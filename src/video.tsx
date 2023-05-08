@@ -87,6 +87,7 @@ export type VideoProps = {
     onError?: () => void;
     onPlay?: () => void;
     onPause?: () => void;
+    onLoad?: () => void;
     poster?: string;
     children?: void;
     /** defaults to none */
@@ -104,6 +105,7 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
             loop = true,
             preload = 'none',
             loadingTimeout = 10000,
+            onLoad,
             onError,
             onPause,
             onPlay,
@@ -113,48 +115,43 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
         },
         ref
     ) => {
-        const borderRadiusContext = useMediaBorderRadius();
-        const [isLoadComplete, setIsLoadComplete] = React.useState(false);
-
         const [videoStatus, dispatch] = React.useReducer(videoReducer, 'loading');
-        const [currentVideoStatus, setCurrentVideoStatus] = React.useState<VideoState>('loading');
+        const videoRef = React.useRef<HTMLVideoElement | null>(null);
+        const loadedSource = React.useRef<VideoSource>();
 
+        const borderRadiusContext = useMediaBorderRadius();
         const ratio = typeof aspectRatio === 'number' ? aspectRatio : RATIO[aspectRatio];
 
-        const videoRef = React.useRef<HTMLVideoElement | null>(null);
-
-        React.useEffect(() => {
-            if (videoStatus !== currentVideoStatus) {
-                setCurrentVideoStatus(videoStatus);
-                if (videoStatus === 'loaded' && !autoPlay && onPause) onPause();
-                if (videoStatus === 'playing' && onPlay) onPlay();
-                if (videoStatus === 'paused' && onPause) onPause();
-                if (videoStatus === 'error' && onError) onError();
+        const handleError = React.useCallback(() => {
+            if (videoStatus === 'loading') {
+                dispatch('fail');
+                onError?.();
             }
-        }, [videoStatus, currentVideoStatus, onPlay, onPause, onError, autoPlay]);
+        }, [onError, videoStatus]);
 
         React.useEffect(() => {
-            const loadingTimeoutId = setTimeout(() => dispatch('fail'), loadingTimeout);
-            setIsLoadComplete(false);
-            dispatch('reset');
-            videoRef.current?.load();
+            if (loadedSource.current !== src) {
+                loadedSource.current = src;
+                const loadingTimeoutId = setTimeout(handleError, loadingTimeout);
+                dispatch('reset');
+                videoRef.current?.load();
 
-            return () => {
-                clearTimeout(loadingTimeoutId);
-            };
-        }, [src, loadingTimeout]);
+                return () => {
+                    clearTimeout(loadingTimeoutId);
+                };
+            }
+        }, [src, loadingTimeout, handleError]);
 
-        React.useEffect(() => {
+        const onLoadFinish = () => {
+            onLoad?.();
             const video = videoRef.current;
             const shouldAutoPlay = autoPlay && !isRunningAcceptanceTest();
 
-            if (isLoadComplete) {
-                dispatch('finishLoad');
-                if (video && shouldAutoPlay && video.paused) {
-                    video.play();
-                }
+            dispatch('finishLoad');
+            if (video && shouldAutoPlay && video.paused) {
+                video.play();
             }
-        }, [isLoadComplete, autoPlay]);
+        };
 
         // normalize sources
         const sources: Array<VideoSourceWithType> = (Array.isArray(src) ? src : [src]).map((source) => {
@@ -176,14 +173,21 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
                 loop={loop}
                 className={styles.video}
                 preload={preload}
-                onError={() => dispatch('fail')}
-                onPause={() => dispatch('pause')}
-                onPlay={() => dispatch('play')}
-                onLoadStart={() => setIsLoadComplete(false)}
-                onCanPlay={() => {
-                    if (autoPlay === 'streaming') setIsLoadComplete(true);
+                onError={handleError}
+                onPause={() => {
+                    onPause?.();
+                    dispatch('pause');
                 }}
-                onCanPlayThrough={() => setIsLoadComplete(true)}
+                onPlay={() => {
+                    onPlay?.();
+                    dispatch('play');
+                }}
+                onCanPlay={() => {
+                    if (autoPlay === 'streaming') onLoadFinish();
+                }}
+                onCanPlayThrough={() => {
+                    if (autoPlay !== 'streaming') onLoadFinish();
+                }}
                 // This transparent pixel fallback avoids showing the ugly "play" image in android webviews
                 poster={TRANSPARENT_PIXEL}
                 {...getPrefixedDataAttributes(dataAttributes)}
