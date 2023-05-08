@@ -53,7 +53,6 @@ type ImageErrorProps = {
 
 const ImageError = ({noBorderRadius}: ImageErrorProps) => {
     const isInverse = useIsInverseVariant();
-    const {isDarkMode} = useTheme();
     const {skinName} = useTheme();
     return (
         <div
@@ -63,11 +62,9 @@ const ImageError = ({noBorderRadius}: ImageErrorProps) => {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                backgroundColor: !isDarkMode
-                    ? isInverse
-                        ? vars.colors.backgroundSkeletonInverse
-                        : vars.colors.backgroundSkeleton
-                    : vars.colors.backgroundContainer,
+                backgroundColor: isInverse
+                    ? vars.colors.backgroundSkeletonInverse
+                    : vars.colors.backgroundSkeleton,
                 borderRadius: noBorderRadius ? undefined : vars.borderRadii.container,
             }}
         >

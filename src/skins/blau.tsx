@@ -199,8 +199,8 @@ export const getBlauSkin: GetKnownSkin = () => {
             backgroundContainerAlternative: palette.darkModeGrey,
             backgroundAlternative: palette.darkModeBlack,
             backgroundOverlay: applyAlpha(palette.darkModeGrey, 0.8),
-            backgroundSkeleton: palette.darkModeGrey,
-            backgroundSkeletonInverse: palette.darkModeGrey,
+            backgroundSkeleton: palette.darkModeGrey6,
+            backgroundSkeletonInverse: palette.darkModeGrey6,
             backgroundFeedbackBottom: palette.darkModeBlack,
             navigationBarBackground: palette.darkModeBlack,
 
