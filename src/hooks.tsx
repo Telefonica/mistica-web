@@ -137,9 +137,6 @@ export const useWindowSize = (): {
     );
 
     React.useEffect(() => {
-        if (typeof window === 'undefined') {
-            return;
-        }
         const handleResize = () => {
             setWindowHeight(window.innerHeight);
             setWindowWidth(window.innerWidth);
