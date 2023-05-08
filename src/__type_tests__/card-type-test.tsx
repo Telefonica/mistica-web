@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {SnapCard} from '../card';
+import {DisplayMediaCard, PosterCard, SnapCard} from '../card';
 
 <SnapCard title="title" />;
 <SnapCard title="title" href="/" />;
@@ -11,6 +11,12 @@ import {SnapCard} from '../card';
 <SnapCard title="title" onPress={() => {}} to="/" />;
 // @ts-expect-error href and to can't be used together
 <SnapCard title="title" href="/" to="/" />;
+
+// @ts-expect-error backgroundImage and backgroundVideo can't be used together
+<DisplayMediaCard title="title" backgroundImage="" backgroundVideo="" />;
+
+// @ts-expect-error backgroundImage and backgroundVideo can't be used together
+<PosterCard title="title" backgroundImage="" backgroundVideo="" />;
 
 (isTouchable: boolean) => <SnapCard title="title" href={isTouchable ? '/' : undefined} />;
 (isTouchable: boolean) => <SnapCard title="title" to={isTouchable ? '/' : undefined} />;

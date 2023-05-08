@@ -3,7 +3,6 @@ import classnames from 'classnames';
 import {ThemeVariant, useIsInverseVariant} from './theme-variant-context';
 import {getPrefixedDataAttributes} from './utils/dom';
 import {vars} from './skins/skin-contract.css';
-import {useTheme} from './hooks';
 import * as styles from './boxed.css';
 import {sprinkles} from './sprinkles.css';
 
@@ -56,7 +55,6 @@ export const InternalBoxed = React.forwardRef<HTMLDivElement, Props & InternalPr
         },
         ref
     ) => {
-        const {isDarkMode} = useTheme();
         const isInverseOutside = useIsInverseVariant();
 
         return (
@@ -69,13 +67,12 @@ export const InternalBoxed = React.forwardRef<HTMLDivElement, Props & InternalPr
                     sprinkles({
                         borderRadius,
                         overflow: 'hidden',
-                        background: !background
-                            ? isInverseInside && !isDarkMode
+                        background:
+                            background ?? isInverseInside
                                 ? isInverseOutside
-                                    ? vars.colors.brandHigh
+                                    ? vars.colors.backgroundContainerBrandOverInverse
                                     : vars.colors.backgroundContainerBrand
-                                : vars.colors.backgroundContainer
-                            : undefined,
+                                : vars.colors.backgroundContainer,
                     })
                 )}
                 role={role}
