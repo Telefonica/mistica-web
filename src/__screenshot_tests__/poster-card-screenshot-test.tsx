@@ -99,3 +99,16 @@ test('PosterCard is never rendered smaller than 140 x 112', async () => {
 
     expect(image).toMatchImageSnapshot();
 });
+
+test('PosterCard with video', async () => {
+    await openStoryPage({
+        id: 'components-cards-poster-card--default',
+        args: {background: 'video'},
+    });
+
+    const posterCard = await screen.findByTestId('poster-card');
+
+    const image = await posterCard.screenshot();
+
+    expect(image).toMatchImageSnapshot();
+});
