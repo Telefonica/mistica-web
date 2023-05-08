@@ -1,3 +1,11 @@
+## [14.7.1](https://github.com/Telefonica/mistica-web/compare/v14.7.0...v14.7.1) (2023-05-08)
+
+
+### Bug Fixes
+
+* **Chip:** improve border color in dark mode ([#744](https://github.com/Telefonica/mistica-web/issues/744)) ([7c6020e](https://github.com/Telefonica/mistica-web/commit/7c6020ebdfa0784edd4e3817a8d0bf2e52125f2e))
+* **TextField:** label not shrinking when the field was autofilled by browser autocomplete ([#728](https://github.com/Telefonica/mistica-web/issues/728)) ([97dff64](https://github.com/Telefonica/mistica-web/commit/97dff641829c0a51778e4ef2338d4306a1d16d01))
+
 # [14.7.0](https://github.com/Telefonica/mistica-web/compare/v14.6.0...v14.7.0) (2023-04-27)
 
 
