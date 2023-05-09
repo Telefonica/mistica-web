@@ -9,3 +9,8 @@ export const video = sprinkles({
     maxHeight: '100%',
     objectFit: 'cover',
 });
+
+export const videoContainer = sprinkles({
+    width: '100%',
+    height: '100%',
+});

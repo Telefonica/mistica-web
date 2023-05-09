@@ -4,6 +4,7 @@ export type Colors = {
     background: string;
     backgroundContainer: string;
     backgroundContainerBrand: string;
+    backgroundContainerBrandOverInverse: string;
     backgroundContainerAlternative: string;
     backgroundBrand: string;
     backgroundBrandSecondary: string;
