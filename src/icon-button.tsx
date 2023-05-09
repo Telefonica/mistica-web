@@ -23,6 +23,8 @@ const getButtonStyle = (
         cursor: disabled ? 'default' : 'pointer',
         height: size,
         width: size,
+        verticalAlign: 'middle',
+        textAlign: 'center',
     };
 };
 
@@ -162,7 +164,13 @@ export const BaseIconButton = (props: Props): JSX.Element => {
         <RawIconButton
             {...props}
             className={classnames(styles.base, props.className)}
-            style={{height: size, width: size, cursor: disabled ? 'default' : 'pointer'}}
+            style={{
+                height: size,
+                width: size,
+                cursor: disabled ? 'default' : 'pointer',
+                verticalAlign: 'middle',
+                textAlign: 'center',
+            }}
         />
     );
 };
