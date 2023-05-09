@@ -49,11 +49,9 @@ const VivoLogo = ({style}: VivoLogoProps) => {
 
 type ImageErrorProps = {
     noBorderRadius?: boolean;
-    border?: boolean;
 };
 
-const ImageError = ({noBorderRadius, border}: ImageErrorProps) => {
-    const borderError = border ? `1px solid ${vars.colors.borderLow}` : 'none';
+const ImageError = ({noBorderRadius}: ImageErrorProps) => {
     const isInverse = useIsInverseVariant();
     const {skinName} = useTheme();
 
@@ -69,7 +67,6 @@ const ImageError = ({noBorderRadius, border}: ImageErrorProps) => {
                     ? vars.colors.backgroundSkeletonInverse
                     : vars.colors.backgroundSkeleton,
                 borderRadius: noBorderRadius ? undefined : vars.borderRadii.container,
-                border: borderError,
             }}
         >
             {skinName === VIVO_SKIN ? (
@@ -116,9 +113,7 @@ export type ImageProps = {
     onLoad?: () => void;
     loadingFallback?: boolean;
     errorFallback?: boolean;
-    zIndex?: 1;
     border?: boolean;
-    noOpacityImageError?: boolean;
 };
 
 const Image = React.forwardRef<HTMLImageElement, ImageProps>(
@@ -214,8 +209,8 @@ const Image = React.forwardRef<HTMLImageElement, ImageProps>(
                     </div>
                 )}
                 {isError && withErrorFallback && (
-                    <div style={{position: 'absolute', width: '100%', height: '100%', zIndex: props.zIndex}}>
-                        <ImageError noBorderRadius={noBorderSetting} border={props.border} />
+                    <div style={{position: 'absolute', width: '100%', height: '100%'}}>
+                        <ImageError noBorderRadius={noBorderSetting} />
                     </div>
                 )}
                 {!isError && img}

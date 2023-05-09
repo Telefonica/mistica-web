@@ -1,20 +1,20 @@
 import {openStoryPage, screen} from '../test-utils';
 
 test.each`
-    size    | type        | stacked  | inverse
-    ${'64'} | ${'image'}  | ${false} | ${false}
-    ${'64'} | ${'avatar'} | ${false} | ${false}
-    ${'64'} | ${'image'}  | ${true}  | ${false}
-    ${'64'} | ${'avatar'} | ${true}  | ${false}
-    ${'64'} | ${'image'}  | ${false} | ${true}
-    ${'64'} | ${'avatar'} | ${false} | ${true}
-    ${'64'} | ${'image'}  | ${true}  | ${true}
-    ${'64'} | ${'avatar'} | ${true}  | ${true}
-`('Stacking Group', async ({size, type, stacked, inverse}) => {
+    type        | stacked  | inverse
+    ${'square'} | ${false} | ${false}
+    ${'circle'} | ${false} | ${false}
+    ${'square'} | ${true}  | ${false}
+    ${'circle'} | ${true}  | ${false}
+    ${'square'} | ${false} | ${true}
+    ${'circle'} | ${false} | ${true}
+    ${'square'} | ${true}  | ${true}
+    ${'circle'} | ${true}  | ${true}
+    `('Stacking Group', async ({ type, stacked, inverse}) => {
     await openStoryPage({
         id: 'components-stackinggroup--default',
         device: 'DESKTOP',
-        args: {size, type, stacked, inverse},
+        args: { type, stacked, inverse},
     });
 
     const element = await screen.findByTestId('stacking-group');

@@ -1731,37 +1731,14 @@ const stackingGroupSnippets = [
     {
         name: 'Stacking Group',
         code: `
-        <StackingGroup
-          size={64}
-          type={'avatar'}
-          stacked={false}
-          data={[
-            {
-              src: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80',
-              initials: 'maria'
-            },
-            {
-              src: '',
-              initials: 'joão'
-            },
-            {
-              src: 'https://images.unsplash.com/photo-1485206412256-701ccc5b93ca?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=594&q=80',
-              initials: 'Carlos'
-            },
-            {
-              src: '',
-              initials: ''
-            },
-            {
-              src: '',
-              initials: ''
-            },
-            {
-              src: '',
-              initials: ''
-            },
-          ]}
-        />
+        <StackingGroup stacked={false} maxItems={5} moreItemsStyle={{type: 'circle', size: 64}}>
+          <Avatar size={64} src="https://source.unsplash.com/600x600/?face" />
+          <Avatar size={64} src="https://source.unsplash.com/600x600/?face" />
+          <Avatar size={64} src="https://source.unsplash.com/600x600/?face" />
+          <Avatar size={64} src="https://source.unsplash.com/600x600/?face" />
+          <Avatar size={64} src="https://source.unsplash.com/600x600/?face" />
+          <Avatar size={64} src="https://source.unsplash.com/600x600/?face" />
+        </StackingGroup>
     `,
         group: 'StackingGroup',
     },
