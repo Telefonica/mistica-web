@@ -3,7 +3,7 @@ on:
     push:
         branches: [master]
 concurrency:
-    group: ${{ github.ref }}
+    group: deploy-master-${{ github.ref }}
     cancel-in-progress: true
 jobs:
     deploy:

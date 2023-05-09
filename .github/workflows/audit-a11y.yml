@@ -1,7 +1,7 @@
 name: audit-a11y
 on: [pull_request]
 concurrency:
-    group: ${{ github.ref }}
+    group: audit-a11y-${{ github.ref }}
     cancel-in-progress: true
 jobs:
     audit-a11y:

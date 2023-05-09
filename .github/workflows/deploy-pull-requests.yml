@@ -1,7 +1,7 @@
 name: deploy-pull-requests
 on: [pull_request]
 concurrency:
-    group: ${{ github.ref }}
+    group: deploy-pull-requests-${{ github.ref }}
     cancel-in-progress: true
 jobs:
     deploy:
