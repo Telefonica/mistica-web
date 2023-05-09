@@ -201,7 +201,7 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
             </video>
         );
 
-        const posterElement = (
+        const posterImage = (
             <Image
                 aspectRatio={aspectRatio}
                 width={props.width}
@@ -210,26 +210,25 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
             />
         );
 
-        const videoElement =
-            ratio || props.width || props.height ? (
-                <AspectRatioElement aspectRatio={ratio} width={props.width} height={props.height}>
-                    {video}
-                </AspectRatioElement>
-            ) : (
-                video
-            );
-
         const showPoster = videoStatus === 'error' || videoStatus === 'loading' || videoStatus === 'loaded';
 
-        return (
+        const videoOrPoster = (
             <>
                 <div className={styles.videoContainer} style={{display: showPoster ? 'block' : 'none'}}>
-                    {posterElement}
+                    {posterImage}
                 </div>
                 <div className={styles.videoContainer} style={{display: showPoster ? 'none' : 'block'}}>
-                    {videoElement}
+                    {video}
                 </div>
             </>
+        );
+
+        return ratio || props.width || props.height ? (
+            <AspectRatioElement aspectRatio={ratio} width={props.width} height={props.height}>
+                {videoOrPoster}
+            </AspectRatioElement>
+        ) : (
+            videoOrPoster
         );
     }
 );
