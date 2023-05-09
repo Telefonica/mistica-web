@@ -213,14 +213,17 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
         const showPoster = videoStatus === 'error' || videoStatus === 'loading' || videoStatus === 'loaded';
 
         const videoOrPoster = (
-            <>
-                <div className={styles.videoContainer} style={{display: showPoster ? 'block' : 'none'}}>
-                    {posterImage}
-                </div>
-                <div className={styles.videoContainer} style={{display: showPoster ? 'none' : 'block'}}>
+            <div className={styles.videoContainer}>
+                <div
+                    className={styles.videoElement}
+                    style={{zIndex: 1, visibility: showPoster ? 'hidden' : 'visible'}}
+                >
                     {video}
                 </div>
-            </>
+                <div className={styles.posterElement} style={{zIndex: 0}}>
+                    {posterImage}
+                </div>
+            </div>
         );
 
         return ratio || props.width || props.height ? (
