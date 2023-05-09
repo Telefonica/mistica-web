@@ -390,7 +390,7 @@ export default class DialogRoot extends React.Component<DialogRootProps, DialogR
     componentDidMount(): void {
         dialogRootInstances++;
         if (dialogRootInstances === 1) {
-            // eslint-disable-next-line @typescript-eslint/no-this-alias
+             
             dialogInstance = this;
             window.addEventListener('popstate', this.handleBack);
         }

@@ -2,7 +2,6 @@ import * as React from 'react';
 import {skinVars} from '..';
 import {ThemeVariant} from '../theme-variant-context';
 import StackingGroup from '../stacking-group';
-import Avatar from '../avatar';
 import Image from '../image';
 import img from './images/avatar.jpg';
 
@@ -42,12 +41,8 @@ export const Default: StoryComponent<Args> = ({
                 }}
                 data-testid="stacking-group"
             >
-                <StackingGroup
-                    stacked={stacked}
-                    maxItems={maxItems}
-                    moreItemsStyle={{type: type, size: size}}
-                >
-                    {Array.from({length: itemsToInclude}, (_, _idx) => (
+                <StackingGroup stacked={stacked} maxItems={maxItems} moreItemsStyle={{type, size}}>
+                    {Array.from({length: itemsToInclude}, () => (
                         <Image height={size} src={img} aspectRatio="1:1" border />
                     ))}
                 </StackingGroup>

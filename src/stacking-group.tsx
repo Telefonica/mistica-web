@@ -1,5 +1,4 @@
 import * as React from 'react';
-import Avatar from './avatar';
 import * as styles from './stacking-group.css';
 import {useIsInverseVariant} from './theme-variant-context';
 import {vars} from './skins/skin-contract.css';
