@@ -11,6 +11,10 @@ on:
     merge_group:
         branches: [master]
 
+concurrency:
+    group: ${{ github.ref }}
+    cancel-in-progress: true
+
 jobs:
     build:
         runs-on: ubuntu-latest
