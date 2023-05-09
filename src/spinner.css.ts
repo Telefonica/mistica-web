@@ -54,7 +54,6 @@ export const spinnerIos = sprinkles({
 export const spinnerIosSvgPath = style({
     animation: `${spinnerIosKeyframes} 1s infinite linear`,
     selectors: {
-        '&:nth-of-type(1)': {animationDelay: '0s'},
         '&:nth-of-type(2)': {animationDelay: '.125s'},
         '&:nth-of-type(3)': {animationDelay: '.250s'},
         '&:nth-of-type(4)': {animationDelay: '.375s'},
