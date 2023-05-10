@@ -7,7 +7,6 @@ export const vars = {space};
 export const inline = style({
     flexDirection: 'row',
     gridAutoFlow: 'column',
-    gridAutoColumns: 'max-content',
     marginTop: `calc(${space} * -1)`,
     marginLeft: `calc(${space} * -1)`,
 });
