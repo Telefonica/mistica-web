@@ -1,6 +1,6 @@
 {
     "name": "@telefonica/mistica",
-    "version": "14.7.0",
+    "version": "14.7.1",
     "license": "MIT",
     "repository": {
         "type": "git",
@@ -30,7 +30,7 @@
         "storybook-for-acceptance-tests": "cross-env NODE_ENV=production yarn storybook --ci 2>&1",
         "playroom": "playroom start",
         "gen-ts-defs": "rimraf dist-ts && tsc --project tsconfig.production.json --emitDeclarationOnly && cp -r dist-ts/src/* dist && rimraf dist-ts",
-        "vercel-build": "yarn storybook-static && ./node_modules/.bin/playroom build && FORCE_MOBILE=1 ./node_modules/.bin/playroom build && FORCE_DESKTOP=1 ./node_modules/.bin/playroom build && cp img/favicon.ico public/",
+        "vercel-build": "VERCEL_PROD_BUILD=1 yarn storybook-static && ./node_modules/.bin/playroom build && FORCE_MOBILE=1 ./node_modules/.bin/playroom build && FORCE_DESKTOP=1 ./node_modules/.bin/playroom build && cp img/favicon.ico public/",
         "vercel-preview-build": "yarn storybook-static && ./node_modules/.bin/playroom build && cp img/favicon.ico public/",
         "storybook-static": "rimraf public && yarn build-storybook -s ./.storybook/css/fonts -o public --quiet",
         "serve-static-storybook": "node ./scripts/serve-static-storybook.js",
@@ -58,7 +58,7 @@
         }
     },
     "devDependencies": {
-        "@actions/core": "^1.6.0",
+        "@actions/core": "^1.10.0",
         "@actions/github": "^5.0.0",
         "@axe-core/puppeteer": "^4.4.2",
         "@azure/storage-blob": "^12.9.0",

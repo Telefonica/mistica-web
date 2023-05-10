@@ -7,6 +7,7 @@ const colors: Colors = {
     background: '',
     backgroundContainer: '',
     backgroundContainerBrand: '',
+    backgroundContainerBrandOverInverse: '',
     backgroundContainerAlternative: '',
     backgroundBrand: '',
     backgroundBrandSecondary: '',
