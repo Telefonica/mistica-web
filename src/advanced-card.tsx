@@ -8,37 +8,150 @@ import IconMeatballFilled from './generated/mistica-icons/icon-meatball-filled';
 import Divider from './divider';
 import NegativeBox from './negative-box';
 import {Placeholder} from './placeholder';
-import {Text2} from './text';
+import Text, {Text2} from './text';
+import Tag from './tag';
+import {useTheme} from './hooks';
+import {vars} from './skins/skin-contract.css';
+import {style} from '@vanilla-extract/css';
 
-import type {ButtonPrimary, ButtonLink} from './button';
-import type {DataAttributes} from './utils/types';
 import type {RendersNullableElement} from './utils/renders-element';
+import type {DataAttributes} from './utils/types';
+import type {ButtonPrimary, ButtonLink} from './button';
 
-interface AdvancedDataCardProps {
+type CardContentProps = {
+    headline?: string | RendersNullableElement<typeof Tag>;
+    pretitle?: string;
+    pretitleLinesMax?: number;
     title?: string;
-    'aria-label'?: string;
+    titleLinesMax?: number;
+    subtitle?: string;
+    subtitleLinesMax?: number;
+    description?: string;
+    descriptionLinesMax?: number;
+    extra?: React.ReactNode;
     button?: RendersNullableElement<typeof ButtonPrimary>;
     buttonLink?: RendersNullableElement<typeof ButtonLink>;
-    dataAttributes?: DataAttributes;
+};
+
+const CardContent: React.FC<CardContentProps> = ({
+    headline,
+    pretitle,
+    pretitleLinesMax,
+    title,
+    titleLinesMax,
+    subtitle,
+    subtitleLinesMax,
+    description,
+    descriptionLinesMax,
+}) => {
+    const {textPresets} = useTheme();
+    const renderHeadline = () => {
+        if (!headline) {
+            return null;
+        }
+        if (typeof headline === 'string') {
+            return <Tag type="promo">{headline}</Tag>;
+        }
+        return headline;
+    };
+    return (
+        <div>
+            <Stack space={8}>
+                {(headline || pretitle || title || subtitle) && (
+                    <header>
+                        <Stack space={8}>
+                            {renderHeadline()}
+                            <Stack space={4}>
+                                {pretitle && (
+                                    <Text2 truncate={pretitleLinesMax} as="div" regular hyphens="auto">
+                                        {pretitle}
+                                    </Text2>
+                                )}
+                                <Text
+                                    mobileSize={18}
+                                    mobileLineHeight="24px"
+                                    desktopSize={20}
+                                    desktopLineHeight="28px"
+                                    truncate={titleLinesMax}
+                                    weight={textPresets.cardTitle.weight}
+                                    as="h3"
+                                    hyphens="auto"
+                                >
+                                    {title}
+                                </Text>
+                                <Text2 truncate={subtitleLinesMax} as="div" regular hyphens="auto">
+                                    {subtitle}
+                                </Text2>
+                            </Stack>
+                        </Stack>
+                    </header>
+                )}
+
+                {description && (
+                    <Text2
+                        truncate={descriptionLinesMax}
+                        as="p"
+                        regular
+                        color={vars.colors.textSecondary}
+                        hyphens="auto"
+                    >
+                        {description}
+                    </Text2>
+                )}
+            </Stack>
+        </div>
+    );
+};
+
+interface AdvancedDataCardProps {
     icon?: React.ReactElement;
-    image?: string;
+    headline?: string | RendersNullableElement<typeof Tag>;
+    pretitle?: string;
+    pretitleLinesMax?: number;
+    title?: string;
+    titleLinesMax?: number;
+    subtitle?: string;
+    subtitleLinesMax?: number;
+    description?: string;
+    descriptionLinesMax?: number;
+
+    slot?: React.ReactNode;
+
     showOptions?: boolean;
+    dataAttributes?: DataAttributes;
+
+    button?: RendersNullableElement<typeof ButtonPrimary>;
+    image?: string;
     footerText?: string;
+    buttonLink?: RendersNullableElement<typeof ButtonLink>;
+    'aria-label'?: string;
+    onClose?: () => void;
 }
 
 const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCardProps>(
     (
         {
-            title,
-            'aria-label': ariaLabel,
-            dataAttributes,
             icon,
+            headline,
+            pretitle,
+            pretitleLinesMax,
+            title,
+            titleLinesMax,
+            subtitle,
+            subtitleLinesMax,
+            description,
+            descriptionLinesMax,
+
             showOptions,
 
             button,
             image,
             footerText,
             buttonLink,
+
+            dataAttributes,
+            'aria-label': ariaLabel,
+            onClose,
         },
         ref
     ) => {
@@ -70,7 +183,17 @@ const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCardProps>
                         >
                             <Stack space={16} className={sprinkles({flex: 1})}>
                                 {hasIcon ? icon : null}
-                                {title}
+                                <CardContent
+                                    headline={headline}
+                                    pretitle={pretitle}
+                                    pretitleLinesMax={pretitleLinesMax}
+                                    title={title}
+                                    titleLinesMax={titleLinesMax}
+                                    subtitle={subtitle}
+                                    subtitleLinesMax={subtitleLinesMax}
+                                    description={description}
+                                    descriptionLinesMax={descriptionLinesMax}
+                                />
                             </Stack>
                             {showOptions && (
                                 <div style={topActionsStylesWithIcon}>
@@ -81,22 +204,22 @@ const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCardProps>
 
                         <div
                             className={sprinkles({
-                                paddingTop: 24,
+                                paddingTop: 32,
                             })}
                         >
-                            <Placeholder />
+                            <div
+                                className={sprinkles({
+                                    paddingY: 24,
+                                })}
+                            >
+                                <Placeholder />
+                            </div>
                         </div>
 
                         {hasFooter && (
-                            <div
-                                className={sprinkles({
-                                    paddingTop: 24,
-                                })}
-                            >
-                                <NegativeBox>
-                                    <Divider />
-                                </NegativeBox>
-                            </div>
+                            <NegativeBox>
+                                <Divider />
+                            </NegativeBox>
                         )}
 
                         <div className={styles.actions}>
