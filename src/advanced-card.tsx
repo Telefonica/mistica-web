@@ -6,7 +6,6 @@ import * as styles from './advanced-card.css';
 import Image from './image';
 import Divider from './divider';
 import NegativeBox from './negative-box';
-import {Placeholder} from './placeholder';
 import Text, {Text2} from './text';
 import Tag from './tag';
 import {useTheme} from './hooks';
@@ -96,9 +95,6 @@ type CardContentProps = {
     subtitleLinesMax?: number;
     description?: string;
     descriptionLinesMax?: number;
-    extra?: React.ReactNode;
-    button?: RendersNullableElement<typeof ButtonPrimary>;
-    buttonLink?: RendersNullableElement<typeof ButtonLink>;
 };
 
 const CardContent: React.FC<CardContentProps> = ({
@@ -171,8 +167,8 @@ const CardContent: React.FC<CardContentProps> = ({
     );
 };
 
-interface AdvancedDataCardProps {
-    icon?: React.ReactElement;
+interface AdvancedCardProps {
+    cardImage?: string;
     headline?: string | RendersNullableElement<typeof Tag>;
     pretitle?: string;
     pretitleLinesMax?: number;
@@ -186,7 +182,7 @@ interface AdvancedDataCardProps {
     slot?: React.ReactNode;
 
     button?: RendersNullableElement<typeof ButtonPrimary>;
-    image?: string;
+    footerImage?: string;
     footerText?: string;
     buttonLink?: RendersNullableElement<typeof ButtonLink>;
 
@@ -196,10 +192,10 @@ interface AdvancedDataCardProps {
     onClose?: () => void;
 }
 
-const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCardProps>(
+const AdvancedCard = React.forwardRef<HTMLDivElement, AdvancedCardProps>(
     (
         {
-            icon,
+            cardImage,
             headline,
             pretitle,
             pretitleLinesMax,
@@ -210,8 +206,10 @@ const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCardProps>
             description,
             descriptionLinesMax,
 
+            slot,
+
             button,
-            image,
+            footerImage,
             footerText,
             buttonLink,
 
@@ -223,14 +221,13 @@ const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCardProps>
         ref
     ) => {
         const finalActions = useTopActions(actions, onClose);
-
         const hasAcations = finalActions?.length > 0;
-        const hasIcon = !!icon;
+        const hascardImage = !!cardImage;
         const hasButton = !!button;
-        const hasImage = !!image;
+        const hasFooterImage = !!footerImage;
         const hasFooterText = !!footerText;
         const hasButtonLink = !!buttonLink;
-        const hasFooter = hasButton || hasImage || hasFooterText || hasButtonLink;
+        const hasFooter = hasButton || hasFooterImage || hasFooterText || hasButtonLink;
 
         const margin = {marginLeft: '16px'};
         const topActionsStylesWithIcon = {position: 'absolute', top: 8, right: 8, zIndex: 2} as const;
@@ -248,6 +245,7 @@ const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCardProps>
                         <div
                             className={sprinkles({
                                 display: 'flex',
+                                paddingBottom: 8,
                             })}
                         >
                             <div
@@ -256,7 +254,7 @@ const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCardProps>
                                 })}
                             >
                                 <Stack space={16} className={sprinkles({flex: 1})}>
-                                    {hasIcon ? icon : null}
+                                    {hascardImage ? <Image height={40} src={cardImage} /> : null}
                                     <CardContent
                                         headline={headline}
                                         pretitle={pretitle}
@@ -279,7 +277,7 @@ const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCardProps>
 
                         <div
                             className={sprinkles({
-                                paddingTop: 32,
+                                paddingTop: 8,
                             })}
                         >
                             <div
@@ -287,7 +285,7 @@ const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCardProps>
                                     paddingY: 24,
                                 })}
                             >
-                                <Placeholder />
+                                {slot && <div>{slot}</div>}
                             </div>
                         </div>
 
@@ -299,17 +297,17 @@ const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCardProps>
 
                         <div className={styles.actions}>
                             {hasButton && button}
-                            {hasImage && (
+                            {hasFooterImage && (
                                 <div
                                     style={hasButton ? margin : {}}
                                     className={sprinkles({alignItems: 'center', display: 'flex'})}
                                 >
-                                    <Image height={40} src={image} />
+                                    <Image height={40} src={footerImage} />
                                 </div>
                             )}
                             {hasFooterText && (
                                 <div
-                                    style={hasButton || hasImage ? margin : {}}
+                                    style={hasButton || hasFooterImage ? margin : {}}
                                     className={styles.footerText}
                                 >
                                     <Text2 medium>{footerText}</Text2>
@@ -324,4 +322,4 @@ const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCardProps>
     }
 );
 
-export default AdvancedDataCard;
+export default AdvancedCard;
