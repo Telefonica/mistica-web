@@ -210,105 +210,19 @@ export const ImageContent = React.forwardRef<HTMLImageElement, ImageProps>(
     }
 );
 
-const Image = React.forwardRef<HTMLImageElement, ImageProps>(
-    (
-        {
-            aspectRatio = '1:1',
-            alt = '',
-            dataAttributes,
-            noBorderRadius,
-            src,
-            onError,
-            onLoad,
-            loadingFallback = true,
-            errorFallback = true,
-            ...props
-        },
-        ref
-    ) => {
-        const imageRef = React.useRef<HTMLImageElement>();
-        const borderRadiusContext = useMediaBorderRadius();
-        const noBorderSetting = noBorderRadius ?? !borderRadiusContext;
-        const [isError, setIsError] = React.useState(false);
-        const [isLoading, setIsLoading] = React.useState(true);
-        const [hideLoadingFallback, setHideLoadingFallback] = React.useState(false);
+const Image = React.forwardRef<HTMLImageElement, ImageProps>(({aspectRatio = '1:1', ...props}, ref) => {
+    const ratio = typeof aspectRatio === 'number' ? aspectRatio : RATIO[aspectRatio];
 
-        const ratio = typeof aspectRatio === 'number' ? aspectRatio : RATIO[aspectRatio];
-
-        const withLoadingFallback = loadingFallback && !!(ratio !== 0 || (props.width && props.height));
-        const withErrorFallback = errorFallback && !!(ratio !== 0 || (props.width && props.height));
-
-        const onLoadHandler = React.useCallback(() => {
-            setIsError(false);
-            setIsLoading(false);
-            setTimeout(() => {
-                setHideLoadingFallback(true);
-            }, styles.FADE_IN_DURATION_MS);
-
-            onLoad?.();
-        }, [onLoad]);
-
-        const img = (
-            // https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/issues/309
-            // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
-            <img
-                {...getPrefixedDataAttributes(dataAttributes)}
-                style={{
-                    ...(isLoading && withLoadingFallback ? {opacity: 0} : {opacity: 1}),
-                }}
-                ref={combineRefs(imageRef, ref)}
-                src={src}
-                className={classnames(
-                    styles.image,
-                    sprinkles({
-                        position: ratio !== 0 ? 'absolute' : 'static',
-                        borderRadius: noBorderSetting ? undefined : vars.borderRadii.container,
-                    })
-                )}
-                alt={alt}
-                onError={() => {
-                    setIsError(true);
-                    setIsLoading(false);
-                    setHideLoadingFallback(true);
-                    onError?.();
-                }}
-                onLoad={onLoadHandler}
-            />
-        );
-
-        React.useEffect(() => {
-            // Needed because there is some race condition with SSR and onLoad events
-            // https://github.com/facebook/react/issues/15446
-            if (imageRef.current?.complete) {
-                onLoadHandler();
-            }
-        }, [onLoadHandler]);
-
-        return (
-            <AspectRatioElement
-                style={{position: 'relative'}}
-                aspectRatio={ratio}
-                width={props.width}
-                height={props.height}
-            >
-                {withLoadingFallback && !hideLoadingFallback && (
-                    <div style={{position: 'absolute', width: '100%', height: '100%'}}>
-                        <SkeletonRectangle
-                            width={props.width}
-                            height={props.height}
-                            noBorderRadius={noBorderSetting}
-                        />
-                    </div>
-                )}
-                {isError && withErrorFallback && (
-                    <div style={{position: 'absolute', width: '100%', height: '100%'}}>
-                        <ImageError noBorderRadius={noBorderSetting} />
-                    </div>
-                )}
-                {!isError && img}
-            </AspectRatioElement>
-        );
-    }
-);
+    return (
+        <AspectRatioElement
+            style={{position: 'relative'}}
+            aspectRatio={ratio}
+            width={props.width}
+            height={props.height}
+        >
+            <ImageContent aspectRatio={aspectRatio} {...props} ref={ref} />
+        </AspectRatioElement>
+    );
+});
 
 export default Image;
