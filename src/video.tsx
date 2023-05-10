@@ -199,12 +199,10 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
                 style={{
                     // For some reason adding this style with classnames doesn't add the border radius in safari
                     borderRadius: !borderRadiusContext ? 0 : vars.borderRadii.container,
-                    top: 0,
-                    left: 0,
                     visibility: showPoster ? 'hidden' : 'visible',
                     position: showPoster || ratio !== 0 ? 'absolute' : 'static',
-                    width: showPoster ? posterWidth : undefined,
-                    height: showPoster ? posterHeight : undefined,
+                    width: showPoster ? posterWidth : '100%',
+                    height: showPoster ? posterHeight : '100%',
                 }}
             >
                 {sources.map(({src, type}, index) => (
@@ -230,8 +228,8 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
                 width={props.width}
                 height={props.height}
             >
-                {showPoster && posterImage}
                 {video}
+                {showPoster && posterImage}
             </AspectRatioElement>
         );
     }
