@@ -1,6 +1,7 @@
 import * as React from 'react';
 import classnames from 'classnames';
-import {useTheme} from './hooks';
+import {useScreenSize, useTheme} from './hooks';
+import Badge from './badge';
 import Box from './box';
 import {Text2} from './text';
 import IconButton from './icon-button';
@@ -19,6 +20,9 @@ interface SimpleChipProps {
     Icon?: React.FC<IconProps>;
     id?: string;
     dataAttributes?: DataAttributes;
+    badge?: boolean | number;
+    badgeValue?: number | string;
+    alternative?: boolean;
 }
 
 interface ClosableChipProps extends SimpleChipProps {
@@ -31,9 +35,21 @@ interface ToggleChipProps extends SimpleChipProps {
 
 type ChipProps = ExclusifyUnion<SimpleChipProps | ClosableChipProps | ToggleChipProps>;
 
-const Chip: React.FC<ChipProps> = ({Icon, children, id, dataAttributes, active, onClose}: ChipProps) => {
+const Chip: React.FC<ChipProps> = ({
+    Icon,
+    children,
+    id,
+    dataAttributes,
+    active,
+    alternative,
+    badge,
+    onClose,
+}: ChipProps) => {
     const {texts, isDarkMode} = useTheme();
     const overAlternative = useThemeVariant() === 'alternative';
+    const {isMobile} = useScreenSize();
+
+    const badgeValue = badge === true ? undefined : badge || 0;
 
     const body = (
         <>
@@ -42,14 +58,53 @@ const Chip: React.FC<ChipProps> = ({Icon, children, id, dataAttributes, active, 
                     <Icon color="currentColor" size={pxToRem(16)} />
                 </Box>
             )}
-            <Text2 id={id} medium truncate={1} color="currentColor">
-                {children}
-            </Text2>
+            {onClose || badge ? (
+                <Box paddingRight={8}>
+                    <Text2 id={id} medium truncate={1} color="currentColor">
+                        {children}
+                    </Text2>
+                </Box>
+            ) : (
+                <Text2 id={id} medium truncate={1} color="currentColor">
+                    {children}
+                </Text2>
+            )}
         </>
     );
 
-    const paddingLeft = Icon ? 8 : 12;
+    const paddingLeft = Icon && isMobile ? 16 : 8 && Icon ? 8 : 20 && isMobile ? 20 : 12;
+    const paddingRight = isMobile ? 20 : 12;
+    const paddingIcon = isMobile ? 16 : 8;
+    const badgeSize = badgeValue === 9 + 1 ? 24 : 16;
 
+    if (badge && onClose) {
+        return (
+            <Box
+                className={
+                    overAlternative ? styles.chipVariants.overAlternative : styles.chipVariants.default
+                }
+                paddingLeft={paddingLeft}
+                paddingRight={paddingIcon}
+                {...getPrefixedDataAttributes(dataAttributes, 'Chip')}
+            >
+                {body}
+                <Box>
+                    <IconButton
+                        size={badgeSize}
+                        style={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                        }}
+                        aria-label={texts.closeButtonLabel}
+                        onPress={() => onClose?.()}
+                    >
+                        <Badge value={badgeValue} />
+                    </IconButton>
+                </Box>
+            </Box>
+        );
+    }
     if (onClose) {
         return (
             <Box
@@ -57,12 +112,13 @@ const Chip: React.FC<ChipProps> = ({Icon, children, id, dataAttributes, active, 
                     overAlternative ? styles.chipVariants.overAlternative : styles.chipVariants.default
                 }
                 paddingLeft={paddingLeft}
+                paddingRight={paddingIcon}
                 {...getPrefixedDataAttributes(dataAttributes, 'Chip')}
             >
                 {body}
-                <Box paddingLeft={4}>
+                <Box>
                     <IconButton
-                        size={24}
+                        size={16}
                         style={{
                             display: 'flex',
                             justifyContent: 'center',
@@ -81,13 +137,23 @@ const Chip: React.FC<ChipProps> = ({Icon, children, id, dataAttributes, active, 
         return (
             <Box
                 className={classnames(
-                    styles.chipVariants[active ? 'active' : overAlternative ? 'overAlternative' : 'default'],
+                    styles.chipVariants[
+                        active
+                            ? 'active'
+                            : overAlternative
+                            ? 'overAlternative'
+                            : 'default' && alternative
+                            ? 'unselected'
+                            : overAlternative
+                            ? 'overAlternative'
+                            : 'default'
+                    ],
                     {
                         [styles.chipInteractiveVariants[isDarkMode ? 'dark' : 'light']]: isInteractive,
                     }
                 )}
                 paddingLeft={paddingLeft}
-                paddingRight={12}
+                paddingRight={paddingRight}
                 {...getPrefixedDataAttributes(dataAttributes, 'Chip')}
             >
                 {body}

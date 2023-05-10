@@ -9,18 +9,28 @@ const containerBase = style([
         justifyContent: 'center',
         alignItems: 'center',
         border: 'regular',
+        paddingY: 4,
     }),
     {
         borderRadius: vars.borderRadii.indicator,
         verticalAlign: 'middle',
-        minHeight: 32,
+        height: 32,
         minWidth: 56,
         cursor: 'default',
         borderColor: vars.colors.control,
+
+        '@media': {
+            [mq.mobile]: {
+                height: 40,
+                minWidth: 72,
+                paddingTop: 10,
+                paddingBottom: 10,
+            },
+        },
     },
 ]);
 
-const chipActive = style({});
+const chipActive = style({'@media': {}});
 
 export const chipVariants = styleVariants({
     default: [
@@ -36,6 +46,19 @@ export const chipVariants = styleVariants({
             background: vars.colors.backgroundContainerAlternative,
             color: vars.colors.textPrimary,
         }),
+    ],
+    unselected: [
+        containerBase,
+        sprinkles({
+            background: vars.colors.backgroundContainer,
+        }),
+        {
+            '@media': {
+                [mq.mobile]: {
+                    background: vars.colors.backgroundContainerAlternative,
+                },
+            },
+        },
     ],
     active: [
         chipActive,
@@ -58,6 +81,14 @@ const interactive = style({
                 [`&:hover:not(${chipActive})`]: {
                     color: vars.colors.controlActivated,
                     backgroundColor: vars.colors.brandLow,
+                    cursor: 'pointer',
+                },
+            },
+        },
+        [mq.mobile]: {
+            selectors: {
+                [`&:hover:not(${chipActive})`]: {
+                    cursor: 'default',
                 },
             },
         },

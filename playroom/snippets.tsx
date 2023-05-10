@@ -1825,7 +1825,7 @@ export default [
     },
     ...navigationBarSnippets,
     menuSnippet,
-    {group: 'Chip', name: 'Chip', code: '<Chip>Chip</Chip>'},
+    {group: 'Chip', name: 'Chip', code: '<Chip >Chip</Chip>'},
     {group: 'Chip', name: 'Chip closeable', code: '<Chip onClose={() => {}}>Chip</Chip>'},
     {
         group: 'Chip',
@@ -1839,7 +1839,7 @@ export default [
         <Checkbox
           name="chip-checkbox"
           render={({labelId, checked}) => (
-            <Chip active={checked} id={labelId} Icon={IconLightningFilled}>
+            <Chip alternative active={checked} id={labelId} Icon={IconLightningFilled}>
                 Chip
             </Chip>
           )}
@@ -1854,7 +1854,7 @@ export default [
             <RadioButton
               value="1"
               render={({ checked, labelId }) => (
-                <Chip active={checked} id={labelId} Icon={IconLightningFilled}>
+                <Chip alternative active={checked} id={labelId} Icon={IconLightningFilled}>
                   Chip 1
                 </Chip>
               )}
@@ -1862,7 +1862,7 @@ export default [
             <RadioButton
               value="2"
               render={({ checked, labelId }) => (
-                <Chip active={checked} id={labelId} Icon={IconLightningFilled}>
+                <Chip alternative active={checked} id={labelId} Icon={IconLightningFilled}>
                   Chip 2
                 </Chip>
               )}
@@ -1870,7 +1870,7 @@ export default [
             <RadioButton
               value="3"
               render={({ checked, labelId }) => (
-                <Chip active={checked} id={labelId} Icon={IconLightningFilled}>
+                <Chip alternative active={checked} id={labelId} Icon={IconLightningFilled}>
                   Chip 3
                 </Chip>
               )}
