@@ -209,7 +209,15 @@ const Image = React.forwardRef<HTMLImageElement, ImageProps>(
                     </div>
                 )}
                 {isError && withErrorFallback && (
-                    <div style={{position: 'absolute', width: '100%', height: '100%'}}>
+                    <div
+                        style={{
+                            position: 'absolute',
+                            width: '100%',
+                            height: '100%',
+                            border: border,
+                            borderRadius: vars.borderRadii.container,
+                        }}
+                    >
                         <ImageError noBorderRadius={noBorderSetting} />
                     </div>
                 )}

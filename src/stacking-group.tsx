@@ -25,7 +25,8 @@ const StackingGroup: React.FC<Props> = ({moreItemsStyle, stacked = false, maxIte
     const plusCase = countChildren - maxItems;
 
     const styleBorderRadius = styleCircle ? vars.borderRadii.avatar : vars.borderRadii.container;
-    const sizeAdjustment = stacked ? moreItemsStyle.size - 2 : moreItemsStyle.size;
+    // this minus 1px adjustment, is to exclude the border size, to prevent misalignment
+    const sizeAdjustment = stacked ? moreItemsStyle.size - 1 : moreItemsStyle.size;
 
     return (
         <Inline space={space}>
