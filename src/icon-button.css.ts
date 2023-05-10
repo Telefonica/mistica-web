@@ -6,8 +6,6 @@ export const base = style([
         display: 'inline-block',
     }),
     {
-        verticalAlign: 'middle',
-        textAlign: 'center',
         border: 0,
         backgroundPosition: '50% 50%',
         backgroundRepeat: 'no-repeat',
