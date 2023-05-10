@@ -24,7 +24,7 @@ const StackingGroup: React.FC<Props> = ({moreItemsStyle, stacked = false, maxIte
     const countChildren = React.Children.count(children);
     const plusCase = countChildren - maxItems;
 
-    const styleBorderRadius = styleCircle ? 64 : 8;
+    const styleBorderRadius = styleCircle ? 64 : vars.borderRadii.container;
     const sizeAdjustment = stacked ? moreItemsStyle.size - 2 : moreItemsStyle.size;
 
     return (
@@ -41,7 +41,6 @@ const StackingGroup: React.FC<Props> = ({moreItemsStyle, stacked = false, maxIte
                             justifyContent: 'center',
                             alignItems: 'center',
                             color: textColor,
-                            borderRadius: 8,
                             zIndex: 2,
                         }}
                         aria-label={'+' + plusCase.toString()}
