@@ -1,18 +1,18 @@
 import * as React from 'react';
-import {Boxed} from '../boxed';
-import {sprinkles} from '../sprinkles.css';
-import Stack from '../stack';
+import {Boxed} from './boxed';
+import {sprinkles} from './sprinkles.css';
+import Stack from './stack';
 import * as styles from './advanced-card.css';
-import Image from '../image';
-import IconMeatballFilled from '../generated/mistica-icons/icon-meatball-filled';
-import Divider from '../divider';
-import NegativeBox from '../negative-box';
-import {Placeholder} from '../placeholder';
-import {Text2} from '../text';
+import Image from './image';
+import IconMeatballFilled from './generated/mistica-icons/icon-meatball-filled';
+import Divider from './divider';
+import NegativeBox from './negative-box';
+import {Placeholder} from './placeholder';
+import {Text2} from './text';
 
-import type {ButtonPrimary, ButtonLink} from '../button';
-import type {DataAttributes} from '../utils/types';
-import type {RendersNullableElement} from '../utils/renders-element';
+import type {ButtonPrimary, ButtonLink} from './button';
+import type {DataAttributes} from './utils/types';
+import type {RendersNullableElement} from './utils/renders-element';
 
 interface AdvancedDataCardProps {
     title?: string;

@@ -1,6 +1,6 @@
 import {style} from '@vanilla-extract/css';
-import {sprinkles} from '../sprinkles.css';
-import * as mq from '../media-queries.css';
+import {sprinkles} from './sprinkles.css';
+import * as mq from './media-queries.css';
 
 export const actions = style([
     sprinkles({display: 'flex', flex: 1, justifyContent: 'space-between'}),
