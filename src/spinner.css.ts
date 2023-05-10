@@ -29,7 +29,7 @@ const spinnerIosKeyframes = keyframes({
         opacity: 1,
     },
     '100%': {
-        opacity: 0.2,
+        opacity: 0,
     },
 });
 
@@ -54,16 +54,12 @@ export const spinnerIos = sprinkles({
 export const spinnerIosSvgPath = style({
     animation: `${spinnerIosKeyframes} 1s infinite linear`,
     selectors: {
-        '&:nth-of-type(2)': {animationDelay: '-.080s'},
-        '&:nth-of-type(3)': {animationDelay: '-.160s'},
-        '&:nth-of-type(4)': {animationDelay: '-.240s'},
-        '&:nth-of-type(5)': {animationDelay: '-.320s'},
-        '&:nth-of-type(6)': {animationDelay: '-.400s'},
-        '&:nth-of-type(7)': {animationDelay: '-.480s'},
-        '&:nth-of-type(8)': {animationDelay: '-.560s'},
-        '&:nth-of-type(9)': {animationDelay: '-.640s'},
-        '&:nth-of-type(10)': {animationDelay: '-.720s'},
-        '&:nth-of-type(11)': {animationDelay: '-.800s'},
-        '&:nth-of-type(12)': {animationDelay: '-.880s'},
+        '&:nth-of-type(2)': {animationDelay: '-.880s'},
+        '&:nth-of-type(3)': {animationDelay: '-.750s'},
+        '&:nth-of-type(4)': {animationDelay: '-.625s'},
+        '&:nth-of-type(5)': {animationDelay: '-.500s'},
+        '&:nth-of-type(6)': {animationDelay: '-.375s'},
+        '&:nth-of-type(7)': {animationDelay: '-.250s'},
+        '&:nth-of-type(8)': {animationDelay: '-.125s'},
     },
 });
