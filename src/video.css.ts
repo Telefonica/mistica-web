@@ -9,21 +9,3 @@ export const video = sprinkles({
     maxHeight: '100%',
     objectFit: 'cover',
 });
-
-export const videoContainer = sprinkles({
-    width: '100%',
-    height: '100%',
-    position: 'relative',
-});
-
-export const videoElement = sprinkles({
-    width: '100%',
-    height: '100%',
-    position: 'absolute',
-});
-
-export const posterElement = sprinkles({
-    width: '100%',
-    height: '100%',
-    position: 'relative',
-});

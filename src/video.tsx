@@ -1,11 +1,12 @@
 import * as React from 'react';
-import Image, {useMediaBorderRadius} from './image';
+import {ImageContent, useMediaBorderRadius} from './image';
 import {AspectRatioElement} from './utils/aspect-ratio-support';
 import {combineRefs} from './utils/common';
 import {getPrefixedDataAttributes} from './utils/dom';
 import {isRunningAcceptanceTest} from './utils/platform';
 import * as styles from './video.css';
 import {vars} from './skins/skin-contract.css';
+import {useElementDimensions} from './hooks';
 
 import type {DataAttributes} from './utils/types';
 
@@ -133,7 +134,6 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
             if (loadedSource.current !== src) {
                 loadedSource.current = src;
                 const loadingTimeoutId = setTimeout(handleError, loadingTimeout);
-                dispatch('reset');
                 videoRef.current?.load();
 
                 return () => {
@@ -162,6 +162,9 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
             }
         });
 
+        const showPoster = videoStatus === 'error' || videoStatus === 'loading' || videoStatus === 'loaded';
+        const {ref: posterRef, width: posterWidth, height: posterHeight} = useElementDimensions();
+
         const video = (
             <video
                 ref={combineRefs(ref, videoRef)}
@@ -172,6 +175,9 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
                 loop={loop}
                 className={styles.video}
                 preload={preload}
+                onLoadStart={() => {
+                    dispatch('reset');
+                }}
                 onError={handleError}
                 onPause={() => {
                     onPause?.();
@@ -193,6 +199,12 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
                 style={{
                     // For some reason adding this style with classnames doesn't add the border radius in safari
                     borderRadius: !borderRadiusContext ? 0 : vars.borderRadii.container,
+                    top: 0,
+                    left: 0,
+                    visibility: showPoster ? 'hidden' : 'visible',
+                    position: showPoster || ratio !== 0 ? 'absolute' : 'static',
+                    width: showPoster ? posterWidth : undefined,
+                    height: showPoster ? posterHeight : undefined,
                 }}
             >
                 {sources.map(({src, type}, index) => (
@@ -202,7 +214,8 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
         );
 
         const posterImage = (
-            <Image
+            <ImageContent
+                ref={posterRef}
                 aspectRatio={aspectRatio}
                 width={props.width}
                 height={props.height}
@@ -210,28 +223,16 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
             />
         );
 
-        const showPoster = videoStatus === 'error' || videoStatus === 'loading' || videoStatus === 'loaded';
-
-        const videoOrPoster = (
-            <div className={styles.videoContainer}>
-                <div
-                    className={styles.videoElement}
-                    style={{zIndex: 1, visibility: showPoster ? 'hidden' : 'visible'}}
-                >
-                    {video}
-                </div>
-                <div className={styles.posterElement} style={{zIndex: 0}}>
-                    {posterImage}
-                </div>
-            </div>
-        );
-
-        return ratio || props.width || props.height ? (
-            <AspectRatioElement aspectRatio={ratio} width={props.width} height={props.height}>
-                {videoOrPoster}
+        return (
+            <AspectRatioElement
+                style={{position: 'relative'}}
+                aspectRatio={ratio}
+                width={props.width}
+                height={props.height}
+            >
+                {showPoster && posterImage}
+                {video}
             </AspectRatioElement>
-        ) : (
-            videoOrPoster
         );
     }
 );
