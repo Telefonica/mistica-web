@@ -13,6 +13,7 @@ import {vars} from './skins/skin-contract.css';
 import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
 import IconButton from './icon-button';
 import Inline from './inline';
+import Touchable from './touchable';
 
 import type {RendersNullableElement} from './utils/renders-element';
 import type {DataAttributes, IconProps} from './utils/types';
@@ -168,6 +169,8 @@ const CardContent: React.FC<CardContentProps> = ({
 };
 
 interface AdvancedCardProps {
+    cardOnPress?: () => void;
+
     cardImage?: string;
     headline?: string | RendersNullableElement<typeof Tag>;
     pretitle?: string;
@@ -195,8 +198,10 @@ interface AdvancedCardProps {
 const AdvancedCard = React.forwardRef<HTMLDivElement, AdvancedCardProps>(
     (
         {
+            cardOnPress,
+
             cardImage,
-            headline,   
+            headline,
             pretitle,
             pretitleLinesMax,
             title,
@@ -238,86 +243,112 @@ const AdvancedCard = React.forwardRef<HTMLDivElement, AdvancedCardProps>(
 
         return (
             <section aria-label={ariaLabel} style={{height: '100%', position: 'relative'}}>
-                <Boxed
-                    className={styles.boxed}
-                    dataAttributes={{'component-name': 'DataCard', ...dataAttributes}}
-                    ref={ref}
-                    width="100%"
-                    height="100%"
+                <Touchable
+                    onPress={() => {
+                        if (cardOnPress) {
+                            cardOnPress();
+                        }
+                    }}
                 >
-                    <div className={styles.dataCard}>
-                        <div className={cardContentStyle}>
-                            <div
-                                className={sprinkles({
-                                    paddingTop: 8,
-                                })}
-                            >
-                                <Stack space={16} className={sprinkles({flex: 1})}>
-                                    {hascardImage ? <Image height={40} src={cardImage} /> : null}
-                                    <CardContent
-                                        headline={headline}pretitle={pretitle}
-                                        pretitleLinesMax={pretitleLinesMax}
-                                        title={title}
-                                        titleLinesMax={titleLinesMax}
-                                        subtitle={subtitle}
-                                        subtitleLinesMax={subtitleLinesMax}
-                                        description={description}
-                                        descriptionLinesMax={descriptionLinesMax}
-                                    />
-                                </Stack>
+                    <Boxed
+                        className={styles.boxed}
+                        dataAttributes={{'component-name': 'DataCard', ...dataAttributes}}
+                        ref={ref}
+                        width="100%"
+                        height="100%"
+                    >
+                        <div className={styles.dataCard}>
+                            <div className={cardContentStyle}>
+                                <div
+                                    className={sprinkles({
+                                        paddingTop: 8,
+                                    })}
+                                >
+                                    <Stack space={16} className={sprinkles({flex: 1})}>
+                                        {hascardImage ? <Image height={40} src={cardImage} /> : null}
+                                        <CardContent
+                                            headline={headline}
+                                            pretitle={pretitle}
+                                            pretitleLinesMax={pretitleLinesMax}
+                                            title={title}
+                                            titleLinesMax={titleLinesMax}
+                                            subtitle={subtitle}
+                                            subtitleLinesMax={subtitleLinesMax}
+                                            description={description}
+                                            descriptionLinesMax={descriptionLinesMax}
+                                        />
+                                    </Stack>
+                                </div>
+                                {hasAcations && (
+                                    <div style={topActionsStylesWithIcon}>
+                                        <CardActionsGroup actions={finalActions} />
+                                    </div>
+                                )}
                             </div>
-                            {hasAcations && (
-                                <div style={topActionsStylesWithIcon}>
-                                    <CardActionsGroup actions={finalActions} />
+
+                            {slot && (
+                                <div
+                                    className={sprinkles({
+                                        paddingTop: 8,
+                                    })}
+                                >
+                                    <div
+                                        className={sprinkles({
+                                            paddingY: 24,
+                                        })}
+                                    >
+                                        {slot}
+                                    </div>
+                                </div>
+                            )}
+
+                            {hasFooter && (
+                                <div>
+                                    <NegativeBox>
+                                        <Divider />
+                                    </NegativeBox>
+
+                                    <div className={styles.actions}>
+                                        <div
+                                            aria-hidden="true"
+                                            className={sprinkles({
+                                                display: 'flex',
+                                            })}
+                                            onClick={(event) => event.stopPropagation()}
+                                        >
+                                            {hasButton && button}
+                                        </div>
+                                        {hasFooterImage && (
+                                            <div
+                                                style={hasButton ? margin : {}}
+                                                className={sprinkles({alignItems: 'center', display: 'flex'})}
+                                            >
+                                                <Image height={40} src={footerImage} />
+                                            </div>
+                                        )}
+                                        {hasFooterText && (
+                                            <div
+                                                style={hasButton || hasFooterImage ? margin : {}}
+                                                className={styles.footerText}
+                                            >
+                                                <Text2 medium>{footerText}</Text2>
+                                            </div>
+                                        )}
+                                        <div
+                                            aria-hidden="true"
+                                            className={sprinkles({
+                                                display: 'flex',
+                                            })}
+                                            onClick={(event) => event.stopPropagation()}
+                                        >
+                                            {hasButtonLink && buttonLink}
+                                        </div>
+                                    </div>
                                 </div>
                             )}
                         </div>
-
-                        {slot && (
-                            <div
-                                className={sprinkles({
-                                    paddingTop: 8,
-                                })}
-                            >
-                                <div
-                                    className={sprinkles({
-                                        paddingY: 24,
-                                    })}
-                                >
-                                    {slot}
-                                </div>
-                            </div>
-                        )}
-                        {hasFooter && (
-                            <div>
-                                <NegativeBox>
-                                    <Divider />
-                                </NegativeBox>
-
-                                <div className={styles.actions}>
-                                    {hasButton && button}
-                                    {hasFooterImage && (
-                                        <div
-                                            style={hasButton ? margin : {}}
-                                            className={sprinkles({alignItems: 'center', display: 'flex'})}
-                                        >
-                                            <Image height={40} src={footerImage} />
-                                        </div>
-                                    )}
-                                    {hasFooterText && (
-                                        <div
-                                            style={hasButton || hasFooterImage ? margin : {}}
-                                            className={styles.footerText}
-                                        >
-                                            <Text2 medium>{footerText}</Text2>
-                                        </div>
-                                    )}
-                                    {hasButtonLink && buttonLink}
-                                </div>
-                            </div>
-                        )}
-                    </div>
-                </Boxed>
+                    </Boxed>
+                </Touchable>
             </section>
         );
     }
