@@ -196,7 +196,7 @@ const AdvancedCard = React.forwardRef<HTMLDivElement, AdvancedCardProps>(
     (
         {
             cardImage,
-            headline,
+            headline,   
             pretitle,
             pretitleLinesMax,
             title,
@@ -231,6 +231,10 @@ const AdvancedCard = React.forwardRef<HTMLDivElement, AdvancedCardProps>(
 
         const margin = {marginLeft: '16px'};
         const topActionsStylesWithIcon = {position: 'absolute', top: 8, right: 8, zIndex: 2} as const;
+        const cardContentStyle = sprinkles({
+            display: 'flex',
+            paddingBottom: slot ? 8 : hasFooter ? 24 : 0,
+        });
 
         return (
             <section aria-label={ariaLabel} style={{height: '100%', position: 'relative'}}>
@@ -242,12 +246,7 @@ const AdvancedCard = React.forwardRef<HTMLDivElement, AdvancedCardProps>(
                     height="100%"
                 >
                     <div className={styles.dataCard}>
-                        <div
-                            className={sprinkles({
-                                display: 'flex',
-                                paddingBottom: 8,
-                            })}
-                        >
+                        <div className={cardContentStyle}>
                             <div
                                 className={sprinkles({
                                     paddingTop: 8,
@@ -256,8 +255,7 @@ const AdvancedCard = React.forwardRef<HTMLDivElement, AdvancedCardProps>(
                                 <Stack space={16} className={sprinkles({flex: 1})}>
                                     {hascardImage ? <Image height={40} src={cardImage} /> : null}
                                     <CardContent
-                                        headline={headline}
-                                        pretitle={pretitle}
+                                        headline={headline}pretitle={pretitle}
                                         pretitleLinesMax={pretitleLinesMax}
                                         title={title}
                                         titleLinesMax={titleLinesMax}
@@ -275,46 +273,49 @@ const AdvancedCard = React.forwardRef<HTMLDivElement, AdvancedCardProps>(
                             )}
                         </div>
 
-                        <div
-                            className={sprinkles({
-                                paddingTop: 8,
-                            })}
-                        >
+                        {slot && (
                             <div
                                 className={sprinkles({
-                                    paddingY: 24,
+                                    paddingTop: 8,
                                 })}
                             >
-                                {slot && <div>{slot}</div>}
+                                <div
+                                    className={sprinkles({
+                                        paddingY: 24,
+                                    })}
+                                >
+                                    {slot}
+                                </div>
                             </div>
-                        </div>
-
-                        {hasFooter && (
-                            <NegativeBox>
-                                <Divider />
-                            </NegativeBox>
                         )}
+                        {hasFooter && (
+                            <div>
+                                <NegativeBox>
+                                    <Divider />
+                                </NegativeBox>
 
-                        <div className={styles.actions}>
-                            {hasButton && button}
-                            {hasFooterImage && (
-                                <div
-                                    style={hasButton ? margin : {}}
-                                    className={sprinkles({alignItems: 'center', display: 'flex'})}
-                                >
-                                    <Image height={40} src={footerImage} />
+                                <div className={styles.actions}>
+                                    {hasButton && button}
+                                    {hasFooterImage && (
+                                        <div
+                                            style={hasButton ? margin : {}}
+                                            className={sprinkles({alignItems: 'center', display: 'flex'})}
+                                        >
+                                            <Image height={40} src={footerImage} />
+                                        </div>
+                                    )}
+                                    {hasFooterText && (
+                                        <div
+                                            style={hasButton || hasFooterImage ? margin : {}}
+                                            className={styles.footerText}
+                                        >
+                                            <Text2 medium>{footerText}</Text2>
+                                        </div>
+                                    )}
+                                    {hasButtonLink && buttonLink}
                                 </div>
-                            )}
-                            {hasFooterText && (
-                                <div
-                                    style={hasButton || hasFooterImage ? margin : {}}
-                                    className={styles.footerText}
-                                >
-                                    <Text2 medium>{footerText}</Text2>
-                                </div>
-                            )}
-                            {hasButtonLink && buttonLink}
-                        </div>
+                            </div>
+                        )}
                     </div>
                 </Boxed>
             </section>
