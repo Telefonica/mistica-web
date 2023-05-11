@@ -27,6 +27,28 @@ test.each(TESTABLE_DEVICES)('Default textfield appears properly on %s', async (d
     expect(image).toMatchImageSnapshot();
 });
 
+test('Textfield collapses its label when autofill fills out the form', async () => {
+    await openStoryPage({
+        id: 'components-input-fields--variants',
+        device: 'DESKTOP',
+    });
+
+    const fieldWrapper = await screen.findByTestId('normal-field');
+    const image = await fieldWrapper.screenshot();
+
+    expect(image).toMatchImageSnapshot();
+
+    // it simulates a data autofill
+    await page.evaluate(() => {
+        const input = document.querySelector('input[data-testid="normal-field-text-field"]');
+        Object.getOwnPropertyDescriptor(Object.getPrototypeOf(input), 'value')?.set?.call(input, 'ciao');
+        input?.dispatchEvent(new Event('input', {bubbles: true}));
+    });
+
+    const secondImage = await fieldWrapper.screenshot();
+    expect(secondImage).toMatchImageSnapshot();
+});
+
 test.each(TESTABLE_DEVICES)('Default textfield appears properly (focus) on %s', async (device) => {
     const page = await openStoryPage({
         id: 'components-input-fields--variants',

@@ -1,3 +1,26 @@
+# [14.8.0](https://github.com/Telefonica/mistica-web/compare/v14.7.1...v14.8.0) (2023-05-11)
+
+
+### Bug Fixes
+
+* **FixedFooterLayout:** issues when rendering inside iframe ([#735](https://github.com/Telefonica/mistica-web/issues/735)) ([ebce0c2](https://github.com/Telefonica/mistica-web/commit/ebce0c2559641061882fe0a0fb332cf0290c949d))
+* **IconButton:** styles ([#747](https://github.com/Telefonica/mistica-web/issues/747)) ([0ee48fe](https://github.com/Telefonica/mistica-web/commit/0ee48fe7d9ad0550c26af7b3bf8ffe6344d390d7))
+* **Video:** logic for video container ([#748](https://github.com/Telefonica/mistica-web/issues/748)) ([212d137](https://github.com/Telefonica/mistica-web/commit/212d1372cf1e73de9f3bc39554482ef45719d6d5))
+
+
+### Features
+
+* **DisplayMediaCard, PosterCard:** support for background video ([#724](https://github.com/Telefonica/mistica-web/issues/724)) ([9959613](https://github.com/Telefonica/mistica-web/commit/9959613bdfa9e158091755f12d3001206018d77c))
+* **Spinner:** update iOS style ([#750](https://github.com/Telefonica/mistica-web/issues/750)) ([053dc09](https://github.com/Telefonica/mistica-web/commit/053dc093c06f7e32a83be3e775975ba2f8163fa7))
+
+## [14.7.1](https://github.com/Telefonica/mistica-web/compare/v14.7.0...v14.7.1) (2023-05-08)
+
+
+### Bug Fixes
+
+* **Chip:** improve border color in dark mode ([#744](https://github.com/Telefonica/mistica-web/issues/744)) ([7c6020e](https://github.com/Telefonica/mistica-web/commit/7c6020ebdfa0784edd4e3817a8d0bf2e52125f2e))
+* **TextField:** label not shrinking when the field was autofilled by browser autocomplete ([#728](https://github.com/Telefonica/mistica-web/issues/728)) ([97dff64](https://github.com/Telefonica/mistica-web/commit/97dff641829c0a51778e4ef2338d4306a1d16d01))
+
 # [14.7.0](https://github.com/Telefonica/mistica-web/compare/v14.6.0...v14.7.0) (2023-04-27)
 
 

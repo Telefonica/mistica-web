@@ -2,6 +2,9 @@ name: deploy-master
 on:
     push:
         branches: [master]
+concurrency:
+    group: deploy-master-${{ github.ref }}
+    cancel-in-progress: true
 jobs:
     deploy:
         runs-on: ubuntu-latest

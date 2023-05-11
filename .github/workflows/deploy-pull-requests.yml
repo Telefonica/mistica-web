@@ -1,5 +1,8 @@
 name: deploy-pull-requests
 on: [pull_request]
+concurrency:
+    group: deploy-pull-requests-${{ github.ref }}
+    cancel-in-progress: true
 jobs:
     deploy:
         runs-on: ubuntu-latest

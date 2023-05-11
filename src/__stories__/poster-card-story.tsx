@@ -9,10 +9,14 @@ import {
     Stack,
     Text2,
     Inline,
+    Title1,
+    Box,
 } from '..';
 import {PosterCard} from '../card';
 import usingVrImg from './images/using-vr.jpg';
 import avatarImg from './images/avatar.jpg';
+import beachVideo from './videos/beach.mp4';
+import beachImg from './images/beach.jpg';
 
 import type {TagType} from '..';
 
@@ -20,10 +24,13 @@ export default {
     title: 'Components/Cards/Poster card',
 };
 
-const BACKGROUND_SRC = usingVrImg;
+const BACKGROUND_IMAGE_SRC = usingVrImg;
+const BACKGROUND_VIDEO_SRC = beachVideo;
+const BACKGROUND_VIDEO_POSTER_SRC = beachImg;
 
 type PosterCardArgs = {
     asset: 'icon' | 'circle + icon' | 'image' | 'circle + image';
+    background: 'image' | 'video';
     headlineType: TagType;
     headline: string;
     pretitle: string;
@@ -38,6 +45,7 @@ type PosterCardArgs = {
 
 export const Default: StoryComponent<PosterCardArgs> = ({
     asset = 'icon',
+    background,
     headline,
     headlineType,
     pretitle,
@@ -60,34 +68,93 @@ export const Default: StoryComponent<PosterCardArgs> = ({
         icon = <Circle size={40} backgroundImage={avatarImg} />;
     }
 
+    const backgroundProps =
+        background === 'image'
+            ? {
+                  onClose: closable ? () => {} : undefined,
+                  actions: withTopAction
+                      ? [
+                            {
+                                Icon: IconLightningRegular,
+                                onPress: () => {},
+                                label: 'Lightning',
+                            },
+                        ]
+                      : undefined,
+                  backgroundImage: BACKGROUND_IMAGE_SRC,
+              }
+            : {
+                  backgroundVideo: BACKGROUND_VIDEO_SRC,
+                  poster: BACKGROUND_VIDEO_POSTER_SRC,
+              };
+
+    const wrongBackgroundProps =
+        background === 'image'
+            ? {
+                  onClose: closable ? () => {} : undefined,
+                  actions: withTopAction
+                      ? [
+                            {
+                                Icon: IconLightningRegular,
+                                onPress: () => {},
+                                label: 'Lightning',
+                            },
+                        ]
+                      : undefined,
+                  backgroundImage: 'test',
+              }
+            : {
+                  backgroundVideo: 'test',
+                  poster: 'test',
+              };
+
     return (
-        <>
+        <Stack space={32} dataAttributes={{testid: 'poster-card'}}>
             <PosterCard
-                onClose={closable ? () => {} : undefined}
-                actions={
-                    withTopAction
-                        ? [
-                              {
-                                  Icon: IconLightningRegular,
-                                  onPress: () => {},
-                                  label: 'Lightning',
-                              },
-                          ]
-                        : undefined
-                }
-                backgroundImage={BACKGROUND_SRC}
+                {...backgroundProps}
                 icon={icon}
                 headline={headline ? <Tag type={headlineType}>{headline}</Tag> : undefined}
                 pretitle={pretitle}
                 title={title}
                 description={description}
-                dataAttributes={{testid: 'poster-card'}}
                 aria-label="Poster card label"
                 width={width}
                 height={height}
                 aspectRatio={aspectRatio}
             />
-        </>
+
+            <Title1>Wrong source for media</Title1>
+            <PosterCard
+                {...wrongBackgroundProps}
+                icon={icon}
+                headline={headline ? <Tag type={headlineType}>{headline}</Tag> : undefined}
+                pretitle={pretitle}
+                title={title}
+                description={description}
+                aria-label="Poster card fallback label"
+                width={width}
+                height={height}
+                aspectRatio={aspectRatio}
+            />
+
+            <Title1>Wrong source for media with inverse</Title1>
+            <ResponsiveLayout isInverse>
+                <Box paddingY={8}>
+                    <PosterCard
+                        {...wrongBackgroundProps}
+                        icon={icon}
+                        headline={headline ? <Tag type={headlineType}>{headline}</Tag> : undefined}
+                        pretitle={pretitle}
+                        title={title}
+                        description={description}
+                        aria-label="Poster card fallback inverse label"
+                        width={width}
+                        height={height}
+                        aspectRatio={aspectRatio}
+                    />
+                </Box>
+            </ResponsiveLayout>
+        </Stack>
     );
 };
 
@@ -95,6 +162,7 @@ Default.storyName = 'Poster card';
 Default.args = {
     asset: 'icon',
     headlineType: 'promo',
+    background: 'image',
     headline: 'Priority',
     pretitle: 'Pretitle',
     title: 'Title',
@@ -112,6 +180,10 @@ Default.argTypes = {
     },
     headlineType: {
         options: ['promo', 'active', 'inactive', 'success', 'warning', 'error'],
+        control: {type: 'select'},
+    },
+    background: {
+        options: ['image', 'video'],
         control: {type: 'select'},
     },
     aspectRatio: {
@@ -135,10 +207,10 @@ export const Group: StoryComponent = () => {
                         pretitle="Pretitle"
                         title="Title"
                         description="Description"
-                        backgroundImage={BACKGROUND_SRC}
+                        backgroundImage={BACKGROUND_IMAGE_SRC}
                     />
-                    <PosterCard title="Title" backgroundImage={BACKGROUND_SRC} />
-                    <PosterCard title="Title" backgroundImage={BACKGROUND_SRC} onClose={() => {}} />
+                    <PosterCard title="Title" backgroundImage={BACKGROUND_IMAGE_SRC} />
+                    <PosterCard title="Title" backgroundImage={BACKGROUND_IMAGE_SRC} onClose={() => {}} />
                 </Inline>
             </Stack>
         </ResponsiveLayout>

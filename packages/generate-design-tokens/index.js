@@ -98,8 +98,22 @@ export const get${capitalize(skinName)}Skin: GetKnownSkin = () => {
 `;
 };
 
+const generateColorTypesSrc = (skinName) => {
+    const designTokensFile = fs.readFileSync(path.join(DESIGN_TOKENS_FOLDER, `${skinName}.json`), 'utf8');
+    const designTokens = JSON.parse(designTokensFile);
+
+    return `
+export type Colors = {
+    ${Object.keys(designTokens.light)
+        .map((colorName) => `'${colorName}': string`)
+        .join(';')}
+};`;
+};
+
 const generateSkinFiles = () => {
     const KNOWN_SKINS = ['blau', 'movistar', 'o2', 'telefonica', 'vivo'];
+
+    let anyGeneratedSkin;
 
     KNOWN_SKINS.forEach((skinName) => {
         console.log('Generating tokens for skin', skinName);
@@ -111,7 +125,13 @@ const generateSkinFiles = () => {
 
         const skinSrc = generateSkinSrc(skinName);
         fs.writeFileSync(path.join(SKINS_FOLDER, `${skinName}.tsx`), skinSrc);
+        anyGeneratedSkin = skinName;
     });
+
+    if (anyGeneratedSkin) {
+        const typesSrc = generateColorTypesSrc(anyGeneratedSkin);
+        fs.writeFileSync(path.join(SKINS_FOLDER, 'types', 'colors.tsx'), typesSrc);
+    }
 };
 
 generateSkinFiles();
