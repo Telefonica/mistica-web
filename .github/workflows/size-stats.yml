@@ -4,6 +4,10 @@ on:
     pull_request:
         branches: [master]
 
+concurrency:
+    group: size-stats-${{ github.ref }}
+    cancel-in-progress: true
+
 jobs:
     branch-size-stats:
         runs-on: ubuntu-latest
