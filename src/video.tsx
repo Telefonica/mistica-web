@@ -1,11 +1,12 @@
 import * as React from 'react';
-import Image, {useMediaBorderRadius} from './image';
+import {ImageContent, ImageError, useMediaBorderRadius} from './image';
 import {AspectRatioElement} from './utils/aspect-ratio-support';
 import {combineRefs} from './utils/common';
 import {getPrefixedDataAttributes} from './utils/dom';
 import {isRunningAcceptanceTest} from './utils/platform';
 import * as styles from './video.css';
 import {vars} from './skins/skin-contract.css';
+import {useElementDimensions} from './hooks';
 
 import type {DataAttributes} from './utils/types';
 
@@ -133,7 +134,6 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
             if (loadedSource.current !== src) {
                 loadedSource.current = src;
                 const loadingTimeoutId = setTimeout(handleError, loadingTimeout);
-                dispatch('reset');
                 videoRef.current?.load();
 
                 return () => {
@@ -162,6 +162,9 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
             }
         });
 
+        const showPoster = videoStatus === 'error' || videoStatus === 'loading' || videoStatus === 'loaded';
+        const {ref: posterRef, width: posterWidth, height: posterHeight} = useElementDimensions();
+
         const video = (
             <video
                 ref={combineRefs(ref, videoRef)}
@@ -172,6 +175,9 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
                 loop={loop}
                 className={styles.video}
                 preload={preload}
+                onLoadStart={() => {
+                    dispatch('reset');
+                }}
                 onError={handleError}
                 onPause={() => {
                     onPause?.();
@@ -193,6 +199,10 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
                 style={{
                     // For some reason adding this style with classnames doesn't add the border radius in safari
                     borderRadius: !borderRadiusContext ? 0 : vars.borderRadii.container,
+                    visibility: showPoster ? 'hidden' : 'visible',
+                    position: showPoster || ratio !== 0 ? 'absolute' : 'static',
+                    width: showPoster ? posterWidth : '100%',
+                    height: showPoster ? posterHeight : '100%',
                 }}
             >
                 {sources.map(({src, type}, index) => (
@@ -201,35 +211,36 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
             </video>
         );
 
-        const posterElement = (
-            <Image
+        const withErrorFallback = !!(ratio !== 0 || (props.width && props.height));
+
+        const posterImage = poster ? (
+            <ImageContent
+                ref={posterRef}
                 aspectRatio={aspectRatio}
                 width={props.width}
                 height={props.height}
-                src={poster ?? '//:0'}
+                src={poster}
             />
-        );
-
-        const videoElement =
-            ratio || props.width || props.height ? (
-                <AspectRatioElement aspectRatio={ratio} width={props.width} height={props.height}>
-                    {video}
-                </AspectRatioElement>
-            ) : (
-                video
-            );
-
-        const showPoster = videoStatus === 'error' || videoStatus === 'loading' || videoStatus === 'loaded';
+        ) : withErrorFallback ? (
+            <div style={{position: 'absolute', width: '100%', height: '100%'}}>
+                <ImageError
+                    ref={posterRef}
+                    noBorderRadius={!borderRadiusContext}
+                    withIcon={videoStatus === 'error'}
+                />
+            </div>
+        ) : undefined;
 
         return (
-            <>
-                <div className={styles.videoContainer} style={{display: showPoster ? 'block' : 'none'}}>
-                    {posterElement}
-                </div>
-                <div className={styles.videoContainer} style={{display: showPoster ? 'none' : 'block'}}>
-                    {videoElement}
-                </div>
-            </>
+            <AspectRatioElement
+                style={{position: 'relative'}}
+                aspectRatio={ratio}
+                width={props.width}
+                height={props.height}
+            >
+                {video}
+                {showPoster && posterImage}
+            </AspectRatioElement>
         );
     }
 );
