@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {ImageContent, useMediaBorderRadius} from './image';
+import {ImageContent, ImageError, useMediaBorderRadius} from './image';
 import {AspectRatioElement} from './utils/aspect-ratio-support';
 import {combineRefs} from './utils/common';
 import {getPrefixedDataAttributes} from './utils/dom';
@@ -211,15 +211,25 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
             </video>
         );
 
-        const posterImage = (
+        const withErrorFallback = !!(ratio !== 0 || (props.width && props.height));
+
+        const posterImage = poster ? (
             <ImageContent
                 ref={posterRef}
                 aspectRatio={aspectRatio}
                 width={props.width}
                 height={props.height}
-                src={poster ?? '//:0'}
+                src={poster}
             />
-        );
+        ) : withErrorFallback ? (
+            <div style={{position: 'absolute', width: '100%', height: '100%'}}>
+                <ImageError
+                    ref={posterRef}
+                    noBorderRadius={!borderRadiusContext}
+                    withIcon={videoStatus === 'error'}
+                />
+            </div>
+        ) : undefined;
 
         return (
             <AspectRatioElement
