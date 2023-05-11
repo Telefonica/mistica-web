@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Avatar, skinVars} from '..';
+import {skinVars} from '..';
 import {ThemeVariant} from '../theme-variant-context';
 import StackingGroup from '../stacking-group';
 import Image from '../image';

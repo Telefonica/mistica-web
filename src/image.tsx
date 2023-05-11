@@ -214,7 +214,7 @@ export const ImageContent = React.forwardRef<HTMLImageElement, ImageProps>(
                             position: 'absolute',
                             width: '100%',
                             height: '100%',
-                            border: border,
+                            border,
                             borderRadius: vars.borderRadii.container,
                         }}
                     >
