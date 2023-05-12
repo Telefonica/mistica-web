@@ -261,11 +261,11 @@ const areSwitchRowContentProps = (obj: any): obj is SwitchRowContentProps => {
 };
 
 const areCheckboxRowContentProps = (obj: any): obj is CheckboxRowContentProps => {
-    return obj.switch !== undefined;
+    return obj.checkbox !== undefined;
 };
 
 const areRadioRowContentProps = (obj: any): obj is RadioRowContentProps => {
-    return obj.switch !== undefined;
+    return obj.radioValue !== undefined;
 };
 
 const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, ref) => {
