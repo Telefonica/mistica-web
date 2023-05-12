@@ -121,10 +121,10 @@ const CardContent: React.FC<CardContentProps> = ({
     };
     return (
         <div>
-            <Stack space={8}>
+            <Stack space={4}>
                 {(headline || pretitle || title || subtitle) && (
                     <header>
-                        <Stack space={8}>
+                        <Stack space={4}>
                             {renderHeadline()}
                             <Stack space={4}>
                                 {pretitle && (
@@ -182,7 +182,8 @@ interface AdvancedCardProps {
     description?: string;
     descriptionLinesMax?: number;
 
-    slot?: React.ReactNode;
+    slots?: Array<React.ReactNode>;
+    small?: boolean;
 
     button?: RendersNullableElement<typeof ButtonPrimary>;
     footerImage?: string;
@@ -211,7 +212,8 @@ const AdvancedCard = React.forwardRef<HTMLDivElement, AdvancedCardProps>(
             description,
             descriptionLinesMax,
 
-            slot,
+            slots,
+            small,
 
             button,
             footerImage,
@@ -234,11 +236,13 @@ const AdvancedCard = React.forwardRef<HTMLDivElement, AdvancedCardProps>(
         const hasButtonLink = !!buttonLink;
         const hasFooter = hasButton || hasFooterImage || hasFooterText || hasButtonLink;
 
+        const slotSpaceSize = small ? 8 : 24;
+
         const margin = {marginLeft: '16px'};
         const topActionsStylesWithIcon = {position: 'absolute', top: 8, right: 8, zIndex: 2} as const;
         const cardContentStyle = sprinkles({
             display: 'flex',
-            paddingBottom: slot ? 8 : hasFooter ? 24 : 0,
+            paddingBottom: hasFooter || slots ? 24 : 0,
         });
 
         return (
@@ -264,7 +268,7 @@ const AdvancedCard = React.forwardRef<HTMLDivElement, AdvancedCardProps>(
                                         paddingTop: 8,
                                     })}
                                 >
-                                    <Stack space={16} className={sprinkles({flex: 1})}>
+                                    <Stack space={8} className={sprinkles({flex: 1})}>
                                         {hascardImage ? <Image height={40} src={cardImage} /> : null}
                                         <CardContent
                                             headline={headline}
@@ -286,19 +290,30 @@ const AdvancedCard = React.forwardRef<HTMLDivElement, AdvancedCardProps>(
                                 )}
                             </div>
 
-                            {slot && (
+                            {slots && (
                                 <div
                                     className={sprinkles({
-                                        paddingTop: 8,
+                                        paddingTop: 16,
+                                        paddingBottom: 24,
                                     })}
                                 >
-                                    <div
-                                        className={sprinkles({
-                                            paddingY: 24,
-                                        })}
-                                    >
-                                        {slot}
-                                    </div>
+                                    {slots.map((slot, index) => {
+                                        return (
+                                            <div>
+                                                <div>{slot}</div>
+
+                                                {index + 1 !== slots.length && (
+                                                    <div
+                                                        className={sprinkles({
+                                                            paddingY: slotSpaceSize,
+                                                        })}
+                                                    >
+                                                        <Divider />
+                                                    </div>
+                                                )}
+                                            </div>
+                                        );
+                                    })}
                                 </div>
                             )}
 
