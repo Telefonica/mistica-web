@@ -30,7 +30,7 @@ const containerBase = style([
     },
 ]);
 
-const chipActive = style({'@media': {}});
+const chipActive = style({});
 
 export const chipVariants = styleVariants({
     default: [
@@ -43,14 +43,8 @@ export const chipVariants = styleVariants({
     overAlternative: [
         containerBase,
         sprinkles({
-            background: vars.colors.backgroundContainerAlternative,
-            color: vars.colors.textPrimary,
-        }),
-    ],
-    unselected: [
-        containerBase,
-        sprinkles({
             background: vars.colors.backgroundContainer,
+            color: vars.colors.textPrimary,
         }),
         {
             '@media': {

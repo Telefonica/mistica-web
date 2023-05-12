@@ -41,7 +41,6 @@ const Chip: React.FC<ChipProps> = ({
     id,
     dataAttributes,
     active,
-    alternative,
     badge,
     onClose,
 }: ChipProps) => {
@@ -49,7 +48,21 @@ const Chip: React.FC<ChipProps> = ({
     const overAlternative = useThemeVariant() === 'alternative';
     const {isMobile} = useScreenSize();
 
-    const badgeValue = badge === true ? undefined : badge || 0;
+    const paddingLeft = Icon && isMobile ? 16 : 8 && Icon ? 8 : 20 && isMobile ? 20 : 12;
+    const paddingRight = isMobile ? 20 : 12;
+    const paddingIcon = isMobile ? 16 : 8;
+    const badgeSize = badge === 9 + 1 ? 24 : 16;
+
+    const renderBadge = () => {
+        if (!badge) {
+            return null;
+        }
+        return (
+            <Box>
+                <div>{badge === true ? <Badge /> : <Badge value={badge} />}</div>
+            </Box>
+        );
+    };
 
     const body = (
         <>
@@ -71,11 +84,6 @@ const Chip: React.FC<ChipProps> = ({
             )}
         </>
     );
-
-    const paddingLeft = Icon && isMobile ? 16 : 8 && Icon ? 8 : 20 && isMobile ? 20 : 12;
-    const paddingRight = isMobile ? 20 : 12;
-    const paddingIcon = isMobile ? 16 : 8;
-    const badgeSize = badgeValue === 9 + 1 ? 24 : 16;
 
     if (badge && onClose) {
         return (
@@ -99,7 +107,7 @@ const Chip: React.FC<ChipProps> = ({
                         aria-label={texts.closeButtonLabel}
                         onPress={() => onClose?.()}
                     >
-                        <Badge value={badgeValue} />
+                        {renderBadge()}
                     </IconButton>
                 </Box>
             </Box>
@@ -141,12 +149,10 @@ const Chip: React.FC<ChipProps> = ({
                         active
                             ? 'active'
                             : overAlternative
-                            ? 'overAlternative'
-                            : 'default' && alternative
-                            ? 'unselected'
-                            : overAlternative
-                            ? 'overAlternative'
-                            : 'default'
+                            ? 'default'
+                            : 'overAlternative' && active === undefined
+                            ? 'default'
+                            : 'overAlternative'
                     ],
                     {
                         [styles.chipInteractiveVariants[isDarkMode ? 'dark' : 'light']]: isInteractive,
