@@ -257,15 +257,15 @@ const useControlState = ({
 };
 
 const areSwitchRowContentProps = (obj: any): obj is SwitchRowContentProps => {
-    return 'switch' in obj;
+    return obj.switch !== undefined;
 };
 
 const areCheckboxRowContentProps = (obj: any): obj is CheckboxRowContentProps => {
-    return 'checkbox' in obj;
+    return obj.switch !== undefined;
 };
 
 const areRadioRowContentProps = (obj: any): obj is RadioRowContentProps => {
-    return 'radioValue' in obj;
+    return obj.switch !== undefined;
 };
 
 const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, ref) => {
