@@ -10,6 +10,7 @@ export type {TouchableElement} from './touchable';
 export {default as Spinner} from './spinner';
 export {default as FadeIn} from './fade-in';
 export {default as AdvancedCard} from './advanced-card';
+export {default as AdvancedSaldo} from './advanced-saldo';
 export {ButtonPrimary, ButtonSecondary, ButtonDanger, ButtonLink} from './button';
 export {default as ButtonLayout} from './button-layout';
 export {default as FixedFooterLayout} from './fixed-footer-layout';
