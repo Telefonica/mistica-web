@@ -4,7 +4,6 @@ import {style} from '@vanilla-extract/css';
 export const column = sprinkles({
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'space-around',
 });
 
 export const container = style([
