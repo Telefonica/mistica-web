@@ -12,8 +12,12 @@ test('Circle', async () => {
     const circleWithImage = (await (
         await screen.findByTestId('circle-with-image')
     ).$('div')) as ElementHandle;
+    const circleWithBorder = (await (
+        await screen.findByTestId('circle-with-border')
+    ).$('div')) as ElementHandle;
 
     expect(await circle.screenshot()).toMatchImageSnapshot();
     expect(await circleWithIcon.screenshot()).toMatchImageSnapshot();
     expect(await circleWithImage.screenshot()).toMatchImageSnapshot();
+    expect(await circleWithBorder.screenshot()).toMatchImageSnapshot();
 });

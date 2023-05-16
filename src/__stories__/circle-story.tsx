@@ -20,6 +20,9 @@ export const Default: StoryComponent = () => {
             <div data-testid="circle-with-image">
                 <Circle size={40} backgroundImage={avatarImg}></Circle>
             </div>
+            <div data-testid="circle-with-border">
+                <Circle size={40} backgroundColor={skinVars.colors.brand} border />
+            </div>
         </Stack>
     );
 };
