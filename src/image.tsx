@@ -167,6 +167,7 @@ export const ImageContent = React.forwardRef<HTMLImageElement, ImageProps>(
                 {...getPrefixedDataAttributes(dataAttributes)}
                 style={{
                     ...(isLoading && withLoadingFallback ? {opacity: 0} : {opacity: 1}),
+                    boxSizing: 'border-box',
                     border,
                 }}
                 ref={combineRefs(imageRef, ref)}
@@ -214,8 +215,10 @@ export const ImageContent = React.forwardRef<HTMLImageElement, ImageProps>(
                             position: 'absolute',
                             width: '100%',
                             height: '100%',
+                            boxSizing: 'border-box',
                             border,
                             borderRadius: vars.borderRadii.container,
+                            zIndex: 1,
                         }}
                     >
                         <ImageError noBorderRadius={noBorderSetting} />

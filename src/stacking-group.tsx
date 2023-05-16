@@ -1,5 +1,4 @@
 import * as React from 'react';
-import * as styles from './stacking-group.css';
 import {useIsInverseVariant} from './theme-variant-context';
 import {vars} from './skins/skin-contract.css';
 import Inline from './inline';
@@ -18,6 +17,7 @@ const StackingGroup: React.FC<Props> = ({moreItemsStyle, stacked = false, maxIte
     const isInverse = useIsInverseVariant();
     const backgroundColor = isInverse ? vars.colors.brandHigh : vars.colors.brandLow;
     const textColor = isInverse ? vars.colors.textPrimaryInverse : vars.colors.brand;
+    const border = stacked ? `1px solid ${vars.colors.borderLow}` : 'none';
 
     const styleCircle = moreItemsStyle.type === 'circle';
     const space = stacked ? -8 : 8;
@@ -25,41 +25,41 @@ const StackingGroup: React.FC<Props> = ({moreItemsStyle, stacked = false, maxIte
     const plusCase = countChildren - maxItems;
 
     const styleBorderRadius = styleCircle ? vars.borderRadii.avatar : vars.borderRadii.container;
-    // this minus 1px adjustment, is to exclude the border size, to prevent misalignment
-    const sizeAdjustment = stacked ? moreItemsStyle.size - 1 : moreItemsStyle.size;
+    const size = moreItemsStyle.size;
 
     return (
         <Inline space={space}>
-            {React.Children.map(children, (child, index: number) => index < maxItems && <div>{child}</div>)}
+            {React.Children.map(children, (child, index: number) => index < maxItems && <>{child}</>)}
             {countChildren > maxItems && (
-                <>
+                <div>
                     <div
-                        style={{
-                            display: 'flex',
-                            position: 'absolute',
-                            width: sizeAdjustment,
-                            height: sizeAdjustment,
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            color: textColor,
-                            zIndex: 2,
-                        }}
-                        aria-label={'+' + plusCase.toString()}
-                    >
-                        {'+' + plusCase}
-                    </div>
-                    <div
-                        className={stacked ? styles.border : 'none'}
                         style={{
                             position: 'relative',
-                            width: sizeAdjustment,
-                            height: sizeAdjustment,
+                            width: size,
+                            height: size,
                             backgroundColor,
                             borderRadius: styleBorderRadius,
+                            boxSizing: 'border-box',
+                            border,
                             zIndex: 1,
                         }}
-                    />
-                </>
+                    >
+                        <div
+                            style={{
+                                display: 'flex',
+                                position: 'absolute',
+                                width: size,
+                                height: size,
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                color: textColor,
+                            }}
+                            aria-label={'+' + plusCase.toString()}
+                        >
+                            {'+' + plusCase}
+                        </div>
+                    </div>
+                </div>
             )}
         </Inline>
     );
