@@ -3,6 +3,7 @@ import {skinVars} from '..';
 import {ThemeVariant} from '../theme-variant-context';
 import StackingGroup from '../stacking-group';
 import Image from '../image';
+import Avatar from '../avatar';
 import img from './images/avatar.jpg';
 
 export default {
@@ -42,9 +43,23 @@ export const Default: StoryComponent<Args> = ({
                 data-testid="stacking-group"
             >
                 <StackingGroup stacked={stacked} maxItems={maxItems} moreItemsStyle={{type, size}}>
-                    {Array.from({length: itemsToInclude}, () => (
-                        <Image height={size} src={img} aspectRatio="1:1" border />
-                    ))}
+                    {Array.from({length: itemsToInclude}, (_, idx) =>
+                        type === 'circle' ? (
+                            <Avatar
+                                border={stacked}
+                                size={size}
+                                initials={['TT', 'AA', 'GC', '', 'MA', 'PA'][idx % 5]}
+                                src={[img, img, '', '', img, ''][idx % 5]}
+                            />
+                        ) : (
+                            <Image
+                                border={stacked}
+                                height={size}
+                                src={[img, img, '', '', img, ''][idx % 5]}
+                                aspectRatio="1:1"
+                            />
+                        )
+                    )}
                 </StackingGroup>
             </div>
         </ThemeVariant>
@@ -61,6 +76,9 @@ Default.argTypes = {
         control: {type: 'select'},
     },
     itemsToInclude: {
+        control: {type: 'range', min: 1, max: 8, step: 1},
+    },
+    maxItems: {
         control: {type: 'range', min: 1, max: 8, step: 1},
     },
 };
