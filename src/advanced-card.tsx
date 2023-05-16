@@ -15,9 +15,13 @@ import IconButton from './icon-button';
 import Inline from './inline';
 import Touchable from './touchable';
 
-import type {RendersNullableElement} from './utils/renders-element';
-import type {DataAttributes, IconProps} from './utils/types';
+import type AdvancedProduto from './advanced-produto';
+import type AdvancedPromocao from './advanced-promocao';
+import type AdvancedFatura from './advanced-fatura';
+import type AdvancedSaldo from './advanced-saldo';
 import type {ButtonPrimary, ButtonLink} from './button';
+import type {DataAttributes, IconProps} from './utils/types';
+import type {RendersNullableElement} from './utils/renders-element';
 
 type CardAction = {
     label: string;
@@ -181,6 +185,12 @@ const CardContent: React.FC<CardContentProps> = ({
     );
 };
 
+type slotsTypeof =
+    | typeof AdvancedProduto
+    | typeof AdvancedPromocao
+    | typeof AdvancedFatura
+    | typeof AdvancedSaldo;
+
 interface AdvancedCardProps {
     cardOnPress?: () => void;
 
@@ -195,7 +205,7 @@ interface AdvancedCardProps {
     description?: string;
     descriptionLinesMax?: number;
 
-    slots?: Array<React.ReactNode>;
+    slots?: Array<RendersNullableElement<slotsTypeof>>;
     small?: boolean;
 
     button?: RendersNullableElement<typeof ButtonPrimary>;
@@ -303,7 +313,7 @@ const AdvancedCard = React.forwardRef<HTMLDivElement, AdvancedCardProps>(
                                 )}
                             </div>
 
-                            {slots && (
+                            {slots && slots?.length ? (
                                 <div
                                     className={sprinkles({
                                         paddingTop: 16,
@@ -328,7 +338,7 @@ const AdvancedCard = React.forwardRef<HTMLDivElement, AdvancedCardProps>(
                                         );
                                     })}
                                 </div>
-                            )}
+                            ) : null}
 
                             {hasFooter && (
                                 <div>
