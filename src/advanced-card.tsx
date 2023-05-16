@@ -128,13 +128,20 @@ const CardContent: React.FC<CardContentProps> = ({
                             {renderHeadline()}
                             <Stack space={4}>
                                 {pretitle && (
-                                    <Text2 truncate={pretitleLinesMax} as="div" regular hyphens="auto">
+                                    <Text2
+                                        color={vars.colors.textPrimary}
+                                        truncate={pretitleLinesMax}
+                                        as="div"
+                                        regular
+                                        hyphens="auto"
+                                    >
                                         {pretitle}
                                     </Text2>
                                 )}
                                 <Text
-                                    mobileSize={18}
-                                    mobileLineHeight="24px"
+                                    color={vars.colors.textPrimary}
+                                    mobileSize={20}
+                                    mobileLineHeight="28px"
                                     desktopSize={20}
                                     desktopLineHeight="28px"
                                     truncate={titleLinesMax}
@@ -144,7 +151,13 @@ const CardContent: React.FC<CardContentProps> = ({
                                 >
                                     {title}
                                 </Text>
-                                <Text2 truncate={subtitleLinesMax} as="div" regular hyphens="auto">
+                                <Text2
+                                    color={vars.colors.textPrimary}
+                                    truncate={subtitleLinesMax}
+                                    as="div"
+                                    regular
+                                    hyphens="auto"
+                                >
                                     {subtitle}
                                 </Text2>
                             </Stack>

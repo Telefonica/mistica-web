@@ -11,13 +11,13 @@ import type {RendersNullableElement} from './utils/renders-element';
 interface AdvancedPromocaoProps {
     tag?: RendersNullableElement<typeof Tag>;
 
-    value1?: 'string';
-    text1?: 'string';
+    value: 'string';
+    text: 'string';
 
     value2?: 'string';
     text2?: 'string';
 
-    value3?: 'string';
+    secondaryValue?: 'string';
 
     title?: 'string';
     subtitle?: 'string';
@@ -25,7 +25,7 @@ interface AdvancedPromocaoProps {
 }
 
 const AdvancedPromocao = React.forwardRef<HTMLDivElement, AdvancedPromocaoProps>(
-    ({tag, value1, text1, value2, text2, value3, title, subtitle, description}) => {
+    ({tag, value, text, value2, text2, secondaryValue, title, subtitle, description}) => {
         return (
             <div>
                 {tag && (
@@ -40,9 +40,9 @@ const AdvancedPromocao = React.forwardRef<HTMLDivElement, AdvancedPromocaoProps>
 
                 <Stack space={2}>
                     <Inline space={8} alignItems="flex-end">
-                        <Text8 color={vars.colors.brand}>{value1}</Text8>
+                        <Text8 color={vars.colors.brand}>{value}</Text8>
                         <Text2 regular color={vars.colors.textSecondary}>
-                            {text1}
+                            {text}
                         </Text2>
                     </Inline>
                     {value2 && (
@@ -53,7 +53,7 @@ const AdvancedPromocao = React.forwardRef<HTMLDivElement, AdvancedPromocaoProps>
                             </Text2>
                         </Inline>
                     )}
-                    {value3 && <Text8 color={vars.colors.textSecondary}>{value3}</Text8>}
+                    {secondaryValue && <Text8 color={vars.colors.textSecondary}>{secondaryValue}</Text8>}
                 </Stack>
                 <div
                     className={sprinkles({
@@ -62,7 +62,7 @@ const AdvancedPromocao = React.forwardRef<HTMLDivElement, AdvancedPromocaoProps>
                 >
                     <Stack space={0}>
                         {title && (
-                            <Text3 regular color={vars.colors.textSecondary}>
+                            <Text3 regular color={vars.colors.textPrimary}>
                                 {title}
                             </Text3>
                         )}
