@@ -7,10 +7,6 @@ export const column = sprinkles({
 });
 
 export const container = style([
-    sprinkles({display: 'flex', justifyContent: 'space-between', position: 'relative'}),
-]);
-
-export const secundaryContainer = style([
     {
         paddingLeft: 32,
         textAlign: 'right',
