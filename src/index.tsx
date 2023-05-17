@@ -14,6 +14,7 @@ export {default as AdvancedSaldo} from './advanced-saldo';
 export {default as AdvancedFatura} from './advanced-fatura';
 export {default as AdvancedProduto} from './advanced-produto';
 export {default as AdvancedPromocao} from './advanced-promocao';
+export {default as AdvancedAssinatura} from './advanced-assinatura';
 export {ButtonPrimary, ButtonSecondary, ButtonDanger, ButtonLink} from './button';
 export {default as ButtonLayout} from './button-layout';
 export {default as FixedFooterLayout} from './fixed-footer-layout';

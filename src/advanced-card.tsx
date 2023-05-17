@@ -15,6 +15,7 @@ import IconButton from './icon-button';
 import Inline from './inline';
 import Touchable from './touchable';
 
+import type AdvancedAssinatura from './advanced-assinatura';
 import type AdvancedProduto from './advanced-produto';
 import type AdvancedPromocao from './advanced-promocao';
 import type AdvancedFatura from './advanced-fatura';
@@ -189,7 +190,8 @@ type slotsTypeof =
     | typeof AdvancedProduto
     | typeof AdvancedPromocao
     | typeof AdvancedFatura
-    | typeof AdvancedSaldo;
+    | typeof AdvancedSaldo
+    | typeof AdvancedAssinatura;
 
 interface AdvancedCardProps {
     cardOnPress?: () => void;
