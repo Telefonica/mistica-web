@@ -1897,4 +1897,56 @@ export default [
     ...heroSnippets,
     ...loaderSnippets,
     ...logoSnippets,
+    {
+        group: 'Grid',
+        name: 'Grid',
+        code: `
+<Grid columns={2} rows={3} gap={8}>
+  <GridItem>
+    <SnapCard
+      icon={
+        <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
+          <IconAcademicRegular color={skinVars.colors.brand} />
+        </Circle>
+      }
+      title="Title 1"
+      subtitle="Subtitle 1"
+    />
+  </GridItem>
+  <GridItem rowSpan={2}>
+    <SnapCard
+      icon={
+        <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
+          <IconAcademicRegular color={skinVars.colors.brand} />
+        </Circle>
+      }
+      title="Title 2"
+      subtitle="Subtitle 2"
+    />
+  </GridItem>
+  <GridItem>
+    <SnapCard
+      icon={
+        <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
+          <IconAcademicRegular color={skinVars.colors.brand} />
+        </Circle>
+      }
+      title="Title 3"
+      subtitle="Subtitle 3"
+    />
+  </GridItem>
+  <GridItem columnSpan={2}>
+    <SnapCard
+      icon={
+        <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
+          <IconAcademicRegular color={skinVars.colors.brand} />
+        </Circle>
+      }
+      title="Title 4"
+      subtitle="Subtitle 4"
+    />
+  </GridItem>
+</Grid>
+`,
+    },
 ].sort((s1, s2) => s1.group.localeCompare(s2.group)) as Array<Snippet>;
