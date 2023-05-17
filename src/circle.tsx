@@ -7,11 +7,12 @@ type Props = {
     backgroundImage?: string;
     size?: number | string;
     children?: React.ReactElement;
-    border?: boolean;
+    border?: boolean | string;
 };
 
-const Circle: React.FC<Props> = ({children, backgroundColor, backgroundImage, size, ...props}) => {
-    const border = props.border ? `1px solid ${vars.colors.borderLow}` : 'none';
+const Circle: React.FC<Props> = ({children, backgroundColor, backgroundImage, size, border = false}) => {
+    const borderColor = border === true ? vars.colors.border : border;
+    const borderProp = border ? `1px solid ${borderColor}` : 'none';
 
     return (
         <div
@@ -21,7 +22,7 @@ const Circle: React.FC<Props> = ({children, backgroundColor, backgroundImage, si
                 height: size,
                 backgroundColor,
                 backgroundImage: backgroundImage ? `url(${backgroundImage})` : 'none',
-                border,
+                border: borderProp,
             }}
         >
             {children}

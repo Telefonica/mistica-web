@@ -12,12 +12,16 @@ test('Circle', async () => {
     const circleWithImage = (await (
         await screen.findByTestId('circle-with-image')
     ).$('div')) as ElementHandle;
-    const circleWithBorder = (await (
-        await screen.findByTestId('circle-with-border')
+    const circleWithBorderDefault = (await (
+        await screen.findByTestId('circle-with-border-default')
+    ).$('div')) as ElementHandle;
+    const circleWithBorderCustom = (await (
+        await screen.findByTestId('circle-with-border-custom')
     ).$('div')) as ElementHandle;
 
     expect(await circle.screenshot()).toMatchImageSnapshot();
     expect(await circleWithIcon.screenshot()).toMatchImageSnapshot();
     expect(await circleWithImage.screenshot()).toMatchImageSnapshot();
-    expect(await circleWithBorder.screenshot()).toMatchImageSnapshot();
+    expect(await circleWithBorderDefault.screenshot()).toMatchImageSnapshot();
+    expect(await circleWithBorderCustom.screenshot()).toMatchImageSnapshot();
 });
