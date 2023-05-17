@@ -32,35 +32,33 @@ const StackingGroup: React.FC<Props> = ({moreItemsStyle, stacked = false, maxIte
         <Inline space={space}>
             {React.Children.map(children, (child, index: number) => index < maxItems && <>{child}</>)}
             {countChildren > maxItems && (
-                <div>
+                <div
+                    style={{
+                        position: 'relative',
+                        width: size,
+                        height: size,
+                        backgroundColor,
+                        borderRadius: styleBorderRadius,
+                        boxSizing: 'border-box',
+                        border,
+                        zIndex: 1,
+                    }}
+                >
                     <div
                         style={{
-                            position: 'relative',
+                            display: 'flex',
+                            position: 'absolute',
                             width: size,
                             height: size,
-                            backgroundColor,
-                            borderRadius: styleBorderRadius,
-                            boxSizing: 'border-box',
-                            border,
-                            zIndex: 1,
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            color: textColor,
                         }}
+                        aria-label={'+' + plusCase.toString()}
                     >
-                        <div
-                            style={{
-                                display: 'flex',
-                                position: 'absolute',
-                                width: size,
-                                height: size,
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                                color: textColor,
-                            }}
-                            aria-label={'+' + plusCase.toString()}
-                        >
-                            <Text4 regular color={textColor}>
-                                {'+' + plusCase}
-                            </Text4>
-                        </div>
+                        <Text4 regular color={textColor}>
+                            {'+' + plusCase}
+                        </Text4>
                     </div>
                 </div>
             )}
