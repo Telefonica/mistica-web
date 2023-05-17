@@ -2,6 +2,7 @@ import * as React from 'react';
 import {useIsInverseVariant} from './theme-variant-context';
 import {vars} from './skins/skin-contract.css';
 import Inline from './inline';
+import {Text4} from './text';
 
 type Props = {
     stacked?: boolean;
@@ -56,7 +57,9 @@ const StackingGroup: React.FC<Props> = ({moreItemsStyle, stacked = false, maxIte
                             }}
                             aria-label={'+' + plusCase.toString()}
                         >
-                            {'+' + plusCase}
+                            <Text4 regular color={textColor}>
+                                {'+' + plusCase}
+                            </Text4>
                         </div>
                     </div>
                 </div>
