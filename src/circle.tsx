@@ -12,7 +12,7 @@ type Props = {
 
 const Circle: React.FC<Props> = ({children, backgroundColor, backgroundImage, size, border = false}) => {
     const borderColor = border === true ? vars.colors.border : border;
-    const borderProp = border ? `1px solid ${borderColor}` : 'none';
+    const borderProp = border ? `1px solid ${borderColor}` : undefined;
 
     return (
         <div
