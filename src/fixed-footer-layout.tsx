@@ -5,6 +5,7 @@ import {isRunningAcceptanceTest} from './utils/platform';
 import {
     useElementDimensions,
     useIsomorphicLayoutEffect,
+    useIsWithinIFrame,
     useScreenHeight,
     useScreenSize,
     useTheme,
@@ -54,10 +55,12 @@ const FixedFooterLayout: React.FC<Props> = ({
     const {isTabletOrSmaller} = useScreenSize();
     const {platformOverrides} = useTheme();
     const {height: realFooterHeight, ref} = useElementDimensions();
+    const isWithinIFrame = useIsWithinIFrame();
     const windowHeight = useWindowHeight();
     const screenHeight = useScreenHeight();
-
-    const hasContentEnoughVSpace = windowHeight - realFooterHeight > screenHeight / FOOTER_CANVAS_RATIO;
+    const hasContentEnoughVSpace =
+        windowHeight - realFooterHeight >
+        (isWithinIFrame ? windowHeight : screenHeight) / FOOTER_CANVAS_RATIO;
 
     useIsomorphicLayoutEffect(() => {
         onChangeFooterHeight?.(realFooterHeight);

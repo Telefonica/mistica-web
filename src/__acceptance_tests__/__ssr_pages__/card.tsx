@@ -4,7 +4,7 @@ import {MediaCard, DataCard, Inline, Image, ButtonPrimary, ButtonLink, IconAcade
 const CardsTest = (): JSX.Element => (
     <Inline space={16}>
         <MediaCard
-            media={<Image aspectRatio="16:9" src="https://i.imgur.com/flZfkiX.png" />}
+            media={<Image aspectRatio="16:9" src="using-vr.jpg" />}
             headline="headline"
             pretitle="pretitle"
             title="title"
