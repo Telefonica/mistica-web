@@ -19,6 +19,7 @@ import type AdvancedProduto from './advanced-produto';
 import type AdvancedPromocao from './advanced-promocao';
 import type AdvancedFatura from './advanced-fatura';
 import type AdvancedSaldo from './advanced-saldo';
+import type AdvancedTravel from './advanced-travel';
 import type {ButtonPrimary, ButtonLink} from './button';
 import type {DataAttributes, IconProps} from './utils/types';
 import type {RendersNullableElement} from './utils/renders-element';
@@ -189,7 +190,8 @@ type slotsTypeof =
     | typeof AdvancedProduto
     | typeof AdvancedPromocao
     | typeof AdvancedFatura
-    | typeof AdvancedSaldo;
+    | typeof AdvancedSaldo
+    | typeof AdvancedTravel;
 
 interface AdvancedCardProps {
     cardOnPress?: () => void;
