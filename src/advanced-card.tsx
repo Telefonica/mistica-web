@@ -368,6 +368,7 @@ const AdvancedCard = React.forwardRef<HTMLDivElement, AdvancedCardProps>(
                                                 <Image height={40} src={footerImage} />
                                             </div>
                                         )}
+
                                         {hasFooterText && (
                                             <div
                                                 style={hasButton || hasFooterImage ? margin : {}}

@@ -133,6 +133,7 @@ interface AdvancedInvoiceProps {
     description?: string;
     mainValue: string;
     secundaryValue?: string;
+    textColor?: string;
 }
 
 export const AdvancedInvoice: React.FC<AdvancedInvoiceProps> = ({
@@ -141,6 +142,7 @@ export const AdvancedInvoice: React.FC<AdvancedInvoiceProps> = ({
     description,
     secundaryValue,
     mainValue,
+    textColor = vars.colors.textPrimary,
 }) => {
     return (
         <Inline space="between" alignItems="flex-end">
@@ -149,7 +151,7 @@ export const AdvancedInvoice: React.FC<AdvancedInvoiceProps> = ({
                 <Text2 regular color={vars.colors.textSecondary}>
                     {secundaryValue}
                 </Text2>
-                <Text5 color={vars.colors.brand}>{mainValue}</Text5>
+                <Text5 color={textColor}>{mainValue}</Text5>
             </div>
         </Inline>
     );
@@ -169,6 +171,8 @@ interface AdvancedPromotionProps {
     title?: 'string';
     subtitle?: 'string';
     description?: 'string';
+
+    textColor?: string;
 }
 
 export const AdvancedPromotion: React.FC<AdvancedPromotionProps> = ({
@@ -181,6 +185,7 @@ export const AdvancedPromotion: React.FC<AdvancedPromotionProps> = ({
     title,
     subtitle,
     description,
+    textColor = vars.colors.textPrimary,
 }) => {
     return (
         <div>
@@ -196,14 +201,14 @@ export const AdvancedPromotion: React.FC<AdvancedPromotionProps> = ({
 
             <Stack space={2}>
                 <Inline space={8} alignItems="flex-end">
-                    <Text8 color={vars.colors.brand}>{value}</Text8>
+                    <Text8 color={textColor}>{value}</Text8>
                     <Text2 regular color={vars.colors.textSecondary}>
                         {text}
                     </Text2>
                 </Inline>
                 {value2 && (
                     <Inline space={8} alignItems="flex-end">
-                        <Text8 color={vars.colors.brand}>{value2}</Text8>
+                        <Text8 color={textColor}>{value2}</Text8>
                         <Text2 regular color={vars.colors.textSecondary}>
                             {text2}
                         </Text2>
@@ -227,9 +232,16 @@ interface AdvancedBalanceProps {
     value?: string;
     subtitle?: string;
     description?: string;
+    textColor?: string;
 }
 
-export const AdvancedBalance: React.FC<AdvancedBalanceProps> = ({title, value, subtitle, description}) => {
+export const AdvancedBalance: React.FC<AdvancedBalanceProps> = ({
+    title,
+    value,
+    subtitle,
+    description,
+    textColor = vars.colors.textPrimary,
+}) => {
     return (
         <div
             style={{
@@ -240,7 +252,7 @@ export const AdvancedBalance: React.FC<AdvancedBalanceProps> = ({title, value, s
             <Text2 regular color={vars.colors.textPrimary}>
                 {title}
             </Text2>
-            <Text8 color={vars.colors.brand}>{value}</Text8>
+            <Text8 color={textColor}>{value}</Text8>
             <Text2 regular color={vars.colors.textSecondary}>
                 {subtitle}
             </Text2>
@@ -259,6 +271,8 @@ interface AdvancedProductProps {
 
     value: string;
     text: string;
+
+    textColor?: string;
 }
 
 export const AdvancedProduct: React.FC<AdvancedProductProps> = ({
@@ -267,6 +281,7 @@ export const AdvancedProduct: React.FC<AdvancedProductProps> = ({
     progressPercent,
     value,
     text,
+    textColor = vars.colors.textPrimary,
 }) => {
     return (
         <div>
@@ -287,7 +302,7 @@ export const AdvancedProduct: React.FC<AdvancedProductProps> = ({
             )}
             <Box paddingTop={8}>
                 <Inline space={8} alignItems="flex-end">
-                    <Text8 color={vars.colors.brand}>{value}</Text8>
+                    <Text8 color={textColor}>{value}</Text8>
                     <Text2 regular color={vars.colors.textSecondary}>
                         {text}
                     </Text2>
