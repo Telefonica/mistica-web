@@ -16,7 +16,9 @@ export {
     AdvancedPromotion,
     AdvancedInvoice,
     AdvancedSubscription,
+    AdvancedTravel,
 } from './advanced-slots';
+
 export {ButtonPrimary, ButtonSecondary, ButtonDanger, ButtonLink} from './button';
 export {default as ButtonLayout} from './button-layout';
 export {default as FixedFooterLayout} from './fixed-footer-layout';
