@@ -1,9 +1,13 @@
-import {createVar, style, styleVariants} from '@vanilla-extract/css';
+import {createVar, fallbackVar, style, styleVariants} from '@vanilla-extract/css';
 
 const rowGap = createVar();
 const columnGap = createVar();
+const rowMinSize = createVar();
+const rowMaxSize = createVar();
+const columnMinSize = createVar();
+const columnMaxSize = createVar();
 
-export const vars = {rowGap, columnGap};
+export const vars = {rowGap, columnGap, rowMinSize, rowMaxSize, columnMinSize, columnMaxSize};
 
 export const grid = style({
     display: 'grid',
@@ -29,6 +33,20 @@ const cells = {
     12: 12,
 } as const;
 
+export const gridTemplateColumnsAutoRepeat = style({
+    gridTemplateColumns: `repeat(auto-fill, minmax(${fallbackVar(columnMinSize, '0')}, ${fallbackVar(
+        columnMaxSize,
+        '1fr'
+    )}))`,
+});
+
+export const gridTemplateRowsAutoRepeat = style({
+    gridTemplateRows: `repeat(auto-fill, minmax(${fallbackVar(rowMinSize, '0')}, ${fallbackVar(
+        rowMaxSize,
+        '1fr'
+    )}))`,
+});
+
 export const gridTemplateColumns = styleVariants(cells, (value) => ({
     gridTemplateColumns: `repeat(${value}, minmax(0, 1fr))`,
 }));
@@ -46,6 +64,61 @@ export const gridAutoFlow = styleVariants(
     },
     (value) => ({
         gridAutoFlow: value,
+    })
+);
+
+export const gridJustifyItems = styleVariants(
+    {
+        start: 'start',
+        end: 'end',
+        center: 'center',
+        stretch: 'stretch',
+    },
+    (value) => ({
+        justifyItems: value,
+    })
+);
+
+export const gridAlignItems = styleVariants(
+    {
+        start: 'start',
+        end: 'end',
+        center: 'center',
+        stretch: 'stretch',
+        baseline: 'baseline',
+    },
+    (value) => ({
+        alignItems: value,
+    })
+);
+
+export const gridJustifyContent = styleVariants(
+    {
+        start: 'start',
+        end: 'end',
+        center: 'center',
+        stretch: 'stretch',
+        'space-between': 'space-between',
+        'space-around': 'space-around',
+        'space-evenly': 'space-evenly',
+    },
+    (value) => ({
+        justifyContent: value,
+    })
+);
+
+export const gridAlignContent = styleVariants(
+    {
+        start: 'start',
+        end: 'end',
+        center: 'center',
+        stretch: 'stretch',
+        'space-between': 'space-between',
+        'space-around': 'space-around',
+        'space-evenly': 'space-evenly',
+    },
+    (value) => ({
+        alignContent: value,
     })
 );
 
@@ -67,3 +140,28 @@ export const columnStart = styleVariants(cells, (column) => ({
 export const rowStart = styleVariants(cells, (row) => ({
     gridRowStart: row,
 }));
+
+export const justifySelf = styleVariants(
+    {
+        start: 'start',
+        end: 'end',
+        center: 'center',
+        stretch: 'stretch',
+    },
+    (value) => ({
+        justifySelf: value,
+    })
+);
+
+export const alignSelf = styleVariants(
+    {
+        start: 'start',
+        end: 'end',
+        center: 'center',
+        stretch: 'stretch',
+        baseline: 'baseline',
+    },
+    (value) => ({
+        alignSelf: value,
+    })
+);
