@@ -15,14 +15,16 @@ import IconButton from './icon-button';
 import Inline from './inline';
 import Touchable from './touchable';
 
-import type AdvancedAssinatura from './advanced-assinatura';
-import type AdvancedProduto from './advanced-produto';
-import type AdvancedPromocao from './advanced-promocao';
-import type AdvancedFatura from './advanced-fatura';
-import type AdvancedSaldo from './advanced-saldo';
 import type {ButtonPrimary, ButtonLink} from './button';
 import type {DataAttributes, IconProps} from './utils/types';
 import type {RendersNullableElement} from './utils/renders-element';
+import {
+    AdvancedBalance,
+    AdvancedInvoice,
+    AdvancedProduct,
+    AdvancedPromotion,
+    AdvancedSubscription,
+} from './advanced-slots';
 
 type CardAction = {
     label: string;
@@ -187,11 +189,11 @@ const CardContent: React.FC<CardContentProps> = ({
 };
 
 type slotsTypeof =
-    | typeof AdvancedProduto
-    | typeof AdvancedPromocao
-    | typeof AdvancedFatura
-    | typeof AdvancedSaldo
-    | typeof AdvancedAssinatura;
+    | typeof AdvancedProduct
+    | typeof AdvancedBalance
+    | typeof AdvancedPromotion
+    | typeof AdvancedInvoice
+    | typeof AdvancedSubscription;
 
 interface AdvancedCardProps {
     cardOnPress?: () => void;
@@ -371,7 +373,7 @@ const AdvancedCard = React.forwardRef<HTMLDivElement, AdvancedCardProps>(
                                                 style={hasButton || hasFooterImage ? margin : {}}
                                                 className={styles.footerText}
                                             >
-                                                <Text2 medium>{footerText}</Text2>
+                                                <Text2 regular>{footerText}</Text2>
                                             </div>
                                         )}
                                         <div

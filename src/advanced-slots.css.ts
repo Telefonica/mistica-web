@@ -1,5 +1,5 @@
-import {sprinkles} from './sprinkles.css';
 import {style} from '@vanilla-extract/css';
+import {sprinkles} from './sprinkles.css';
 
 export const column = sprinkles({
     display: 'flex',

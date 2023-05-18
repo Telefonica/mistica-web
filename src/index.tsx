@@ -10,11 +10,13 @@ export type {TouchableElement} from './touchable';
 export {default as Spinner} from './spinner';
 export {default as FadeIn} from './fade-in';
 export {default as AdvancedCard} from './advanced-card';
-export {default as AdvancedSaldo} from './advanced-saldo';
-export {default as AdvancedFatura} from './advanced-fatura';
-export {default as AdvancedProduto} from './advanced-produto';
-export {default as AdvancedPromocao} from './advanced-promocao';
-export {default as AdvancedAssinatura} from './advanced-assinatura';
+export {
+    AdvancedProduct,
+    AdvancedBalance,
+    AdvancedPromotion,
+    AdvancedInvoice,
+    AdvancedSubscription,
+} from './advanced-slots';
 export {ButtonPrimary, ButtonSecondary, ButtonDanger, ButtonLink} from './button';
 export {default as ButtonLayout} from './button-layout';
 export {default as FixedFooterLayout} from './fixed-footer-layout';
