@@ -96,7 +96,6 @@ const Tabs: React.FC<TabsProps> = ({selectedIndex, onChange, tabs, dataAttribute
                                                 : styles.tabSelectionVariants.noSelected,
                                             icon && styles.tabWithIcon
                                         )}
-                                        disabled={isSelected}
                                         onPress={() => {
                                             if (!isAnimating && selectedIndex !== index) {
                                                 onChange(index);
