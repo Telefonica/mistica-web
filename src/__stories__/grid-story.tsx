@@ -226,3 +226,37 @@ Default.storyName = 'Grid';
 Default.args = {
     gap: 16,
 };
+
+type AutoColumnsArgs = {
+    gap: React.ComponentProps<typeof Grid>['gap'];
+    columnsMinSize: number;
+    numItems: number;
+};
+
+export const AutoColumns: StoryComponent<AutoColumnsArgs> = ({gap, columnsMinSize, numItems}) => (
+    <ResponsiveLayout>
+        <Box paddingY={24}>
+            <Grid columns={{minSize: columnsMinSize}} gap={gap}>
+                {Array.from({length: numItems}, (_, idx) => (
+                    <SnapCard
+                        key={idx}
+                        icon={
+                            <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
+                                <IconAcademicRegular color={skinVars.colors.brand} />
+                            </Circle>
+                        }
+                        title={`Title ${idx + 1}`}
+                        subtitle="Subtitle"
+                    />
+                ))}
+            </Grid>
+        </Box>
+    </ResponsiveLayout>
+);
+
+AutoColumns.storyName = 'Auto columns';
+AutoColumns.args = {
+    gap: 16,
+    columnsMinSize: 100,
+    numItems: 10,
+};
