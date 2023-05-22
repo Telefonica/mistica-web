@@ -135,7 +135,7 @@ export const AdvancedSubscription: React.FC<AdvancedSubscriptionProps> = ({image
     );
 };
 
-interface AdvancedInvoiceProps {
+interface InformationBlockProps {
     title?: string;
     subtitle?: string;
     description?: string;
@@ -144,7 +144,7 @@ interface AdvancedInvoiceProps {
     textColor?: string;
 }
 
-export const AdvancedInvoice: React.FC<AdvancedInvoiceProps> = ({
+export const InformationBlock: React.FC<InformationBlockProps> = ({
     title,
     subtitle,
     description,
@@ -165,7 +165,7 @@ export const AdvancedInvoice: React.FC<AdvancedInvoiceProps> = ({
     );
 };
 
-interface AdvancedPromotionProps {
+interface HighlightedValueBlockProps {
     tag?: RendersNullableElement<typeof Tag>;
 
     value: 'string';
@@ -183,7 +183,7 @@ interface AdvancedPromotionProps {
     textColor?: string;
 }
 
-export const AdvancedPromotion: React.FC<AdvancedPromotionProps> = ({
+export const HighlightedValueBlock: React.FC<HighlightedValueBlockProps> = ({
     tag,
     value,
     text,
@@ -235,7 +235,7 @@ export const AdvancedPromotion: React.FC<AdvancedPromotionProps> = ({
     );
 };
 
-interface AdvancedBalanceProps {
+interface ValueBlockProps {
     title?: string;
     value?: string;
     subtitle?: string;
@@ -243,7 +243,7 @@ interface AdvancedBalanceProps {
     textColor?: string;
 }
 
-export const AdvancedBalance: React.FC<AdvancedBalanceProps> = ({
+export const ValueBlock: React.FC<ValueBlockProps> = ({
     title,
     value,
     subtitle,
@@ -271,7 +271,7 @@ export const AdvancedBalance: React.FC<AdvancedBalanceProps> = ({
     );
 };
 
-interface AdvancedProductProps {
+interface ProgressBlockProps {
     title?: string;
     image?: string;
 
@@ -283,7 +283,7 @@ interface AdvancedProductProps {
     textColor?: string;
 }
 
-export const AdvancedProduct: React.FC<AdvancedProductProps> = ({
+export const ProgressBlock: React.FC<ProgressBlockProps> = ({
     title,
     image,
     progressPercent,

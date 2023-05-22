@@ -16,10 +16,10 @@ import Inline from './inline';
 import Touchable from './touchable';
 
 import type {
-    AdvancedBalance,
-    AdvancedInvoice,
-    AdvancedProduct,
-    AdvancedPromotion,
+    ValueBlock,
+    InformationBlock,
+    ProgressBlock,
+    HighlightedValueBlock,
     AdvancedSubscription,
 } from './advanced-slots';
 import type {ButtonPrimary, ButtonLink} from './button';
@@ -189,10 +189,10 @@ const CardContent: React.FC<CardContentProps> = ({
 };
 
 type slotsTypeof =
-    | typeof AdvancedProduct
-    | typeof AdvancedBalance
-    | typeof AdvancedPromotion
-    | typeof AdvancedInvoice
+    | typeof ProgressBlock
+    | typeof ValueBlock
+    | typeof HighlightedValueBlock
+    | typeof InformationBlock
     | typeof AdvancedSubscription;
 
 interface AdvancedCardProps {

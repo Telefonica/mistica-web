@@ -11,10 +11,10 @@ export {default as Spinner} from './spinner';
 export {default as FadeIn} from './fade-in';
 export {default as AdvancedCard} from './advanced-card';
 export {
-    AdvancedProduct,
-    AdvancedBalance,
-    AdvancedPromotion,
-    AdvancedInvoice,
+    ProgressBlock,
+    ValueBlock,
+    HighlightedValueBlock,
+    InformationBlock,
     AdvancedSubscription,
     AdvancedTravel,
 } from './advanced-slots';
