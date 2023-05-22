@@ -5,17 +5,26 @@ import {vars} from './skins/skin-contract.css';
 import {applyAlpha} from './utils/color';
 
 export const actions = style([
-    sprinkles({display: 'flex', flex: 1, justifyContent: 'space-between'}),
-    {marginTop: 16},
+    sprinkles({
+        display: 'flex',
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'space-between',
+    }),
+    {marginTop: 16, flexWrap: 'wrap'},
 ]);
 
 export const footerText = style([
     {
-        height: '40px',
-        width: '100%',
+        minHeight: '40px',
+        maxHeight: '40px',
+        minWidth: '70px',
+        height: 'auto',
+
+        width: 'auto',
+        overflowY: 'hidden',
         flex: '1',
         display: 'flex',
-        overflow: 'hidden',
         alignItems: 'center',
     },
 ]);

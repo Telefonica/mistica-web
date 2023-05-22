@@ -3,18 +3,16 @@ import {sprinkles} from './sprinkles.css';
 import Stack from './stack';
 import * as styles from './advanced-slots.css';
 import Image from './image';
-
 import {Text2, Text3, Text5, Text8} from './text';
-import Tag from './tag';
 import {vars} from './skins/skin-contract.css';
-
+import Avatar from './avatar';
 import Inline from './inline';
 import Box from './box';
 import ProgressBar from './progress-bar';
 import classNames from 'classnames';
 
+import type Tag from './tag';
 import type {RendersNullableElement} from './utils/renders-element';
-import Avatar from './avatar';
 
 interface SlotContentProps {
     title?: string;
@@ -41,12 +39,10 @@ const SlotContent: React.FC<SlotContentProps> = ({title, subtitle, description})
 interface AdvancedTravelProps {
     title?: string;
     image?: string;
-    description: string;
+    description?: string;
 }
 
 export const AdvancedTravel: React.FC<AdvancedTravelProps> = ({title, image, description}) => {
-    const width = description ? 271 : 263;
-
     return (
         <div
             style={{
@@ -57,36 +53,48 @@ export const AdvancedTravel: React.FC<AdvancedTravelProps> = ({title, image, des
             {(title || image || description) && (
                 <>
                     {image && (
-                        <>
+                        <div
+                            className={sprinkles({
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                                flex: 1,
+                            })}
+                        >
                             {title && (
-                                <Box width={width} paddingRight={32}>
-                                    <Text2 medium>{title}</Text2>
-                                </Box>
+                                <div style={{paddingRight: '32px'}}>
+                                    <Text2 regular>{title}</Text2>
+                                </div>
                             )}
-                            <Box>
+                            <div>
                                 <Inline space={-12}>
                                     {Array.from({length: 3}, (_, i) => (
                                         <Avatar key={i} size={32} border src={image} />
                                     ))}
                                 </Inline>
-                            </Box>
-                        </>
+                            </div>
+                        </div>
                     )}
-                    {description && !image && (
-                        <>
+                    {!image && (
+                        <div
+                            className={sprinkles({
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                                flex: 1,
+                            })}
+                        >
                             {title && (
-                                <Box width={263} paddingRight={32}>
-                                    <Text2 medium as="div">
+                                <div style={{paddingRight: '32px'}}>
+                                    <Text2 regular as="div">
                                         {title}
                                     </Text2>
-                                </Box>
+                                </div>
                             )}
-                            <Box width={72}>
-                                <Text2 medium color={vars.colors.textSecondary}>
+                            <div>
+                                <Text2 regular color={vars.colors.textSecondary}>
                                     {description}
                                 </Text2>
-                            </Box>
-                        </>
+                            </div>
+                        </div>
                     )}
                 </>
             )}

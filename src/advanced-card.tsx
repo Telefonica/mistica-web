@@ -15,16 +15,16 @@ import IconButton from './icon-button';
 import Inline from './inline';
 import Touchable from './touchable';
 
-import type {ButtonPrimary, ButtonLink} from './button';
-import type {DataAttributes, IconProps} from './utils/types';
-import type {RendersNullableElement} from './utils/renders-element';
-import {
+import type {
     AdvancedBalance,
     AdvancedInvoice,
     AdvancedProduct,
     AdvancedPromotion,
     AdvancedSubscription,
 } from './advanced-slots';
+import type {ButtonPrimary, ButtonLink} from './button';
+import type {DataAttributes, IconProps} from './utils/types';
+import type {RendersNullableElement} from './utils/renders-element';
 
 type CardAction = {
     label: string;
@@ -351,15 +351,17 @@ const AdvancedCard = React.forwardRef<HTMLDivElement, AdvancedCardProps>(
                                     </NegativeBox>
 
                                     <div className={styles.actions}>
-                                        <div
-                                            aria-hidden="true"
-                                            className={sprinkles({
-                                                display: 'flex',
-                                            })}
-                                            onClick={(event) => event.stopPropagation()}
-                                        >
-                                            {hasButton && button}
-                                        </div>
+                                        {hasButton && (
+                                            <div
+                                                aria-hidden="true"
+                                                className={sprinkles({
+                                                    display: 'flex',
+                                                })}
+                                                onClick={(event) => event.stopPropagation()}
+                                            >
+                                                {button}
+                                            </div>
+                                        )}
                                         {hasFooterImage && (
                                             <div
                                                 style={hasButton ? margin : {}}
@@ -377,15 +379,17 @@ const AdvancedCard = React.forwardRef<HTMLDivElement, AdvancedCardProps>(
                                                 <Text2 regular>{footerText}</Text2>
                                             </div>
                                         )}
-                                        <div
-                                            aria-hidden="true"
-                                            className={sprinkles({
-                                                display: 'flex',
-                                            })}
-                                            onClick={(event) => event.stopPropagation()}
-                                        >
-                                            {hasButtonLink && buttonLink}
-                                        </div>
+                                        {hasButtonLink && (
+                                            <div
+                                                aria-hidden="true"
+                                                className={sprinkles({
+                                                    display: 'flex',
+                                                })}
+                                                onClick={(event) => event.stopPropagation()}
+                                            >
+                                                {buttonLink}
+                                            </div>
+                                        )}
                                     </div>
                                 </div>
                             )}
