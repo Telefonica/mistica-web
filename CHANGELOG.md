@@ -1,3 +1,19 @@
+# [14.9.0](https://github.com/Telefonica/mistica-web/compare/v14.8.0...v14.9.0) (2023-05-19)
+
+
+### Bug Fixes
+
+* **Chevron:** fix align issue in chevron icon ([#756](https://github.com/Telefonica/mistica-web/issues/756)) ([e4a3913](https://github.com/Telefonica/mistica-web/commit/e4a391327c908fa4fb594c4d75ee20a87a4290ad))
+* **Form:** export formValues type in form ([#758](https://github.com/Telefonica/mistica-web/issues/758)) ([d5e5157](https://github.com/Telefonica/mistica-web/commit/d5e515731f1bb1f328388765734218d503487735))
+* **Row, BoxedRow:** check for undefined value in props is incorrect ([#753](https://github.com/Telefonica/mistica-web/issues/753)) ([2e5af28](https://github.com/Telefonica/mistica-web/commit/2e5af28eaf69ac73ed5c0ae094eb4a72e83aa2dd))
+* **Tabs:** remove disabled in active tab ([#755](https://github.com/Telefonica/mistica-web/issues/755)) ([d15b02b](https://github.com/Telefonica/mistica-web/commit/d15b02bc9231c091ff2e07ecfc445e062ff92707))
+
+
+### Features
+
+* **Circle:** add border prop ([#761](https://github.com/Telefonica/mistica-web/issues/761)) ([431ff37](https://github.com/Telefonica/mistica-web/commit/431ff37fe174510db3ab512872295eacce5b7dbb))
+* **HorizontalScroll:** new component ([#745](https://github.com/Telefonica/mistica-web/issues/745)) ([61e4f3d](https://github.com/Telefonica/mistica-web/commit/61e4f3d9df5bc07abff5499268e8eba9eab5f7c8))
+
 # [14.8.0](https://github.com/Telefonica/mistica-web/compare/v14.7.1...v14.8.0) (2023-05-11)
 
 

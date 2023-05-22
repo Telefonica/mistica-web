@@ -8,18 +8,18 @@ export default {
 
 export const Default: StoryComponent = () => {
     return (
-        <Stack space={16}>
-            <div data-testid="circle">
-                <Circle size={40} backgroundColor={skinVars.colors.brand} />
-            </div>
-            <div data-testid="circle-with-icon">
-                <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
-                    <IconShopRegular color={skinVars.colors.brand} />
-                </Circle>
-            </div>
-            <div data-testid="circle-with-image">
-                <Circle size={40} backgroundImage={avatarImg}></Circle>
-            </div>
+        <Stack space={16} dataAttributes={{testid: 'circle'}}>
+            <Circle size={40} backgroundColor={skinVars.colors.brand} />
+
+            <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
+                <IconShopRegular color={skinVars.colors.brand} />
+            </Circle>
+
+            <Circle size={40} backgroundImage={avatarImg}></Circle>
+
+            <Circle size={40} backgroundColor={skinVars.colors.background} border />
+
+            <Circle size={40} backgroundColor={skinVars.colors.background} border="red" />
         </Stack>
     );
 };

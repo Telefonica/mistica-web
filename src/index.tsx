@@ -114,6 +114,7 @@ export {default as PasswordField} from './password-field';
 export {default as DoubleField} from './double-field';
 export {default as IbanField} from './iban-field';
 export {useForm, useFieldProps} from './form-context';
+export type {FormValues} from './form';
 
 // Icons
 export {default as IconInfo} from './icons/icon-info';
