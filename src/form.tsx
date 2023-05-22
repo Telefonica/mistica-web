@@ -16,7 +16,7 @@ if (
     import('scroll-behavior-polyfill').finally(() => {});
 }
 
-type FormValues = {[name: string]: any};
+export type FormValues = {[name: string]: any};
 
 type FormProps = {
     id?: string;
