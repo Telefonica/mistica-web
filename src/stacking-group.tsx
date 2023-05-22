@@ -3,6 +3,7 @@ import {useIsInverseVariant} from './theme-variant-context';
 import {vars} from './skins/skin-contract.css';
 import Inline from './inline';
 import {Text4} from './text';
+import * as styles from './stacking-group.css';
 
 type Props = {
     stacked?: boolean;
@@ -14,52 +15,30 @@ type Props = {
     children: React.ReactNode;
 };
 
-const StackingGroup: React.FC<Props> = ({moreItemsStyle, stacked = false, maxItems = Infinity, children}) => {
+const StackingGroup: React.FC<Props> = ({moreItemsStyle, stacked = true, maxItems = Infinity, children}) => {
     const isInverse = useIsInverseVariant();
-    const backgroundColor = isInverse ? vars.colors.brandHigh : vars.colors.brandLow;
-    const textColor = isInverse ? vars.colors.textPrimaryInverse : vars.colors.brand;
-    const border = stacked ? `1px solid ${vars.colors.borderLow}` : 'none';
-
-    const styleCircle = moreItemsStyle.type === 'circle';
-    const space = stacked ? -8 : 8;
     const countChildren = React.Children.count(children);
-    const plusCase = countChildren - maxItems;
-
-    const styleBorderRadius = styleCircle ? vars.borderRadii.avatar : vars.borderRadii.container;
+    const moreItemsCount = countChildren - maxItems;
+    const space = stacked ? -8 : 8;
     const size = moreItemsStyle.size;
 
     return (
         <Inline space={space}>
-            {React.Children.map(children, (child, index: number) => index < maxItems && <>{child}</>)}
+            {React.Children.toArray(children).slice(0, maxItems - 1)}
             {countChildren > maxItems && (
                 <div
+                    className={styles.moreItems}
                     style={{
-                        position: 'relative',
                         width: size,
                         height: size,
-                        backgroundColor,
-                        borderRadius: styleBorderRadius,
-                        boxSizing: 'border-box',
-                        border,
-                        zIndex: 1,
+                        backgroundColor: isInverse ? vars.colors.brandHigh : vars.colors.brandLow,
+                        borderRadius: moreItemsStyle.type === 'circle' ? 64 : vars.borderRadii.container,
+                        border: stacked ? `1px solid ${vars.colors.borderLow}` : 'none',
                     }}
                 >
-                    <div
-                        style={{
-                            display: 'flex',
-                            position: 'absolute',
-                            width: size,
-                            height: size,
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            color: textColor,
-                        }}
-                        aria-label={'+' + plusCase.toString()}
-                    >
-                        <Text4 regular color={textColor}>
-                            {'+' + plusCase}
-                        </Text4>
-                    </div>
+                    <Text4 regular color={isInverse ? vars.colors.textPrimaryInverse : vars.colors.brand}>
+                        {'+' + moreItemsCount}
+                    </Text4>
                 </div>
             )}
         </Inline>

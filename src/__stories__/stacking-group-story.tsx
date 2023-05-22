@@ -88,6 +88,6 @@ Default.args = {
     type: 'circle',
     size: 64,
     maxItems: 4,
-    stacked: false,
+    stacked: true,
     inverse: false,
 };

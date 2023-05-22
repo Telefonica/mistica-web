@@ -217,7 +217,7 @@ export const ImageContent = React.forwardRef<HTMLImageElement, ImageProps>(
                             height: '100%',
                             boxSizing: 'border-box',
                             border,
-                            borderRadius: vars.borderRadii.container,
+                            borderRadius: noBorderSetting ? undefined : vars.borderRadii.container,
                             zIndex: 1,
                         }}
                     >
