@@ -2,14 +2,14 @@ import {openStoryPage, screen} from '../test-utils';
 
 test.each`
     type        | stacked  | inverse
-    ${'square'} | ${false} | ${false}
-    ${'circle'} | ${false} | ${false}
     ${'square'} | ${true}  | ${false}
     ${'circle'} | ${true}  | ${false}
-    ${'square'} | ${false} | ${true}
-    ${'circle'} | ${false} | ${true}
+    ${'square'} | ${false} | ${false}
+    ${'circle'} | ${false} | ${false}
     ${'square'} | ${true}  | ${true}
     ${'circle'} | ${true}  | ${true}
+    ${'square'} | ${false} | ${true}
+    ${'circle'} | ${false} | ${true}
     `('Stacking Group', async ({ type, stacked, inverse}) => {
     await openStoryPage({
         id: 'components-stackinggroup--default',
