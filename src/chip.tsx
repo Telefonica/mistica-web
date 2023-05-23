@@ -10,9 +10,10 @@ import * as styles from './chip.css';
 import {vars} from './skins/skin-contract.css';
 import {getPrefixedDataAttributes} from './utils/dom';
 import {useThemeVariant} from './theme-variant-context';
+import {BaseTouchable} from './touchable';
 
 import type {ExclusifyUnion} from './utils/utility-types';
-import type {DataAttributes, IconProps} from './utils/types';
+import type {DataAttributes, IconProps, TrackingEvent} from './utils/types';
 
 interface SimpleChipProps {
     children: string;
@@ -29,9 +30,33 @@ interface ToggleChipProps extends SimpleChipProps {
     active: boolean;
 }
 
-type ChipProps = ExclusifyUnion<SimpleChipProps | ClosableChipProps | ToggleChipProps>;
+interface HrefChipProps extends SimpleChipProps {
+    trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
+    href: string;
+    newTab?: boolean;
+    active?: boolean;
+}
 
-const Chip: React.FC<ChipProps> = ({Icon, children, id, dataAttributes, active, onClose}: ChipProps) => {
+interface ToChipProps extends SimpleChipProps {
+    trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
+    to: string;
+    fullPageOnWebView?: boolean;
+    replace?: boolean;
+    active?: boolean;
+}
+
+interface OnPressChipProps extends SimpleChipProps {
+    trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
+    onPress: () => void;
+    active?: boolean;
+}
+
+type ClickableChipProps = ExclusifyUnion<HrefChipProps | ToChipProps | OnPressChipProps>;
+
+type ChipProps = ExclusifyUnion<SimpleChipProps | ClosableChipProps | ToggleChipProps | ClickableChipProps>;
+
+const Chip: React.FC<ChipProps> = (props: ChipProps) => {
+    const {Icon, children, id, dataAttributes, active, onClose} = props;
     const {texts, isDarkMode} = useTheme();
     const overAlternative = useThemeVariant() === 'alternative';
 
@@ -76,24 +101,58 @@ const Chip: React.FC<ChipProps> = ({Icon, children, id, dataAttributes, active, 
                 </Box>
             </Box>
         );
-    } else {
-        const isInteractive = active !== undefined;
+    }
+    const isInteractive = active !== undefined || props.href || props.onPress || props.to;
+
+    const renderContent = () => (
+        <Box
+            className={classnames(
+                styles.chipVariants[active ? 'active' : overAlternative ? 'overAlternative' : 'default'],
+                {
+                    [styles.chipInteractiveVariants[isDarkMode ? 'dark' : 'light']]: isInteractive,
+                }
+            )}
+            paddingLeft={paddingLeft}
+            paddingRight={12}
+            {...getPrefixedDataAttributes(dataAttributes, 'Chip')}
+        >
+            {body}
+        </Box>
+    );
+
+    if (props.onPress) {
         return (
-            <Box
-                className={classnames(
-                    styles.chipVariants[active ? 'active' : overAlternative ? 'overAlternative' : 'default'],
-                    {
-                        [styles.chipInteractiveVariants[isDarkMode ? 'dark' : 'light']]: isInteractive,
-                    }
-                )}
-                paddingLeft={paddingLeft}
-                paddingRight={12}
-                {...getPrefixedDataAttributes(dataAttributes, 'Chip')}
+            <BaseTouchable
+                className={styles.button}
+                trackingEvent={props.trackingEvent}
+                onPress={props.onPress}
             >
-                {body}
-            </Box>
+                {renderContent()}
+            </BaseTouchable>
         );
     }
+
+    if (props.to) {
+        return (
+            <BaseTouchable
+                trackingEvent={props.trackingEvent}
+                to={props.to}
+                fullPageOnWebView={props.fullPageOnWebView}
+            >
+                {renderContent()}
+            </BaseTouchable>
+        );
+    }
+
+    if (props.href) {
+        return (
+            <BaseTouchable trackingEvent={props.trackingEvent} href={props.href} newTab={props.newTab}>
+                {renderContent()}
+            </BaseTouchable>
+        );
+    }
+
+    return renderContent();
 };
 
 export default Chip;

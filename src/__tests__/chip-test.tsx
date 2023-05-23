@@ -19,3 +19,18 @@ test('Chip can be closed', async () => {
 
     expect(closeSpy).toHaveBeenCalledTimes(1);
 });
+
+test('Chip can be clicked', async () => {
+    const clickSpy = jest.fn();
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Chip onPress={clickSpy}>some text</Chip>
+        </ThemeContextProvider>
+    );
+
+    const chip = screen.getByText('some text');
+
+    await userEvent.click(chip);
+
+    expect(clickSpy).toHaveBeenCalledTimes(1);
+});

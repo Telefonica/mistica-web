@@ -64,6 +64,12 @@ const interactive = style({
     },
 });
 
+export const button = sprinkles({
+    border: 'none',
+    background: 'transparent',
+    padding: 0,
+});
+
 export const chipInteractiveVariants = styleVariants({
     light: [
         interactive,
