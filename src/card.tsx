@@ -446,7 +446,7 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
         ref
     ) => {
         const isTouchable = touchableProps.href || touchableProps.to || touchableProps.onPress;
-        const themeVariant = useThemeVariant();
+        const variant = useThemeVariant();
 
         return (
             <MaybeWithActions onClose={onClose} actions={actions} aria-label={ariaLabel} isInverse>
@@ -462,7 +462,7 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
                         {...touchableProps}
                         className={classNames(
                             styles.touchableCardContainer,
-                            isTouchable ? styles.mediaCardTouchable[themeVariant] : undefined
+                            isTouchable ? styles.mediaCardTouchable[variant] : undefined
                         )}
                         aria-label={ariaLabel}
                     >

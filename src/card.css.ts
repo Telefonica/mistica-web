@@ -4,7 +4,7 @@ import * as mq from './media-queries.css';
 import {vars} from './skins/skin-contract.css';
 import {applyAlpha} from './utils/color';
 
-import type {Variant} from '../dist/theme-variant-context';
+type Variant = 'default' | 'inverse' | 'alternative';
 
 export const actions = style([
     sprinkles({display: 'flex', flex: 1, alignItems: 'flex-end'}),
