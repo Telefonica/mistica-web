@@ -189,6 +189,68 @@ const CardContent: React.FC<CardContentProps> = ({
     );
 };
 
+type CardFooterProps = {
+    button?: RendersNullableElement<typeof ButtonPrimary>;
+    footerImage?: string;
+    footerText?: string;
+    buttonLink?: RendersNullableElement<typeof ButtonLink>;
+};
+
+const CardFooter: React.FC<CardFooterProps> = ({button, footerImage, footerText, buttonLink}) => {
+    const hasButton = !!button;
+    const hasFooterImage = !!footerImage;
+    const hasFooterText = !!footerText;
+    const hasButtonLink = !!buttonLink;
+
+    const margin = {marginLeft: '16px'};
+    return (
+        <div>
+            <NegativeBox>
+                <Divider />
+            </NegativeBox>
+
+            <div className={styles.actions}>
+                {hasButton && (
+                    <div
+                        aria-hidden="true"
+                        className={sprinkles({
+                            display: 'flex',
+                        })}
+                        onClick={(event) => event.stopPropagation()}
+                    >
+                        {button}
+                    </div>
+                )}
+                {hasFooterImage && (
+                    <div
+                        style={hasButton ? margin : {}}
+                        className={sprinkles({alignItems: 'center', display: 'flex'})}
+                    >
+                        <Image height={40} src={footerImage} />
+                    </div>
+                )}
+
+                {hasFooterText && (
+                    <div style={hasButton || hasFooterImage ? margin : {}} className={styles.footerText}>
+                        <Text2 regular>{footerText}</Text2>
+                    </div>
+                )}
+                {hasButtonLink && (
+                    <div
+                        aria-hidden="true"
+                        className={sprinkles({
+                            display: 'flex',
+                        })}
+                        onClick={(event) => event.stopPropagation()}
+                    >
+                        {buttonLink}
+                    </div>
+                )}
+            </div>
+        </div>
+    );
+};
+
 type slotsTypeof =
     | typeof ProgressBlock
     | typeof RowBlock
@@ -259,15 +321,12 @@ const DataCardAdvanced = React.forwardRef<HTMLDivElement, DataCardAdvancedProps>
         const finalActions = useTopActions(actions, onClose);
         const hasAcations = finalActions?.length > 0;
         const hascardImage = !!cardImage;
-        const hasButton = !!button;
-        const hasFooterImage = !!footerImage;
-        const hasFooterText = !!footerText;
-        const hasButtonLink = !!buttonLink;
-        const hasFooter = hasButton || hasFooterImage || hasFooterText || hasButtonLink;
+
+        const hasFooter = !!button || !!footerImage || !!footerText || !!buttonLink;
+        const footerProps = {button, footerImage, footerText, buttonLink};
 
         const slotSpaceSize = small ? 8 : 24;
 
-        const margin = {marginLeft: '16px'};
         const topActionsStylesWithIcon = {position: 'absolute', top: 8, right: 8, zIndex: 2} as const;
         const cardContentStyle = sprinkles({
             display: 'flex',
@@ -282,6 +341,7 @@ const DataCardAdvanced = React.forwardRef<HTMLDivElement, DataCardAdvancedProps>
                             cardOnPress();
                         }
                     }}
+                    className={sprinkles({height: '100%', position: 'relative'})}
                 >
                     <Boxed
                         className={styles.boxed}
@@ -319,82 +379,31 @@ const DataCardAdvanced = React.forwardRef<HTMLDivElement, DataCardAdvancedProps>
                                 )}
                             </div>
 
-                            {slots && slots?.length ? (
-                                <div
-                                    className={sprinkles({
-                                        paddingTop: 16,
-                                        paddingBottom: 24,
-                                    })}
-                                >
-                                    {slots.map((slot, index) => {
-                                        return (
-                                            <div>
-                                                <div>{slot}</div>
+                            <div style={{marginTop: 'auto'}}>
+                                {slots && slots?.length ? (
+                                    <div className={styles.slots}>
+                                        {slots.map((slot, index) => {
+                                            return (
+                                                <div>
+                                                    <div>{slot}</div>
 
-                                                {index + 1 !== slots.length && (
-                                                    <div
-                                                        className={sprinkles({
-                                                            paddingY: slotSpaceSize,
-                                                        })}
-                                                    >
-                                                        <Divider />
-                                                    </div>
-                                                )}
-                                            </div>
-                                        );
-                                    })}
-                                </div>
-                            ) : null}
-
-                            {hasFooter && (
-                                <div>
-                                    <NegativeBox>
-                                        <Divider />
-                                    </NegativeBox>
-
-                                    <div className={styles.actions}>
-                                        {hasButton && (
-                                            <div
-                                                aria-hidden="true"
-                                                className={sprinkles({
-                                                    display: 'flex',
-                                                })}
-                                                onClick={(event) => event.stopPropagation()}
-                                            >
-                                                {button}
-                                            </div>
-                                        )}
-                                        {hasFooterImage && (
-                                            <div
-                                                style={hasButton ? margin : {}}
-                                                className={sprinkles({alignItems: 'center', display: 'flex'})}
-                                            >
-                                                <Image height={40} src={footerImage} />
-                                            </div>
-                                        )}
-
-                                        {hasFooterText && (
-                                            <div
-                                                style={hasButton || hasFooterImage ? margin : {}}
-                                                className={styles.footerText}
-                                            >
-                                                <Text2 regular>{footerText}</Text2>
-                                            </div>
-                                        )}
-                                        {hasButtonLink && (
-                                            <div
-                                                aria-hidden="true"
-                                                className={sprinkles({
-                                                    display: 'flex',
-                                                })}
-                                                onClick={(event) => event.stopPropagation()}
-                                            >
-                                                {buttonLink}
-                                            </div>
-                                        )}
+                                                    {index + 1 !== slots.length && (
+                                                        <div
+                                                            className={sprinkles({
+                                                                paddingY: slotSpaceSize,
+                                                            })}
+                                                        >
+                                                            <Divider />
+                                                        </div>
+                                                    )}
+                                                </div>
+                                            );
+                                        })}
                                     </div>
-                                </div>
-                            )}
+                                ) : null}
+
+                                {hasFooter && <CardFooter {...footerProps} />}
+                            </div>
                         </div>
                     </Boxed>
                 </Touchable>

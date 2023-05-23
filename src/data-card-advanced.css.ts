@@ -14,21 +14,6 @@ export const actions = style([
     {marginTop: 16, flexWrap: 'wrap'},
 ]);
 
-export const footerText = style([
-    {
-        minHeight: '40px',
-        maxHeight: '40px',
-        minWidth: '70px',
-        height: 'auto',
-
-        width: 'auto',
-        overflowY: 'hidden',
-        flex: '1',
-        display: 'flex',
-        alignItems: 'center',
-    },
-]);
-
 export const boxed = style([
     sprinkles({display: 'flex'}),
     {
@@ -43,9 +28,9 @@ export const dataCard = style([
         paddingTop: 8,
         paddingBottom: 24,
         paddingX: 16,
-
         flexDirection: 'column',
         width: '100%',
+        height: '100%',
     }),
     {
         '@media': {
@@ -56,6 +41,9 @@ export const dataCard = style([
                 paddingRight: 24,
             },
         },
+    },
+    {
+        minHeight: '216px',
     },
 ]);
 
@@ -103,5 +91,27 @@ export const cardActionInverse = style([
                 },
             },
         },
+    },
+]);
+
+export const slots = style([
+    sprinkles({
+        paddingTop: 16,
+        paddingBottom: 24,
+    }),
+]);
+
+export const footerText = style([
+    {
+        minHeight: '40px',
+        maxHeight: '40px',
+        minWidth: '70px',
+        height: 'auto',
+
+        width: 'auto',
+        overflowY: 'hidden',
+        flex: '1',
+        display: 'flex',
+        alignItems: 'center',
     },
 ]);
