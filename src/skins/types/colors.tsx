@@ -1,29 +1,31 @@
 export type Colors = {
-    // BACKGROUNDS
-    appBarBackground: string;
     background: string;
-    backgroundContainer: string;
-    backgroundContainerBrand: string;
-    backgroundContainerBrandOverInverse: string;
-    backgroundContainerAlternative: string;
+    backgroundAlternative: string;
     backgroundBrand: string;
     backgroundBrandSecondary: string;
+    backgroundContainer: string;
+    backgroundContainerHover: string;
+    backgroundContainerPressed: string;
+    backgroundContainerBrand: string;
+    backgroundContainerBrandHover: string;
+    backgroundContainerBrandPressed: string;
+    backgroundContainerBrandOverInverse: string;
+    backgroundContainerBrandOverInverseHover: string;
+    backgroundContainerBrandOverInversePressed: string;
+    backgroundContainerAlternative: string;
+    backgroundContainerAlternativeHover: string;
+    backgroundContainerAlternativePressed: string;
     backgroundOverlay: string;
     backgroundSkeleton: string;
     backgroundSkeletonInverse: string;
-    backgroundAlternative: string;
     backgroundFeedbackBottom: string;
+    appBarBackground: string;
     navigationBarBackground: string;
-
     skeletonWave: string;
-
-    // BORDERS
-    border: string;
     borderLow: string;
+    border: string;
     borderHigh: string;
     borderSelected: string;
-
-    // BUTTONS
     buttonDangerBackground: string;
     buttonDangerBackgroundSelected: string;
     buttonDangerBackgroundHover: string;
@@ -32,62 +34,16 @@ export type Colors = {
     buttonPrimaryBackground: string;
     buttonPrimaryBackgroundInverse: string;
     buttonPrimaryBackgroundSelected: string;
-    buttonPrimaryBackgroundInverseSelected: string;
     buttonPrimaryBackgroundHover: string;
+    buttonPrimaryBackgroundInverseSelected: string;
     buttonSecondaryBorder: string;
     buttonSecondaryBorderSelected: string;
-    buttonSecondaryBorderInverse: string;
-    buttonSecondaryBorderInverseSelected: string;
     buttonSecondaryBackgroundHover: string;
     buttonSecondaryBackgroundSelected: string;
+    buttonSecondaryBorderInverse: string;
+    buttonSecondaryBorderInverseSelected: string;
     buttonSecondaryBackgroundInverseHover: string;
     buttonSecondaryBackgroundInverseSelected: string;
-
-    // CONTROLS
-    control: string;
-    controlActivated: string;
-    controlError: string;
-    loadingBar: string;
-    loadingBarBackground: string;
-
-    toggleAndroidInactive: string;
-    toggleAndroidBackgroundActive: string;
-    iosControlKnob: string;
-
-    // DIVIDERS
-    divider: string;
-    dividerInverse: string;
-    navigationBarDivider: string;
-
-    // FEEDBACKS
-    badge: string;
-    feedbackErrorBackground: string;
-    feedbackInfoBackground: string;
-
-    // GLOBAL
-    brand: string;
-    brandHigh: string;
-    inverse: string;
-    neutralHigh: string;
-    neutralLow: string;
-    neutralLowAlternative: string;
-    neutralMedium: string;
-    neutralMediumInverse: string;
-    promo: string;
-
-    // STATES
-    error: string;
-    highlight: string;
-    success: string;
-    warning: string;
-
-    // TEXT GLOBAL
-    textPrimary: string;
-    textPrimaryInverse: string;
-    textSecondary: string;
-    textSecondaryInverse: string;
-
-    // TEXT BUTTONS
     textButtonPrimary: string;
     textButtonPrimaryInverse: string;
     textButtonPrimaryInverseSelected: string;
@@ -95,22 +51,41 @@ export type Colors = {
     textButtonSecondarySelected: string;
     textButtonSecondaryInverse: string;
     textButtonSecondaryInverseSelected: string;
-
-    // TEXT LINKS
     textLink: string;
     textLinkInverse: string;
     textLinkDanger: string;
     textLinkSnackbar: string;
-
-    // TEXT NAVIGATION BARS
-    textNavigationBarPrimary: string;
-    textNavigationBarSecondary: string;
-    textNavigationSearchBarHint: string;
-    textNavigationSearchBarText: string;
-    textAppBar: string;
-    textAppBarSelected: string;
-
-    // TAGS
+    control: string;
+    controlActivated: string;
+    controlError: string;
+    loadingBar: string;
+    loadingBarBackground: string;
+    toggleAndroidInactive: string;
+    toggleAndroidBackgroundActive: string;
+    iosControlKnob: string;
+    divider: string;
+    dividerInverse: string;
+    navigationBarDivider: string;
+    badge: string;
+    feedbackErrorBackground: string;
+    feedbackInfoBackground: string;
+    brand: string;
+    brandHigh: string;
+    inverse: string;
+    neutralHigh: string;
+    neutralMedium: string;
+    neutralMediumInverse: string;
+    neutralLow: string;
+    neutralLowAlternative: string;
+    textPrimary: string;
+    textPrimaryInverse: string;
+    textSecondary: string;
+    textSecondaryInverse: string;
+    success: string;
+    warning: string;
+    error: string;
+    promo: string;
+    highlight: string;
     successLow: string;
     warningLow: string;
     errorLow: string;
@@ -124,4 +99,11 @@ export type Colors = {
     warningHighInverse: string;
     errorHighInverse: string;
     promoHighInverse: string;
+    textNavigationBarPrimary: string;
+    textNavigationBarSecondary: string;
+    textNavigationSearchBarHint: string;
+    textNavigationSearchBarText: string;
+    textAppBar: string;
+    textAppBarSelected: string;
+    customTabsBackground: string;
 };
