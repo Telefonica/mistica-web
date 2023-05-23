@@ -33,6 +33,25 @@ export const Default: StoryComponent = () => (
                 Chip with icon and closeable
             </Chip>
         </StorySection>
+        <StorySection title="Clickable">
+            <Chip
+                onPress={() => {
+                    window.alert('clicked');
+                }}
+            >
+                Clickable Chip
+            </Chip>
+        </StorySection>
+        <StorySection title="With Icon and Clickable">
+            <Chip
+                Icon={IconLightningFilled}
+                onPress={() => {
+                    window.alert('clicked');
+                }}
+            >
+                Clickable Chip
+            </Chip>
+        </StorySection>
 
         <StorySection title="Multiple selection">
             <Inline space={8}>
