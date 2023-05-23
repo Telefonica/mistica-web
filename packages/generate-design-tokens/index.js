@@ -26,6 +26,9 @@ const buildRadius = (radiusDescription) => {
     if (radiusDescription.value.endsWith('%')) {
         return radiusDescription.value;
     }
+    if (radiusDescription.value === 'circle') {
+        return '50%';
+    }
     if (radiusDescription.value.endsWith('px')) {
         return radiusDescription.value;
     }
@@ -33,7 +36,7 @@ const buildRadius = (radiusDescription) => {
         return `${radiusDescription.value}px`;
     }
 
-    throw new Error(`Unknown radius format: ${radiusDescription.value})`);
+    throw new Error(`Unknown radius format: ${radiusDescription.value}`);
 };
 
 const buildTextPresetName = (name) => {
