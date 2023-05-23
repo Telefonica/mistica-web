@@ -1,8 +1,10 @@
-import {style} from '@vanilla-extract/css';
+import {style, styleVariants} from '@vanilla-extract/css';
 import {sprinkles} from './sprinkles.css';
 import * as mq from './media-queries.css';
 import {vars} from './skins/skin-contract.css';
 import {applyAlpha} from './utils/color';
+
+import type {Variant} from '../dist/theme-variant-context';
 
 export const actions = style([
     sprinkles({display: 'flex', flex: 1, alignItems: 'flex-end'}),
@@ -15,6 +17,36 @@ export const boxed = style([
         isolation: 'isolate', // Needed to preserve border-radius with Video component and Safari
     },
 ]);
+
+export const touchableCardContainer = sprinkles({
+    display: 'flex',
+    height: '100%',
+    width: '100%',
+    padding: 0,
+    border: 'none',
+    background: 'transparent',
+});
+
+const getCardInteractionStyles = (config: Partial<Record<Variant, {hover?: string; active?: string}>>) =>
+    styleVariants(config, (value) => ({
+        '@media': {
+            [mq.supportsHover]: {
+                transition: 'background-color 0.15s ease-in-out',
+                ':hover': {
+                    backgroundColor: value?.hover,
+                },
+                ':active': {
+                    backgroundColor: value?.active,
+                },
+            },
+        },
+    }));
+
+export const mediaCardTouchable = getCardInteractionStyles({
+    default: {hover: 'red', active: 'white'},
+    inverse: {hover: 'blue', active: 'white'},
+    alternative: {hover: 'green', active: 'white'},
+});
 
 export const mediaCard = sprinkles({
     display: 'flex',

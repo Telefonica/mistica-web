@@ -19,8 +19,10 @@ import IconPlayFilled from './generated/mistica-icons/icon-play-filled';
 import {combineRefs} from './utils/common';
 import Spinner from './spinner';
 import Video from './video';
-import {ThemeVariant, useIsInverseVariant} from './theme-variant-context';
+import {ThemeVariant, useIsInverseVariant, useThemeVariant} from './theme-variant-context';
+import classNames from 'classnames';
 
+import type {PressHandler} from './touchable';
 import type {VideoSource} from './video';
 import type {ButtonLink, ButtonPrimary, ButtonSecondary} from './button';
 import type {ExclusifyUnion} from './utils/utility-types';
@@ -387,7 +389,11 @@ const CardContent: React.FC<CardContentProps> = ({
     );
 };
 
-type MediaCardProps = {
+type BaseCardTouchableProps = ExclusifyUnion<
+    {href?: string; newTab?: boolean} | {to?: string; fullPageOnWebView?: boolean} | {onPress?: PressHandler}
+>;
+
+interface MediaCardBaseProps {
     media: RendersElement<typeof Image> | RendersElement<typeof Video>;
     headline?: string | RendersNullableElement<typeof Tag>;
     pretitle?: string;
@@ -400,13 +406,20 @@ type MediaCardProps = {
     descriptionLinesMax?: number;
     extra?: React.ReactNode;
     actions?: Array<CardAction>;
-    button?: RendersNullableElement<typeof ButtonPrimary>;
-    buttonLink?: RendersNullableElement<typeof ButtonLink>;
     children?: void;
     dataAttributes?: DataAttributes;
     'aria-label'?: string;
     onClose?: () => void;
-};
+}
+
+type MediaCardProps = MediaCardBaseProps &
+    ExclusifyUnion<
+        | BaseCardTouchableProps
+        | {
+              button?: RendersNullableElement<typeof ButtonPrimary>;
+              buttonLink?: RendersNullableElement<typeof ButtonLink>;
+          }
+    >;
 
 export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
     (
@@ -428,9 +441,13 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
             dataAttributes,
             'aria-label': ariaLabel,
             onClose,
+            ...touchableProps
         },
         ref
     ) => {
+        const isTouchable = touchableProps.href || touchableProps.to || touchableProps.onPress;
+        const themeVariant = useThemeVariant();
+
         return (
             <MaybeWithActions onClose={onClose} actions={actions} aria-label={ariaLabel} isInverse>
                 <Boxed
@@ -440,25 +457,35 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
                     width="100%"
                     height="100%"
                 >
-                    <div className={styles.mediaCard}>
-                        <MediaBorderRadiusProvider value={false}>{media}</MediaBorderRadiusProvider>
-                        <div className={styles.mediaCardContent}>
-                            <CardContent
-                                headline={headline}
-                                pretitle={pretitle}
-                                pretitleLinesMax={pretitleLinesMax}
-                                title={title}
-                                titleLinesMax={titleLinesMax}
-                                subtitle={subtitle}
-                                subtitleLinesMax={subtitleLinesMax}
-                                description={description}
-                                descriptionLinesMax={descriptionLinesMax}
-                                extra={extra}
-                                button={button}
-                                buttonLink={buttonLink}
-                            />
+                    <BaseTouchable
+                        maybe
+                        {...touchableProps}
+                        className={classNames(
+                            styles.touchableCardContainer,
+                            isTouchable ? styles.mediaCardTouchable[themeVariant] : undefined
+                        )}
+                        aria-label={ariaLabel}
+                    >
+                        <div className={styles.mediaCard}>
+                            <MediaBorderRadiusProvider value={false}>{media}</MediaBorderRadiusProvider>
+                            <div className={styles.mediaCardContent}>
+                                <CardContent
+                                    headline={headline}
+                                    pretitle={pretitle}
+                                    pretitleLinesMax={pretitleLinesMax}
+                                    title={title}
+                                    titleLinesMax={titleLinesMax}
+                                    subtitle={subtitle}
+                                    subtitleLinesMax={subtitleLinesMax}
+                                    description={description}
+                                    descriptionLinesMax={descriptionLinesMax}
+                                    extra={extra}
+                                    button={button}
+                                    buttonLink={buttonLink}
+                                />
+                            </div>
                         </div>
-                    </div>
+                    </BaseTouchable>
                 </Boxed>
             </MaybeWithActions>
         );
