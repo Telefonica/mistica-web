@@ -9,14 +9,14 @@ export {default as Touchable} from './touchable';
 export type {TouchableElement} from './touchable';
 export {default as Spinner} from './spinner';
 export {default as FadeIn} from './fade-in';
-export {default as AdvancedCard} from './advanced-card';
+export {default as DataCardAdvanced} from './data-card-advanced';
 export {
     ProgressBlock,
     ValueBlock,
     HighlightedValueBlock,
     InformationBlock,
-    AdvancedSubscription,
-    AdvancedTravel,
+    SimpleBlock,
+    RowBlock,
 } from './advanced-slots';
 
 export {ButtonPrimary, ButtonSecondary, ButtonDanger, ButtonLink} from './button';

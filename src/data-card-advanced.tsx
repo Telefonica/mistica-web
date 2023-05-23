@@ -2,7 +2,7 @@ import * as React from 'react';
 import {Boxed} from './boxed';
 import {sprinkles} from './sprinkles.css';
 import Stack from './stack';
-import * as styles from './advanced-card.css';
+import * as styles from './data-card-advanced.css';
 import Image from './image';
 import Divider from './divider';
 import NegativeBox from './negative-box';
@@ -20,7 +20,8 @@ import type {
     InformationBlock,
     ProgressBlock,
     HighlightedValueBlock,
-    AdvancedSubscription,
+    RowBlock,
+    SimpleBlock,
 } from './advanced-slots';
 import type {ButtonPrimary, ButtonLink} from './button';
 import type {DataAttributes, IconProps} from './utils/types';
@@ -190,12 +191,13 @@ const CardContent: React.FC<CardContentProps> = ({
 
 type slotsTypeof =
     | typeof ProgressBlock
+    | typeof RowBlock
     | typeof ValueBlock
-    | typeof HighlightedValueBlock
     | typeof InformationBlock
-    | typeof AdvancedSubscription;
+    | typeof HighlightedValueBlock
+    | typeof SimpleBlock;
 
-interface AdvancedCardProps {
+interface DataCardAdvancedProps {
     cardOnPress?: () => void;
 
     cardImage?: string;
@@ -223,7 +225,7 @@ interface AdvancedCardProps {
     onClose?: () => void;
 }
 
-const AdvancedCard = React.forwardRef<HTMLDivElement, AdvancedCardProps>(
+const DataCardAdvanced = React.forwardRef<HTMLDivElement, DataCardAdvancedProps>(
     (
         {
             cardOnPress,
@@ -401,4 +403,4 @@ const AdvancedCard = React.forwardRef<HTMLDivElement, AdvancedCardProps>(
     }
 );
 
-export default AdvancedCard;
+export default DataCardAdvanced;

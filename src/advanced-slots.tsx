@@ -36,13 +36,13 @@ const SlotContent: React.FC<SlotContentProps> = ({title, subtitle, description})
     );
 };
 
-interface AdvancedTravelProps {
+interface RowBlockProps {
     title?: string;
     image?: string;
     description?: string;
 }
 
-export const AdvancedTravel: React.FC<AdvancedTravelProps> = ({title, image, description}) => {
+export const RowBlock: React.FC<RowBlockProps> = ({title, image, description}) => {
     return (
         <div
             style={{
@@ -102,12 +102,12 @@ export const AdvancedTravel: React.FC<AdvancedTravelProps> = ({title, image, des
     );
 };
 
-interface AdvancedSubscriptionProps {
+interface SimpleBlockProps {
     image?: string;
     description?: string;
 }
 
-export const AdvancedSubscription: React.FC<AdvancedSubscriptionProps> = ({image, description}) => {
+export const SimpleBlock: React.FC<SimpleBlockProps> = ({image, description}) => {
     return (
         <div>
             <div

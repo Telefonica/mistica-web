@@ -43,6 +43,7 @@ export const dataCard = style([
         paddingTop: 8,
         paddingBottom: 24,
         paddingX: 16,
+
         flexDirection: 'column',
         width: '100%',
     }),
