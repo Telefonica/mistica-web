@@ -10,11 +10,11 @@ test.each`
     ${'circle'} | ${true}  | ${true}
     ${'square'} | ${false} | ${true}
     ${'circle'} | ${false} | ${true}
-    `('Stacking Group', async ({ type, stacked, inverse}) => {
+`('Stacking Group', async ({type, stacked, inverse}) => {
     await openStoryPage({
         id: 'components-stackinggroup--default',
         device: 'DESKTOP',
-        args: { type, stacked, inverse},
+        args: {type, stacked, inverse},
     });
 
     const element = await screen.findByTestId('stacking-group');

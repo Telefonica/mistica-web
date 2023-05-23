@@ -1,6 +1,5 @@
 import * as React from 'react';
-import {skinVars} from '..';
-import {ThemeVariant} from '../theme-variant-context';
+import {Box, ResponsiveLayout} from '..';
 import StackingGroup from '../stacking-group';
 import Image from '../image';
 import Avatar from '../avatar';
@@ -32,37 +31,33 @@ export const Default: StoryComponent<Args> = ({
     inverse = false,
 }) => {
     return (
-        <ThemeVariant isInverse={inverse}>
-            <div
-                style={{
-                    padding: 16,
-                    width: 'fit-content',
-                    background: inverse ? skinVars.colors.backgroundBrand : skinVars.colors.background,
-                    lineHeight: 0,
-                }}
-                data-testid="stacking-group"
-            >
-                <StackingGroup stacked={stacked} maxItems={maxItems} moreItemsStyle={{type, size}}>
-                    {Array.from({length: itemsToInclude}, (_, idx) =>
-                        type === 'circle' ? (
-                            <Avatar
-                                border={stacked}
-                                size={size}
-                                initials={['TT', 'AA', 'GC', '', 'MA', 'PA'][idx % 5]}
-                                src={[img, img, '', '', img, ''][idx % 5]}
-                            />
-                        ) : (
-                            <Image
-                                border={stacked}
-                                height={size}
-                                src={[img, img, '', '', img, ''][idx % 5]}
-                                aspectRatio="1:1"
-                            />
-                        )
-                    )}
-                </StackingGroup>
-            </div>
-        </ThemeVariant>
+        <div data-testid="stacking-group" style={{width: 'max-content'}}>
+            <ResponsiveLayout isInverse={inverse}>
+                <Box paddingY={24}>
+                    <StackingGroup stacked={stacked} maxItems={maxItems} moreItemsStyle={{type, size}}>
+                        {Array.from({length: itemsToInclude}, (_, idx) =>
+                            type === 'circle' ? (
+                                <Avatar
+                                    key={idx}
+                                    border={stacked}
+                                    size={size}
+                                    initials={['TT', 'AA', 'GC', '', 'MA', 'PA'][idx % 5]}
+                                    src={[img, img, '', '', img, ''][idx % 5]}
+                                />
+                            ) : (
+                                <Image
+                                    key={idx}
+                                    border={stacked}
+                                    height={size}
+                                    src={[img, img, '', '', img, ''][idx % 5]}
+                                    aspectRatio="1:1"
+                                />
+                            )
+                        )}
+                    </StackingGroup>
+                </Box>
+            </ResponsiveLayout>
+        </div>
     );
 };
 

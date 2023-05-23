@@ -1767,7 +1767,7 @@ const stackingGroupSnippets = [
     {
         name: 'Stacking Group',
         code: `
-        <StackingGroup stacked={false} maxItems={5} moreItemsStyle={{type: 'circle', size: 64}}>
+        <StackingGroup maxItems={5} moreItemsStyle={{type: 'circle', size: 64}}>
           <Avatar size={64} src="https://source.unsplash.com/600x600/?face" />
           <Avatar size={64} src="https://source.unsplash.com/600x600/?face" />
           <Avatar size={64} src="https://source.unsplash.com/600x600/?face" />
