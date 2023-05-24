@@ -70,9 +70,7 @@ type GridProps = {
         | 'space-between'
         | 'space-evenly';
     alignContent?: 'start' | 'end' | 'center' | 'stretch' | 'space-around' | 'space-between' | 'space-evenly';
-    width?: string | number;
     height?: string | number;
-    minWidth?: string | number;
     minHeight?: string | number;
     children: React.ReactNode;
     as?: React.ComponentType<any> | string;
@@ -91,9 +89,7 @@ export const Grid = React.forwardRef<HTMLDivElement, GridProps>(
             alignItems,
             justifyContent,
             alignContent,
-            width,
             height,
-            minWidth,
             minHeight,
             children,
             as = 'div',
@@ -126,9 +122,7 @@ export const Grid = React.forwardRef<HTMLDivElement, GridProps>(
                     alignContent ? styles.gridAlignContent[alignContent] : ''
                 ),
                 style: {
-                    width,
                     height,
-                    minWidth,
                     minHeight,
                     ...assignInlineVars({
                         [styles.vars.columnGap]: columnGap ? `${columnGap}px` : '',
