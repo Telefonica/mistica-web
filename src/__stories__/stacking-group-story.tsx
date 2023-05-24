@@ -31,33 +31,31 @@ export const Default: StoryComponent<Args> = ({
     inverse = false,
 }) => {
     return (
-        <div data-testid="stacking-group" style={{width: 'max-content'}}>
-            <ResponsiveLayout isInverse={inverse}>
-                <Box paddingY={24}>
-                    <StackingGroup stacked={stacked} maxItems={maxItems} moreItemsStyle={{type, size}}>
-                        {Array.from({length: itemsToInclude}, (_, idx) =>
-                            type === 'circle' ? (
-                                <Avatar
-                                    key={idx}
-                                    border={stacked}
-                                    size={size}
-                                    initials={['TT', 'AA', 'GC', '', 'MA', 'PA'][idx % 5]}
-                                    src={[img, img, '', '', img, ''][idx % 5]}
-                                />
-                            ) : (
-                                <Image
-                                    key={idx}
-                                    border={stacked}
-                                    height={size}
-                                    src={[img, img, '', '', img, ''][idx % 5]}
-                                    aspectRatio="1:1"
-                                />
-                            )
-                        )}
-                    </StackingGroup>
-                </Box>
-            </ResponsiveLayout>
-        </div>
+        <ResponsiveLayout isInverse={inverse} dataAttributes={{testid: 'stacking-group'}}>
+            <Box paddingY={24}>
+                <StackingGroup stacked={stacked} maxItems={maxItems} moreItemsStyle={{type, size}}>
+                    {Array.from({length: itemsToInclude}, (_, idx) =>
+                        type === 'circle' ? (
+                            <Avatar
+                                key={idx}
+                                border={stacked}
+                                size={size}
+                                initials={['TT', 'AA', 'GC', '', 'MA', 'PA'][idx % 5]}
+                                src={[img, img, '', '', img, ''][idx % 5]}
+                            />
+                        ) : (
+                            <Image
+                                key={idx}
+                                border={stacked}
+                                height={size}
+                                src={[img, img, '', '', img, ''][idx % 5]}
+                                aspectRatio="1:1"
+                            />
+                        )
+                    )}
+                </StackingGroup>
+            </Box>
+        </ResponsiveLayout>
     );
 };
 

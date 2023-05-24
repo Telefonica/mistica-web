@@ -24,8 +24,8 @@ const StackingGroup: React.FC<Props> = ({moreItemsStyle, stacked = true, maxItem
 
     return (
         <Inline space={space}>
-            {React.Children.toArray(children).slice(0, maxItems - 1)}
-            {countChildren >= maxItems && (
+            {React.Children.toArray(children).slice(0, countChildren > maxItems ? maxItems - 1 : maxItems)}
+            {countChildren > maxItems && (
                 <div
                     className={styles.moreItems}
                     style={{
