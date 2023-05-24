@@ -6,9 +6,17 @@ const colors: Colors = {
     appBarBackground: '',
     background: '',
     backgroundContainer: '',
+    backgroundContainerHover: '',
+    backgroundContainerPressed: '',
     backgroundContainerBrand: '',
+    backgroundContainerBrandHover: '',
+    backgroundContainerBrandPressed: '',
     backgroundContainerBrandOverInverse: '',
+    backgroundContainerBrandOverInverseHover: '',
+    backgroundContainerBrandOverInversePressed: '',
     backgroundContainerAlternative: '',
+    backgroundContainerAlternativeHover: '',
+    backgroundContainerAlternativePressed: '',
     backgroundBrand: '',
     backgroundBrandSecondary: '',
     backgroundOverlay: '',
@@ -127,6 +135,8 @@ const colors: Colors = {
     warningHighInverse: '',
     errorHighInverse: '',
     promoHighInverse: '',
+
+    customTabsBackground: '',
 };
 
 const borderRadii: BorderRadiiConfig = {
