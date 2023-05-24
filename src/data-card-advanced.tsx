@@ -202,47 +202,52 @@ const CardFooter: React.FC<CardFooterProps> = ({button, footerImage, footerText,
     const hasFooterImage = !!footerImage;
     const hasFooterText = !!footerText;
     const hasButtonLink = !!buttonLink;
+    const hasAllItens = hasButton && (hasFooterImage || hasFooterText) && hasButtonLink;
 
-    const margin = {marginLeft: '16px'};
+    const flexDirection = hasAllItens ? 'column' : 'row';
+    const alignItems = hasAllItens ? 'start' : 'center';
+    const marginTop = hasAllItens ? '8px' : '16px';
+    const maxWidth = hasButtonLink && !hasAllItens ? '178px' : '';
+
     return (
         <div style={{marginTop: 'auto'}}>
             <NegativeBox>
                 <Divider />
             </NegativeBox>
 
-            <div className={styles.actions}>
+            <div className={styles.actions} style={{flexDirection, alignItems}}>
                 {hasButton && (
                     <div
-                        aria-hidden="true"
                         className={sprinkles({
                             display: 'flex',
                         })}
-                        onClick={(event) => event.stopPropagation()}
+                        style={{marginTop: '16px', marginRight: '16px'}}
                     >
                         {button}
                     </div>
                 )}
-                {hasFooterImage && (
-                    <div
-                        style={hasButton ? margin : {}}
-                        className={sprinkles({alignItems: 'center', display: 'flex'})}
-                    >
-                        <Image height={40} src={footerImage} />
-                    </div>
-                )}
+                <div style={{display: 'flex', flexDirection: 'row', marginTop, flexWrap: 'wrap'}}>
+                    {hasFooterImage && (
+                        <div
+                            style={{marginRight: '16px'}}
+                            className={sprinkles({alignItems: 'center', display: 'flex'})}
+                        >
+                            <Image height={40} src={footerImage} />
+                        </div>
+                    )}
 
-                {hasFooterText && (
-                    <div style={hasButton || hasFooterImage ? margin : {}} className={styles.footerText}>
-                        <Text2 regular>{footerText}</Text2>
-                    </div>
-                )}
+                    {hasFooterText && (
+                        <div style={{maxWidth}} className={styles.footerText}>
+                            <Text2 regular>{footerText}</Text2>
+                        </div>
+                    )}
+                </div>
                 {hasButtonLink && (
                     <div
-                        aria-hidden="true"
                         className={sprinkles({
                             display: 'flex',
                         })}
-                        onClick={(event) => event.stopPropagation()}
+                        style={{marginTop}}
                     >
                         {buttonLink}
                     </div>

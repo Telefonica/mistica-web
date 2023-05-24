@@ -8,10 +8,9 @@ export const actions = style([
     sprinkles({
         display: 'flex',
         flex: 1,
-        alignItems: 'center',
         justifyContent: 'space-between',
     }),
-    {marginTop: 16, flexWrap: 'wrap'},
+    {flexWrap: 'wrap'},
 ]);
 
 export const boxed = style([
@@ -108,15 +107,21 @@ export const slots = style([
 
 export const footerText = style([
     {
-        minHeight: '40px',
-        maxHeight: '40px',
-        minWidth: '70px',
+        width: 'auto',
         height: 'auto',
 
-        width: 'auto',
-        overflowY: 'hidden',
-        flex: '1',
         display: 'flex',
+        flex: '1',
+
+        lineClamp: '2',
+        boxOrient: 'vertical',
+
         alignItems: 'center',
+
+        minHeight: '40px',
+        maxHeight: '40px',
+
+        overflowY: 'hidden',
+        overflowWrap: 'break-word',
     },
 ]);
