@@ -1,5 +1,5 @@
 import {applyAlpha} from '../utils/color';
-import {MOVISTAR_SKIN} from './constants';
+import {MOVISTAR_LEGACY_SKIN} from './constants';
 
 import type {GetKnownSkin, KnownSkin} from './types';
 
@@ -61,7 +61,7 @@ export const palette = {
 
 export const getMovistarLegacySkin: GetKnownSkin = (variant) => {
     const skin: KnownSkin = {
-        name: MOVISTAR_SKIN,
+        name: MOVISTAR_LEGACY_SKIN,
         colors: {
             // BACKGROUNDS
             appBarBackground: palette.white,
