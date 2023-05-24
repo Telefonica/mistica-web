@@ -14,6 +14,7 @@ import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
 import IconButton from './icon-button';
 import Inline from './inline';
 import Touchable from './touchable';
+import classNames from 'classnames';
 
 import type {
     ValueBlock,
@@ -204,7 +205,7 @@ const CardFooter: React.FC<CardFooterProps> = ({button, footerImage, footerText,
 
     const margin = {marginLeft: '16px'};
     return (
-        <div>
+        <div style={{marginTop: 'auto'}}>
             <NegativeBox>
                 <Divider />
             </NegativeBox>
@@ -335,27 +336,29 @@ const DataCardAdvanced = React.forwardRef<HTMLDivElement, DataCardAdvancedProps>
 
         return (
             <section aria-label={ariaLabel} style={{height: '100%', position: 'relative'}}>
-                <Touchable
-                    onPress={() => {
-                        if (cardOnPress) {
-                            cardOnPress();
-                        }
-                    }}
-                    className={sprinkles({height: '100%', position: 'relative'})}
+                <Boxed
+                    className={styles.boxed}
+                    dataAttributes={{'component-name': 'DataCard', ...dataAttributes}}
+                    ref={ref}
+                    width="100%"
+                    height="100%"
                 >
-                    <Boxed
-                        className={styles.boxed}
-                        dataAttributes={{'component-name': 'DataCard', ...dataAttributes}}
-                        ref={ref}
-                        width="100%"
-                        height="100%"
-                    >
-                        <div className={styles.dataCard}>
+                    <div className={styles.dataCard}>
+                        <Touchable
+                            onPress={() => {
+                                if (cardOnPress) {
+                                    cardOnPress();
+                                }
+                            }}
+                            className={styles.TouchableZone}
+                        >
                             <div className={cardContentStyle}>
                                 <div
-                                    className={sprinkles({
-                                        paddingTop: 8,
-                                    })}
+                                    className={classNames(
+                                        sprinkles({
+                                            paddingTop: 8,
+                                        })
+                                    )}
                                 >
                                     <Stack space={8} className={sprinkles({flex: 1})}>
                                         {hascardImage ? <Image height={40} src={cardImage} /> : null}
@@ -378,8 +381,7 @@ const DataCardAdvanced = React.forwardRef<HTMLDivElement, DataCardAdvancedProps>
                                     </div>
                                 )}
                             </div>
-
-                            <div style={{marginTop: 'auto'}}>
+                            <div style={{marginTop: 'auto', width: '100%'}}>
                                 {slots && slots?.length ? (
                                     <div className={styles.slots}>
                                         {slots.map((slot, index) => {
@@ -401,12 +403,12 @@ const DataCardAdvanced = React.forwardRef<HTMLDivElement, DataCardAdvancedProps>
                                         })}
                                     </div>
                                 ) : null}
-
-                                {hasFooter && <CardFooter {...footerProps} />}
                             </div>
-                        </div>
-                    </Boxed>
-                </Touchable>
+                        </Touchable>
+
+                        {hasFooter && <CardFooter {...footerProps} />}
+                    </div>
+                </Boxed>
             </section>
         );
     }

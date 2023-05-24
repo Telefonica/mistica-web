@@ -94,6 +94,11 @@ export const cardActionInverse = style([
     },
 ]);
 
+export const TouchableZone = style([
+    sprinkles({height: '100%', flex: 1}),
+    {display: 'flex', flexDirection: 'column', alignItems: 'flex-start', alignContent: 'flex-start'},
+]);
+
 export const slots = style([
     sprinkles({
         paddingTop: 16,
