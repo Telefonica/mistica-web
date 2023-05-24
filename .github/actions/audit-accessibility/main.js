@@ -3,7 +3,8 @@ const path = require('path');
 const os = require('os');
 const _ = require('lodash');
 const {execSync} = require('child_process');
-const StaticServer = require('static-server');
+const handler = require('serve-handler');
+const http = require('http');
 const {AxePuppeteer} = require('@axe-core/puppeteer');
 const {createHtmlReport} = require('axe-html-reporter');
 const puppeteer = require('puppeteer');
@@ -45,14 +46,21 @@ const getStories = () => {
 const startStorybook = () => {
     return new Promise((resolve) => {
         const port = 6006;
-        const storybookServer = new StaticServer({rootPath: 'public', port: port});
-        storybookServer.start(() => {
+
+        const storybookServer = http.createServer((request, response) => {
+            return handler(request, response, {
+                public: 'public',
+                cleanUrls: ['/'],
+            });
+        });
+
+        storybookServer.listen(port, () => {
             console.log(`Serving static storybook at: http://localhost:${port}`);
             resolve({
                 getStoryUrl: (id) => `http://localhost:${port}/iframe.html?viewMode=story&id=${id}`,
                 closeStorybook: () => {
                     console.log('Stopping static storybook server');
-                    storybookServer.stop();
+                    storybookServer.close();
                 },
             });
         });

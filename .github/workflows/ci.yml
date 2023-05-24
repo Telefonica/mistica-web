@@ -11,13 +11,17 @@ on:
     merge_group:
         branches: [master]
 
+concurrency:
+    group: ci-${{ github.ref }}
+    cancel-in-progress: true
+
 jobs:
     build:
         runs-on: ubuntu-latest
         container: telefonica/web-builder:chromium93.0.4577-1.2.4
 
         steps:
-            - uses: actions/checkout@v2
+            - uses: actions/checkout@v3
 
             - name: Install dependencies
               env:
@@ -47,7 +51,7 @@ jobs:
             fail-fast: false
 
         steps:
-            - uses: actions/checkout@v2
+            - uses: actions/checkout@v3
 
             - name: Install dependencies
               env:
@@ -70,7 +74,7 @@ jobs:
         if: always()
 
         steps:
-            - uses: actions/checkout@v2
+            - uses: actions/checkout@v3
 
             - name: Install dependencies
               env:

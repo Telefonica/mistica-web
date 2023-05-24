@@ -1,4 +1,5 @@
 import {style} from '@vanilla-extract/css';
+import {vars} from './skins/skin-contract.css';
 import {sprinkles} from './sprinkles.css';
 import * as mq from './media-queries.css';
 
@@ -100,7 +101,7 @@ export const field = sprinkles({
     overflow: 'hidden',
     border: 'regular',
     display: 'flex',
-    borderRadius: 8,
+    borderRadius: vars.borderRadii.input,
     position: 'relative',
 });
 

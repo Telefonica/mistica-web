@@ -1,3 +1,59 @@
+# [14.10.0](https://github.com/Telefonica/mistica-web/compare/v14.9.0...v14.10.0) (2023-05-23)
+
+
+### Features
+
+* **Chip:** Add ability to click Chips ([#621](https://github.com/Telefonica/mistica-web/issues/621)) ([#759](https://github.com/Telefonica/mistica-web/issues/759)) ([e2b28a7](https://github.com/Telefonica/mistica-web/commit/e2b28a7846bcc8ac85642fe7a8e5136a9fc64dea))
+
+# [14.9.0](https://github.com/Telefonica/mistica-web/compare/v14.8.0...v14.9.0) (2023-05-19)
+
+
+### Bug Fixes
+
+* **Chevron:** fix align issue in chevron icon ([#756](https://github.com/Telefonica/mistica-web/issues/756)) ([e4a3913](https://github.com/Telefonica/mistica-web/commit/e4a391327c908fa4fb594c4d75ee20a87a4290ad))
+* **Form:** export formValues type in form ([#758](https://github.com/Telefonica/mistica-web/issues/758)) ([d5e5157](https://github.com/Telefonica/mistica-web/commit/d5e515731f1bb1f328388765734218d503487735))
+* **Row, BoxedRow:** check for undefined value in props is incorrect ([#753](https://github.com/Telefonica/mistica-web/issues/753)) ([2e5af28](https://github.com/Telefonica/mistica-web/commit/2e5af28eaf69ac73ed5c0ae094eb4a72e83aa2dd))
+* **Tabs:** remove disabled in active tab ([#755](https://github.com/Telefonica/mistica-web/issues/755)) ([d15b02b](https://github.com/Telefonica/mistica-web/commit/d15b02bc9231c091ff2e07ecfc445e062ff92707))
+
+
+### Features
+
+* **Circle:** add border prop ([#761](https://github.com/Telefonica/mistica-web/issues/761)) ([431ff37](https://github.com/Telefonica/mistica-web/commit/431ff37fe174510db3ab512872295eacce5b7dbb))
+* **HorizontalScroll:** new component ([#745](https://github.com/Telefonica/mistica-web/issues/745)) ([61e4f3d](https://github.com/Telefonica/mistica-web/commit/61e4f3d9df5bc07abff5499268e8eba9eab5f7c8))
+
+# [14.8.0](https://github.com/Telefonica/mistica-web/compare/v14.7.1...v14.8.0) (2023-05-11)
+
+
+### Bug Fixes
+
+* **FixedFooterLayout:** issues when rendering inside iframe ([#735](https://github.com/Telefonica/mistica-web/issues/735)) ([ebce0c2](https://github.com/Telefonica/mistica-web/commit/ebce0c2559641061882fe0a0fb332cf0290c949d))
+* **IconButton:** styles ([#747](https://github.com/Telefonica/mistica-web/issues/747)) ([0ee48fe](https://github.com/Telefonica/mistica-web/commit/0ee48fe7d9ad0550c26af7b3bf8ffe6344d390d7))
+* **Video:** logic for video container ([#748](https://github.com/Telefonica/mistica-web/issues/748)) ([212d137](https://github.com/Telefonica/mistica-web/commit/212d1372cf1e73de9f3bc39554482ef45719d6d5))
+
+
+### Features
+
+* **DisplayMediaCard, PosterCard:** support for background video ([#724](https://github.com/Telefonica/mistica-web/issues/724)) ([9959613](https://github.com/Telefonica/mistica-web/commit/9959613bdfa9e158091755f12d3001206018d77c))
+* **Spinner:** update iOS style ([#750](https://github.com/Telefonica/mistica-web/issues/750)) ([053dc09](https://github.com/Telefonica/mistica-web/commit/053dc093c06f7e32a83be3e775975ba2f8163fa7))
+
+## [14.7.1](https://github.com/Telefonica/mistica-web/compare/v14.7.0...v14.7.1) (2023-05-08)
+
+
+### Bug Fixes
+
+* **Chip:** improve border color in dark mode ([#744](https://github.com/Telefonica/mistica-web/issues/744)) ([7c6020e](https://github.com/Telefonica/mistica-web/commit/7c6020ebdfa0784edd4e3817a8d0bf2e52125f2e))
+* **TextField:** label not shrinking when the field was autofilled by browser autocomplete ([#728](https://github.com/Telefonica/mistica-web/issues/728)) ([97dff64](https://github.com/Telefonica/mistica-web/commit/97dff641829c0a51778e4ef2338d4306a1d16d01))
+
+# [14.7.0](https://github.com/Telefonica/mistica-web/compare/v14.6.0...v14.7.0) (2023-04-27)
+
+
+### Features
+
+* **Button:** show loading state when onPress returns a promise until it resolves ([#726](https://github.com/Telefonica/mistica-web/issues/726)) ([262e17b](https://github.com/Telefonica/mistica-web/commit/262e17b596acb8d1da76fd3d36356018402a385f))
+* **Logo, MovistarLogo, VivoLogo, O2Logo, TelefonicaLogo, BlauLogo:** new components ([#721](https://github.com/Telefonica/mistica-web/issues/721)) ([ff04a85](https://github.com/Telefonica/mistica-web/commit/ff04a85aebe846ed8bc4b63ffbf4bc643389502f))
+* **skin:** make border radius configurable by skin ([#723](https://github.com/Telefonica/mistica-web/issues/723)) ([07cb30d](https://github.com/Telefonica/mistica-web/commit/07cb30dd3166eacb899dea3a4158efe13977baf9))
+* **ThemeVariant:** support alternative theme variant ([#722](https://github.com/Telefonica/mistica-web/issues/722)) ([76128f0](https://github.com/Telefonica/mistica-web/commit/76128f0421062323bc39319389161f0e7c8dd2cc))
+
 # [14.6.0](https://github.com/Telefonica/mistica-web/compare/v14.5.0...v14.6.0) (2023-04-18)
 
 

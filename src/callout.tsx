@@ -3,18 +3,18 @@ import Stack from './stack';
 import Inline from './inline';
 import Box from './box';
 import {useTheme} from './hooks';
-import {ThemeVariant, useIsInverseVariant} from './theme-variant-context';
+import {ThemeVariant, useThemeVariant} from './theme-variant-context';
 import {Text2, Text3} from './text';
 import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
 import IconButton from './icon-button';
 import classNames from 'classnames';
-import {ButtonLink, ButtonPrimary, ButtonSecondary} from './button';
 import ButtonGroup from './button-group';
 import * as styles from './callout.css';
 import {sprinkles} from './sprinkles.css';
 import {vars} from './skins/skin-contract.css';
 import {getPrefixedDataAttributes} from './utils/dom';
 
+import type {ButtonLink, ButtonPrimary, ButtonSecondary} from './button';
 import type {DataAttributes, RendersNullableElement} from './utils/types';
 
 type Props = {
@@ -41,16 +41,18 @@ const Callout: React.FC<Props> = ({
     'aria-label': ariaLabel,
     dataAttributes,
 }) => {
-    const isInverse = useIsInverseVariant();
+    const variant = useThemeVariant();
     const {texts} = useTheme();
     return (
         <section
             className={classNames(
                 styles.container,
                 sprinkles({
-                    background: isInverse
-                        ? vars.colors.backgroundContainer
-                        : vars.colors.backgroundAlternative,
+                    background: {
+                        inverse: vars.colors.backgroundContainer,
+                        alternative: vars.colors.backgroundContainer,
+                        default: vars.colors.backgroundContainerAlternative,
+                    }[variant],
                 })
             )}
             aria-label={ariaLabel ?? title}

@@ -7,7 +7,6 @@ import {
     skinVars,
     Circle,
     Tag,
-    TagType,
     Image,
     ButtonSecondary,
     IconLightningRegular,
@@ -18,6 +17,8 @@ import {
 } from '..';
 import {Placeholder} from '../placeholder';
 import avatarImg from './images/avatar.jpg';
+
+import type {TagType} from '..';
 
 export default {
     title: 'Components/Cards/Display data card',

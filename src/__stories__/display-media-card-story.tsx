@@ -7,26 +7,34 @@ import {
     skinVars,
     Circle,
     Tag,
-    TagType,
     ButtonSecondary,
     IconLightningRegular,
     ResponsiveLayout,
     Stack,
     Text2,
     Inline,
+    Title1,
+    Box,
 } from '..';
 import usingVrImg from './images/using-vr.jpg';
 import avatarImg from './images/avatar.jpg';
+import beachVideo from './videos/beach.mp4';
+import beachImg from './images/beach.jpg';
+
+import type {TagType} from '..';
 
 export default {
     title: 'Components/Cards/Display media card',
 };
 
-const BACKGROUND_SRC = usingVrImg;
+const BACKGROUND_IMAGE_SRC = usingVrImg;
+const BACKGROUND_VIDEO_SRC = beachVideo;
+const BACKGROUND_VIDEO_POSTER_SRC = beachImg;
 
 type DisplayMediaCardArgs = {
     asset: 'icon' | 'circle + icon' | 'image' | 'circle + image';
     headlineType: TagType;
+    background: 'image' | 'video';
     headline: string;
     pretitle: string;
     title: string;
@@ -42,6 +50,7 @@ export const Default: StoryComponent<DisplayMediaCardArgs> = ({
     asset = 'icon',
     headline,
     headlineType,
+    background,
     pretitle,
     title,
     description,
@@ -75,34 +84,99 @@ export const Default: StoryComponent<DisplayMediaCardArgs> = ({
         </ButtonSecondary>
     ) : undefined;
 
+    const backgroundProps =
+        background === 'image'
+            ? {
+                  onClose: closable ? () => {} : undefined,
+                  actions: withTopAction
+                      ? [
+                            {
+                                Icon: IconLightningRegular,
+                                onPress: () => {},
+                                label: 'Lightning',
+                            },
+                        ]
+                      : undefined,
+                  backgroundImage: BACKGROUND_IMAGE_SRC,
+              }
+            : {
+                  backgroundVideo: BACKGROUND_VIDEO_SRC,
+                  poster: BACKGROUND_VIDEO_POSTER_SRC,
+              };
+
+    const wrongBackgroundProps =
+        background === 'image'
+            ? {
+                  onClose: closable ? () => {} : undefined,
+                  actions: withTopAction
+                      ? [
+                            {
+                                Icon: IconLightningRegular,
+                                onPress: () => {},
+                                label: 'Lightning',
+                            },
+                        ]
+                      : undefined,
+                  backgroundImage: 'test',
+              }
+            : {
+                  backgroundVideo: 'test',
+                  poster: 'test',
+              };
+
     return (
-        <DisplayMediaCard
-            onClose={closable ? () => {} : undefined}
-            actions={
-                withTopAction
-                    ? [
-                          {
-                              Icon: IconLightningRegular,
-                              onPress: () => {},
-                              label: 'Lightning',
-                          },
-                      ]
-                    : undefined
-            }
-            backgroundImage={BACKGROUND_SRC}
-            icon={icon}
-            headline={headline ? <Tag type={headlineType}>{headline}</Tag> : undefined}
-            pretitle={pretitle}
-            title={title}
-            description={description}
-            button={button}
-            buttonLink={buttonLink}
-            secondaryButton={secondaryButton}
-            dataAttributes={{testid: 'display-media-card'}}
-            aria-label="Display data card label"
-            width={width}
-            aspectRatio={aspectRatio}
-        />
+        <Stack space={32} dataAttributes={{testid: 'display-media-card'}}>
+            <DisplayMediaCard
+                {...backgroundProps}
+                icon={icon}
+                headline={headline ? <Tag type={headlineType}>{headline}</Tag> : undefined}
+                pretitle={pretitle}
+                title={title}
+                description={description}
+                button={button}
+                buttonLink={buttonLink}
+                secondaryButton={secondaryButton}
+                aria-label="Display media card label"
+                width={width}
+                aspectRatio={aspectRatio}
+            />
+
+            <Title1>Wrong source for media</Title1>
+            <DisplayMediaCard
+                {...wrongBackgroundProps}
+                icon={icon}
+                headline={headline ? <Tag type={headlineType}>{headline}</Tag> : undefined}
+                pretitle={pretitle}
+                title={title}
+                description={description}
+                button={button}
+                buttonLink={buttonLink}
+                secondaryButton={secondaryButton}
+                aria-label="Display media card fallback label"
+                width={width}
+                aspectRatio={aspectRatio}
+            />
+
+            <Title1>Wrong source for media with inverse</Title1>
+            <ResponsiveLayout isInverse>
+                <Box paddingY={8}>
+                    <DisplayMediaCard
+                        {...wrongBackgroundProps}
+                        icon={icon}
+                        headline={headline ? <Tag type={headlineType}>{headline}</Tag> : undefined}
+                        pretitle={pretitle}
+                        title={title}
+                        description={description}
+                        button={button}
+                        buttonLink={buttonLink}
+                        secondaryButton={secondaryButton}
+                        aria-label="Display data card fallback inverse label"
+                        width={width}
+                        aspectRatio={aspectRatio}
+                    />
+                </Box>
+            </ResponsiveLayout>
+        </Stack>
     );
 };
 
@@ -110,6 +184,7 @@ Default.storyName = 'Display Media card';
 Default.args = {
     asset: 'icon',
     headlineType: 'promo',
+    background: 'image',
     headline: 'Priority',
     pretitle: 'Pretitle',
     title: 'Title',
@@ -133,6 +208,10 @@ Default.argTypes = {
         options: ['button', 'link', 'button and link', 'button and secondary button'],
         control: {type: 'select'},
     },
+    background: {
+        options: ['image', 'video'],
+        control: {type: 'select'},
+    },
     aspectRatio: {
         options: ['1:1', '16:9', '7:10', '9:10', 'auto'],
         control: {type: 'select'},
@@ -154,15 +233,19 @@ export const Group: StoryComponent = () => {
                         pretitle="Pretitle"
                         title="Title"
                         description="Description"
-                        backgroundImage={BACKGROUND_SRC}
+                        backgroundImage={BACKGROUND_IMAGE_SRC}
                         button={
                             <ButtonPrimary small href="https://google.com">
                                 Action
                             </ButtonPrimary>
                         }
                     />
-                    <DisplayMediaCard title="Title" backgroundImage={BACKGROUND_SRC} />
-                    <DisplayMediaCard title="Title" backgroundImage={BACKGROUND_SRC} onClose={() => {}} />
+                    <DisplayMediaCard title="Title" backgroundImage={BACKGROUND_IMAGE_SRC} />
+                    <DisplayMediaCard
+                        title="Title"
+                        backgroundImage={BACKGROUND_IMAGE_SRC}
+                        onClose={() => {}}
+                    />
                 </Inline>
             </Stack>
         </ResponsiveLayout>

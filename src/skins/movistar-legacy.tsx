@@ -1,5 +1,5 @@
 import {applyAlpha} from '../utils/color';
-import {MOVISTAR_SKIN} from './constants';
+import {MOVISTAR_LEGACY_SKIN} from './constants';
 
 import type {GetKnownSkin, KnownSkin} from './types';
 
@@ -61,12 +61,15 @@ export const palette = {
 
 export const getMovistarLegacySkin: GetKnownSkin = (variant) => {
     const skin: KnownSkin = {
-        name: MOVISTAR_SKIN,
+        name: MOVISTAR_LEGACY_SKIN,
         colors: {
             // BACKGROUNDS
             appBarBackground: palette.white,
             background: palette.white,
             backgroundContainer: palette.white,
+            backgroundContainerBrand: palette.movistarBlue,
+            backgroundContainerBrandOverInverse: palette.movistarBlue55,
+            backgroundContainerAlternative: palette.grey1,
             backgroundBrand: palette.movistarBlue,
             backgroundBrandSecondary: palette.movistarBlue,
             backgroundOverlay: applyAlpha(palette.grey6, 0.6),
@@ -149,6 +152,7 @@ export const getMovistarLegacySkin: GetKnownSkin = (variant) => {
             neutralHigh: palette.grey6,
             neutralMedium: palette.grey5,
             neutralLow: palette.grey1,
+            neutralLowAlternative: palette.grey2,
             promo: palette.purple,
             highlight: palette.pink,
 
@@ -193,13 +197,16 @@ export const getMovistarLegacySkin: GetKnownSkin = (variant) => {
             appBarBackground: palette.darkModeGrey,
             background: palette.darkModeBlack,
             backgroundContainer: palette.darkModeGrey,
+            backgroundContainerBrand: palette.darkModeGrey,
+            backgroundContainerBrandOverInverse: palette.darkModeGrey,
+            backgroundContainerAlternative: palette.darkModeGrey,
             backgroundBrand: palette.darkModeBlack,
             backgroundBrandSecondary: palette.darkModeBlack,
             backgroundOverlay: applyAlpha(palette.darkModeGrey, 0.8),
             backgroundSkeleton: palette.grey6,
             backgroundSkeletonInverse: palette.grey6,
             navigationBarBackground: palette.darkModeBlack,
-            backgroundAlternative: palette.darkModeGrey,
+            backgroundAlternative: palette.darkModeBlack,
             backgroundFeedbackBottom: palette.darkModeBlack,
             skeletonWave: palette.grey5,
             borderLow: palette.darkModeBlack,
@@ -243,6 +250,7 @@ export const getMovistarLegacySkin: GetKnownSkin = (variant) => {
             neutralHigh: palette.grey2,
             neutralMedium: palette.grey5,
             neutralLow: palette.grey6,
+            neutralLowAlternative: palette.grey6,
             textPrimary: palette.grey2,
             textPrimaryInverse: palette.grey2,
             textSecondary: palette.grey4,

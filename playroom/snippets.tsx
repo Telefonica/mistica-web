@@ -712,7 +712,7 @@ const cardSnippets: Array<Snippet> = [
     },
     {
         group: 'Cards',
-        name: 'DisplayMediaCard',
+        name: 'DisplayMediaCard with image',
         code: `
         <DisplayMediaCard
           headline={<Tag type="promo">Headline</Tag>}
@@ -737,14 +737,32 @@ const cardSnippets: Array<Snippet> = [
     },
     {
         group: 'Cards',
-        name: 'PosterCard',
+        name: 'DisplayMediaCard with video',
+        code: `
+        <DisplayMediaCard
+          headline={<Tag type="promo">Headline</Tag>}
+          pretitle="Pretitle"
+          title="Title"
+          description="Description"
+          backgroundVideo="https://fr-cert1-es.mytelco.io/2O4-xBJqiMlAfLkseq8RkXs_mv2ACV7Hnt20HqXxNl-mK7KLI3M2dAw"
+          poster="https://source.unsplash.com/900x900/?landscape"
+          button={
+            <ButtonPrimary small href="https://google.com">
+              Action
+            </ButtonPrimary>
+          }
+        />`,
+    },
+    {
+        group: 'Cards',
+        name: 'PosterCard with image',
         code: `
         <PosterCard
           headline={<Tag type="promo">Headline</Tag>}
           pretitle="Pretitle"
           title="Title"
           description="Description"
-          backgroundImage="https://api.lorem.space/image/watch?w=700&h=700"
+          backgroundImage="https://source.unsplash.com/900x900/?landscape"
           onClose={() => {}}
           actions={[
             {
@@ -753,6 +771,24 @@ const cardSnippets: Array<Snippet> = [
               label: "Lightning",
             },
           ]}
+        />`,
+    },
+    {
+        group: 'Cards',
+        name: 'PosterCard with video',
+        code: `
+        <PosterCard
+          headline={<Tag type="promo">Headline</Tag>}
+          pretitle="Pretitle"
+          title="Title"
+          description="Description"
+          backgroundVideo="https://fr-cert1-es.mytelco.io/2O4-xBJqiMlAfLkseq8RkXs_mv2ACV7Hnt20HqXxNl-mK7KLI3M2dAw"
+          poster="https://source.unsplash.com/900x900/?landscape"
+          button={
+            <ButtonPrimary small href="https://google.com">
+              Action
+            </ButtonPrimary>
+          }
         />`,
     },
 ];
@@ -1664,6 +1700,69 @@ const loaderSnippets = [
     },
 ];
 
+const logoSnippets = [
+    {
+        group: 'Logo',
+        name: 'Logo imagotype',
+        code: `<Logo type="imagotype" size={48} />`,
+    },
+    {
+        group: 'Logo',
+        name: 'Logo isotype',
+        code: `<Logo type="isotype" size={48} />`,
+    },
+    {
+        group: 'Logo',
+        name: 'Logo vertical',
+        code: `<Logo type="vertical" size={48} />`,
+    },
+    {
+        group: 'Logo',
+        name: 'Logo with to prop',
+        code: `<Logo to="#" size={48} />`,
+    },
+    {
+        group: 'Logo',
+        name: 'Logo with href prop',
+        code: `<Logo href="#" newTab aria-label="href logo" size={48} />`,
+    },
+    {
+        group: 'Logo',
+        name: 'Logo with onPress prop',
+        code: `<Logo onPress={() => {alert({ title: "pressed" });}} aria-label="pressed logo" size={48} />`,
+    },
+    {
+        group: 'Logo',
+        name: 'Blau Logo',
+        code: `<BlauLogo size={48} type="isotype" />`,
+    },
+    {
+        group: 'Logo',
+        name: 'Movistar Logo',
+        code: `<MovistarLogo size={48} type="isotype" />`,
+    },
+    {
+        group: 'Logo',
+        name: 'O2 Logo',
+        code: `<O2Logo size={48} type="isotype" />`,
+    },
+    {
+        group: 'Logo',
+        name: 'Telefónica Logo',
+        code: `<TelefonicaLogo size={48} type="isotype" />`,
+    },
+    {
+        group: 'Logo',
+        name: 'Vigo Logo',
+        code: `<VivoLogo size={48} type="isotype" />`,
+    },
+    {
+        group: 'Logo',
+        name: ' with to prop',
+        code: `<Logo to="#" size={48} />`,
+    },
+];
+
 export default [
     ...buttonSnippets,
     ...formSnippets,
@@ -1797,4 +1896,5 @@ export default [
     ...popoverSnippets,
     ...heroSnippets,
     ...loaderSnippets,
+    ...logoSnippets,
 ].sort((s1, s2) => s1.group.localeCompare(s2.group)) as Array<Snippet>;

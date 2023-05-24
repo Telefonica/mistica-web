@@ -1,9 +1,9 @@
 import * as React from 'react';
-import {ButtonLink, ButtonPrimary, ButtonSecondary} from './button';
 import classNames from 'classnames';
 import {getPrefixedDataAttributes} from './utils/dom';
 import * as styles from './button-group.css';
 
+import type {ButtonLink, ButtonPrimary, ButtonSecondary} from './button';
 import type {DataAttributes, RendersNullableElement} from './utils/types';
 
 export interface ButtonGroupProps {

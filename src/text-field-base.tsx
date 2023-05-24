@@ -300,6 +300,12 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
                                 // Workaround for systems where maxlength prop is applied onBlur (https://caniuse.com/#feat=maxlength)
                                 if (maxLength === undefined || event.target.value.length <= maxLength) {
                                     setCharacterCount(event.target.value.length);
+
+                                    // Browser's autofill can change the value without focusing
+                                    if (event.target.value.length > 0 && inputState !== 'focused') {
+                                        setInputState('filled');
+                                    }
+
                                     props.onChange?.(event);
                                 } else {
                                     event.stopPropagation();

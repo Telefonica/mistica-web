@@ -1,7 +1,7 @@
 import {style, styleVariants, createVar} from '@vanilla-extract/css';
 import {sprinkles} from './sprinkles.css';
 import * as mq from './media-queries.css';
-import {vars as colorsVars} from './skins/skin-contract.css';
+import {vars as skinVars} from './skins/skin-contract.css';
 
 const top = createVar();
 const left = createVar();
@@ -21,8 +21,8 @@ export const optionsContainer = style([
     sprinkles({
         position: 'absolute',
         padding: 0,
-        borderRadius: 8,
-        background: colorsVars.colors.backgroundContainer,
+        borderRadius: skinVars.borderRadii.input,
+        background: skinVars.colors.backgroundContainer,
     }),
     {
         margin: 0,
@@ -93,7 +93,7 @@ export const selectContainerVariants = styleVariants({
 const selectBase = style([
     sprinkles({
         border: 'none',
-        color: colorsVars.colors.textPrimary,
+        color: skinVars.colors.textPrimary,
         background: 'transparent', // FieldContainer gives the correct background color
         width: '100%',
         height: '100%',
@@ -129,7 +129,7 @@ const selectTextBase = style([
         position: 'absolute',
         overflow: 'hidden',
         maxWidth: '100%',
-        color: colorsVars.colors.textPrimary,
+        color: skinVars.colors.textPrimary,
     }),
     {
         pointerEvents: 'none',
@@ -160,7 +160,7 @@ export const arrowDown = style([
 
 export const menuItem = style([
     sprinkles({
-        color: colorsVars.colors.textPrimary,
+        color: skinVars.colors.textPrimary,
         display: 'flex',
         alignItems: 'center',
         cursor: 'pointer',
@@ -182,5 +182,5 @@ export const menuItem = style([
 ]);
 
 export const menuItemSelected = sprinkles({
-    background: colorsVars.colors.backgroundAlternative,
+    background: skinVars.colors.backgroundAlternative,
 });

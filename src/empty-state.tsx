@@ -2,7 +2,7 @@ import * as React from 'react';
 import {assignInlineVars} from '@vanilla-extract/dynamic';
 import classnames from 'classnames';
 import {useIsInverseVariant} from './theme-variant-context';
-import {ButtonPrimary, ButtonSecondary, ButtonLink} from './button';
+import {ButtonPrimary} from './button';
 import {useTheme} from './hooks';
 import Stack from './stack';
 import {Text3, Text6} from './text';
@@ -13,6 +13,7 @@ import {AspectRatioElement} from './utils/aspect-ratio-support';
 import {getPrefixedDataAttributes} from './utils/dom';
 import {sprinkles} from './sprinkles.css';
 
+import type {ButtonSecondary, ButtonLink} from './button';
 import type {ButtonGroupProps} from './button-group';
 import type {DataAttributes, RendersNullableElement} from './utils/types';
 

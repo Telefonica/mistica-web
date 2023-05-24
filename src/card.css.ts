@@ -125,18 +125,26 @@ export const snapCardTouchableHoverTransparent = style([
     },
 ]);
 
-export const displayCard = style([
-    sprinkles({
-        display: 'flex',
-        flex: 1,
-        flexDirection: 'column',
-        justifyContent: 'space-between',
-    }),
-    {
-        backgroundPosition: 'center center',
-        backgroundSize: 'cover',
-    },
-]);
+export const displayCardContainer = sprinkles({
+    width: '100%',
+    display: 'flex',
+    position: 'relative',
+});
+
+export const displayCardContent = sprinkles({
+    display: 'flex',
+    flex: 1,
+    flexDirection: 'column',
+    position: 'relative',
+    justifyContent: 'space-between',
+});
+
+export const displayCardBackground = sprinkles({
+    position: 'absolute',
+    objectFit: 'cover',
+    width: '100%',
+    height: '100%',
+});
 
 export const displayCardGradient = style({
     background: `linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.4) 29.02%, rgba(0, 0, 0, 0.7) 100%)`,
@@ -183,6 +191,21 @@ export const cardActionInverse = style([
             [mq.supportsHover]: {
                 ':hover': {
                     background: applyAlpha(vars.rawColors.backgroundContainer, 0.9),
+                },
+            },
+        },
+    },
+]);
+
+export const videoAction = style([
+    cardActionBase,
+    {
+        background: applyAlpha('#000000', 0.4),
+        transition: 'background-color 0.2s ease-in-out',
+        '@media': {
+            [mq.supportsHover]: {
+                ':hover': {
+                    background: applyAlpha('#000000', 0.6),
                 },
             },
         },

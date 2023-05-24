@@ -1,10 +1,13 @@
 name: audit-a11y
 on: [pull_request]
+concurrency:
+    group: audit-a11y-${{ github.ref }}
+    cancel-in-progress: true
 jobs:
     audit-a11y:
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v2
+            - uses: actions/checkout@v3
 
             - name: Install dependencies
               env:

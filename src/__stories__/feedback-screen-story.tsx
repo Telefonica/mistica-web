@@ -1,9 +1,17 @@
 import * as React from 'react';
-import {FeedbackScreen} from '../feedback';
-import {ButtonLink, ButtonPrimary, ButtonSecondary} from '../button';
-import Stack from '../stack';
-import {ThemeVariant, useIsInverseVariant} from '../theme-variant-context';
-import {Box, FixedToTop, Text3, Text2, skinVars} from '..';
+import {
+    Box,
+    FixedToTop,
+    Text3,
+    Text2,
+    skinVars,
+    useIsInverseVariant,
+    Stack,
+    ButtonLink,
+    ButtonPrimary,
+    ButtonSecondary,
+    FeedbackScreen,
+} from '..';
 
 export default {
     title: 'Patterns/Feedback/FeedbackScreen',
@@ -85,10 +93,11 @@ export const FeedbackScreenStory: StoryComponent<FeedbackScreenArgs> = ({
 }) => (
     <FixedToTop height={withNavbar ? 56 : 0}>
         {(top) => (
-            <ThemeVariant isInverse={isInverse}>
+            <>
                 {withNavbar && <Navbar top={top} />}
                 <Box paddingTop={withNavbar ? 56 : 0}>
                     <FeedbackScreen
+                        isInverse={isInverse}
                         title={title}
                         description={
                             multipleParagraphs ? [description, 'paragraph 2', 'paragraph 3'] : description
@@ -119,7 +128,7 @@ export const FeedbackScreenStory: StoryComponent<FeedbackScreenArgs> = ({
                         </Stack>
                     </FeedbackScreen>
                 </Box>
-            </ThemeVariant>
+            </>
         )}
     </FixedToTop>
 );
