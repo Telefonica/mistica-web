@@ -24,9 +24,7 @@ export const dataCard = style([
     sprinkles({
         display: 'flex',
         flex: 1,
-        paddingTop: 8,
         paddingBottom: 24,
-        paddingX: 16,
         flexDirection: 'column',
         width: '100%',
         height: '100%',
@@ -94,7 +92,7 @@ export const cardActionInverse = style([
 ]);
 
 export const TouchableZone = style([
-    sprinkles({height: '100%', flex: 1}),
+    sprinkles({height: '100%', flex: 1, paddingTop: 8, paddingX: 16}),
     {display: 'flex', flexDirection: 'column', alignItems: 'flex-start', alignContent: 'flex-start'},
 ]);
 

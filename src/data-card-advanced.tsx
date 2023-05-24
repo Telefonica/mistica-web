@@ -210,7 +210,7 @@ const CardFooter: React.FC<CardFooterProps> = ({button, footerImage, footerText,
     const maxWidth = hasButtonLink && !hasAllItens ? '178px' : '';
 
     return (
-        <div style={{marginTop: 'auto'}}>
+        <div style={{marginTop: 'auto', marginLeft: '16px', marginRight: '16px'}}>
             <NegativeBox>
                 <Divider />
             </NegativeBox>
