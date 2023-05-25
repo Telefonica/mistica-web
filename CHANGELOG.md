@@ -1,3 +1,10 @@
+# [14.10.0](https://github.com/Telefonica/mistica-web/compare/v14.9.0...v14.10.0) (2023-05-23)
+
+
+### Features
+
+* **Chip:** Add ability to click Chips ([#621](https://github.com/Telefonica/mistica-web/issues/621)) ([#759](https://github.com/Telefonica/mistica-web/issues/759)) ([e2b28a7](https://github.com/Telefonica/mistica-web/commit/e2b28a7846bcc8ac85642fe7a8e5136a9fc64dea))
+
 # [14.9.0](https://github.com/Telefonica/mistica-web/compare/v14.8.0...v14.9.0) (2023-05-19)
 
 
