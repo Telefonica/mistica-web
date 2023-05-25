@@ -58,6 +58,7 @@ const interactive = style({
                 [`&:hover:not(${chipActive})`]: {
                     color: vars.colors.controlActivated,
                     backgroundColor: vars.colors.brandLow,
+                    cursor: 'pointer',
                 },
             },
         },
