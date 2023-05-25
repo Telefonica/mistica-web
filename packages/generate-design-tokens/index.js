@@ -5,6 +5,8 @@ const DESIGN_TOKENS_FOLDER = path.join(__dirname, '..', '..', '.github', 'mistic
 const SKINS_FOLDER = path.join(__dirname, '..', '..', 'src', 'skins');
 
 const capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1);
+const toCamelCase = (str) => str.replace(/-([a-z])/g, (g) => g[1].toUpperCase());
+const toPascalCase = (str) => capitalize(toCamelCase(str));
 
 const buildColor = (colorDescription) => {
     if (colorDescription.value.startsWith('{') && colorDescription.value.endsWith('}')) {
@@ -52,7 +54,7 @@ const generateSkinSrc = (skinName) => {
     const designTokensFile = fs.readFileSync(path.join(DESIGN_TOKENS_FOLDER, `${skinName}.json`), 'utf8');
     const needsApplyAlphaImport = designTokensFile.includes('rgba');
     const designTokens = JSON.parse(designTokensFile);
-    const skinConstantName = `${skinName.toUpperCase()}_SKIN`;
+    const skinConstantName = `${skinName.toUpperCase().replace(/-/g, '_')}_SKIN`;
 
     return `
 import {${skinConstantName}} from './constants';
@@ -66,7 +68,7 @@ export const palette = {
         .join(',')}
 };
 
-export const get${capitalize(skinName)}Skin: GetKnownSkin = () => {
+export const get${toPascalCase(skinName)}Skin: GetKnownSkin = () => {
     const skin: KnownSkin = {
         name: ${skinConstantName},
         colors: {
