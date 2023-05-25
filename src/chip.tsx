@@ -104,7 +104,6 @@ const Chip: React.FC<ChipProps> = ({
                             justifyContent: 'center',
                             alignItems: 'center',
                         }}
-                        aria-label={texts.closeButtonLabel}
                         onPress={() => onClose?.()}
                     >
                         {renderBadge()}
@@ -149,10 +148,10 @@ const Chip: React.FC<ChipProps> = ({
                         active
                             ? 'active'
                             : overAlternative
-                            ? 'default'
-                            : 'overAlternative' && active === undefined
-                            ? 'default'
-                            : 'overAlternative'
+                            ? 'overAlternative'
+                            : 'default' && active !== undefined && isMobile
+                            ? 'overAlternative'
+                            : 'default'
                     ],
                     {
                         [styles.chipInteractiveVariants[isDarkMode ? 'dark' : 'light']]: isInteractive,

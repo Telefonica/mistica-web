@@ -9,7 +9,6 @@ const containerBase = style([
         justifyContent: 'center',
         alignItems: 'center',
         border: 'regular',
-        paddingY: 4,
     }),
     {
         borderRadius: vars.borderRadii.indicator,
@@ -18,7 +17,6 @@ const containerBase = style([
         minWidth: 56,
         cursor: 'default',
         borderColor: vars.colors.control,
-
         '@media': {
             [mq.mobile]: {
                 height: 40,
@@ -43,16 +41,9 @@ export const chipVariants = styleVariants({
     overAlternative: [
         containerBase,
         sprinkles({
-            background: vars.colors.backgroundContainer,
+            background: vars.colors.backgroundContainerAlternative,
             color: vars.colors.textPrimary,
         }),
-        {
-            '@media': {
-                [mq.mobile]: {
-                    background: vars.colors.backgroundContainerAlternative,
-                },
-            },
-        },
     ],
     active: [
         chipActive,
@@ -75,18 +66,16 @@ const interactive = style({
                 [`&:hover:not(${chipActive})`]: {
                     color: vars.colors.controlActivated,
                     backgroundColor: vars.colors.brandLow,
-                    cursor: 'pointer',
-                },
-            },
-        },
-        [mq.mobile]: {
-            selectors: {
-                [`&:hover:not(${chipActive})`]: {
-                    cursor: 'default',
                 },
             },
         },
     },
+});
+
+export const button = sprinkles({
+    border: 'none',
+    background: 'transparent',
+    padding: 0,
 });
 
 export const chipInteractiveVariants = styleVariants({
