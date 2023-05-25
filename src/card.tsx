@@ -19,7 +19,7 @@ import IconPlayFilled from './generated/mistica-icons/icon-play-filled';
 import {combineRefs} from './utils/common';
 import Spinner from './spinner';
 import Video from './video';
-import {ThemeVariant, useIsInverseVariant, useThemeVariant} from './theme-variant-context';
+import {ThemeVariant, useIsInverseVariant} from './theme-variant-context';
 import classNames from 'classnames';
 
 import type {PressHandler} from './touchable';
@@ -111,34 +111,25 @@ const CSS_ASPECT_RATIO = {
     auto: 'auto',
 } as const;
 
-type MaybeWithActionsProps = {
+type CardContainerProps = {
     children: React.ReactNode;
     width?: string | number;
     height?: string | number;
     minWidth?: string | number;
     minHeight?: string | number;
     aspectRatio?: AspectRatio | number;
-    actions?: Array<CardAction>;
-    onClose?: () => void;
-    isInverse?: boolean;
     'aria-label'?: string;
 };
 
-const MaybeWithActions = ({
+const CardContainer = ({
     children,
     width = '100%',
     height = '100%',
     minWidth,
     minHeight,
     aspectRatio,
-    actions,
-    onClose,
-    isInverse,
     'aria-label': ariaLabel,
-}: MaybeWithActionsProps): JSX.Element => {
-    const finalActions = useTopActions(actions, onClose);
-    const hasActions = finalActions.length > 0;
-
+}: CardContainerProps): JSX.Element => {
     const cssAspectRatio: React.CSSProperties['aspectRatio'] = aspectRatio
         ? typeof aspectRatio === 'number'
             ? String(aspectRatio)
@@ -158,19 +149,33 @@ const MaybeWithActions = ({
             }}
         >
             {children}
-            {hasActions && (
-                <div
-                    style={{
-                        position: 'absolute',
-                        right: 8,
-                        top: 8,
-                        zIndex: 2, // needed because images has zIndex 1, otherwise this component won't be shown
-                    }}
-                >
-                    <CardActionsGroup actions={finalActions} isInverse={isInverse} />
-                </div>
-            )}
         </section>
+    );
+};
+
+type MaybeWithActionsProps = {
+    actions?: Array<CardAction>;
+    onClose?: () => void;
+    isInverse?: boolean;
+};
+
+const MaybeWithActions = ({actions, onClose, isInverse}: MaybeWithActionsProps): JSX.Element => {
+    const finalActions = useTopActions(actions, onClose);
+    const hasActions = finalActions.length > 0;
+
+    return hasActions ? (
+        <div
+            style={{
+                position: 'absolute',
+                right: 8,
+                top: 8,
+                zIndex: 3, // needed because images has zIndex 1 and touchable overlay has zIndex 2
+            }}
+        >
+            <CardActionsGroup actions={finalActions} isInverse={isInverse} />
+        </div>
+    ) : (
+        <></>
     );
 };
 
@@ -446,12 +451,11 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
         ref
     ) => {
         const isTouchable = touchableProps.href || touchableProps.to || touchableProps.onPress;
-        const variant = useThemeVariant();
 
         return (
-            <MaybeWithActions onClose={onClose} actions={actions} aria-label={ariaLabel} isInverse>
+            <CardContainer aria-label={ariaLabel}>
                 <Boxed
-                    className={styles.boxed}
+                    className={classNames(styles.boxed)}
                     dataAttributes={{'component-name': 'MediaCard', ...dataAttributes}}
                     ref={ref}
                     width="100%"
@@ -460,12 +464,10 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
                     <BaseTouchable
                         maybe
                         {...touchableProps}
-                        className={classNames(
-                            styles.touchableCardContainer,
-                            isTouchable ? styles.mediaCardTouchable[variant] : undefined
-                        )}
+                        className={styles.touchableCardContainer}
                         aria-label={ariaLabel}
                     >
+                        {isTouchable && <div className={styles.touchableCardOverlay} />}
                         <div className={styles.mediaCard}>
                             <MediaBorderRadiusProvider value={false}>{media}</MediaBorderRadiusProvider>
                             <div className={styles.mediaCardContent}>
@@ -486,8 +488,9 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
                             </div>
                         </div>
                     </BaseTouchable>
+                    <MaybeWithActions onClose={onClose} actions={actions} aria-label={ariaLabel} isInverse />
                 </Boxed>
-            </MaybeWithActions>
+            </CardContainer>
         );
     }
 );

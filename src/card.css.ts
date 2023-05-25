@@ -1,10 +1,8 @@
-import {style, styleVariants} from '@vanilla-extract/css';
+import {style} from '@vanilla-extract/css';
 import {sprinkles} from './sprinkles.css';
 import * as mq from './media-queries.css';
 import {vars} from './skins/skin-contract.css';
 import {applyAlpha} from './utils/color';
-
-type Variant = 'default' | 'inverse' | 'alternative';
 
 export const actions = style([
     sprinkles({display: 'flex', flex: 1, alignItems: 'flex-end'}),
@@ -12,13 +10,13 @@ export const actions = style([
 ]);
 
 export const boxed = style([
-    sprinkles({display: 'flex'}),
+    sprinkles({display: 'flex', position: 'relative'}),
     {
         isolation: 'isolate', // Needed to preserve border-radius with Video component and Safari
     },
 ]);
 
-export const touchableCardContainer = sprinkles({
+export const touchableCardContainer = style({
     display: 'flex',
     height: '100%',
     width: '100%',
@@ -27,25 +25,23 @@ export const touchableCardContainer = sprinkles({
     background: 'transparent',
 });
 
-const getCardInteractionStyles = (config: Partial<Record<Variant, {hover?: string; active?: string}>>) =>
-    styleVariants(config, (value) => ({
-        '@media': {
-            [mq.supportsHover]: {
-                transition: 'background-color 0.15s ease-in-out',
-                ':hover': {
-                    backgroundColor: value?.hover,
-                },
-                ':active': {
-                    backgroundColor: value?.active,
-                },
-            },
+export const touchableCardOverlay = style({
+    height: '100%',
+    width: '100%',
+    background: 'black',
+    opacity: 0,
+    pointerEvents: 'none',
+    position: 'absolute',
+    zIndex: 2,
+    transition: 'all 0.1s',
+    selectors: {
+        [`${boxed}:hover &`]: {
+            opacity: 0.2,
         },
-    }));
-
-export const mediaCardTouchable = getCardInteractionStyles({
-    default: {hover: 'red', active: 'white'},
-    inverse: {hover: 'blue', active: 'white'},
-    alternative: {hover: 'green', active: 'white'},
+        [`${touchableCardContainer}:active &`]: {
+            opacity: 0.4,
+        },
+    },
 });
 
 export const mediaCard = sprinkles({
