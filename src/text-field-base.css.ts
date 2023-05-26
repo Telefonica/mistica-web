@@ -107,6 +107,7 @@ export const input = style([
                 opacity: 0,
                 color: 'transparent',
                 background: 'transparent',
+                cursor: 'pointer',
             },
 
             // Chrome: hide value if not valid or focused
