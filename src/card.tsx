@@ -636,27 +636,7 @@ interface SnapCardBaseProps {
     children?: void;
 }
 
-interface SnapCardToProps extends SnapCardBaseProps {
-    to?: string;
-    fullPageOnWebView?: boolean;
-    href?: undefined;
-    onPress?: undefined;
-}
-
-interface SnapCardHrefProps extends SnapCardBaseProps {
-    href?: string;
-    newTab?: boolean;
-    onPress?: undefined;
-    to?: undefined;
-}
-
-interface SnapCardOnPressProps extends SnapCardBaseProps {
-    onPress?: () => void;
-    href?: undefined;
-    to?: undefined;
-}
-
-type SnapCardProps = SnapCardToProps | SnapCardHrefProps | SnapCardOnPressProps;
+type SnapCardProps = SnapCardBaseProps & BaseCardTouchableProps;
 
 export const SnapCard = React.forwardRef<HTMLDivElement, SnapCardProps>(
     (
@@ -675,7 +655,7 @@ export const SnapCard = React.forwardRef<HTMLDivElement, SnapCardProps>(
         ref
     ) => {
         const {isDarkMode} = useTheme();
-        const isTouchable = Boolean(touchableProps.to || touchableProps.href || touchableProps.onPress);
+        const isTouchable = touchableProps.href || touchableProps.to || touchableProps.onPress;
 
         return (
             <Boxed
@@ -689,14 +669,15 @@ export const SnapCard = React.forwardRef<HTMLDivElement, SnapCardProps>(
                 <BaseTouchable
                     maybe
                     {...touchableProps}
-                    className={
-                        // @todo: define hover background color for inverse and for dark mode
-                        isTouchable && !isInverse && !isDarkMode
-                            ? styles.snapCardTouchableHover
-                            : styles.snapCardTouchableHoverTransparent
-                    }
+                    className={styles.touchableCardContainer}
                     aria-label={ariaLabel}
                 >
+                    {isTouchable && (
+                        <div
+                            className={styles.touchableCardOverlay}
+                            style={{backgroundColor: isDarkMode ? 'white' : 'black', zIndex: 1}}
+                        />
+                    )}
                     <section className={styles.snapCard}>
                         <div>
                             {icon && <Box paddingBottom={16}>{icon}</Box>}

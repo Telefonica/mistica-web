@@ -100,6 +100,7 @@ export const dataCard = style([
 export const snapCard = style([
     sprinkles({
         display: 'flex',
+        position: 'relative',
         height: '100%',
         flexDirection: 'column',
         justifyContent: 'space-between',
@@ -109,7 +110,7 @@ export const snapCard = style([
     {
         minHeight: 80,
         minWidth: 104,
-
+        zIndex: 2,
         '@media': {
             [mq.desktopOrBigger]: {
                 padding: 24,
