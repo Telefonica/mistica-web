@@ -723,9 +723,6 @@ interface CommonDisplayCardProps {
     titleLinesMax?: number;
     description?: string;
     descriptionLinesMax?: number;
-    button?: React.ReactComponentElement<typeof ButtonPrimary>;
-    secondaryButton?: React.ReactComponentElement<typeof ButtonSecondary>;
-    buttonLink?: React.ReactComponentElement<typeof ButtonLink>;
     'aria-label'?: string;
 }
 
@@ -735,9 +732,9 @@ type DisplayMediaCardBaseProps = {
     height?: number | string;
 };
 
-interface DisplayMediaCardWithImageProps extends CommonDisplayCardProps {
+type DisplayMediaCardWithImageProps = CommonDisplayCardProps & {
     backgroundImage: string;
-}
+};
 
 type DisplayMediaCardWithVideoProps = Omit<CommonDisplayCardProps, 'actions' | 'onClose'> & {
     backgroundVideo: VideoSource;
@@ -748,14 +745,22 @@ type DisplayMediaCardWithVideoProps = Omit<CommonDisplayCardProps, 'actions' | '
 type DisplayMediaCardProps = DisplayMediaCardBaseProps &
     ExclusifyUnion<DisplayMediaCardWithImageProps | DisplayMediaCardWithVideoProps>;
 
-interface DisplayDataCardProps extends CommonDisplayCardProps {
+type DisplayDataCardProps = CommonDisplayCardProps & {
     extra?: React.ReactNode;
     isInverse?: boolean;
-}
+};
 
 type GenericDisplayCardProps = ExclusifyUnion<
     (DisplayMediaCardProps & {isInverse: true}) | DisplayDataCardProps
->;
+> &
+    ExclusifyUnion<
+        | BaseCardTouchableProps
+        | {
+              button?: React.ReactComponentElement<typeof ButtonPrimary>;
+              secondaryButton?: React.ReactComponentElement<typeof ButtonSecondary>;
+              buttonLink?: React.ReactComponentElement<typeof ButtonLink>;
+          }
+    >;
 
 const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
     (
@@ -784,6 +789,7 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
             height,
             aspectRatio,
             'aria-label': ariaLabel,
+            ...touchableProps
         },
         ref
     ) => {
@@ -813,16 +819,11 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
         const textShadow = withGradient ? '0 0 16px rgba(0,0,0,0.4)' : undefined;
         const hasTopActions = actions?.length || onClose;
 
+        const {isDarkMode} = useTheme();
+        const isTouchable = touchableProps.href || touchableProps.to || touchableProps.onPress;
+
         return (
-            <MaybeWithActions
-                width={width}
-                height={height}
-                aspectRatio={aspectRatio}
-                onClose={onClose}
-                actions={actions}
-                aria-label={ariaLabel}
-                isInverse={isInverse}
-            >
+            <CardContainer width={width} height={height} aspectRatio={aspectRatio} aria-label={ariaLabel}>
                 <InternalBoxed
                     borderRadius={vars.borderRadii.legacyDisplay}
                     className={styles.boxed}
@@ -839,102 +840,113 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
                             : undefined
                     }
                 >
-                    <div className={styles.displayCardContainer}>
-                        <ThemeVariant isInverse={isExternalInverse}>
+                    <BaseTouchable
+                        maybe
+                        {...touchableProps}
+                        className={styles.touchableCardContainer}
+                        aria-label={ariaLabel}
+                    >
+                        {isTouchable && (
                             <div
-                                className={styles.displayCardBackground}
+                                className={styles.touchableCardOverlay}
+                                style={{backgroundColor: isDarkMode ? 'white' : 'black', zIndex: 1}}
+                            />
+                        )}
+
+                        <div className={styles.displayCardContainer}>
+                            <ThemeVariant isInverse={isExternalInverse}>
+                                <div className={styles.displayCardBackground}>
+                                    {backgroundVideo ? video : backgroundImage ? image : undefined}
+                                </div>
+                            </ThemeVariant>
+
+                            <div
+                                className={styles.displayCardContent}
                                 style={{
-                                    zIndex: 0,
+                                    paddingTop: withGradient && !icon && !hasTopActions ? 0 : 24,
                                 }}
                             >
-                                {backgroundVideo ? video : backgroundImage ? image : undefined}
-                            </div>
-                        </ThemeVariant>
-
-                        <div
-                            className={styles.displayCardContent}
-                            style={{
-                                paddingTop: withGradient && !icon && !hasTopActions ? 0 : 24,
-                                zIndex: 1,
-                            }}
-                        >
-                            {icon ? (
-                                <Box paddingBottom={withGradient ? 0 : 40} paddingX={24}>
-                                    {icon}
-                                </Box>
-                            ) : (
+                                {icon ? (
+                                    <Box paddingBottom={withGradient ? 0 : 40} paddingX={24}>
+                                        {icon}
+                                    </Box>
+                                ) : (
+                                    <Box
+                                        paddingBottom={
+                                            actions?.length || onClose ? (withGradient ? 24 : 64) : 0
+                                        }
+                                    />
+                                )}
                                 <Box
-                                    paddingBottom={actions?.length || onClose ? (withGradient ? 24 : 64) : 0}
-                                />
-                            )}
-                            <Box
-                                paddingX={24}
-                                paddingTop={withGradient ? 40 : 0}
-                                paddingBottom={24}
-                                className={withGradient ? styles.displayCardGradient : undefined}
-                            >
-                                <Stack space={24}>
-                                    <div>
-                                        <Stack space={8}>
-                                            {(headline || pretitle || title) && (
-                                                <header>
-                                                    <Stack space={16}>
-                                                        {headline}
-                                                        <Stack space={4}>
-                                                            {pretitle && (
-                                                                <Text2
+                                    paddingX={24}
+                                    paddingTop={withGradient ? 40 : 0}
+                                    paddingBottom={24}
+                                    className={withGradient ? styles.displayCardGradient : undefined}
+                                >
+                                    <Stack space={24}>
+                                        <div>
+                                            <Stack space={8}>
+                                                {(headline || pretitle || title) && (
+                                                    <header>
+                                                        <Stack space={16}>
+                                                            {headline}
+                                                            <Stack space={4}>
+                                                                {pretitle && (
+                                                                    <Text2
+                                                                        forceMobileSizes
+                                                                        truncate={pretitleLinesMax}
+                                                                        as="div"
+                                                                        regular
+                                                                        textShadow={textShadow}
+                                                                    >
+                                                                        {pretitle}
+                                                                    </Text2>
+                                                                )}
+                                                                <Text6
                                                                     forceMobileSizes
-                                                                    truncate={pretitleLinesMax}
-                                                                    as="div"
-                                                                    regular
+                                                                    truncate={titleLinesMax}
+                                                                    as="h3"
                                                                     textShadow={textShadow}
+                                                                    hyphens="auto"
                                                                 >
-                                                                    {pretitle}
-                                                                </Text2>
-                                                            )}
-                                                            <Text6
-                                                                forceMobileSizes
-                                                                truncate={titleLinesMax}
-                                                                as="h3"
-                                                                textShadow={textShadow}
-                                                                hyphens="auto"
-                                                            >
-                                                                {title}
-                                                            </Text6>
+                                                                    {title}
+                                                                </Text6>
+                                                            </Stack>
                                                         </Stack>
-                                                    </Stack>
-                                                </header>
-                                            )}
+                                                    </header>
+                                                )}
 
-                                            {description && (
-                                                <Text3
-                                                    forceMobileSizes
-                                                    truncate={descriptionLinesMax}
-                                                    as="p"
-                                                    regular
-                                                    color={vars.colors.textSecondary}
-                                                    textShadow={textShadow}
-                                                    hyphens="auto"
-                                                >
-                                                    {description}
-                                                </Text3>
-                                            )}
-                                        </Stack>
-                                        {extra}
-                                    </div>
-                                    {(button || secondaryButton || buttonLink) && (
-                                        <ButtonGroup
-                                            primaryButton={button}
-                                            secondaryButton={secondaryButton}
-                                            link={buttonLink}
-                                        />
-                                    )}
-                                </Stack>
-                            </Box>
+                                                {description && (
+                                                    <Text3
+                                                        forceMobileSizes
+                                                        truncate={descriptionLinesMax}
+                                                        as="p"
+                                                        regular
+                                                        color={vars.colors.textSecondary}
+                                                        textShadow={textShadow}
+                                                        hyphens="auto"
+                                                    >
+                                                        {description}
+                                                    </Text3>
+                                                )}
+                                            </Stack>
+                                            {extra}
+                                        </div>
+                                        {(button || secondaryButton || buttonLink) && (
+                                            <ButtonGroup
+                                                primaryButton={button}
+                                                secondaryButton={secondaryButton}
+                                                link={buttonLink}
+                                            />
+                                        )}
+                                    </Stack>
+                                </Box>
+                            </div>
                         </div>
-                    </div>
+                    </BaseTouchable>
+                    <MaybeWithActions onClose={onClose} actions={actions} isInverse />
                 </InternalBoxed>
-            </MaybeWithActions>
+            </CardContainer>
         );
     }
 );

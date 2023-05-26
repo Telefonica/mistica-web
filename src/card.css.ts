@@ -163,19 +163,21 @@ export const displayCardContainer = sprinkles({
     position: 'relative',
 });
 
-export const displayCardContent = sprinkles({
+export const displayCardContent = style({
     display: 'flex',
     flex: 1,
     flexDirection: 'column',
     position: 'relative',
     justifyContent: 'space-between',
+    zIndex: 2,
 });
 
-export const displayCardBackground = sprinkles({
+export const displayCardBackground = style({
     position: 'absolute',
     objectFit: 'cover',
     width: '100%',
     height: '100%',
+    zIndex: 0,
 });
 
 export const displayCardGradient = style({
