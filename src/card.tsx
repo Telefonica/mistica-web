@@ -743,16 +743,7 @@ type DisplayMediaCardWithVideoProps = Omit<CommonDisplayCardProps, 'actions' | '
 };
 
 type DisplayMediaCardProps = DisplayMediaCardBaseProps &
-    ExclusifyUnion<DisplayMediaCardWithImageProps | DisplayMediaCardWithVideoProps>;
-
-type DisplayDataCardProps = CommonDisplayCardProps & {
-    extra?: React.ReactNode;
-    isInverse?: boolean;
-};
-
-type GenericDisplayCardProps = ExclusifyUnion<
-    (DisplayMediaCardProps & {isInverse: true}) | DisplayDataCardProps
-> &
+    ExclusifyUnion<DisplayMediaCardWithImageProps | DisplayMediaCardWithVideoProps> &
     ExclusifyUnion<
         | BaseCardTouchableProps
         | {
@@ -761,6 +752,22 @@ type GenericDisplayCardProps = ExclusifyUnion<
               buttonLink?: React.ReactComponentElement<typeof ButtonLink>;
           }
     >;
+
+type DisplayDataCardProps = CommonDisplayCardProps & {
+    extra?: React.ReactNode;
+    isInverse?: boolean;
+} & ExclusifyUnion<
+        | BaseCardTouchableProps
+        | {
+              button?: React.ReactComponentElement<typeof ButtonPrimary>;
+              secondaryButton?: React.ReactComponentElement<typeof ButtonSecondary>;
+              buttonLink?: React.ReactComponentElement<typeof ButtonLink>;
+          }
+    >;
+
+type GenericDisplayCardProps = ExclusifyUnion<
+    (DisplayMediaCardProps & {isInverse: true}) | DisplayDataCardProps
+>;
 
 const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
     (
