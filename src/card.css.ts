@@ -35,12 +35,16 @@ export const touchableCardOverlay = style({
     pointerEvents: 'none',
     position: 'absolute',
     transition: 'all 0.1s',
-    selectors: {
-        [`${touchableContainer}:hover &`]: {
-            opacity: 0.05,
-        },
-        [`${touchable}:active &`]: {
-            opacity: 0.1,
+    '@media': {
+        [mq.supportsHover]: {
+            selectors: {
+                [`${touchableContainer}:hover &`]: {
+                    opacity: 0.05,
+                },
+                [`${touchable}:active &`]: {
+                    opacity: 0.1,
+                },
+            },
         },
     },
 });
