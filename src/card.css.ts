@@ -20,6 +20,7 @@ export const touchableCardContainer = style({
     display: 'flex',
     height: '100%',
     width: '100%',
+    position: 'relative',
     padding: 0,
     border: 'none',
     background: 'transparent',
@@ -28,18 +29,16 @@ export const touchableCardContainer = style({
 export const touchableCardOverlay = style({
     height: '100%',
     width: '100%',
-    background: 'black',
     opacity: 0,
     pointerEvents: 'none',
     position: 'absolute',
-    zIndex: 2,
     transition: 'all 0.1s',
     selectors: {
         [`${boxed}:hover &`]: {
-            opacity: 0.2,
+            opacity: 0.05,
         },
         [`${touchableCardContainer}:active &`]: {
-            opacity: 0.4,
+            opacity: 0.1,
         },
     },
 });
@@ -55,6 +54,7 @@ export const mediaCardContent = style([
     sprinkles({
         display: 'flex',
         flex: 1,
+        position: 'relative',
         paddingX: 16,
         paddingTop: 16,
         paddingBottom: 24,
@@ -62,6 +62,7 @@ export const mediaCardContent = style([
         justifyContent: 'space-between',
     }),
     {
+        zIndex: 3,
         '@media': {
             [mq.desktopOrBigger]: {
                 paddingLeft: 24,
@@ -77,12 +78,14 @@ export const dataCard = style([
     sprinkles({
         display: 'flex',
         flex: 1,
+        position: 'relative',
         paddingY: 24,
         paddingX: 16,
         flexDirection: 'column',
         width: '100%',
     }),
     {
+        zIndex: 2,
         '@media': {
             [mq.desktopOrBigger]: {
                 paddingTop: 32,

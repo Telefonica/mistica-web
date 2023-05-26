@@ -451,6 +451,7 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
         ref
     ) => {
         const isTouchable = touchableProps.href || touchableProps.to || touchableProps.onPress;
+        const {isDarkMode} = useTheme();
 
         return (
             <CardContainer aria-label={ariaLabel}>
@@ -467,7 +468,12 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
                         className={styles.touchableCardContainer}
                         aria-label={ariaLabel}
                     >
-                        {isTouchable && <div className={styles.touchableCardOverlay} />}
+                        {isTouchable && (
+                            <div
+                                className={styles.touchableCardOverlay}
+                                style={{backgroundColor: isDarkMode ? 'white' : 'black', zIndex: 2}}
+                            />
+                        )}
                         <div className={styles.mediaCard}>
                             <MediaBorderRadiusProvider value={false}>{media}</MediaBorderRadiusProvider>
                             <div className={styles.mediaCardContent}>
@@ -488,14 +494,14 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
                             </div>
                         </div>
                     </BaseTouchable>
-                    <MaybeWithActions onClose={onClose} actions={actions} aria-label={ariaLabel} isInverse />
+                    <MaybeWithActions onClose={onClose} actions={actions} isInverse />
                 </Boxed>
             </CardContainer>
         );
     }
 );
 
-interface DataCardProps {
+interface DataCardBaseProps {
     /**
      * Typically a mistica-icons component element
      */
@@ -511,14 +517,21 @@ interface DataCardProps {
     descriptionLinesMax?: number;
     extra?: React.ReactNode;
     actions?: Array<CardAction>;
-    button?: RendersNullableElement<typeof ButtonPrimary>;
-    buttonLink?: RendersNullableElement<typeof ButtonLink>;
     children?: void;
     /** "data-" prefix is automatically added. For example, use "testid" instead of "data-testid" */
     dataAttributes?: DataAttributes;
     'aria-label'?: string;
     onClose?: () => void;
 }
+
+type DataCardProps = DataCardBaseProps &
+    ExclusifyUnion<
+        | BaseCardTouchableProps
+        | {
+              button?: RendersNullableElement<typeof ButtonPrimary>;
+              buttonLink?: RendersNullableElement<typeof ButtonLink>;
+          }
+    >;
 
 export const DataCard = React.forwardRef<HTMLDivElement, DataCardProps>(
     (
@@ -540,15 +553,14 @@ export const DataCard = React.forwardRef<HTMLDivElement, DataCardProps>(
             dataAttributes,
             'aria-label': ariaLabel,
             onClose,
+            ...touchableProps
         },
         ref
     ) => {
-        const finalActions = useTopActions(actions, onClose);
-        const hasActions = finalActions.length > 0;
         const hasIcon = !!icon;
 
-        const topActionsStylesWithIcon = {position: 'absolute', top: 8, right: 8, zIndex: 2} as const;
-        const topActionsStylesWithoutIcon = {marginRight: -8, marginTop: -16} as const;
+        const {isDarkMode} = useTheme();
+        const isTouchable = touchableProps.href || touchableProps.to || touchableProps.onPress;
 
         return (
             <section aria-label={ariaLabel} style={{height: '100%', position: 'relative'}}>
@@ -559,41 +571,50 @@ export const DataCard = React.forwardRef<HTMLDivElement, DataCardProps>(
                     width="100%"
                     height="100%"
                 >
-                    <div className={styles.dataCard}>
-                        <div
-                            className={sprinkles({
-                                display: 'flex',
-                            })}
-                        >
-                            <Stack space={16} className={sprinkles({flex: 1})}>
-                                {hasIcon ? icon : null}
-                                <CardContent
-                                    headline={headline}
-                                    pretitle={pretitle}
-                                    pretitleLinesMax={pretitleLinesMax}
-                                    title={title}
-                                    titleLinesMax={titleLinesMax}
-                                    subtitle={subtitle}
-                                    subtitleLinesMax={subtitleLinesMax}
-                                    description={description}
-                                    descriptionLinesMax={descriptionLinesMax}
-                                />
-                            </Stack>
-                            {hasActions && (
-                                <div style={hasIcon ? topActionsStylesWithIcon : topActionsStylesWithoutIcon}>
-                                    <CardActionsGroup actions={finalActions} />
+                    <BaseTouchable
+                        maybe
+                        {...touchableProps}
+                        className={styles.touchableCardContainer}
+                        aria-label={ariaLabel}
+                    >
+                        {isTouchable && (
+                            <div
+                                className={styles.touchableCardOverlay}
+                                style={{backgroundColor: isDarkMode ? 'white' : 'black', zIndex: 1}}
+                            />
+                        )}
+                        <div className={styles.dataCard}>
+                            <div
+                                className={sprinkles({
+                                    display: 'flex',
+                                })}
+                            >
+                                <Stack space={16} className={sprinkles({flex: 1})}>
+                                    {hasIcon ? icon : null}
+                                    <CardContent
+                                        headline={headline}
+                                        pretitle={pretitle}
+                                        pretitleLinesMax={pretitleLinesMax}
+                                        title={title}
+                                        titleLinesMax={titleLinesMax}
+                                        subtitle={subtitle}
+                                        subtitleLinesMax={subtitleLinesMax}
+                                        description={description}
+                                        descriptionLinesMax={descriptionLinesMax}
+                                    />
+                                </Stack>
+                            </div>
+
+                            {extra && <div>{extra}</div>}
+
+                            {(button || buttonLink) && (
+                                <div className={styles.actions}>
+                                    <ButtonGroup primaryButton={button} link={buttonLink} />
                                 </div>
                             )}
                         </div>
-
-                        {extra && <div>{extra}</div>}
-
-                        {(button || buttonLink) && (
-                            <div className={styles.actions}>
-                                <ButtonGroup primaryButton={button} link={buttonLink} />
-                            </div>
-                        )}
-                    </div>
+                    </BaseTouchable>
+                    <MaybeWithActions onClose={onClose} actions={actions} />
                 </Boxed>
             </section>
         );
