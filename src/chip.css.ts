@@ -13,13 +13,13 @@ const containerBase = style([
     {
         borderRadius: vars.borderRadii.indicator,
         verticalAlign: 'middle',
-        height: 32,
+        minHeight: 32,
         minWidth: 56,
         cursor: 'default',
         borderColor: vars.colors.control,
         '@media': {
-            [mq.mobile]: {
-                height: 40,
+            [mq.tabletOrSmaller]: {
+                minHeight: 40,
                 minWidth: 72,
                 paddingTop: 10,
                 paddingBottom: 10,

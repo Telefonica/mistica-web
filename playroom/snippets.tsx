@@ -1825,7 +1825,7 @@ export default [
     },
     ...navigationBarSnippets,
     menuSnippet,
-    {group: 'Chip', name: 'Chip', code: '<Chip >Chip</Chip>'},
+    {group: 'Chip', name: 'Chip', code: '<Chip>Chip</Chip>'},
     {group: 'Chip', name: 'Chip closeable', code: '<Chip onClose={() => {}}>Chip</Chip>'},
     {
         group: 'Chip',
@@ -1839,7 +1839,7 @@ export default [
         <Checkbox
           name="chip-checkbox"
           render={({labelId, checked}) => (
-            <Chip alternative active={checked} id={labelId} Icon={IconLightningFilled}>
+            <Chip active={checked} id={labelId} Icon={IconLightningFilled}>
                 Chip
             </Chip>
           )}

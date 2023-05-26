@@ -21,8 +21,6 @@ interface SimpleChipProps {
     id?: string;
     dataAttributes?: DataAttributes;
     badge?: boolean | number;
-    badgeValue?: number | string;
-    alternative?: boolean;
 }
 
 interface ClosableChipProps extends SimpleChipProps {
@@ -57,11 +55,7 @@ const Chip: React.FC<ChipProps> = ({
         if (!badge) {
             return null;
         }
-        return (
-            <Box>
-                <div>{badge === true ? <Badge /> : <Badge value={badge} />}</div>
-            </Box>
-        );
+        return <div>{badge === true ? <Badge /> : <Badge value={badge} />}</div>;
     };
 
     const body = (
@@ -125,7 +119,7 @@ const Chip: React.FC<ChipProps> = ({
                 {body}
                 <Box>
                     <IconButton
-                        size={16}
+                        size={24}
                         style={{
                             display: 'flex',
                             justifyContent: 'center',
@@ -144,15 +138,7 @@ const Chip: React.FC<ChipProps> = ({
         return (
             <Box
                 className={classnames(
-                    styles.chipVariants[
-                        active
-                            ? 'active'
-                            : overAlternative
-                            ? 'overAlternative'
-                            : 'default' && active !== undefined && isMobile
-                            ? 'overAlternative'
-                            : 'default'
-                    ],
+                    styles.chipVariants[active ? 'active' : overAlternative ? 'overAlternative' : 'default'],
                     {
                         [styles.chipInteractiveVariants[isDarkMode ? 'dark' : 'light']]: isInteractive,
                     }
