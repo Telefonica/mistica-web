@@ -830,7 +830,7 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
                     dataAttributes={dataAttributes}
                     ref={ref}
                     width="100%"
-                    minHeight="100%"
+                    height="100%"
                     isInverse={isInverse}
                     background={
                         backgroundImage || backgroundVideo
@@ -1000,7 +1000,8 @@ type PosterCardWithVideoProps = Omit<PosterCardBaseProps, 'actions' | 'onClose'>
     backgroundVideoRef?: React.RefObject<HTMLVideoElement>;
 };
 
-type PosterCardProps = ExclusifyUnion<PosterCardWithImageProps | PosterCardWithVideoProps>;
+type PosterCardProps = ExclusifyUnion<PosterCardWithImageProps | PosterCardWithVideoProps> &
+    BaseCardTouchableProps;
 
 const POSTER_CARD_MIN_WIDTH = 140;
 const POSTER_CARD_MIN_HEIGHT = 112;
@@ -1026,6 +1027,7 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
             titleLinesMax,
             description,
             descriptionLinesMax,
+            ...touchableProps
         },
         ref
     ) => {
@@ -1056,17 +1058,17 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
         const hasTopActions = actions?.length || onClose;
         const {textPresets} = useTheme();
 
+        const {isDarkMode} = useTheme();
+        const isTouchable = touchableProps.href || touchableProps.to || touchableProps.onPress;
+
         return (
-            <MaybeWithActions
+            <CardContainer
                 width={width}
                 height={height}
                 minWidth={POSTER_CARD_MIN_WIDTH}
                 minHeight={POSTER_CARD_MIN_HEIGHT}
                 aspectRatio={aspectRatio}
-                onClose={onClose}
-                actions={actions}
                 aria-label={ariaLabel}
-                isInverse
             >
                 <InternalBoxed
                     borderRadius={vars.borderRadii.legacyDisplay}
@@ -1074,7 +1076,7 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                     dataAttributes={dataAttributes}
                     ref={ref}
                     width="100%"
-                    minHeight="100%"
+                    height="100%"
                     isInverse
                     background={
                         backgroundImage || backgroundVideo
@@ -1084,96 +1086,107 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                             : undefined
                     }
                 >
-                    <div className={styles.displayCardContainer}>
-                        <ThemeVariant isInverse={isExternalInverse}>
+                    <BaseTouchable
+                        maybe
+                        {...touchableProps}
+                        className={styles.touchableCardContainer}
+                        aria-label={ariaLabel}
+                    >
+                        {isTouchable && (
                             <div
-                                className={styles.displayCardBackground}
+                                className={styles.touchableCardOverlay}
+                                style={{backgroundColor: isDarkMode ? 'white' : 'black', zIndex: 1}}
+                            />
+                        )}
+
+                        <div className={styles.displayCardContainer}>
+                            <ThemeVariant isInverse={isExternalInverse}>
+                                <div className={styles.displayCardBackground}>
+                                    {backgroundVideo ? video : backgroundImage ? image : undefined}
+                                </div>
+                            </ThemeVariant>
+
+                            <div
+                                className={styles.displayCardContent}
                                 style={{
-                                    zIndex: 0,
+                                    paddingTop: withGradient && !icon && !hasTopActions ? 0 : 24,
                                 }}
                             >
-                                {backgroundVideo ? video : backgroundImage ? image : undefined}
-                            </div>
-                        </ThemeVariant>
-
-                        <div
-                            className={styles.displayCardContent}
-                            style={{
-                                paddingTop: withGradient && !icon && !hasTopActions ? 0 : 24,
-                                zIndex: 1,
-                            }}
-                        >
-                            {icon ? (
-                                <Box paddingBottom={withGradient ? 0 : 40} paddingX={24}>
-                                    {icon}
-                                </Box>
-                            ) : (
+                                {icon ? (
+                                    <Box paddingBottom={withGradient ? 0 : 40} paddingX={24}>
+                                        {icon}
+                                    </Box>
+                                ) : (
+                                    <Box
+                                        paddingBottom={
+                                            actions?.length || onClose ? (withGradient ? 24 : 64) : 0
+                                        }
+                                    />
+                                )}
                                 <Box
-                                    paddingBottom={actions?.length || onClose ? (withGradient ? 24 : 64) : 0}
-                                />
-                            )}
-                            <Box
-                                paddingX={16}
-                                paddingTop={withGradient ? 40 : 0}
-                                paddingBottom={24}
-                                className={withGradient ? styles.displayCardGradient : undefined}
-                            >
-                                <Stack space={24}>
-                                    <div>
-                                        <Stack space={8}>
-                                            {(headline || pretitle || title) && (
-                                                <header>
-                                                    <Stack space={16}>
-                                                        {headline}
-                                                        <Stack space={4}>
-                                                            {pretitle && (
-                                                                <Text2
-                                                                    forceMobileSizes
-                                                                    truncate={pretitleLinesMax}
-                                                                    as="div"
-                                                                    regular
-                                                                    textShadow={textShadow}
+                                    paddingX={16}
+                                    paddingTop={withGradient ? 40 : 0}
+                                    paddingBottom={24}
+                                    className={withGradient ? styles.displayCardGradient : undefined}
+                                >
+                                    <Stack space={24}>
+                                        <div>
+                                            <Stack space={8}>
+                                                {(headline || pretitle || title) && (
+                                                    <header>
+                                                        <Stack space={16}>
+                                                            {headline}
+                                                            <Stack space={4}>
+                                                                {pretitle && (
+                                                                    <Text2
+                                                                        forceMobileSizes
+                                                                        truncate={pretitleLinesMax}
+                                                                        as="div"
+                                                                        regular
+                                                                        textShadow={textShadow}
+                                                                        hyphens="auto"
+                                                                    >
+                                                                        {pretitle}
+                                                                    </Text2>
+                                                                )}
+                                                                <Text
+                                                                    desktopSize={20}
+                                                                    mobileSize={18}
+                                                                    mobileLineHeight="24px"
+                                                                    desktopLineHeight="28px"
+                                                                    truncate={titleLinesMax}
+                                                                    weight={textPresets.cardTitle.weight}
+                                                                    as="h3"
                                                                     hyphens="auto"
                                                                 >
-                                                                    {pretitle}
-                                                                </Text2>
-                                                            )}
-                                                            <Text
-                                                                desktopSize={20}
-                                                                mobileSize={18}
-                                                                mobileLineHeight="24px"
-                                                                desktopLineHeight="28px"
-                                                                truncate={titleLinesMax}
-                                                                weight={textPresets.cardTitle.weight}
-                                                                as="h3"
-                                                                hyphens="auto"
-                                                            >
-                                                                {title}
-                                                            </Text>
+                                                                    {title}
+                                                                </Text>
+                                                            </Stack>
                                                         </Stack>
-                                                    </Stack>
-                                                </header>
-                                            )}
-                                            {description && (
-                                                <Text2
-                                                    forceMobileSizes
-                                                    truncate={descriptionLinesMax}
-                                                    as="p"
-                                                    regular
-                                                    textShadow={textShadow}
-                                                    hyphens="auto"
-                                                >
-                                                    {description}
-                                                </Text2>
-                                            )}
-                                        </Stack>
-                                    </div>
-                                </Stack>
-                            </Box>
+                                                    </header>
+                                                )}
+                                                {description && (
+                                                    <Text2
+                                                        forceMobileSizes
+                                                        truncate={descriptionLinesMax}
+                                                        as="p"
+                                                        regular
+                                                        textShadow={textShadow}
+                                                        hyphens="auto"
+                                                    >
+                                                        {description}
+                                                    </Text2>
+                                                )}
+                                            </Stack>
+                                        </div>
+                                    </Stack>
+                                </Box>
+                            </div>
                         </div>
-                    </div>
+                    </BaseTouchable>
+                    <MaybeWithActions onClose={onClose} actions={actions} isInverse />
                 </InternalBoxed>
-            </MaybeWithActions>
+            </CardContainer>
         );
     }
 );
