@@ -50,10 +50,11 @@ const VivoLogo = ({style}: VivoLogoProps) => {
 type ImageErrorProps = {
     noBorderRadius?: boolean;
     withIcon?: boolean;
+    border?: boolean;
 };
 
 export const ImageError = React.forwardRef<HTMLDivElement, ImageErrorProps>(
-    ({noBorderRadius, withIcon = true}, ref) => {
+    ({noBorderRadius, withIcon = true, border}, ref) => {
         const isInverse = useIsInverseVariant();
         const {skinName} = useTheme();
         return (
@@ -67,6 +68,8 @@ export const ImageError = React.forwardRef<HTMLDivElement, ImageErrorProps>(
                     backgroundColor: isInverse
                         ? vars.colors.backgroundSkeletonInverse
                         : vars.colors.backgroundSkeleton,
+                    boxSizing: 'border-box',
+                    border: border ? `1px solid ${vars.colors.borderLow}` : 'none',
                     borderRadius: noBorderRadius ? undefined : vars.borderRadii.container,
                 }}
                 ref={ref}
@@ -215,13 +218,10 @@ export const ImageContent = React.forwardRef<HTMLImageElement, ImageProps>(
                             position: 'absolute',
                             width: '100%',
                             height: '100%',
-                            boxSizing: 'border-box',
-                            border,
-                            borderRadius: noBorderSetting ? undefined : vars.borderRadii.container,
                             zIndex: 1,
                         }}
                     >
-                        <ImageError noBorderRadius={noBorderSetting} />
+                        <ImageError noBorderRadius={noBorderSetting} border={props.border} />
                     </div>
                 )}
                 {!isError && img}
