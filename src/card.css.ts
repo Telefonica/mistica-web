@@ -16,7 +16,9 @@ export const boxed = style([
     },
 ]);
 
-export const touchableCardContainer = style({
+export const touchableContainer = style({});
+
+export const touchable = style({
     display: 'flex',
     height: '100%',
     width: '100%',
@@ -34,10 +36,10 @@ export const touchableCardOverlay = style({
     position: 'absolute',
     transition: 'all 0.1s',
     selectors: {
-        [`${boxed}:hover &`]: {
+        [`${touchableContainer}:hover &`]: {
             opacity: 0.05,
         },
-        [`${touchableCardContainer}:active &`]: {
+        [`${touchable}:active &`]: {
             opacity: 0.1,
         },
     },

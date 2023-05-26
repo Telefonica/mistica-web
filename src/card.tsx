@@ -118,6 +118,7 @@ type CardContainerProps = {
     minWidth?: string | number;
     minHeight?: string | number;
     aspectRatio?: AspectRatio | number;
+    className?: string;
     'aria-label'?: string;
 };
 
@@ -128,6 +129,7 @@ const CardContainer = ({
     minWidth,
     minHeight,
     aspectRatio,
+    className,
     'aria-label': ariaLabel,
 }: CardContainerProps): JSX.Element => {
     const cssAspectRatio: React.CSSProperties['aspectRatio'] = aspectRatio
@@ -139,6 +141,7 @@ const CardContainer = ({
     return (
         <section
             aria-label={ariaLabel}
+            className={className}
             style={{
                 width,
                 height,
@@ -454,7 +457,7 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
         const {isDarkMode} = useTheme();
 
         return (
-            <CardContainer aria-label={ariaLabel}>
+            <CardContainer aria-label={ariaLabel} className={styles.touchableContainer}>
                 <Boxed
                     className={classNames(styles.boxed)}
                     dataAttributes={{'component-name': 'MediaCard', ...dataAttributes}}
@@ -465,7 +468,7 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
                     <BaseTouchable
                         maybe
                         {...touchableProps}
-                        className={styles.touchableCardContainer}
+                        className={styles.touchable}
                         aria-label={ariaLabel}
                     >
                         {isTouchable && (
@@ -494,8 +497,8 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
                             </div>
                         </div>
                     </BaseTouchable>
-                    <MaybeWithActions onClose={onClose} actions={actions} isInverse />
                 </Boxed>
+                <MaybeWithActions onClose={onClose} actions={actions} isInverse />
             </CardContainer>
         );
     }
@@ -563,7 +566,11 @@ export const DataCard = React.forwardRef<HTMLDivElement, DataCardProps>(
         const isTouchable = touchableProps.href || touchableProps.to || touchableProps.onPress;
 
         return (
-            <section aria-label={ariaLabel} style={{height: '100%', position: 'relative'}}>
+            <section
+                aria-label={ariaLabel}
+                style={{height: '100%', position: 'relative'}}
+                className={styles.touchableContainer}
+            >
                 <Boxed
                     className={styles.boxed}
                     dataAttributes={{'component-name': 'DataCard', ...dataAttributes}}
@@ -574,7 +581,7 @@ export const DataCard = React.forwardRef<HTMLDivElement, DataCardProps>(
                     <BaseTouchable
                         maybe
                         {...touchableProps}
-                        className={styles.touchableCardContainer}
+                        className={styles.touchable}
                         aria-label={ariaLabel}
                     >
                         {isTouchable && (
@@ -614,8 +621,8 @@ export const DataCard = React.forwardRef<HTMLDivElement, DataCardProps>(
                             )}
                         </div>
                     </BaseTouchable>
-                    <MaybeWithActions onClose={onClose} actions={actions} />
                 </Boxed>
+                <MaybeWithActions onClose={onClose} actions={actions} />
             </section>
         );
     }
@@ -658,52 +665,54 @@ export const SnapCard = React.forwardRef<HTMLDivElement, SnapCardProps>(
         const isTouchable = touchableProps.href || touchableProps.to || touchableProps.onPress;
 
         return (
-            <Boxed
-                className={styles.boxed}
-                dataAttributes={{'component-name': 'SnapCard', ...dataAttributes}}
-                ref={ref}
-                isInverse={isInverse}
-                width="100%"
-                height="100%"
-            >
-                <BaseTouchable
-                    maybe
-                    {...touchableProps}
-                    className={styles.touchableCardContainer}
-                    aria-label={ariaLabel}
+            <CardContainer className={styles.touchableContainer}>
+                <Boxed
+                    className={styles.boxed}
+                    dataAttributes={{'component-name': 'SnapCard', ...dataAttributes}}
+                    ref={ref}
+                    isInverse={isInverse}
+                    width="100%"
+                    height="100%"
                 >
-                    {isTouchable && (
-                        <div
-                            className={styles.touchableCardOverlay}
-                            style={{backgroundColor: isDarkMode ? 'white' : 'black', zIndex: 1}}
-                        />
-                    )}
-                    <section className={styles.snapCard}>
-                        <div>
-                            {icon && <Box paddingBottom={16}>{icon}</Box>}
-                            <Stack space={4}>
-                                {title && (
-                                    <Text2 truncate={titleLinesMax} as="h3" regular hyphens="auto">
-                                        {title}
-                                    </Text2>
-                                )}
-                                {subtitle && (
-                                    <Text2
-                                        truncate={subtitleLinesMax}
-                                        regular
-                                        color={vars.colors.textSecondary}
-                                        as="p"
-                                        hyphens="auto"
-                                    >
-                                        {subtitle}
-                                    </Text2>
-                                )}
-                            </Stack>
-                        </div>
-                        {extra && <div>{extra}</div>}
-                    </section>
-                </BaseTouchable>
-            </Boxed>
+                    <BaseTouchable
+                        maybe
+                        {...touchableProps}
+                        className={styles.touchable}
+                        aria-label={ariaLabel}
+                    >
+                        {isTouchable && (
+                            <div
+                                className={styles.touchableCardOverlay}
+                                style={{backgroundColor: isDarkMode ? 'white' : 'black', zIndex: 1}}
+                            />
+                        )}
+                        <section className={styles.snapCard}>
+                            <div>
+                                {icon && <Box paddingBottom={16}>{icon}</Box>}
+                                <Stack space={4}>
+                                    {title && (
+                                        <Text2 truncate={titleLinesMax} as="h3" regular hyphens="auto">
+                                            {title}
+                                        </Text2>
+                                    )}
+                                    {subtitle && (
+                                        <Text2
+                                            truncate={subtitleLinesMax}
+                                            regular
+                                            color={vars.colors.textSecondary}
+                                            as="p"
+                                            hyphens="auto"
+                                        >
+                                            {subtitle}
+                                        </Text2>
+                                    )}
+                                </Stack>
+                            </div>
+                            {extra && <div>{extra}</div>}
+                        </section>
+                    </BaseTouchable>
+                </Boxed>
+            </CardContainer>
         );
     }
 );
@@ -830,7 +839,13 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
         const isTouchable = touchableProps.href || touchableProps.to || touchableProps.onPress;
 
         return (
-            <CardContainer width={width} height={height} aspectRatio={aspectRatio} aria-label={ariaLabel}>
+            <CardContainer
+                width={width}
+                height={height}
+                aspectRatio={aspectRatio}
+                aria-label={ariaLabel}
+                className={styles.touchableContainer}
+            >
                 <InternalBoxed
                     borderRadius={vars.borderRadii.legacyDisplay}
                     className={styles.boxed}
@@ -850,7 +865,7 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
                     <BaseTouchable
                         maybe
                         {...touchableProps}
-                        className={styles.touchableCardContainer}
+                        className={styles.touchable}
                         aria-label={ariaLabel}
                     >
                         {isTouchable && (
@@ -951,8 +966,8 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
                             </div>
                         </div>
                     </BaseTouchable>
-                    <MaybeWithActions onClose={onClose} actions={actions} isInverse />
                 </InternalBoxed>
+                <MaybeWithActions onClose={onClose} actions={actions} isInverse />
             </CardContainer>
         );
     }
@@ -1076,6 +1091,7 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                 minHeight={POSTER_CARD_MIN_HEIGHT}
                 aspectRatio={aspectRatio}
                 aria-label={ariaLabel}
+                className={styles.touchableContainer}
             >
                 <InternalBoxed
                     borderRadius={vars.borderRadii.legacyDisplay}
@@ -1096,7 +1112,7 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                     <BaseTouchable
                         maybe
                         {...touchableProps}
-                        className={styles.touchableCardContainer}
+                        className={styles.touchable}
                         aria-label={ariaLabel}
                     >
                         {isTouchable && (
@@ -1191,8 +1207,8 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                             </div>
                         </div>
                     </BaseTouchable>
-                    <MaybeWithActions onClose={onClose} actions={actions} isInverse />
                 </InternalBoxed>
+                <MaybeWithActions onClose={onClose} actions={actions} isInverse />
             </CardContainer>
         );
     }
