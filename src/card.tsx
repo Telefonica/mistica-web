@@ -116,7 +116,6 @@ type CardContainerProps = {
     width?: string | number;
     height?: string | number;
     minWidth?: string | number;
-    minHeight?: string | number;
     aspectRatio?: AspectRatio | number;
     className?: string;
     'aria-label'?: string;
@@ -776,6 +775,7 @@ type GenericDisplayCardProps = ExclusifyUnion<
     (DisplayMediaCardProps & {isInverse: true}) | DisplayDataCardProps
 >;
 
+const DISPLAY_CARD_MIN_WIDTH = 264;
 const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
     (
         {
@@ -842,6 +842,7 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
                 height={height}
                 aspectRatio={aspectRatio}
                 aria-label={ariaLabel}
+                minWidth={DISPLAY_CARD_MIN_WIDTH}
                 className={styles.touchableContainer}
             >
                 <InternalBoxed
