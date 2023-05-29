@@ -10,8 +10,9 @@ import {isFirefox} from './utils/platform';
 
 import type {CommonFormFieldProps} from './text-field-base';
 
-export interface DateFieldProps extends CommonFormFieldProps {
+export interface DateFieldProps extends Omit<CommonFormFieldProps, 'onBlur'> {
     onChangeValue?: (value: string, rawValue: string) => void;
+    onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
     min?: Date;
     max?: Date;
 }
@@ -79,7 +80,7 @@ const DateField: React.FC<DateFieldProps> = ({
         optional,
         error,
         disabled,
-        onBlur,
+        onBlur: onBlur as (event: React.FocusEvent<HTMLElement>) => void,
         validate,
         onChange,
         onChangeValue,

@@ -114,7 +114,7 @@ export const useFieldProps = ({
     optional: boolean | undefined;
     error: boolean | undefined;
     disabled: boolean | undefined;
-    onBlur: undefined | ((event: React.FocusEvent<Element>) => void);
+    onBlur: undefined | ((event: React.FocusEvent<HTMLElement>) => void);
     validate: undefined | ((value: any, rawValue: string) => string | undefined);
     onChange: undefined | ((event: React.ChangeEvent<HTMLInputElement>) => void);
     onChangeValue: undefined | ((value: any, rawValue: string) => void);
@@ -126,7 +126,7 @@ export const useFieldProps = ({
     required: boolean;
     error: boolean;
     disabled: boolean;
-    onBlur: (event: React.FocusEvent<Element>) => void;
+    onBlur: (event: React.FocusEvent<HTMLElement>) => void;
     inputRef: (field: HTMLInputElement | null) => void;
     onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 } => {
@@ -148,7 +148,7 @@ export const useFieldProps = ({
         required: !optional,
         error: error || !!formErrors[name],
         disabled: disabled || formStatus === 'sending',
-        onBlur: (e: React.FocusEvent) => {
+        onBlur: (e: React.FocusEvent<HTMLElement>) => {
             setFormError({name, error: validate?.(values[name], rawValues[name])});
             onBlur?.(e);
         },

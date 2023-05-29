@@ -52,7 +52,7 @@ const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
         const inputRef = React.useRef<HTMLInputElement | null>(null);
         const processValue = (v: string) => v;
 
-        const onBlur = (event: React.FocusEvent<Element>) => {
+        const onBlur = (event: React.FocusEvent<HTMLElement>) => {
             if (rest.multiline && inputRef.current) {
                 // scroll to start
                 inputRef.current.scrollTop = 0;

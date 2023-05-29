@@ -56,7 +56,7 @@ export interface CommonFormFieldProps {
     validate?: FieldValidator;
     autoComplete?: AutoComplete;
     onFocus?: (event: React.FocusEvent) => void;
-    onBlur?: (event: React.FocusEvent) => void;
+    onBlur?: (event: React.FocusEvent<HTMLElement>) => void;
     fullWidth?: boolean;
     getSuggestions?: (text: string) => ReadonlyArray<string>;
     placeholder?: string;
@@ -93,7 +93,7 @@ interface TextFieldBaseProps {
     getSuggestions?: (value: string) => ReadonlyArray<string>;
     onClick?: (event: React.MouseEvent) => void;
     onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
-    onBlur?: (event: React.FocusEvent) => void;
+    onBlur?: (event: React.FocusEvent<HTMLElement>) => void;
     onFocus?: (event: React.FocusEvent) => void;
     onKeyDown?: (event: React.KeyboardEvent) => void;
     inputProps?: {[name: string]: string | number | undefined};
