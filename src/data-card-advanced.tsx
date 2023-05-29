@@ -210,7 +210,7 @@ const CardFooter: React.FC<CardFooterProps> = ({button, footerImage, footerText,
     const maxWidth = hasButtonLink && !hasAllItens ? '178px' : '';
 
     return (
-        <div style={{marginTop: 'auto', marginLeft: '16px', marginRight: '16px'}}>
+        <div style={{marginTop: 'auto'}}>
             <NegativeBox>
                 <Divider />
             </NegativeBox>
@@ -218,6 +218,8 @@ const CardFooter: React.FC<CardFooterProps> = ({button, footerImage, footerText,
             <div className={styles.actions} style={{flexDirection, alignItems}}>
                 {hasButton && (
                     <div
+                        aria-hidden="true"
+                        onClick={(event) => event.stopPropagation()}
                         className={sprinkles({
                             display: 'flex',
                         })}
@@ -244,9 +246,11 @@ const CardFooter: React.FC<CardFooterProps> = ({button, footerImage, footerText,
                 </div>
                 {hasButtonLink && (
                     <div
+                        aria-hidden="true"
                         className={sprinkles({
                             display: 'flex',
                         })}
+                        onClick={(event) => event.stopPropagation()}
                         style={{marginTop}}
                     >
                         {buttonLink}
@@ -289,7 +293,8 @@ interface DataCardAdvancedProps {
 
     dataAttributes?: DataAttributes;
     actions?: Array<CardAction>;
-    'aria-label'?: string;
+    'card-aria-label'?: string;
+    'touchable-aria-label'?: string;
     onClose?: () => void;
 }
 
@@ -319,7 +324,8 @@ const DataCardAdvanced = React.forwardRef<HTMLDivElement, DataCardAdvancedProps>
 
             dataAttributes,
             actions,
-            'aria-label': ariaLabel,
+            'touchable-aria-label': touchableAriaLabel,
+            'card-aria-label': cardAriaLabel,
             onClose,
         },
         ref
@@ -340,23 +346,24 @@ const DataCardAdvanced = React.forwardRef<HTMLDivElement, DataCardAdvancedProps>
         });
 
         return (
-            <section aria-label={ariaLabel} style={{height: '100%', position: 'relative'}}>
-                <Boxed
-                    className={styles.boxed}
-                    dataAttributes={{'component-name': 'DataCard', ...dataAttributes}}
-                    ref={ref}
-                    width="100%"
-                    height="100%"
+            <section aria-label={cardAriaLabel} style={{height: '100%', position: 'relative'}}>
+                <Touchable
+                    aria-label={touchableAriaLabel}
+                    onPress={() => {
+                        if (cardOnPress) {
+                            cardOnPress();
+                        }
+                    }}
+                    className={sprinkles({height: '100%', position: 'relative'})}
                 >
-                    <div className={styles.dataCard}>
-                        <Touchable
-                            onPress={() => {
-                                if (cardOnPress) {
-                                    cardOnPress();
-                                }
-                            }}
-                            className={styles.TouchableZone}
-                        >
+                    <Boxed
+                        className={styles.boxed}
+                        dataAttributes={{'component-name': 'DataCard', ...dataAttributes}}
+                        ref={ref}
+                        width="100%"
+                        height="100%"
+                    >
+                        <div className={styles.dataCard}>
                             <div className={cardContentStyle}>
                                 <div
                                     className={classNames(
@@ -409,11 +416,11 @@ const DataCardAdvanced = React.forwardRef<HTMLDivElement, DataCardAdvancedProps>
                                     </div>
                                 ) : null}
                             </div>
-                        </Touchable>
 
-                        {hasFooter && <CardFooter {...footerProps} />}
-                    </div>
-                </Boxed>
+                            {hasFooter && <CardFooter {...footerProps} />}
+                        </div>
+                    </Boxed>
+                </Touchable>
             </section>
         );
     }
