@@ -127,7 +127,6 @@ const CardContainer = ({
     width = '100%',
     height = '100%',
     minWidth,
-    minHeight,
     aspectRatio,
     className,
     'aria-label': ariaLabel,
@@ -146,7 +145,6 @@ const CardContainer = ({
                 width,
                 height,
                 minWidth,
-                minHeight,
                 aspectRatio: cssAspectRatio,
                 position: 'relative',
             }}
@@ -1026,7 +1024,6 @@ type PosterCardProps = ExclusifyUnion<PosterCardWithImageProps | PosterCardWithV
     BaseCardTouchableProps;
 
 const POSTER_CARD_MIN_WIDTH = 140;
-const POSTER_CARD_MIN_HEIGHT = 112;
 export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
     (
         {
@@ -1088,7 +1085,6 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                 width={width}
                 height={height}
                 minWidth={POSTER_CARD_MIN_WIDTH}
-                minHeight={POSTER_CARD_MIN_HEIGHT}
                 aspectRatio={aspectRatio}
                 aria-label={ariaLabel}
                 className={styles.touchableContainer}
