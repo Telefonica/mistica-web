@@ -852,7 +852,7 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
                     dataAttributes={dataAttributes}
                     ref={ref}
                     width="100%"
-                    height="100%"
+                    minHeight="100%"
                     isInverse={isInverse}
                     background={
                         backgroundImage || backgroundVideo
@@ -1099,7 +1099,7 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                     dataAttributes={dataAttributes}
                     ref={ref}
                     width="100%"
-                    height="100%"
+                    minHeight="100%"
                     isInverse
                     background={
                         backgroundImage || backgroundVideo
