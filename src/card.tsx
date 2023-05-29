@@ -11,7 +11,6 @@ import {vars} from './skins/skin-contract.css';
 import * as styles from './card.css';
 import {useTheme} from './hooks';
 import {sprinkles} from './sprinkles.css';
-import Inline from './inline';
 import IconButton from './icon-button';
 import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
 import IconPauseFilled from './generated/mistica-icons/icon-pause-filled';
@@ -49,9 +48,11 @@ type CardActionsGroupProps = {
     isInverse?: boolean;
 };
 
+const TOP_ACTION_BUTTON_SIZE = 48;
+
 const CardActionsGroup = ({actions, isInverse}: CardActionsGroupProps): JSX.Element => {
     return (
-        <Inline space={0}>
+        <div style={{display: 'flex'}}>
             {actions.map(
                 (
                     {
@@ -67,7 +68,7 @@ const CardActionsGroup = ({actions, isInverse}: CardActionsGroupProps): JSX.Elem
                 ) =>
                     Icon ? (
                         <IconButton
-                            size={48}
+                            size={TOP_ACTION_BUTTON_SIZE}
                             key={index}
                             onPress={onPress}
                             aria-label={label}
@@ -82,7 +83,7 @@ const CardActionsGroup = ({actions, isInverse}: CardActionsGroupProps): JSX.Elem
                         <div key={index} className={styles.cardActionIconButton} />
                     )
             )}
-        </Inline>
+        </div>
     );
 };
 
@@ -562,12 +563,15 @@ export const DataCard = React.forwardRef<HTMLDivElement, DataCardProps>(
         const {isDarkMode} = useTheme();
         const isTouchable = touchableProps.href || touchableProps.to || touchableProps.onPress;
 
+        const finalActions = useTopActions(actions, onClose);
+        const topActionsStylesWithoutIcon = {
+            marginRight: -16,
+            marginTop: -24,
+            width: TOP_ACTION_BUTTON_SIZE * finalActions.length,
+        } as const;
+
         return (
-            <section
-                aria-label={ariaLabel}
-                style={{height: '100%', position: 'relative'}}
-                className={styles.touchableContainer}
-            >
+            <CardContainer aria-label={ariaLabel} className={styles.touchableContainer}>
                 <Boxed
                     className={styles.boxed}
                     dataAttributes={{'component-name': 'DataCard', ...dataAttributes}}
@@ -607,6 +611,7 @@ export const DataCard = React.forwardRef<HTMLDivElement, DataCardProps>(
                                         descriptionLinesMax={descriptionLinesMax}
                                     />
                                 </Stack>
+                                {!hasIcon && <div style={topActionsStylesWithoutIcon} />}
                             </div>
 
                             {extra && <div>{extra}</div>}
@@ -620,7 +625,7 @@ export const DataCard = React.forwardRef<HTMLDivElement, DataCardProps>(
                     </BaseTouchable>
                 </Boxed>
                 <MaybeWithActions onClose={onClose} actions={actions} />
-            </section>
+            </CardContainer>
         );
     }
 );
@@ -966,7 +971,7 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
                         </div>
                     </BaseTouchable>
                 </InternalBoxed>
-                <MaybeWithActions onClose={onClose} actions={actions} isInverse />
+                <MaybeWithActions onClose={onClose} actions={actions} isInverse={isInverse} />
             </CardContainer>
         );
     }
