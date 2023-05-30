@@ -16,5 +16,3 @@ test('Chip', async () => {
 
     expect(await story.screenshot()).toMatchImageSnapshot();
 });
-
-
