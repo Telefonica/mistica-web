@@ -171,13 +171,24 @@ export const TypeOfButtons: StoryComponent = () => {
                     <Text2 regular as="p">
                         Button (onPress):
                     </Text2>
-                    <ButtonLink onPress={handleOnPress} disabled={disabled}>
+                    <ButtonLink
+                        onPress={handleOnPress}
+                        disabled={disabled}
+                        showSpinner={showSpinner}
+                        loadingText={loadingText}
+                    >
                         {text}
                     </ButtonLink>
                     <Text2 regular as="p">
                         Link (href):
                     </Text2>
-                    <ButtonLink href={href} newTab={newTab} disabled={disabled}>
+                    <ButtonLink
+                        href={href}
+                        newTab={newTab}
+                        disabled={disabled}
+                        showSpinner={showSpinner}
+                        loadingText={loadingText}
+                    >
                         {text}
                     </ButtonLink>
                 </Stack>

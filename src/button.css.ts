@@ -340,7 +340,6 @@ export const textContentLink = style([
         justifyContent: 'center',
     }),
     {
-        padding: `${Y_SMALL_PADDING_PX}px ${X_SMALL_PADDING_PX}px`, // height 32
         opacity: 1,
         transition: `opacity ${transitionTiming}, transform ${transitionTiming}`,
 
