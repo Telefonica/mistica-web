@@ -334,10 +334,25 @@ export const LoadingState: StoryComponent = () => {
                     </ButtonDanger>
                 </Inline>
             </StorySection>
+            <StorySection title="ButtonLink with/without loading text">
+                <Inline space={16}>
+                    <ButtonLink loadingText="Sending file" showSpinner={isLoading} onPress={handlePress}>
+                        Send
+                    </ButtonLink>
+                    <ButtonLink showSpinner={isLoading} onPress={handlePress}>
+                        Send
+                    </ButtonLink>
+                </Inline>
+            </StorySection>
             <StorySection title="onPress returning a promise">
-                <ButtonPrimary loadingText="Sending file" onPress={handlePressWithPromise}>
-                    Send
-                </ButtonPrimary>
+                <Inline space={16}>
+                    <ButtonPrimary loadingText="Sending file" onPress={handlePressWithPromise}>
+                        Send
+                    </ButtonPrimary>
+                    <ButtonLink loadingText="Sending file" onPress={handlePressWithPromise}>
+                        Send
+                    </ButtonLink>
+                </Inline>
             </StorySection>
         </BackgroundTheme>
     );
