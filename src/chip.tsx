@@ -39,17 +39,6 @@ interface HrefChipProps extends SimpleChipProps {
     active?: boolean;
 }
 
-<<<<<<< HEAD
-const Chip: React.FC<ChipProps> = ({
-    Icon,
-    children,
-    id,
-    dataAttributes,
-    active,
-    badge,
-    onClose,
-}: ChipProps) => {
-=======
 interface ToChipProps extends SimpleChipProps {
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
     to: string;
@@ -69,8 +58,7 @@ type ClickableChipProps = ExclusifyUnion<HrefChipProps | ToChipProps | OnPressCh
 type ChipProps = ExclusifyUnion<SimpleChipProps | ClosableChipProps | ToggleChipProps | ClickableChipProps>;
 
 const Chip: React.FC<ChipProps> = (props: ChipProps) => {
-    const {Icon, children, id, dataAttributes, active, onClose} = props;
->>>>>>> origin
+    const {Icon, children, id, dataAttributes, active, badge, onClose} = props;
     const {texts, isDarkMode} = useTheme();
     const overAlternative = useThemeVariant() === 'alternative';
     const {isMobile} = useScreenSize();
@@ -174,7 +162,7 @@ const Chip: React.FC<ChipProps> = (props: ChipProps) => {
                 }
             )}
             paddingLeft={paddingLeft}
-            paddingRight={12}
+            paddingRight={paddingRight}
             {...getPrefixedDataAttributes(dataAttributes, 'Chip')}
         >
             {body}
@@ -183,23 +171,10 @@ const Chip: React.FC<ChipProps> = (props: ChipProps) => {
 
     if (props.onPress) {
         return (
-<<<<<<< HEAD
-            <Box
-                className={classnames(
-                    styles.chipVariants[active ? 'active' : overAlternative ? 'overAlternative' : 'default'],
-                    {
-                        [styles.chipInteractiveVariants[isDarkMode ? 'dark' : 'light']]: isInteractive,
-                    }
-                )}
-                paddingLeft={paddingLeft}
-                paddingRight={paddingRight}
-                {...getPrefixedDataAttributes(dataAttributes, 'Chip')}
-=======
             <BaseTouchable
                 className={styles.button}
                 trackingEvent={props.trackingEvent}
                 onPress={props.onPress}
->>>>>>> origin
             >
                 {renderContent()}
             </BaseTouchable>

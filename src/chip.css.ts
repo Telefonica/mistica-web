@@ -17,9 +17,10 @@ const containerBase = style([
         minWidth: 56,
         cursor: 'default',
         borderColor: vars.colors.control,
+
         '@media': {
-            [mq.tabletOrSmaller]: {
-                minHeight: 40,
+            [mq.mobile]: {
+                height: 40,
                 minWidth: 72,
                 paddingTop: 10,
                 paddingBottom: 10,
