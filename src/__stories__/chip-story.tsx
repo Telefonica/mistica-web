@@ -23,59 +23,10 @@ export default {
     },
 };
 
-<<<<<<< HEAD
 type Args = {
     badge: string;
     inverse: boolean;
 };
-=======
-export const Default: StoryComponent = () => (
-    <div data-testid="chip-story">
-        <StorySection title="Default">
-            <Chip>Chip</Chip>
-        </StorySection>
-        <StorySection title="Closeable">
-            <Chip
-                onClose={() => {
-                    window.alert('closed');
-                }}
-            >
-                Chip closeable
-            </Chip>
-        </StorySection>
-        <StorySection title="With icon">
-            <Chip Icon={IconLightningFilled}>Chip with icon</Chip>
-        </StorySection>
-        <StorySection title="With icon and closeable">
-            <Chip
-                Icon={IconLightningFilled}
-                onClose={() => {
-                    window.alert('closed');
-                }}
-            >
-                Chip with icon and closeable
-            </Chip>
-        </StorySection>
-        <StorySection title="Clickable">
-            <Chip
-                onPress={() => {
-                    window.alert('clicked');
-                }}
-            >
-                Clickable Chip
-            </Chip>
-        </StorySection>
-        <StorySection title="With Icon and Clickable">
-            <Chip
-                Icon={IconLightningFilled}
-                onPress={() => {
-                    window.alert('clicked');
-                }}
-            >
-                Clickable Chip
-            </Chip>
-        </StorySection>
->>>>>>> origin
 
 export const Default: StoryComponent<Args> = ({badge, inverse}) => {
     // eslint-disable-next-line no-eval
