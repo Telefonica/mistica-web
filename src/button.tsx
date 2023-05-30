@@ -337,9 +337,11 @@ interface ButtonLinkCommonProps {
     /** "data-" prefix is automatically added. For example, use "testid" instead of "data-testid" */
     dataAttributes?: DataAttributes;
     aligned?: boolean;
+    showSpinner?: boolean;
+    loadingText?: string;
 }
 interface ButtonLinkOnPressProps extends ButtonLinkCommonProps {
-    onPress: (event: React.MouseEvent<HTMLElement>) => void;
+    onPress: (event: React.MouseEvent<HTMLElement>) => void | undefined | Promise<void>;
     to?: undefined;
     href?: undefined;
 }
@@ -363,6 +365,24 @@ export const ButtonLink = React.forwardRef<TouchableElement, ButtonLinkProps>((p
     const isInverse = useIsInverseVariant();
     const {analytics} = useTheme();
 
+    const {loadingText} = props;
+    const isFormSending = formStatus === 'sending';
+    const [isOnPressPromiseResolving, setIsOnPressPromiseResolving] = React.useState(false);
+
+    const showSpinner = props.showSpinner || isOnPressPromiseResolving;
+
+    // This state is needed to not render the spinner when hidden (because it causes high CPU usage
+    // specially in iPhone). But we want the spinner to be visible during the show/hide animation.
+    // * When showSpinner prop is true, state is changed immediately.
+    // * When the transition ends this state is updated again if needed
+    const [shouldRenderSpinner, setShouldRenderSpinner] = React.useState(!!showSpinner);
+
+    React.useEffect(() => {
+        if (showSpinner && !shouldRenderSpinner) {
+            setShouldRenderSpinner(true);
+        }
+    }, [showSpinner, shouldRenderSpinner, formStatus]);
+
     const createDefaultTrackingEvent = (): TrackingEvent => {
         if (analytics.eventFormat === 'google-analytics-4') {
             return {
@@ -379,6 +399,9 @@ export const ButtonLink = React.forwardRef<TouchableElement, ButtonLinkProps>((p
         }
     };
 
+    const defaultIconSize = styles.SMALL_ICON_SIZE;
+    const spinnerSizeRem = pxToRem(styles.SMALL_SPINNER_SIZE);
+
     const renderText = (element: React.ReactNode) => (
         <Text2 medium truncate={1} color="inherit">
             {element}
@@ -386,22 +409,71 @@ export const ButtonLink = React.forwardRef<TouchableElement, ButtonLinkProps>((p
     );
 
     const commonProps = {
-        className: classnames(styles.link, {
+        className: classnames(styles.link, styles.small, {
             [styles.inverseLink]: isInverse,
             [styles.alignedLink]: props.aligned,
+            [styles.isLoading]: showSpinner,
         }),
         trackingEvent: props.trackingEvent ?? (props.trackEvent ? createDefaultTrackingEvent() : undefined),
         dataAttributes: {'component-name': 'ButtonLink', ...props.dataAttributes},
         children: (
-            <div className={styles.textContentLink}>
-                {renderButtonContent({
-                    content: props.children,
-                    defaultIconSize: styles.SMALL_ICON_SIZE,
-                    renderText,
-                })}
-            </div>
+            <>
+                {/* text content */}
+                <div aria-hidden={showSpinner ? true : undefined} className={styles.textContentLink}>
+                    {renderButtonContent({
+                        content: props.children,
+                        defaultIconSize,
+                        renderText,
+                    })}
+                </div>
+
+                {/* the following div won't be visible (see loadingFiller class), this is used to force the button width */}
+                <div
+                    className={styles.loadingFiller}
+                    aria-hidden
+                    style={{
+                        paddingLeft: spinnerSizeRem,
+                        paddingRight: styles.ICON_MARGIN_PX + 2 * styles.X_SMALL_PADDING_PX,
+                    }}
+                >
+                    {renderButtonContent({content: loadingText, defaultIconSize, renderText})}
+                </div>
+
+                {/* loading content */}
+                <div
+                    aria-hidden={showSpinner ? undefined : true}
+                    className={styles.loadingContent}
+                    onTransitionEnd={() => {
+                        if (showSpinner !== shouldRenderSpinner) {
+                            setShouldRenderSpinner(showSpinner);
+                        }
+                    }}
+                >
+                    {shouldRenderSpinner ? (
+                        <Spinner
+                            rolePresentation={!!loadingText}
+                            color="currentcolor"
+                            delay="0s"
+                            size={spinnerSizeRem}
+                        />
+                    ) : (
+                        <div
+                            style={{
+                                display: 'inline-block',
+                                width: spinnerSizeRem,
+                                height: spinnerSizeRem,
+                            }}
+                        />
+                    )}
+                    {loadingText ? (
+                        <Box paddingLeft={8}>
+                            {renderButtonContent({content: loadingText, defaultIconSize, renderText})}
+                        </Box>
+                    ) : null}
+                </div>
+            </>
         ),
-        disabled: props.disabled || formStatus === 'sending',
+        disabled: props.disabled || showSpinner || isFormSending,
     };
 
     if (process.env.NODE_ENV !== 'production') {
@@ -411,7 +483,19 @@ export const ButtonLink = React.forwardRef<TouchableElement, ButtonLinkProps>((p
     }
 
     if (props.onPress) {
-        return <BaseTouchable ref={ref} {...commonProps} onPress={props.onPress} />;
+        return (
+            <BaseTouchable
+                ref={ref}
+                {...commonProps}
+                onPress={(e) => {
+                    const result = props.onPress(e);
+                    if (result) {
+                        setIsOnPressPromiseResolving(true);
+                        result.finally(() => setIsOnPressPromiseResolving(false));
+                    }
+                }}
+            />
+        );
     }
 
     if (props.to || props.to === '') {
