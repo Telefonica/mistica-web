@@ -33,23 +33,15 @@ test('<Link> element is rendered when "to" prop is passed', async () => {
 test('<a> element is rendered when "to" prop is used and no Link component injected via ThemeContextProvider', async () => {
     const to = '/to';
 
-    const {container} = render(
+    render(
         <ThemeContextProvider theme={makeTheme()}>
             <Touchable to={to}>Test</Touchable>
         </ThemeContextProvider>
     );
 
-    expect(container).toMatchInlineSnapshot(`
-        <div>
-          <a
-            class="touchable_touchable__mhti6u3 touchable_base__mhti6u1 touchable__mhti6u0 sprinkles_cursor_pointer__1y2v1nfa5 touchable__mhti6u2 sprinkles_paddingTop_0__1y2v1nf6d sprinkles_paddingBottom_0__1y2v1nf6r sprinkles_paddingLeft_0__1y2v1nf75 sprinkles_paddingRight_0__1y2v1nf7j sprinkles_display_block__1y2v1nf5s sprinkles_border_none__1y2v1nf9o sprinkles_width_100%__1y2v1nf7x sprinkles_color_inherit__1y2v1nf2r sprinkles_background_transparent__1y2v1nf5k sprinkles_overflow_visible__1y2v1nfa7"
-            data-component-name="Touchable"
-            href="/to"
-          >
-            Test
-          </a>
-        </div>
-    `);
+    const anchor = screen.getByRole('link', {name: 'Test'});
+
+    expect(anchor).toHaveAttribute('href', to);
 });
 
 test('<Link> element is rendered when "to" prop is passed with tracking', async () => {

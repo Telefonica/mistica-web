@@ -173,6 +173,8 @@ export const useScreenHeight = (): number => {
     return screenHeight;
 };
 
+export const useIsWithinIFrame = (): boolean => window?.top !== window?.self;
+
 // React currently throws a warning when using useLayoutEffect on the server.
 // To get around it, we can conditionally useEffect on the server (no-op) and
 // useLayoutEffect in the browser
