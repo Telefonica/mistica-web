@@ -2,15 +2,15 @@ import * as React from 'react';
 import {sprinkles} from './sprinkles.css';
 import Stack from './stack';
 import * as styles from './advanced-slots.css';
-import Image from './image';
 import {Text2, Text3, Text5, Text8} from './text';
 import {vars} from './skins/skin-contract.css';
-import Avatar from './avatar';
 import Inline from './inline';
 import Box from './box';
 import ProgressBar from './progress-bar';
 import classNames from 'classnames';
 
+import type StackingGroup from './stacking-group';
+import type Image from './image';
 import type Tag from './tag';
 import type {RendersNullableElement} from './utils/renders-element';
 
@@ -38,12 +38,17 @@ const SlotContent: React.FC<SlotContentProps> = ({title, subtitle, description})
 
 interface RowBlockProps {
     title?: string;
-    image?: string;
+    stackingGroup?: RendersNullableElement<typeof StackingGroup>;
     description?: string;
     'aria-label'?: string;
 }
 
-export const RowBlock: React.FC<RowBlockProps> = ({title, image, description, 'aria-label': ariaLabel}) => {
+export const RowBlock: React.FC<RowBlockProps> = ({
+    title,
+    stackingGroup,
+    description,
+    'aria-label': ariaLabel,
+}) => {
     return (
         <div
             style={{
@@ -52,14 +57,15 @@ export const RowBlock: React.FC<RowBlockProps> = ({title, image, description, 'a
             }}
             aria-label={ariaLabel}
         >
-            {(title || image || description) && (
+            {(title || stackingGroup || description) && (
                 <>
-                    {image && (
+                    {stackingGroup && (
                         <div
                             className={sprinkles({
                                 display: 'flex',
                                 justifyContent: 'space-between',
                                 flex: 1,
+                                alignItems: 'center',
                             })}
                         >
                             {title && (
@@ -67,21 +73,16 @@ export const RowBlock: React.FC<RowBlockProps> = ({title, image, description, 'a
                                     <Text2 regular>{title}</Text2>
                                 </div>
                             )}
-                            <div>
-                                <Inline space={-12}>
-                                    {Array.from({length: 3}, (_, i) => (
-                                        <Avatar key={i} size={32} border src={image} />
-                                    ))}
-                                </Inline>
-                            </div>
+                            <div style={{zIndex: '0'}}>{stackingGroup}</div>
                         </div>
                     )}
-                    {!image && (
+                    {!stackingGroup && (
                         <div
                             className={sprinkles({
                                 display: 'flex',
                                 justifyContent: 'space-between',
                                 flex: 1,
+                                alignItems: 'center',
                             })}
                         >
                             {title && (
@@ -105,7 +106,7 @@ export const RowBlock: React.FC<RowBlockProps> = ({title, image, description, 'a
 };
 
 interface SimpleBlockProps {
-    image?: string;
+    image?: RendersNullableElement<typeof Image>;
     description?: string;
     'aria-label'?: string;
 }
@@ -125,8 +126,9 @@ export const SimpleBlock: React.FC<SimpleBlockProps> = ({image, description, 'ar
                         className={sprinkles({
                             paddingRight: 16,
                         })}
+                        style={{zIndex: '0'}}
                     >
-                        <Image height={40} src={image} />
+                        {image}
                     </div>
                 )}
 
@@ -283,7 +285,7 @@ export const ValueBlock: React.FC<ValueBlockProps> = ({
 
 interface ProgressBlockProps {
     title?: string;
-    image?: string;
+    stackingGroup?: RendersNullableElement<typeof StackingGroup>;
 
     progressPercent?: number;
 
@@ -296,7 +298,7 @@ interface ProgressBlockProps {
 
 export const ProgressBlock: React.FC<ProgressBlockProps> = ({
     title,
-    image,
+    stackingGroup,
     progressPercent,
     value,
     text,
@@ -313,7 +315,7 @@ export const ProgressBlock: React.FC<ProgressBlockProps> = ({
                                 <div style={{paddingRight: '32px'}}>
                                     <Text2 regular>{title}</Text2>
                                 </div>
-                                {image && <Image height={40} src={image} />}
+                                {stackingGroup && <div style={{zIndex: '0'}}>{stackingGroup}</div>}
                             </Inline>
                         </Box>
                     )}

@@ -368,9 +368,7 @@ const DataCardAdvanced = React.forwardRef<HTMLDivElement, DataCardAdvancedProps>
                                 onClick={() => {
                                     cardOnPress();
                                 }}
-                            >
-                                <div></div>
-                            </a>
+                            />
                         )}
 
                         <div className={cardContentStyle}>
@@ -382,7 +380,7 @@ const DataCardAdvanced = React.forwardRef<HTMLDivElement, DataCardAdvancedProps>
                                 )}
                             >
                                 <Stack space={8} className={sprinkles({flex: 1})}>
-                                    {hasStackingGroup && stackingGroup}
+                                    {hasStackingGroup && <div>{stackingGroup}</div>}
                                     <CardContent
                                         headline={headline}
                                         pretitle={pretitle}
@@ -408,7 +406,7 @@ const DataCardAdvanced = React.forwardRef<HTMLDivElement, DataCardAdvancedProps>
                                     {slots.map((slot, index) => {
                                         return (
                                             <div>
-                                                <div>{slot}</div>
+                                                <div style={{zIndex: '0'}}>{slot}</div>
 
                                                 {index + 1 !== slots.length && (
                                                     <div
