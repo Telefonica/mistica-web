@@ -71,7 +71,7 @@ const Chip: React.FC<ChipProps> = (props: ChipProps) => {
         if (!badge) {
             return null;
         }
-        return <div>{badge === true ? <Badge /> : <Badge value={badge} />}</div>;
+        return <>{badge === true ? <Badge /> : <Badge value={badge} />}</>;
     };
 
     const body = (
