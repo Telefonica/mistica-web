@@ -40,15 +40,17 @@ interface RowBlockProps {
     title?: string;
     image?: string;
     description?: string;
+    'aria-label'?: string;
 }
 
-export const RowBlock: React.FC<RowBlockProps> = ({title, image, description}) => {
+export const RowBlock: React.FC<RowBlockProps> = ({title, image, description, 'aria-label': ariaLabel}) => {
     return (
         <div
             style={{
                 display: 'flex',
                 alignItems: 'center',
             }}
+            aria-label={ariaLabel}
         >
             {(title || image || description) && (
                 <>
@@ -105,11 +107,12 @@ export const RowBlock: React.FC<RowBlockProps> = ({title, image, description}) =
 interface SimpleBlockProps {
     image?: string;
     description?: string;
+    'aria-label'?: string;
 }
 
-export const SimpleBlock: React.FC<SimpleBlockProps> = ({image, description}) => {
+export const SimpleBlock: React.FC<SimpleBlockProps> = ({image, description, 'aria-label': ariaLabel}) => {
     return (
-        <div>
+        <div aria-label={ariaLabel}>
             <div
                 className={sprinkles({
                     display: 'flex',
@@ -142,6 +145,7 @@ interface InformationBlockProps {
     mainValue: string;
     secundaryValue?: string;
     textColor?: string;
+    'aria-label'?: string;
 }
 
 export const InformationBlock: React.FC<InformationBlockProps> = ({
@@ -151,9 +155,10 @@ export const InformationBlock: React.FC<InformationBlockProps> = ({
     secundaryValue,
     mainValue,
     textColor = vars.colors.textPrimary,
+    'aria-label': ariaLabel,
 }) => {
     return (
-        <Inline space="between" alignItems="flex-end">
+        <Inline space="between" alignItems="flex-end" aria-label={ariaLabel}>
             <SlotContent title={title} subtitle={subtitle} description={description} />
             <div className={classNames(styles.column, styles.container)}>
                 <Text2 regular color={vars.colors.textSecondary}>
@@ -181,6 +186,7 @@ interface HighlightedValueBlockProps {
     description?: 'string';
 
     textColor?: string;
+    'aria-label'?: string;
 }
 
 export const HighlightedValueBlock: React.FC<HighlightedValueBlockProps> = ({
@@ -194,9 +200,10 @@ export const HighlightedValueBlock: React.FC<HighlightedValueBlockProps> = ({
     subtitle,
     description,
     textColor = vars.colors.textPrimary,
+    'aria-label': ariaLabel,
 }) => {
     return (
-        <div>
+        <div aria-label={ariaLabel}>
             {tag && (
                 <div
                     className={sprinkles({
@@ -241,6 +248,7 @@ interface ValueBlockProps {
     subtitle?: string;
     description?: string;
     textColor?: string;
+    'aria-label'?: string;
 }
 
 export const ValueBlock: React.FC<ValueBlockProps> = ({
@@ -249,9 +257,11 @@ export const ValueBlock: React.FC<ValueBlockProps> = ({
     subtitle,
     description,
     textColor = vars.colors.textPrimary,
+    'aria-label': ariaLabel,
 }) => {
     return (
         <div
+            aria-label={ariaLabel}
             style={{
                 display: 'flex',
                 flexDirection: 'column',
@@ -281,6 +291,7 @@ interface ProgressBlockProps {
     text: string;
 
     textColor?: string;
+    'aria-label'?: string;
 }
 
 export const ProgressBlock: React.FC<ProgressBlockProps> = ({
@@ -290,9 +301,10 @@ export const ProgressBlock: React.FC<ProgressBlockProps> = ({
     value,
     text,
     textColor = vars.colors.textPrimary,
+    'aria-label': ariaLabel,
 }) => {
     return (
-        <div>
+        <div aria-label={ariaLabel}>
             {progressPercent && (
                 <div>
                     {title && (
