@@ -20,7 +20,7 @@ const useKeepMaxLength = (
     }, [onChange, value, maxLength, input]);
 };
 
-export interface TextFieldProps extends CommonFormFieldProps {
+export interface TextFieldProps extends CommonFormFieldProps<Element> {
     onChangeValue?: (value: string, rawValue: string) => void;
     onPress?: (event: React.MouseEvent) => void;
     multiline?: boolean;
@@ -52,7 +52,7 @@ const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
         const inputRef = React.useRef<HTMLInputElement | null>(null);
         const processValue = (v: string) => v;
 
-        const onBlur = (event: React.FocusEvent<HTMLElement>) => {
+        const onBlur = (event: React.FocusEvent<Element>) => {
             if (rest.multiline && inputRef.current) {
                 // scroll to start
                 inputRef.current.scrollTop = 0;

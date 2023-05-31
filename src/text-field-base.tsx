@@ -43,7 +43,7 @@ export type AutoComplete =
     | 'cc-csc' // The security code; on credit cards, this is the 3-digit verification number on the back of the card
     | 'username'; // Username or account name, when used with a password field the browser offers to save credentials together
 
-export interface CommonFormFieldProps {
+export interface CommonFormFieldProps<T = HTMLInputElement> {
     autoFocus?: boolean;
     disabled?: boolean;
     error?: boolean;
@@ -55,8 +55,8 @@ export interface CommonFormFieldProps {
     maxLength?: number;
     validate?: FieldValidator;
     autoComplete?: AutoComplete;
-    onFocus?: (event: React.FocusEvent) => void;
-    onBlur?: (event: React.FocusEvent<HTMLElement>) => void;
+    onFocus?: React.FocusEventHandler<T>;
+    onBlur?: React.FocusEventHandler<T>;
     fullWidth?: boolean;
     getSuggestions?: (text: string) => ReadonlyArray<string>;
     placeholder?: string;
@@ -93,8 +93,8 @@ interface TextFieldBaseProps {
     getSuggestions?: (value: string) => ReadonlyArray<string>;
     onClick?: (event: React.MouseEvent) => void;
     onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
-    onBlur?: (event: React.FocusEvent<HTMLElement>) => void;
-    onFocus?: (event: React.FocusEvent) => void;
+    onBlur?: React.FocusEventHandler;
+    onFocus?: React.FocusEventHandler;
     onKeyDown?: (event: React.KeyboardEvent) => void;
     inputProps?: {[name: string]: string | number | undefined};
     inputComponent?: React.ComponentType<any>;
