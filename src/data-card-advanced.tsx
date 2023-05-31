@@ -3,7 +3,6 @@ import {Boxed} from './boxed';
 import {sprinkles} from './sprinkles.css';
 import Stack from './stack';
 import * as styles from './data-card-advanced.css';
-import Image from './image';
 import Divider from './divider';
 import NegativeBox from './negative-box';
 import Text, {Text2} from './text';
@@ -15,6 +14,8 @@ import IconButton from './icon-button';
 import Inline from './inline';
 import classNames from 'classnames';
 
+import type StackingGroup from './stacking-group';
+import type Image from './image';
 import type {
     ValueBlock,
     InformationBlock,
@@ -275,7 +276,7 @@ type slotsTypeof =
 interface DataCardAdvancedProps {
     cardOnPress?: () => void;
 
-    cardImage?: string;
+    stackingGroup?: RendersNullableElement<typeof StackingGroup>;
     headline?: string | RendersNullableElement<typeof Tag>;
     pretitle?: string;
     pretitleLinesMax?: number;
@@ -306,7 +307,7 @@ const DataCardAdvanced = React.forwardRef<HTMLDivElement, DataCardAdvancedProps>
         {
             cardOnPress,
 
-            cardImage,
+            stackingGroup,
             headline,
             pretitle,
             pretitleLinesMax,
@@ -335,7 +336,7 @@ const DataCardAdvanced = React.forwardRef<HTMLDivElement, DataCardAdvancedProps>
     ) => {
         const finalActions = useTopActions(actions, onClose);
         const hasAcations = finalActions?.length > 0;
-        const hascardImage = !!cardImage;
+        const hasStackingGroup = !!stackingGroup;
 
         const hasFooter = !!button || !!footerImage || !!footerText || !!buttonLink;
         const footerProps = {button, footerImage, footerText, buttonLink};
@@ -381,7 +382,7 @@ const DataCardAdvanced = React.forwardRef<HTMLDivElement, DataCardAdvancedProps>
                                 )}
                             >
                                 <Stack space={8} className={sprinkles({flex: 1})}>
-                                    {hascardImage ? <Image height={40} src={cardImage} /> : null}
+                                    {hasStackingGroup && stackingGroup}
                                     <CardContent
                                         headline={headline}
                                         pretitle={pretitle}
