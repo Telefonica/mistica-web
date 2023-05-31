@@ -13,7 +13,6 @@ import {vars} from './skins/skin-contract.css';
 import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
 import IconButton from './icon-button';
 import Inline from './inline';
-import Touchable from './touchable';
 import classNames from 'classnames';
 
 import type {
@@ -138,9 +137,10 @@ const CardContent: React.FC<CardContentProps> = ({
                             <Stack space={4}>
                                 {pretitle && (
                                     <Text2
+                                        aria-label="Texto"
                                         color={vars.colors.textPrimary}
                                         truncate={pretitleLinesMax}
-                                        as="div"
+                                        as="h4"
                                         regular
                                         hyphens="auto"
                                     >
@@ -148,6 +148,7 @@ const CardContent: React.FC<CardContentProps> = ({
                                     </Text2>
                                 )}
                                 <Text
+                                    aria-label="Texto"
                                     color={vars.colors.textPrimary}
                                     mobileSize={20}
                                     mobileLineHeight="28px"
@@ -161,9 +162,10 @@ const CardContent: React.FC<CardContentProps> = ({
                                     {title}
                                 </Text>
                                 <Text2
+                                    aria-label="Texto"
                                     color={vars.colors.textPrimary}
                                     truncate={subtitleLinesMax}
-                                    as="div"
+                                    as="p"
                                     regular
                                     hyphens="auto"
                                 >
@@ -181,6 +183,7 @@ const CardContent: React.FC<CardContentProps> = ({
                         regular
                         color={vars.colors.textSecondary}
                         hyphens="auto"
+                        aria-label="Texto"
                     >
                         {description}
                     </Text2>
@@ -192,7 +195,7 @@ const CardContent: React.FC<CardContentProps> = ({
 
 type CardFooterProps = {
     button?: RendersNullableElement<typeof ButtonPrimary>;
-    footerImage?: string;
+    footerImage?: RendersNullableElement<typeof Image>;
     footerText?: string;
     buttonLink?: RendersNullableElement<typeof ButtonLink>;
 };
@@ -223,7 +226,7 @@ const CardFooter: React.FC<CardFooterProps> = ({button, footerImage, footerText,
                         className={sprinkles({
                             display: 'flex',
                         })}
-                        style={{marginTop: '16px', marginRight: '16px'}}
+                        style={{marginTop: '16px', marginRight: '16px', position: 'relative', zIndex: '2'}}
                     >
                         {button}
                     </div>
@@ -231,10 +234,10 @@ const CardFooter: React.FC<CardFooterProps> = ({button, footerImage, footerText,
                 <div style={{display: 'flex', flexDirection: 'row', marginTop, flexWrap: 'wrap'}}>
                     {hasFooterImage && (
                         <div
-                            style={{marginRight: '16px'}}
+                            style={{marginRight: '16px', zIndex: '0'}}
                             className={sprinkles({alignItems: 'center', display: 'flex'})}
                         >
-                            <Image height={40} src={footerImage} />
+                            {footerImage}
                         </div>
                     )}
 
@@ -251,7 +254,7 @@ const CardFooter: React.FC<CardFooterProps> = ({button, footerImage, footerText,
                             display: 'flex',
                         })}
                         onClick={(event) => event.stopPropagation()}
-                        style={{marginTop}}
+                        style={{marginTop, position: 'relative', zIndex: '2'}}
                     >
                         {buttonLink}
                     </div>
@@ -287,7 +290,7 @@ interface DataCardAdvancedProps {
     small?: boolean;
 
     button?: RendersNullableElement<typeof ButtonPrimary>;
-    footerImage?: string;
+    footerImage?: RendersNullableElement<typeof Image>;
     footerText?: string;
     buttonLink?: RendersNullableElement<typeof ButtonLink>;
 
@@ -347,80 +350,84 @@ const DataCardAdvanced = React.forwardRef<HTMLDivElement, DataCardAdvancedProps>
 
         return (
             <section aria-label={cardAriaLabel} style={{height: '100%', position: 'relative'}}>
-                <Touchable
-                    aria-label={touchableAriaLabel}
-                    onPress={() => {
-                        if (cardOnPress) {
-                            cardOnPress();
-                        }
-                    }}
-                    className={sprinkles({height: '100%', position: 'relative'})}
+                <Boxed
+                    className={styles.boxed}
+                    dataAttributes={{'component-name': 'DataCard', ...dataAttributes}}
+                    ref={ref}
+                    width="100%"
+                    height="100%"
                 >
-                    <Boxed
-                        className={styles.boxed}
-                        dataAttributes={{'component-name': 'DataCard', ...dataAttributes}}
-                        ref={ref}
-                        width="100%"
-                        height="100%"
-                    >
-                        <div className={styles.dataCard}>
-                            <div className={cardContentStyle}>
-                                <div
-                                    className={classNames(
-                                        sprinkles({
-                                            paddingTop: 8,
-                                        })
-                                    )}
-                                >
-                                    <Stack space={8} className={sprinkles({flex: 1})}>
-                                        {hascardImage ? <Image height={40} src={cardImage} /> : null}
-                                        <CardContent
-                                            headline={headline}
-                                            pretitle={pretitle}
-                                            pretitleLinesMax={pretitleLinesMax}
-                                            title={title}
-                                            titleLinesMax={titleLinesMax}
-                                            subtitle={subtitle}
-                                            subtitleLinesMax={subtitleLinesMax}
-                                            description={description}
-                                            descriptionLinesMax={descriptionLinesMax}
-                                        />
-                                    </Stack>
-                                </div>
-                                {hasAcations && (
-                                    <div style={topActionsStylesWithIcon}>
-                                        <CardActionsGroup actions={finalActions} />
-                                    </div>
+                    <div className={styles.dataCard}>
+                        {cardOnPress && (
+                            <a
+                                tabIndex={0}
+                                aria-label={touchableAriaLabel}
+                                href="javascript:void(0)"
+                                className={styles.anchorCard}
+                                onClick={() => {
+                                    cardOnPress();
+                                }}
+                            >
+                                <div></div>
+                            </a>
+                        )}
+
+                        <div className={cardContentStyle}>
+                            <div
+                                className={classNames(
+                                    sprinkles({
+                                        paddingTop: 8,
+                                    })
                                 )}
+                            >
+                                <Stack space={8} className={sprinkles({flex: 1})}>
+                                    {hascardImage ? <Image height={40} src={cardImage} /> : null}
+                                    <CardContent
+                                        headline={headline}
+                                        pretitle={pretitle}
+                                        pretitleLinesMax={pretitleLinesMax}
+                                        title={title}
+                                        titleLinesMax={titleLinesMax}
+                                        subtitle={subtitle}
+                                        subtitleLinesMax={subtitleLinesMax}
+                                        description={description}
+                                        descriptionLinesMax={descriptionLinesMax}
+                                    />
+                                </Stack>
                             </div>
-                            <div style={{marginTop: 'auto', width: '100%'}}>
-                                {slots && slots?.length ? (
-                                    <div className={styles.slots}>
-                                        {slots.map((slot, index) => {
-                                            return (
-                                                <div>
-                                                    <div>{slot}</div>
-
-                                                    {index + 1 !== slots.length && (
-                                                        <div
-                                                            className={sprinkles({
-                                                                paddingY: slotSpaceSize,
-                                                            })}
-                                                        >
-                                                            <Divider />
-                                                        </div>
-                                                    )}
-                                                </div>
-                                            );
-                                        })}
-                                    </div>
-                                ) : null}
-                            </div>
-
-                            {hasFooter && <CardFooter {...footerProps} />}
+                            {hasAcations && (
+                                <div style={topActionsStylesWithIcon}>
+                                    <CardActionsGroup actions={finalActions} />
+                                </div>
+                            )}
                         </div>
-                    </Boxed>
-                </Touchable>
+                        <div style={{marginTop: 'auto', width: '100%'}}>
+                            {slots && slots?.length ? (
+                                <div className={styles.slots}>
+                                    {slots.map((slot, index) => {
+                                        return (
+                                            <div>
+                                                <div>{slot}</div>
+
+                                                {index + 1 !== slots.length && (
+                                                    <div
+                                                        className={sprinkles({
+                                                            paddingY: slotSpaceSize,
+                                                        })}
+                                                    >
+                                                        <Divider />
+                                                    </div>
+                                                )}
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                            ) : null}
+                        </div>
+
+                        {hasFooter && <CardFooter {...footerProps} />}
+                    </div>
+                </Boxed>
             </section>
         );
     }

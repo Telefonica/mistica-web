@@ -4,6 +4,27 @@ import * as mq from './media-queries.css';
 import {vars} from './skins/skin-contract.css';
 import {applyAlpha} from './utils/color';
 
+export const anchorCard = style([
+    {
+        selectors: {
+            '&:focus:after': {
+                borderRadius: '2%',
+                outline: '2px solid black',
+            },
+            '&:after': {
+                content: ' ',
+                position: 'absolute',
+                top: '0',
+                left: '0',
+                width: '100%',
+                height: '100%',
+                cursor: 'pointer',
+                zIndex: '1',
+            },
+        },
+    },
+]);
+
 export const actions = style([
     sprinkles({
         display: 'flex',
