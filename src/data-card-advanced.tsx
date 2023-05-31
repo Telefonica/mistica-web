@@ -214,7 +214,7 @@ const CardFooter: React.FC<CardFooterProps> = ({button, footerImage, footerText,
     const maxWidth = hasButtonLink && !hasAllItens ? '178px' : '';
 
     return (
-        <div style={{marginTop: 'auto'}}>
+        <div>
             <NegativeBox>
                 <Divider />
             </NegativeBox>
@@ -271,7 +271,8 @@ type slotsTypeof =
     | typeof ValueBlock
     | typeof InformationBlock
     | typeof HighlightedValueBlock
-    | typeof SimpleBlock;
+    | typeof SimpleBlock
+    | typeof StackingGroup;
 
 interface DataCardAdvancedProps {
     cardOnPress?: () => void;
@@ -380,7 +381,11 @@ const DataCardAdvanced = React.forwardRef<HTMLDivElement, DataCardAdvancedProps>
                                 )}
                             >
                                 <Stack space={8} className={sprinkles({flex: 1})}>
-                                    {hasStackingGroup && <div>{stackingGroup}</div>}
+                                    {hasStackingGroup && (
+                                        <div style={{display: 'flex', width: '100%'}}>
+                                            <div style={{zIndex: '0', width: '100%'}}>{stackingGroup}</div>
+                                        </div>
+                                    )}
                                     <CardContent
                                         headline={headline}
                                         pretitle={pretitle}
@@ -406,7 +411,14 @@ const DataCardAdvanced = React.forwardRef<HTMLDivElement, DataCardAdvancedProps>
                                     {slots.map((slot, index) => {
                                         return (
                                             <div>
-                                                <div style={{zIndex: '0'}}>{slot}</div>
+                                                <div
+                                                    style={{
+                                                        display: 'flex',
+                                                        width: '100%',
+                                                    }}
+                                                >
+                                                    <div style={{zIndex: '0', width: '100%'}}>{slot}</div>
+                                                </div>
 
                                                 {index + 1 !== slots.length && (
                                                     <div

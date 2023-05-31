@@ -8,7 +8,6 @@ export const anchorCard = style([
     {
         selectors: {
             '&:focus:after': {
-                borderRadius: '2%',
                 outline: '2px solid black',
             },
             '&:after': {
