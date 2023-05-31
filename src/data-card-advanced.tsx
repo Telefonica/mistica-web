@@ -98,8 +98,10 @@ const useTopActions = (actions?: Array<CardAction>, onClose?: () => void) => {
 type CardContentProps = {
     headline?: string | RendersNullableElement<typeof Tag>;
     pretitle?: string;
+    pretitleAs?: string;
     pretitleLinesMax?: number;
     title?: string;
+    titleAs?: string;
     titleLinesMax?: number;
     subtitle?: string;
     subtitleLinesMax?: number;
@@ -110,8 +112,10 @@ type CardContentProps = {
 const CardContent: React.FC<CardContentProps> = ({
     headline,
     pretitle,
+    pretitleAs = 'h4',
     pretitleLinesMax,
     title,
+    titleAs = 'h3',
     titleLinesMax,
     subtitle,
     subtitleLinesMax,
@@ -141,7 +145,7 @@ const CardContent: React.FC<CardContentProps> = ({
                                         aria-label="Texto"
                                         color={vars.colors.textPrimary}
                                         truncate={pretitleLinesMax}
-                                        as="h4"
+                                        as={pretitleAs}
                                         regular
                                         hyphens="auto"
                                     >
@@ -157,7 +161,7 @@ const CardContent: React.FC<CardContentProps> = ({
                                     desktopLineHeight="28px"
                                     truncate={titleLinesMax}
                                     weight={textPresets.cardTitle.weight}
-                                    as="h3"
+                                    as={titleAs}
                                     hyphens="auto"
                                 >
                                     {title}
@@ -274,6 +278,8 @@ type slotsTypeof =
     | typeof SimpleBlock
     | typeof StackingGroup;
 
+type textAs = 'h1' | 'h2' | 'h3' | 'h4';
+
 interface DataCardAdvancedProps {
     cardOnPress?: () => void;
 
@@ -281,8 +287,10 @@ interface DataCardAdvancedProps {
     headline?: string | RendersNullableElement<typeof Tag>;
     pretitle?: string;
     pretitleLinesMax?: number;
+    pretitleAs?: textAs;
     title?: string;
     titleLinesMax?: number;
+    titleAs?: textAs;
     subtitle?: string;
     subtitleLinesMax?: number;
     description?: string;
@@ -311,8 +319,10 @@ const DataCardAdvanced = React.forwardRef<HTMLDivElement, DataCardAdvancedProps>
             stackingGroup,
             headline,
             pretitle,
+            pretitleAs,
             pretitleLinesMax,
             title,
+            titleAs,
             titleLinesMax,
             subtitle,
             subtitleLinesMax,
@@ -389,8 +399,10 @@ const DataCardAdvanced = React.forwardRef<HTMLDivElement, DataCardAdvancedProps>
                                     <CardContent
                                         headline={headline}
                                         pretitle={pretitle}
+                                        pretitleAs={pretitleAs}
                                         pretitleLinesMax={pretitleLinesMax}
                                         title={title}
+                                        titleAs={titleAs}
                                         titleLinesMax={titleLinesMax}
                                         subtitle={subtitle}
                                         subtitleLinesMax={subtitleLinesMax}
