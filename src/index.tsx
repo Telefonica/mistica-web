@@ -65,6 +65,7 @@ export {default as RadioButton, RadioGroup} from './radio-button';
 export {default as NegativeBox} from './negative-box';
 export {default as Tabs} from './tabs';
 export {default as Inline} from './inline';
+export {default as HorizontalScroll} from './horizontal-scroll';
 export {default as HighlightedCard} from './highlighted-card';
 export {default as Stepper} from './stepper';
 export {default as ProgressBar} from './progress-bar';
@@ -100,6 +101,8 @@ export {default as Image} from './image';
 export {default as Chip} from './chip';
 export {default as Video} from './video';
 export {Carousel, CenteredCarousel, Slideshow, PageBullets} from './carousel';
+export {Grid, GridItem} from './grid';
+export {default as StackingGroup} from './stacking-group';
 
 // Forms
 export {default as Form} from './form';
@@ -122,6 +125,7 @@ export {default as PasswordField} from './password-field';
 export {default as DoubleField} from './double-field';
 export {default as IbanField} from './iban-field';
 export {useForm, useFieldProps} from './form-context';
+export type {FormValues} from './form';
 
 // Icons
 export {default as IconInfo} from './icons/icon-info';

@@ -49,7 +49,8 @@ export const innerCircleChecked = style([
     },
 ]);
 
-export const radioButton = style({cursor: 'default'});
+export const radioButton = style({cursor: 'pointer'});
+export const radioButtonContainerDisabled = style({cursor: 'default'});
 
 export const outerCircleCheckedVariants = styleVariants({
     default: {

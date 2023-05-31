@@ -1,5 +1,5 @@
 import {applyAlpha} from '../utils/color';
-import {MOVISTAR_SKIN} from './constants';
+import {MOVISTAR_LEGACY_SKIN} from './constants';
 
 import type {GetKnownSkin, KnownSkin} from './types';
 
@@ -61,15 +61,23 @@ export const palette = {
 
 export const getMovistarLegacySkin: GetKnownSkin = (variant) => {
     const skin: KnownSkin = {
-        name: MOVISTAR_SKIN,
+        name: MOVISTAR_LEGACY_SKIN,
         colors: {
             // BACKGROUNDS
             appBarBackground: palette.white,
             background: palette.white,
             backgroundContainer: palette.white,
+            backgroundContainerHover: palette.white,
+            backgroundContainerPressed: palette.white,
             backgroundContainerBrand: palette.movistarBlue,
+            backgroundContainerBrandHover: palette.movistarBlue,
+            backgroundContainerBrandPressed: palette.movistarBlue,
             backgroundContainerBrandOverInverse: palette.movistarBlue55,
+            backgroundContainerBrandOverInverseHover: palette.movistarBlue55,
+            backgroundContainerBrandOverInversePressed: palette.movistarBlue55,
             backgroundContainerAlternative: palette.grey1,
+            backgroundContainerAlternativeHover: palette.grey1,
+            backgroundContainerAlternativePressed: palette.grey1,
             backgroundBrand: palette.movistarBlue,
             backgroundBrandSecondary: palette.movistarBlue,
             backgroundOverlay: applyAlpha(palette.grey6, 0.6),
@@ -191,15 +199,25 @@ export const getMovistarLegacySkin: GetKnownSkin = (variant) => {
             errorHighInverse: palette.pepper70,
             promoHighInverse: palette.purple70,
             neutralMediumInverse: palette.grey5,
+
+            customTabsBackground: palette.movistarBlue,
         },
         darkModeColors: {
             brand: palette.movistarBlue, // this color needs to be in darkModeColors to revert the promient variant
             appBarBackground: palette.darkModeGrey,
             background: palette.darkModeBlack,
             backgroundContainer: palette.darkModeGrey,
+            backgroundContainerHover: palette.darkModeGrey,
+            backgroundContainerPressed: palette.darkModeGrey,
             backgroundContainerBrand: palette.darkModeGrey,
+            backgroundContainerBrandHover: palette.darkModeGrey,
+            backgroundContainerBrandPressed: palette.darkModeGrey,
             backgroundContainerBrandOverInverse: palette.darkModeGrey,
+            backgroundContainerBrandOverInverseHover: palette.darkModeGrey,
+            backgroundContainerBrandOverInversePressed: palette.darkModeGrey,
             backgroundContainerAlternative: palette.darkModeGrey,
+            backgroundContainerAlternativeHover: palette.darkModeGrey,
+            backgroundContainerAlternativePressed: palette.darkModeGrey,
             backgroundBrand: palette.darkModeBlack,
             backgroundBrandSecondary: palette.darkModeBlack,
             backgroundOverlay: applyAlpha(palette.darkModeGrey, 0.8),
@@ -279,6 +297,8 @@ export const getMovistarLegacySkin: GetKnownSkin = (variant) => {
             errorHighInverse: palette.pepper70,
             promoHighInverse: palette.purple70,
             neutralMediumInverse: palette.grey5,
+
+            customTabsBackground: palette.darkModeBlack,
         },
         textPresets: {
             text5: {weight: 'bold'},

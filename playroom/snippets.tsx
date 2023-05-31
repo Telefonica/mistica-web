@@ -1763,6 +1763,98 @@ const logoSnippets = [
     },
 ];
 
+const gridSnippets = [
+    {
+        group: 'Grid',
+        name: 'Fixed columns/rows',
+        code: `
+<Grid columns={2} rows={3} gap={8}>
+  <GridItem>
+    <SnapCard
+      icon={
+        <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
+          <IconAcademicRegular color={skinVars.colors.brand} />
+        </Circle>
+      }
+      title="Title 1"
+      subtitle="Subtitle 1"
+    />
+  </GridItem>
+  <GridItem rowSpan={2}>
+    <SnapCard
+      icon={
+        <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
+          <IconAcademicRegular color={skinVars.colors.brand} />
+        </Circle>
+      }
+      title="Title 2"
+      subtitle="Subtitle 2"
+    />
+  </GridItem>
+  <GridItem>
+    <SnapCard
+      icon={
+        <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
+          <IconAcademicRegular color={skinVars.colors.brand} />
+        </Circle>
+      }
+      title="Title 3"
+      subtitle="Subtitle 3"
+    />
+  </GridItem>
+  <GridItem columnSpan={2}>
+    <SnapCard
+      icon={
+        <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
+          <IconAcademicRegular color={skinVars.colors.brand} />
+        </Circle>
+      }
+      title="Title 4"
+      subtitle="Subtitle 4"
+    />
+  </GridItem>
+</Grid>
+`,
+    },
+    {
+        group: 'Grid',
+        name: 'Auto columns',
+        code: `
+<Grid columns={{ minSize: 100 }} gap={8}>
+  {Array.from({ length: 10 }, (_, idx) => (
+    <SnapCard
+      key={idx}
+      icon={
+        <Circle size={40} backgroundColor={colors.brandLow}>
+          <IconAcademicRegular color={colors.brand} />
+        </Circle>
+      }
+      title={\`Title \${idx}\`}
+      subtitle="Subtitle"
+    />
+  ))}
+</Grid>
+`,
+    },
+];
+
+const stackingGroupSnippets = [
+    {
+        name: 'Stacking Group',
+        code: `
+        <StackingGroup maxItems={5} moreItemsStyle={{type: 'circle', size: 64}}>
+          <Avatar size={64} src="https://source.unsplash.com/600x600/?face" />
+          <Avatar size={64} src="https://source.unsplash.com/600x600/?face" />
+          <Avatar size={64} src="https://source.unsplash.com/600x600/?face" />
+          <Avatar size={64} src="https://source.unsplash.com/600x600/?face" />
+          <Avatar size={64} src="https://source.unsplash.com/600x600/?face" />
+          <Avatar size={64} src="https://source.unsplash.com/600x600/?face" />
+        </StackingGroup>
+    `,
+        group: 'StackingGroup',
+    },
+];
+
 export default [
     ...buttonSnippets,
     ...formSnippets,
@@ -1897,4 +1989,6 @@ export default [
     ...heroSnippets,
     ...loaderSnippets,
     ...logoSnippets,
+    ...gridSnippets,
+    ...stackingGroupSnippets,
 ].sort((s1, s2) => s1.group.localeCompare(s2.group)) as Array<Snippet>;
