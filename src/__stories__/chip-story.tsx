@@ -31,11 +31,6 @@ type Args = {
 export const Default: StoryComponent<Args> = ({badge, inverse}) => {
     // eslint-disable-next-line no-eval
     const badgeValue = badgeOptions.includes(badge) ? eval(badge) : undefined;
-    const [isClosed, setIsClosed] = React.useState(true);
-
-    React.useEffect(() => {
-        setIsClosed(badgeValue);
-    }, [badgeValue]);
 
     return (
         <div
@@ -56,7 +51,7 @@ export const Default: StoryComponent<Args> = ({badge, inverse}) => {
                 <StorySection title="Closeable">
                     <Chip
                         onClose={() => {
-                            window.alert('closed badge');
+                            window.alert('closed');
                         }}
                     >
                         Chip closeable
@@ -66,23 +61,12 @@ export const Default: StoryComponent<Args> = ({badge, inverse}) => {
                     <Chip Icon={IconLightningFilled}>Chip with icon</Chip>
                 </StorySection>
                 <StorySection title="No icon and badge">
-                    <Chip
-                        badge={isClosed}
-                        onClose={() => {
-                            setIsClosed(false);
-                        }}
-                    >
+                    <Chip badge={badgeValue} onClose={() => {}}>
                         Chip with icon and badge
                     </Chip>
                 </StorySection>
                 <StorySection title="With icon and badge">
-                    <Chip
-                        Icon={IconLightningFilled}
-                        badge={isClosed}
-                        onClose={() => {
-                            setIsClosed(false);
-                        }}
-                    >
+                    <Chip Icon={IconLightningFilled} badge={badgeValue} onClose={() => {}}>
                         Chip with icon and badge
                     </Chip>
                 </StorySection>

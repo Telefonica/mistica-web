@@ -19,7 +19,7 @@ const containerBase = style([
         borderColor: vars.colors.control,
 
         '@media': {
-            [mq.mobile]: {
+            [mq.tabletOrSmaller]: {
                 height: 40,
                 minWidth: 72,
                 paddingTop: 10,
