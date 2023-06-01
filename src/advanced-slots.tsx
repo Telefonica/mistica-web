@@ -291,6 +291,7 @@ interface ProgressBlockProps {
 
     value: string;
     text: string;
+    description?: string;
 
     textColor?: string;
     'aria-label'?: string;
@@ -302,33 +303,42 @@ export const ProgressBlock: React.FC<ProgressBlockProps> = ({
     progressPercent,
     value,
     text,
+    description,
     textColor = vars.colors.textPrimary,
     'aria-label': ariaLabel,
 }) => {
+    const hasHeader = !!title || !!progressPercent;
+
     return (
         <div aria-label={ariaLabel}>
-            {progressPercent && (
-                <div>
-                    {title && (
-                        <Box paddingBottom={8}>
-                            <Inline space="between" alignItems="flex-end">
-                                <div style={{paddingRight: '32px'}}>
-                                    <Text2 regular>{title}</Text2>
-                                </div>
-                                {stackingGroup && <div style={{zIndex: '0'}}>{stackingGroup}</div>}
-                            </Inline>
-                        </Box>
-                    )}
-                    <ProgressBar progressPercent={progressPercent} reverse={false} />
-                </div>
-            )}
-            <Box paddingTop={8}>
+            <div>
+                {title && (
+                    <Box paddingBottom={progressPercent ? 8 : 0}>
+                        <Inline space="between" alignItems="flex-end">
+                            <div style={{paddingRight: '32px'}}>
+                                <Text2 regular>{title}</Text2>
+                            </div>
+                            {stackingGroup && <div style={{zIndex: '0'}}>{stackingGroup}</div>}
+                        </Inline>
+                    </Box>
+                )}
+                {progressPercent && <ProgressBar progressPercent={progressPercent} reverse={false} />}
+            </div>
+
+            <Box paddingTop={hasHeader ? 8 : 0}>
                 <Inline space={8} alignItems="flex-end">
                     <Text8 color={textColor}>{value}</Text8>
                     <Text2 regular color={vars.colors.textSecondary}>
                         {text}
                     </Text2>
                 </Inline>
+                {description && (
+                    <Box paddingTop={8}>
+                        <Text2 regular color={vars.colors.textSecondary}>
+                            {description}
+                        </Text2>
+                    </Box>
+                )}
             </Box>
         </div>
     );
