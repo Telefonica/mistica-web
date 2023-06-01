@@ -16,22 +16,32 @@ import type {RendersNullableElement} from './utils/renders-element';
 
 interface SlotContentProps {
     title?: string;
-    subtitle?: string;
-    description?: string;
+    description?: string | Array<string>;
 }
 
-const SlotContent: React.FC<SlotContentProps> = ({title, subtitle, description}) => {
-    return (
-        <div className={styles.column}>
-            <Text3 regular color={vars.colors.textPrimary}>
-                {title}
-            </Text3>
-            <Text2 regular color={vars.colors.textSecondary}>
-                {subtitle}
-            </Text2>
+const SlotContent: React.FC<SlotContentProps> = ({title, description}) => {
+    const normalizedDescription =
+        description && Array.isArray(description) ? (
+            description.map((paragraph, i) => (
+                <Text2 regular color={vars.colors.textSecondary} key={i}>
+                    {paragraph}
+                </Text2>
+            ))
+        ) : (
             <Text2 regular color={vars.colors.textSecondary}>
                 {description}
             </Text2>
+        );
+
+    return (
+        <div className={styles.column}>
+            {title && (
+                <Text3 regular color={vars.colors.textPrimary}>
+                    {title}
+                </Text3>
+            )}
+
+            {!!description && normalizedDescription}
         </div>
     );
 };
@@ -142,8 +152,7 @@ export const SimpleBlock: React.FC<SimpleBlockProps> = ({image, description, 'ar
 
 interface InformationBlockProps {
     title?: string;
-    subtitle?: string;
-    description?: string;
+    description?: string | Array<string>;
     mainValue: string;
     secundaryValue?: string;
     textColor?: string;
@@ -152,7 +161,6 @@ interface InformationBlockProps {
 
 export const InformationBlock: React.FC<InformationBlockProps> = ({
     title,
-    subtitle,
     description,
     secundaryValue,
     mainValue,
@@ -161,7 +169,7 @@ export const InformationBlock: React.FC<InformationBlockProps> = ({
 }) => {
     return (
         <Inline space="between" alignItems="flex-end" aria-label={ariaLabel}>
-            <SlotContent title={title} subtitle={subtitle} description={description} />
+            <SlotContent title={title} description={description} />
             <div className={classNames(styles.column, styles.container)}>
                 <Text2 regular color={vars.colors.textSecondary}>
                     {secundaryValue}
@@ -175,17 +183,16 @@ export const InformationBlock: React.FC<InformationBlockProps> = ({
 interface HighlightedValueBlockProps {
     tag?: RendersNullableElement<typeof Tag>;
 
-    value: 'string';
-    text: 'string';
+    value: string;
+    text: string;
 
-    value2?: 'string';
-    text2?: 'string';
+    value2?: string;
+    text2?: string;
 
-    secondaryValue?: 'string';
+    secondaryValue?: string;
 
-    title?: 'string';
-    subtitle?: 'string';
-    description?: 'string';
+    title?: string;
+    description?: string | Array<string>;
 
     textColor?: string;
     'aria-label'?: string;
@@ -199,7 +206,6 @@ export const HighlightedValueBlock: React.FC<HighlightedValueBlockProps> = ({
     text2,
     secondaryValue,
     title,
-    subtitle,
     description,
     textColor = vars.colors.textPrimary,
     'aria-label': ariaLabel,
@@ -238,7 +244,7 @@ export const HighlightedValueBlock: React.FC<HighlightedValueBlockProps> = ({
                     paddingTop: 8,
                 })}
             >
-                <SlotContent title={title} subtitle={subtitle} description={description} />
+                <SlotContent title={title} description={description} />
             </div>
         </div>
     );
@@ -247,8 +253,7 @@ export const HighlightedValueBlock: React.FC<HighlightedValueBlockProps> = ({
 interface ValueBlockProps {
     title?: string;
     value?: string;
-    subtitle?: string;
-    description?: string;
+    description?: string | Array<string>;
     textColor?: string;
     'aria-label'?: string;
 }
@@ -256,7 +261,6 @@ interface ValueBlockProps {
 export const ValueBlock: React.FC<ValueBlockProps> = ({
     title,
     value,
-    subtitle,
     description,
     textColor = vars.colors.textPrimary,
     'aria-label': ariaLabel,
@@ -273,12 +277,13 @@ export const ValueBlock: React.FC<ValueBlockProps> = ({
                 {title}
             </Text2>
             <Text8 color={textColor}>{value}</Text8>
-            <Text2 regular color={vars.colors.textSecondary}>
+            <SlotContent description={description} />
+            {/* <Text2 regular color={vars.colors.textSecondary}>
                 {subtitle}
             </Text2>
             <Text2 regular color={vars.colors.textSecondary}>
                 {description}
-            </Text2>
+            </Text2> */}
         </div>
     );
 };
