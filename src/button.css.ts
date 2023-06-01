@@ -283,6 +283,7 @@ export const link = style([
         color: vars.colors.textLink,
         background: 'transparent',
         overflow: 'hidden',
+        minWidth: 40,
     }),
     {
         paddingTop: PADDING_Y_LINK,
