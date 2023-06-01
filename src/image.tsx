@@ -50,10 +50,11 @@ const VivoLogo = ({style}: VivoLogoProps) => {
 type ImageErrorProps = {
     noBorderRadius?: boolean;
     withIcon?: boolean;
+    border?: boolean;
 };
 
 export const ImageError = React.forwardRef<HTMLDivElement, ImageErrorProps>(
-    ({noBorderRadius, withIcon = true}, ref) => {
+    ({noBorderRadius, withIcon = true, border}, ref) => {
         const isInverse = useIsInverseVariant();
         const {skinName} = useTheme();
         return (
@@ -67,6 +68,8 @@ export const ImageError = React.forwardRef<HTMLDivElement, ImageErrorProps>(
                     backgroundColor: isInverse
                         ? vars.colors.backgroundSkeletonInverse
                         : vars.colors.backgroundSkeleton,
+                    boxSizing: 'border-box',
+                    border: border ? `1px solid ${vars.colors.borderLow}` : 'none',
                     borderRadius: noBorderRadius ? undefined : vars.borderRadii.container,
                 }}
                 ref={ref}
@@ -118,6 +121,7 @@ export type ImageProps = {
     onLoad?: () => void;
     loadingFallback?: boolean;
     errorFallback?: boolean;
+    border?: boolean;
 };
 
 export const ImageContent = React.forwardRef<HTMLImageElement, ImageProps>(
@@ -138,6 +142,7 @@ export const ImageContent = React.forwardRef<HTMLImageElement, ImageProps>(
     ) => {
         const imageRef = React.useRef<HTMLImageElement>();
         const borderRadiusContext = useMediaBorderRadius();
+        const border = props.border ? `1px solid ${vars.colors.borderLow}` : 'none';
         const noBorderSetting = noBorderRadius ?? !borderRadiusContext;
         const [isError, setIsError] = React.useState(false);
         const [isLoading, setIsLoading] = React.useState(true);
@@ -165,6 +170,8 @@ export const ImageContent = React.forwardRef<HTMLImageElement, ImageProps>(
                 {...getPrefixedDataAttributes(dataAttributes)}
                 style={{
                     ...(isLoading && withLoadingFallback ? {opacity: 0} : {opacity: 1}),
+                    boxSizing: 'border-box',
+                    border,
                 }}
                 ref={combineRefs(imageRef, ref)}
                 src={src}
@@ -206,8 +213,15 @@ export const ImageContent = React.forwardRef<HTMLImageElement, ImageProps>(
                     </div>
                 )}
                 {isError && withErrorFallback && (
-                    <div style={{position: 'absolute', width: '100%', height: '100%'}}>
-                        <ImageError noBorderRadius={noBorderSetting} />
+                    <div
+                        style={{
+                            position: 'absolute',
+                            width: '100%',
+                            height: '100%',
+                            zIndex: 1,
+                        }}
+                    >
+                        <ImageError noBorderRadius={noBorderSetting} border={props.border} />
                     </div>
                 )}
                 {!isError && img}

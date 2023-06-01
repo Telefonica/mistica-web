@@ -1838,6 +1838,23 @@ const gridSnippets = [
     },
 ];
 
+const stackingGroupSnippets = [
+    {
+        name: 'Stacking Group',
+        code: `
+        <StackingGroup maxItems={5} moreItemsStyle={{type: 'circle', size: 64}}>
+          <Avatar size={64} src="https://source.unsplash.com/600x600/?face" />
+          <Avatar size={64} src="https://source.unsplash.com/600x600/?face" />
+          <Avatar size={64} src="https://source.unsplash.com/600x600/?face" />
+          <Avatar size={64} src="https://source.unsplash.com/600x600/?face" />
+          <Avatar size={64} src="https://source.unsplash.com/600x600/?face" />
+          <Avatar size={64} src="https://source.unsplash.com/600x600/?face" />
+        </StackingGroup>
+    `,
+        group: 'StackingGroup',
+    },
+];
+
 export default [
     ...buttonSnippets,
     ...formSnippets,
@@ -1973,4 +1990,5 @@ export default [
     ...loaderSnippets,
     ...logoSnippets,
     ...gridSnippets,
+    ...stackingGroupSnippets,
 ].sort((s1, s2) => s1.group.localeCompare(s2.group)) as Array<Snippet>;
