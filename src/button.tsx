@@ -228,12 +228,16 @@ const Button = React.forwardRef<TouchableElement, ButtonProps & {type: ButtonTyp
                 <div
                     className={styles.loadingFiller}
                     aria-hidden
-                    style={{
-                        paddingLeft: spinnerSizeRem,
-                        paddingRight:
-                            styles.ICON_MARGIN_PX +
-                            2 * (props.small ? styles.X_SMALL_PADDING_PX : styles.X_PADDING_PX),
-                    }}
+                    style={
+                        loadingText
+                            ? {
+                                  paddingLeft: spinnerSizeRem,
+                                  paddingRight:
+                                      styles.ICON_MARGIN_PX +
+                                      2 * (props.small ? styles.X_SMALL_PADDING_PX : styles.X_PADDING_PX),
+                              }
+                            : undefined
+                    }
                 >
                     {renderButtonContent({content: loadingText, defaultIconSize, renderText})}
                 </div>
@@ -431,10 +435,14 @@ export const ButtonLink = React.forwardRef<TouchableElement, ButtonLinkProps>((p
                 <div
                     className={styles.loadingFiller}
                     aria-hidden
-                    style={{
-                        paddingLeft: spinnerSizeRem,
-                        paddingRight: styles.ICON_MARGIN_PX + 2 * styles.X_SMALL_PADDING_PX,
-                    }}
+                    style={
+                        loadingText
+                            ? {
+                                  paddingLeft: spinnerSizeRem,
+                                  paddingRight: styles.ICON_MARGIN_PX + 2 * styles.X_SMALL_PADDING_PX,
+                              }
+                            : undefined
+                    }
                 >
                     {renderButtonContent({content: loadingText, defaultIconSize, renderText})}
                 </div>
