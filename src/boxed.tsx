@@ -3,7 +3,6 @@ import classnames from 'classnames';
 import {ThemeVariant, useIsInverseVariant} from './theme-variant-context';
 import {getPrefixedDataAttributes} from './utils/dom';
 import {vars} from './skins/skin-contract.css';
-import * as styles from './boxed.css';
 import {sprinkles} from './sprinkles.css';
 
 import type {DataAttributes} from './utils/types';
@@ -28,7 +27,7 @@ type InternalProps = {
 
 const getBorderStyle = (isInverseOutside: boolean, isInverseInside: boolean) => {
     if (isInverseOutside && !isInverseInside) {
-        return styles.inverseBorder;
+        return sprinkles({border: 'none'});
     }
 
     if (isInverseInside) {
