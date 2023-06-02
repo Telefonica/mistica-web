@@ -45,43 +45,43 @@ type CardAction = {
 
 type CardActionsGroupProps = {
     actions: Array<CardAction>;
-    isInverse?: boolean;
+    type?: 'default' | 'inverse' | 'media';
 };
 
 const TOP_ACTION_BUTTON_SIZE = 48;
 
-const CardActionsGroup = ({actions, isInverse}: CardActionsGroupProps): JSX.Element => {
+const CardActionsGroup = ({actions, type = 'default'}: CardActionsGroupProps): JSX.Element => {
+    const iconColor: Record<typeof type, string> = {
+        default: vars.colors.neutralHigh,
+        inverse: vars.colors.inverse,
+        media: '#000000',
+    };
+
+    const iconBackgroundStyle: Record<typeof type, string> = {
+        default: styles.cardAction,
+        inverse: styles.cardActionInverse,
+        media: styles.cardActionMedia,
+    };
+
     return (
         <div style={{display: 'flex'}}>
-            {actions.map(
-                (
-                    {
-                        onPress,
-                        label,
-                        Icon,
-                        iconSize = 20,
-                        iconColor = vars.colors.neutralHigh,
-                        iconBackground = styles.cardAction,
-                        iconBackgroundInverse = styles.cardActionInverse,
-                    },
-                    index
-                ) =>
-                    Icon ? (
-                        <IconButton
-                            size={TOP_ACTION_BUTTON_SIZE}
-                            key={index}
-                            onPress={onPress}
-                            aria-label={label}
-                            className={styles.cardActionIconButton}
-                            style={{display: 'flex'}}
-                        >
-                            <div className={isInverse ? iconBackgroundInverse : iconBackground}>
-                                <Icon color={iconColor} size={iconSize} />
-                            </div>
-                        </IconButton>
-                    ) : (
-                        <div key={index} className={styles.cardActionIconButton} />
-                    )
+            {actions.map(({onPress, label, Icon, iconSize = 20}, index) =>
+                Icon ? (
+                    <IconButton
+                        size={TOP_ACTION_BUTTON_SIZE}
+                        key={index}
+                        onPress={onPress}
+                        aria-label={label}
+                        className={styles.cardActionIconButton}
+                        style={{display: 'flex'}}
+                    >
+                        <div className={iconBackgroundStyle[type]}>
+                            <Icon color={iconColor[type]} size={iconSize} />
+                        </div>
+                    </IconButton>
+                ) : (
+                    <div key={index} className={styles.cardActionIconButton} />
+                )
             )}
         </div>
     );
@@ -157,10 +157,10 @@ const CardContainer = ({
 type MaybeWithActionsProps = {
     actions?: Array<CardAction>;
     onClose?: () => void;
-    isInverse?: boolean;
+    type: 'default' | 'inverse' | 'media';
 };
 
-const MaybeWithActions = ({actions, onClose, isInverse}: MaybeWithActionsProps): JSX.Element => {
+const MaybeWithActions = ({actions, onClose, type}: MaybeWithActionsProps): JSX.Element => {
     const finalActions = useTopActions(actions, onClose);
     const hasActions = finalActions.length > 0;
 
@@ -173,7 +173,7 @@ const MaybeWithActions = ({actions, onClose, isInverse}: MaybeWithActionsProps):
                 zIndex: 3, // needed because images has zIndex 1 and touchable overlay has zIndex 2
             }}
         >
-            <CardActionsGroup actions={finalActions} isInverse={isInverse} />
+            <CardActionsGroup actions={finalActions} type={type} />
         </div>
     ) : (
         <></>
@@ -491,7 +491,7 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
                         </div>
                     </BaseTouchable>
                 </Boxed>
-                <MaybeWithActions onClose={onClose} actions={actions} isInverse />
+                <MaybeWithActions onClose={onClose} actions={actions} type="default" />
             </CardContainer>
         );
     }
@@ -613,7 +613,7 @@ export const DataCard = React.forwardRef<HTMLDivElement, DataCardProps>(
                         </div>
                     </BaseTouchable>
                 </Boxed>
-                <MaybeWithActions onClose={onClose} actions={actions} />
+                <MaybeWithActions onClose={onClose} actions={actions} type="default" />
             </CardContainer>
         );
     }
@@ -826,6 +826,8 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
         const overlayStyle =
             backgroundImage || backgroundVideo
                 ? styles.touchableCardOverlayMedia
+                : isInverse
+                ? styles.touchableCardOverlayInverse
                 : styles.touchableCardOverlay;
 
         return (
@@ -953,7 +955,11 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
                         </div>
                     </BaseTouchable>
                 </InternalBoxed>
-                <MaybeWithActions onClose={onClose} actions={actions} isInverse={isInverse} />
+                <MaybeWithActions
+                    onClose={onClose}
+                    actions={actions}
+                    type={backgroundImage || backgroundVideo ? 'media' : isInverse ? 'inverse' : 'default'}
+                />
             </CardContainer>
         );
     }
@@ -1187,7 +1193,7 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                         </div>
                     </BaseTouchable>
                 </InternalBoxed>
-                <MaybeWithActions onClose={onClose} actions={actions} isInverse />
+                <MaybeWithActions onClose={onClose} actions={actions} type="media" />
             </CardContainer>
         );
     }

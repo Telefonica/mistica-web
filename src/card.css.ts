@@ -259,7 +259,10 @@ export const cardAction = style([
         '@media': {
             [mq.supportsHover]: {
                 ':hover': {
-                    background: vars.colors.backgroundAlternative,
+                    background: vars.colors.backgroundContainerHover,
+                },
+                ':active': {
+                    background: vars.colors.backgroundContainerPressed,
                 },
             },
         },
@@ -269,12 +272,33 @@ export const cardAction = style([
 export const cardActionInverse = style([
     cardActionBase,
     {
-        background: applyAlpha(vars.rawColors.backgroundContainer, 0.7),
+        background: vars.colors.backgroundContainerBrand,
         transition: 'background-color 0.2s ease-in-out',
         '@media': {
             [mq.supportsHover]: {
                 ':hover': {
-                    background: applyAlpha(vars.rawColors.backgroundContainer, 0.9),
+                    background: vars.colors.backgroundContainerBrandHover,
+                },
+                ':active': {
+                    background: vars.colors.backgroundContainerBrandPressed,
+                },
+            },
+        },
+    },
+]);
+
+export const cardActionMedia = style([
+    cardActionBase,
+    {
+        backgroundColor: applyAlpha(vars.rawColors.inverse, 0.7),
+        transition: 'background-color 0.2s ease-in-out',
+        '@media': {
+            [mq.supportsHover]: {
+                ':hover': {
+                    backgroundColor: applyAlpha(vars.rawColors.inverse, 0.9),
+                },
+                ':active': {
+                    backgroundColor: applyAlpha(vars.rawColors.inverse, 1.0),
                 },
             },
         },
