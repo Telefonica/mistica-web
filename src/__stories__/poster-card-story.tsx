@@ -37,6 +37,7 @@ type PosterCardArgs = {
     title: string;
     description: string;
     closable: boolean;
+    onPress: boolean;
     withTopAction: boolean;
     width: string;
     height: string;
@@ -52,6 +53,7 @@ export const Default: StoryComponent<PosterCardArgs> = ({
     title,
     description,
     closable,
+    onPress,
     withTopAction,
     width,
     height,
@@ -121,6 +123,7 @@ export const Default: StoryComponent<PosterCardArgs> = ({
                 width={width}
                 height={height}
                 aspectRatio={aspectRatio}
+                onPress={onPress ? () => null : undefined}
             />
 
             <Title1>Wrong source for media</Title1>
@@ -135,6 +138,7 @@ export const Default: StoryComponent<PosterCardArgs> = ({
                 width={width}
                 height={height}
                 aspectRatio={aspectRatio}
+                onPress={onPress ? () => null : undefined}
             />
 
             <Title1>Wrong source for media with inverse</Title1>
@@ -151,6 +155,7 @@ export const Default: StoryComponent<PosterCardArgs> = ({
                         width={width}
                         height={height}
                         aspectRatio={aspectRatio}
+                        onPress={onPress ? () => null : undefined}
                     />
                 </Box>
             </ResponsiveLayout>
@@ -168,6 +173,7 @@ Default.args = {
     title: 'Title',
     description: 'This is a description for the card',
     closable: false,
+    onPress: false,
     withTopAction: false,
     width: 'auto',
     height: 'auto',
