@@ -28,26 +28,70 @@ export const touchable = style({
     background: 'transparent',
 });
 
-export const touchableCardOverlay = style({
+const touchableCardOverlayBase = style({
     height: '100%',
     width: '100%',
-    opacity: 0,
     pointerEvents: 'none',
     position: 'absolute',
-    transition: 'all 0.1s',
-    '@media': {
-        [mq.supportsHover]: {
-            selectors: {
-                [`${touchableContainer}:hover &`]: {
-                    opacity: 0.05,
-                },
-                [`${touchable}:active &`]: {
-                    opacity: 0.1,
+    backgroundColor: 'transparent',
+});
+
+export const touchableCardOverlay = style([
+    touchableCardOverlayBase,
+    {
+        '@media': {
+            [mq.supportsHover]: {
+                transition: 'all 0.1s',
+                selectors: {
+                    [`${touchableContainer}:hover &`]: {
+                        backgroundColor: vars.colors.backgroundContainerHover,
+                    },
+                    [`${touchable}:active &`]: {
+                        backgroundColor: vars.colors.backgroundContainerPressed,
+                    },
                 },
             },
         },
     },
-});
+]);
+
+export const touchableCardOverlayInverse = style([
+    touchableCardOverlayBase,
+    {
+        '@media': {
+            [mq.supportsHover]: {
+                transition: 'all 0.1s',
+                selectors: {
+                    [`${touchableContainer}:hover &`]: {
+                        backgroundColor: vars.colors.backgroundContainerBrandHover,
+                    },
+                    [`${touchable}:active &`]: {
+                        backgroundColor: vars.colors.backgroundContainerBrandPressed,
+                    },
+                },
+            },
+        },
+    },
+]);
+
+export const touchableCardOverlayMedia = style([
+    touchableCardOverlayBase,
+    {
+        '@media': {
+            [mq.supportsHover]: {
+                transition: 'all 0.1s',
+                selectors: {
+                    [`${touchableContainer}:hover &`]: {
+                        backgroundColor: vars.colors.coverBackgroundHover,
+                    },
+                    [`${touchable}:active &`]: {
+                        backgroundColor: vars.colors.coverBackgroundPressed,
+                    },
+                },
+            },
+        },
+    },
+]);
 
 export const mediaCard = sprinkles({
     display: 'flex',

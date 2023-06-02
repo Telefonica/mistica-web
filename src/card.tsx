@@ -452,7 +452,7 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
         ref
     ) => {
         const isTouchable = touchableProps.href || touchableProps.to || touchableProps.onPress;
-        const {isDarkMode} = useTheme();
+        const overlayStyle = styles.touchableCardOverlay;
 
         return (
             <CardContainer aria-label={ariaLabel} className={styles.touchableContainer}>
@@ -469,12 +469,7 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
                         className={styles.touchable}
                         aria-label={ariaLabel}
                     >
-                        {isTouchable && (
-                            <div
-                                className={styles.touchableCardOverlay}
-                                style={{backgroundColor: isDarkMode ? 'white' : 'black', zIndex: 2}}
-                            />
-                        )}
+                        {isTouchable && <div className={overlayStyle} style={{zIndex: 2}} />}
                         <div className={styles.mediaCard}>
                             <MediaBorderRadiusProvider value={false}>{media}</MediaBorderRadiusProvider>
                             <div className={styles.mediaCardContent}>
@@ -559,9 +554,8 @@ export const DataCard = React.forwardRef<HTMLDivElement, DataCardProps>(
         ref
     ) => {
         const hasIcon = !!icon;
-
-        const {isDarkMode} = useTheme();
         const isTouchable = touchableProps.href || touchableProps.to || touchableProps.onPress;
+        const overlayStyle = styles.touchableCardOverlay;
 
         const finalActions = useTopActions(actions, onClose);
         const topActionsStylesWithoutIcon = {
@@ -585,12 +579,7 @@ export const DataCard = React.forwardRef<HTMLDivElement, DataCardProps>(
                         className={styles.touchable}
                         aria-label={ariaLabel}
                     >
-                        {isTouchable && (
-                            <div
-                                className={styles.touchableCardOverlay}
-                                style={{backgroundColor: isDarkMode ? 'white' : 'black', zIndex: 1}}
-                            />
-                        )}
+                        {isTouchable && <div className={overlayStyle} style={{zIndex: 1}} />}
                         <div className={styles.dataCard}>
                             <div
                                 className={sprinkles({
@@ -663,8 +652,8 @@ export const SnapCard = React.forwardRef<HTMLDivElement, SnapCardProps>(
         },
         ref
     ) => {
-        const {isDarkMode} = useTheme();
         const isTouchable = touchableProps.href || touchableProps.to || touchableProps.onPress;
+        const overlayStyle = isInverse ? styles.touchableCardOverlayInverse : styles.touchableCardOverlay;
 
         return (
             <CardContainer className={styles.touchableContainer}>
@@ -682,12 +671,7 @@ export const SnapCard = React.forwardRef<HTMLDivElement, SnapCardProps>(
                         className={styles.touchable}
                         aria-label={ariaLabel}
                     >
-                        {isTouchable && (
-                            <div
-                                className={styles.touchableCardOverlay}
-                                style={{backgroundColor: isDarkMode ? 'white' : 'black', zIndex: 1}}
-                            />
-                        )}
+                        {isTouchable && <div className={overlayStyle} style={{zIndex: 1}} />}
                         <section className={styles.snapCard}>
                             <div>
                                 {icon && <Box paddingBottom={16}>{icon}</Box>}
@@ -838,8 +822,11 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
         const textShadow = withGradient ? '0 0 16px rgba(0,0,0,0.4)' : undefined;
         const hasTopActions = actions?.length || onClose;
 
-        const {isDarkMode} = useTheme();
         const isTouchable = touchableProps.href || touchableProps.to || touchableProps.onPress;
+        const overlayStyle =
+            backgroundImage || backgroundVideo
+                ? styles.touchableCardOverlayMedia
+                : styles.touchableCardOverlay;
 
         return (
             <CardContainer
@@ -872,12 +859,7 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
                         className={styles.touchable}
                         aria-label={ariaLabel}
                     >
-                        {isTouchable && (
-                            <div
-                                className={styles.touchableCardOverlay}
-                                style={{backgroundColor: isDarkMode ? 'white' : 'black', zIndex: 1}}
-                            />
-                        )}
+                        {isTouchable && <div className={overlayStyle} style={{zIndex: 1}} />}
 
                         <div className={styles.displayCardContainer}>
                             <ThemeVariant isInverse={isExternalInverse}>
@@ -1083,8 +1065,8 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
         const hasTopActions = actions?.length || onClose;
         const {textPresets} = useTheme();
 
-        const {isDarkMode} = useTheme();
         const isTouchable = touchableProps.href || touchableProps.to || touchableProps.onPress;
+        const overlayStyle = styles.touchableCardOverlayMedia;
 
         return (
             <CardContainer
@@ -1117,12 +1099,7 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                         className={styles.touchable}
                         aria-label={ariaLabel}
                     >
-                        {isTouchable && (
-                            <div
-                                className={styles.touchableCardOverlay}
-                                style={{backgroundColor: isDarkMode ? 'white' : 'black', zIndex: 1}}
-                            />
-                        )}
+                        {isTouchable && <div className={overlayStyle} style={{zIndex: 1}} />}
 
                         <div className={styles.displayCardContainer}>
                             <ThemeVariant isInverse={isExternalInverse}>
