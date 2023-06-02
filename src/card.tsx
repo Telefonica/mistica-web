@@ -491,7 +491,7 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
                         </div>
                     </BaseTouchable>
                 </Boxed>
-                <MaybeWithActions onClose={onClose} actions={actions} type="default" />
+                <MaybeWithActions onClose={onClose} actions={actions} type="media" />
             </CardContainer>
         );
     }
