@@ -41,15 +41,6 @@ const buildRadius = (radiusDescription) => {
     throw new Error(`Unknown radius format: ${radiusDescription.value}`);
 };
 
-const buildTextPresetName = (name) => {
-    const presetRegex = /preset-(\d+)/;
-    const presetMatches = name.match(presetRegex);
-    if (presetMatches) {
-        return `text${presetMatches[1]}`;
-    }
-    return name;
-};
-
 const generateSkinSrc = (skinName) => {
     const designTokensFile = fs.readFileSync(path.join(DESIGN_TOKENS_FOLDER, `${skinName}.json`), 'utf8');
     const needsApplyAlphaImport = designTokensFile.includes('rgba');
@@ -93,7 +84,7 @@ export const get${toPascalCase(skinName)}Skin: GetKnownSkin = () => {
             ${Object.entries(designTokens.text.weight)
                 .map(
                     ([textPresetName, textPresetDescription]) =>
-                        `'${buildTextPresetName(textPresetName)}': {weight: '${textPresetDescription.value}'}`
+                        `'${textPresetName}': {weight: '${textPresetDescription.value}'}`
                 )
                 .join(',')}
         },
