@@ -291,6 +291,7 @@ interface ProgressBlockProps {
     stackingGroup?: RendersNullableElement<typeof StackingGroup>;
 
     progressPercent?: number;
+    reverse?: boolean;
 
     value: string;
     text: string;
@@ -304,6 +305,7 @@ export const ProgressBlock: React.FC<ProgressBlockProps> = ({
     title,
     stackingGroup,
     progressPercent,
+    reverse,
     value,
     text,
     description,
@@ -325,7 +327,7 @@ export const ProgressBlock: React.FC<ProgressBlockProps> = ({
                         </Inline>
                     </Box>
                 )}
-                {progressPercent && <ProgressBar progressPercent={progressPercent} reverse={false} />}
+                {progressPercent && <ProgressBar progressPercent={progressPercent} reverse={reverse} />}
             </div>
 
             <Box paddingTop={hasHeader ? 8 : 0}>
