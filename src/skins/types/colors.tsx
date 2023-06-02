@@ -10,11 +10,7 @@ export type Colors = {
     backgroundContainerBrandHover: string;
     backgroundContainerBrandPressed: string;
     backgroundContainerBrandOverInverse: string;
-    backgroundContainerBrandOverInverseHover: string;
-    backgroundContainerBrandOverInversePressed: string;
     backgroundContainerAlternative: string;
-    backgroundContainerAlternativeHover: string;
-    backgroundContainerAlternativePressed: string;
     backgroundOverlay: string;
     backgroundSkeleton: string;
     backgroundSkeletonInverse: string;
@@ -26,6 +22,8 @@ export type Colors = {
     border: string;
     borderHigh: string;
     borderSelected: string;
+    coverBackgroundHover: string;
+    coverBackgroundPressed: string;
     buttonDangerBackground: string;
     buttonDangerBackgroundSelected: string;
     buttonDangerBackgroundHover: string;
