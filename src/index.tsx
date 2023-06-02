@@ -14,7 +14,7 @@ export {
     HighlightedValueBlock,
     ValueBlock,
     ProgressBlock,
-} from './advanced-slots';
+} from './blocks';
 export {default as Spinner} from './spinner';
 export {default as FadeIn} from './fade-in';
 export {ButtonPrimary, ButtonSecondary, ButtonDanger, ButtonLink} from './button';

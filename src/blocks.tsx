@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {sprinkles} from './sprinkles.css';
 import Stack from './stack';
-import * as styles from './advanced-slots.css';
+import * as styles from './blocks.css';
 import {Text2, Text3, Text5, Text8} from './text';
 import {vars} from './skins/skin-contract.css';
 import Inline from './inline';
@@ -142,7 +142,7 @@ export const SimpleBlock: React.FC<SimpleBlockProps> = ({image, description, 'ar
                     </div>
                 )}
 
-                <Text2 regular color={vars.colors.textSecondary}>
+                <Text2 regular truncate={2} color={vars.colors.textSecondary}>
                     {description}
                 </Text2>
             </div>
@@ -153,18 +153,18 @@ export const SimpleBlock: React.FC<SimpleBlockProps> = ({image, description, 'ar
 interface InformationBlockProps {
     title?: string;
     description?: string | Array<string>;
-    mainValue: string;
-    secundaryValue?: string;
-    textColor?: string;
+    value: string;
+    secondaryValue?: string;
+    valueColor?: string;
     'aria-label'?: string;
 }
 
 export const InformationBlock: React.FC<InformationBlockProps> = ({
     title,
     description,
-    secundaryValue,
-    mainValue,
-    textColor = vars.colors.textPrimary,
+    secondaryValue,
+    value,
+    valueColor = vars.colors.textPrimary,
     'aria-label': ariaLabel,
 }) => {
     return (
@@ -172,9 +172,9 @@ export const InformationBlock: React.FC<InformationBlockProps> = ({
             <SlotContent title={title} description={description} />
             <div className={classNames(styles.column, styles.container)}>
                 <Text2 regular color={vars.colors.textSecondary}>
-                    {secundaryValue}
+                    {secondaryValue}
                 </Text2>
-                <Text5 color={textColor}>{mainValue}</Text5>
+                <Text5 color={valueColor}>{value}</Text5>
             </div>
         </Inline>
     );
@@ -183,18 +183,15 @@ export const InformationBlock: React.FC<InformationBlockProps> = ({
 interface HighlightedValueBlockProps {
     tag?: RendersNullableElement<typeof Tag>;
 
-    value: string;
-    text: string;
-
-    value2?: string;
-    text2?: string;
+    value: string | Array<string>;
+    text: string | Array<string>;
 
     secondaryValue?: string;
 
     title?: string;
     description?: string | Array<string>;
 
-    textColor?: string;
+    valueColor?: string;
     'aria-label'?: string;
 }
 
@@ -202,14 +199,15 @@ export const HighlightedValueBlock: React.FC<HighlightedValueBlockProps> = ({
     tag,
     value,
     text,
-    value2,
-    text2,
     secondaryValue,
     title,
     description,
-    textColor = vars.colors.textPrimary,
+    valueColor = vars.colors.textPrimary,
     'aria-label': ariaLabel,
 }) => {
+    const [firtValue, secondValue] = value && Array.isArray(value) ? value : [value, ''];
+    const [firtText, secondText] = text && Array.isArray(text) ? text : [text, ''];
+
     return (
         <div aria-label={ariaLabel}>
             {tag && (
@@ -223,17 +221,17 @@ export const HighlightedValueBlock: React.FC<HighlightedValueBlockProps> = ({
             )}
 
             <Stack space={2}>
-                <Inline space={8} alignItems="flex-end">
-                    <Text8 color={textColor}>{value}</Text8>
+                <Inline space={8} alignItems="baseline">
+                    <Text8 color={valueColor}>{firtValue}</Text8>
                     <Text2 regular color={vars.colors.textSecondary}>
-                        {text}
+                        {firtText}
                     </Text2>
                 </Inline>
-                {value2 && (
-                    <Inline space={8} alignItems="flex-end">
-                        <Text8 color={textColor}>{value2}</Text8>
+                {secondValue && (
+                    <Inline space={8} alignItems="baseline">
+                        <Text8 color={valueColor}>{secondValue}</Text8>
                         <Text2 regular color={vars.colors.textSecondary}>
-                            {text2}
+                            {secondText}
                         </Text2>
                     </Inline>
                 )}
@@ -254,7 +252,7 @@ interface ValueBlockProps {
     title?: string;
     value?: string;
     description?: string | Array<string>;
-    textColor?: string;
+    valueColor?: string;
     'aria-label'?: string;
 }
 
@@ -262,7 +260,7 @@ export const ValueBlock: React.FC<ValueBlockProps> = ({
     title,
     value,
     description,
-    textColor = vars.colors.textPrimary,
+    valueColor = vars.colors.textPrimary,
     'aria-label': ariaLabel,
 }) => {
     return (
@@ -276,14 +274,8 @@ export const ValueBlock: React.FC<ValueBlockProps> = ({
             <Text2 regular color={vars.colors.textPrimary}>
                 {title}
             </Text2>
-            <Text8 color={textColor}>{value}</Text8>
+            <Text8 color={valueColor}>{value}</Text8>
             <SlotContent description={description} />
-            {/* <Text2 regular color={vars.colors.textSecondary}>
-                {subtitle}
-            </Text2>
-            <Text2 regular color={vars.colors.textSecondary}>
-                {description}
-            </Text2> */}
         </div>
     );
 };
@@ -298,7 +290,7 @@ interface ProgressBlockProps {
     text: string;
     description?: string;
 
-    textColor?: string;
+    valueColor?: string;
     'aria-label'?: string;
 }
 
@@ -309,7 +301,7 @@ export const ProgressBlock: React.FC<ProgressBlockProps> = ({
     value,
     text,
     description,
-    textColor = vars.colors.textPrimary,
+    valueColor = vars.colors.textPrimary,
     'aria-label': ariaLabel,
 }) => {
     const hasHeader = !!title || !!progressPercent;
@@ -332,7 +324,7 @@ export const ProgressBlock: React.FC<ProgressBlockProps> = ({
 
             <Box paddingTop={hasHeader ? 8 : 0}>
                 <Inline space={8} alignItems="flex-end">
-                    <Text8 color={textColor}>{value}</Text8>
+                    <Text8 color={valueColor}>{value}</Text8>
                     <Text2 regular color={vars.colors.textSecondary}>
                         {text}
                     </Text2>
