@@ -1,7 +1,7 @@
 import {applyAlpha} from '../utils/color';
 import {O2_CLASSIC_SKIN} from './constants';
 
-import type {GetKnownSkin} from './types';
+import type {GetKnownSkin, KnownSkin} from './types';
 
 // https://github.com/Telefonica/mistica-design/blob/production/tokens/classicO2-constants.json
 // https://github.com/Telefonica/mistica-design/blob/production/tokens/classicO2-skin-schema.json
@@ -72,7 +72,7 @@ export const palette = {
 } as const;
 
 export const getO2ClassicSkin: GetKnownSkin = () => {
-    return {
+    const skin: KnownSkin = {
         name: O2_CLASSIC_SKIN,
         colors: {
             // BACKGROUNDS
@@ -85,11 +85,7 @@ export const getO2ClassicSkin: GetKnownSkin = () => {
             backgroundContainerBrandHover: `linear-gradient(to bottom, ${palette.o2Blue}, ${palette.o2GradientSecond} 51%, ${palette.o2GradientThird} 72%, ${palette.o2GradientFourth})`,
             backgroundContainerBrandPressed: `linear-gradient(to bottom, ${palette.o2Blue}, ${palette.o2GradientSecond} 51%, ${palette.o2GradientThird} 72%, ${palette.o2GradientFourth})`,
             backgroundContainerBrandOverInverse: `linear-gradient(to bottom, ${palette.o2Blue}, ${palette.o2GradientSecond} 51%, ${palette.o2GradientThird} 72%, ${palette.o2GradientFourth})`,
-            backgroundContainerBrandOverInverseHover: `linear-gradient(to bottom, ${palette.o2Blue}, ${palette.o2GradientSecond} 51%, ${palette.o2GradientThird} 72%, ${palette.o2GradientFourth})`,
-            backgroundContainerBrandOverInversePressed: `linear-gradient(to bottom, ${palette.o2Blue}, ${palette.o2GradientSecond} 51%, ${palette.o2GradientThird} 72%, ${palette.o2GradientFourth})`,
             backgroundContainerAlternative: palette.grey1,
-            backgroundContainerAlternativeHover: palette.grey1,
-            backgroundContainerAlternativePressed: palette.grey1,
             backgroundBrand: `linear-gradient(to bottom, ${palette.o2Blue}, ${palette.o2GradientSecond} 51%, ${palette.o2GradientThird} 72%, ${palette.o2GradientFourth})`,
             backgroundBrandSecondary: `linear-gradient(to bottom, ${palette.o2Blue}, ${palette.o2GradientSecond} 51%, ${palette.o2GradientThird} 72%, ${palette.o2GradientFourth})`,
             backgroundOverlay: applyAlpha(palette.grey6, 0.6),
@@ -106,6 +102,8 @@ export const getO2ClassicSkin: GetKnownSkin = () => {
             border: palette.grey3,
             borderHigh: palette.grey5,
             borderSelected: palette.o2Gem,
+            coverBackgroundHover: applyAlpha(palette.darkModeBlack, 0.25),
+            coverBackgroundPressed: applyAlpha(palette.darkModeBlack, 0.35),
 
             // BUTTONS
             buttonDangerBackground: palette.pepper,
@@ -220,11 +218,7 @@ export const getO2ClassicSkin: GetKnownSkin = () => {
             backgroundContainerBrandHover: palette.darkModeGrey,
             backgroundContainerBrandPressed: palette.darkModeGrey,
             backgroundContainerBrandOverInverse: palette.darkModeGrey,
-            backgroundContainerBrandOverInverseHover: palette.darkModeGrey,
-            backgroundContainerBrandOverInversePressed: palette.darkModeGrey,
             backgroundContainerAlternative: palette.darkModeGrey,
-            backgroundContainerAlternativeHover: palette.darkModeGrey,
-            backgroundContainerAlternativePressed: palette.darkModeGrey,
             backgroundBrand: palette.darkModeBlack,
             backgroundBrandSecondary: palette.darkModeBlack,
             backgroundOverlay: applyAlpha(palette.darkModeGrey, 0.8),
@@ -310,4 +304,5 @@ export const getO2ClassicSkin: GetKnownSkin = () => {
             customTabsBackground: palette.darkModeBlack,
         },
     };
+    return skin;
 };
