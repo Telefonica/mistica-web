@@ -14,12 +14,12 @@ import type Image from './image';
 import type Tag from './tag';
 import type {RendersNullableElement} from './utils/renders-element';
 
-interface SlotContentProps {
+interface BlockContentProps {
     title?: string;
     description?: string | Array<string>;
 }
 
-const SlotContent: React.FC<SlotContentProps> = ({title, description}) => {
+const BlockContent: React.FC<BlockContentProps> = ({title, description}) => {
     const normalizedDescription =
         description && Array.isArray(description) ? (
             description.map((paragraph, i) => (
@@ -118,10 +118,16 @@ export const RowBlock: React.FC<RowBlockProps> = ({
 interface SimpleBlockProps {
     image?: RendersNullableElement<typeof Image>;
     description?: string;
+    descriptionLinesMax?: number;
     'aria-label'?: string;
 }
 
-export const SimpleBlock: React.FC<SimpleBlockProps> = ({image, description, 'aria-label': ariaLabel}) => {
+export const SimpleBlock: React.FC<SimpleBlockProps> = ({
+    image,
+    description,
+    descriptionLinesMax,
+    'aria-label': ariaLabel,
+}) => {
     return (
         <div aria-label={ariaLabel}>
             <div
@@ -142,7 +148,7 @@ export const SimpleBlock: React.FC<SimpleBlockProps> = ({image, description, 'ar
                     </div>
                 )}
 
-                <Text2 regular truncate={2} color={vars.colors.textSecondary}>
+                <Text2 regular truncate={descriptionLinesMax} color={vars.colors.textSecondary}>
                     {description}
                 </Text2>
             </div>
@@ -169,7 +175,7 @@ export const InformationBlock: React.FC<InformationBlockProps> = ({
 }) => {
     return (
         <Inline space="between" alignItems="flex-end" aria-label={ariaLabel}>
-            <SlotContent title={title} description={description} />
+            <BlockContent title={title} description={description} />
             <div className={classNames(styles.column, styles.container)}>
                 <Text2 regular color={vars.colors.textSecondary}>
                     {secondaryValue}
@@ -242,7 +248,7 @@ export const HighlightedValueBlock: React.FC<HighlightedValueBlockProps> = ({
                     paddingTop: 8,
                 })}
             >
-                <SlotContent title={title} description={description} />
+                <BlockContent title={title} description={description} />
             </div>
         </div>
     );
@@ -275,7 +281,7 @@ export const ValueBlock: React.FC<ValueBlockProps> = ({
                 {title}
             </Text2>
             <Text8 color={valueColor}>{value}</Text8>
-            <SlotContent description={description} />
+            <BlockContent description={description} />
         </div>
     );
 };
