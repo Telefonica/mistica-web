@@ -12,11 +12,7 @@ const colors: Colors = {
     backgroundContainerBrandHover: '',
     backgroundContainerBrandPressed: '',
     backgroundContainerBrandOverInverse: '',
-    backgroundContainerBrandOverInverseHover: '',
-    backgroundContainerBrandOverInversePressed: '',
     backgroundContainerAlternative: '',
-    backgroundContainerAlternativeHover: '',
-    backgroundContainerAlternativePressed: '',
     backgroundBrand: '',
     backgroundBrandSecondary: '',
     backgroundOverlay: '',
@@ -137,6 +133,8 @@ const colors: Colors = {
     promoHighInverse: '',
 
     customTabsBackground: '',
+    coverBackgroundHover: '',
+    coverBackgroundPressed: '',
 };
 
 const borderRadii: BorderRadiiConfig = {
