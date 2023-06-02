@@ -248,7 +248,9 @@ const CardFooter: React.FC<CardFooterProps> = ({button, footerImage, footerText,
 
                     {hasFooterText && (
                         <div style={{maxWidth}} className={styles.footerText}>
-                            <Text2 regular>{footerText}</Text2>
+                            <Text2 truncate={2} regular>
+                                {footerText}
+                            </Text2>
                         </div>
                     )}
                 </div>
