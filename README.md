@@ -128,3 +128,10 @@ Start prototyping interfaces with Mistica components in the
 ## Contributing
 
 See [CONTRIBUTING.md](https://github.com/Telefonica/mistica-web/blob/master/CONTRIBUTING.md)
+
+### Mistica Community
+
+About [Mistica Community](https://mistica-web.vercel.app/?path=/story/community-welcome--default)
+
+If you are building a Mistica Community component, place it inside the
+[`src/community` folder](src/community/)
