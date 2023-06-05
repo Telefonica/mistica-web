@@ -46,6 +46,7 @@ export const chipVariants = styleVariants({
         }),
         {
             borderColor: vars.colors.controlActivated,
+            cursor: 'pointer',
         },
     ],
 });
