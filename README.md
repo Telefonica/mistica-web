@@ -134,4 +134,5 @@ See [CONTRIBUTING.md](https://github.com/Telefonica/mistica-web/blob/master/CONT
 About [Mistica Community](https://mistica-web.vercel.app/?path=/story/community-welcome--default)
 
 If you are building a Mistica Community component, place it inside the
-[`src/community` folder](src/community/)
+[`src/community` folder](src/community/) and don't forget to export it in the
+[`src/community/index.ts`](src/community/index.tsx) file to make it public.
