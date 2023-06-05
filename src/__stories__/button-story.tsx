@@ -9,11 +9,11 @@ import {
     ButtonSecondary,
     TextField,
     Stack,
-    ThemeVariant,
     skinVars,
     Checkbox,
     Text2,
     IconPhotoCameraRegular,
+    ResponsiveLayout,
 } from '..';
 import DoubleField from '../double-field';
 import {Title1} from '../title';
@@ -25,23 +25,17 @@ export default {
 const BackgroundTheme: StoryComponent = ({children}) => {
     const [isInverse, setIsInverse] = React.useState(false);
     return (
-        <ThemeVariant isInverse={isInverse}>
-            <div
-                style={{
-                    background: isInverse ? skinVars.colors.backgroundBrand : skinVars.colors.background,
-                }}
-            >
-                <Box padding={16}>
-                    <Box padding={8}>
-                        <Checkbox name="inverse" checked={isInverse} onChange={setIsInverse}>
-                            Inverse variant
-                        </Checkbox>
-                    </Box>
-
-                    {children}
+        <ResponsiveLayout isInverse={isInverse}>
+            <Box paddingY={24}>
+                <Box padding={8}>
+                    <Checkbox name="inverse" checked={isInverse} onChange={setIsInverse}>
+                        Inverse variant
+                    </Checkbox>
                 </Box>
-            </div>
-        </ThemeVariant>
+
+                {children}
+            </Box>
+        </ResponsiveLayout>
     );
 };
 
