@@ -12,7 +12,9 @@ export const palette = {
     movistarBlue55: '#008EDD',
     movistarGreen: '#5CB615',
     movistarGreen10: '#EFF8E8',
+    movistarGreen30: '#ADDA8A',
     movistarGreen40: '#8DCC5B',
+    movistarGreen60: '#499110',
     movistarGreen70: '#407F0F',
     pepper: '#FF374A',
     pepper10: '#FFEBED',
@@ -44,7 +46,7 @@ export const palette = {
     darkModeGrey: '#242424',
 };
 
-export const getMovistarLegacySkin: GetKnownSkin = (variant) => {
+export const getMovistarLegacySkin: GetKnownSkin = () => {
     const skin: KnownSkin = {
         name: MOVISTAR_LEGACY_SKIN,
         colors: {
@@ -283,16 +285,5 @@ export const getMovistarLegacySkin: GetKnownSkin = (variant) => {
             text10: {weight: 'bold'},
         },
     };
-
-    if (variant === 'prominent') {
-        skin.colors.brand = palette.movistarProminentBlue;
-        skin.colors.brandHigh = palette.movistarProminentBlueDark;
-        skin.colors.backgroundBrand = palette.movistarProminentBlue;
-        skin.colors.navigationBarBackground = palette.movistarProminentBlue;
-        skin.colors.backgroundFeedbackBottom = palette.movistarProminentBlue;
-        skin.colors.controlActivated = palette.movistarProminentBlue;
-        skin.colors.dividerInverse = palette.movistarProminentBlueDark;
-    }
-
     return skin;
 };
