@@ -22,19 +22,19 @@ export const Default: StoryComponent = () => {
                     <Title2 as="h1">Welcome to Mística Community</Title2>
                     <Stack space={16}>
                         <Paragraph>
-                            Mistica Community is a place to share components which are built with Mistica
+                            Mística Community is a place to share components which are built with Mística
                             tools but are not part of the core of the design system.
                         </Paragraph>
                         <Paragraph>
-                            A Mistica Community Component must meet the following conditions:
+                            A Mística Community Component must meet the following conditions:
                         </Paragraph>
                         <Paragraph>
                             <ul>
                                 <li>
                                     Its purpose is too coupled to a specific OB or to a specific product/app
-                                    to be part of Mistica core. Or has the same purpose as a core component
-                                    already in Mistica but we need to explore a diferent approach to test if
-                                    it works better. (Otherwise it should be part of Mistica core)
+                                    to be part of Mística core. Or has the same purpose as a core component
+                                    already in Mística but we need to explore a diferent approach to test if
+                                    it works better. (Otherwise it should be part of Mística core)
                                 </li>
                                 <li>
                                     Lives in the @telefonica/mistica npm package because we have the need to
@@ -44,14 +44,14 @@ export const Default: StoryComponent = () => {
                             </ul>
                         </Paragraph>
                         <Paragraph>
-                            Mistica Community Components are built with the same quality standards as Mistica
+                            Mística Community Components are built with the same quality standards as Mística
                             core components. They are designed with accessibility in mind, have support for
                             dark mode, are multi skin and are tested in different devices and browsers. They
-                            are available in Mistica Storybook and can be used in Playroom to build
+                            are available in Mística Storybook and can be used in Playroom to build
                             interactive prototypes.
                         </Paragraph>
                         <Paragraph>
-                            Mistica Community Components can be imported from the community folder:
+                            Mística Community Components can be imported from the community folder:
                         </Paragraph>
                         <pre>{`import {SomeComponent} from @telefonica/mistica/community`}</pre>
                     </Stack>
