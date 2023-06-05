@@ -8,20 +8,18 @@ export default {
     },
 };
 
-const Paragraph = ({children}: {children: React.ReactNode}) => {
-    return (
-        <Text2 as="p" regular>
-            {children}
-        </Text2>
-    );
-};
+const Paragraph = ({children}: {children: React.ReactNode}) => (
+    <Text2 as="p" regular>
+        {children}
+    </Text2>
+);
 
 export const Default: StoryComponent = () => {
     return (
         <ResponsiveLayout>
             <Box paddingY={32}>
                 <Stack space={24}>
-                    <Title2 as="h1">Welcome to Mistica Community</Title2>
+                    <Title2 as="h1">Welcome to Mística Community</Title2>
                     <Stack space={16}>
                         <Paragraph>
                             Mistica Community is a place to share components which are built with Mistica
@@ -46,7 +44,11 @@ export const Default: StoryComponent = () => {
                             </ul>
                         </Paragraph>
                         <Paragraph>
-                            Mistica Community Components are available in Mistica Storybook and Playroom.
+                            Mistica Community Components are built with the same quality standards as Mistica
+                            core components. They are designed with accessibility in mind, have support for
+                            dark mode, are multi skin and are tested in different devices and browsers. They
+                            are available in Mistica Storybook and can be used in Playroom to build
+                            interactive prototypes.
                         </Paragraph>
                         <Paragraph>
                             Mistica Community Components can be imported from the community folder:
