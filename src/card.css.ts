@@ -255,7 +255,6 @@ const cardActionBase = sprinkles({
 export const cardAction = style([
     cardActionBase,
     {
-        background: vars.colors.backgroundContainer,
         transition: 'background-color 0.2s ease-in-out',
         '@media': {
             [mq.supportsHover]: {
@@ -273,7 +272,6 @@ export const cardAction = style([
 export const cardActionInverse = style([
     cardActionBase,
     {
-        background: vars.colors.backgroundContainerBrand,
         transition: 'background-color 0.2s ease-in-out',
         '@media': {
             [mq.supportsHover]: {
