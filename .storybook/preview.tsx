@@ -114,9 +114,4 @@ export const decorators = [withLayoutDecorator, withMisticaThemeProvider];
 export const parameters = {
     // https://storybook.js.org/docs/react/configure/story-layout
     layout: 'fullscreen',
-
-    options: {
-        // https://storybook.js.org/docs/react/writing-stories/naming-components-and-hierarchy#sorting-stories
-        // storySort: ['Welcome', '*', 'Community'],
-    },
 };
