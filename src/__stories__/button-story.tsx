@@ -26,12 +26,12 @@ const BackgroundTheme: StoryComponent = ({children}) => {
     const [isInverse, setIsInverse] = React.useState(false);
     return (
         <ThemeVariant isInverse={isInverse}>
-            <>
-                <div
-                    style={{
-                        background: isInverse ? skinVars.colors.backgroundBrand : skinVars.colors.background,
-                    }}
-                >
+            <div
+                style={{
+                    background: isInverse ? skinVars.colors.backgroundBrand : skinVars.colors.background,
+                }}
+            >
+                <Box padding={16}>
                     <Box padding={8}>
                         <Checkbox name="inverse" checked={isInverse} onChange={setIsInverse}>
                             Inverse variant
@@ -39,8 +39,8 @@ const BackgroundTheme: StoryComponent = ({children}) => {
                     </Box>
 
                     {children}
-                </div>
-            </>
+                </Box>
+            </div>
         </ThemeVariant>
     );
 };
@@ -391,3 +391,6 @@ EllipsisInButtons.storyName = 'Ellipsis in buttons';
 withIcon.storyName = 'Button with icon';
 LoadingState.storyName = 'Loading state';
 SubmitButton.storyName = 'Submit button';
+
+TypeOfButtons.parameters = {fullScreen: true};
+LoadingState.parameters = {fullScreen: true};
