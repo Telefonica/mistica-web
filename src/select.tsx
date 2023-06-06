@@ -1,15 +1,15 @@
 import * as React from 'react';
 import classnames from 'classnames';
 import {useForm} from './form-context';
-import {useAriaId, useTheme} from './hooks';
+import {useAriaId, useTheme, useScreenSize} from './hooks';
 import {DOWN, ENTER, ESC, SPACE, TAB, UP} from './utils/key-codes';
 import {FieldContainer, HelperText, Label} from './text-field-components';
 import ChevronDownRegular from './generated/mistica-icons/icon-chevron-down-regular';
 import {TextFieldBaseAutosuggest} from './text-field-base';
 import Overlay from './overlay';
-import {isAndroid, isIos} from './utils/platform';
+import {isAndroid, isIos, isSafari} from './utils/platform';
 import {cancelEvent} from './utils/dom';
-import {Text3} from './text';
+import {Text3, Text} from './text';
 import * as styles from './select.css';
 import {assignInlineVars} from '@vanilla-extract/dynamic';
 
@@ -286,6 +286,7 @@ const Select: React.FC<SelectProps> = ({
             }
         },
     };
+    const {isDesktopOrBigger} = useScreenSize();
 
     return shouldUseNative || isServerSide ? (
         <FieldContainer
@@ -385,9 +386,21 @@ const Select: React.FC<SelectProps> = ({
 
                 <div
                     className={styles.selectTextVariants[disabled ? 'disabled' : 'default']}
-                    style={{top: label ? 27 : 17}}
+                    style={{
+                        top: isDesktopOrBigger
+                            ? label
+                                ? isSafari()
+                                    ? 27
+                                    : 24
+                                : 17
+                            : label
+                            ? isSafari()
+                                ? 23
+                                : 21
+                            : 17,
+                    }}
                 >
-                    {getOptionText(value ?? valueState)}
+                    <Text3 regular> {getOptionText(value ?? valueState)}</Text3>
                 </div>
             </div>
             {optionsShown && (

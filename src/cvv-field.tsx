@@ -8,7 +8,12 @@ import IcnInfo from './icons/icon-info-cvv';
 import {useFieldProps, useForm} from './form-context';
 import {TextFieldBaseAutosuggest} from './text-field-base';
 import {IntegerInput} from './integer-field';
-import * as styles from './cvv-field.css';
+import Inline from './inline';
+import Stack from './stack';
+import Box from './box';
+import Divider from './divider';
+import Text2 from './text';
+import {vars} from './skins/skin-contract.css';
 
 import type {CommonFormFieldProps} from './text-field-base';
 import type {CardOptions} from './utils/credit-card';
@@ -18,16 +23,21 @@ const TooltipContent = ({acceptedCards}: {acceptedCards: CardOptions}) => {
 
     return (
         <>
-            <div className={styles.tooltipContainer}>
-                <IconCvvVisaMc size={48} role="img" />
-                <p className={styles.cvvText}>{texts.formCreditCardCvvTooltipVisaMc}</p>
-            </div>
-            {acceptedCards?.americanExpress && (
-                <div className={styles.tooltipContainer}>
-                    <IconCvvAmex size={48} role="img" />
-                    <p className={styles.cvvText}>{texts.formCreditCardCvvTooltipAmex}</p>
-                </div>
-            )}
+            <Box padding={8}>
+                <Stack space={8}>
+                    <Inline space={16} alignItems="center">
+                        <IconCvvVisaMc size={48} role="img" />
+                        <Text2>{texts.formCreditCardCvvTooltipVisaMc}</Text2>
+                    </Inline>
+                    <Divider />
+                    {acceptedCards?.americanExpress && (
+                        <Inline space={16} alignItems="center">
+                            <IconCvvAmex size={48} role="img" />
+                            <Text2>{texts.formCreditCardCvvTooltipAmex}</Text2>
+                        </Inline>
+                    )}
+                </Stack>
+            </Box>
         </>
     );
 };
