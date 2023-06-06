@@ -1,3 +1,20 @@
+# [14.11.0](https://github.com/Telefonica/mistica-web/compare/v14.10.0...v14.11.0) (2023-06-05)
+
+
+### Bug Fixes
+
+* **Controls:** show cursor pointer in most interactive elements ([#646](https://github.com/Telefonica/mistica-web/issues/646)) ([4efe325](https://github.com/Telefonica/mistica-web/commit/4efe32576f96a891c4bc17f36dfbb441a4c60ffd))
+* **DateField:** input type for onBlur/onFocus prop ([#767](https://github.com/Telefonica/mistica-web/issues/767)) ([69354e9](https://github.com/Telefonica/mistica-web/commit/69354e934d72891793b3266b67dd68c8b5bb352f)), closes [/github.com/Telefonica/webapp/pull/3039#discussion_r1185951534](https://github.com//github.com/Telefonica/webapp/pull/3039/issues/discussion_r1185951534)
+
+
+### Features
+
+* **Grid:** new component ([#762](https://github.com/Telefonica/mistica-web/issues/762)) ([bb966f5](https://github.com/Telefonica/mistica-web/commit/bb966f55791478e2464a94600fc368abeba917f1))
+* **skin:** update design tokens ([#737](https://github.com/Telefonica/mistica-web/issues/737)) ([ead261c](https://github.com/Telefonica/mistica-web/commit/ead261c1fed55b8612ac8bb433f0eee3b4b3f750))
+* **skin:** update design tokens ([#766](https://github.com/Telefonica/mistica-web/issues/766)) ([ed60e62](https://github.com/Telefonica/mistica-web/commit/ed60e623437f0a0c14814e5cf391a299c735ec10))
+* **skin:** update design tokens ([#774](https://github.com/Telefonica/mistica-web/issues/774)) ([78e6781](https://github.com/Telefonica/mistica-web/commit/78e67810866f5db3d1c6d1ba248f44b3ccb3b80b))
+* **StackingGroup:** new component ([#743](https://github.com/Telefonica/mistica-web/issues/743)) ([c4ddec3](https://github.com/Telefonica/mistica-web/commit/c4ddec34aa71820ba484e5ec3b2c39e4f3841e09))
+
 # [14.10.0](https://github.com/Telefonica/mistica-web/compare/v14.9.0...v14.10.0) (2023-05-23)
 
 
