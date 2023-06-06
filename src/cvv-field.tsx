@@ -13,7 +13,6 @@ import Stack from './stack';
 import Box from './box';
 import Divider from './divider';
 import Text2 from './text';
-import {vars} from './skins/skin-contract.css';
 
 import type {CommonFormFieldProps} from './text-field-base';
 import type {CardOptions} from './utils/credit-card';

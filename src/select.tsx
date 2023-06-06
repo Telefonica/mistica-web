@@ -9,7 +9,7 @@ import {TextFieldBaseAutosuggest} from './text-field-base';
 import Overlay from './overlay';
 import {isAndroid, isIos, isSafari} from './utils/platform';
 import {cancelEvent} from './utils/dom';
-import {Text3, Text} from './text';
+import {Text3} from './text';
 import * as styles from './select.css';
 import {assignInlineVars} from '@vanilla-extract/dynamic';
 
