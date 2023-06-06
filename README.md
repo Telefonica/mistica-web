@@ -102,7 +102,6 @@ Start prototyping interfaces with Mistica components in the
 - [Theme config options](https://github.com/Telefonica/mistica-web/blob/master/doc/theme-config.md)
 - [Customize default texts](https://github.com/Telefonica/mistica-web/blob/master/doc/texts.md)
 - [Analytics](https://github.com/Telefonica/mistica-web/blob/master/doc/analytics.md)
-- [Style your components](https://github.com/Telefonica/mistica-web/blob/master/doc/styles.md)
 - [Fonts](https://github.com/Telefonica/mistica-web/blob/master/doc/fonts.md)
 - [Testing notes](https://github.com/Telefonica/mistica-web/blob/master/doc/testing.md)
 
@@ -129,3 +128,11 @@ Start prototyping interfaces with Mistica components in the
 ## Contributing
 
 See [CONTRIBUTING.md](https://github.com/Telefonica/mistica-web/blob/master/CONTRIBUTING.md)
+
+### Mistica Community
+
+About [Mistica Community](https://mistica-web.vercel.app/?path=/story/community-welcome--default)
+
+If you are building a Mistica Community component, place it inside the
+[`src/community` folder](src/community/) and don't forget to export it in the
+[`src/community/index.ts`](src/community/index.tsx) file to make it public.
