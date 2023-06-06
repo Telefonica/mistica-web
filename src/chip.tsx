@@ -108,7 +108,7 @@ const Chip: React.FC<ChipProps> = (props: ChipProps) => {
                 {body}
                 <Box>
                     <IconButton
-                        size={24}
+                        size={18}
                         style={{
                             display: 'flex',
                             justifyContent: 'center',
