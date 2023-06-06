@@ -91,15 +91,7 @@ const RadioButton: React.FC<PropsRender | PropsChildren> = ({
     };
 
     const radio = (
-        <div
-            className={classnames(
-                isIos ? styles.outerCircleVariants.ios : styles.outerCircleVariants.default,
-                {
-                    [styles.outerCircleCheckedVariants[isIos ? 'ios' : 'default']]: checked,
-                    [styles.disabled]: disabled,
-                }
-            )}
-        >
+        <div>
             {!isIos && (
                 <div className={classnames(styles.innerCircle, {[styles.innerCircleChecked]: checked})} />
             )}

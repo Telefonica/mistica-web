@@ -135,7 +135,6 @@ const Chip: React.FC<ChipProps> = (props: ChipProps) => {
     if (props.to) {
         return (
             <BaseTouchable
-                className={styles.button}
                 trackingEvent={props.trackingEvent}
                 to={props.to}
                 fullPageOnWebView={props.fullPageOnWebView}
@@ -147,12 +146,7 @@ const Chip: React.FC<ChipProps> = (props: ChipProps) => {
 
     if (props.href) {
         return (
-            <BaseTouchable
-                className={styles.button}
-                trackingEvent={props.trackingEvent}
-                href={props.href}
-                newTab={props.newTab}
-            >
+            <BaseTouchable trackingEvent={props.trackingEvent} href={props.href} newTab={props.newTab}>
                 {renderContent()}
             </BaseTouchable>
         );
