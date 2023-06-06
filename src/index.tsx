@@ -67,6 +67,7 @@ export {default as EmptyState} from './empty-state';
 export {default as EmptyStateCard} from './empty-state-card';
 export {default as Callout} from './callout';
 export {default as Avatar} from './avatar';
+export {default as Slider} from './slider';
 export {useModalState} from './modal-context-provider';
 export {
     NavigationBar,
