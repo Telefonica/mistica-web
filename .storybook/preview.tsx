@@ -5,8 +5,8 @@ import {
     ThemeContextProvider,
     MOVISTAR_SKIN,
     VIVO_SKIN,
+    VIVO_NEW_SKIN,
     O2_SKIN,
-    O2_CLASSIC_SKIN,
     TELEFONICA_SKIN,
     BLAU_SKIN,
     skinVars,
@@ -20,7 +20,7 @@ type Platform = 'android' | 'desktop' | 'ios';
 
 const getSkin = (searchParams: URLSearchParams) => {
     const qsSkin = searchParams.get('skin');
-    return [MOVISTAR_SKIN, O2_SKIN, O2_CLASSIC_SKIN, VIVO_SKIN, TELEFONICA_SKIN, BLAU_SKIN].find(
+    return [MOVISTAR_SKIN, O2_SKIN, VIVO_SKIN, VIVO_NEW_SKIN, TELEFONICA_SKIN, BLAU_SKIN].find(
         (skin) => skin === qsSkin
     );
 };
@@ -114,17 +114,4 @@ export const decorators = [withLayoutDecorator, withMisticaThemeProvider];
 export const parameters = {
     // https://storybook.js.org/docs/react/configure/story-layout
     layout: 'fullscreen',
-
-    options: {
-        // https://storybook.js.org/docs/react/writing-stories/naming-components-and-hierarchy#sorting-stories
-        storySort: (a: {id: string; kind: string}[], b: {id: string; kind: string}[]): number => {
-            if (a[1].kind === 'Welcome') {
-                return -1;
-            }
-            if (b[1].kind === 'Welcome') {
-                return 1;
-            }
-            return a[1].kind === b[1].kind ? 0 : a[1].id.localeCompare(b[1].id, undefined, {numeric: true});
-        },
-    },
 };

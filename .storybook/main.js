@@ -52,7 +52,13 @@ const addVanillaExtractSupport = (config) => {
     });
 };
 
-const stories = ['./welcome-story.js', '../src/**/__stories__/*-story.tsx'];
+const stories = [
+    './welcome-story.js',
+    '../src/__stories__/*-story.tsx',
+    '../src/icons/__stories__/*-story.tsx',
+    '../src/community/__stories__/index-story.tsx',
+    '../src/community/__stories__/*-story.tsx',
+];
 
 const shouldIncludePrivateStories = !process.env.VERCEL_PROD_BUILD;
 
