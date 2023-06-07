@@ -36,12 +36,33 @@ const touchableCardOverlayBase = style({
     backgroundColor: 'transparent',
 });
 
+export const touchableMediaCardOverlay = style([
+    touchableCardOverlayBase,
+    {
+        zIndex: 2,
+        '@media': {
+            [mq.supportsHover]: {
+                transition: 'background-color 0.1s',
+                selectors: {
+                    [`${touchableContainer}:hover &`]: {
+                        backgroundColor: vars.colors.backgroundContainerHover,
+                    },
+                    [`${touchable}:active &`]: {
+                        backgroundColor: vars.colors.backgroundContainerPressed,
+                    },
+                },
+            },
+        },
+    },
+]);
+
 export const touchableCardOverlay = style([
     touchableCardOverlayBase,
     {
+        zIndex: 1,
         '@media': {
             [mq.supportsHover]: {
-                transition: 'all 0.1s',
+                transition: 'background-color 0.1s',
                 selectors: {
                     [`${touchableContainer}:hover &`]: {
                         backgroundColor: vars.colors.backgroundContainerHover,
@@ -58,9 +79,10 @@ export const touchableCardOverlay = style([
 export const touchableCardOverlayInverse = style([
     touchableCardOverlayBase,
     {
+        zIndex: 1,
         '@media': {
             [mq.supportsHover]: {
-                transition: 'all 0.1s',
+                transition: 'background-color 0.1s',
                 selectors: {
                     [`${touchableContainer}:hover &`]: {
                         backgroundColor: vars.colors.backgroundContainerBrandHover,
@@ -77,9 +99,10 @@ export const touchableCardOverlayInverse = style([
 export const touchableCardOverlayMedia = style([
     touchableCardOverlayBase,
     {
+        zIndex: 1,
         '@media': {
             [mq.supportsHover]: {
-                transition: 'all 0.1s',
+                transition: 'background-color 0.1s',
                 selectors: {
                     [`${touchableContainer}:hover &`]: {
                         backgroundColor: vars.colors.coverBackgroundHover,

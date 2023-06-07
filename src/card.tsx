@@ -19,7 +19,6 @@ import {combineRefs} from './utils/common';
 import Spinner from './spinner';
 import Video from './video';
 import {ThemeVariant, useIsInverseVariant} from './theme-variant-context';
-import classNames from 'classnames';
 
 import type {PressHandler} from './touchable';
 import type {VideoSource} from './video';
@@ -43,50 +42,6 @@ type CardAction = {
     iconBackgroundInverse?: string;
 };
 
-type CardActionsGroupProps = {
-    actions: Array<CardAction>;
-    type?: 'default' | 'inverse' | 'media';
-};
-
-const TOP_ACTION_BUTTON_SIZE = 48;
-
-const CardActionsGroup = ({actions, type = 'default'}: CardActionsGroupProps): JSX.Element => {
-    const iconColor: Record<typeof type, string> = {
-        default: vars.colors.neutralHigh,
-        inverse: vars.colors.inverse,
-        media: '#000000',
-    };
-
-    const iconBackgroundStyle: Record<typeof type, string> = {
-        default: styles.cardAction,
-        inverse: styles.cardActionInverse,
-        media: styles.cardActionMedia,
-    };
-
-    return (
-        <div style={{display: 'flex'}}>
-            {actions.map(({onPress, label, Icon, iconSize = 20}, index) =>
-                Icon ? (
-                    <IconButton
-                        size={TOP_ACTION_BUTTON_SIZE}
-                        key={index}
-                        onPress={onPress}
-                        aria-label={label}
-                        className={styles.cardActionIconButton}
-                        style={{display: 'flex'}}
-                    >
-                        <div className={iconBackgroundStyle[type]}>
-                            <Icon color={iconColor[type]} size={iconSize} />
-                        </div>
-                    </IconButton>
-                ) : (
-                    <div key={index} className={styles.cardActionIconButton} />
-                )
-            )}
-        </div>
-    );
-};
-
 const useTopActions = (actions?: Array<CardAction>, onClose?: () => void) => {
     const {texts} = useTheme();
     const finalActions = actions ? [...actions] : [];
@@ -100,6 +55,65 @@ const useTopActions = (actions?: Array<CardAction>, onClose?: () => void) => {
     }
 
     return finalActions;
+};
+
+type CardActionsGroupProps = {
+    actions?: Array<CardAction>;
+    onClose?: () => void;
+    type?: 'default' | 'inverse' | 'media';
+};
+
+const TOP_ACTION_BUTTON_SIZE = 48;
+
+const CardActionsGroup = ({actions, onClose, type = 'default'}: CardActionsGroupProps): JSX.Element => {
+    const finalActions = useTopActions(actions, onClose);
+    const hasActions = finalActions.length > 0;
+
+    const iconColor = {
+        default: vars.colors.neutralHigh,
+        inverse: vars.colors.inverse,
+        media: '#000000',
+    };
+
+    const iconBackgroundStyle = {
+        default: styles.cardAction,
+        inverse: styles.cardActionInverse,
+        media: styles.cardActionMedia,
+    };
+
+    return hasActions ? (
+        <div
+            style={{
+                position: 'absolute',
+                right: 8,
+                top: 8,
+                zIndex: 3, // needed because images has zIndex 1 and touchable overlay has zIndex 2
+            }}
+        >
+            <div className={sprinkles({display: 'flex'})}>
+                {finalActions.map(({onPress, label, Icon, iconSize = 20}, index) =>
+                    Icon ? (
+                        <IconButton
+                            size={TOP_ACTION_BUTTON_SIZE}
+                            key={index}
+                            onPress={onPress}
+                            aria-label={label}
+                            className={styles.cardActionIconButton}
+                            style={{display: 'flex'}}
+                        >
+                            <div className={iconBackgroundStyle[type]}>
+                                <Icon color={iconColor[type]} size={iconSize} />
+                            </div>
+                        </IconButton>
+                    ) : (
+                        <div key={index} className={styles.cardActionIconButton} />
+                    )
+                )}
+            </div>
+        </div>
+    ) : (
+        <></>
+    );
 };
 
 type AspectRatio = '1:1' | '16:9' | '7:10' | '9:10' | 'auto';
@@ -151,32 +165,6 @@ const CardContainer = ({
         >
             {children}
         </section>
-    );
-};
-
-type MaybeWithActionsProps = {
-    actions?: Array<CardAction>;
-    onClose?: () => void;
-    type: 'default' | 'inverse' | 'media';
-};
-
-const MaybeWithActions = ({actions, onClose, type}: MaybeWithActionsProps): JSX.Element => {
-    const finalActions = useTopActions(actions, onClose);
-    const hasActions = finalActions.length > 0;
-
-    return hasActions ? (
-        <div
-            style={{
-                position: 'absolute',
-                right: 8,
-                top: 8,
-                zIndex: 3, // needed because images has zIndex 1 and touchable overlay has zIndex 2
-            }}
-        >
-            <CardActionsGroup actions={finalActions} type={type} />
-        </div>
-    ) : (
-        <></>
     );
 };
 
@@ -452,12 +440,12 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
         ref
     ) => {
         const isTouchable = touchableProps.href || touchableProps.to || touchableProps.onPress;
-        const overlayStyle = styles.touchableCardOverlay;
+        const overlayStyle = styles.touchableMediaCardOverlay;
 
         return (
             <CardContainer aria-label={ariaLabel} className={styles.touchableContainer}>
                 <Boxed
-                    className={classNames(styles.boxed)}
+                    className={styles.boxed}
                     dataAttributes={{'component-name': 'MediaCard', ...dataAttributes}}
                     ref={ref}
                     width="100%"
@@ -469,7 +457,7 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
                         className={styles.touchable}
                         aria-label={ariaLabel}
                     >
-                        {isTouchable && <div className={overlayStyle} style={{zIndex: 2}} />}
+                        {isTouchable && <div className={overlayStyle} />}
                         <div className={styles.mediaCard}>
                             <MediaBorderRadiusProvider value={false}>{media}</MediaBorderRadiusProvider>
                             <div className={styles.mediaCardContent}>
@@ -491,7 +479,7 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
                         </div>
                     </BaseTouchable>
                 </Boxed>
-                <MaybeWithActions onClose={onClose} actions={actions} type="media" />
+                <CardActionsGroup onClose={onClose} actions={actions} type="media" />
             </CardContainer>
         );
     }
@@ -579,7 +567,7 @@ export const DataCard = React.forwardRef<HTMLDivElement, DataCardProps>(
                         className={styles.touchable}
                         aria-label={ariaLabel}
                     >
-                        {isTouchable && <div className={overlayStyle} style={{zIndex: 1}} />}
+                        {isTouchable && <div className={overlayStyle} />}
                         <div className={styles.dataCard}>
                             <div
                                 className={sprinkles({
@@ -613,7 +601,7 @@ export const DataCard = React.forwardRef<HTMLDivElement, DataCardProps>(
                         </div>
                     </BaseTouchable>
                 </Boxed>
-                <MaybeWithActions onClose={onClose} actions={actions} type="default" />
+                <CardActionsGroup onClose={onClose} actions={actions} type="default" />
             </CardContainer>
         );
     }
@@ -671,7 +659,7 @@ export const SnapCard = React.forwardRef<HTMLDivElement, SnapCardProps>(
                         className={styles.touchable}
                         aria-label={ariaLabel}
                     >
-                        {isTouchable && <div className={overlayStyle} style={{zIndex: 1}} />}
+                        {isTouchable && <div className={overlayStyle} />}
                         <section className={styles.snapCard}>
                             <div>
                                 {icon && <Box paddingBottom={16}>{icon}</Box>}
@@ -861,7 +849,7 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
                         className={styles.touchable}
                         aria-label={ariaLabel}
                     >
-                        {isTouchable && <div className={overlayStyle} style={{zIndex: 1}} />}
+                        {isTouchable && <div className={overlayStyle} />}
 
                         <div className={styles.displayCardContainer}>
                             <ThemeVariant isInverse={isExternalInverse}>
@@ -955,7 +943,7 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
                         </div>
                     </BaseTouchable>
                 </InternalBoxed>
-                <MaybeWithActions
+                <CardActionsGroup
                     onClose={onClose}
                     actions={actions}
                     type={backgroundImage || backgroundVideo ? 'media' : isInverse ? 'inverse' : 'default'}
@@ -1105,7 +1093,7 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                         className={styles.touchable}
                         aria-label={ariaLabel}
                     >
-                        {isTouchable && <div className={overlayStyle} style={{zIndex: 1}} />}
+                        {isTouchable && <div className={overlayStyle} />}
 
                         <div className={styles.displayCardContainer}>
                             <ThemeVariant isInverse={isExternalInverse}>
@@ -1193,7 +1181,7 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                         </div>
                     </BaseTouchable>
                 </InternalBoxed>
-                <MaybeWithActions onClose={onClose} actions={actions} type="media" />
+                <CardActionsGroup onClose={onClose} actions={actions} type="media" />
             </CardContainer>
         );
     }
