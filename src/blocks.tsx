@@ -118,23 +118,16 @@ export const RowBlock: React.FC<RowBlockProps> = ({
 interface SimpleBlockProps {
     image?: RendersNullableElement<typeof Image>;
     description?: string;
-    descriptionLinesMax?: number;
     'aria-label'?: string;
 }
 
-export const SimpleBlock: React.FC<SimpleBlockProps> = ({
-    image,
-    description,
-    descriptionLinesMax,
-    'aria-label': ariaLabel,
-}) => {
+export const SimpleBlock: React.FC<SimpleBlockProps> = ({image, description, 'aria-label': ariaLabel}) => {
     return (
         <div aria-label={ariaLabel}>
             <div
                 className={sprinkles({
                     display: 'flex',
                     alignItems: 'center',
-                    height: 40,
                 })}
             >
                 {image && (
@@ -148,7 +141,7 @@ export const SimpleBlock: React.FC<SimpleBlockProps> = ({
                     </div>
                 )}
 
-                <Text2 regular truncate={descriptionLinesMax} color={vars.colors.textSecondary}>
+                <Text2 regular color={vars.colors.textSecondary}>
                     {description}
                 </Text2>
             </div>
