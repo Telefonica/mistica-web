@@ -71,6 +71,9 @@ export const palette = {
     darkModeGrey6: '#313235',
 } as const;
 
+/**
+ * @deprecated use `getO2Skin` instead
+ */
 export const getO2ClassicSkin: GetKnownSkin = () => {
     const skin: KnownSkin = {
         name: O2_CLASSIC_SKIN,

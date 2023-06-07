@@ -313,7 +313,7 @@ This is how a page layout could look like:
 ```tsx
 <HeaderLayout header={<Header title="Header" />} />
 <ResponsiveLayout>
-  <Box spaceY={24}>
+  <Box paddingY={24}>
     <Stack space={32}>
       <Stack space={16}>
         <Title1>Section 1</Title1>

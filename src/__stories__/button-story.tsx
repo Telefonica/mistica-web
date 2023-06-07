@@ -9,11 +9,11 @@ import {
     ButtonSecondary,
     TextField,
     Stack,
-    ThemeVariant,
     skinVars,
     Checkbox,
     Text2,
     IconPhotoCameraRegular,
+    ResponsiveLayout,
 } from '..';
 import DoubleField from '../double-field';
 import {Title1} from '../title';
@@ -25,23 +25,17 @@ export default {
 const BackgroundTheme: StoryComponent = ({children}) => {
     const [isInverse, setIsInverse] = React.useState(false);
     return (
-        <ThemeVariant isInverse={isInverse}>
-            <>
-                <div
-                    style={{
-                        background: isInverse ? skinVars.colors.backgroundBrand : skinVars.colors.background,
-                    }}
-                >
-                    <Box padding={8}>
-                        <Checkbox name="inverse" checked={isInverse} onChange={setIsInverse}>
-                            Inverse variant
-                        </Checkbox>
-                    </Box>
+        <ResponsiveLayout isInverse={isInverse}>
+            <Box paddingY={24}>
+                <Box padding={8}>
+                    <Checkbox name="inverse" checked={isInverse} onChange={setIsInverse}>
+                        Inverse variant
+                    </Checkbox>
+                </Box>
 
-                    {children}
-                </div>
-            </>
-        </ThemeVariant>
+                {children}
+            </Box>
+        </ResponsiveLayout>
     );
 };
 
@@ -171,13 +165,24 @@ export const TypeOfButtons: StoryComponent = () => {
                     <Text2 regular as="p">
                         Button (onPress):
                     </Text2>
-                    <ButtonLink onPress={handleOnPress} disabled={disabled}>
+                    <ButtonLink
+                        onPress={handleOnPress}
+                        disabled={disabled}
+                        showSpinner={showSpinner}
+                        loadingText={loadingText}
+                    >
                         {text}
                     </ButtonLink>
                     <Text2 regular as="p">
                         Link (href):
                     </Text2>
-                    <ButtonLink href={href} newTab={newTab} disabled={disabled}>
+                    <ButtonLink
+                        href={href}
+                        newTab={newTab}
+                        disabled={disabled}
+                        showSpinner={showSpinner}
+                        loadingText={loadingText}
+                    >
                         {text}
                     </ButtonLink>
                 </Stack>
@@ -334,10 +339,25 @@ export const LoadingState: StoryComponent = () => {
                     </ButtonDanger>
                 </Inline>
             </StorySection>
+            <StorySection title="ButtonLink with/without loading text">
+                <Inline space={16}>
+                    <ButtonLink loadingText="Sending file" showSpinner={isLoading} onPress={handlePress}>
+                        Send
+                    </ButtonLink>
+                    <ButtonLink showSpinner={isLoading} onPress={handlePress}>
+                        Send
+                    </ButtonLink>
+                </Inline>
+            </StorySection>
             <StorySection title="onPress returning a promise">
-                <ButtonPrimary loadingText="Sending file" onPress={handlePressWithPromise}>
-                    Send
-                </ButtonPrimary>
+                <Inline space={16}>
+                    <ButtonPrimary loadingText="Sending file" onPress={handlePressWithPromise}>
+                        Send
+                    </ButtonPrimary>
+                    <ButtonLink loadingText="Sending file" onPress={handlePressWithPromise}>
+                        Send
+                    </ButtonLink>
+                </Inline>
             </StorySection>
         </BackgroundTheme>
     );
@@ -365,3 +385,6 @@ EllipsisInButtons.storyName = 'Ellipsis in buttons';
 withIcon.storyName = 'Button with icon';
 LoadingState.storyName = 'Loading state';
 SubmitButton.storyName = 'Submit button';
+
+TypeOfButtons.parameters = {fullScreen: true};
+LoadingState.parameters = {fullScreen: true};

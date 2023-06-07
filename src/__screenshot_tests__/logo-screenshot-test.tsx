@@ -30,7 +30,7 @@ test.each`
     }
 );
 
-const SKINS = ['Movistar', 'O2', 'O2-classic', 'Vivo', 'Telefonica', 'Blau'] as const;
+const SKINS = ['Movistar', 'O2', 'Vivo', 'Vivo-new', 'Telefonica', 'Blau'] as const;
 
 test.each(SKINS)('Logo with defaults and skin %s', async (skin) => {
     const page = await openStoryPage({

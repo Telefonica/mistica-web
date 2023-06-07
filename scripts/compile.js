@@ -16,6 +16,11 @@ const compile = () => {
     run(`yarn swc dist-es --out-dir dist-es`);
 
     run(`yarn swc dist-es --out-dir dist -C module.type=commonjs`);
+
+    // Entry point for community folder (import {Component} from '@telefonica/mistica/community')
+    run(`echo "export * from './dist/community';" > community.d.ts`);
+    run(`echo "export * from './dist/community';" > community.js`);
+    run(`yarn swc community.js -o community.js --source-maps=false -C module.type=commonjs`);
 };
 
 if (require.main === module) {
