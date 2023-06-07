@@ -15,7 +15,17 @@ const IconTicketsRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^blau/i)) {
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path fill={fillColor} d="M11.008 9.594l-1.414 1.414-.884-.884 1.414-1.414.884.884z" />
+                <path
+                    fill={fillColor}
+                    d="M6.372 15.918l4.947 4.947a3.859 3.859 0 005.457.002l4.091-4.09a3.859 3.859 0 00-.002-5.458l-4.947-4.947-3.325.766.767-3.324-.683-.683A3.859 3.859 0 007.22 3.13L3.13 7.22a3.859 3.859 0 00.001 5.457l.683.683 3.324-.767-.766 3.325zm-2.164-3.932l-.193-.193a2.609 2.609 0 01-.002-3.689l4.091-4.091a2.609 2.609 0 013.69.002l.192.193-.61 2.65a1.25 1.25 0 001.498 1.499l2.65-.611 4.458 4.457a2.609 2.609 0 01.002 3.69l-4.092 4.09a2.609 2.609 0 01-3.689-.002l-4.457-4.457.61-2.65a1.25 1.25 0 00-1.498-1.499l-2.65.61z"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^blau/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path

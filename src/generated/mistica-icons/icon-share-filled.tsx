@@ -15,7 +15,16 @@ const IconShareFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element =>
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2/i)) {
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M17.625 3.003c.589.014 2.875.246 2.875 3.005 0 2.765-2.29 2.98-2.863 2.99L17.46 9h-.098c-.435-.007-1.738-.123-2.426-1.24l-5.557 3.242c.077.291.121.624.121 1.006 0 .376-.042.704-.117.992l5.544 3.233c.68-1.12 1.977-1.23 2.414-1.233h.06c.077 0 .156 0 .224.003.589.014 2.875.246 2.875 3.005 0 2.765-2.29 2.98-2.863 2.99L17.46 21h-.098c-.602-.01-2.862-.227-2.862-3.01 0-.192.01-.372.03-.54L8.8 14.107c-.722.793-1.796.884-2.163.891L6.46 15h-.097c-.603-.01-2.863-.227-2.863-3.01C3.5 9.213 5.738 9.006 6.341 9h.06c.077 0 .156 0 .224.003.376.009 1.444.107 2.167.895l5.741-3.35a4.498 4.498 0 01-.033-.557c0-2.78 2.238-2.986 2.841-2.991h.06c.077 0 .156 0 .224.003z"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
