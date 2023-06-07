@@ -16,7 +16,10 @@ export default defineConfig({
     publicDir: false,
     build: {
         lib: {
-            entry: path.resolve(__dirname, 'src', 'index.tsx'),
+            entry: [
+                path.resolve(__dirname, 'src', 'index.tsx'),
+                path.resolve(__dirname, 'src', 'community', 'index.tsx'),
+            ],
             formats: ['es'],
         },
         outDir: 'dist-es',

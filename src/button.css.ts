@@ -276,12 +276,14 @@ export const link = style([
     sprinkles({
         display: 'inline-block',
         width: 'auto',
+        position: 'relative',
         borderRadius: vars.borderRadii.button,
         paddingX: PADDING_X_LINK,
         border: 'none',
         color: vars.colors.textLink,
         background: 'transparent',
         overflow: 'hidden',
+        minWidth: 40,
     }),
     {
         paddingTop: PADDING_Y_LINK,
@@ -294,7 +296,7 @@ export const link = style([
                 backgroundColor: vars.colors.buttonLinkBackgroundSelected,
             },
 
-            '&[disabled]': disabledStyle,
+            [`&[disabled]:not(${isLoading})`]: disabledStyle,
 
             '&:hover:not([disabled])': {
                 backgroundColor: vars.colors.buttonLinkBackgroundSelected,
@@ -332,13 +334,26 @@ export const inverseLink = style([
     },
 ]);
 
-export const textContentLink = sprinkles({
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-});
+export const textContentLink = style([
+    sprinkles({
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+    }),
+    {
+        opacity: 1,
+        transition: `opacity ${transitionTiming}, transform ${transitionTiming}`,
 
-globalStyle(`${textContent} svg`, {
+        selectors: {
+            [`${isLoading} &`]: {
+                transform: 'translateY(-2rem)',
+                opacity: 0,
+            },
+        },
+    },
+]);
+
+globalStyle(`${textContentLink} svg`, {
     display: 'block',
 });
 

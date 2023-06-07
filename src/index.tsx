@@ -155,6 +155,7 @@ export {ThemeVariant, useIsInverseVariant, useThemeVariant} from './theme-varian
 export type {Skin, KnownSkinName, SkinName} from './skins/types';
 export {
     VIVO_SKIN,
+    VIVO_NEW_SKIN,
     O2_CLASSIC_SKIN,
     O2_SKIN,
     MOVISTAR_SKIN,
@@ -163,6 +164,7 @@ export {
 } from './skins/constants';
 export {getSkinByName} from './skins/utils';
 export {getVivoSkin} from './skins/vivo';
+export {getVivoNewSkin} from './skins/vivo-new';
 export {getMovistarSkin} from './skins/movistar';
 export {getMovistarLegacySkin} from './skins/movistar-legacy';
 export {getO2Skin} from './skins/o2';
