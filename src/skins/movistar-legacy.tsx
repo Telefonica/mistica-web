@@ -47,7 +47,7 @@ export const palette = {
 };
 
 /**
- * @deprecated Use `getMovistarSkin` instead
+ * @deprecated Use `getMovistarSkin` instead.
  */
 export const getMovistarLegacySkin: GetKnownSkin = (variant) => {
     const skin: KnownSkin = {
