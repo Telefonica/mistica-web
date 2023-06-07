@@ -202,10 +202,17 @@ type CardFooterProps = {
     button?: RendersNullableElement<typeof ButtonPrimary>;
     footerImage?: RendersNullableElement<typeof Image>;
     footerText?: string;
+    footerTextLinesMax?: number;
     buttonLink?: RendersNullableElement<typeof ButtonLink>;
 };
 
-const CardFooter: React.FC<CardFooterProps> = ({button, footerImage, footerText, buttonLink}) => {
+const CardFooter: React.FC<CardFooterProps> = ({
+    button,
+    footerImage,
+    footerText,
+    footerTextLinesMax,
+    buttonLink,
+}) => {
     const hasButton = !!button;
     const hasFooterImage = !!footerImage;
     const hasFooterText = !!footerText;
@@ -248,7 +255,7 @@ const CardFooter: React.FC<CardFooterProps> = ({button, footerImage, footerText,
 
                     {hasFooterText && (
                         <div style={{maxWidth}} className={styles.footerText}>
-                            <Text2 truncate={2} regular>
+                            <Text2 truncate={footerTextLinesMax} regular>
                                 {footerText}
                             </Text2>
                         </div>
@@ -304,6 +311,7 @@ interface DataCardAdvancedProps {
     button?: RendersNullableElement<typeof ButtonPrimary>;
     footerImage?: RendersNullableElement<typeof Image>;
     footerText?: string;
+    footerTextLinesMax?: number;
     buttonLink?: RendersNullableElement<typeof ButtonLink>;
 
     dataAttributes?: DataAttributes;
@@ -337,6 +345,7 @@ const DataCardAdvanced = React.forwardRef<HTMLDivElement, DataCardAdvancedProps>
             button,
             footerImage,
             footerText,
+            footerTextLinesMax,
             buttonLink,
 
             dataAttributes,
@@ -352,7 +361,7 @@ const DataCardAdvanced = React.forwardRef<HTMLDivElement, DataCardAdvancedProps>
         const hasStackingGroup = !!stackingGroup;
 
         const hasFooter = !!button || !!footerImage || !!footerText || !!buttonLink;
-        const footerProps = {button, footerImage, footerText, buttonLink};
+        const footerProps = {button, footerImage, footerText, footerTextLinesMax, buttonLink};
 
         const slotSpaceSize = small ? 8 : 24;
 
