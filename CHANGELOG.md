@@ -1,3 +1,16 @@
+# [14.12.0](https://github.com/Telefonica/mistica-web/compare/v14.11.0...v14.12.0) (2023-06-07)
+
+
+### Bug Fixes
+
+* **Chip:** cursor pointer in active chips ([#768](https://github.com/Telefonica/mistica-web/issues/768)) ([8631c27](https://github.com/Telefonica/mistica-web/commit/8631c2724379ba2fcd7e84269de6b2863480f6eb))
+
+
+### Features
+
+* **ButtonLink:** spinner support ([#769](https://github.com/Telefonica/mistica-web/issues/769)) ([9e26a8e](https://github.com/Telefonica/mistica-web/commit/9e26a8e2992fbbfb4e5803d500cb9f55ee879713))
+* **skins:** new vivo skin ([#775](https://github.com/Telefonica/mistica-web/issues/775)) ([edb5668](https://github.com/Telefonica/mistica-web/commit/edb5668b68d0d1055a296c36cf50991a843a6727))
+
 # [14.11.0](https://github.com/Telefonica/mistica-web/compare/v14.10.0...v14.11.0) (2023-06-05)
 
 
