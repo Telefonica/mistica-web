@@ -16,14 +16,14 @@ import classNames from 'classnames';
 
 import type StackingGroup from './stacking-group';
 import type Image from './image';
-import type {
-    ValueBlock,
-    InformationBlock,
-    ProgressBlock,
-    HighlightedValueBlock,
-    RowBlock,
-    SimpleBlock,
-} from './advanced-slots';
+// import type {
+//     ValueBlock,
+//     InformationBlock,
+//     ProgressBlock,
+//     HighlightedValueBlock,
+//     RowBlock,
+//     SimpleBlock,
+// } from './advanced-slots';
 import type {ButtonPrimary, ButtonLink} from './button';
 import type {DataAttributes, IconProps} from './utils/types';
 import type {RendersNullableElement} from './utils/renders-element';
@@ -278,14 +278,7 @@ const CardFooter: React.FC<CardFooterProps> = ({
     );
 };
 
-type slotsTypeof =
-    | typeof ProgressBlock
-    | typeof RowBlock
-    | typeof ValueBlock
-    | typeof InformationBlock
-    | typeof HighlightedValueBlock
-    | typeof SimpleBlock
-    | typeof StackingGroup;
+type slotsTypeof = typeof StackingGroup;
 
 type textAs = 'h1' | 'h2' | 'h3' | 'h4';
 

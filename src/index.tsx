@@ -10,14 +10,6 @@ export type {TouchableElement} from './touchable';
 export {default as Spinner} from './spinner';
 export {default as FadeIn} from './fade-in';
 export {default as DataCardAdvanced} from './data-card-advanced';
-export {
-    ProgressBlock,
-    ValueBlock,
-    HighlightedValueBlock,
-    InformationBlock,
-    SimpleBlock,
-    RowBlock,
-} from './advanced-slots';
 
 export {ButtonPrimary, ButtonSecondary, ButtonDanger, ButtonLink} from './button';
 export {default as ButtonLayout} from './button-layout';
