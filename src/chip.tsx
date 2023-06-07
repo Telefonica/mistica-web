@@ -113,6 +113,7 @@ const Chip: React.FC<ChipProps> = (props: ChipProps) => {
                             display: 'flex',
                             justifyContent: 'center',
                             alignItems: 'center',
+                            cursor: 'default'
                         }}
                         onPress={() => {}}
                     >
