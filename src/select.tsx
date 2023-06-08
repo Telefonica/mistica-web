@@ -400,7 +400,7 @@ const Select: React.FC<SelectProps> = ({
                                 ? 26
                                 : 25
                             : isSafari()
-                            ? 16
+                            ? 18
                             : 16,
                     }}
                 >
