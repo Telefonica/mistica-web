@@ -390,17 +390,17 @@ const Select: React.FC<SelectProps> = ({
                         top: isDesktopOrBigger
                             ? label
                                 ? isSafari()
-                                    ? 27
-                                    : 24
+                                    ? 31
+                                    : 29
                                 : 17
                             : label
                             ? isSafari()
-                                ? 23
-                                : 21
+                                ? 26
+                                : 25
                             : 17,
                     }}
                 >
-                    <Text3 regular> {getOptionText(value ?? valueState)}</Text3>
+                    {getOptionText(value ?? valueState)}
                 </div>
             </div>
             {optionsShown && (
