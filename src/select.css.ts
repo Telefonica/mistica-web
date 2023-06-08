@@ -127,7 +127,6 @@ export const selectVariants = styleVariants({
 const selectTextBase = style([
     sprinkles({
         position: 'absolute',
-        overflow: 'hidden',
         maxWidth: '100%',
         color: skinVars.colors.textPrimary,
     }),
