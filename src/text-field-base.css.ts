@@ -13,8 +13,14 @@ const commonInputStyles = style([
     {
         background: 'none',
         outline: 0,
-        fontSize: 'inherit',
-        lineHeight: 'inherit',
+        lineHeight: '24px',
+        fontSize: 16,
+        '@media': {
+            [mq.desktopOrBigger]: {
+                lineHeight: '24px',
+                fontSize: 18,
+            },
+        },
         caretColor: vars.colors.controlActivated,
         // Seems like 'display: flex' is causing issues on firefox and the input takes over the whole space https://stackoverflow.com/questions/43314921/strange-input-widths-in-firefox-vs-chrome
         textOverflow: 'ellipsis',

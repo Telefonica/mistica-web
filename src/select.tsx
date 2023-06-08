@@ -390,17 +390,13 @@ const Select: React.FC<SelectProps> = ({
                         top: isDesktopOrBigger
                             ? label
                                 ? isSafari()
-                                    ? 31
-                                    : 29
+                                    ? 28
+                                    : 28
                                 : isSafari()
                                 ? 19
-                                : 19
+                                : 18
                             : label
-                            ? isSafari()
-                                ? 26
-                                : 25
-                            : isSafari()
-                            ? 18
+                            ? 24
                             : 16,
                     }}
                 >
