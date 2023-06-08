@@ -392,12 +392,16 @@ const Select: React.FC<SelectProps> = ({
                                 ? isSafari()
                                     ? 31
                                     : 29
-                                : 17
+                                : isSafari()
+                                ? 19
+                                : 19
                             : label
                             ? isSafari()
                                 ? 26
                                 : 25
-                            : 17,
+                            : isSafari()
+                            ? 16
+                            : 16,
                     }}
                 >
                     {getOptionText(value ?? valueState)}
