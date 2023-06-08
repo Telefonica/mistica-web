@@ -677,6 +677,7 @@ const cardSnippets: Array<Snippet> = [
                 <IconAcademicRegular color={colors.brand} />
               </Circle>
             }
+            onPress={() => {alert({ title: "pressed" });}}
             title="Title"
             subtitle="Subtitle"
         />`,
@@ -764,6 +765,7 @@ const cardSnippets: Array<Snippet> = [
           description="Description"
           backgroundImage="https://source.unsplash.com/900x900/?landscape"
           onClose={() => {}}
+          onPress={() => {alert({ title: "pressed" });}}
           actions={[
             {
               Icon: IconLightningRegular,
@@ -784,6 +786,7 @@ const cardSnippets: Array<Snippet> = [
           description="Description"
           backgroundVideo="https://fr-cert1-es.mytelco.io/2O4-xBJqiMlAfLkseq8RkXs_mv2ACV7Hnt20HqXxNl-mK7KLI3M2dAw"
           poster="https://source.unsplash.com/900x900/?landscape"
+          onPress={() => {alert({ title: "pressed" });}}
           button={
             <ButtonPrimary small href="https://google.com">
               Action

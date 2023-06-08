@@ -30,7 +30,7 @@ type DataCardArgs = {
     subtitle: string;
     description: string;
     withExtra: boolean;
-    actions: 'button' | 'link' | 'button and link';
+    actions: 'button' | 'link' | 'button and link' | 'on press';
     closable: boolean;
     withTopAction: boolean;
 };
@@ -67,6 +67,15 @@ export const Default: StoryComponent<DataCardArgs> = ({
 
     const buttonLink = actions.includes('link') ? <ButtonLink href="#">Link</ButtonLink> : undefined;
 
+    const onPress = actions.includes('press') ? () => null : undefined;
+
+    const interactiveActions = onPress
+        ? {onPress}
+        : {
+              button,
+              buttonLink,
+          };
+
     return (
         <DataCard
             onClose={closable ? () => {} : undefined}
@@ -77,8 +86,7 @@ export const Default: StoryComponent<DataCardArgs> = ({
             subtitle={subtitle}
             description={description}
             extra={withExtra ? <Placeholder /> : undefined}
-            button={button}
-            buttonLink={buttonLink}
+            {...interactiveActions}
             dataAttributes={{testid: 'data-card'}}
             aria-label="Data card label"
             actions={
@@ -122,7 +130,7 @@ Default.argTypes = {
         control: {type: 'select'},
     },
     actions: {
-        options: ['button', 'link', 'button and link', 'none'],
+        options: ['button', 'link', 'button and link', 'on press', 'none'],
         control: {type: 'select'},
     },
 };
