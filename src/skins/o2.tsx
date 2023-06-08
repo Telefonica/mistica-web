@@ -277,7 +277,7 @@ export const getO2Skin: GetKnownSkin = () => {
             sheet: '8px',
         },
         textPresets: {
-            cardTitle: {weight: 'light'},
+            cardTitle: {weight: 'regular'},
             text5: {weight: 'light'},
             text6: {weight: 'light'},
             text7: {weight: 'light'},
