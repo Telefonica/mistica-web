@@ -8,6 +8,7 @@ export const checkboxContainer = style([
     }),
     {
         cursor: 'pointer',
+        WebkitTapHighlightColor: 'transparent',
     },
 ]);
 export const checkboxContainerDisabled = style({cursor: 'default'});

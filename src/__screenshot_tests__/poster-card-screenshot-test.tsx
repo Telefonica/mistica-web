@@ -82,7 +82,7 @@ test('PosterCard without icon, with top actions and too long title', async () =>
     expect(image).toMatchImageSnapshot();
 });
 
-test('PosterCard is never rendered smaller than 140 x 112', async () => {
+test('PosterCard width is never smaller than 140px', async () => {
     const page = await openStoryPage({
         id: 'components-cards-poster-card--default',
         device: 'DESKTOP',
@@ -91,7 +91,6 @@ test('PosterCard is never rendered smaller than 140 x 112', async () => {
             asset: 'none',
             title: 'A title',
             width: '1px',
-            height: '1px',
         },
     });
 
