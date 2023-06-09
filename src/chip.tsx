@@ -95,7 +95,7 @@ const Chip: React.FC<ChipProps> = (props: ChipProps) => {
         </>
     );
 
-    if (badge && onClose) {
+    if (badge) {
         return (
             <Box
                 className={
