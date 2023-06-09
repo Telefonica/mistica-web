@@ -34,7 +34,7 @@ type Args = {
     subtitle: string;
     description: string;
     withExtra: boolean;
-    actions: 'button' | 'link' | 'button and link' | 'none';
+    actions: 'button' | 'link' | 'button and link' | 'on press' | 'none';
     closable: boolean;
     withTopAction: boolean;
 };
@@ -62,6 +62,15 @@ export const Default: StoryComponent<Args> = ({
         <ButtonLink href="https://google.com">Link</ButtonLink>
     ) : undefined;
 
+    const onPress = actions.includes('press') ? () => null : undefined;
+
+    const interactiveActions = onPress
+        ? {onPress}
+        : {
+              button,
+              buttonLink,
+          };
+
     return (
         <MediaCard
             dataAttributes={{testid: 'media-card'}}
@@ -77,8 +86,7 @@ export const Default: StoryComponent<Args> = ({
                     <Image aspectRatio="16:9" src={IMAGE_SRC} />
                 )
             }
-            button={button}
-            buttonLink={buttonLink}
+            {...interactiveActions}
             extra={withExtra ? <Placeholder /> : undefined}
             onClose={closable ? () => {} : undefined}
             actions={
@@ -122,7 +130,7 @@ Default.argTypes = {
         control: {type: 'select'},
     },
     actions: {
-        options: ['button', 'link', 'button and link', 'none'],
+        options: ['button', 'link', 'button and link', 'on press', 'none'],
         control: {type: 'select'},
     },
 };

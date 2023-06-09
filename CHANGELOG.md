@@ -1,3 +1,10 @@
+# [14.13.0](https://github.com/Telefonica/mistica-web/compare/v14.12.0...v14.13.0) (2023-06-08)
+
+
+### Features
+
+* **skin:** revert cardTitle weight change in Vivo, O2 and Blau ([#781](https://github.com/Telefonica/mistica-web/issues/781)) ([abcec7e](https://github.com/Telefonica/mistica-web/commit/abcec7e9e7165624f57ac4e9f0b40863b5c6b349))
+
 # [14.12.0](https://github.com/Telefonica/mistica-web/compare/v14.11.0...v14.12.0) (2023-06-07)
 
 
