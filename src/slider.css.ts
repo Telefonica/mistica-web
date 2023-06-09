@@ -33,7 +33,7 @@ export const rangeSlider = style([
 ]);
 
 export const slider = style([
-    rangeSlider,
+    //rangeSlider,
     sprinkles({
         borderRadius: vars.borderRadii.bar,
         background: vars.colors.control,
@@ -43,16 +43,24 @@ export const slider = style([
         width: 363,
         height: 4,
         outline: 'none',
+        margin: 0,
+        //marginRight: -20,
 
         '::-webkit-slider-thumb': { 
             'WebkitAppearance': 'none',
             width: 20, 
             height: 20, 
             cursor: 'pointer',
+            
             zIndex: 3,
             position: 'relative',
+           
+            borderRadius: vars.borderRadii.bar,
             
+           
+          
             
+        
            
         },
 
@@ -76,6 +84,8 @@ export const sliderThumb = style([
         left: '50%',
         transform: 'translate(-50%, -50%)',  
         zIndex: 1,
+      
+       
         
      
      
@@ -127,9 +137,178 @@ export const progress = style([
     {
         width: '50%',
         height: 4,
-        top: '50%',
+        top: '80%',
         transform: 'translateY(-50%)',
         left: 0,
         pointerEvents: 'none',
+        
+    },
+]);
+
+
+export const body = style([
+
+    sprinkles({
+        
+    }),
+    {
+        background: '#26281c',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'column',
+        minHeight: '100vh',
+        padding: '2em'
+        
+    
+        
+        
+    },
+]);
+
+
+
+export const rangeSliderP = style([
+
+    sprinkles({
+        
+    }),
+    {
+     position: 'relative',
+     justifyContent: 'center',
+     alignItems: 'center',
+     flexDirection: 'column',
+     gap: '1em',
+     color: '#fff',
+     margin: '4em auto',
+        
+   
+        
+    },
+]);
+
+export const sliderContainerP = style([
+
+    sprinkles({
+        
+    }),
+    {
+       position: 'relative',
+       display: 'flex',
+       justifyContent: 'center',
+       alignItems: 'center',
+       userSelect: 'none',
+       width: '90vw',
+       maxWidth: '30em' 
+        
+    },
+]);
+
+export const sliderP = style([
+
+    sprinkles({
+        
+    }),
+    {
+        'WebkitAppearance': 'none',
+        appearance: 'none',
+        width: '100%',
+        height: '0.5em',
+        outline: 'none',
+        borderRadius: 3,
+        background: '#1f1f1f',
+        boxShadow: 'inset 3px 3px 6px #000, 1px 1px 1px #909090',
+        cursor: 'pointer',
+
+        '::-webkit-slider-thumb': {
+            width: 0,
+            zIndex: 3,
+            position: 'relative',
+        }
+        
+    },
+]);
+
+export const progressP = style([
+
+    sprinkles({
+        
+    }),
+    {
+       width: 0,
+       height: '0.4em',
+       borderRadius: 3,
+       background: 'linear-gradiente(90deg, #55e0ff, #3193fc)',
+       position: 'absolute',
+       top: '50%',
+       transform: 'trasnlateY(-50%)',
+       left: 0,
+       pointerEvents: 'none',
+       transitionProperty: 'box-shadow',
+       transitionDuration: '0.2s', 
+        
+    },
+]);
+
+export const timeLineP = style([
+
+    sprinkles({
+        
+    }),
+    {
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',  
+        
+    },
+]);
+
+export const sliderThumbP = style([
+
+    sprinkles({
+        
+    }),
+    {
+      position: 'absolute',
+      width: '2em',
+      height: '2em',
+      background: '#fff',
+      borderRadius: '50%',
+      top: '50%',
+      left: '-0.5em',
+      transform: 'translateY(-50%)',
+      zIndex: 2,
+      pointerEvents: 'none',   
+        
+    },
+]);
+
+export const sliderValuesP = style([
+
+    sprinkles({
+        
+    }),
+    {
+       margin: 0,
+       width: '100%',
+       display: 'flex',
+       justifyContent: 'space-between',
+       alignItems: 'center', 
+        
+    },
+]);
+
+export const numberInputP = style([
+
+    sprinkles({
+        
+    }),
+    {
+      background: 'none',
+      color: '#FFF',
+      width: '4em',
+      border: '1px solid #909090',
+      borderRadius: 4  
+        
     },
 ]);

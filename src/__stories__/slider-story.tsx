@@ -10,7 +10,7 @@ type Args = {
     progressPercent: number;
 };
 
-export const Default: StoryComponent<Args> = ({reverse, progressPercent}) => (
+export const Default: StoryComponent<Args> = () => (
     <div data-testid="slider">
         <Slider  />
     </div>

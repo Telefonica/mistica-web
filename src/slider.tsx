@@ -10,58 +10,50 @@ import type { DataAttributes } from './utils/types';
 
 
 type Props = {
-    progressPercent: number;
-    color?: string;
-    children?: void;
-    'aria-label'?: string;
-    'aria-labelledby'?: string;
-    dataAttributes?: DataAttributes;
-    reverse?: boolean;
+
 };
 
 const Slider: React.FC<Props> = ({
-    progressPercent,
-    color,
-    'aria-label': ariaLabel,
-    'aria-labelledby': ariaLabelledBy,
-    dataAttributes,
-    reverse = false,
-    // value,
+
+
 }) => {
-    const { texts } = useTheme();
-    const defaultLabel = texts.loading;
-    const label = ariaLabelledBy ? undefined : ariaLabel || defaultLabel;
 
-    const [valueRanger, setValueRange] = React.useState('30')
 
-    //  const changeValue = (e: React.ChangeEvent<HTMLInputElement>) => {
-    //     setValueRange(e.target.value) 
-    //  };
+    const [valueRanger, setValueRange] = React.useState(50)
 
-    // Evento das teclas das setas e tab
-    // const handleChange = (e: KeyboardEvent) => {
-    //     if(e.keyCode === key.LEFT || key.DOWN) {
-    //         return valueRanger !== '0' ? setValueRange(valueRanger - 1) : valueRanger
-    //     }
-    //     if(e.keyCode === key.RIGHT || key.UP) {
-    //         return valueRanger !== '100' ? setValueRange(valueRanger + 1) : valueRanger
-    //     }
-    // }
-    
+    const setValue = () => {
+        const
+            newValue = Number((valueRanger - 0) * 100 / (100 - 0)),
+            newPosition = 10 - (newValue * 0.2);
+        return `calc(${newValue}% + (${newPosition}px))`;
+    }
+
+    const handleSlider = (e) => {
+        setValueRange(e.target.value);
+    }
+
+
+
 
     return (
         <div className={styles.container} >
+
             <div className={styles.rangeSlider}>
-                <input className={styles.slider} type="range" min={0} max={100} value={valueRanger} onChange={(e) => setValueRange(e.target.value)}>
+
+                <input className={styles.slider} type="range" min={0} max={100} value={valueRanger} onChange={(e) => handleSlider(e)}>
 
                 </input>
-                <div className={styles.sliderThumb} style={{ left: `${valueRanger}%` }}>
-                    {/* <div className={styles.tooltip}>{valueRanger}</div> */}
+
+                <div className={styles.sliderThumb} style={{ left: setValue() }}>
+
 
                 </div>
-                <div className={styles.progress} style={{ width: `${valueRanger}%` }} ></div>
+
+                <div className={styles.progress} style={{ width: setValue() }} ></div>
             </div>
+
         </div>
+
     );
 };
 
