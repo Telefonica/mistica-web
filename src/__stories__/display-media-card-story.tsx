@@ -41,7 +41,7 @@ type DisplayMediaCardArgs = {
     description: string;
     closable: boolean;
     withTopAction: boolean;
-    actions: 'button' | 'link' | 'button and link' | 'button and secondary button';
+    actions: 'button' | 'link' | 'button and link' | 'button and secondary button' | 'onPress';
     width: string;
     aspectRatio: '1:1' | '16:9' | '7:10' | '9:10' | 'auto';
 };
@@ -83,6 +83,16 @@ export const Default: StoryComponent<DisplayMediaCardArgs> = ({
             Action 2
         </ButtonSecondary>
     ) : undefined;
+
+    const onPress = actions.includes('press') ? () => null : undefined;
+
+    const interactiveActions = onPress
+        ? {onPress}
+        : {
+              button,
+              buttonLink,
+              secondaryButton,
+          };
 
     const backgroundProps =
         background === 'image'
@@ -133,9 +143,7 @@ export const Default: StoryComponent<DisplayMediaCardArgs> = ({
                 pretitle={pretitle}
                 title={title}
                 description={description}
-                button={button}
-                buttonLink={buttonLink}
-                secondaryButton={secondaryButton}
+                {...interactiveActions}
                 aria-label="Display media card label"
                 width={width}
                 aspectRatio={aspectRatio}
@@ -149,9 +157,7 @@ export const Default: StoryComponent<DisplayMediaCardArgs> = ({
                 pretitle={pretitle}
                 title={title}
                 description={description}
-                button={button}
-                buttonLink={buttonLink}
-                secondaryButton={secondaryButton}
+                {...interactiveActions}
                 aria-label="Display media card fallback label"
                 width={width}
                 aspectRatio={aspectRatio}
@@ -167,9 +173,7 @@ export const Default: StoryComponent<DisplayMediaCardArgs> = ({
                         pretitle={pretitle}
                         title={title}
                         description={description}
-                        button={button}
-                        buttonLink={buttonLink}
-                        secondaryButton={secondaryButton}
+                        {...interactiveActions}
                         aria-label="Display data card fallback inverse label"
                         width={width}
                         aspectRatio={aspectRatio}
@@ -205,7 +209,7 @@ Default.argTypes = {
         control: {type: 'select'},
     },
     actions: {
-        options: ['button', 'link', 'button and link', 'button and secondary button'],
+        options: ['button', 'link', 'button and link', 'button and secondary button', 'on press'],
         control: {type: 'select'},
     },
     background: {

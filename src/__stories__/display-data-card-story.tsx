@@ -79,6 +79,16 @@ export const Default: StoryComponent<DisplayDataCardArgs> = ({
         </ButtonSecondary>
     ) : undefined;
 
+    const onPress = actions.includes('press') ? () => null : undefined;
+
+    const interactiveActions = onPress
+        ? {onPress}
+        : {
+              button,
+              buttonLink,
+              secondaryButton,
+          };
+
     return (
         <DisplayDataCard
             isInverse={isInverse}
@@ -100,9 +110,7 @@ export const Default: StoryComponent<DisplayDataCardArgs> = ({
             title={title}
             description={description}
             extra={withExtra ? <Placeholder /> : undefined}
-            button={button}
-            buttonLink={buttonLink}
-            secondaryButton={secondaryButton}
+            {...interactiveActions}
             dataAttributes={{testid: 'display-data-card'}}
             aria-label="Display data card label"
         />
@@ -133,7 +141,7 @@ Default.argTypes = {
         control: {type: 'select'},
     },
     actions: {
-        options: ['button', 'link', 'button and link', 'button and secondary button'],
+        options: ['button', 'link', 'button and link', 'button and secondary button', 'on press'],
         control: {type: 'select'},
     },
 };
