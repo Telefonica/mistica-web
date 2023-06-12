@@ -67,7 +67,7 @@ const Chip: React.FC<ChipProps> = (props: ChipProps) => {
     const paddingRight = isMobile ? 20 : 12;
     const paddingIcon = isMobile ? 16 : 8;
 
-    const badgeSize = badge > 9 ? 24 : badge === true ? 8 : 18;
+    const badgeSize = Number(badge) > 9 ? 24 : badge === true ? 8 : 18;
 
     const renderBadge = () => {
         if (!badge) {
