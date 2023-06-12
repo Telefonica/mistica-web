@@ -1,19 +1,26 @@
 import * as React from 'react';
-import {Slider} from '..';
+import { Slider } from '..';
+
 
 export default {
     title: 'Components/Slider',
 };
 
 type Args = {
-    reverse: boolean;
-    progressPercent: number;
+    
 };
 
-export const Default: StoryComponent<Args> = () => (
-    <div data-testid="slider">
-        <Slider  />
+export const Default: StoryComponent<Args> = () => {
+   
+   
+
+    
+
+
+    return <div data-testid="slider">
+        <Slider />
     </div>
-);
+}
+
 
 Default.storyName = 'Slider';

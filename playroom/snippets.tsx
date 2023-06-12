@@ -1549,6 +1549,8 @@ const skeletonSnippets = [
     },
 ];
 
+
+
 const heroSnippets = [
     {
         group: 'Hero',
@@ -1970,6 +1972,11 @@ export default [
           </Inline>
         </RadioGroup>`,
     },
+    {
+      group: 'Slider',
+      name: 'Slider',
+      code: '<Slider min={0} max={100}   />',
+  },
     ...tagSnippets,
     {
         group: 'Media',
