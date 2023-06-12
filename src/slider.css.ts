@@ -1,7 +1,7 @@
 import { sprinkles } from './sprinkles.css';
 import { vars } from './skins/skin-contract.css';
-import { style, keyframes, styleVariants } from '@vanilla-extract/css';
-import { BoxedRow, mq } from '.';
+import { style, styleVariants } from '@vanilla-extract/css';
+import {  mq } from '.';
 
 export const container = style([
     sprinkles({
@@ -24,7 +24,7 @@ export const rangeSlider = style([
 ]);
 
 export const sliderBase = style([
-    //rangeSlider,
+    // rangeSlider,
     sprinkles({
         borderRadius: vars.borderRadii.bar,
         background: vars.colors.control,
@@ -35,7 +35,7 @@ export const sliderBase = style([
         height: 4,
         outline: 'none',
         margin: 0,
-        cursor: 'move',
+        cursor: 'pointer',
        
 
         '::-webkit-slider-thumb': {
@@ -55,25 +55,6 @@ export const sliderBase = style([
             [mq.tabletOrSmaller]: {
                 cursor: 'none'
             },}
-
-
-
-
-        // selectors: {
-        //     '&::-webkit-slider-thumb:hover': {
-        //         opacity: 0.2,
-        //         // transitionDelay: '0.8s',
-        //         boxShadow: `0px 0px 0px 6px ${vars.colors.controlActivated}`
-        //     },
-        //     '&::-webkit-slider-thumb:active': {
-        //         opacity: 0.2,
-        //         boxShadow: `0px 0px 0px 10px ${vars.colors.controlActivated}`
-        //     },
-        // }
-
-
-
-
     },
 ]);
 
@@ -93,24 +74,40 @@ export const sliderVariant = styleVariants({
         },
 
     }],
-    default: [sliderBase, { cursor: 'none',
+    default: [sliderBase, { 
         selectors: {
             '&::-webkit-slider-thumb:hover': {
+                cursor:'grab',
                 opacity: 0.2,
-                // transitionDelay: '0.8s',
                 boxShadow: `0px 0px 0px 6px ${vars.colors.controlActivated}`
             },
             '&::-webkit-slider-thumb:active': {
+                cursor: 'grabbing',
                 opacity: 0.2,
                 boxShadow: `0px 0px 0px 10px ${vars.colors.controlActivated}`
+
             },
+            
+            
         }
 
     }],
 
 });
 
+export const sliderDisabled = style([
+    sliderBase,
+    {selectors: {
+        '&::-webkit-slider-thumb:hover': {
+            cursor:'no-drop',
+            boxShadow: 'none'
+        },
+        '&::-webkit-slider-thumb:active': {
+            cursor: 'no-drop',
+            boxShadow: 'none'
 
+        },}}
+])
 
 export const sliderThumbBase = style([
     sprinkles({

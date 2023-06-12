@@ -1,25 +1,14 @@
 import * as React from 'react';
 import { useTheme } from './hooks';
-import { vars } from './skins/skin-contract.css';
 import * as styles from './slider.css';
-import { getPrefixedDataAttributes } from './utils/dom';
-import classNames from 'classnames';
-import * as key from './utils/key-codes';
 import classnames from 'classnames';
 
-import type { DataAttributes } from './utils/types';
-import IntegerField from './integer-field';
-
-
-
-
-type Props = {
-
+interface SliderProps {
+    disabled?: boolean,
 };
 
-const Slider: React.FC<Props> = ({
-
-
+const Slider: React.FC<SliderProps> = ({
+    disabled,
 }) => {
 
     const { isIos } = useTheme();
@@ -37,34 +26,33 @@ const Slider: React.FC<Props> = ({
         return `calc(${newValue}% + (${newPosition}px))`;
     }
 
-    const handleSlider = (e) => {
-        setValueRange(e.target.value);
-    }
+    const opacity = disabled ? '0.2' : '1'
 
+    const cursor = disabled ? 'no-drop' : ''
 
+    const sliderDisabled = disabled && styles.sliderDisabled
 
     return (
         <div className={styles.container} >
 
-            <div className={styles.rangeSlider}>
+            <div style={{opacity}} className={styles.rangeSlider}>
 
                 {/* <input className={styles.slider} type="range" min={0} max={100} value={valueRanger} onChange={(e) => handleSlider(e)}>
 
                 </input> */}
 
-                <input className={classnames(styles.sliderVariant[isIos ? 'ios' : 'default'])} type="range" min={min} max={max} value={valueRanger} onChange={(e) => handleSlider(e)}>
+                <input  style={{cursor}} disabled={disabled} className={classnames(styles.sliderVariant[isIos ? 'ios' : 'default'],sliderDisabled)} type="range" min={min} max={max} value={valueRanger} onChange={(e) => setValueRange(+e.target.value)}>
 
                 </input>
 
                 {/* <div className={styles.sliderThumb} style={{ left: setValue() }}> */}
 
-                <div className={classnames(styles.sliderThumbVariant[isIos ? 'ios' : 'default'])} style={{ left: setValue() }}>
+                <div style={{ left: setValue() }} className={classnames(styles.sliderThumbVariant[isIos ? 'ios' : 'default'])} />
 
 
 
-                </div>
 
-                <div className={styles.progress} style={{ width: setValue() }} ></div>
+                <div className={styles.progress} style={{ width: setValue()  }} ></div>
             </div>
             
 
