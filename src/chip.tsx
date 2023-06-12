@@ -61,11 +61,13 @@ const Chip: React.FC<ChipProps> = (props: ChipProps) => {
     const {Icon, children, id, dataAttributes, active, badge, onClose} = props;
     const {texts, isDarkMode} = useTheme();
     const overAlternative = useThemeVariant() === 'alternative';
-    const {isTabletOrSmaller} = useScreenSize();
+    const {isMobile} = useScreenSize();
 
-    const paddingLeft = Icon && isTabletOrSmaller ? 16 : 8 && Icon ? 8 : 20 && isTabletOrSmaller ? 20 : 12;
-    const paddingRight = isTabletOrSmaller ? 20 : 12;
-    const paddingIcon = isTabletOrSmaller ? 16 : 8;
+    const paddingLeft = Icon && isMobile ? 16 : 8 && Icon ? 8 : 20 && isMobile ? 20 : 12;
+    const paddingRight = isMobile ? 20 : 12;
+    const paddingIcon = isMobile ? 16 : 8;
+
+    const badgeSize = badge > 9 ? 24 : badge <= 0 ? 8 : 18;
 
     const renderBadge = () => {
         if (!badge) {
@@ -81,17 +83,11 @@ const Chip: React.FC<ChipProps> = (props: ChipProps) => {
                     <Icon color="currentColor" size={pxToRem(16)} />
                 </Box>
             )}
-            {onClose || badge ? (
-                <Box paddingRight={8}>
-                    <Text2 id={id} medium truncate={1} color="currentColor">
-                        {children}
-                    </Text2>
-                </Box>
-            ) : (
+            <Box paddingRight={onClose || badge ? 8 : 0}>
                 <Text2 id={id} medium truncate={1} color="currentColor">
                     {children}
                 </Text2>
-            )}
+            </Box>
         </>
     );
 
@@ -106,20 +102,17 @@ const Chip: React.FC<ChipProps> = (props: ChipProps) => {
                 {...getPrefixedDataAttributes(dataAttributes, 'Chip')}
             >
                 {body}
-                <Box>
-                    <IconButton
-                        size={18}
-                        style={{
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            cursor: 'default',
-                        }}
-                        onPress={() => {}}
-                    >
-                        {renderBadge()}
-                    </IconButton>
-                </Box>
+                <div
+                    style={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        height: badgeSize,
+                        width: badgeSize,
+                    }}
+                >
+                    {renderBadge()}
+                </div>
             </Box>
         );
     }
@@ -134,20 +127,18 @@ const Chip: React.FC<ChipProps> = (props: ChipProps) => {
                 {...getPrefixedDataAttributes(dataAttributes, 'Chip')}
             >
                 {body}
-                <Box>
-                    <IconButton
-                        size={24}
-                        style={{
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                        }}
-                        aria-label={texts.closeButtonLabel}
-                        onPress={() => onClose()}
-                    >
-                        <IconCloseRegular size={16} color={vars.colors.neutralMedium} />
-                    </IconButton>
-                </Box>
+                <IconButton
+                    size={24}
+                    style={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                    }}
+                    aria-label={texts.closeButtonLabel}
+                    onPress={() => onClose()}
+                >
+                    <IconCloseRegular size={16} color={vars.colors.neutralMedium} />
+                </IconButton>
             </Box>
         );
     }
