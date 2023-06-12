@@ -9,7 +9,7 @@ export const container = style([
         alignItems: 'center',
     }),
     {
-        width: 375,
+        width: '100%',
         minHeight: 200,
     },
 ]);
@@ -18,20 +18,20 @@ export const rangeSlider = style([
     sprinkles({
         display: 'flex',
         position: 'relative',
+        width: '100%',
     }),
     {
     }
 ]);
 
 export const sliderBase = style([
-    // rangeSlider,
     sprinkles({
         borderRadius: vars.borderRadii.bar,
         background: vars.colors.control,
     }),
     {
         'WebkitAppearance': 'none',
-        width: 363,
+        width: '100%',
         height: 4,
         outline: 'none',
         margin: 0,
