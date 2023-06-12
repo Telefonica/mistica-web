@@ -138,7 +138,6 @@ const selectTextBase = style([
         fontSize: 16,
         '@media': {
             [mq.desktopOrBigger]: {
-                lineHeight: '24px',
                 fontSize: 18,
             },
         },
