@@ -112,7 +112,7 @@ type CardContentProps = {
 const CardContent: React.FC<CardContentProps> = ({
     headline,
     pretitle,
-    pretitleAs = 'h4',
+    pretitleAs,
     pretitleLinesMax,
     title,
     titleAs = 'h3',
@@ -278,27 +278,27 @@ const CardFooter: React.FC<CardFooterProps> = ({
     );
 };
 
-type slotsTypeof = typeof StackingGroup;
+type SlotsTypeof = typeof StackingGroup;
 
-type textAs = 'h1' | 'h2' | 'h3' | 'h4';
+type TextAs = 'h1' | 'h2' | 'h3' | 'h4';
 
 interface DataCardAdvancedProps {
-    cardOnPress?: () => void;
+    onPress?: () => void;
 
     stackingGroup?: RendersNullableElement<typeof StackingGroup>;
     headline?: string | RendersNullableElement<typeof Tag>;
     pretitle?: string;
     pretitleLinesMax?: number;
-    pretitleAs?: textAs;
+    pretitleAs?: TextAs;
     title?: string;
     titleLinesMax?: number;
-    titleAs?: textAs;
+    titleAs?: TextAs;
     subtitle?: string;
     subtitleLinesMax?: number;
     description?: string;
     descriptionLinesMax?: number;
 
-    slots?: Array<RendersNullableElement<slotsTypeof>>;
+    slots?: Array<RendersNullableElement<SlotsTypeof>>;
     small?: boolean;
 
     button?: RendersNullableElement<typeof ButtonPrimary>;
@@ -309,15 +309,15 @@ interface DataCardAdvancedProps {
 
     dataAttributes?: DataAttributes;
     actions?: Array<CardAction>;
-    'card-aria-label'?: string;
+    'aria-label'?: string;
     'touchable-aria-label'?: string;
     onClose?: () => void;
 }
 
-const DataCardAdvanced = React.forwardRef<HTMLDivElement, DataCardAdvancedProps>(
+const AdvancedDataCard = React.forwardRef<HTMLDivElement, DataCardAdvancedProps>(
     (
         {
-            cardOnPress,
+            onPress,
 
             stackingGroup,
             headline,
@@ -344,7 +344,7 @@ const DataCardAdvanced = React.forwardRef<HTMLDivElement, DataCardAdvancedProps>
             dataAttributes,
             actions,
             'touchable-aria-label': touchableAriaLabel,
-            'card-aria-label': cardAriaLabel,
+            'aria-label': ariaLabel,
             onClose,
         },
         ref
@@ -365,23 +365,23 @@ const DataCardAdvanced = React.forwardRef<HTMLDivElement, DataCardAdvancedProps>
         });
 
         return (
-            <section aria-label={cardAriaLabel} style={{height: '100%', position: 'relative'}}>
+            <section aria-label={ariaLabel} style={{height: '100%', position: 'relative'}}>
                 <Boxed
                     className={styles.boxed}
-                    dataAttributes={{'component-name': 'DataCard', ...dataAttributes}}
+                    dataAttributes={{'component-name': 'AdvancedDataCard', ...dataAttributes}}
                     ref={ref}
                     width="100%"
                     height="100%"
                 >
                     <div className={styles.dataCard}>
-                        {cardOnPress && (
+                        {onPress && (
                             <a
                                 tabIndex={0}
                                 aria-label={touchableAriaLabel}
                                 href="javascript:void(0)"
                                 className={styles.anchorCard}
                                 onClick={() => {
-                                    cardOnPress();
+                                    onPress();
                                 }}
                             />
                         )}
@@ -460,4 +460,4 @@ const DataCardAdvanced = React.forwardRef<HTMLDivElement, DataCardAdvancedProps>
     }
 );
 
-export default DataCardAdvanced;
+export default AdvancedDataCard;
