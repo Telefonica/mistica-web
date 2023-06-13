@@ -20,7 +20,7 @@ const containerBase = style([
 
         '@media': {
             [mq.mobile]: {
-                height: 40,
+                minHeight: 40,
                 minWidth: 72,
                 paddingTop: 10,
                 paddingBottom: 10,
