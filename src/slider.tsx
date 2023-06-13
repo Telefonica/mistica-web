@@ -5,32 +5,51 @@ import classnames from 'classnames';
 
 interface SliderProps {
     disabled?: boolean,
+    steps?: number | number[]
+    max?: number
+    min?: number
 };
 
 const Slider: React.FC<SliderProps> = ({
     disabled,
+    steps=1,
+    max=100,
+    min=0,
 }) => {
 
     const { isIos } = useTheme();
 
-    const min = 0
-    const max = 100
 
-
-    const [valueRanger, setValueRange] = React.useState(50)
+    const [valueRanger, setValueRanger] = React.useState(min)
+    const [minSlider,setMinSlider] = React.useState(min)
+    const [maxSlider,setMaxSlider] = React.useState(max)
+    const [step,setStep] = React.useState(1)
 
     const setValue = () => {
         const
-            newValue = Number((valueRanger - 0) * 100 / (100 - 0)),
+            newValue = Number(Math.abs(valueRanger - minSlider) * 100 / (maxSlider - minSlider)),
             newPosition = 10 - (newValue * 0.2);
+  
         return `calc(${newValue}% + (${newPosition}px))`;
     }
 
-    const opacity = disabled ? '0.2' : '1'
-
-    const cursor = disabled ? 'no-drop' : ''
+    const opacity = disabled ? '0.5' : '1'
 
     const sliderDisabled = disabled && styles.sliderDisabled
+
+    React.useEffect(()=>{
+        if(steps !== 1){         
+            if(Array.isArray(steps)){
+                setStep(100/steps.length)
+                setValueRanger(0)
+            }else {
+                setStep(steps)
+                setMinSlider(min)
+                setMaxSlider(max)
+                setValueRanger(min)
+            }
+        }
+    },[steps,max,min])
 
     return (
         <div className={styles.container} >
@@ -41,7 +60,7 @@ const Slider: React.FC<SliderProps> = ({
 
                 </input> */}
 
-                <input  style={{cursor}} disabled={disabled} className={classnames(styles.sliderVariant[isIos ? 'ios' : 'default'],sliderDisabled)} type="range" min={min} max={max} value={valueRanger} onChange={(e) => setValueRange(+e.target.value)}>
+                <input   disabled={disabled} className={classnames(styles.sliderVariant[isIos ? 'ios' : 'default'],sliderDisabled)} type="range" min={minSlider} max={maxSlider} value={valueRanger} step={step} onChange={(e) => setValueRanger(+e.target.value)}>
 
                 </input>
 

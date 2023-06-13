@@ -5,15 +5,19 @@ import { Slider } from '..';
 export default {
     title: 'Components/Slider',
    
+   
 };
 
 type Args = {
     disabled: boolean
+    steps: number | number[]
+    max: number
+    min: number
 };
 
-export const Default: StoryComponent<Args> = ({disabled}) => {
+export const Default: StoryComponent<Args> = ({disabled,steps,max}) => {
     return <div data-testid="slider">
-        <Slider disabled={disabled} />
+        <Slider disabled={disabled} steps={steps} max={max} />
     </div>
 }
 
@@ -21,5 +25,8 @@ export const Default: StoryComponent<Args> = ({disabled}) => {
 Default.storyName = 'Slider';
 
 Default.args = {
-    disabled: false
+    disabled: false,
+    steps: 1,
+    max: 100,
+    min:0,
 };

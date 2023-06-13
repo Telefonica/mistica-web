@@ -97,7 +97,8 @@ export const sliderVariant = styleVariants({
 
 export const sliderDisabled = style([
     sliderBase,
-    {selectors: {
+    {cursor: 'no-drop',
+        selectors: {
         '&::-webkit-slider-thumb:hover': {
             cursor:'no-drop',
             boxShadow: 'none'
