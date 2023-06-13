@@ -5,7 +5,7 @@ import classnames from 'classnames';
 
 interface SliderProps {
     disabled?: boolean,
-    steps?: number | number[]
+    steps?: number | Array<number>
     max?: number
     min?: number
 };

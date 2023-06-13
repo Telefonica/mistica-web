@@ -10,7 +10,7 @@ export default {
 
 type Args = {
     disabled: boolean
-    steps: number | number[]
+    steps: number | Array<number>
     max: number
     min: number
 };
