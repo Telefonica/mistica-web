@@ -118,13 +118,6 @@ export const touchableZone = style([
     {display: 'flex', flexDirection: 'column', alignItems: 'flex-start', alignContent: 'flex-start'},
 ]);
 
-export const slots = style([
-    sprinkles({
-        paddingTop: 16,
-        paddingBottom: 24,
-    }),
-]);
-
 export const footerText = style([
     {
         display: 'flex',

@@ -12,7 +12,7 @@ import {vars} from './skins/skin-contract.css';
 import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
 import IconButton from './icon-button';
 import Inline from './inline';
-import classNames from 'classnames';
+import Box from './box';
 
 import type StackingGroup from './stacking-group';
 import type Image from './image';
@@ -284,7 +284,6 @@ type TextAs = 'h1' | 'h2' | 'h3' | 'h4';
 
 interface DataCardAdvancedProps {
     onPress?: () => void;
-
     stackingGroup?: RendersNullableElement<typeof StackingGroup>;
     headline?: string | RendersNullableElement<typeof Tag>;
     pretitle?: string;
@@ -297,16 +296,13 @@ interface DataCardAdvancedProps {
     subtitleLinesMax?: number;
     description?: string;
     descriptionLinesMax?: number;
-
     slots?: Array<RendersNullableElement<SlotsTypeof>>;
-    small?: boolean;
-
+    smallSlotSpace?: boolean;
     button?: RendersNullableElement<typeof ButtonPrimary>;
     footerImage?: RendersNullableElement<typeof Image>;
     footerText?: string;
     footerTextLinesMax?: number;
     buttonLink?: RendersNullableElement<typeof ButtonLink>;
-
     dataAttributes?: DataAttributes;
     actions?: Array<CardAction>;
     'aria-label'?: string;
@@ -333,7 +329,7 @@ const AdvancedDataCard = React.forwardRef<HTMLDivElement, DataCardAdvancedProps>
             descriptionLinesMax,
 
             slots,
-            small,
+            smallSlotSpace,
 
             button,
             footerImage,
@@ -356,7 +352,7 @@ const AdvancedDataCard = React.forwardRef<HTMLDivElement, DataCardAdvancedProps>
         const hasFooter = !!button || !!footerImage || !!footerText || !!buttonLink;
         const footerProps = {button, footerImage, footerText, footerTextLinesMax, buttonLink};
 
-        const slotSpaceSize = small ? 8 : 24;
+        const slotSpaceSize = smallSlotSpace ? 8 : 24;
 
         const topActionsStylesWithIcon = {position: 'absolute', top: 8, right: 8, zIndex: 2} as const;
         const cardContentStyle = sprinkles({
@@ -388,11 +384,9 @@ const AdvancedDataCard = React.forwardRef<HTMLDivElement, DataCardAdvancedProps>
 
                         <div className={cardContentStyle}>
                             <div
-                                className={classNames(
-                                    sprinkles({
-                                        paddingTop: 8,
-                                    })
-                                )}
+                                className={sprinkles({
+                                    paddingTop: 8,
+                                })}
                             >
                                 <Stack space={8} className={sprinkles({flex: 1})}>
                                     {hasStackingGroup && (
@@ -423,7 +417,7 @@ const AdvancedDataCard = React.forwardRef<HTMLDivElement, DataCardAdvancedProps>
                         </div>
                         <div style={{marginTop: 'auto', width: '100%'}}>
                             {slots && slots?.length ? (
-                                <div className={styles.slots}>
+                                <Box paddingTop={16} paddingBottom={24}>
                                     {slots.map((slot, index) => {
                                         return (
                                             <div>
@@ -448,7 +442,7 @@ const AdvancedDataCard = React.forwardRef<HTMLDivElement, DataCardAdvancedProps>
                                             </div>
                                         );
                                     })}
-                                </div>
+                                </Box>
                             ) : null}
                         </div>
 
