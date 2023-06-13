@@ -121,7 +121,6 @@ const FixedFooterLayout: React.FC<Props> = ({
                 {children}
             </div>
             <div
-                ref={ref}
                 className={classnames(styles.footer, {
                     [styles.withoutFooter]: !isFooterVisible,
                     [styles.elevated]: displayElevation,
@@ -144,6 +143,7 @@ const FixedFooterLayout: React.FC<Props> = ({
             >
                 {isFooterVisible && (
                     <aside
+                        ref={ref}
                         data-component-name="FixedFooter"
                         style={{
                             height: footerHeight,
