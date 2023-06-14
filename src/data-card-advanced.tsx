@@ -13,6 +13,7 @@ import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
 import IconButton from './icon-button';
 import Inline from './inline';
 import Box from './box';
+import Touchable from './touchable';
 
 import type StackingGroup from './stacking-group';
 import type Image from './image';
@@ -312,7 +313,7 @@ interface DataCardAdvancedProps {
 const AdvancedDataCard = React.forwardRef<HTMLDivElement, DataCardAdvancedProps>(
     (
         {
-            onPress,
+            // onPress,
 
             stackingGroup,
             headline,
@@ -360,15 +361,16 @@ const AdvancedDataCard = React.forwardRef<HTMLDivElement, DataCardAdvancedProps>
 
         return (
             <section aria-label={ariaLabel} style={{height: '100%', position: 'relative'}}>
-                <Boxed
-                    className={styles.boxed}
-                    dataAttributes={{'component-name': 'AdvancedDataCard', ...dataAttributes}}
-                    ref={ref}
-                    width="100%"
-                    height="100%"
-                >
-                    <div className={styles.dataCard}>
-                        {onPress && (
+                <Touchable maybe style={{height: '100%', position: 'relative'}}>
+                    <Boxed
+                        className={styles.boxed}
+                        dataAttributes={{'component-name': 'AdvancedDataCard', ...dataAttributes}}
+                        ref={ref}
+                        width="100%"
+                        height="100%"
+                    >
+                        <div className={styles.dataCard}>
+                            {/* {onPress && (
                             <a
                                 tabIndex={0}
                                 aria-label={ariaLabel}
@@ -378,75 +380,78 @@ const AdvancedDataCard = React.forwardRef<HTMLDivElement, DataCardAdvancedProps>
                                     onPress();
                                 }}
                             />
-                        )}
+                        )} */}
 
-                        <div className={cardContentStyle}>
-                            <div
-                                className={sprinkles({
-                                    paddingTop: 8,
-                                })}
-                            >
-                                <Stack space={8} className={sprinkles({flex: 1})}>
-                                    {hasStackingGroup && (
-                                        <div style={{display: 'flex', width: '100%'}}>
-                                            <div style={{zIndex: '0', width: '100%'}}>{stackingGroup}</div>
-                                        </div>
-                                    )}
-                                    <CardContent
-                                        headline={headline}
-                                        pretitle={pretitle}
-                                        pretitleAs={pretitleAs}
-                                        pretitleLinesMax={pretitleLinesMax}
-                                        title={title}
-                                        titleAs={titleAs}
-                                        titleLinesMax={titleLinesMax}
-                                        subtitle={subtitle}
-                                        subtitleLinesMax={subtitleLinesMax}
-                                        description={description}
-                                        descriptionLinesMax={descriptionLinesMax}
-                                    />
-                                </Stack>
-                            </div>
-                            {hasAcations && (
-                                <div style={topActionsStylesWithIcon}>
-                                    <CardActionsGroup actions={finalActions} />
-                                </div>
-                            )}
-                        </div>
-                        <div style={{marginTop: 'auto', width: '100%'}}>
-                            {slots && slots?.length ? (
-                                <Box paddingTop={16} paddingBottom={24}>
-                                    {slots.map((slot, index) => {
-                                        return (
-                                            <div>
-                                                <div
-                                                    style={{
-                                                        display: 'flex',
-                                                        width: '100%',
-                                                    }}
-                                                >
-                                                    <div style={{zIndex: '0', width: '100%'}}>{slot}</div>
-                                                </div>
-
-                                                {index + 1 !== slots.length && (
-                                                    <div
-                                                        className={sprinkles({
-                                                            paddingY: slotSpaceSize,
-                                                        })}
-                                                    >
-                                                        <Divider />
-                                                    </div>
-                                                )}
-                                            </div>
-                                        );
+                            <div className={cardContentStyle}>
+                                <div
+                                    className={sprinkles({
+                                        paddingTop: 8,
                                     })}
-                                </Box>
-                            ) : null}
-                        </div>
+                                >
+                                    <Stack space={8} className={sprinkles({flex: 1})}>
+                                        {hasStackingGroup && (
+                                            <div style={{display: 'flex', width: '100%'}}>
+                                                <div style={{zIndex: '0', width: '100%'}}>
+                                                    {stackingGroup}
+                                                </div>
+                                            </div>
+                                        )}
+                                        <CardContent
+                                            headline={headline}
+                                            pretitle={pretitle}
+                                            pretitleAs={pretitleAs}
+                                            pretitleLinesMax={pretitleLinesMax}
+                                            title={title}
+                                            titleAs={titleAs}
+                                            titleLinesMax={titleLinesMax}
+                                            subtitle={subtitle}
+                                            subtitleLinesMax={subtitleLinesMax}
+                                            description={description}
+                                            descriptionLinesMax={descriptionLinesMax}
+                                        />
+                                    </Stack>
+                                </div>
+                                {hasAcations && (
+                                    <div style={topActionsStylesWithIcon}>
+                                        <CardActionsGroup actions={finalActions} />
+                                    </div>
+                                )}
+                            </div>
+                            <div style={{marginTop: 'auto', width: '100%'}}>
+                                {slots && slots?.length ? (
+                                    <Box paddingTop={16} paddingBottom={24}>
+                                        {slots.map((slot, index) => {
+                                            return (
+                                                <div>
+                                                    <div
+                                                        style={{
+                                                            display: 'flex',
+                                                            width: '100%',
+                                                        }}
+                                                    >
+                                                        <div style={{zIndex: '0', width: '100%'}}>{slot}</div>
+                                                    </div>
 
-                        {hasFooter && <CardFooter {...footerProps} />}
-                    </div>
-                </Boxed>
+                                                    {index + 1 !== slots.length && (
+                                                        <div
+                                                            className={sprinkles({
+                                                                paddingY: slotSpaceSize,
+                                                            })}
+                                                        >
+                                                            <Divider />
+                                                        </div>
+                                                    )}
+                                                </div>
+                                            );
+                                        })}
+                                    </Box>
+                                ) : null}
+                            </div>
+
+                            {hasFooter && <CardFooter {...footerProps} />}
+                        </div>
+                    </Boxed>
+                </Touchable>
             </section>
         );
     }
