@@ -38,6 +38,6 @@ jobs:
                   add-paths: 'src/skins'
                   commit-message: 'feat(skin): update design tokens'
                   title: 'feat(skin): update design tokens'
-                  branch: 'import-design-tokens'
+                  branch: 'import-design-tokens-${{github.event.inputs.ref}}'
                   reviewers: 'atabel,pladaria'
                   delete-branch: true
