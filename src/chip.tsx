@@ -61,11 +61,11 @@ const Chip: React.FC<ChipProps> = (props: ChipProps) => {
     const {Icon, children, id, dataAttributes, active, badge, onClose} = props;
     const {texts, isDarkMode} = useTheme();
     const overAlternative = useThemeVariant() === 'alternative';
-    const {isMobile} = useScreenSize();
+    const {isTabletOrSmaller} = useScreenSize();
 
-    const paddingLeft = Icon && isMobile ? 16 : 8 && Icon ? 8 : 20 && isMobile ? 20 : 12;
-    const paddingRight = isMobile ? 20 : 12;
-    const paddingIcon = isMobile ? 16 : 8;
+    const paddingLeft = Icon && isTabletOrSmaller ? 16 : 8 && Icon ? 8 : 20 && isTabletOrSmaller ? 20 : 12;
+    const paddingRight = isTabletOrSmaller ? 20 : 12;
+    const paddingIcon = isTabletOrSmaller ? 16 : 8;
 
     const badgeSize = Number(badge) > 9 ? 24 : badge === true ? 8 : 18;
 
