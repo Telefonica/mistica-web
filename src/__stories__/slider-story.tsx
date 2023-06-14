@@ -13,11 +13,12 @@ type Args = {
     steps: number | Array<number>
     max: number
     min: number
+    field: boolean
 };
 
-export const Default: StoryComponent<Args> = ({disabled,steps,max}) => {
+export const Default: StoryComponent<Args> = (props) => {
     return <div data-testid="slider">
-        <Slider disabled={disabled} steps={steps} max={max} />
+        <Slider {...props}  />
     </div>
 }
 
@@ -29,4 +30,5 @@ Default.args = {
     steps: 1,
     max: 100,
     min:0,
+    field:false,
 };
