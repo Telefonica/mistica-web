@@ -278,6 +278,10 @@ export const getO2Skin: GetKnownSkin = () => {
         },
         textPresets: {
             cardTitle: {weight: 'regular'},
+            button: {weight: 'medium'},
+            link: {weight: 'medium'},
+            title1: {weight: 'medium'},
+            indicator: {weight: 'medium'},
             text5: {weight: 'light'},
             text6: {weight: 'light'},
             text7: {weight: 'light'},
