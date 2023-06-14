@@ -272,6 +272,10 @@ export const getTelefonicaSkin: GetKnownSkin = () => {
         },
         textPresets: {
             cardTitle: {weight: 'regular'},
+            button: {weight: 'medium'},
+            link: {weight: 'medium'},
+            title1: {weight: 'medium'},
+            indicator: {weight: 'medium'},
             text5: {weight: 'regular'},
             text6: {weight: 'regular'},
             text7: {weight: 'regular'},
