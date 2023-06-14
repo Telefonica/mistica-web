@@ -112,10 +112,10 @@ type CardContentProps = {
 const CardContent: React.FC<CardContentProps> = ({
     headline,
     pretitle,
-    pretitleAs,
+    pretitleAs = 'p',
     pretitleLinesMax,
     title,
-    titleAs = 'h3',
+    titleAs,
     titleLinesMax,
     subtitle,
     subtitleLinesMax,
@@ -306,7 +306,6 @@ interface DataCardAdvancedProps {
     dataAttributes?: DataAttributes;
     actions?: Array<CardAction>;
     'aria-label'?: string;
-    'touchable-aria-label'?: string;
     onClose?: () => void;
 }
 
@@ -339,7 +338,6 @@ const AdvancedDataCard = React.forwardRef<HTMLDivElement, DataCardAdvancedProps>
 
             dataAttributes,
             actions,
-            'touchable-aria-label': touchableAriaLabel,
             'aria-label': ariaLabel,
             onClose,
         },
@@ -373,7 +371,7 @@ const AdvancedDataCard = React.forwardRef<HTMLDivElement, DataCardAdvancedProps>
                         {onPress && (
                             <a
                                 tabIndex={0}
-                                aria-label={touchableAriaLabel}
+                                aria-label={ariaLabel}
                                 href="javascript:void(0)"
                                 className={styles.anchorCard}
                                 onClick={() => {
