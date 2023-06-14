@@ -115,7 +115,7 @@ const CardContent: React.FC<CardContentProps> = ({
     pretitleAs = 'p',
     pretitleLinesMax,
     title,
-    titleAs,
+    titleAs = 'h3',
     titleLinesMax,
     subtitle,
     subtitleLinesMax,
