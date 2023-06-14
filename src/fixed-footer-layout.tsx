@@ -20,7 +20,7 @@ import {
 } from './utils/dom';
 import * as styles from './fixed-footer-layout.css';
 import {assignInlineVars} from '@vanilla-extract/dynamic';
-import {isServerSide} from './utils/environment';
+import {isClientSide} from './utils/environment';
 
 const FOOTER_CANVAS_RATIO = 2;
 const getScrollEventTarget = (el: HTMLElement) => (el === document.documentElement ? window : el);
@@ -106,8 +106,7 @@ const FixedFooterLayout: React.FC<Props> = ({
         };
     }, [hasContentEnoughVSpace, platformOverrides]);
 
-    const isContentWithScroll =
-        !isServerSide() && hasScroll(getScrollableParentElement(containerRef.current));
+    const isContentWithScroll = isClientSide() && hasScroll(getScrollableParentElement(containerRef.current));
 
     const isFixedFooter = hasContentEnoughVSpace || !isContentWithScroll;
 
