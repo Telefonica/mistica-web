@@ -20,7 +20,6 @@ import {
 } from './utils/dom';
 import * as styles from './fixed-footer-layout.css';
 import {assignInlineVars} from '@vanilla-extract/dynamic';
-import {isClientSide} from './utils/environment';
 
 const FOOTER_CANVAS_RATIO = 2;
 const getScrollEventTarget = (el: HTMLElement) => (el === document.documentElement ? window : el);
@@ -51,6 +50,7 @@ const FixedFooterLayout: React.FC<Props> = ({
     children,
     onChangeFooterHeight,
 }) => {
+    const [isContentWithScroll, setIsContentWithScroll] = React.useState(false);
     const [displayElevation, setDisplayElevation] = React.useState(false);
     const containerRef = React.useRef<HTMLDivElement>(null);
     const {isTabletOrSmaller} = useScreenSize();
@@ -66,6 +66,10 @@ const FixedFooterLayout: React.FC<Props> = ({
     useIsomorphicLayoutEffect(() => {
         onChangeFooterHeight?.(realFooterHeight);
     }, [onChangeFooterHeight, realFooterHeight]);
+
+    React.useEffect(() => {
+        setIsContentWithScroll(hasScroll(getScrollableParentElement(containerRef.current)));
+    }, []);
 
     React.useEffect(() => {
         const scrollable = getScrollableParentElement(containerRef.current);
@@ -106,8 +110,6 @@ const FixedFooterLayout: React.FC<Props> = ({
         };
     }, [hasContentEnoughVSpace, platformOverrides]);
 
-    const isContentWithScroll = isClientSide() && hasScroll(getScrollableParentElement(containerRef.current));
-
     const isFixedFooter = hasContentEnoughVSpace || !isContentWithScroll;
 
     return (
@@ -116,7 +118,9 @@ const FixedFooterLayout: React.FC<Props> = ({
                 ref={containerRef}
                 className={styles.container}
                 style={assignInlineVars({
-                    [styles.vars.backgroundColor]: containerBgColor ?? '',
+                    ...(containerBgColor && {
+                        [styles.vars.backgroundColor]: containerBgColor,
+                    }),
                     [styles.vars.footerHeight]: isFixedFooter ? `${realFooterHeight}px` : '0px',
                 })}
             >
