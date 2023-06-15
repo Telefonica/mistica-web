@@ -15,7 +15,16 @@ const IconBellRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element =>
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^blau/i)) {
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M4.428 16.815a1 1 0 00.95 1.31h3.52a3.126 3.126 0 006.205 0h3.518a1 1 0 00.951-1.31l-.715-2.19-.695-6.994a5 5 0 00-4.975-4.506h-2.374a5 5 0 00-4.975 4.506l-.695 6.994-.715 2.19zm1.295.06l.65-1.991.709-7.13a3.75 3.75 0 013.731-3.379h2.373a3.75 3.75 0 013.732 3.38l.709 7.129.65 1.991H5.723zm4.44 1.25h3.674a1.876 1.876 0 01-3.675 0z"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^blau/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path

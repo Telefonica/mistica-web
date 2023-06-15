@@ -33,7 +33,7 @@ export const Catalog = (): JSX.Element => {
     const [showNames, showNamesCheckbox] = useCheckbox('Show names', true);
     const [showIConBackground, showIConBackgroundCheckbox] = useCheckbox('Show background', false);
     const [filter, setFilter] = React.useState('');
-    const [size, setSize] = React.useState(64);
+    const [size, setSize] = React.useState(32);
 
     const getRealName = (name: string) => name.replace(/^Icon/, '').replace(/(Regular|Filled|Light)$/, '');
     const getTypeSortValue = (name: string) => {

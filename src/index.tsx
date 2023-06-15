@@ -1537,6 +1537,9 @@ export {default as IconShieldLight} from './generated/mistica-icons/icon-shield-
 export {default as IconShieldRegular} from './generated/mistica-icons/icon-shield-regular';
 export {default as IconShopFilled} from './generated/mistica-icons/icon-shop-filled';
 export {default as IconShopLight} from './generated/mistica-icons/icon-shop-light';
+export {default as IconShoppingBagFilled} from './generated/mistica-icons/icon-shopping-bag-filled';
+export {default as IconShoppingBagLight} from './generated/mistica-icons/icon-shopping-bag-light';
+export {default as IconShoppingBagRegular} from './generated/mistica-icons/icon-shopping-bag-regular';
 export {default as IconShoppingCartFilled} from './generated/mistica-icons/icon-shopping-cart-filled';
 export {default as IconShoppingCartLight} from './generated/mistica-icons/icon-shopping-cart-light';
 export {default as IconShoppingCartRegular} from './generated/mistica-icons/icon-shopping-cart-regular';
