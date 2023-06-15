@@ -154,7 +154,7 @@ export const BlockHighlightedValue: StoryComponent<HighlightedValueBlockArgs> = 
     );
 };
 
-BlockHighlightedValue.storyName = 'Highlighted Value';
+BlockHighlightedValue.storyName = 'Highlighted Value Block';
 BlockHighlightedValue.args = {
     tag: 'promo',
     title: 'title',

@@ -324,7 +324,7 @@ export const ProgressBlock: React.FC<ProgressBlockProps> = ({
             </div>
 
             <Box paddingTop={hasHeader ? 8 : 0}>
-                <Inline space={8} alignItems="flex-end">
+                <Inline space={8} alignItems="baseline">
                     <Text8 color={valueColor}>{value}</Text8>
                     <Text2 regular color={vars.colors.textSecondary}>
                         {text}
