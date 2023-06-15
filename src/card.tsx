@@ -211,15 +211,17 @@ const transitions: Record<VideoState, Partial<Record<VideoAction, VideoState>>> 
 const videoReducer = (state: VideoState, action: VideoAction): VideoState =>
     transitions[state][action] || state;
 
+const VideoSpinner = ({size, color}: IconProps) => <Spinner size={size} color={color} delay="0" />;
+
 const getVideoActionIcon = (state: VideoState) => {
     switch (state) {
         case 'playing':
+        case 'loading':
             return IconPauseFilled;
         case 'paused':
-        case 'loading':
             return IconPlayFilled;
         case 'loadingTimeout':
-            return Spinner;
+            return VideoSpinner;
         default:
             return undefined;
     }

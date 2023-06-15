@@ -5132,6 +5132,7 @@ __metadata:
     dpdm: ^3.8.0
     es6-promise-pool: ^2.5.0
     eslint: ^8.11.0
+    file-loader: ^6.2.0
     glob: ^7.2.0
     gzip-size: ^6.0.0
     husky: ^7.0.4

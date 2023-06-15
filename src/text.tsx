@@ -148,22 +148,36 @@ interface LightProps extends TextPresetProps {
     light: boolean;
     regular?: undefined;
     medium?: undefined;
+    weight?: undefined;
 }
 
 interface MediumProps extends TextPresetProps {
     light?: undefined;
     regular?: undefined;
     medium: boolean;
+    weight?: undefined;
 }
 
 interface RegularProps extends TextPresetProps {
     light?: undefined;
     regular: boolean;
     medium?: undefined;
+    weight?: undefined;
 }
 
-type RegularMediumProps = RegularProps | MediumProps;
-type LightRegularMediumProps = LightProps | RegularProps | MediumProps;
+interface RestrictedWeightTextProps<T> extends TextPresetProps {
+    weight: T;
+    light?: undefined;
+    regular?: undefined;
+    medium?: undefined;
+}
+
+type RegularMediumProps = RegularProps | MediumProps | RestrictedWeightTextProps<'regular' | 'medium'>;
+type LightRegularMediumProps =
+    | LightProps
+    | RegularProps
+    | MediumProps
+    | RestrictedWeightTextProps<'light' | 'regular' | 'medium'>;
 
 const getWeight = (props: LightRegularMediumProps) => {
     if (props.light) {
@@ -174,6 +188,9 @@ const getWeight = (props: LightRegularMediumProps) => {
     }
     if (props.medium) {
         return 'medium';
+    }
+    if (props.weight) {
+        return props.weight;
     }
     return undefined;
 };
