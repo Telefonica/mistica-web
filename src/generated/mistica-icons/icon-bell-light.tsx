@@ -15,7 +15,16 @@ const IconBellLight = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2/i)) {
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M4.618 16.877l.722-2.21.697-7.017a4.8 4.8 0 014.776-4.325h2.373a4.8 4.8 0 014.777 4.325l.697 7.016.722 2.21a.8.8 0 01-.76 1.049h-3.697l-.02.176a2.925 2.925 0 01-5.81 0l-.02-.176H5.378a.8.8 0 01-.76-1.048zm13.935.198l-.73-2.233-.706-7.108a3.95 3.95 0 00-3.93-3.559h-2.374a3.95 3.95 0 00-3.93 3.56l-.707 7.107-.729 2.233h13.106zm-4.47.85H9.917l.048.24a2.076 2.076 0 004.068 0l.048-.24z"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path

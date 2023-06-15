@@ -15,7 +15,20 @@ const IconAlertRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element =
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2/i)) {
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M11.35 9.766a.625.625 0 111.25 0v4.25a.625.625 0 11-1.25 0v-4.25zm.625 7.365a.625.625 0 100-1.25.625.625 0 000 1.25z"
+                />
+                <path
+                    fill={fillColor}
+                    d="M13.463 4.14c-.646-1.134-2.28-1.134-2.927 0L2.533 18.195a1.684 1.684 0 001.463 2.517h16.007a1.684 1.684 0 001.463-2.517L13.463 4.14zm6.917 14.672a.434.434 0 01-.377.65H3.996a.434.434 0 01-.377-.65L11.623 4.76a.434.434 0 01.754 0l8.003 14.053z"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
