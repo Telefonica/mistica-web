@@ -19,6 +19,8 @@ import {combineRefs} from './utils/common';
 import Spinner from './spinner';
 import Video from './video';
 import {ThemeVariant, useIsInverseVariant} from './theme-variant-context';
+import classNames from 'classnames';
+import {assignInlineVars} from '@vanilla-extract/dynamic';
 
 import type {PressHandler} from './touchable';
 import type {VideoSource} from './video';
@@ -118,13 +120,21 @@ const CardActionsGroup = ({actions, onClose, type = 'default'}: CardActionsGroup
 
 type AspectRatio = '1:1' | '16:9' | '7:10' | '9:10' | 'auto';
 
-const CSS_ASPECT_RATIO = {
-    '1:1': '1',
-    '16:9': '16 / 9',
-    '7:10': '7 / 10',
-    '9:10': '9 / 10',
-    auto: 'auto',
-} as const;
+const aspectRatioToNumber = (aspectRatio?: AspectRatio | number): number => {
+    if (!aspectRatio) {
+        return 0;
+    }
+    if (typeof aspectRatio === 'number') {
+        return aspectRatio;
+    }
+    return {
+        '1:1': 1,
+        '16:9': 16 / 9,
+        '7:10': 7 / 10,
+        '9:10': 9 / 10,
+        auto: 0,
+    }[aspectRatio];
+};
 
 type CardContainerProps = {
     children: React.ReactNode;
@@ -145,22 +155,19 @@ const CardContainer = ({
     className,
     'aria-label': ariaLabel,
 }: CardContainerProps): JSX.Element => {
-    const cssAspectRatio: React.CSSProperties['aspectRatio'] = aspectRatio
-        ? typeof aspectRatio === 'number'
-            ? String(aspectRatio)
-            : CSS_ASPECT_RATIO[aspectRatio]
-        : undefined;
+    const cssAspectRatio = aspectRatioToNumber(aspectRatio);
 
     return (
         <section
             aria-label={ariaLabel}
-            className={className}
+            className={classNames(className, styles.cardContainer)}
             style={{
                 width,
                 height,
                 minWidth,
-                aspectRatio: cssAspectRatio,
-                position: 'relative',
+                ...(cssAspectRatio
+                    ? assignInlineVars({[styles.vars.aspectRatio]: String(cssAspectRatio)})
+                    : {}),
             }}
         >
             {children}

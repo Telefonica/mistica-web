@@ -1,7 +1,7 @@
-import {style} from '@vanilla-extract/css';
+import {createVar, style} from '@vanilla-extract/css';
 import {sprinkles} from './sprinkles.css';
 import * as mq from './media-queries.css';
-import {vars} from './skins/skin-contract.css';
+import {vars as skinVars} from './skins/skin-contract.css';
 import {applyAlpha} from './utils/color';
 
 export const actions = style([
@@ -45,10 +45,10 @@ export const touchableMediaCardOverlay = style([
                 transition: 'background-color 0.1s',
                 selectors: {
                     [`${touchableContainer}:hover &`]: {
-                        backgroundColor: vars.colors.backgroundContainerHover,
+                        backgroundColor: skinVars.colors.backgroundContainerHover,
                     },
                     [`${touchable}:active &`]: {
-                        backgroundColor: vars.colors.backgroundContainerPressed,
+                        backgroundColor: skinVars.colors.backgroundContainerPressed,
                     },
                 },
             },
@@ -65,10 +65,10 @@ export const touchableCardOverlay = style([
                 transition: 'background-color 0.1s',
                 selectors: {
                     [`${touchableContainer}:hover &`]: {
-                        backgroundColor: vars.colors.backgroundContainerHover,
+                        backgroundColor: skinVars.colors.backgroundContainerHover,
                     },
                     [`${touchable}:active &`]: {
-                        backgroundColor: vars.colors.backgroundContainerPressed,
+                        backgroundColor: skinVars.colors.backgroundContainerPressed,
                     },
                 },
             },
@@ -85,10 +85,10 @@ export const touchableCardOverlayInverse = style([
                 transition: 'background-color 0.1s',
                 selectors: {
                     [`${touchableContainer}:hover &`]: {
-                        backgroundColor: vars.colors.backgroundContainerBrandHover,
+                        backgroundColor: skinVars.colors.backgroundContainerBrandHover,
                     },
                     [`${touchable}:active &`]: {
-                        backgroundColor: vars.colors.backgroundContainerBrandPressed,
+                        backgroundColor: skinVars.colors.backgroundContainerBrandPressed,
                     },
                 },
             },
@@ -105,10 +105,10 @@ export const touchableCardOverlayMedia = style([
                 transition: 'background-color 0.1s',
                 selectors: {
                     [`${touchableContainer}:hover &`]: {
-                        backgroundColor: vars.colors.coverBackgroundHover,
+                        backgroundColor: skinVars.colors.coverBackgroundHover,
                     },
                     [`${touchable}:active &`]: {
-                        backgroundColor: vars.colors.coverBackgroundPressed,
+                        backgroundColor: skinVars.colors.coverBackgroundPressed,
                     },
                 },
             },
@@ -207,7 +207,7 @@ export const snapCardTouchableHover = style([
         '@media': {
             [mq.supportsHover]: {
                 ':hover': {
-                    backgroundColor: vars.colors.backgroundAlternative,
+                    backgroundColor: skinVars.colors.backgroundAlternative,
                 },
             },
         },
@@ -282,10 +282,10 @@ export const cardAction = style([
         '@media': {
             [mq.supportsHover]: {
                 ':hover': {
-                    background: vars.colors.backgroundContainerHover,
+                    background: skinVars.colors.backgroundContainerHover,
                 },
                 ':active': {
-                    background: vars.colors.backgroundContainerPressed,
+                    background: skinVars.colors.backgroundContainerPressed,
                 },
             },
         },
@@ -299,10 +299,10 @@ export const cardActionInverse = style([
         '@media': {
             [mq.supportsHover]: {
                 ':hover': {
-                    background: vars.colors.backgroundContainerBrandHover,
+                    background: skinVars.colors.backgroundContainerBrandHover,
                 },
                 ':active': {
-                    background: vars.colors.backgroundContainerBrandPressed,
+                    background: skinVars.colors.backgroundContainerBrandPressed,
                 },
             },
         },
@@ -312,15 +312,15 @@ export const cardActionInverse = style([
 export const cardActionMedia = style([
     cardActionBase,
     {
-        backgroundColor: applyAlpha(vars.rawColors.inverse, 0.7),
+        backgroundColor: applyAlpha(skinVars.rawColors.inverse, 0.7),
         transition: 'background-color 0.2s ease-in-out',
         '@media': {
             [mq.supportsHover]: {
                 ':hover': {
-                    backgroundColor: applyAlpha(vars.rawColors.inverse, 0.9),
+                    backgroundColor: applyAlpha(skinVars.rawColors.inverse, 0.9),
                 },
                 ':active': {
-                    backgroundColor: applyAlpha(vars.rawColors.inverse, 1.0),
+                    backgroundColor: applyAlpha(skinVars.rawColors.inverse, 1.0),
                 },
             },
         },
@@ -341,3 +341,27 @@ export const videoAction = style([
         },
     },
 ]);
+
+const aspectRatio = createVar();
+
+export const vars = {aspectRatio};
+
+export const cardContainer = style({
+    position: 'relative',
+    aspectRatio,
+    '@supports': {
+        'not (aspect-ratio: 1 / 1)': {
+            display: 'flex',
+            ':before': {
+                float: 'left',
+                content: '""',
+                paddingTop: `calc(100% / ${aspectRatio})`,
+            },
+            ':after': {
+                display: 'block',
+                content: '""',
+                clear: 'both',
+            },
+        },
+    },
+});
