@@ -28,7 +28,7 @@ type RowBlockArgs = {
 export const BlockRow: StoryComponent<RowBlockArgs> = ({title, description, showStackingGroup}) => {
     return (
         <ResponsiveLayout>
-            <Box paddingY={24}>
+            <Box paddingY={24} dataAttributes={{testid: 'row-block'}}>
                 <RowBlock
                     title={title}
                     description={description}
@@ -65,7 +65,7 @@ type SimpleBlockArgs = {
 export const BlockSimple: StoryComponent<SimpleBlockArgs> = ({description}) => {
     return (
         <ResponsiveLayout>
-            <Box paddingY={24}>
+            <Box paddingY={24} dataAttributes={{testid: 'simple-block'}}>
                 <SimpleBlock
                     description={description}
                     image={<Image height={40} src={imgExample} />}
@@ -96,7 +96,7 @@ export const BlockInformation: StoryComponent<InformationBlockArgs> = ({
 }) => {
     return (
         <ResponsiveLayout>
-            <Box paddingY={24}>
+            <Box paddingY={24} dataAttributes={{testid: 'information-block'}}>
                 <InformationBlock
                     title={title}
                     description={description}
@@ -139,7 +139,7 @@ export const BlockHighlightedValue: StoryComponent<HighlightedValueBlockArgs> = 
 }) => {
     return (
         <ResponsiveLayout>
-            <Box paddingY={24}>
+            <Box paddingY={24} dataAttributes={{testid: 'highlighted-value-block'}}>
                 <HighlightedValueBlock
                     tag={<Tag type={tag}>{`${tag}`}</Tag>}
                     title={title}
@@ -179,7 +179,7 @@ type ValueBlockArgs = {
 export const BlockValue: StoryComponent<ValueBlockArgs> = ({title, value, description}) => {
     return (
         <ResponsiveLayout>
-            <Box paddingY={24}>
+            <Box paddingY={24} dataAttributes={{testid: 'value-block'}}>
                 <ValueBlock title={title} description={description} value={value} aria-label="aria-label" />
             </Box>
         </ResponsiveLayout>
@@ -217,7 +217,7 @@ export const BlockProgress: StoryComponent<ProgressBlockArgs> = ({
 }) => {
     return (
         <ResponsiveLayout>
-            <Box paddingY={24}>
+            <Box paddingY={24} dataAttributes={{testid: 'progress-block'}}>
                 <ProgressBlock
                     title={title}
                     stackingGroup={
