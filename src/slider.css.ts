@@ -10,7 +10,6 @@ export const container = style([
     }),
     {
         width: '100%',
-        minHeight: 200,
     },
 ]);
 
