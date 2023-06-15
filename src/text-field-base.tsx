@@ -227,7 +227,7 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
         /* Workaround to avoid huge bullets on ios devices (-apple-system font related) */
         const fontFamily =
             rest.type === 'password' && !isRunningAcceptanceTest(theme.platformOverrides)
-                ? 'Lucida Grande, Arial, Arial, sans-serif'
+                ? 'Lucida Grande, Arial, sans-serif'
                 : 'inherit';
 
         return (
