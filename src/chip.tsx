@@ -107,7 +107,6 @@ const Chip: React.FC<ChipProps> = (props: ChipProps) => {
                         display: 'flex',
                         justifyContent: 'center',
                         alignItems: 'center',
-                        height: badgeSize,
                         width: badgeSize,
                     }}
                 >
