@@ -22,8 +22,6 @@ const containerBase = style([
             [mq.tabletOrSmaller]: {
                 minHeight: 40,
                 minWidth: 72,
-                paddingTop: 10,
-                paddingBottom: 10,
             },
         },
     },
