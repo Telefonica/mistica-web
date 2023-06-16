@@ -13,6 +13,7 @@ type TitleLayoutProps = {
 };
 
 const TitleLayout = ({title, right}: TitleLayoutProps): React.ReactElement => {
+    const {textPresets} = useTheme();
     if (!right) {
         return title;
     }
@@ -21,7 +22,7 @@ const TitleLayout = ({title, right}: TitleLayoutProps): React.ReactElement => {
         <Inline space="between" alignItems="baseline">
             {title}
             <Box paddingLeft={16}>
-                <Text2 regular>{right}</Text2>
+                <Text2 weight={textPresets.link.weight}>{right}</Text2>
             </Box>
         </Inline>
     );
