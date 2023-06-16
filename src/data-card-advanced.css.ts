@@ -37,6 +37,18 @@ export const boxed = style([
     sprinkles({display: 'flex'}),
     {
         isolation: 'isolate', // Needed to preserve border-radius with Video component and Safari
+        selectors: {
+            '&:hover': {
+                backgroundColor: vars.colors.backgroundContainerHover,
+                transition: '0.15s ease-in-out',
+
+            },
+            '&:active': {
+                backgroundColor: vars.colors.backgroundContainerPressed,
+                transition: '0.1s ease-in-out',
+
+            }
+        }
     },
 ]);
 
