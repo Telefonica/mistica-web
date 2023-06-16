@@ -8,17 +8,26 @@ export default {
    
 };
 
-type Args = {
+type SliderArgs = {
     disabled: boolean
-    steps: number | Array<number>
+    steps: number
     max: number
     min: number
     field: boolean
+    stepsInArray: boolean
 };
 
-export const Default: StoryComponent<Args> = (props) => {
+export const Default: StoryComponent<SliderArgs> = ({disabled,
+    steps,
+    max,
+    min,
+    field,
+    stepsInArray}) => {
+
+    const step = stepsInArray ? [0,8,12,16,24,40] : steps
+
     return <div data-testid="slider">
-        <Slider {...props}  />
+        <Slider disabled={disabled} steps={step} max={max} min={min} field={field}  />
     </div>
 }
 
@@ -31,4 +40,5 @@ Default.args = {
     max: 100,
     min:0,
     field:false,
+    stepsInArray: false,
 };
