@@ -41,14 +41,12 @@ export const boxed = style([
             '&:hover': {
                 backgroundColor: vars.colors.backgroundContainerHover,
                 transition: '0.15s ease-in-out',
-
             },
             '&:active': {
                 backgroundColor: vars.colors.backgroundContainerPressed,
                 transition: '0.1s ease-in-out',
-
-            }
-        }
+            },
+        },
     },
 ]);
 
