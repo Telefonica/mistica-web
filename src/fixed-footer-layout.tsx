@@ -50,7 +50,6 @@ const FixedFooterLayout: React.FC<Props> = ({
     children,
     onChangeFooterHeight,
 }) => {
-    const [isContentWithScroll, setIsContentWithScroll] = React.useState(false);
     const [displayElevation, setDisplayElevation] = React.useState(false);
     const containerRef = React.useRef<HTMLDivElement>(null);
     const {isTabletOrSmaller} = useScreenSize();
@@ -66,10 +65,6 @@ const FixedFooterLayout: React.FC<Props> = ({
     useIsomorphicLayoutEffect(() => {
         onChangeFooterHeight?.(realFooterHeight);
     }, [onChangeFooterHeight, realFooterHeight]);
-
-    React.useEffect(() => {
-        setIsContentWithScroll(hasScroll(getScrollableParentElement(containerRef.current)));
-    }, []);
 
     React.useEffect(() => {
         const scrollable = getScrollableParentElement(containerRef.current);
@@ -110,7 +105,7 @@ const FixedFooterLayout: React.FC<Props> = ({
         };
     }, [hasContentEnoughVSpace, platformOverrides]);
 
-    const isFixedFooter = hasContentEnoughVSpace || !isContentWithScroll;
+    const isFixedFooter = hasContentEnoughVSpace;
 
     return (
         <>
