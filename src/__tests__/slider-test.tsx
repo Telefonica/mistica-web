@@ -91,4 +91,35 @@ test('change input to invalid value and show error message', () => {
 
 });
 
+test('change slider value with array steps and show on input', () => {
+  render(
+      <ThemeContextProvider theme={makeTheme()}>
+        <Slider field steps={[0,8,12,16,24,40]} />
+      </ThemeContextProvider>
+  );
 
+  
+  const slider = screen.getByRole('slider');
+  
+  fireEvent.change(slider, { target: { value: 3 } });
+  
+  const field = screen.getByRole('textbox')
+
+  expect(field).toHaveValue('16')
+});
+
+test('change input value with array steps and show on slider', () => {
+  render(
+      <ThemeContextProvider theme={makeTheme()}>
+        <Slider field steps={[0,8,12,16,24,40]} />
+      </ThemeContextProvider>
+  );
+
+  const field = screen.getByRole('textbox')
+  
+  fireEvent.change(field, { target: { value: 16 } });
+  
+  const slider = screen.getByRole('slider');
+
+  expect(slider).toHaveValue('3')
+});
