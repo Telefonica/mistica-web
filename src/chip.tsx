@@ -83,7 +83,7 @@ const Chip: React.FC<ChipProps> = (props: ChipProps) => {
                     <Icon color="currentColor" size={pxToRem(16)} />
                 </Box>
             )}
-            <Box paddingRight={onClose || badge ? 8 : 0}>
+            <Box paddingRight={badge ? 8 : 0 || onClose ? 4 : 0}>
                 <Text2 id={id} medium truncate={1} color="currentColor">
                     {children}
                 </Text2>
