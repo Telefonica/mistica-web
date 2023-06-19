@@ -1,4 +1,5 @@
 import {PACKAGE_VERSION} from './package-version';
+import {isClientSide} from './utils/environment';
 
 export {vars as skinVars} from './skins/skin-contract.css';
 export * as mq from './media-queries.css';
@@ -181,7 +182,7 @@ export type {TrackingEvent, IconProps} from './utils/types';
 export type {RegionCode} from './utils/region-code';
 
 // Check there is only one version of mistica installed in the page.
-if (process.env.NODE_ENV !== 'production' && typeof window !== 'undefined') {
+if (process.env.NODE_ENV !== 'production' && isClientSide()) {
     // @ts-expect-error __mistica_version__ does not exist in window
     if (window['__mistica_version__'] && window['__mistica_version__'] !== PACKAGE_VERSION) {
         throw new Error(`There is more than one version of @telefonica/mistica running on the same page`);
@@ -1537,6 +1538,9 @@ export {default as IconShieldLight} from './generated/mistica-icons/icon-shield-
 export {default as IconShieldRegular} from './generated/mistica-icons/icon-shield-regular';
 export {default as IconShopFilled} from './generated/mistica-icons/icon-shop-filled';
 export {default as IconShopLight} from './generated/mistica-icons/icon-shop-light';
+export {default as IconShoppingBagFilled} from './generated/mistica-icons/icon-shopping-bag-filled';
+export {default as IconShoppingBagLight} from './generated/mistica-icons/icon-shopping-bag-light';
+export {default as IconShoppingBagRegular} from './generated/mistica-icons/icon-shopping-bag-regular';
 export {default as IconShoppingCartFilled} from './generated/mistica-icons/icon-shopping-cart-filled';
 export {default as IconShoppingCartLight} from './generated/mistica-icons/icon-shopping-cart-light';
 export {default as IconShoppingCartRegular} from './generated/mistica-icons/icon-shopping-cart-regular';

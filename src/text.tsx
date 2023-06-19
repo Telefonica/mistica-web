@@ -8,6 +8,7 @@ import {useTheme} from './hooks';
 import {vars} from './skins/skin-contract.css';
 import * as styles from './text.css';
 
+import type {ExclusifyUnion} from './utils/utility-types';
 import type {FontWeight} from './skins/types';
 import type {DataAttributes} from './utils/types';
 
@@ -146,24 +147,26 @@ export const Text: React.FC<TextProps> = ({
 
 interface LightProps extends TextPresetProps {
     light: boolean;
-    regular?: undefined;
-    medium?: undefined;
 }
 
 interface MediumProps extends TextPresetProps {
-    light?: undefined;
-    regular?: undefined;
     medium: boolean;
 }
 
 interface RegularProps extends TextPresetProps {
-    light?: undefined;
     regular: boolean;
-    medium?: undefined;
 }
 
-type RegularMediumProps = RegularProps | MediumProps;
-type LightRegularMediumProps = LightProps | RegularProps | MediumProps;
+interface RestrictedWeightTextProps<T> extends TextPresetProps {
+    weight: T;
+}
+
+type RegularMediumProps = ExclusifyUnion<
+    RegularProps | MediumProps | RestrictedWeightTextProps<'regular' | 'medium'>
+>;
+type LightRegularMediumProps = ExclusifyUnion<
+    LightProps | RegularProps | MediumProps | RestrictedWeightTextProps<'light' | 'regular' | 'medium'>
+>;
 
 const getWeight = (props: LightRegularMediumProps) => {
     if (props.light) {
@@ -174,6 +177,9 @@ const getWeight = (props: LightRegularMediumProps) => {
     }
     if (props.medium) {
         return 'medium';
+    }
+    if (props.weight) {
+        return props.weight;
     }
     return undefined;
 };

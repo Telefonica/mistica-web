@@ -1,7 +1,7 @@
 import * as React from 'react';
 import classnames from 'classnames';
 import {Text2, Text1} from './text';
-import {useScreenSize, useElementDimensions} from './hooks';
+import {useScreenSize, useElementDimensions, useTheme} from './hooks';
 import IconSuccess from './icons/icon-success';
 import * as styles from './stepper.css';
 import {pxToRem} from './utils/css';
@@ -25,6 +25,7 @@ const Stepper: React.FC<StepperProps> = ({
     'aria-label': ariaLabel,
     dataAttributes,
 }: StepperProps) => {
+    const {textPresets} = useTheme();
     const {isDesktopOrBigger} = useScreenSize();
     const {height, ref} = useElementDimensions();
     const textContainerHeight = height;
@@ -81,7 +82,7 @@ const Stepper: React.FC<StepperProps> = ({
                                 >
                                     <Text1
                                         as="span"
-                                        medium
+                                        weight={textPresets.indicator.weight}
                                         color={
                                             isCurrent
                                                 ? vars.colors.textPrimaryInverse

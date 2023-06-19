@@ -1,3 +1,19 @@
+# [14.14.0](https://github.com/Telefonica/mistica-web/compare/v14.13.0...v14.14.0) (2023-06-15)
+
+
+### Bug Fixes
+
+* **Chip, RadioButton:** prevent default browser highlight on press ([#778](https://github.com/Telefonica/mistica-web/issues/778)) ([ed3633a](https://github.com/Telefonica/mistica-web/commit/ed3633a4c7c768617091eb5511ac922f27972a3c))
+* **FixedFooterLayout:** avoid blinking during page transitions ([#782](https://github.com/Telefonica/mistica-web/issues/782)) ([7aa852b](https://github.com/Telefonica/mistica-web/commit/7aa852bbcd9ed2bab4450eed337d86a824e9088b))
+* **FixedFooterLayout:** remove next js errors when using SSR ([#783](https://github.com/Telefonica/mistica-web/issues/783)) ([db9adbd](https://github.com/Telefonica/mistica-web/commit/db9adbd80bca8fd9b25dfb8bd2e76a94439ddb73))
+
+
+### Features
+
+* **Cards:** add interactivity to cards ([#763](https://github.com/Telefonica/mistica-web/issues/763)) ([724da5f](https://github.com/Telefonica/mistica-web/commit/724da5f7f7456338aa578b7078bca2d635d5c5fb))
+* **Icons:** vivo-new variants for some mistica icons ([#779](https://github.com/Telefonica/mistica-web/issues/779)) ([e51294b](https://github.com/Telefonica/mistica-web/commit/e51294b7c52efc033250da9f7ebcead2c121160a))
+* **skin:** added new text design tokens ([#785](https://github.com/Telefonica/mistica-web/issues/785)) ([b7e36f7](https://github.com/Telefonica/mistica-web/commit/b7e36f792a05230150d3de8a44ec8d3cd878f6fa))
+
 # [14.13.0](https://github.com/Telefonica/mistica-web/compare/v14.12.0...v14.13.0) (2023-06-08)
 
 
