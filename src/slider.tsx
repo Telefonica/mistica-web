@@ -11,6 +11,8 @@ interface SliderProps {
     max?: number
     min?: number
     field?: boolean
+    value?: number
+    onChange?: (value: number) => void;
 };
 
 const Slider: React.FC<SliderProps> = ({
@@ -18,7 +20,9 @@ const Slider: React.FC<SliderProps> = ({
     steps = 1,
     max = 100,
     min = 0,
-    field
+    field,
+    value,
+    onChange,
 }) => {
 
     const { isIos } = useTheme();
@@ -31,31 +35,29 @@ const Slider: React.FC<SliderProps> = ({
     const [fieldValue, setFieldValue] = React.useState('')
     const [error, setError] = React.useState('')
 
-    const setValue = () => {
-        const
-            newValue = Number(Math.abs(valueRanger - minSlider) * 100 / (maxSlider - minSlider)),
-            newPosition = 10 - (newValue * 0.2);
-        return `calc(${newValue}% + (${newPosition}px))`;
-    }
-
     const opacity = React.useMemo(() => disabled ? '0.5' : '1', [disabled])
 
     const sliderDisabled = React.useMemo(() => disabled && styles.sliderDisabled, [disabled])
 
-    // const tooltipDescription = React.useMemo(() =>Array.isArray(steps) ? steps[valueRanger].toString() : valueRanger.toString(),[valueRanger,steps])
+    const setValue = React.useCallback(() => {
+        const
+            newValue = Number(Math.abs(valueRanger - minSlider) * 100 / (maxSlider - minSlider)),
+            newPosition = 10 - (newValue * 0.2);
+        return `calc(${newValue}% + (${newPosition}px))`;
+    }, [valueRanger, minSlider, maxSlider])
 
-    const getClosestNumber = (value: number) => {
+
+    const getClosestNumber = React.useCallback((value: number) => {
         let finalValue = value
         if (Array.isArray(steps)) {
-            // steps.includes(fieldValue) ? fieldValue : getClosestNumber(fieldValue)
             finalValue = steps.reduce((a, b) => {
                 return Math.abs(b - value) < Math.abs(a - value) ? b : a;
             });
         }
         return finalValue
-    }
+    }, [steps])
 
-    const getValidSliderValue = (fieldValue: number) => {
+    const getValidSliderValue = React.useCallback((fieldValue: number) => {
         let value = 0
         for (let i = fieldValue; ; i--) {
             if (i % step === 0) {
@@ -64,64 +66,69 @@ const Slider: React.FC<SliderProps> = ({
             }
         }
         return value
-    }
-
+    }, [step])
 
     const handleField = (fieldValue: number) => {
         setFieldValue(fieldValue.toString())
-        if (Array.isArray(steps)) {
-            setValueRanger(steps.indexOf(getClosestNumber(fieldValue)))
-
-            const max = steps[steps.length - 1]
-            const min = steps[0]
-
-            let text = ''
-            if (min > fieldValue || fieldValue > max) {
-                text = max < fieldValue ? 'Max: ' + max : 'Min: ' + min
-            }
-            setError(text)
+        const maxValue = Array.isArray(steps) ? steps[steps.length - 1] : max
+        const minValue = Array.isArray(steps) ? steps[0] : min
+        
+        let sliderValue = Array.isArray(steps) ? steps.indexOf(getClosestNumber(fieldValue)) : getValidSliderValue(fieldValue)
+        let text = ''
+        if(min > fieldValue || fieldValue > max){
+            sliderValue = max < fieldValue ? max : min
+            
         }
-        else {
-            let text = ''
-            let sliderValue = getValidSliderValue(fieldValue)
-            if (min > fieldValue || fieldValue > max) {
-                sliderValue = max < fieldValue ? max : min
-                text = max < fieldValue ? 'Max: ' + max : 'Min: ' + min
-            }
-            setValueRanger(sliderValue)
-            setError(text)
+        if(minValue > fieldValue || fieldValue > maxValue){
+            text = maxValue < fieldValue ? 'Max: ' + maxValue : 'Min: ' + minValue
         }
+        
+        setValueRanger(sliderValue)
+        setError(text)
+        
     }
 
+    const handleSlider = (value: number) => {
+        const fieldAux = Array.isArray(steps) ? steps[value].toString() : value.toString()
 
-    const handleSlider = (value:number) => {
-
-        if (Array.isArray(steps)) {
-            setFieldValue(steps[value].toString())
-        } else {
-            setFieldValue(value.toString())
-        }
+        setFieldValue(fieldAux)
         setValueRanger(value)
         setError('')
     }
 
     React.useEffect(() => {
+        onChange?.(+fieldValue)
+    }, [fieldValue, onChange])
+
+    React.useEffect(() => {
         if (Array.isArray(steps)) {
 
             setMaxSlider(steps.length - 1)
-            setValueRanger(0)
-            setFieldValue(steps[0].toString())
-
+            const valueIndex = value !== undefined ? steps.indexOf(getClosestNumber(value)) : 0
+            setValueRanger(valueIndex)
+            setFieldValue(steps[valueIndex].toString())
         } else {
 
             setMinSlider(min)
             setMaxSlider(max)
-            setValueRanger(min)
+            if (value === undefined) {
+                setValueRanger(min)
+                setError('')
+            }
+            else if (min <= value && value <= max) {
+                const finalValue = getValidSliderValue(value)
+                setValueRanger(finalValue)
+                setError('')
+            } else {
+
+                setValueRanger(max < value ? max : min)
+                setError(max < value ? 'Max: ' + max : 'Min: ' + min)
+            }
             setFieldValue(min.toString())
             setStep(steps)
 
         }
-    }, [steps, max, min])
+    }, [steps, max, min, getClosestNumber, value, getValidSliderValue])
 
     return (
         <div className={styles.container}>
