@@ -2,6 +2,9 @@ import * as React from 'react';
 import classnames from 'classnames';
 import * as classes from './badge.css';
 import {getPrefixedDataAttributes} from './utils/dom';
+import {Text1} from './text';
+import {useTheme} from './hooks';
+import {vars} from './skins/skin-contract.css';
 
 import type {DataAttributes} from './utils/types';
 
@@ -24,6 +27,7 @@ type Props = {
  * </Badge>
  */
 const Badge: React.FC<Props> = ({children, value, right, top, dataAttributes}) => {
+    const {textPresets} = useTheme();
     if (children && value === 0) {
         return <>{children}</>;
     }
@@ -46,7 +50,13 @@ const Badge: React.FC<Props> = ({children, value, right, top, dataAttributes}) =
                     })}
                     style={{right, top}}
                 >
-                    {isBigNumber ? '+9' : value}
+                    <Text1
+                        forceMobileSizes
+                        weight={textPresets.indicator.weight}
+                        color={vars.colors.textPrimaryInverse}
+                    >
+                        {isBigNumber ? '+9' : value}
+                    </Text1>
                 </div>
             ) : (
                 <div

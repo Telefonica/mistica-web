@@ -10,6 +10,7 @@ import Stack from './stack';
 import * as styles from './tooltip.css';
 import {assignInlineVars} from '@vanilla-extract/dynamic';
 import {getPrefixedDataAttributes} from './utils/dom';
+import {isClientSide, isServerSide} from './utils/environment';
 
 import type {DataAttributes} from './utils/types';
 
@@ -139,8 +140,7 @@ const Tooltip: React.FC<Props> = ({
 
     const position = getPosition(rest.position);
 
-    const isTouchableDevice =
-        typeof window !== 'undefined' ? window.matchMedia('(pointer: coarse)').matches : false;
+    const isTouchableDevice = isClientSide() ? window.matchMedia('(pointer: coarse)').matches : false;
 
     const closeTooltip = () => {
         if (isVisible) {
@@ -179,7 +179,7 @@ const Tooltip: React.FC<Props> = ({
     };
 
     const getContainerPosition = (position: Position, width: number) => {
-        if (typeof window === 'undefined') {
+        if (isServerSide()) {
             return {};
         }
 

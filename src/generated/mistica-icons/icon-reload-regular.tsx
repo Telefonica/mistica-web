@@ -15,7 +15,16 @@ const IconReloadRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element 
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2/i)) {
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M18.2 7.905h-4.405v-1.25h2.321a6.75 6.75 0 00-10.865 5.45H4l-.001-.1A8 8 0 0116.95 5.72V3.5h1.25v4.405zm-12.4 8.2h4.405v1.25H7.884a6.75 6.75 0 0010.866-5.45H20v.1A8 8 0 017.05 18.29v2.22H5.8v-4.405z"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
