@@ -1,20 +1,20 @@
 import {openStoryPage, screen} from '../test-utils';
 
 test.each`
-    showButtonPrimary | showButtonLink | footerText      | showFooterImage
-    ${false}          | ${false}       | ${''}           | ${false}
-    ${true}           | ${false}       | ${''}           | ${false}
-    ${false}          | ${true}        | ${''}           | ${false}
-    ${true}           | ${true}        | ${''}           | ${false}
-    ${true}           | ${true}        | ${'footerText'} | ${true}
-    ${true}           | ${false}       | ${'footerText'} | ${true}
-    ${false}          | ${true}        | ${'footerText'} | ${true}
-    ${false}          | ${false}       | ${'footerText'} | ${true}
-`('Data Card Advanced', async ({showButtonPrimary, showButtonLink, footerText, showFooterImage}) => {
+    bottomActions
+    ${'none'}
+    ${'button'}
+    ${'link'}
+    ${'button and link'}
+    ${'footerImage'}
+    ${'button and footerImage'}
+    ${'link and footerImage'}
+    ${'button link and footerImage'}
+`('Data Card Advanced', async ({bottomActions}) => {
     await openStoryPage({
         id: 'community-datacardadvanced--default',
         device: 'MOBILE_IOS',
-        args: {showButtonPrimary, showButtonLink, footerText, showFooterImage},
+        args: {bottomActions},
     });
 
     const element = await screen.findByTestId('data-card-advanced');
