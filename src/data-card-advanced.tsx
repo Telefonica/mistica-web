@@ -14,6 +14,7 @@ import IconButton from './icon-button';
 import Inline from './inline';
 import Box from './box';
 import Touchable from './touchable';
+import classNames from 'classnames';
 
 import type StackingGroup from './stacking-group';
 import type Image from './image';
@@ -234,7 +235,8 @@ const CardFooter: React.FC<CardFooterProps> = ({
             <div className={styles.actions} style={{flexDirection, alignItems}}>
                 {hasButton && (
                     <div
-                        aria-hidden="true"
+                        role="button"
+                        aria-disabled
                         onClick={(event) => event.stopPropagation()}
                         className={sprinkles({
                             display: 'flex',
@@ -264,7 +266,8 @@ const CardFooter: React.FC<CardFooterProps> = ({
                 </div>
                 {hasButtonLink && (
                     <div
-                        aria-hidden="true"
+                        role="button"
+                        aria-disabled
                         className={sprinkles({
                             display: 'flex',
                         })}
@@ -279,7 +282,7 @@ const CardFooter: React.FC<CardFooterProps> = ({
     );
 };
 
-type SlotsTypeof = typeof StackingGroup;
+type ExtraTypeof = typeof StackingGroup;
 
 type TextAs = 'h1' | 'h2' | 'h3' | 'h4';
 
@@ -297,7 +300,7 @@ interface DataCardAdvancedProps {
     subtitleLinesMax?: number;
     description?: string;
     descriptionLinesMax?: number;
-    slots?: Array<RendersNullableElement<SlotsTypeof>>;
+    extra?: Array<RendersNullableElement<ExtraTypeof>>;
     smallSlotSpace?: boolean;
     button?: RendersNullableElement<typeof ButtonPrimary>;
     footerImage?: RendersNullableElement<typeof Image>;
@@ -310,10 +313,10 @@ interface DataCardAdvancedProps {
     onClose?: () => void;
 }
 
-const AdvancedDataCard = React.forwardRef<HTMLDivElement, DataCardAdvancedProps>(
+export const DataCardAdvanced = React.forwardRef<HTMLDivElement, DataCardAdvancedProps>(
     (
         {
-            // onPress,
+            onPress,
 
             stackingGroup,
             headline,
@@ -328,7 +331,7 @@ const AdvancedDataCard = React.forwardRef<HTMLDivElement, DataCardAdvancedProps>
             description,
             descriptionLinesMax,
 
-            slots,
+            extra,
             smallSlotSpace,
 
             button,
@@ -351,19 +354,24 @@ const AdvancedDataCard = React.forwardRef<HTMLDivElement, DataCardAdvancedProps>
         const hasFooter = !!button || !!footerImage || !!footerText || !!buttonLink;
         const footerProps = {button, footerImage, footerText, footerTextLinesMax, buttonLink};
 
-        const slotSpaceSize = smallSlotSpace ? 8 : 24;
+        const extraSpaceSize = smallSlotSpace ? 8 : 24;
 
         const topActionsStylesWithIcon = {position: 'absolute', top: 8, right: 8, zIndex: 2} as const;
         const cardContentStyle = sprinkles({
             display: 'flex',
-            paddingBottom: hasFooter || slots ? 24 : 0,
+            paddingBottom: hasFooter || extra ? 24 : 0,
         });
 
         return (
             <section aria-label={ariaLabel} style={{height: '100%', position: 'relative'}}>
-                <Touchable maybe style={{height: '100%', position: 'relative'}}>
+                <Touchable
+                    onPress={onPress}
+                    tabIndex={0}
+                    maybe
+                    style={{height: '100%', position: 'relative'}}
+                >
                     <Boxed
-                        className={styles.boxed}
+                        className={classNames(styles.boxed, onPress ? styles.interaction : '')}
                         dataAttributes={{'component-name': 'AdvancedDataCard', ...dataAttributes}}
                         ref={ref}
                         width="100%"
@@ -418,9 +426,9 @@ const AdvancedDataCard = React.forwardRef<HTMLDivElement, DataCardAdvancedProps>
                                 )}
                             </div>
                             <div style={{marginTop: 'auto', width: '100%'}}>
-                                {slots && slots?.length ? (
+                                {extra && extra?.length ? (
                                     <Box paddingTop={16} paddingBottom={24}>
-                                        {slots.map((slot, index) => {
+                                        {extra.map((ex, index) => {
                                             return (
                                                 <div>
                                                     <div
@@ -429,13 +437,13 @@ const AdvancedDataCard = React.forwardRef<HTMLDivElement, DataCardAdvancedProps>
                                                             width: '100%',
                                                         }}
                                                     >
-                                                        <div style={{zIndex: '0', width: '100%'}}>{slot}</div>
+                                                        <div style={{zIndex: '0', width: '100%'}}>{ex}</div>
                                                     </div>
 
-                                                    {index + 1 !== slots.length && (
+                                                    {index + 1 !== extra.length && (
                                                         <div
                                                             className={sprinkles({
-                                                                paddingY: slotSpaceSize,
+                                                                paddingY: extraSpaceSize,
                                                             })}
                                                         >
                                                             <Divider />
@@ -457,4 +465,4 @@ const AdvancedDataCard = React.forwardRef<HTMLDivElement, DataCardAdvancedProps>
     }
 );
 
-export default AdvancedDataCard;
+export default DataCardAdvanced;

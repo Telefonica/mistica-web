@@ -22,11 +22,8 @@ type Args = {
     subtitle: string;
     description: string;
     footerText: string;
-    showStackingGroup: boolean;
-    showFooterImage: boolean;
-    showHeadline: boolean;
-    showButtonPrimary: boolean;
-    showButtonLink: boolean;
+    actions: string;
+    bottomActions: string;
 };
 
 export const Default: StoryComponent<Args> = ({
@@ -36,61 +33,69 @@ export const Default: StoryComponent<Args> = ({
     title,
     subtitle,
     description,
-    showFooterImage,
     footerText,
-    showStackingGroup,
-    showHeadline,
-    showButtonPrimary,
-    showButtonLink,
+    actions,
+    bottomActions,
 }) => {
+    const button = bottomActions.includes('button') ? (
+        <ButtonPrimary
+            small
+            onPress={() => {
+                window.alert('close!');
+            }}
+        >
+            Action
+        </ButtonPrimary>
+    ) : undefined;
+
+    const buttonLink = bottomActions.includes('link') ? (
+        <ButtonLink
+            onPress={() => {
+                window.alert('close!');
+            }}
+        >
+            Link
+        </ButtonLink>
+    ) : undefined;
+
+    const footerImage = bottomActions.includes('footerImage') ? (
+        <Image height={40} src={imgExample} />
+    ) : undefined;
+
+    const stackingGroup = actions.includes('stackingGroup') ? (
+        <StackingGroup maxItems={4} moreItemsStyle={{type: 'square', size: 40}}>
+            <Image height={40} src={imgExample} />
+            <Image height={40} src={imgExample} />
+            <Image height={40} src={imgExample} />
+            <Image height={40} src={imgExample} />
+            <Image height={40} src={imgExample} />
+        </StackingGroup>
+    ) : undefined;
+
+    const onClose = actions.includes('onClose')
+        ? () => {
+              window.alert('closed!');
+          }
+        : undefined;
+
     return (
         <ResponsiveLayout>
             <Box paddingY={24} dataAttributes={{testid: 'data-card-advanced'}}>
                 <DataCardAdvanced
-                    stackingGroup={
-                        showStackingGroup ? (
-                            <StackingGroup maxItems={4} moreItemsStyle={{type: 'square', size: 40}}>
-                                <Image height={40} src={imgExample} />
-                                <Image height={40} src={imgExample} />
-                                <Image height={40} src={imgExample} />
-                                <Image height={40} src={imgExample} />
-                                <Image height={40} src={imgExample} />
-                            </StackingGroup>
-                        ) : null
-                    }
-                    headline={
-                        showHeadline ? headline ? <Tag type={headlineType}>{headline}</Tag> : undefined : ''
-                    }
+                    smallSlotSpace
+                    stackingGroup={stackingGroup}
+                    headline={headline ? <Tag type={headlineType}>{headline}</Tag> : ''}
                     pretitle={pretitle}
                     title={title}
                     subtitle={subtitle}
                     description={description}
                     aria-label="aria label"
-                    button={
-                        showButtonPrimary ? (
-                            <ButtonPrimary
-                                onPress={() => {
-                                    window.alert('pressed!');
-                                }}
-                            >
-                                Action
-                            </ButtonPrimary>
-                        ) : null
-                    }
-                    buttonLink={
-                        showButtonLink ? (
-                            <ButtonLink
-                                onPress={() => {
-                                    window.alert('pressed!');
-                                }}
-                            >
-                                Action
-                            </ButtonLink>
-                        ) : null
-                    }
-                    footerImage={showFooterImage ? <Image height={40} src={imgExample} /> : undefined}
+                    button={button}
+                    buttonLink={buttonLink}
+                    footerImage={footerImage}
                     footerText={footerText}
-                    onClose={() => window.alert('close!')}
+                    onClose={onClose}
+                    onPress={() => window.alert('press!')}
                 />
             </Box>
         </ResponsiveLayout>
@@ -106,15 +111,29 @@ Default.args = {
     subtitle: 'subtitle',
     description: 'description',
     footerText: '',
-    showStackingGroup: true,
-    showFooterImage: false,
-    showHeadline: true,
-    showButtonPrimary: true,
-    showButtonLink: true,
+    actions: 'stackingGroup',
+    bottomActions: 'button and link',
 };
 Default.argTypes = {
     headlineType: {
         options: ['promo', 'active', 'inactive', 'success', 'warning', 'error'],
+        control: {type: 'select'},
+    },
+    actions: {
+        options: ['none', 'stackingGroup', 'onClose', 'stackingGroup and onClose'],
+        control: {type: 'select'},
+    },
+    bottomActions: {
+        options: [
+            'none',
+            'button',
+            'link',
+            'button and link',
+            'footerImage',
+            'button and footerImage',
+            'link and footerImage',
+            'button link and footerImage',
+        ],
         control: {type: 'select'},
     },
 };

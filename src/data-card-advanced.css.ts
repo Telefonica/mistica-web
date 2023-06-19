@@ -37,6 +37,11 @@ export const boxed = style([
     sprinkles({display: 'flex'}),
     {
         isolation: 'isolate', // Needed to preserve border-radius with Video component and Safari
+    },
+]);
+
+export const interaction = style([
+    {
         selectors: {
             '&:hover': {
                 backgroundColor: vars.colors.backgroundContainerHover,
@@ -134,7 +139,6 @@ export const footerText = style([
         flex: '1',
 
         lineClamp: '2',
-        boxOrient: 'vertical',
 
         alignItems: 'center',
 

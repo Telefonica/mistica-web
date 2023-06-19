@@ -1855,6 +1855,21 @@ const stackingGroupSnippets = [
     },
 ];
 
+const dataCardAdvancedSnippets = [
+    {
+        name: 'Data Advanced Card',
+        code: `
+          <DataCardAdvanced smallSlotSpace={true} 
+            title="title" subtitle={"subtitle 1"}
+            subtitle="subtitle"
+            description="description"
+            button={<ButtonPrimary small onPress={() => {}}>Action</ButtonPrimary>}
+          />
+  `,
+        group: 'DataCardAdvanced',
+    },
+];
+
 export default [
     ...buttonSnippets,
     ...formSnippets,
@@ -1991,4 +2006,5 @@ export default [
     ...logoSnippets,
     ...gridSnippets,
     ...stackingGroupSnippets,
+    ...dataCardAdvancedSnippets,
 ].sort((s1, s2) => s1.group.localeCompare(s2.group)) as Array<Snippet>;
