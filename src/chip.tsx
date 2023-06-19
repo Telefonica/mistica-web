@@ -58,7 +58,6 @@ type ClickableChipProps = ExclusifyUnion<HrefChipProps | ToChipProps | OnPressCh
 type ChipProps = ExclusifyUnion<SimpleChipProps | ClosableChipProps | ToggleChipProps | ClickableChipProps>;
 
 const Chip: React.FC<ChipProps> = (props: ChipProps) => {
-
     const {Icon, children, id, dataAttributes, active, badge, onClose} = props;
     const {texts, isDarkMode, textPresets} = useTheme();
 
@@ -84,7 +83,7 @@ const Chip: React.FC<ChipProps> = (props: ChipProps) => {
                 </Box>
             )}
             <Box paddingRight={badge ? 8 : 0 || onClose ? 4 : 0}>
-                <Text2 id={id} weight={textPresets.indicator.weight} medium truncate={1} color="currentColor">
+                <Text2 id={id} weight={textPresets.indicator.weight} truncate={1} color="currentColor">
                     {children}
                 </Text2>
             </Box>
