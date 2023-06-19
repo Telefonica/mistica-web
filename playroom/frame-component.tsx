@@ -1,7 +1,8 @@
 import '../css/roboto.css';
+import '../.storybook/css/vivo-font.css';
 import '../css/reset.css';
 import * as React from 'react';
-import {ThemeContextProvider, useModalState, OverscrollColorProvider, skinVars} from '../src';
+import {ThemeContextProvider, useModalState, OverscrollColorProvider, skinVars, VIVO_NEW_SKIN} from '../src';
 
 import type {ThemeConfig} from '../src';
 
@@ -23,10 +24,12 @@ const ThemeOverriderContextProvider = ({children}: ThemeOverriderContextProvider
 
 export const useOverrideTheme = (): OverrideTheme => React.useContext(ThemeOverriderContext);
 
-const App = ({children}: {children: React.ReactNode}) => {
+const App = ({children, skinName}: {children: React.ReactNode; skinName: string}) => {
     const {isModalOpen} = useModalState();
     const styles = `
         body {background: ${skinVars.colors.background}}
+
+        ${skinName === VIVO_NEW_SKIN ? 'body {font-family: "Vivo Type"}' : ''}
 
         ${isModalOpen ? 'body {overflow-y: hidden}' : ''}
 
@@ -50,7 +53,7 @@ const FrameComponent = ({children, theme}: Props): React.ReactNode => (
         {(overridenTheme) => (
             <ThemeContextProvider theme={overridenTheme ?? theme}>
                 <OverscrollColorProvider>
-                    <App>{children}</App>
+                    <App skinName={(overridenTheme ?? theme).skin.name}>{children}</App>
                 </OverscrollColorProvider>
             </ThemeContextProvider>
         )}

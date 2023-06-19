@@ -11,29 +11,25 @@ export type GetKnownSkin = (variant?: SkinVariant) => KnownSkin;
 
 export type FontWeight = 'light' | 'regular' | 'medium' | 'bold';
 
-type TextPresetName =
-    | 'text5'
-    | 'text6'
-    | 'text7'
-    | 'text8'
-    | 'text9'
-    | 'text10'
-    | 'cardTitle'
-    | 'button'
-    | 'link'
-    | 'title1'
-    | 'indicator';
-export type TextPresetsConfig = {
-    [preset in TextPresetName]: {
-        weight: FontWeight;
-    };
+type TextTokenConfig<PossibleFontWeights = FontWeight> = {
+    weight: PossibleFontWeights;
 };
 
-type PartialTextPresetsConfig = {
-    [preset in TextPresetName]?: {
-        weight?: FontWeight;
-    };
+export type TextPresetsConfig = {
+    cardTitle: TextTokenConfig;
+    button: TextTokenConfig<'regular' | 'medium'>;
+    link: TextTokenConfig<'regular' | 'medium'>;
+    title1: TextTokenConfig<'regular' | 'medium'>;
+    indicator: TextTokenConfig<'regular' | 'medium'>;
+    text5: TextTokenConfig;
+    text6: TextTokenConfig;
+    text7: TextTokenConfig;
+    text8: TextTokenConfig;
+    text9: TextTokenConfig;
+    text10: TextTokenConfig;
 };
+
+type PartialTextPresetsConfig = Partial<TextPresetsConfig>;
 
 export type BorderRadiiConfig = {
     button: string;

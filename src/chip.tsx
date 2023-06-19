@@ -57,7 +57,7 @@ type ChipProps = ExclusifyUnion<SimpleChipProps | ClosableChipProps | ToggleChip
 
 const Chip: React.FC<ChipProps> = (props: ChipProps) => {
     const {Icon, children, id, dataAttributes, active, onClose} = props;
-    const {texts, isDarkMode} = useTheme();
+    const {texts, isDarkMode, textPresets} = useTheme();
     const overAlternative = useThemeVariant() === 'alternative';
 
     const body = (
@@ -67,7 +67,7 @@ const Chip: React.FC<ChipProps> = (props: ChipProps) => {
                     <Icon color="currentColor" size={pxToRem(16)} />
                 </Box>
             )}
-            <Text2 id={id} medium truncate={1} color="currentColor">
+            <Text2 id={id} weight={textPresets.indicator.weight} truncate={1} color="currentColor">
                 {children}
             </Text2>
         </>

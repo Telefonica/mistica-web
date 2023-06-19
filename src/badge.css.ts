@@ -27,15 +27,12 @@ export const badgeNumber = style([
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        color: vars.colors.textPrimaryInverse,
     }),
     {
         top: -8,
         right: -9,
         width: 18,
         height: 18,
-        fontSize: 12,
-        fontWeight: 500,
     },
 ]);
 

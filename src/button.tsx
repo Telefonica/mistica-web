@@ -232,6 +232,7 @@ export type ButtonProps =
     | HrefButtonProps;
 
 const Button = React.forwardRef<TouchableElement, ButtonProps & {type: ButtonType}>((props, ref) => {
+    const {textPresets} = useTheme();
     const {eventFormat} = useTrackingConfig();
     const {formStatus, formId} = useForm();
     const isInverse = useIsInverseVariant();
@@ -272,11 +273,18 @@ const Button = React.forwardRef<TouchableElement, ButtonProps & {type: ButtonTyp
 
     const renderText = (element: React.ReactNode) =>
         props.small ? (
-            <Text size={14} lineHeight={20} weight="medium" truncate={1} color="inherit" as="div">
+            <Text
+                size={14}
+                lineHeight={20}
+                weight={textPresets.button.weight}
+                truncate={1}
+                color="inherit"
+                as="div"
+            >
                 {element}
             </Text>
         ) : (
-            <Text3 medium truncate={1} color="inherit" as="div">
+            <Text3 weight={textPresets.button.weight} truncate={1} color="inherit" as="div">
                 {element}
             </Text3>
         );
@@ -398,7 +406,7 @@ export type ButtonLinkProps = ButtonLinkOnPressProps | ButtonLinkHrefProps | But
 export const ButtonLink = React.forwardRef<TouchableElement, ButtonLinkProps>((props, ref) => {
     const {formStatus} = useForm();
     const isInverse = useIsInverseVariant();
-    const {analytics} = useTheme();
+    const {analytics, textPresets} = useTheme();
 
     const {loadingText} = props;
     const isFormSending = formStatus === 'sending';
@@ -435,7 +443,7 @@ export const ButtonLink = React.forwardRef<TouchableElement, ButtonLinkProps>((p
     };
 
     const renderText = (element: React.ReactNode) => (
-        <Text2 medium truncate={1} color="inherit">
+        <Text2 weight={textPresets.button.weight} truncate={1} color="inherit">
             {element}
         </Text2>
     );
