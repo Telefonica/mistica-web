@@ -1,3 +1,17 @@
+# [14.15.0](https://github.com/Telefonica/mistica-web/compare/v14.14.0...v14.15.0) (2023-06-19)
+
+
+### Bug Fixes
+
+* **Cards:** aspect ratio support for old browsers ([#787](https://github.com/Telefonica/mistica-web/issues/787)) ([2686e6a](https://github.com/Telefonica/mistica-web/commit/2686e6af5e4b3f2f9afc5d931483f8ec781904cd))
+* **FixedFooterLayout:** fix warnings in SSR ([#788](https://github.com/Telefonica/mistica-web/issues/788)) ([25dece8](https://github.com/Telefonica/mistica-web/commit/25dece853375420a9c02eb52aa7b9182c871190f))
+
+
+### Features
+
+* **Chip:** bigger size in mobile. Added support for badge ([#751](https://github.com/Telefonica/mistica-web/issues/751)) ([ec8c18e](https://github.com/Telefonica/mistica-web/commit/ec8c18e4cbfcecf5c00edc2ed7ffb42967bcd750))
+* **vivo new skin:** adjust font weight in some components for Vivo Type font ([#786](https://github.com/Telefonica/mistica-web/issues/786)) ([04b955a](https://github.com/Telefonica/mistica-web/commit/04b955a8446d5f2a3c2d2262a9238e5cdfe3c458))
+
 # [14.14.0](https://github.com/Telefonica/mistica-web/compare/v14.13.0...v14.14.0) (2023-06-15)
 
 
