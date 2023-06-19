@@ -13,6 +13,7 @@ interface SliderProps {
     field?: boolean
     value?: number
     onChange?: (value: number) => void;
+    getStepArrayIndex?: (value: number) => void;
 };
 
 const Slider: React.FC<SliderProps> = ({
@@ -23,6 +24,7 @@ const Slider: React.FC<SliderProps> = ({
     field,
     value,
     onChange,
+    getStepArrayIndex
 }) => {
 
     const { isIos } = useTheme();
@@ -68,12 +70,16 @@ const Slider: React.FC<SliderProps> = ({
         return value
     }, [step])
 
+    const getValidNumber = React.useCallback((
+        fieldValue:number|string
+    )=>Array.isArray(steps) ? steps.indexOf(getClosestNumber(+fieldValue)) : getValidSliderValue(+fieldValue),[steps,getClosestNumber,getValidSliderValue])
+
     const handleField = (fieldValue: number) => {
         setFieldValue(fieldValue.toString())
         const maxValue = Array.isArray(steps) ? steps[steps.length - 1] : max
         const minValue = Array.isArray(steps) ? steps[0] : min
         
-        let sliderValue = Array.isArray(steps) ? steps.indexOf(getClosestNumber(fieldValue)) : getValidSliderValue(fieldValue)
+        let sliderValue = getValidNumber(fieldValue)
         let text = ''
         if(min > fieldValue || fieldValue > max){
             sliderValue = max < fieldValue ? max : min
@@ -97,8 +103,9 @@ const Slider: React.FC<SliderProps> = ({
     }
 
     React.useEffect(() => {
-        onChange?.(+fieldValue)
-    }, [fieldValue, onChange])
+        onChange?.(getValidNumber(fieldValue))
+        getStepArrayIndex?.(valueRanger)
+    }, [fieldValue, onChange,getValidNumber,getStepArrayIndex,valueRanger])
 
     React.useEffect(() => {
         if (Array.isArray(steps)) {
