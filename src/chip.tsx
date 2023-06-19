@@ -1,6 +1,7 @@
 import * as React from 'react';
 import classnames from 'classnames';
-import {useTheme} from './hooks';
+import {useScreenSize, useTheme} from './hooks';
+import Badge from './badge';
 import Box from './box';
 import {Text2} from './text';
 import IconButton from './icon-button';
@@ -20,6 +21,7 @@ interface SimpleChipProps {
     Icon?: React.FC<IconProps>;
     id?: string;
     dataAttributes?: DataAttributes;
+    badge?: boolean | number;
 }
 
 interface ClosableChipProps extends SimpleChipProps {
@@ -56,9 +58,22 @@ type ClickableChipProps = ExclusifyUnion<HrefChipProps | ToChipProps | OnPressCh
 type ChipProps = ExclusifyUnion<SimpleChipProps | ClosableChipProps | ToggleChipProps | ClickableChipProps>;
 
 const Chip: React.FC<ChipProps> = (props: ChipProps) => {
-    const {Icon, children, id, dataAttributes, active, onClose} = props;
+    const {Icon, children, id, dataAttributes, active, badge, onClose} = props;
     const {texts, isDarkMode, textPresets} = useTheme();
+
     const overAlternative = useThemeVariant() === 'alternative';
+    const {isTabletOrSmaller} = useScreenSize();
+
+    const paddingLeft = Icon ? (isTabletOrSmaller ? 16 : 8) : isTabletOrSmaller ? 20 : 12;
+    const paddingRight = isTabletOrSmaller ? 20 : 12;
+    const paddingIcon = isTabletOrSmaller ? 16 : 8;
+
+    const renderBadge = () => {
+        if (!badge) {
+            return null;
+        }
+        return <>{badge === true ? <Badge /> : <Badge value={badge} />}</>;
+    };
 
     const body = (
         <>
@@ -67,14 +82,29 @@ const Chip: React.FC<ChipProps> = (props: ChipProps) => {
                     <Icon color="currentColor" size={pxToRem(16)} />
                 </Box>
             )}
-            <Text2 id={id} weight={textPresets.indicator.weight} truncate={1} color="currentColor">
-                {children}
-            </Text2>
+            <Box paddingRight={badge ? 8 : 0 || onClose ? 4 : 0}>
+                <Text2 id={id} weight={textPresets.indicator.weight} truncate={1} color="currentColor">
+                    {children}
+                </Text2>
+            </Box>
         </>
     );
 
-    const paddingLeft = Icon ? 8 : 12;
-
+    if (badge) {
+        return (
+            <Box
+                className={
+                    overAlternative ? styles.chipVariants.overAlternative : styles.chipVariants.default
+                }
+                paddingLeft={paddingLeft}
+                paddingRight={paddingIcon}
+                {...getPrefixedDataAttributes(dataAttributes, 'Chip')}
+            >
+                {body}
+                {renderBadge()}
+            </Box>
+        );
+    }
     if (onClose) {
         return (
             <Box
@@ -82,23 +112,22 @@ const Chip: React.FC<ChipProps> = (props: ChipProps) => {
                     overAlternative ? styles.chipVariants.overAlternative : styles.chipVariants.default
                 }
                 paddingLeft={paddingLeft}
+                paddingRight={paddingIcon}
                 {...getPrefixedDataAttributes(dataAttributes, 'Chip')}
             >
                 {body}
-                <Box paddingLeft={4}>
-                    <IconButton
-                        size={24}
-                        style={{
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                        }}
-                        aria-label={texts.closeButtonLabel}
-                        onPress={() => onClose()}
-                    >
-                        <IconCloseRegular size={16} color={vars.colors.neutralMedium} />
-                    </IconButton>
-                </Box>
+                <IconButton
+                    size={24}
+                    style={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                    }}
+                    aria-label={texts.closeButtonLabel}
+                    onPress={() => onClose()}
+                >
+                    <IconCloseRegular size={16} color={vars.colors.neutralMedium} />
+                </IconButton>
             </Box>
         );
     }
@@ -113,7 +142,7 @@ const Chip: React.FC<ChipProps> = (props: ChipProps) => {
                 }
             )}
             paddingLeft={paddingLeft}
-            paddingRight={12}
+            paddingRight={paddingRight}
             {...getPrefixedDataAttributes(dataAttributes, 'Chip')}
         >
             {body}
