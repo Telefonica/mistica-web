@@ -385,6 +385,3 @@ EllipsisInButtons.storyName = 'Ellipsis in buttons';
 withIcon.storyName = 'Button with icon';
 LoadingState.storyName = 'Loading state';
 SubmitButton.storyName = 'Submit button';
-
-TypeOfButtons.parameters = {fullScreen: true};
-LoadingState.parameters = {fullScreen: true};

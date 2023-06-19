@@ -124,6 +124,3 @@ export const Group: StoryComponent = () => {
 };
 
 Group.storyName = 'Snap card group';
-Group.parameters = {
-    fullScreen: true,
-};

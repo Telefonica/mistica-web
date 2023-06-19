@@ -119,7 +119,6 @@ export const Default: StoryComponent<Args> = ({
 };
 
 Default.storyName = 'Carousel on different container types';
-Default.parameters = {fullScreen: true};
 Default.args = {
     numItems: 6,
     itemsPerPageMobile: 1,

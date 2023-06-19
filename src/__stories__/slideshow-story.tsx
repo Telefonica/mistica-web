@@ -38,7 +38,6 @@ export const Default: StoryComponent<Args> = ({numItems, autoplay, loop, withBul
 };
 
 Default.storyName = 'Slideshow';
-Default.parameters = {fullScreen: true};
 Default.args = {
     numItems: 6,
     autoplay: false,

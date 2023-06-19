@@ -61,7 +61,6 @@ export const Default: StoryComponent<Args> = ({themeVariant}) => {
 };
 
 Default.storyName = 'ThemeVariant';
-Default.parameters = {fullScreen: true};
 Default.args = {
     themeVariant: 'default',
 };
@@ -127,7 +126,6 @@ ComponentsOverDifferentThemeVariants.storyName = 'Components over different them
 ComponentsOverDifferentThemeVariants.args = {
     themeVariant: 'default',
 };
-ComponentsOverDifferentThemeVariants.parameters = {fullScreen: true};
 ComponentsOverDifferentThemeVariants.argTypes = {
     themeVariant: {
         options: ['default', 'inverse', 'alternative'],

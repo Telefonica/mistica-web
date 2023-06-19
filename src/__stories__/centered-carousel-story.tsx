@@ -83,7 +83,6 @@ export const Default: StoryComponent<Args> = ({numItems, initialActiveItem}) => 
 };
 
 Default.storyName = 'Centered carousel';
-Default.parameters = {fullScreen: true};
 Default.args = {
     numItems: 6,
     initialActiveItem: 0,

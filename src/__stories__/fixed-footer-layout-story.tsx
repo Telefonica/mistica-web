@@ -57,7 +57,6 @@ export const FooterWithButtonsOnly: StoryComponent = () => {
 };
 
 FooterWithButtonsOnly.storyName = 'Button fixed footer layout';
-FooterWithButtonsOnly.parameters = {fullScreen: true};
 
 export const MoreComplexFooter: StoryComponent = () => {
     const [textLines, loadMoreText] = useTextLines();
@@ -97,7 +96,6 @@ export const MoreComplexFooter: StoryComponent = () => {
 };
 
 MoreComplexFooter.storyName = 'Fixed footer layout';
-MoreComplexFooter.parameters = {fullScreen: true};
 
 export const DialogOverFixedFooter: StoryComponent = () => {
     return (
@@ -125,4 +123,3 @@ export const DialogOverFixedFooter: StoryComponent = () => {
 };
 
 DialogOverFixedFooter.storyName = 'Dialog over fixed footer';
-DialogOverFixedFooter.parameters = {fullScreen: true};

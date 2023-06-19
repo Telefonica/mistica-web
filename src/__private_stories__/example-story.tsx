@@ -3,9 +3,6 @@ import {ResponsiveLayout, Stack, Title2, Text2, Box} from '..';
 
 export default {
     title: 'Private/Example',
-    parameters: {
-        fullScreen: true,
-    },
 };
 
 export const Default: StoryComponent = () => {

@@ -25,7 +25,6 @@ export const Default: StoryComponent<Args> = ({numPages}) => {
 };
 
 Default.storyName = 'Page bullets';
-Default.parameters = {fullScreen: true};
 Default.args = {
     numPages: 5,
 };

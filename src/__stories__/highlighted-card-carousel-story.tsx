@@ -36,4 +36,3 @@ export const Default: StoryComponent<Args> = () => {
 };
 
 Default.storyName = 'Highlighted card carousel';
-Default.parameters = {fullScreen: true};

@@ -1,60 +1,42 @@
 import * as React from 'react';
-import {StorySection} from './helpers';
-import {Badge, IconButton, skinVars, IconBellFilled, IconShoppingCartFilled, IconStarFilled} from '..';
+import {Badge, IconButton, IconBellFilled, Box, ResponsiveLayout} from '..';
+
+const badgeOptions = ['non numeric', '0', '2', '3', '10'];
 
 export default {
     title: 'Components/Badge',
+    argTypes: {
+        value: {
+            options: badgeOptions,
+            control: {type: 'select'},
+        },
+    },
 };
 
-export const Default: StoryComponent = () => {
+type Args = {
+    isInverse: boolean;
+    value: string;
+};
+
+export const Default: StoryComponent<Args> = ({isInverse, value}) => {
+    const ariaLabelPrefix = value === 'non numeric' ? 'Read' : value === '0' ? 'No' : value;
+
     return (
-        <>
-            <StorySection title="Badge (non numeric)">
-                <Badge>
-                    <IconButton onPress={() => {}} aria-label="Read notifications">
+        <ResponsiveLayout isInverse={isInverse} fullWidth>
+            <Box padding={16}>
+                <Badge value={value === 'non numeric' ? undefined : +value}>
+                    <IconButton onPress={() => {}} aria-label={ariaLabelPrefix + ' notifications'}>
                         <IconBellFilled />
                     </IconButton>
                 </Badge>
-            </StorySection>
-            <StorySection title="Badge (numeric, value 0)">
-                <Badge value={0}>
-                    <IconButton onPress={() => {}} aria-label="No notifications">
-                        <IconBellFilled />
-                    </IconButton>
-                </Badge>
-            </StorySection>
-            <StorySection title="Badge (numeric, value 2)">
-                <Badge value={2}>
-                    <IconButton onPress={() => {}} aria-label="Shopping Cart with 2 items">
-                        <IconShoppingCartFilled />
-                    </IconButton>
-                </Badge>
-            </StorySection>
-            <StorySection title="Badge (numeric, value 2)">
-                <Badge value={2}>
-                    <IconButton onPress={() => {}} aria-label="Shopping Cart with 2 items">
-                        <IconShoppingCartFilled />
-                    </IconButton>
-                </Badge>
-            </StorySection>
-            <StorySection title="Badge (numeric, value 14)">
-                <Badge value={14}>
-                    <IconButton onPress={() => {}} aria-label="Starred 14 times">
-                        <IconStarFilled />
-                    </IconButton>
-                </Badge>
-            </StorySection>
-            <StorySection title="Badge (numeric, value 3) (Over inverse)">
-                <div style={{padding: 20, background: skinVars.colors.backgroundBrand}}>
-                    <Badge value={3}>
-                        <IconButton onPress={() => {}} aria-label="3 notifications">
-                            <IconBellFilled color="#fff" />
-                        </IconButton>
-                    </Badge>
-                </div>
-            </StorySection>
-        </>
+            </Box>
+        </ResponsiveLayout>
     );
 };
 
 Default.storyName = 'Badge';
+
+Default.args = {
+    isInverse: false,
+    value: '2',
+};

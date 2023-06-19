@@ -1,15 +1,24 @@
 import * as React from 'react';
-import {Placeholder, Stack} from '..';
+import {Box, Placeholder} from '..';
 
 export default {
     title: 'Components/Primitives/Placeholder',
 };
 
-export const Default: StoryComponent = () => (
-    <Stack space={16}>
-        <Placeholder />
-        <Placeholder height={200} />
-    </Stack>
+type Args = {
+    width: string;
+    height: string;
+};
+
+export const Default: StoryComponent<Args> = ({width, height}) => (
+    <Box padding={16}>
+        <Placeholder width={width} height={height} />
+    </Box>
 );
 
 Default.storyName = 'Placeholder';
+
+Default.args = {
+    width: '100%',
+    height: '100%',
+};

@@ -81,7 +81,6 @@ export const Default: StoryComponent<Args> = ({
 };
 
 Default.storyName = 'Callout';
-Default.parameters = {fullScreen: true};
 Default.args = {
     title: 'Some title',
     description: 'This is a description for the callout',

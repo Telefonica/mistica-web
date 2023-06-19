@@ -94,7 +94,6 @@ export const Default: StoryComponent<Args> = ({
 };
 
 Default.storyName = 'Carousel';
-Default.parameters = {fullScreen: true};
 Default.args = {
     withBullets: true,
     numItems: 6,
