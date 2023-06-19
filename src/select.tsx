@@ -7,7 +7,7 @@ import {FieldContainer, HelperText, Label} from './text-field-components';
 import ChevronDownRegular from './generated/mistica-icons/icon-chevron-down-regular';
 import {TextFieldBaseAutosuggest} from './text-field-base';
 import Overlay from './overlay';
-import {isAndroid, isIos, isSafari} from './utils/platform';
+import {isAndroid, isIos} from './utils/platform';
 import {cancelEvent} from './utils/dom';
 import {Text3} from './text';
 import * as styles from './select.css';
@@ -387,17 +387,7 @@ const Select: React.FC<SelectProps> = ({
                 <div
                     className={styles.selectTextVariants[disabled ? 'disabled' : 'default']}
                     style={{
-                        top: isDesktopOrBigger
-                            ? label
-                                ? 28
-                                : isSafari()
-                                ? 19
-                                : 18
-                            : label
-                            ? isSafari()
-                                ? 24
-                                : 25
-                            : 16,
+                        top: isDesktopOrBigger ? (label ? 28 : 18) : label ? 25 : 16,
                     }}
                 >
                     {getOptionText(value ?? valueState)}
