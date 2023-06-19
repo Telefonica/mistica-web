@@ -11,7 +11,7 @@ import {
 } from '..';
 import {StorySection} from './helpers';
 
-const badgeOptions = ['false', 'undefined', '0', '1', '5', '10'];
+const badgeOptions = ['false', 'true', 'undefined', '0', '1', '5', '10'];
 
 export default {
     title: 'Components/Chip',

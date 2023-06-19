@@ -63,11 +63,9 @@ const Chip: React.FC<ChipProps> = (props: ChipProps) => {
     const overAlternative = useThemeVariant() === 'alternative';
     const {isTabletOrSmaller} = useScreenSize();
 
-    const paddingLeft = Icon && isTabletOrSmaller ? 16 : 8 && Icon ? 8 : 20 && isTabletOrSmaller ? 20 : 12;
+    const paddingLeft = Icon ? (isTabletOrSmaller ? 16 : 8) : isTabletOrSmaller ? 20 : 12;
     const paddingRight = isTabletOrSmaller ? 20 : 12;
     const paddingIcon = isTabletOrSmaller ? 16 : 8;
-
-    const badgeSize = Number(badge) > 9 ? 24 : badge === true ? 8 : 18;
 
     const renderBadge = () => {
         if (!badge) {
@@ -102,16 +100,7 @@ const Chip: React.FC<ChipProps> = (props: ChipProps) => {
                 {...getPrefixedDataAttributes(dataAttributes, 'Chip')}
             >
                 {body}
-                <div
-                    style={{
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        width: badgeSize,
-                    }}
-                >
-                    {renderBadge()}
-                </div>
+                {renderBadge()}
             </Box>
         );
     }
