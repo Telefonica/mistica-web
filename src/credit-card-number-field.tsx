@@ -17,6 +17,7 @@ import {useRifm} from 'rifm';
 import {createChangeEvent} from './utils/dom';
 import {combineRefs} from './utils/common';
 import * as styles from './credit-card-number-field.css';
+import {vars} from './skins/skin-contract.css';
 
 import type {CardOptions} from './utils/credit-card';
 import type {CommonFormFieldProps} from './text-field-base';
@@ -135,7 +136,7 @@ const CreditcardAdornment = ({value}: {value?: string}) => {
                 onTransitionEnd={() => isAnimating && dispatch({type: 'TRANSITION_END'})}
             >
                 <div className={styles.flipFront}>
-                    <IconCreditCardVisaRegular />
+                    <IconCreditCardVisaRegular color={vars.colors.neutralMedium} />
                 </div>
                 <div className={styles.flipBack}>{animationTarget}</div>
             </div>

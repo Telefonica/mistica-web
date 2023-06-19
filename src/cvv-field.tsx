@@ -4,7 +4,7 @@ import IconCvvVisaMc from './icons/icon-cvv-visa-mc';
 import IconCvvAmex from './icons/icon-cvv-amex';
 import Tooltip from './tooltip';
 import IconButton from './icon-button';
-import IcnInfo from './icons/icon-info-cvv';
+import IconInformationRegular from './generated/mistica-icons/icon-information-regular';
 import {useFieldProps, useForm} from './form-context';
 import {TextFieldBaseAutosuggest} from './text-field-base';
 import {IntegerInput} from './integer-field';
@@ -13,6 +13,7 @@ import Stack from './stack';
 import Box from './box';
 import Divider from './divider';
 import Text2 from './text';
+import {vars} from './skins/skin-contract.css';
 
 import type {CommonFormFieldProps} from './text-field-base';
 import type {CardOptions} from './utils/credit-card';
@@ -129,7 +130,7 @@ const CvvField: React.FC<CvvFieldProps> = ({
                                     top: -12,
                                 }}
                             >
-                                <IcnInfo size={20} />
+                                <IconInformationRegular size={16} color={vars.colors.neutralMedium} />
                             </IconButton>
                         </div>
                     }
