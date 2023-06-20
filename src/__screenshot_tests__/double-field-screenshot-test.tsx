@@ -15,8 +15,9 @@ test.each(DEVICES)('Double Field', async (device) => {
 
 test.each(DEVICES)('Double Field: Full width', async (device) => {
     const page = await openStoryPage({
-        id: 'layout-double-field--full-width',
+        id: 'layout-double-field--default',
         device,
+        args: {fullWidth: true},
     });
 
     expect(await page.screenshot({fullPage: true})).toMatchImageSnapshot();
