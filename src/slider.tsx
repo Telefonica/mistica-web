@@ -109,8 +109,10 @@ const Slider: React.FC<SliderProps> = ({
     }
 
     React.useEffect(() => {
-        onChange?.(getValidNumber(fieldValue))
-        getStepArrayIndex?.(valueRanger)
+            if(fieldValue !== 'true'){
+                onChange?.(getValidNumber(fieldValue))
+                getStepArrayIndex?.(valueRanger)
+            }
     }, [fieldValue, onChange, getValidNumber, getStepArrayIndex, valueRanger])
 
     React.useEffect(() => {
