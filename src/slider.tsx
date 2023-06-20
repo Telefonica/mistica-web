@@ -14,6 +14,7 @@ interface SliderProps {
     value?: number
     onChange?: (value: number) => void;
     getStepArrayIndex?: (value: number) => void;
+    errorText?: string
 };
 
 const Slider: React.FC<SliderProps> = ({
@@ -24,7 +25,8 @@ const Slider: React.FC<SliderProps> = ({
     field,
     value,
     onChange,
-    getStepArrayIndex
+    getStepArrayIndex,
+    errorText = ' ',
 }) => {
 
     const { isIos } = useTheme();
@@ -71,27 +73,31 @@ const Slider: React.FC<SliderProps> = ({
     }, [step])
 
     const getValidNumber = React.useCallback((
-        fieldValue:number|string
-    )=>Array.isArray(steps) ? steps.indexOf(getClosestNumber(+fieldValue)) : getValidSliderValue(+fieldValue),[steps,getClosestNumber,getValidSliderValue])
+        fieldValue: number | string
+    ) => Array.isArray(steps) ? steps.indexOf(getClosestNumber(+fieldValue)) : getValidSliderValue(+fieldValue), [steps, getClosestNumber, getValidSliderValue])
 
     const handleField = (fieldValue: number) => {
         setFieldValue(fieldValue.toString())
         const maxValue = Array.isArray(steps) ? steps[steps.length - 1] : max
         const minValue = Array.isArray(steps) ? steps[0] : min
-        
+
         let sliderValue = getValidNumber(fieldValue)
         let text = ''
-        if(min > fieldValue || fieldValue > max){
-            sliderValue = max < fieldValue ? max : min
-            
+
+        if (fieldValue % step !== 0 || (Array.isArray(steps) && !steps.includes(fieldValue))) {
+            text = errorText
         }
-        if(minValue > fieldValue || fieldValue > maxValue){
+
+        if (min > fieldValue || fieldValue > max) {
+            sliderValue = max < fieldValue ? max : min
+        }
+        if (minValue > fieldValue || fieldValue > maxValue) {
             text = maxValue < fieldValue ? 'Max: ' + maxValue : 'Min: ' + minValue
         }
-        
+
         setValueRanger(sliderValue)
         setError(text)
-        
+
     }
 
     const handleSlider = (value: number) => {
@@ -105,37 +111,56 @@ const Slider: React.FC<SliderProps> = ({
     React.useEffect(() => {
         onChange?.(getValidNumber(fieldValue))
         getStepArrayIndex?.(valueRanger)
-    }, [fieldValue, onChange,getValidNumber,getStepArrayIndex,valueRanger])
+    }, [fieldValue, onChange, getValidNumber, getStepArrayIndex, valueRanger])
 
     React.useEffect(() => {
         if (Array.isArray(steps)) {
 
             setMaxSlider(steps.length - 1)
-            const valueIndex = value !== undefined ? steps.indexOf(getClosestNumber(value)) : 0
+            let valueIndex = 0
+            let error = ""
+            let field = 0
+
+            if (value !== undefined) {
+                const condition = steps[0] > value || value > steps[steps.length - 1]
+                valueIndex = steps.indexOf(getClosestNumber(value))
+                field = value
+                error = !steps.includes(value) ? errorText : error
+                error = condition ? (steps[0] > value ? 'Min: ' + steps[0] : 'Max: ' + steps[steps.length - 1]) : error
+            }
+
+
+            setFieldValue(field.toString())
             setValueRanger(valueIndex)
-            setFieldValue(steps[valueIndex].toString())
+            setError(error)
         } else {
 
             setMinSlider(min)
             setMaxSlider(max)
-            if (value === undefined) {
-                setValueRanger(min)
-                setError('')
-            }
-            else if (min <= value && value <= max) {
+            let ranger = min
+            let field = min.toString()
+            let error = ''
+            if (value !== undefined) {
                 const finalValue = getValidSliderValue(value)
-                setValueRanger(finalValue)
-                setError('')
-            } else {
-
-                setValueRanger(max < value ? max : min)
-                setError(max < value ? 'Max: ' + max : 'Min: ' + min)
+                ranger = finalValue
+                field = value.toString()
+                if (step !== 1 && value % step !== 0) {
+                    error = errorText
+                }
+                if (min > value || value > max) {
+                    ranger = max < value ? max : min
+                    field = value.toString()
+                    error = max < value ? 'Max: ' + max : 'Min: ' + min
+                }
             }
-            setFieldValue(min.toString())
+
+            setError(error)
+            setValueRanger(ranger)
+            setFieldValue(field)
             setStep(steps)
 
         }
-    }, [steps, max, min, getClosestNumber, value, getValidSliderValue])
+    }, [steps, max, min, getClosestNumber, value, getValidSliderValue, errorText, step])
 
     return (
         <div className={styles.container}>
