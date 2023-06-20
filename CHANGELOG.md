@@ -1,3 +1,40 @@
+# [14.15.0](https://github.com/Telefonica/mistica-web/compare/v14.14.0...v14.15.0) (2023-06-19)
+
+
+### Bug Fixes
+
+* **Cards:** aspect ratio support for old browsers ([#787](https://github.com/Telefonica/mistica-web/issues/787)) ([2686e6a](https://github.com/Telefonica/mistica-web/commit/2686e6af5e4b3f2f9afc5d931483f8ec781904cd))
+* **FixedFooterLayout:** fix warnings in SSR ([#788](https://github.com/Telefonica/mistica-web/issues/788)) ([25dece8](https://github.com/Telefonica/mistica-web/commit/25dece853375420a9c02eb52aa7b9182c871190f))
+
+
+### Features
+
+* **Chip:** bigger size in mobile. Added support for badge ([#751](https://github.com/Telefonica/mistica-web/issues/751)) ([ec8c18e](https://github.com/Telefonica/mistica-web/commit/ec8c18e4cbfcecf5c00edc2ed7ffb42967bcd750))
+* **vivo new skin:** adjust font weight in some components for Vivo Type font ([#786](https://github.com/Telefonica/mistica-web/issues/786)) ([04b955a](https://github.com/Telefonica/mistica-web/commit/04b955a8446d5f2a3c2d2262a9238e5cdfe3c458))
+
+# [14.14.0](https://github.com/Telefonica/mistica-web/compare/v14.13.0...v14.14.0) (2023-06-15)
+
+
+### Bug Fixes
+
+* **Chip, RadioButton:** prevent default browser highlight on press ([#778](https://github.com/Telefonica/mistica-web/issues/778)) ([ed3633a](https://github.com/Telefonica/mistica-web/commit/ed3633a4c7c768617091eb5511ac922f27972a3c))
+* **FixedFooterLayout:** avoid blinking during page transitions ([#782](https://github.com/Telefonica/mistica-web/issues/782)) ([7aa852b](https://github.com/Telefonica/mistica-web/commit/7aa852bbcd9ed2bab4450eed337d86a824e9088b))
+* **FixedFooterLayout:** remove next js errors when using SSR ([#783](https://github.com/Telefonica/mistica-web/issues/783)) ([db9adbd](https://github.com/Telefonica/mistica-web/commit/db9adbd80bca8fd9b25dfb8bd2e76a94439ddb73))
+
+
+### Features
+
+* **Cards:** add interactivity to cards ([#763](https://github.com/Telefonica/mistica-web/issues/763)) ([724da5f](https://github.com/Telefonica/mistica-web/commit/724da5f7f7456338aa578b7078bca2d635d5c5fb))
+* **Icons:** vivo-new variants for some mistica icons ([#779](https://github.com/Telefonica/mistica-web/issues/779)) ([e51294b](https://github.com/Telefonica/mistica-web/commit/e51294b7c52efc033250da9f7ebcead2c121160a))
+* **skin:** added new text design tokens ([#785](https://github.com/Telefonica/mistica-web/issues/785)) ([b7e36f7](https://github.com/Telefonica/mistica-web/commit/b7e36f792a05230150d3de8a44ec8d3cd878f6fa))
+
+# [14.13.0](https://github.com/Telefonica/mistica-web/compare/v14.12.0...v14.13.0) (2023-06-08)
+
+
+### Features
+
+* **skin:** revert cardTitle weight change in Vivo, O2 and Blau ([#781](https://github.com/Telefonica/mistica-web/issues/781)) ([abcec7e](https://github.com/Telefonica/mistica-web/commit/abcec7e9e7165624f57ac4e9f0b40863b5c6b349))
+
 # [14.12.0](https://github.com/Telefonica/mistica-web/compare/v14.11.0...v14.12.0) (2023-06-07)
 
 

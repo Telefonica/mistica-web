@@ -96,7 +96,7 @@ export const hasScroll = (el: HTMLElement): boolean => el.scrollHeight > el.clie
 type ResizeListener = (entries: Array<ResizeObserverEntry>, observer: ResizeObserver) => void;
 export const listenResize = (element: Element, handler: ResizeListener): (() => void) => {
     const getResizeObserverPromise = (): Promise<typeof window.ResizeObserver | null> => {
-        if (typeof window === 'undefined') {
+        if (isServerSide()) {
             return Promise.resolve(null);
         }
         return window.ResizeObserver

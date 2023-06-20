@@ -278,6 +278,10 @@ export const getMovistarSkin: GetKnownSkin = () => {
         },
         textPresets: {
             cardTitle: {weight: 'bold'},
+            button: {weight: 'medium'},
+            link: {weight: 'medium'},
+            title1: {weight: 'medium'},
+            indicator: {weight: 'medium'},
             text5: {weight: 'bold'},
             text6: {weight: 'bold'},
             text7: {weight: 'bold'},

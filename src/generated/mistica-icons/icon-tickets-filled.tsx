@@ -15,7 +15,16 @@ const IconTicketsFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element 
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2/i)) {
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M6.372 15.918l4.947 4.947a3.859 3.859 0 005.457.002l4.091-4.09a3.859 3.859 0 00-.002-5.458l-4.947-4.947-3.325.766.767-3.324-.683-.683A3.859 3.859 0 007.22 3.13L3.13 7.22a3.859 3.859 0 00.001 5.457l.683.683 3.324-.767-.766 3.325zm4.636-6.324l-1.414 1.414-.884-.884 1.414-1.414.884.884z"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path

@@ -27,15 +27,10 @@ type InternalProps = {
 };
 
 const getBorderStyle = (isInverseOutside: boolean, isInverseInside: boolean) => {
-    if (isInverseOutside && !isInverseInside) {
-        return styles.inverseBorder;
-    }
-
-    if (isInverseInside) {
+    if (isInverseOutside || isInverseInside) {
         return sprinkles({border: 'none'});
     }
-
-    return sprinkles({border: 'regular'});
+    return styles.boxBorder;
 };
 
 export const InternalBoxed = React.forwardRef<HTMLDivElement, Props & InternalProps>(

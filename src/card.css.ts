@@ -1,7 +1,7 @@
-import {style} from '@vanilla-extract/css';
+import {createVar, style} from '@vanilla-extract/css';
 import {sprinkles} from './sprinkles.css';
 import * as mq from './media-queries.css';
-import {vars} from './skins/skin-contract.css';
+import {vars as skinVars} from './skins/skin-contract.css';
 import {applyAlpha} from './utils/color';
 
 export const actions = style([
@@ -10,9 +10,109 @@ export const actions = style([
 ]);
 
 export const boxed = style([
-    sprinkles({display: 'flex'}),
+    sprinkles({display: 'flex', position: 'relative'}),
     {
         isolation: 'isolate', // Needed to preserve border-radius with Video component and Safari
+    },
+]);
+
+export const touchableContainer = style({});
+
+export const touchable = style({
+    display: 'flex',
+    minHeight: '100%',
+    width: '100%',
+    position: 'relative',
+    padding: 0,
+    border: 'none',
+    background: 'transparent',
+});
+
+const touchableCardOverlayBase = style({
+    height: '100%',
+    width: '100%',
+    pointerEvents: 'none',
+    position: 'absolute',
+    backgroundColor: 'transparent',
+});
+
+export const touchableMediaCardOverlay = style([
+    touchableCardOverlayBase,
+    {
+        zIndex: 2,
+        '@media': {
+            [mq.supportsHover]: {
+                transition: 'background-color 0.1s',
+                selectors: {
+                    [`${touchableContainer}:hover &`]: {
+                        backgroundColor: skinVars.colors.backgroundContainerHover,
+                    },
+                    [`${touchable}:active &`]: {
+                        backgroundColor: skinVars.colors.backgroundContainerPressed,
+                    },
+                },
+            },
+        },
+    },
+]);
+
+export const touchableCardOverlay = style([
+    touchableCardOverlayBase,
+    {
+        zIndex: 1,
+        '@media': {
+            [mq.supportsHover]: {
+                transition: 'background-color 0.1s',
+                selectors: {
+                    [`${touchableContainer}:hover &`]: {
+                        backgroundColor: skinVars.colors.backgroundContainerHover,
+                    },
+                    [`${touchable}:active &`]: {
+                        backgroundColor: skinVars.colors.backgroundContainerPressed,
+                    },
+                },
+            },
+        },
+    },
+]);
+
+export const touchableCardOverlayInverse = style([
+    touchableCardOverlayBase,
+    {
+        zIndex: 1,
+        '@media': {
+            [mq.supportsHover]: {
+                transition: 'background-color 0.1s',
+                selectors: {
+                    [`${touchableContainer}:hover &`]: {
+                        backgroundColor: skinVars.colors.backgroundContainerBrandHover,
+                    },
+                    [`${touchable}:active &`]: {
+                        backgroundColor: skinVars.colors.backgroundContainerBrandPressed,
+                    },
+                },
+            },
+        },
+    },
+]);
+
+export const touchableCardOverlayMedia = style([
+    touchableCardOverlayBase,
+    {
+        zIndex: 1,
+        '@media': {
+            [mq.supportsHover]: {
+                transition: 'background-color 0.1s',
+                selectors: {
+                    [`${touchableContainer}:hover &`]: {
+                        backgroundColor: skinVars.colors.coverBackgroundHover,
+                    },
+                    [`${touchable}:active &`]: {
+                        backgroundColor: skinVars.colors.coverBackgroundPressed,
+                    },
+                },
+            },
+        },
     },
 ]);
 
@@ -27,6 +127,7 @@ export const mediaCardContent = style([
     sprinkles({
         display: 'flex',
         flex: 1,
+        position: 'relative',
         paddingX: 16,
         paddingTop: 16,
         paddingBottom: 24,
@@ -34,6 +135,7 @@ export const mediaCardContent = style([
         justifyContent: 'space-between',
     }),
     {
+        zIndex: 3,
         '@media': {
             [mq.desktopOrBigger]: {
                 paddingLeft: 24,
@@ -49,12 +151,14 @@ export const dataCard = style([
     sprinkles({
         display: 'flex',
         flex: 1,
+        position: 'relative',
         paddingY: 24,
         paddingX: 16,
         flexDirection: 'column',
         width: '100%',
     }),
     {
+        zIndex: 2,
         '@media': {
             [mq.desktopOrBigger]: {
                 paddingTop: 32,
@@ -69,6 +173,7 @@ export const dataCard = style([
 export const snapCard = style([
     sprinkles({
         display: 'flex',
+        position: 'relative',
         height: '100%',
         flexDirection: 'column',
         justifyContent: 'space-between',
@@ -78,7 +183,7 @@ export const snapCard = style([
     {
         minHeight: 80,
         minWidth: 104,
-
+        zIndex: 2,
         '@media': {
             [mq.desktopOrBigger]: {
                 padding: 24,
@@ -102,7 +207,7 @@ export const snapCardTouchableHover = style([
         '@media': {
             [mq.supportsHover]: {
                 ':hover': {
-                    backgroundColor: vars.colors.backgroundAlternative,
+                    backgroundColor: skinVars.colors.backgroundAlternative,
                 },
             },
         },
@@ -127,23 +232,26 @@ export const snapCardTouchableHoverTransparent = style([
 
 export const displayCardContainer = sprinkles({
     width: '100%',
+    height: '100%',
     display: 'flex',
     position: 'relative',
 });
 
-export const displayCardContent = sprinkles({
+export const displayCardContent = style({
     display: 'flex',
     flex: 1,
     flexDirection: 'column',
     position: 'relative',
     justifyContent: 'space-between',
+    zIndex: 2,
 });
 
-export const displayCardBackground = sprinkles({
+export const displayCardBackground = style({
     position: 'absolute',
     objectFit: 'cover',
     width: '100%',
     height: '100%',
+    zIndex: 0,
 });
 
 export const displayCardGradient = style({
@@ -170,12 +278,14 @@ const cardActionBase = sprinkles({
 export const cardAction = style([
     cardActionBase,
     {
-        background: vars.colors.backgroundContainer,
         transition: 'background-color 0.2s ease-in-out',
         '@media': {
             [mq.supportsHover]: {
                 ':hover': {
-                    background: vars.colors.backgroundAlternative,
+                    background: skinVars.colors.backgroundContainerHover,
+                },
+                ':active': {
+                    background: skinVars.colors.backgroundContainerPressed,
                 },
             },
         },
@@ -185,12 +295,32 @@ export const cardAction = style([
 export const cardActionInverse = style([
     cardActionBase,
     {
-        background: applyAlpha(vars.rawColors.backgroundContainer, 0.7),
         transition: 'background-color 0.2s ease-in-out',
         '@media': {
             [mq.supportsHover]: {
                 ':hover': {
-                    background: applyAlpha(vars.rawColors.backgroundContainer, 0.9),
+                    background: skinVars.colors.backgroundContainerBrandHover,
+                },
+                ':active': {
+                    background: skinVars.colors.backgroundContainerBrandPressed,
+                },
+            },
+        },
+    },
+]);
+
+export const cardActionMedia = style([
+    cardActionBase,
+    {
+        backgroundColor: applyAlpha(skinVars.rawColors.inverse, 0.7),
+        transition: 'background-color 0.2s ease-in-out',
+        '@media': {
+            [mq.supportsHover]: {
+                ':hover': {
+                    backgroundColor: applyAlpha(skinVars.rawColors.inverse, 0.9),
+                },
+                ':active': {
+                    backgroundColor: applyAlpha(skinVars.rawColors.inverse, 1.0),
                 },
             },
         },
@@ -211,3 +341,27 @@ export const videoAction = style([
         },
     },
 ]);
+
+const aspectRatio = createVar();
+
+export const vars = {aspectRatio};
+
+export const cardContainer = style({
+    position: 'relative',
+    aspectRatio,
+    '@supports': {
+        'not (aspect-ratio: 1 / 1)': {
+            display: 'flex',
+            ':before': {
+                float: 'left',
+                content: '""',
+                paddingTop: `calc(100% / ${aspectRatio})`,
+            },
+            ':after': {
+                display: 'block',
+                content: '""',
+                clear: 'both',
+            },
+        },
+    },
+});

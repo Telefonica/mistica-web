@@ -6,6 +6,12 @@ on:
                 description: 'mistica-design repo changeset or branch'
                 required: false
                 default: 'production'
+            draft:
+                type: boolean
+                description: 'Create a draft PR'
+                required: false
+                default: false
+
 jobs:
     import-design-tokens:
         runs-on: ubuntu-latest
@@ -38,6 +44,7 @@ jobs:
                   add-paths: 'src/skins'
                   commit-message: 'feat(skin): update design tokens'
                   title: 'feat(skin): update design tokens'
-                  branch: 'import-design-tokens'
+                  branch: 'import-design-tokens-${{github.event.inputs.ref}}'
                   reviewers: 'atabel,pladaria'
                   delete-branch: true
+                  draft: ${{github.event.inputs.draft}}

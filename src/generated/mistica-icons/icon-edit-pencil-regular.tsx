@@ -15,7 +15,16 @@ const IconEditPencilRegular = ({color, size = 24, ...rest}: IconProps): JSX.Elem
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^blau/i)) {
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M19.071 4.519c-1.426-1.525-3.747-1.525-5.174-.001l-8.753 9.33-.005.005a2.84 2.84 0 00-.73 1.562l-.523 3.921v.004c-.044.34.042.694.293.957.254.266.611.366.96.315h.004l3.678-.565a2.483 2.483 0 001.502-.812l8.747-9.322c1.407-1.493 1.405-3.895.001-5.394zm-4.262.854c.933-.997 2.417-.997 3.35 0 .956 1.021.953 2.673.001 3.682v.002l-.275.292-3.583-3.436.507-.54zm-1.363 1.452l3.583 3.436L9.4 18.392l-.005.007a1.234 1.234 0 01-.753.41l-3.496.537.503-3.768v-.005c.04-.32.181-.623.41-.873l7.387-7.875zm-8.493 12.55l.016.103-.012-.103h-.004z"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^blau/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path fill={fillColor} d="M7.968 16.9H4.933v-1.36h3.035v1.36z" />
