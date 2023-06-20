@@ -6,6 +6,7 @@ import beachImg from './images/beach.jpg';
 export default {
     title: 'Components/Primitives/Video',
     component: Video,
+    parameters: {fullScreen: false},
 };
 
 const VIDEO_SRC = beachVideo;

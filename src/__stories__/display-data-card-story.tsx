@@ -22,6 +22,7 @@ import type {TagType} from '..';
 
 export default {
     title: 'Components/Cards/Display data card',
+    parameters: {fullScreen: false},
 };
 
 type DisplayDataCardArgs = {

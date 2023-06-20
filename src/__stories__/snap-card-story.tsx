@@ -16,6 +16,7 @@ import avatarImg from './images/avatar.jpg';
 
 export default {
     title: 'Components/Cards/Snap card',
+    parameters: {fullScreen: false},
 };
 
 type Args = {

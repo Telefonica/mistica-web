@@ -42,6 +42,7 @@ type PosterCardArgs = {
     width: string;
     height: string;
     aspectRatio: '1:1' | '16:9' | '7:10' | '9:10' | 'auto';
+    overInverse: boolean;
 };
 
 export const Default: StoryComponent<PosterCardArgs> = ({
@@ -58,6 +59,7 @@ export const Default: StoryComponent<PosterCardArgs> = ({
     width,
     height,
     aspectRatio,
+    overInverse,
 }) => {
     let icon;
     if (asset === 'circle + icon') {
@@ -111,39 +113,24 @@ export const Default: StoryComponent<PosterCardArgs> = ({
               };
 
     return (
-        <Stack space={32} dataAttributes={{testid: 'poster-card'}}>
-            <PosterCard
-                {...backgroundProps}
-                icon={icon}
-                headline={headline ? <Tag type={headlineType}>{headline}</Tag> : undefined}
-                pretitle={pretitle}
-                title={title}
-                description={description}
-                aria-label="Poster card label"
-                width={width}
-                height={height}
-                aspectRatio={aspectRatio}
-                onPress={onPress ? () => null : undefined}
-            />
+        <ResponsiveLayout fullWidth isInverse={overInverse}>
+            <Box padding={16}>
+                <Stack space={32} dataAttributes={{testid: 'poster-card'}}>
+                    <PosterCard
+                        {...backgroundProps}
+                        icon={icon}
+                        headline={headline ? <Tag type={headlineType}>{headline}</Tag> : undefined}
+                        pretitle={pretitle}
+                        title={title}
+                        description={description}
+                        aria-label="Poster card label"
+                        width={width}
+                        height={height}
+                        aspectRatio={aspectRatio}
+                        onPress={onPress ? () => null : undefined}
+                    />
 
-            <Title1>Wrong source for media</Title1>
-            <PosterCard
-                {...wrongBackgroundProps}
-                icon={icon}
-                headline={headline ? <Tag type={headlineType}>{headline}</Tag> : undefined}
-                pretitle={pretitle}
-                title={title}
-                description={description}
-                aria-label="Poster card fallback label"
-                width={width}
-                height={height}
-                aspectRatio={aspectRatio}
-                onPress={onPress ? () => null : undefined}
-            />
-
-            <Title1>Wrong source for media with inverse</Title1>
-            <ResponsiveLayout isInverse>
-                <Box paddingY={8}>
+                    <Title1>Wrong source for media</Title1>
                     <PosterCard
                         {...wrongBackgroundProps}
                         icon={icon}
@@ -151,15 +138,15 @@ export const Default: StoryComponent<PosterCardArgs> = ({
                         pretitle={pretitle}
                         title={title}
                         description={description}
-                        aria-label="Poster card fallback inverse label"
+                        aria-label="Poster card fallback label"
                         width={width}
                         height={height}
                         aspectRatio={aspectRatio}
                         onPress={onPress ? () => null : undefined}
                     />
-                </Box>
-            </ResponsiveLayout>
-        </Stack>
+                </Stack>
+            </Box>
+        </ResponsiveLayout>
     );
 };
 
@@ -178,6 +165,7 @@ Default.args = {
     width: 'auto',
     height: 'auto',
     aspectRatio: 'auto',
+    overInverse: false,
 };
 Default.argTypes = {
     asset: {

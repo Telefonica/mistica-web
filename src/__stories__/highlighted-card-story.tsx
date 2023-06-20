@@ -1,9 +1,10 @@
 import * as React from 'react';
-import {HighlightedCard, Box, ButtonPrimary, ButtonSecondary, ButtonLink} from '..';
+import {HighlightedCard, Box, ButtonPrimary, ButtonSecondary, ButtonLink, skinVars} from '..';
 import personPortraitImg from './images/person-portrait.jpg';
 
 export default {
     title: 'Components/Cards/Highlighted card',
+    parameters: {fullScreen: false},
 };
 
 type Args = {
@@ -19,7 +20,7 @@ export const Default: StoryComponent<Args> = ({
     title,
     description,
     action = 'ButtonPrimary',
-    image = 'fit',
+    image = 'fill',
     inverse,
     closable,
 }) => {
@@ -69,7 +70,7 @@ Default.args = {
     title: 'Resolver problema técnico',
     description: 'Usa nuestra herramienta para resolver tus problemas técnicos',
     action: 'ButtonPrimary',
-    image: 'fit',
+    image: 'fill',
     inverse: false,
     closable: false,
 };
@@ -80,7 +81,7 @@ Default.argTypes = {
         control: {type: 'select'},
     },
     image: {
-        options: ['fit', 'fill', 'none'],
+        options: ['fill', 'fit', 'none'],
         control: {type: 'select'},
     },
 };
@@ -88,7 +89,12 @@ Default.argTypes = {
 export const CustomCardSize: StoryComponent = () => {
     return (
         <div
-            style={{display: 'flex', background: '#eee', overflowX: 'auto', justifyContent: 'flex-start'}}
+            style={{
+                display: 'flex',
+                background: skinVars.colors.backgroundSkeleton,
+                overflowX: 'auto',
+                justifyContent: 'flex-start',
+            }}
             data-testid="highlighted-card"
         >
             <HighlightedCard
@@ -96,7 +102,7 @@ export const CustomCardSize: StoryComponent = () => {
                 title="Title 1"
                 description="Some description here"
                 imageUrl={personPortraitImg}
-                imageFit="fit"
+                imageFit="fill"
                 onClose={() => {}}
             />
 
@@ -107,7 +113,7 @@ export const CustomCardSize: StoryComponent = () => {
                 title="Title 2"
                 description="Some description here"
                 imageUrl={personPortraitImg}
-                imageFit="fit"
+                imageFit="fill"
                 button={
                     <ButtonPrimary small href="https://google.com">
                         Action
@@ -122,7 +128,7 @@ export const CustomCardSize: StoryComponent = () => {
                 title="Title 3"
                 description="Some description here. Some description here."
                 imageUrl={personPortraitImg}
-                imageFit="fit"
+                imageFit="fill"
                 button={
                     <ButtonPrimary small href="https://google.com">
                         Action
@@ -139,7 +145,7 @@ export const CustomCardSize: StoryComponent = () => {
                 title="Title 4"
                 description="Some description here. Some description here. Some description here. "
                 imageUrl={personPortraitImg}
-                imageFit="fit"
+                imageFit="fill"
             />
         </div>
     );
@@ -153,7 +159,10 @@ const CardWrapper = ({children}: {children: React.ReactNode}) => (
 
 export const CustomCardSizeInsideWrapper: StoryComponent = () => {
     return (
-        <div style={{display: 'flex', background: '#eee'}} data-testid="highlighted-card">
+        <div
+            style={{display: 'flex', background: skinVars.colors.backgroundSkeleton}}
+            data-testid="highlighted-card"
+        >
             <CardWrapper>
                 <HighlightedCard title="Title1" description="Simple" />
             </CardWrapper>

@@ -20,6 +20,7 @@ import type {TagType} from '..';
 
 export default {
     title: 'Components/Cards/Media card',
+    parameters: {fullScreen: false},
 };
 
 const VIDEO_SRC = confettiVideo;

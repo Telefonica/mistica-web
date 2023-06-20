@@ -25,6 +25,7 @@ import type {TagType} from '..';
 
 export default {
     title: 'Components/Cards/Display media card',
+    parameters: {fullScreen: false},
 };
 
 const BACKGROUND_IMAGE_SRC = usingVrImg;
