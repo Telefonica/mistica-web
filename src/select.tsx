@@ -1,7 +1,7 @@
 import * as React from 'react';
 import classnames from 'classnames';
 import {useForm} from './form-context';
-import {useAriaId, useTheme} from './hooks';
+import {useAriaId, useTheme, useScreenSize} from './hooks';
 import {DOWN, ENTER, ESC, SPACE, TAB, UP} from './utils/key-codes';
 import {FieldContainer, HelperText, Label} from './text-field-components';
 import ChevronDownRegular from './generated/mistica-icons/icon-chevron-down-regular';
@@ -286,6 +286,7 @@ const Select: React.FC<SelectProps> = ({
             }
         },
     };
+    const {isDesktopOrBigger} = useScreenSize();
 
     return shouldUseNative || isServerSide ? (
         <FieldContainer
@@ -385,7 +386,9 @@ const Select: React.FC<SelectProps> = ({
 
                 <div
                     className={styles.selectTextVariants[disabled ? 'disabled' : 'default']}
-                    style={{top: label ? 27 : 17}}
+                    style={{
+                        top: isDesktopOrBigger ? (label ? 28 : 18) : label ? 25 : 16,
+                    }}
                 >
                     {getOptionText(value ?? valueState)}
                 </div>
