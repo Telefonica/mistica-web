@@ -89,7 +89,6 @@ test('buttons can track events', async () => {
 });
 
 test('buttons track default events', async () => {
-    jest.setTimeout(10000);
     const logEventSpy = jest.fn();
 
     render(
