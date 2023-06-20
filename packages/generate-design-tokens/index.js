@@ -47,6 +47,16 @@ const generateSkinSrc = (skinName) => {
     const designTokens = JSON.parse(designTokensFile);
     const skinConstantName = `${skinName.toUpperCase().replace(/-/g, '_')}_SKIN`;
 
+    const textTokens = {};
+    Object.entries(designTokens.text).forEach(([textAttribute, textAttributeConfig]) => {
+        Object.entries(textAttributeConfig).forEach(([textPresetName, {value}]) => {
+            if (!textTokens[textPresetName]) {
+                textTokens[textPresetName] = {};
+            }
+            textTokens[textPresetName][textAttribute] = value;
+        });
+    });
+
     return `
 import {${skinConstantName}} from './constants';
 ${needsApplyAlphaImport ? `import {applyAlpha} from '../utils/color';` : ''}
@@ -80,14 +90,7 @@ export const get${toPascalCase(skinName)}Skin: GetKnownSkin = () => {
                 )
                 .join(',')}
         },
-        textPresets: {
-            ${Object.entries(designTokens.text.weight)
-                .map(
-                    ([textPresetName, textPresetDescription]) =>
-                        `'${textPresetName}': {weight: '${textPresetDescription.value}'}`
-                )
-                .join(',')}
-        },
+        textPresets: ${JSON.stringify(textTokens)},
     };
     return skin;
 };
