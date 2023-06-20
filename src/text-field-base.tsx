@@ -2,7 +2,7 @@ import * as React from 'react';
 import {Label, HelperText, FieldContainer} from './text-field-components';
 import {LABEL_LEFT_POSITION, LABEL_SCALE_MOBILE, LABEL_SCALE_DESKTOP} from './text-field-components.css';
 import {Text3} from './text';
-import {isIos, isRunningAcceptanceTest, isFirefox, isSafari} from './utils/platform';
+import {isRunningAcceptanceTest, isFirefox, isSafari} from './utils/platform';
 import {useAriaId, useTheme, useScreenSize, useIsomorphicLayoutEffect} from './hooks';
 import classNames from 'classnames';
 import {combineRefs} from './utils/common';
@@ -226,10 +226,8 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
 
         /* Workaround to avoid huge bullets on ios devices (-apple-system font related) */
         const fontFamily =
-            rest.type === 'password' &&
-            isIos(theme.platformOverrides) &&
-            !isRunningAcceptanceTest(theme.platformOverrides)
-                ? 'arial'
+            rest.type === 'password' && !isRunningAcceptanceTest(theme.platformOverrides)
+                ? 'Lucida Grande, Arial, sans-serif'
                 : 'inherit';
 
         return (

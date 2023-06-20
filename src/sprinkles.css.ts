@@ -17,7 +17,7 @@ const colorProperties = defineProperties({
     },
 });
 
-const sizes = [0, 2, 4, 8, 12, 16, 24, 32, 40, 48, 56, 64, 72, 80] as const;
+const sizes = [0, 2, 4, 8, 12, 16, 20, 24, 32, 40, 48, 56, 64, 72, 80] as const;
 
 const commonProperties = defineProperties({
     properties: {
