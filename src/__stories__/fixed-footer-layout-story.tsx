@@ -12,7 +12,6 @@ import {
     Inline,
     alert,
 } from '..';
-import {useCheckbox} from './helpers';
 
 export default {
     title: 'Layout/Fixed footer layout',
@@ -31,8 +30,11 @@ const useTextLines = (): [Array<string>, () => void, () => void] => {
     return [textLines, loadMoreText, loadLessText];
 };
 
-export const FooterWithButtonsOnly: StoryComponent = () => {
-    const [isFooterVisible, isFooterVisibleCheckbox] = useCheckbox('isFooterVisible', true);
+type Args = {
+    isFooterVisible: boolean;
+};
+
+export const FooterWithButtonsOnly: StoryComponent<Args> = ({isFooterVisible}) => {
     const [textLines, loadMoreText, loadLessText] = useTextLines();
     return (
         <ButtonFixedFooterLayout
@@ -43,7 +45,6 @@ export const FooterWithButtonsOnly: StoryComponent = () => {
             <ResponsiveLayout>
                 <Box paddingY={16}>
                     <Stack space={16}>
-                        {isFooterVisibleCheckbox}
                         {textLines.map((line, idx) => (
                             <Text2 regular key={idx}>
                                 {line}
@@ -57,10 +58,10 @@ export const FooterWithButtonsOnly: StoryComponent = () => {
 };
 
 FooterWithButtonsOnly.storyName = 'Button fixed footer layout';
+FooterWithButtonsOnly.args = {isFooterVisible: true};
 
-export const MoreComplexFooter: StoryComponent = () => {
+export const MoreComplexFooter: StoryComponent<Args> = ({isFooterVisible}) => {
     const [textLines, loadMoreText] = useTextLines();
-    const [isFooterVisible, isFooterVisibleCheckbox] = useCheckbox('isFooterVisible', true);
     return (
         <FixedFooterLayout
             footer={
@@ -79,7 +80,6 @@ export const MoreComplexFooter: StoryComponent = () => {
         >
             <ResponsiveLayout>
                 <Stack space={16}>
-                    {isFooterVisibleCheckbox}
                     <Text2 regular as="p">
                         When you need a more elaborated thing for your footer (not just buttons), you can use
                         FixedFooterLayout instead of ButtonFixedFooterLayout
@@ -96,6 +96,7 @@ export const MoreComplexFooter: StoryComponent = () => {
 };
 
 MoreComplexFooter.storyName = 'Fixed footer layout';
+MoreComplexFooter.args = {isFooterVisible: true};
 
 export const DialogOverFixedFooter: StoryComponent = () => {
     return (

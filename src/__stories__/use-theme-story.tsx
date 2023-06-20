@@ -3,6 +3,7 @@ import {useTheme, Stack, Text2, skinVars} from '..';
 
 export default {
     title: 'Hooks/useTheme',
+    parameters: {fullScreen: false},
 };
 
 const CodeText = ({children}: {children: React.ReactNode}) => <Text2 medium>{children}</Text2>;

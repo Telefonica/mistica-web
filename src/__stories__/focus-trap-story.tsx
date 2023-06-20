@@ -3,6 +3,7 @@ import {FocusTrap, ButtonPrimary, ButtonSecondary, ButtonLayout, Stack, Text6, T
 
 export default {
     title: 'Utilities/Accesibility/FocusTrap',
+    parameters: {fullScreen: false},
 };
 
 export const Default: StoryComponent = () => {

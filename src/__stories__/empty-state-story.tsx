@@ -5,12 +5,7 @@ import emptyStateImg from './images/empty-state.png';
 
 export default {
     title: 'Patterns/Empty states/EmptyState',
-    argTypes: {
-        asset: {
-            options: ['Icon', 'Image', 'img'],
-            control: {type: 'select'},
-        },
-    },
+    parameters: {fullScreen: false},
 };
 
 type Args = {asset: string};
@@ -56,6 +51,12 @@ export const WithIcon: StoryComponent<Args> = ({asset}) => {
     );
 };
 WithIcon.storyName = 'With icon';
+WithIcon.argTypes = {
+    asset: {
+        options: ['Icon', 'Image', 'img'],
+        control: {type: 'select'},
+    },
+};
 WithIcon.args = {
     asset: 'Icon',
 };

@@ -3,6 +3,7 @@ import {ScreenReaderOnly, Stack, Text6, Text2, skinVars} from '..';
 
 export default {
     title: 'Utilities/Accesibility/ScreenReaderOnly',
+    parameters: {fullScreen: false},
 };
 
 export const Default: StoryComponent = () => {

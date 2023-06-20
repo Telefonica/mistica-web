@@ -20,6 +20,15 @@ import type {Variant} from '../theme-variant-context';
 
 export default {
     title: 'Utilities/ThemeVariant',
+    argTypes: {
+        themeVariant: {
+            options: ['default', 'inverse', 'alternative'],
+            control: {type: 'select'},
+        },
+    },
+    args: {
+        themeVariant: 'default',
+    },
 };
 
 const OtherComponent = (): JSX.Element => {
@@ -42,33 +51,15 @@ type Args = {
 };
 
 export const Default: StoryComponent<Args> = ({themeVariant}) => {
-    const background = {
-        default: 'transparent',
-        inverse: skinVars.colors.backgroundBrand,
-        alternative: skinVars.colors.backgroundAlternative,
-    }[themeVariant];
     return (
-        <div style={{background}}>
-            <ResponsiveLayout>
-                <Box paddingY={24}>
-                    <ThemeVariant variant={themeVariant}>
-                        <OtherComponent />
-                    </ThemeVariant>
-                </Box>
-            </ResponsiveLayout>
-        </div>
+        <ResponsiveLayout variant={themeVariant}>
+            <Box paddingY={24}>
+                <ThemeVariant variant={themeVariant}>
+                    <OtherComponent />
+                </ThemeVariant>
+            </Box>
+        </ResponsiveLayout>
     );
-};
-
-Default.storyName = 'ThemeVariant';
-Default.args = {
-    themeVariant: 'default',
-};
-Default.argTypes = {
-    themeVariant: {
-        options: ['default', 'inverse', 'alternative'],
-        control: {type: 'select'},
-    },
 };
 
 export const ComponentsOverDifferentThemeVariants: StoryComponent<Args> = ({themeVariant}) => {
@@ -122,13 +113,5 @@ export const ComponentsOverDifferentThemeVariants: StoryComponent<Args> = ({them
     );
 };
 
+Default.storyName = 'ThemeVariant';
 ComponentsOverDifferentThemeVariants.storyName = 'Components over different theme variants';
-ComponentsOverDifferentThemeVariants.args = {
-    themeVariant: 'default',
-};
-ComponentsOverDifferentThemeVariants.argTypes = {
-    themeVariant: {
-        options: ['default', 'inverse', 'alternative'],
-        control: {type: 'select'},
-    },
-};

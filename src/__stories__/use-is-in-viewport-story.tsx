@@ -3,6 +3,7 @@ import {useIsInViewport, skinVars, Stack, Text2, Placeholder, Boxed, Box, Text6,
 
 export default {
     title: 'Hooks/useIsInViewport',
+    parameters: {fullScreen: false},
 };
 
 export const UseIsInViewport: StoryComponent = () => {

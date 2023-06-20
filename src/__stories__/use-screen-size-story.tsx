@@ -3,6 +3,7 @@ import {useScreenSize, skinVars, Stack, Text2} from '..';
 
 export default {
     title: 'Hooks/useScreenSize',
+    parameters: {fullScreen: false},
 };
 
 export const UseScreenSize: StoryComponent = () => {

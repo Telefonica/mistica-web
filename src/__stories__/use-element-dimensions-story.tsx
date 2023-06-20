@@ -4,6 +4,7 @@ import {useElementDimensions, Text2, ButtonPrimary} from '..';
 
 export default {
     title: 'Hooks/useElementDimensions',
+    parameters: {fullScreen: false},
 };
 
 const SomeComponent = ({innerRef}: {innerRef?: (node: HTMLElement | null) => void}) => {

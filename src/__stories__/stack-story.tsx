@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Stack, Text2} from '..';
+import {Stack, Text2, skinVars} from '..';
 
 export default {
     title: 'Layout/Stack',
@@ -17,8 +17,8 @@ const Row = ({children}: {children?: any}) => {
         <div
             style={{
                 padding: 16,
-                border: `2px solid gray`,
-                background: 'lightgray',
+                border: `2px solid ${skinVars.colors.border}`,
+                background: skinVars.colors.backgroundSkeleton,
             }}
         >
             <Text2 regular>{children}</Text2>

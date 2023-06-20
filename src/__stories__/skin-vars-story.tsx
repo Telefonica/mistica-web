@@ -4,6 +4,7 @@ import {useIsInverseVariant} from '../theme-variant-context';
 
 export default {
     title: 'Utilities/skinVars',
+    parameters: {fullScreen: false},
 };
 
 const CodeText = ({children}: {children: React.ReactNode}) => <Text2 medium>{children}</Text2>;

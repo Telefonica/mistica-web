@@ -3,6 +3,7 @@ import {useDocumentVisibility, skinVars, Stack, Text2} from '..';
 
 export default {
     title: 'Hooks/useDocumentVisibility',
+    parameters: {fullScreen: false},
 };
 
 export const UseDocumentVisibility: StoryComponent = () => {

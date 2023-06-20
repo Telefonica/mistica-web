@@ -23,6 +23,7 @@ const misticaIcons = ((requireContext) => {
 
 export default {
     title: 'Icons/Catalog',
+    parameters: {fullScreen: false},
 };
 
 export const Catalog = (): JSX.Element => {

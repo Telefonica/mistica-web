@@ -4,6 +4,7 @@ import {ButtonPrimary} from '../button';
 
 export default {
     title: 'Hooks/useModalState',
+    parameters: {fullScreen: false},
 };
 
 export const UseModalState: StoryComponent = () => {

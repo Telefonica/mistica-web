@@ -3,6 +3,7 @@ import {Stack, Touchable, Form, TextField, useForm, ButtonPrimary, Text2} from '
 
 export default {
     title: 'Patterns/Forms/Form with error handler',
+    parameters: {fullScreen: false},
 };
 
 type CardProps = {show: boolean; children: React.ReactNode; onPress: any};

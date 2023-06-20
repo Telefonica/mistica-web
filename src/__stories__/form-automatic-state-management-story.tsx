@@ -25,6 +25,7 @@ import {
 
 export default {
     title: 'Patterns/Forms/Form with automatic state management',
+    parameters: {fullScreen: false},
 };
 
 const fakeApiCall = (data: any): Promise<void> =>

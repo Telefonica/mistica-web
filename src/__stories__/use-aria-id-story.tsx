@@ -3,6 +3,7 @@ import {useAriaId, skinVars, Stack, Text2} from '..';
 
 export default {
     title: 'Hooks/useAriaId',
+    parameters: {fullScreen: false},
 };
 
 export const UseAriaId: StoryComponent = () => {

@@ -3,50 +3,25 @@ import {ButtonPrimary, ButtonSecondary, ButtonLink, Text2, ButtonLayout, Stack} 
 import {Title1} from '../title';
 import {StorySection} from './helpers';
 
+const alignOptions = ['full-width', 'left', 'center', 'right'];
+
 export default {
     title: 'Layout/Button layout',
     component: ButtonLayout,
+    parameters: {fullScreen: false},
+    argTypes: {
+        align: {
+            options: alignOptions,
+            control: {type: 'select'},
+        },
+    },
 };
 
-type Props = {
-    align?: 'center' | 'left' | 'right' | 'full-width';
+type Args = {
+    align: 'center' | 'left' | 'right' | 'full-width';
 };
 
-const Template: React.FC<Props> = ({align = 'full-width'}) => (
-    <StorySection title={`ButtonLayout (align = ${align})`}>
-        <Stack space={16}>
-            <Title1 as="h2">One button</Title1>
-            <ButtonLayout align={align}>
-                <ButtonPrimary fake>Ok</ButtonPrimary>
-            </ButtonLayout>
-
-            <Title1 as="h2">Two buttons</Title1>
-            <ButtonLayout align={align}>
-                <ButtonSecondary fake>Cancel</ButtonSecondary>
-                <ButtonPrimary fake>Ok</ButtonPrimary>
-            </ButtonLayout>
-
-            <Title1 as="h2">Long captions</Title1>
-            <ButtonLayout align={align}>
-                <ButtonSecondary fake>The text in this button is very long</ButtonSecondary>
-                <ButtonPrimary fake>The text in this button is very long</ButtonPrimary>
-            </ButtonLayout>
-
-            <Title1 as="h2">One button with link</Title1>
-            <ButtonLayout align={align} link={<ButtonLink href="#">Text link</ButtonLink>}>
-                <ButtonPrimary fake>Ok</ButtonPrimary>
-            </ButtonLayout>
-
-            <Title1 as="h2">Two buttons with link</Title1>
-            <ButtonLayout align={align} link={<ButtonLink href="#">Text link</ButtonLink>}>
-                <ButtonSecondary fake>Cancel</ButtonSecondary>
-                <ButtonPrimary fake>Ok</ButtonPrimary>
-            </ButtonLayout>
-        </Stack>
-    </StorySection>
-);
-
-export const Default: StoryComponent = () => (
+export const Default: StoryComponent<Args> = ({align}) => (
     <>
         <StorySection title="Limitations">
             <Stack space={16}>
@@ -77,13 +52,40 @@ export const Default: StoryComponent = () => (
                 </Text2>
             </Stack>
         </StorySection>
+
         <Stack space={16}>
-            <Template align="full-width" />
-            <Template align="center" />
-            <Template align="left" />
-            <Template align="right" />
+            <Title1 as="h2">One button</Title1>
+            <ButtonLayout align={align}>
+                <ButtonPrimary fake>Ok</ButtonPrimary>
+            </ButtonLayout>
+
+            <Title1 as="h2">Two buttons</Title1>
+            <ButtonLayout align={align}>
+                <ButtonSecondary fake>Cancel</ButtonSecondary>
+                <ButtonPrimary fake>Ok</ButtonPrimary>
+            </ButtonLayout>
+
+            <Title1 as="h2">Long captions</Title1>
+            <ButtonLayout align={align}>
+                <ButtonSecondary fake>The text in this button is very long</ButtonSecondary>
+                <ButtonPrimary fake>The text in this button is very long</ButtonPrimary>
+            </ButtonLayout>
+
+            <Title1 as="h2">One button with link</Title1>
+            <ButtonLayout align={align} link={<ButtonLink href="#">Text link</ButtonLink>}>
+                <ButtonPrimary fake>Ok</ButtonPrimary>
+            </ButtonLayout>
+
+            <Title1 as="h2">Two buttons with link</Title1>
+            <ButtonLayout align={align} link={<ButtonLink href="#">Text link</ButtonLink>}>
+                <ButtonSecondary fake>Cancel</ButtonSecondary>
+                <ButtonPrimary fake>Ok</ButtonPrimary>
+            </ButtonLayout>
         </Stack>
     </>
 );
 
 Default.storyName = 'Button layout';
+Default.args = {
+    align: 'full-width',
+};

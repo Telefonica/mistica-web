@@ -5,6 +5,7 @@ import {StorySection} from './helpers';
 export default {
     title: 'Utilities/Animations/FadeIn',
     component: FadeIn,
+    parameters: {fullScreen: false},
 };
 
 export const Default: StoryComponent = () => (

@@ -3,6 +3,7 @@ import {Stack, ButtonPrimary, Form, Text2, FixedFooterLayout, Text4, Box} from '
 
 export default {
     title: 'Patterns/Forms/Form with submit button in fixed footer',
+    parameters: {fullScreen: false},
 };
 
 export const Default: StoryComponent = () => {

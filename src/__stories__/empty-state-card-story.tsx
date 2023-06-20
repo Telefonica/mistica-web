@@ -14,6 +14,7 @@ export default {
             control: {type: 'select'},
         },
     },
+    parameters: {fullScreen: false},
 };
 
 type Args = {
