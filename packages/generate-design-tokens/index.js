@@ -90,7 +90,7 @@ export const get${toPascalCase(skinName)}Skin: GetKnownSkin = () => {
                 )
                 .join(',')}
         },
-        textPresets: ${JSON.encode(textTokens)},
+        textPresets: ${JSON.stringify(textTokens)},
     };
     return skin;
 };
