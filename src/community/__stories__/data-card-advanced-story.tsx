@@ -1,14 +1,14 @@
 import * as React from 'react';
-import ResponsiveLayout from '../responsive-layout';
-import Box from '../box';
-import {ButtonLink, ButtonPrimary} from '../button';
-import Tag from '../tag';
-import DataCardAdvanced from '../data-card-advanced';
-import imgExample from './images/avatar.jpg';
-import Image from '../image';
-import StackingGroup from '../stacking-group';
+import ResponsiveLayout from '../../responsive-layout';
+import Box from '../../box';
+import {ButtonLink, ButtonPrimary} from '../../button';
+import Tag from '../../tag';
+import DataCardAdvanced from '../../data-card-advanced';
+import imgExample from '../../__stories__/images/avatar.jpg';
+import Image from '../../image';
+import StackingGroup from '../../stacking-group';
 
-import type {TagType} from '../tag';
+import type {TagType} from '../../tag';
 
 export default {
     title: 'Components/DataCardAdvanced',
