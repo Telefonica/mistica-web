@@ -196,11 +196,63 @@ type LinkComponent = React.ComponentType<{
     children: React.ReactNode;
 }>;
 
-export const AnchorLink: LinkComponent = ({to, innerRef, ...props}) => (
+const AnchorLink: LinkComponent = ({to, innerRef, ...props}) => (
     <a ref={innerRef} href={typeof to === 'string' ? to : to?.pathname} {...props}>
         {props.children}
     </a>
 );
+
+const getReactRouter5Link =
+    (ReactRouterLink: React.ComponentType<any>): LinkComponent =>
+    ({...props}) =>
+        <ReactRouterLink {...props} />;
+
+const getReactRouter6Link =
+    (ReactRouterLink: React.ComponentType<any>): LinkComponent =>
+    ({innerRef, ...props}) =>
+        <ReactRouterLink ref={innerRef} {...props} />;
+
+const getNext12Link =
+    (NextLink: React.ComponentType<any>): LinkComponent =>
+    ({to, innerRef, children, ...props}) =>
+        (
+            <NextLink href={to}>
+                <a ref={innerRef} {...props}>
+                    {children}
+                </a>
+            </NextLink>
+        );
+
+const getNext13Link =
+    (NextLink: React.ComponentType<any>): LinkComponent =>
+    ({to, innerRef, children, ...props}) =>
+        (
+            <NextLink href={to} ref={innerRef} {...props}>
+                {children}
+            </NextLink>
+        );
+
+export const getMisticaLinkComponent = (Link?: ThemeConfig['Link']): LinkComponent => {
+    if (typeof Link === 'function') {
+        return Link;
+    }
+    switch (Link?.type) {
+        case 'ReactRouter5':
+            // webapp, flow-frontend
+            return getReactRouter5Link(Link.Component);
+        case 'ReactRouter6':
+            // nt_core
+            return getReactRouter6Link(Link.Component);
+        case 'Next12':
+            // zeus-web
+            return getNext12Link(Link.Component);
+        case 'Next13':
+            // hello-world-web, global-checkout-webview
+            return getNext13Link(Link.Component);
+        default:
+            return AnchorLink;
+    }
+};
 
 export type ColorScheme = 'dark' | 'light' | 'auto';
 export type EventFormat = 'universal-analytics' | 'google-analytics-4';
@@ -225,7 +277,12 @@ export type ThemeConfig = Readonly<{
         eventFormat?: EventFormat;
     }>;
     dimensions?: Readonly<{headerMobileHeight: number | 'mistica'}>;
-    Link?: LinkComponent;
+    Link?:
+        | LinkComponent
+        | {
+              type: 'ReactRouter5' | 'ReactRouter6' | 'Next12' | 'Next13';
+              Component: React.ComponentType<any>;
+          };
     useHrefDecorator?: () => (href: string) => string;
     useId?: () => string;
     enableTabFocus?: boolean;
