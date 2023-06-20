@@ -11,7 +11,7 @@ import StackingGroup from '../../stacking-group';
 import type {TagType} from '../../tag';
 
 export default {
-    title: 'Components/DataCardAdvanced',
+    title: 'Community/DataCardAdvanced',
 };
 
 type Args = {
