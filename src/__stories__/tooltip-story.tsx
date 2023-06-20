@@ -8,6 +8,7 @@ import IconMastercard from '../icons/icon-mastercard';
 
 export default {
     title: 'Components/Tooltip',
+    parameters: {fullScreen: false},
 };
 
 export const Default: StoryComponent = () => {

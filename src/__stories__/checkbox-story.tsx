@@ -3,6 +3,7 @@ import {Checkbox, Stack, Text3, Inline, Title1} from '..';
 
 export default {
     title: 'Components/Checkbox',
+    parameters: {fullScreen: false},
 };
 
 export const Default: StoryComponent = () => {

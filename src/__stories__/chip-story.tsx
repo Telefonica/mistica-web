@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {
+    Box,
     Checkbox,
     Chip,
     IconLightningFilled,
@@ -7,7 +8,6 @@ import {
     RadioButton,
     RadioGroup,
     ResponsiveLayout,
-    skinVars,
 } from '..';
 import {StorySection} from './helpers';
 
@@ -25,26 +25,16 @@ export default {
 
 type Args = {
     badge: string;
-    inverse: boolean;
+    isInverse: boolean;
 };
 
-export const Default: StoryComponent<Args> = ({badge, inverse}) => {
+export const Default: StoryComponent<Args> = ({badge, isInverse}) => {
     // eslint-disable-next-line no-eval
     const badgeValue = badgeOptions.includes(badge) ? eval(badge) : undefined;
 
     return (
-        <div
-            style={{
-                padding: 16,
-                width: 'fit-content',
-                background: inverse ? skinVars.colors.backgroundBrand : skinVars.colors.background,
-                // prevent line-height from affecting the height of the container;
-                // happens when changing the base font size
-                lineHeight: 0,
-            }}
-            data-testid="chip-story"
-        >
-            <ResponsiveLayout>
+        <ResponsiveLayout data-testid="chip-story" fullWidth isInverse={isInverse}>
+            <Box padding={16}>
                 <StorySection title="Default">
                     <Chip>Chip</Chip>
                 </StorySection>
@@ -139,14 +129,13 @@ export const Default: StoryComponent<Args> = ({badge, inverse}) => {
                         </Inline>
                     </RadioGroup>
                 </StorySection>
-            </ResponsiveLayout>
-        </div>
+            </Box>
+        </ResponsiveLayout>
     );
 };
 
 Default.storyName = 'Chip';
-Default.parameters = {fullScreen: false};
 Default.args = {
     badge: '5',
-    inverse: false,
+    isInverse: false,
 };

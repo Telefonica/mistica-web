@@ -1,106 +1,64 @@
 import * as React from 'react';
 import {
-    Stack,
     Tag,
-    skinVars,
-    Text3,
     IconStarFilled,
     IconTimeFilled,
     IconOfferPercentFilled,
     IconCheckRegular,
     IconCloseRegular,
     IconAlertRegular,
-    Inline,
+    ResponsiveLayout,
+    Stack,
+    Box,
 } from '..';
-import {ThemeVariant} from '../theme-variant-context';
 
-type Args = {
-    label: string;
-};
+import type {IconProps} from '..';
 
 export default {
     title: 'Components/Tag',
 };
 
-const Container = ({children, inverse = false}: {inverse?: boolean; children: React.ReactNode}) => {
-    return (
-        <ThemeVariant isInverse={inverse}>
-            <div
-                style={{
-                    padding: 16,
-                    width: 175,
-                    background: inverse ? skinVars.colors.backgroundBrand : skinVars.colors.background,
-                }}
-            >
-                <Stack space={16}>{children}</Stack>
-            </div>
-        </ThemeVariant>
-    );
+type Args = {
+    label: string;
+    withIcon: boolean;
+    isInverse: boolean;
 };
 
-export const Default: StoryComponent<Args> = ({label: labelFromArgs}) => {
+export const Default: StoryComponent<Args> = ({label: labelFromArgs, withIcon, isInverse}) => {
     const getLabel = (fallback: string) => labelFromArgs || fallback;
+    const getIcon = (icon: (props: IconProps) => JSX.Element) => (withIcon ? icon : undefined);
 
     return (
-        <div data-testid="tags" style={{display: 'inline-flex'}}>
-            <Inline space={48}>
-                <Container>
-                    <Text3 medium>Example</Text3>
-                    <Tag Icon={IconOfferPercentFilled} type="promo" dataAttributes={{qsysid: 'promo'}}>
+        <ResponsiveLayout fullWidth data-testid="tags" isInverse={isInverse}>
+            <Box padding={16}>
+                <Stack space={16}>
+                    <Tag
+                        Icon={getIcon(IconOfferPercentFilled)}
+                        type="promo"
+                        dataAttributes={{qsysid: 'promo'}}
+                    >
                         {getLabel('Promo')}
                     </Tag>
-                    <Tag Icon={IconStarFilled} type="active">
+                    <Tag Icon={getIcon(IconStarFilled)} type="active">
                         {getLabel('Active')}
                     </Tag>
-                    <Tag Icon={IconTimeFilled} type="inactive">
+                    <Tag Icon={getIcon(IconTimeFilled)} type="inactive">
                         {getLabel('Inactive')}
                     </Tag>
-                    <Tag Icon={IconCheckRegular} type="success">
+                    <Tag Icon={getIcon(IconCheckRegular)} type="success">
                         {getLabel('Success')}
                     </Tag>
-                    <Tag Icon={IconAlertRegular} type="warning">
+                    <Tag Icon={getIcon(IconAlertRegular)} type="warning">
                         {getLabel('Warning')}
                     </Tag>
-                    <Tag Icon={IconCloseRegular} type="error">
+                    <Tag Icon={getIcon(IconCloseRegular)} type="error">
                         {getLabel('Error')}
                     </Tag>
-                </Container>
-
-                <Container>
-                    <Text3 medium>Without icon</Text3>
-                    <Tag type="promo">{getLabel('Promo')}</Tag>
-                    <Tag type="active">{getLabel('Active')}</Tag>
-                    <Tag type="inactive">{getLabel('Inactive')}</Tag>
-                    <Tag type="success">{getLabel('Success')}</Tag>
-                    <Tag type="warning">{getLabel('Warning')}</Tag>
-                    <Tag type="error">{getLabel('Error')}</Tag>
-                </Container>
-
-                <Container inverse>
-                    <Text3 medium>Inverse</Text3>
-                    <Tag Icon={IconOfferPercentFilled} type="promo">
-                        {getLabel('Promo')}
-                    </Tag>
-                    <Tag Icon={IconStarFilled} type="active">
-                        {getLabel('Active')}
-                    </Tag>
-                    <Tag Icon={IconTimeFilled} type="inactive">
-                        {getLabel('Inactive')}
-                    </Tag>
-                    <Tag Icon={IconCheckRegular} type="success">
-                        {getLabel('Success')}
-                    </Tag>
-                    <Tag Icon={IconAlertRegular} type="warning">
-                        {getLabel('Warning')}
-                    </Tag>
-                    <Tag Icon={IconCloseRegular} type="error">
-                        {getLabel('Error')}
-                    </Tag>
-                </Container>
-            </Inline>
-        </div>
+                </Stack>
+            </Box>
+        </ResponsiveLayout>
     );
 };
 
 Default.storyName = 'Tag';
-Default.args = {label: ''};
+Default.args = {label: '', withIcon: true, isInverse: false};

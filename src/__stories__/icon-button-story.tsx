@@ -1,21 +1,31 @@
 import * as React from 'react';
 import IconButton from '../icon-button';
 import IcnCloseRegular from '../generated/mistica-icons/icon-close-regular';
-import {StorySection} from './helpers';
 import catIcon from './images/cat-icon.png';
+import {StorySection} from './helpers';
 
 export default {
     title: 'Components/Buttons/Icon button',
+    argTypes: {
+        size: {
+            control: {type: 'range', min: 24, max: 128, step: 4},
+        },
+    },
+    parameters: {fullScreen: false},
 };
 
-export const Default: StoryComponent = () => (
+type Args = {
+    size: number;
+};
+
+export const Default: StoryComponent<Args> = ({size}) => (
     <>
         <StorySection title="Icon Button Image URL">
-            <IconButton onPress={() => {}} icon={catIcon} aria-label="Icon" />
+            <IconButton size={size} onPress={() => {}} icon={catIcon} aria-label="Icon" />
         </StorySection>
 
         <StorySection title="Icon Button SVG component">
-            <IconButton onPress={() => {}} aria-label="Icon">
+            <IconButton size={size} onPress={() => {}} aria-label="Icon">
                 <IcnCloseRegular />
             </IconButton>
         </StorySection>
@@ -23,3 +33,7 @@ export const Default: StoryComponent = () => (
 );
 
 Default.storyName = 'Icon button';
+
+Default.args = {
+    size: 24,
+};

@@ -30,6 +30,7 @@ import {getLocalDateString, getLocalDateTimeString} from '../utils/time';
 
 export default {
     title: 'Components/Input fields',
+    parameters: {fullScreen: false},
 };
 
 type UncontrolledProps = {

@@ -320,3 +320,4 @@ RowListStory.args = defaultArgs;
 export const BoxedRowListStory: StoryComponent<Args> = (args) => <Template boxed {...args} />;
 BoxedRowListStory.storyName = 'Boxed row list';
 BoxedRowListStory.args = defaultArgs;
+BoxedRowListStory.parameters = {fullScreen: false};

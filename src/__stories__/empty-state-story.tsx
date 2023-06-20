@@ -5,9 +5,6 @@ import emptyStateImg from './images/empty-state.png';
 
 export default {
     title: 'Patterns/Empty states/EmptyState',
-    parameters: {
-        fullScreen: true,
-    },
     argTypes: {
         asset: {
             options: ['Icon', 'Image', 'img'],

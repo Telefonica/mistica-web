@@ -3,6 +3,7 @@ import {Stack, Title1, RadioGroup, RadioButton, Inline, Text3, IconHandLeftRegul
 
 export default {
     title: 'Components/Radio Button',
+    parameters: {fullScreen: false},
 };
 
 export const Default: StoryComponent = () => {

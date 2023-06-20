@@ -13,9 +13,6 @@ import avatarImg from './images/avatar.jpg';
 export default {
     title: 'Components/Navigation bars/Main navigation bar',
     component: MainNavigationBar,
-    parameters: {
-        fullScreen: true,
-    },
 };
 
 const sections = ['Start', 'Account', 'Explore', 'Support'];

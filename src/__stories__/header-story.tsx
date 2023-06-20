@@ -9,73 +9,79 @@ import {
     Text1,
     Text2,
 } from '..';
-import {useTextField, useCheckbox} from './helpers';
+
+const extraContentOptions = ['default', 'side', 'undefined'];
 
 export default {
     title: 'Components/Headers/Header',
-    parameters: {
-        fullScreen: true,
-    },
 };
 
-export const Default: StoryComponent = () => {
-    const [pretitle, pretitleTextField] = useTextField('Pretitle', 'Your last bill');
-    const [title, titleTextField] = useTextField('Title', 'December bill is now available');
-    const [description, descriptionTextField] = useTextField('Description', 'This is a description');
-    const [isInverse, inverseCheckbox] = useCheckbox('Inverse', true);
-    const [withExtraContent, extraContentCheckbox] = useCheckbox('With extra content', true);
-    const [extraSideBySide, extraSideBySideCheckbox] = useCheckbox(
-        'Extra content placed on the right in desktop',
-        true
-    );
-    const [withBreadcrumbs, breadcrumbsCheckbox] = useCheckbox('With breadcrumbs (desktop only)', true);
-    const [bleed, bleedCheckbox] = useCheckbox('Bleed', false);
+type Args = {
+    pretitle: string;
+    title: string;
+    description: string;
+    extraContent: string;
+    isInverse: boolean;
+    withBreadcrumbs: boolean;
+    bleed: boolean;
+};
+
+export const Default: StoryComponent<Args> = ({
+    pretitle,
+    title,
+    description,
+    extraContent,
+    isInverse,
+    withBreadcrumbs,
+    bleed,
+}) => {
     return (
-        <Stack space={16}>
-            <div data-testid="header-layout">
-                <HeaderLayout
-                    isInverse={isInverse}
-                    bleed={bleed}
-                    sideBySideExtraOnDesktop={extraSideBySide}
-                    breadcrumbs={
-                        withBreadcrumbs ? (
-                            <NavigationBreadcrumbs
-                                title="Bills"
-                                breadcrumbs={[{title: 'Account', url: '/consumptions'}]}
-                            />
-                        ) : undefined
-                    }
-                    header={<Header pretitle={pretitle} title={title} description={description} />}
-                    extra={withExtraContent ? <Placeholder /> : undefined}
-                />
-            </div>
-            <ResponsiveLayout>
-                <Stack space={16}>
-                    {breadcrumbsCheckbox}
-                    {pretitleTextField}
-                    {titleTextField}
-                    {descriptionTextField}
-                    {bleedCheckbox}
-                    {inverseCheckbox}
-                    {extraContentCheckbox}
-                    {extraSideBySideCheckbox}
-                </Stack>
-            </ResponsiveLayout>
-        </Stack>
+        <div data-testid="header-layout">
+            <HeaderLayout
+                isInverse={isInverse}
+                bleed={bleed}
+                sideBySideExtraOnDesktop={extraContent === 'side'}
+                breadcrumbs={
+                    withBreadcrumbs ? (
+                        <NavigationBreadcrumbs
+                            title="Bills"
+                            breadcrumbs={[{title: 'Account', url: '/consumptions'}]}
+                        />
+                    ) : undefined
+                }
+                header={<Header pretitle={pretitle} title={title} description={description} />}
+                extra={extraContent !== 'undefined' ? <Placeholder /> : undefined}
+            />
+        </div>
     );
 };
 
 Default.storyName = 'Header';
+Default.argTypes = {
+    extraContent: {
+        options: extraContentOptions,
+        control: {type: 'select'},
+    },
+};
+Default.args = {
+    pretitle: 'Your last bill',
+    title: 'December bill is now available',
+    description: 'This is a description',
+    extraContent: 'default',
+    isInverse: true,
+    withBreadcrumbs: true,
+    bleed: false,
+};
+
+type NoHeaderArgs = {
+    extraSideBySide: boolean;
+};
 
 /**
  * The header is optional in order to allow webviews to delegate the header visualization to the surrounding native app.
  * For example, in Novum App, the Start tab's greeting is rendered nativelly in the apps and via web in desktop.
  */
-export const NoHeader: StoryComponent = () => {
-    const [extraSideBySide, extraSideBySideCheckbox] = useCheckbox(
-        'Extra content placed on the right in desktop',
-        true
-    );
+export const NoHeader: StoryComponent<NoHeaderArgs> = ({extraSideBySide}) => {
     return (
         <Stack space={16}>
             <div data-testid="header-layout">
@@ -99,7 +105,6 @@ export const NoHeader: StoryComponent = () => {
                         to the surrounding native app. For example, in Novum App, the Start tab's greeting is
                         rendered nativelly in the apps and via web in desktop.
                     </Text1>
-                    {extraSideBySideCheckbox}
                 </Stack>
             </ResponsiveLayout>
         </Stack>
@@ -107,6 +112,9 @@ export const NoHeader: StoryComponent = () => {
 };
 
 NoHeader.storyName = 'Header layout with no header';
+NoHeader.args = {
+    extraSideBySide: true,
+};
 
 export const RichTexts: StoryComponent = () => {
     const filler = ' - more text'.repeat(20);

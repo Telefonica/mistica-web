@@ -7,9 +7,6 @@ import type {AspectRatio} from '../image';
 
 export default {
     title: 'Components/Hero/Component',
-    parameters: {
-        fullScreen: true,
-    },
 };
 
 type HeroArgs = {

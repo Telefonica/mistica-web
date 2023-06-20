@@ -3,9 +3,6 @@ import {ResponsiveLayout, Box, Title2, Stack, Text2} from '../..';
 
 export default {
     title: 'Community/Welcome',
-    parameters: {
-        fullScreen: true,
-    },
 };
 
 const Paragraph = ({children}: {children: React.ReactNode}) => (

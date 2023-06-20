@@ -4,9 +4,6 @@ import {ThemeVariant, skinVars} from '..';
 
 export default {
     title: 'Components/Skeletons/Skeleton Rectangle',
-    parameters: {
-        fullScreen: true,
-    },
 };
 
 type Args = {

@@ -3,9 +3,6 @@ import ExampleComponent from '../example-component';
 
 export default {
     title: 'Community/ExampleComponent',
-    parameters: {
-        fullScreen: true,
-    },
 };
 
 export const Default: StoryComponent = () => {

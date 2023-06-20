@@ -5,6 +5,7 @@ import {Select, Stack, Title1} from '..';
 export default {
     title: 'Components/Select',
     component: Select,
+    parameters: {fullScreen: false},
 };
 
 const fruitOptions = fruitEntries.map(([text, value]) => ({text, value}));

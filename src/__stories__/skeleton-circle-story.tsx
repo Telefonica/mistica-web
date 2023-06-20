@@ -4,9 +4,6 @@ import {SkeletonCircle} from '../skeletons';
 
 export default {
     title: 'Components/Skeletons/Skeleton Circle',
-    parameters: {
-        fullScreen: true,
-    },
 };
 
 type Args = {

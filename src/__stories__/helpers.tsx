@@ -16,7 +16,8 @@ export const StorySection: React.FC<Props> = ({title, children}) => {
                     color: isInverse ? 'white' : '#888',
                     fontWeight: 'normal',
                     fontSize: 20,
-                    margin: '16px 0px',
+                    marginBottom: '12px',
+                    marginTop: '0px',
                 }}
             >
                 {title}

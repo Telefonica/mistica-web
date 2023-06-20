@@ -21,9 +21,6 @@ import {
 
 export default {
     title: 'Layout/Master detail layout',
-    parameters: {
-        fullScreen: true,
-    },
 };
 
 export const Default: StoryComponent = () => {

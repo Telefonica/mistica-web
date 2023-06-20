@@ -4,9 +4,6 @@ import {Placeholder} from '../placeholder';
 
 export default {
     title: 'Layout/Responsive layout',
-    parameters: {
-        fullScreen: true,
-    },
     argTypes: {
         withBackgroundColor: {
             name: 'backgroundColor={colors.backgroundAlternative}',

@@ -5,9 +5,6 @@ import {ThemeVariant} from '../theme-variant-context';
 export default {
     title: 'Components/Text link',
     component: TextLink,
-    parameters: {
-        fullScreen: true,
-    },
 };
 
 type textLinkArgs = {

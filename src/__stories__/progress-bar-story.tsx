@@ -3,6 +3,7 @@ import {ProgressBar} from '..';
 
 export default {
     title: 'Components/Progress bar',
+    parameters: {fullScreen: false},
 };
 
 type Args = {

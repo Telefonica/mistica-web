@@ -4,9 +4,6 @@ import usingVrImg from './images/using-vr.jpg';
 
 export default {
     title: 'Components/Hero/Slideshow',
-    parameters: {
-        fullScreen: true,
-    },
 };
 
 const HeroComponent = ({idx}: {idx: number}) => {

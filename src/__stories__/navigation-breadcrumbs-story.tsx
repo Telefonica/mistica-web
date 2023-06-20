@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {NavigationBreadcrumbs, ThemeVariant, skinVars} from '..';
+import {Box, NavigationBreadcrumbs, ResponsiveLayout} from '..';
 
 export default {
     title: 'Components/Breadcrumbs',
@@ -11,8 +11,8 @@ type Args = {
 
 export const Default: StoryComponent<Args> = ({inverse}) => {
     return (
-        <ThemeVariant isInverse={inverse}>
-            <div style={{background: inverse ? skinVars.colors.backgroundBrand : skinVars.colors.background}}>
+        <ResponsiveLayout fullWidth isInverse={inverse}>
+            <Box padding={16}>
                 <NavigationBreadcrumbs
                     dataAttributes={{testid: 'story'}}
                     title="Subsection"
@@ -21,8 +21,8 @@ export const Default: StoryComponent<Args> = ({inverse}) => {
                         {title: 'Section', url: 'https://example.org?path=section'},
                     ]}
                 />
-            </div>
-        </ThemeVariant>
+            </Box>
+        </ResponsiveLayout>
     );
 };
 

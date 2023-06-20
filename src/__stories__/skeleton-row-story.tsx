@@ -4,9 +4,6 @@ import {SkeletonRow} from '../skeletons';
 
 export default {
     title: 'Components/Skeletons/Skeleton Row',
-    parameters: {
-        fullScreen: true,
-    },
 };
 
 type Args = {

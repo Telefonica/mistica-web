@@ -11,9 +11,6 @@ import {
 export default {
     title: 'Components/Navigation bars/Navigation bar',
     component: NavigationBar,
-    parameters: {
-        fullScreen: true,
-    },
 };
 
 type Args = {isInverse: boolean; withBorder: boolean};

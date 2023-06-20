@@ -5,6 +5,7 @@ const texts = ['Basic Details', 'Company Details', 'Subscription Plan', 'Payment
 
 export default {
     title: 'Components/Stepper',
+    parameters: {fullScreen: false},
 };
 
 export const Default: StoryComponent = () => {

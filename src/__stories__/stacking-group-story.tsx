@@ -7,9 +7,6 @@ import img from './images/avatar.jpg';
 
 export default {
     title: 'Components/StackingGroup',
-    parameters: {
-        fullScreen: true,
-    },
 };
 
 type Args = {

@@ -4,9 +4,6 @@ import {SkeletonText} from '../skeletons';
 
 export default {
     title: 'Components/Skeletons/Skeleton Text',
-    parameters: {
-        fullScreen: true,
-    },
 };
 
 type Args = {

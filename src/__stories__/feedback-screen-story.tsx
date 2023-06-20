@@ -15,9 +15,6 @@ import {
 
 export default {
     title: 'Patterns/Feedback/FeedbackScreen',
-    parameters: {
-        fullScreen: true,
-    },
     argTypes: {
         imageFit: {
             options: ['fit', 'fill'],

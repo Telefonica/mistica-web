@@ -1,9 +1,9 @@
 import * as React from 'react';
-import {Divider, ThemeVariant, useIsInverseVariant, skinVars} from '..';
-import {StorySection} from './helpers';
+import {Divider, useIsInverseVariant, skinVars, ResponsiveLayout} from '..';
 
 export default {
     title: 'Components/Divider',
+    parameters: {fullScreen: false},
 };
 
 const Container = ({children}: {children: React.ReactNode}) => {
@@ -26,24 +26,22 @@ const Container = ({children}: {children: React.ReactNode}) => {
     );
 };
 
-export const Default: StoryComponent = () => {
-    return (
-        <div data-testid="divider-story">
-            <StorySection title="Divider">
-                <Container>
-                    <Divider />
-                </Container>
-            </StorySection>
+type Args = {
+    isInverse: boolean;
+};
 
-            <StorySection title="Divider inverse">
-                <ThemeVariant isInverse>
-                    <Container>
-                        <Divider />
-                    </Container>
-                </ThemeVariant>
-            </StorySection>
-        </div>
+export const Default: StoryComponent<Args> = ({isInverse}) => {
+    return (
+        <ResponsiveLayout fullWidth data-testid="divider-story" isInverse={isInverse}>
+            <Container>
+                <Divider />
+            </Container>
+        </ResponsiveLayout>
     );
 };
 
 Default.storyName = 'Divider';
+
+Default.args = {
+    isInverse: false,
+};

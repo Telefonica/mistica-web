@@ -4,9 +4,6 @@ import {ButtonPrimary} from '../button';
 
 export default {
     title: 'Patterns/Feedback/InfoFeedbackScreen',
-    parameters: {
-        fullScreen: true,
-    },
 };
 
 export const Info: StoryComponent = () => (

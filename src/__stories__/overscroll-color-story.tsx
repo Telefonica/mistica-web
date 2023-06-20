@@ -3,9 +3,6 @@ import {OverscrollColor, skinVars, Text2, Box} from '..';
 
 export default {
     title: 'Utilities/OverscrollColor',
-    parameters: {
-        fullScreen: true,
-    },
 };
 
 export const Default: StoryComponent = () => {

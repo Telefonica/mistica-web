@@ -10,9 +10,6 @@ export default {
             control: {type: 'select'},
         },
     },
-    parameters: {
-        fullScreen: true,
-    },
 };
 
 const Row = ({children}: {children?: any}) => {

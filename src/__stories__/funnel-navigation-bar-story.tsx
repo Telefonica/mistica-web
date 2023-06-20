@@ -13,9 +13,6 @@ import {vars} from '../skins/skin-contract.css';
 export default {
     title: 'Components/Navigation bars/Funnel navigation bar',
     component: FunnelNavigationBar,
-    parameters: {
-        fullScreen: true,
-    },
 };
 
 type Args = {isInverse: boolean};

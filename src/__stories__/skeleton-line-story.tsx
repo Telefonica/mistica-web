@@ -4,9 +4,6 @@ import {SkeletonLine} from '../skeletons';
 
 export default {
     title: 'Components/Skeletons/Skeleton Line',
-    parameters: {
-        fullScreen: true,
-    },
 };
 
 type Args = {

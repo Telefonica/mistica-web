@@ -9,9 +9,6 @@ import emptyStateImg from './images/empty-state.png';
 
 export default {
     title: 'Patterns/Feedback/SuccessFeedback',
-    parameters: {
-        fullScreen: true,
-    },
     argTypes: {
         imageFit: {
             options: ['fit', 'fill'],

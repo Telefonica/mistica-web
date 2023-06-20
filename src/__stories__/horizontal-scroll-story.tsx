@@ -4,7 +4,6 @@ import {Placeholder} from '../placeholder';
 
 export default {
     title: 'Layout/HorizontalScroll',
-    parameters: {fullScreen: true},
 };
 
 type Args = {

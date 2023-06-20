@@ -5,6 +5,7 @@ import ButtonGroup from '../button-group';
 
 export default {
     title: 'Components/Buttons/Button group',
+    parameters: {fullScreen: false},
 };
 
 const handleOnPress = () => window.alert('pressed!');

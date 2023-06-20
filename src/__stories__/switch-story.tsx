@@ -3,6 +3,7 @@ import {Switch, Stack, Inline, Text3, Title1} from '..';
 
 export default {
     title: 'Components/Switch',
+    parameters: {fullScreen: false},
 };
 
 export const Default: StoryComponent = () => {

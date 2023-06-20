@@ -4,9 +4,6 @@ import {Placeholder} from '../placeholder';
 
 export default {
     title: 'Layout/Grid layout',
-    parameters: {
-        fullScreen: true,
-    },
 };
 
 export const WithoutTemplate: StoryComponent = () => (

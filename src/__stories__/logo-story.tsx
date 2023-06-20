@@ -8,9 +8,6 @@ import {skinVars} from '../index';
 export default {
     title: 'Components/Logo',
     component: Logo,
-    parameters: {
-        fullScreen: true,
-    },
     inverse: false,
 };
 

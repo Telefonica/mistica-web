@@ -5,6 +5,7 @@ import {StorySection} from './helpers';
 export default {
     title: 'Components/Snackbar',
     component: Snackbar,
+    parameters: {fullScreen: false},
 };
 
 type Args = {

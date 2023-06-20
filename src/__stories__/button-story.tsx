@@ -1,5 +1,4 @@
 import * as React from 'react';
-import {StorySection} from './helpers';
 import {
     Box,
     Inline,
@@ -10,88 +9,45 @@ import {
     TextField,
     Stack,
     skinVars,
-    Checkbox,
     Text2,
     IconPhotoCameraRegular,
     ResponsiveLayout,
 } from '..';
-import DoubleField from '../double-field';
 import {Title1} from '../title';
+import {StorySection} from './helpers';
 
 export default {
     title: 'Components/Buttons',
 };
 
-const BackgroundTheme: StoryComponent = ({children}) => {
-    const [isInverse, setIsInverse] = React.useState(false);
-    return (
-        <ResponsiveLayout isInverse={isInverse}>
-            <Box paddingY={24}>
-                <Box padding={8}>
-                    <Checkbox name="inverse" checked={isInverse} onChange={setIsInverse}>
-                        Inverse variant
-                    </Checkbox>
-                </Box>
-
-                {children}
-            </Box>
-        </ResponsiveLayout>
-    );
-};
-
 const handleOnPress = () => window.alert('pressed!');
 
-export const TypeOfButtons: StoryComponent = () => {
-    const [disabled, setDisabled] = React.useState(false);
-    const [showSpinner, setShowSpinner] = React.useState(false);
-    const [small, setSmall] = React.useState(false);
-    const [newTab, setNewTab] = React.useState(false);
-    const [text, setTextInput] = React.useState('Example');
-    const [loadingText, setLoadingText] = React.useState('Loading Text');
+type TypeOfButtonsArgs = {
+    text: string;
+    loadingText: string;
+    isInverse: boolean;
+    disabled: boolean;
+    showSpinner: boolean;
+    small: boolean;
+    newTab: boolean;
+};
+
+export const TypeOfButtons: StoryComponent<TypeOfButtonsArgs> = ({
+    text,
+    loadingText,
+    isInverse,
+    disabled,
+    showSpinner,
+    small,
+    newTab,
+}) => {
     const href = 'https://example.com';
 
     const props = {disabled, showSpinner, small, loadingText};
 
     return (
-        <BackgroundTheme>
-            <Box padding={8}>
-                <Stack space={16}>
-                    <Inline space={32}>
-                        <Checkbox name="Disabled" checked={disabled} onChange={setDisabled}>
-                            Disabled
-                        </Checkbox>
-                        <Checkbox name="ShowSpinner" checked={showSpinner} onChange={setShowSpinner}>
-                            Show Spinner
-                        </Checkbox>
-                    </Inline>
-                    <Inline space={32}>
-                        <Checkbox name="Small" checked={small} onChange={setSmall}>
-                            Small
-                        </Checkbox>
-                        <Checkbox name="newTab" checked={newTab} onChange={setNewTab}>
-                            newTab
-                        </Checkbox>
-                    </Inline>
-                    <Inline space={16}>
-                        <DoubleField>
-                            <TextField
-                                name="btn-text"
-                                label="Text"
-                                value={text}
-                                onChangeValue={setTextInput}
-                            />
-                            <TextField
-                                name="btn-loading"
-                                label="Loading Text"
-                                value={loadingText}
-                                onChangeValue={setLoadingText}
-                            />
-                        </DoubleField>
-                    </Inline>
-                </Stack>
-            </Box>
-
-            <div data-testid="content">
+        <ResponsiveLayout fullWidth data-testid="content" isInverse={isInverse}>
+            <Box padding={16}>
                 <Stack space={8}>
                     <Title1>ButtonPrimary</Title1>
 
@@ -186,13 +142,16 @@ export const TypeOfButtons: StoryComponent = () => {
                         {text}
                     </ButtonLink>
                 </Stack>
-            </div>
-        </BackgroundTheme>
+            </Box>
+        </ResponsiveLayout>
     );
 };
 
-export const EllipsisInButtons: StoryComponent = () => {
-    const text = 'Ellipsis text example example';
+type EllipsisInButtonsArgs = {
+    text: string;
+};
+
+export const EllipsisInButtons: StoryComponent<EllipsisInButtonsArgs> = ({text}) => {
     const href = 'https://example.com';
 
     return (
@@ -254,112 +213,57 @@ export const withIcon: StoryComponent = () => (
     </StorySection>
 );
 
-export const LoadingState: StoryComponent = () => {
-    const [isLoading, setIsLoading] = React.useState(false);
-    const handlePress = () => {
-        setIsLoading(true);
-        setTimeout(() => {
-            setIsLoading(false);
-        }, 2000);
-    };
+type LoadingStateArgs = {
+    isInverse: boolean;
+    isLoading: boolean;
+    withLoadingText: boolean;
+    small: boolean;
+};
 
-    const handlePressWithPromise = (): Promise<void> => new Promise((resolve) => setTimeout(resolve, 3000));
+export const LoadingState: StoryComponent<LoadingStateArgs> = ({
+    isInverse,
+    isLoading,
+    withLoadingText,
+    small,
+}) => {
+    const handlePress = (): Promise<void> => new Promise((resolve) => setTimeout(resolve, 2000));
+
+    const loadingText = withLoadingText ? 'Sending file' : undefined;
 
     return (
-        <BackgroundTheme>
-            <Box padding={8}>
-                <Checkbox checked={isLoading} onChange={setIsLoading} name="isLoading">
-                    isLoading
-                </Checkbox>
-            </Box>
-            <StorySection title="With loading text">
-                <Inline space={16}>
-                    <ButtonPrimary loadingText="Sending file" showSpinner={isLoading} onPress={handlePress}>
-                        Send
-                    </ButtonPrimary>
-                    <ButtonSecondary loadingText="Sending file" showSpinner={isLoading} onPress={handlePress}>
-                        Send
-                    </ButtonSecondary>
-                    <ButtonDanger loadingText="Sending file" showSpinner={isLoading} onPress={handlePress}>
-                        Send
-                    </ButtonDanger>
-                </Inline>
-            </StorySection>
-            <StorySection title="Without loading text">
-                <Inline space={16}>
-                    <ButtonPrimary showSpinner={isLoading} onPress={handlePress}>
-                        Send
-                    </ButtonPrimary>
-                    <ButtonSecondary showSpinner={isLoading} onPress={handlePress}>
-                        Send
-                    </ButtonSecondary>
-                    <ButtonDanger showSpinner={isLoading} onPress={handlePress}>
-                        Send
-                    </ButtonDanger>
-                </Inline>
-            </StorySection>
-            <StorySection title="Small with loading text">
-                <Inline space={16}>
+        <ResponsiveLayout fullWidth isInverse={isInverse}>
+            <Box padding={16}>
+                <Inline space={16} alignItems="center">
                     <ButtonPrimary
-                        small
-                        loadingText="Sending file"
+                        small={small}
+                        loadingText={loadingText}
                         showSpinner={isLoading}
                         onPress={handlePress}
                     >
                         Send
                     </ButtonPrimary>
                     <ButtonSecondary
-                        small
-                        loadingText="Sending file"
+                        small={small}
+                        loadingText={loadingText}
                         showSpinner={isLoading}
                         onPress={handlePress}
                     >
                         Send
                     </ButtonSecondary>
                     <ButtonDanger
-                        small
-                        loadingText="Sending file"
+                        small={small}
+                        loadingText={loadingText}
                         showSpinner={isLoading}
                         onPress={handlePress}
                     >
                         Send
                     </ButtonDanger>
-                </Inline>
-            </StorySection>
-            <StorySection title="Small without loading text">
-                <Inline space={16}>
-                    <ButtonPrimary small showSpinner={isLoading} onPress={handlePress}>
-                        Send
-                    </ButtonPrimary>
-                    <ButtonSecondary small showSpinner={isLoading} onPress={handlePress}>
-                        Send
-                    </ButtonSecondary>
-                    <ButtonDanger small showSpinner={isLoading} onPress={handlePress}>
-                        Send
-                    </ButtonDanger>
-                </Inline>
-            </StorySection>
-            <StorySection title="ButtonLink with/without loading text">
-                <Inline space={16}>
-                    <ButtonLink loadingText="Sending file" showSpinner={isLoading} onPress={handlePress}>
-                        Send
-                    </ButtonLink>
-                    <ButtonLink showSpinner={isLoading} onPress={handlePress}>
+                    <ButtonLink loadingText={loadingText} showSpinner={isLoading} onPress={handlePress}>
                         Send
                     </ButtonLink>
                 </Inline>
-            </StorySection>
-            <StorySection title="onPress returning a promise">
-                <Inline space={16}>
-                    <ButtonPrimary loadingText="Sending file" onPress={handlePressWithPromise}>
-                        Send
-                    </ButtonPrimary>
-                    <ButtonLink loadingText="Sending file" onPress={handlePressWithPromise}>
-                        Send
-                    </ButtonLink>
-                </Inline>
-            </StorySection>
-        </BackgroundTheme>
+            </Box>
+        </ResponsiveLayout>
     );
 };
 
@@ -385,3 +289,28 @@ EllipsisInButtons.storyName = 'Ellipsis in buttons';
 withIcon.storyName = 'Button with icon';
 LoadingState.storyName = 'Loading state';
 SubmitButton.storyName = 'Submit button';
+
+TypeOfButtons.args = {
+    text: 'Example',
+    loadingText: 'Loading Text',
+    isInverse: false,
+    disabled: false,
+    showSpinner: false,
+    small: false,
+    newTab: false,
+};
+
+EllipsisInButtons.args = {
+    text: 'Ellipsis text example example',
+};
+
+LoadingState.args = {
+    isInverse: false,
+    isLoading: false,
+    small: false,
+    withLoadingText: true,
+};
+
+EllipsisInButtons.parameters = {fullScreen: false};
+withIcon.parameters = {fullScreen: false};
+SubmitButton.parameters = {fullScreen: false};

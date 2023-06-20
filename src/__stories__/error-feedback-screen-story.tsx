@@ -4,9 +4,6 @@ import {ButtonLink, ButtonPrimary} from '../button';
 
 export default {
     title: 'Patterns/Feedback/ErrorFeedbackScreen',
-    parameters: {
-        fullScreen: true,
-    },
 };
 
 export const Error: StoryComponent = () => (

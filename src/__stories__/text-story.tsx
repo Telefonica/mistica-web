@@ -1,10 +1,11 @@
 import * as React from 'react';
-import {Text10, Text9, Text8, Text7, Text6, Text5, Text4, Text3, Text2, Text1, Stack, Title1} from '..';
+import {Text10, Text9, Text8, Text7, Text6, Text5, Text4, Text3, Text2, Text1, Stack} from '..';
 import {isSafari} from '../utils/platform';
 
 export default {
     title: 'Components/Text',
     component: Text,
+    parameters: {fullScreen: false},
 };
 
 export const TextComponents: StoryComponent = () => (
@@ -45,6 +46,8 @@ export const TextComponents: StoryComponent = () => (
 
 TextComponents.storyName = 'Text components';
 
+const typeOptions = ['wordbreak', 'no wordbreak', 'truncate = 1', 'truncate = 3'];
+
 const Wrapper = ({children}: any) => (
     <div
         style={{
@@ -58,42 +61,33 @@ const Wrapper = ({children}: any) => (
         {children}
     </div>
 );
-export const TextWrapping: StoryComponent = () => {
+
+type TextWrappingArgs = {
+    type: string;
+};
+
+export const TextWrapping: StoryComponent<TextWrappingArgs> = ({type}) => {
     return (
-        <Stack space={16} dataAttributes={{testid: 'text'}}>
-            <Wrapper>
-                <Title1>Default (with workBreak)</Title1>
-                <Text2 regular>
-                    Strawberry Friendship Everything Pneumonoultramicroscopicsilicovolcanoconiosis Appreciate
-                    Motivation
-                </Text2>
-            </Wrapper>
-
-            <Wrapper>
-                <Title1>Without wordBreak</Title1>
-                <Text2 regular wordBreak={false}>
-                    Strawberry Friendship Everything Pneumonoultramicroscopicsilicovolcanoconiosis Appreciate
-                    Motivation
-                </Text2>
-            </Wrapper>
-
-            <Wrapper>
-                <Title1>truncate=1</Title1>
-                <Text2 regular truncate>
-                    Strawberry Friendship Everything Pneumonoultramicroscopicsilicovolcanoconiosis Appreciate
-                    Motivation
-                </Text2>
-            </Wrapper>
-
-            <Wrapper>
-                <Title1>truncate=3</Title1>
-                <Text2 regular truncate={3}>
-                    Strawberry Friendship Everything Pneumonoultramicroscopicsilicovolcanoconiosis Appreciate
-                    Motivation
-                </Text2>
-            </Wrapper>
-        </Stack>
+        <Wrapper dataAttributes={{testid: 'text'}}>
+            <Text2
+                regular
+                wordBreak={type !== 'no wordbreak'}
+                truncate={type === 'truncate = 1' ? 1 : type === 'truncate = 3' ? 3 : undefined}
+            >
+                Strawberry Friendship Everything Pneumonoultramicroscopicsilicovolcanoconiosis Appreciate
+                Motivation
+            </Text2>
+        </Wrapper>
     );
 };
 
 TextWrapping.storyName = 'Text wrapping';
+TextWrapping.argTypes = {
+    type: {
+        options: typeOptions,
+        control: {type: 'select'},
+    },
+};
+TextWrapping.args = {
+    type: 'wordbreak',
+};

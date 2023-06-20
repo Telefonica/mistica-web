@@ -4,15 +4,8 @@ import {Touchable, Menu, Stack, Inline, Text3, Box, Checkbox, IconKebabMenuLight
 export default {
     title: 'Components/Menu',
     component: Menu,
-    argTypes: {
-        horizontalPosition: {
-            options: ['right', 'left'],
-            control: {type: 'select'},
-        },
-        verticalPosition: {
-            options: ['top', 'bottom'],
-            control: {type: 'select'},
-        },
+    parameters: {
+        fullScreen: false,
     },
 };
 
@@ -109,6 +102,16 @@ export const Default: StoryComponent<MenuArgs> = ({
 };
 
 Default.storyName = 'Menu';
+Default.argTypes = {
+    horizontalPosition: {
+        options: ['right', 'left'],
+        control: {type: 'select'},
+    },
+    verticalPosition: {
+        options: ['top', 'bottom'],
+        control: {type: 'select'},
+    },
+};
 Default.args = {
     menuOptionsCount: 4,
     horizontalPosition: 'right',

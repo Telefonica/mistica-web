@@ -1,18 +1,17 @@
 import * as React from 'react';
 import LoadingBarComponent from '../loading-bar';
-import {StorySection} from './helpers';
+import {Title1} from '../title';
+import Box from '../box';
 
 export default {
     title: 'Components/Loading bar',
-    parameters: {
-        fullScreen: true,
-    },
 };
 
 export const Default: StoryComponent = () => (
-    <StorySection title="LoadingBar">
+    <Box padding={16}>
         <LoadingBarComponent visible />
-    </StorySection>
+        <Title1>Loading Bar</Title1>
+    </Box>
 );
 
 Default.storyName = 'Loading bar';
