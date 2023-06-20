@@ -33,7 +33,7 @@ export const Default: StoryComponent<Args> = ({badge, isInverse}) => {
     const badgeValue = badgeOptions.includes(badge) ? eval(badge) : undefined;
 
     return (
-        <ResponsiveLayout data-testid="chip-story" fullWidth isInverse={isInverse}>
+        <ResponsiveLayout dataAttributes={{testid: 'chip-story'}} fullWidth isInverse={isInverse}>
             <Box padding={16}>
                 <StorySection title="Default">
                     <Chip>Chip</Chip>

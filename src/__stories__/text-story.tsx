@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {Text10, Text9, Text8, Text7, Text6, Text5, Text4, Text3, Text2, Text1, Stack} from '..';
 import {isSafari} from '../utils/platform';
+import {getPrefixedDataAttributes} from '../utils/dom';
 
 export default {
     title: 'Components/Text',
@@ -48,7 +49,7 @@ TextComponents.storyName = 'Text components';
 
 const typeOptions = ['wordbreak', 'no wordbreak', 'truncate = 1', 'truncate = 3'];
 
-const Wrapper = ({children}: any) => (
+const Wrapper = ({children, dataAttributes}: any) => (
     <div
         style={{
             padding: 8,
@@ -57,6 +58,7 @@ const Wrapper = ({children}: any) => (
             width: isSafari() ? 155 : 200,
             border: '1px solid lightgray',
         }}
+        {...getPrefixedDataAttributes(dataAttributes)}
     >
         {children}
     </div>

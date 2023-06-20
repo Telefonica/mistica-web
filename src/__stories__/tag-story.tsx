@@ -29,7 +29,7 @@ export const Default: StoryComponent<Args> = ({label: labelFromArgs, withIcon, i
     const getIcon = (icon: (props: IconProps) => JSX.Element) => (withIcon ? icon : undefined);
 
     return (
-        <ResponsiveLayout fullWidth data-testid="tags" isInverse={isInverse}>
+        <ResponsiveLayout fullWidth dataAttributes={{testid: 'tags'}} isInverse={isInverse}>
             <Box padding={16}>
                 <Stack space={16}>
                     <Tag

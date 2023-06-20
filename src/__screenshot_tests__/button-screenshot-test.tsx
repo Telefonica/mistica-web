@@ -17,39 +17,45 @@ test.each(DEVICES)('Buttons - normal (%s)', async (device) => {
 });
 
 test.each(DEVICES)('Buttons - disabled (%s)', async (device) => {
-    const page = await openStoryPage({
+    await openStoryPage({
         id: 'components-buttons--type-of-buttons',
         device,
+        args: {
+            disabled: true,
+        },
     });
 
     const story = await screen.findByTestId('content');
-    await page.click(await screen.findByLabelText('Disabled'));
 
     const image = await story.screenshot();
     expect(image).toMatchImageSnapshot();
 });
 
 test.each(DEVICES)('Buttons - spinner (%s)', async (device) => {
-    const page = await openStoryPage({
+    await openStoryPage({
         id: 'components-buttons--type-of-buttons',
         device,
+        args: {
+            showSpinner: true,
+        },
     });
 
     const story = await screen.findByTestId('content');
-    await page.click(await screen.findByLabelText('Show Spinner'));
 
     const image = await story.screenshot();
     expect(image).toMatchImageSnapshot();
 });
 
 test.each(DEVICES)('Buttons - small (%s)', async (device) => {
-    const page = await openStoryPage({
+    await openStoryPage({
         id: 'components-buttons--type-of-buttons',
         device,
+        args: {
+            small: true,
+        },
     });
 
     const story = await screen.findByTestId('content');
-    await page.click(await screen.findByLabelText('Small'));
 
     const image = await story.screenshot();
     expect(image).toMatchImageSnapshot();

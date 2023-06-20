@@ -32,7 +32,7 @@ type Args = {
 
 export const Default: StoryComponent<Args> = ({isInverse}) => {
     return (
-        <ResponsiveLayout fullWidth data-testid="divider-story" isInverse={isInverse}>
+        <ResponsiveLayout fullWidth dataAttributes={{testid: 'divider-story'}} isInverse={isInverse}>
             <Container>
                 <Divider />
             </Container>

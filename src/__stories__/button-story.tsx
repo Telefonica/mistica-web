@@ -46,7 +46,7 @@ export const TypeOfButtons: StoryComponent<TypeOfButtonsArgs> = ({
     const props = {disabled, showSpinner, small, loadingText};
 
     return (
-        <ResponsiveLayout fullWidth data-testid="content" isInverse={isInverse}>
+        <ResponsiveLayout fullWidth dataAttributes={{testid: 'content'}} isInverse={isInverse}>
             <Box padding={16}>
                 <Stack space={8}>
                     <Title1>ButtonPrimary</Title1>
