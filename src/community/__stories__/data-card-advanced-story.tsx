@@ -21,9 +21,11 @@ type Args = {
     title: string;
     subtitle: string;
     description: string;
+    stackingGroup: boolean;
+    footerImage: boolean;
     footerText: string;
-    actions: string;
-    bottomActions: string;
+    Actions: string;
+    onClose: boolean;
 };
 
 export const Default: StoryComponent<Args> = ({
@@ -33,11 +35,13 @@ export const Default: StoryComponent<Args> = ({
     title,
     subtitle,
     description,
+    stackingGroup,
+    footerImage,
     footerText,
-    actions,
-    bottomActions,
+    Actions,
+    onClose,
 }) => {
-    const button = bottomActions.includes('button') ? (
+    const button = Actions.includes('button') ? (
         <ButtonPrimary
             small
             onPress={() => {
@@ -48,7 +52,7 @@ export const Default: StoryComponent<Args> = ({
         </ButtonPrimary>
     ) : undefined;
 
-    const buttonLink = bottomActions.includes('link') ? (
+    const buttonLink = Actions.includes('link') ? (
         <ButtonLink
             onPress={() => {
                 window.alert('close!');
@@ -58,21 +62,7 @@ export const Default: StoryComponent<Args> = ({
         </ButtonLink>
     ) : undefined;
 
-    const footerImage = bottomActions.includes('footerImage') ? (
-        <Image height={40} src={imgExample} />
-    ) : undefined;
-
-    const stackingGroup = actions.includes('stackingGroup') ? (
-        <StackingGroup maxItems={4} moreItemsStyle={{type: 'square', size: 40}}>
-            <Image height={40} src={imgExample} />
-            <Image height={40} src={imgExample} />
-            <Image height={40} src={imgExample} />
-            <Image height={40} src={imgExample} />
-            <Image height={40} src={imgExample} />
-        </StackingGroup>
-    ) : undefined;
-
-    const onClose = actions.includes('onClose')
+    const onPress = Actions.includes('onPress')
         ? () => {
               window.alert('closed!');
           }
@@ -83,7 +73,17 @@ export const Default: StoryComponent<Args> = ({
             <Box paddingY={24} dataAttributes={{testid: 'data-card-advanced'}}>
                 <DataCardAdvanced
                     smallSlotSpace
-                    stackingGroup={stackingGroup}
+                    stackingGroup={
+                        stackingGroup ? (
+                            <StackingGroup maxItems={4} moreItemsStyle={{type: 'square', size: 40}}>
+                                <Image height={40} src={imgExample} />
+                                <Image height={40} src={imgExample} />
+                                <Image height={40} src={imgExample} />
+                                <Image height={40} src={imgExample} />
+                                <Image height={40} src={imgExample} />
+                            </StackingGroup>
+                        ) : undefined
+                    }
                     headline={headline ? <Tag type={headlineType}>{headline}</Tag> : ''}
                     pretitle={pretitle}
                     title={title}
@@ -92,10 +92,10 @@ export const Default: StoryComponent<Args> = ({
                     aria-label="aria label"
                     button={button}
                     buttonLink={buttonLink}
-                    footerImage={footerImage}
+                    footerImage={footerImage ? <Image height={40} src={imgExample} /> : undefined}
                     footerText={footerText}
-                    onClose={onClose}
-                    onPress={() => window.alert('press!')}
+                    onClose={onClose ? () => window.alert('closed!') : undefined}
+                    onPress={onPress}
                 />
             </Box>
         </ResponsiveLayout>
@@ -110,30 +110,19 @@ Default.args = {
     title: 'title',
     subtitle: 'subtitle',
     description: 'description',
+    stackingGroup: true,
+    footerImage: false,
     footerText: '',
-    actions: 'stackingGroup',
-    bottomActions: 'button and link',
+    Actions: 'button and link',
+    onClose: true,
 };
 Default.argTypes = {
     headlineType: {
         options: ['promo', 'active', 'inactive', 'success', 'warning', 'error'],
         control: {type: 'select'},
     },
-    actions: {
-        options: ['none', 'stackingGroup', 'onClose', 'stackingGroup and onClose'],
-        control: {type: 'select'},
-    },
-    bottomActions: {
-        options: [
-            'none',
-            'button',
-            'link',
-            'button and link',
-            'footerImage',
-            'button and footerImage',
-            'link and footerImage',
-            'button link and footerImage',
-        ],
+    Actions: {
+        options: ['none', 'button', 'link', 'button and link', 'onPress'],
         control: {type: 'select'},
     },
 };

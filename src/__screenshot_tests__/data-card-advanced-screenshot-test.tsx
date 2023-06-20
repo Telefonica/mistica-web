@@ -1,20 +1,20 @@
 import {openStoryPage, screen} from '../test-utils';
 
 test.each`
-    bottomActions
-    ${'none'}
-    ${'button'}
-    ${'link'}
-    ${'button and link'}
-    ${'footerImage'}
-    ${'button and footerImage'}
-    ${'link and footerImage'}
-    ${'button link and footerImage'}
-`('Data Card Advanced', async ({bottomActions}) => {
+    Actions              | footerImage
+    ${'none'}            | ${false}
+    ${'button'}          | ${false}
+    ${'link'}            | ${false}
+    ${'button and link'} | ${false}
+    ${'none'}            | ${true}
+    ${'button'}          | ${true}
+    ${'link'}            | ${true}
+    ${'button and link'} | ${true}
+`('Data Card Advanced', async ({Actions, footerImage}) => {
     await openStoryPage({
         id: 'community-datacardadvanced--default',
         device: 'MOBILE_IOS',
-        args: {bottomActions},
+        args: {Actions, footerImage},
     });
 
     const element = await screen.findByTestId('data-card-advanced');
