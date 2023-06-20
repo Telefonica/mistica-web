@@ -2,7 +2,7 @@ import * as React from 'react';
 import {Tooltip, Text2, Text1, Stack, skinVars, Placeholder} from '..';
 import {StorySection} from './helpers';
 import IconCloseRegular from '../generated/mistica-icons/icon-close-regular';
-import IcnInfo from '../icons/icon-info-cvv';
+import IconInformationRegular from '../generated/mistica-icons/icon-information-regular';
 import IconVisa from '../icons/icon-visa';
 import IconMastercard from '../icons/icon-mastercard';
 
@@ -92,6 +92,7 @@ export const Default: StoryComponent = () => {
                         justifyContent: 'space-around',
                         paddingTop: 20,
                         borderTop: `1px solid ${skinVars.colors.border}`,
+                        alignItems: 'center',
                     }}
                 >
                     <Tooltip
@@ -103,7 +104,7 @@ export const Default: StoryComponent = () => {
                     />
                     <Tooltip
                         targetLabel="help text"
-                        target={<IcnInfo />}
+                        target={<IconInformationRegular size={16} />}
                         position="right"
                         description={description}
                         width={100}

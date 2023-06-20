@@ -127,7 +127,6 @@ export const selectVariants = styleVariants({
 const selectTextBase = style([
     sprinkles({
         position: 'absolute',
-        overflow: 'hidden',
         maxWidth: '100%',
         color: skinVars.colors.textPrimary,
     }),
@@ -135,8 +134,13 @@ const selectTextBase = style([
         pointerEvents: 'none',
         left: 12 + 1, // 12 for select paddingLeft and +1 for border
         right: 48 + 1, // 48 for icon and +1 for border
-        lineHeight: '20px',
+        lineHeight: '24px',
         fontSize: 16,
+        '@media': {
+            [mq.desktopOrBigger]: {
+                fontSize: 18,
+            },
+        },
         textOverflow: 'ellipsis',
         whiteSpace: 'nowrap',
     },
