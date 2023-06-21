@@ -236,7 +236,10 @@ export const getMisticaLinkComponent = (Link?: ThemeConfig['Link']): LinkCompone
     if (typeof Link === 'function') {
         return Link;
     }
-    switch (Link?.type) {
+    if (!Link) {
+        return AnchorLink;
+    }
+    switch (Link.type) {
         case 'ReactRouter5':
             // webapp, flow-frontend
             return getReactRouter5Link(Link.Component);
@@ -250,7 +253,8 @@ export const getMisticaLinkComponent = (Link?: ThemeConfig['Link']): LinkCompone
             // hello-world-web, global-checkout-webview
             return getNext13Link(Link.Component);
         default:
-            return AnchorLink;
+            const exhaustiveCheck: never = Link.type;
+            throw new Error(`Invalid Link type: ${exhaustiveCheck}`);
     }
 };
 
