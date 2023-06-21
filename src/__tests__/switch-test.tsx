@@ -114,3 +114,18 @@ test('form uncontrolled mode', async () => {
     await userEvent.click(screen.getByRole('button'));
     await waitFor(() => expect(handleSubmitSpy).toHaveBeenCalledWith({switch: true}, {switch: true}));
 });
+
+test('Switch onClick event is not propagated', async () => {
+    const onPressHandler = jest.fn();
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <button onClick={onPressHandler}>
+                <Switch name="switch" defaultChecked={false} />
+            </button>
+        </ThemeContextProvider>
+    );
+
+    await userEvent.click(screen.getByRole('switch'));
+
+    await waitFor(() => expect(onPressHandler).toHaveBeenCalledTimes(0));
+});

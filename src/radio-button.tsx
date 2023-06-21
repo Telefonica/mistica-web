@@ -66,7 +66,7 @@ const RadioButton: React.FC<PropsRender | PropsChildren> = ({
     const tabIndex = focusableValue === value ? 0 : -1;
     const {isIos} = useTheme();
 
-    const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    const handleKeyDown = (event: React.KeyboardEvent) => {
         switch (event.keyCode) {
             case SPACE:
                 select(value);
@@ -117,7 +117,13 @@ const RadioButton: React.FC<PropsRender | PropsChildren> = ({
             aria-checked={checked}
             aria-disabled={disabled}
             aria-labelledby={labelId}
-            onClick={disabled ? undefined : () => select(value)}
+            onClick={(e) => {
+                if (!disabled) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    select(value);
+                }
+            }}
             onKeyDown={disabled ? undefined : handleKeyDown}
             className={styles.radioButton}
             {...getPrefixedDataAttributes(dataAttributes, 'RadioButton')}

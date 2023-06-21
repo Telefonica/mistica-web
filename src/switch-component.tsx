@@ -122,7 +122,13 @@ const Switch: React.FC<PropsRender | PropsChildren> = (props) => {
         <span
             role="switch"
             aria-checked={value ?? checkedState}
-            onClick={disabled ? undefined : handleChange}
+            onClick={(e) => {
+                if (!disabled) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    handleChange();
+                }
+            }}
             onKeyDown={disabled ? undefined : handleKeyDown}
             tabIndex={disabled ? undefined : 0}
             ref={focusableRef}
