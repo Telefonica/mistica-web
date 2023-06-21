@@ -7,7 +7,7 @@ import Divider from './divider';
 import NegativeBox from './negative-box';
 import Text, {Text2} from './text';
 import Tag from './tag';
-import {useTheme} from './hooks';
+import {useScreenSize, useTheme} from './hooks';
 import {vars} from './skins/skin-contract.css';
 import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
 import IconButton from './icon-button';
@@ -215,15 +215,22 @@ const CardFooter: React.FC<CardFooterProps> = ({
     footerTextLinesMax,
     buttonLink,
 }) => {
+    const {isMobile, isTabletOrBigger} = useScreenSize();
+
     const hasButton = !!button;
     const hasFooterImage = !!footerImage;
     const hasFooterText = !!footerText;
     const hasButtonLink = !!buttonLink;
     const hasAllItens = hasButton && (hasFooterImage || hasFooterText) && hasButtonLink;
 
-    const flexDirection = hasAllItens ? 'column' : 'row';
-    const alignItems = hasAllItens ? 'start' : 'center';
+    const footerCondition = hasAllItens && isMobile;
+
+    const flexDirection = footerCondition ? 'column' : 'row';
+    const marginRight = footerCondition ? '' : 'auto';
+    const alignItems = footerCondition ? 'start' : 'center';
     const marginTop = hasAllItens ? '8px' : '16px';
+    const marginTopTabletOrBigger = isTabletOrBigger ? '8px' : '';
+    const marginTopButton = isMobile ? '16px' : '8px';
     const maxWidth = hasButtonLink && !hasAllItens ? '178px' : '';
 
     return (
@@ -232,7 +239,10 @@ const CardFooter: React.FC<CardFooterProps> = ({
                 <Divider />
             </NegativeBox>
 
-            <div className={styles.actions} style={{flexDirection, alignItems}}>
+            <div
+                className={styles.actions}
+                style={{flexDirection, alignItems, marginTop: marginTopTabletOrBigger}}
+            >
                 {hasButton && (
                     <div
                         role="button"
@@ -241,12 +251,25 @@ const CardFooter: React.FC<CardFooterProps> = ({
                         className={sprinkles({
                             display: 'flex',
                         })}
-                        style={{marginTop: '16px', marginRight: '16px', position: 'relative', zIndex: '2'}}
+                        style={{
+                            marginTop: marginTopButton,
+                            marginRight: '16px',
+                            position: 'relative',
+                            zIndex: '2',
+                        }}
                     >
                         {button}
                     </div>
                 )}
-                <div style={{display: 'flex', flexDirection: 'row', marginTop, flexWrap: 'wrap'}}>
+                <div
+                    style={{
+                        display: 'flex',
+                        flexDirection: 'row',
+                        marginTop,
+                        flexWrap: 'wrap',
+                        marginRight,
+                    }}
+                >
                     {hasFooterImage && (
                         <div
                             style={{marginRight: '16px', zIndex: '0'}}

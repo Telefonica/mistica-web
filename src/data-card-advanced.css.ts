@@ -138,14 +138,8 @@ export const footerText = style([
         display: 'flex',
         flex: '1',
 
-        lineClamp: '2',
-
         alignItems: 'center',
 
         minHeight: '40px',
-        maxHeight: '40px',
-
-        overflowY: 'hidden',
-        overflowWrap: 'break-word',
     },
 ]);
