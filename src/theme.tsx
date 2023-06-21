@@ -202,8 +202,7 @@ const AnchorLink: LinkComponent = ({to, innerRef, ...props}) => (
     </a>
 );
 
-const getReactRouter5Link =
-    (ReactRouterLink: React.ComponentType<any>): LinkComponent => ReactRouterLink
+const getReactRouter5Link = (ReactRouterLink: React.ComponentType<any>): LinkComponent => ReactRouterLink;
 
 const getReactRouter6Link =
     (ReactRouterLink: React.ComponentType<any>): LinkComponent =>
