@@ -299,5 +299,5 @@ test('Radio onClick event is not propagated', async () => {
 
     await userEvent.click(screen.getByRole('radio'));
 
-    await waitFor(() => expect(onPressHandler).toHaveBeenCalledTimes(0));
+    await waitFor(() => expect(onPressHandler).not.toHaveBeenCalled());
 });

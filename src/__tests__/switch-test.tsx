@@ -127,5 +127,5 @@ test('Switch onClick event is not propagated', async () => {
 
     await userEvent.click(screen.getByRole('switch'));
 
-    await waitFor(() => expect(onPressHandler).toHaveBeenCalledTimes(0));
+    await waitFor(() => expect(onPressHandler).not.toHaveBeenCalled());
 });
