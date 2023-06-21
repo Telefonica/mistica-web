@@ -237,7 +237,6 @@ const CardFooter: React.FC<CardFooterProps> = ({
                     <div
                         role="button"
                         tabIndex={-1}
-                        aria-label="Button"
                         onClick={(event) => event.stopPropagation()}
                         className={sprinkles({
                             display: 'flex',
@@ -269,7 +268,6 @@ const CardFooter: React.FC<CardFooterProps> = ({
                     <div
                         role="button"
                         tabIndex={-1}
-                        aria-label="Link"
                         className={sprinkles({
                             display: 'flex',
                         })}
