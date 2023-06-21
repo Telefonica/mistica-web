@@ -244,8 +244,9 @@ const CardFooter: React.FC<CardFooterProps> = ({
                 style={{flexDirection, alignItems, marginTop: marginTopTabletOrBigger}}
             >
                 {hasButton && (
+                    // eslint-disable-next-line jsx-a11y/no-static-element-interactions
                     <div
-                        role='button'
+                        aria-label="button"
                         tabIndex={-1}
                         onClick={(event) => event.stopPropagation()}
                         className={sprinkles({
@@ -288,9 +289,9 @@ const CardFooter: React.FC<CardFooterProps> = ({
                     )}
                 </div>
                 {hasButtonLink && (
+                    // eslint-disable-next-line jsx-a11y/no-static-element-interactions
                     <div
-                        role='button'
-                        aria-label='link'
+                        aria-label="link"
                         tabIndex={-1}
                         className={sprinkles({
                             display: 'flex',
