@@ -13,3 +13,14 @@ test.each(DEVICES)('ButtonGroup (%s)', async (device) => {
     const image = await page.screenshot({fullPage: true});
     expect(image).toMatchImageSnapshot();
 });
+
+test.each(DEVICES)('ButtonGroup - Long text (%s)', async (device) => {
+    const page = await openStoryPage({
+        id: 'components-buttons-button-group--default',
+        device,
+        args: {primaryButtonText: 'A very long action text in this button', showLink: false},
+    });
+
+    const image = await page.screenshot({fullPage: true});
+    expect(image).toMatchImageSnapshot();
+});

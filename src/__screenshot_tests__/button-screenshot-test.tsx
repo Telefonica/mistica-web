@@ -2,12 +2,25 @@ import {openStoryPage, screen} from '../test-utils';
 
 import type {Device} from '../test-utils';
 
+// DISABLED, SPINNER SMALL
+
 const DEVICES: Array<Device> = ['MOBILE_IOS', 'MOBILE_ANDROID'];
+const BUTTONS = ['Primary button', 'Secondary button', 'Danger button', 'Link button'];
 
-test.each(DEVICES)('Buttons - normal (%s)', async (device) => {
+const getCases = () => {
+    const cases = [];
+    for (const device of DEVICES) {
+        for (const button of BUTTONS) {
+            cases.push([button, device]);
+        }
+    }
+    return cases;
+};
+
+test.each(getCases())('Buttons - %s - normal (%s)', async (button, device) => {
     await openStoryPage({
-        id: 'components-buttons--type-of-buttons',
-        device,
+        id: `components-buttons--${button.toLowerCase().replace(' ', '-')}`,
+        device: device as Device,
     });
 
     const story = await screen.findByTestId('content');
@@ -16,40 +29,53 @@ test.each(DEVICES)('Buttons - normal (%s)', async (device) => {
     expect(image).toMatchImageSnapshot();
 });
 
-test.each(DEVICES)('Buttons - disabled (%s)', async (device) => {
-    const page = await openStoryPage({
-        id: 'components-buttons--type-of-buttons',
-        device,
+test.each(getCases())('Buttons - %s - inverse (%s)', async (button, device) => {
+    await openStoryPage({
+        id: `components-buttons--${button.toLowerCase().replace(' ', '-')}`,
+        device: device as Device,
+        args: {isInverse: true},
     });
 
     const story = await screen.findByTestId('content');
-    await page.click(await screen.findByLabelText('Disabled'));
 
     const image = await story.screenshot();
     expect(image).toMatchImageSnapshot();
 });
 
-test.each(DEVICES)('Buttons - spinner (%s)', async (device) => {
-    const page = await openStoryPage({
-        id: 'components-buttons--type-of-buttons',
-        device,
+test.each(getCases())('Buttons - %s - disabled (%s)', async (button, device) => {
+    await openStoryPage({
+        id: `components-buttons--${button.toLowerCase().replace(' ', '-')}`,
+        device: device as Device,
+        args: {disabled: true},
     });
 
     const story = await screen.findByTestId('content');
-    await page.click(await screen.findByLabelText('Show Spinner'));
 
     const image = await story.screenshot();
     expect(image).toMatchImageSnapshot();
 });
 
-test.each(DEVICES)('Buttons - small (%s)', async (device) => {
-    const page = await openStoryPage({
-        id: 'components-buttons--type-of-buttons',
-        device,
+test.each(getCases())('Buttons - %s - spinner (%s)', async (button, device) => {
+    await openStoryPage({
+        id: `components-buttons--${button.toLowerCase().replace(' ', '-')}`,
+        device: device as Device,
+        args: {showSpinner: true},
     });
 
     const story = await screen.findByTestId('content');
-    await page.click(await screen.findByLabelText('Small'));
+
+    const image = await story.screenshot();
+    expect(image).toMatchImageSnapshot();
+});
+
+test.each(getCases())('Buttons - %s - small (%s)', async (button, device) => {
+    await openStoryPage({
+        id: `components-buttons--${button.toLowerCase().replace(' ', '-')}`,
+        device: device as Device,
+        args: {small: true},
+    });
+
+    const story = await screen.findByTestId('content');
 
     const image = await story.screenshot();
     expect(image).toMatchImageSnapshot();
@@ -57,21 +83,12 @@ test.each(DEVICES)('Buttons - small (%s)', async (device) => {
 
 test.each(DEVICES)('Buttons - ellipsis (%s)', async (device) => {
     await openStoryPage({
-        id: 'components-buttons--ellipsis-in-buttons',
+        id: 'private-ellipsis-in-buttons--default',
         device,
     });
 
     const story = await screen.findByTestId('content');
 
     const image = await story.screenshot();
-    expect(image).toMatchImageSnapshot();
-});
-
-test('Buttons with icon', async () => {
-    const page = await openStoryPage({
-        id: 'components-buttons--with-icon',
-    });
-
-    const image = await page.screenshot();
     expect(image).toMatchImageSnapshot();
 });

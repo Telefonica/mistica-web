@@ -1,25 +1,31 @@
 import * as React from 'react';
 import IconButton from '../icon-button';
-import IcnCloseRegular from '../generated/mistica-icons/icon-close-regular';
-import {StorySection} from './helpers';
+import IconCloseRegular from '../generated/mistica-icons/icon-close-regular';
 import catIcon from './images/cat-icon.png';
 
 export default {
     title: 'Components/Buttons/Icon button',
+    argTypes: {
+        type: {
+            options: ['image url', 'svg component'],
+            control: {type: 'select'},
+        },
+    },
 };
 
-export const Default: StoryComponent = () => (
-    <>
-        <StorySection title="Icon Button Image URL">
-            <IconButton onPress={() => {}} icon={catIcon} aria-label="Icon" />
-        </StorySection>
+const handleOnPress = () => window.alert('pressed!');
 
-        <StorySection title="Icon Button SVG component">
-            <IconButton onPress={() => {}} aria-label="Icon">
-                <IcnCloseRegular />
-            </IconButton>
-        </StorySection>
-    </>
+type Args = {
+    type: string;
+};
+
+export const Default: StoryComponent<Args> = ({type}) => (
+    <IconButton onPress={handleOnPress} icon={type === 'image url' ? catIcon : undefined} aria-label="Icon">
+        {type === 'svg component' ? <IconCloseRegular /> : undefined}
+    </IconButton>
 );
 
 Default.storyName = 'Icon button';
+Default.args = {
+    type: 'image url',
+};
