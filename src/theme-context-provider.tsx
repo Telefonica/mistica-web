@@ -3,7 +3,7 @@ import {assignInlineVars} from '@vanilla-extract/dynamic';
 import DialogRoot from './dialog';
 import ScreenSizeContextProvider from './screen-size-context-provider';
 import AriaIdGetterContext from './aria-id-getter-context';
-import {AnchorLink, dimensions, getTexts, NAVBAR_HEIGHT_MOBILE} from './theme';
+import {dimensions, getTexts, getMisticaLinkComponent, NAVBAR_HEIGHT_MOBILE} from './theme';
 import {getPlatform, isInsideNovumNativeApp} from './utils/platform';
 import ThemeContext from './theme-context';
 import {useIsomorphicLayoutEffect} from './hooks';
@@ -111,7 +111,7 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children, as}) => {
                 title1: {...defaultTextPresetsConfig.title1, ...theme.skin.textPresets?.title1},
                 indicator: {...defaultTextPresetsConfig.indicator, ...theme.skin.textPresets?.indicator},
             },
-            Link: theme.Link ?? AnchorLink,
+            Link: getMisticaLinkComponent(theme.Link),
             isDarkMode: isDarkModeEnabled,
             isIos: getPlatform(platformOverrides) === 'ios',
             useHrefDecorator: theme.useHrefDecorator ?? useDefaultHrefDecorator,
