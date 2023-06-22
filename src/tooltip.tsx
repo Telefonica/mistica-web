@@ -100,10 +100,19 @@ type Props = {
     target: React.ReactNode;
     title?: string;
     position?: Position;
+    newPosition?: string;
     width?: number;
     targetLabel: string;
     delay?: boolean;
     dataAttributes?: DataAttributes;
+    justifyContent?:
+        | 'start'
+        | 'end'
+        | 'center'
+        | 'stretch'
+        | 'space-around'
+        | 'space-between'
+        | 'space-evenly';
 };
 
 const Tooltip: React.FC<Props> = ({
@@ -115,6 +124,8 @@ const Tooltip: React.FC<Props> = ({
     targetLabel,
     delay = true,
     dataAttributes,
+    newPosition,
+    justifyContent = 'start',
     ...rest
 }) => {
     const {isDarkMode} = useTheme();
@@ -200,8 +211,8 @@ const Tooltip: React.FC<Props> = ({
             },
             top: {
                 top: window.pageYOffset + targetBoundingClientRect.current.top - distanceToTarget,
-                left: isTabletOrSmaller
-                    ? marginLeftRightMobile
+                left: newPosition
+                    ? newPosition
                     : window.pageXOffset +
                       targetBoundingClientRect.current.left +
                       targetBoundingClientRect.current.width / 2 -
@@ -209,8 +220,8 @@ const Tooltip: React.FC<Props> = ({
             },
             bottom: {
                 top: window.pageYOffset + targetBoundingClientRect.current.bottom + distanceToTarget,
-                left: isTabletOrSmaller
-                    ? marginLeftRightMobile
+                left: newPosition
+                    ? newPosition
                     : window.pageXOffset +
                       targetBoundingClientRect.current.left +
                       targetBoundingClientRect.current.width / 2 -
@@ -231,7 +242,9 @@ const Tooltip: React.FC<Props> = ({
             : {};
 
     const getWidth = () =>
-        isTabletOrSmaller ? window.innerWidth - marginLeftRightMobile * 2 : getWidthDesktop(rest.width);
+        isTabletOrSmaller && !newPosition
+            ? window.innerWidth - marginLeftRightMobile * 2
+            : getWidthDesktop(rest.width);
 
     const width = getWidth();
 
@@ -329,6 +342,7 @@ const Tooltip: React.FC<Props> = ({
                             width,
                             ...getContainerPosition(position, width),
                             ...vars,
+                            justifyContent,
                         }}
                         onPointerOver={() => {
                             if (closeTooltipTimeoutId.current) {
@@ -352,7 +366,7 @@ const Tooltip: React.FC<Props> = ({
                     >
                         <div
                             className={classnames(styles.arrowWrapper, arrowClassNameByPosition[position])}
-                            style={getCustomStylesForMobile()}
+                            // style={getCustomStylesForMobile()}
                         >
                             <div className={styles.arrow} />
                         </div>
