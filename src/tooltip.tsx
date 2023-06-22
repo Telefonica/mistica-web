@@ -18,7 +18,7 @@ const defaultPositionMobile = 'top';
 const arrowSize = 12;
 const distanceToTarget = 4 + arrowSize;
 const marginLeftRightMobile = 16;
-const defaultWidthDesktop = 340;
+const defaultWidthDesktop = 10;
 const transitionDurationMs = 500;
 const animationMovement = 12;
 const defaultShowTooltipDelayMs = 500;
@@ -200,38 +200,44 @@ const Tooltip: React.FC<Props> = ({
             },
             top: {
                 top: window.pageYOffset + targetBoundingClientRect.current.top - distanceToTarget,
-                left: isTabletOrSmaller
-                    ? marginLeftRightMobile
-                    : window.pageXOffset +
-                      targetBoundingClientRect.current.left +
-                      targetBoundingClientRect.current.width / 2 -
-                      width / 2,
+                left:
+                    //  isTabletOrSmaller
+                    //     ? marginLeftRightMobile
+                    //     :
+                    window.pageXOffset +
+                    targetBoundingClientRect.current.left +
+                    targetBoundingClientRect.current.width / 2 -
+                    width / 2,
             },
             bottom: {
                 top: window.pageYOffset + targetBoundingClientRect.current.bottom + distanceToTarget,
-                left: isTabletOrSmaller
-                    ? marginLeftRightMobile
-                    : window.pageXOffset +
-                      targetBoundingClientRect.current.left +
-                      targetBoundingClientRect.current.width / 2 -
-                      width / 2,
+                left:
+                    // isTabletOrSmaller
+                    //     ? marginLeftRightMobile
+                    //     :
+                    window.pageXOffset +
+                    targetBoundingClientRect.current.left +
+                    16 +
+                    targetBoundingClientRect.current.width / 2 -
+                    width / 2,
             },
         };
         return containerPos[position];
     };
 
-    const getCustomStylesForMobile = () =>
-        isTabletOrSmaller
-            ? {
-                  left:
-                      targetBoundingClientRect.current.left +
-                      targetBoundingClientRect.current.width / 2 -
-                      marginLeftRightMobile,
-              }
-            : {};
+    // const getCustomStylesForMobile = () =>
+    //     isTabletOrSmaller
+    //         ? {
+    //               left:
+    //                   targetBoundingClientRect.current.left +
+    //                   targetBoundingClientRect.current.width / 2 -
+    //                   marginLeftRightMobile,
+    //           }
+    //         : {};
 
     const getWidth = () =>
-        isTabletOrSmaller ? window.innerWidth - marginLeftRightMobile * 2 : getWidthDesktop(rest.width);
+        // isTabletOrSmaller ? window.innerWidth - marginLeftRightMobile * 2 :
+        getWidthDesktop(rest.width);
 
     const width = getWidth();
 
@@ -346,13 +352,13 @@ const Tooltip: React.FC<Props> = ({
                                           closeTooltipTimeoutId.current = null;
                                           isPointerOver.current = false;
                                           toggleVisibility();
-                                      }, 100);
+                                      }, 10000000);
                                   }
                         }
                     >
                         <div
                             className={classnames(styles.arrowWrapper, arrowClassNameByPosition[position])}
-                            style={getCustomStylesForMobile()}
+                            // style={getCustomStylesForMobile()}
                         >
                             <div className={styles.arrow} />
                         </div>

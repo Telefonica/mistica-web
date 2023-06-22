@@ -124,6 +124,8 @@ export const container = style([
         zIndex: 50,
         boxShadow: `0 2px 4px 0 rgba(0, 0, 0, ${shadowAlpha})`,
         backgroundColor: skinVars.colors.backgroundContainer,
+        maxWidth: 496,
+        margin: 'auto',
     },
 ]);
 
