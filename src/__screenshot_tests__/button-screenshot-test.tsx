@@ -2,8 +2,6 @@ import {openStoryPage, screen} from '../test-utils';
 
 import type {Device} from '../test-utils';
 
-// DISABLED, SPINNER SMALL
-
 const DEVICES: Array<Device> = ['MOBILE_IOS', 'MOBILE_ANDROID'];
 const BUTTONS = ['Primary button', 'Secondary button', 'Danger button', 'Link button'];
 
