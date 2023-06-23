@@ -110,6 +110,7 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children, as}) => {
                 link: {...defaultTextPresetsConfig.link, ...theme.skin.textPresets?.link},
                 title1: {...defaultTextPresetsConfig.title1, ...theme.skin.textPresets?.title1},
                 indicator: {...defaultTextPresetsConfig.indicator, ...theme.skin.textPresets?.indicator},
+                tabsLabel: {...defaultTextPresetsConfig.tabsLabel, ...theme.skin.textPresets?.tabsLabel},
             },
             Link: getMisticaLinkComponent(theme.Link),
             isDarkMode: isDarkModeEnabled,

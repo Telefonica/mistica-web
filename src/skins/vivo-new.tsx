@@ -282,6 +282,7 @@ export const getVivoNewSkin: GetKnownSkin = () => {
             text8: {weight: 'regular'},
             text9: {weight: 'regular'},
             text10: {weight: 'regular'},
+            tabsLabel: {size: {mobile: 18, desktop: 18}, lineHeight: {mobile: 24, desktop: 24}},
         },
     };
     return skin;
