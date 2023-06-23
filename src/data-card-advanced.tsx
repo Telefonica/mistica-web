@@ -4,7 +4,6 @@ import {sprinkles} from './sprinkles.css';
 import Stack from './stack';
 import * as styles from './data-card-advanced.css';
 import Divider from './divider';
-import NegativeBox from './negative-box';
 import Text, {Text2} from './text';
 import Tag from './tag';
 import {useScreenSize, useTheme} from './hooks';
@@ -235,9 +234,9 @@ const CardFooter: React.FC<CardFooterProps> = ({
 
     return (
         <div>
-            <NegativeBox>
+            <div style={{marginLeft: -24, marginRight: -24}}>
                 <Divider />
-            </NegativeBox>
+            </div>
 
             <div
                 className={styles.actions}
@@ -297,7 +296,7 @@ const CardFooter: React.FC<CardFooterProps> = ({
                             display: 'flex',
                         })}
                         onClick={(event) => event.stopPropagation()}
-                        style={{marginTop, position: 'relative', zIndex: '2', marginLeft: -12}}
+                        style={{marginTop, position: 'relative', zIndex: '2', marginLeft: -12, marginRight: -12}}
                     >
                         {buttonLink}
                     </div>

@@ -1863,7 +1863,7 @@ const dataCardAdvancedSnippets = [
         name: 'Data Advanced Card',
         code: `
           <DataCardAdvanced smallSlotSpace={true} 
-            title="title" subtitle={"subtitle 1"}
+            title="title"
             subtitle="subtitle"
             description="description"
             button={<ButtonPrimary small onPress={() => {}}>Action</ButtonPrimary>}

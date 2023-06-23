@@ -122,7 +122,7 @@ Default.argTypes = {
         control: {type: 'select'},
     },
     Actions: {
-        options: ['none', 'button', 'link', 'button and link', 'onPress'],
+        options: ['none', 'button', 'link', 'button and link', 'onPress', 'button and onPress', 'link and onPress' ,'button link and onPress'],
         control: {type: 'select'},
     },
 };
