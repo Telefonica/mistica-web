@@ -290,6 +290,7 @@ export const getMovistarLegacySkin: GetKnownSkin = (variant) => {
             text8: {weight: 'bold'},
             text9: {weight: 'bold'},
             text10: {weight: 'bold'},
+            tabsLabel: {size: {mobile: 16, desktop: 18}, lineHeight: {mobile: 24, desktop: 24}},
         },
     };
 

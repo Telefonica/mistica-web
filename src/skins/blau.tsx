@@ -284,6 +284,7 @@ export const getBlauSkin: GetKnownSkin = () => {
             text8: {weight: 'light'},
             text9: {weight: 'light'},
             text10: {weight: 'light'},
+            tabsLabel: {size: {mobile: 16, desktop: 18}, lineHeight: {mobile: 24, desktop: 24}},
         },
     };
     return skin;
