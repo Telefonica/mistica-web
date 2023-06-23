@@ -105,7 +105,7 @@ const Checkbox: React.FC<RenderProps | ChildrenProps> = (props) => {
         }
     };
 
-    const handleKeyDown = (event: React.KeyboardEvent) => {
+    const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
         if (event.keyCode === SPACE) {
             event.preventDefault();
             event.stopPropagation();
@@ -124,9 +124,8 @@ const Checkbox: React.FC<RenderProps | ChildrenProps> = (props) => {
             aria-checked={value ?? checkedState}
             onKeyDown={disabled ? undefined : handleKeyDown}
             onClick={(e) => {
+                e.stopPropagation();
                 if (!disabled) {
-                    e.preventDefault();
-                    e.stopPropagation();
                     handleChange();
                 }
             }}

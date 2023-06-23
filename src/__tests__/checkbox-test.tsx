@@ -144,5 +144,5 @@ test('Checkbox onClick event is not propagated', async () => {
 
     await userEvent.click(screen.getByRole('checkbox'));
 
-    await waitFor(() => expect(onPressHandler).not.toHaveBeenCalled());
+    expect(onPressHandler).not.toHaveBeenCalled();
 });

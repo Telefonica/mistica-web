@@ -123,9 +123,8 @@ const Switch: React.FC<PropsRender | PropsChildren> = (props) => {
             role="switch"
             aria-checked={value ?? checkedState}
             onClick={(e) => {
+                e.stopPropagation();
                 if (!disabled) {
-                    e.preventDefault();
-                    e.stopPropagation();
                     handleChange();
                 }
             }}
