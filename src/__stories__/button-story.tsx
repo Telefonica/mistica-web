@@ -25,7 +25,7 @@ export default {
 
 const defaultArgs = {
     text: 'Example',
-    loadingText: 'Loading text',
+    loadingText: '',
     icon: 'none',
     isInverse: false,
     disabled: false,

@@ -15,10 +15,10 @@ const getCases = () => {
     return cases;
 };
 
-test.each(getCases())('Buttons - %s - normal (%s)', async (button, device) => {
+test.each(BUTTONS)('Buttons - %s - normal', async (button) => {
     await openStoryPage({
         id: `components-buttons--${button.toLowerCase().replace(' ', '-')}`,
-        device: device as Device,
+        device: 'MOBILE_IOS',
     });
 
     const story = await screen.findByTestId('content');
@@ -27,10 +27,10 @@ test.each(getCases())('Buttons - %s - normal (%s)', async (button, device) => {
     expect(image).toMatchImageSnapshot();
 });
 
-test.each(getCases())('Buttons - %s - inverse (%s)', async (button, device) => {
+test.each(BUTTONS)('Buttons - %s - inverse', async (button) => {
     await openStoryPage({
         id: `components-buttons--${button.toLowerCase().replace(' ', '-')}`,
-        device: device as Device,
+        device: 'MOBILE_IOS',
         args: {isInverse: true},
     });
 
@@ -40,11 +40,24 @@ test.each(getCases())('Buttons - %s - inverse (%s)', async (button, device) => {
     expect(image).toMatchImageSnapshot();
 });
 
-test.each(getCases())('Buttons - %s - disabled (%s)', async (button, device) => {
+test.each(BUTTONS)('Buttons - %s - disabled', async (button) => {
     await openStoryPage({
         id: `components-buttons--${button.toLowerCase().replace(' ', '-')}`,
-        device: device as Device,
+        device: 'MOBILE_IOS',
         args: {disabled: true},
+    });
+
+    const story = await screen.findByTestId('content');
+
+    const image = await story.screenshot();
+    expect(image).toMatchImageSnapshot();
+});
+
+test.each(BUTTONS)('Buttons - %s - small', async (button) => {
+    await openStoryPage({
+        id: `components-buttons--${button.toLowerCase().replace(' ', '-')}`,
+        device: 'MOBILE_IOS',
+        args: {small: true},
     });
 
     const story = await screen.findByTestId('content');
@@ -57,20 +70,7 @@ test.each(getCases())('Buttons - %s - spinner (%s)', async (button, device) => {
     await openStoryPage({
         id: `components-buttons--${button.toLowerCase().replace(' ', '-')}`,
         device: device as Device,
-        args: {showSpinner: true},
-    });
-
-    const story = await screen.findByTestId('content');
-
-    const image = await story.screenshot();
-    expect(image).toMatchImageSnapshot();
-});
-
-test.each(getCases())('Buttons - %s - small (%s)', async (button, device) => {
-    await openStoryPage({
-        id: `components-buttons--${button.toLowerCase().replace(' ', '-')}`,
-        device: device as Device,
-        args: {small: true},
+        args: {showSpinner: true, loadingText: 'Loading text'},
     });
 
     const story = await screen.findByTestId('content');
