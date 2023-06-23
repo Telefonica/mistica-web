@@ -15,6 +15,8 @@ const controls = [
     'custom element with text',
 ];
 
+const controlsWithOnPress = ['checkbox', 'switch', 'radio'];
+
 const getCases = () => {
     const cases = [];
     for (const device of devices) {
@@ -135,6 +137,23 @@ test.each(devices)('Custom row with text centered', async (device) => {
             description: '',
         },
     });
+
+    const list = await screen.findByTestId('list');
+    const image = await list.screenshot();
+    expect(image).toMatchImageSnapshot();
+});
+
+test.each(controlsWithOnPress)('Click control with onPress - %s', async (control) => {
+    await openStoryPage({
+        id: 'components-lists--row-list-story',
+        device: 'MOBILE_IOS',
+        args: {
+            control: control + ' and onPress',
+        },
+    });
+
+    const elements = await screen.findAllByRole(control);
+    await elements[0].click();
 
     const list = await screen.findByTestId('list');
     const image = await list.screenshot();
