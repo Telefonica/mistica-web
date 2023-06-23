@@ -282,6 +282,7 @@ export const getTelefonicaSkin: GetKnownSkin = () => {
             text8: {weight: 'regular'},
             text9: {weight: 'regular'},
             text10: {weight: 'regular'},
+            tabsLabel: {size: {mobile: 16, desktop: 18}, lineHeight: {mobile: 24, desktop: 24}},
         },
     };
     return skin;

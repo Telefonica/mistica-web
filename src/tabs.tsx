@@ -2,8 +2,8 @@ import * as React from 'react';
 import classnames from 'classnames';
 import {BaseTouchable} from './touchable';
 import ResponsiveLayout from './responsive-layout';
-import {useAriaId, useElementDimensions} from './hooks';
-import {Text3} from './text';
+import {useAriaId, useElementDimensions, useTheme} from './hooks';
+import {Text} from './text';
 import {isRunningAcceptanceTest} from './utils/platform';
 import {getPrefixedDataAttributes} from './utils/dom';
 import * as styles from './tabs.css';
@@ -37,6 +37,7 @@ export type TabsProps = {
 };
 
 const Tabs: React.FC<TabsProps> = ({selectedIndex, onChange, tabs, dataAttributes}: TabsProps) => {
+    const {textPresets} = useTheme();
     const id = useAriaId();
     const {ref} = useElementDimensions();
     const animatedLineRef = React.useRef<HTMLDivElement>(null);
@@ -108,9 +109,18 @@ const Tabs: React.FC<TabsProps> = ({selectedIndex, onChange, tabs, dataAttribute
                                         aria-selected={isSelected ? 'true' : 'false'}
                                     >
                                         {icon && <div className={styles.icon}>{icon}</div>}
-                                        <Text3 medium color="inherit" wordBreak={false} textAlign="center">
+                                        <Text
+                                            desktopSize={textPresets.tabsLabel.size.desktop}
+                                            mobileSize={textPresets.tabsLabel.size.mobile}
+                                            desktopLineHeight={textPresets.tabsLabel.lineHeight.desktop}
+                                            mobileLineHeight={textPresets.tabsLabel.lineHeight.mobile}
+                                            weight="medium"
+                                            color="inherit"
+                                            wordBreak={false}
+                                            textAlign="center"
+                                        >
                                             {text}
-                                        </Text3>
+                                        </Text>
                                     </BaseTouchable>
                                 );
                             })}
