@@ -297,7 +297,7 @@ const CardFooter: React.FC<CardFooterProps> = ({
                         })}
                         onClick={(event) => event.stopPropagation()}
                         style={{
-                            marginTop,
+                            marginTop: marginTopButton,
                             position: 'relative',
                             zIndex: '2',
                             marginLeft: -12,
