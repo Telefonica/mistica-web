@@ -296,7 +296,13 @@ const CardFooter: React.FC<CardFooterProps> = ({
                             display: 'flex',
                         })}
                         onClick={(event) => event.stopPropagation()}
-                        style={{marginTop, position: 'relative', zIndex: '2', marginLeft: -12, marginRight: -12}}
+                        style={{
+                            marginTop,
+                            position: 'relative',
+                            zIndex: '2',
+                            marginLeft: -12,
+                            marginRight: -12,
+                        }}
                     >
                         {buttonLink}
                     </div>
