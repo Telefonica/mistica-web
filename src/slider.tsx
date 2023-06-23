@@ -38,7 +38,6 @@ const Slider: React.FC<SliderProps> = ({
     const [error, setError] = React.useState('');
     const sliderRef = React.useRef<HTMLDivElement>(null);
     const opacity = React.useMemo(() => (disabled ? '0.5' : '1'), [disabled]);
-
     const sliderDisabled = React.useMemo(() => disabled && styles.sliderDisabled, [disabled]);
 
     const setValue = React.useCallback(() => {
@@ -171,36 +170,54 @@ const Slider: React.FC<SliderProps> = ({
 
     return (
         <section className={styles.container} aria-label={arialLabel}>
-            <div ref={sliderRef} style={{opacity}} className={styles.rangeSlider}>
-                <input
-                    disabled={disabled}
-                    className={classnames(styles.sliderVariant[isIos ? 'ios' : 'default'], sliderDisabled)}
-                    type="range"
-                    min={minSlider}
-                    max={maxSlider}
-                    value={valueRanger}
-                    step={step}
-                    onChange={(e) => handleSlider(+e.target.value)}
-                />
+            <div
+                style={{
+                    display: 'inline-block',
+                    width: '100%',
+                }}
+            >
+                <div ref={sliderRef} style={{opacity}} className={styles.rangeSlider}>
+                    <input
+                        disabled={disabled}
+                        className={classnames(
+                            styles.sliderVariant[isIos ? 'ios' : 'default'],
+                            sliderDisabled
+                        )}
+                        type="range"
+                        min={minSlider}
+                        max={maxSlider}
+                        value={valueRanger}
+                        step={step}
+                        onChange={(e) => handleSlider(+e.target.value)}
+                    />
 
-                <div
-                    style={{left: setValue()}}
-                    className={classnames(styles.sliderThumbVariant[isIos ? 'ios' : 'default'])}
-                />
+                    <div
+                        style={{left: setValue()}}
+                        className={classnames(styles.sliderThumbVariant[isIos ? 'ios' : 'default'])}
+                    />
 
-                <div className={styles.progress} style={{width: setValue()}} />
+                    <div className={styles.progress} style={{width: setValue()}} />
+                </div>
             </div>
 
             {field && (
-                <div style={{width: '96px', marginLeft: '16px'}}>
+                <div
+                    style={{
+                        display: 'inline-block',
+
+                        width: '100px',
+                        marginLeft: '16px',
+                    }}
+                >
                     <IntegerField
                         error={!!error}
-                        helperText={error}
                         disabled={disabled}
                         value={fieldValue}
+                        helperText={error}
                         label="Value"
                         name="Value"
                         onChange={(e) => handleField(+e.target.value)}
+                        id="sliderField"
                     />
                 </div>
             )}
