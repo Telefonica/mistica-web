@@ -3,7 +3,6 @@ import {useTheme} from './hooks';
 import * as styles from './slider.css';
 import classnames from 'classnames';
 import IntegerField from './integer-field';
-import Tooltip from './tooltip';
 
 interface SliderProps {
     disabled?: boolean;
@@ -42,21 +41,9 @@ const Slider: React.FC<SliderProps> = ({
 
     const sliderDisabled = React.useMemo(() => disabled && styles.sliderDisabled, [disabled]);
 
-    const tooltipDescription = Array.isArray(steps) ? steps[valueRanger].toString() : valueRanger.toString();
-
     const setValue = React.useCallback(() => {
         const newValue = Number((Math.abs(valueRanger - minSlider) * 100) / (maxSlider - minSlider)),
             newPosition = 10 - newValue * 0.2;
-        return `calc(${newValue}% + (${newPosition}px))`;
-    }, [valueRanger, minSlider, maxSlider]);
-
-    const setNewValue = React.useCallback(() => {
-        if (!sliderRef.current) return;
-        const slider = sliderRef.current.getBoundingClientRect();
-        console.log(sliderRef.current.getBoundingClientRect());
-        const newValue = Number((Math.abs(valueRanger - minSlider) * 100) / (maxSlider - minSlider));
-        const multiplyValue = 0.52;
-        const newPosition = slider.left - 15 - newValue * multiplyValue;
         return `calc(${newValue}% + (${newPosition}px))`;
     }, [valueRanger, minSlider, maxSlider]);
 
@@ -184,38 +171,26 @@ const Slider: React.FC<SliderProps> = ({
 
     return (
         <section className={styles.container} aria-label={arialLabel}>
-            <Tooltip
-                description={tooltipDescription}
-                targetLabel="Slider"
-                position="top"
-                width={50}
-                justifyContent="center"
-                newPosition={setNewValue()}
-                target={
-                    <div ref={sliderRef} style={{opacity}} className={styles.rangeSlider}>
-                        <input
-                            disabled={disabled}
-                            className={classnames(
-                                styles.sliderVariant[isIos ? 'ios' : 'default'],
-                                sliderDisabled
-                            )}
-                            type="range"
-                            min={minSlider}
-                            max={maxSlider}
-                            value={valueRanger}
-                            step={step}
-                            onChange={(e) => handleSlider(+e.target.value)}
-                        />
+            <div ref={sliderRef} style={{opacity}} className={styles.rangeSlider}>
+                <input
+                    disabled={disabled}
+                    className={classnames(styles.sliderVariant[isIos ? 'ios' : 'default'], sliderDisabled)}
+                    type="range"
+                    min={minSlider}
+                    max={maxSlider}
+                    value={valueRanger}
+                    step={step}
+                    onChange={(e) => handleSlider(+e.target.value)}
+                />
 
-                        <div
-                            style={{left: setValue()}}
-                            className={classnames(styles.sliderThumbVariant[isIos ? 'ios' : 'default'])}
-                        />
+                <div
+                    style={{left: setValue()}}
+                    className={classnames(styles.sliderThumbVariant[isIos ? 'ios' : 'default'])}
+                />
 
-                        <div className={styles.progress} style={{width: setValue()}} />
-                    </div>
-                }
-            />
+                <div className={styles.progress} style={{width: setValue()}} />
+            </div>
+
             {field && (
                 <div style={{width: '96px', marginLeft: '16px'}}>
                     <IntegerField
