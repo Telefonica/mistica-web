@@ -230,11 +230,13 @@ const getNext13Link =
         );
 
 export const getMisticaLinkComponent = (Link?: ThemeConfig['Link']): LinkComponent => {
-    if (typeof Link === 'function') {
-        return Link;
-    }
     if (!Link) {
         return AnchorLink;
+    }
+    // the $$typeof check is because components like forwardRefs are objects
+    // see https://github.com/facebook/react/blob/main/packages/shared/isValidElementType.js
+    if (typeof Link === 'function' || (Link as any).$$typeof) {
+        return Link as LinkComponent;
     }
     switch (Link.type) {
         case 'ReactRouter5':
