@@ -182,8 +182,15 @@ export const InformationBlock: React.FC<InformationBlockProps> = ({
 interface HighlightedValueBlockProps {
     tag?: RendersNullableElement<typeof Tag>;
 
-    value: string | Array<string>;
-    text: string | Array<string>;
+    mainHeading: {
+        value: string;
+        text: string;
+    };
+
+    secondHeading?: {
+        value: string;
+        text: string;
+    };
 
     secondaryValue?: string;
 
@@ -196,17 +203,14 @@ interface HighlightedValueBlockProps {
 
 export const HighlightedValueBlock: React.FC<HighlightedValueBlockProps> = ({
     tag,
-    value,
-    text,
+    mainHeading,
+    secondHeading,
     secondaryValue,
     title,
     description,
     valueColor = vars.colors.textPrimary,
     'aria-label': ariaLabel,
 }) => {
-    const [firtValue, secondValue] = value && Array.isArray(value) ? value : [value, ''];
-    const [firtText, secondText] = text && Array.isArray(text) ? text : [text, ''];
-
     return (
         <div aria-label={ariaLabel}>
             {tag && (
@@ -221,16 +225,16 @@ export const HighlightedValueBlock: React.FC<HighlightedValueBlockProps> = ({
 
             <Stack space={2}>
                 <Inline space={8} alignItems="baseline">
-                    <Text8 color={valueColor}>{firtValue}</Text8>
+                    <Text8 color={valueColor}>{mainHeading.value}</Text8>
                     <Text2 regular color={vars.colors.textSecondary}>
-                        {firtText}
+                        {mainHeading.text}
                     </Text2>
                 </Inline>
-                {secondValue && (
+                {secondHeading && (
                     <Inline space={8} alignItems="baseline">
-                        <Text8 color={valueColor}>{secondValue}</Text8>
+                        <Text8 color={valueColor}>{secondHeading.value}</Text8>
                         <Text2 regular color={vars.colors.textSecondary}>
-                            {secondText}
+                            {secondHeading.text}
                         </Text2>
                     </Inline>
                 )}

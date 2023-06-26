@@ -118,10 +118,11 @@ BlockInformation.args = {
 };
 
 type HighlightedValueBlockArgs = {
-    value: string | Array<string>;
-    text: string | Array<string>;
     tag?: TagType;
     icon?: string;
+
+    value: string;
+    text: string;
 
     secondaryValue?: string;
 
@@ -144,9 +145,8 @@ export const BlockHighlightedValue: StoryComponent<HighlightedValueBlockArgs> = 
                     tag={<Tag type={tag}>{`${tag}`}</Tag>}
                     title={title}
                     description={description}
-                    value={value}
+                    mainHeading={{value, text}}
                     secondaryValue={secondaryValue}
-                    text={text}
                     aria-label="aria-label"
                 />
             </Box>
@@ -159,9 +159,9 @@ BlockHighlightedValue.args = {
     tag: 'promo',
     title: 'title',
     description: 'description',
+    text: 'text',
     value: '20',
     secondaryValue: '20',
-    text: 'text',
 };
 BlockHighlightedValue.argTypes = {
     tag: {
