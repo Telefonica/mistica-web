@@ -27,7 +27,7 @@ const noOp = () => {};
 
 type Position = 'top' | 'bottom' | 'left' | 'right';
 
-const getWidthTooltip = (customWidth?: number) => (customWidth ? customWidth : defaultWidth);
+const getWidthTooltip = (customWidth?: number) => (customWidth ? customWidth : '');
 
 const getEnterTransform = (position: Position) => {
     if (position === 'bottom') {
@@ -134,7 +134,16 @@ const Tooltip: React.FC<Props> = ({
     const closeTooltipTimeoutId = React.useRef<NodeJS.Timeout | null>(null);
     const showTooltipTimeoutId = React.useRef<NodeJS.Timeout | null>(null);
     const targetRef = React.useRef<HTMLDivElement>(null);
+    const tooltipRef = React.useRef<HTMLDivElement>(null);
     const targetBoundingClientRect = React.useRef({
+        top: 0,
+        right: 0,
+        left: 0,
+        bottom: 0,
+        width: 0,
+        height: 0,
+    });
+    const tooltipBoundingClientRect = React.useRef({
         top: 0,
         right: 0,
         left: 0,
@@ -168,13 +177,15 @@ const Tooltip: React.FC<Props> = ({
         setIsVisible(false);
     };
 
+    console.log(tooltipRef);
+
     const toggleVisibility = () => {
         if (!targetRef.current) return;
 
         targetBoundingClientRect.current = targetRef.current.getBoundingClientRect();
+
         setIsVisible(!isVisible);
     };
-
     const handleFocus = () => {
         if (!isVisible) {
             toggleVisibility();
@@ -187,51 +198,60 @@ const Tooltip: React.FC<Props> = ({
         }
     };
 
-    const getContainerPosition = (position: Position, width: number) => {
-        if (typeof window === 'undefined') {
-            return {};
-        }
+    const getContainerPosition = React.useCallback(
+        (position: Position, width: number) => {
+            if (typeof window === 'undefined') {
+                return {};
+            }
 
-        const containerPos = {
-            right: {
-                left: targetBoundingClientRect.current.right + distanceToTarget,
-                top:
-                    window.pageYOffset +
-                    targetBoundingClientRect.current.top +
-                    targetBoundingClientRect.current.height / 2,
-            },
-            left: {
-                left: targetBoundingClientRect.current.left - width - distanceToTarget,
-                top:
-                    window.pageYOffset +
-                    targetBoundingClientRect.current.top +
-                    targetBoundingClientRect.current.height / 2,
-            },
-            top: {
-                top: window.pageYOffset + targetBoundingClientRect.current.top - distanceToTarget,
-                left:
-                    // isTabletOrSmaller
-                    //     ? marginLeftRightMobile
-                    //     :
-                    window.pageXOffset +
-                    targetBoundingClientRect.current.left +
-                    targetBoundingClientRect.current.width / 2 -
-                    width / 2,
-            },
-            bottom: {
-                top: window.pageYOffset + targetBoundingClientRect.current.bottom + distanceToTarget,
-                left:
-                    //  isTabletOrSmaller
-                    //     ? marginLeftRightMobile
-                    //     :
-                    window.pageXOffset +
-                    targetBoundingClientRect.current.left +
-                    targetBoundingClientRect.current.width / 2 -
-                    width / 2,
-            },
-        };
-        return containerPos[position];
-    };
+            const containerPos = {
+                right: {
+                    left: targetBoundingClientRect.current.right + distanceToTarget,
+                    top:
+                        window.pageYOffset +
+                        targetBoundingClientRect.current.top +
+                        targetBoundingClientRect.current.height / 2,
+                },
+                left: {
+                    left: targetBoundingClientRect.current.left - width - distanceToTarget,
+                    top:
+                        window.pageYOffset +
+                        targetBoundingClientRect.current.top +
+                        targetBoundingClientRect.current.height / 2,
+                },
+                top: {
+                    top: window.pageYOffset + targetBoundingClientRect.current.top - distanceToTarget,
+                    left: !width
+                        ? targetBoundingClientRect.current.left +
+                          targetBoundingClientRect.current.width / 2 -
+                          tooltipBoundingClientRect.current.width / 2
+                        : // isTabletOrSmaller
+                          //     ? marginLeftRightMobile
+                          //     :
+                          window.pageXOffset +
+                          targetBoundingClientRect.current.left +
+                          targetBoundingClientRect.current.width / 2 -
+                          width / 2,
+                },
+                bottom: {
+                    top: window.pageYOffset + targetBoundingClientRect.current.bottom + distanceToTarget,
+                    left: !width
+                        ? targetBoundingClientRect.current.left +
+                          targetBoundingClientRect.current.width / 2 -
+                          tooltipBoundingClientRect.current.width / 2
+                        : //  isTabletOrSmaller
+                          //     ? marginLeftRightMobile
+                          //     :
+                          window.pageXOffset +
+                          targetBoundingClientRect.current.left +
+                          targetBoundingClientRect.current.width / 2 -
+                          width / 2,
+                },
+            };
+            return containerPos[position];
+        },
+        [tooltipBoundingClientRect]
+    );
 
     // const getCustomStylesForMobile = () =>
     //     isTabletOrSmaller
@@ -264,6 +284,12 @@ const Tooltip: React.FC<Props> = ({
         [styles.vars.shadowAlpha]: getShadowAlpha(isDarkMode),
         [styles.vars.arrowBoxShadow]: getArrowBoxShadow(position),
     });
+
+    React.useEffect(() => {
+        if (tooltipRef.current && isVisible) {
+            tooltipBoundingClientRect.current = tooltipRef.current.getBoundingClientRect();
+        }
+    }, [isVisible]);
 
     return (
         <>
@@ -335,6 +361,7 @@ const Tooltip: React.FC<Props> = ({
                     unmountOnExit
                 >
                     <div
+                        ref={tooltipRef}
                         {...getPrefixedDataAttributes(dataAttributes, 'Tooltip')}
                         role="tooltip"
                         id={ariaId}
