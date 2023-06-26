@@ -278,7 +278,7 @@ const Video = React.forwardRef<VideoElement, VideoProps>(
                 {video}
                 <div
                     style={{
-                        position: 'absolute',
+                        position: ratio !== 0 ? 'absolute' : 'static',
                         width: showPoster ? '100%' : 0,
                         height: showPoster ? '100%' : 0,
                         overflow: 'hidden',
