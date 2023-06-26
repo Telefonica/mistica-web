@@ -151,6 +151,7 @@ const Tooltip: React.FC<Props> = ({
         width: 0,
         height: 0,
     });
+    const [containerPosition, setContainerPosition] = React.useState({});
 
     const getPosition = (position: Position = defaultPositionDesktop) =>
         isTabletOrSmaller && (position === 'left' || position === 'right') ? defaultPositionMobile : position;
@@ -288,8 +289,9 @@ const Tooltip: React.FC<Props> = ({
     React.useEffect(() => {
         if (tooltipRef.current && isVisible) {
             tooltipBoundingClientRect.current = tooltipRef.current.getBoundingClientRect();
+            setContainerPosition(getContainerPosition(position, width));
         }
-    }, [isVisible]);
+    }, [isVisible, getContainerPosition, position, width]);
 
     return (
         <>
@@ -368,7 +370,7 @@ const Tooltip: React.FC<Props> = ({
                         className={styles.container}
                         style={{
                             width,
-                            ...getContainerPosition(position, width),
+                            ...containerPosition,
                             justifyContent,
                             ...vars,
                         }}
