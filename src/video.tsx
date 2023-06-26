@@ -95,7 +95,7 @@ export type VideoProps = {
 };
 
 export interface VideoElement extends HTMLDivElement {
-    play: () => void;
+    play: () => Promise<void>;
     pause: () => void;
     load: () => void;
     setCurrentTime: (time: number) => void;
@@ -258,7 +258,7 @@ const Video = React.forwardRef<VideoElement, VideoProps>(
                         const containerElement = element ? (element as VideoElement) : null;
 
                         if (containerElement) {
-                            containerElement.play = () => videoRef.current?.play();
+                            containerElement.play = () => videoRef.current?.play() || new Promise(() => {});
                             containerElement.pause = () => videoRef.current?.pause();
                             containerElement.load = () => videoRef.current?.load();
                             containerElement.setCurrentTime = (time: number) => {
