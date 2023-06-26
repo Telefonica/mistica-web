@@ -4,7 +4,7 @@ import IconCloseRegular from '../generated/mistica-icons/icon-close-regular';
 import catIcon from './images/cat-icon.png';
 
 export default {
-    title: 'Components/Buttons/Icon button',
+    title: 'Components/Buttons/IconButton',
     argTypes: {
         type: {
             options: ['image url', 'svg component'],
@@ -25,7 +25,7 @@ export const Default: StoryComponent<Args> = ({type}) => (
     </IconButton>
 );
 
-Default.storyName = 'Icon button';
+Default.storyName = 'IconButton';
 Default.args = {
     type: 'image url',
 };

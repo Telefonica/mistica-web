@@ -42,6 +42,7 @@ export const Default: StoryComponent<Args> = ({text}) => {
     );
 };
 
+Default.storyName = 'Ellipsis in buttons';
 Default.args = {
     text: 'Ellipsis text example example',
 };

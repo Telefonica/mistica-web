@@ -123,10 +123,10 @@ export const SubmitButton: StoryComponent = () => (
     </ButtonBackgroundContainer>
 );
 
-primaryButton.storyName = 'Primary button';
-SecondaryButton.storyName = 'Secondary button';
-DangerButton.storyName = 'Danger button';
-LinkButton.storyName = 'Link button';
+primaryButton.storyName = 'ButtonPrimary';
+SecondaryButton.storyName = 'ButtonSecondary';
+DangerButton.storyName = 'ButtonDanger';
+LinkButton.storyName = 'ButtonLink';
 SubmitButton.storyName = 'Submit button';
 
 primaryButton.args = defaultArgs;

@@ -4,47 +4,61 @@ import {ButtonPrimary, ButtonSecondary} from '../button';
 import ButtonGroup from '../button-group';
 
 export default {
-    title: 'Components/Buttons/Button group',
+    title: 'Components/Buttons/ButtonGroup',
 };
 
 const handleOnPress = () => window.alert('pressed!');
 
 type Args = {
-    showPrimaryButton: boolean;
-    showSecondaryButton: boolean;
-    showLink: boolean;
-    primaryButtonText: string;
-    secondaryButtonText: string;
-    linkText: string;
+    small: boolean;
+    showButtonPrimary: boolean;
+    showButtonSecondary: boolean;
+    showButtonLink: boolean;
+    buttonPrimaryText: string;
+    buttonSecondaryText: string;
+    buttonLinkText: string;
 };
 
 export const Default: StoryComponent<Args> = ({
-    showPrimaryButton,
-    showSecondaryButton,
-    showLink,
-    primaryButtonText,
-    secondaryButtonText,
-    linkText,
+    small,
+    showButtonPrimary,
+    showButtonSecondary,
+    showButtonLink,
+    buttonPrimaryText,
+    buttonSecondaryText,
+    buttonLinkText,
 }) => {
-    const primaryButton = showPrimaryButton ? (
-        <ButtonPrimary onPress={handleOnPress}>{primaryButtonText}</ButtonPrimary>
+    const primaryButton = showButtonPrimary ? (
+        <ButtonPrimary small={small} onPress={handleOnPress}>
+            {buttonPrimaryText}
+        </ButtonPrimary>
     ) : undefined;
 
-    const secondaryButton = showSecondaryButton ? (
-        <ButtonSecondary onPress={handleOnPress}>{secondaryButtonText}</ButtonSecondary>
+    const secondaryButton = showButtonSecondary ? (
+        <ButtonSecondary small={small} onPress={handleOnPress}>
+            {buttonSecondaryText}
+        </ButtonSecondary>
     ) : undefined;
 
-    const buttonLink = showLink ? <ButtonLink onPress={handleOnPress}>{linkText}</ButtonLink> : undefined;
+    const buttonLink = showButtonLink ? (
+        <ButtonLink onPress={handleOnPress}>{buttonLinkText}</ButtonLink>
+    ) : undefined;
 
     return <ButtonGroup primaryButton={primaryButton} secondaryButton={secondaryButton} link={buttonLink} />;
 };
 
-Default.storyName = 'Button group';
+Default.storyName = 'ButtonGroup';
+Default.argTypes = {
+    buttonPrimaryText: {if: {arg: 'showButtonPrimary'}},
+    buttonSecondaryText: {if: {arg: 'showButtonSecondary'}},
+    buttonLinkText: {if: {arg: 'showButtonLink'}},
+};
 Default.args = {
-    showPrimaryButton: true,
-    showSecondaryButton: true,
-    showLink: true,
-    primaryButtonText: 'Action1',
-    secondaryButtonText: 'Action2',
-    linkText: 'link',
+    small: false,
+    showButtonPrimary: true,
+    showButtonSecondary: true,
+    showButtonLink: true,
+    buttonPrimaryText: 'Action1',
+    buttonSecondaryText: 'Action2',
+    buttonLinkText: 'link',
 };
