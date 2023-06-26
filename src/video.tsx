@@ -5,7 +5,6 @@ import {getPrefixedDataAttributes} from './utils/dom';
 import {isRunningAcceptanceTest} from './utils/platform';
 import * as styles from './video.css';
 import {vars} from './skins/skin-contract.css';
-import {useElementDimensions} from './hooks';
 
 import type {DataAttributes} from './utils/types';
 
@@ -169,7 +168,6 @@ const Video = React.forwardRef<VideoElement, VideoProps>(
         });
 
         const showPoster = videoStatus === 'error' || videoStatus === 'loading' || videoStatus === 'loaded';
-        const {ref: posterRef, width: posterWidth, height: posterHeight} = useElementDimensions();
 
         const video = (
             <video
@@ -218,24 +216,30 @@ const Video = React.forwardRef<VideoElement, VideoProps>(
         );
 
         const withErrorFallback = !!(ratio !== 0 || (props.width && props.height));
+        const hasError = videoStatus === 'error';
 
-        const posterImage = poster ? (
-            <ImageContent
-                ref={posterRef}
-                aspectRatio={aspectRatio}
-                width={props.width}
-                height={props.height}
-                src={poster}
-            />
-        ) : withErrorFallback ? (
-            <div style={{position: 'absolute', width: '100%', height: '100%'}}>
-                <ImageError
-                    ref={posterRef}
-                    noBorderRadius={!borderRadiusContext}
-                    withIcon={videoStatus === 'error'}
+        const posterImage = React.useMemo(() => {
+            return poster ? (
+                <ImageContent
+                    aspectRatio={aspectRatio}
+                    width={props.width}
+                    height={props.height}
+                    src={poster}
                 />
-            </div>
-        ) : undefined;
+            ) : withErrorFallback ? (
+                <div style={{position: 'absolute', width: '100%', height: '100%'}}>
+                    <ImageError noBorderRadius={!borderRadiusContext} withIcon={hasError} />
+                </div>
+            ) : undefined;
+        }, [
+            aspectRatio,
+            props.height,
+            props.width,
+            borderRadiusContext,
+            hasError,
+            poster,
+            withErrorFallback,
+        ]);
 
         return (
             <AspectRatioElement
@@ -247,30 +251,41 @@ const Video = React.forwardRef<VideoElement, VideoProps>(
                 <div
                     style={{
                         position: 'absolute',
-                        width: showPoster ? posterWidth : '100%',
-                        height: showPoster ? posterHeight : '100%',
+                        width: '100%',
+                        height: '100%',
                     }}
                     ref={(element) => {
-                        const extendedElement = element ? Object.create(element) : null;
-                        if (element) {
-                            extendedElement.play = () => videoRef.current?.play();
-                            extendedElement.pause = () => videoRef.current?.pause();
-                            extendedElement.load = () => videoRef.current?.load();
-                            extendedElement.setCurrentTime = (time: number) => {
+                        const containerElement = element ? (element as VideoElement) : null;
+
+                        if (containerElement) {
+                            containerElement.play = () => videoRef.current?.play();
+                            containerElement.pause = () => videoRef.current?.pause();
+                            containerElement.load = () => videoRef.current?.load();
+                            containerElement.setCurrentTime = (time: number) => {
                                 if (videoRef.current) {
                                     videoRef.current.currentTime = time;
                                 }
                             };
                         }
+
                         if (typeof ref === 'function') {
-                            ref(extendedElement);
+                            ref(containerElement);
                         } else if (ref) {
-                            ref.current = extendedElement;
+                            ref.current = containerElement;
                         }
                     }}
                 />
                 {video}
-                {showPoster && posterImage}
+                <div
+                    style={{
+                        position: 'absolute',
+                        width: showPoster ? '100%' : 0,
+                        height: showPoster ? '100%' : 0,
+                        overflow: 'hidden',
+                    }}
+                >
+                    {posterImage}
+                </div>
             </AspectRatioElement>
         );
     }
