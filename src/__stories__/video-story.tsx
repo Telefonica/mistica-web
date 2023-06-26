@@ -3,6 +3,8 @@ import {Stack, ButtonPrimary, Inline, Title2, Video, Title1, Text3} from '..';
 import beachVideo from './videos/beach.mp4';
 import beachImg from './images/beach.jpg';
 
+import type {VideoElement} from '..';
+
 export default {
     title: 'Components/Primitives/Video',
     component: Video,
@@ -12,8 +14,8 @@ const VIDEO_SRC = beachVideo;
 const POSTER_SRC = beachImg;
 
 export const Default: StoryComponent = () => {
-    const videoRef = React.useRef<HTMLVideoElement | null>(null);
-    const videoRefWithPoster = React.useRef<HTMLVideoElement | null>(null);
+    const videoRef = React.useRef<VideoElement>(null);
+    const videoRefWithPoster = React.useRef<VideoElement>(null);
 
     return (
         <Stack space={64} dataAttributes={{testid: 'video'}}>
@@ -83,7 +85,7 @@ export const Default: StoryComponent = () => {
                         small
                         onPress={() => {
                             if (videoRefWithPoster.current) {
-                                videoRefWithPoster.current.currentTime = 0; // play from the beginning
+                                videoRefWithPoster.current.setCurrentTime(0); // play from the beginning
                                 videoRefWithPoster.current.play();
                             }
                         }}

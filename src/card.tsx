@@ -23,7 +23,7 @@ import classNames from 'classnames';
 import {assignInlineVars} from '@vanilla-extract/dynamic';
 
 import type {PressHandler} from './touchable';
-import type {VideoSource} from './video';
+import type {VideoElement, VideoSource} from './video';
 import type {ButtonLink, ButtonPrimary, ButtonSecondary} from './button';
 import type {ExclusifyUnion} from './utils/utility-types';
 import type {
@@ -237,9 +237,9 @@ const getVideoActionIcon = (state: VideoState) => {
 const useVideoWithControls = (
     videoSrc?: VideoSource,
     poster?: string,
-    videoRef?: React.RefObject<HTMLVideoElement>
+    videoRef?: React.RefObject<VideoElement>
 ) => {
-    const videoController = React.useRef<HTMLVideoElement>(null);
+    const videoController = React.useRef<VideoElement>(null);
     const [videoStatus, dispatch] = React.useReducer(videoReducer, 'loading');
 
     React.useEffect(() => {
@@ -731,7 +731,7 @@ type DisplayMediaCardWithImageProps = CommonDisplayCardProps & {
 type DisplayMediaCardWithVideoProps = Omit<CommonDisplayCardProps, 'actions' | 'onClose'> & {
     backgroundVideo: VideoSource;
     poster?: string;
-    backgroundVideoRef?: React.RefObject<HTMLVideoElement>;
+    backgroundVideoRef?: React.RefObject<VideoElement>;
 };
 
 type DisplayMediaCardProps = DisplayMediaCardBaseProps &
@@ -1008,7 +1008,7 @@ interface PosterCardWithImageProps extends PosterCardBaseProps {
 type PosterCardWithVideoProps = Omit<PosterCardBaseProps, 'actions' | 'onClose'> & {
     backgroundVideo: VideoSource;
     poster?: string;
-    backgroundVideoRef?: React.RefObject<HTMLVideoElement>;
+    backgroundVideoRef?: React.RefObject<VideoElement>;
 };
 
 type PosterCardProps = ExclusifyUnion<PosterCardWithImageProps | PosterCardWithVideoProps> &

@@ -1,7 +1,6 @@
 import * as React from 'react';
 import {ImageContent, ImageError, useMediaBorderRadius} from './image';
 import {AspectRatioElement} from './utils/aspect-ratio-support';
-import {combineRefs} from './utils/common';
 import {getPrefixedDataAttributes} from './utils/dom';
 import {isRunningAcceptanceTest} from './utils/platform';
 import * as styles from './video.css';
@@ -96,7 +95,14 @@ export type VideoProps = {
     dataAttributes?: DataAttributes;
 };
 
-const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
+export interface VideoElement extends HTMLDivElement {
+    play: () => void;
+    pause: () => void;
+    load: () => void;
+    setCurrentTime: (time: number) => void;
+}
+
+const Video = React.forwardRef<VideoElement, VideoProps>(
     (
         {
             src,
@@ -167,7 +173,7 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
 
         const video = (
             <video
-                ref={combineRefs(ref, videoRef)}
+                ref={videoRef}
                 playsInline
                 disablePictureInPicture
                 disableRemotePlayback
@@ -201,8 +207,8 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
                     borderRadius: !borderRadiusContext ? 0 : vars.borderRadii.container,
                     visibility: showPoster ? 'hidden' : 'visible',
                     position: showPoster || ratio !== 0 ? 'absolute' : 'static',
-                    width: showPoster ? posterWidth : '100%',
-                    height: showPoster ? posterHeight : '100%',
+                    width: '100%',
+                    height: '100%',
                 }}
             >
                 {sources.map(({src, type}, index) => (
@@ -238,6 +244,31 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
                 width={props.width}
                 height={props.height}
             >
+                <div
+                    style={{
+                        position: 'absolute',
+                        width: showPoster ? posterWidth : '100%',
+                        height: showPoster ? posterHeight : '100%',
+                    }}
+                    ref={(element) => {
+                        const extendedElement = element ? Object.create(element) : null;
+                        if (element) {
+                            extendedElement.play = () => videoRef.current?.play();
+                            extendedElement.pause = () => videoRef.current?.pause();
+                            extendedElement.load = () => videoRef.current?.load();
+                            extendedElement.setCurrentTime = (time: number) => {
+                                if (videoRef.current) {
+                                    videoRef.current.currentTime = time;
+                                }
+                            };
+                        }
+                        if (typeof ref === 'function') {
+                            ref(extendedElement);
+                        } else if (ref) {
+                            ref.current = extendedElement;
+                        }
+                    }}
+                />
                 {video}
                 {showPoster && posterImage}
             </AspectRatioElement>
