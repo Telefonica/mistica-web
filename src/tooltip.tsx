@@ -18,7 +18,7 @@ const defaultPositionMobile = 'top';
 const arrowSize = 12;
 const distanceToTarget = 4 + arrowSize;
 const marginLeftRightMobile = 16;
-const defaultWidthDesktop = 10;
+const defaultWidth = 40;
 const transitionDurationMs = 500;
 const animationMovement = 12;
 const defaultShowTooltipDelayMs = 500;
@@ -27,7 +27,7 @@ const noOp = () => {};
 
 type Position = 'top' | 'bottom' | 'left' | 'right';
 
-const getWidthDesktop = (customWidth?: number) => (customWidth ? customWidth : defaultWidthDesktop);
+const getWidthTooltip = (customWidth?: number) => (customWidth ? customWidth : defaultWidth);
 
 const getEnterTransform = (position: Position) => {
     if (position === 'bottom') {
@@ -104,6 +104,14 @@ type Props = {
     targetLabel: string;
     delay?: boolean;
     dataAttributes?: DataAttributes;
+    justifyContent?:
+        | 'start'
+        | 'end'
+        | 'center'
+        | 'stretch'
+        | 'space-around'
+        | 'space-between'
+        | 'space-evenly';
 };
 
 const Tooltip: React.FC<Props> = ({
@@ -115,6 +123,7 @@ const Tooltip: React.FC<Props> = ({
     targetLabel,
     delay = true,
     dataAttributes,
+    justifyContent = 'center',
     ...rest
 }) => {
     const {isDarkMode} = useTheme();
@@ -201,7 +210,7 @@ const Tooltip: React.FC<Props> = ({
             top: {
                 top: window.pageYOffset + targetBoundingClientRect.current.top - distanceToTarget,
                 left:
-                    //  isTabletOrSmaller
+                    // isTabletOrSmaller
                     //     ? marginLeftRightMobile
                     //     :
                     window.pageXOffset +
@@ -212,12 +221,11 @@ const Tooltip: React.FC<Props> = ({
             bottom: {
                 top: window.pageYOffset + targetBoundingClientRect.current.bottom + distanceToTarget,
                 left:
-                    // isTabletOrSmaller
+                    //  isTabletOrSmaller
                     //     ? marginLeftRightMobile
                     //     :
                     window.pageXOffset +
                     targetBoundingClientRect.current.left +
-                    16 +
                     targetBoundingClientRect.current.width / 2 -
                     width / 2,
             },
@@ -237,7 +245,7 @@ const Tooltip: React.FC<Props> = ({
 
     const getWidth = () =>
         // isTabletOrSmaller ? window.innerWidth - marginLeftRightMobile * 2 :
-        getWidthDesktop(rest.width);
+        getWidthTooltip(rest.width);
 
     const width = getWidth();
 
@@ -334,6 +342,7 @@ const Tooltip: React.FC<Props> = ({
                         style={{
                             width,
                             ...getContainerPosition(position, width),
+                            justifyContent,
                             ...vars,
                         }}
                         onPointerOver={() => {
@@ -352,7 +361,7 @@ const Tooltip: React.FC<Props> = ({
                                           closeTooltipTimeoutId.current = null;
                                           isPointerOver.current = false;
                                           toggleVisibility();
-                                      }, 10000000);
+                                      }, 100);
                                   }
                         }
                     >
