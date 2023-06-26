@@ -460,7 +460,7 @@ export const DataCardAdvanced = React.forwardRef<HTMLDivElement, DataCardAdvance
                                     <Box paddingTop={16} paddingBottom={24}>
                                         {extra.map((ex, index) => {
                                             return (
-                                                <div>
+                                                <div key={index}>
                                                     <div
                                                         style={{
                                                             display: 'flex',
