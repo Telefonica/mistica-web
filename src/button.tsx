@@ -79,6 +79,16 @@ const renderButtonElement = ({
     return resultChildrenArr;
 };
 
+const ButtonLinkChevron: React.FC = () => (
+    <svg width="8" height="20" viewBox="0 0 8 20" fill="none">
+        <path
+            id="icon"
+            d="M6.32595 11.0107L3.03801 7.7086L3.03292 7.70375L3.032 7.70291L3.02931 7.70047L3.02848 7.69974L3.02248 7.69436C2.88533 7.57121 2.71386 7.53733 2.56343 7.55395C2.41648 7.57018 2.27272 7.63567 2.16886 7.73711C2.06893 7.83185 2.01209 7.97816 2.00175 8.11707C1.99083 8.26377 2.02925 8.43959 2.16869 8.57393L5.24446 11.5515L2.15859 14.512L2.15375 14.5171L2.1529 14.518L2.15046 14.5207L2.14974 14.5215L2.14435 14.5275C2.02121 14.6647 1.98733 14.8361 2.00394 14.9866C2.02017 15.1335 2.08567 15.2773 2.18711 15.3811C2.28184 15.4811 2.42816 15.5379 2.56706 15.5483C2.71377 15.5592 2.88958 15.5208 3.02392 15.3813L6.32595 12.0922C6.6246 11.7936 6.6246 11.3094 6.32595 11.0107Z"
+            fill="currentColor"
+        />
+    </svg>
+);
+
 const renderButtonContent = ({
     showSpinner,
     children,
@@ -88,6 +98,9 @@ const renderButtonContent = ({
     setShouldRenderSpinner,
     renderText,
     textContentStyle,
+    iconLeft,
+    iconRight,
+    withChevron,
 }: {
     showSpinner: boolean;
     children: React.ReactNode;
@@ -97,6 +110,9 @@ const renderButtonContent = ({
     setShouldRenderSpinner: (value: boolean) => void;
     renderText: (text: React.ReactNode) => React.ReactNode;
     textContentStyle?: string;
+    iconLeft?: React.ReactElement<IconProps>;
+    iconRight?: React.ReactElement<IconProps>;
+    withChevron?: boolean;
 }): React.ReactNode => {
     const defaultIconSize = small ? styles.SMALL_ICON_SIZE : styles.ICON_SIZE;
     const spinnerSizeRem = pxToRem(small ? styles.SMALL_SPINNER_SIZE : styles.SPINNER_SIZE);
@@ -105,11 +121,48 @@ const renderButtonContent = ({
         <>
             {/* text content */}
             <div aria-hidden={showSpinner ? true : undefined} className={textContentStyle}>
+                {iconLeft && (
+                    <div
+                        style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            marginRight: styles.ICON_MARGIN_PX,
+                        }}
+                    >
+                        {React.cloneElement(iconLeft, {
+                            size: pxToRem(iconLeft.props.size || defaultIconSize),
+                        })}
+                    </div>
+                )}
                 {renderButtonElement({
                     content: children,
                     defaultIconSize,
                     renderText,
                 })}
+                {iconRight && !withChevron && (
+                    <div
+                        style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            marginLeft: styles.ICON_MARGIN_PX,
+                        }}
+                    >
+                        {React.cloneElement(iconRight, {
+                            size: pxToRem(iconRight.props.size || defaultIconSize),
+                        })}
+                    </div>
+                )}
+                {withChevron && (
+                    <div
+                        style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            marginLeft: styles.CHEVRON_MARGIN_LEFT_LINK,
+                        }}
+                    >
+                        <ButtonLinkChevron />
+                    </div>
+                )}
             </div>
 
             {/* the following div won't be visible (see loadingFiller class), this is used to force the button width */}
@@ -183,6 +236,8 @@ interface CommonProps {
     'aria-controls'?: string;
     'aria-expanded'?: 'true' | 'false';
     tabIndex?: number;
+    iconLeft?: React.ReactElement<IconProps>;
+    iconRight?: React.ReactElement<IconProps>;
 }
 
 export interface ToButtonProps extends CommonProps {
@@ -314,6 +369,8 @@ const Button = React.forwardRef<TouchableElement, ButtonProps & {type: ButtonTyp
             small: props.small,
             renderText,
             textContentStyle: styles.textContent,
+            iconLeft: props.iconLeft,
+            iconRight: props.iconRight,
         }),
         disabled: props.disabled || showSpinner || isFormSending,
         role: 'button',
@@ -382,6 +439,8 @@ interface ButtonLinkCommonProps {
     aligned?: boolean;
     showSpinner?: boolean;
     loadingText?: string;
+    iconLeft?: React.ReactElement<IconProps>;
+    iconRight?: React.ReactElement<IconProps>;
 }
 interface ButtonLinkOnPressProps extends ButtonLinkCommonProps {
     onPress: (event: React.MouseEvent<HTMLElement>) => void | undefined | Promise<void>;
@@ -465,6 +524,9 @@ export const ButtonLink = React.forwardRef<TouchableElement, ButtonLinkProps>((p
             small: true,
             renderText,
             textContentStyle: styles.textContentLink,
+            iconLeft: props.iconLeft,
+            iconRight: props.iconRight,
+            withChevron: !!props.to || !!props.href,
         }),
         disabled: props.disabled || showSpinner || isFormSending,
     };
