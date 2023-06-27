@@ -187,7 +187,7 @@ const Video = React.forwardRef<VideoElement, VideoProps>(
                     onPause?.();
                     dispatch('pause');
                 }}
-                onPlay={() => {
+                onTimeUpdate={() => {
                     onPlay?.();
                     dispatch('play');
                 }}
