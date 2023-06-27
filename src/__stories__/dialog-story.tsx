@@ -5,12 +5,13 @@ import {
     confirm,
     alert,
     dialog,
-    Text1,
     IconInformationUserLight,
     ButtonLink,
     Title1,
     Stack,
     skinVars,
+    Select,
+    Text1,
 } from '..';
 
 export default {
@@ -78,7 +79,20 @@ export const Default: StoryComponent = () => {
                                     subtitle: 'Subtitle',
                                     message: 'Message',
                                     acceptText: 'Accept terms and conditions',
-                                    extra: <Text1 regular>This is the extra zone</Text1>,
+                                    extra: (
+                                        <Stack space={16}>
+                                            <Text1 regular>Extra content</Text1>
+                                            <Select
+                                                name="fruits"
+                                                value="orange"
+                                                label="Select"
+                                                options={[
+                                                    {value: 'orange', text: 'Orange'},
+                                                    {value: 'banana', text: 'Banana'},
+                                                ]}
+                                            />
+                                        </Stack>
+                                    ),
                                     forceWeb: true,
                                     showCancel: true,
                                     link: <ButtonLink href="https://google.com">Link</ButtonLink>,
