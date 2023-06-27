@@ -106,12 +106,19 @@ const Select: React.FC<SelectProps> = ({
                 const MAX_OPTIONS = 8;
                 const MARGIN_TOP_SIZE = 12;
                 const PADDING_SIZE = 16;
-                const {
-                    top: availableSpaceTop,
-                    width,
-                    left,
-                    height,
-                } = fieldRef.current.getBoundingClientRect();
+
+                // get a possible non-static parent, like a modal dialog
+                const nonStaticParentElement = focusableRef.current?.offsetParent;
+                const parentElementRect = nonStaticParentElement?.getBoundingClientRect() || {
+                    left: 0,
+                    top: 0,
+                };
+                const clientRect = fieldRef.current.getBoundingClientRect();
+                const availableSpaceTop = clientRect.top - parentElementRect.top;
+                const width = clientRect.width;
+                const left = clientRect.left - parentElementRect.left;
+                const height = clientRect.height;
+
                 const top = availableSpaceTop + height;
                 const visibleOptions = Math.min(options.length, MAX_OPTIONS);
                 const spaceTaken = visibleOptions * 48 + PADDING_SIZE;
