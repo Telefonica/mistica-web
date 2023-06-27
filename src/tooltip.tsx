@@ -104,6 +104,7 @@ type Props = {
     targetLabel: string;
     delay?: boolean;
     dataAttributes?: DataAttributes;
+    fullWidth?: boolean;
     justifyContent?:
         | 'start'
         | 'end'
@@ -124,6 +125,7 @@ const Tooltip: React.FC<Props> = ({
     delay = true,
     dataAttributes,
     justifyContent = 'center',
+    fullWidth,
     ...rest
 }) => {
     const {isDarkMode} = useTheme();
@@ -178,8 +180,6 @@ const Tooltip: React.FC<Props> = ({
         setIsVisible(false);
     };
 
-    console.log(tooltipRef);
-
     const toggleVisibility = () => {
         if (!targetRef.current) return;
 
@@ -228,7 +228,8 @@ const Tooltip: React.FC<Props> = ({
             top: {
                 top: window.pageYOffset + targetBoundingClientRect.current.top - distanceToTarget,
                 left: !width
-                    ? targetBoundingClientRect.current.left +
+                    ? window.pageXOffset +
+                      targetBoundingClientRect.current.left +
                       targetBoundingClientRect.current.width / 2 -
                       tooltipBoundingClientRect.width / 2
                     : // isTabletOrSmaller
@@ -242,7 +243,8 @@ const Tooltip: React.FC<Props> = ({
             bottom: {
                 top: window.pageYOffset + targetBoundingClientRect.current.bottom + distanceToTarget,
                 left: !width
-                    ? targetBoundingClientRect.current.left +
+                    ? window.pageXOffset +
+                      targetBoundingClientRect.current.left +
                       targetBoundingClientRect.current.width / 2 -
                       tooltipBoundingClientRect.width / 2
                     : //  isTabletOrSmaller
@@ -254,6 +256,7 @@ const Tooltip: React.FC<Props> = ({
                       width / 2,
             },
         };
+
         return containerPos[position];
     }, []);
 
@@ -292,13 +295,15 @@ const Tooltip: React.FC<Props> = ({
     React.useEffect(() => {
         if (tooltipRef.current && isVisible) {
             // tooltipBoundingClientRect.current = tooltipRef.current.getBoundingClientRect();
-            setContainerPosition(getContainerPosition(position, width));
+            const widthAux = width ? width : 0;
+            setContainerPosition(getContainerPosition(position, widthAux));
         }
     }, [isVisible, getContainerPosition, position, width]);
 
     return (
         <>
             <div
+                style={{width: fullWidth ? '100%' : ''}}
                 ref={targetRef}
                 className={styles.wrapper}
                 onPointerOver={() => {

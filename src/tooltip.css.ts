@@ -129,7 +129,7 @@ export const container = style([
         padding: 8,
         borderRadius: skinVars.borderRadii.popup,
         border: 'regular',
-        justifyContent: 'center',
+        display: 'flex',
     }),
     {
         minWidth: 40,
