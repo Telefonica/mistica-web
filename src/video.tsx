@@ -139,6 +139,7 @@ const Video = React.forwardRef<VideoElement, VideoProps>(
             if (loadedSource.current !== src) {
                 loadedSource.current = src;
                 const loadingTimeoutId = setTimeout(handleError, loadingTimeout);
+                dispatch('reset');
                 videoRef.current?.load();
 
                 return () => {
@@ -179,17 +180,16 @@ const Video = React.forwardRef<VideoElement, VideoProps>(
                 loop={loop}
                 className={styles.video}
                 preload={preload}
-                onLoadStart={() => {
-                    dispatch('reset');
-                }}
                 onError={handleError}
                 onPause={() => {
                     onPause?.();
                     dispatch('pause');
                 }}
                 onTimeUpdate={() => {
-                    onPlay?.();
-                    dispatch('play');
+                    if (videoStatus !== 'playing' && videoRef.current?.currentTime !== 0) {
+                        onPlay?.();
+                        dispatch('play');
+                    }
                 }}
                 onCanPlay={() => {
                     if (autoPlay === 'streaming') handleLoadFinish();
@@ -260,7 +260,10 @@ const Video = React.forwardRef<VideoElement, VideoProps>(
                         if (containerElement) {
                             containerElement.play = () => videoRef.current?.play() || new Promise(() => {});
                             containerElement.pause = () => videoRef.current?.pause();
-                            containerElement.load = () => videoRef.current?.load();
+                            containerElement.load = () => {
+                                dispatch('reset');
+                                videoRef.current?.load();
+                            };
                             containerElement.setCurrentTime = (time: number) => {
                                 if (videoRef.current) {
                                     videoRef.current.currentTime = time;
