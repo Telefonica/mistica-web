@@ -17,7 +17,9 @@ test('getMisicaLinkComponent detects function components as components', () => {
 test('getMisicaLinkComponent uses given component with type', async () => {
     const Component = ({children, href}: any) => <a href={href}>{children}</a>;
     const Link = getMisticaLinkComponent({Component, type: 'Next13'});
+
     render(<Link to="#">any text</Link>);
+
     expect(await screen.findByText('any text')).toMatchInlineSnapshot(`
         <a
           href="#"
