@@ -99,7 +99,7 @@ export const Default: StoryComponent = () => {
                         target={<IconCloseRegular />}
                         position="left"
                         description={description}
-                        width={35}
+                        // width={35}
                     />
                     <Tooltip
                         targetLabel="help text"

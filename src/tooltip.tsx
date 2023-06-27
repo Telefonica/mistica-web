@@ -143,14 +143,14 @@ const Tooltip: React.FC<Props> = ({
         width: 0,
         height: 0,
     });
-    const tooltipBoundingClientRect = React.useRef({
-        top: 0,
-        right: 0,
-        left: 0,
-        bottom: 0,
-        width: 0,
-        height: 0,
-    });
+    // const tooltipBoundingClientRect = React.useRef({
+    //     top: 0,
+    //     right: 0,
+    //     left: 0,
+    //     bottom: 0,
+    //     width: 0,
+    //     height: 0,
+    // });
     const [containerPosition, setContainerPosition] = React.useState({});
 
     const getPosition = (position: Position = defaultPositionDesktop) =>
@@ -199,60 +199,63 @@ const Tooltip: React.FC<Props> = ({
         }
     };
 
-    const getContainerPosition = React.useCallback(
-        (position: Position, width: number) => {
-            if (typeof window === 'undefined') {
-                return {};
-            }
+    const getContainerPosition = React.useCallback((position: Position, width: number) => {
+        if (typeof window === 'undefined' || !tooltipRef.current) {
+            return {};
+        }
 
-            const containerPos = {
-                right: {
-                    left: targetBoundingClientRect.current.right + distanceToTarget,
-                    top:
-                        window.pageYOffset +
-                        targetBoundingClientRect.current.top +
-                        targetBoundingClientRect.current.height / 2,
-                },
-                left: {
-                    left: targetBoundingClientRect.current.left - width - distanceToTarget,
-                    top:
-                        window.pageYOffset +
-                        targetBoundingClientRect.current.top +
-                        targetBoundingClientRect.current.height / 2,
-                },
-                top: {
-                    top: window.pageYOffset + targetBoundingClientRect.current.top - distanceToTarget,
-                    left: !width
-                        ? targetBoundingClientRect.current.left +
-                          targetBoundingClientRect.current.width / 2 -
-                          tooltipBoundingClientRect.current.width / 2
-                        : // isTabletOrSmaller
-                          //     ? marginLeftRightMobile
-                          //     :
-                          window.pageXOffset +
-                          targetBoundingClientRect.current.left +
-                          targetBoundingClientRect.current.width / 2 -
-                          width / 2,
-                },
-                bottom: {
-                    top: window.pageYOffset + targetBoundingClientRect.current.bottom + distanceToTarget,
-                    left: !width
-                        ? targetBoundingClientRect.current.left +
-                          targetBoundingClientRect.current.width / 2 -
-                          tooltipBoundingClientRect.current.width / 2
-                        : //  isTabletOrSmaller
-                          //     ? marginLeftRightMobile
-                          //     :
-                          window.pageXOffset +
-                          targetBoundingClientRect.current.left +
-                          targetBoundingClientRect.current.width / 2 -
-                          width / 2,
-                },
-            };
-            return containerPos[position];
-        },
-        [tooltipBoundingClientRect]
-    );
+        const tooltipBoundingClientRect = tooltipRef.current.getBoundingClientRect();
+
+        const containerPos = {
+            right: {
+                left: targetBoundingClientRect.current.right + distanceToTarget,
+                top:
+                    window.pageYOffset +
+                    targetBoundingClientRect.current.top +
+                    targetBoundingClientRect.current.height / 2,
+            },
+            left: {
+                left: !width
+                    ? targetBoundingClientRect.current.left -
+                      tooltipBoundingClientRect.width -
+                      distanceToTarget
+                    : targetBoundingClientRect.current.left - width - distanceToTarget,
+                top:
+                    window.pageYOffset +
+                    targetBoundingClientRect.current.top +
+                    targetBoundingClientRect.current.height / 2,
+            },
+            top: {
+                top: window.pageYOffset + targetBoundingClientRect.current.top - distanceToTarget,
+                left: !width
+                    ? targetBoundingClientRect.current.left +
+                      targetBoundingClientRect.current.width / 2 -
+                      tooltipBoundingClientRect.width / 2
+                    : // isTabletOrSmaller
+                      //     ? marginLeftRightMobile
+                      //     :
+                      window.pageXOffset +
+                      targetBoundingClientRect.current.left +
+                      targetBoundingClientRect.current.width / 2 -
+                      width / 2,
+            },
+            bottom: {
+                top: window.pageYOffset + targetBoundingClientRect.current.bottom + distanceToTarget,
+                left: !width
+                    ? targetBoundingClientRect.current.left +
+                      targetBoundingClientRect.current.width / 2 -
+                      tooltipBoundingClientRect.width / 2
+                    : //  isTabletOrSmaller
+                      //     ? marginLeftRightMobile
+                      //     :
+                      window.pageXOffset +
+                      targetBoundingClientRect.current.left +
+                      targetBoundingClientRect.current.width / 2 -
+                      width / 2,
+            },
+        };
+        return containerPos[position];
+    }, []);
 
     // const getCustomStylesForMobile = () =>
     //     isTabletOrSmaller
@@ -288,7 +291,7 @@ const Tooltip: React.FC<Props> = ({
 
     React.useEffect(() => {
         if (tooltipRef.current && isVisible) {
-            tooltipBoundingClientRect.current = tooltipRef.current.getBoundingClientRect();
+            // tooltipBoundingClientRect.current = tooltipRef.current.getBoundingClientRect();
             setContainerPosition(getContainerPosition(position, width));
         }
     }, [isVisible, getContainerPosition, position, width]);
