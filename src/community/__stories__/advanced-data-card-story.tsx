@@ -3,7 +3,7 @@ import ResponsiveLayout from '../../responsive-layout';
 import Box from '../../box';
 import {ButtonLink, ButtonPrimary} from '../../button';
 import Tag from '../../tag';
-import DataCardAdvanced from '../../data-card-advanced';
+import AdvancedDataCard from '../advanced-data-card';
 import imgExample from '../../__stories__/images/avatar.jpg';
 import Image from '../../image';
 import StackingGroup from '../../stacking-group';
@@ -11,7 +11,7 @@ import StackingGroup from '../../stacking-group';
 import type {TagType} from '../../tag';
 
 export default {
-    title: 'Community/DataCardAdvanced',
+    title: 'Community/AdvancedDataCard',
 };
 
 type Args = {
@@ -70,8 +70,8 @@ export const Default: StoryComponent<Args> = ({
 
     return (
         <ResponsiveLayout>
-            <Box paddingY={24} dataAttributes={{testid: 'data-card-advanced'}}>
-                <DataCardAdvanced
+            <Box paddingY={24} dataAttributes={{testid: 'advanced-data-card'}}>
+                <AdvancedDataCard
                     smallSlotSpace
                     stackingGroup={
                         stackingGroup ? (

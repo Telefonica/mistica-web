@@ -1,22 +1,22 @@
 import * as React from 'react';
-import {Boxed} from './boxed';
-import {sprinkles} from './sprinkles.css';
-import Stack from './stack';
-import * as styles from './data-card-advanced.css';
-import Divider from './divider';
-import Text, {Text2} from './text';
-import Tag from './tag';
-import {useScreenSize, useTheme} from './hooks';
-import {vars} from './skins/skin-contract.css';
-import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
-import IconButton from './icon-button';
-import Inline from './inline';
-import Box from './box';
-import Touchable from './touchable';
+import {Boxed} from '../boxed';
+import {sprinkles} from '../sprinkles.css';
+import Stack from '../stack';
+import * as styles from './advanced-data-card.css';
+import Divider from '../divider';
+import Text, {Text2} from '../text';
+import Tag from '../tag';
+import {useScreenSize, useTheme} from '../hooks';
+import {vars} from '../skins/skin-contract.css';
+import IconCloseRegular from '../generated/mistica-icons/icon-close-regular';
+import IconButton from '../icon-button';
+import Inline from '../inline';
+import Box from '../box';
+import Touchable from '../touchable';
 import classNames from 'classnames';
 
-import type StackingGroup from './stacking-group';
-import type Image from './image';
+import type StackingGroup from '../stacking-group';
+import type Image from '../image';
 // import type {
 //     ValueBlock,
 //     InformationBlock,
@@ -25,9 +25,9 @@ import type Image from './image';
 //     RowBlock,
 //     SimpleBlock,
 // } from './advanced-slots';
-import type {ButtonPrimary, ButtonLink} from './button';
-import type {DataAttributes, IconProps} from './utils/types';
-import type {RendersNullableElement} from './utils/renders-element';
+import type {ButtonPrimary, ButtonLink} from '../button';
+import type {DataAttributes, IconProps} from '../utils/types';
+import type {RendersNullableElement} from '../utils/renders-element';
 
 type CardAction = {
     label: string;
@@ -316,7 +316,7 @@ type ExtraTypeof = typeof StackingGroup;
 
 type TextAs = 'h1' | 'h2' | 'h3' | 'h4';
 
-interface DataCardAdvancedProps {
+interface AdvancedDataCardProps {
     onPress?: () => void;
     stackingGroup?: RendersNullableElement<typeof StackingGroup>;
     headline?: string | RendersNullableElement<typeof Tag>;
@@ -343,7 +343,7 @@ interface DataCardAdvancedProps {
     onClose?: () => void;
 }
 
-export const DataCardAdvanced = React.forwardRef<HTMLDivElement, DataCardAdvancedProps>(
+export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCardProps>(
     (
         {
             onPress,
@@ -495,4 +495,4 @@ export const DataCardAdvanced = React.forwardRef<HTMLDivElement, DataCardAdvance
     }
 );
 
-export default DataCardAdvanced;
+export default AdvancedDataCard;

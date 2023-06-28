@@ -10,7 +10,6 @@ export {default as Touchable} from './touchable';
 export type {TouchableElement} from './touchable';
 export {default as Spinner} from './spinner';
 export {default as FadeIn} from './fade-in';
-export {default as DataCardAdvanced} from './data-card-advanced';
 
 export {ButtonPrimary, ButtonSecondary, ButtonDanger, ButtonLink} from './button';
 export {default as ButtonLayout} from './button-layout';

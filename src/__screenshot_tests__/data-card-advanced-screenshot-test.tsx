@@ -10,14 +10,14 @@ test.each`
     ${'button'}          | ${true}
     ${'link'}            | ${true}
     ${'button and link'} | ${true}
-`('Data Card Advanced', async ({Actions, footerImage}) => {
+`('Advanced Data Card', async ({Actions, footerImage}) => {
     await openStoryPage({
-        id: 'community-datacardadvanced--default',
+        id: 'community-advanceddatacard--default',
         device: 'MOBILE_IOS',
         args: {Actions, footerImage},
     });
 
-    const element = await screen.findByTestId('data-card-advanced');
+    const element = await screen.findByTestId('advanced-data-card');
     const image = await element.screenshot();
 
     expect(image).toMatchImageSnapshot();
