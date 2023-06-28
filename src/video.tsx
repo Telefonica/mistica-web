@@ -20,6 +20,11 @@ const transitions: Record<VideoState, Partial<Record<VideoAction, VideoState>>> 
         finishLoad: 'loaded',
     },
 
+    /**
+     * This state represents the scenario when video.load() finishes, but the video isn't played yet. Some browsers don't actually load
+     * the video until someone plays it. In this case, we need to show the poster, because we may not have the first frame to display it.
+     * https://stackoverflow.com/questions/10235919/the-canplay-canplaythrough-events-for-an-html5-video-are-not-called-on-firefox/26430919#26430919
+     */
     loaded: {
         play: 'playing',
         pause: 'paused',
@@ -122,8 +127,9 @@ const Video = React.forwardRef<VideoElement, VideoProps>(
         ref
     ) => {
         const [videoStatus, dispatch] = React.useReducer(videoReducer, 'loading');
-        const videoRef = React.useRef<HTMLVideoElement | null>(null);
+        const videoRef = React.useRef<HTMLVideoElement>(null);
         const loadedSource = React.useRef<VideoSource>();
+        const posterRef = React.useRef<HTMLDivElement>(null);
 
         const borderRadiusContext = useMediaBorderRadius();
         const ratio = typeof aspectRatio === 'number' ? aspectRatio : RATIO[aspectRatio];
@@ -266,8 +272,18 @@ const Video = React.forwardRef<VideoElement, VideoProps>(
                             containerElement.play = () => videoRef.current?.play() || Promise.resolve();
                             containerElement.pause = () => videoRef.current?.pause();
                             containerElement.load = () => {
-                                dispatch('reset');
-                                videoRef.current?.load();
+                                /**
+                                 * Hack to avoid a flash when hiding the video and showing the poster.
+                                 * The issue happened when calling .load() form the component's exposed ref
+                                 */
+                                if (posterRef.current?.style) {
+                                    posterRef.current.style.width = '100%';
+                                    posterRef.current.style.height = '100%';
+                                }
+                                setTimeout(() => {
+                                    dispatch('reset');
+                                    videoRef.current?.load();
+                                }, 100);
                             };
                             containerElement.setCurrentTime = (time: number) => {
                                 if (videoRef.current) {
@@ -285,6 +301,7 @@ const Video = React.forwardRef<VideoElement, VideoProps>(
                 />
                 {video}
                 <div
+                    ref={posterRef}
                     style={{
                         position: ratio !== 0 ? 'absolute' : 'static',
                         width: showPoster ? '100%' : 0,
