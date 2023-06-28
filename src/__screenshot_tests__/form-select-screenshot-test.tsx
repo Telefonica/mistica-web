@@ -26,8 +26,9 @@ test.each(devices)('Select elements on a selected state appear properly on %s', 
     } else {
         const select = await screen.findByLabelText('Select a fruit (opcional)');
         await select.click();
-        const selectOption = (await screen.findAllByText('Apple'))[0];
-        await selectOption.click();
+        const selectOptions = await screen.findAllByRole('option', {name: 'Apple'});
+        // take the last one because the options are displayed in a portal, at the end of the body
+        await selectOptions?.at(-1)?.click();
     }
 
     const image = await page.screenshot({fullPage: true});
