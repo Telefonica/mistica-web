@@ -254,11 +254,16 @@ const Video = React.forwardRef<VideoElement, VideoProps>(
                         width: '100%',
                         height: '100%',
                     }}
+                    /**
+                     * The component forwards this ref instead of the video's one, because sometimes the video
+                     * is hidden (when poster is displayed), which may cause problems if its ref is used by an
+                     * intersection observer (or any logic that depends on visibility of the video)
+                     */
                     ref={(element) => {
                         const containerElement = element ? (element as VideoElement) : null;
 
                         if (containerElement) {
-                            containerElement.play = () => videoRef.current?.play() || new Promise(() => {});
+                            containerElement.play = () => videoRef.current?.play() || Promise.resolve();
                             containerElement.pause = () => videoRef.current?.pause();
                             containerElement.load = () => {
                                 dispatch('reset');
