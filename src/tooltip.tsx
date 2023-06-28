@@ -103,14 +103,12 @@ type Props = {
     delay?: boolean;
     dataAttributes?: DataAttributes;
     fullWidth?: boolean;
-    justifyContent?:
-    | 'start'
-    | 'end'
+    textAlign?:
     | 'center'
-    | 'stretch'
-    | 'space-around'
-    | 'space-between'
-    | 'space-evenly';
+    | 'left'
+    | 'right'
+    | 'justify'
+    
 };
 
 const Tooltip: React.FC<Props> = ({
@@ -122,7 +120,7 @@ const Tooltip: React.FC<Props> = ({
     targetLabel,
     delay = true,
     dataAttributes,
-    justifyContent = 'left',
+    textAlign = 'left',
     fullWidth,
     ...rest
 }) => {
@@ -354,7 +352,7 @@ const Tooltip: React.FC<Props> = ({
                         style={{
                             width,
                             ...containerPosition,
-                            justifyContent,
+                            textAlign,
                             ...vars,
                         }}
                         onPointerOver={() => {
