@@ -17,9 +17,12 @@ export const vars = {
     maxHeight,
 };
 
+/** Must be equal or higher than the dialog's z-index */
+const OPTIONS_ZINDEX = 26;
+
 export const optionsContainer = style([
     sprinkles({
-        position: 'absolute',
+        position: 'fixed',
         padding: 0,
         borderRadius: skinVars.borderRadii.input,
         background: skinVars.colors.backgroundContainer,
@@ -38,6 +41,7 @@ export const optionsContainer = style([
         transition: 'opacity .03s linear,transform .12s cubic-bezier(0,0,.2,1) .15s',
         overflowY: 'auto',
         maxHeight: maxHeight ?? '416px',
+        zIndex: OPTIONS_ZINDEX,
     },
 ]);
 
