@@ -131,3 +131,18 @@ test("with link. Clicking the link doesn't check the checkbox", async () => {
     await userEvent.click(linkElement);
     expect(checkBoxElement.getAttribute('aria-checked')).toBe('false');
 });
+
+test('Checkbox onClick event is not propagated', async () => {
+    const onPressHandler = jest.fn();
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <button onClick={onPressHandler}>
+                <Checkbox name="checkbox" />
+            </button>
+        </ThemeContextProvider>
+    );
+
+    await userEvent.click(screen.getByRole('checkbox'));
+
+    expect(onPressHandler).not.toHaveBeenCalled();
+});
