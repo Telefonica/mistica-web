@@ -12,6 +12,7 @@ import {cancelEvent} from './utils/dom';
 import {Text3} from './text';
 import * as styles from './select.css';
 import {assignInlineVars} from '@vanilla-extract/dynamic';
+import {Portal} from './portal';
 
 export type SelectProps = {
     disabled?: boolean;
@@ -107,16 +108,10 @@ const Select: React.FC<SelectProps> = ({
                 const MARGIN_TOP_SIZE = 12;
                 const PADDING_SIZE = 16;
 
-                // get a possible non-static parent, like a modal dialog
-                const nonStaticParentElement = focusableRef.current?.offsetParent;
-                const parentElementRect = nonStaticParentElement?.getBoundingClientRect() || {
-                    left: 0,
-                    top: 0,
-                };
                 const clientRect = fieldRef.current.getBoundingClientRect();
-                const availableSpaceTop = clientRect.top - parentElementRect.top;
+                const availableSpaceTop = clientRect.top;
                 const width = clientRect.width;
-                const left = clientRect.left - parentElementRect.left;
+                const left = clientRect.left;
                 const height = clientRect.height;
 
                 const top = availableSpaceTop + height;
@@ -408,56 +403,58 @@ const Select: React.FC<SelectProps> = ({
                     }}
                     disableScroll
                 >
-                    <ul
-                        style={assignInlineVars({
-                            [styles.vars.top]: optionsComputedProps.top
-                                ? `${optionsComputedProps.top}px`
-                                : '',
-                            [styles.vars.left]: optionsComputedProps.left
-                                ? `${optionsComputedProps.left}px`
-                                : '',
-                            [styles.vars.maxHeight]: optionsComputedProps.maxHeight
-                                ? `${optionsComputedProps.maxHeight}px`
-                                : '',
-                            [styles.vars.minWidth]: optionsComputedProps.minWidth
-                                ? `${optionsComputedProps.minWidth}px`
-                                : '',
-                            [styles.vars.transformOrigin]: optionsComputedProps.transformOrigin ?? '',
-                        })}
-                        onPointerDown={cancelEvent}
-                        className={classnames(
-                            styles.optionsContainer,
-                            animateShowOptions
-                                ? styles.optionsAnimationsVariants.show
-                                : styles.optionsAnimationsVariants.hide
-                        )}
-                        role="listbox"
-                        ref={optionsMenuRef}
-                    >
-                        {options.map(({value: val, text}) => (
-                            <li
-                                role="option"
-                                aria-selected={val === (valueState ?? value)}
-                                key={val}
-                                data-value={val}
-                                className={classnames(styles.menuItem, {
-                                    [styles.menuItemSelected]:
-                                        val === tentativeValueState || val === (valueState ?? value),
-                                })}
-                                onPointerDown={cancelEvent}
-                                onClick={() => setValue(val)}
-                                ref={(liRef) => {
-                                    if (liRef) {
-                                        optionRefs.current.set(val, liRef);
-                                    } else {
-                                        optionRefs.current.delete(val);
-                                    }
-                                }}
-                            >
-                                <Text3 regular>{text}</Text3>
-                            </li>
-                        ))}
-                    </ul>
+                    <Portal>
+                        <ul
+                            style={assignInlineVars({
+                                [styles.vars.top]: optionsComputedProps.top
+                                    ? `${optionsComputedProps.top}px`
+                                    : '',
+                                [styles.vars.left]: optionsComputedProps.left
+                                    ? `${optionsComputedProps.left}px`
+                                    : '',
+                                [styles.vars.maxHeight]: optionsComputedProps.maxHeight
+                                    ? `${optionsComputedProps.maxHeight}px`
+                                    : '',
+                                [styles.vars.minWidth]: optionsComputedProps.minWidth
+                                    ? `${optionsComputedProps.minWidth}px`
+                                    : '',
+                                [styles.vars.transformOrigin]: optionsComputedProps.transformOrigin ?? '',
+                            })}
+                            onPointerDown={cancelEvent}
+                            className={classnames(
+                                styles.optionsContainer,
+                                animateShowOptions
+                                    ? styles.optionsAnimationsVariants.show
+                                    : styles.optionsAnimationsVariants.hide
+                            )}
+                            role="listbox"
+                            ref={optionsMenuRef}
+                        >
+                            {options.map(({value: val, text}) => (
+                                <li
+                                    role="option"
+                                    aria-selected={val === (valueState ?? value)}
+                                    key={val}
+                                    data-value={val}
+                                    className={classnames(styles.menuItem, {
+                                        [styles.menuItemSelected]:
+                                            val === tentativeValueState || val === (valueState ?? value),
+                                    })}
+                                    onPointerDown={cancelEvent}
+                                    onClick={() => setValue(val)}
+                                    ref={(liRef) => {
+                                        if (liRef) {
+                                            optionRefs.current.set(val, liRef);
+                                        } else {
+                                            optionRefs.current.delete(val);
+                                        }
+                                    }}
+                                >
+                                    <Text3 regular>{text}</Text3>
+                                </li>
+                            ))}
+                        </ul>
+                    </Portal>
                 </Overlay>
             )}
         </>
