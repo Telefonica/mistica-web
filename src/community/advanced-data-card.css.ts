@@ -4,33 +4,20 @@ import * as mq from '../media-queries.css';
 import {vars} from '../skins/skin-contract.css';
 import {applyAlpha} from '../utils/color';
 
-export const anchorCard = style([
-    {
-        selectors: {
-            '&:focus:after': {
-                outline: '2px solid black',
-            },
-            '&:after': {
-                content: ' ',
-                position: 'absolute',
-                top: '0',
-                left: '0',
-                width: '100%',
-                height: '100%',
-                cursor: 'pointer',
-                zIndex: '1',
-            },
-        },
-    },
-]);
-
 export const actions = style([
     sprinkles({
         display: 'flex',
         flex: 1,
         justifyContent: 'space-between',
     }),
-    {flexWrap: 'wrap'},
+    {
+        flexWrap: 'wrap',
+        '@media': {
+            [mq.tabletOrBigger]: {
+                marginTop: 8,
+            },
+        },
+    },
 ]);
 
 export const boxed = style([
@@ -128,9 +115,11 @@ export const cardActionInverse = style([
     },
 ]);
 
-export const touchableZone = style([
-    sprinkles({height: '100%', flex: 1}),
-    {display: 'flex', flexDirection: 'column', alignItems: 'flex-start', alignContent: 'flex-start'},
+export const adjustmentDivider = style([
+    {
+        marginLeft: -24,
+        marginRight: -24,
+    },
 ]);
 
 export const footerText = style([

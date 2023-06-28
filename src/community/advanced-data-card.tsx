@@ -17,14 +17,6 @@ import classNames from 'classnames';
 
 import type StackingGroup from '../stacking-group';
 import type Image from '../image';
-// import type {
-//     ValueBlock,
-//     InformationBlock,
-//     ProgressBlock,
-//     HighlightedValueBlock,
-//     RowBlock,
-//     SimpleBlock,
-// } from './advanced-slots';
 import type {ButtonPrimary, ButtonLink} from '../button';
 import type {DataAttributes, IconProps} from '../utils/types';
 import type {RendersNullableElement} from '../utils/renders-element';
@@ -143,7 +135,6 @@ const CardContent: React.FC<CardContentProps> = ({
                             <Stack space={4}>
                                 {pretitle && (
                                     <Text2
-                                        aria-label="Texto"
                                         color={vars.colors.textPrimary}
                                         truncate={pretitleLinesMax}
                                         as={pretitleAs}
@@ -154,7 +145,6 @@ const CardContent: React.FC<CardContentProps> = ({
                                     </Text2>
                                 )}
                                 <Text
-                                    aria-label="Texto"
                                     color={vars.colors.textPrimary}
                                     mobileSize={20}
                                     mobileLineHeight="28px"
@@ -168,7 +158,6 @@ const CardContent: React.FC<CardContentProps> = ({
                                     {title}
                                 </Text>
                                 <Text2
-                                    aria-label="Texto"
                                     color={vars.colors.textPrimary}
                                     truncate={subtitleLinesMax}
                                     as="p"
@@ -189,7 +178,6 @@ const CardContent: React.FC<CardContentProps> = ({
                         regular
                         color={vars.colors.textSecondary}
                         hyphens="auto"
-                        aria-label="Texto"
                     >
                         {description}
                     </Text2>
@@ -214,7 +202,7 @@ const CardFooter: React.FC<CardFooterProps> = ({
     footerTextLinesMax,
     buttonLink,
 }) => {
-    const {isMobile, isTabletOrBigger} = useScreenSize();
+    const {isMobile} = useScreenSize();
 
     const hasButton = !!button;
     const hasFooterImage = !!footerImage;
@@ -228,24 +216,19 @@ const CardFooter: React.FC<CardFooterProps> = ({
     const marginRight = footerCondition ? '' : 'auto';
     const alignItems = footerCondition ? 'start' : 'center';
     const marginTop = hasAllItens ? '8px' : '16px';
-    const marginTopTabletOrBigger = isTabletOrBigger ? '8px' : '';
     const marginTopButton = isMobile ? '16px' : '8px';
     const maxWidth = hasButtonLink && !hasAllItens ? '178px' : '';
 
     return (
         <div>
-            <div style={{marginLeft: -24, marginRight: -24}}>
+            <div className={styles.adjustmentDivider}>
                 <Divider />
             </div>
 
-            <div
-                className={styles.actions}
-                style={{flexDirection, alignItems, marginTop: marginTopTabletOrBigger}}
-            >
+            <div className={styles.actions} style={{flexDirection, alignItems}}>
                 {hasButton && (
                     // eslint-disable-next-line jsx-a11y/no-static-element-interactions
                     <div
-                        aria-label="button"
                         tabIndex={-1}
                         onClick={(event) => event.stopPropagation()}
                         className={sprinkles({
@@ -255,7 +238,6 @@ const CardFooter: React.FC<CardFooterProps> = ({
                             marginTop: marginTopButton,
                             marginRight: '16px',
                             position: 'relative',
-                            zIndex: '2',
                         }}
                     >
                         {button}
@@ -272,7 +254,7 @@ const CardFooter: React.FC<CardFooterProps> = ({
                 >
                     {hasFooterImage && (
                         <div
-                            style={{marginRight: '16px', zIndex: '0'}}
+                            style={{marginRight: '16px'}}
                             className={sprinkles({alignItems: 'center', display: 'flex'})}
                         >
                             {footerImage}
@@ -290,7 +272,6 @@ const CardFooter: React.FC<CardFooterProps> = ({
                 {hasButtonLink && (
                     // eslint-disable-next-line jsx-a11y/no-static-element-interactions
                     <div
-                        aria-label="link"
                         tabIndex={-1}
                         className={sprinkles({
                             display: 'flex',
@@ -299,7 +280,6 @@ const CardFooter: React.FC<CardFooterProps> = ({
                         style={{
                             marginTop: isMobile ? marginTop : marginTopButton,
                             position: 'relative',
-                            zIndex: '2',
                             marginLeft: -12,
                             marginRight: -12,
                         }}
@@ -379,26 +359,35 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
     ) => {
         const finalActions = useTopActions(actions, onClose);
         const hasAcations = finalActions?.length > 0;
-        const hasStackingGroup = !!stackingGroup;
 
-        const hasFooter = !!button || !!footerImage || !!footerText || !!buttonLink;
         const footerProps = {button, footerImage, footerText, footerTextLinesMax, buttonLink};
 
         const extraSpaceSize = smallSlotSpace ? 8 : 24;
 
         const topActionsStylesWithIcon = {position: 'absolute', top: 8, right: 8, zIndex: 2} as const;
+
+        const hasFooter = !!button || !!footerImage || !!footerText || !!buttonLink;
         const cardContentStyle = sprinkles({
             display: 'flex',
             paddingBottom: hasFooter || extra ? 24 : 0,
         });
 
         return (
-            <section aria-label={ariaLabel} style={{height: '100%', position: 'relative'}}>
+            <section
+                aria-label={ariaLabel}
+                className={sprinkles({
+                    position: 'relative',
+                    height: '100%',
+                })}
+            >
                 <Touchable
                     onPress={onPress}
                     tabIndex={0}
                     maybe
-                    style={{height: '100%', position: 'relative'}}
+                    className={sprinkles({
+                        position: 'relative',
+                        height: '100%',
+                    })}
                 >
                     <Boxed
                         className={classNames(styles.boxed, onPress ? styles.interaction : '')}
@@ -408,18 +397,6 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
                         height="100%"
                     >
                         <div className={styles.dataCard}>
-                            {/* {onPress && (
-                            <a
-                                tabIndex={0}
-                                aria-label={ariaLabel}
-                                href="javascript:void(0)"
-                                className={styles.anchorCard}
-                                onClick={() => {
-                                    onPress();
-                                }}
-                            />
-                        )} */}
-
                             <div className={cardContentStyle}>
                                 <div
                                     className={sprinkles({
@@ -427,9 +404,18 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
                                     })}
                                 >
                                     <Stack space={8} className={sprinkles({flex: 1})}>
-                                        {hasStackingGroup && (
-                                            <div style={{display: 'flex', width: '100%'}}>
-                                                <div style={{zIndex: '0', width: '100%'}}>
+                                        {stackingGroup && (
+                                            <div
+                                                className={sprinkles({
+                                                    display: 'flex',
+                                                    width: '100%',
+                                                })}
+                                            >
+                                                <div
+                                                    className={sprinkles({
+                                                        width: '100%',
+                                                    })}
+                                                >
                                                     {stackingGroup}
                                                 </div>
                                             </div>
@@ -462,22 +448,18 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
                                             return (
                                                 <div key={index}>
                                                     <div
-                                                        style={{
+                                                        className={sprinkles({
                                                             display: 'flex',
                                                             width: '100%',
-                                                        }}
+                                                        })}
                                                     >
-                                                        <div style={{zIndex: '0', width: '100%'}}>{ex}</div>
+                                                        <div className={sprinkles({width: '100%'})}>{ex}</div>
                                                     </div>
 
                                                     {index + 1 !== extra.length && (
-                                                        <div
-                                                            className={sprinkles({
-                                                                paddingY: extraSpaceSize,
-                                                            })}
-                                                        >
+                                                        <Box paddingY={extraSpaceSize}>
                                                             <Divider />
-                                                        </div>
+                                                        </Box>
                                                     )}
                                                 </div>
                                             );

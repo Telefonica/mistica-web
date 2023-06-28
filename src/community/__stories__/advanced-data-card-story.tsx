@@ -45,7 +45,7 @@ export const Default: StoryComponent<Args> = ({
         <ButtonPrimary
             small
             onPress={() => {
-                window.alert('close!');
+                window.alert('click!');
             }}
         >
             Action
@@ -55,7 +55,7 @@ export const Default: StoryComponent<Args> = ({
     const buttonLink = Actions.includes('link') ? (
         <ButtonLink
             onPress={() => {
-                window.alert('close!');
+                window.alert('click!');
             }}
         >
             Link
@@ -64,7 +64,7 @@ export const Default: StoryComponent<Args> = ({
 
     const onPress = Actions.includes('onPress')
         ? () => {
-              window.alert('closed!');
+              window.alert('press!');
           }
         : undefined;
 
@@ -102,7 +102,7 @@ export const Default: StoryComponent<Args> = ({
     );
 };
 
-Default.storyName = 'Data Card Advanced';
+Default.storyName = 'Advanced Data Card';
 Default.args = {
     headlineType: 'promo',
     headline: 'Priority',
