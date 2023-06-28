@@ -1,29 +1,27 @@
 import * as React from 'react';
 import classnames from 'classnames';
-import {CSSTransition} from 'react-transition-group';
-import {useAriaId, useScreenSize, useTheme} from './hooks';
-import {Portal} from './portal';
+import { CSSTransition } from 'react-transition-group';
+import { useAriaId, useScreenSize, useTheme } from './hooks';
+import { Portal } from './portal';
 import Overlay from './overlay';
-import {Text2} from './text';
+import { Text2 } from './text';
 import * as key from './utils/key-codes';
 import Stack from './stack';
 import * as styles from './tooltip.css';
-import {assignInlineVars} from '@vanilla-extract/dynamic';
-import {getPrefixedDataAttributes} from './utils/dom';
+import { assignInlineVars } from '@vanilla-extract/dynamic';
+import { getPrefixedDataAttributes } from './utils/dom';
 
-import type {DataAttributes} from './utils/types';
+import type { DataAttributes } from './utils/types';
 
 const defaultPositionDesktop = 'bottom';
 const defaultPositionMobile = 'top';
 const arrowSize = 12;
 const distanceToTarget = 4 + arrowSize;
-const marginLeftRightMobile = 16;
-const defaultWidth = 40;
 const transitionDurationMs = 500;
 const animationMovement = 12;
 const defaultShowTooltipDelayMs = 500;
 
-const noOp = () => {};
+const noOp = () => { };
 
 type Position = 'top' | 'bottom' | 'left' | 'right';
 
@@ -106,13 +104,13 @@ type Props = {
     dataAttributes?: DataAttributes;
     fullWidth?: boolean;
     justifyContent?:
-        | 'start'
-        | 'end'
-        | 'center'
-        | 'stretch'
-        | 'space-around'
-        | 'space-between'
-        | 'space-evenly';
+    | 'start'
+    | 'end'
+    | 'center'
+    | 'stretch'
+    | 'space-around'
+    | 'space-between'
+    | 'space-evenly';
 };
 
 const Tooltip: React.FC<Props> = ({
@@ -124,13 +122,13 @@ const Tooltip: React.FC<Props> = ({
     targetLabel,
     delay = true,
     dataAttributes,
-    justifyContent = 'center',
+    justifyContent = 'left',
     fullWidth,
     ...rest
 }) => {
-    const {isDarkMode} = useTheme();
+    const { isDarkMode } = useTheme();
     const [isVisible, setIsVisible] = React.useState(false);
-    const {isTabletOrSmaller} = useScreenSize();
+    const { isTabletOrSmaller } = useScreenSize();
     const ariaId = useAriaId();
     const isPointerOver = React.useRef(false);
     const closeTooltipTimeoutId = React.useRef<NodeJS.Timeout | null>(null);
@@ -145,14 +143,7 @@ const Tooltip: React.FC<Props> = ({
         width: 0,
         height: 0,
     });
-    // const tooltipBoundingClientRect = React.useRef({
-    //     top: 0,
-    //     right: 0,
-    //     left: 0,
-    //     bottom: 0,
-    //     width: 0,
-    //     height: 0,
-    // });
+
     const [containerPosition, setContainerPosition] = React.useState({});
 
     const getPosition = (position: Position = defaultPositionDesktop) =>
@@ -217,8 +208,8 @@ const Tooltip: React.FC<Props> = ({
             left: {
                 left: !width
                     ? targetBoundingClientRect.current.left -
-                      tooltipBoundingClientRect.width -
-                      distanceToTarget
+                    tooltipBoundingClientRect.width -
+                    distanceToTarget
                     : targetBoundingClientRect.current.left - width - distanceToTarget,
                 top:
                     window.pageYOffset +
@@ -229,51 +220,36 @@ const Tooltip: React.FC<Props> = ({
                 top: window.pageYOffset + targetBoundingClientRect.current.top - distanceToTarget,
                 left: !width
                     ? window.pageXOffset +
-                      targetBoundingClientRect.current.left +
-                      targetBoundingClientRect.current.width / 2 -
-                      tooltipBoundingClientRect.width / 2
-                    : // isTabletOrSmaller
-                      //     ? marginLeftRightMobile
-                      //     :
-                      window.pageXOffset +
-                      targetBoundingClientRect.current.left +
-                      targetBoundingClientRect.current.width / 2 -
-                      width / 2,
+                    targetBoundingClientRect.current.left +
+                    targetBoundingClientRect.current.width / 2 -
+                    tooltipBoundingClientRect.width / 2
+                    :
+                    window.pageXOffset +
+                    targetBoundingClientRect.current.left +
+                    targetBoundingClientRect.current.width / 2 -
+                    width / 2,
             },
             bottom: {
                 top: window.pageYOffset + targetBoundingClientRect.current.bottom + distanceToTarget,
                 left: !width
                     ? window.pageXOffset +
-                      targetBoundingClientRect.current.left +
-                      targetBoundingClientRect.current.width / 2 -
-                      tooltipBoundingClientRect.width / 2
-                    : //  isTabletOrSmaller
-                      //     ? marginLeftRightMobile
-                      //     :
-                      window.pageXOffset +
-                      targetBoundingClientRect.current.left +
-                      targetBoundingClientRect.current.width / 2 -
-                      width / 2,
+                    targetBoundingClientRect.current.left +
+                    targetBoundingClientRect.current.width / 2 -
+                    tooltipBoundingClientRect.width / 2
+                    :
+                    window.pageXOffset +
+                    targetBoundingClientRect.current.left +
+                    targetBoundingClientRect.current.width / 2 -
+                    width / 2,
             },
         };
 
         return containerPos[position];
     }, []);
 
-    // const getCustomStylesForMobile = () =>
-    //     isTabletOrSmaller
-    //         ? {
-    //               left:
-    //                   targetBoundingClientRect.current.left +
-    //                   targetBoundingClientRect.current.width / 2 -
-    //                   marginLeftRightMobile,
-    //           }
-    //         : {};
 
     const getWidth = () =>
-        // isTabletOrSmaller ? window.innerWidth - marginLeftRightMobile * 2 :
         getWidthTooltip(rest.width);
-
     const width = getWidth();
 
     const arrowClassNameByPosition = {
@@ -294,7 +270,6 @@ const Tooltip: React.FC<Props> = ({
 
     React.useEffect(() => {
         if (tooltipRef.current && isVisible) {
-            // tooltipBoundingClientRect.current = tooltipRef.current.getBoundingClientRect();
             const widthAux = width ? width : 0;
             setContainerPosition(getContainerPosition(position, widthAux));
         }
@@ -303,7 +278,7 @@ const Tooltip: React.FC<Props> = ({
     return (
         <>
             <div
-                style={{width: fullWidth ? '100%' : ''}}
+                style={{ width: fullWidth ? '100%' : '' }}
                 ref={targetRef}
                 className={styles.wrapper}
                 onPointerOver={() => {
@@ -329,20 +304,20 @@ const Tooltip: React.FC<Props> = ({
                     isTouchableDevice
                         ? noOp
                         : () => {
-                              if (showTooltipTimeoutId.current) {
-                                  clearTimeout(showTooltipTimeoutId.current);
-                                  showTooltipTimeoutId.current = null;
-                                  isPointerOver.current = false;
-                                  return;
-                              }
+                            if (showTooltipTimeoutId.current) {
+                                clearTimeout(showTooltipTimeoutId.current);
+                                showTooltipTimeoutId.current = null;
+                                isPointerOver.current = false;
+                                return;
+                            }
 
-                              closeTooltipTimeoutId.current = setTimeout(() => {
-                                  if (!isPointerOver.current) return;
-                                  closeTooltipTimeoutId.current = null;
-                                  isPointerOver.current = false;
-                                  toggleVisibility();
-                              }, 100);
-                          }
+                            closeTooltipTimeoutId.current = setTimeout(() => {
+                                if (!isPointerOver.current) return;
+                                closeTooltipTimeoutId.current = null;
+                                isPointerOver.current = false;
+                                toggleVisibility();
+                            }, 100);
+                        }
                 }
                 onFocus={handleFocus}
                 onKeyDown={handleKeyDown}
@@ -392,19 +367,18 @@ const Tooltip: React.FC<Props> = ({
                             isTouchableDevice
                                 ? noOp
                                 : () => {
-                                      closeTooltipTimeoutId.current = setTimeout(() => {
-                                          if (!isPointerOver.current) return;
+                                    closeTooltipTimeoutId.current = setTimeout(() => {
+                                        if (!isPointerOver.current) return;
 
-                                          closeTooltipTimeoutId.current = null;
-                                          isPointerOver.current = false;
-                                          toggleVisibility();
-                                      }, 100);
-                                  }
+                                        closeTooltipTimeoutId.current = null;
+                                        isPointerOver.current = false;
+                                        toggleVisibility();
+                                    }, 100);
+                                }
                         }
                     >
                         <div
                             className={classnames(styles.arrowWrapper, arrowClassNameByPosition[position])}
-                            // style={getCustomStylesForMobile()}
                         >
                             <div className={styles.arrow} />
                         </div>
