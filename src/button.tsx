@@ -97,8 +97,8 @@ const renderButtonContent = ({
     setShouldRenderSpinner,
     renderText,
     textContentStyle,
-    startIcon,
-    endIcon,
+    StartIcon,
+    EndIcon,
     withChevron,
 }: {
     showSpinner: boolean;
@@ -109,8 +109,8 @@ const renderButtonContent = ({
     setShouldRenderSpinner: (value: boolean) => void;
     renderText: (text: React.ReactNode) => React.ReactNode;
     textContentStyle?: string;
-    startIcon?: React.ReactElement<IconProps>;
-    endIcon?: React.ReactElement<IconProps>;
+    StartIcon?: React.FC<IconProps>;
+    EndIcon?: React.FC<IconProps>;
     withChevron?: boolean;
 }): React.ReactNode => {
     const defaultIconSize = small ? styles.SMALL_ICON_SIZE : styles.ICON_SIZE;
@@ -120,7 +120,7 @@ const renderButtonContent = ({
         <>
             {/* text content */}
             <div aria-hidden={showSpinner ? true : undefined} className={textContentStyle}>
-                {startIcon && (
+                {StartIcon && (
                     <div
                         style={{
                             display: 'flex',
@@ -128,9 +128,7 @@ const renderButtonContent = ({
                             marginRight: styles.ICON_MARGIN_PX,
                         }}
                     >
-                        {React.cloneElement(startIcon, {
-                            size: pxToRem(startIcon.props.size || defaultIconSize),
-                        })}
+                        <StartIcon size={defaultIconSize} color="currentColor" />
                     </div>
                 )}
                 {renderButtonElement({
@@ -138,7 +136,7 @@ const renderButtonContent = ({
                     defaultIconSize,
                     renderText,
                 })}
-                {endIcon && !withChevron && (
+                {EndIcon && !withChevron && (
                     <div
                         style={{
                             display: 'flex',
@@ -146,9 +144,7 @@ const renderButtonContent = ({
                             marginLeft: styles.ICON_MARGIN_PX,
                         }}
                     >
-                        {React.cloneElement(endIcon, {
-                            size: pxToRem(endIcon.props.size || defaultIconSize),
-                        })}
+                        <EndIcon size={defaultIconSize} color="currentColor" />
                     </div>
                 )}
                 {withChevron && (
@@ -235,8 +231,8 @@ interface CommonProps {
     'aria-controls'?: string;
     'aria-expanded'?: 'true' | 'false';
     tabIndex?: number;
-    startIcon?: React.ReactElement<IconProps>;
-    endIcon?: React.ReactElement<IconProps>;
+    StartIcon?: React.FC<IconProps>;
+    EndIcon?: React.FC<IconProps>;
 }
 
 export interface ToButtonProps extends CommonProps {
@@ -368,8 +364,8 @@ const Button = React.forwardRef<TouchableElement, ButtonProps & {type: ButtonTyp
             small: props.small,
             renderText,
             textContentStyle: styles.textContent,
-            startIcon: props.startIcon,
-            endIcon: props.endIcon,
+            StartIcon: props.StartIcon,
+            EndIcon: props.EndIcon,
         }),
         disabled: props.disabled || showSpinner || isFormSending,
         role: 'button',
@@ -438,8 +434,8 @@ interface ButtonLinkCommonProps {
     aligned?: boolean;
     showSpinner?: boolean;
     loadingText?: string;
-    startIcon?: React.ReactElement<IconProps>;
-    endIcon?: React.ReactElement<IconProps>;
+    StartIcon?: React.FC<IconProps>;
+    EndIcon?: React.FC<IconProps>;
 }
 interface ButtonLinkOnPressProps extends ButtonLinkCommonProps {
     onPress: (event: React.MouseEvent<HTMLElement>) => void | undefined | Promise<void>;
@@ -525,8 +521,8 @@ export const ButtonLink = React.forwardRef<TouchableElement, ButtonLinkProps>((p
             small: true,
             renderText,
             textContentStyle: styles.textContentLink,
-            startIcon: props.startIcon,
-            endIcon: props.endIcon,
+            StartIcon: props.StartIcon,
+            EndIcon: props.EndIcon,
             withChevron: (!!props.to || !!props.href) && !props.noChevron,
         }),
         disabled: props.disabled || showSpinner || isFormSending,

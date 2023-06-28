@@ -226,29 +226,23 @@ export const EllipsisInButtons: StoryComponent = () => {
 export const withIcon: StoryComponent = () => (
     <StorySection title="Buttons can have an icon">
         <Stack space={16}>
-            <ButtonPrimary onPress={() => window.alert('photo!')}>
-                <IconPhotoCameraRegular color="currentColor" />
+            <ButtonPrimary onPress={() => window.alert('photo!')} StartIcon={IconPhotoCameraRegular}>
                 Take a photo
             </ButtonPrimary>
-            <ButtonPrimary small onPress={() => window.alert('photo!')}>
-                <IconPhotoCameraRegular color="currentColor" />
+            <ButtonPrimary small onPress={() => window.alert('photo!')} StartIcon={IconPhotoCameraRegular}>
                 Take a photo
             </ButtonPrimary>
-            <ButtonLink onPress={() => window.alert('photo!')}>
-                <IconPhotoCameraRegular color="currentColor" />
+            <ButtonLink onPress={() => window.alert('photo!')} StartIcon={IconPhotoCameraRegular}>
                 Take a photo
             </ButtonLink>
-            <ButtonPrimary onPress={() => window.alert('photo!')}>
+            <ButtonPrimary onPress={() => window.alert('photo!')} EndIcon={IconPhotoCameraRegular}>
                 Take a photo
-                <IconPhotoCameraRegular color="currentColor" />
             </ButtonPrimary>
-            <ButtonPrimary small onPress={() => window.alert('photo!')}>
+            <ButtonPrimary small onPress={() => window.alert('photo!')} EndIcon={IconPhotoCameraRegular}>
                 Take a photo
-                <IconPhotoCameraRegular color="currentColor" />
             </ButtonPrimary>
-            <ButtonLink onPress={() => window.alert('photo!')}>
+            <ButtonLink onPress={() => window.alert('photo!')} EndIcon={IconPhotoCameraRegular}>
                 Take a photo
-                <IconPhotoCameraRegular color="currentColor" />
             </ButtonLink>
         </Stack>
     </StorySection>
