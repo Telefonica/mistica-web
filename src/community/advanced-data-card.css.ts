@@ -1,4 +1,4 @@
-import {style} from '@vanilla-extract/css';
+import {style, styleVariants} from '@vanilla-extract/css';
 import {sprinkles} from '../sprinkles.css';
 import * as mq from '../media-queries.css';
 import {vars} from '../skins/skin-contract.css';
@@ -132,3 +132,43 @@ export const footerText = style([
         minHeight: '40px',
     },
 ]);
+
+export const actionsVariants = styleVariants({
+    default: [
+        {
+            flexDirection: 'row',
+            alignItems: 'center',
+        },
+    ],
+    mobile: [
+        {
+            '@media': {
+                [mq.mobile]: {
+                    flexDirection: 'column',
+                    alignItems: 'start',
+                },
+            },
+        },
+    ],
+});
+
+export const marginRightAuto = style({
+    '@media': {
+        [mq.mobile]: {
+            marginRight: 'auto',
+        },
+    },
+});
+
+export const marginTop = style({
+    marginTop: 8,
+});
+
+export const marginTopButton = style({
+    marginTop: 8,
+    '@media': {
+        [mq.mobile]: {
+            marginTop: 16,
+        },
+    },
+});

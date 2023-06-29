@@ -24,7 +24,7 @@ type Args = {
     stackingGroup: boolean;
     footerImage: boolean;
     footerText: string;
-    Actions: string;
+    actions: string;
     onClose: boolean;
 };
 
@@ -38,10 +38,10 @@ export const Default: StoryComponent<Args> = ({
     stackingGroup,
     footerImage,
     footerText,
-    Actions,
+    actions,
     onClose,
 }) => {
-    const button = Actions.includes('button') ? (
+    const button = actions.includes('button') ? (
         <ButtonPrimary
             small
             onPress={() => {
@@ -52,7 +52,7 @@ export const Default: StoryComponent<Args> = ({
         </ButtonPrimary>
     ) : undefined;
 
-    const buttonLink = Actions.includes('link') ? (
+    const buttonLink = actions.includes('link') ? (
         <ButtonLink
             onPress={() => {
                 window.alert('click!');
@@ -62,7 +62,7 @@ export const Default: StoryComponent<Args> = ({
         </ButtonLink>
     ) : undefined;
 
-    const onPress = Actions.includes('onPress')
+    const onPress = actions.includes('onPress')
         ? () => {
               window.alert('press!');
           }
@@ -113,7 +113,7 @@ Default.args = {
     stackingGroup: true,
     footerImage: false,
     footerText: '',
-    Actions: 'button and link',
+    actions: 'button and link',
     onClose: true,
 };
 Default.argTypes = {
@@ -121,7 +121,7 @@ Default.argTypes = {
         options: ['promo', 'active', 'inactive', 'success', 'warning', 'error'],
         control: {type: 'select'},
     },
-    Actions: {
+    actions: {
         options: [
             'none',
             'button',

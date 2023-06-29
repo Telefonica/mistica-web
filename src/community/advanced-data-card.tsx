@@ -5,8 +5,7 @@ import Stack from '../stack';
 import * as styles from './advanced-data-card.css';
 import Divider from '../divider';
 import Text, {Text2} from '../text';
-import Tag from '../tag';
-import {useScreenSize, useTheme} from '../hooks';
+import {useTheme} from '../hooks';
 import {vars} from '../skins/skin-contract.css';
 import IconCloseRegular from '../generated/mistica-icons/icon-close-regular';
 import IconButton from '../icon-button';
@@ -20,6 +19,7 @@ import type Image from '../image';
 import type {ButtonPrimary, ButtonLink} from '../button';
 import type {DataAttributes, IconProps} from '../utils/types';
 import type {RendersNullableElement} from '../utils/renders-element';
+import type Tag from '../tag';
 
 type CardAction = {
     label: string;
@@ -116,22 +116,13 @@ const CardContent: React.FC<CardContentProps> = ({
     descriptionLinesMax,
 }) => {
     const {textPresets} = useTheme();
-    const renderHeadline = () => {
-        if (!headline) {
-            return null;
-        }
-        if (typeof headline === 'string') {
-            return <Tag type="promo">{headline}</Tag>;
-        }
-        return headline;
-    };
     return (
         <div>
             <Stack space={4}>
                 {(headline || pretitle || title || subtitle) && (
                     <header>
                         <Stack space={4}>
-                            {renderHeadline()}
+                            {headline}
                             <Stack space={4}>
                                 {pretitle && (
                                     <Text2
@@ -202,21 +193,12 @@ const CardFooter: React.FC<CardFooterProps> = ({
     footerTextLinesMax,
     buttonLink,
 }) => {
-    const {isMobile} = useScreenSize();
-
     const hasButton = !!button;
     const hasFooterImage = !!footerImage;
     const hasFooterText = !!footerText;
     const hasButtonLink = !!buttonLink;
     const hasAllItens = hasButton && (hasFooterImage || hasFooterText) && hasButtonLink;
 
-    const footerCondition = hasAllItens && isMobile;
-
-    const flexDirection = footerCondition ? 'column' : 'row';
-    const marginRight = footerCondition ? '' : 'auto';
-    const alignItems = footerCondition ? 'start' : 'center';
-    const marginTop = hasAllItens ? '8px' : '16px';
-    const marginTopButton = isMobile ? '16px' : '8px';
     const maxWidth = hasButtonLink && !hasAllItens ? '178px' : '';
 
     return (
@@ -225,17 +207,24 @@ const CardFooter: React.FC<CardFooterProps> = ({
                 <Divider />
             </div>
 
-            <div className={styles.actions} style={{flexDirection, alignItems}}>
+            <div
+                className={classNames(
+                    styles.actions,
+                    styles.actionsVariants[hasAllItens ? 'mobile' : 'default']
+                )}
+            >
                 {hasButton && (
                     // eslint-disable-next-line jsx-a11y/no-static-element-interactions
                     <div
                         tabIndex={-1}
                         onClick={(event) => event.stopPropagation()}
-                        className={sprinkles({
-                            display: 'flex',
-                        })}
+                        className={classNames(
+                            sprinkles({
+                                display: 'flex',
+                            }),
+                            styles.marginTopButton
+                        )}
                         style={{
-                            marginTop: marginTopButton,
                             marginRight: '16px',
                             position: 'relative',
                         }}
@@ -244,12 +233,12 @@ const CardFooter: React.FC<CardFooterProps> = ({
                     </div>
                 )}
                 <div
+                    className={hasAllItens ? styles.marginRightAuto : ''}
                     style={{
                         display: 'flex',
                         flexDirection: 'row',
-                        marginTop,
+                        marginTop: hasAllItens ? 8 : 16,
                         flexWrap: 'wrap',
-                        marginRight,
                     }}
                 >
                     {hasFooterImage && (
@@ -273,12 +262,14 @@ const CardFooter: React.FC<CardFooterProps> = ({
                     // eslint-disable-next-line jsx-a11y/no-static-element-interactions
                     <div
                         tabIndex={-1}
-                        className={sprinkles({
-                            display: 'flex',
-                        })}
+                        className={classNames(
+                            sprinkles({
+                                display: 'flex',
+                            }),
+                            hasAllItens ? styles.marginTop : styles.marginTopButton
+                        )}
                         onClick={(event) => event.stopPropagation()}
                         style={{
-                            marginTop: isMobile ? marginTop : marginTopButton,
                             position: 'relative',
                             marginLeft: -12,
                             marginRight: -12,

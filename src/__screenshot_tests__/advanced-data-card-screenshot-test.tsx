@@ -1,7 +1,7 @@
 import {openStoryPage, screen} from '../test-utils';
 
 test.each`
-    Actions              | footerImage
+    actions              | footerImage
     ${'none'}            | ${false}
     ${'button'}          | ${false}
     ${'link'}            | ${false}
@@ -10,11 +10,11 @@ test.each`
     ${'button'}          | ${true}
     ${'link'}            | ${true}
     ${'button and link'} | ${true}
-`('Advanced Data Card', async ({Actions, footerImage}) => {
+`('Advanced Data Card', async ({actions, footerImage}) => {
     await openStoryPage({
         id: 'community-advanceddatacard--default',
         device: 'MOBILE_IOS',
-        args: {Actions, footerImage},
+        args: {actions, footerImage},
     });
 
     const element = await screen.findByTestId('advanced-data-card');
