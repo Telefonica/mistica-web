@@ -3,6 +3,7 @@ import {useTheme} from './hooks';
 import * as styles from './slider.css';
 import classnames from 'classnames';
 import IntegerField from './integer-field';
+import Tooltip from './tooltip';
 
 interface SliderProps {
     disabled?: boolean;
@@ -38,6 +39,8 @@ const Slider: React.FC<SliderProps> = ({
     const [error, setError] = React.useState('');
     const sliderRef = React.useRef<HTMLDivElement>(null);
     const opacity = React.useMemo(() => (disabled ? '0.5' : '1'), [disabled]);
+    const sliderPaddingTop = field ? 24 : 0;
+    const sliderTop = field ? '93%' : '50%';
     const sliderDisabled = React.useMemo(() => disabled && styles.sliderDisabled, [disabled]);
 
     const setValue = React.useCallback(() => {
@@ -176,9 +179,14 @@ const Slider: React.FC<SliderProps> = ({
                     width: '100%',
                 }}
             >
-                <div ref={sliderRef} style={{opacity}} className={styles.rangeSlider}>
+                <div
+                    ref={sliderRef}
+                    style={{opacity, paddingTop: sliderPaddingTop}}
+                    className={styles.rangeSlider}
+                >
                     <input
                         disabled={disabled}
+                        style={{top: sliderTop}}
                         className={classnames(
                             styles.sliderVariant[isIos ? 'ios' : 'default'],
                             sliderDisabled
@@ -192,11 +200,11 @@ const Slider: React.FC<SliderProps> = ({
                     />
 
                     <div
-                        style={{left: setValue()}}
+                        style={{left: setValue(), top: sliderTop}}
                         className={classnames(styles.sliderThumbVariant[isIos ? 'ios' : 'default'])}
                     />
 
-                    <div className={styles.progress} style={{width: setValue()}} />
+                    <div className={styles.progress} style={{width: setValue(), top: sliderTop}} />
                 </div>
             </div>
 

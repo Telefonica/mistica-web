@@ -14,7 +14,6 @@ export const container = style([
 
 export const rangeSlider = style([
     sprinkles({
-        paddingTop: 24,
         display: 'flex',
         position: 'relative',
         width: '100%',
