@@ -290,7 +290,7 @@ type TextAs = 'h1' | 'h2' | 'h3' | 'h4';
 interface AdvancedDataCardProps {
     onPress?: () => void;
     stackingGroup?: RendersNullableElement<typeof StackingGroup>;
-    headline?: string | RendersNullableElement<typeof Tag>;
+    headline?: RendersNullableElement<typeof Tag>;
     pretitle?: string;
     pretitleLinesMax?: number;
     pretitleAs?: TextAs;

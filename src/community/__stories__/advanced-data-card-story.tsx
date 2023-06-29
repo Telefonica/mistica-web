@@ -15,7 +15,6 @@ export default {
 };
 
 type Args = {
-    headline: string;
     headlineType: TagType;
     pretitle: string;
     title: string;
@@ -29,7 +28,6 @@ type Args = {
 };
 
 export const Default: StoryComponent<Args> = ({
-    headline,
     headlineType,
     pretitle,
     title,
@@ -84,7 +82,7 @@ export const Default: StoryComponent<Args> = ({
                             </StackingGroup>
                         ) : undefined
                     }
-                    headline={headline ? <Tag type={headlineType}>{headline}</Tag> : ''}
+                    headline={<Tag type={headlineType}>{headlineType}</Tag>}
                     pretitle={pretitle}
                     title={title}
                     subtitle={subtitle}
@@ -105,7 +103,6 @@ export const Default: StoryComponent<Args> = ({
 Default.storyName = 'Advanced Data Card';
 Default.args = {
     headlineType: 'promo',
-    headline: 'Priority',
     pretitle: 'pretitle',
     title: 'title',
     subtitle: 'subtitle',
@@ -118,7 +115,7 @@ Default.args = {
 };
 Default.argTypes = {
     headlineType: {
-        options: ['promo', 'active', 'inactive', 'success', 'warning', 'error'],
+        options: ['promo', 'active', 'inactive', 'success', 'warning', 'error', undefined],
         control: {type: 'select'},
     },
     actions: {
