@@ -9,6 +9,7 @@ export const actions = style([
         display: 'flex',
         flex: 1,
         justifyContent: 'space-between',
+        paddingX: 16,
     }),
     {
         flexWrap: 'wrap',
@@ -50,8 +51,6 @@ export const dataCard = style([
         flexDirection: 'column',
         width: '100%',
         height: '100%',
-        paddingTop: 8,
-        paddingX: 16,
     }),
     {
         '@media': {

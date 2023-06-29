@@ -214,10 +214,8 @@ const CardFooter: React.FC<CardFooterProps> = ({
                 )}
             >
                 {hasButton && (
-                    // eslint-disable-next-line jsx-a11y/no-static-element-interactions
                     <div
                         tabIndex={-1}
-                        onClick={(event) => event.stopPropagation()}
                         className={classNames(
                             sprinkles({
                                 display: 'flex',
@@ -259,7 +257,6 @@ const CardFooter: React.FC<CardFooterProps> = ({
                     )}
                 </div>
                 {hasButtonLink && (
-                    // eslint-disable-next-line jsx-a11y/no-static-element-interactions
                     <div
                         tabIndex={-1}
                         className={classNames(
@@ -268,7 +265,6 @@ const CardFooter: React.FC<CardFooterProps> = ({
                             }),
                             hasAllItens ? styles.marginTop : styles.marginTopButton
                         )}
-                        onClick={(event) => event.stopPropagation()}
                         style={{
                             position: 'relative',
                             marginLeft: -12,
@@ -359,6 +355,8 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
 
         const hasFooter = !!button || !!footerImage || !!footerText || !!buttonLink;
         const cardContentStyle = sprinkles({
+            paddingTop: 8,
+            paddingX: 16,
             display: 'flex',
             paddingBottom: hasFooter || extra ? 24 : 0,
         });
@@ -371,24 +369,24 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
                     height: '100%',
                 })}
             >
-                <Touchable
-                    onPress={onPress}
-                    tabIndex={0}
-                    maybe
-                    className={sprinkles({
-                        position: 'relative',
-                        height: '100%',
-                    })}
+                <Boxed
+                    className={styles.boxed}
+                    dataAttributes={{'component-name': 'AdvancedDataCard', ...dataAttributes}}
+                    ref={ref}
+                    width="100%"
+                    height="100%"
                 >
-                    <Boxed
-                        className={classNames(styles.boxed, onPress ? styles.interaction : '')}
-                        dataAttributes={{'component-name': 'AdvancedDataCard', ...dataAttributes}}
-                        ref={ref}
-                        width="100%"
-                        height="100%"
-                    >
-                        <div className={styles.dataCard}>
-                            <div className={cardContentStyle}>
+                    <div className={styles.dataCard}>
+                        <Touchable
+                            onPress={onPress}
+                            tabIndex={0}
+                            maybe
+                            className={sprinkles({
+                                position: 'relative',
+                                height: '100%',
+                            })}
+                        >
+                            <div className={classNames(cardContentStyle, onPress ? styles.interaction : '')}>
                                 <div
                                     className={sprinkles({
                                         paddingTop: 8,
@@ -458,11 +456,10 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
                                     </Box>
                                 ) : null}
                             </div>
-
-                            {hasFooter && <CardFooter {...footerProps} />}
-                        </div>
-                    </Boxed>
-                </Touchable>
+                        </Touchable>
+                        {hasFooter && <CardFooter {...footerProps} />}
+                    </div>
+                </Boxed>
             </section>
         );
     }
