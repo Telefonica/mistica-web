@@ -90,3 +90,18 @@ test.each(DEVICES)('Buttons - ellipsis (%s)', async (device) => {
     const image = await story.screenshot();
     expect(image).toMatchImageSnapshot();
 });
+
+test('Buttons - Link button - href and no chevron', async () => {
+    await openStoryPage({
+        id: 'components-buttons--link-button',
+        device: 'MOBILE_IOS',
+        args: {
+            noChevron: true,
+        },
+    });
+
+    const story = await screen.findByTestId('content');
+
+    const image = await story.screenshot();
+    expect(image).toMatchImageSnapshot();
+});
