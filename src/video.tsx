@@ -274,7 +274,15 @@ const Video = React.forwardRef<VideoElement, VideoProps>(
                             containerElement.load = () => {
                                 /**
                                  * Hack to avoid a flash when hiding the video and showing the poster.
-                                 * The issue happened when calling .load() form the component's exposed ref
+                                 *
+                                 * The flash happens because dispatch('reset') triggers a re-render of the component,
+                                 * but it may happen that the call video.load() is called before the re-render takes
+                                 * place (for example, safari sometimes batches updates). In this scenario, the frames
+                                 * of the video are cleared and a transparent background is shown for a few milliseconds
+                                 * (before the poster's width/height are actually set to 100% in the re-render).
+                                 *
+                                 * To avoid this, we set the poster's styles beforehand and we wait some time before
+                                 * triggering the re-render and calling video.load()
                                  */
                                 if (posterRef.current?.style) {
                                     posterRef.current.style.width = '100%';
