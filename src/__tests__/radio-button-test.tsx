@@ -284,3 +284,20 @@ test('form uncontrolled mode', async () => {
         expect(handleSubmitSpy).toHaveBeenCalledWith({'radio-group': 'apple'}, {'radio-group': 'apple'})
     );
 });
+
+test('Radio onClick event is not propagated', async () => {
+    const onPressHandler = jest.fn();
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <button onClick={onPressHandler}>
+                <RadioGroup name="radio-group" aria-labelledby="label">
+                    <RadioButton value="banana" />
+                </RadioGroup>
+            </button>
+        </ThemeContextProvider>
+    );
+
+    await userEvent.click(screen.getByRole('radio'));
+
+    expect(onPressHandler).not.toHaveBeenCalled();
+});
