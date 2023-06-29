@@ -108,7 +108,7 @@ type Props = {
     | 'left'
     | 'right'
     | 'justify'
-    
+
 };
 
 const Tooltip: React.FC<Props> = ({
@@ -144,10 +144,18 @@ const Tooltip: React.FC<Props> = ({
 
     const [containerPosition, setContainerPosition] = React.useState({});
 
-    const getPosition = (position: Position = defaultPositionDesktop) =>
-        isTabletOrSmaller && (position === 'left' || position === 'right') ? defaultPositionMobile : position;
+    const getPosition = (position: Position | undefined) => {
+        let  finalPosition = position ? position : defaultPositionDesktop;
+        if (isTabletOrSmaller) {
+            finalPosition = position ? position : defaultPositionMobile
+        } 
 
-    const position = getPosition(rest.position);
+        return finalPosition
+
+
+    }
+
+    const position = getPosition(rest.position)
 
     const isTouchableDevice =
         typeof window !== 'undefined' ? window.matchMedia('(pointer: coarse)').matches : false;
@@ -351,8 +359,8 @@ const Tooltip: React.FC<Props> = ({
                         className={styles.container}
                         style={{
                             width,
-                            ...containerPosition,
                             textAlign,
+                            ...containerPosition,
                             ...vars,
                         }}
                         onPointerOver={() => {

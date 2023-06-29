@@ -107,15 +107,9 @@ export const arrowWrapper = sprinkles({
     color: skinVars.colors.backgroundContainer,
 });
 
-
-
-export const wrapper = style([
-    sprinkles({
-        display: 'flex',
-    }),
-    {
-    },
-]);
+export const wrapper = sprinkles({
+    display: 'inline-block',
+});
 
 export const container = style([
     sprinkles({
@@ -126,7 +120,7 @@ export const container = style([
         borderRadius: skinVars.borderRadii.popup,
         border: 'regular',
     }),
-    {   textAlign: 'left',
+    {
         minWidth: 40,
         maxWidth: 496,
         zIndex: 50,
