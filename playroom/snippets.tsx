@@ -1860,7 +1860,7 @@ const stackingGroupSnippets = [
 
 const advancedDataCardSnippets = [
     {
-        name: 'Data Advanced Card',
+        name: 'Advanced Data Card',
         code: `
           <AdvancedDataCard smallSlotSpace={true} 
             title="title"
