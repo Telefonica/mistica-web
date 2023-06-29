@@ -10,6 +10,7 @@ export const actions = style([
         flex: 1,
         justifyContent: 'space-between',
         paddingX: 16,
+        paddingBottom: 24,
     }),
     {
         flexWrap: 'wrap',
@@ -43,14 +44,12 @@ export const interaction = style([
     },
 ]);
 
-export const dataCard = style([
+export const cardContentStyle = style([
     sprinkles({
         display: 'flex',
-        flex: 1,
+        paddingTop: 8,
+        paddingX: 16,
         paddingBottom: 24,
-        flexDirection: 'column',
-        width: '100%',
-        height: '100%',
     }),
     {
         '@media': {
@@ -62,6 +61,16 @@ export const dataCard = style([
             },
         },
     },
+]);
+
+export const dataCard = style([
+    sprinkles({
+        display: 'flex',
+        flex: 1,
+        flexDirection: 'column',
+        width: '100%',
+        height: '100%',
+    }),
     {
         minHeight: '216px',
     },

@@ -354,12 +354,6 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
         const topActionsStylesWithIcon = {position: 'absolute', top: 8, right: 8, zIndex: 2} as const;
 
         const hasFooter = !!button || !!footerImage || !!footerText || !!buttonLink;
-        const cardContentStyle = sprinkles({
-            paddingTop: 8,
-            paddingX: 16,
-            display: 'flex',
-            paddingBottom: hasFooter || extra ? 24 : 0,
-        });
 
         return (
             <section
@@ -386,7 +380,12 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
                                 height: '100%',
                             })}
                         >
-                            <div className={classNames(cardContentStyle, onPress ? styles.interaction : '')}>
+                            <div
+                                className={classNames(
+                                    styles.cardContentStyle,
+                                    onPress ? styles.interaction : ''
+                                )}
+                            >
                                 <div
                                     className={sprinkles({
                                         paddingTop: 8,
