@@ -1,3 +1,10 @@
+## [14.16.1](https://github.com/Telefonica/mistica-web/compare/v14.16.0...v14.16.1) (2023-06-30)
+
+
+### Bug Fixes
+
+* **DataCard:** avoid content from overflowing card padding ([#806](https://github.com/Telefonica/mistica-web/issues/806)) ([9b70869](https://github.com/Telefonica/mistica-web/commit/9b70869179b36b9e3953442920f9821b84651c45))
+
 # [14.16.0](https://github.com/Telefonica/mistica-web/compare/v14.15.0...v14.16.0) (2023-06-30)
 
 
