@@ -380,80 +380,84 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
                                 height: '100%',
                             })}
                         >
-                            <div
-                                className={classNames(
-                                    styles.cardContentStyle,
-                                    onPress ? styles.interaction : ''
-                                )}
-                            >
+                            <div className={onPress ? styles.interaction : ''}>
                                 <div
-                                    className={sprinkles({
-                                        paddingTop: 8,
-                                    })}
+                                    className={classNames(
+                                        styles.cardContentStyle,
+                                        !hasFooter && !extra ? styles.minHeight : ''
+                                    )}
                                 >
-                                    <Stack space={8} className={sprinkles({flex: 1})}>
-                                        {stackingGroup && (
-                                            <div
-                                                className={sprinkles({
-                                                    display: 'flex',
-                                                    width: '100%',
-                                                })}
-                                            >
+                                    <div
+                                        className={sprinkles({
+                                            paddingTop: 8,
+                                        })}
+                                    >
+                                        <Stack space={8} className={sprinkles({flex: 1})}>
+                                            {stackingGroup && (
                                                 <div
                                                     className={sprinkles({
+                                                        display: 'flex',
                                                         width: '100%',
                                                     })}
                                                 >
-                                                    {stackingGroup}
-                                                </div>
-                                            </div>
-                                        )}
-                                        <CardContent
-                                            headline={headline}
-                                            pretitle={pretitle}
-                                            pretitleAs={pretitleAs}
-                                            pretitleLinesMax={pretitleLinesMax}
-                                            title={title}
-                                            titleAs={titleAs}
-                                            titleLinesMax={titleLinesMax}
-                                            subtitle={subtitle}
-                                            subtitleLinesMax={subtitleLinesMax}
-                                            description={description}
-                                            descriptionLinesMax={descriptionLinesMax}
-                                        />
-                                    </Stack>
-                                </div>
-                                {hasAcations && (
-                                    <div style={topActionsStylesWithIcon}>
-                                        <CardActionsGroup actions={finalActions} />
-                                    </div>
-                                )}
-                            </div>
-                            <div style={{marginTop: 'auto', width: '100%'}}>
-                                {extra && extra?.length ? (
-                                    <Box paddingTop={16} paddingBottom={24}>
-                                        {extra.map((ex, index) => {
-                                            return (
-                                                <div key={index}>
                                                     <div
                                                         className={sprinkles({
-                                                            display: 'flex',
                                                             width: '100%',
                                                         })}
                                                     >
-                                                        <div className={sprinkles({width: '100%'})}>{ex}</div>
+                                                        {stackingGroup}
                                                     </div>
-
-                                                    {index + 1 !== extra.length && (
-                                                        <Box paddingY={extraSpaceSize}>
-                                                            <Divider />
-                                                        </Box>
-                                                    )}
                                                 </div>
-                                            );
-                                        })}
-                                    </Box>
-                                ) : null}
+                                            )}
+                                            <CardContent
+                                                headline={headline}
+                                                pretitle={pretitle}
+                                                pretitleAs={pretitleAs}
+                                                pretitleLinesMax={pretitleLinesMax}
+                                                title={title}
+                                                titleAs={titleAs}
+                                                titleLinesMax={titleLinesMax}
+                                                subtitle={subtitle}
+                                                subtitleLinesMax={subtitleLinesMax}
+                                                description={description}
+                                                descriptionLinesMax={descriptionLinesMax}
+                                            />
+                                        </Stack>
+                                    </div>
+                                    {hasAcations && (
+                                        <div style={topActionsStylesWithIcon}>
+                                            <CardActionsGroup actions={finalActions} />
+                                        </div>
+                                    )}
+                                </div>
+                                <div style={{marginTop: 'auto', width: '100%'}}>
+                                    {extra && extra?.length ? (
+                                        <Box paddingTop={16} paddingBottom={24}>
+                                            {extra.map((ex, index) => {
+                                                return (
+                                                    <div key={index}>
+                                                        <div
+                                                            className={sprinkles({
+                                                                display: 'flex',
+                                                                width: '100%',
+                                                            })}
+                                                        >
+                                                            <div className={sprinkles({width: '100%'})}>
+                                                                {ex}
+                                                            </div>
+                                                        </div>
+
+                                                        {index + 1 !== extra.length && (
+                                                            <Box paddingY={extraSpaceSize}>
+                                                                <Divider />
+                                                            </Box>
+                                                        )}
+                                                    </div>
+                                                );
+                                            })}
+                                        </Box>
+                                    ) : null}
+                                </div>
                             </div>
                         </Touchable>
                         {hasFooter && <CardFooter {...footerProps} />}

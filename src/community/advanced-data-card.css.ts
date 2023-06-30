@@ -52,7 +52,6 @@ export const cardContentStyle = style([
         paddingBottom: 24,
     }),
     {
-        // minHeight: '216px',
         '@media': {
             [mq.desktopOrBigger]: {
                 paddingTop: 32,
@@ -64,6 +63,8 @@ export const cardContentStyle = style([
     },
 ]);
 
+export const minHeight = style([{minHeight: 216}]);
+
 export const dataCard = style([
     sprinkles({
         display: 'flex',
@@ -72,7 +73,9 @@ export const dataCard = style([
         width: '100%',
         height: '100%',
     }),
-    {minHeight: '216px'},
+    {
+        minHeight,
+    },
 ]);
 
 const cardActionBase = sprinkles({
