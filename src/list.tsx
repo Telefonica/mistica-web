@@ -437,6 +437,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
         return props.onPress ? (
             <div className={styles.dualActionContainer}>
                 <BaseTouchable
+                    dataAttributes={dataAttributes}
                     disabled={disabled}
                     onPress={props.onPress}
                     role={role}
@@ -447,20 +448,17 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
                     {renderContent({type: 'basic', labelId: titleId})}
                 </BaseTouchable>
                 <div className={styles.dualActionDivider} />
-                <BaseTouchable
+
+                <Control
                     disabled={disabled}
-                    className={styles.dualActionRight}
-                    onPress={toggle}
-                    dataAttributes={dataAttributes}
-                >
-                    <Control
-                        disabled={disabled}
-                        name={name}
-                        checked={isChecked}
-                        aria-labelledby={titleId}
-                        render={({controlElement}) => controlElement}
-                    />
-                </BaseTouchable>
+                    name={name}
+                    checked={isChecked}
+                    aria-labelledby={titleId}
+                    onChange={toggle}
+                    render={({controlElement}) => (
+                        <div className={styles.dualActionRight}>{controlElement}</div>
+                    )}
+                />
             </div>
         ) : (
             <div

@@ -80,11 +80,12 @@ export const dualActionContainer = sprinkles({
     flexDirection: 'row',
 });
 
-const dualActionBase = sprinkles({display: 'block', padding: 0, border: 'none', background: 'transparent'});
+const dualActionBase = sprinkles({padding: 0, border: 'none', background: 'transparent'});
 
 export const dualActionLeft = style([
     dualActionBase,
     sprinkles({
+        display: 'block',
         flexGrow: 1,
         paddingX: 16,
     }),
@@ -106,6 +107,7 @@ export const dualActionRight = style([
         alignItems: 'center',
         flexGrow: 0,
         width: 'auto',
+        height: '100%',
     }),
     {
         lineHeight: 0,
