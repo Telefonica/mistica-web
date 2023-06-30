@@ -104,6 +104,7 @@ type Props = {
     dataAttributes?: DataAttributes;
     fullWidth?: boolean;
     textAlign?: 'center' | 'left' | 'right' | 'justify';
+    changedPosition?: string;
 };
 
 const Tooltip: React.FC<Props> = ({
@@ -117,6 +118,7 @@ const Tooltip: React.FC<Props> = ({
     dataAttributes,
     textAlign = 'left',
     fullWidth,
+    changedPosition,
     ...rest
 }) => {
     const {isDarkMode} = useTheme();
@@ -171,7 +173,7 @@ const Tooltip: React.FC<Props> = ({
         return positionValidated[position];
     };
 
-    const position = getPosition(rest.position);
+    const position = validatePosition(getPosition(rest.position));
 
     const isTouchableDevice =
         typeof window !== 'undefined' ? window.matchMedia('(pointer: coarse)').matches : false;
@@ -212,60 +214,69 @@ const Tooltip: React.FC<Props> = ({
         }
     };
 
-    const getContainerPosition = React.useCallback((position: Position, width: number) => {
-        if (typeof window === 'undefined' || !tooltipRef.current) {
-            return {};
-        }
+    const getContainerPosition = React.useCallback(
+        (position: Position, width: number) => {
+            if (typeof window === 'undefined' || !tooltipRef.current) {
+                return {};
+            }
 
-        const tooltipBoundingClientRect = tooltipRef.current.getBoundingClientRect();
+            const tooltipBoundingClientRect = tooltipRef.current.getBoundingClientRect();
 
-        const containerPos = {
-            right: {
-                left: targetBoundingClientRect.current.right + distanceToTarget,
-                top:
-                    window.pageYOffset +
-                    targetBoundingClientRect.current.top +
-                    targetBoundingClientRect.current.height / 2,
-            },
-            left: {
-                left: !width
-                    ? targetBoundingClientRect.current.left -
-                      tooltipBoundingClientRect.width -
-                      distanceToTarget
-                    : targetBoundingClientRect.current.left - width - distanceToTarget,
-                top:
-                    window.pageYOffset +
-                    targetBoundingClientRect.current.top +
-                    targetBoundingClientRect.current.height / 2,
-            },
-            top: {
-                top: window.pageYOffset + targetBoundingClientRect.current.top - distanceToTarget,
-                left: !width
-                    ? window.pageXOffset +
-                      targetBoundingClientRect.current.left +
-                      targetBoundingClientRect.current.width / 2 -
-                      tooltipBoundingClientRect.width / 2
-                    : window.pageXOffset +
-                      targetBoundingClientRect.current.left +
-                      targetBoundingClientRect.current.width / 2 -
-                      width / 2,
-            },
-            bottom: {
-                top: window.pageYOffset + targetBoundingClientRect.current.bottom + distanceToTarget,
-                left: !width
-                    ? window.pageXOffset +
-                      targetBoundingClientRect.current.left +
-                      targetBoundingClientRect.current.width / 2 -
-                      tooltipBoundingClientRect.width / 2
-                    : window.pageXOffset +
-                      targetBoundingClientRect.current.left +
-                      targetBoundingClientRect.current.width / 2 -
-                      width / 2,
-            },
-        };
+            const containerPos = {
+                right: {
+                    left: targetBoundingClientRect.current.right + distanceToTarget,
+                    top: changedPosition
+                        ? changedPosition
+                        : window.pageYOffset +
+                          targetBoundingClientRect.current.top +
+                          targetBoundingClientRect.current.height / 2,
+                },
+                left: {
+                    left: !width
+                        ? targetBoundingClientRect.current.left -
+                          tooltipBoundingClientRect.width -
+                          distanceToTarget
+                        : targetBoundingClientRect.current.left - width - distanceToTarget,
+                    top: changedPosition
+                        ? changedPosition
+                        : window.pageYOffset +
+                          targetBoundingClientRect.current.top +
+                          targetBoundingClientRect.current.height / 2,
+                },
+                top: {
+                    top: window.pageYOffset + targetBoundingClientRect.current.top - distanceToTarget,
+                    left: changedPosition
+                        ? changedPosition
+                        : !width
+                        ? window.pageXOffset +
+                          targetBoundingClientRect.current.left +
+                          targetBoundingClientRect.current.width / 2 -
+                          tooltipBoundingClientRect.width / 2
+                        : window.pageXOffset +
+                          targetBoundingClientRect.current.left +
+                          targetBoundingClientRect.current.width / 2 -
+                          width / 2,
+                },
+                bottom: {
+                    top: window.pageYOffset + targetBoundingClientRect.current.bottom + distanceToTarget,
+                    left: changedPosition
+                        ? changedPosition
+                        : !width
+                        ? window.pageXOffset +
+                          targetBoundingClientRect.current.left +
+                          targetBoundingClientRect.current.width / 2 -
+                          tooltipBoundingClientRect.width / 2
+                        : window.pageXOffset +
+                          targetBoundingClientRect.current.left +
+                          targetBoundingClientRect.current.width / 2 -
+                          width / 2,
+                },
+            };
 
-        return containerPos[validatePosition(position)];
-    }, []);
+            return containerPos[position];
+        },
+        [changedPosition]
+    );
 
     const getWidth = () => getWidthTooltip(rest.width);
     const width = getWidth();
@@ -395,12 +406,7 @@ const Tooltip: React.FC<Props> = ({
                                   }
                         }
                     >
-                        <div
-                            className={classnames(
-                                styles.arrowWrapper,
-                                arrowClassNameByPosition[validatePosition(position)]
-                            )}
-                        >
+                        <div className={classnames(styles.arrowWrapper, arrowClassNameByPosition[position])}>
                             <div className={styles.arrow} />
                         </div>
                         {(title || description) && (
