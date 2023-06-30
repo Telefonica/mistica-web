@@ -159,7 +159,7 @@ const Content: React.FC<ContentProps> = ({
 
             <div className={classNames({[styles.right]: !!detail || type !== 'basic'})}>
                 {detail && (
-                    <div className={classNames(styles.center, styles.detail)}>
+                    <div className={classNames(styles.center, styles.detail, {[styles.disabled]: disabled})}>
                         <Text2 regular color={vars.colors.textSecondary} hyphens="auto">
                             {detail}
                         </Text2>
