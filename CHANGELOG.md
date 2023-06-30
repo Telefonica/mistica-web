@@ -1,3 +1,22 @@
+# [14.16.0](https://github.com/Telefonica/mistica-web/compare/v14.15.0...v14.16.0) (2023-06-30)
+
+
+### Bug Fixes
+
+* **DateTimePicker:** fix locale imports in date-time-picker ([#793](https://github.com/Telefonica/mistica-web/issues/793)) ([8b69325](https://github.com/Telefonica/mistica-web/commit/8b693252ad8db78fe9593ac2a07af4df6d330de8))
+* **LinkComponent:** improve component detection for forwardRefs ([#800](https://github.com/Telefonica/mistica-web/issues/800)) ([7ba36c6](https://github.com/Telefonica/mistica-web/commit/7ba36c636240323b472e5c73f42af81a8183b076))
+* **Select:** fix select options positioning ([#802](https://github.com/Telefonica/mistica-web/issues/802)) ([acc1909](https://github.com/Telefonica/mistica-web/commit/acc19099fd15178bdb9c0416601327278f3d52ca))
+* **Select:** Fix select options positioning inside non static parents ([#796](https://github.com/Telefonica/mistica-web/issues/796)) ([0cf6455](https://github.com/Telefonica/mistica-web/commit/0cf6455360d0f3a79e21c12101d7728c7e858716))
+* **Switch, RadioButton, Checkbox:** stop propagation on click ([#798](https://github.com/Telefonica/mistica-web/issues/798)) ([08b986e](https://github.com/Telefonica/mistica-web/commit/08b986ed855d98e09470d582006b438267c9d680))
+* **TextField, Select:** improve styles ([#777](https://github.com/Telefonica/mistica-web/issues/777)) ([c186728](https://github.com/Telefonica/mistica-web/commit/c18672810db17a996c5e4723012f3d8b6529fb01))
+* **Video:** improve perfomance and stability ([#801](https://github.com/Telefonica/mistica-web/issues/801)) ([d992180](https://github.com/Telefonica/mistica-web/commit/d992180779b885aa420998860ed389b44f5db547))
+
+
+### Features
+
+* **Tabs:** change label size in vivo new ([#794](https://github.com/Telefonica/mistica-web/issues/794)) ([82945ea](https://github.com/Telefonica/mistica-web/commit/82945ea9d28233e1cbf643bf4eecd697f2da6da7))
+* **ThemeContextProvider:** built in Link components for Next and React Router ([#795](https://github.com/Telefonica/mistica-web/issues/795)) ([b20b0a5](https://github.com/Telefonica/mistica-web/commit/b20b0a53d2ce0930c8aebbf74ac6721d0f62d86d))
+
 # [14.15.0](https://github.com/Telefonica/mistica-web/compare/v14.14.0...v14.15.0) (2023-06-19)
 
 
