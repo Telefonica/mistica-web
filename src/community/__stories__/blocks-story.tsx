@@ -7,7 +7,7 @@ import {
     RowBlock,
     SimpleBlock,
     ValueBlock,
-} from '../../blocks';
+} from '../blocks';
 import imgExample from '../../__stories__/images/avatar.jpg';
 
 import type {TagType} from '../..';

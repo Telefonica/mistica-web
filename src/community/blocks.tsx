@@ -1,18 +1,18 @@
 import * as React from 'react';
-import {sprinkles} from './sprinkles.css';
-import Stack from './stack';
+import {sprinkles} from '../sprinkles.css';
+import Stack from '../stack';
 import * as styles from './blocks.css';
-import {Text2, Text3, Text5, Text8} from './text';
-import {vars} from './skins/skin-contract.css';
-import Inline from './inline';
-import Box from './box';
-import ProgressBar from './progress-bar';
+import {Text2, Text3, Text5, Text8} from '../text';
+import {vars} from '../skins/skin-contract.css';
+import Inline from '../inline';
+import Box from '../box';
+import ProgressBar from '../progress-bar';
 import classNames from 'classnames';
 
-import type StackingGroup from './stacking-group';
-import type Image from './image';
-import type Tag from './tag';
-import type {RendersNullableElement} from './utils/renders-element';
+import type StackingGroup from '../stacking-group';
+import type Image from '../image';
+import type Tag from '../tag';
+import type {RendersNullableElement} from '../utils/renders-element';
 
 interface BlockContentProps {
     title?: string;
