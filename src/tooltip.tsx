@@ -1,17 +1,17 @@
 import * as React from 'react';
 import classnames from 'classnames';
-import { CSSTransition } from 'react-transition-group';
-import { useAriaId, useScreenSize, useTheme } from './hooks';
-import { Portal } from './portal';
+import {CSSTransition} from 'react-transition-group';
+import {useAriaId, useScreenSize, useTheme} from './hooks';
+import {Portal} from './portal';
 import Overlay from './overlay';
-import { Text2 } from './text';
+import {Text2} from './text';
 import * as key from './utils/key-codes';
 import Stack from './stack';
 import * as styles from './tooltip.css';
-import { assignInlineVars } from '@vanilla-extract/dynamic';
-import { getPrefixedDataAttributes } from './utils/dom';
+import {assignInlineVars} from '@vanilla-extract/dynamic';
+import {getPrefixedDataAttributes} from './utils/dom';
 
-import type { DataAttributes } from './utils/types';
+import type {DataAttributes} from './utils/types';
 
 const defaultPositionDesktop = 'bottom';
 const defaultPositionMobile = 'top';
@@ -21,7 +21,7 @@ const transitionDurationMs = 500;
 const animationMovement = 12;
 const defaultShowTooltipDelayMs = 500;
 
-const noOp = () => { };
+const noOp = () => {};
 
 type Position = 'top' | 'bottom' | 'left' | 'right';
 
@@ -103,12 +103,7 @@ type Props = {
     delay?: boolean;
     dataAttributes?: DataAttributes;
     fullWidth?: boolean;
-    textAlign?:
-    | 'center'
-    | 'left'
-    | 'right'
-    | 'justify'
-
+    textAlign?: 'center' | 'left' | 'right' | 'justify';
 };
 
 const Tooltip: React.FC<Props> = ({
@@ -124,9 +119,9 @@ const Tooltip: React.FC<Props> = ({
     fullWidth,
     ...rest
 }) => {
-    const { isDarkMode } = useTheme();
+    const {isDarkMode} = useTheme();
     const [isVisible, setIsVisible] = React.useState(false);
-    const { isTabletOrSmaller } = useScreenSize();
+    const {isTabletOrSmaller} = useScreenSize();
     const ariaId = useAriaId();
     const isPointerOver = React.useRef(false);
     const closeTooltipTimeoutId = React.useRef<NodeJS.Timeout | null>(null);
@@ -145,17 +140,38 @@ const Tooltip: React.FC<Props> = ({
     const [containerPosition, setContainerPosition] = React.useState({});
 
     const getPosition = (position: Position | undefined) => {
-        let  finalPosition = position ? position : defaultPositionDesktop;
+        let finalPosition = position ? position : defaultPositionDesktop;
         if (isTabletOrSmaller) {
-            finalPosition = position ? position : defaultPositionMobile
-        } 
+            finalPosition = position ? position : defaultPositionMobile;
+        }
 
-        return finalPosition
+        return finalPosition;
+    };
 
+    const validatePosition = (position: Position) => {
+        if (!tooltipRef.current) return position;
+        const tooltipBoundingClientRect = tooltipRef.current.getBoundingClientRect();
 
-    }
+        const positionValidated = {
+            top:
+                targetBoundingClientRect.current.top < tooltipBoundingClientRect.height ? 'bottom' : position,
+            right:
+                targetBoundingClientRect.current.right + tooltipBoundingClientRect.width > window.outerWidth
+                    ? 'left'
+                    : position,
+            left:
+                targetBoundingClientRect.current.left < tooltipBoundingClientRect.width ? 'right' : position,
+            bottom:
+                targetBoundingClientRect.current.bottom + tooltipBoundingClientRect.height >
+                window.outerHeight
+                    ? 'top'
+                    : position,
+        };
 
-    const position = getPosition(rest.position)
+        return positionValidated[position];
+    };
+
+    const position = getPosition(rest.position);
 
     const isTouchableDevice =
         typeof window !== 'undefined' ? window.matchMedia('(pointer: coarse)').matches : false;
@@ -214,8 +230,8 @@ const Tooltip: React.FC<Props> = ({
             left: {
                 left: !width
                     ? targetBoundingClientRect.current.left -
-                    tooltipBoundingClientRect.width -
-                    distanceToTarget
+                      tooltipBoundingClientRect.width -
+                      distanceToTarget
                     : targetBoundingClientRect.current.left - width - distanceToTarget,
                 top:
                     window.pageYOffset +
@@ -226,36 +242,32 @@ const Tooltip: React.FC<Props> = ({
                 top: window.pageYOffset + targetBoundingClientRect.current.top - distanceToTarget,
                 left: !width
                     ? window.pageXOffset +
-                    targetBoundingClientRect.current.left +
-                    targetBoundingClientRect.current.width / 2 -
-                    tooltipBoundingClientRect.width / 2
-                    :
-                    window.pageXOffset +
-                    targetBoundingClientRect.current.left +
-                    targetBoundingClientRect.current.width / 2 -
-                    width / 2,
+                      targetBoundingClientRect.current.left +
+                      targetBoundingClientRect.current.width / 2 -
+                      tooltipBoundingClientRect.width / 2
+                    : window.pageXOffset +
+                      targetBoundingClientRect.current.left +
+                      targetBoundingClientRect.current.width / 2 -
+                      width / 2,
             },
             bottom: {
                 top: window.pageYOffset + targetBoundingClientRect.current.bottom + distanceToTarget,
                 left: !width
                     ? window.pageXOffset +
-                    targetBoundingClientRect.current.left +
-                    targetBoundingClientRect.current.width / 2 -
-                    tooltipBoundingClientRect.width / 2
-                    :
-                    window.pageXOffset +
-                    targetBoundingClientRect.current.left +
-                    targetBoundingClientRect.current.width / 2 -
-                    width / 2,
+                      targetBoundingClientRect.current.left +
+                      targetBoundingClientRect.current.width / 2 -
+                      tooltipBoundingClientRect.width / 2
+                    : window.pageXOffset +
+                      targetBoundingClientRect.current.left +
+                      targetBoundingClientRect.current.width / 2 -
+                      width / 2,
             },
         };
 
-        return containerPos[position];
+        return containerPos[validatePosition(position)];
     }, []);
 
-
-    const getWidth = () =>
-        getWidthTooltip(rest.width);
+    const getWidth = () => getWidthTooltip(rest.width);
     const width = getWidth();
 
     const arrowClassNameByPosition = {
@@ -284,7 +296,7 @@ const Tooltip: React.FC<Props> = ({
     return (
         <>
             <div
-                style={{ width: fullWidth ? '100%' : '' }}
+                style={{width: fullWidth ? '100%' : ''}}
                 ref={targetRef}
                 className={styles.wrapper}
                 onPointerOver={() => {
@@ -310,20 +322,20 @@ const Tooltip: React.FC<Props> = ({
                     isTouchableDevice
                         ? noOp
                         : () => {
-                            if (showTooltipTimeoutId.current) {
-                                clearTimeout(showTooltipTimeoutId.current);
-                                showTooltipTimeoutId.current = null;
-                                isPointerOver.current = false;
-                                return;
-                            }
+                              if (showTooltipTimeoutId.current) {
+                                  clearTimeout(showTooltipTimeoutId.current);
+                                  showTooltipTimeoutId.current = null;
+                                  isPointerOver.current = false;
+                                  return;
+                              }
 
-                            closeTooltipTimeoutId.current = setTimeout(() => {
-                                if (!isPointerOver.current) return;
-                                closeTooltipTimeoutId.current = null;
-                                isPointerOver.current = false;
-                                toggleVisibility();
-                            }, 100);
-                        }
+                              closeTooltipTimeoutId.current = setTimeout(() => {
+                                  if (!isPointerOver.current) return;
+                                  closeTooltipTimeoutId.current = null;
+                                  isPointerOver.current = false;
+                                  toggleVisibility();
+                              }, 100);
+                          }
                 }
                 onFocus={handleFocus}
                 onKeyDown={handleKeyDown}
@@ -373,18 +385,21 @@ const Tooltip: React.FC<Props> = ({
                             isTouchableDevice
                                 ? noOp
                                 : () => {
-                                    closeTooltipTimeoutId.current = setTimeout(() => {
-                                        if (!isPointerOver.current) return;
+                                      closeTooltipTimeoutId.current = setTimeout(() => {
+                                          if (!isPointerOver.current) return;
 
-                                        closeTooltipTimeoutId.current = null;
-                                        isPointerOver.current = false;
-                                        toggleVisibility();
-                                    }, 100);
-                                }
+                                          closeTooltipTimeoutId.current = null;
+                                          isPointerOver.current = false;
+                                          toggleVisibility();
+                                      }, 100);
+                                  }
                         }
                     >
                         <div
-                            className={classnames(styles.arrowWrapper, arrowClassNameByPosition[position])}
+                            className={classnames(
+                                styles.arrowWrapper,
+                                arrowClassNameByPosition[validatePosition(position)]
+                            )}
                         >
                             <div className={styles.arrow} />
                         </div>
