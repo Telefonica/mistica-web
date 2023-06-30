@@ -59,19 +59,13 @@ const getButtonActionProps = (action: string, newTab: boolean) => {
               onPress: () => {
                   window.alert('pressed!');
               },
-              href: undefined,
-              to: undefined,
           }
         : action === 'href'
         ? {
-              onPress: undefined,
-              to: undefined,
               href: 'https://www.google.com',
               newTab,
           }
         : {
-              onPress: undefined,
-              href: undefined,
               to: '#',
           };
 };
