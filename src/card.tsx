@@ -21,6 +21,7 @@ import Video from './video';
 import {ThemeVariant, useIsInverseVariant} from './theme-variant-context';
 import classNames from 'classnames';
 import {assignInlineVars} from '@vanilla-extract/dynamic';
+import Inline from './inline';
 
 import type {PressHandler} from './touchable';
 import type {VideoElement, VideoSource} from './video';
@@ -578,12 +579,8 @@ export const DataCard = React.forwardRef<HTMLDivElement, DataCardProps>(
                     >
                         {isTouchable && <div className={overlayStyle} />}
                         <div className={styles.dataCard}>
-                            <div
-                                className={sprinkles({
-                                    display: 'flex',
-                                })}
-                            >
-                                <Stack space={16} className={sprinkles({flex: 1})}>
+                            <Inline space={0}>
+                                <Stack space={16}>
                                     {hasIcon ? icon : null}
                                     <CardContent
                                         headline={headline}
@@ -598,7 +595,7 @@ export const DataCard = React.forwardRef<HTMLDivElement, DataCardProps>(
                                     />
                                 </Stack>
                                 {!hasIcon && <div style={topActionsStylesWithoutIcon} />}
-                            </div>
+                            </Inline>
 
                             {extra && <div>{extra}</div>}
 
