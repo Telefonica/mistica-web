@@ -4,7 +4,7 @@ import {sprinkles} from '../sprinkles.css';
 import Stack from '../stack';
 import * as styles from './advanced-data-card.css';
 import Divider from '../divider';
-import Text, {Text2} from '../text';
+import {Text2, Text4} from '../text';
 import {useTheme} from '../hooks';
 import {vars} from '../skins/skin-contract.css';
 import IconCloseRegular from '../generated/mistica-icons/icon-close-regular';
@@ -115,7 +115,6 @@ const CardContent: React.FC<CardContentProps> = ({
     description,
     descriptionLinesMax,
 }) => {
-    const {textPresets} = useTheme();
     return (
         <div>
             <Stack space={4}>
@@ -135,19 +134,15 @@ const CardContent: React.FC<CardContentProps> = ({
                                         {pretitle}
                                     </Text2>
                                 )}
-                                <Text
+                                <Text4
                                     color={vars.colors.textPrimary}
-                                    mobileSize={20}
-                                    mobileLineHeight="28px"
-                                    desktopSize={20}
-                                    desktopLineHeight="28px"
                                     truncate={titleLinesMax}
-                                    weight={textPresets.cardTitle.weight}
+                                    weight="regular"
                                     as={titleAs}
                                     hyphens="auto"
                                 >
                                     {title}
-                                </Text>
+                                </Text4>
                                 <Text2
                                     color={vars.colors.textPrimary}
                                     truncate={subtitleLinesMax}
