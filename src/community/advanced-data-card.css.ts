@@ -18,6 +18,10 @@ export const actions = style([
             [mq.tabletOrBigger]: {
                 marginTop: 8,
             },
+            [mq.desktopOrBigger]: {
+                paddingLeft: 24,
+                paddingRight: 24,
+            },
         },
     },
 ]);
