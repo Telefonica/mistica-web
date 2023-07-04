@@ -437,7 +437,12 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
                                                                 width: '100%',
                                                             })}
                                                         >
-                                                            <div className={sprinkles({width: '100%'})}>
+                                                            <div
+                                                                className={classNames(
+                                                                    sprinkles({width: '100%'}),
+                                                                    styles.paddingX
+                                                                )}
+                                                            >
                                                                 {ex}
                                                             </div>
                                                         </div>

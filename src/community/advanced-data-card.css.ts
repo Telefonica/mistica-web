@@ -4,12 +4,26 @@ import * as mq from '../media-queries.css';
 import {vars} from '../skins/skin-contract.css';
 import {applyAlpha} from '../utils/color';
 
+export const paddingX = style([
+    sprinkles({
+        paddingX: 16,
+    }),
+    {
+        '@media': {
+            [mq.desktopOrBigger]: {
+                paddingLeft: 24,
+                paddingRight: 24,
+            },
+        },
+    },
+]);
+
 export const actions = style([
+    paddingX,
     sprinkles({
         display: 'flex',
         flex: 1,
         justifyContent: 'space-between',
-        paddingX: 16,
         paddingBottom: 24,
     }),
     {
@@ -17,10 +31,6 @@ export const actions = style([
         '@media': {
             [mq.tabletOrBigger]: {
                 marginTop: 8,
-            },
-            [mq.desktopOrBigger]: {
-                paddingLeft: 24,
-                paddingRight: 24,
             },
         },
     },
@@ -49,10 +59,10 @@ export const interaction = style([
 ]);
 
 export const cardContentStyle = style([
+    paddingX,
     sprinkles({
         display: 'flex',
         paddingTop: 8,
-        paddingX: 16,
         paddingBottom: 24,
     }),
     {
@@ -60,8 +70,6 @@ export const cardContentStyle = style([
             [mq.desktopOrBigger]: {
                 paddingTop: 32,
                 paddingBottom: 32,
-                paddingLeft: 24,
-                paddingRight: 24,
             },
         },
     },
