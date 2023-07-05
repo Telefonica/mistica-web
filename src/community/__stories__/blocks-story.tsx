@@ -23,9 +23,15 @@ type RowBlockArgs = {
     title?: string;
     description?: string;
     showStackingGroup?: boolean;
+    ariaLabel?: string;
 };
 
-export const BlockRow: StoryComponent<RowBlockArgs> = ({title, description, showStackingGroup}) => {
+export const BlockRow: StoryComponent<RowBlockArgs> = ({
+    title,
+    description,
+    showStackingGroup,
+    ariaLabel,
+}) => {
     return (
         <ResponsiveLayout>
             <Box paddingY={24} dataAttributes={{testid: 'row-block'}}>
@@ -44,55 +50,60 @@ export const BlockRow: StoryComponent<RowBlockArgs> = ({title, description, show
                             </StackingGroup>
                         ) : null
                     }
-                    aria-label="aria-label"
+                    aria-label={ariaLabel}
                 />
             </Box>
         </ResponsiveLayout>
     );
 };
 
-BlockRow.storyName = 'Row Block';
+BlockRow.storyName = 'RowBlock';
 BlockRow.args = {
     title: 'title',
     description: 'description',
     showStackingGroup: false,
+    ariaLabel: 'aria-label',
 };
 
 type SimpleBlockArgs = {
     description?: string;
+    ariaLabel?: string;
 };
 
-export const BlockSimple: StoryComponent<SimpleBlockArgs> = ({description}) => {
+export const BlockSimple: StoryComponent<SimpleBlockArgs> = ({description, ariaLabel}) => {
     return (
         <ResponsiveLayout>
             <Box paddingY={24} dataAttributes={{testid: 'simple-block'}}>
                 <SimpleBlock
                     description={description}
                     image={<Image height={40} src={imgExample} />}
-                    aria-label="aria-label"
+                    aria-label={ariaLabel}
                 />
             </Box>
         </ResponsiveLayout>
     );
 };
 
-BlockSimple.storyName = 'Simple Block';
+BlockSimple.storyName = 'SimpleBlock';
 BlockSimple.args = {
     description: 'description',
+    ariaLabel: 'aria-label',
 };
 
 type InformationBlockArgs = {
     title?: string;
     description?: string;
-    value: string;
+    value?: string | number;
     secondaryValue?: string;
+    ariaLabel?: string;
 };
 
 export const BlockInformation: StoryComponent<InformationBlockArgs> = ({
     title,
     description,
-    secondaryValue,
     value,
+    secondaryValue,
+    ariaLabel,
 }) => {
     return (
         <ResponsiveLayout>
@@ -102,23 +113,25 @@ export const BlockInformation: StoryComponent<InformationBlockArgs> = ({
                     description={description}
                     value={value}
                     secondaryValue={secondaryValue}
-                    aria-label="aria-label"
+                    aria-label={ariaLabel}
                 />
             </Box>
         </ResponsiveLayout>
     );
 };
 
-BlockInformation.storyName = 'Information Block';
+BlockInformation.storyName = 'InformationBlock';
 BlockInformation.args = {
     title: 'title',
     description: 'description',
     value: '20',
     secondaryValue: '20',
+    ariaLabel: 'aria-label',
 };
 
 type HighlightedValueBlockArgs = {
-    tag?: TagType;
+    headline?: string;
+    headlineType?: TagType;
     icon?: string;
 
     value: string;
@@ -128,44 +141,49 @@ type HighlightedValueBlockArgs = {
 
     title?: string;
     description?: string | Array<string>;
+    ariaLabel?: string;
 };
 
 export const BlockHighlightedValue: StoryComponent<HighlightedValueBlockArgs> = ({
-    tag,
+    headline,
+    headlineType,
     value,
     text,
     secondaryValue,
     title,
     description,
+    ariaLabel,
 }) => {
     return (
         <ResponsiveLayout>
             <Box paddingY={24} dataAttributes={{testid: 'highlighted-value-block'}}>
                 <HighlightedValueBlock
-                    tag={<Tag type={tag}>{`${tag}`}</Tag>}
+                    tag={<Tag type={headlineType}>{headline}</Tag>}
                     title={title}
                     description={description}
                     mainHeading={{value, text}}
                     secondaryValue={secondaryValue}
-                    aria-label="aria-label"
+                    aria-label={ariaLabel}
                 />
             </Box>
         </ResponsiveLayout>
     );
 };
 
-BlockHighlightedValue.storyName = 'Highlighted Value Block';
+BlockHighlightedValue.storyName = 'HighlightedValueBlock';
 BlockHighlightedValue.args = {
-    tag: 'promo',
+    headline: 'Priority',
+    headlineType: 'promo',
     title: 'title',
     description: 'description',
     text: 'text',
     value: '20',
     secondaryValue: '20',
+    ariaLabel: 'aria-label',
 };
 BlockHighlightedValue.argTypes = {
-    tag: {
-        options: ['promo', 'active', 'inactive', 'success', 'warning', 'error', ''],
+    headlineType: {
+        options: ['promo', 'active', 'inactive', 'success', 'warning', 'error'],
         control: {type: 'select'},
     },
 };
@@ -174,23 +192,25 @@ type ValueBlockArgs = {
     title?: string;
     value?: string;
     description?: string | Array<string>;
+    ariaLabel?: string;
 };
 
-export const BlockValue: StoryComponent<ValueBlockArgs> = ({title, value, description}) => {
+export const BlockValue: StoryComponent<ValueBlockArgs> = ({title, value, description, ariaLabel}) => {
     return (
         <ResponsiveLayout>
             <Box paddingY={24} dataAttributes={{testid: 'value-block'}}>
-                <ValueBlock title={title} description={description} value={value} aria-label="aria-label" />
+                <ValueBlock title={title} description={description} value={value} aria-label={ariaLabel} />
             </Box>
         </ResponsiveLayout>
     );
 };
 
-BlockValue.storyName = 'Value Block';
+BlockValue.storyName = 'ValueBlock';
 BlockValue.args = {
     title: 'title',
     description: 'description',
     value: '20',
+    ariaLabel: 'aria-label',
 };
 
 type ProgressBlockArgs = {
@@ -201,9 +221,10 @@ type ProgressBlockArgs = {
     progressPercent?: number;
     reverse?: boolean;
 
-    value: string;
+    value: string | number;
     text: string;
     description?: string;
+    ariaLabel?: string;
 };
 
 export const BlockProgress: StoryComponent<ProgressBlockArgs> = ({
@@ -214,6 +235,7 @@ export const BlockProgress: StoryComponent<ProgressBlockArgs> = ({
     value,
     text,
     description,
+    ariaLabel,
 }) => {
     return (
         <ResponsiveLayout>
@@ -234,17 +256,16 @@ export const BlockProgress: StoryComponent<ProgressBlockArgs> = ({
                     }
                     progressPercent={progressPercent}
                     reverse={reverse}
-                    value={value}
-                    text={text}
+                    heading={{value, text}}
                     description={description}
-                    aria-label="aria-label"
+                    aria-label={ariaLabel}
                 />
             </Box>
         </ResponsiveLayout>
     );
 };
 
-BlockProgress.storyName = 'Progress Block';
+BlockProgress.storyName = 'ProgressBlock';
 BlockProgress.args = {
     title: 'title',
     showStackingGroup: false,
@@ -253,4 +274,5 @@ BlockProgress.args = {
     value: '20',
     text: 'text',
     description: 'description',
+    ariaLabel: 'aria-label',
 };

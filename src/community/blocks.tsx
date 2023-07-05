@@ -13,6 +13,7 @@ import type StackingGroup from '../stacking-group';
 import type Image from '../image';
 import type Tag from '../tag';
 import type {RendersNullableElement} from '../utils/renders-element';
+import type {ExclusifyUnion} from '../utils/utility-types';
 
 interface BlockContentProps {
     title?: string;
@@ -46,12 +47,20 @@ const BlockContent: React.FC<BlockContentProps> = ({title, description}) => {
     );
 };
 
-interface RowBlockProps {
+interface RowBlockBaseProps {
     title?: string;
-    stackingGroup?: RendersNullableElement<typeof StackingGroup>;
-    description?: string;
     'aria-label'?: string;
 }
+
+interface RowBlockWithDescription extends RowBlockBaseProps {
+    description: string;
+}
+
+interface RowBlockWithStackingGroup extends RowBlockBaseProps {
+    stackingGroup: RendersNullableElement<typeof StackingGroup>;
+}
+
+type RowBlockProps = ExclusifyUnion<RowBlockWithDescription | RowBlockWithStackingGroup>;
 
 export const RowBlock: React.FC<RowBlockProps> = ({
     title,
@@ -68,48 +77,27 @@ export const RowBlock: React.FC<RowBlockProps> = ({
             aria-label={ariaLabel}
         >
             {(title || stackingGroup || description) && (
-                <>
-                    {stackingGroup && (
-                        <div
-                            className={sprinkles({
-                                display: 'flex',
-                                justifyContent: 'space-between',
-                                flex: 1,
-                                alignItems: 'center',
-                            })}
-                        >
-                            {title && (
-                                <div style={{paddingRight: '32px'}}>
-                                    <Text2 regular>{title}</Text2>
-                                </div>
-                            )}
-                            <div style={{zIndex: '0'}}>{stackingGroup}</div>
-                        </div>
+                <Inline
+                    className={sprinkles({
+                        display: 'flex',
+                        flex: 1,
+                    })}
+                    space="between"
+                    alignItems="center"
+                >
+                    {title && (
+                        <Box paddingRight={32}>
+                            <Text2 regular>{title}</Text2>
+                        </Box>
                     )}
-                    {!stackingGroup && (
-                        <div
-                            className={sprinkles({
-                                display: 'flex',
-                                justifyContent: 'space-between',
-                                flex: 1,
-                                alignItems: 'center',
-                            })}
-                        >
-                            {title && (
-                                <div style={{paddingRight: '32px'}}>
-                                    <Text2 regular as="div">
-                                        {title}
-                                    </Text2>
-                                </div>
-                            )}
-                            <div>
-                                <Text2 regular color={vars.colors.textSecondary}>
-                                    {description}
-                                </Text2>
-                            </div>
-                        </div>
+                    {stackingGroup ? (
+                        <>{stackingGroup}</>
+                    ) : (
+                        <Text2 regular color={vars.colors.textSecondary}>
+                            {description}
+                        </Text2>
                     )}
-                </>
+                </Inline>
             )}
         </div>
     );
@@ -124,27 +112,12 @@ interface SimpleBlockProps {
 export const SimpleBlock: React.FC<SimpleBlockProps> = ({image, description, 'aria-label': ariaLabel}) => {
     return (
         <div aria-label={ariaLabel}>
-            <div
-                className={sprinkles({
-                    display: 'flex',
-                    alignItems: 'center',
-                })}
-            >
-                {image && (
-                    <div
-                        className={sprinkles({
-                            paddingRight: 16,
-                        })}
-                        style={{zIndex: '0'}}
-                    >
-                        {image}
-                    </div>
-                )}
-
+            <Inline space={16} alignItems="center">
+                {image}
                 <Text2 regular color={vars.colors.textSecondary}>
                     {description}
                 </Text2>
-            </div>
+            </Inline>
         </div>
     );
 };
@@ -152,7 +125,7 @@ export const SimpleBlock: React.FC<SimpleBlockProps> = ({image, description, 'ar
 interface InformationBlockProps {
     title?: string;
     description?: string | Array<string>;
-    value: string;
+    value?: string | number;
     secondaryValue?: string;
     valueColor?: string;
     'aria-label'?: string;
@@ -169,7 +142,7 @@ export const InformationBlock: React.FC<InformationBlockProps> = ({
     return (
         <Inline space="between" alignItems="flex-end" aria-label={ariaLabel}>
             <BlockContent title={title} description={description} />
-            <div className={classNames(styles.column, styles.container)}>
+            <div className={classNames(styles.column, styles.rightContent)}>
                 <Text2 regular color={vars.colors.textSecondary}>
                     {secondaryValue}
                 </Text2>
@@ -183,12 +156,12 @@ interface HighlightedValueBlockProps {
     tag?: RendersNullableElement<typeof Tag>;
 
     mainHeading: {
-        value: string;
+        value: string | number;
         text: string;
     };
 
     secondHeading?: {
-        value: string;
+        value: string | number;
         text: string;
     };
 
@@ -213,15 +186,7 @@ export const HighlightedValueBlock: React.FC<HighlightedValueBlockProps> = ({
 }) => {
     return (
         <div aria-label={ariaLabel}>
-            {tag && (
-                <div
-                    className={sprinkles({
-                        paddingBottom: 24,
-                    })}
-                >
-                    {tag}
-                </div>
-            )}
+            {tag && <Box paddingBottom={24}>{tag}</Box>}
 
             <Stack space={2}>
                 <Inline space={8} alignItems="baseline">
@@ -240,13 +205,9 @@ export const HighlightedValueBlock: React.FC<HighlightedValueBlockProps> = ({
                 )}
                 {secondaryValue && <Text8 color={vars.colors.textSecondary}>{secondaryValue}</Text8>}
             </Stack>
-            <div
-                className={sprinkles({
-                    paddingTop: 8,
-                })}
-            >
+            <Box paddingTop={8}>
                 <BlockContent title={title} description={description} />
-            </div>
+            </Box>
         </div>
     );
 };
@@ -267,13 +228,7 @@ export const ValueBlock: React.FC<ValueBlockProps> = ({
     'aria-label': ariaLabel,
 }) => {
     return (
-        <div
-            aria-label={ariaLabel}
-            style={{
-                display: 'flex',
-                flexDirection: 'column',
-            }}
-        >
+        <div aria-label={ariaLabel} className={styles.column}>
             <Text2 regular color={vars.colors.textPrimary}>
                 {title}
             </Text2>
@@ -290,8 +245,11 @@ interface ProgressBlockProps {
     progressPercent?: number;
     reverse?: boolean;
 
-    value: string;
-    text: string;
+    heading: {
+        value: string | number;
+        text: string;
+    };
+
     description?: string;
 
     valueColor?: string;
@@ -303,45 +261,33 @@ export const ProgressBlock: React.FC<ProgressBlockProps> = ({
     stackingGroup,
     progressPercent,
     reverse,
-    value,
-    text,
+    heading,
     description,
     valueColor = vars.colors.textPrimary,
     'aria-label': ariaLabel,
 }) => {
-    const hasHeader = !!title || !!progressPercent;
-
     return (
         <div aria-label={ariaLabel}>
-            <div>
-                {title && (
-                    <Box paddingBottom={progressPercent ? 8 : 0}>
-                        <Inline space="between" alignItems="flex-end">
-                            <div style={{paddingRight: '32px'}}>
-                                <Text2 regular>{title}</Text2>
-                            </div>
-                            {stackingGroup && <div style={{zIndex: '0'}}>{stackingGroup}</div>}
-                        </Inline>
+            <Stack space={8}>
+                <Inline space="between" alignItems="flex-end">
+                    <Box paddingRight={32}>
+                        <Text2 regular>{title}</Text2>
                     </Box>
-                )}
+                    {stackingGroup && <>{stackingGroup}</>}
+                </Inline>
                 {progressPercent && <ProgressBar progressPercent={progressPercent} reverse={reverse} />}
-            </div>
-
-            <Box paddingTop={hasHeader ? 8 : 0}>
                 <Inline space={8} alignItems="baseline">
-                    <Text8 color={valueColor}>{value}</Text8>
+                    <Text8 color={valueColor}>{heading.value}</Text8>
                     <Text2 regular color={vars.colors.textSecondary}>
-                        {text}
+                        {heading.text}
                     </Text2>
                 </Inline>
                 {description && (
-                    <Box paddingTop={8}>
-                        <Text2 regular color={vars.colors.textSecondary}>
-                            {description}
-                        </Text2>
-                    </Box>
+                    <Text2 regular color={vars.colors.textSecondary}>
+                        {description}
+                    </Text2>
                 )}
-            </Box>
+            </Stack>
         </div>
     );
 };

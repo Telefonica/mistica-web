@@ -6,9 +6,7 @@ export const column = sprinkles({
     flexDirection: 'column',
 });
 
-export const container = style([
-    {
-        paddingLeft: 32,
-        textAlign: 'right',
-    },
-]);
+export const rightContent = style({
+    paddingLeft: 32,
+    textAlign: 'right',
+});
