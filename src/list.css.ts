@@ -64,7 +64,10 @@ export const control = style([
     },
 ]);
 
-export const right = style({marginLeft: 16});
+export const right = style({display: 'flex', marginLeft: 16, maxWidth: '40%'});
+
+export const detailRight = style({paddingLeft: 8});
+export const detail = style({textAlign: 'right'});
 
 export const centeredControl = sprinkles({
     display: 'flex',
