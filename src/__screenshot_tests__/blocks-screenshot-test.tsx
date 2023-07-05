@@ -21,13 +21,13 @@ test('Blocks Information Block', async () => {
 });
 
 test.each`
-    showStackingGroup
-    ${false}          | ${true}
-`('Blocks Progress Block', async ({showStackingGroup}) => {
+    stackingGroup
+    ${false}      | ${true}
+`('Blocks Progress Block', async ({stackingGroup}) => {
     await openStoryPage({
         id: 'community-blocks--block-progress',
         device: 'MOBILE_IOS',
-        args: {showStackingGroup},
+        args: {stackingGroup},
     });
 
     const stepper = await screen.findByTestId('progress-block');
@@ -38,13 +38,13 @@ test.each`
 });
 
 test.each`
-    showStackingGroup
-    ${false}          | ${true}
-`('Blocks Row Block', async ({showStackingGroup}) => {
+    stackingGroup
+    ${false}      | ${true}
+`('Blocks Row Block', async ({stackingGroup}) => {
     await openStoryPage({
         id: 'community-blocks--block-row',
         device: 'MOBILE_IOS',
-        args: {showStackingGroup},
+        args: {stackingGroup},
     });
 
     const stepper = await screen.findByTestId('row-block');

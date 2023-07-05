@@ -53,14 +53,14 @@ interface RowBlockBaseProps {
 }
 
 interface RowBlockWithDescription extends RowBlockBaseProps {
-    description: string;
+    description?: string;
 }
 
 interface RowBlockWithStackingGroup extends RowBlockBaseProps {
-    stackingGroup: RendersNullableElement<typeof StackingGroup>;
+    stackingGroup?: RendersNullableElement<typeof StackingGroup>;
 }
 
-type RowBlockProps = ExclusifyUnion<RowBlockWithDescription | RowBlockWithStackingGroup>;
+type RowBlockProps = ExclusifyUnion<RowBlockWithDescription & RowBlockWithStackingGroup>;
 
 export const RowBlock: React.FC<RowBlockProps> = ({
     title,
