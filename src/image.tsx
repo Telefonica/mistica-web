@@ -2,7 +2,6 @@ import * as React from 'react';
 import classnames from 'classnames';
 import {SkeletonRectangle} from './skeletons';
 import {AspectRatioElement} from './utils/aspect-ratio-support';
-import {getPrefixedDataAttributes} from './utils/dom';
 import {useIsInverseVariant} from './theme-variant-context';
 import {useTheme} from './hooks';
 import {VIVO_SKIN} from './skins/constants';
@@ -167,7 +166,6 @@ export const ImageContent = React.forwardRef<HTMLImageElement, ImageProps>(
             // https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/issues/309
             // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
             <img
-                {...getPrefixedDataAttributes(dataAttributes)}
                 style={{
                     ...(isLoading && withLoadingFallback ? {opacity: 0} : {opacity: 1}),
                     boxSizing: 'border-box',
@@ -239,6 +237,7 @@ const Image = React.forwardRef<HTMLImageElement, ImageProps>(({aspectRatio = '1:
             aspectRatio={ratio}
             width={props.width}
             height={props.height}
+            dataAttributes={props.dataAttributes}
         >
             <ImageContent aspectRatio={aspectRatio} {...props} ref={ref} />
         </AspectRatioElement>

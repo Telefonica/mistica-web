@@ -3,6 +3,9 @@ import classNames from 'classnames';
 import * as React from 'react';
 import {useIsomorphicLayoutEffect} from '../hooks';
 import * as styles from './aspect-ratio-support.css';
+import {getPrefixedDataAttributes} from './dom';
+
+import type {DataAttributes} from './types';
 
 const AspectRatioSupport = React.createContext<boolean>(true);
 
@@ -38,6 +41,7 @@ type AspectRatioElementProps = {
     as?: React.ComponentType<any> | string;
     style?: React.CSSProperties;
     className?: string;
+    dataAttributes?: DataAttributes;
 };
 
 export const AspectRatioElement = (props: AspectRatioElementProps): JSX.Element => {
@@ -87,6 +91,7 @@ export const AspectRatioElement = (props: AspectRatioElementProps): JSX.Element 
                     [styles.vars.aspectRatio]: aspectRatio ? String(aspectRatio) : 'unset',
                 }),
             },
+            ...getPrefixedDataAttributes(props.dataAttributes),
         },
         props.children
     );

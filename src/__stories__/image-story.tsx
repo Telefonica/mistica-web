@@ -43,7 +43,7 @@ type Args = {
     height: number;
     aspectRatio: string;
     borderRadius: boolean;
-    withErrorFallback: boolean;
+    isInvalidSource: boolean;
 };
 
 export const Default: StoryComponent<Args> = ({
@@ -52,7 +52,7 @@ export const Default: StoryComponent<Args> = ({
     height,
     aspectRatio,
     borderRadius,
-    withErrorFallback,
+    isInvalidSource,
 }) => {
     const props = {
         width: type !== 'full width' ? width : undefined,
@@ -64,6 +64,7 @@ export const Default: StoryComponent<Args> = ({
                     : (aspectRatio.replace(' ', ':') as AspectRatio)
                 : undefined,
         noBorderRadius: borderRadius === false,
+        dataAttributes: {testid: 'image'},
     };
 
     const image = <Image src={usingVrImg} {...props} />;
@@ -73,11 +74,14 @@ export const Default: StoryComponent<Args> = ({
      * */
     const error = <Image src="data:image/jpg;" {...props} />;
 
+    /** for some reason, if we write this logic with a conditional (isInvalidSource ? error : image),
+     * the image element triggers an error when switching the isInvalidSource control from true to false
+     * */
     return (
-        <div data-testid="image">
-            <div style={{display: withErrorFallback ? 'none' : 'block'}}>{image}</div>
-            <div style={{display: withErrorFallback ? 'block' : 'none'}}>{error}</div>
-        </div>
+        <>
+            {!isInvalidSource && image}
+            {isInvalidSource && error}
+        </>
     );
 };
 
@@ -88,5 +92,5 @@ Default.args = {
     height: 240,
     aspectRatio: '1 1',
     borderRadius: true,
-    withErrorFallback: false,
+    isInvalidSource: false,
 };

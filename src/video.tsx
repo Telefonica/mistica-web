@@ -1,7 +1,6 @@
 import * as React from 'react';
 import {ImageContent, ImageError, useMediaBorderRadius} from './image';
 import {AspectRatioElement} from './utils/aspect-ratio-support';
-import {getPrefixedDataAttributes} from './utils/dom';
 import {isRunningAcceptanceTest} from './utils/platform';
 import * as styles from './video.css';
 import {vars} from './skins/skin-contract.css';
@@ -205,7 +204,6 @@ const Video = React.forwardRef<VideoElement, VideoProps>(
                 }}
                 // This transparent pixel fallback avoids showing the ugly "play" image in android webviews
                 poster={TRANSPARENT_PIXEL}
-                {...getPrefixedDataAttributes(dataAttributes)}
                 style={{
                     // For some reason adding this style with classnames doesn't add the border radius in safari
                     borderRadius: !borderRadiusContext ? 0 : vars.borderRadii.container,
@@ -253,6 +251,7 @@ const Video = React.forwardRef<VideoElement, VideoProps>(
                 aspectRatio={ratio}
                 width={props.width}
                 height={props.height}
+                dataAttributes={dataAttributes}
             >
                 <div
                     style={{

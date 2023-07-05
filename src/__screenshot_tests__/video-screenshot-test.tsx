@@ -53,7 +53,7 @@ test.each(ASPECT_RATIO.slice(0, 3))('Video - error fallback with aspect ratio %s
             type: 'width and aspect ratio',
             aspectRatio: aspectRatio.replace(':', ' '),
             withPoster: false,
-            withErrorFallback: true,
+            isInvalidSource: true,
         },
     });
 
