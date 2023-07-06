@@ -91,7 +91,7 @@ export const RowBlock: React.FC<RowBlockProps> = ({
                         </Box>
                     )}
                     {stackingGroup ? (
-                        <>{stackingGroup}</>
+                        stackingGroup
                     ) : (
                         <Text2 regular color={vars.colors.textSecondary}>
                             {description}
@@ -153,7 +153,7 @@ export const InformationBlock: React.FC<InformationBlockProps> = ({
 };
 
 interface HighlightedValueBlockProps {
-    tag?: RendersNullableElement<typeof Tag>;
+    headline?: RendersNullableElement<typeof Tag>;
 
     mainHeading: {
         value: string | number;
@@ -175,7 +175,7 @@ interface HighlightedValueBlockProps {
 }
 
 export const HighlightedValueBlock: React.FC<HighlightedValueBlockProps> = ({
-    tag,
+    headline,
     mainHeading,
     secondHeading,
     secondaryValue,
@@ -186,7 +186,7 @@ export const HighlightedValueBlock: React.FC<HighlightedValueBlockProps> = ({
 }) => {
     return (
         <div aria-label={ariaLabel}>
-            {tag && <Box paddingBottom={24}>{tag}</Box>}
+            {headline && <Box paddingBottom={24}>{headline}</Box>}
 
             <Stack space={2}>
                 <Inline space={8} alignItems="baseline">
