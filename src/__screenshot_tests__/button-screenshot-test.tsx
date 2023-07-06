@@ -91,17 +91,34 @@ test.each(DEVICES)('Buttons - ellipsis (%s)', async (device) => {
     expect(image).toMatchImageSnapshot();
 });
 
-test('Buttons - Link button - href and no chevron', async () => {
-    await openStoryPage({
-        id: 'components-buttons--link-button',
-        device: 'MOBILE_IOS',
-        args: {
-            noChevron: true,
-        },
-    });
+const BUTTON_LINK_ACTIONS = ['href', 'to', 'onPress'];
+const BUTTON_LINK_CHEVRON_OPTIONS = ['default', 'true', 'false'];
 
-    const story = await screen.findByTestId('content');
+const getLinkWithChevronCases = () => {
+    const cases = [];
+    for (const action of BUTTON_LINK_ACTIONS) {
+        for (const withChevron of BUTTON_LINK_CHEVRON_OPTIONS) {
+            cases.push([action, withChevron]);
+        }
+    }
+    return cases;
+};
 
-    const image = await story.screenshot();
-    expect(image).toMatchImageSnapshot();
-});
+test.each(getLinkWithChevronCases())(
+    'Buttons - Link button - %s (chevron = %s)',
+    async (action, withChevron) => {
+        await openStoryPage({
+            id: 'components-buttons--link-button',
+            device: 'MOBILE_IOS',
+            args: {
+                action,
+                withChevron,
+            },
+        });
+
+        const story = await screen.findByTestId('content');
+
+        const image = await story.screenshot();
+        expect(image).toMatchImageSnapshot();
+    }
+);

@@ -441,6 +441,7 @@ interface ButtonLinkCommonProps {
     loadingText?: string;
     StartIcon?: React.FC<IconProps>;
     EndIcon?: React.FC<IconProps>;
+    withChevron?: boolean;
 }
 interface ButtonLinkOnPressProps extends ButtonLinkCommonProps {
     onPress: (event: React.MouseEvent<HTMLElement>) => void | undefined | Promise<void>;
@@ -452,14 +453,12 @@ interface ButtonLinkHrefProps extends ButtonLinkCommonProps {
     newTab?: boolean;
     onPress?: undefined;
     to?: undefined;
-    noChevron?: boolean;
 }
 interface ButtonLinkToProps extends ButtonLinkCommonProps {
     to: string;
     fullPageOnWebView?: boolean;
     onPress?: undefined;
     href?: undefined;
-    noChevron?: boolean;
 }
 
 export type ButtonLinkProps = ButtonLinkOnPressProps | ButtonLinkHrefProps | ButtonLinkToProps;
@@ -474,6 +473,7 @@ export const ButtonLink = React.forwardRef<TouchableElement, ButtonLinkProps>((p
     const [isOnPressPromiseResolving, setIsOnPressPromiseResolving] = React.useState(false);
 
     const showSpinner = props.showSpinner || isOnPressPromiseResolving;
+    const showChevron = props.withChevron ?? (!!props.href || !!props.to);
 
     // This state is needed to not render the spinner when hidden (because it causes high CPU usage
     // specially in iPhone). But we want the spinner to be visible during the show/hide animation.
@@ -528,7 +528,7 @@ export const ButtonLink = React.forwardRef<TouchableElement, ButtonLinkProps>((p
             textContentStyle: styles.textContentLink,
             StartIcon: props.StartIcon,
             EndIcon: props.EndIcon,
-            withChevron: (!!props.to || !!props.href) && !props.noChevron,
+            withChevron: showChevron,
         }),
         disabled: props.disabled || showSpinner || isFormSending,
     };
