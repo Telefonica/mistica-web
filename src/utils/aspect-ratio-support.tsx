@@ -3,7 +3,6 @@ import classNames from 'classnames';
 import * as React from 'react';
 import {useIsomorphicLayoutEffect} from '../hooks';
 import * as styles from './aspect-ratio-support.css';
-import {getPrefixedDataAttributes} from './dom';
 
 import type {DataAttributes} from './types';
 
@@ -91,7 +90,7 @@ export const AspectRatioContainer = (props: AspectRatioContainerProps): JSX.Elem
                     [styles.vars.aspectRatio]: aspectRatio ? String(aspectRatio) : 'unset',
                 }),
             },
-            ...(!needsWrapper && getPrefixedDataAttributes(props.dataAttributes)),
+            ...(!needsWrapper && props.dataAttributes),
         },
         props.children
     );
@@ -108,11 +107,7 @@ export const AspectRatioContainer = (props: AspectRatioContainerProps): JSX.Elem
         })();
 
         return (
-            <div
-                style={{width, height, paddingTop}}
-                className={styles.wrapper}
-                {...getPrefixedDataAttributes(props.dataAttributes, 'AspectRatioContainer')}
-            >
+            <div style={{width, height, paddingTop}} className={styles.wrapper} {...props.dataAttributes}>
                 {container}
             </div>
         );
