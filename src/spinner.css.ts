@@ -34,7 +34,7 @@ const spinnerIosKeyframes = keyframes({
 });
 
 export const spinnerDefault = style([
-    sprinkles({flexShrink: 0}),
+    sprinkles({flexShrink: 0, display: 'block'}),
     {
         animation: `${rotatorKeyframes} 1.4s linear infinite`,
     },
@@ -49,6 +49,7 @@ export const spinnerDefaultPath = style({
 
 export const spinnerIos = sprinkles({
     flexShrink: 0,
+    display: 'block',
 });
 
 export const spinnerIosSvgPath = style({
