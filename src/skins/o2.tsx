@@ -279,6 +279,11 @@ export const getO2Skin: GetKnownSkin = () => {
         textPresets: {
             cardTitle: {weight: 'regular'},
             button: {weight: 'medium'},
+            tabsLabel: {
+                weight: 'medium',
+                size: {mobile: 16, desktop: 18},
+                lineHeight: {mobile: 24, desktop: 24},
+            },
             link: {weight: 'medium'},
             title1: {weight: 'medium'},
             indicator: {weight: 'medium'},
@@ -288,7 +293,6 @@ export const getO2Skin: GetKnownSkin = () => {
             text8: {weight: 'light'},
             text9: {weight: 'light'},
             text10: {weight: 'light'},
-            tabsLabel: {size: {mobile: 16, desktop: 18}, lineHeight: {mobile: 24, desktop: 24}},
         },
     };
     return skin;

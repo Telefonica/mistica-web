@@ -36,6 +36,7 @@ interface CommonProps {
     subtitleLinesMax?: number;
     description?: string | null;
     descriptionLinesMax?: number;
+    detail?: string;
     asset?: React.ReactNode;
     badge?: boolean | number;
     role?: string;
@@ -74,6 +75,7 @@ const Content: React.FC<ContentProps> = ({
     subtitleLinesMax,
     description,
     descriptionLinesMax,
+    detail,
     asset,
     type = 'basic',
     badge,
@@ -114,21 +116,37 @@ const Content: React.FC<ContentProps> = ({
             >
                 <Stack space={4}>
                     {headline && (
-                        <Text1 regular color={vars.colors.textPrimary}>
+                        <Text1 regular color={vars.colors.textPrimary} hyphens="auto">
                             {headline}
                         </Text1>
                     )}
                     <Stack space={2}>
-                        <Text3 regular color={vars.colors.textPrimary} truncate={titleLinesMax} id={labelId}>
+                        <Text3
+                            regular
+                            color={vars.colors.textPrimary}
+                            truncate={titleLinesMax}
+                            id={labelId}
+                            hyphens="auto"
+                        >
                             {title}
                         </Text3>
                         {subtitle && (
-                            <Text2 regular color={vars.colors.textSecondary} truncate={subtitleLinesMax}>
+                            <Text2
+                                regular
+                                color={vars.colors.textSecondary}
+                                truncate={subtitleLinesMax}
+                                hyphens="auto"
+                            >
                                 {subtitle}
                             </Text2>
                         )}
                         {description && (
-                            <Text2 regular color={vars.colors.textSecondary} truncate={descriptionLinesMax}>
+                            <Text2
+                                regular
+                                color={vars.colors.textSecondary}
+                                truncate={descriptionLinesMax}
+                                hyphens="auto"
+                            >
                                 {description}
                             </Text2>
                         )}
@@ -136,34 +154,44 @@ const Content: React.FC<ContentProps> = ({
                     </Stack>
                 </Stack>
             </div>
+
             {renderBadge()}
-            {type === 'chevron' && (
-                <Box paddingLeft={16} className={classNames(styles.center, {[styles.disabled]: disabled})}>
-                    <IconChevron
-                        color={isInverse ? vars.colors.inverse : vars.colors.neutralMedium}
-                        direction="right"
-                    />
-                </Box>
-            )}
-            {type === 'control' && <div className={styles.right}>{renderRight(right, centerY)}</div>}
-            {type === 'custom' && (
-                <>
-                    <div className={classNames(styles.right, {[styles.disabled]: disabled})}>
+
+            <div className={classNames({[styles.right]: !!detail || type !== 'basic'})}>
+                {detail && (
+                    <div className={classNames(styles.center, styles.detail, {[styles.disabled]: disabled})}>
+                        <Text2 regular color={vars.colors.textSecondary} hyphens="auto">
+                            {detail}
+                        </Text2>
+                    </div>
+                )}
+
+                {type === 'control' && (
+                    <div className={classNames({[styles.detailRight]: !!detail})}>
                         {renderRight(right, centerY)}
                     </div>
-                    {withChevron && (
-                        <Box
-                            paddingLeft={4}
-                            className={classNames(styles.center, {[styles.disabled]: disabled})}
-                        >
-                            <IconChevron
-                                color={isInverse ? vars.colors.inverse : vars.colors.neutralMedium}
-                                direction="right"
-                            />
-                        </Box>
-                    )}
-                </>
-            )}
+                )}
+
+                {type === 'custom' && (
+                    <div
+                        className={classNames({[styles.detailRight]: !!detail, [styles.disabled]: disabled})}
+                    >
+                        {renderRight(right, centerY)}
+                    </div>
+                )}
+
+                {(type === 'chevron' || (type === 'custom' && withChevron)) && (
+                    <Box
+                        paddingLeft={detail || type === 'custom' ? 4 : 0}
+                        className={classNames(styles.center, {[styles.disabled]: disabled})}
+                    >
+                        <IconChevron
+                            color={isInverse ? vars.colors.inverse : vars.colors.neutralMedium}
+                            direction="right"
+                        />
+                    </Box>
+                )}
+            </div>
         </Box>
     );
 };
@@ -280,6 +308,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
         subtitleLinesMax,
         description,
         descriptionLinesMax,
+        detail,
         badge,
         role,
         extra,
@@ -310,6 +339,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
             titleLinesMax={titleLinesMax}
             subtitleLinesMax={subtitleLinesMax}
             descriptionLinesMax={descriptionLinesMax}
+            detail={detail}
             type={type}
             right={right}
             extra={extra}

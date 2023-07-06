@@ -22,6 +22,7 @@ export type TextPresetsConfig = {
     title1: TextTokenConfig<'regular' | 'medium'>;
     indicator: TextTokenConfig<'regular' | 'medium'>;
     tabsLabel: {
+        weight: FontWeight;
         size: {mobile: number; desktop: number};
         lineHeight: {mobile: number; desktop: number};
     };
