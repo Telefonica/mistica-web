@@ -40,7 +40,7 @@ declare global {
         readonly ready: Promise<FontFaceSet>;
         add(font: FontFace): void;
         check(font: string, text?: string): boolean; // throws exception
-        load(font: string, text?: string): Promise<FontFace[]>;
+        load(font: string, text?: string): Promise<Array<FontFace>>;
         delete(font: FontFace): void;
         clear(): void;
     }

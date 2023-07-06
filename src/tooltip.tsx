@@ -296,6 +296,7 @@ const Tooltip: React.FC<Props> = ({
                 }
                 onFocus={handleFocus}
                 onKeyDown={handleKeyDown}
+                // eslint-disable-next-line react/no-unknown-property
                 touch-action="auto" // Prop needed for Pointer Events Polyfill to work properly
                 role="button"
                 tabIndex={0}

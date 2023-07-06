@@ -186,7 +186,7 @@ export const useIsomorphicLayoutEffect = isClientSide() ? React.useLayoutEffect 
 type IntersectionObserverOptions = {
     root?: Element | Document | null;
     rootMargin?: string;
-    threshold?: number | number[];
+    threshold?: number | Array<number>;
 };
 
 export const useIsInViewport = (
