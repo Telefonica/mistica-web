@@ -3,7 +3,6 @@ import {
     Select,
     IconButton,
     IconSettingsRegular,
-    IconCodeFilled,
     Overlay,
     useTheme,
     useScreenSize,
@@ -11,6 +10,13 @@ import {
     Checkbox,
     ThemeContextProvider,
     skinVars,
+    MovistarLogo,
+    VivoLogo,
+    O2Logo,
+    TelefonicaLogo,
+    BlauLogo,
+    Inline,
+    Circle,
 } from '../../src';
 import {Movistar, Vivo, O2, Telefonica, Blau} from '../themes';
 import {useOverrideTheme} from '../frame-component';
@@ -18,35 +24,40 @@ import IconSun from '../icons/icon-sun';
 import IconMoon from '../icons/icon-moon';
 import IconAppleOn from '../icons/icon-apple-on';
 import IconAppleOff from '../icons/icon-apple-off';
+import IconCode from '../icons/icon-code';
 import * as styles from '../preview-tools.css';
 
 import type {ThemeConfig, ColorScheme, SkinName} from '../../src';
 
 export * from '../../src';
-export * from '../../src/community';
 export {default as Loader} from './loader';
 export {default as ButtonGroup} from '../../src/button-group';
 
-const themesMap: {[skinName: string]: {themeConfig: ThemeConfig; text: string}} = {
+const themesMap: {[skinName: string]: {themeConfig: ThemeConfig; text: string; icon: React.ReactNode}} = {
     Movistar: {
-        text: 'Movistar',
+        text: '',
         themeConfig: Movistar,
+        icon: <MovistarLogo size={24} />,
     },
     Vivo: {
-        text: 'Vivo',
+        text: '',
         themeConfig: Vivo,
+        icon: <VivoLogo size={24} />,
     },
     O2: {
-        text: 'O2',
+        text: '',
         themeConfig: O2,
+        icon: <O2Logo size={24} />,
     },
     Telefonica: {
-        text: 'Telefónica',
+        text: '',
         themeConfig: Telefonica,
+        icon: <TelefonicaLogo size={24} />,
     },
     Blau: {
-        text: 'Blau',
+        text: '',
         themeConfig: Blau,
+        icon: <BlauLogo size={24} />,
     },
 };
 
@@ -75,39 +86,77 @@ const PreviewToolsControls: React.FC<PreviewToolsControlsProps> = ({
     const systemColorScheme = 'light';
     const alternativeColorScheme = 'dark';
 
+    const themesMap: {[skinName: string]: {themeConfig: ThemeConfig; text: string; icon: React.ReactNode}} = {
+        Movistar: {
+            text: isMobile ? 'Movistar' : '',
+            themeConfig: Movistar,
+            icon: <MovistarLogo size={24} />,
+        },
+        Vivo: {
+            text: isMobile ? 'Vivo' : '',
+            themeConfig: Vivo,
+            icon: <VivoLogo size={24} />,
+        },
+        O2: {
+            text: isMobile ? 'O2' : '',
+            themeConfig: O2,
+            icon: <O2Logo size={24} />,
+        },
+        Telefonica: {
+            text: isMobile ? 'Telefónica' : '',
+            themeConfig: Telefonica,
+            icon: <TelefonicaLogo size={24} />,
+        },
+        Blau: {
+            text: isMobile ? 'Blau' : '',
+            themeConfig: Blau,
+            icon: <BlauLogo size={24} />,
+        },
+    };
+
     if (isMobile) {
         return (
-            <div className={`${styles.controls} ${styles.mobileControls}`}>
+            <div className={`${styles.controls} `}>
                 <Select
                     label="Select brand"
+                    aria-label="Select brand"
                     name="theme"
-                    options={Object.entries(themesMap).map(([skinName, {text}]) => ({value: skinName, text}))}
+                    options={Object.entries(themesMap).map(([skinName, {text}]) => ({
+                        value: skinName,
+                        text,
+                    }))}
                     value={skinName}
                     onChangeValue={onSkinNameChange as any}
                 />
-                <Checkbox
-                    name="colorScheme"
-                    checked={colorScheme === alternativeColorScheme}
-                    onChange={(checked) => {
-                        if (checked) {
-                            onColorSchemeChange(alternativeColorScheme);
-                        } else {
-                            onColorSchemeChange(systemColorScheme);
-                        }
-                    }}
-                    render={({checked}) => (checked ? <IconSun /> : <IconMoon />)}
-                />
-                {showPlatformSelector && (
+                <Inline space={16} alignItems="center">
+                    {showPlatformSelector && (
+                        <Checkbox
+                            name="iOS"
+                            aria-label="Change platform to iOS"
+                            checked={os === 'ios'}
+                            onChange={(checked) => onOsChange(checked ? 'ios' : 'android')}
+                            render={({checked}) =>
+                                checked ? <IconAppleOn size={24} /> : <IconAppleOff size={24} />
+                            }
+                        />
+                    )}
                     <Checkbox
-                        name="iOS"
-                        checked={os === 'ios'}
-                        onChange={(checked) => onOsChange(checked ? 'ios' : 'android')}
-                        render={({checked}) => (checked ? <IconAppleOn /> : <IconAppleOff />)}
+                        aria-label="Change color scheme"
+                        name="colorScheme"
+                        checked={colorScheme === alternativeColorScheme}
+                        onChange={(checked) => {
+                            if (checked) {
+                                onColorSchemeChange(alternativeColorScheme);
+                            } else {
+                                onColorSchemeChange(systemColorScheme);
+                            }
+                        }}
+                        render={({checked}) => (checked ? <IconSun size={24} /> : <IconMoon size={24} />)}
                     />
-                )}
-                <IconButton aria-label="Edit in Playroom" size={32} onPress={onEditStoryPress}>
-                    <IconCodeFilled size={32} color={skinVars.colors.neutralHigh} />
-                </IconButton>
+                    <IconButton aria-label="Edit in Playroom" size={24} onPress={onEditStoryPress}>
+                        <IconCode size={24} color={skinVars.colors.neutralHigh} />
+                    </IconButton>
+                </Inline>
             </div>
         );
     } else {
@@ -115,7 +164,7 @@ const PreviewToolsControls: React.FC<PreviewToolsControlsProps> = ({
             <div className={`${styles.controls} ${styles.desktopControls}`}>
                 <div className={styles.tabs}>
                     <Tabs
-                        tabs={Object.values(themesMap).map(({text}) => ({text}))}
+                        tabs={Object.values(themesMap).map(({text, icon}) => ({text, icon}))}
                         selectedIndex={Object.keys(themesMap).indexOf(skinName)}
                         onChange={(index) => {
                             onSkinNameChange((Object.keys(themesMap) as Array<SkinName>)[index]);
@@ -123,7 +172,15 @@ const PreviewToolsControls: React.FC<PreviewToolsControlsProps> = ({
                     />
                 </div>
                 <div className={styles.flexSpacer} />
-                <div className={styles.desktopControlItem}>
+                <Inline space={32} alignItems="center" fullWidth>
+                    {showPlatformSelector && (
+                        <Checkbox
+                            name="iOS"
+                            checked={os === 'ios'}
+                            onChange={(checked) => onOsChange(checked ? 'ios' : 'android')}
+                            render={({checked}) => (checked ? <IconAppleOn /> : <IconAppleOff />)}
+                        />
+                    )}
                     <Checkbox
                         name="colorScheme"
                         checked={colorScheme === alternativeColorScheme}
@@ -136,22 +193,11 @@ const PreviewToolsControls: React.FC<PreviewToolsControlsProps> = ({
                         }}
                         render={({checked}) => (checked ? <IconSun /> : <IconMoon />)}
                     />
-                </div>
-                {showPlatformSelector && (
-                    <div className={styles.desktopControlItem}>
-                        <Checkbox
-                            name="iOS"
-                            checked={os === 'ios'}
-                            onChange={(checked) => onOsChange(checked ? 'ios' : 'android')}
-                            render={({checked}) => (checked ? <IconAppleOn /> : <IconAppleOff />)}
-                        />
-                    </div>
-                )}
-                <div className={styles.desktopControlItem}>
-                    <IconButton aria-label="Edit in Playroom" size={32} onPress={onEditStoryPress}>
-                        <IconCodeFilled size={32} color={skinVars.colors.neutralHigh} />
+
+                    <IconButton aria-label="Edit in Playroom" size={24} onPress={onEditStoryPress}>
+                        <IconCode size={24} color={skinVars.colors.neutralHigh} />
                     </IconButton>
-                </div>
+                </Inline>
             </div>
         );
     }
@@ -186,6 +232,7 @@ export const PreviewTools = ({
     const [os, setOs] = React.useState<'android' | 'ios' | 'desktop'>(initialOs);
     const [colorScheme, setColorScheme] = React.useState<ColorScheme>('light');
     const overrideTheme = useOverrideTheme();
+    const {isMobile} = useScreenSize();
 
     React.useEffect(() => {
         const selectedThemeConfig = themesMap[skinName].themeConfig;
@@ -265,7 +312,13 @@ export const PreviewTools = ({
                     >
                         <IconButton size={56} aria-label="settings" onPress={() => setShowOverlay(true)}>
                             <div className={styles.floattingButtonBackground}>
-                                <IconSettingsRegular size={24} color={skinVars.colors.neutralHigh} />
+                                <Circle
+                                    backgroundColor={skinVars.colors.backgroundContainer}
+                                    size={40}
+                                    border
+                                >
+                                    <IconSettingsRegular size={24} color={skinVars.colors.neutralHigh} />
+                                </Circle>
                             </div>
                         </IconButton>
                     </div>
