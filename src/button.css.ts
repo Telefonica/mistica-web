@@ -290,7 +290,7 @@ export const link = style([
         paddingTop: PADDING_Y_LINK,
         paddingBottom: PADDING_Y_LINK,
         fontWeight: 500,
-        transition: `background-color ${transitionTiming}, color ${transitionTiming}`,
+        transition: `background-color ${transitionTiming}`,
 
         selectors: {
             '&:enabled:active': {
