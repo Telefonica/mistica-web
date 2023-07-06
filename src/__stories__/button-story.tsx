@@ -15,12 +15,6 @@ import {
 export default {
     title: 'Components/Buttons',
     parameters: {fullScreen: true},
-    argTypes: {
-        icon: {
-            options: ['none', 'left', 'right'],
-            control: {type: 'select'},
-        },
-    },
 };
 
 const defaultArgs = {
@@ -31,7 +25,20 @@ const defaultArgs = {
     disabled: false,
     showSpinner: false,
     small: false,
+    action: 'href',
     newTab: false,
+};
+
+const defaultArgTypes = {
+    icon: {
+        options: ['none', 'left', 'right'],
+        control: {type: 'select'},
+    },
+    action: {
+        options: ['onPress', 'href', 'to'],
+        control: {type: 'select'},
+    },
+    newTab: {if: {arg: 'action', eq: 'href'}},
 };
 
 type Args = {
@@ -42,10 +49,26 @@ type Args = {
     disabled: boolean;
     showSpinner: boolean;
     small: boolean;
+    action: string;
     newTab: boolean;
 };
 
-const href = 'https://example.com';
+const getButtonActionProps = (action: string, newTab: boolean) => {
+    return action === 'onPress'
+        ? {
+              onPress: () => {
+                  window.alert('pressed!');
+              },
+          }
+        : action === 'href'
+        ? {
+              href: 'https://www.google.com',
+              newTab,
+          }
+        : {
+              to: '#',
+          };
+};
 
 type Props = {
     isInverse: boolean;
@@ -58,49 +81,70 @@ const ButtonBackgroundContainer: React.FC<Props> = ({isInverse, children}) => (
     </ResponsiveLayout>
 );
 
-const renderButtonContent = (text: string, icon: string) => (
-    <>
-        {icon === 'left' && <IconPhotoCameraRegular color="currentColor" />}
-        {text}
-        {icon === 'right' && <IconPhotoCameraRegular color="currentColor" />}
-    </>
-);
-
-export const primaryButton: StoryComponent<Args> = ({isInverse, text, icon, ...props}) => {
+export const primaryButton: StoryComponent<Args> = ({isInverse, text, icon, action, newTab, ...props}) => {
     return (
         <ButtonBackgroundContainer isInverse={isInverse}>
-            <ButtonPrimary href={href} {...props}>
-                {renderButtonContent(text, icon)}
+            <ButtonPrimary
+                {...props}
+                {...getButtonActionProps(action, newTab)}
+                StartIcon={icon === 'left' ? IconPhotoCameraRegular : undefined}
+                EndIcon={icon === 'right' ? IconPhotoCameraRegular : undefined}
+            >
+                {text}
             </ButtonPrimary>
         </ButtonBackgroundContainer>
     );
 };
 
-export const SecondaryButton: StoryComponent<Args> = ({isInverse, text, icon, ...props}) => {
+export const SecondaryButton: StoryComponent<Args> = ({isInverse, text, icon, action, newTab, ...props}) => {
     return (
         <ButtonBackgroundContainer isInverse={isInverse}>
-            <ButtonSecondary href={href} {...props}>
-                {renderButtonContent(text, icon)}
+            <ButtonSecondary
+                {...props}
+                {...getButtonActionProps(action, newTab)}
+                StartIcon={icon === 'left' ? IconPhotoCameraRegular : undefined}
+                EndIcon={icon === 'right' ? IconPhotoCameraRegular : undefined}
+            >
+                {text}
             </ButtonSecondary>
         </ButtonBackgroundContainer>
     );
 };
 
-export const DangerButton: StoryComponent<Args> = ({isInverse, text, icon, ...props}) => {
+export const DangerButton: StoryComponent<Args> = ({isInverse, text, icon, action, newTab, ...props}) => {
     return (
         <ButtonBackgroundContainer isInverse={isInverse}>
-            <ButtonDanger href={href} {...props}>
-                {renderButtonContent(text, icon)}
+            <ButtonDanger
+                {...props}
+                {...getButtonActionProps(action, newTab)}
+                StartIcon={icon === 'left' ? IconPhotoCameraRegular : undefined}
+                EndIcon={icon === 'right' ? IconPhotoCameraRegular : undefined}
+            >
+                {text}
             </ButtonDanger>
         </ButtonBackgroundContainer>
     );
 };
 
-export const LinkButton: StoryComponent<Omit<Args, 'small'>> = ({isInverse, text, icon, ...props}) => {
+export const LinkButton: StoryComponent<Omit<Args, 'small'> & {withChevron: string}> = ({
+    isInverse,
+    text,
+    icon,
+    action,
+    newTab,
+    withChevron,
+    ...props
+}) => {
     return (
         <ButtonBackgroundContainer isInverse={isInverse}>
-            <ButtonLink href={href} {...props}>
-                {renderButtonContent(text, icon)}
+            <ButtonLink
+                {...props}
+                withChevron={withChevron === 'default' ? undefined : withChevron === 'true'}
+                {...getButtonActionProps(action, newTab)}
+                StartIcon={icon === 'left' ? IconPhotoCameraRegular : undefined}
+                EndIcon={icon === 'right' ? IconPhotoCameraRegular : undefined}
+            >
+                {text}
             </ButtonLink>
         </ButtonBackgroundContainer>
     );
@@ -132,4 +176,18 @@ SubmitButton.storyName = 'Submit button';
 primaryButton.args = defaultArgs;
 SecondaryButton.args = defaultArgs;
 DangerButton.args = defaultArgs;
-LinkButton.args = (({small, ...o}) => o)(defaultArgs);
+LinkButton.args = {
+    ...(({small, ...o}) => o)(defaultArgs),
+    withChevron: 'default',
+};
+
+primaryButton.argTypes = defaultArgTypes;
+SecondaryButton.argTypes = defaultArgTypes;
+DangerButton.argTypes = defaultArgTypes;
+LinkButton.argTypes = {
+    ...defaultArgTypes,
+    withChevron: {
+        options: ['default', 'true', 'false'],
+        control: {type: 'select'},
+    },
+};
