@@ -2,7 +2,14 @@ import '../css/roboto.css';
 import '../.storybook/css/vivo-font.css';
 import '../css/reset.css';
 import * as React from 'react';
-import {ThemeContextProvider, useModalState, OverscrollColorProvider, skinVars, VIVO_NEW_SKIN} from '../src';
+import {
+    ThemeContextProvider,
+    useModalState,
+    OverscrollColorProvider,
+    skinVars,
+    VIVO_NEW_SKIN,
+    TELEFONICA_SKIN,
+} from '../src';
 
 import type {ThemeConfig} from '../src';
 
@@ -30,6 +37,7 @@ const App = ({children, skinName}: {children: React.ReactNode; skinName: string}
         body {background: ${skinVars.colors.background}}
 
         ${skinName === VIVO_NEW_SKIN ? 'body {font-family: "Vivo Type"}' : ''}
+        ${skinName === TELEFONICA_SKIN ? 'body {font-family: "Telefonica Sans"}' : ''}
 
         ${isModalOpen ? 'body {overflow-y: hidden}' : ''}
 

@@ -1,5 +1,6 @@
 import './css/roboto.css';
 import './css/vivo-font.css';
+import './css/telefonica-font.css';
 import './css/main.css';
 import * as React from 'react';
 import {
@@ -70,6 +71,7 @@ const MisticaThemeProvider = ({Story, context}): React.ReactElement => {
     return (
         <ThemeContextProvider theme={getTheme(skin as string, platform, colorScheme)}>
             {skin === VIVO_NEW_SKIN && <style>{`body {font-family: "Vivo Type"}`}</style>}
+            {skin === TELEFONICA_SKIN && <style>{`body {font-family: "Telefonica Sans"}`}</style>}
             <Story {...context} />
         </ThemeContextProvider>
     );
