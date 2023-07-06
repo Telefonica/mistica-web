@@ -26,7 +26,6 @@ const Spinner: React.FC<Props> = ({color, delay = '500ms', size = 24, style, rol
                 aria-labelledby={spinnerId}
                 className={styles.spinnerIos}
                 height={size}
-                display="block"
                 style={{...style}}
                 role="img"
                 viewBox="0 0 30 30"
@@ -82,7 +81,6 @@ const Spinner: React.FC<Props> = ({color, delay = '500ms', size = 24, style, rol
                 className={styles.spinnerDefault}
                 height={size}
                 style={{...style}}
-                display="block"
                 role="img"
                 viewBox="0 0 66 66"
                 width={size}
