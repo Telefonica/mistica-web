@@ -19,7 +19,14 @@ export const hoverBackground = style({
 
 export const pointer = sprinkles({cursor: 'pointer'});
 
-export const rowContent = sprinkles({width: '100%', border: 'none', background: 'transparent', padding: 0});
+export const rowContent = sprinkles({
+    width: '100%',
+    border: 'none',
+    background: 'transparent',
+    padding: 0,
+    display: 'block',
+    height: '100%',
+});
 
 export const content = sprinkles({
     display: 'flex',
@@ -78,6 +85,7 @@ export const centeredControl = sprinkles({
 export const dualActionContainer = sprinkles({
     display: 'flex',
     flexDirection: 'row',
+    height: '100%',
 });
 
 const dualActionBase = sprinkles({padding: 0, border: 'none', background: 'transparent'});
