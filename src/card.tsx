@@ -926,7 +926,11 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
                                                         truncate={descriptionLinesMax}
                                                         as="p"
                                                         regular
-                                                        color={vars.colors.textSecondary}
+                                                        color={
+                                                            withGradient
+                                                                ? vars.colors.textPrimary
+                                                                : vars.colors.textSecondary
+                                                        }
                                                         textShadow={textShadow}
                                                         hyphens="auto"
                                                     >
