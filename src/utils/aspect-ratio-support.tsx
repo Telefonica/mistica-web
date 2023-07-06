@@ -91,7 +91,7 @@ export const AspectRatioElement = (props: AspectRatioElementProps): JSX.Element 
                     [styles.vars.aspectRatio]: aspectRatio ? String(aspectRatio) : 'unset',
                 }),
             },
-            ...getPrefixedDataAttributes(props.dataAttributes),
+            ...(!needsWrapper && getPrefixedDataAttributes(props.dataAttributes)),
         },
         props.children
     );
@@ -108,7 +108,11 @@ export const AspectRatioElement = (props: AspectRatioElementProps): JSX.Element 
         })();
 
         return (
-            <div style={{width, height, paddingTop}} className={styles.wrapper}>
+            <div
+                style={{width, height, paddingTop}}
+                className={styles.wrapper}
+                {...getPrefixedDataAttributes(props.dataAttributes)}
+            >
                 {container}
             </div>
         );
