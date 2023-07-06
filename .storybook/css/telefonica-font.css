@@ -3,7 +3,7 @@
     font-family: 'Telefonica Sans';
     font-style: normal;
     font-weight: 400;
-    src: url('./fonts/telefonica-sans-regular.woff2') format('woff2');
+    src: url('./fonts/Telefonica_Sans_Regular.woff2') format('woff2');
 }
 
 /* Light */
@@ -11,7 +11,7 @@
     font-family: 'Telefonica Sans';
     font-style: normal;
     font-weight: 300;
-    src: url('./fonts/telefonica-sans-light.woff2') format('woff2');
+    src: url('./fonts/Telefonica_Sans_Light.woff2') format('woff2');
 }
 
 /* Medium */
@@ -19,7 +19,7 @@
     font-family: 'Telefonica Sans';
     font-style: normal;
     font-weight: 500;
-    src: url('./fonts/telefonica-sans-medium.woff2') format('woff2');
+    src: url('./fonts/Telefonica_Sans_Medium.woff2') format('woff2');
 }
 
 /* Bold */
@@ -27,5 +27,5 @@
     font-family: 'Telefonica Sans';
     font-style: normal;
     font-weight: 700;
-    src: url('./fonts/telefonica-sans-bold.woff2') format('woff2');
+    src: url('./fonts/Telefonica_Sans_Bold.woff2') format('woff2');
 }
