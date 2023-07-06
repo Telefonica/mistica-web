@@ -1,5 +1,4 @@
 import * as React from 'react';
-import {sprinkles} from '../sprinkles.css';
 import Stack from '../stack';
 import * as styles from './blocks.css';
 import {Text2, Text3, Text5, Text8} from '../text';
@@ -17,7 +16,7 @@ import type {ExclusifyUnion} from '../utils/utility-types';
 
 interface BlockContentProps {
     title?: string;
-    description?: string | Array<string>;
+    description?: Array<string>;
 }
 
 const BlockContent: React.FC<BlockContentProps> = ({title, description}) => {
@@ -69,36 +68,21 @@ export const RowBlock: React.FC<RowBlockProps> = ({
     'aria-label': ariaLabel,
 }) => {
     return (
-        <div
-            style={{
-                display: 'flex',
-                alignItems: 'center',
-            }}
-            aria-label={ariaLabel}
-        >
-            {(title || stackingGroup || description) && (
-                <Inline
-                    className={sprinkles({
-                        display: 'flex',
-                        flex: 1,
-                    })}
-                    space="between"
-                    alignItems="center"
-                >
-                    {title && (
-                        <Box paddingRight={32}>
-                            <Text2 regular>{title}</Text2>
-                        </Box>
-                    )}
-                    {stackingGroup ? (
-                        stackingGroup
-                    ) : (
-                        <Text2 regular color={vars.colors.textSecondary}>
-                            {description}
-                        </Text2>
-                    )}
-                </Inline>
-            )}
+        <div aria-label={ariaLabel}>
+            <Inline space="between" alignItems="center">
+                {title && (
+                    <Box paddingRight={32}>
+                        <Text2 regular>{title}</Text2>
+                    </Box>
+                )}
+                {stackingGroup ? (
+                    stackingGroup
+                ) : (
+                    <Text2 regular color={vars.colors.textSecondary}>
+                        {description}
+                    </Text2>
+                )}
+            </Inline>
         </div>
     );
 };
@@ -124,9 +108,9 @@ export const SimpleBlock: React.FC<SimpleBlockProps> = ({image, description, 'ar
 
 interface InformationBlockProps {
     title?: string;
-    description?: string | Array<string>;
-    value?: string | number;
-    secondaryValue?: string;
+    description?: Array<string>;
+    value?: number;
+    secondaryValue?: number;
     valueColor?: string;
     'aria-label'?: string;
 }
@@ -156,19 +140,19 @@ interface HighlightedValueBlockProps {
     headline?: RendersNullableElement<typeof Tag>;
 
     mainHeading: {
-        value: string | number;
+        value: number;
         text: string;
     };
 
     secondHeading?: {
-        value: string | number;
+        value: number;
         text: string;
     };
 
-    secondaryValue?: string;
+    secondaryValue?: number;
 
     title?: string;
-    description?: string | Array<string>;
+    description?: Array<string>;
 
     valueColor?: string;
     'aria-label'?: string;
@@ -215,7 +199,7 @@ export const HighlightedValueBlock: React.FC<HighlightedValueBlockProps> = ({
 interface ValueBlockProps {
     title?: string;
     value?: string;
-    description?: string | Array<string>;
+    description?: Array<string>;
     valueColor?: string;
     'aria-label'?: string;
 }
@@ -246,7 +230,7 @@ interface ProgressBlockProps {
     reverse?: boolean;
 
     heading: {
-        value: string | number;
+        value: number;
         text: string;
     };
 
@@ -273,7 +257,7 @@ export const ProgressBlock: React.FC<ProgressBlockProps> = ({
                     <Box paddingRight={32}>
                         <Text2 regular>{title}</Text2>
                     </Box>
-                    {stackingGroup && <>{stackingGroup}</>}
+                    {stackingGroup}
                 </Inline>
                 {progressPercent && <ProgressBar progressPercent={progressPercent} reverse={reverse} />}
                 <Inline space={8} alignItems="baseline">

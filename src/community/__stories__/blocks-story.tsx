@@ -65,10 +65,7 @@ export const BlockSimple: StoryComponent<SimpleBlockArgs> = ({description}) => {
     return (
         <ResponsiveLayout>
             <Box paddingY={24} dataAttributes={{testid: 'simple-block'}}>
-                <SimpleBlock
-                    description={description}
-                    image={<Image height={40} src={imgExample} />}
-                />
+                <SimpleBlock description={description} image={<Image height={40} src={imgExample} />} />
             </Box>
         </ResponsiveLayout>
     );
@@ -81,9 +78,9 @@ BlockSimple.args = {
 
 type InformationBlockArgs = {
     title: string;
-    description: string;
-    value: string;
-    secondaryValue: string;
+    description: Array<string>;
+    value: number;
+    secondaryValue: number;
 };
 
 export const BlockInformation: StoryComponent<InformationBlockArgs> = ({
@@ -109,22 +106,22 @@ export const BlockInformation: StoryComponent<InformationBlockArgs> = ({
 BlockInformation.storyName = 'InformationBlock';
 BlockInformation.args = {
     title: 'title',
-    description: 'description',
-    value: '20',
-    secondaryValue: '20',
+    description: ['description'],
+    value: 20,
+    secondaryValue: 20,
 };
 
 type HighlightedValueBlockArgs = {
     headline: string;
     headlineType: TagType;
 
-    value: string;
+    value: number;
     text: string;
 
-    secondaryValue: string;
+    secondaryValue: number;
 
     title: string;
-    description: string;
+    description: Array<string>;
 };
 
 export const BlockHighlightedValue: StoryComponent<HighlightedValueBlockArgs> = ({
@@ -156,10 +153,10 @@ BlockHighlightedValue.args = {
     headline: 'Priority',
     headlineType: 'promo',
     text: 'text',
-    value: '20',
+    value: 20,
+    secondaryValue: 20,
     title: 'title',
-    secondaryValue: '20',
-    description: 'description',
+    description: ['description'],
 };
 BlockHighlightedValue.argTypes = {
     headlineType: {
@@ -171,7 +168,7 @@ BlockHighlightedValue.argTypes = {
 type ValueBlockArgs = {
     title: string;
     value: string;
-    description: string;
+    description: Array<string>;
 };
 
 export const BlockValue: StoryComponent<ValueBlockArgs> = ({title, value, description}) => {
@@ -187,7 +184,7 @@ export const BlockValue: StoryComponent<ValueBlockArgs> = ({title, value, descri
 BlockValue.storyName = 'ValueBlock';
 BlockValue.args = {
     title: 'title',
-    description: 'description',
+    description: ['description'],
     value: '20',
 };
 
@@ -199,7 +196,7 @@ type ProgressBlockArgs = {
     progressPercent: number;
     reverse: boolean;
 
-    value: string | number;
+    value: number;
     text: string;
     description: string;
 };
@@ -246,7 +243,7 @@ BlockProgress.args = {
     stackingGroup: false,
     progressPercent: 20,
     reverse: false,
-    value: '20',
+    value: 20,
     text: 'text',
     description: 'description',
 };

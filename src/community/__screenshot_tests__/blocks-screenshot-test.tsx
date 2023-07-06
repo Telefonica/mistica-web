@@ -1,4 +1,4 @@
-import {openStoryPage, screen} from '../test-utils';
+import {openStoryPage, screen} from '../../test-utils';
 
 test('Blocks Highlighted Value Block', async () => {
     await openStoryPage({id: 'community-blocks--block-highlighted-value', device: 'MOBILE_IOS'});
