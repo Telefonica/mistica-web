@@ -1,5 +1,6 @@
 import '../css/roboto.css';
 import '../.storybook/css/vivo-font.css';
+import '../.storybook/css/telefonica-font.css';
 import '../css/reset.css';
 import * as React from 'react';
 import {
