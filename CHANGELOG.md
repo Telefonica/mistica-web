@@ -1,3 +1,19 @@
+# [14.17.0](https://github.com/Telefonica/mistica-web/compare/v14.16.1...v14.17.0) (2023-07-06)
+
+
+### Bug Fixes
+
+* **DisplayCard:** change description text color ([#810](https://github.com/Telefonica/mistica-web/issues/810)) ([9186f74](https://github.com/Telefonica/mistica-web/commit/9186f74356943e4d77bb1c6e0a4ec2968af480de))
+* **Row:** fix missing hover in lists with href ([#812](https://github.com/Telefonica/mistica-web/issues/812)) ([240f95a](https://github.com/Telefonica/mistica-web/commit/240f95a859ff275afc4b9569e8b56ad46c5e472f))
+* **Spinner:** remove extra space at the bottom of spinner ([#809](https://github.com/Telefonica/mistica-web/issues/809)) ([c4795b6](https://github.com/Telefonica/mistica-web/commit/c4795b68b25d63959343569f2092bfaf7adcc529))
+
+
+### Features
+
+* **Button:** add ButtonLink chevron and icon left/right in all the buttons ([#803](https://github.com/Telefonica/mistica-web/issues/803)) ([b0a0edb](https://github.com/Telefonica/mistica-web/commit/b0a0edbd004425e364fb572fdbc28f1dd337fcde))
+* **Row:** add right text to rows ([#804](https://github.com/Telefonica/mistica-web/issues/804)) ([32aa2c7](https://github.com/Telefonica/mistica-web/commit/32aa2c7806b660f3ff02c79843c618bdd0fa6f08))
+* **skin:** update design tokens ([#808](https://github.com/Telefonica/mistica-web/issues/808)) ([a18535e](https://github.com/Telefonica/mistica-web/commit/a18535e9fff4dbef79b45638a17c6383ced2b454))
+
 ## [14.16.1](https://github.com/Telefonica/mistica-web/compare/v14.16.0...v14.16.1) (2023-06-30)
 
 
