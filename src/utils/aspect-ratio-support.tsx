@@ -33,7 +33,7 @@ export const AspectRatioSupportProvider: React.FC<Props> = ({children}) => {
 
 export const useSupportsAspectRatio = (): boolean => React.useContext(AspectRatioSupport);
 
-type AspectRatioElementProps = {
+type AspectRatioContainerProps = {
     width?: number | string;
     height?: number | string;
     aspectRatio: number;
@@ -44,7 +44,7 @@ type AspectRatioElementProps = {
     dataAttributes?: DataAttributes;
 };
 
-export const AspectRatioElement = (props: AspectRatioElementProps): JSX.Element => {
+export const AspectRatioContainer = (props: AspectRatioContainerProps): JSX.Element => {
     const supportsAspectRatio = useSupportsAspectRatio();
     // if width or height are numeric, we can calculate the other with the ratio without css.
     // if aspect ratio is 0, we use the original image proportions
@@ -111,7 +111,7 @@ export const AspectRatioElement = (props: AspectRatioElementProps): JSX.Element 
             <div
                 style={{width, height, paddingTop}}
                 className={styles.wrapper}
-                {...getPrefixedDataAttributes(props.dataAttributes)}
+                {...getPrefixedDataAttributes(props.dataAttributes, 'AspectRatioContainer')}
             >
                 {container}
             </div>

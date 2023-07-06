@@ -1,7 +1,7 @@
 import * as React from 'react';
 import classnames from 'classnames';
 import {SkeletonRectangle} from './skeletons';
-import {AspectRatioElement} from './utils/aspect-ratio-support';
+import {AspectRatioContainer} from './utils/aspect-ratio-support';
 import {useIsInverseVariant} from './theme-variant-context';
 import {useTheme} from './hooks';
 import {VIVO_SKIN} from './skins/constants';
@@ -9,6 +9,7 @@ import {sprinkles} from './sprinkles.css';
 import * as styles from './image.css';
 import {vars} from './skins/skin-contract.css';
 import {combineRefs} from './utils/common';
+import {getPrefixedDataAttributes} from './utils/dom';
 
 import type {DataAttributes} from './utils/types';
 
@@ -232,15 +233,15 @@ const Image = React.forwardRef<HTMLImageElement, ImageProps>(({aspectRatio = '1:
     const ratio = typeof aspectRatio === 'number' ? aspectRatio : RATIO[aspectRatio];
 
     return (
-        <AspectRatioElement
+        <AspectRatioContainer
             style={{position: 'relative'}}
             aspectRatio={ratio}
             width={props.width}
             height={props.height}
-            dataAttributes={props.dataAttributes}
+            dataAttributes={getPrefixedDataAttributes(props.dataAttributes, 'Image')}
         >
             <ImageContent aspectRatio={aspectRatio} {...props} ref={ref} />
-        </AspectRatioElement>
+        </AspectRatioContainer>
     );
 });
 

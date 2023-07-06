@@ -31,13 +31,13 @@ export const Default: StoryComponent<Args> = ({type, newTab}) => {
         type === 'href' ? {href: window.location.origin, newTab} : {onPress: () => window.alert('Pressed')};
 
     return (
-        <Stack space={16} dataAttributes={{testid: 'touchable'}}>
+        <Stack space={16}>
             <Text2 as="p" regular>
                 Touchable is the base component we use for any component that can be clicked/tapped by the
                 user, for example buttons, list rows, etc. This component handles touch events, can track
                 analytics events on press, and guarantees the required a11y for any touchable area.
             </Text2>
-            <Touchable style={styles} {...props}>
+            <Touchable style={styles} {...props} dataAttributes={{testid: 'touchable'}}>
                 Touchable
             </Touchable>
         </Stack>

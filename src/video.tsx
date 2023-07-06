@@ -1,9 +1,10 @@
 import * as React from 'react';
 import {ImageContent, ImageError, useMediaBorderRadius} from './image';
-import {AspectRatioElement} from './utils/aspect-ratio-support';
+import {AspectRatioContainer} from './utils/aspect-ratio-support';
 import {isRunningAcceptanceTest} from './utils/platform';
 import * as styles from './video.css';
 import {vars} from './skins/skin-contract.css';
+import {getPrefixedDataAttributes} from './utils/dom';
 
 import type {DataAttributes} from './utils/types';
 
@@ -246,12 +247,12 @@ const Video = React.forwardRef<VideoElement, VideoProps>(
         ]);
 
         return (
-            <AspectRatioElement
+            <AspectRatioContainer
                 style={{position: 'relative'}}
                 aspectRatio={ratio}
                 width={props.width}
                 height={props.height}
-                dataAttributes={dataAttributes}
+                dataAttributes={getPrefixedDataAttributes(dataAttributes, 'Video')}
             >
                 <div
                     style={{
@@ -318,7 +319,7 @@ const Video = React.forwardRef<VideoElement, VideoProps>(
                 >
                     {posterImage}
                 </div>
-            </AspectRatioElement>
+            </AspectRatioContainer>
         );
     }
 );
