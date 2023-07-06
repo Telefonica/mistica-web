@@ -13,7 +13,6 @@ export const controls = style([
     }),
     {
         gap: 16,
-        borderBottom: `1px solid ${skinVars.colors.divider}`,
         zIndex: 2,
         background: 'white',
     },
