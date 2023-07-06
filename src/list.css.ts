@@ -25,6 +25,7 @@ export const rowContent = sprinkles({
     background: 'transparent',
     padding: 0,
     display: 'block',
+    height: '100%',
 });
 
 export const content = sprinkles({
@@ -84,6 +85,7 @@ export const centeredControl = sprinkles({
 export const dualActionContainer = sprinkles({
     display: 'flex',
     flexDirection: 'row',
+    height: '100%',
 });
 
 const dualActionBase = sprinkles({padding: 0, border: 'none', background: 'transparent'});
