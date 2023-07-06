@@ -19,7 +19,13 @@ export const hoverBackground = style({
 
 export const pointer = sprinkles({cursor: 'pointer'});
 
-export const rowContent = sprinkles({width: '100%', border: 'none', background: 'transparent', padding: 0});
+export const rowContent = sprinkles({
+    width: '100%',
+    border: 'none',
+    background: 'transparent',
+    padding: 0,
+    display: 'block',
+});
 
 export const content = sprinkles({
     display: 'flex',
