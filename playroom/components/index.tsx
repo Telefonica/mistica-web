@@ -204,7 +204,6 @@ export const PreviewTools = ({
     const [os, setOs] = React.useState<'android' | 'ios' | 'desktop'>(initialOs);
     const [colorScheme, setColorScheme] = React.useState<ColorScheme>('light');
     const overrideTheme = useOverrideTheme();
-    const {isMobile} = useScreenSize();
 
     React.useEffect(() => {
         const selectedThemeConfig = themesMap[skinName].themeConfig;
