@@ -1,3 +1,10 @@
+## [14.17.1](https://github.com/Telefonica/mistica-web/compare/v14.17.0...v14.17.1) (2023-07-07)
+
+
+### Bug Fixes
+
+* **Row:** remove 40 percent maxWidth when there is no detail ([#814](https://github.com/Telefonica/mistica-web/issues/814)) ([cf09796](https://github.com/Telefonica/mistica-web/commit/cf0979624cfc8061022ecd72eab2692b0a443e47))
+
 # [14.17.0](https://github.com/Telefonica/mistica-web/compare/v14.16.1...v14.17.0) (2023-07-06)
 
 
