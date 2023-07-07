@@ -1,4 +1,4 @@
-import {openStoryPage, screen} from '../test-utils';
+import {openStoryPage, screen} from '../../test-utils';
 
 test.each`
     actions              | footerImage
