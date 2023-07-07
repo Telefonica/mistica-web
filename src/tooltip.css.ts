@@ -1,6 +1,7 @@
 import {createVar, keyframes, style} from '@vanilla-extract/css';
 import {vars as skinVars} from './skins/skin-contract.css';
 import {sprinkles} from './sprinkles.css';
+import * as mq from './media-queries.css';
 
 const arrowSize = 12;
 const arrowWrapperWidth = 24; // arrowSize * 2;
@@ -126,6 +127,17 @@ export const container = style([
         zIndex: 50,
         boxShadow: `0 2px 4px 0 rgba(0, 0, 0, ${shadowAlpha})`,
         backgroundColor: skinVars.colors.backgroundContainer,
+        '@media': {
+            [mq.mobile]: {
+                marginRight: 16,
+            },
+            [mq.tablet]: {
+                marginRight: 32,
+            },
+            [mq.desktop]: {
+                marginRight: 40,
+            },
+        },
     },
 ]);
 

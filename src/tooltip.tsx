@@ -158,14 +158,14 @@ const Tooltip: React.FC<Props> = ({
             top:
                 targetBoundingClientRect.current.top < tooltipBoundingClientRect.height ? 'bottom' : position,
             right:
-                targetBoundingClientRect.current.right + tooltipBoundingClientRect.width > window.outerWidth
+                targetBoundingClientRect.current.right + tooltipBoundingClientRect.width > window.innerWidth
                     ? 'left'
                     : position,
             left:
                 targetBoundingClientRect.current.left < tooltipBoundingClientRect.width ? 'right' : position,
             bottom:
                 targetBoundingClientRect.current.bottom + tooltipBoundingClientRect.height >
-                window.outerHeight
+                window.innerHeight
                     ? 'top'
                     : position,
         };
@@ -214,6 +214,23 @@ const Tooltip: React.FC<Props> = ({
         }
     };
 
+    const test = (position: Position) => {
+        if (!tooltipRef.current) {
+            return {};
+        }
+        const tooltipBoundingClientRect = tooltipRef.current.getBoundingClientRect();
+
+        const arrowPosition =
+            tooltipBoundingClientRect.width > targetBoundingClientRect.current.width &&
+            targetBoundingClientRect.current.left + targetBoundingClientRect.current.width / 2 <
+                tooltipBoundingClientRect.width / 2 + 16
+                ? targetBoundingClientRect.current.width / 2
+                : '50%';
+        const aux = position === 'bottom' || position === 'top' ? {left: arrowPosition} : {};
+
+        return aux;
+    };
+
     const getContainerPosition = React.useCallback(
         (position: Position, width: number) => {
             if (typeof window === 'undefined' || !tooltipRef.current) {
@@ -221,6 +238,15 @@ const Tooltip: React.FC<Props> = ({
             }
 
             const tooltipBoundingClientRect = tooltipRef.current.getBoundingClientRect();
+
+            const tooltipMarginFix =
+                tooltipBoundingClientRect.width > targetBoundingClientRect.current.width &&
+                targetBoundingClientRect.current.left + targetBoundingClientRect.current.width / 2 <
+                    tooltipBoundingClientRect.width / 2 + 16
+                    ? Math.round(
+                          tooltipBoundingClientRect.width / 2 - targetBoundingClientRect.current.width / 2
+                      )
+                    : 0;
 
             const containerPos = {
                 right: {
@@ -250,6 +276,7 @@ const Tooltip: React.FC<Props> = ({
                         : !width
                         ? window.pageXOffset +
                           targetBoundingClientRect.current.left +
+                          tooltipMarginFix +
                           targetBoundingClientRect.current.width / 2 -
                           tooltipBoundingClientRect.width / 2
                         : window.pageXOffset +
@@ -264,6 +291,7 @@ const Tooltip: React.FC<Props> = ({
                         : !width
                         ? window.pageXOffset +
                           targetBoundingClientRect.current.left +
+                          tooltipMarginFix +
                           targetBoundingClientRect.current.width / 2 -
                           tooltipBoundingClientRect.width / 2
                         : window.pageXOffset +
@@ -406,7 +434,10 @@ const Tooltip: React.FC<Props> = ({
                                   }
                         }
                     >
-                        <div className={classnames(styles.arrowWrapper, arrowClassNameByPosition[position])}>
+                        <div
+                            style={test(position)}
+                            className={classnames(styles.arrowWrapper, arrowClassNameByPosition[position])}
+                        >
                             <div className={styles.arrow} />
                         </div>
                         {(title || description) && (
