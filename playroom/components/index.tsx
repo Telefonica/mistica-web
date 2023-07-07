@@ -92,7 +92,6 @@ const PreviewToolsControls: React.FC<PreviewToolsControlsProps> = ({
             <div className={`${styles.controls} `}>
                 <Select
                     label="Select brand"
-                    aria-label="Select brand"
                     name="theme"
                     options={Object.entries(themesMap).map(([skinName, {text}]) => ({
                         value: skinName,
