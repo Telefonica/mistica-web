@@ -37,14 +37,10 @@ test.each`
     expect(image).toMatchImageSnapshot();
 });
 
-test.each`
-    stackingGroup
-    ${false}      | ${true}
-`('Blocks Row Block', async ({stackingGroup}) => {
+test('Blocks Row Block', async () => {
     await openStoryPage({
         id: 'community-blocks--block-row',
         device: 'MOBILE_IOS',
-        args: {stackingGroup},
     });
 
     const stepper = await screen.findByTestId('row-block');

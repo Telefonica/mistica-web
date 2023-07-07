@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Avatar, Image, Box, ResponsiveLayout, StackingGroup, Tag} from '../..';
+import {Avatar, Image, Box, ResponsiveLayout, StackingGroup, Tag, Stack} from '../..';
 import {
     HighlightedValueBlock,
     InformationBlock,
@@ -28,23 +28,29 @@ type RowBlockArgs = {
 export const BlockRow: StoryComponent<RowBlockArgs> = ({title, description, stackingGroup}) => {
     return (
         <ResponsiveLayout>
-            <Box paddingY={24} dataAttributes={{testid: 'row-block'}}>
-                <RowBlock
-                    title={title}
-                    description={description}
-                    stackingGroup={
-                        stackingGroup ? (
-                            <StackingGroup stacked maxItems={3} moreItemsStyle={{type: 'circle', size: 40}}>
-                                <Avatar size={40} src={imgExample} />
-                                <Avatar size={40} src={imgExample} />
-                                <Avatar size={40} src={imgExample} />
-                                <Avatar size={40} src={imgExample} />
-                                <Avatar size={40} src={imgExample} />
-                                <Avatar size={40} src={imgExample} />
-                            </StackingGroup>
-                        ) : undefined
-                    }
-                />
+            <Box paddingY={24}>
+                <Stack space={24} dataAttributes={{testid: 'row-block'}}>
+                    <RowBlock
+                        title={title}
+                        stackingGroup={
+                            stackingGroup ? (
+                                <StackingGroup
+                                    stacked
+                                    maxItems={3}
+                                    moreItemsStyle={{type: 'circle', size: 40}}
+                                >
+                                    <Avatar size={40} src={imgExample} />
+                                    <Avatar size={40} src={imgExample} />
+                                    <Avatar size={40} src={imgExample} />
+                                    <Avatar size={40} src={imgExample} />
+                                    <Avatar size={40} src={imgExample} />
+                                    <Avatar size={40} src={imgExample} />
+                                </StackingGroup>
+                            ) : undefined
+                        }
+                    />
+                    <RowBlock title={title} description={description} />
+                </Stack>
             </Box>
         </ResponsiveLayout>
     );
@@ -54,7 +60,7 @@ BlockRow.storyName = 'RowBlock';
 BlockRow.args = {
     title: 'title',
     description: 'description',
-    stackingGroup: false,
+    stackingGroup: true,
 };
 
 type SimpleBlockArgs = {
