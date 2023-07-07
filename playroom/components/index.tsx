@@ -35,27 +35,27 @@ export {default as ButtonGroup} from '../../src/button-group';
 
 const themesMap: {[skinName: string]: {themeConfig: ThemeConfig; text: string; icon: React.ReactNode}} = {
     Movistar: {
-        text: '',
+        text: 'Movistar',
         themeConfig: Movistar,
         icon: <MovistarLogo size={24} />,
     },
     Vivo: {
-        text: '',
+        text: 'Vivo',
         themeConfig: Vivo,
         icon: <VivoLogo size={24} />,
     },
     O2: {
-        text: '',
+        text: 'O2',
         themeConfig: O2,
         icon: <O2Logo size={24} />,
     },
     Telefonica: {
-        text: '',
+        text: 'Telefónica',
         themeConfig: Telefonica,
         icon: <TelefonicaLogo size={24} />,
     },
     Blau: {
-        text: '',
+        text: 'Blau',
         themeConfig: Blau,
         icon: <BlauLogo size={24} />,
     },
@@ -85,34 +85,6 @@ const PreviewToolsControls: React.FC<PreviewToolsControlsProps> = ({
     const {isMobile} = useScreenSize();
     const systemColorScheme = 'light';
     const alternativeColorScheme = 'dark';
-
-    const themesMap: {[skinName: string]: {themeConfig: ThemeConfig; text: string; icon: React.ReactNode}} = {
-        Movistar: {
-            text: isMobile ? 'Movistar' : '',
-            themeConfig: Movistar,
-            icon: <MovistarLogo size={24} />,
-        },
-        Vivo: {
-            text: isMobile ? 'Vivo' : '',
-            themeConfig: Vivo,
-            icon: <VivoLogo size={24} />,
-        },
-        O2: {
-            text: isMobile ? 'O2' : '',
-            themeConfig: O2,
-            icon: <O2Logo size={24} />,
-        },
-        Telefonica: {
-            text: isMobile ? 'Telefónica' : '',
-            themeConfig: Telefonica,
-            icon: <TelefonicaLogo size={24} />,
-        },
-        Blau: {
-            text: isMobile ? 'Blau' : '',
-            themeConfig: Blau,
-            icon: <BlauLogo size={24} />,
-        },
-    };
 
     if (isMobile) {
         return (
@@ -164,7 +136,7 @@ const PreviewToolsControls: React.FC<PreviewToolsControlsProps> = ({
             <div className={`${styles.controls} ${styles.desktopControls}`}>
                 <div className={styles.tabs}>
                     <Tabs
-                        tabs={Object.values(themesMap).map(({text, icon}) => ({text, icon}))}
+                        tabs={Object.values(themesMap).map(({icon}) => ({text: '', icon}))}
                         selectedIndex={Object.keys(themesMap).indexOf(skinName)}
                         onChange={(index) => {
                             onSkinNameChange((Object.keys(themesMap) as Array<SkinName>)[index]);
