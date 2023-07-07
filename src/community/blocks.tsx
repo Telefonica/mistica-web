@@ -59,7 +59,7 @@ interface RowBlockWithStackingGroup extends RowBlockBaseProps {
     stackingGroup?: RendersNullableElement<typeof StackingGroup>;
 }
 
-type RowBlockProps = ExclusifyUnion<RowBlockWithDescription & RowBlockWithStackingGroup>;
+type RowBlockProps = ExclusifyUnion<RowBlockWithDescription | RowBlockWithStackingGroup>;
 
 export const RowBlock: React.FC<RowBlockProps> = ({
     title,
@@ -189,9 +189,11 @@ export const HighlightedValueBlock: React.FC<HighlightedValueBlockProps> = ({
                 )}
                 {secondaryValue && <Text8 color={vars.colors.textSecondary}>{secondaryValue}</Text8>}
             </Stack>
-            <Box paddingTop={8}>
-                <BlockContent title={title} description={description} />
-            </Box>
+            {title || description ? (
+                <Box paddingTop={8}>
+                    <BlockContent title={title} description={description} />
+                </Box>
+            ) : null}
         </div>
     );
 };
@@ -231,12 +233,11 @@ interface ProgressBlockProps {
 
     heading: {
         value: number;
+        valueColor?: string;
         text: string;
     };
 
     description?: string;
-
-    valueColor?: string;
     'aria-label'?: string;
 }
 
@@ -247,7 +248,6 @@ export const ProgressBlock: React.FC<ProgressBlockProps> = ({
     reverse,
     heading,
     description,
-    valueColor = vars.colors.textPrimary,
     'aria-label': ariaLabel,
 }) => {
     return (
@@ -261,7 +261,7 @@ export const ProgressBlock: React.FC<ProgressBlockProps> = ({
                 </Inline>
                 {progressPercent && <ProgressBar progressPercent={progressPercent} reverse={reverse} />}
                 <Inline space={8} alignItems="baseline">
-                    <Text8 color={valueColor}>{heading.value}</Text8>
+                    <Text8 color={heading.valueColor || vars.colors.textPrimary}>{heading.value}</Text8>
                     <Text2 regular color={vars.colors.textSecondary}>
                         {heading.text}
                     </Text2>
