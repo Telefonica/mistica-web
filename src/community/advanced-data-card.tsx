@@ -116,46 +116,44 @@ const CardContent: React.FC<CardContentProps> = ({
     descriptionLinesMax,
 }) => {
     return (
-        <div>
+        <>
             <Stack space={4}>
-                {(headline || pretitle || title || subtitle) && (
-                    <header>
+                <header>
+                    <Stack space={4}>
+                        {headline}
                         <Stack space={4}>
-                            {headline}
-                            <Stack space={4}>
-                                {pretitle && (
-                                    <Text2
-                                        color={vars.colors.textPrimary}
-                                        truncate={pretitleLinesMax}
-                                        as={pretitleAs}
-                                        regular
-                                        hyphens="auto"
-                                    >
-                                        {pretitle}
-                                    </Text2>
-                                )}
-                                <Text4
-                                    color={vars.colors.textPrimary}
-                                    truncate={titleLinesMax}
-                                    weight="regular"
-                                    as={titleAs}
-                                    hyphens="auto"
-                                >
-                                    {title}
-                                </Text4>
+                            {pretitle && (
                                 <Text2
                                     color={vars.colors.textPrimary}
-                                    truncate={subtitleLinesMax}
-                                    as="p"
+                                    truncate={pretitleLinesMax}
+                                    as={pretitleAs}
                                     regular
                                     hyphens="auto"
                                 >
-                                    {subtitle}
+                                    {pretitle}
                                 </Text2>
-                            </Stack>
+                            )}
+                            <Text4
+                                color={vars.colors.textPrimary}
+                                truncate={titleLinesMax}
+                                weight="regular"
+                                as={titleAs}
+                                hyphens="auto"
+                            >
+                                {title}
+                            </Text4>
+                            <Text2
+                                color={vars.colors.textPrimary}
+                                truncate={subtitleLinesMax}
+                                as="p"
+                                regular
+                                hyphens="auto"
+                            >
+                                {subtitle}
+                            </Text2>
                         </Stack>
-                    </header>
-                )}
+                    </Stack>
+                </header>
 
                 {description && (
                     <Text2
@@ -169,7 +167,7 @@ const CardContent: React.FC<CardContentProps> = ({
                     </Text2>
                 )}
             </Stack>
-        </div>
+        </>
     );
 };
 
@@ -197,7 +195,7 @@ const CardFooter: React.FC<CardFooterProps> = ({
     const maxWidth = hasButtonLink && !hasAllItens ? '178px' : '';
 
     return (
-        <div>
+        <>
             <div className={styles.adjustmentDivider}>
                 <Divider />
             </div>
@@ -218,7 +216,7 @@ const CardFooter: React.FC<CardFooterProps> = ({
                             styles.marginTopButton
                         )}
                         style={{
-                            marginRight: '16px',
+                            marginRight: 16,
                             position: 'relative',
                         }}
                     >
@@ -235,12 +233,9 @@ const CardFooter: React.FC<CardFooterProps> = ({
                     }}
                 >
                     {hasFooterImage && (
-                        <div
-                            style={{marginRight: '16px'}}
-                            className={sprinkles({alignItems: 'center', display: 'flex'})}
-                        >
+                        <Box paddingRight={16} className={sprinkles({alignItems: 'center', display: 'flex'})}>
                             {footerImage}
-                        </div>
+                        </Box>
                     )}
 
                     {hasFooterText && (
@@ -270,7 +265,7 @@ const CardFooter: React.FC<CardFooterProps> = ({
                     </div>
                 )}
             </div>
-        </div>
+        </>
     );
 };
 
@@ -382,11 +377,7 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
                                         !hasFooter && !extra ? styles.minHeight : ''
                                     )}
                                 >
-                                    <div
-                                        className={sprinkles({
-                                            paddingTop: 8,
-                                        })}
-                                    >
+                                    <Box paddingTop={8}>
                                         <Stack space={8} className={sprinkles({flex: 1})}>
                                             {stackingGroup && (
                                                 <div
@@ -418,7 +409,7 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
                                                 descriptionLinesMax={descriptionLinesMax}
                                             />
                                         </Stack>
-                                    </div>
+                                    </Box>
                                     {hasAcations && (
                                         <div style={topActionsStylesWithIcon}>
                                             <CardActionsGroup actions={finalActions} />
