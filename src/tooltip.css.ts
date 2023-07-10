@@ -131,12 +131,6 @@ export const container = style([
             [mq.mobile]: {
                 marginRight: 16,
             },
-            [mq.tablet]: {
-                marginRight: 32,
-            },
-            [mq.desktop]: {
-                marginRight: 40,
-            },
         },
     },
 ]);

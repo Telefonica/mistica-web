@@ -12,8 +12,7 @@ export default {
 
 export const Default: StoryComponent = () => {
     const description =
-        // 'When working on a project and the customer has not yet delivered the copy, something is missing...';
-        '50jkjflçdagkjdçflgkjçsdf';
+        'When working on a project and the customer has not yet delivered the copy, something is missing...';
     return (
         <StorySection title="Tooltip">
             <Text2 medium>Desktop examples:</Text2>
@@ -44,7 +43,7 @@ export const Default: StoryComponent = () => {
                     target={<Text2 regular>Tooltip bottom</Text2>}
                     position="bottom"
                     description={description}
-                    // width={260}
+                    width={260}
                 />
                 <Tooltip
                     targetLabel="help text"
@@ -99,14 +98,14 @@ export const Default: StoryComponent = () => {
                         target={<IconCloseRegular />}
                         position="left"
                         description={description}
-                        // width={35}
+                        width={100}
                     />
                     <Tooltip
                         targetLabel="help text"
                         target={<IcnInfo />}
                         position="right"
                         description={description}
-                        //   width={100}
+                        width={100}
                     />
                     <Tooltip
                         targetLabel="help text"
