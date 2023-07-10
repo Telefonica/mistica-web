@@ -57,7 +57,7 @@ export const Default: StoryComponent = () => {
                     target={<Text2 regular>Tooltip right</Text2>}
                     position="right"
                     description={description}
-                    width={300}
+                    width={150}
                 />
                 <Tooltip
                     targetLabel="help text"
