@@ -123,10 +123,15 @@ const Checkbox: React.FC<RenderProps | ChildrenProps> = (props) => {
             role="checkbox"
             aria-checked={value ?? checkedState}
             onKeyDown={disabled ? undefined : handleKeyDown}
-            onClick={disabled ? undefined : handleChange}
+            onClick={(e) => {
+                e.stopPropagation();
+                if (!disabled) {
+                    handleChange();
+                }
+            }}
             tabIndex={disabled ? undefined : 0}
             ref={focusableRef}
-            className={styles.checkboxContainer}
+            className={disabled ? styles.checkboxContainerDisabled : styles.checkboxContainer}
             aria-label={ariaLabel}
             aria-labelledby={ariaLabel ? undefined : labelId}
             aria-disabled={disabled}
@@ -140,7 +145,7 @@ const Checkbox: React.FC<RenderProps | ChildrenProps> = (props) => {
                     disabled: !!disabled,
                 })
             ) : (
-                <Inline space={16} className={disabled ? styles.checkboxContainerDisabled : ''}>
+                <Inline space={16}>
                     {/* Text3 wrapper added to have the same line-height and center checkbox with text and -2px to perfect pixel center icon */}
                     <Text3 regular as="div">
                         <div style={{position: 'relative', top: -2}}>{iconCheckbox}</div>

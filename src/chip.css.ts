@@ -17,6 +17,13 @@ const containerBase = style([
         minWidth: 56,
         cursor: 'default',
         borderColor: vars.colors.control,
+
+        '@media': {
+            [mq.tabletOrSmaller]: {
+                minHeight: 40,
+                minWidth: 72,
+            },
+        },
     },
 ]);
 

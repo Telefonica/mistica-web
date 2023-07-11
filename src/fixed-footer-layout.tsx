@@ -105,8 +105,7 @@ const FixedFooterLayout: React.FC<Props> = ({
         };
     }, [hasContentEnoughVSpace, platformOverrides]);
 
-    const isContentWithScroll = hasScroll(getScrollableParentElement(containerRef.current));
-    const isFixedFooter = hasContentEnoughVSpace || !isContentWithScroll;
+    const isFixedFooter = hasContentEnoughVSpace;
 
     return (
         <>
@@ -114,7 +113,9 @@ const FixedFooterLayout: React.FC<Props> = ({
                 ref={containerRef}
                 className={styles.container}
                 style={assignInlineVars({
-                    [styles.vars.backgroundColor]: containerBgColor ?? '',
+                    ...(containerBgColor && {
+                        [styles.vars.backgroundColor]: containerBgColor,
+                    }),
                     [styles.vars.footerHeight]: isFixedFooter ? `${realFooterHeight}px` : '0px',
                 })}
             >

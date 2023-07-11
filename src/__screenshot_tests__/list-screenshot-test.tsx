@@ -15,6 +15,8 @@ const controls = [
     'custom element with text',
 ];
 
+const controlsWithOnPress = ['checkbox', 'switch', 'radio'];
+
 const getCases = () => {
     const cases = [];
     for (const device of devices) {
@@ -42,6 +44,7 @@ test.each(getCases())(
                 extraContent,
                 withBadge,
                 headline: 'Headline',
+                detail: 'Detail',
             },
         });
 
@@ -62,6 +65,7 @@ test.each(getCases())(
                 extraContent,
                 withBadge,
                 headline: 'Headline',
+                detail: 'Detail',
             },
         });
 
@@ -80,6 +84,7 @@ test.each(controls)('Row list disabled - %s', async (control) => {
             headline: 'Headline',
             withBadge: true,
             disabled: true,
+            detail: 'Detail',
         },
     });
 
@@ -97,6 +102,7 @@ test.each(controls)('Boxed row list disabled - %s', async (control) => {
             headline: 'Headline',
             withBadge: true,
             disabled: true,
+            detail: 'Detail',
         },
     });
 
@@ -115,6 +121,7 @@ test('Rows with only a Title content are centered', async () => {
             headline: '',
             description: '',
             control: 'chevron',
+            detail: 'Detail',
         },
     });
 
@@ -133,8 +140,26 @@ test.each(devices)('Custom row with text centered', async (device) => {
             subtitle: '',
             headline: '',
             description: '',
+            detail: 'Detail',
         },
     });
+
+    const list = await screen.findByTestId('list');
+    const image = await list.screenshot();
+    expect(image).toMatchImageSnapshot();
+});
+
+test.each(controlsWithOnPress)('Click control with onPress - %s', async (control) => {
+    await openStoryPage({
+        id: 'components-lists--row-list-story',
+        device: 'MOBILE_IOS',
+        args: {
+            control: control + ' and onPress',
+        },
+    });
+
+    const elements = await screen.findAllByRole(control);
+    await elements[0].click();
 
     const list = await screen.findByTestId('list');
     const image = await list.screenshot();

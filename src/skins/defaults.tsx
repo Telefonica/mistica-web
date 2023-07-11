@@ -8,6 +8,11 @@ export const defaultTextPresetsConfig: TextPresetsConfig = {
     text9: {weight: 'light'},
     text10: {weight: 'light'},
     cardTitle: {weight: 'regular'},
+    button: {weight: 'medium'},
+    link: {weight: 'medium'},
+    title1: {weight: 'medium'},
+    indicator: {weight: 'medium'},
+    tabsLabel: {weight: 'medium', size: {mobile: 16, desktop: 18}, lineHeight: {mobile: 24, desktop: 24}},
 };
 
 export const defaultBorderRadiiConfig: BorderRadiiConfig = {

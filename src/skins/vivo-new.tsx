@@ -272,6 +272,15 @@ export const getVivoNewSkin: GetKnownSkin = () => {
         },
         textPresets: {
             cardTitle: {weight: 'regular'},
+            button: {weight: 'regular'},
+            tabsLabel: {
+                weight: 'regular',
+                size: {mobile: 18, desktop: 18},
+                lineHeight: {mobile: 24, desktop: 24},
+            },
+            link: {weight: 'regular'},
+            title1: {weight: 'regular'},
+            indicator: {weight: 'regular'},
             text5: {weight: 'regular'},
             text6: {weight: 'regular'},
             text7: {weight: 'regular'},

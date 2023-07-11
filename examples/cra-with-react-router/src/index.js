@@ -6,9 +6,7 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import {ThemeContextProvider, getMovistarSkin} from '@telefonica/mistica';
-import {Link as ReactRouterLink} from 'react-router-dom';
-
-const Link = ({innerRef, ...props}) => <ReactRouterLink ref={innerRef} {...props} />;
+import {Link} from 'react-router-dom';
 
 ReactDOM.render(
     <React.StrictMode>
@@ -16,7 +14,7 @@ ReactDOM.render(
             theme={{
                 skin: getMovistarSkin(),
                 i18n: {locale: 'es-ES', phoneNumberFormattingRegionCode: 'ES'},
-                Link,
+                Link: {type: 'ReactRouter6', Component: Link},
             }}
         >
             <App />

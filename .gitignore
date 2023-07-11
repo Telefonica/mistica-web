@@ -8,7 +8,6 @@ coverage/
 *.js.map
 *.orig
 *.rej
-jsconfig.json
 **/node_modules/
 yarn-debug.log*
 yarn-error.log*

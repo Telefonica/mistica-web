@@ -10,6 +10,7 @@ import Stack from './stack';
 import * as styles from './tooltip.css';
 import {assignInlineVars} from '@vanilla-extract/dynamic';
 import {getPrefixedDataAttributes} from './utils/dom';
+import {isClientSide, isServerSide} from './utils/environment';
 
 import type {DataAttributes} from './utils/types';
 
@@ -175,8 +176,7 @@ const Tooltip: React.FC<Props> = ({
 
     const position = validatePosition(getPosition(rest.position));
 
-    const isTouchableDevice =
-        typeof window !== 'undefined' ? window.matchMedia('(pointer: coarse)').matches : false;
+    const isTouchableDevice = isClientSide() ? window.matchMedia('(pointer: coarse)').matches : false;
 
     const closeTooltip = () => {
         if (isVisible) {
@@ -214,7 +214,7 @@ const Tooltip: React.FC<Props> = ({
         }
     };
 
-    const test = (position: Position) => {
+    const changeArrowPosition = (position: Position) => {
         if (!tooltipRef.current) {
             return {};
         }
@@ -233,7 +233,7 @@ const Tooltip: React.FC<Props> = ({
 
     const getContainerPosition = React.useCallback(
         (position: Position, width: number) => {
-            if (typeof window === 'undefined' || !tooltipRef.current) {
+            if (isServerSide() || !tooltipRef.current) {
                 return {};
             }
 
@@ -378,6 +378,7 @@ const Tooltip: React.FC<Props> = ({
                 }
                 onFocus={handleFocus}
                 onKeyDown={handleKeyDown}
+                // eslint-disable-next-line react/no-unknown-property
                 touch-action="auto" // Prop needed for Pointer Events Polyfill to work properly
                 role="button"
                 tabIndex={0}
@@ -435,7 +436,7 @@ const Tooltip: React.FC<Props> = ({
                         }
                     >
                         <div
-                            style={test(position)}
+                            style={changeArrowPosition(position)}
                             className={classnames(styles.arrowWrapper, arrowClassNameByPosition[position])}
                         >
                             <div className={styles.arrow} />

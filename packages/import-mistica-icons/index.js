@@ -1,4 +1,3 @@
-// @ts-check
 const fs = require('fs');
 const mkdirp = require('mkdirp');
 const rimraf = require('rimraf');
@@ -123,8 +122,9 @@ const getIconJsx = (svgFilename) => {
 /** lower number means higher priority (more generic) */
 const SKIN_PRIORITY = {
     telefonica: 1,
-    o2: 2,
-    blau: 3,
+    vivo: 2,
+    o2: 3,
+    blau: 4,
 };
 
 /**

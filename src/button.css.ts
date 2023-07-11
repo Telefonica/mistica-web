@@ -20,6 +20,7 @@ export const SPINNER_SIZE = 20;
 export const SMALL_SPINNER_SIZE = 16;
 export const PADDING_Y_LINK = 6;
 const PADDING_X_LINK = 12;
+export const CHEVRON_MARGIN_LEFT_LINK = 2;
 
 const disabledStyle = {opacity: 0.5};
 
@@ -289,7 +290,7 @@ export const link = style([
         paddingTop: PADDING_Y_LINK,
         paddingBottom: PADDING_Y_LINK,
         fontWeight: 500,
-        transition: `background-color ${transitionTiming}, color ${transitionTiming}`,
+        transition: `background-color ${transitionTiming}`,
 
         selectors: {
             '&:enabled:active': {

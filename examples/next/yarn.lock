@@ -158,30 +158,30 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@telefonica/mistica@npm:^13.0.2":
-  version: 13.0.2
-  resolution: "@telefonica/mistica@npm:13.0.2"
+"@telefonica/mistica@npm:^14":
+  version: 14.15.0
+  resolution: "@telefonica/mistica@npm:14.15.0"
   dependencies:
     "@juggle/resize-observer": ^3.3.1
     "@tef-novum/webview-bridge": ^3.8.0
     "@telefonica/libphonenumber": ^2.8.1
-    "@vanilla-extract/css": ^1.9.1
-    "@vanilla-extract/dynamic": ^2.0.2
-    "@vanilla-extract/sprinkles": ^1.5.0
+    "@vanilla-extract/css": ^1.9.5
+    "@vanilla-extract/dynamic": ^2.0.3
+    "@vanilla-extract/sprinkles": ^1.5.1
     classnames: ^2.3.1
     lodash: ^4.17.21
     moment: ^2.29.1
     react-autosuggest: ^10.1.0
     react-datetime: ^3.1.1
     react-focus-lock: ^2.8.1
-    react-transition-group: ^4.4.2
+    react-transition-group: ^4.4.5
     rifm: ^0.12.1
     scroll-behavior-polyfill: ^2.0.13
     semver-compare: ^1.0.0
   peerDependencies:
-    react: 16.x || 17.x
-    react-dom: 16.x || 17.x
-  checksum: 444657c9ea8031a6c9d1dd4015cb81a8b46a1b0b697d66a6e49006e7810258e0c5d059a948fbfde3531a83036271b5b8c28e574e30dd94fbc2897a4061c2d685
+    react: 17.x || 18.x
+    react-dom: 17.x || 18.x
+  checksum: 7744f985ed4b11b1a7d5f7ac36b83760c0efac0c5ffeec2e32384a5cfc8406fdbe8ae704023f74589771875bafe14357b86e4db0223c6e13f586a501cd030259
   languageName: node
   linkType: hard
 
@@ -217,26 +217,26 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vanilla-extract/css@npm:^1.9.1":
-  version: 1.9.2
-  resolution: "@vanilla-extract/css@npm:1.9.2"
+"@vanilla-extract/css@npm:^1.9.5":
+  version: 1.11.1
+  resolution: "@vanilla-extract/css@npm:1.11.1"
   dependencies:
     "@emotion/hash": ^0.9.0
     "@vanilla-extract/private": ^1.0.3
     ahocorasick: 1.0.2
     chalk: ^4.1.1
-    css-what: ^5.0.1
+    css-what: ^6.1.0
     cssesc: ^3.0.0
     csstype: ^3.0.7
-    deep-object-diff: ^1.1.0
+    deep-object-diff: ^1.1.9
     deepmerge: ^4.2.2
     media-query-parser: ^2.0.2
     outdent: ^0.8.0
-  checksum: 8444134def22e46021ac3de94ee275528354cc44297ebe2da1b61df27a6f1d3088832b52e8a1ad65cfb81203be7ce085177a80a0681371e902158081ac222685
+  checksum: 1498ced4ba1fd78f3e42567a49daac9eea15e0fa1418d39e4ba5a3e84ded66a5567733f5fa364eaf5fe9c0354124bd62a32ffd603427b76e36004ed49b55c7d2
   languageName: node
   linkType: hard
 
-"@vanilla-extract/dynamic@npm:^2.0.2":
+"@vanilla-extract/dynamic@npm:^2.0.3":
   version: 2.0.3
   resolution: "@vanilla-extract/dynamic@npm:2.0.3"
   dependencies:
@@ -252,12 +252,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vanilla-extract/sprinkles@npm:^1.5.0":
-  version: 1.5.1
-  resolution: "@vanilla-extract/sprinkles@npm:1.5.1"
+"@vanilla-extract/sprinkles@npm:^1.5.1":
+  version: 1.6.0
+  resolution: "@vanilla-extract/sprinkles@npm:1.6.0"
   peerDependencies:
     "@vanilla-extract/css": ^1.0.0
-  checksum: a99d5a89cd56f1da7dd32fcc05c12d85fa9f2253a68431398e671861a7f8b48a8cd2c1057af364f8c74e69207038d7e1cd52fd84abcfb0dc63516beeea91e944
+  checksum: ab30ce88f9124f1eacbb5d5fb4f70534cda1ef0fdb992049657b4b480714f340e6b248b12a9c58451d4c7e7cdf55bf2e7a4bfc7c2fc60873ac0da28dc132d32f
   languageName: node
   linkType: hard
 
@@ -325,10 +325,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"css-what@npm:^5.0.1":
-  version: 5.1.0
-  resolution: "css-what@npm:5.1.0"
-  checksum: 0b75d1bac95c885c168573c85744a6c6843d8c33345f54f717218b37ea6296b0e99bb12105930ea170fd4a921990392a7c790c16c585c1d8960c49e2b7ec39f7
+"css-what@npm:^6.1.0":
+  version: 6.1.0
+  resolution: "css-what@npm:6.1.0"
+  checksum: b975e547e1e90b79625918f84e67db5d33d896e6de846c9b584094e529f0c63e2ab85ee33b9daffd05bff3a146a1916bec664e18bb76dd5f66cbff9fc13b2bbe
   languageName: node
   linkType: hard
 
@@ -355,7 +355,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"deep-object-diff@npm:^1.1.0":
+"deep-object-diff@npm:^1.1.9":
   version: 1.1.9
   resolution: "deep-object-diff@npm:1.1.9"
   checksum: ecd42455e4773f653595d28070295e7aaa8402db5f8ab21d0bec115a7cb4de5e207a5665514767da5f025c96597f1d3a0a4888aeb4dd49e03c996871a3aa05ef
@@ -531,7 +531,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "next@workspace:."
   dependencies:
-    "@telefonica/mistica": ^13.0.2
+    "@telefonica/mistica": ^14
     "@types/react": ^18.0.26
     next: 13.1.1
     react: ^18.2.0
@@ -687,9 +687,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-transition-group@npm:^4.4.2":
-  version: 4.4.2
-  resolution: "react-transition-group@npm:4.4.2"
+"react-transition-group@npm:^4.4.5":
+  version: 4.4.5
+  resolution: "react-transition-group@npm:4.4.5"
   dependencies:
     "@babel/runtime": ^7.5.5
     dom-helpers: ^5.0.1
@@ -698,7 +698,7 @@ __metadata:
   peerDependencies:
     react: ">=16.6.0"
     react-dom: ">=16.6.0"
-  checksum: b67bf5b3e86dbab72d658b9a52a3589e5960583ab28c7c66272427d8fe30d4c7de422d5046ae96bd2683cdf80cc3264b2516f5ce80cae1dbe6cf3ca6dda392c5
+  checksum: 75602840106aa9c6545149d6d7ae1502fb7b7abadcce70a6954c4b64a438ff1cd16fc77a0a1e5197cdd72da398f39eb929ea06f9005c45b132ed34e056ebdeb1
   languageName: node
   linkType: hard
 

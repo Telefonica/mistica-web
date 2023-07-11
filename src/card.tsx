@@ -19,9 +19,12 @@ import {combineRefs} from './utils/common';
 import Spinner from './spinner';
 import Video from './video';
 import {ThemeVariant, useIsInverseVariant} from './theme-variant-context';
+import classNames from 'classnames';
+import {assignInlineVars} from '@vanilla-extract/dynamic';
+import Inline from './inline';
 
 import type {PressHandler} from './touchable';
-import type {VideoSource} from './video';
+import type {VideoElement, VideoSource} from './video';
 import type {ButtonLink, ButtonPrimary, ButtonSecondary} from './button';
 import type {ExclusifyUnion} from './utils/utility-types';
 import type {
@@ -118,13 +121,21 @@ const CardActionsGroup = ({actions, onClose, type = 'default'}: CardActionsGroup
 
 type AspectRatio = '1:1' | '16:9' | '7:10' | '9:10' | 'auto';
 
-const CSS_ASPECT_RATIO = {
-    '1:1': '1',
-    '16:9': '16 / 9',
-    '7:10': '7 / 10',
-    '9:10': '9 / 10',
-    auto: 'auto',
-} as const;
+const aspectRatioToNumber = (aspectRatio?: AspectRatio | number): number => {
+    if (!aspectRatio) {
+        return 0;
+    }
+    if (typeof aspectRatio === 'number') {
+        return aspectRatio;
+    }
+    return {
+        '1:1': 1,
+        '16:9': 16 / 9,
+        '7:10': 7 / 10,
+        '9:10': 9 / 10,
+        auto: 0,
+    }[aspectRatio];
+};
 
 type CardContainerProps = {
     children: React.ReactNode;
@@ -145,22 +156,19 @@ const CardContainer = ({
     className,
     'aria-label': ariaLabel,
 }: CardContainerProps): JSX.Element => {
-    const cssAspectRatio: React.CSSProperties['aspectRatio'] = aspectRatio
-        ? typeof aspectRatio === 'number'
-            ? String(aspectRatio)
-            : CSS_ASPECT_RATIO[aspectRatio]
-        : undefined;
+    const cssAspectRatio = aspectRatioToNumber(aspectRatio);
 
     return (
         <section
             aria-label={ariaLabel}
-            className={className}
+            className={classNames(className, styles.cardContainer)}
             style={{
                 width,
                 height,
                 minWidth,
-                aspectRatio: cssAspectRatio,
-                position: 'relative',
+                ...(cssAspectRatio
+                    ? assignInlineVars({[styles.vars.aspectRatio]: String(cssAspectRatio)})
+                    : {}),
             }}
         >
             {children}
@@ -211,15 +219,17 @@ const transitions: Record<VideoState, Partial<Record<VideoAction, VideoState>>> 
 const videoReducer = (state: VideoState, action: VideoAction): VideoState =>
     transitions[state][action] || state;
 
+const VideoSpinner = ({size, color}: IconProps) => <Spinner size={size} color={color} delay="0" />;
+
 const getVideoActionIcon = (state: VideoState) => {
     switch (state) {
         case 'playing':
+        case 'loading':
             return IconPauseFilled;
         case 'paused':
-        case 'loading':
             return IconPlayFilled;
         case 'loadingTimeout':
-            return Spinner;
+            return VideoSpinner;
         default:
             return undefined;
     }
@@ -228,9 +238,9 @@ const getVideoActionIcon = (state: VideoState) => {
 const useVideoWithControls = (
     videoSrc?: VideoSource,
     poster?: string,
-    videoRef?: React.RefObject<HTMLVideoElement>
+    videoRef?: React.RefObject<VideoElement>
 ) => {
-    const videoController = React.useRef<HTMLVideoElement>(null);
+    const videoController = React.useRef<VideoElement>(null);
     const [videoStatus, dispatch] = React.useReducer(videoReducer, 'loading');
 
     React.useEffect(() => {
@@ -569,12 +579,8 @@ export const DataCard = React.forwardRef<HTMLDivElement, DataCardProps>(
                     >
                         {isTouchable && <div className={overlayStyle} />}
                         <div className={styles.dataCard}>
-                            <div
-                                className={sprinkles({
-                                    display: 'flex',
-                                })}
-                            >
-                                <Stack space={16} className={sprinkles({flex: 1})}>
+                            <Inline space={0}>
+                                <Stack space={16}>
                                     {hasIcon ? icon : null}
                                     <CardContent
                                         headline={headline}
@@ -589,7 +595,7 @@ export const DataCard = React.forwardRef<HTMLDivElement, DataCardProps>(
                                     />
                                 </Stack>
                                 {!hasIcon && <div style={topActionsStylesWithoutIcon} />}
-                            </div>
+                            </Inline>
 
                             {extra && <div>{extra}</div>}
 
@@ -722,7 +728,7 @@ type DisplayMediaCardWithImageProps = CommonDisplayCardProps & {
 type DisplayMediaCardWithVideoProps = Omit<CommonDisplayCardProps, 'actions' | 'onClose'> & {
     backgroundVideo: VideoSource;
     poster?: string;
-    backgroundVideoRef?: React.RefObject<HTMLVideoElement>;
+    backgroundVideoRef?: React.RefObject<VideoElement>;
 };
 
 type DisplayMediaCardProps = DisplayMediaCardBaseProps &
@@ -920,7 +926,11 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
                                                         truncate={descriptionLinesMax}
                                                         as="p"
                                                         regular
-                                                        color={vars.colors.textSecondary}
+                                                        color={
+                                                            withGradient
+                                                                ? vars.colors.textPrimary
+                                                                : vars.colors.textSecondary
+                                                        }
                                                         textShadow={textShadow}
                                                         hyphens="auto"
                                                     >
@@ -999,7 +1009,7 @@ interface PosterCardWithImageProps extends PosterCardBaseProps {
 type PosterCardWithVideoProps = Omit<PosterCardBaseProps, 'actions' | 'onClose'> & {
     backgroundVideo: VideoSource;
     poster?: string;
-    backgroundVideoRef?: React.RefObject<HTMLVideoElement>;
+    backgroundVideoRef?: React.RefObject<VideoElement>;
 };
 
 type PosterCardProps = ExclusifyUnion<PosterCardWithImageProps | PosterCardWithVideoProps> &
