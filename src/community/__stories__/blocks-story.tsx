@@ -85,8 +85,8 @@ BlockSimple.args = {
 type InformationBlockArgs = {
     title: string;
     description: Array<string>;
-    value: number;
-    secondaryValue: number;
+    value: string;
+    secondaryValue: string;
 };
 
 export const BlockInformation: StoryComponent<InformationBlockArgs> = ({
@@ -113,18 +113,18 @@ BlockInformation.storyName = 'InformationBlock';
 BlockInformation.args = {
     title: 'title',
     description: ['description'],
-    value: 20,
-    secondaryValue: 20,
+    value: '20',
+    secondaryValue: '20',
 };
 
 type HighlightedValueBlockArgs = {
     headline: string;
     headlineType: TagType;
 
-    value: number;
+    value: string;
     text: string;
 
-    secondaryValue: number;
+    secondaryValue: string;
 
     title: string;
     description: Array<string>;
@@ -159,8 +159,8 @@ BlockHighlightedValue.args = {
     headline: 'Priority',
     headlineType: 'promo',
     text: 'text',
-    value: 20,
-    secondaryValue: 20,
+    value: '20',
+    secondaryValue: '20',
     title: 'title',
     description: ['description'],
 };
@@ -202,7 +202,7 @@ type ProgressBlockArgs = {
     progressPercent: number;
     reverse: boolean;
 
-    value: number;
+    value: string;
     text: string;
     description: string;
 };
@@ -249,7 +249,7 @@ BlockProgress.args = {
     stackingGroup: false,
     progressPercent: 20,
     reverse: false,
-    value: 20,
+    value: '20',
     text: 'text',
     description: 'description',
 };

@@ -109,8 +109,8 @@ export const SimpleBlock: React.FC<SimpleBlockProps> = ({image, description, 'ar
 interface InformationBlockProps {
     title?: string;
     description?: Array<string>;
-    value?: number;
-    secondaryValue?: number;
+    value?: string;
+    secondaryValue?: string;
     valueColor?: string;
     'aria-label'?: string;
 }
@@ -140,16 +140,16 @@ interface HighlightedValueBlockProps {
     headline?: RendersNullableElement<typeof Tag>;
 
     mainHeading: {
-        value: number;
+        value: string;
         text: string;
     };
 
     secondHeading?: {
-        value: number;
+        value: string;
         text: string;
     };
 
-    secondaryValue?: number;
+    secondaryValue?: string;
 
     title?: string;
     description?: Array<string>;
@@ -232,7 +232,7 @@ interface ProgressBlockProps {
     reverse?: boolean;
 
     heading: {
-        value: number;
+        value: string;
         valueColor?: string;
         text: string;
     };
