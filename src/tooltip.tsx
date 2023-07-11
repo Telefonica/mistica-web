@@ -1,18 +1,18 @@
 import * as React from 'react';
 import classnames from 'classnames';
-import {CSSTransition} from 'react-transition-group';
-import {useAriaId, useScreenSize, useTheme} from './hooks';
-import {Portal} from './portal';
+import { CSSTransition } from 'react-transition-group';
+import { useAriaId, useScreenSize, useTheme } from './hooks';
+import { Portal } from './portal';
 import Overlay from './overlay';
-import {Text2} from './text';
+import { Text2 } from './text';
 import * as key from './utils/key-codes';
 import Stack from './stack';
 import * as styles from './tooltip.css';
-import {assignInlineVars} from '@vanilla-extract/dynamic';
-import {getPrefixedDataAttributes} from './utils/dom';
-import {isClientSide, isServerSide} from './utils/environment';
+import { assignInlineVars } from '@vanilla-extract/dynamic';
+import { getPrefixedDataAttributes } from './utils/dom';
+import { isClientSide, isServerSide } from './utils/environment';
 
-import type {DataAttributes} from './utils/types';
+import type { DataAttributes } from './utils/types';
 
 const defaultPositionDesktop = 'bottom';
 const defaultPositionMobile = 'top';
@@ -22,7 +22,7 @@ const transitionDurationMs = 500;
 const animationMovement = 12;
 const defaultShowTooltipDelayMs = 500;
 
-const noOp = () => {};
+const noOp = () => { };
 
 type Position = 'top' | 'bottom' | 'left' | 'right';
 
@@ -122,9 +122,9 @@ const Tooltip: React.FC<Props> = ({
     changedPosition,
     ...rest
 }) => {
-    const {isDarkMode} = useTheme();
+    const { isDarkMode } = useTheme();
     const [isVisible, setIsVisible] = React.useState(false);
-    const {isTabletOrSmaller} = useScreenSize();
+    const { isTabletOrSmaller } = useScreenSize();
     const ariaId = useAriaId();
     const isPointerOver = React.useRef(false);
     const closeTooltipTimeoutId = React.useRef<NodeJS.Timeout | null>(null);
@@ -142,14 +142,7 @@ const Tooltip: React.FC<Props> = ({
 
     const [containerPosition, setContainerPosition] = React.useState({});
 
-    const getPosition = (position: Position | undefined) => {
-        let finalPosition = position ? position : defaultPositionDesktop;
-        if (isTabletOrSmaller) {
-            finalPosition = position ? position : defaultPositionMobile;
-        }
-
-        return finalPosition;
-    };
+    const getPosition = (position: Position | undefined) => isTabletOrSmaller ? (position || defaultPositionMobile) : (position || defaultPositionDesktop);
 
     const validatePosition = (position: Position) => {
         if (!tooltipRef.current) return position;
@@ -166,7 +159,7 @@ const Tooltip: React.FC<Props> = ({
                 targetBoundingClientRect.current.left < tooltipBoundingClientRect.width ? 'right' : position,
             bottom:
                 targetBoundingClientRect.current.bottom + tooltipBoundingClientRect.height >
-                window.innerHeight
+                    window.innerHeight
                     ? 'top'
                     : position,
         };
@@ -222,11 +215,11 @@ const Tooltip: React.FC<Props> = ({
 
         const arrowPosition =
             tooltipBoundingClientRect.width > targetBoundingClientRect.current.width &&
-            targetBoundingClientRect.current.left + targetBoundingClientRect.current.width / 2 <
+                targetBoundingClientRect.current.left + targetBoundingClientRect.current.width / 2 <
                 tooltipBoundingClientRect.width / 2 + 16
                 ? targetBoundingClientRect.current.width / 2
                 : '50%';
-        const aux = position === 'bottom' || position === 'top' ? {left: arrowPosition} : {};
+        const aux = position === 'bottom' || position === 'top' ? { left: arrowPosition } : {};
 
         return aux;
     };
@@ -241,11 +234,11 @@ const Tooltip: React.FC<Props> = ({
 
             const tooltipMarginFix =
                 tooltipBoundingClientRect.width > targetBoundingClientRect.current.width &&
-                targetBoundingClientRect.current.left + targetBoundingClientRect.current.width / 2 <
+                    targetBoundingClientRect.current.left + targetBoundingClientRect.current.width / 2 <
                     tooltipBoundingClientRect.width / 2 + 16
                     ? Math.round(
-                          tooltipBoundingClientRect.width / 2 - targetBoundingClientRect.current.width / 2
-                      )
+                        tooltipBoundingClientRect.width / 2 - targetBoundingClientRect.current.width / 2
+                    )
                     : 0;
 
             const containerPos = {
@@ -254,50 +247,50 @@ const Tooltip: React.FC<Props> = ({
                     top: changedPosition
                         ? changedPosition
                         : window.pageYOffset +
-                          targetBoundingClientRect.current.top +
-                          targetBoundingClientRect.current.height / 2,
+                        targetBoundingClientRect.current.top +
+                        targetBoundingClientRect.current.height / 2,
                 },
                 left: {
                     left: !width
                         ? targetBoundingClientRect.current.left -
-                          tooltipBoundingClientRect.width -
-                          distanceToTarget
+                        tooltipBoundingClientRect.width -
+                        distanceToTarget
                         : targetBoundingClientRect.current.left - width - distanceToTarget,
                     top: changedPosition
                         ? changedPosition
                         : window.pageYOffset +
-                          targetBoundingClientRect.current.top +
-                          targetBoundingClientRect.current.height / 2,
+                        targetBoundingClientRect.current.top +
+                        targetBoundingClientRect.current.height / 2,
                 },
                 top: {
                     top: window.pageYOffset + targetBoundingClientRect.current.top - distanceToTarget,
                     left: changedPosition
                         ? changedPosition
                         : !width
-                        ? window.pageXOffset +
-                          targetBoundingClientRect.current.left +
-                          tooltipMarginFix +
-                          targetBoundingClientRect.current.width / 2 -
-                          tooltipBoundingClientRect.width / 2
-                        : window.pageXOffset +
-                          targetBoundingClientRect.current.left +
-                          targetBoundingClientRect.current.width / 2 -
-                          width / 2,
+                            ? window.pageXOffset +
+                            targetBoundingClientRect.current.left +
+                            tooltipMarginFix +
+                            targetBoundingClientRect.current.width / 2 -
+                            tooltipBoundingClientRect.width / 2
+                            : window.pageXOffset +
+                            targetBoundingClientRect.current.left +
+                            targetBoundingClientRect.current.width / 2 -
+                            width / 2,
                 },
                 bottom: {
                     top: window.pageYOffset + targetBoundingClientRect.current.bottom + distanceToTarget,
                     left: changedPosition
                         ? changedPosition
                         : !width
-                        ? window.pageXOffset +
-                          targetBoundingClientRect.current.left +
-                          tooltipMarginFix +
-                          targetBoundingClientRect.current.width / 2 -
-                          tooltipBoundingClientRect.width / 2
-                        : window.pageXOffset +
-                          targetBoundingClientRect.current.left +
-                          targetBoundingClientRect.current.width / 2 -
-                          width / 2,
+                            ? window.pageXOffset +
+                            targetBoundingClientRect.current.left +
+                            tooltipMarginFix +
+                            targetBoundingClientRect.current.width / 2 -
+                            tooltipBoundingClientRect.width / 2
+                            : window.pageXOffset +
+                            targetBoundingClientRect.current.left +
+                            targetBoundingClientRect.current.width / 2 -
+                            width / 2,
                 },
             };
 
@@ -332,10 +325,12 @@ const Tooltip: React.FC<Props> = ({
         }
     }, [isVisible, getContainerPosition, position, width]);
 
+    const targetStyle = fullWidth ? styles.fullWidth : {}
+
     return (
         <>
             <div
-                style={{width: fullWidth ? '100%' : ''}}
+                style={targetStyle}
                 ref={targetRef}
                 className={styles.wrapper}
                 onPointerOver={() => {
@@ -361,20 +356,20 @@ const Tooltip: React.FC<Props> = ({
                     isTouchableDevice
                         ? noOp
                         : () => {
-                              if (showTooltipTimeoutId.current) {
-                                  clearTimeout(showTooltipTimeoutId.current);
-                                  showTooltipTimeoutId.current = null;
-                                  isPointerOver.current = false;
-                                  return;
-                              }
+                            if (showTooltipTimeoutId.current) {
+                                clearTimeout(showTooltipTimeoutId.current);
+                                showTooltipTimeoutId.current = null;
+                                isPointerOver.current = false;
+                                return;
+                            }
 
-                              closeTooltipTimeoutId.current = setTimeout(() => {
-                                  if (!isPointerOver.current) return;
-                                  closeTooltipTimeoutId.current = null;
-                                  isPointerOver.current = false;
-                                  toggleVisibility();
-                              }, 100);
-                          }
+                            closeTooltipTimeoutId.current = setTimeout(() => {
+                                if (!isPointerOver.current) return;
+                                closeTooltipTimeoutId.current = null;
+                                isPointerOver.current = false;
+                                toggleVisibility();
+                            }, 100);
+                        }
                 }
                 onFocus={handleFocus}
                 onKeyDown={handleKeyDown}
@@ -425,14 +420,14 @@ const Tooltip: React.FC<Props> = ({
                             isTouchableDevice
                                 ? noOp
                                 : () => {
-                                      closeTooltipTimeoutId.current = setTimeout(() => {
-                                          if (!isPointerOver.current) return;
+                                    closeTooltipTimeoutId.current = setTimeout(() => {
+                                        if (!isPointerOver.current) return;
 
-                                          closeTooltipTimeoutId.current = null;
-                                          isPointerOver.current = false;
-                                          toggleVisibility();
-                                      }, 100);
-                                  }
+                                        closeTooltipTimeoutId.current = null;
+                                        isPointerOver.current = false;
+                                        toggleVisibility();
+                                    }, 100);
+                                }
                         }
                     >
                         <div
