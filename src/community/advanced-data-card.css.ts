@@ -179,13 +179,13 @@ export const marginRightAuto = style({
     },
 });
 
-export const marginTop = style({
+export const button = style({
     display: 'flex',
     marginTop: 8,
 });
 
-export const marginTopButton = style([
-    marginTop,
+export const buttonMobile = style([
+    button,
     {
         '@media': {
             [mq.mobile]: {

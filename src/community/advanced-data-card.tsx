@@ -164,9 +164,7 @@ const CardFooter: React.FC<CardFooterProps> = ({
                 )}
             >
                 {hasButton && (
-                    <div className={classNames(styles.marginRightButton, styles.marginTopButton)}>
-                        {button}
-                    </div>
+                    <div className={classNames(styles.marginRightButton, styles.buttonMobile)}>{button}</div>
                 )}
                 <div
                     className={classNames(
@@ -196,7 +194,7 @@ const CardFooter: React.FC<CardFooterProps> = ({
                     <div
                         className={classNames(
                             styles.adjustButtonLink,
-                            hasAllItens ? styles.marginTop : styles.marginTopButton
+                            hasAllItens ? styles.button : styles.buttonMobile
                         )}
                     >
                         {buttonLink}
