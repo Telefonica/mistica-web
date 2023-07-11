@@ -8,11 +8,10 @@ import {Text2, Text4} from '../text';
 import {useTheme} from '../hooks';
 import {vars} from '../skins/skin-contract.css';
 import IconCloseRegular from '../generated/mistica-icons/icon-close-regular';
-import IconButton from '../icon-button';
-import Inline from '../inline';
 import Box from '../box';
 import Touchable from '../touchable';
 import classNames from 'classnames';
+import {CardActionsGroup} from '../card';
 
 import type StackingGroup from '../stacking-group';
 import type Image from '../image';
@@ -29,48 +28,6 @@ type CardAction = {
     iconColor?: string;
     iconBackground?: string;
     iconBackgroundInverse?: string;
-};
-
-type CardActionsGroupProps = {
-    actions: Array<CardAction>;
-    isInverse?: boolean;
-};
-
-const CardActionsGroup = ({actions, isInverse}: CardActionsGroupProps): JSX.Element => {
-    return (
-        <Inline space={0}>
-            {actions.map(
-                (
-                    {
-                        onPress,
-                        label,
-                        Icon,
-                        iconSize = 20,
-                        iconColor = vars.colors.neutralHigh,
-                        iconBackground = styles.cardAction,
-                        iconBackgroundInverse = styles.cardActionInverse,
-                    },
-                    index
-                ) =>
-                    Icon ? (
-                        <IconButton
-                            size={48}
-                            key={index}
-                            onPress={onPress}
-                            aria-label={label}
-                            className={styles.cardActionIconButton}
-                            style={{display: 'flex'}}
-                        >
-                            <div className={isInverse ? iconBackgroundInverse : iconBackground}>
-                                <Icon color={iconColor} size={iconSize} />
-                            </div>
-                        </IconButton>
-                    ) : (
-                        <div key={index} className={styles.cardActionIconButton} />
-                    )
-            )}
-        </Inline>
-    );
 };
 
 const useTopActions = (actions?: Array<CardAction>, onClose?: () => void) => {
@@ -196,7 +153,7 @@ const CardFooter: React.FC<CardFooterProps> = ({
 
     return (
         <>
-            <div className={styles.adjustmentDivider}>
+            <div className={styles.divider}>
                 <Divider />
             </div>
 
@@ -207,30 +164,19 @@ const CardFooter: React.FC<CardFooterProps> = ({
                 )}
             >
                 {hasButton && (
-                    <div
-                        tabIndex={-1}
-                        className={classNames(
-                            sprinkles({
-                                display: 'flex',
-                            }),
-                            styles.marginTopButton
-                        )}
-                        style={{
-                            marginRight: 16,
-                            position: 'relative',
-                        }}
-                    >
+                    <div className={classNames(styles.marginRightButton, styles.marginTopButton)}>
                         {button}
                     </div>
                 )}
                 <div
-                    className={hasAllItens ? styles.marginRightAuto : ''}
-                    style={{
-                        display: 'flex',
-                        flexDirection: 'row',
-                        marginTop: hasAllItens ? 8 : 16,
-                        flexWrap: 'wrap',
-                    }}
+                    className={classNames(
+                        styles.footerDirection,
+                        hasAllItens
+                            ? styles.marginRightAuto
+                            : sprinkles({
+                                  paddingTop: 16,
+                              })
+                    )}
                 >
                     {hasFooterImage && (
                         <Box paddingRight={16} className={sprinkles({alignItems: 'center', display: 'flex'})}>
@@ -248,18 +194,10 @@ const CardFooter: React.FC<CardFooterProps> = ({
                 </div>
                 {hasButtonLink && (
                     <div
-                        tabIndex={-1}
                         className={classNames(
-                            sprinkles({
-                                display: 'flex',
-                            }),
+                            styles.adjustButtonLink,
                             hasAllItens ? styles.marginTop : styles.marginTopButton
                         )}
-                        style={{
-                            position: 'relative',
-                            marginLeft: -12,
-                            marginRight: -12,
-                        }}
                     >
                         {buttonLink}
                     </div>
@@ -269,7 +207,7 @@ const CardFooter: React.FC<CardFooterProps> = ({
     );
 };
 
-type ExtraTypeof = typeof StackingGroup;
+type AllowedExtra = typeof StackingGroup;
 
 type TextAs = 'h1' | 'h2' | 'h3' | 'h4';
 
@@ -287,8 +225,8 @@ interface AdvancedDataCardProps {
     subtitleLinesMax?: number;
     description?: string;
     descriptionLinesMax?: number;
-    extra?: Array<RendersNullableElement<ExtraTypeof>>;
-    smallSlotSpace?: boolean;
+    extra?: Array<RendersNullableElement<AllowedExtra>>;
+    extraDividerPadding?: 8 | 24;
     button?: RendersNullableElement<typeof ButtonPrimary>;
     footerImage?: RendersNullableElement<typeof Image>;
     footerText?: string;
@@ -319,7 +257,7 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
             descriptionLinesMax,
 
             extra,
-            smallSlotSpace,
+            extraDividerPadding = 24,
 
             button,
             footerImage,
@@ -335,13 +273,9 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
         ref
     ) => {
         const finalActions = useTopActions(actions, onClose);
-        const hasAcations = finalActions?.length > 0;
+        const hasActions = finalActions?.length > 0;
 
         const footerProps = {button, footerImage, footerText, footerTextLinesMax, buttonLink};
-
-        const extraSpaceSize = smallSlotSpace ? 8 : 24;
-
-        const topActionsStylesWithIcon = {position: 'absolute', top: 8, right: 8, zIndex: 2} as const;
 
         const hasFooter = !!button || !!footerImage || !!footerText || !!buttonLink;
 
@@ -379,22 +313,7 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
                                 >
                                     <Box paddingTop={8}>
                                         <Stack space={8} className={sprinkles({flex: 1})}>
-                                            {stackingGroup && (
-                                                <div
-                                                    className={sprinkles({
-                                                        display: 'flex',
-                                                        width: '100%',
-                                                    })}
-                                                >
-                                                    <div
-                                                        className={sprinkles({
-                                                            width: '100%',
-                                                        })}
-                                                    >
-                                                        {stackingGroup}
-                                                    </div>
-                                                </div>
-                                            )}
+                                            {stackingGroup}
                                             <CardContent
                                                 headline={headline}
                                                 pretitle={pretitle}
@@ -410,13 +329,9 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
                                             />
                                         </Stack>
                                     </Box>
-                                    {hasAcations && (
-                                        <div style={topActionsStylesWithIcon}>
-                                            <CardActionsGroup actions={finalActions} />
-                                        </div>
-                                    )}
+                                    {hasActions && <CardActionsGroup actions={finalActions} />}
                                 </div>
-                                <div style={{marginTop: 'auto', width: '100%'}}>
+                                <div className={styles.extraTop}>
                                     {extra && extra?.length ? (
                                         <Box paddingTop={16} paddingBottom={24}>
                                             {extra.map((ex, index) => {
@@ -439,7 +354,7 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
                                                         </div>
 
                                                         {index + 1 !== extra.length && (
-                                                            <Box paddingY={extraSpaceSize}>
+                                                            <Box paddingY={extraDividerPadding}>
                                                                 <Divider />
                                                             </Box>
                                                         )}

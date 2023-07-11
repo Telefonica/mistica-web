@@ -4,6 +4,8 @@ import * as mq from '../media-queries.css';
 import {vars} from '../skins/skin-contract.css';
 import {applyAlpha} from '../utils/color';
 
+export const horizontalPadding = 24;
+
 export const paddingX = style([
     sprinkles({
         paddingX: 16,
@@ -11,8 +13,8 @@ export const paddingX = style([
     {
         '@media': {
             [mq.desktopOrBigger]: {
-                paddingLeft: 24,
-                paddingRight: 24,
+                paddingLeft: horizontalPadding,
+                paddingRight: horizontalPadding,
             },
         },
     },
@@ -43,20 +45,22 @@ export const boxed = style([
     },
 ]);
 
-export const interaction = style([
-    {
-        selectors: {
-            '&:hover': {
-                backgroundColor: vars.colors.backgroundContainerHover,
-                transition: '0.15s ease-in-out',
-            },
-            '&:active': {
-                backgroundColor: vars.colors.backgroundContainerPressed,
-                transition: '0.1s ease-in-out',
+export const interaction = style({
+    '@media': {
+        [mq.supportsHover]: {
+            selectors: {
+                '&:hover': {
+                    backgroundColor: vars.colors.backgroundContainerHover,
+                    transition: '0.15s ease-in-out',
+                },
+                '&:active': {
+                    backgroundColor: vars.colors.backgroundContainerPressed,
+                    transition: '0.1s ease-in-out',
+                },
             },
         },
     },
-]);
+});
 
 export const cardContentStyle = style([
     paddingX,
@@ -75,7 +79,7 @@ export const cardContentStyle = style([
     },
 ]);
 
-export const minHeight = style([{minHeight: 216}]);
+export const minHeight = style({minHeight: 216});
 
 export const dataCard = style([
     sprinkles({
@@ -85,9 +89,7 @@ export const dataCard = style([
         width: '100%',
         height: '100%',
     }),
-    {
-        minHeight,
-    },
+    minHeight,
 ]);
 
 const cardActionBase = sprinkles({
@@ -137,23 +139,17 @@ export const cardActionInverse = style([
     },
 ]);
 
-export const adjustmentDivider = style([
-    {
-        marginLeft: -24,
-        marginRight: -24,
-    },
-]);
+export const divider = style({
+    marginLeft: -horizontalPadding,
+    marginRight: -horizontalPadding,
+});
 
-export const footerText = style([
-    {
-        display: 'flex',
-        flex: '1',
-
-        alignItems: 'center',
-
-        minHeight: '40px',
-    },
-]);
+export const footerText = sprinkles({
+    display: 'flex',
+    flex: 1,
+    alignItems: 'center',
+    minHeight: 40,
+});
 
 export const actionsVariants = styleVariants({
     default: [
@@ -175,6 +171,7 @@ export const actionsVariants = styleVariants({
 });
 
 export const marginRightAuto = style({
+    marginTop: 8,
     '@media': {
         [mq.mobile]: {
             marginRight: 'auto',
@@ -183,14 +180,40 @@ export const marginRightAuto = style({
 });
 
 export const marginTop = style({
+    display: 'flex',
     marginTop: 8,
 });
 
-export const marginTopButton = style({
-    marginTop: 8,
-    '@media': {
-        [mq.mobile]: {
-            marginTop: 16,
+export const marginTopButton = style([
+    marginTop,
+    {
+        '@media': {
+            [mq.mobile]: {
+                marginTop: 16,
+            },
         },
     },
+]);
+
+export const extraTop = style({
+    marginTop: 'auto',
+    width: '100%',
+});
+
+export const footerDirection = style([
+    sprinkles({
+        display: 'flex',
+        flexDirection: 'row',
+    }),
+    {flexWrap: 'wrap'},
+]);
+
+export const adjustButtonLink = style({
+    position: 'relative',
+    marginLeft: -12,
+    marginRight: -12,
+});
+
+export const marginRightButton = sprinkles({
+    right: 16,
 });

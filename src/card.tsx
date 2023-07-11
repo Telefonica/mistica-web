@@ -67,7 +67,11 @@ type CardActionsGroupProps = {
 
 const TOP_ACTION_BUTTON_SIZE = 48;
 
-const CardActionsGroup = ({actions, onClose, type = 'default'}: CardActionsGroupProps): JSX.Element => {
+export const CardActionsGroup = ({
+    actions,
+    onClose,
+    type = 'default',
+}: CardActionsGroupProps): JSX.Element => {
     const finalActions = useTopActions(actions, onClose);
     const hasActions = finalActions.length > 0;
 

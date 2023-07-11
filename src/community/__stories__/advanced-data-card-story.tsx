@@ -70,7 +70,6 @@ export const Default: StoryComponent<Args> = ({
         <ResponsiveLayout>
             <Box paddingY={24} dataAttributes={{testid: 'advanced-data-card'}}>
                 <AdvancedDataCard
-                    smallSlotSpace
                     stackingGroup={
                         stackingGroup ? (
                             <StackingGroup maxItems={4} moreItemsStyle={{type: 'square', size: 40}}>
