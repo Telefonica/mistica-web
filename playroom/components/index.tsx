@@ -118,7 +118,7 @@ const PreviewToolsControls: React.FC<PreviewToolsControlsProps> = ({
         return (
             <div className={`${styles.controls} `}>
                 <Select
-                    label="Select brand"
+                    label="Select skin"
                     name="theme"
                     options={Object.entries(themesMap).map(([skinName, {text}]) => ({
                         value: skinName,
