@@ -326,14 +326,13 @@ const Tooltip: React.FC<Props> = ({
         }
     }, [isVisible, getContainerPosition, position, width]);
 
-    const targetStyle = fullWidth ? styles.fullWidth : {};
+    const targetStyle = fullWidth && styles.fullWidth;
 
     return (
         <>
             <div
-                style={targetStyle}
                 ref={targetRef}
-                className={styles.wrapper}
+                className={classnames(styles.wrapper, targetStyle)}
                 onPointerOver={() => {
                     if (closeTooltipTimeoutId.current) {
                         clearTimeout(closeTooltipTimeoutId.current);
