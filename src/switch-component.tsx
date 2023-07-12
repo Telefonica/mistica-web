@@ -122,11 +122,16 @@ const Switch: React.FC<PropsRender | PropsChildren> = (props) => {
         <span
             role="switch"
             aria-checked={value ?? checkedState}
-            onClick={disabled ? undefined : handleChange}
+            onClick={(e) => {
+                e.stopPropagation();
+                if (!disabled) {
+                    handleChange();
+                }
+            }}
             onKeyDown={disabled ? undefined : handleKeyDown}
             tabIndex={disabled ? undefined : 0}
             ref={focusableRef}
-            className={styles.container}
+            className={disabled ? styles.containerDisabled : styles.container}
             aria-disabled={disabled}
             aria-labelledby={labelId}
             {...getPrefixedDataAttributes(props.dataAttributes, 'Switch')}
@@ -141,7 +146,7 @@ const Switch: React.FC<PropsRender | PropsChildren> = (props) => {
                     })}
                 </>
             ) : (
-                <Inline space={16} alignItems="center" className={disabled ? styles.containerDisabled : ''}>
+                <Inline space={16} alignItems="center">
                     {switchEl}
                     {props.children && (
                         <Text3 regular as="div" id={labelId}>

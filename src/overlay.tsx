@@ -75,6 +75,7 @@ const Overlay: React.FC<Props> = ({
                     onPress(e);
                 }
             }}
+            // eslint-disable-next-line react/no-unknown-property
             touch-action="auto" // Prop needed for Pointer Events Polyfill to work properly
             onContextMenu={handleContextMenu}
             role="button"

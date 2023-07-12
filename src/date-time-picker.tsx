@@ -1,3 +1,9 @@
+/**
+ * Do not use this component!
+ * Use DateField or FormDateTimeField
+ *
+ * This component is a fallback for browsers that don't support datetime-local or date inputs
+ */
 import * as React from 'react';
 import {TextFieldBaseAutosuggest} from './text-field-base';
 import IconCalendarRegular from './generated/mistica-icons/icon-calendar-regular';
@@ -10,19 +16,14 @@ import {useElementDimensions, useTheme} from './hooks';
 import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
 import * as styles from './date-time-picker.css';
 import {vars} from './skins/skin-contract.css';
+import 'moment/locale/es';
+import 'moment/locale/de';
+import 'moment/locale/pt-br';
+import 'moment/locale/en-gb';
 
 import type {CommonFormFieldProps} from './text-field-base';
 import type Moment from 'moment';
-
-/**
- * Do not use this component!
- * Use DateField or FormDateTimeField
- *
- * This component is a fallback for browsers that don't support datetime-local or date inputs
- */
-
-const browserLocale = navigator.language.toLocaleLowerCase().split('-')[0];
-import(/* webpackChunkName: "moment-locale" */ `moment/locale/${browserLocale}`).finally(() => {});
+import type {Locale} from './utils/locale';
 
 export interface DateTimePickerProps extends CommonFormFieldProps {
     inputRef: (field: HTMLInputElement | null) => void;
@@ -31,9 +32,27 @@ export interface DateTimePickerProps extends CommonFormFieldProps {
     mode?: 'year-month';
 }
 
+const langToLocale: Record<string, string> = {
+    es: 'es', // spanish
+    ca: 'es', // catalan
+    eu: 'es', // euskera
+    gl: 'es', // gallego
+    de: 'de', // german
+    pt: 'pt-br', // portuguese
+    en: 'en-gb', // english
+};
+
+const getLocaleForMoment = (locale: Locale) => {
+    const lang = locale.toLocaleLowerCase().split('-')[0];
+    return langToLocale[lang] || 'en-gb';
+};
+
 const DateTimePicker: React.FC<DateTimePickerProps> = ({withTime, mode, isValidDate, optional, ...rest}) => {
     const [showPicker, realSetShowPicker] = React.useState(false);
-    const {texts} = useTheme();
+    const {
+        texts,
+        i18n: {locale},
+    } = useTheme();
     const fieldRef = React.useRef<HTMLInputElement | null>(null);
     const {height: pickerContainerHeight, ref: pickerContainerRef} = useElementDimensions();
 
@@ -149,7 +168,7 @@ const DateTimePicker: React.FC<DateTimePickerProps> = ({withTime, mode, isValidD
                             dateFormat={mode === 'year-month' ? 'YYYY-MM' : undefined}
                             timeFormat={withTime ? 'HH:mm' : false}
                             initialValue={getValue()}
-                            locale={browserLocale}
+                            locale={getLocaleForMoment(locale)}
                             input={false}
                             onChange={setValue}
                             isValidDate={isValidDate}

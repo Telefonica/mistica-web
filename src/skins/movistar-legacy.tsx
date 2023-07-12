@@ -281,6 +281,11 @@ export const getMovistarLegacySkin: GetKnownSkin = (variant) => {
         textPresets: {
             cardTitle: {weight: 'bold'},
             button: {weight: 'medium'},
+            tabsLabel: {
+                weight: 'medium',
+                size: {mobile: 16, desktop: 18},
+                lineHeight: {mobile: 24, desktop: 24},
+            },
             link: {weight: 'medium'},
             title1: {weight: 'medium'},
             indicator: {weight: 'medium'},
@@ -302,6 +307,5 @@ export const getMovistarLegacySkin: GetKnownSkin = (variant) => {
         skin.colors.controlActivated = palette.movistarProminentBlue;
         skin.colors.dividerInverse = palette.movistarProminentBlueDark;
     }
-
     return skin;
 };

@@ -1,7 +1,11 @@
+root: true
 extends:
     - '@telefonica/eslint-config'
 overrides:
     - files: ['*.js']
       parser: espree
+      env:
+          node: true
+          es2020: true
 rules:
     import/extensions: [error, {js: never, json: always, css: always}]
