@@ -198,5 +198,5 @@
         "@types/react-dom": "^18.0.10",
         "@testing-library/dom": "^8.19.1"
     },
-    "packageManager": "yarn@3.2.4"
+    "packageManager": "yarn@3.6.1"
 }
