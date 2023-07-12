@@ -4,7 +4,7 @@ import * as mq from '../media-queries.css';
 import {vars} from '../skins/skin-contract.css';
 import {applyAlpha} from '../utils/color';
 
-export const horizontalPadding = 24;
+const horizontalPadding = 24;
 
 export const paddingX = style([
     sprinkles({

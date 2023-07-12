@@ -34,7 +34,7 @@ import type {
     TrackingEvent,
 } from './utils/types';
 
-type CardAction = {
+export type CardAction = {
     label: string;
     onPress: () => void;
     Icon?: React.FC<IconProps>;

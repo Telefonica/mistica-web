@@ -5,45 +5,19 @@ import Stack from '../stack';
 import * as styles from './advanced-data-card.css';
 import Divider from '../divider';
 import {Text2, Text4} from '../text';
-import {useTheme} from '../hooks';
 import {vars} from '../skins/skin-contract.css';
-import IconCloseRegular from '../generated/mistica-icons/icon-close-regular';
 import Box from '../box';
 import Touchable from '../touchable';
 import classNames from 'classnames';
 import {CardActionsGroup} from '../card';
 
+import type {CardAction} from '../card';
 import type StackingGroup from '../stacking-group';
 import type Image from '../image';
 import type {ButtonPrimary, ButtonLink} from '../button';
-import type {DataAttributes, IconProps} from '../utils/types';
+import type {DataAttributes} from '../utils/types';
 import type {RendersNullableElement} from '../utils/renders-element';
 import type Tag from '../tag';
-
-type CardAction = {
-    label: string;
-    onPress: () => void;
-    Icon?: React.FC<IconProps>;
-    iconSize?: number;
-    iconColor?: string;
-    iconBackground?: string;
-    iconBackgroundInverse?: string;
-};
-
-const useTopActions = (actions?: Array<CardAction>, onClose?: () => void) => {
-    const {texts} = useTheme();
-    const finalActions = actions ? [...actions] : [];
-
-    if (onClose) {
-        finalActions.push({
-            label: texts.closeButtonLabel,
-            onPress: onClose,
-            Icon: IconCloseRegular,
-        });
-    }
-
-    return finalActions;
-};
 
 type CardContentProps = {
     headline?: string | RendersNullableElement<typeof Tag>;
@@ -270,9 +244,6 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
         },
         ref
     ) => {
-        const finalActions = useTopActions(actions, onClose);
-        const hasActions = finalActions?.length > 0;
-
         const footerProps = {button, footerImage, footerText, footerTextLinesMax, buttonLink};
 
         const hasFooter = !!button || !!footerImage || !!footerText || !!buttonLink;
@@ -327,7 +298,7 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
                                             />
                                         </Stack>
                                     </Box>
-                                    {hasActions && <CardActionsGroup actions={finalActions} />}
+                                    <CardActionsGroup actions={actions} onClose={onClose} />
                                 </div>
                                 <div className={styles.extraTop}>
                                     {extra && extra?.length ? (
