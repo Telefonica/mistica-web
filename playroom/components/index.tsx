@@ -27,7 +27,7 @@ import IconAppleOff from '../icons/icon-apple-off';
 import IconCode from '../icons/icon-code';
 import * as styles from '../preview-tools.css';
 
-import type {ThemeConfig, ColorScheme, SkinName} from '../../src';
+import type {ThemeConfig, ColorScheme, KnownSkinName} from '../../src';
 
 export * from '../../src';
 export * from '../../src/community';
@@ -56,7 +56,11 @@ const VivoNewLogo = () => (
     </svg>
 );
 
-const themesMap: {[skinName: SkinName]: {themeConfig: ThemeConfig; text: string; icon: React.ReactNode}} = {
+type PlayroomSkinName = Exclude<KnownSkinName, 'O2-classic'>;
+
+const themesMap: {
+    [skinName in PlayroomSkinName]: {themeConfig: ThemeConfig; text: string; icon: React.ReactNode};
+} = {
     Movistar: {
         text: 'Movistar',
         themeConfig: Movistar,
@@ -92,8 +96,8 @@ const themesMap: {[skinName: SkinName]: {themeConfig: ThemeConfig; text: string;
 type PreviewToolsControlsProps = {
     os: 'android' | 'ios' | 'desktop';
     onOsChange: (newOs: 'android' | 'ios' | 'desktop') => void;
-    skinName: SkinName;
-    onSkinNameChange: (newSkinName: SkinName) => void;
+    skinName: PlayroomSkinName;
+    onSkinNameChange: (newSkinName: PlayroomSkinName) => void;
     colorScheme: ColorScheme;
     onColorSchemeChange: (newColorScheme: ColorScheme) => void;
     onEditStoryPress: () => void;
@@ -125,7 +129,7 @@ const PreviewToolsControls: React.FC<PreviewToolsControlsProps> = ({
                         text,
                     }))}
                     value={skinName}
-                    onChangeValue={onSkinNameChange as any}
+                    onChangeValue={onSkinNameChange as (value: string) => void}
                 />
                 <Inline space={16} alignItems="center">
                     {showPlatformSelector && (
@@ -166,7 +170,7 @@ const PreviewToolsControls: React.FC<PreviewToolsControlsProps> = ({
                         tabs={Object.values(themesMap).map(({icon}) => ({text: '', icon}))}
                         selectedIndex={Object.keys(themesMap).indexOf(skinName)}
                         onChange={(index) => {
-                            onSkinNameChange((Object.keys(themesMap) as Array<SkinName>)[index]);
+                            onSkinNameChange((Object.keys(themesMap) as Array<PlayroomSkinName>)[index]);
                         }}
                     />
                 </div>
@@ -227,7 +231,7 @@ export const PreviewTools = ({
         platformOverrides: {platform: initialOs = 'android'},
     } = useTheme();
     const [showOverlay, setShowOverlay] = React.useState(false);
-    const [skinName, setSkinName] = React.useState<SkinName>(initialSkinName);
+    const [skinName, setSkinName] = React.useState<PlayroomSkinName>(initialSkinName as PlayroomSkinName);
     const [os, setOs] = React.useState<'android' | 'ios' | 'desktop'>(initialOs);
     const [colorScheme, setColorScheme] = React.useState<ColorScheme>('light');
     const overrideTheme = useOverrideTheme();
