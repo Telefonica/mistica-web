@@ -29,9 +29,7 @@ const IconPlayRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element =>
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
-                    fillRule="evenodd"
                     d="M6.368 1.983c-1.166-.667-2.618.176-2.618 1.52v16.553c0 1.344 1.452 2.186 2.618 1.52l14.485-8.277c1.175-.672 1.175-2.368 0-3.04L6.368 1.984zM5.25 3.503a.25.25 0 01.374-.218l14.484 8.277a.25.25 0 010 .434L5.624 20.273a.25.25 0 01-.374-.217V3.502z"
-                    clipRule="evenodd"
                 />
             </svg>
         );

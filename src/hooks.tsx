@@ -3,6 +3,7 @@ import ThemeContext from './theme-context';
 import ScreenSizeContext from './screen-size-context';
 import AriaIdGetterContext from './aria-id-getter-context';
 import {listenResize} from './utils/dom';
+import {isClientSide} from './utils/environment';
 
 import type {Theme} from './theme';
 import type {ScreenSizeContextType} from './screen-size-context';
@@ -123,17 +124,17 @@ export const useWindowSize = (): {
     screenWidth: number;
 } => {
     const [windowHeight, setWindowHeight] = React.useState<number>(
-        typeof window !== 'undefined' ? window.innerHeight : 1200 // Best guess
+        isClientSide() ? window.innerHeight : 1200 // Best guess
     );
     const [windowWidth, setWindowWidth] = React.useState<number>(
-        typeof window !== 'undefined' ? window.innerWidth : 800 // Best guess
+        isClientSide() ? window.innerWidth : 800 // Best guess
     );
 
     const [screenHeight, setScreenHeight] = React.useState<number>(
-        typeof window !== 'undefined' ? window.screen.availHeight : 1200
+        isClientSide() ? window.screen.availHeight : 1200
     );
     const [screenWidth, setScreenWidth] = React.useState<number>(
-        typeof window !== 'undefined' ? window.screen.availWidth : 800
+        isClientSide() ? window.screen.availWidth : 800
     );
 
     React.useEffect(() => {
@@ -173,18 +174,19 @@ export const useScreenHeight = (): number => {
     return screenHeight;
 };
 
-export const useIsWithinIFrame = (): boolean => window?.top !== window?.self;
+export const useIsWithinIFrame = (): boolean => {
+    return isClientSide() && window.top !== window.self;
+};
 
 // React currently throws a warning when using useLayoutEffect on the server.
 // To get around it, we can conditionally useEffect on the server (no-op) and
 // useLayoutEffect in the browser
-export const useIsomorphicLayoutEffect =
-    typeof window !== 'undefined' ? React.useLayoutEffect : React.useEffect;
+export const useIsomorphicLayoutEffect = isClientSide() ? React.useLayoutEffect : React.useEffect;
 
 type IntersectionObserverOptions = {
     root?: Element | Document | null;
     rootMargin?: string;
-    threshold?: number | number[];
+    threshold?: number | Array<number>;
 };
 
 export const useIsInViewport = (

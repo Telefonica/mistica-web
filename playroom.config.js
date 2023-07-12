@@ -99,8 +99,12 @@ const config = {
                     ],
                 },
                 {
-                    test: /(reset|roboto)\.css$/,
+                    test: /(reset|roboto|vivo-font|telefonica-font)\.css$/,
                     use: ['style-loader', 'css-loader'],
+                },
+                {
+                    test: /\.woff2$/,
+                    use: ['file-loader'],
                 },
                 {
                     test: /\.vanilla\.css$/i,

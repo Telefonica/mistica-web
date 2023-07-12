@@ -49,8 +49,23 @@ export const innerCircleChecked = style([
     },
 ]);
 
-export const radioButton = style({cursor: 'pointer'});
-export const radioButtonContainerDisabled = style({cursor: 'default'});
+const radioButtonBase = style({
+    WebkitTapHighlightColor: 'transparent',
+});
+
+export const radioButton = style([
+    radioButtonBase,
+    {
+        cursor: 'pointer',
+    },
+]);
+
+export const radioButtonContainerDisabled = style([
+    radioButtonBase,
+    {
+        cursor: 'default',
+    },
+]);
 
 export const outerCircleCheckedVariants = styleVariants({
     default: {

@@ -3,7 +3,7 @@ import {assignInlineVars} from '@vanilla-extract/dynamic';
 import DialogRoot from './dialog';
 import ScreenSizeContextProvider from './screen-size-context-provider';
 import AriaIdGetterContext from './aria-id-getter-context';
-import {AnchorLink, dimensions, getTexts, NAVBAR_HEIGHT_MOBILE} from './theme';
+import {dimensions, getTexts, getMisticaLinkComponent, NAVBAR_HEIGHT_MOBILE} from './theme';
 import {getPlatform, isInsideNovumNativeApp} from './utils/platform';
 import ThemeContext from './theme-context';
 import {useIsomorphicLayoutEffect} from './hooks';
@@ -106,8 +106,13 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children, as}) => {
                 text9: {...defaultTextPresetsConfig.text9, ...theme.skin.textPresets?.text9},
                 text10: {...defaultTextPresetsConfig.text10, ...theme.skin.textPresets?.text10},
                 cardTitle: {...defaultTextPresetsConfig.cardTitle, ...theme.skin.textPresets?.cardTitle},
+                button: {...defaultTextPresetsConfig.button, ...theme.skin.textPresets?.button},
+                link: {...defaultTextPresetsConfig.link, ...theme.skin.textPresets?.link},
+                title1: {...defaultTextPresetsConfig.title1, ...theme.skin.textPresets?.title1},
+                indicator: {...defaultTextPresetsConfig.indicator, ...theme.skin.textPresets?.indicator},
+                tabsLabel: {...defaultTextPresetsConfig.tabsLabel, ...theme.skin.textPresets?.tabsLabel},
             },
-            Link: theme.Link ?? AnchorLink,
+            Link: getMisticaLinkComponent(theme.Link),
             isDarkMode: isDarkModeEnabled,
             isIos: getPlatform(platformOverrides) === 'ios',
             useHrefDecorator: theme.useHrefDecorator ?? useDefaultHrefDecorator,

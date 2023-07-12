@@ -117,15 +117,20 @@ const RadioButton: React.FC<PropsRender | PropsChildren> = ({
             aria-checked={checked}
             aria-disabled={disabled}
             aria-labelledby={labelId}
-            onClick={disabled ? undefined : () => select(value)}
+            onClick={(e) => {
+                e.stopPropagation();
+                if (!disabled) {
+                    select(value);
+                }
+            }}
             onKeyDown={disabled ? undefined : handleKeyDown}
-            className={styles.radioButton}
+            className={disabled ? styles.radioButtonContainerDisabled : styles.radioButton}
             {...getPrefixedDataAttributes(dataAttributes, 'RadioButton')}
         >
             {rest.render ? (
                 rest.render({controlElement: radio, disabled: !!disabled, checked, labelId})
             ) : (
-                <Inline space={16} className={disabled ? styles.radioButtonContainerDisabled : ''}>
+                <Inline space={16}>
                     {/* Text3 wrapper added to have the same line-height and center checkbox with text and -2px to perfect pixel center icon  */}
                     <Text3 regular as="div">
                         <div style={{position: 'relative', top: -2}}>{radio}</div>
