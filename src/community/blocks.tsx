@@ -20,28 +20,18 @@ interface BlockContentProps {
 }
 
 const BlockContent: React.FC<BlockContentProps> = ({title, description}) => {
-    const normalizedDescription =
-        description && Array.isArray(description) ? (
-            description.map((paragraph, i) => (
-                <Text2 regular color={vars.colors.textSecondary} key={i}>
-                    {paragraph}
-                </Text2>
-            ))
-        ) : (
-            <Text2 regular color={vars.colors.textSecondary}>
-                {description}
-            </Text2>
-        );
-
     return (
         <div className={styles.column}>
-            {title && (
-                <Text3 regular color={vars.colors.textPrimary}>
-                    {title}
-                </Text3>
-            )}
+            <Text3 regular color={vars.colors.textPrimary}>
+                {title}
+            </Text3>
 
-            {!!description && normalizedDescription}
+            {description &&
+                description.map((paragraph, i) => (
+                    <Text2 regular color={vars.colors.textSecondary} key={i}>
+                        {paragraph}
+                    </Text2>
+                ))}
         </div>
     );
 };
