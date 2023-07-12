@@ -12,6 +12,8 @@ export const container = style([
     },
 ]);
 
+export const targetContainer = style([{display: 'inline-block', width: '100%'}]);
+
 export const rangeSlider = style([
     sprinkles({
         display: 'flex',
@@ -149,9 +151,8 @@ export const progress = style([
     },
 ]);
 
-export const textError = style([
-    sprinkles({
-        // position: 'absolute',
-        // right: 0,
-    }),
-]);
+export const fieldContainer = style({
+    display: 'inline-block',
+    width: '100px',
+    marginLeft: '16px',
+});

@@ -49,6 +49,16 @@ const Slider: React.FC<SliderProps> = ({
         return `calc(${newValue}% + (${newPosition}px))`;
     }, [valueRanger, minSlider, maxSlider]);
 
+    const setNewValue = React.useCallback(() => {
+        if (!sliderRef.current) return;
+        const slider = sliderRef.current.getBoundingClientRect();
+        const newValue = Number((Math.abs(valueRanger - minSlider) * 100) / (maxSlider - minSlider));
+        const multiplyValue = 0.2 + (window.innerWidth - slider.right) / 100 + (slider.left - 0) / 100;
+
+        const newPosition = slider.left - 10 - newValue * multiplyValue;
+        return `calc(${newValue}% + (${newPosition}px))`;
+    }, [valueRanger, minSlider, maxSlider]);
+
     const getClosestNumber = React.useCallback(
         (value: number) => {
             let finalValue = value;
@@ -173,50 +183,49 @@ const Slider: React.FC<SliderProps> = ({
 
     return (
         <section className={styles.container} aria-label={arialLabel}>
-            <div
-                style={{
-                    display: 'inline-block',
-                    width: '100%',
-                }}
-            >
-                <div
-                    ref={sliderRef}
-                    style={{opacity, paddingTop: sliderPaddingTop}}
-                    className={styles.rangeSlider}
-                >
-                    <input
-                        disabled={disabled}
-                        style={{top: sliderTop}}
-                        className={classnames(
-                            styles.sliderVariant[isIos ? 'ios' : 'default'],
-                            sliderDisabled
-                        )}
-                        type="range"
-                        min={minSlider}
-                        max={maxSlider}
-                        value={valueRanger}
-                        step={step}
-                        onChange={(e) => handleSlider(+e.target.value)}
-                    />
+            <Tooltip
+                description={Array.isArray(steps) ? steps[valueRanger].toString() : valueRanger.toString()}
+                fullWidth
+                width={42}
+                targetLabel=""
+                changedPosition={setNewValue()}
+                textAlign="center"
+                position="top"
+                target={
+                    <div className={styles.targetContainer}>
+                        <div
+                            ref={sliderRef}
+                            style={{opacity, paddingTop: sliderPaddingTop}}
+                            className={styles.rangeSlider}
+                        >
+                            <input
+                                disabled={disabled}
+                                style={{top: sliderTop}}
+                                className={classnames(
+                                    styles.sliderVariant[isIos ? 'ios' : 'default'],
+                                    sliderDisabled
+                                )}
+                                type="range"
+                                min={minSlider}
+                                max={maxSlider}
+                                value={valueRanger}
+                                step={step}
+                                onChange={(e) => handleSlider(+e.target.value)}
+                            />
 
-                    <div
-                        style={{left: setValue(), top: sliderTop}}
-                        className={classnames(styles.sliderThumbVariant[isIos ? 'ios' : 'default'])}
-                    />
+                            <div
+                                style={{left: setValue(), top: sliderTop}}
+                                className={classnames(styles.sliderThumbVariant[isIos ? 'ios' : 'default'])}
+                            />
 
-                    <div className={styles.progress} style={{width: setValue(), top: sliderTop}} />
-                </div>
-            </div>
+                            <div className={styles.progress} style={{width: setValue(), top: sliderTop}} />
+                        </div>
+                    </div>
+                }
+            />
 
             {field && (
-                <div
-                    style={{
-                        display: 'inline-block',
-
-                        width: '100px',
-                        marginLeft: '16px',
-                    }}
-                >
+                <div className={styles.fieldContainer}>
                     <IntegerField
                         error={!!error}
                         disabled={disabled}
