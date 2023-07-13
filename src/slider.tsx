@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useTheme} from './hooks';
+import {useScreenSize, useTheme} from './hooks';
 import * as styles from './slider.css';
 import classnames from 'classnames';
 import IntegerField from './integer-field';
@@ -31,6 +31,7 @@ const Slider: React.FC<SliderProps> = ({
     'arial-label': arialLabel,
 }) => {
     const {isIos} = useTheme();
+    const {isTabletOrSmaller} = useScreenSize();
     const [valueRanger, setValueRanger] = React.useState(min);
     const [minSlider, setMinSlider] = React.useState(min);
     const [maxSlider, setMaxSlider] = React.useState(max);
@@ -186,7 +187,7 @@ const Slider: React.FC<SliderProps> = ({
             <Tooltip
                 description={Array.isArray(steps) ? steps[valueRanger].toString() : valueRanger.toString()}
                 fullWidth
-                width={42}
+                width={isTabletOrSmaller ? 42 : 45}
                 targetLabel=""
                 changedPosition={setNewValue()}
                 textAlign="center"

@@ -137,3 +137,39 @@ test('change input value with array steps and show on slider', () => {
     expect(tooltip).toBeInTheDocument();
     expect(slider).toHaveValue('3');
 });
+
+test('change input value with invalid value', () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Slider field steps={10} invalidText="Invalid" />
+        </ThemeContextProvider>
+    );
+
+    const field = screen.getByRole('textbox');
+
+    fireEvent.change(field, {target: {value: 16}});
+
+    const slider = screen.getByRole('slider');
+    fireEvent.focus(slider);
+
+    const tooltip = screen.getByText(/10/);
+    const text = screen.getByText(/invalid/im);
+
+    expect(tooltip).toBeInTheDocument();
+    expect(text).toBeInTheDocument();
+    expect(slider).toHaveValue('10');
+});
+
+test('disabled slider and input', () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Slider field disabled />
+        </ThemeContextProvider>
+    );
+
+    const field = screen.getByRole('textbox');
+    const slider = screen.getByRole('slider');
+
+    expect(field).toBeDisabled();
+    expect(slider).toBeDisabled();
+});
