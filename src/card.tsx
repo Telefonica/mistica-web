@@ -22,6 +22,7 @@ import {ThemeVariant, useIsInverseVariant} from './theme-variant-context';
 import classNames from 'classnames';
 import {assignInlineVars} from '@vanilla-extract/dynamic';
 import Inline from './inline';
+import {getPrefixedDataAttributes} from './utils/dom';
 
 import type {PressHandler} from './touchable';
 import type {VideoElement, VideoSource} from './video';
@@ -143,38 +144,47 @@ type CardContainerProps = {
     height?: string | number;
     minWidth?: string | number;
     aspectRatio?: AspectRatio | number;
+    dataAttributes?: DataAttributes;
     className?: string;
     'aria-label'?: string;
 };
 
-const CardContainer = ({
-    children,
-    width = '100%',
-    height = '100%',
-    minWidth,
-    aspectRatio,
-    className,
-    'aria-label': ariaLabel,
-}: CardContainerProps): JSX.Element => {
-    const cssAspectRatio = aspectRatioToNumber(aspectRatio);
+const CardContainer = React.forwardRef<HTMLDivElement, CardContainerProps>(
+    (
+        {
+            children,
+            width = '100%',
+            height = '100%',
+            minWidth,
+            aspectRatio,
+            dataAttributes,
+            className,
+            'aria-label': ariaLabel,
+        },
+        ref
+    ): JSX.Element => {
+        const cssAspectRatio = aspectRatioToNumber(aspectRatio);
 
-    return (
-        <section
-            aria-label={ariaLabel}
-            className={classNames(className, styles.cardContainer)}
-            style={{
-                width,
-                height,
-                minWidth,
-                ...(cssAspectRatio
-                    ? assignInlineVars({[styles.vars.aspectRatio]: String(cssAspectRatio)})
-                    : {}),
-            }}
-        >
-            {children}
-        </section>
-    );
-};
+        return (
+            <section
+                {...getPrefixedDataAttributes(dataAttributes)}
+                ref={ref}
+                aria-label={ariaLabel}
+                className={classNames(className, styles.cardContainer)}
+                style={{
+                    width,
+                    height,
+                    minWidth,
+                    ...(cssAspectRatio
+                        ? assignInlineVars({[styles.vars.aspectRatio]: String(cssAspectRatio)})
+                        : {}),
+                }}
+            >
+                {children}
+            </section>
+        );
+    }
+);
 
 const renderBackgroundImage = (src?: string) => {
     // Adding '//:0' to force an error in case src is undefined
@@ -450,24 +460,22 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
         ref
     ) => {
         const isTouchable = touchableProps.href || touchableProps.to || touchableProps.onPress;
-        const overlayStyle = styles.touchableMediaCardOverlay;
 
         return (
-            <CardContainer aria-label={ariaLabel} className={styles.touchableContainer}>
-                <Boxed
-                    className={styles.boxed}
-                    dataAttributes={{'component-name': 'MediaCard', ...dataAttributes}}
-                    ref={ref}
-                    width="100%"
-                    height="100%"
-                >
+            <CardContainer
+                dataAttributes={{'component-name': 'MediaCard', ...dataAttributes}}
+                ref={ref}
+                aria-label={ariaLabel}
+                className={styles.touchableContainer}
+            >
+                <Boxed className={styles.boxed} width="100%" height="100%">
                     <BaseTouchable
                         maybe
                         {...touchableProps}
                         className={styles.touchable}
                         aria-label={ariaLabel}
                     >
-                        {isTouchable && <div className={overlayStyle} />}
+                        {isTouchable && <div className={styles.touchableMediaOverlay} />}
                         <div className={styles.mediaCard}>
                             <MediaBorderRadiusProvider value={false}>{media}</MediaBorderRadiusProvider>
                             <div className={styles.mediaCardContent}>
@@ -490,6 +498,151 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
                     </BaseTouchable>
                 </Boxed>
                 <CardActionsGroup onClose={onClose} actions={actions} type="media" />
+            </CardContainer>
+        );
+    }
+);
+
+export const NakedCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
+    (
+        {
+            media,
+            headline,
+            pretitle,
+            pretitleLinesMax,
+            subtitle,
+            subtitleLinesMax,
+            title,
+            titleLinesMax,
+            description,
+            descriptionLinesMax,
+            extra,
+            actions,
+            button,
+            buttonLink,
+            dataAttributes,
+            'aria-label': ariaLabel,
+            onClose,
+            ...touchableProps
+        },
+        ref
+    ) => {
+        const isTouchable = touchableProps.href || touchableProps.to || touchableProps.onPress;
+
+        return (
+            <CardContainer
+                ref={ref}
+                dataAttributes={{'component-name': 'NakedCard', ...dataAttributes}}
+                aria-label={ariaLabel}
+                className={isTouchable ? styles.touchableContainer : undefined}
+            >
+                <BaseTouchable maybe {...touchableProps} className={styles.touchable} aria-label={ariaLabel}>
+                    <div className={styles.mediaCard}>
+                        <div style={{position: 'relative'}}>
+                            {isTouchable && <div className={styles.touchableMediaOverlay} />}
+                            {media}
+                        </div>
+                        <div className={styles.nakedCardContent}>
+                            <CardContent
+                                headline={headline}
+                                pretitle={pretitle}
+                                pretitleLinesMax={pretitleLinesMax}
+                                title={title}
+                                titleLinesMax={titleLinesMax}
+                                subtitle={subtitle}
+                                subtitleLinesMax={subtitleLinesMax}
+                                description={description}
+                                descriptionLinesMax={descriptionLinesMax}
+                                extra={extra}
+                                button={button}
+                                buttonLink={buttonLink}
+                            />
+                        </div>
+                    </div>
+                </BaseTouchable>
+                <CardActionsGroup onClose={onClose} actions={actions} type="media" />
+            </CardContainer>
+        );
+    }
+);
+
+interface SmallNakedCardBaseProps {
+    media: RendersElement<typeof Image> | RendersElement<typeof Video>;
+    title?: string;
+    titleLinesMax?: number;
+    subtitle?: string;
+    subtitleLinesMax?: number;
+    description?: string;
+    descriptionLinesMax?: number;
+    extra?: React.ReactNode;
+    dataAttributes?: DataAttributes;
+    'aria-label'?: string;
+}
+
+type SmallNakedCardProps = SmallNakedCardBaseProps & BaseCardTouchableProps;
+
+export const SmallNakedCard = React.forwardRef<HTMLDivElement, SmallNakedCardProps>(
+    (
+        {
+            media,
+            title,
+            titleLinesMax,
+            subtitle,
+            subtitleLinesMax,
+            description,
+            descriptionLinesMax,
+            extra,
+            dataAttributes,
+            'aria-label': ariaLabel,
+            ...touchableProps
+        },
+        ref
+    ) => {
+        const isTouchable = touchableProps.href || touchableProps.to || touchableProps.onPress;
+
+        return (
+            <CardContainer
+                ref={ref}
+                dataAttributes={{'component-name': 'SmallNakedCard', ...dataAttributes}}
+                aria-label={ariaLabel}
+                className={isTouchable ? styles.touchableContainer : undefined}
+            >
+                <BaseTouchable maybe {...touchableProps} className={styles.touchable} aria-label={ariaLabel}>
+                    <div className={styles.mediaCard}>
+                        <div style={{position: 'relative'}}>
+                            {isTouchable && <div className={styles.touchableMediaOverlay} />}
+                            {media}
+                        </div>
+                        <div className={styles.nakedCardContent}>
+                            <div>
+                                <Stack space={8}>
+                                    {title && (
+                                        <Text2 truncate={titleLinesMax} as="h3" regular hyphens="auto">
+                                            {title}
+                                        </Text2>
+                                    )}
+                                    {subtitle && (
+                                        <Text2 truncate={subtitleLinesMax} regular as="p" hyphens="auto">
+                                            {subtitle}
+                                        </Text2>
+                                    )}
+                                </Stack>
+                                {description && (
+                                    <Text2
+                                        truncate={descriptionLinesMax}
+                                        regular
+                                        as="p"
+                                        color={vars.colors.textSecondary}
+                                        hyphens="auto"
+                                    >
+                                        {description}
+                                    </Text2>
+                                )}
+                            </div>
+                            {extra && <div>{extra}</div>}
+                        </div>
+                    </div>
+                </BaseTouchable>
             </CardContainer>
         );
     }
@@ -553,7 +706,6 @@ export const DataCard = React.forwardRef<HTMLDivElement, DataCardProps>(
     ) => {
         const hasIcon = !!icon;
         const isTouchable = touchableProps.href || touchableProps.to || touchableProps.onPress;
-        const overlayStyle = styles.touchableCardOverlay;
 
         const finalActions = useTopActions(actions, onClose);
         const topActionsStylesWithoutIcon = {
@@ -563,21 +715,20 @@ export const DataCard = React.forwardRef<HTMLDivElement, DataCardProps>(
         } as const;
 
         return (
-            <CardContainer aria-label={ariaLabel} className={styles.touchableContainer}>
-                <Boxed
-                    className={styles.boxed}
-                    dataAttributes={{'component-name': 'DataCard', ...dataAttributes}}
-                    ref={ref}
-                    width="100%"
-                    height="100%"
-                >
+            <CardContainer
+                dataAttributes={{'component-name': 'DataCard', ...dataAttributes}}
+                ref={ref}
+                aria-label={ariaLabel}
+                className={styles.touchableContainer}
+            >
+                <Boxed className={styles.boxed} width="100%" height="100%">
                     <BaseTouchable
                         maybe
                         {...touchableProps}
                         className={styles.touchable}
                         aria-label={ariaLabel}
                     >
-                        {isTouchable && <div className={overlayStyle} />}
+                        {isTouchable && <div className={styles.touchableCardOverlay} />}
                         <div className={styles.dataCard}>
                             <Inline space={0}>
                                 <Stack space={16}>
@@ -650,15 +801,12 @@ export const SnapCard = React.forwardRef<HTMLDivElement, SnapCardProps>(
         const overlayStyle = isInverse ? styles.touchableCardOverlayInverse : styles.touchableCardOverlay;
 
         return (
-            <CardContainer className={styles.touchableContainer}>
-                <Boxed
-                    className={styles.boxed}
-                    dataAttributes={{'component-name': 'SnapCard', ...dataAttributes}}
-                    ref={ref}
-                    isInverse={isInverse}
-                    width="100%"
-                    height="100%"
-                >
+            <CardContainer
+                dataAttributes={{'component-name': 'SnapCard', ...dataAttributes}}
+                ref={ref}
+                className={styles.touchableContainer}
+            >
+                <Boxed className={styles.boxed} isInverse={isInverse} width="100%" height="100%">
                     <BaseTouchable
                         maybe
                         {...touchableProps}
@@ -826,6 +974,8 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
 
         return (
             <CardContainer
+                dataAttributes={dataAttributes}
+                ref={ref}
                 width={width}
                 height={height}
                 aspectRatio={aspectRatio}
@@ -836,8 +986,6 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
                 <InternalBoxed
                     borderRadius={vars.borderRadii.legacyDisplay}
                     className={styles.boxed}
-                    dataAttributes={dataAttributes}
-                    ref={ref}
                     width="100%"
                     minHeight="100%"
                     isInverse={isInverse}
@@ -1070,12 +1218,13 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
         const {textPresets} = useTheme();
 
         const isTouchable = touchableProps.href || touchableProps.to || touchableProps.onPress;
-        const overlayStyle = styles.touchableCardOverlayMedia;
 
         return (
             <CardContainer
                 width={width}
                 height={height}
+                dataAttributes={{...dataAttributes, 'component-name': 'PosterCard'}}
+                ref={ref}
                 minWidth={POSTER_CARD_MIN_WIDTH}
                 aspectRatio={aspectRatio}
                 aria-label={ariaLabel}
@@ -1084,8 +1233,6 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                 <InternalBoxed
                     borderRadius={vars.borderRadii.legacyDisplay}
                     className={styles.boxed}
-                    dataAttributes={dataAttributes}
-                    ref={ref}
                     width="100%"
                     minHeight="100%"
                     isInverse
@@ -1103,7 +1250,7 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                         className={styles.touchable}
                         aria-label={ariaLabel}
                     >
-                        {isTouchable && <div className={overlayStyle} />}
+                        {isTouchable && <div className={styles.touchableCardOverlayMedia} />}
 
                         <div className={styles.displayCardContainer}>
                             <ThemeVariant isInverse={isExternalInverse}>

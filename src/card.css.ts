@@ -36,13 +36,13 @@ const touchableCardOverlayBase = style({
     backgroundColor: 'transparent',
 });
 
-export const touchableMediaCardOverlay = style([
+export const touchableMediaOverlay = style([
     touchableCardOverlayBase,
     {
         zIndex: 2,
         '@media': {
             [mq.supportsHover]: {
-                transition: 'background-color 0.1s',
+                transition: 'background-color 0.1s ease-in-out',
                 selectors: {
                     [`${touchableContainer}:hover &`]: {
                         backgroundColor: skinVars.colors.backgroundContainerHover,
@@ -62,7 +62,7 @@ export const touchableCardOverlay = style([
         zIndex: 1,
         '@media': {
             [mq.supportsHover]: {
-                transition: 'background-color 0.1s',
+                transition: 'background-color 0.1s ease-in-out',
                 selectors: {
                     [`${touchableContainer}:hover &`]: {
                         backgroundColor: skinVars.colors.backgroundContainerHover,
@@ -82,7 +82,7 @@ export const touchableCardOverlayInverse = style([
         zIndex: 1,
         '@media': {
             [mq.supportsHover]: {
-                transition: 'background-color 0.1s',
+                transition: 'background-color 0.1s ease-in-out',
                 selectors: {
                     [`${touchableContainer}:hover &`]: {
                         backgroundColor: skinVars.colors.backgroundContainerBrandHover,
@@ -102,7 +102,7 @@ export const touchableCardOverlayMedia = style([
         zIndex: 1,
         '@media': {
             [mq.supportsHover]: {
-                transition: 'background-color 0.1s',
+                transition: 'background-color 0.1s ease-in-out',
                 selectors: {
                     [`${touchableContainer}:hover &`]: {
                         backgroundColor: skinVars.colors.coverBackgroundHover,
@@ -142,6 +142,34 @@ export const mediaCardContent = style([
                 paddingRight: 24,
                 paddingTop: 24,
                 paddingBottom: 32,
+            },
+        },
+    },
+]);
+
+export const nakedCardContent = style([
+    sprinkles({
+        display: 'flex',
+        flex: 1,
+        position: 'relative',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        paddingTop: 16,
+    }),
+    {
+        zIndex: 3,
+        '@media': {
+            [mq.supportsHover]: {
+                transition: 'opacity 0.15s ease-in-out',
+                selectors: {
+                    [`${touchableContainer}:hover &`]: {
+                        opacity: 0.8,
+                    },
+                    [`${touchable}:active &`]: {
+                        transitionDuration: '0.1s',
+                        opacity: 0.6,
+                    },
+                },
             },
         },
     },
