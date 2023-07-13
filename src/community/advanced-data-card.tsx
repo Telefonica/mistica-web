@@ -4,12 +4,13 @@ import {sprinkles} from '../sprinkles.css';
 import Stack from '../stack';
 import * as styles from './advanced-data-card.css';
 import Divider from '../divider';
-import {Text2, Text4} from '../text';
+import {Text2, Text} from '../text';
 import {vars} from '../skins/skin-contract.css';
 import Box from '../box';
 import Touchable from '../touchable';
 import classNames from 'classnames';
 import {CardActionsGroup} from '../card';
+import {useTheme} from '../hooks';
 
 import type {CardAction} from '../card';
 import type StackingGroup from '../stacking-group';
@@ -46,6 +47,8 @@ const CardContent: React.FC<CardContentProps> = ({
     description,
     descriptionLinesMax,
 }) => {
+    const {textPresets} = useTheme();
+
     return (
         <>
             <Stack space={4}>
@@ -64,15 +67,18 @@ const CardContent: React.FC<CardContentProps> = ({
                                     {pretitle}
                                 </Text2>
                             )}
-                            <Text4
-                                color={vars.colors.textPrimary}
+                            <Text
+                                mobileSize={18}
+                                mobileLineHeight="24px"
+                                desktopSize={20}
+                                desktopLineHeight="28px"
                                 truncate={titleLinesMax}
-                                weight="regular"
+                                weight={textPresets.cardTitle.weight}
                                 as={titleAs}
                                 hyphens="auto"
                             >
                                 {title}
-                            </Text4>
+                            </Text>
                             <Text2
                                 color={vars.colors.textPrimary}
                                 truncate={subtitleLinesMax}
