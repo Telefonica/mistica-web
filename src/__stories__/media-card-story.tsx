@@ -10,6 +10,8 @@ import {
     Image,
     Tag,
     IconMobileDeviceRegular,
+    Circle,
+    skinVars,
 } from '..';
 import ResponsiveLayout from '../responsive-layout';
 import {Placeholder} from '../placeholder';
@@ -33,6 +35,7 @@ type Args = {
     title: string;
     subtitle: string;
     description: string;
+    icon: React.ReactElement;
     withExtra: boolean;
     actions: 'button' | 'link' | 'button and link' | 'on press' | 'none';
     closable: boolean;
@@ -51,6 +54,7 @@ export const Default: StoryComponent<Args> = ({
     closable,
     withTopAction,
     media,
+    icon,
 }) => {
     const button = actions.includes('button') ? (
         <ButtonPrimary small href="https://google.com">
@@ -79,6 +83,7 @@ export const Default: StoryComponent<Args> = ({
             title={title}
             subtitle={subtitle}
             description={description}
+            icon={icon}
             media={
                 media === 'video' ? (
                     <Video src={VIDEO_SRC} aspectRatio="16:9" dataAttributes={{qsysid: 'video'}} />
@@ -108,6 +113,11 @@ export const Default: StoryComponent<Args> = ({
 
 Default.storyName = 'Media card';
 Default.args = {
+    icon: (
+        <Circle size={50} backgroundColor={skinVars.colors.promoLow}>
+            <IconMobileDeviceRegular />
+        </Circle>
+    ),
     media: 'image',
     headlineType: 'promo',
     headline: 'Priority',
@@ -151,6 +161,11 @@ export const Group: StoryComponent = () => {
                         title="Title"
                         subtitle="Subtitle"
                         description="Description"
+                        icon={
+                            <Circle size={50} backgroundColor={skinVars.colors.promoLow}>
+                                <IconMobileDeviceRegular />
+                            </Circle>
+                        }
                         media={<Image aspectRatio="16:9" src={IMAGE_SRC} />}
                         buttonLink={<ButtonLink href="https://google.com">Link</ButtonLink>}
                     />

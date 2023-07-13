@@ -408,6 +408,7 @@ interface MediaCardBaseProps {
     subtitleLinesMax?: number;
     description?: string;
     descriptionLinesMax?: number;
+    icon?: React.ReactElement;
     extra?: React.ReactNode;
     actions?: Array<CardAction>;
     children?: void;
@@ -443,6 +444,7 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
             button,
             buttonLink,
             dataAttributes,
+            icon,
             'aria-label': ariaLabel,
             onClose,
             ...touchableProps
@@ -486,6 +488,13 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
                                     buttonLink={buttonLink}
                                 />
                             </div>
+                            {icon ? (
+                                <Box className={styles.touchableCardOverlay} paddingX={16} paddingY={16}>
+                                    {icon}
+                                </Box>
+                            ) : (
+                                <Box paddingBottom={actions?.length || onClose ? 64 : 0} />
+                            )}
                         </div>
                     </BaseTouchable>
                 </Boxed>
@@ -494,7 +503,6 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
         );
     }
 );
-
 interface DataCardBaseProps {
     /**
      * Typically a mistica-icons component element
