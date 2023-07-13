@@ -84,7 +84,7 @@ BlockSimple.args = {
 
 type InformationBlockArgs = {
     title: string;
-    description: Array<string>;
+    description: string;
     value: string;
     secondaryValue: string;
 };
@@ -112,7 +112,7 @@ export const BlockInformation: StoryComponent<InformationBlockArgs> = ({
 BlockInformation.storyName = 'InformationBlock';
 BlockInformation.args = {
     title: 'title',
-    description: ['description'],
+    description: 'description',
     value: '20',
     secondaryValue: '20',
 };
@@ -127,7 +127,7 @@ type HighlightedValueBlockArgs = {
     secondaryValue: string;
 
     title: string;
-    description: Array<string>;
+    description: string;
 };
 
 export const BlockHighlightedValue: StoryComponent<HighlightedValueBlockArgs> = ({
@@ -162,7 +162,7 @@ BlockHighlightedValue.args = {
     value: '20',
     secondaryValue: '20',
     title: 'title',
-    description: ['description'],
+    description: 'description',
 };
 BlockHighlightedValue.argTypes = {
     headlineType: {
@@ -174,7 +174,7 @@ BlockHighlightedValue.argTypes = {
 type ValueBlockArgs = {
     title: string;
     value: string;
-    description: Array<string>;
+    description: string;
 };
 
 export const BlockValue: StoryComponent<ValueBlockArgs> = ({title, value, description}) => {
@@ -190,7 +190,7 @@ export const BlockValue: StoryComponent<ValueBlockArgs> = ({title, value, descri
 BlockValue.storyName = 'ValueBlock';
 BlockValue.args = {
     title: 'title',
-    description: ['description'],
+    description: 'description',
     value: '20',
 };
 

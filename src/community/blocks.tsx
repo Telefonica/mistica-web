@@ -16,19 +16,20 @@ import type {ExclusifyUnion} from '../utils/utility-types';
 
 interface BlockContentProps {
     title?: string;
-    description?: Array<string>;
+    description?: Array<string> | string;
 }
 
-const BlockContent: React.FC<BlockContentProps> = ({title, description}) => {
+const BlockContent = ({title, description}: BlockContentProps) => {
+    const descriptionLines = typeof description === 'string' ? [description] : description;
     return (
         <div className={styles.column}>
             <Text3 regular color={vars.colors.textPrimary}>
                 {title}
             </Text3>
 
-            {description &&
-                description.map((paragraph, i) => (
-                    <Text2 regular color={vars.colors.textSecondary} key={i}>
+            {descriptionLines &&
+                descriptionLines.map((paragraph, i) => (
+                    <Text2 regular color={vars.colors.textSecondary} as="p" key={i}>
                         {paragraph}
                     </Text2>
                 ))}
@@ -98,7 +99,7 @@ export const SimpleBlock: React.FC<SimpleBlockProps> = ({image, description, 'ar
 
 interface InformationBlockProps {
     title?: string;
-    description?: Array<string>;
+    description?: Array<string> | string;
     value?: string;
     secondaryValue?: string;
     valueColor?: string;
@@ -142,7 +143,7 @@ interface HighlightedValueBlockProps {
     secondaryValue?: string;
 
     title?: string;
-    description?: Array<string>;
+    description?: Array<string> | string;
 
     valueColor?: string;
     'aria-label'?: string;
@@ -191,7 +192,7 @@ export const HighlightedValueBlock: React.FC<HighlightedValueBlockProps> = ({
 interface ValueBlockProps {
     title?: string;
     value?: string;
-    description?: Array<string>;
+    description?: Array<string> | string;
     valueColor?: string;
     'aria-label'?: string;
 }
