@@ -12,6 +12,7 @@ export const defaultTextPresetsConfig: TextPresetsConfig = {
     link: {weight: 'medium'},
     title1: {weight: 'medium'},
     indicator: {weight: 'medium'},
+    tabsLabel: {weight: 'medium', size: {mobile: 16, desktop: 18}, lineHeight: {mobile: 24, desktop: 24}},
 };
 
 export const defaultBorderRadiiConfig: BorderRadiiConfig = {

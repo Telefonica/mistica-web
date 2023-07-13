@@ -1,12 +1,10 @@
 import * as React from 'react';
 import {ImageContent, ImageError, useMediaBorderRadius} from './image';
-import {AspectRatioElement} from './utils/aspect-ratio-support';
-import {combineRefs} from './utils/common';
-import {getPrefixedDataAttributes} from './utils/dom';
+import {AspectRatioContainer} from './utils/aspect-ratio-support';
 import {isRunningAcceptanceTest} from './utils/platform';
 import * as styles from './video.css';
 import {vars} from './skins/skin-contract.css';
-import {useElementDimensions} from './hooks';
+import {getPrefixedDataAttributes} from './utils/dom';
 
 import type {DataAttributes} from './utils/types';
 
@@ -22,6 +20,11 @@ const transitions: Record<VideoState, Partial<Record<VideoAction, VideoState>>> 
         finishLoad: 'loaded',
     },
 
+    /**
+     * This state represents the scenario when video.load() finishes, but the video isn't played yet. Some browsers don't actually load
+     * the video until someone plays it. In this case, we need to show the poster, because we may not have the first frame to display it.
+     * https://stackoverflow.com/questions/10235919/the-canplay-canplaythrough-events-for-an-html5-video-are-not-called-on-firefox/26430919#26430919
+     */
     loaded: {
         play: 'playing',
         pause: 'paused',
@@ -96,7 +99,14 @@ export type VideoProps = {
     dataAttributes?: DataAttributes;
 };
 
-const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
+export interface VideoElement extends HTMLDivElement {
+    play: () => Promise<void>;
+    pause: () => void;
+    load: () => void;
+    setCurrentTime: (time: number) => void;
+}
+
+const Video = React.forwardRef<VideoElement, VideoProps>(
     (
         {
             src,
@@ -117,8 +127,9 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
         ref
     ) => {
         const [videoStatus, dispatch] = React.useReducer(videoReducer, 'loading');
-        const videoRef = React.useRef<HTMLVideoElement | null>(null);
+        const videoRef = React.useRef<HTMLVideoElement>(null);
         const loadedSource = React.useRef<VideoSource>();
+        const posterRef = React.useRef<HTMLDivElement>(null);
 
         const borderRadiusContext = useMediaBorderRadius();
         const ratio = typeof aspectRatio === 'number' ? aspectRatio : RATIO[aspectRatio];
@@ -134,6 +145,7 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
             if (loadedSource.current !== src) {
                 loadedSource.current = src;
                 const loadingTimeoutId = setTimeout(handleError, loadingTimeout);
+                dispatch('reset');
                 videoRef.current?.load();
 
                 return () => {
@@ -163,11 +175,10 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
         });
 
         const showPoster = videoStatus === 'error' || videoStatus === 'loading' || videoStatus === 'loaded';
-        const {ref: posterRef, width: posterWidth, height: posterHeight} = useElementDimensions();
 
         const video = (
             <video
-                ref={combineRefs(ref, videoRef)}
+                ref={videoRef}
                 playsInline
                 disablePictureInPicture
                 disableRemotePlayback
@@ -175,17 +186,16 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
                 loop={loop}
                 className={styles.video}
                 preload={preload}
-                onLoadStart={() => {
-                    dispatch('reset');
-                }}
                 onError={handleError}
                 onPause={() => {
                     onPause?.();
                     dispatch('pause');
                 }}
-                onPlay={() => {
-                    onPlay?.();
-                    dispatch('play');
+                onTimeUpdate={() => {
+                    if (videoStatus !== 'playing' && videoRef.current?.currentTime !== 0) {
+                        onPlay?.();
+                        dispatch('play');
+                    }
                 }}
                 onCanPlay={() => {
                     if (autoPlay === 'streaming') handleLoadFinish();
@@ -195,14 +205,13 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
                 }}
                 // This transparent pixel fallback avoids showing the ugly "play" image in android webviews
                 poster={TRANSPARENT_PIXEL}
-                {...getPrefixedDataAttributes(dataAttributes)}
                 style={{
                     // For some reason adding this style with classnames doesn't add the border radius in safari
                     borderRadius: !borderRadiusContext ? 0 : vars.borderRadii.container,
                     visibility: showPoster ? 'hidden' : 'visible',
                     position: showPoster || ratio !== 0 ? 'absolute' : 'static',
-                    width: showPoster ? posterWidth : '100%',
-                    height: showPoster ? posterHeight : '100%',
+                    width: '100%',
+                    height: '100%',
                 }}
             >
                 {sources.map(({src, type}, index) => (
@@ -212,35 +221,105 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
         );
 
         const withErrorFallback = !!(ratio !== 0 || (props.width && props.height));
+        const hasError = videoStatus === 'error';
 
-        const posterImage = poster ? (
-            <ImageContent
-                ref={posterRef}
-                aspectRatio={aspectRatio}
-                width={props.width}
-                height={props.height}
-                src={poster}
-            />
-        ) : withErrorFallback ? (
-            <div style={{position: 'absolute', width: '100%', height: '100%'}}>
-                <ImageError
-                    ref={posterRef}
-                    noBorderRadius={!borderRadiusContext}
-                    withIcon={videoStatus === 'error'}
+        const posterImage = React.useMemo(() => {
+            return poster ? (
+                <ImageContent
+                    aspectRatio={aspectRatio}
+                    width={props.width}
+                    height={props.height}
+                    src={poster}
                 />
-            </div>
-        ) : undefined;
+            ) : withErrorFallback ? (
+                <div style={{position: 'absolute', width: '100%', height: '100%'}}>
+                    <ImageError noBorderRadius={!borderRadiusContext} withIcon={hasError} />
+                </div>
+            ) : undefined;
+        }, [
+            aspectRatio,
+            props.height,
+            props.width,
+            borderRadiusContext,
+            hasError,
+            poster,
+            withErrorFallback,
+        ]);
 
         return (
-            <AspectRatioElement
+            <AspectRatioContainer
                 style={{position: 'relative'}}
                 aspectRatio={ratio}
                 width={props.width}
                 height={props.height}
+                dataAttributes={getPrefixedDataAttributes(dataAttributes, 'Video')}
             >
+                <div
+                    style={{
+                        position: 'absolute',
+                        width: '100%',
+                        height: '100%',
+                    }}
+                    /**
+                     * The component forwards this ref instead of the video's one, because sometimes the video
+                     * is hidden (when poster is displayed), which may cause problems if its ref is used by an
+                     * intersection observer (or any logic that depends on visibility of the video)
+                     */
+                    ref={(element) => {
+                        const containerElement = element ? (element as VideoElement) : null;
+
+                        if (containerElement) {
+                            containerElement.play = () => videoRef.current?.play() || Promise.resolve();
+                            containerElement.pause = () => videoRef.current?.pause();
+                            containerElement.load = () => {
+                                /**
+                                 * Hack to avoid a flash when hiding the video and showing the poster.
+                                 *
+                                 * The flash happens because dispatch('reset') triggers a re-render of the component,
+                                 * but it may happen that the call video.load() is called before the re-render takes
+                                 * place (for example, safari sometimes batches updates). In this scenario, the frames
+                                 * of the video are cleared and a transparent background is shown for a few milliseconds
+                                 * (before the poster's width/height are actually set to 100% in the re-render).
+                                 *
+                                 * To avoid this, we set the poster's styles beforehand and we wait some time before
+                                 * triggering the re-render and calling video.load()
+                                 */
+                                if (posterRef.current?.style) {
+                                    posterRef.current.style.width = '100%';
+                                    posterRef.current.style.height = '100%';
+                                }
+                                setTimeout(() => {
+                                    dispatch('reset');
+                                    videoRef.current?.load();
+                                }, 100);
+                            };
+                            containerElement.setCurrentTime = (time: number) => {
+                                if (videoRef.current) {
+                                    videoRef.current.currentTime = time;
+                                }
+                            };
+                        }
+
+                        if (typeof ref === 'function') {
+                            ref(containerElement);
+                        } else if (ref) {
+                            ref.current = containerElement;
+                        }
+                    }}
+                />
                 {video}
-                {showPoster && posterImage}
-            </AspectRatioElement>
+                <div
+                    ref={posterRef}
+                    style={{
+                        position: ratio !== 0 ? 'absolute' : 'static',
+                        width: showPoster ? '100%' : 0,
+                        height: showPoster ? '100%' : 0,
+                        overflow: 'hidden',
+                    }}
+                >
+                    {posterImage}
+                </div>
+            </AspectRatioContainer>
         );
     }
 );

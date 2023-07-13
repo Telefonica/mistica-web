@@ -6,8 +6,19 @@ const DEVICES: Array<Device> = ['MOBILE_IOS', 'MOBILE_ANDROID', 'DESKTOP'];
 
 test.each(DEVICES)('ButtonGroup (%s)', async (device) => {
     const page = await openStoryPage({
-        id: 'components-buttons-button-group--default',
+        id: 'components-buttons-buttongroup--default',
         device,
+    });
+
+    const image = await page.screenshot({fullPage: true});
+    expect(image).toMatchImageSnapshot();
+});
+
+test.each(DEVICES)('ButtonGroup - Long text (%s)', async (device) => {
+    const page = await openStoryPage({
+        id: 'components-buttons-buttongroup--default',
+        device,
+        args: {buttonPrimaryText: 'A very long action text in this button', showButtonLink: false},
     });
 
     const image = await page.screenshot({fullPage: true});

@@ -25,7 +25,7 @@ const usePlayroomState = () => {
         setStore(new Map(store.set(key, actualValue)));
     });
 
-    const resetState = (...keys: string[]) => {
+    const resetState = (...keys: Array<string>) => {
         if (keys.length) {
             keys.forEach((key) => {
                 store.delete(key);

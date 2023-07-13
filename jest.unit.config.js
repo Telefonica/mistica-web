@@ -1,5 +1,6 @@
 module.exports = {
     ...require('./jest.base.config'),
+    testTimeout: 10000,
     displayName: 'unit',
     testEnvironment: 'jsdom',
     testMatch: ['**/__tests__/*-test.tsx'],
