@@ -12,15 +12,11 @@ test.each`
         await openStoryPage({
             id: 'components-primitives-boxed--default',
             device: 'MOBILE_IOS',
+            args: {
+                inverseInside,
+                inverseOutside,
+            },
         });
-
-        if (inverseOutside) {
-            await (await screen.findByText('Inverse outside')).click();
-        }
-
-        if (inverseInside) {
-            await (await screen.findByText('Inverse inside')).click();
-        }
 
         const image = await (await screen.findByTestId('boxed')).screenshot();
         expect(image).toMatchImageSnapshot();
