@@ -20,8 +20,30 @@ import Image from '../image';
 // @ts-expect-error backgroundImage and backgroundVideo can't be used together
 <DisplayMediaCard title="title" backgroundImage="" backgroundVideo="" />;
 
+<PosterCard backgroundImage="background.png" title="title" />;
+<PosterCard backgroundVideo="background.mp4" title="title" />;
+<PosterCard backgroundImage="background.png" title="title" href="/" />;
+<PosterCard backgroundImage="background.png" title="title" to="/" />;
+<PosterCard backgroundImage="background.png" title="title" onPress={() => {}} />;
+<PosterCard
+    backgroundImage="background.png"
+    title="title"
+    onPress={() => {}}
+    trackingEvent={{name: 'do-something'}}
+/>;
+
+// @ts-expect-error onPress and href can't be used together
+<PosterCard title="title" onPress={() => {}} href="/" />;
+// @ts-expect-error onPress and to can't be used together
+<PosterCard title="title" onPress={() => {}} to="/" />;
+// @ts-expect-error href and to can't be used together
+<PosterCard title="title" href="/" to="/" />;
+// @ts-expect-error trackingEvent can't be used if the card is not touchable
+<PosterCard title="title" trackingEvent={{name: 'do-something'}} />;
 // @ts-expect-error backgroundImage and backgroundVideo can't be used together
 <PosterCard title="title" backgroundImage="" backgroundVideo="" />;
+// @ts-expect-error backgroundImage or backgroundVideo are mandatory
+<PosterCard title="title" />;
 
 (isTouchable: boolean) => <SnapCard title="title" href={isTouchable ? '/' : undefined} />;
 (isTouchable: boolean) => <SnapCard title="title" to={isTouchable ? '/' : undefined} />;

@@ -403,13 +403,16 @@ const CardContent: React.FC<CardContentProps> = ({
     );
 };
 
-type BaseCardTouchableProps = {
+type TouchableProps = {
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
 } & ExclusifyUnion<
     | {href: string | undefined; newTab?: boolean}
     | {to: string | undefined; fullPageOnWebView?: boolean}
     | {onPress: PressHandler | undefined}
 >;
+
+type TouchableCard<T> = T & TouchableProps;
+type MaybeTouchableCard<T> = ExclusifyUnion<TouchableCard<T> | T>;
 
 interface MediaCardBaseProps {
     media: RendersElement<typeof Image> | RendersElement<typeof Video>;
@@ -432,7 +435,7 @@ interface MediaCardBaseProps {
 
 type MediaCardProps = MediaCardBaseProps &
     ExclusifyUnion<
-        | BaseCardTouchableProps
+        | TouchableProps
         | {
               button?: RendersNullableElement<typeof ButtonPrimary>;
               buttonLink?: RendersNullableElement<typeof ButtonLink>;
@@ -570,7 +573,7 @@ export const NakedCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
     }
 );
 
-interface SmallNakedCardBaseProps {
+type SmallNakedCardProps = MaybeTouchableCard<{
     media: RendersElement<typeof Image> | RendersElement<typeof Video>;
     title?: string;
     titleLinesMax?: number;
@@ -581,11 +584,7 @@ interface SmallNakedCardBaseProps {
     extra?: React.ReactNode;
     dataAttributes?: DataAttributes;
     'aria-label'?: string;
-}
-
-type SmallNakedCardProps = ExclusifyUnion<
-    (SmallNakedCardBaseProps & BaseCardTouchableProps) | SmallNakedCardBaseProps
->;
+}>;
 
 export const SmallNakedCard = React.forwardRef<HTMLDivElement, SmallNakedCardProps>(
     (
@@ -679,7 +678,7 @@ interface DataCardBaseProps {
 
 type DataCardProps = DataCardBaseProps &
     ExclusifyUnion<
-        | BaseCardTouchableProps
+        | TouchableProps
         | {
               button?: RendersNullableElement<typeof ButtonPrimary>;
               buttonLink?: RendersNullableElement<typeof ButtonLink>;
@@ -770,7 +769,7 @@ export const DataCard = React.forwardRef<HTMLDivElement, DataCardProps>(
     }
 );
 
-interface SnapCardBaseProps {
+type SnapCardProps = MaybeTouchableCard<{
     icon?: React.ReactElement;
     title?: string;
     titleLinesMax?: number;
@@ -782,9 +781,7 @@ interface SnapCardBaseProps {
     extra?: React.ReactNode;
     isInverse?: boolean;
     children?: void;
-}
-
-type SnapCardProps = ExclusifyUnion<(SnapCardBaseProps & BaseCardTouchableProps) | SnapCardBaseProps>;
+}>;
 
 export const SnapCard = React.forwardRef<HTMLDivElement, SnapCardProps>(
     (
@@ -887,7 +884,7 @@ type DisplayMediaCardWithVideoProps = Omit<CommonDisplayCardProps, 'actions' | '
 type DisplayMediaCardProps = DisplayMediaCardBaseProps &
     ExclusifyUnion<DisplayMediaCardWithImageProps | DisplayMediaCardWithVideoProps> &
     ExclusifyUnion<
-        | BaseCardTouchableProps
+        | TouchableProps
         | {
               button?: React.ReactComponentElement<typeof ButtonPrimary>;
               secondaryButton?: React.ReactComponentElement<typeof ButtonSecondary>;
@@ -899,7 +896,7 @@ type DisplayDataCardProps = CommonDisplayCardProps & {
     extra?: React.ReactNode;
     isInverse?: boolean;
 } & ExclusifyUnion<
-        | BaseCardTouchableProps
+        | TouchableProps
         | {
               button?: React.ReactComponentElement<typeof ButtonPrimary>;
               secondaryButton?: React.ReactComponentElement<typeof ButtonSecondary>;
@@ -1165,8 +1162,9 @@ type PosterCardWithVideoProps = Omit<PosterCardBaseProps, 'actions' | 'onClose'>
     backgroundVideoRef?: React.RefObject<VideoElement>;
 };
 
-type PosterCardProps = ExclusifyUnion<PosterCardWithImageProps | PosterCardWithVideoProps> &
-    BaseCardTouchableProps;
+type PosterCardProps = MaybeTouchableCard<
+    ExclusifyUnion<PosterCardWithImageProps | PosterCardWithVideoProps>
+>;
 
 const POSTER_CARD_MIN_WIDTH = 140;
 export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
