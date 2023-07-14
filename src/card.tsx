@@ -536,6 +536,8 @@ export const NakedCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
     ) => {
         const isTouchable = touchableProps.href || touchableProps.to || touchableProps.onPress;
 
+        const isCircularMedia = media && media.type === Image && (media.props as any).circular;
+
         return (
             <CardContainer
                 ref={ref}
@@ -546,7 +548,13 @@ export const NakedCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
                 <BaseTouchable maybe {...touchableProps} className={styles.touchable} aria-label={ariaLabel}>
                     <div className={styles.mediaCard}>
                         <div style={{position: 'relative'}}>
-                            {isTouchable && <div className={styles.touchableMediaOverlay} />}
+                            {isTouchable && (
+                                <div
+                                    className={classNames(styles.touchableMediaOverlay, {
+                                        [styles.circularMediaOverlay]: isCircularMedia,
+                                    })}
+                                />
+                            )}
                             {media}
                         </div>
                         <div className={styles.nakedCardContent}>

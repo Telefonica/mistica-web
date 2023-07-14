@@ -36,10 +36,18 @@ const touchableCardOverlayBase = style({
     backgroundColor: 'transparent',
 });
 
+export const circularMediaOverlay = style({});
+
 export const touchableMediaOverlay = style([
     touchableCardOverlayBase,
     {
         zIndex: 2,
+        borderRadius: skinVars.borderRadii.container,
+        selectors: {
+            [`${circularMediaOverlay}&`]: {
+                borderRadius: '50%',
+            },
+        },
         '@media': {
             [mq.supportsHover]: {
                 transition: 'background-color 0.1s ease-in-out',
