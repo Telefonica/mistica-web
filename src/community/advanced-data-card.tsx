@@ -19,6 +19,14 @@ import type {ButtonPrimary, ButtonLink} from '../button';
 import type {DataAttributes} from '../utils/types';
 import type {RendersNullableElement} from '../utils/renders-element';
 import type Tag from '../tag';
+import type {
+    HighlightedValueBlock,
+    InformationBlock,
+    ProgressBlock,
+    RowBlock,
+    SimpleBlock,
+    ValueBlock,
+} from './blocks';
 
 type CardContentProps = {
     headline?: string | RendersNullableElement<typeof Tag>;
@@ -185,7 +193,14 @@ const CardFooter: React.FC<CardFooterProps> = ({
     );
 };
 
-type AllowedExtra = typeof StackingGroup;
+type AllowedExtra =
+    | typeof StackingGroup
+    | typeof HighlightedValueBlock
+    | typeof InformationBlock
+    | typeof ProgressBlock
+    | typeof RowBlock
+    | typeof SimpleBlock
+    | typeof ValueBlock;
 
 type TextAs = 'h1' | 'h2' | 'h3' | 'h4';
 
