@@ -165,9 +165,6 @@ export const Small: StoryComponent<SmallArgs> = ({
             <Box paddingY={24}>
                 <SmallNakedCard
                     dataAttributes={{testid: 'small-naked-card'}}
-                    title={title}
-                    subtitle={subtitle}
-                    description={description}
                     media={
                         media === 'video' ? (
                             <Video src={VIDEO_SRC} aspectRatio="16:9" dataAttributes={{qsysid: 'video'}} />
@@ -177,6 +174,9 @@ export const Small: StoryComponent<SmallArgs> = ({
                             <Image circular src={IMAGE_SRC} />
                         )
                     }
+                    title={title}
+                    subtitle={subtitle}
+                    description={description}
                     onPress={touchable ? () => null : undefined}
                     extra={withExtra ? <Placeholder /> : undefined}
                 />

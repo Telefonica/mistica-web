@@ -794,6 +794,71 @@ const cardSnippets: Array<Snippet> = [
           }
         />`,
     },
+
+    {
+        group: 'Cards',
+        name: 'NakedCard with Image',
+        code: `
+        <NakedCard
+            media={<Image src="https://picsum.photos/1200/1200" aspectRatio="16:9"/>}
+            headline={<Tag type="promo">Headline</Tag>}
+            pretitle="Pretitle"
+            title="Title"
+            subtitle="Subtitle"
+            description="Description"
+            extra={<Placeholder />}
+            button={
+                <ButtonPrimary small onPress={() => {}}>
+                    Action
+                </ButtonPrimary>
+            }
+            buttonLink={<ButtonLink onPress={() => {}}>Link</ButtonLink>}
+        />`,
+    },
+    {
+        group: 'Cards',
+        name: 'NakedCard with Video',
+        code: `
+        <NakedCard
+            media={<Video src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4" aspectRatio="16:9" />}
+            headline={<Tag color={colors.promo}>headline</Tag>}
+            pretitle="Pretitle"
+            title="Title"
+            subtitle="Subtitle"
+            description="Description"
+            extra={<Placeholder />}
+            button={
+                <ButtonPrimary small onPress={() => {}}>
+                    Action
+                </ButtonPrimary>
+            }
+            buttonLink={<ButtonLink onPress={() => {}}>Link</ButtonLink>}
+        />`,
+    },
+
+    {
+        group: 'Cards',
+        name: 'SmallNakedCard with Image',
+        code: `
+        <SmallNakedCard
+            media={<Image src="https://picsum.photos/1200/1200" aspectRatio="16:9"/>}
+            title="Title"
+            subtitle="Subtitle"
+            description="Description"
+        />`,
+    },
+    {
+        group: 'Cards',
+        name: 'SmallNakedCard with Video',
+        code: `
+        <SmallNakedCard
+            media={<Video src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4" aspectRatio="16:9" />}
+            headline={<Tag color={colors.promo}>headline</Tag>}
+            title="Title"
+            subtitle="Subtitle"
+            description="Description"
+        />`,
+    },
 ];
 
 const titlesSnippets: Array<Snippet> = [

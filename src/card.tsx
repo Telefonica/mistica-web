@@ -403,8 +403,12 @@ const CardContent: React.FC<CardContentProps> = ({
     );
 };
 
-type BaseCardTouchableProps = ExclusifyUnion<
-    {href?: string; newTab?: boolean} | {to?: string; fullPageOnWebView?: boolean} | {onPress?: PressHandler}
+type BaseCardTouchableProps = {
+    trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
+} & ExclusifyUnion<
+    | {href: string | undefined; newTab?: boolean}
+    | {to: string | undefined; fullPageOnWebView?: boolean}
+    | {onPress: PressHandler | undefined}
 >;
 
 interface MediaCardBaseProps {
@@ -579,7 +583,9 @@ interface SmallNakedCardBaseProps {
     'aria-label'?: string;
 }
 
-type SmallNakedCardProps = SmallNakedCardBaseProps & BaseCardTouchableProps;
+type SmallNakedCardProps = ExclusifyUnion<
+    (SmallNakedCardBaseProps & BaseCardTouchableProps) | SmallNakedCardBaseProps
+>;
 
 export const SmallNakedCard = React.forwardRef<HTMLDivElement, SmallNakedCardProps>(
     (
@@ -775,11 +781,10 @@ interface SnapCardBaseProps {
     'aria-label'?: string;
     extra?: React.ReactNode;
     isInverse?: boolean;
-    trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
     children?: void;
 }
 
-type SnapCardProps = SnapCardBaseProps & BaseCardTouchableProps;
+type SnapCardProps = ExclusifyUnion<(SnapCardBaseProps & BaseCardTouchableProps) | SnapCardBaseProps>;
 
 export const SnapCard = React.forwardRef<HTMLDivElement, SnapCardProps>(
     (
