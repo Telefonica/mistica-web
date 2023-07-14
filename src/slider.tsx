@@ -44,21 +44,19 @@ const Slider: React.FC<SliderProps> = ({
     const sliderTop = field ? '93%' : '50%';
     const sliderDisabled = React.useMemo(() => disabled && styles.sliderDisabled, [disabled]);
 
-    const setValue = React.useCallback(() => {
-        const newValue = Number((Math.abs(valueRanger - minSlider) * 100) / (maxSlider - minSlider)),
-            newPosition = 10 - newValue * 0.2;
-        return `calc(${newValue}% + (${newPosition}px))`;
-    }, [valueRanger, minSlider, maxSlider]);
-
-    const setNewValue = React.useCallback(() => {
-        if (!sliderRef.current) return;
-        const slider = sliderRef.current.getBoundingClientRect();
-        const newValue = Number((Math.abs(valueRanger - minSlider) * 100) / (maxSlider - minSlider));
-        const multiplyValue = 0.2 + (window.innerWidth - slider.right) / 100 + (slider.left - 0) / 100;
-
-        const newPosition = slider.left - 10 - newValue * multiplyValue;
-        return `calc(${newValue}% + (${newPosition}px))`;
-    }, [valueRanger, minSlider, maxSlider]);
+    const setValue = React.useCallback(
+        (withMultiplyValue = false) => {
+            if (!sliderRef.current) return;
+            const slider = sliderRef.current.getBoundingClientRect();
+            const newValue = Number((Math.abs(valueRanger - minSlider) * 100) / (maxSlider - minSlider)),
+                multiplyValue = 0.2 + (window.innerWidth - slider.right) / 100 + (slider.left - 0) / 100,
+                newPosition = withMultiplyValue
+                    ? slider.left - 10 - newValue * multiplyValue
+                    : 10 - newValue * 0.2;
+            return `calc(${newValue}% + (${newPosition}px))`;
+        },
+        [valueRanger, minSlider, maxSlider]
+    );
 
     const getClosestNumber = React.useCallback(
         (value: number) => {
@@ -182,62 +180,73 @@ const Slider: React.FC<SliderProps> = ({
         }
     }, [steps, max, min, getClosestNumber, value, getValidSliderValue, invalidText, step]);
 
+    const fieldContent = () => {
+        return (
+            <div className={styles.targetContainer}>
+                <div
+                    ref={sliderRef}
+                    style={{opacity, paddingTop: sliderPaddingTop}}
+                    className={styles.rangeSlider}
+                >
+                    <input
+                        disabled={disabled}
+                        style={{top: sliderTop}}
+                        className={classnames(
+                            styles.sliderVariant[isIos ? 'ios' : 'default'],
+                            sliderDisabled
+                        )}
+                        type="range"
+                        min={minSlider}
+                        max={maxSlider}
+                        value={valueRanger}
+                        step={step}
+                        onChange={(e) => handleSlider(+e.target.value)}
+                    />
+
+                    <div
+                        style={{left: setValue(), top: sliderTop}}
+                        className={classnames(styles.sliderThumbVariant[isIos ? 'ios' : 'default'])}
+                    />
+
+                    <div className={styles.progress} style={{width: setValue(), top: sliderTop}} />
+                </div>
+            </div>
+        );
+    };
+
     return (
         <section className={styles.container} aria-label={arialLabel}>
-            <Tooltip
-                description={Array.isArray(steps) ? steps[valueRanger].toString() : valueRanger.toString()}
-                fullWidth
-                width={isTabletOrSmaller ? 42 : 45}
-                targetLabel=""
-                changedPosition={setNewValue()}
-                textAlign="center"
-                position="top"
-                target={
-                    <div className={styles.targetContainer}>
-                        <div
-                            ref={sliderRef}
-                            style={{opacity, paddingTop: sliderPaddingTop}}
-                            className={styles.rangeSlider}
-                        >
-                            <input
-                                disabled={disabled}
-                                style={{top: sliderTop}}
-                                className={classnames(
-                                    styles.sliderVariant[isIos ? 'ios' : 'default'],
-                                    sliderDisabled
-                                )}
-                                type="range"
-                                min={minSlider}
-                                max={maxSlider}
-                                value={valueRanger}
-                                step={step}
-                                onChange={(e) => handleSlider(+e.target.value)}
-                            />
+            {field ? (
+                <div className={styles.container}>
+                    {fieldContent()}
 
-                            <div
-                                style={{left: setValue(), top: sliderTop}}
-                                className={classnames(styles.sliderThumbVariant[isIos ? 'ios' : 'default'])}
-                            />
-
-                            <div className={styles.progress} style={{width: setValue(), top: sliderTop}} />
-                        </div>
+                    <div className={styles.fieldContainer}>
+                        <IntegerField
+                            fullWidth
+                            error={!!error}
+                            disabled={disabled}
+                            value={fieldValue}
+                            helperText={error}
+                            label="Value"
+                            name="Value"
+                            onChange={(e) => handleField(+e.target.value)}
+                            id="sliderField"
+                        />
                     </div>
-                }
-            />
-
-            {field && (
-                <div className={styles.fieldContainer}>
-                    <IntegerField
-                        error={!!error}
-                        disabled={disabled}
-                        value={fieldValue}
-                        helperText={error}
-                        label="Value"
-                        name="Value"
-                        onChange={(e) => handleField(+e.target.value)}
-                        id="sliderField"
-                    />
                 </div>
+            ) : (
+                <Tooltip
+                    description={
+                        Array.isArray(steps) ? steps[valueRanger].toString() : valueRanger.toString()
+                    }
+                    fullWidth
+                    width={isTabletOrSmaller ? 42 : 45}
+                    targetLabel=""
+                    changedPosition={setValue(true)}
+                    textAlign="center"
+                    position="top"
+                    target={fieldContent()}
+                />
             )}
         </section>
     );
