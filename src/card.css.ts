@@ -165,7 +165,7 @@ export const nakedCardContent = style([
                     [`${touchableContainer}:hover &`]: {
                         opacity: 0.8,
                     },
-                    [`${touchable}:active &`]: {
+                    [`${touchableContainer} ${touchable}:active &`]: {
                         transitionDuration: '0.1s',
                         opacity: 0.6,
                     },
