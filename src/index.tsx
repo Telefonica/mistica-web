@@ -68,6 +68,7 @@ export {
     DisplayMediaCard,
     PosterCard,
     NakedCard,
+    SmallNakedCard,
 } from './card';
 export {default as Hero} from './hero';
 export {default as Divider} from './divider';
