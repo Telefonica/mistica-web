@@ -46,6 +46,21 @@ test('NakedCard with extra ', async () => {
     expect(image).toMatchImageSnapshot();
 });
 
+test('NakedCard with circular image ', async () => {
+    await openStoryPage({
+        id: 'components-cards-nakedcard--default',
+        device: 'MOBILE_IOS',
+        args: {
+            media: 'circular image',
+        },
+    });
+
+    const nakedCard = await screen.findByTestId('naked-card');
+    const image = await nakedCard.screenshot({captureBeyondViewport: true});
+
+    expect(image).toMatchImageSnapshot();
+});
+
 test('NakedCard closeable', async () => {
     await openStoryPage({
         id: 'components-cards-nakedcard--default',
@@ -74,6 +89,63 @@ test('NakedCard with top actions', async () => {
 
     const nakedCard = await screen.findByTestId('naked-card');
     const image = await nakedCard.screenshot({captureBeyondViewport: true});
+
+    expect(image).toMatchImageSnapshot();
+});
+
+test.each(TESTABLE_DEVICES)('SmallNakedCard in %s', async (device) => {
+    await openStoryPage({
+        id: 'components-cards-nakedcard--small',
+        device,
+    });
+
+    const smallNakedCard = await screen.findByTestId('small-naked-card');
+    const image = await smallNakedCard.screenshot({captureBeyondViewport: true});
+
+    expect(image).toMatchImageSnapshot();
+});
+
+test.each(TESTABLE_DEVICES)('SmallNakedCard with large fontSize in %s', async (device) => {
+    await openStoryPage({
+        id: 'components-cards-nakedcard--small',
+        device,
+    });
+
+    await setRootFontSize(32);
+
+    const smallNakedCard = await screen.findByTestId('small-naked-card');
+    const image = await smallNakedCard.screenshot({captureBeyondViewport: true});
+
+    expect(image).toMatchImageSnapshot();
+});
+
+test('SmallNakedCard with extra ', async () => {
+    await openStoryPage({
+        id: 'components-cards-nakedcard--small',
+        device: 'MOBILE_IOS',
+        args: {
+            withExtra: true,
+            actions: 'button and link',
+        },
+    });
+
+    const smallNakedCard = await screen.findByTestId('small-naked-card');
+    const image = await smallNakedCard.screenshot({captureBeyondViewport: true});
+
+    expect(image).toMatchImageSnapshot();
+});
+
+test('SmallNakedCard with circular image ', async () => {
+    await openStoryPage({
+        id: 'components-cards-nakedcard--small',
+        device: 'MOBILE_IOS',
+        args: {
+            media: 'circular image',
+        },
+    });
+
+    const smallNakedCard = await screen.findByTestId('small-naked-card');
+    const image = await smallNakedCard.screenshot({captureBeyondViewport: true});
 
     expect(image).toMatchImageSnapshot();
 });
