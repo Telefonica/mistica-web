@@ -2049,6 +2049,11 @@ export default [
         name: 'Image',
         code: `<Image src="https://picsum.photos/1200/1200" aspectRatio="16:9" />`,
     },
+    {
+        group: 'Media',
+        name: 'Image circular',
+        code: `<Image circular src="https://picsum.photos/1200/1200" />`,
+    },
     ...carouselSnippets,
     ...avatarSnippets,
     ...alertSnippets,
