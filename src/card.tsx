@@ -489,7 +489,7 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
                                 />
                             </div>
                             {icon ? (
-                                <Box className={styles.touchableCardOverlay} paddingX={16} paddingY={16}>
+                                <Box className={styles.mediaCardIcon} paddingX={16} paddingY={16}>
                                     {icon}
                                 </Box>
                             ) : (

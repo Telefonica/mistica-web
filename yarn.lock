@@ -5067,7 +5067,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@telefonica/mistica@workspace:.":
+"@telefonica/mistica@^14.17.1, @telefonica/mistica@workspace:.":
   version: 0.0.0-use.local
   resolution: "@telefonica/mistica@workspace:."
   dependencies:
@@ -5098,6 +5098,7 @@ __metadata:
     "@telefonica/acceptance-testing": 2.13.0
     "@telefonica/eslint-config": ^1.6.0
     "@telefonica/libphonenumber": ^2.8.1
+    "@telefonica/mistica": ^14.17.1
     "@telefonica/prettier-config": ^1.1.0
     "@testing-library/jest-dom": ^5.16.5
     "@testing-library/react": ^13.4.0

@@ -143,6 +143,7 @@
         "@juggle/resize-observer": "^3.3.1",
         "@tef-novum/webview-bridge": "^3.8.0",
         "@telefonica/libphonenumber": "^2.8.1",
+        "@telefonica/mistica": "^14.17.1",
         "@vanilla-extract/css": "^1.9.5",
         "@vanilla-extract/dynamic": "^2.0.3",
         "@vanilla-extract/sprinkles": "^1.5.1",

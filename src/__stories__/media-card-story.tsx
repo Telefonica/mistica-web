@@ -17,6 +17,7 @@ import ResponsiveLayout from '../responsive-layout';
 import {Placeholder} from '../placeholder';
 import tennisImg from './images/tennis.jpg';
 import confettiVideo from './videos/confetti.mp4';
+import avatarImg from './images/avatar.jpg';
 
 import type {TagType} from '..';
 
@@ -28,6 +29,7 @@ const VIDEO_SRC = confettiVideo;
 const IMAGE_SRC = tennisImg;
 
 type Args = {
+    asset: 'icon' | 'circle + icon' | 'image' | 'circle + image';
     media: 'image' | 'video';
     headlineType: TagType;
     headline: string;
@@ -35,7 +37,6 @@ type Args = {
     title: string;
     subtitle: string;
     description: string;
-    icon: React.ReactElement;
     withExtra: boolean;
     actions: 'button' | 'link' | 'button and link' | 'on press' | 'none';
     closable: boolean;
@@ -54,8 +55,18 @@ export const Default: StoryComponent<Args> = ({
     closable,
     withTopAction,
     media,
-    icon,
+    asset,
 }) => {
+    let icon;
+    if (asset === 'circle + icon') {
+        icon = (
+            <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
+                <IconMobileDeviceRegular color={skinVars.colors.brand} />
+            </Circle>
+        );
+    } else if (asset === 'circle + image') {
+        icon = <Circle size={40} backgroundImage={avatarImg} />;
+    }
     const button = actions.includes('button') ? (
         <ButtonPrimary small href="https://google.com">
             Action
@@ -113,11 +124,7 @@ export const Default: StoryComponent<Args> = ({
 
 Default.storyName = 'Media card';
 Default.args = {
-    icon: (
-        <Circle size={50} backgroundColor={skinVars.colors.promoLow}>
-            <IconMobileDeviceRegular />
-        </Circle>
-    ),
+    asset: 'icon',
     media: 'image',
     headlineType: 'promo',
     headline: 'Priority',
@@ -131,6 +138,10 @@ Default.args = {
     withTopAction: false,
 };
 Default.argTypes = {
+    asset: {
+        options: ['circle + icon', 'circle + image', 'none'],
+        control: {type: 'select'},
+    },
     media: {
         options: ['image', 'video'],
         control: {type: 'select'},
@@ -161,11 +172,6 @@ export const Group: StoryComponent = () => {
                         title="Title"
                         subtitle="Subtitle"
                         description="Description"
-                        icon={
-                            <Circle size={50} backgroundColor={skinVars.colors.promoLow}>
-                                <IconMobileDeviceRegular />
-                            </Circle>
-                        }
                         media={<Image aspectRatio="16:9" src={IMAGE_SRC} />}
                         buttonLink={<ButtonLink href="https://google.com">Link</ButtonLink>}
                     />
