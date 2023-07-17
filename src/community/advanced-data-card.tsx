@@ -282,7 +282,7 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
                     width="100%"
                     height="100%"
                 >
-                    <div className={styles.dataCard}>
+                    <div className={styles.dataCard} aria-hidden={!!ariaLabel}>
                         <Touchable
                             onPress={onPress}
                             tabIndex={0}
@@ -291,7 +291,6 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
                                 position: 'relative',
                                 height: '100%',
                             })}
-                            role="link"
                             aria-label={ariaLabel}
                         >
                             <div className={onPress ? styles.interaction : ''}>
@@ -300,7 +299,6 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
                                         styles.cardContentStyle,
                                         !hasFooter && !extra ? styles.minHeight : ''
                                     )}
-                                    aria-hidden={!!ariaLabel}
                                 >
                                     <Box paddingTop={8}>
                                         <Stack space={8} className={sprinkles({flex: 1})}>
