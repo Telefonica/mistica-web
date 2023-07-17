@@ -51,12 +51,13 @@ const VivoLogo = ({style}: VivoLogoProps) => {
 
 type ImageErrorProps = {
     noBorderRadius?: boolean;
+    circular?: boolean;
     withIcon?: boolean;
     border?: boolean;
 };
 
 export const ImageError = React.forwardRef<HTMLDivElement, ImageErrorProps>(
-    ({noBorderRadius, withIcon = true, border}, ref) => {
+    ({noBorderRadius, circular, withIcon = true, border}, ref) => {
         const isInverse = useIsInverseVariant();
         const {skinName} = useTheme();
         return (
@@ -72,7 +73,7 @@ export const ImageError = React.forwardRef<HTMLDivElement, ImageErrorProps>(
                         : vars.colors.backgroundSkeleton,
                     boxSizing: 'border-box',
                     border: border ? `1px solid ${vars.colors.borderLow}` : 'none',
-                    borderRadius: noBorderRadius ? undefined : vars.borderRadii.container,
+                    borderRadius: circular ? '50%' : noBorderRadius ? undefined : vars.borderRadii.container,
                 }}
                 ref={ref}
             >
@@ -165,7 +166,7 @@ export const ImageContent = React.forwardRef<HTMLImageElement, ImageProps>(
         const borderRadiusContext = useMediaBorderRadius();
         const border = props.border ? `1px solid ${vars.colors.borderLow}` : 'none';
         const noBorderSetting = noBorderRadius ?? !borderRadiusContext;
-        const [isError, setIsError] = React.useState(false);
+        const [isError, setIsError] = React.useState(!src);
         const [isLoading, setIsLoading] = React.useState(true);
         const [hideLoadingFallback, setHideLoadingFallback] = React.useState(false);
 
@@ -249,7 +250,11 @@ export const ImageContent = React.forwardRef<HTMLImageElement, ImageProps>(
                             zIndex: 1,
                         }}
                     >
-                        <ImageError noBorderRadius={noBorderSetting} border={props.border} />
+                        <ImageError
+                            circular={props.circular}
+                            noBorderRadius={noBorderSetting}
+                            border={props.border}
+                        />
                     </div>
                 )}
                 {!isError && img}
