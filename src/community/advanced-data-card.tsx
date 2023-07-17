@@ -97,20 +97,19 @@ const CardContent: React.FC<CardContentProps> = ({
                                 {subtitle}
                             </Text2>
                         </Stack>
+                        {description && (
+                            <Text2
+                                truncate={descriptionLinesMax}
+                                as="p"
+                                regular
+                                color={vars.colors.textSecondary}
+                                hyphens="auto"
+                            >
+                                {description}
+                            </Text2>
+                        )}
                     </Stack>
                 </header>
-
-                {description && (
-                    <Text2
-                        truncate={descriptionLinesMax}
-                        as="p"
-                        regular
-                        color={vars.colors.textSecondary}
-                        hyphens="auto"
-                    >
-                        {description}
-                    </Text2>
-                )}
             </Stack>
         </>
     );
@@ -271,7 +270,6 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
 
         return (
             <section
-                aria-label={ariaLabel}
                 className={sprinkles({
                     position: 'relative',
                     height: '100%',
@@ -293,6 +291,8 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
                                 position: 'relative',
                                 height: '100%',
                             })}
+                            role="link"
+                            aria-label={ariaLabel}
                         >
                             <div className={onPress ? styles.interaction : ''}>
                                 <div
@@ -300,6 +300,7 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
                                         styles.cardContentStyle,
                                         !hasFooter && !extra ? styles.minHeight : ''
                                     )}
+                                    aria-hidden={!!ariaLabel}
                                 >
                                     <Box paddingTop={8}>
                                         <Stack space={8} className={sprinkles({flex: 1})}>
