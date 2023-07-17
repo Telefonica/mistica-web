@@ -282,7 +282,7 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
                     width="100%"
                     height="100%"
                 >
-                    <div className={styles.dataCard} aria-hidden={!!ariaLabel}>
+                    <div className={styles.dataCard}>
                         <Touchable
                             onPress={onPress}
                             tabIndex={0}
