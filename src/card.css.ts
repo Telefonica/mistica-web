@@ -165,7 +165,6 @@ export const nakedCardContent = style([
         paddingTop: 16,
     }),
     {
-        zIndex: 3,
         '@media': {
             [mq.supportsHover]: {
                 transition: 'opacity 0.15s ease-in-out',
