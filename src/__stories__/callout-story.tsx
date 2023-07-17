@@ -1,15 +1,5 @@
 import * as React from 'react';
-import {
-    Callout,
-    ButtonPrimary,
-    ButtonLink,
-    IconBoxLight,
-    skinVars,
-    ThemeVariant,
-    ResponsiveLayout,
-    Box,
-    ButtonSecondary,
-} from '..';
+import {Callout, ButtonPrimary, ButtonLink, IconBoxLight, ResponsiveLayout, Box, ButtonSecondary} from '..';
 
 export default {
     title: 'Components/Callout',
@@ -19,6 +9,7 @@ export default {
             control: {type: 'select'},
         },
     },
+    parameters: {fullScreen: true},
 };
 
 type Args = {
@@ -55,28 +46,20 @@ export const Default: StoryComponent<Args> = ({
     ) : undefined;
 
     return (
-        <ThemeVariant isInverse={isOverInverse}>
-            <div
-                style={{
-                    background: isOverInverse ? skinVars.colors.backgroundBrand : skinVars.colors.background,
-                }}
-            >
-                <ResponsiveLayout>
-                    <Box paddingY={24}>
-                        <Callout
-                            icon={withIcon ? <IconBoxLight /> : undefined}
-                            onClose={isClosable ? () => {} : undefined}
-                            title={title}
-                            description={description}
-                            button={button}
-                            secondaryButton={secondaryButton}
-                            buttonLink={buttonLink}
-                            aria-label="Callout label"
-                        />
-                    </Box>
-                </ResponsiveLayout>
-            </div>
-        </ThemeVariant>
+        <ResponsiveLayout isInverse={isOverInverse}>
+            <Box paddingY={24}>
+                <Callout
+                    icon={withIcon ? <IconBoxLight /> : undefined}
+                    onClose={isClosable ? () => {} : undefined}
+                    title={title}
+                    description={description}
+                    button={button}
+                    secondaryButton={secondaryButton}
+                    buttonLink={buttonLink}
+                    aria-label="Callout label"
+                />
+            </Box>
+        </ResponsiveLayout>
     );
 };
 
