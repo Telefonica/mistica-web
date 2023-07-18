@@ -37,6 +37,18 @@ test('Header vertical extra in desktop', async () => {
     expect(image).toMatchImageSnapshot();
 });
 
+test('Header small', async () => {
+    await openStoryPage({
+        id: 'components-headers-header--default',
+        device: 'MOBILE_IOS',
+        args: {small: true},
+    });
+
+    const story = await screen.findByTestId('header-layout');
+    const image = await story.screenshot();
+    expect(image).toMatchImageSnapshot();
+});
+
 test.each(DEVICES)('HeaderLayout without paddingY', async (device) => {
     await openStoryPage({
         id: 'components-headers-header--default',
