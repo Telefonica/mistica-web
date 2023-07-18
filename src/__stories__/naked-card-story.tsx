@@ -85,7 +85,7 @@ export const Default: StoryComponent<Args> = ({
                     description={description}
                     media={
                         media === 'video' ? (
-                            <Video src={VIDEO_SRC} aspectRatio="16:9" dataAttributes={{qsysid: 'video'}} />
+                            <Video src={VIDEO_SRC} aspectRatio="16:9" />
                         ) : media === 'image' ? (
                             <Image aspectRatio="16:9" src={IMAGE_SRC} />
                         ) : (
@@ -144,7 +144,7 @@ Default.argTypes = {
 };
 
 type SmallArgs = {
-    media: 'image' | 'circular image' | 'video';
+    media: 'image' | 'circular image';
     title: string;
     subtitle: string;
     description: string;
@@ -166,9 +166,7 @@ export const Small: StoryComponent<SmallArgs> = ({
                 <SmallNakedCard
                     dataAttributes={{testid: 'small-naked-card'}}
                     media={
-                        media === 'video' ? (
-                            <Video src={VIDEO_SRC} aspectRatio="16:9" dataAttributes={{qsysid: 'video'}} />
-                        ) : media === 'image' ? (
+                        media === 'image' ? (
                             <Image aspectRatio="16:9" src={IMAGE_SRC} />
                         ) : (
                             <Image circular src={IMAGE_SRC} />
@@ -196,7 +194,7 @@ Small.args = {
 };
 Small.argTypes = {
     media: {
-        options: ['image', 'circular image', 'video'],
+        options: ['image', 'circular image'],
         control: {type: 'select'},
     },
 };
