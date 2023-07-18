@@ -1862,13 +1862,81 @@ const advancedDataCardSnippets = [
     {
         name: 'Advanced Data Card',
         code: `
-          <AdvancedDataCard smallSlotSpace={true} 
-            title="title"
-            subtitle="subtitle"
-            description="description"
-            button={<ButtonPrimary small onPress={() => {}}>Action</ButtonPrimary>}
-          />
-  `,
+        <AdvancedDataCard
+          headline={
+            <Tag type="promo" Icon={IconStarFilled}>
+              Promo
+            </Tag>
+          }
+          smallSlotSpace={true}
+          title="title"
+          titleAs="h2"
+          subtitle="subtitle"
+          pretitle="pretitle"
+          pretitleAs="h4"
+          description="description"
+          extra={[
+            <RowBlock title="RowBlock" description="description" />,
+            <SimpleBlock
+              image={
+                <Image src="https://source.unsplash.com/600x600/?face" height={40} />
+              }
+              description="SimpleBlock"
+            />,
+            <InformationBlock
+              title="InformationBlock"
+              description="description"
+              value="20"
+              secondaryValue="20"
+            />,
+            <HighlightedValueBlock
+              headline={
+                <Tag type="promo" Icon={IconStarFilled}>
+                  Promo
+                </Tag>
+              }
+              mainHeading={{ text: "text", value: "20" }}
+              secondHeading={{ text: "text", value: "20" }}
+              title="HighlightedValueBlock"
+              description="description"
+            />,
+            <ValueBlock title="ValueBlock" description="description" value="20" />,
+            <ProgressBlock
+              title="Progress Block"
+              heading={{
+                value: "20 GB",
+                text: "text",
+              }}
+              progressPercent={20}
+              description="description"
+            />,
+            <StackingGroup maxItems={5} moreItemsStyle={{ type: "circle", size: 64 }}>
+              <Avatar size={64} src="https://source.unsplash.com/600x600/?face" />
+              <Avatar size={64} src="https://source.unsplash.com/600x600/?face" />
+              <Avatar size={64} src="https://source.unsplash.com/600x600/?face" />
+              <Avatar size={64} src="https://source.unsplash.com/600x600/?face" />
+              <Avatar size={64} src="https://source.unsplash.com/600x600/?face" />
+              <Avatar size={64} src="https://source.unsplash.com/600x600/?face" />
+            </StackingGroup>,
+          ]}
+          button={
+            <ButtonPrimary small onPress={() => window.alert("click")}>
+              Action
+            </ButtonPrimary>
+          }
+          buttonLink={
+            <ButtonLink small onPress={() => window.alert("click")}>
+              Action
+            </ButtonLink>
+          }
+          footerImage={
+            <Image src="https://source.unsplash.com/600x600/?face" height={40} />
+          }
+          footerText="footer text"
+          onClose={() => window.alert("close")}
+          onPress={() => window.alert("click")}
+        />
+        `,
         group: 'AdvancedDataCard',
     },
 ];
