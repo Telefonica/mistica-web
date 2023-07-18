@@ -20,6 +20,7 @@ export const touchableContainer = style({});
 
 export const touchable = style({
     display: 'flex',
+    flexDirection: 'column',
     minHeight: '100%',
     width: '100%',
     position: 'relative',
@@ -129,6 +130,7 @@ export const mediaCard = sprinkles({
     flexDirection: 'column',
     height: '100%',
     width: '100%',
+    flex: 1,
 });
 
 export const mediaCardContent = style([
@@ -212,6 +214,7 @@ export const snapCard = style([
         height: '100%',
         flexDirection: 'column',
         justifyContent: 'space-between',
+        width: '100%',
         padding: 16,
         flex: 1,
     }),
