@@ -10,11 +10,14 @@ import {
     Image,
     Tag,
     IconMobileDeviceRegular,
+    Circle,
+    skinVars,
 } from '..';
 import ResponsiveLayout from '../responsive-layout';
 import {Placeholder} from '../placeholder';
 import tennisImg from './images/tennis.jpg';
 import confettiVideo from './videos/confetti.mp4';
+import avatarImg from './images/avatar.jpg'
 
 import type {TagType} from '..';
 
@@ -26,6 +29,7 @@ const VIDEO_SRC = confettiVideo;
 const IMAGE_SRC = tennisImg;
 
 type Args = {
+    asset: 'icon' | 'circle + icon' | 'image' | 'circle + image';
     media: 'image' | 'video';
     headlineType: TagType;
     headline: string;
@@ -51,7 +55,19 @@ export const Default: StoryComponent<Args> = ({
     closable,
     withTopAction,
     media,
+    asset
 }) => {
+    let icon;
+    if(asset === 'circle + icon') {
+        icon = (
+            <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
+                <IconMobileDeviceRegular color={skinVars.colors.brand} />
+            </Circle>
+        );
+    } else if(asset === 'circle + image'){
+        icon = <Circle size={40} backgroundImage={avatarImg} />
+    }
+
     const button = actions.includes('button') ? (
         <ButtonPrimary small href="https://google.com">
             Action
@@ -79,6 +95,7 @@ export const Default: StoryComponent<Args> = ({
             title={title}
             subtitle={subtitle}
             description={description}
+            icon={icon}
             media={
                 media === 'video' ? (
                     <Video src={VIDEO_SRC} aspectRatio="16:9" dataAttributes={{qsysid: 'video'}} />
@@ -108,6 +125,7 @@ export const Default: StoryComponent<Args> = ({
 
 Default.storyName = 'Media card';
 Default.args = {
+    asset: 'icon',
     media: 'image',
     headlineType: 'promo',
     headline: 'Priority',
@@ -121,6 +139,10 @@ Default.args = {
     withTopAction: false,
 };
 Default.argTypes = {
+    asset: {
+        options: ['circle + icon', 'circle + image', 'none'],
+        control: {type: 'select'}
+    },
     media: {
         options: ['image', 'video'],
         control: {type: 'select'},
