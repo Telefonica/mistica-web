@@ -7,7 +7,6 @@ import {
     dialog,
     IconInformationUserLight,
     ButtonLink,
-    Title1,
     Stack,
     skinVars,
     Select,
@@ -16,96 +15,74 @@ import {
 
 export default {
     title: 'Components/Modals',
+    argTypes: {
+        action: {
+            options: ['alert', 'confirm', 'confirm destructive', 'dialog'],
+            control: {type: 'select'},
+        },
+    },
 };
 
-export const Default: StoryComponent = () => {
+type Args = {
+    action: 'alert' | 'confirm' | 'confirm destructive' | 'dialog';
+};
+
+export const Default: StoryComponent<Args> = ({action}) => {
+    const dialogAction = {
+        alert: () =>
+            alert({
+                title: 'Profile updated',
+                message: 'Your changes have been successfully saved',
+                acceptText: 'Ok',
+            }),
+        confirm: () =>
+            confirm({
+                message: 'Are you sure you want to delete "rainy_day.jpg"? You cant undo this action.',
+                title: 'Delete media?',
+            }),
+        'confirm destructive': () =>
+            confirm({
+                title: 'Delete Account',
+                message:
+                    'Deleting your account will remove all of your information from our database. This cannot be undone.',
+                destructive: true,
+                acceptText: 'Delete account',
+            }),
+        dialog: () =>
+            dialog({
+                title: 'Title',
+                subtitle: 'Subtitle',
+                message: 'Message',
+                acceptText: 'Accept terms and conditions',
+                extra: (
+                    <Stack space={16}>
+                        <Text1 regular>Extra content</Text1>
+                        <Select
+                            name="fruits"
+                            value="orange"
+                            label="Select"
+                            options={[
+                                {value: 'orange', text: 'Orange'},
+                                {value: 'banana', text: 'Banana'},
+                            ]}
+                        />
+                    </Stack>
+                ),
+                forceWeb: true,
+                showCancel: true,
+                link: <ButtonLink href="https://google.com">Link</ButtonLink>,
+                icon: <IconInformationUserLight color={skinVars.colors.brand} />,
+            }),
+    };
+
     return (
-        <>
-            <Stack space={32}>
-                <Stack space={8}>
-                    <Title1>Alerts</Title1>
-                    <ButtonLayout>
-                        <ButtonPrimary
-                            onPress={() =>
-                                alert({
-                                    title: 'Profile updated',
-                                    message: 'Your changes have been successfully saved',
-                                    acceptText: 'Ok',
-                                })
-                            }
-                        >
-                            Open one button
-                        </ButtonPrimary>
-                    </ButtonLayout>
-                </Stack>
-                <Stack space={8}>
-                    <Title1>Confirms</Title1>
-                    <ButtonLayout>
-                        <ButtonPrimary
-                            onPress={() =>
-                                confirm({
-                                    message:
-                                        'Are you sure you want to delete "rainy_day.jpg"? You cant undo this action.',
-                                    title: 'Delete media?',
-                                })
-                            }
-                        >
-                            Open two buttons
-                        </ButtonPrimary>
-                    </ButtonLayout>
-                    <ButtonLayout>
-                        <ButtonPrimary
-                            onPress={() =>
-                                confirm({
-                                    title: 'Delete Account',
-                                    message:
-                                        'Deleting your account will remove all of your information from our database. This cannot be undone.',
-                                    destructive: true,
-                                    acceptText: 'Delete account',
-                                })
-                            }
-                        >
-                            Open two buttons destructive
-                        </ButtonPrimary>
-                    </ButtonLayout>
-                </Stack>
-                <Stack space={8}>
-                    <Title1>Dialog</Title1>
-                    <ButtonLayout>
-                        <ButtonPrimary
-                            onPress={() =>
-                                dialog({
-                                    title: 'Title',
-                                    subtitle: 'Subtitle',
-                                    message: 'Message',
-                                    acceptText: 'Accept terms and conditions',
-                                    extra: (
-                                        <Stack space={16}>
-                                            <Text1 regular>Extra content</Text1>
-                                            <Select
-                                                name="fruits"
-                                                value="orange"
-                                                label="Select"
-                                                options={[
-                                                    {value: 'orange', text: 'Orange'},
-                                                    {value: 'banana', text: 'Banana'},
-                                                ]}
-                                            />
-                                        </Stack>
-                                    ),
-                                    forceWeb: true,
-                                    showCancel: true,
-                                    link: <ButtonLink href="https://google.com">Link</ButtonLink>,
-                                    icon: <IconInformationUserLight color={skinVars.colors.brand} />,
-                                })
-                            }
-                        >
-                            Open dialog
-                        </ButtonPrimary>
-                    </ButtonLayout>
-                </Stack>
-            </Stack>
-        </>
+        <ButtonLayout>
+            <ButtonPrimary onPress={dialogAction[action]}>Open</ButtonPrimary>
+        </ButtonLayout>
     );
 };
+
 Default.storyName = 'Modals';
+Default.args = {
+    action: 'alert',
+};
