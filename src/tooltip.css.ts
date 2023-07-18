@@ -135,10 +135,6 @@ export const container = style([
     },
 ]);
 
-export const fullWidth = style({
-    width: '100%',
-});
-
 export const enter = style({
     transform: enterTransform,
 });

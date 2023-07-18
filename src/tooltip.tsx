@@ -17,7 +17,7 @@ import type {DataAttributes} from './utils/types';
 const defaultPositionDesktop = 'bottom';
 const defaultPositionMobile = 'top';
 const arrowSize = 12;
-const minWidth = 40;
+const minWidth = 45;
 const distanceToTarget = 4 + arrowSize;
 const transitionDurationMs = 500;
 const animationMovement = 12;
@@ -106,7 +106,6 @@ type Props = {
     targetLabel: string;
     delay?: boolean;
     dataAttributes?: DataAttributes;
-    fullWidth?: boolean;
     textAlign?: TextAlign;
     changedPosition?: string;
 };
@@ -120,7 +119,6 @@ const Tooltip: React.FC<Props> = ({
     targetLabel,
     delay = true,
     dataAttributes,
-    fullWidth,
     changedPosition,
     ...rest
 }) => {
@@ -311,7 +309,7 @@ const Tooltip: React.FC<Props> = ({
         }
         const tooltipBoundingClientRect = tooltipRef.current.getBoundingClientRect();
 
-        const containerAlign = tooltipBoundingClientRect.width !== minWidth ? 'left' : 'center';
+        const containerAlign = tooltipBoundingClientRect.width >= minWidth ? 'left' : 'center';
 
         return containerAlign;
     };
@@ -341,13 +339,11 @@ const Tooltip: React.FC<Props> = ({
         }
     }, [isVisible, getContainerPosition, position, width]);
 
-    const targetStyle = fullWidth && styles.fullWidth;
-
     return (
         <>
             <div
                 ref={targetRef}
-                className={classnames(styles.wrapper, targetStyle)}
+                className={styles.wrapper}
                 onPointerOver={() => {
                     if (closeTooltipTimeoutId.current) {
                         clearTimeout(closeTooltipTimeoutId.current);
