@@ -1941,6 +1941,94 @@ const advancedDataCardSnippets = [
     },
 ];
 
+const RowBlockSnippets = [
+    {
+        name: 'Row Block',
+        code: `
+          <RowBlock title="title" description="description" />
+      `,
+        group: 'RowBlock',
+    },
+];
+
+const SimpleBlockSnippets = [
+    {
+        name: 'Simple Block',
+        code: `
+        <SimpleBlock
+          image={
+            <Image src="https://source.unsplash.com/600x600/?face" height={40} />
+          }
+          description="description"
+        />
+      `,
+        group: 'SimpleBlock',
+    },
+];
+
+const InformationBlockSnippets = [
+    {
+        name: 'Information Block',
+        code: `
+        <InformationBlock
+          title="title"
+          description="description"
+          value="value"
+          secondaryValue="secondaryValue"
+        />
+      `,
+        group: 'InformationBlock',
+    },
+];
+
+const HighlightedValueBlockSnippets = [
+    {
+        name: 'Highlighted Value Block',
+        code: `
+        <HighlightedValueBlock
+          headline={
+            <Tag type="promo" Icon={IconStarFilled}>
+              Promo
+            </Tag>
+          }
+          mainHeading={{ text: "text", value: "value" }}
+          secondHeading={{ text: "text", value: "value" }}
+          title="title"
+          description="description"
+        />
+      `,
+        group: 'HighlightedValueBlock',
+    },
+];
+
+const ValueBlockSnippets = [
+    {
+        name: 'Value Block',
+        code: `
+        <ValueBlock title="title" description="description" value="value" />
+      `,
+        group: 'ValueBlock',
+    },
+];
+
+const ProgressBlockSnippets = [
+    {
+        name: 'Progress Block',
+        code: `
+      <ProgressBlock
+        title="title"
+        heading={{
+          value: "20 GB",
+          text: "text",
+        }}
+        progressPercent={20}
+        description="description"
+      />
+      `,
+        group: 'ProgressBlock',
+    },
+];
+
 export default [
     ...buttonSnippets,
     ...formSnippets,
@@ -2078,4 +2166,10 @@ export default [
     ...gridSnippets,
     ...stackingGroupSnippets,
     ...advancedDataCardSnippets,
+    ...RowBlockSnippets,
+    ...SimpleBlockSnippets,
+    ...InformationBlockSnippets,
+    ...HighlightedValueBlockSnippets,
+    ...ValueBlockSnippets,
+    ...ProgressBlockSnippets,
 ].sort((s1, s2) => s1.group.localeCompare(s2.group)) as Array<Snippet>;
