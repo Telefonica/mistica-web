@@ -30,6 +30,16 @@ test.each(TESTABLE_DEVICES)('NakedCard with large fontSize in %s', async (device
     expect(image).toMatchImageSnapshot();
 });
 
+test('NakedCard group', async () => {
+    const page = await openStoryPage({
+        id: 'components-cards-nakedcard--group',
+    });
+
+    const image = await page.screenshot({fullPage: true});
+
+    expect(image).toMatchImageSnapshot();
+});
+
 test('NakedCard with extra ', async () => {
     await openStoryPage({
         id: 'components-cards-nakedcard--default',

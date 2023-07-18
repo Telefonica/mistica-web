@@ -9,6 +9,9 @@ import {
     IconMobileDeviceRegular,
     ResponsiveLayout,
     Box,
+    Stack,
+    Text2,
+    Inline,
 } from '..';
 import {Placeholder} from '../placeholder';
 import tennisImg from './images/tennis.jpg';
@@ -198,3 +201,48 @@ Small.argTypes = {
         control: {type: 'select'},
     },
 };
+
+export const Group: StoryComponent = () => {
+    return (
+        <ResponsiveLayout>
+            <Box paddingY={24}>
+                <Stack space={16}>
+                    <Text2 regular>
+                        We can group multiple cards and they adjust to the same height. The card actions are
+                        always fixed on bottom:
+                    </Text2>
+                    <style>{`.group > * {width: 300px}`}</style>
+                    <Inline space={16} className="group">
+                        <NakedCard
+                            headline={<Tag type="promo">Headline</Tag>}
+                            pretitle="Pretitle"
+                            title="Title"
+                            subtitle="Subtitle"
+                            description="Description"
+                            media={<Image aspectRatio="16:9" src={IMAGE_SRC} />}
+                            button={
+                                <ButtonPrimary small href="https://google.com">
+                                    Action
+                                </ButtonPrimary>
+                            }
+                            buttonLink={<ButtonLink href="https://google.com">Link</ButtonLink>}
+                        />
+                        <NakedCard
+                            title="Title"
+                            description="Description"
+                            media={<Image aspectRatio="16:9" src={IMAGE_SRC} />}
+                            button={
+                                <ButtonPrimary small href="https://google.com">
+                                    Action
+                                </ButtonPrimary>
+                            }
+                            buttonLink={<ButtonLink href="https://google.com">Link</ButtonLink>}
+                        />
+                    </Inline>
+                </Stack>
+            </Box>
+        </ResponsiveLayout>
+    );
+};
+
+Group.storyName = 'NakedCard group';
