@@ -10,3 +10,5 @@ export type IconProps = {
     className?: string;
     style?: React.CSSProperties;
 };
+
+export type ByBreakpoint<T> = T | {mobile: T; tablet?: T; desktop: T};

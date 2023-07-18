@@ -4,11 +4,12 @@ import Stack from './stack';
 import {useIsInverseVariant} from './theme-variant-context';
 import ResponsiveLayout from './responsive-layout';
 import GridLayout from './grid-layout';
-import {useScreenSize} from './hooks';
 import OverscrollColor from './overscroll-color-context';
-import {Text8, Text7, Text6, Text3} from './text';
+import {Text8, Text7, Text6, Text3, Text4, Text2} from './text';
 import ButtonGroup from './button-group';
 import {vars} from './skins/skin-contract.css';
+import * as styles from './header.css';
+import {getPrefixedDataAttributes} from './utils/dom';
 
 import type NavigationBreadcrumbs from './navigation-breadcrumbs';
 import type {ButtonPrimary, ButtonSecondary} from './button';
@@ -27,6 +28,7 @@ type HeaderProps = {
     pretitle?: RichText;
     title?: string;
     description?: string;
+    small?: boolean;
     dataAttributes?: DataAttributes;
     /**
      * @deprecated This field is deprecated, please use the extra slot in the HeaderLayout component instead.
@@ -59,6 +61,7 @@ export const Header: React.FC<HeaderProps> = ({
     title,
     description,
     dataAttributes,
+    small = false,
     preamount,
     amount,
     button,
@@ -66,7 +69,6 @@ export const Header: React.FC<HeaderProps> = ({
     isErrorAmount,
     secondaryButton,
 }) => {
-    const {isTabletOrSmaller} = useScreenSize();
     const isInverse = useIsInverseVariant();
 
     const renderRichText = (richText: RichText, baseProps: Omit<TextPresetProps, 'children'>) => {
@@ -86,19 +88,30 @@ export const Header: React.FC<HeaderProps> = ({
     };
 
     return (
-        <Stack space={isTabletOrSmaller ? 24 : 32} dataAttributes={dataAttributes}>
+        <Stack space={{mobile: 24, desktop: 32}} dataAttributes={dataAttributes}>
             {(title || pretitle || description) && (
                 <Box paddingRight={16}>
                     <Stack space={8}>
                         {pretitle && renderRichText(pretitle, {color: vars.colors.textPrimary})}
-                        <Text6 role="heading" aria-level={2}>
-                            {title}
-                        </Text6>
-                        {description && (
-                            <Text3 regular color={vars.colors.textSecondary}>
-                                {description}
-                            </Text3>
+                        {small ? (
+                            <Text4 regular role="heading" aria-level={2}>
+                                {title}
+                            </Text4>
+                        ) : (
+                            <Text6 role="heading" aria-level={2}>
+                                {title}
+                            </Text6>
                         )}
+                        {description &&
+                            (small ? (
+                                <Text2 regular color={vars.colors.textSecondary}>
+                                    {description}
+                                </Text2>
+                            ) : (
+                                <Text3 regular color={vars.colors.textSecondary}>
+                                    {description}
+                                </Text3>
+                            ))}
                     </Stack>
                 </Box>
             )}
@@ -135,11 +148,9 @@ type MainSectionHeaderProps = {
 };
 
 export const MainSectionHeader: React.FC<MainSectionHeaderProps> = ({title, description, button}) => {
-    const {isTabletOrSmaller} = useScreenSize();
-
     return (
         <Stack space={32}>
-            <Stack space={isTabletOrSmaller ? 12 : 16}>
+            <Stack space={{mobile: 12, desktop: 16}}>
                 {title && (
                     <Text7 role="heading" aria-level={1}>
                         {title}
@@ -165,6 +176,7 @@ type HeaderLayoutProps = {
     children?: void;
     dataAttributes?: DataAttributes;
     bleed?: boolean;
+    noPaddingY?: boolean;
 };
 
 export const HeaderLayout: React.FC<HeaderLayoutProps> = ({
@@ -175,81 +187,95 @@ export const HeaderLayout: React.FC<HeaderLayoutProps> = ({
     sideBySideExtraOnDesktop = false,
     dataAttributes,
     bleed = false,
+    noPaddingY = false,
 }) => {
-    const {isTabletOrSmaller} = useScreenSize();
-    const isBleedActivated = bleed && isInverse;
+    const isBleedActivated = bleed && isInverse && extra;
+
+    const mainContent = (
+        <div>
+            {breadcrumbs && <div className={styles.breadcrumbs}>{breadcrumbs}</div>}
+            {header}
+        </div>
+    );
 
     return (
-        <>
-            <ResponsiveLayout
-                isInverse={isInverse}
-                dataAttributes={{'component-name': 'HeaderLayout', ...dataAttributes}}
-            >
+        <div {...getPrefixedDataAttributes({'component-name': 'HeaderLayout', ...dataAttributes})}>
+            <ResponsiveLayout isInverse={isInverse}>
                 <OverscrollColor />
-                {isTabletOrSmaller ? (
-                    <Box paddingTop={header ? 32 : 0} paddingBottom={24}>
-                        <Stack space={24}>
-                            {header}
-                            {!isBleedActivated && extra}
-                        </Stack>
-                    </Box>
-                ) : sideBySideExtraOnDesktop ? (
-                    <Box paddingTop={breadcrumbs ? 16 : 48} paddingBottom={48}>
+                <Box
+                    paddingTop={
+                        noPaddingY
+                            ? 0
+                            : {
+                                  mobile: header ? 32 : 0,
+                                  desktop: breadcrumbs ? 16 : 48,
+                              }
+                    }
+                    paddingBottom={
+                        noPaddingY
+                            ? 0
+                            : {
+                                  mobile: 24,
+                                  desktop: isBleedActivated && !sideBySideExtraOnDesktop ? 32 : 48,
+                              }
+                    }
+                >
+                    {sideBySideExtraOnDesktop ? (
                         <GridLayout
                             template="6+6"
-                            left={
-                                <Stack space={32}>
-                                    {breadcrumbs}
-                                    {header}
-                                </Stack>
+                            left={mainContent}
+                            right={
+                                <div className={isBleedActivated ? styles.hideOnTabletOrSmaller : ''}>
+                                    <Box paddingTop={{mobile: header ? 24 : 0, desktop: 0}}>{extra}</Box>
+                                </div>
                             }
-                            right={extra}
                         />
-                    </Box>
-                ) : (
-                    <Box paddingTop={breadcrumbs ? 16 : 48} paddingBottom={isBleedActivated ? 32 : 48}>
-                        <Stack space={isTabletOrSmaller ? 24 : 32}>
-                            <Stack space={32}>
-                                {breadcrumbs}
-                                {header}
-                            </Stack>
+                    ) : (
+                        <Stack space={header ? {mobile: 24, desktop: 32} : 0}>
+                            {mainContent}
                             {!isBleedActivated && extra}
                         </Stack>
-                    </Box>
-                )}
+                    )}
+                </Box>
             </ResponsiveLayout>
-            {isBleedActivated && extra && (isTabletOrSmaller || !sideBySideExtraOnDesktop) && (
+            {isBleedActivated && (
                 <ResponsiveLayout
+                    className={sideBySideExtraOnDesktop ? styles.hideOnDesktop : ''}
                     backgroundColor={`linear-gradient(to bottom, ${vars.colors.backgroundBrand} 40px, ${vars.colors.background} 0%)`}
                 >
                     {extra}
                 </ResponsiveLayout>
             )}
-        </>
+        </div>
     );
 };
 
 type MainSectionHeaderLayoutProps = {
     isInverse?: boolean;
     children: RendersElement<typeof MainSectionHeader>;
+    dataAttributes?: DataAttributes;
 };
 
 export const MainSectionHeaderLayout: React.FC<MainSectionHeaderLayoutProps> = ({
     isInverse = true,
     children,
+    dataAttributes,
 }) => {
-    const {isTabletOrSmaller} = useScreenSize();
-
     return (
-        <ResponsiveLayout isInverse={isInverse}>
+        <ResponsiveLayout
+            isInverse={isInverse}
+            dataAttributes={{'component-name': 'MainSectionHeaderLayout', ...dataAttributes}}
+        >
             <OverscrollColor />
-            {isTabletOrSmaller ? (
-                <Box paddingTop={12} paddingBottom={24}>
-                    {children}
-                </Box>
-            ) : (
-                <GridLayout template="6+6" left={<Box paddingY={48}>{children}</Box>} right={null} />
-            )}
+            <GridLayout
+                template="6+6"
+                left={
+                    <Box paddingTop={{mobile: 12, desktop: 48}} paddingBottom={{mobile: 24, desktop: 48}}>
+                        {children}
+                    </Box>
+                }
+                right={null}
+            />
         </ResponsiveLayout>
     );
 };
