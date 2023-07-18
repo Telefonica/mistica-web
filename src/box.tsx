@@ -52,10 +52,10 @@ const Box = React.forwardRef<HTMLDivElement, Props>(
             // if this fails, it's because the consumer passed in a value that is not a valid padding size
             // fallback to inline styles in that case.
             paddingStyles = {
-                paddingTop: typeof paddingTop === 'number' ? paddingTop : paddingTop.mobile,
-                paddingBottom: typeof paddingBottom === 'number' ? paddingBottom : paddingBottom.mobile,
-                paddingLeft: typeof paddingLeft === 'number' ? paddingLeft : paddingLeft.mobile,
-                paddingRight: typeof paddingRight === 'number' ? paddingRight : paddingRight.mobile,
+                paddingTop: typeof paddingTop === 'object' ? paddingTop.mobile : paddingTop,
+                paddingBottom: typeof paddingBottom === 'object' ? paddingBottom.mobile : paddingBottom,
+                paddingLeft: typeof paddingLeft === 'object' ? paddingLeft.mobile : paddingLeft,
+                paddingRight: typeof paddingRight === 'object' ? paddingRight.mobile : paddingRight,
             };
         }
 
