@@ -44,15 +44,15 @@ const Slider: React.FC<SliderProps> = ({
     const sliderTop = field ? '93%' : '50%';
     const sliderDisabled = React.useMemo(() => disabled && styles.sliderDisabled, [disabled]);
 
-    const setValue = React.useCallback(
+    const setPosition = React.useCallback(
         (withMultiplyValue = false) => {
             if (!sliderRef.current) return;
             const slider = sliderRef.current.getBoundingClientRect();
-            const newValue = Number((Math.abs(valueRanger - minSlider) * 100) / (maxSlider - minSlider)),
-                multiplyValue = 0.2 + (window.innerWidth - slider.right) / 100 + (slider.left - 0) / 100,
-                newPosition = withMultiplyValue
-                    ? slider.left - 10 - newValue * multiplyValue
-                    : 10 - newValue * 0.2;
+            const newValue = Number((Math.abs(valueRanger - minSlider) * 100) / (maxSlider - minSlider));
+            const multiplyValue = 0.2 + (window.innerWidth - slider.right) / 100 + (slider.left - 0) / 100;
+            const newPosition = withMultiplyValue
+                ? slider.left - 10 - newValue * multiplyValue
+                : 10 - newValue * 0.2;
             return `calc(${newValue}% + (${newPosition}px))`;
         },
         [valueRanger, minSlider, maxSlider]
@@ -204,11 +204,11 @@ const Slider: React.FC<SliderProps> = ({
                     />
 
                     <div
-                        style={{left: setValue(), top: sliderTop}}
+                        style={{left: setPosition(), top: sliderTop}}
                         className={classnames(styles.sliderThumbVariant[isIos ? 'ios' : 'default'])}
                     />
 
-                    <div className={styles.progress} style={{width: setValue(), top: sliderTop}} />
+                    <div className={styles.progress} style={{width: setPosition(), top: sliderTop}} />
                 </div>
             </div>
         );
@@ -242,7 +242,7 @@ const Slider: React.FC<SliderProps> = ({
                     fullWidth
                     width={isTabletOrSmaller ? 42 : 45}
                     targetLabel=""
-                    changedPosition={setValue(true)}
+                    changedPosition={setPosition(true)}
                     textAlign="center"
                     position="top"
                     target={fieldContent()}
