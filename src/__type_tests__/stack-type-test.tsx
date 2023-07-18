@@ -38,8 +38,19 @@ import Stack from '../stack';
     <div>2</div>
 </Stack>;
 
-// @ts-expect-error when using object notation, we only support numeric values
-<Stack space={{mobile: 'between'}}>
+// @ts-expect-error when using object notation, desktop and mobile are required
+<Stack space={{mobile: 8}}>
+    <div>1</div>
+    <div>2</div>
+</Stack>;
+
+<Stack
+    space={{
+        // @ts-expect-error when using object notation, we only support numeric values
+        mobile: 'between',
+        desktop: 8,
+    }}
+>
     <div>1</div>
     <div>2</div>
 </Stack>;
