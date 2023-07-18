@@ -6,6 +6,7 @@ import {mq} from '.';
 export const container = style([
     sprinkles({
         display: 'flex',
+        flex: 1,
     }),
     {
         width: '100%',

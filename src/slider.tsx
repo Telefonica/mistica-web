@@ -222,7 +222,6 @@ const Slider: React.FC<SliderProps> = ({
 
                     <div className={styles.fieldContainer}>
                         <IntegerField
-                            fullWidth
                             error={!!error}
                             disabled={disabled}
                             value={fieldValue}
