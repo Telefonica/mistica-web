@@ -19,7 +19,7 @@ test('Badge - over inverse', async () => {
     await openStoryPage({
         id: 'components-badge--default',
         device: 'MOBILE_IOS',
-        args: {overInverse: true},
+        args: {inverse: true},
     });
 
     const story = await screen.findByTestId('content');
