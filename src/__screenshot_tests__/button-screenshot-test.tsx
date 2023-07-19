@@ -31,7 +31,7 @@ test.each(BUTTONS)('Buttons - %s - inverse', async (button) => {
     await openStoryPage({
         id: `components-buttons--${button.toLowerCase().replace(' ', '-')}`,
         device: 'MOBILE_IOS',
-        args: {isInverse: true},
+        args: {inverse: true},
     });
 
     const story = await screen.findByTestId('content');

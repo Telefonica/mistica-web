@@ -18,7 +18,7 @@ type Args = {
     actions: string;
     withIcon: boolean;
     isClosable: boolean;
-    isOverInverse: boolean;
+    inverse: boolean;
 };
 
 export const Default: StoryComponent<Args> = ({
@@ -27,7 +27,7 @@ export const Default: StoryComponent<Args> = ({
     withIcon,
     actions,
     isClosable,
-    isOverInverse,
+    inverse,
 }) => {
     const button = actions.includes('button') ? (
         <ButtonPrimary small onPress={() => {}}>
@@ -46,7 +46,7 @@ export const Default: StoryComponent<Args> = ({
     ) : undefined;
 
     return (
-        <ResponsiveLayout isInverse={isOverInverse}>
+        <ResponsiveLayout isInverse={inverse}>
             <Box paddingY={24}>
                 <Callout
                     icon={withIcon ? <IconBoxLight /> : undefined}
@@ -71,5 +71,5 @@ Default.args = {
     actions: 'button and link',
     withIcon: true,
     isClosable: true,
-    isOverInverse: false,
+    inverse: false,
 };
