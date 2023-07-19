@@ -20,7 +20,7 @@ test.each(CHIP_OPTIONS)('Chip - %s', async (option) => {
         },
     });
 
-    const story = await screen.findByTestId('chip-story');
+    const story = await screen.findByTestId('chip');
 
     expect(await story.screenshot()).toMatchImageSnapshot();
 });
@@ -33,15 +33,12 @@ test.each`
     ${'multiple'} | ${true}
 `('Chip - $selection selection (inverse = $inverse)', async ({selection, inverse}) => {
     const page = await openStoryPage({
-        id: 'components-chip--default',
+        id: `components-chip--${selection}-selection`,
         device: 'DESKTOP',
-        args: {
-            type: selection + ' selection',
-            inverse,
-        },
+        args: {inverse, withIcon: true},
     });
 
-    const story = await screen.findByTestId('chip-story');
+    const story = await screen.findByTestId(`chip-${selection}-selection`);
 
     expect(await story.screenshot()).toMatchImageSnapshot();
 

@@ -10,11 +10,13 @@ test.each`
     ${'DESKTOP'}    | ${'confirm destructive'}
     ${'MOBILE_IOS'} | ${'dialog'}
     ${'DESKTOP'}    | ${'dialog'}
-`('Dialog, device: $device, action: $action', async ({device, action}) => {
+`('Dialog - device: $device, action: $action', async ({device, action}) => {
+    const type = (action as string).split(' ')[0];
+
     const page = await openStoryPage({
-        id: 'components-modals--default',
+        id: `components-modals--${type}`,
         device,
-        args: {action},
+        args: {destructive: action.includes('destructive')},
     });
 
     await (await screen.findByRole('button')).click();
@@ -25,9 +27,8 @@ test.each`
 
 test('Select options are correctly positioned inside a dialog', async () => {
     const page = await openStoryPage({
-        id: 'components-modals--default',
+        id: 'components-modals--dialog',
         device: 'DESKTOP',
-        args: {action: 'dialog'},
     });
 
     await (await screen.findByRole('button')).click();

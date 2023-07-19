@@ -13,13 +13,13 @@ export default {
 };
 
 type Args = {
-    overInverse: boolean;
+    inverse: boolean;
     value: string;
 };
 
-export const Default: StoryComponent<Args> = ({overInverse, value}) => {
+export const Default: StoryComponent<Args> = ({inverse, value}) => {
     return (
-        <ResponsiveLayout fullWidth isInverse={overInverse}>
+        <ResponsiveLayout fullWidth isInverse={inverse}>
             <Box padding={16} width="fit-content" dataAttributes={{testid: 'content'}}>
                 <Badge value={value !== 'undefined' ? +value : undefined}>
                     <IconButton onPress={() => {}} aria-label="Read notifications">
@@ -33,6 +33,6 @@ export const Default: StoryComponent<Args> = ({overInverse, value}) => {
 
 Default.storyName = 'Badge';
 Default.args = {
-    overInverse: false,
+    inverse: false,
     value: '2',
 };
