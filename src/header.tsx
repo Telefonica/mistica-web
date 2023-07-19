@@ -211,14 +211,10 @@ export const HeaderLayout: React.FC<HeaderLayoutProps> = ({
                                   desktop: breadcrumbs ? 16 : 48,
                               }
                     }
-                    paddingBottom={
-                        noPaddingY
-                            ? 0
-                            : {
-                                  mobile: 24,
-                                  desktop: isBleedActivated && !sideBySideExtraOnDesktop ? 32 : 48,
-                              }
-                    }
+                    paddingBottom={{
+                        mobile: noPaddingY && !isBleedActivated ? 0 : 24,
+                        desktop: isBleedActivated && !sideBySideExtraOnDesktop ? 32 : noPaddingY ? 0 : 48,
+                    }}
                 >
                     {sideBySideExtraOnDesktop ? (
                         <GridLayout

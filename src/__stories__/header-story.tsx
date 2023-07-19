@@ -88,18 +88,19 @@ Default.args = {
     description: 'This is a description',
     small: false,
     isInverse: true,
+    withBreadcrumbs: true,
+    noPaddingY: false,
     withExtraContent: true,
     sideBySideExtraOnDesktop: true,
-    withBreadcrumbs: true,
     bleed: false,
-    noPaddingY: false,
 };
 Default.argTypes = {
-    pretitle: {if: {arg: 'withHeader', value: true}},
-    title: {if: {arg: 'withHeader', value: true}},
-    description: {if: {arg: 'withHeader', value: true}},
-    small: {if: {arg: 'withHeader', value: true}},
-    sideBySideExtraOnDesktop: {if: {arg: 'withExtraContent', value: true}},
+    pretitle: {if: {arg: 'withHeader'}},
+    title: {if: {arg: 'withHeader'}},
+    description: {if: {arg: 'withHeader'}},
+    small: {if: {arg: 'withHeader'}},
+    sideBySideExtraOnDesktop: {if: {arg: 'withExtraContent'}},
+    bleed: {if: {arg: 'withExtraContent'}},
 };
 
 export const RichTexts: StoryComponent = () => {

@@ -49,17 +49,28 @@ test('Header small', async () => {
     expect(image).toMatchImageSnapshot();
 });
 
-test.each(DEVICES)('HeaderLayout without paddingY', async (device) => {
-    await openStoryPage({
-        id: 'components-headers-header--default',
-        device,
-        args: {noPaddingY: true},
-    });
+test.each`
+    device          | bleed    | sideBySideExtraOnDesktop
+    ${'MOBILE_IOS'} | ${true}  | ${false}
+    ${'MOBILE_IOS'} | ${false} | ${false}
+    ${'DESKTOP'}    | ${true}  | ${false}
+    ${'DESKTOP'}    | ${false} | ${false}
+    ${'DESKTOP'}    | ${true}  | ${true}
+    ${'DESKTOP'}    | ${false} | ${true}
+`(
+    'HeaderLayout without paddingY device=$device bleed=$bleed sideBySideExtraOnDesktop=$sideBySideExtraOnDesktop',
+    async ({device, bleed, sideBySideExtraOnDesktop}) => {
+        await openStoryPage({
+            id: 'components-headers-header--default',
+            device,
+            args: {noPaddingY: true, bleed, sideBySideExtraOnDesktop},
+        });
 
-    const story = await screen.findByTestId('header-layout');
-    const image = await story.screenshot();
-    expect(image).toMatchImageSnapshot();
-});
+        const story = await screen.findByTestId('header-layout');
+        const image = await story.screenshot();
+        expect(image).toMatchImageSnapshot();
+    }
+);
 
 test.each(DEVICES)('MainSectionHeader', async (device) => {
     await openStoryPage({
