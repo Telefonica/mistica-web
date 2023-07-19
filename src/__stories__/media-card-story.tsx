@@ -95,7 +95,7 @@ export const Default: StoryComponent<Args> = ({
             title={title}
             subtitle={subtitle}
             description={description}
-            icon={icon}
+            asset={icon}
             media={
                 media === 'video' ? (
                     <Video src={VIDEO_SRC} aspectRatio="16:9" dataAttributes={{qsysid: 'video'}} />

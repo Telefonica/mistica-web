@@ -147,7 +147,7 @@ export const mediaCardContent = style([
     },
 ]);
 
-export const mediaCardIcon = style([
+export const mediaCardAsset = style([
     {
         position: 'absolute',
         zIndex: 1,

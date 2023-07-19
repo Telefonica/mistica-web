@@ -407,7 +407,7 @@ interface MediaCardBaseProps {
     subtitle?: string;
     subtitleLinesMax?: number;
     description?: string;
-    icon?: React.ReactElement
+    asset?: React.ReactElement;
     descriptionLinesMax?: number;
     extra?: React.ReactNode;
     actions?: Array<CardAction>;
@@ -438,7 +438,7 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
             title,
             titleLinesMax,
             description,
-            icon,
+            asset,
             descriptionLinesMax,
             extra,
             actions,
@@ -488,13 +488,13 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
                                     buttonLink={buttonLink}
                                 />
                             </div>
-                           {icon ? (
-                            <Box className={styles.mediaCardIcon} paddingX={16} paddingY={16}>
-                                {icon}
-                            </Box>
-                           ): (
-                            <Box paddingBottom={actions?.length || onClose ? 64 : 0} />
-                           )}
+                            {asset ? (
+                                <Box className={styles.mediaCardAsset} paddingX={16} paddingY={16}>
+                                    {asset}
+                                </Box>
+                            ) : (
+                                <Box paddingBottom={actions?.length || onClose ? 64 : 0} />
+                            )}
                         </div>
                     </BaseTouchable>
                 </Boxed>
