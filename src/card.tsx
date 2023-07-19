@@ -482,7 +482,7 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
                         className={styles.touchable}
                         aria-label={ariaLabel}
                     >
-                        {isTouchable && <div className={styles.touchableMediaOverlay} />}
+                        {isTouchable && <div className={styles.touchableMediaCardOverlay} />}
                         <div className={styles.mediaCard}>
                             <MediaBorderRadiusProvider value={false}>{media}</MediaBorderRadiusProvider>
                             <div className={styles.mediaCardContent}>
@@ -549,7 +549,7 @@ export const NakedCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
                         <div style={{position: 'relative'}}>
                             {isTouchable && (
                                 <div
-                                    className={classNames(styles.touchableMediaOverlay, {
+                                    className={classNames(styles.touchableNakedMediaOverlay, {
                                         [styles.circularMediaOverlay]: isCircularMedia,
                                     })}
                                 />
@@ -625,7 +625,7 @@ export const SmallNakedCard = React.forwardRef<HTMLDivElement, SmallNakedCardPro
                         <div style={{position: 'relative'}}>
                             {isTouchable && (
                                 <div
-                                    className={classNames(styles.touchableMediaOverlay, {
+                                    className={classNames(styles.touchableNakedMediaOverlay, {
                                         [styles.circularMediaOverlay]: isCircularMedia,
                                     })}
                                 />

@@ -37,9 +37,29 @@ const touchableCardOverlayBase = style({
     backgroundColor: 'transparent',
 });
 
+export const touchableMediaCardOverlay = style([
+    touchableCardOverlayBase,
+    {
+        zIndex: 2,
+        '@media': {
+            [mq.supportsHover]: {
+                transition: 'background-color 0.1s ease-in-out',
+                selectors: {
+                    [`${touchableContainer}:hover &`]: {
+                        backgroundColor: skinVars.colors.backgroundContainerHover,
+                    },
+                    [`${touchable}:active &`]: {
+                        backgroundColor: skinVars.colors.backgroundContainerPressed,
+                    },
+                },
+            },
+        },
+    },
+]);
+
 export const circularMediaOverlay = style({});
 
-export const touchableMediaOverlay = style([
+export const touchableNakedMediaOverlay = style([
     touchableCardOverlayBase,
     {
         zIndex: 2,
@@ -54,10 +74,10 @@ export const touchableMediaOverlay = style([
                 transition: 'background-color 0.1s ease-in-out',
                 selectors: {
                     [`${touchableContainer}:hover &`]: {
-                        backgroundColor: skinVars.colors.backgroundContainerHover,
+                        backgroundColor: skinVars.colors.coverBackgroundHover,
                     },
                     [`${touchable}:active &`]: {
-                        backgroundColor: skinVars.colors.backgroundContainerPressed,
+                        backgroundColor: skinVars.colors.coverBackgroundPressed,
                     },
                 },
             },
