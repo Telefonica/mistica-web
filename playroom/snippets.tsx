@@ -1863,12 +1863,6 @@ const advancedDataCardSnippets = [
         name: 'Advanced Data Card',
         code: `
         <AdvancedDataCard
-          headline={
-            <Tag type="promo" Icon={IconStarFilled}>
-              Promo
-            </Tag>
-          }
-          smallSlotSpace={true}
           title="title"
           titleAs="h2"
           subtitle="subtitle"
@@ -1947,7 +1941,7 @@ const RowBlockSnippets = [
         code: `
           <RowBlock title="title" description="description" />
       `,
-        group: 'RowBlock',
+        group: 'Blocks',
     },
 ];
 
@@ -1962,7 +1956,7 @@ const SimpleBlockSnippets = [
           description="description"
         />
       `,
-        group: 'SimpleBlock',
+        group: 'Blocks',
     },
 ];
 
@@ -1977,7 +1971,7 @@ const InformationBlockSnippets = [
           secondaryValue="secondaryValue"
         />
       `,
-        group: 'InformationBlock',
+        group: 'Blocks',
     },
 ];
 
@@ -1997,7 +1991,7 @@ const HighlightedValueBlockSnippets = [
           description="description"
         />
       `,
-        group: 'HighlightedValueBlock',
+        group: 'Blocks',
     },
 ];
 
@@ -2007,7 +2001,7 @@ const ValueBlockSnippets = [
         code: `
         <ValueBlock title="title" description="description" value="value" />
       `,
-        group: 'ValueBlock',
+        group: 'Blocks',
     },
 ];
 
@@ -2025,7 +2019,7 @@ const ProgressBlockSnippets = [
         description="description"
       />
       `,
-        group: 'ProgressBlock',
+        group: 'Blocks',
     },
 ];
 
