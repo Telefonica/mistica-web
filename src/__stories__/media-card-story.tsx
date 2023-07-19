@@ -17,7 +17,7 @@ import ResponsiveLayout from '../responsive-layout';
 import {Placeholder} from '../placeholder';
 import tennisImg from './images/tennis.jpg';
 import confettiVideo from './videos/confetti.mp4';
-import avatarImg from './images/avatar.jpg'
+import avatarImg from './images/avatar.jpg';
 
 import type {TagType} from '..';
 
@@ -55,17 +55,17 @@ export const Default: StoryComponent<Args> = ({
     closable,
     withTopAction,
     media,
-    asset
+    asset,
 }) => {
     let icon;
-    if(asset === 'circle + icon') {
+    if (asset === 'circle + icon') {
         icon = (
             <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
                 <IconMobileDeviceRegular color={skinVars.colors.brand} />
             </Circle>
         );
-    } else if(asset === 'circle + image'){
-        icon = <Circle size={40} backgroundImage={avatarImg} />
+    } else if (asset === 'circle + image') {
+        icon = <Circle size={40} backgroundImage={avatarImg} />;
     }
 
     const button = actions.includes('button') ? (
@@ -141,7 +141,7 @@ Default.args = {
 Default.argTypes = {
     asset: {
         options: ['circle + icon', 'circle + image', 'none'],
-        control: {type: 'select'}
+        control: {type: 'select'},
     },
     media: {
         options: ['image', 'video'],
