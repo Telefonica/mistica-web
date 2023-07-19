@@ -43,6 +43,7 @@ type CardAction = {
     iconColor?: string;
     iconBackground?: string;
     iconBackgroundInverse?: string;
+    disabled?: boolean;
 };
 
 const useTopActions = (actions?: Array<CardAction>, onClose?: () => void) => {
@@ -94,9 +95,10 @@ const CardActionsGroup = ({actions, onClose, type = 'default'}: CardActionsGroup
             }}
         >
             <div className={sprinkles({display: 'flex'})}>
-                {finalActions.map(({onPress, label, Icon, iconSize = 20}, index) =>
+                {finalActions.map(({onPress, label, Icon, iconSize = 20, disabled = false}, index) =>
                     Icon ? (
                         <IconButton
+                            disabled={disabled}
                             size={TOP_ACTION_BUTTON_SIZE}
                             key={index}
                             onPress={onPress}
@@ -221,25 +223,12 @@ const videoReducer = (state: VideoState, action: VideoAction): VideoState =>
 
 const VideoSpinner = ({size, color}: IconProps) => <Spinner size={size} color={color} delay="0" />;
 
-const getVideoActionIcon = (state: VideoState) => {
-    switch (state) {
-        case 'playing':
-        case 'loading':
-            return IconPauseFilled;
-        case 'paused':
-            return IconPlayFilled;
-        case 'loadingTimeout':
-            return VideoSpinner;
-        default:
-            return undefined;
-    }
-};
-
 const useVideoWithControls = (
     videoSrc?: VideoSource,
     poster?: string,
     videoRef?: React.RefObject<VideoElement>
 ) => {
+    const {texts} = useTheme();
     const videoController = React.useRef<VideoElement>(null);
     const [videoStatus, dispatch] = React.useReducer(videoReducer, 'loading');
 
@@ -281,10 +270,32 @@ const useVideoWithControls = (
         }
     };
 
+    const videoAction: CardAction = {
+        Icon: {
+            playing: IconPauseFilled,
+            loading: IconPauseFilled,
+            paused: IconPlayFilled,
+            loadingTimeout: VideoSpinner,
+            error: undefined,
+        }[videoStatus],
+        onPress: onVideoControlPress,
+        label: {
+            playing: texts.pauseIconButtonLabel,
+            loading: texts.pauseIconButtonLabel,
+            paused: texts.playIconButtonLabel,
+            loadingTimeout: '',
+            error: '',
+        }[videoStatus],
+        disabled: !['loading', 'playing', 'paused'].includes(videoStatus),
+        iconSize: videoStatus === 'loadingTimeout' ? 16 : 12,
+        iconColor: vars.colors.inverse,
+        iconBackground: styles.videoAction,
+        iconBackgroundInverse: styles.videoAction,
+    };
+
     return {
         video,
-        videoStatus,
-        onVideoControlPress,
+        videoAction,
     };
 };
 
@@ -791,24 +802,10 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
         ref
     ) => {
         const image = renderBackgroundImage(backgroundImage);
-        const {video, videoStatus, onVideoControlPress} = useVideoWithControls(
-            backgroundVideo,
-            poster,
-            backgroundVideoRef
-        );
+        const {video, videoAction} = useVideoWithControls(backgroundVideo, poster, backgroundVideoRef);
 
         if (backgroundVideo) {
-            actions = [
-                {
-                    Icon: getVideoActionIcon(videoStatus),
-                    onPress: onVideoControlPress,
-                    label: 'Video controls',
-                    iconSize: videoStatus === 'loadingTimeout' ? 16 : 12,
-                    iconColor: vars.colors.inverse,
-                    iconBackground: styles.videoAction,
-                    iconBackgroundInverse: styles.videoAction,
-                },
-            ];
+            actions = [videoAction];
         }
 
         const isExternalInverse = useIsInverseVariant();
@@ -1043,24 +1040,10 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
         ref
     ) => {
         const image = renderBackgroundImage(backgroundImage);
-        const {video, videoStatus, onVideoControlPress} = useVideoWithControls(
-            backgroundVideo,
-            poster,
-            backgroundVideoRef
-        );
+        const {video, videoAction} = useVideoWithControls(backgroundVideo, poster, backgroundVideoRef);
 
         if (backgroundVideo) {
-            actions = [
-                {
-                    Icon: getVideoActionIcon(videoStatus),
-                    onPress: onVideoControlPress,
-                    label: 'Video controls',
-                    iconSize: videoStatus === 'loadingTimeout' ? 16 : 12,
-                    iconColor: vars.colors.inverse,
-                    iconBackground: styles.videoAction,
-                    iconBackgroundInverse: styles.videoAction,
-                },
-            ];
+            actions = [videoAction];
         }
 
         const isExternalInverse = useIsInverseVariant();

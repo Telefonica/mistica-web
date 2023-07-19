@@ -281,11 +281,13 @@ export const cardAction = style([
         transition: 'background-color 0.2s ease-in-out',
         '@media': {
             [mq.supportsHover]: {
-                ':hover': {
-                    background: skinVars.colors.backgroundContainerHover,
-                },
-                ':active': {
-                    background: skinVars.colors.backgroundContainerPressed,
+                selectors: {
+                    ':not(:disabled) > &:hover': {
+                        background: skinVars.colors.backgroundContainerHover,
+                    },
+                    ':not(:disabled) > &:active': {
+                        background: skinVars.colors.backgroundContainerPressed,
+                    },
                 },
             },
         },
@@ -298,11 +300,13 @@ export const cardActionInverse = style([
         transition: 'background-color 0.2s ease-in-out',
         '@media': {
             [mq.supportsHover]: {
-                ':hover': {
-                    background: skinVars.colors.backgroundContainerBrandHover,
-                },
-                ':active': {
-                    background: skinVars.colors.backgroundContainerBrandPressed,
+                selectors: {
+                    ':not(:disabled) > &:hover': {
+                        background: skinVars.colors.backgroundContainerBrandHover,
+                    },
+                    ':not(:disabled) > &:active': {
+                        background: skinVars.colors.backgroundContainerBrandPressed,
+                    },
                 },
             },
         },
@@ -316,11 +320,13 @@ export const cardActionMedia = style([
         transition: 'background-color 0.2s ease-in-out',
         '@media': {
             [mq.supportsHover]: {
-                ':hover': {
-                    backgroundColor: applyAlpha(skinVars.rawColors.inverse, 0.9),
-                },
-                ':active': {
-                    backgroundColor: applyAlpha(skinVars.rawColors.inverse, 1.0),
+                selectors: {
+                    ':not(:disabled) > &:hover': {
+                        backgroundColor: applyAlpha(skinVars.rawColors.inverse, 0.9),
+                    },
+                    ':not(:disabled) > &:active': {
+                        backgroundColor: applyAlpha(skinVars.rawColors.inverse, 1.0),
+                    },
                 },
             },
         },
