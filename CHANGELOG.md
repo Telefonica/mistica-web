@@ -1,3 +1,19 @@
+# [14.18.0](https://github.com/Telefonica/mistica-web/compare/v14.17.1...v14.18.0) (2023-07-20)
+
+
+### Bug Fixes
+
+* **DisplayMediaCard, PosterCard:** add label to video control ([#823](https://github.com/Telefonica/mistica-web/issues/823)) ([dc765ef](https://github.com/Telefonica/mistica-web/commit/dc765efd8906850eed971e894cbc1a0e0ea4c704))
+* **row:** add missing dataAttributes ([#815](https://github.com/Telefonica/mistica-web/issues/815)) ([47e7cab](https://github.com/Telefonica/mistica-web/commit/47e7cab4b3d5fecbd7d9b0633cc343e855356982))
+
+
+### Features
+
+* **AdvancedDataCard:** new community component ([#780](https://github.com/Telefonica/mistica-web/issues/780)) ([2803b9c](https://github.com/Telefonica/mistica-web/commit/2803b9c5f7286cedaba762d6387d6f291b6fbe5e))
+* **Blocks:** new Mistica Community Components ([#770](https://github.com/Telefonica/mistica-web/issues/770)) ([8fc368a](https://github.com/Telefonica/mistica-web/commit/8fc368a66e3df0f24aa3ba5c5e5fe3ddb1c3801f))
+* **Header:** small version, allow removing vertical padding ([#822](https://github.com/Telefonica/mistica-web/issues/822)) ([448387e](https://github.com/Telefonica/mistica-web/commit/448387e4d7b5203983a5b11ac31156de3ef6d05f))
+* **Nakedcard:** new component ([#819](https://github.com/Telefonica/mistica-web/issues/819)) ([688bb8e](https://github.com/Telefonica/mistica-web/commit/688bb8e7dce5f0bc2011aacc0b6aeabf99e261b9))
+
 ## [14.17.1](https://github.com/Telefonica/mistica-web/compare/v14.17.0...v14.17.1) (2023-07-07)
 
 
