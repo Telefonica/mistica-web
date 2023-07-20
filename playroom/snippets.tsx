@@ -472,7 +472,7 @@ const headerSnippets: Array<Snippet> = [
     },
     {
         group: 'Headers',
-        name: 'Basic header layout (white)',
+        name: 'Basic header layout (no inverse)',
         code: `
         <HeaderLayout
             isInverse={false}
@@ -507,7 +507,7 @@ const headerSnippets: Array<Snippet> = [
     },
     {
         group: 'Headers',
-        name: 'Header layout (with breadcrumbs)(white)',
+        name: 'Header layout (with breadcrumbs)(no inverse)',
         code: `
         <HeaderLayout
             isInverse={false}
@@ -541,7 +541,7 @@ const headerSnippets: Array<Snippet> = [
     },
     {
         group: 'Headers',
-        name: 'Main section header layout (white)',
+        name: 'Main section header layout (no inverse)',
         code: `
         <MainSectionHeaderLayout
             isInverse={false}>

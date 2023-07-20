@@ -5,22 +5,19 @@ import type {Device} from '../test-utils';
 const DEVICES: Array<Device> = ['MOBILE_IOS', 'DESKTOP'];
 
 test.each`
-    device          | isInverse | isErrorAmount
-    ${'MOBILE_IOS'} | ${true}   | ${true}
-    ${'MOBILE_IOS'} | ${false}  | ${true}
-    ${'MOBILE_IOS'} | ${false}  | ${false}
-    ${'DESKTOP'}    | ${true}   | ${true}
+    device          | isInverse
+    ${'MOBILE_IOS'} | ${true}
+    ${'MOBILE_IOS'} | ${false}
+    ${'DESKTOP'}    | ${true}
+    ${'DESKTOP'}    | ${false}
 `(
-    'Header in $device isInverse=$isInverse isErrorAmount=$isErrorAmount',
+    'Header in $device isInverse=$isInverse',
     async ({device, isInverse}: {device: Device; isInverse: boolean}) => {
-        const {click} = await openStoryPage({
+        await openStoryPage({
             id: 'components-headers-header--default',
             device,
+            args: {isInverse},
         });
-
-        if (!isInverse) {
-            await click(await screen.findByText('Inverse'));
-        }
 
         const story = await screen.findByTestId('header-layout');
         const image = await story.screenshot();
@@ -29,17 +26,51 @@ test.each`
 );
 
 test('Header vertical extra in desktop', async () => {
-    const {click} = await openStoryPage({
+    await openStoryPage({
         id: 'components-headers-header--default',
         device: 'DESKTOP',
+        args: {sideBySideExtraOnDesktop: false},
     });
-
-    await click(await screen.findByLabelText('Extra content placed on the right in desktop'));
 
     const story = await screen.findByTestId('header-layout');
     const image = await story.screenshot();
     expect(image).toMatchImageSnapshot();
 });
+
+test('Header small', async () => {
+    await openStoryPage({
+        id: 'components-headers-header--default',
+        device: 'MOBILE_IOS',
+        args: {small: true},
+    });
+
+    const story = await screen.findByTestId('header-layout');
+    const image = await story.screenshot();
+    expect(image).toMatchImageSnapshot();
+});
+
+test.each`
+    device          | bleed    | sideBySideExtraOnDesktop
+    ${'MOBILE_IOS'} | ${true}  | ${false}
+    ${'MOBILE_IOS'} | ${false} | ${false}
+    ${'DESKTOP'}    | ${true}  | ${false}
+    ${'DESKTOP'}    | ${false} | ${false}
+    ${'DESKTOP'}    | ${true}  | ${true}
+    ${'DESKTOP'}    | ${false} | ${true}
+`(
+    'HeaderLayout without paddingY device=$device bleed=$bleed sideBySideExtraOnDesktop=$sideBySideExtraOnDesktop',
+    async ({device, bleed, sideBySideExtraOnDesktop}) => {
+        await openStoryPage({
+            id: 'components-headers-header--default',
+            device,
+            args: {noPaddingY: true, bleed, sideBySideExtraOnDesktop},
+        });
+
+        const story = await screen.findByTestId('header-layout');
+        const image = await story.screenshot();
+        expect(image).toMatchImageSnapshot();
+    }
+);
 
 test.each(DEVICES)('MainSectionHeader', async (device) => {
     await openStoryPage({
@@ -81,15 +112,8 @@ test.each(DEVICES)('Header with bleed', async (device) => {
     await openStoryPage({
         id: 'components-headers-header--default',
         device,
+        args: {bleed: true, sideBySideExtraOnDesktop: false},
     });
-
-    const bleedCheckbox = await screen.findByLabelText('Bleed');
-    await bleedCheckbox.click();
-
-    const extraSideBySideCheckbox = await screen.findByLabelText(
-        'Extra content placed on the right in desktop'
-    );
-    await extraSideBySideCheckbox.click();
 
     const story = await screen.findByTestId('header-layout');
 
