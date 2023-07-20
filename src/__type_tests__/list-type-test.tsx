@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {RowList, BoxedRowList, BoxedRow, Row} from '../list';
 
-const v = true;
+const v = true as boolean;
 
 // @ts-expect-error - missing children
 <RowList />;
@@ -22,40 +22,44 @@ const v = true;
 <RowList>
     {/* @ts-expect-error - missing props */}
     <Row />
-
     <Row title="with children">
         {/* @ts-expect-error - children not allowed */}
         <span>error</span>
     </Row>
-
     {/* OK - basic */}
     <Row title="basic" />
-
     {/* OK - to */}
     <Row title="to" to="/to" />
+    <Row title="to" to="/to" trackingEvent={{name: 'something'}} />
     <Row title="to" to="/to" fullPageOnWebView />
     {/* @ts-expect-error - newTab not allowed in to */}
     <Row title="to" to="/to" newTab />
-
     {/* OK - href */}
     <Row title="href" href="/href" />
+    <Row title="href" href="/href" trackingEvent={{name: 'something'}} />
     <Row title="href" href="/href" newTab />
     {/* @ts-expect-error - fullPageOnWebView not allowed in href */}
     <Row title="href" href="/href" fullPageOnWebView />
-
     {/* OK - onPress */}
     <Row title="onPress" onPress={() => {}} />
+    <Row title="onPress" onPress={() => {}} trackingEvent={{name: 'something'}} />
     {/* @ts-expect-error - fullPageOnWebView not allowed in onPress */}
     <Row title="onPress" onPress={() => {}} fullPageOnWebView />
-
     {/* OK - switch */}
     <Row title="switch" switch={{name: 'switch', value: true}} />
-
+    <Row title="switch + onPress" switch={{name: 'switch', value: true}} onPress={() => {}} />
     {/* OK - checkbox */}
     <Row title="checkbox" checkbox={{name: 'checkbox', value: true}} />
-
+    <Row title="checkbox + onPress" checkbox={{name: 'checkbox', value: true}} onPress={() => {}} />
     {/* OK - radio */}
     <Row title="radio" radioValue="radio" />
+    <Row title="radio + onPress" radioValue="radio" onPress={() => {}} />
+    {/* @ts-expect-error - can't use trackingEvent without to/href/onPress */}
+    <Row title="tracking event without to/href/onPress" trackingEvent={{name: 'something'}} />
+
+    <Row title="conditional onPress" onPress={v ? () => {} : undefined} />
+    <Row title="conditional href" href={v ? '' : undefined} />
+    <Row title="conditional to" to={v ? '' : undefined} />
 </RowList>;
 
 <BoxedRowList>
