@@ -250,14 +250,14 @@ const Tooltip: React.FC<Props> = ({
                       )
                     : 0;
 
-            const noSpaceRight =
+            const noRightSpace =
                 targetBoundingClientRect.current.right + tooltipBoundingClientRect.width > window.innerWidth;
 
-            const leftLeft = !width
+            const leftAdjustment = !width
                 ? targetBoundingClientRect.current.left - tooltipBoundingClientRect.width - distanceToTarget
                 : targetBoundingClientRect.current.left - width - distanceToTarget;
 
-            const leftTop = changedPosition
+            const topAdjustment = changedPosition
                 ? changedPosition
                 : window.pageYOffset +
                   targetBoundingClientRect.current.top +
@@ -265,9 +265,11 @@ const Tooltip: React.FC<Props> = ({
 
             const containerPos = {
                 right: {
-                    left: noSpaceRight ? leftLeft : targetBoundingClientRect.current.right + distanceToTarget,
-                    top: noSpaceRight
-                        ? leftTop
+                    left: noRightSpace
+                        ? leftAdjustment
+                        : targetBoundingClientRect.current.right + distanceToTarget,
+                    top: noRightSpace
+                        ? topAdjustment
                         : changedPosition
                         ? changedPosition
                         : window.pageYOffset +
@@ -275,16 +277,16 @@ const Tooltip: React.FC<Props> = ({
                           targetBoundingClientRect.current.height / 2,
                 },
                 left: {
-                    left: leftLeft,
-                    top: leftTop,
+                    left: leftAdjustment,
+                    top: topAdjustment,
                 },
                 top: {
-                    top: noSpaceRight
-                        ? leftTop
+                    top: noRightSpace
+                        ? topAdjustment
                         : window.pageYOffset + targetBoundingClientRect.current.top - distanceToTarget,
 
-                    left: noSpaceRight
-                        ? leftLeft
+                    left: noRightSpace
+                        ? leftAdjustment
                         : changedPosition
                         ? changedPosition
                         : !width
@@ -299,11 +301,11 @@ const Tooltip: React.FC<Props> = ({
                           width / 2,
                 },
                 bottom: {
-                    top: noSpaceRight
-                        ? leftTop
+                    top: noRightSpace
+                        ? topAdjustment
                         : window.pageYOffset + targetBoundingClientRect.current.bottom + distanceToTarget,
-                    left: noSpaceRight
-                        ? leftLeft
+                    left: noRightSpace
+                        ? leftAdjustment
                         : changedPosition
                         ? changedPosition
                         : !width
