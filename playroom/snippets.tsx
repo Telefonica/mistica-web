@@ -472,7 +472,7 @@ const headerSnippets: Array<Snippet> = [
     },
     {
         group: 'Headers',
-        name: 'Basic header layout (white)',
+        name: 'Basic header layout (no inverse)',
         code: `
         <HeaderLayout
             isInverse={false}
@@ -507,7 +507,7 @@ const headerSnippets: Array<Snippet> = [
     },
     {
         group: 'Headers',
-        name: 'Header layout (with breadcrumbs)(white)',
+        name: 'Header layout (with breadcrumbs)(no inverse)',
         code: `
         <HeaderLayout
             isInverse={false}
@@ -541,7 +541,7 @@ const headerSnippets: Array<Snippet> = [
     },
     {
         group: 'Headers',
-        name: 'Main section header layout (white)',
+        name: 'Main section header layout (no inverse)',
         code: `
         <MainSectionHeaderLayout
             isInverse={false}>
@@ -794,6 +794,59 @@ const cardSnippets: Array<Snippet> = [
               Action
             </ButtonPrimary>
           }
+        />`,
+    },
+
+    {
+        group: 'Cards',
+        name: 'NakedCard with Image',
+        code: `
+        <NakedCard
+            media={<Image src="https://picsum.photos/1200/1200" aspectRatio="16:9"/>}
+            headline={<Tag type="promo">Headline</Tag>}
+            pretitle="Pretitle"
+            title="Title"
+            subtitle="Subtitle"
+            description="Description"
+            extra={<Placeholder />}
+            button={
+                <ButtonPrimary small onPress={() => {}}>
+                    Action
+                </ButtonPrimary>
+            }
+            buttonLink={<ButtonLink onPress={() => {}}>Link</ButtonLink>}
+        />`,
+    },
+    {
+        group: 'Cards',
+        name: 'NakedCard with Video',
+        code: `
+        <NakedCard
+            media={<Video src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4" aspectRatio="16:9" />}
+            headline={<Tag color={colors.promo}>headline</Tag>}
+            pretitle="Pretitle"
+            title="Title"
+            subtitle="Subtitle"
+            description="Description"
+            extra={<Placeholder />}
+            button={
+                <ButtonPrimary small onPress={() => {}}>
+                    Action
+                </ButtonPrimary>
+            }
+            buttonLink={<ButtonLink onPress={() => {}}>Link</ButtonLink>}
+        />`,
+    },
+
+    {
+        group: 'Cards',
+        name: 'SmallNakedCard',
+        code: `
+        <SmallNakedCard
+            media={<Image src="https://picsum.photos/1200/1200" aspectRatio="16:9"/>}
+            title="Title"
+            subtitle="Subtitle"
+            description="Description"
         />`,
     },
 ];
@@ -1860,6 +1913,171 @@ const stackingGroupSnippets = [
     },
 ];
 
+const advancedDataCardSnippets = [
+    {
+        name: 'Advanced Data Card',
+        code: `
+        <AdvancedDataCard
+          title="title"
+          titleAs="h2"
+          subtitle="subtitle"
+          pretitle="pretitle"
+          pretitleAs="h4"
+          description="description"
+          extra={[
+            <RowBlock title="RowBlock" description="description" />,
+            <SimpleBlock
+              image={
+                <Image src="https://source.unsplash.com/600x600/?face" height={40} />
+              }
+              description="SimpleBlock"
+            />,
+            <InformationBlock
+              title="InformationBlock"
+              description="description"
+              value="20"
+              secondaryValue="20"
+            />,
+            <HighlightedValueBlock
+              headline={
+                <Tag type="promo" Icon={IconStarFilled}>
+                  Promo
+                </Tag>
+              }
+              mainHeading={{ text: "text", value: "20" }}
+              secondHeading={{ text: "text", value: "20" }}
+              title="HighlightedValueBlock"
+              description="description"
+            />,
+            <ValueBlock title="ValueBlock" description="description" value="20" />,
+            <ProgressBlock
+              title="Progress Block"
+              heading={{
+                value: "20 GB",
+                text: "text",
+              }}
+              progressPercent={20}
+              description="description"
+            />,
+            <StackingGroup maxItems={5} moreItemsStyle={{ type: "circle", size: 64 }}>
+              <Avatar size={64} src="https://source.unsplash.com/600x600/?face" />
+              <Avatar size={64} src="https://source.unsplash.com/600x600/?face" />
+              <Avatar size={64} src="https://source.unsplash.com/600x600/?face" />
+              <Avatar size={64} src="https://source.unsplash.com/600x600/?face" />
+              <Avatar size={64} src="https://source.unsplash.com/600x600/?face" />
+              <Avatar size={64} src="https://source.unsplash.com/600x600/?face" />
+            </StackingGroup>,
+          ]}
+          button={
+            <ButtonPrimary small onPress={() => window.alert("click")}>
+              Action
+            </ButtonPrimary>
+          }
+          buttonLink={
+            <ButtonLink small onPress={() => window.alert("click")}>
+              Action
+            </ButtonLink>
+          }
+          footerImage={
+            <Image src="https://source.unsplash.com/600x600/?face" height={40} />
+          }
+          footerText="footer text"
+          onClose={() => window.alert("close")}
+          onPress={() => window.alert("click")}
+        />
+        `,
+        group: 'AdvancedDataCard',
+    },
+];
+
+const RowBlockSnippets = [
+    {
+        name: 'Row Block',
+        code: `
+          <RowBlock title="title" description="description" />
+      `,
+        group: 'Blocks',
+    },
+];
+
+const SimpleBlockSnippets = [
+    {
+        name: 'Simple Block',
+        code: `
+        <SimpleBlock
+          image={
+            <Image src="https://source.unsplash.com/600x600/?face" height={40} />
+          }
+          description="description"
+        />
+      `,
+        group: 'Blocks',
+    },
+];
+
+const InformationBlockSnippets = [
+    {
+        name: 'Information Block',
+        code: `
+        <InformationBlock
+          title="title"
+          description="description"
+          value="value"
+          secondaryValue="secondaryValue"
+        />
+      `,
+        group: 'Blocks',
+    },
+];
+
+const HighlightedValueBlockSnippets = [
+    {
+        name: 'Highlighted Value Block',
+        code: `
+        <HighlightedValueBlock
+          headline={
+            <Tag type="promo" Icon={IconStarFilled}>
+              Promo
+            </Tag>
+          }
+          mainHeading={{ text: "text", value: "value" }}
+          secondHeading={{ text: "text", value: "value" }}
+          title="title"
+          description="description"
+        />
+      `,
+        group: 'Blocks',
+    },
+];
+
+const ValueBlockSnippets = [
+    {
+        name: 'Value Block',
+        code: `
+        <ValueBlock title="title" description="description" value="value" />
+      `,
+        group: 'Blocks',
+    },
+];
+
+const ProgressBlockSnippets = [
+    {
+        name: 'Progress Block',
+        code: `
+      <ProgressBlock
+        title="title"
+        heading={{
+          value: "20 GB",
+          text: "text",
+        }}
+        progressPercent={20}
+        description="description"
+      />
+      `,
+        group: 'Blocks',
+    },
+];
+
 export default [
     ...buttonSnippets,
     ...formSnippets,
@@ -1986,6 +2204,11 @@ export default [
         name: 'Image',
         code: `<Image src="https://picsum.photos/1200/1200" aspectRatio="16:9" />`,
     },
+    {
+        group: 'Media',
+        name: 'Image circular',
+        code: `<Image circular src="https://picsum.photos/1200/1200" />`,
+    },
     ...carouselSnippets,
     ...avatarSnippets,
     ...alertSnippets,
@@ -1996,4 +2219,11 @@ export default [
     ...logoSnippets,
     ...gridSnippets,
     ...stackingGroupSnippets,
+    ...advancedDataCardSnippets,
+    ...RowBlockSnippets,
+    ...SimpleBlockSnippets,
+    ...InformationBlockSnippets,
+    ...HighlightedValueBlockSnippets,
+    ...ValueBlockSnippets,
+    ...ProgressBlockSnippets,
 ].sort((s1, s2) => s1.group.localeCompare(s2.group)) as Array<Snippet>;

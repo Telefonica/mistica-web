@@ -10,6 +10,7 @@ export {default as Touchable} from './touchable';
 export type {TouchableElement} from './touchable';
 export {default as Spinner} from './spinner';
 export {default as FadeIn} from './fade-in';
+
 export {ButtonPrimary, ButtonSecondary, ButtonDanger, ButtonLink} from './button';
 export {default as ButtonLayout} from './button-layout';
 export {default as FixedFooterLayout} from './fixed-footer-layout';
@@ -60,7 +61,16 @@ export {default as HorizontalScroll} from './horizontal-scroll';
 export {default as HighlightedCard} from './highlighted-card';
 export {default as Stepper} from './stepper';
 export {default as ProgressBar} from './progress-bar';
-export {MediaCard, DataCard, SnapCard, DisplayDataCard, DisplayMediaCard, PosterCard} from './card';
+export {
+    MediaCard,
+    DataCard,
+    SnapCard,
+    DisplayDataCard,
+    DisplayMediaCard,
+    PosterCard,
+    NakedCard,
+    SmallNakedCard,
+} from './card';
 export {default as Hero} from './hero';
 export {default as Divider} from './divider';
 export {default as Menu} from './menu';

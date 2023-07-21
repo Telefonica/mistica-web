@@ -1,5 +1,6 @@
 import {defineProperties, createSprinkles} from '@vanilla-extract/sprinkles';
 import {vars} from './skins/skin-contract.css';
+import * as mq from './media-queries.css';
 
 type ColorKeys = keyof typeof vars.colors;
 type ColorValues = (typeof vars.colors)[ColorKeys];
@@ -19,6 +20,26 @@ const colorProperties = defineProperties({
 
 const sizes = [0, 2, 4, 8, 12, 16, 20, 24, 32, 40, 48, 56, 64, 72, 80] as const;
 
+const responsiveProperties = defineProperties({
+    conditions: {
+        mobile: {},
+        tablet: {'@media': mq.tablet},
+        desktop: {'@media': mq.desktopOrBigger},
+    },
+    defaultCondition: 'mobile',
+    properties: {
+        paddingTop: sizes,
+        paddingBottom: sizes,
+        paddingLeft: sizes,
+        paddingRight: sizes,
+    },
+    shorthands: {
+        padding: ['paddingTop', 'paddingBottom', 'paddingLeft', 'paddingRight'],
+        paddingX: ['paddingLeft', 'paddingRight'],
+        paddingY: ['paddingTop', 'paddingBottom'],
+    },
+});
+
 const commonProperties = defineProperties({
     properties: {
         position: ['relative', 'absolute', 'fixed', 'static'],
@@ -29,10 +50,6 @@ const commonProperties = defineProperties({
         flexShrink: [0, 1],
         flexGrow: [0, 1],
         flex: [1],
-        paddingTop: sizes,
-        paddingBottom: sizes,
-        paddingLeft: sizes,
-        paddingRight: sizes,
         width: ['100%', 'auto', ...sizes],
         height: ['100%', ...sizes],
         minWidth: ['100%', ...sizes],
@@ -52,13 +69,8 @@ const commonProperties = defineProperties({
         bottom: sizes,
         objectFit: ['cover'],
     } as const,
-    shorthands: {
-        padding: ['paddingTop', 'paddingBottom', 'paddingLeft', 'paddingRight'],
-        paddingX: ['paddingLeft', 'paddingRight'],
-        paddingY: ['paddingTop', 'paddingBottom'],
-    },
 });
 
-export const sprinkles = createSprinkles(commonProperties, colorProperties);
+export const sprinkles = createSprinkles(commonProperties, responsiveProperties, colorProperties);
 
 export type Sprinkles = Parameters<typeof sprinkles>[0];
