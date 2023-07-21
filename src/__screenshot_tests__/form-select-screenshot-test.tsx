@@ -35,6 +35,32 @@ test.each(devices)('Select elements on a selected state appear properly on %s', 
     expect(image).toMatchImageSnapshot();
 });
 
+test.each(devices)(
+    'Select elements on a selected state appear properly on %s with long texts',
+    async (device) => {
+        const page = await openStoryPage({
+            id: 'components-select--default',
+            device,
+        });
+
+        if (device === 'MOBILE_IOS') {
+            const select = (await screen.findAllByRole('combobox'))[0];
+            await select.select('longValue');
+        } else {
+            const select = await screen.findByLabelText('Select a fruit (opcional)');
+            await select.click();
+            const selectOptions = await screen.findAllByRole('option', {
+                name: 'A very very long text value for this option',
+            });
+            // take the last one because the options are displayed in a portal, at the end of the body
+            await selectOptions?.at(-1)?.click();
+        }
+
+        const image = await page.screenshot({fullPage: true});
+        expect(image).toMatchImageSnapshot();
+    }
+);
+
 test('Display all options', async () => {
     const page = await openStoryPage({id: 'components-select--default'});
 

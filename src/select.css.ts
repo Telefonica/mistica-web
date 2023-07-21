@@ -97,6 +97,7 @@ export const selectContainerVariants = styleVariants({
 const selectBase = style([
     sprinkles({
         border: 'none',
+        overflow: 'hidden',
         color: skinVars.colors.textPrimary,
         background: 'transparent', // FieldContainer gives the correct background color
         width: '100%',
@@ -131,6 +132,7 @@ export const selectVariants = styleVariants({
 const selectTextBase = style([
     sprinkles({
         position: 'absolute',
+        overflow: 'hidden',
         maxWidth: '100%',
         color: skinVars.colors.textPrimary,
     }),
