@@ -1,3 +1,10 @@
+## [14.18.1](https://github.com/Telefonica/mistica-web/compare/v14.18.0...v14.18.1) (2023-07-21)
+
+
+### Bug Fixes
+
+* **Row:** improve onPress/to/href types ([#825](https://github.com/Telefonica/mistica-web/issues/825)) ([2214c1f](https://github.com/Telefonica/mistica-web/commit/2214c1f7ebe57a47bf8eba2fe645df94e3220dbb))
+
 # [14.18.0](https://github.com/Telefonica/mistica-web/compare/v14.17.1...v14.18.0) (2023-07-20)
 
 
