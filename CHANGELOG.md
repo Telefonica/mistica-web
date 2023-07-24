@@ -1,3 +1,11 @@
+## [14.18.2](https://github.com/Telefonica/mistica-web/compare/v14.18.1...v14.18.2) (2023-07-24)
+
+
+### Bug Fixes
+
+* **community:** issue with community build preventing import of community components ([#828](https://github.com/Telefonica/mistica-web/issues/828)) ([fd59552](https://github.com/Telefonica/mistica-web/commit/fd595524052147926b61228c017a631bf014a23d))
+* **Select:** long value overflow ([#827](https://github.com/Telefonica/mistica-web/issues/827)) ([ec0e43c](https://github.com/Telefonica/mistica-web/commit/ec0e43cd401436376315b75a18db4f22b835c836))
+
 ## [14.18.1](https://github.com/Telefonica/mistica-web/compare/v14.18.0...v14.18.1) (2023-07-21)
 
 

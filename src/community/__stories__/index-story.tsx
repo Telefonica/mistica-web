@@ -53,7 +53,7 @@ export const Default: StoryComponent = () => {
                         <Paragraph>
                             Mística Community Components can be imported from the community folder:
                         </Paragraph>
-                        <pre>{`import {SomeComponent} from @telefonica/mistica/community`}</pre>
+                        <pre>{`import {SomeComponent} from '@telefonica/mistica/community'`}</pre>
                     </Stack>
                 </Stack>
             </Box>
