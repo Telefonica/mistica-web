@@ -615,7 +615,7 @@ const cardSnippets: Array<Snippet> = [
             title="Title"
             subtitle="Subtitle"
             description="Description"
-            asset={<Avatar size={40} src="https://source.unsplash.com/600x600/?face" />}
+            icon={<Avatar size={40} src="https://source.unsplash.com/600x600/?face" />}
             extra={<Placeholder />}
             button={
                 <ButtonPrimary small onPress={() => {}}>
@@ -636,7 +636,7 @@ const cardSnippets: Array<Snippet> = [
             title="Title"
             subtitle="Subtitle"
             description="Description"
-            asset={<Avatar size={40} src="https://source.unsplash.com/600x600/?face" />}
+            icon={<Avatar size={40} src="https://source.unsplash.com/600x600/?face" />}
             extra={<Placeholder />}
             button={
                 <ButtonPrimary small onPress={() => {}}>
