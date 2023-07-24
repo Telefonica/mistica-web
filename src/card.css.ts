@@ -182,15 +182,6 @@ export const mediaCardIcon = style([
         position: 'absolute',
         zIndex: 1,
     },
-    {
-        '@media': {
-            [mq.desktopOrBigger]: {
-                paddingLeft: 24,
-                paddingTop: 24,
-                paddingBottom: 32,
-            },
-        },
-    },
 ]);
 
 export const nakedCardContent = style([

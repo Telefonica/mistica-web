@@ -518,12 +518,10 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
                                     buttonLink={buttonLink}
                                 />
                             </div>
-                            {icon ? (
+                            {icon && (
                                 <Box className={styles.mediaCardIcon} paddingX={16} paddingY={16}>
                                     {icon}
                                 </Box>
-                            ) : (
-                                <Box paddingBottom={actions?.length || onClose ? 64 : 0} />
                             )}
                         </div>
                     </BaseTouchable>
