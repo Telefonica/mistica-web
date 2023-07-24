@@ -12,7 +12,9 @@
     "files": [
         "dist/**",
         "dist-es/**",
-        "css/**"
+        "css/**",
+        "community.d.ts",
+        "community.js"
     ],
     "scripts": {
         "test": "jest --config jest.unit.config.js",
