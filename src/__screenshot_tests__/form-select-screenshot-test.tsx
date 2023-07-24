@@ -14,52 +14,65 @@ test.each(devices)('Select elements on the initial state appear properly on %s',
     expect(image).toMatchImageSnapshot();
 });
 
-test.each(devices)('Select elements on a selected state appear properly on %s', async (device) => {
+test('Select elements on a selected state appear properly on DESKTOP', async () => {
     const page = await openStoryPage({
         id: 'components-select--default',
-        device,
+        device: 'DESKTOP',
     });
 
-    if (device === 'MOBILE_IOS') {
-        const select = (await screen.findAllByRole('combobox'))[0];
-        await select.select('apple');
-    } else {
-        const select = await screen.findByLabelText('Select a fruit (opcional)');
-        await select.click();
-        const selectOptions = await screen.findAllByRole('option', {name: 'Apple'});
-        // take the last one because the options are displayed in a portal, at the end of the body
-        await selectOptions?.at(-1)?.click();
-    }
+    const select = await screen.findByLabelText('Select a fruit (opcional)');
+    await select.click();
+    const selectOptions = await screen.findAllByRole('option', {name: 'Apple'});
+    // take the last one because the options are displayed in a portal, at the end of the body
+    await selectOptions?.at(-1)?.click();
 
     const image = await page.screenshot({fullPage: true});
     expect(image).toMatchImageSnapshot();
 });
 
-test.each(devices)(
-    'Select elements on a selected state appear properly on %s with long texts',
-    async (device) => {
-        const page = await openStoryPage({
-            id: 'components-select--default',
-            device,
-        });
+test('Select elements on a selected state appear properly on MOBILE_IOS', async () => {
+    const page = await openStoryPage({
+        id: 'components-select--default',
+        device: 'MOBILE_IOS',
+    });
 
-        if (device === 'MOBILE_IOS') {
-            const select = (await screen.findAllByRole('combobox'))[0];
-            await select.select('longValue');
-        } else {
-            const select = await screen.findByLabelText('Select a fruit (opcional)');
-            await select.click();
-            const selectOptions = await screen.findAllByRole('option', {
-                name: 'A very very long text value for this option',
-            });
-            // take the last one because the options are displayed in a portal, at the end of the body
-            await selectOptions?.at(-1)?.click();
-        }
+    const select = (await screen.findAllByRole('combobox'))[0];
+    await select.select('apple');
 
-        const image = await page.screenshot({fullPage: true});
-        expect(image).toMatchImageSnapshot();
-    }
-);
+    const image = await page.screenshot({fullPage: true});
+    expect(image).toMatchImageSnapshot();
+});
+
+test('Select elements on a selected state appear properly on DESKTOP with long texts', async () => {
+    const page = await openStoryPage({
+        id: 'components-select--default',
+        device: 'DESKTOP',
+    });
+
+    const select = await screen.findByLabelText('Select a fruit (opcional)');
+    await select.click();
+    const selectOptions = await screen.findAllByRole('option', {
+        name: 'A very very long text value for this option',
+    });
+    // take the last one because the options are displayed in a portal, at the end of the body
+    await selectOptions?.at(-1)?.click();
+
+    const image = await page.screenshot({fullPage: true});
+    expect(image).toMatchImageSnapshot();
+});
+
+test('Select elements on a selected state appear properly on MOBILE_IOS with long texts', async () => {
+    const page = await openStoryPage({
+        id: 'components-select--default',
+        device: 'MOBILE_IOS',
+    });
+
+    const select = (await screen.findAllByRole('combobox'))[0];
+    await select.select('longValue');
+
+    const image = await page.screenshot({fullPage: true});
+    expect(image).toMatchImageSnapshot();
+});
 
 test('Display all options', async () => {
     const page = await openStoryPage({id: 'components-select--default'});
