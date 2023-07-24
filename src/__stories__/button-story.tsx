@@ -21,7 +21,7 @@ const defaultArgs = {
     text: 'Example',
     loadingText: '',
     icon: 'none',
-    isInverse: false,
+    inverse: false,
     disabled: false,
     showSpinner: false,
     small: false,
@@ -45,7 +45,7 @@ type Args = {
     text: string;
     loadingText: string;
     icon: string;
-    isInverse: boolean;
+    inverse: boolean;
     disabled: boolean;
     showSpinner: boolean;
     small: boolean;
@@ -71,19 +71,19 @@ const getButtonActionProps = (action: string, newTab: boolean) => {
 };
 
 type Props = {
-    isInverse: boolean;
+    inverse: boolean;
     children: React.ReactNode;
 };
 
-const ButtonBackgroundContainer: React.FC<Props> = ({isInverse, children}) => (
-    <ResponsiveLayout fullWidth dataAttributes={{testid: 'content'}} isInverse={isInverse}>
+const ButtonBackgroundContainer: React.FC<Props> = ({inverse, children}) => (
+    <ResponsiveLayout fullWidth dataAttributes={{testid: 'content'}} isInverse={inverse}>
         <Box padding={16}>{children}</Box>
     </ResponsiveLayout>
 );
 
-export const primaryButton: StoryComponent<Args> = ({isInverse, text, icon, action, newTab, ...props}) => {
+export const primaryButton: StoryComponent<Args> = ({inverse, text, icon, action, newTab, ...props}) => {
     return (
-        <ButtonBackgroundContainer isInverse={isInverse}>
+        <ButtonBackgroundContainer inverse={inverse}>
             <ButtonPrimary
                 {...props}
                 {...getButtonActionProps(action, newTab)}
@@ -96,9 +96,9 @@ export const primaryButton: StoryComponent<Args> = ({isInverse, text, icon, acti
     );
 };
 
-export const SecondaryButton: StoryComponent<Args> = ({isInverse, text, icon, action, newTab, ...props}) => {
+export const SecondaryButton: StoryComponent<Args> = ({inverse, text, icon, action, newTab, ...props}) => {
     return (
-        <ButtonBackgroundContainer isInverse={isInverse}>
+        <ButtonBackgroundContainer inverse={inverse}>
             <ButtonSecondary
                 {...props}
                 {...getButtonActionProps(action, newTab)}
@@ -111,9 +111,9 @@ export const SecondaryButton: StoryComponent<Args> = ({isInverse, text, icon, ac
     );
 };
 
-export const DangerButton: StoryComponent<Args> = ({isInverse, text, icon, action, newTab, ...props}) => {
+export const DangerButton: StoryComponent<Args> = ({inverse, text, icon, action, newTab, ...props}) => {
     return (
-        <ButtonBackgroundContainer isInverse={isInverse}>
+        <ButtonBackgroundContainer inverse={inverse}>
             <ButtonDanger
                 {...props}
                 {...getButtonActionProps(action, newTab)}
@@ -127,7 +127,7 @@ export const DangerButton: StoryComponent<Args> = ({isInverse, text, icon, actio
 };
 
 export const LinkButton: StoryComponent<Omit<Args, 'small'> & {withChevron: string}> = ({
-    isInverse,
+    inverse,
     text,
     icon,
     action,
@@ -136,7 +136,7 @@ export const LinkButton: StoryComponent<Omit<Args, 'small'> & {withChevron: stri
     ...props
 }) => {
     return (
-        <ButtonBackgroundContainer isInverse={isInverse}>
+        <ButtonBackgroundContainer inverse={inverse}>
             <ButtonLink
                 {...props}
                 withChevron={withChevron === 'default' ? undefined : withChevron === 'true'}
@@ -151,7 +151,7 @@ export const LinkButton: StoryComponent<Omit<Args, 'small'> & {withChevron: stri
 };
 
 export const SubmitButton: StoryComponent = () => (
-    <ButtonBackgroundContainer isInverse={false}>
+    <ButtonBackgroundContainer inverse={false}>
         <Text2 as="p" regular>
             A button with submit attribute in a form doesn't need a onPress prop. And clicking on it will fire
             onSubmit event, that should be handled by the form.
