@@ -213,33 +213,33 @@ interface BasicRowContentProps extends CommonProps {
 }
 
 interface SwitchRowContentProps extends CommonProps {
-    onPress?: () => void;
+    onPress?: (() => void) | undefined;
 
     switch: ControlProps | undefined;
 }
 
 interface CheckboxRowContentProps extends CommonProps {
-    onPress?: () => void;
+    onPress?: (() => void) | undefined;
 
     checkbox: ControlProps | undefined;
 }
 
 interface RadioRowContentProps extends CommonProps {
-    onPress?: () => void;
+    onPress?: (() => void) | undefined;
 
     radioValue: string;
 }
 
 interface HrefRowContentProps extends CommonProps {
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
-    href: string;
+    href: string | undefined;
     newTab?: boolean;
     right?: Right;
 }
 
 interface ToRowContentProps extends CommonProps {
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
-    to: string;
+    to: string | undefined;
     fullPageOnWebView?: boolean;
     replace?: boolean;
     right?: Right;
@@ -247,7 +247,7 @@ interface ToRowContentProps extends CommonProps {
 
 interface OnPressRowContentProps extends CommonProps {
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
-    onPress: () => void;
+    onPress: (() => void) | undefined;
     right?: Right;
 }
 
