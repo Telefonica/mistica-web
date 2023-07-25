@@ -433,7 +433,7 @@ interface ButtonLinkCommonProps {
     trackEvent?: boolean;
     /** "data-" prefix is automatically added. For example, use "testid" instead of "data-testid" */
     dataAttributes?: DataAttributes;
-    aligned?: boolean;
+    aligned?: boolean | 'left' | 'right';
     showSpinner?: boolean;
     loadingText?: string;
     StartIcon?: React.FC<IconProps>;
@@ -509,7 +509,8 @@ export const ButtonLink = React.forwardRef<TouchableElement, ButtonLinkProps>((p
     const commonProps = {
         className: classnames(styles.link, {
             [styles.inverseLink]: isInverse,
-            [styles.alignedLink]: props.aligned,
+            [styles.alignedLeftLink]: props.aligned === true || props.aligned === 'left',
+            [styles.alignedRightLink]: props.aligned === 'right',
             [styles.isLoading]: showSpinner,
         }),
         trackingEvent: props.trackingEvent ?? (props.trackEvent ? createDefaultTrackingEvent() : undefined),
