@@ -856,7 +856,7 @@ const titlesSnippets: Array<Snippet> = [
     },
     {
         name: 'Title1 (with link)',
-        code: '<Title1 right={<ButtonLink onPress={() => {}} withChevron>Link</ButtonLink>}>Some title</Title1>',
+        code: '<Title1 right={<ButtonLink onPress={() => {}} withChevron aligned="right">Link</ButtonLink>}>Some title</Title1>',
     },
     {
         name: 'Title2',
@@ -864,7 +864,7 @@ const titlesSnippets: Array<Snippet> = [
     },
     {
         name: 'Title2 (with link)',
-        code: '<Title2 right={<ButtonLink onPress={() => {}} withChevron>Link</ButtonLink>}>Some title</Title2>',
+        code: '<Title2 right={<ButtonLink onPress={() => {}} withChevron aligned="right">Link</ButtonLink>}>Some title</Title2>',
     },
 ].map((snippet) => ({...snippet, group: 'Titles'}));
 
