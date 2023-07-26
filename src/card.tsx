@@ -292,7 +292,6 @@ const useVideoWithControls = (
             loading: CardActionPauseIcon,
             paused: CardActionPlayIcon,
             loadingTimeout: CardActionSpinner,
-            error: undefined,
         }[videoStatus],
         onPress: onVideoControlPress,
         label: {
