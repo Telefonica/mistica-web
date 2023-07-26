@@ -299,9 +299,8 @@ const useVideoWithControls = (
             loading: texts.pauseIconButtonLabel,
             paused: texts.playIconButtonLabel,
             loadingTimeout: '',
-            error: '',
         }[videoStatus],
-        disabled: !['loading', 'playing', 'paused'].includes(videoStatus),
+        disabled: videoStatus === 'loadingTimeout',
     };
 
     return {
