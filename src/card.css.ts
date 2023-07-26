@@ -391,21 +391,6 @@ export const cardActionMedia = style([
     },
 ]);
 
-export const videoAction = style([
-    cardActionBase,
-    {
-        background: applyAlpha('#000000', 0.4),
-        transition: 'background-color 0.2s ease-in-out',
-        '@media': {
-            [mq.supportsHover]: {
-                ':hover': {
-                    background: applyAlpha('#000000', 0.6),
-                },
-            },
-        },
-    },
-]);
-
 const aspectRatio = createVar();
 
 export const vars = {aspectRatio};
