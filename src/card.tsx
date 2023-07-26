@@ -519,7 +519,11 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
                                 />
                             </div>
                             {icon && (
-                                <Box className={styles.mediaCardIcon} paddingX={16} paddingY={16}>
+                                <Box
+                                    className={styles.mediaCardIcon}
+                                    paddingLeft={{mobile: 16, desktop: 24}}
+                                    paddingTop={{mobile: 16, desktop: 24}}
+                                >
                                     {icon}
                                 </Box>
                             )}
