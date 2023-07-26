@@ -149,10 +149,20 @@ const Tooltip: React.FC<Props> = ({
         if (!tooltipRef.current) return position;
         const tooltipBoundingClientRect = tooltipRef.current.getBoundingClientRect();
 
+        const noRightSpaceBottom =
+            targetBoundingClientRect.current.right + tooltipBoundingClientRect.width > window.innerWidth
+                ? 'left'
+                : 'bottom';
+
+        const noRightSpaceTop =
+            targetBoundingClientRect.current.right + tooltipBoundingClientRect.width > window.innerWidth
+                ? 'left'
+                : 'top';
+
         const positionValidated = {
             top:
                 targetBoundingClientRect.current.top < tooltipBoundingClientRect.height
-                    ? 'bottom'
+                    ? noRightSpaceBottom
                     : targetBoundingClientRect.current.right + tooltipBoundingClientRect.width >
                       window.innerWidth
                     ? 'left'
@@ -166,7 +176,7 @@ const Tooltip: React.FC<Props> = ({
             bottom:
                 targetBoundingClientRect.current.bottom + tooltipBoundingClientRect.height >
                 window.innerHeight
-                    ? 'top'
+                    ? noRightSpaceTop
                     : targetBoundingClientRect.current.right + tooltipBoundingClientRect.width >
                       window.innerWidth
                     ? 'left'
