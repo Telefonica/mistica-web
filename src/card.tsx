@@ -39,7 +39,7 @@ import type {
 export type CardAction = {
     label: string;
     onPress: () => void;
-    Icon?: React.FC<IconProps>;
+    Icon: React.FC<IconProps>;
     iconSize?: number;
     iconColor?: string;
     iconBackground?: string;
@@ -100,25 +100,21 @@ export const CardActionsGroup = ({
             }}
         >
             <div className={sprinkles({display: 'flex'})}>
-                {finalActions.map(({onPress, label, Icon, iconSize = 20, disabled = false}, index) =>
-                    Icon ? (
-                        <IconButton
-                            disabled={disabled}
-                            size={TOP_ACTION_BUTTON_SIZE}
-                            key={index}
-                            onPress={onPress}
-                            aria-label={label}
-                            className={styles.cardActionIconButton}
-                            style={{display: 'flex'}}
-                        >
-                            <div className={iconBackgroundStyle[type]}>
-                                <Icon color={iconColor[type]} size={iconSize} />
-                            </div>
-                        </IconButton>
-                    ) : (
-                        <div key={index} className={styles.cardActionIconButton} />
-                    )
-                )}
+                {finalActions.map(({onPress, label, Icon, iconSize = 20, disabled = false}, index) => (
+                    <IconButton
+                        disabled={disabled}
+                        size={TOP_ACTION_BUTTON_SIZE}
+                        key={index}
+                        onPress={onPress}
+                        aria-label={label}
+                        className={styles.cardActionIconButton}
+                        style={{display: 'flex'}}
+                    >
+                        <div className={iconBackgroundStyle[type]}>
+                            <Icon color={iconColor[type]} size={iconSize} />
+                        </div>
+                    </IconButton>
+                ))}
             </div>
         </div>
     ) : (
@@ -237,6 +233,8 @@ const videoReducer = (state: VideoState, action: VideoAction): VideoState =>
 
 const VideoSpinner = ({size, color}: IconProps) => <Spinner size={size} color={color} delay="0" />;
 
+const IconVideoActionError = () => <></>;
+
 const useVideoWithControls = (
     videoSrc?: VideoSource,
     poster?: string,
@@ -290,7 +288,7 @@ const useVideoWithControls = (
             loading: IconPauseFilled,
             paused: IconPlayFilled,
             loadingTimeout: VideoSpinner,
-            error: undefined,
+            error: IconVideoActionError,
         }[videoStatus],
         onPress: onVideoControlPress,
         label: {
