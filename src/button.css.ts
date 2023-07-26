@@ -360,6 +360,7 @@ globalStyle(`${textContentLink} svg`, {
 
 export const alignedLeftLink = style({marginLeft: -PADDING_X_LINK});
 export const alignedRightLink = style({marginRight: -PADDING_X_LINK});
+export const alignedVerticalLink = style({marginTop: -PADDING_Y_LINK, marginBottom: -PADDING_Y_LINK});
 
 export const variants = styleVariants({
     primary: lightPrimary,

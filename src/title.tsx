@@ -19,7 +19,7 @@ const TitleLayout = ({title, right}: TitleLayoutProps): React.ReactElement => {
     }
 
     return (
-        <Inline space="between" alignItems="center">
+        <Inline space="between" alignItems="baseline">
             {title}
             <Box paddingLeft={16}>
                 <Text2 weight={textPresets.link.weight}>{right}</Text2>

@@ -13,7 +13,7 @@ export const Default: StoryComponent<Args> = ({title, linkText}) => (
             as="h3"
             right={
                 linkText ? (
-                    <ButtonLink href="https://google.com" aligned="right">
+                    <ButtonLink href="https://google.com" bleedRight bleedY>
                         {linkText}
                     </ButtonLink>
                 ) : undefined
@@ -25,7 +25,7 @@ export const Default: StoryComponent<Args> = ({title, linkText}) => (
             as="h2"
             right={
                 linkText ? (
-                    <ButtonLink href="https://google.com" aligned="right">
+                    <ButtonLink href="https://google.com" bleedRight bleedY>
                         {linkText}
                     </ButtonLink>
                 ) : undefined
