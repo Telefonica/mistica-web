@@ -106,6 +106,7 @@ type Props = {
     targetLabel: string;
     delay?: boolean;
     dataAttributes?: DataAttributes;
+    fullWidth?: boolean;
     textAlign?: TextAlign;
     changedPosition?: string;
 };
@@ -119,6 +120,7 @@ const Tooltip: React.FC<Props> = ({
     targetLabel,
     delay = true,
     dataAttributes,
+    fullWidth,
     changedPosition,
     ...rest
 }) => {
@@ -375,11 +377,13 @@ const Tooltip: React.FC<Props> = ({
         }
     }, [isVisible, getContainerPosition, position, width]);
 
+    const targetStyle = fullWidth && styles.fullWidth;
+
     return (
         <>
             <div
                 ref={targetRef}
-                className={styles.wrapper}
+                className={classnames(styles.wrapper, targetStyle)}
                 onPointerOver={() => {
                     if (closeTooltipTimeoutId.current) {
                         clearTimeout(closeTooltipTimeoutId.current);
