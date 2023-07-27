@@ -70,6 +70,7 @@ export {
     PosterCard,
     NakedCard,
     SmallNakedCard,
+    CardActionSpinner,
 } from './card';
 export {default as Hero} from './hero';
 export {default as Divider} from './divider';

@@ -39,11 +39,7 @@ import type {
 export type CardAction = {
     label: string;
     onPress: () => void;
-    Icon?: React.FC<IconProps>;
-    iconSize?: number;
-    iconColor?: string;
-    iconBackground?: string;
-    iconBackgroundInverse?: string;
+    Icon: React.FC<IconProps>;
     disabled?: boolean;
 };
 
@@ -100,25 +96,21 @@ export const CardActionsGroup = ({
             }}
         >
             <div className={sprinkles({display: 'flex'})}>
-                {finalActions.map(({onPress, label, Icon, iconSize = 20, disabled = false}, index) =>
-                    Icon ? (
-                        <IconButton
-                            disabled={disabled}
-                            size={TOP_ACTION_BUTTON_SIZE}
-                            key={index}
-                            onPress={onPress}
-                            aria-label={label}
-                            className={styles.cardActionIconButton}
-                            style={{display: 'flex'}}
-                        >
-                            <div className={iconBackgroundStyle[type]}>
-                                <Icon color={iconColor[type]} size={iconSize} />
-                            </div>
-                        </IconButton>
-                    ) : (
-                        <div key={index} className={styles.cardActionIconButton} />
-                    )
-                )}
+                {finalActions.map(({onPress, label, Icon, disabled = false}, index) => (
+                    <IconButton
+                        disabled={disabled}
+                        size={TOP_ACTION_BUTTON_SIZE}
+                        key={index}
+                        onPress={onPress}
+                        aria-label={label}
+                        className={styles.cardActionIconButton}
+                        style={{display: 'flex'}}
+                    >
+                        <div className={iconBackgroundStyle[type]}>
+                            <Icon color={iconColor[type]} size={20} />
+                        </div>
+                    </IconButton>
+                ))}
             </div>
         </div>
     ) : (
@@ -235,7 +227,13 @@ const transitions: Record<VideoState, Partial<Record<VideoAction, VideoState>>> 
 const videoReducer = (state: VideoState, action: VideoAction): VideoState =>
     transitions[state][action] || state;
 
-const VideoSpinner = ({size, color}: IconProps) => <Spinner size={size} color={color} delay="0" />;
+export const CardActionSpinner = ({color}: IconProps): React.ReactElement => (
+    <Spinner color={color} size={16} delay="0" />
+);
+
+const CardActionPauseIcon = ({color}: IconProps) => <IconPauseFilled color={color} size={12} />;
+
+const CardActionPlayIcon = ({color}: IconProps) => <IconPlayFilled color={color} size={12} />;
 
 const useVideoWithControls = (
     videoSrc?: VideoSource,
@@ -284,13 +282,16 @@ const useVideoWithControls = (
         }
     };
 
+    if (videoStatus === 'error') {
+        return {video};
+    }
+
     const videoAction: CardAction = {
         Icon: {
-            playing: IconPauseFilled,
-            loading: IconPauseFilled,
-            paused: IconPlayFilled,
-            loadingTimeout: VideoSpinner,
-            error: undefined,
+            playing: CardActionPauseIcon,
+            loading: CardActionPauseIcon,
+            paused: CardActionPlayIcon,
+            loadingTimeout: CardActionSpinner,
         }[videoStatus],
         onPress: onVideoControlPress,
         label: {
@@ -298,13 +299,8 @@ const useVideoWithControls = (
             loading: texts.pauseIconButtonLabel,
             paused: texts.playIconButtonLabel,
             loadingTimeout: '',
-            error: '',
         }[videoStatus],
-        disabled: !['loading', 'playing', 'paused'].includes(videoStatus),
-        iconSize: videoStatus === 'loadingTimeout' ? 16 : 12,
-        iconColor: vars.colors.inverse,
-        iconBackground: styles.videoAction,
-        iconBackgroundInverse: styles.videoAction,
+        disabled: videoStatus === 'loadingTimeout',
     };
 
     return {
@@ -973,7 +969,7 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
         const {video, videoAction} = useVideoWithControls(backgroundVideo, poster, backgroundVideoRef);
 
         if (backgroundVideo) {
-            actions = [videoAction];
+            actions = videoAction ? [videoAction] : [];
         }
 
         const isExternalInverse = useIsInverseVariant();
@@ -1032,7 +1028,8 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
                             <div
                                 className={styles.displayCardContent}
                                 style={{
-                                    paddingTop: withGradient && !icon && !hasTopActions ? 0 : 24,
+                                    paddingTop:
+                                        withGradient && !icon && !hasTopActions && !backgroundVideo ? 0 : 24,
                                 }}
                             >
                                 {icon ? (
@@ -1042,7 +1039,7 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
                                 ) : (
                                     <Box
                                         paddingBottom={
-                                            actions?.length || onClose ? (withGradient ? 24 : 64) : 0
+                                            hasTopActions || backgroundVideo ? (withGradient ? 24 : 64) : 0
                                         }
                                     />
                                 )}
@@ -1212,7 +1209,7 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
         const {video, videoAction} = useVideoWithControls(backgroundVideo, poster, backgroundVideoRef);
 
         if (backgroundVideo) {
-            actions = [videoAction];
+            actions = videoAction ? [videoAction] : [];
         }
 
         const isExternalInverse = useIsInverseVariant();
@@ -1266,7 +1263,8 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                             <div
                                 className={styles.displayCardContent}
                                 style={{
-                                    paddingTop: withGradient && !icon && !hasTopActions ? 0 : 24,
+                                    paddingTop:
+                                        withGradient && !icon && !hasTopActions && !backgroundVideo ? 0 : 24,
                                 }}
                             >
                                 {icon ? (
@@ -1276,7 +1274,7 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                                 ) : (
                                     <Box
                                         paddingBottom={
-                                            actions?.length || onClose ? (withGradient ? 24 : 64) : 0
+                                            hasTopActions || backgroundVideo ? (withGradient ? 24 : 64) : 0
                                         }
                                     />
                                 )}
