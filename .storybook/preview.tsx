@@ -118,4 +118,7 @@ export const decorators = [withLayoutDecorator, withMisticaThemeProvider];
 export const parameters = {
     // https://storybook.js.org/docs/react/configure/story-layout
     layout: 'fullscreen',
+
+    // Workaround for: https://github.com/storybookjs/storybook/issues/17098
+    docs: {source: {type: 'code'}},
 };
