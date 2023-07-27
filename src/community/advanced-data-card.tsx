@@ -274,82 +274,62 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
                 {...getPrefixedDataAttributes(dataAttributes, 'AdvancedDataCard')}
                 ref={ref}
             >
-                <Boxed className={styles.boxed} width="100%" height="100%">
-                    <div className={styles.dataCard}>
-                        <Touchable
-                            onPress={onPress}
-                            tabIndex={0}
-                            maybe
-                            className={sprinkles({
-                                position: 'relative',
-                                height: '100%',
-                            })}
-                            aria-label={ariaLabel}
+                <Boxed className={styles.dataCard} height="100%">
+                    <Touchable
+                        onPress={onPress}
+                        tabIndex={0}
+                        maybe
+                        className={classNames(styles.touchableContainer, {
+                            [styles.hoverEffect]: !!onPress,
+                        })}
+                        aria-label={ariaLabel}
+                    >
+                        <div
+                            className={classNames(
+                                styles.cardContentStyle,
+                                !hasFooter && !hasExtras ? styles.minHeight : ''
+                            )}
                         >
-                            <div className={onPress ? styles.interaction : ''}>
-                                <div
-                                    className={classNames(
-                                        styles.cardContentStyle,
-                                        !hasFooter && !hasExtras ? styles.minHeight : ''
-                                    )}
-                                >
-                                    <Box paddingTop={8}>
-                                        <Stack space={8} className={sprinkles({flex: 1})}>
-                                            {stackingGroup}
-                                            <CardContent
-                                                headline={headline}
-                                                pretitle={pretitle}
-                                                pretitleAs={pretitleAs}
-                                                pretitleLinesMax={pretitleLinesMax}
-                                                title={title}
-                                                titleAs={titleAs}
-                                                titleLinesMax={titleLinesMax}
-                                                subtitle={subtitle}
-                                                subtitleLinesMax={subtitleLinesMax}
-                                                description={description}
-                                                descriptionLinesMax={descriptionLinesMax}
-                                            />
-                                        </Stack>
-                                    </Box>
-                                    <CardActionsGroup actions={actions} onClose={onClose} />
-                                </div>
-                                <div className={styles.extraTop}>
-                                    {hasExtras ? (
-                                        <Box paddingTop={16} paddingBottom={24}>
-                                            {extra.map((ex, index) => {
-                                                return (
-                                                    <div key={index}>
-                                                        <div
-                                                            className={sprinkles({
-                                                                display: 'flex',
-                                                                width: '100%',
-                                                            })}
-                                                        >
-                                                            <div
-                                                                className={classNames(
-                                                                    sprinkles({width: '100%'}),
-                                                                    styles.paddingX
-                                                                )}
-                                                            >
-                                                                {ex}
-                                                            </div>
-                                                        </div>
+                            <Box paddingTop={8}>
+                                <Stack space={8}>
+                                    {stackingGroup}
+                                    <CardContent
+                                        headline={headline}
+                                        pretitle={pretitle}
+                                        pretitleAs={pretitleAs}
+                                        pretitleLinesMax={pretitleLinesMax}
+                                        title={title}
+                                        titleAs={titleAs}
+                                        titleLinesMax={titleLinesMax}
+                                        subtitle={subtitle}
+                                        subtitleLinesMax={subtitleLinesMax}
+                                        description={description}
+                                        descriptionLinesMax={descriptionLinesMax}
+                                    />
+                                </Stack>
+                            </Box>
+                            <CardActionsGroup actions={actions} onClose={onClose} />
+                        </div>
 
-                                                        {index + 1 !== extra.length && (
-                                                            <Box paddingY={extraDividerPadding}>
-                                                                <Divider />
-                                                            </Box>
-                                                        )}
-                                                    </div>
-                                                );
-                                            })}
-                                        </Box>
-                                    ) : null}
-                                </div>
-                            </div>
-                        </Touchable>
-                        {hasFooter && <CardFooter {...footerProps} />}
-                    </div>
+                        {hasExtras && (
+                            <Box paddingTop={16} paddingBottom={24}>
+                                {extra.map((item, index) => {
+                                    return (
+                                        <div key={index}>
+                                            <div className={styles.paddingX}>{item}</div>
+
+                                            {index + 1 !== extra.length && (
+                                                <Box paddingY={extraDividerPadding}>
+                                                    <Divider />
+                                                </Box>
+                                            )}
+                                        </div>
+                                    );
+                                })}
+                            </Box>
+                        )}
+                    </Touchable>
+                    {hasFooter && <CardFooter {...footerProps} />}
                 </Boxed>
             </section>
         );
