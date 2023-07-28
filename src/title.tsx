@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Text1, Text2, Text5} from './text';
+import Text, {Text1, Text2, Text6} from './text';
 import Inline from './inline';
 import Box from './box';
 import {vars} from './skins/skin-contract.css';
@@ -60,12 +60,35 @@ export const Title1 = ({children, as = 'h3', id, right, dataAttributes}: TitlePr
 };
 
 export const Title2 = ({children, as = 'h3', id, right, dataAttributes}: TitleProps): React.ReactElement => {
+    const {textPresets} = useTheme();
     return (
         <TitleLayout
             title={
-                <Text5 as={as} id={id} dataAttributes={{'component-name': 'Title2', ...dataAttributes}}>
+                <Text
+                    as={as}
+                    id={id}
+                    mobileSize={textPresets.title2.size.mobile}
+                    desktopSize={textPresets.title2.size.desktop}
+                    weight={textPresets.title2.weight}
+                    mobileLineHeight={textPresets.title2.lineHeight.mobile}
+                    desktopLineHeight={textPresets.title2.lineHeight.desktop}
+                    dataAttributes={{'component-name': 'Title2', ...dataAttributes}}
+                >
                     {children}
-                </Text5>
+                </Text>
+            }
+            right={right}
+        />
+    );
+};
+
+export const Title3 = ({children, as = 'h3', id, right, dataAttributes}: TitleProps): React.ReactElement => {
+    return (
+        <TitleLayout
+            title={
+                <Text6 as={as} id={id} dataAttributes={{'component-name': 'Title3', ...dataAttributes}}>
+                    {children}
+                </Text6>
             }
             right={right}
         />
