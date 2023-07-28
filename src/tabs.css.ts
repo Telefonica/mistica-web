@@ -46,6 +46,7 @@ export const tabsContainer = sprinkles({
 const baseTab = style([
     sprinkles({
         display: 'inline-flex',
+        flexShrink: 0,
         alignItems: 'center',
         justifyContent: 'center',
         paddingX: 16,
@@ -81,7 +82,6 @@ export const tabVariants = styleVariants({
         {
             '@media': {
                 [mq.tabletOrSmaller]: {
-                    maxWidth: 'initial',
                     flex: '1 1 0px',
                 },
             },
