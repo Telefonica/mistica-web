@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Title1, Title2, Title3, Stack, TextLink, ButtonLink} from '..';
+import {Title1, Title2, Title3, Stack, ButtonLink} from '..';
 
 export default {
     title: 'Components/Title',
@@ -35,7 +35,13 @@ export const Default: StoryComponent<Args> = ({title, linkText}) => (
         </Title2>
         <Title3
             as="h3"
-            right={linkText ? <TextLink href="https://google.com">{linkText}</TextLink> : undefined}
+            right={
+                linkText ? (
+                    <ButtonLink href="https://google.com" bleedRight bleedY>
+                        {linkText}
+                    </ButtonLink>
+                ) : undefined
+            }
         >
             {title || 'Title3'}
         </Title3>
