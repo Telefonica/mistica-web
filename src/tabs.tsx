@@ -16,11 +16,9 @@ const LINE_ANIMATION_DURATION_MS = isRunningAcceptanceTest() ? 0 : 300;
 const getTabVariant = (numberOfTabs: number): keyof typeof styles.tabVariants => {
     switch (numberOfTabs) {
         case 1:
-            return 'tabs1';
         case 2:
-            return 'tabs2';
         case 3:
-            return 'tabs3';
+            return 'fullWidth';
         default:
             return 'default';
     }

@@ -76,35 +76,13 @@ const baseTab = style([
 
 export const tabVariants = styleVariants({
     default: [baseTab],
-    tabs1: [
+    fullWidth: [
         baseTab,
         {
             '@media': {
                 [mq.tabletOrSmaller]: {
-                    minWidth: '100%',
-                    maxWidth: undefined,
-                },
-            },
-        },
-    ],
-    tabs2: [
-        baseTab,
-        {
-            '@media': {
-                [mq.tabletOrSmaller]: {
-                    minWidth: '50%',
-                    maxWidth: undefined,
-                },
-            },
-        },
-    ],
-    tabs3: [
-        baseTab,
-        {
-            '@media': {
-                [mq.tabletOrSmaller]: {
-                    minWidth: 'calc(100% / 3)',
-                    maxWidth: undefined,
+                    maxWidth: 'initial',
+                    flex: '1 1 0px',
                 },
             },
         },
