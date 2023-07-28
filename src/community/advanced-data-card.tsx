@@ -1,3 +1,4 @@
+// https://www.figma.com/file/35iS2dwoogulJZPgFGKmCX/Explora%C3%A7%C3%A3o-Data-Card-%2F-Slots?type=design&node-id=443-32508&mode=design&t=wwoi2TRLVsjwGYAb-0
 import * as React from 'react';
 import {Boxed} from '../boxed';
 import {sprinkles} from '../sprinkles.css';
@@ -11,6 +12,7 @@ import Touchable from '../touchable';
 import classNames from 'classnames';
 import {CardActionsGroup} from '../card';
 import {useTheme} from '../hooks';
+import {getPrefixedDataAttributes} from '../utils/dom';
 
 import type {CardAction} from '../card';
 import type StackingGroup from '../stacking-group';
@@ -58,60 +60,54 @@ const CardContent: React.FC<CardContentProps> = ({
     const {textPresets} = useTheme();
 
     return (
-        <>
+        <Stack space={4}>
+            {headline}
             <Stack space={4}>
-                <header>
-                    <Stack space={4}>
-                        {headline}
-                        <Stack space={4}>
-                            {pretitle && (
-                                <Text2
-                                    color={vars.colors.textPrimary}
-                                    truncate={pretitleLinesMax}
-                                    as={pretitleAs}
-                                    regular
-                                    hyphens="auto"
-                                >
-                                    {pretitle}
-                                </Text2>
-                            )}
-                            <Text
-                                mobileSize={18}
-                                mobileLineHeight="24px"
-                                desktopSize={20}
-                                desktopLineHeight="28px"
-                                truncate={titleLinesMax}
-                                weight={textPresets.cardTitle.weight}
-                                as={titleAs}
-                                hyphens="auto"
-                            >
-                                {title}
-                            </Text>
-                            <Text2
-                                color={vars.colors.textPrimary}
-                                truncate={subtitleLinesMax}
-                                as="p"
-                                regular
-                                hyphens="auto"
-                            >
-                                {subtitle}
-                            </Text2>
-                        </Stack>
-                        {description && (
-                            <Text2
-                                truncate={descriptionLinesMax}
-                                as="p"
-                                regular
-                                color={vars.colors.textSecondary}
-                                hyphens="auto"
-                            >
-                                {description}
-                            </Text2>
-                        )}
-                    </Stack>
-                </header>
+                {pretitle && (
+                    <Text2
+                        color={vars.colors.textPrimary}
+                        truncate={pretitleLinesMax}
+                        as={pretitleAs}
+                        regular
+                        hyphens="auto"
+                    >
+                        {pretitle}
+                    </Text2>
+                )}
+                <Text
+                    mobileSize={18}
+                    mobileLineHeight="24px"
+                    desktopSize={20}
+                    desktopLineHeight="28px"
+                    truncate={titleLinesMax}
+                    weight={textPresets.cardTitle.weight}
+                    as={titleAs}
+                    hyphens="auto"
+                >
+                    {title}
+                </Text>
+                <Text2
+                    color={vars.colors.textPrimary}
+                    truncate={subtitleLinesMax}
+                    as="p"
+                    regular
+                    hyphens="auto"
+                >
+                    {subtitle}
+                </Text2>
             </Stack>
-        </>
+            {description && (
+                <Text2
+                    truncate={descriptionLinesMax}
+                    as="p"
+                    regular
+                    color={vars.colors.textSecondary}
+                    hyphens="auto"
+                >
+                    {description}
+                </Text2>
+            )}
+        </Stack>
     );
 };
 
@@ -267,6 +263,7 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
         const footerProps = {button, footerImage, footerText, footerTextLinesMax, buttonLink};
 
         const hasFooter = !!button || !!footerImage || !!footerText || !!buttonLink;
+        const hasExtras = !!extra?.length;
 
         return (
             <section
@@ -274,90 +271,64 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
                     position: 'relative',
                     height: '100%',
                 })}
+                {...getPrefixedDataAttributes(dataAttributes, 'AdvancedDataCard')}
+                ref={ref}
             >
-                <Boxed
-                    className={styles.boxed}
-                    dataAttributes={{'component-name': 'AdvancedDataCard', ...dataAttributes}}
-                    ref={ref}
-                    width="100%"
-                    height="100%"
-                >
-                    <div className={styles.dataCard}>
-                        <Touchable
-                            onPress={onPress}
-                            tabIndex={0}
-                            maybe
-                            className={sprinkles({
-                                position: 'relative',
-                                height: '100%',
-                            })}
-                            aria-label={ariaLabel}
+                <Boxed className={styles.dataCard} height="100%">
+                    <Touchable
+                        onPress={onPress}
+                        tabIndex={0}
+                        maybe
+                        className={classNames(styles.touchableContainer, {[styles.hoverEffect]: !!onPress})}
+                        aria-label={ariaLabel}
+                    >
+                        <div
+                            className={classNames(
+                                styles.cardContentStyle,
+                                !hasFooter && !hasExtras ? styles.minHeight : ''
+                            )}
                         >
-                            <div className={onPress ? styles.interaction : ''}>
-                                <div
-                                    className={classNames(
-                                        styles.cardContentStyle,
-                                        !hasFooter && !extra ? styles.minHeight : ''
-                                    )}
-                                >
-                                    <Box paddingTop={8}>
-                                        <Stack space={8} className={sprinkles({flex: 1})}>
-                                            {stackingGroup}
-                                            <CardContent
-                                                headline={headline}
-                                                pretitle={pretitle}
-                                                pretitleAs={pretitleAs}
-                                                pretitleLinesMax={pretitleLinesMax}
-                                                title={title}
-                                                titleAs={titleAs}
-                                                titleLinesMax={titleLinesMax}
-                                                subtitle={subtitle}
-                                                subtitleLinesMax={subtitleLinesMax}
-                                                description={description}
-                                                descriptionLinesMax={descriptionLinesMax}
-                                            />
-                                        </Stack>
-                                    </Box>
-                                    <CardActionsGroup actions={actions} onClose={onClose} />
-                                </div>
-                                <div className={styles.extraTop}>
-                                    {extra && extra?.length ? (
-                                        <Box paddingTop={16} paddingBottom={24}>
-                                            {extra.map((ex, index) => {
-                                                return (
-                                                    <div key={index}>
-                                                        <div
-                                                            className={sprinkles({
-                                                                display: 'flex',
-                                                                width: '100%',
-                                                            })}
-                                                        >
-                                                            <div
-                                                                className={classNames(
-                                                                    sprinkles({width: '100%'}),
-                                                                    styles.paddingX
-                                                                )}
-                                                            >
-                                                                {ex}
-                                                            </div>
-                                                        </div>
+                            <Box paddingTop={8}>
+                                <Stack space={8}>
+                                    {stackingGroup}
+                                    <CardContent
+                                        headline={headline}
+                                        pretitle={pretitle}
+                                        pretitleAs={pretitleAs}
+                                        pretitleLinesMax={pretitleLinesMax}
+                                        title={title}
+                                        titleAs={titleAs}
+                                        titleLinesMax={titleLinesMax}
+                                        subtitle={subtitle}
+                                        subtitleLinesMax={subtitleLinesMax}
+                                        description={description}
+                                        descriptionLinesMax={descriptionLinesMax}
+                                    />
+                                </Stack>
+                            </Box>
+                        </div>
+                        <div style={{flexGrow: 1}} />
+                        {hasExtras && (
+                            <Box paddingTop={16} paddingBottom={24}>
+                                {extra.map((item, index) => {
+                                    return (
+                                        <div key={index}>
+                                            <div className={styles.paddingX}>{item}</div>
 
-                                                        {index + 1 !== extra.length && (
-                                                            <Box paddingY={extraDividerPadding}>
-                                                                <Divider />
-                                                            </Box>
-                                                        )}
-                                                    </div>
-                                                );
-                                            })}
-                                        </Box>
-                                    ) : null}
-                                </div>
-                            </div>
-                        </Touchable>
-                        {hasFooter && <CardFooter {...footerProps} />}
-                    </div>
+                                            {index + 1 !== extra.length && (
+                                                <Box paddingY={extraDividerPadding}>
+                                                    <Divider />
+                                                </Box>
+                                            )}
+                                        </div>
+                                    );
+                                })}
+                            </Box>
+                        )}
+                    </Touchable>
+                    {hasFooter && <CardFooter {...footerProps} />}
                 </Boxed>
+                <CardActionsGroup actions={actions} onClose={onClose} />
             </section>
         );
     }
