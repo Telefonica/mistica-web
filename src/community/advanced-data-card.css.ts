@@ -38,14 +38,18 @@ export const actions = style([
     },
 ]);
 
-export const boxed = style([
-    sprinkles({display: 'flex'}),
+export const touchableContainer = style([
     {
-        isolation: 'isolate', // Needed to preserve border-radius with Video component and Safari
+        // not defined in sprinkles to avoid touchable style override
+        display: 'flex',
     },
+    sprinkles({
+        height: '100%',
+        flexDirection: 'column',
+    }),
 ]);
 
-export const interaction = style({
+export const hoverEffect = style({
     '@media': {
         [mq.supportsHover]: {
             selectors: {
@@ -65,7 +69,6 @@ export const interaction = style({
 export const cardContentStyle = style([
     paddingX,
     sprinkles({
-        display: 'flex',
         paddingTop: 8,
         paddingBottom: 24,
     }),
@@ -83,6 +86,7 @@ export const minHeight = style({minHeight: 216});
 
 export const dataCard = style([
     sprinkles({
+        position: 'relative',
         display: 'flex',
         flex: 1,
         flexDirection: 'column',
@@ -194,11 +198,6 @@ export const buttonMobile = style([
         },
     },
 ]);
-
-export const extraTop = style({
-    marginTop: 'auto',
-    width: '100%',
-});
 
 export const footerDirection = style([
     sprinkles({

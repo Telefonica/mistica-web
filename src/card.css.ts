@@ -177,6 +177,13 @@ export const mediaCardContent = style([
     },
 ]);
 
+export const mediaCardIcon = style([
+    {
+        position: 'absolute',
+        zIndex: 1,
+    },
+]);
+
 export const nakedCardContent = style([
     sprinkles({
         display: 'flex',

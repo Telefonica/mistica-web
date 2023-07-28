@@ -1,3 +1,16 @@
+# [14.19.0](https://github.com/Telefonica/mistica-web/compare/v14.18.2...v14.19.0) (2023-07-28)
+
+
+### Bug Fixes
+
+* **ButtonLink, Title:** update alignments ([#829](https://github.com/Telefonica/mistica-web/issues/829)) ([87bd3e3](https://github.com/Telefonica/mistica-web/commit/87bd3e35de3a1e69b43a3c48b73761555b67e483))
+* **Cards:** CardAction type ([#831](https://github.com/Telefonica/mistica-web/issues/831)) ([6631788](https://github.com/Telefonica/mistica-web/commit/6631788588cddbe247f8ae70308ba1d5c0492dc5))
+
+
+### Features
+
+* **MediaCard:** add top icon support ([#824](https://github.com/Telefonica/mistica-web/issues/824)) ([e9a79a3](https://github.com/Telefonica/mistica-web/commit/e9a79a3fc389106906b647fe1b6f90482ffa5e1d))
+
 ## [14.18.2](https://github.com/Telefonica/mistica-web/compare/v14.18.1...v14.18.2) (2023-07-24)
 
 
