@@ -103,6 +103,21 @@ test('NakedCard with top actions', async () => {
     expect(image).toMatchImageSnapshot();
 });
 
+test.each(TESTABLE_DEVICES)('NakedCard with asset in %s', async (device) => {
+    await openStoryPage({
+        id: 'components-cards-nakedcard--default',
+        device,
+        args: {
+            asset: 'circle with icon',
+        },
+    });
+
+    const nakedCard = await screen.findByTestId('naked-card');
+    const image = await nakedCard.screenshot({captureBeyondViewport: true});
+
+    expect(image).toMatchImageSnapshot();
+});
+
 test.each(TESTABLE_DEVICES)('SmallNakedCard in %s', async (device) => {
     await openStoryPage({
         id: 'components-cards-nakedcard--small',

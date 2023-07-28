@@ -29,7 +29,7 @@ const BACKGROUND_VIDEO_SRC = beachVideo;
 const BACKGROUND_VIDEO_POSTER_SRC = beachImg;
 
 type PosterCardArgs = {
-    asset: 'icon' | 'circle + icon' | 'image' | 'circle + image';
+    asset: 'icon' | 'circle with icon' | 'image' | 'circle with image';
     background: 'image' | 'video';
     headlineType: TagType;
     headline: string;
@@ -60,13 +60,13 @@ export const Default: StoryComponent<PosterCardArgs> = ({
     aspectRatio,
 }) => {
     let icon;
-    if (asset === 'circle + icon') {
+    if (asset === 'circle with icon') {
         icon = (
             <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
                 <IconInvoicePlanFileRegular color={skinVars.colors.brand} />
             </Circle>
         );
-    } else if (asset === 'circle + image') {
+    } else if (asset === 'circle with image') {
         icon = <Circle size={40} backgroundImage={avatarImg} />;
     }
 
@@ -181,7 +181,7 @@ Default.args = {
 };
 Default.argTypes = {
     asset: {
-        options: ['circle + icon', 'circle + image', 'none'],
+        options: ['circle with icon', 'circle with image', 'none'],
         control: {type: 'select'},
     },
     headlineType: {
