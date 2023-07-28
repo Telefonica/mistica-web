@@ -29,7 +29,7 @@ const BACKGROUND_VIDEO_SRC = beachVideo;
 const BACKGROUND_VIDEO_POSTER_SRC = beachImg;
 
 type PosterCardArgs = {
-    asset: 'icon' | 'circle with icon' | 'image' | 'circle with image';
+    asset: 'circle with icon' | 'circle with image' | 'none';
     background: 'image' | 'video';
     headlineType: TagType;
     headline: string;
@@ -45,7 +45,7 @@ type PosterCardArgs = {
 };
 
 export const Default: StoryComponent<PosterCardArgs> = ({
-    asset = 'icon',
+    asset,
     background,
     headline,
     headlineType,
@@ -165,7 +165,7 @@ export const Default: StoryComponent<PosterCardArgs> = ({
 
 Default.storyName = 'Poster card';
 Default.args = {
-    asset: 'icon',
+    asset: 'none',
     headlineType: 'promo',
     background: 'image',
     headline: 'Priority',

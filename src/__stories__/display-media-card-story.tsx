@@ -32,7 +32,7 @@ const BACKGROUND_VIDEO_SRC = beachVideo;
 const BACKGROUND_VIDEO_POSTER_SRC = beachImg;
 
 type DisplayMediaCardArgs = {
-    asset: 'icon' | 'circle with icon' | 'image' | 'circle with image';
+    asset: 'circle with icon' | 'circle with image' | 'none';
     headlineType: TagType;
     background: 'image' | 'video';
     headline: string;
@@ -47,7 +47,7 @@ type DisplayMediaCardArgs = {
 };
 
 export const Default: StoryComponent<DisplayMediaCardArgs> = ({
-    asset = 'icon',
+    asset,
     headline,
     headlineType,
     background,
@@ -186,7 +186,7 @@ export const Default: StoryComponent<DisplayMediaCardArgs> = ({
 
 Default.storyName = 'Display Media card';
 Default.args = {
-    asset: 'icon',
+    asset: 'none',
     headlineType: 'promo',
     background: 'image',
     headline: 'Priority',
