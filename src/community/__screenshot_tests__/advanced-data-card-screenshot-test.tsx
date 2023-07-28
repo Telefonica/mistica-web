@@ -10,7 +10,7 @@ test.each`
     ${'button'}          | ${true}
     ${'link'}            | ${true}
     ${'button and link'} | ${true}
-`('Advanced Data Card', async ({actions, footerImage}) => {
+`('Advanced Data Card actions: $actions - footerImage: $footerImage', async ({actions, footerImage}) => {
     await openStoryPage({
         id: 'community-advanceddatacard--default',
         device: 'MOBILE_IOS',
@@ -18,6 +18,36 @@ test.each`
     });
 
     const element = await screen.findByTestId('advanced-data-card');
+    const image = await element.screenshot();
+
+    expect(image).toMatchImageSnapshot();
+});
+
+test.each`
+    extra
+    ${0}
+    ${1}
+    ${3}
+`('Advanced Data Card extras: $extra', async ({extra}) => {
+    await openStoryPage({
+        id: 'community-advanceddatacard--default',
+        device: 'MOBILE_IOS',
+        args: {extra},
+    });
+
+    const element = await screen.findByTestId('advanced-data-card');
+    const image = await element.screenshot();
+
+    expect(image).toMatchImageSnapshot();
+});
+
+test('Advanced Data Card inside Carousel', async () => {
+    await openStoryPage({
+        id: 'community-advanceddatacards-in-carousel--default',
+        device: 'DESKTOP',
+    });
+
+    const element = await screen.findByTestId('advanced-data-card-carousel');
     const image = await element.screenshot();
 
     expect(image).toMatchImageSnapshot();

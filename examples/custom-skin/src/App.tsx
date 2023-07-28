@@ -56,7 +56,7 @@ const App = () => {
                                 </Text3>
                                 <TextField name="phone" label="Phone number" prefix="+34" />
 
-                                <ButtonLink aligned onPress={() => {}}>
+                                <ButtonLink bleedLeft onPress={() => {}}>
                                     I’m having access problems
                                 </ButtonLink>
                             </Stack>

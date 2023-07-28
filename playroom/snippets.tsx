@@ -615,6 +615,7 @@ const cardSnippets: Array<Snippet> = [
             title="Title"
             subtitle="Subtitle"
             description="Description"
+            icon={<Avatar size={40} src="https://source.unsplash.com/600x600/?face" />}
             extra={<Placeholder />}
             button={
                 <ButtonPrimary small onPress={() => {}}>
@@ -635,6 +636,7 @@ const cardSnippets: Array<Snippet> = [
             title="Title"
             subtitle="Subtitle"
             description="Description"
+            icon={<Avatar size={40} src="https://source.unsplash.com/600x600/?face" />}
             extra={<Placeholder />}
             button={
                 <ButtonPrimary small onPress={() => {}}>
@@ -856,7 +858,7 @@ const titlesSnippets: Array<Snippet> = [
     },
     {
         name: 'Title1 (with link)',
-        code: '<Title1 right={<TextLink onPress={() => {}}>Link</TextLink>}>Some title</Title1>',
+        code: '<Title1 right={<ButtonLink onPress={() => {}} withChevron bleedRight bleedY>Link</ButtonLink>}>Some title</Title1>',
     },
     {
         name: 'Title2',
@@ -864,7 +866,7 @@ const titlesSnippets: Array<Snippet> = [
     },
     {
         name: 'Title2 (with link)',
-        code: '<Title2 right={<TextLink onPress={() => {}}>Link</TextLink>}>Some title</Title2>',
+        code: '<Title2 right={<ButtonLink onPress={() => {}} withChevron bleedRight bleedY>Link</ButtonLink>}>Some title</Title2>',
     },
 ].map((snippet) => ({...snippet, group: 'Titles'}));
 
@@ -1209,7 +1211,7 @@ const exampleScreens: Array<Snippet> = [
                     label="Password"
                     helperText="Helper text"
                   />
-                  <ButtonLink aligned onPress>
+                  <ButtonLink bleedLeft onPress>
                     I’m having problems with my password
                   </ButtonLink>
                 </Stack>
@@ -1222,7 +1224,7 @@ const exampleScreens: Array<Snippet> = [
                   </Text3>
                   <TextField name="phone" label="Phone number" prefix="+34" />
 
-                  <ButtonLink aligned onPress>
+                  <ButtonLink bleedLeft onPress>
                     I’m having access problems
                   </ButtonLink>
                 </Stack>
