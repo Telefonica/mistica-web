@@ -40,3 +40,15 @@ test.each`
 
     expect(image).toMatchImageSnapshot();
 });
+
+test('Advanced Data Card inside Carousel', async () => {
+    await openStoryPage({
+        id: 'community-advanceddatacards-in-carousel--default',
+        device: 'DESKTOP',
+    });
+
+    const element = await screen.findByTestId('advanced-data-card-carousel');
+    const image = await element.screenshot();
+
+    expect(image).toMatchImageSnapshot();
+});

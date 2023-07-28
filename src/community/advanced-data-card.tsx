@@ -279,9 +279,7 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
                         onPress={onPress}
                         tabIndex={0}
                         maybe
-                        className={classNames(styles.touchableContainer, {
-                            [styles.hoverEffect]: !!onPress,
-                        })}
+                        className={classNames(styles.touchableContainer, {[styles.hoverEffect]: !!onPress})}
                         aria-label={ariaLabel}
                     >
                         <div
@@ -308,9 +306,8 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
                                     />
                                 </Stack>
                             </Box>
-                            <CardActionsGroup actions={actions} onClose={onClose} />
                         </div>
-
+                        <div style={{flexGrow: 1}} />
                         {hasExtras && (
                             <Box paddingTop={16} paddingBottom={24}>
                                 {extra.map((item, index) => {
@@ -331,6 +328,7 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
                     </Touchable>
                     {hasFooter && <CardFooter {...footerProps} />}
                 </Boxed>
+                <CardActionsGroup actions={actions} onClose={onClose} />
             </section>
         );
     }

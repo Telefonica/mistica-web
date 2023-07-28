@@ -38,11 +38,16 @@ export const actions = style([
     },
 ]);
 
-export const touchableContainer = sprinkles({
-    height: '100%',
-    display: 'flex',
-    flexDirection: 'column',
-});
+export const touchableContainer = style([
+    {
+        // not defined in sprinkles to avoid touchable style override
+        display: 'flex',
+    },
+    sprinkles({
+        height: '100%',
+        flexDirection: 'column',
+    }),
+]);
 
 export const hoverEffect = style({
     '@media': {

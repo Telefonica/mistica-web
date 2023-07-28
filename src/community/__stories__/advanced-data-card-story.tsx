@@ -11,7 +11,6 @@ import type {TagType} from '../../tag';
 
 export default {
     title: 'Community/AdvancedDataCard',
-    argTypes: {extra: {control: {type: 'range', min: 0, max: 5}}},
 };
 
 type Args = {
