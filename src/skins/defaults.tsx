@@ -12,6 +12,7 @@ export const defaultTextPresetsConfig: TextPresetsConfig = {
     link: {weight: 'medium'},
     title1: {weight: 'medium'},
     title2: {weight: 'light', size: {mobile: 20, desktop: 28}, lineHeight: {mobile: 24, desktop: 32}},
+    navigationBar: {weight: 'medium'},
     indicator: {weight: 'medium'},
     tabsLabel: {weight: 'medium', size: {mobile: 16, desktop: 18}, lineHeight: {mobile: 24, desktop: 24}},
 };

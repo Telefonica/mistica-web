@@ -31,6 +31,7 @@ export type TextPresetsConfig = {
         size: {mobile: number; desktop: number};
         lineHeight: {mobile: number; desktop: number};
     };
+    navigationBar: TextTokenConfig;
     text5: TextTokenConfig;
     text6: TextTokenConfig;
     text7: TextTokenConfig;
