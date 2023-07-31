@@ -119,6 +119,7 @@ const Tabs: React.FC<TabsProps> = ({selectedIndex, onChange, tabs, dataAttribute
                                                 color="inherit"
                                                 wordBreak={false}
                                                 textAlign="center"
+                                                hyphens="auto"
                                             >
                                                 {text}
                                             </Text>
