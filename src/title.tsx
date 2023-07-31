@@ -10,16 +10,17 @@ import type {DataAttributes} from './utils/types';
 type TitleLayoutProps = {
     title: React.ReactElement;
     right?: React.ReactNode;
+    dataAttributes?: DataAttributes;
 };
 
-const TitleLayout = ({title, right}: TitleLayoutProps): React.ReactElement => {
+const TitleLayout = ({title, right, dataAttributes}: TitleLayoutProps): React.ReactElement => {
     const {textPresets} = useTheme();
     if (!right) {
         return title;
     }
 
     return (
-        <Inline space="between" alignItems="baseline">
+        <Inline space="between" alignItems="baseline" dataAttributes={dataAttributes}>
             {title}
             <Box paddingLeft={16}>
                 <Text2 weight={textPresets.link.weight}>{right}</Text2>
@@ -48,13 +49,13 @@ export const Title1 = ({children, as = 'h3', id, right, dataAttributes}: TitlePr
                     weight={textPresets.title1.weight}
                     as={as}
                     id={id}
-                    dataAttributes={{'component-name': 'Title1', ...dataAttributes}}
                     wordBreak={false}
                 >
                     {children}
                 </Text1>
             }
             right={right}
+            dataAttributes={{'component-name': 'Title1', ...dataAttributes}}
         />
     );
 };
@@ -72,12 +73,12 @@ export const Title2 = ({children, as = 'h3', id, right, dataAttributes}: TitlePr
                     weight={textPresets.title2.weight}
                     mobileLineHeight={textPresets.title2.lineHeight.mobile}
                     desktopLineHeight={textPresets.title2.lineHeight.desktop}
-                    dataAttributes={{'component-name': 'Title2', ...dataAttributes}}
                 >
                     {children}
                 </Text>
             }
             right={right}
+            dataAttributes={{'component-name': 'Title2', ...dataAttributes}}
         />
     );
 };
@@ -86,11 +87,12 @@ export const Title3 = ({children, as = 'h3', id, right, dataAttributes}: TitlePr
     return (
         <TitleLayout
             title={
-                <Text6 as={as} id={id} dataAttributes={{'component-name': 'Title3', ...dataAttributes}}>
+                <Text6 as={as} id={id}>
                     {children}
                 </Text6>
             }
             right={right}
+            dataAttributes={{'component-name': 'Title3', ...dataAttributes}}
         />
     );
 };
