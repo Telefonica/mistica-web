@@ -5,12 +5,12 @@ import {useIsInverseVariant} from './theme-variant-context';
 import ResponsiveLayout from './responsive-layout';
 import GridLayout from './grid-layout';
 import OverscrollColor from './overscroll-color-context';
-import Text, {Text8, Text7, Text6, Text3, Text2} from './text';
+import {Text8, Text7, Text6, Text3, Text2} from './text';
 import ButtonGroup from './button-group';
 import {vars} from './skins/skin-contract.css';
 import * as styles from './header.css';
 import {getPrefixedDataAttributes} from './utils/dom';
-import {useTheme} from './hooks';
+import {Title2, Title3} from './title';
 
 import type NavigationBreadcrumbs from './navigation-breadcrumbs';
 import type {ButtonPrimary, ButtonSecondary} from './button';
@@ -70,7 +70,6 @@ export const Header: React.FC<HeaderProps> = ({
     isErrorAmount,
     secondaryButton,
 }) => {
-    const {textPresets} = useTheme();
     const isInverse = useIsInverseVariant();
 
     const renderRichText = (richText: RichText, baseProps: Omit<TextPresetProps, 'children'>) => {
@@ -96,21 +95,9 @@ export const Header: React.FC<HeaderProps> = ({
                     <Stack space={8}>
                         {pretitle && renderRichText(pretitle, {color: vars.colors.textPrimary})}
                         {small ? (
-                            <Text
-                                mobileSize={textPresets.title2.size.mobile}
-                                desktopSize={textPresets.title2.size.desktop}
-                                weight={textPresets.title2.weight}
-                                mobileLineHeight={textPresets.title2.lineHeight.mobile}
-                                desktopLineHeight={textPresets.title2.lineHeight.desktop}
-                                role="heading"
-                                aria-level={2}
-                            >
-                                {title}
-                            </Text>
+                            <Title2 aria-level={2}>{title}</Title2>
                         ) : (
-                            <Text6 role="heading" aria-level={2}>
-                                {title}
-                            </Text6>
+                            <Title3 aria-level={2}>{title}</Title3>
                         )}
                         {description &&
                             (small ? (
