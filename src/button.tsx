@@ -433,12 +433,18 @@ interface ButtonLinkCommonProps {
     trackEvent?: boolean;
     /** "data-" prefix is automatically added. For example, use "testid" instead of "data-testid" */
     dataAttributes?: DataAttributes;
+    /**
+     * @deprecated This field is deprecated, please use bleedLeft instead.
+     */
     aligned?: boolean;
     showSpinner?: boolean;
     loadingText?: string;
     StartIcon?: React.FC<IconProps>;
     EndIcon?: React.FC<IconProps>;
     withChevron?: boolean;
+    bleedLeft?: boolean;
+    bleedRight?: boolean;
+    bleedY?: boolean;
 }
 interface ButtonLinkOnPressProps extends ButtonLinkCommonProps {
     onPress: (event: React.MouseEvent<HTMLElement>) => void | undefined | Promise<void>;
@@ -509,7 +515,9 @@ export const ButtonLink = React.forwardRef<TouchableElement, ButtonLinkProps>((p
     const commonProps = {
         className: classnames(styles.link, {
             [styles.inverseLink]: isInverse,
-            [styles.alignedLink]: props.aligned,
+            [styles.alignedLeftLink]: !!props.bleedLeft,
+            [styles.alignedRightLink]: !!props.bleedRight,
+            [styles.alignedVerticalLink]: !!props.bleedY,
             [styles.isLoading]: showSpinner,
         }),
         trackingEvent: props.trackingEvent ?? (props.trackEvent ? createDefaultTrackingEvent() : undefined),

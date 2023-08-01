@@ -177,6 +177,13 @@ export const mediaCardContent = style([
     },
 ]);
 
+export const mediaCardIcon = style([
+    {
+        position: 'absolute',
+        zIndex: 1,
+    },
+]);
+
 export const nakedCardContent = style([
     sprinkles({
         display: 'flex',
@@ -385,21 +392,6 @@ export const cardActionMedia = style([
                     ':not(:disabled) > &:active': {
                         backgroundColor: applyAlpha(skinVars.rawColors.inverse, 1.0),
                     },
-                },
-            },
-        },
-    },
-]);
-
-export const videoAction = style([
-    cardActionBase,
-    {
-        background: applyAlpha('#000000', 0.4),
-        transition: 'background-color 0.2s ease-in-out',
-        '@media': {
-            [mq.supportsHover]: {
-                ':hover': {
-                    background: applyAlpha('#000000', 0.6),
                 },
             },
         },

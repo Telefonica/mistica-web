@@ -1,12 +1,11 @@
 import * as React from 'react';
-import ResponsiveLayout from '../../responsive-layout';
-import Box from '../../box';
 import {ButtonLink, ButtonPrimary} from '../../button';
 import Tag from '../../tag';
 import AdvancedDataCard from '../advanced-data-card';
 import imgExample from '../../__stories__/images/avatar.jpg';
 import Image from '../../image';
 import StackingGroup from '../../stacking-group';
+import {Placeholder} from '../../placeholder';
 
 import type {TagType} from '../../tag';
 
@@ -25,6 +24,7 @@ type Args = {
     footerText: string;
     actions: string;
     onClose: boolean;
+    extra: number;
 };
 
 export const Default: StoryComponent<Args> = ({
@@ -38,6 +38,7 @@ export const Default: StoryComponent<Args> = ({
     footerText,
     actions,
     onClose,
+    extra,
 }) => {
     const button = actions.includes('button') ? (
         <ButtonPrimary
@@ -67,35 +68,35 @@ export const Default: StoryComponent<Args> = ({
         : undefined;
 
     return (
-        <ResponsiveLayout>
-            <Box paddingY={24} dataAttributes={{testid: 'advanced-data-card'}}>
-                <AdvancedDataCard
-                    stackingGroup={
-                        stackingGroup ? (
-                            <StackingGroup maxItems={4} moreItemsStyle={{type: 'square', size: 40}}>
-                                <Image height={40} src={imgExample} />
-                                <Image height={40} src={imgExample} />
-                                <Image height={40} src={imgExample} />
-                                <Image height={40} src={imgExample} />
-                                <Image height={40} src={imgExample} />
-                            </StackingGroup>
-                        ) : undefined
-                    }
-                    headline={<Tag type={headlineType}>{headlineType}</Tag>}
-                    pretitle={pretitle}
-                    title={title}
-                    subtitle={subtitle}
-                    description={description}
-                    aria-label="aria label"
-                    button={button}
-                    buttonLink={buttonLink}
-                    footerImage={footerImage ? <Image height={40} src={imgExample} /> : undefined}
-                    footerText={footerText}
-                    onClose={onClose ? () => window.alert('closed!') : undefined}
-                    onPress={onPress}
-                />
-            </Box>
-        </ResponsiveLayout>
+        <AdvancedDataCard
+            dataAttributes={{testid: 'advanced-data-card'}}
+            stackingGroup={
+                stackingGroup ? (
+                    <StackingGroup maxItems={4} moreItemsStyle={{type: 'square', size: 40}}>
+                        <Image height={40} src={imgExample} />
+                        <Image height={40} src={imgExample} />
+                        <Image height={40} src={imgExample} />
+                        <Image height={40} src={imgExample} />
+                        <Image height={40} src={imgExample} />
+                    </StackingGroup>
+                ) : undefined
+            }
+            headline={<Tag type={headlineType}>{headlineType}</Tag>}
+            pretitle={pretitle}
+            title={title}
+            subtitle={subtitle}
+            description={description}
+            aria-label="aria label"
+            button={button}
+            buttonLink={buttonLink}
+            footerImage={footerImage ? <Image height={40} src={imgExample} /> : undefined}
+            footerText={footerText}
+            onClose={onClose ? () => window.alert('closed!') : undefined}
+            onPress={onPress}
+            extra={Array.from({length: extra}, (_, i) => (
+                <Placeholder key={i} height={56} />
+            ))}
+        />
     );
 };
 
@@ -111,6 +112,7 @@ Default.args = {
     footerText: '',
     actions: 'button and link',
     onClose: true,
+    extra: 0,
 };
 Default.argTypes = {
     headlineType: {
