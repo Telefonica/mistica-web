@@ -7,6 +7,7 @@ import {Text} from './text';
 import {isRunningAcceptanceTest} from './utils/platform';
 import {getPrefixedDataAttributes} from './utils/dom';
 import * as styles from './tabs.css';
+import Inline from './inline';
 
 import type {DataAttributes, TrackingEvent} from './utils/types';
 
@@ -14,10 +15,10 @@ const LINE_ANIMATION_DURATION_MS = isRunningAcceptanceTest() ? 0 : 300;
 
 const getTabVariant = (numberOfTabs: number): keyof typeof styles.tabVariants => {
     switch (numberOfTabs) {
+        case 1:
         case 2:
-            return 'tabs2';
         case 3:
-            return 'tabs3';
+            return 'fullWidth';
         default:
             return 'default';
     }
@@ -57,9 +58,9 @@ const Tabs: React.FC<TabsProps> = ({selectedIndex, onChange, tabs, dataAttribute
             line.style.transform = `translate(${tabFrom.offsetLeft - scrollable.scrollLeft}px, 0)`;
             Promise.resolve().then(() => {
                 // set final line styles
+                line.style.transition = `transform ${LINE_ANIMATION_DURATION_MS}ms, width ${LINE_ANIMATION_DURATION_MS}ms`;
                 line.style.width = `${tabTo.offsetWidth}px`;
                 line.style.transform = `translate(${tabTo.offsetLeft - scrollable.scrollLeft}px, 0)`;
-                line.style.transition = `transform ${LINE_ANIMATION_DURATION_MS}ms, width ${LINE_ANIMATION_DURATION_MS}ms`;
             });
             setTimeout(() => {
                 // hide line
@@ -94,8 +95,7 @@ const Tabs: React.FC<TabsProps> = ({selectedIndex, onChange, tabs, dataAttribute
                                                 ? isAnimating
                                                     ? styles.tabSelectionVariants.selectedAnimating
                                                     : styles.tabSelectionVariants.selected
-                                                : styles.tabSelectionVariants.noSelected,
-                                            icon && styles.tabWithIcon
+                                                : styles.tabSelectionVariants.noSelected
                                         )}
                                         onPress={() => {
                                             if (!isAnimating && selectedIndex !== index) {
@@ -108,19 +108,22 @@ const Tabs: React.FC<TabsProps> = ({selectedIndex, onChange, tabs, dataAttribute
                                         aria-controls={ariaControls}
                                         aria-selected={isSelected ? 'true' : 'false'}
                                     >
-                                        {icon && <div className={styles.icon}>{icon}</div>}
-                                        <Text
-                                            desktopSize={textPresets.tabsLabel.size.desktop}
-                                            mobileSize={textPresets.tabsLabel.size.mobile}
-                                            desktopLineHeight={textPresets.tabsLabel.lineHeight.desktop}
-                                            mobileLineHeight={textPresets.tabsLabel.lineHeight.mobile}
-                                            weight={textPresets.tabsLabel.weight}
-                                            color="inherit"
-                                            wordBreak={false}
-                                            textAlign="center"
-                                        >
-                                            {text}
-                                        </Text>
+                                        <Inline space={!!icon && !!text ? 8 : 0} alignItems="center">
+                                            {icon && <div className={styles.icon}>{icon}</div>}
+                                            <Text
+                                                desktopSize={textPresets.tabsLabel.size.desktop}
+                                                mobileSize={textPresets.tabsLabel.size.mobile}
+                                                desktopLineHeight={textPresets.tabsLabel.lineHeight.desktop}
+                                                mobileLineHeight={textPresets.tabsLabel.lineHeight.mobile}
+                                                weight={textPresets.tabsLabel.weight}
+                                                color="inherit"
+                                                wordBreak={false}
+                                                textAlign="center"
+                                                hyphens="auto"
+                                            >
+                                                {text}
+                                            </Text>
+                                        </Inline>
                                     </BaseTouchable>
                                 );
                             })}
