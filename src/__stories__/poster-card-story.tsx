@@ -29,7 +29,7 @@ const BACKGROUND_VIDEO_SRC = beachVideo;
 const BACKGROUND_VIDEO_POSTER_SRC = beachImg;
 
 type PosterCardArgs = {
-    asset: 'icon' | 'circle + icon' | 'image' | 'circle + image';
+    asset: 'circle with icon' | 'circle with image' | 'none';
     background: 'image' | 'video';
     headlineType: TagType;
     headline: string;
@@ -45,7 +45,7 @@ type PosterCardArgs = {
 };
 
 export const Default: StoryComponent<PosterCardArgs> = ({
-    asset = 'icon',
+    asset,
     background,
     headline,
     headlineType,
@@ -60,13 +60,13 @@ export const Default: StoryComponent<PosterCardArgs> = ({
     aspectRatio,
 }) => {
     let icon;
-    if (asset === 'circle + icon') {
+    if (asset === 'circle with icon') {
         icon = (
             <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
                 <IconInvoicePlanFileRegular color={skinVars.colors.brand} />
             </Circle>
         );
-    } else if (asset === 'circle + image') {
+    } else if (asset === 'circle with image') {
         icon = <Circle size={40} backgroundImage={avatarImg} />;
     }
 
@@ -165,7 +165,7 @@ export const Default: StoryComponent<PosterCardArgs> = ({
 
 Default.storyName = 'Poster card';
 Default.args = {
-    asset: 'icon',
+    asset: 'none',
     headlineType: 'promo',
     background: 'image',
     headline: 'Priority',
@@ -181,7 +181,7 @@ Default.args = {
 };
 Default.argTypes = {
     asset: {
-        options: ['circle + icon', 'circle + image', 'none'],
+        options: ['circle with icon', 'circle with image', 'none'],
         control: {type: 'select'},
     },
     headlineType: {
