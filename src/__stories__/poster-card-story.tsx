@@ -30,7 +30,9 @@ const BACKGROUND_VIDEO_POSTER_SRC = beachImg;
 
 type PosterCardArgs = {
     asset: 'icon' | 'circle + icon' | 'image' | 'circle + image';
-    background: 'image' | 'video';
+    background: 'image' | 'video' | 'color';
+    backgroundColor: string;
+    variant: 'default' | 'inverse' | 'alternative';
     headlineType: TagType;
     headline: string;
     pretitle: string;
@@ -47,6 +49,8 @@ type PosterCardArgs = {
 export const Default: StoryComponent<PosterCardArgs> = ({
     asset = 'icon',
     background,
+    backgroundColor,
+    variant,
     headline,
     headlineType,
     pretitle,
@@ -85,9 +89,14 @@ export const Default: StoryComponent<PosterCardArgs> = ({
                       : undefined,
                   backgroundImage: BACKGROUND_IMAGE_SRC,
               }
-            : {
+            : background === 'video'
+            ? {
                   backgroundVideo: BACKGROUND_VIDEO_SRC,
                   poster: BACKGROUND_VIDEO_POSTER_SRC,
+              }
+            : {
+                  backgroundColor,
+                  variant,
               };
 
     const wrongBackgroundProps =
@@ -168,6 +177,8 @@ Default.args = {
     asset: 'icon',
     headlineType: 'promo',
     background: 'image',
+    backgroundColor: '',
+    variant: 'default',
     headline: 'Priority',
     pretitle: 'Pretitle',
     title: 'Title',
@@ -189,8 +200,17 @@ Default.argTypes = {
         control: {type: 'select'},
     },
     background: {
-        options: ['image', 'video'],
+        options: ['image', 'video', 'color'],
         control: {type: 'select'},
+    },
+    backgroundColor: {
+        control: {type: 'color'},
+        if: {arg: 'background', eq: 'color'},
+    },
+    variant: {
+        options: ['default', 'inverse', 'alternative'],
+        control: {type: 'select'},
+        if: {arg: 'background', eq: 'color'},
     },
     aspectRatio: {
         options: ['1:1', '16:9', '7:10', '9:10', 'auto'],
