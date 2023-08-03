@@ -147,42 +147,53 @@ const Tooltip: React.FC<Props> = ({
     const getPosition = (position: Position | undefined) =>
         isTabletOrSmaller ? position || defaultPositionMobile : position || defaultPositionDesktop;
 
+    const noRightSpace = (position: Position) => {
+        if (!tooltipRef.current) return position;
+        const tooltipBoundingClientRect = tooltipRef.current.getBoundingClientRect();
+
+        return targetBoundingClientRect.current.right + tooltipBoundingClientRect.width > window.innerWidth;
+    };
+
+    const noLeftSpace = (position: Position) => {
+        if (!tooltipRef.current) return position;
+        const tooltipBoundingClientRect = tooltipRef.current.getBoundingClientRect();
+
+        return targetBoundingClientRect.current.left < tooltipBoundingClientRect.width;
+    };
+
     const validatePosition = (position: Position) => {
         if (!tooltipRef.current) return position;
         const tooltipBoundingClientRect = tooltipRef.current.getBoundingClientRect();
 
-        const noRightSpaceBottom =
-            targetBoundingClientRect.current.right + tooltipBoundingClientRect.width > window.innerWidth
-                ? 'left'
-                : 'bottom';
+        const validateLeft = (position: Position) => {
+            const noTopSpace =
+                targetBoundingClientRect.current.top < tooltipBoundingClientRect.height ? 'bottom' : 'top';
+            return noLeftSpace(position) ? noTopSpace : position;
+        };
 
-        const noRightSpaceTop =
-            targetBoundingClientRect.current.right + tooltipBoundingClientRect.width > window.innerWidth
-                ? 'left'
-                : 'top';
+        const validateRight = (position: Position) => {
+            return noRightSpace(position) ? validateLeft('left') : position;
+        };
 
         const positionValidated = {
             top:
                 targetBoundingClientRect.current.top < tooltipBoundingClientRect.height
-                    ? noRightSpaceBottom
-                    : targetBoundingClientRect.current.right + tooltipBoundingClientRect.width >
-                      window.innerWidth
-                    ? 'left'
-                    : position,
-            right:
-                targetBoundingClientRect.current.right + tooltipBoundingClientRect.width > window.innerWidth
-                    ? 'left'
-                    : position,
+                    ? validateRight('bottom')
+                    : validateRight(position),
+            right: validateRight(position),
             left:
-                targetBoundingClientRect.current.left < tooltipBoundingClientRect.width ? 'right' : position,
+                targetBoundingClientRect.current.left < tooltipBoundingClientRect.width
+                    ? noRightSpace(position)
+                        ? targetBoundingClientRect.current.top < tooltipBoundingClientRect.height
+                            ? 'bottom'
+                            : 'top'
+                        : 'right'
+                    : position,
             bottom:
                 targetBoundingClientRect.current.bottom + tooltipBoundingClientRect.height >
                 window.innerHeight
-                    ? noRightSpaceTop
-                    : targetBoundingClientRect.current.right + tooltipBoundingClientRect.width >
-                      window.innerWidth
-                    ? 'left'
-                    : position,
+                    ? validateRight('top')
+                    : validateRight(position),
         };
 
         return positionValidated[position];
@@ -262,14 +273,30 @@ const Tooltip: React.FC<Props> = ({
                       )
                     : 0;
 
-            const noRightSpace =
-                targetBoundingClientRect.current.right + tooltipBoundingClientRect.width > window.innerWidth;
+            const bottomAdjustment = changedPosition
+                ? changedPosition
+                : !width
+                ? window.pageXOffset +
+                  targetBoundingClientRect.current.left +
+                  tooltipMarginFix +
+                  targetBoundingClientRect.current.width / 2 -
+                  tooltipBoundingClientRect.width / 2
+                : window.pageXOffset +
+                  targetBoundingClientRect.current.left +
+                  targetBoundingClientRect.current.width / 2 -
+                  width / 2;
 
-            const leftAdjustment = !width
+            const leftAdjustment = noLeftSpace(position)
+                ? bottomAdjustment
+                : !width
                 ? targetBoundingClientRect.current.left - tooltipBoundingClientRect.width - distanceToTarget
                 : targetBoundingClientRect.current.left - width - distanceToTarget;
 
-            const topAdjustment = changedPosition
+            const topAdjustment = noLeftSpace(position)
+                ? targetBoundingClientRect.current.top < tooltipBoundingClientRect.height
+                    ? window.pageYOffset + targetBoundingClientRect.current.bottom + distanceToTarget
+                    : window.pageYOffset + targetBoundingClientRect.current.top - distanceToTarget
+                : changedPosition
                 ? changedPosition
                 : window.pageYOffset +
                   targetBoundingClientRect.current.top +
@@ -277,10 +304,10 @@ const Tooltip: React.FC<Props> = ({
 
             const containerPos = {
                 right: {
-                    left: noRightSpace
+                    left: noRightSpace(position)
                         ? leftAdjustment
                         : targetBoundingClientRect.current.right + distanceToTarget,
-                    top: noRightSpace
+                    top: noRightSpace(position)
                         ? topAdjustment
                         : changedPosition
                         ? changedPosition
@@ -293,43 +320,17 @@ const Tooltip: React.FC<Props> = ({
                     top: topAdjustment,
                 },
                 top: {
-                    top: noRightSpace
+                    top: noRightSpace(position)
                         ? topAdjustment
                         : window.pageYOffset + targetBoundingClientRect.current.top - distanceToTarget,
 
-                    left: noRightSpace
-                        ? leftAdjustment
-                        : changedPosition
-                        ? changedPosition
-                        : !width
-                        ? window.pageXOffset +
-                          targetBoundingClientRect.current.left +
-                          tooltipMarginFix +
-                          targetBoundingClientRect.current.width / 2 -
-                          tooltipBoundingClientRect.width / 2
-                        : window.pageXOffset +
-                          targetBoundingClientRect.current.left +
-                          targetBoundingClientRect.current.width / 2 -
-                          width / 2,
+                    left: noRightSpace(position) ? leftAdjustment : bottomAdjustment,
                 },
                 bottom: {
-                    top: noRightSpace
+                    top: noRightSpace(position)
                         ? topAdjustment
                         : window.pageYOffset + targetBoundingClientRect.current.bottom + distanceToTarget,
-                    left: noRightSpace
-                        ? leftAdjustment
-                        : changedPosition
-                        ? changedPosition
-                        : !width
-                        ? window.pageXOffset +
-                          targetBoundingClientRect.current.left +
-                          tooltipMarginFix +
-                          targetBoundingClientRect.current.width / 2 -
-                          tooltipBoundingClientRect.width / 2
-                        : window.pageXOffset +
-                          targetBoundingClientRect.current.left +
-                          targetBoundingClientRect.current.width / 2 -
-                          width / 2,
+                    left: noRightSpace(position) ? leftAdjustment : bottomAdjustment,
                 },
             };
 
