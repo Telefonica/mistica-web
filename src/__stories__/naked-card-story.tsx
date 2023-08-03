@@ -12,11 +12,14 @@ import {
     Stack,
     Text2,
     Inline,
+    Circle,
+    skinVars,
 } from '..';
 import {Placeholder} from '../placeholder';
 import tennisImg from './images/tennis.jpg';
 import confettiVideo from './videos/confetti.mp4';
 import {SmallNakedCard} from '../card';
+import avatarImg from './images/avatar.jpg';
 
 import type {TagType} from '..';
 
@@ -31,6 +34,7 @@ const VIDEO_SRC = confettiVideo;
 const IMAGE_SRC = tennisImg;
 
 type Args = {
+    asset: 'circle with icon' | 'circle with image' | 'none';
     media: 'image' | 'circular image' | 'video';
     headlineType: TagType;
     headline: string;
@@ -56,7 +60,19 @@ export const Default: StoryComponent<Args> = ({
     closable,
     withTopAction,
     media,
+    asset,
 }) => {
+    let icon;
+    if (asset === 'circle with icon') {
+        icon = (
+            <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
+                <IconMobileDeviceRegular color={skinVars.colors.brand} />
+            </Circle>
+        );
+    } else if (asset === 'circle with image') {
+        icon = <Circle size={40} backgroundImage={avatarImg} />;
+    }
+
     const button = actions.includes('button') ? (
         <ButtonPrimary small href="https://google.com">
             Action
@@ -95,6 +111,7 @@ export const Default: StoryComponent<Args> = ({
                             <Image circular src={IMAGE_SRC} />
                         )
                     }
+                    icon={icon}
                     {...interactiveActions}
                     extra={withExtra ? <Placeholder /> : undefined}
                     onClose={closable ? () => {} : undefined}
@@ -119,6 +136,7 @@ export const Default: StoryComponent<Args> = ({
 
 Default.storyName = 'NakedCard';
 Default.args = {
+    asset: 'none',
     media: 'image',
     headlineType: 'promo',
     headline: 'Priority',
@@ -132,6 +150,10 @@ Default.args = {
     withTopAction: false,
 };
 Default.argTypes = {
+    asset: {
+        options: ['circle with icon', 'circle with image', 'none'],
+        control: {type: 'select'},
+    },
     media: {
         options: ['image', 'circular image', 'video'],
         control: {type: 'select'},

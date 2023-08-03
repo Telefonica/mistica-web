@@ -32,7 +32,7 @@ const BACKGROUND_VIDEO_SRC = beachVideo;
 const BACKGROUND_VIDEO_POSTER_SRC = beachImg;
 
 type DisplayMediaCardArgs = {
-    asset: 'icon' | 'circle + icon' | 'image' | 'circle + image';
+    asset: 'circle with icon' | 'circle with image' | 'none';
     headlineType: TagType;
     background: 'image' | 'video';
     headline: string;
@@ -47,7 +47,7 @@ type DisplayMediaCardArgs = {
 };
 
 export const Default: StoryComponent<DisplayMediaCardArgs> = ({
-    asset = 'icon',
+    asset,
     headline,
     headlineType,
     background,
@@ -61,13 +61,13 @@ export const Default: StoryComponent<DisplayMediaCardArgs> = ({
     aspectRatio,
 }) => {
     let icon;
-    if (asset === 'circle + icon') {
+    if (asset === 'circle with icon') {
         icon = (
             <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
                 <IconInvoicePlanFileRegular color={skinVars.colors.brand} />
             </Circle>
         );
-    } else if (asset === 'circle + image') {
+    } else if (asset === 'circle with image') {
         icon = <Circle size={40} backgroundImage={avatarImg} />;
     }
 
@@ -186,7 +186,7 @@ export const Default: StoryComponent<DisplayMediaCardArgs> = ({
 
 Default.storyName = 'Display Media card';
 Default.args = {
-    asset: 'icon',
+    asset: 'none',
     headlineType: 'promo',
     background: 'image',
     headline: 'Priority',
@@ -201,7 +201,7 @@ Default.args = {
 };
 Default.argTypes = {
     asset: {
-        options: ['circle + icon', 'circle + image', 'none'],
+        options: ['circle with icon', 'circle with image', 'none'],
         control: {type: 'select'},
     },
     headlineType: {

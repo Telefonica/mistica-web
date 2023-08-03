@@ -47,3 +47,16 @@ test('DisplayMediaCard with video', async () => {
 
     expect(image).toMatchImageSnapshot();
 });
+
+test('DisplayMediaCard with asset', async () => {
+    await openStoryPage({
+        id: 'components-cards-display-media-card--default',
+        args: {asset: 'circle with icon'},
+    });
+
+    const displayMediaCard = await screen.findByTestId('display-media-card');
+
+    const image = await displayMediaCard.screenshot();
+
+    expect(image).toMatchImageSnapshot();
+});

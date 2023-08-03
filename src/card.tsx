@@ -427,6 +427,7 @@ type MaybeTouchableCard<T> = ExclusifyUnion<TouchableCard<T> | T>;
 
 interface MediaCardBaseProps {
     media: RendersElement<typeof Image> | RendersElement<typeof Video>;
+    icon?: React.ReactElement;
     headline?: string | RendersNullableElement<typeof Tag>;
     pretitle?: string;
     pretitleLinesMax?: number;
@@ -435,7 +436,6 @@ interface MediaCardBaseProps {
     subtitle?: string;
     subtitleLinesMax?: number;
     description?: string;
-    icon?: React.ReactElement;
     descriptionLinesMax?: number;
     extra?: React.ReactNode;
     actions?: Array<CardAction>;
@@ -458,6 +458,7 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
     (
         {
             media,
+            icon,
             headline,
             pretitle,
             pretitleLinesMax,
@@ -466,7 +467,6 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
             title,
             titleLinesMax,
             description,
-            icon,
             descriptionLinesMax,
             extra,
             actions,
@@ -536,6 +536,7 @@ export const NakedCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
     (
         {
             media,
+            icon,
             headline,
             pretitle,
             pretitleLinesMax,
@@ -594,6 +595,15 @@ export const NakedCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
                                 buttonLink={buttonLink}
                             />
                         </div>
+                        {icon && (
+                            <Box
+                                className={styles.mediaCardIcon}
+                                paddingLeft={{mobile: 16, desktop: 24}}
+                                paddingTop={{mobile: 16, desktop: 24}}
+                            >
+                                {icon}
+                            </Box>
+                        )}
                     </div>
                 </BaseTouchable>
                 <CardActionsGroup onClose={onClose} actions={actions} type="media" />
@@ -1271,15 +1281,19 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                                 </div>
                             </ThemeVariant>
 
-                            <div
+                            <Box
                                 className={styles.displayCardContent}
-                                style={{
-                                    paddingTop:
-                                        withGradient && !icon && !hasTopActions && !backgroundVideo ? 0 : 24,
-                                }}
+                                paddingTop={
+                                    withGradient && !icon && !hasTopActions && !backgroundVideo
+                                        ? 0
+                                        : {mobile: icon ? 16 : 24, desktop: 24}
+                                }
                             >
                                 {icon ? (
-                                    <Box paddingBottom={withGradient ? 0 : 40} paddingX={24}>
+                                    <Box
+                                        paddingBottom={withGradient ? 0 : 40}
+                                        paddingX={{mobile: 16, desktop: 24}}
+                                    >
                                         {icon}
                                     </Box>
                                 ) : (
@@ -1290,7 +1304,7 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                                     />
                                 )}
                                 <Box
-                                    paddingX={16}
+                                    paddingX={{mobile: 16, desktop: 24}}
                                     paddingTop={withGradient ? 40 : 0}
                                     paddingBottom={24}
                                     className={withGradient ? styles.displayCardGradient : undefined}
@@ -1347,7 +1361,7 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                                         </div>
                                     </Stack>
                                 </Box>
-                            </div>
+                            </Box>
                         </div>
                     </BaseTouchable>
                 </InternalBoxed>
