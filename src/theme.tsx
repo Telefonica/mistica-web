@@ -40,6 +40,7 @@ const TEXTS_ES = {
     carouselPrevButton: 'anterior',
     playIconButtonLabel: 'Reproducir',
     pauseIconButtonLabel: 'Pausar',
+    bottomSheetConfirmButton: 'Continuar',
 };
 
 const TEXTS_EN: ThemeTexts = {
@@ -75,6 +76,7 @@ const TEXTS_EN: ThemeTexts = {
     carouselPrevButton: 'previous',
     playIconButtonLabel: 'Play',
     pauseIconButtonLabel: 'Pause',
+    bottomSheetConfirmButton: 'Continue',
 };
 
 const TEXTS_DE: ThemeTexts = {
@@ -110,6 +112,7 @@ const TEXTS_DE: ThemeTexts = {
     carouselPrevButton: 'vorherige',
     playIconButtonLabel: 'Abspielen',
     pauseIconButtonLabel: 'Pausieren',
+    bottomSheetConfirmButton: 'Fortfahren',
 };
 
 const TEXTS_PT: ThemeTexts = {
@@ -145,6 +148,7 @@ const TEXTS_PT: ThemeTexts = {
     carouselPrevButton: 'anterior',
     playIconButtonLabel: 'Reproduzir',
     pauseIconButtonLabel: 'Pausar',
+    bottomSheetConfirmButton: 'Continuar',
 };
 
 export const getTexts = (locale: Locale): typeof TEXTS_ES => {

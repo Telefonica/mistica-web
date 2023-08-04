@@ -23,7 +23,6 @@ import {
     InfoBottomSheet,
     RadioListBottomSheet,
 } from '../bottom-sheet';
-import ButtonGroup from '../button-group';
 
 export default {
     title: 'Components/BottomSheet',
@@ -112,18 +111,13 @@ export const Default: StoryComponent = () => {
                                 </ButtonFixedFooterLayout>
                             ) : (
                                 <ResponsiveLayout>
-                                    <Box paddingBottom={16}>
+                                    <Box
+                                        paddingBottom={{mobile: 16, desktop: 40}}
+                                        paddingTop={{mobile: 0, desktop: 40}}
+                                    >
                                         {Array.from({length: counter}).map((_, i) => (
                                             <Placeholder key={i} />
                                         ))}
-                                        <ButtonGroup
-                                            primaryButton={
-                                                <ButtonPrimary onPress={closeModal}>Close</ButtonPrimary>
-                                            }
-                                            secondaryButton={
-                                                <ButtonSecondary onPress={inc}>More content</ButtonSecondary>
-                                            }
-                                        />
                                     </Box>
                                 </ResponsiveLayout>
                             )
@@ -254,6 +248,10 @@ export const ActionList: StoryComponent = () => {
                             },
                             {
                                 id: '3',
+                                title: 'Action without icon',
+                            },
+                            {
+                                id: '4',
                                 title: 'Destructive action',
                                 style: 'destructive',
                                 Icon: IconTrashCanRegular,
@@ -354,7 +352,10 @@ export const Actions: StoryComponent = () => {
                         subitile="Subtitle"
                         description={'Description '.repeat(500)}
                         button={{
-                            text: 'Button',
+                            text: 'Button with a long text to force next button',
+                        }}
+                        secondaryButton={{
+                            text: 'Secondary button',
                         }}
                         buttonLink={{
                             text: 'Link',

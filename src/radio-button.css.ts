@@ -45,7 +45,7 @@ export const innerCircleChecked = style([
     }),
     {
         opacity: 1,
-        transform: 'scale(1)',
+        transform: 'none',
     },
 ]);
 

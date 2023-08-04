@@ -2,7 +2,7 @@ import classnames from 'classnames';
 import * as React from 'react';
 import * as styles from './bottom-sheet.css';
 import FocusTrap from './focus-trap';
-import {useAriaId} from './hooks';
+import {useAriaId, useIsInViewport, useScreenSize, useTheme} from './hooks';
 import {useSetModalStateEffect} from './modal-context-provider';
 import {Portal} from './portal';
 import {Text2, Text3, Text5} from './text';
@@ -16,12 +16,14 @@ import Box from './box';
 import Touchable from './touchable';
 import Inline from './inline';
 import Circle from './circle';
-import ButtonFixedFooterLayout from './button-fixed-footer-layout';
 import Divider from './divider';
-import {getPrefixedDataAttributes} from './utils/dom';
+import {getPrefixedDataAttributes, getScrollableParentElement} from './utils/dom';
 import {ButtonLink, ButtonPrimary, ButtonSecondary} from './button';
+import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
+import IconButton from './icon-button';
+import ButtonLayout from './button-layout';
 
-import type {DataAttributes, IconProps, TrackingEvent} from './utils/types';
+import type {DataAttributes, IconProps, RendersNullableElement, TrackingEvent} from './utils/types';
 
 const getClientY = (ev: TouchEvent | MouseEvent | React.TouchEvent | React.MouseEvent) => {
     if ('touches' in ev) {
@@ -38,6 +40,8 @@ const useDraggableSheet = ({closeModal}: {closeModal: () => void}) => {
     const initialYRef = React.useRef(0);
     const currentYRef = React.useRef(0);
 
+    const {isDesktopOrBigger} = useScreenSize();
+
     const handleTouchStart = React.useCallback((ev: React.TouchEvent | React.MouseEvent) => {
         isDraggingRef.current = true;
         initialMoveEventsCount.current = 0;
@@ -51,6 +55,10 @@ const useDraggableSheet = ({closeModal}: {closeModal: () => void}) => {
     }, []);
 
     React.useEffect(() => {
+        if (isDesktopOrBigger) {
+            return;
+        }
+
         const handleTouchMove = (ev: TouchEvent | MouseEvent) => {
             if (!isDraggingRef.current) {
                 return;
@@ -95,7 +103,11 @@ const useDraggableSheet = ({closeModal}: {closeModal: () => void}) => {
             document.removeEventListener('mousemove', handleTouchMove);
             document.removeEventListener('mouseup', handleTouchEnd);
         };
-    }, [closeModal]);
+    }, [closeModal, isDesktopOrBigger]);
+
+    if (isDesktopOrBigger) {
+        return {};
+    }
 
     return {
         onTouchStart: handleTouchStart,
@@ -172,6 +184,7 @@ type BottomSheetProps = {
 
 const BottomSheet = React.forwardRef<HTMLDivElement, BottomSheetProps>(
     ({onClose, children, dataAttributes}, ref) => {
+        const {texts} = useTheme();
         const [modalState, dispatch] = React.useReducer(modalReducer, 'closed');
         const initRef = React.useRef(false);
         const modalTitleId = useAriaId();
@@ -234,28 +247,35 @@ const BottomSheet = React.forwardRef<HTMLDivElement, BottomSheetProps>(
                         onClick={closeModal}
                     />
                     <div
-                        {...getPrefixedDataAttributes(dataAttributes, 'BottomSheet')}
-                        ref={ref}
-                        className={classnames(styles.bottomSheet, {
+                        className={classnames(styles.bottomSheetContainer, {
                             [styles.closingSheet]: modalState === 'closing',
                         })}
                         onTransitionEnd={handleTransitionEnd}
                         onAnimationEnd={handleTransitionEnd}
                         {...dragableSheetProps}
+                        {...getPrefixedDataAttributes(dataAttributes, 'BottomSheet')}
+                        ref={ref}
                     >
-                        <div className={styles.bottomSheetContent}>
-                            <div className={styles.handleContainer}>
-                                <div className={styles.handle} />
+                        <div className={styles.bottomSheet}>
+                            <div className={styles.bottomSheetContent}>
+                                <div className={styles.handleContainer}>
+                                    <div className={styles.handle} />
+                                </div>
+                                <section
+                                    role="dialog"
+                                    aria-modal="true"
+                                    aria-describedby={modalTitleId}
+                                    onScroll={onScroll}
+                                    className={styles.children}
+                                >
+                                    {children({closeModal, modalTitleId})}
+                                </section>
                             </div>
-                            <section
-                                role="dialog"
-                                aria-modal="true"
-                                aria-describedby={modalTitleId}
-                                onScroll={onScroll}
-                                className={styles.children}
-                            >
-                                {children({closeModal, modalTitleId})}
-                            </section>
+                            <div className={styles.modalCloseButton}>
+                                <IconButton size={32} onPress={closeModal} aria-label={texts.modalClose}>
+                                    <IconCloseRegular />
+                                </IconButton>
+                            </div>
                         </div>
                     </div>
                 </FocusTrap>
@@ -268,46 +288,93 @@ type SheetBodyProps = {
     title?: string;
     subitile?: string;
     description?: string;
+    button?: RendersNullableElement<typeof ButtonPrimary>;
+    secondaryButton?: RendersNullableElement<typeof ButtonSecondary>;
+    link?: RendersNullableElement<typeof ButtonLink>;
     modalTitleId: string;
     children?: React.ReactNode;
 };
 
-const SheetBody = ({title, subitile, description, modalTitleId, children}: SheetBodyProps) => (
-    <>
-        {title && (
-            <>
+const SheetBody = ({
+    title,
+    subitile,
+    description,
+    modalTitleId,
+    button,
+    secondaryButton,
+    link,
+    children,
+}: SheetBodyProps) => {
+    const topScrollSignalRef = React.useRef<HTMLDivElement>(null);
+    const bottomScrollSignalRef = React.useRef<HTMLDivElement>(null);
+    const scrollableParentRef = React.useRef<HTMLElement | null>(null);
+
+    React.useEffect(() => {
+        if (bottomScrollSignalRef.current) {
+            scrollableParentRef.current = getScrollableParentElement(bottomScrollSignalRef.current);
+        }
+    }, []);
+
+    const showTitleDivider = !useIsInViewport(topScrollSignalRef, false, {root: scrollableParentRef.current});
+    const showButtonsDivider = !useIsInViewport(bottomScrollSignalRef, false, {
+        rootMargin: '1px', // bottomScrollSignal div has 0px height so we need a 1px margin to trigger the intersection observer
+        root: scrollableParentRef.current,
+    });
+
+    const hasButtons = !!button || !!secondaryButton || !!link;
+    return (
+        <>
+            <div ref={topScrollSignalRef} />
+            {title && (
                 <div className={styles.stickyTitle}>
-                    <Box paddingBottom={8} paddingTop={12}>
+                    <Box paddingBottom={8} paddingTop={{mobile: 0, desktop: 40}}>
                         <ResponsiveLayout>
                             <Text5 as="h2" id={modalTitleId} truncate>
                                 {title}
                             </Text5>
                         </ResponsiveLayout>
                     </Box>
+                    {showTitleDivider && <Divider />}
                 </div>
-                <div className={styles.titleDivider}>
-                    <Divider />
+            )}
+            <Box paddingBottom={hasButtons ? 0 : {desktop: 40, mobile: 0}}>
+                <ResponsiveLayout>
+                    <Stack space={8}>
+                        {subitile || description ? (
+                            <Stack space={{mobile: 8, desktop: 16}}>
+                                {subitile && (
+                                    <Text3 as="p" regular>
+                                        {subitile}
+                                    </Text3>
+                                )}
+                                {description && (
+                                    <Text2 as="p" regular color={skinVars.colors.textSecondary}>
+                                        {description}
+                                    </Text2>
+                                )}
+                            </Stack>
+                        ) : null}
+                        {children}
+                    </Stack>
+                </ResponsiveLayout>
+            </Box>
+            {hasButtons && (
+                <div className={styles.stickyButtons}>
+                    {showButtonsDivider && <Divider />}
+                    <Box paddingY={16}>
+                        <ResponsiveLayout>
+                            <ButtonLayout align="full-width" link={link}>
+                                {button}
+                                {secondaryButton}
+                            </ButtonLayout>
+                        </ResponsiveLayout>
+                    </Box>
                 </div>
-                <div className={styles.titleDividerCover} />
-            </>
-        )}
-        <ResponsiveLayout>
-            <Stack space={8}>
-                {subitile && (
-                    <Text3 as="p" regular>
-                        {subitile}
-                    </Text3>
-                )}
-                {description && (
-                    <Text2 as="p" regular color={skinVars.colors.textSecondary}>
-                        {description}
-                    </Text2>
-                )}
-                {children}
-            </Stack>
-        </ResponsiveLayout>
-    </>
-);
+            )}
+            <div ref={bottomScrollSignalRef} />
+        </>
+    );
+};
 
 type RadioListBottomSheetProps = {
     title?: string;
@@ -323,23 +390,21 @@ type RadioListBottomSheetProps = {
     onClose?: () => void;
     onSelect?: (id: string) => void;
     dataAttributes?: DataAttributes;
+    button?: {
+        text: string;
+    };
 };
 
 export const RadioListBottomSheet = React.forwardRef<HTMLDivElement, RadioListBottomSheetProps>(
-    ({title, subitile, description, items, selectedId, onClose, onSelect, dataAttributes}, ref) => {
+    ({title, subitile, description, items, selectedId, onClose, onSelect, button, dataAttributes}, ref) => {
         const [selectedItemId, setSelectedItemId] = React.useState(selectedId);
         const hasSelectedRef = React.useRef(false);
-
-        const handleClose = () => {
-            if (hasSelectedRef.current) {
-                onSelect?.(selectedItemId ?? '');
-            }
-            onClose?.();
-        };
+        const {isDesktopOrBigger} = useScreenSize();
+        const {texts} = useTheme();
 
         return (
             <BottomSheet
-                onClose={handleClose}
+                onClose={onClose}
                 ref={ref}
                 dataAttributes={{...dataAttributes, 'component-name': 'RadioListBottomSheet'}}
             >
@@ -349,6 +414,20 @@ export const RadioListBottomSheet = React.forwardRef<HTMLDivElement, RadioListBo
                         subitile={subitile}
                         description={description}
                         modalTitleId={modalTitleId}
+                        button={
+                            isDesktopOrBigger ? (
+                                <ButtonPrimary
+                                    onPress={() => {
+                                        if (hasSelectedRef.current) {
+                                            onSelect?.(selectedItemId ?? '');
+                                        }
+                                        closeModal();
+                                    }}
+                                >
+                                    {button?.text ?? texts.bottomSheetConfirmButton}
+                                </ButtonPrimary>
+                            ) : undefined
+                        }
                     >
                         <NegativeBox>
                             <RadioGroup
@@ -356,9 +435,16 @@ export const RadioListBottomSheet = React.forwardRef<HTMLDivElement, RadioListBo
                                 name="sheetselection"
                                 value={selectedItemId}
                                 onChange={(value) => {
-                                    hasSelectedRef.current = true;
                                     setSelectedItemId(value);
-                                    // wait for radio animation to finish before closing the modal
+                                    hasSelectedRef.current = true;
+
+                                    // In desktop, the modal is closed with the ButtonPrimary
+                                    if (isDesktopOrBigger) {
+                                        return;
+                                    }
+
+                                    onSelect?.(value);
+                                    // Wait for radio animation to finish before closing the modal
                                     setTimeout(() => {
                                         closeModal();
                                     }, 200);
@@ -415,42 +501,40 @@ export const ActionsListBottomSheet = React.forwardRef<HTMLDivElement, ActionsLi
                         modalTitleId={modalTitleId}
                     >
                         <NegativeBox>
-                            <Stack space={0}>
-                                {items.map(({id, style, title, Icon}) => (
-                                    <Touchable
-                                        key={id}
-                                        onPress={() => {
-                                            onSelect?.(id);
-                                            closeModal();
-                                        }}
-                                    >
-                                        <div className={styles.sheetActionRow}>
-                                            {Icon && (
-                                                <div className={styles.sheetActionRowIcon}>
-                                                    <Icon
-                                                        size={24}
-                                                        color={
-                                                            style === 'destructive'
-                                                                ? skinVars.colors.textLinkDanger
-                                                                : skinVars.colors.neutralHigh
-                                                        }
-                                                    />
-                                                </div>
-                                            )}
-                                            <Text3
-                                                regular
-                                                color={
-                                                    style === 'destructive'
-                                                        ? skinVars.colors.textLinkDanger
-                                                        : skinVars.colors.textPrimary
-                                                }
-                                            >
-                                                {title}
-                                            </Text3>
-                                        </div>
-                                    </Touchable>
-                                ))}
-                            </Stack>
+                            {items.map(({id, style, title, Icon}) => (
+                                <Touchable
+                                    key={id}
+                                    onPress={() => {
+                                        onSelect?.(id);
+                                        closeModal();
+                                    }}
+                                >
+                                    <div className={styles.sheetActionRow}>
+                                        {Icon && (
+                                            <Box paddingRight={16}>
+                                                <Icon
+                                                    size={24}
+                                                    color={
+                                                        style === 'destructive'
+                                                            ? skinVars.colors.textLinkDanger
+                                                            : skinVars.colors.neutralHigh
+                                                    }
+                                                />
+                                            </Box>
+                                        )}
+                                        <Text3
+                                            regular
+                                            color={
+                                                style === 'destructive'
+                                                    ? skinVars.colors.textLinkDanger
+                                                    : skinVars.colors.textPrimary
+                                            }
+                                        >
+                                            {title}
+                                        </Text3>
+                                    </div>
+                                </Touchable>
+                            ))}
                         </NegativeBox>
                     </SheetBody>
                 )}
@@ -494,7 +578,7 @@ export const InfoBottomSheet = React.forwardRef<HTMLDivElement, InfoBottomSheetP
                         modalTitleId={modalTitleId}
                     >
                         <Box paddingBottom={16}>
-                            <Stack space={16}>
+                            <Stack space={16} role="list">
                                 {items.map((item, idx) => (
                                     <Inline key={item.id || idx} space={8}>
                                         <div className={styles.infoItemIcon}>
@@ -561,17 +645,8 @@ export const ActionsBottomSheet = React.forwardRef<HTMLDivElement, ActionsBottom
         },
         ref
     ) => {
-        const pressedButtonRef = React.useRef<PressedButton | null>(null);
-
-        const handleClose = () => {
-            if (pressedButtonRef.current) {
-                onPressButton?.(pressedButtonRef.current);
-            }
-            onClose?.();
-        };
-
         const createPressHandler = (closeModal: () => void, pressedButton: PressedButton) => () => {
-            pressedButtonRef.current = pressedButton;
+            onPressButton?.(pressedButton);
             closeModal();
         };
 
@@ -582,12 +657,16 @@ export const ActionsBottomSheet = React.forwardRef<HTMLDivElement, ActionsBottom
 
         return (
             <BottomSheet
-                onClose={handleClose}
+                onClose={onClose}
                 ref={ref}
                 dataAttributes={{...dataAttributes, 'component-name': 'ActionsBottomSheet'}}
             >
                 {({modalTitleId, closeModal}) => (
-                    <ButtonFixedFooterLayout
+                    <SheetBody
+                        title={title}
+                        subitile={subitile}
+                        description={description}
+                        modalTitleId={modalTitleId}
                         button={
                             <ButtonPrimary
                                 {...getButtonProps(button)}
@@ -610,14 +689,7 @@ export const ActionsBottomSheet = React.forwardRef<HTMLDivElement, ActionsBottom
                                 />
                             ) : undefined
                         }
-                    >
-                        <SheetBody
-                            title={title}
-                            subitile={subitile}
-                            description={description}
-                            modalTitleId={modalTitleId}
-                        />
-                    </ButtonFixedFooterLayout>
+                    />
                 )}
             </BottomSheet>
         );

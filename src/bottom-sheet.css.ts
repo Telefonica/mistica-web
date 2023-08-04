@@ -3,33 +3,63 @@ import * as mq from './media-queries.css';
 import {vars as skinVars} from './skins/skin-contract.css';
 import {sprinkles} from './sprinkles.css';
 
-export const transitionDuration = 500;
+export const transitionDuration = 400;
 
-const openingAnimation = keyframes({
-    '0%': {
-        transform: `translateY(100%)`,
-    },
-    '100%': {
-        transform: `translateY(0)`,
-    },
+const sheetClosedStyle = {
+    transform: 'translateY(100%)',
+};
+
+const translateUp = keyframes({
+    '0%': sheetClosedStyle,
+    '100%': {},
+});
+
+const modalClosedStyle = {
+    opacity: 0,
+    transform: 'scale(.8)',
+};
+
+const fadeScale = keyframes({
+    '0%': modalClosedStyle,
+    '100%': {},
 });
 
 const timmingFunction = 'cubic-bezier(0.32, 0.72, 0, 1)';
 
 const topMargin = 64;
 
-export const bottomSheet = style([
+export const bottomSheetContainer = style([
     sprinkles({
         position: 'fixed',
         left: 0,
         right: 0,
         bottom: 0,
+    }),
+    {
+        transition: `transform ${transitionDuration}ms ${timmingFunction}`,
+        animation: `${translateUp} ${transitionDuration}ms ${timmingFunction}`,
+
+        '@media': {
+            [mq.desktopOrBigger]: {
+                pointerEvents: 'none', // allow clicks to go through this layer and hit the overlay
+                top: 0,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                animationName: fadeScale,
+                transition: `opacity ${transitionDuration}ms ${timmingFunction}, transform ${transitionDuration}ms ${timmingFunction}`,
+            },
+        },
+    },
+]);
+
+export const bottomSheet = style([
+    sprinkles({
         background: skinVars.colors.background,
     }),
     {
         userSelect: 'none',
-        transition: `transform ${transitionDuration}ms ${timmingFunction}`,
-        animation: `${openingAnimation} ${transitionDuration}ms ${timmingFunction}`,
         borderTopLeftRadius: skinVars.borderRadii.sheet,
         borderTopRightRadius: skinVars.borderRadii.sheet,
 
@@ -45,18 +75,47 @@ export const bottomSheet = style([
             content: '""',
             height: '150vh',
         },
+
+        '@media': {
+            [mq.desktopOrBigger]: {
+                position: 'relative',
+                pointerEvents: 'initial', // restore pointer events (disabled by parent bottomSheetContainer) to work inside the modal
+                borderRadius: skinVars.borderRadii.sheet,
+                overflow: 'hidden',
+                userSelect: 'initial',
+
+                ':after': {
+                    display: 'none',
+                },
+            },
+        },
     },
 ]);
 
+export const closingSheet = style({
+    ...sheetClosedStyle,
+    '@media': {
+        [mq.desktopOrBigger]: modalClosedStyle,
+    },
+});
+
 export const bottomSheetContent = style([
     sprinkles({
-        paddingTop: 20,
+        paddingTop: 32, // drag handle height
         display: 'flex',
         flexDirection: 'column',
     }),
     {
         maxHeight: [`calc(100vh - ${topMargin}px)`, `calc(100dvh - ${topMargin}px)`],
-        minHeight: 100, // ['50vh', '50dvh'],
+        minHeight: 100,
+
+        '@media': {
+            [mq.desktopOrBigger]: {
+                width: 680,
+                paddingTop: 0,
+                maxHeight: ['560px', 'min(calc(100vh - 64px), 560px)'],
+            },
+        },
     },
 ]);
 
@@ -65,13 +124,9 @@ export const children = sprinkles({
     flex: 1,
 });
 
-export const closingSheet = style({
-    transform: `translateY(100%)`,
-});
-
-// absolute positioned with a bigger size to increase the touchable area for dragging
 export const handleContainer = style([
     sprinkles({
+        // Absolute positioned with a bigger size to increase the touchable area for dragging
         position: 'absolute',
         top: 0,
         height: 64,
@@ -83,6 +138,12 @@ export const handleContainer = style([
     {
         zIndex: 1,
         touchAction: 'none', // prevent scrolling while dragging
+
+        '@media': {
+            [mq.desktopOrBigger]: {
+                display: 'none',
+            },
+        },
     },
 ]);
 
@@ -93,13 +154,25 @@ export const handle = sprinkles({
     borderRadius: 2,
 });
 
+export const modalCloseButton = style([
+    sprinkles({
+        position: 'absolute',
+        top: 0,
+        right: 0,
+        padding: 16,
+    }),
+    {
+        '@media': {
+            [mq.tabletOrSmaller]: {
+                display: 'none',
+            },
+        },
+    },
+]);
+
+const overlayClosedStyle = {opacity: 0};
 const overlayAnimation = keyframes({
-    '0%': {
-        opacity: 0,
-    },
-    '100%': {
-        opacity: 1,
-    },
+    '0%': overlayClosedStyle,
 });
 
 export const overlay = style([
@@ -118,27 +191,17 @@ export const overlay = style([
     },
 ]);
 
-export const closingOverlay = style({opacity: 0});
+export const closingOverlay = style(overlayClosedStyle);
 
-export const stickyTitle = style([
-    sprinkles({
-        position: 'sticky',
-        top: 0,
-        background: skinVars.colors.background,
-    }),
-    {
-        zIndex: 1,
-    },
-]);
+export const stickyTitle = sprinkles({
+    position: 'sticky',
+    top: 0,
+    background: skinVars.colors.background,
+});
 
-export const titleDivider = style({position: 'sticky', top: 44});
-
-// covers the divider when there isn't scroll
-export const titleDividerCover = style({
-    position: 'relative',
-    top: -1,
-    height: 1,
-    width: '100%',
+export const stickyButtons = sprinkles({
+    position: 'sticky',
+    bottom: 0,
     background: skinVars.colors.background,
 });
 
@@ -150,11 +213,16 @@ export const sheetActionRow = style([
         alignItems: 'center',
     }),
     {
+        transition: 'background-color 0.1s ease-in-out',
+        ':active': {
+            background: skinVars.colors.backgroundContainerPressed,
+        },
         '@media': {
             [mq.supportsHover]: {
                 ':hover': {
                     background: skinVars.colors.backgroundContainerHover,
                 },
+                // need to repeat this inside of @media to avoid :hover background to take precedence over :active
                 ':active': {
                     background: skinVars.colors.backgroundContainerPressed,
                 },
@@ -162,10 +230,6 @@ export const sheetActionRow = style([
         },
     },
 ]);
-
-export const sheetActionRowIcon = sprinkles({
-    paddingRight: 16,
-});
 
 export const infoItemIcon = sprinkles({
     display: 'flex',
