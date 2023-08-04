@@ -3,7 +3,6 @@ import {
     BottomSheet,
     Box,
     ButtonFixedFooterLayout,
-    ButtonLink,
     ButtonPrimary,
     ButtonSecondary,
     Circle,
@@ -323,29 +322,44 @@ Info.storyName = 'InfoBottomSheet';
 
 export const Actions: StoryComponent = () => {
     const [open, setOpen] = React.useState(false);
+    const [pressedButton, setPressedButton] = React.useState<string | null>(null);
 
     return (
         <Box paddingY={24}>
             <ResponsiveLayout>
-                <ButtonPrimary
-                    disabled={open}
-                    onPress={() => {
-                        setOpen(true);
-                    }}
-                >
-                    Open sheet
-                </ButtonPrimary>
+                <Stack space={16}>
+                    <ButtonPrimary
+                        disabled={open}
+                        onPress={() => {
+                            setOpen(true);
+                            setPressedButton(null);
+                        }}
+                    >
+                        Open sheet
+                    </ButtonPrimary>
+                    {pressedButton && (
+                        <Text3 regular as="p">
+                            pressedButton: {pressedButton}
+                        </Text3>
+                    )}
+                </Stack>
 
                 {open && (
                     <ActionsBottomSheet
                         onClose={() => {
                             setOpen(false);
                         }}
+                        onPressButton={setPressedButton}
                         title="Title"
                         subitile="Subtitle"
                         description={'Description '.repeat(500)}
-                        button={<ButtonPrimary onPress={() => {}}>Action</ButtonPrimary>}
-                        buttonLink={<ButtonLink href="#">Link</ButtonLink>}
+                        button={{
+                            text: 'Button',
+                        }}
+                        buttonLink={{
+                            text: 'Link',
+                            withChevron: true,
+                        }}
                     />
                 )}
             </ResponsiveLayout>

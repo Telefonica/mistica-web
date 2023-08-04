@@ -18,9 +18,10 @@ import Inline from './inline';
 import Circle from './circle';
 import ButtonFixedFooterLayout from './button-fixed-footer-layout';
 import Divider from './divider';
+import {getPrefixedDataAttributes} from './utils/dom';
+import {ButtonLink, ButtonPrimary, ButtonSecondary} from './button';
 
-import type {ButtonLink, NullableButtonElement} from './button';
-import type {IconProps, RendersNullableElement} from './utils/types';
+import type {DataAttributes, IconProps, TrackingEvent} from './utils/types';
 
 const getClientY = (ev: TouchEvent | MouseEvent | React.TouchEvent | React.MouseEvent) => {
     if ('touches' in ev) {
@@ -165,98 +166,103 @@ const modalReducer = (state: ModalState, action: ModalAction): ModalState =>
 
 type BottomSheetProps = {
     onClose?: () => void;
+    dataAttributes?: DataAttributes;
     children: (renderParams: {closeModal: () => void; modalTitleId: string}) => React.ReactNode;
 };
 
-const BottomSheet = ({onClose, children}: BottomSheetProps): React.ReactElement | null => {
-    const [modalState, dispatch] = React.useReducer(modalReducer, 'closed');
-    const initRef = React.useRef(false);
-    const modalTitleId = useAriaId();
+const BottomSheet = React.forwardRef<HTMLDivElement, BottomSheetProps>(
+    ({onClose, children, dataAttributes}, ref) => {
+        const [modalState, dispatch] = React.useReducer(modalReducer, 'closed');
+        const initRef = React.useRef(false);
+        const modalTitleId = useAriaId();
 
-    const handleTransitionEnd = React.useCallback((ev: React.AnimationEvent | React.TransitionEvent) => {
-        // Don't trigger transitionEnd if the event is not triggered by the sheet element.
-        if (ev.target === ev.currentTarget) {
-            dispatch('transitionEnd');
-        }
-    }, []);
-
-    const closeModal = () => {
-        if (modalState === 'open') {
-            dispatch('close');
-        }
-    };
-
-    // transitionEnd/animationEnd dom events may not trigger in some cases, so we use a timeout as fallback
-    React.useEffect(() => {
-        if (modalState === 'opening' || modalState === 'closing') {
-            const tid = setTimeout(() => {
+        const handleTransitionEnd = React.useCallback((ev: React.AnimationEvent | React.TransitionEvent) => {
+            // Don't trigger transitionEnd if the event is not triggered by the sheet element.
+            if (ev.target === ev.currentTarget) {
                 dispatch('transitionEnd');
-            }, styles.transitionDuration);
-
-            return () => clearTimeout(tid);
-        }
-    }, [modalState]);
-
-    React.useEffect(() => {
-        if (modalState === 'closed') {
-            if (initRef.current) {
-                onClose?.();
-            } else {
-                dispatch('open');
             }
-        } else {
-            initRef.current = true;
+        }, []);
+
+        const closeModal = () => {
+            if (modalState === 'open') {
+                dispatch('close');
+            }
+        };
+
+        // transitionEnd/animationEnd dom events may not trigger in some cases, so we use a timeout as fallback
+        React.useEffect(() => {
+            if (modalState === 'opening' || modalState === 'closing') {
+                const tid = setTimeout(() => {
+                    dispatch('transitionEnd');
+                }, styles.transitionDuration);
+
+                return () => clearTimeout(tid);
+            }
+        }, [modalState]);
+
+        React.useEffect(() => {
+            if (modalState === 'closed') {
+                if (initRef.current) {
+                    onClose?.();
+                } else {
+                    dispatch('open');
+                }
+            } else {
+                initRef.current = true;
+            }
+        }, [modalState, onClose]);
+
+        const {onScroll, overlayStyle, ...dragableSheetProps} = useDraggableSheet({closeModal});
+
+        useSetModalStateEffect();
+        const bodyStyle = useLockBodyScroll();
+
+        if (modalState === 'closed') {
+            return null;
         }
-    }, [modalState, onClose]);
 
-    const {onScroll, overlayStyle, ...dragableSheetProps} = useDraggableSheet({closeModal});
-
-    useSetModalStateEffect();
-    const bodyStyle = useLockBodyScroll();
-
-    if (modalState === 'closed') {
-        return null;
-    }
-
-    return (
-        <Portal>
-            <FocusTrap>
-                {bodyStyle}
-                {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
-                <div
-                    className={classnames(styles.overlay, {
-                        [styles.closingOverlay]: modalState === 'closing',
-                    })}
-                    style={overlayStyle}
-                    onClick={closeModal}
-                />
-                <div
-                    className={classnames(styles.bottomSheet, {
-                        [styles.closingSheet]: modalState === 'closing',
-                    })}
-                    onTransitionEnd={handleTransitionEnd}
-                    onAnimationEnd={handleTransitionEnd}
-                    {...dragableSheetProps}
-                >
-                    <div className={styles.bottomSheetContent}>
-                        <div className={styles.handleContainer}>
-                            <div className={styles.handle} />
+        return (
+            <Portal>
+                <FocusTrap>
+                    {bodyStyle}
+                    {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
+                    <div
+                        className={classnames(styles.overlay, {
+                            [styles.closingOverlay]: modalState === 'closing',
+                        })}
+                        style={overlayStyle}
+                        onClick={closeModal}
+                    />
+                    <div
+                        {...getPrefixedDataAttributes(dataAttributes, 'BottomSheet')}
+                        ref={ref}
+                        className={classnames(styles.bottomSheet, {
+                            [styles.closingSheet]: modalState === 'closing',
+                        })}
+                        onTransitionEnd={handleTransitionEnd}
+                        onAnimationEnd={handleTransitionEnd}
+                        {...dragableSheetProps}
+                    >
+                        <div className={styles.bottomSheetContent}>
+                            <div className={styles.handleContainer}>
+                                <div className={styles.handle} />
+                            </div>
+                            <section
+                                role="dialog"
+                                aria-modal="true"
+                                aria-describedby={modalTitleId}
+                                onScroll={onScroll}
+                                className={styles.children}
+                            >
+                                {children({closeModal, modalTitleId})}
+                            </section>
                         </div>
-                        <section
-                            role="dialog"
-                            aria-modal="true"
-                            aria-describedby={modalTitleId}
-                            onScroll={onScroll}
-                            className={styles.children}
-                        >
-                            {children({closeModal, modalTitleId})}
-                        </section>
                     </div>
-                </div>
-            </FocusTrap>
-        </Portal>
-    );
-};
+                </FocusTrap>
+            </Portal>
+        );
+    }
+);
 
 type SheetBodyProps = {
     title?: string;
@@ -316,68 +322,67 @@ type RadioListBottomSheetProps = {
     selectedId?: string;
     onClose?: () => void;
     onSelect?: (id: string) => void;
+    dataAttributes?: DataAttributes;
 };
 
-export const RadioListBottomSheet = ({
-    title,
-    subitile,
-    description,
-    items,
-    selectedId,
-    onClose,
-    onSelect,
-}: RadioListBottomSheetProps): React.ReactElement => {
-    const [selectedItemId, setSelectedItemId] = React.useState(selectedId);
-    const hasSelectedRef = React.useRef(false);
+export const RadioListBottomSheet = React.forwardRef<HTMLDivElement, RadioListBottomSheetProps>(
+    ({title, subitile, description, items, selectedId, onClose, onSelect, dataAttributes}, ref) => {
+        const [selectedItemId, setSelectedItemId] = React.useState(selectedId);
+        const hasSelectedRef = React.useRef(false);
 
-    const handleClose = () => {
-        if (hasSelectedRef.current) {
-            onSelect?.(selectedItemId ?? '');
-        }
-        onClose?.();
-    };
+        const handleClose = () => {
+            if (hasSelectedRef.current) {
+                onSelect?.(selectedItemId ?? '');
+            }
+            onClose?.();
+        };
 
-    return (
-        <BottomSheet onClose={handleClose}>
-            {({closeModal, modalTitleId}) => (
-                <SheetBody
-                    title={title}
-                    subitile={subitile}
-                    description={description}
-                    modalTitleId={modalTitleId}
-                >
-                    <NegativeBox>
-                        <RadioGroup
-                            aria-labelledby={modalTitleId}
-                            name="sheetselection"
-                            value={selectedItemId}
-                            onChange={(value) => {
-                                hasSelectedRef.current = true;
-                                setSelectedItemId(value);
-                                // wait for radio animation to finish before closing the modal
-                                setTimeout(() => {
-                                    closeModal();
-                                }, 200);
-                            }}
-                        >
-                            <RowList>
-                                {items.map((item) => (
-                                    <Row
-                                        key={item.id}
-                                        title={item.title ?? ''}
-                                        description={item.description}
-                                        asset={item.asset}
-                                        radioValue={item.id}
-                                    />
-                                ))}
-                            </RowList>
-                        </RadioGroup>
-                    </NegativeBox>
-                </SheetBody>
-            )}
-        </BottomSheet>
-    );
-};
+        return (
+            <BottomSheet
+                onClose={handleClose}
+                ref={ref}
+                dataAttributes={{...dataAttributes, 'component-name': 'RadioListBottomSheet'}}
+            >
+                {({closeModal, modalTitleId}) => (
+                    <SheetBody
+                        title={title}
+                        subitile={subitile}
+                        description={description}
+                        modalTitleId={modalTitleId}
+                    >
+                        <NegativeBox>
+                            <RadioGroup
+                                aria-labelledby={modalTitleId}
+                                name="sheetselection"
+                                value={selectedItemId}
+                                onChange={(value) => {
+                                    hasSelectedRef.current = true;
+                                    setSelectedItemId(value);
+                                    // wait for radio animation to finish before closing the modal
+                                    setTimeout(() => {
+                                        closeModal();
+                                    }, 200);
+                                }}
+                            >
+                                <RowList>
+                                    {items.map((item) => (
+                                        <Row
+                                            key={item.id}
+                                            title={item.title ?? ''}
+                                            description={item.description}
+                                            asset={item.asset}
+                                            radioValue={item.id}
+                                        />
+                                    ))}
+                                </RowList>
+                            </RadioGroup>
+                        </NegativeBox>
+                    </SheetBody>
+                )}
+            </BottomSheet>
+        );
+    }
+);
 
 type ActionsListSheetProps = {
     title?: string;
@@ -391,68 +396,68 @@ type ActionsListSheetProps = {
     }>;
     onClose?: () => void;
     onSelect?: (id: string) => void;
+    dataAttributes?: DataAttributes;
 };
 
-export const ActionsListBottomSheet = ({
-    title,
-    subitile,
-    description,
-    items,
-    onClose,
-    onSelect,
-}: ActionsListSheetProps): React.ReactElement => {
-    return (
-        <BottomSheet onClose={onClose}>
-            {({closeModal, modalTitleId}) => (
-                <SheetBody
-                    title={title}
-                    subitile={subitile}
-                    description={description}
-                    modalTitleId={modalTitleId}
-                >
-                    <NegativeBox>
-                        <Stack space={0}>
-                            {items.map(({id, style, title, Icon}) => (
-                                <Touchable
-                                    key={id}
-                                    onPress={() => {
-                                        onSelect?.(id);
-                                        closeModal();
-                                    }}
-                                >
-                                    <div className={styles.sheetActionRow}>
-                                        {Icon && (
-                                            <div className={styles.sheetActionRowIcon}>
-                                                <Icon
-                                                    size={24}
-                                                    color={
-                                                        style === 'destructive'
-                                                            ? skinVars.colors.textLinkDanger
-                                                            : skinVars.colors.neutralHigh
-                                                    }
-                                                />
-                                            </div>
-                                        )}
-                                        <Text3
-                                            regular
-                                            color={
-                                                style === 'destructive'
-                                                    ? skinVars.colors.textLinkDanger
-                                                    : skinVars.colors.textPrimary
-                                            }
-                                        >
-                                            {title}
-                                        </Text3>
-                                    </div>
-                                </Touchable>
-                            ))}
-                        </Stack>
-                    </NegativeBox>
-                </SheetBody>
-            )}
-        </BottomSheet>
-    );
-};
+export const ActionsListBottomSheet = React.forwardRef<HTMLDivElement, ActionsListSheetProps>(
+    ({title, subitile, description, items, onClose, onSelect, dataAttributes}, ref) => {
+        return (
+            <BottomSheet
+                onClose={onClose}
+                ref={ref}
+                dataAttributes={{...dataAttributes, 'component-name': 'ActionsListBottomSheet'}}
+            >
+                {({closeModal, modalTitleId}) => (
+                    <SheetBody
+                        title={title}
+                        subitile={subitile}
+                        description={description}
+                        modalTitleId={modalTitleId}
+                    >
+                        <NegativeBox>
+                            <Stack space={0}>
+                                {items.map(({id, style, title, Icon}) => (
+                                    <Touchable
+                                        key={id}
+                                        onPress={() => {
+                                            onSelect?.(id);
+                                            closeModal();
+                                        }}
+                                    >
+                                        <div className={styles.sheetActionRow}>
+                                            {Icon && (
+                                                <div className={styles.sheetActionRowIcon}>
+                                                    <Icon
+                                                        size={24}
+                                                        color={
+                                                            style === 'destructive'
+                                                                ? skinVars.colors.textLinkDanger
+                                                                : skinVars.colors.neutralHigh
+                                                        }
+                                                    />
+                                                </div>
+                                            )}
+                                            <Text3
+                                                regular
+                                                color={
+                                                    style === 'destructive'
+                                                        ? skinVars.colors.textLinkDanger
+                                                        : skinVars.colors.textPrimary
+                                                }
+                                            >
+                                                {title}
+                                            </Text3>
+                                        </div>
+                                    </Touchable>
+                                ))}
+                            </Stack>
+                        </NegativeBox>
+                    </SheetBody>
+                )}
+            </BottomSheet>
+        );
+    }
+);
 
 type InfoBottomSheetProps = {
     title?: string;
@@ -470,86 +475,153 @@ type InfoBottomSheetProps = {
             | {type: 'bullet'};
     }>;
     onClose?: () => void;
+    dataAttributes?: DataAttributes;
 };
 
-export const InfoBottomSheet = ({
-    title,
-    subitile,
-    description,
-    items,
-    onClose,
-}: InfoBottomSheetProps): React.ReactElement => {
-    return (
-        <BottomSheet onClose={onClose}>
-            {({modalTitleId}) => (
-                <SheetBody
-                    title={title}
-                    subitile={subitile}
-                    description={description}
-                    modalTitleId={modalTitleId}
-                >
-                    <Box paddingBottom={16}>
-                        <Stack space={16}>
-                            {items.map((item, idx) => (
-                                <Inline key={item.id || idx} space={8}>
-                                    <div className={styles.infoItemIcon}>
-                                        {item.icon.type === 'bullet' ? (
-                                            <Circle size={8} backgroundColor={skinVars.colors.textPrimary} />
-                                        ) : (
-                                            <item.icon.Icon size={item.icon.type === 'small' ? 16 : 24} />
-                                        )}
-                                    </div>
-                                    <Stack space={2}>
-                                        <Text3 regular>{item.title}</Text3>
-                                        {item.description && (
-                                            <Text2 regular color={skinVars.colors.textSecondary}>
-                                                {item.description}
-                                            </Text2>
-                                        )}
-                                    </Stack>
-                                </Inline>
-                            ))}
-                        </Stack>
-                    </Box>
-                </SheetBody>
-            )}
-        </BottomSheet>
-    );
+export const InfoBottomSheet = React.forwardRef<HTMLDivElement, InfoBottomSheetProps>(
+    ({title, subitile, description, items, onClose, dataAttributes}, ref) => {
+        return (
+            <BottomSheet
+                onClose={onClose}
+                ref={ref}
+                dataAttributes={{...dataAttributes, 'component-name': 'InfoBottomSheet'}}
+            >
+                {({modalTitleId}) => (
+                    <SheetBody
+                        title={title}
+                        subitile={subitile}
+                        description={description}
+                        modalTitleId={modalTitleId}
+                    >
+                        <Box paddingBottom={16}>
+                            <Stack space={16}>
+                                {items.map((item, idx) => (
+                                    <Inline key={item.id || idx} space={8}>
+                                        <div className={styles.infoItemIcon}>
+                                            {item.icon.type === 'bullet' ? (
+                                                <Circle
+                                                    size={8}
+                                                    backgroundColor={skinVars.colors.textPrimary}
+                                                />
+                                            ) : (
+                                                <item.icon.Icon size={item.icon.type === 'small' ? 16 : 24} />
+                                            )}
+                                        </div>
+                                        <Stack space={2}>
+                                            <Text3 regular>{item.title}</Text3>
+                                            {item.description && (
+                                                <Text2 regular color={skinVars.colors.textSecondary}>
+                                                    {item.description}
+                                                </Text2>
+                                            )}
+                                        </Stack>
+                                    </Inline>
+                                ))}
+                            </Stack>
+                        </Box>
+                    </SheetBody>
+                )}
+            </BottomSheet>
+        );
+    }
+);
+
+type PressedButton = 'PRIMARY' | 'SECONDARY' | 'LINK';
+
+type ButtonProps = {
+    text: string;
+    trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
+    trackEvent?: boolean;
 };
 
 type ActionsBottomSheetProps = {
     title?: string;
     subitile?: string;
     description?: string;
-    button: NullableButtonElement;
-    secondaryButton?: NullableButtonElement;
-    buttonLink?: RendersNullableElement<typeof ButtonLink>;
+    button: ButtonProps;
+    secondaryButton?: ButtonProps;
+    buttonLink?: ButtonProps & {withChevron?: boolean};
     onClose?: () => void;
+    onPressButton?: (pressedButton: PressedButton) => void;
+    dataAttributes?: DataAttributes;
 };
 
-export const ActionsBottomSheet = ({
-    title,
-    subitile,
-    description,
-    button,
-    secondaryButton,
-    buttonLink,
-    onClose,
-}: ActionsBottomSheetProps): React.ReactElement => {
-    return (
-        <BottomSheet onClose={onClose}>
-            {({modalTitleId}) => (
-                <ButtonFixedFooterLayout button={button} secondaryButton={secondaryButton} link={buttonLink}>
-                    <SheetBody
-                        title={title}
-                        subitile={subitile}
-                        description={description}
-                        modalTitleId={modalTitleId}
-                    />
-                </ButtonFixedFooterLayout>
-            )}
-        </BottomSheet>
-    );
-};
+export const ActionsBottomSheet = React.forwardRef<HTMLDivElement, ActionsBottomSheetProps>(
+    (
+        {
+            title,
+            subitile,
+            description,
+            button,
+            secondaryButton,
+            buttonLink,
+            onClose,
+            dataAttributes,
+            onPressButton,
+        },
+        ref
+    ) => {
+        const pressedButtonRef = React.useRef<PressedButton | null>(null);
+
+        const handleClose = () => {
+            if (pressedButtonRef.current) {
+                onPressButton?.(pressedButtonRef.current);
+            }
+            onClose?.();
+        };
+
+        const createPressHandler = (closeModal: () => void, pressedButton: PressedButton) => () => {
+            pressedButtonRef.current = pressedButton;
+            closeModal();
+        };
+
+        const getButtonProps = <T extends {text: string}>({text, ...otherProps}: T) => ({
+            children: text,
+            ...otherProps,
+        });
+
+        return (
+            <BottomSheet
+                onClose={handleClose}
+                ref={ref}
+                dataAttributes={{...dataAttributes, 'component-name': 'ActionsBottomSheet'}}
+            >
+                {({modalTitleId, closeModal}) => (
+                    <ButtonFixedFooterLayout
+                        button={
+                            <ButtonPrimary
+                                {...getButtonProps(button)}
+                                onPress={createPressHandler(closeModal, 'PRIMARY')}
+                            />
+                        }
+                        secondaryButton={
+                            secondaryButton ? (
+                                <ButtonSecondary
+                                    {...getButtonProps(secondaryButton)}
+                                    onPress={createPressHandler(closeModal, 'SECONDARY')}
+                                />
+                            ) : undefined
+                        }
+                        link={
+                            buttonLink ? (
+                                <ButtonLink
+                                    {...getButtonProps(buttonLink)}
+                                    onPress={createPressHandler(closeModal, 'LINK')}
+                                />
+                            ) : undefined
+                        }
+                    >
+                        <SheetBody
+                            title={title}
+                            subitile={subitile}
+                            description={description}
+                            modalTitleId={modalTitleId}
+                        />
+                    </ButtonFixedFooterLayout>
+                )}
+            </BottomSheet>
+        );
+    }
+);
 
 export default BottomSheet;
