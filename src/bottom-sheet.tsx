@@ -315,8 +315,10 @@ const SheetBody = ({
         }
     }, []);
 
-    const showTitleDivider = !useIsInViewport(topScrollSignalRef, false, {root: scrollableParentRef.current});
-    const showButtonsDivider = !useIsInViewport(bottomScrollSignalRef, false, {
+    const showTitleDivider = !useIsInViewport(topScrollSignalRef, true, {
+        root: scrollableParentRef.current,
+    });
+    const showButtonsDivider = !useIsInViewport(bottomScrollSignalRef, true, {
         rootMargin: '1px', // bottomScrollSignal div has 0px height so we need a 1px margin to trigger the intersection observer
         root: scrollableParentRef.current,
     });
