@@ -20,12 +20,18 @@ export type TextPresetsConfig = {
     button: TextTokenConfig<'regular' | 'medium'>;
     link: TextTokenConfig<'regular' | 'medium'>;
     title1: TextTokenConfig<'regular' | 'medium'>;
+    title2: {
+        weight: FontWeight;
+        size: {mobile: number; desktop: number};
+        lineHeight: {mobile: number; desktop: number};
+    };
     indicator: TextTokenConfig<'regular' | 'medium'>;
     tabsLabel: {
         weight: FontWeight;
         size: {mobile: number; desktop: number};
         lineHeight: {mobile: number; desktop: number};
     };
+    navigationBar: TextTokenConfig;
     text5: TextTokenConfig;
     text6: TextTokenConfig;
     text7: TextTokenConfig;

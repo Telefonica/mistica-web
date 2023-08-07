@@ -7,11 +7,29 @@ export const disabled = style({
     opacity: 0.5,
 });
 
-export const hoverBackground = style({
+export const touchableBackground = style({
     '@media': {
         [mq.supportsHover]: {
+            transition: 'background-color 0.1s ease-in-out',
             ':hover': {
-                background: vars.colors.backgroundAlternative,
+                background: vars.colors.backgroundContainerHover,
+            },
+            ':active': {
+                background: vars.colors.backgroundContainerPressed,
+            },
+        },
+    },
+});
+
+export const touchableBackgroundInverse = style({
+    '@media': {
+        [mq.supportsHover]: {
+            transition: 'background-color 0.1s ease-in-out',
+            ':hover': {
+                background: vars.colors.backgroundContainerBrandHover,
+            },
+            ':active': {
+                background: vars.colors.backgroundContainerBrandPressed,
             },
         },
     },
