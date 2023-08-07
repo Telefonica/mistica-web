@@ -109,6 +109,11 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children, as}) => {
                 button: {...defaultTextPresetsConfig.button, ...theme.skin.textPresets?.button},
                 link: {...defaultTextPresetsConfig.link, ...theme.skin.textPresets?.link},
                 title1: {...defaultTextPresetsConfig.title1, ...theme.skin.textPresets?.title1},
+                title2: {...defaultTextPresetsConfig.title2, ...theme.skin.textPresets?.title2},
+                navigationBar: {
+                    ...defaultTextPresetsConfig.navigationBar,
+                    ...theme.skin.textPresets?.navigationBar,
+                },
                 indicator: {...defaultTextPresetsConfig.indicator, ...theme.skin.textPresets?.indicator},
                 tabsLabel: {...defaultTextPresetsConfig.tabsLabel, ...theme.skin.textPresets?.tabsLabel},
             },

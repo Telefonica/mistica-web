@@ -49,7 +49,7 @@ export {default as Text, Text1, Text2, Text3, Text4, Text5, Text6, Text7, Text8,
 export {default as Tag} from './tag';
 export type {TagType} from './tag';
 export {Placeholder} from './placeholder';
-export {Title1, Title2} from './title';
+export {Title1, Title2, Title3} from './title';
 export {RowList, Row, BoxedRowList, BoxedRow} from './list';
 export {default as Switch} from './switch-component';
 export {default as Checkbox} from './checkbox';

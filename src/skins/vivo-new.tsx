@@ -280,7 +280,13 @@ export const getVivoNewSkin: GetKnownSkin = () => {
             },
             link: {weight: 'regular'},
             title1: {weight: 'regular'},
+            title2: {
+                weight: 'regular',
+                size: {mobile: 18, desktop: 20},
+                lineHeight: {mobile: 24, desktop: 28},
+            },
             indicator: {weight: 'regular'},
+            navigationBar: {weight: 'regular'},
             text5: {weight: 'regular'},
             text6: {weight: 'regular'},
             text7: {weight: 'regular'},
