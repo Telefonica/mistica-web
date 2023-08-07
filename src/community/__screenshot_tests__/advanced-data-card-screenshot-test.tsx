@@ -59,6 +59,8 @@ test('Advanced Data Card without stackingGroup, with top actions and too long ti
         device: 'MOBILE_IOS',
         args: {
             stackingGroup: false,
+            headlineType: 'undefined',
+            pretitle: '',
             title: 'Too long title too long title too long titltoo long title too long title',
         },
     });

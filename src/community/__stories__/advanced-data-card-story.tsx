@@ -14,7 +14,7 @@ export default {
 };
 
 type Args = {
-    headlineType: TagType;
+    headlineType: TagType | 'undefined';
     pretitle: string;
     title: string;
     subtitle: string;
@@ -81,7 +81,9 @@ export const Default: StoryComponent<Args> = ({
                     </StackingGroup>
                 ) : undefined
             }
-            headline={<Tag type={headlineType}>{headlineType}</Tag>}
+            headline={
+                headlineType !== 'undefined' ? <Tag type={headlineType}>{headlineType}</Tag> : undefined
+            }
             pretitle={pretitle}
             title={title}
             subtitle={subtitle}
@@ -116,7 +118,7 @@ Default.args = {
 };
 Default.argTypes = {
     headlineType: {
-        options: ['promo', 'active', 'inactive', 'success', 'warning', 'error', undefined],
+        options: ['promo', 'active', 'inactive', 'success', 'warning', 'error', 'undefined'],
         control: {type: 'select'},
     },
     actions: {
