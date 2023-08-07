@@ -338,7 +338,7 @@ export const PreviewTools = ({
         return (
             <>
                 {controls}
-                <div style={{height: 56}} />
+                <div className={styles.controlsHeight} />
                 {children}
             </>
         );

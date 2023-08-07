@@ -2,6 +2,15 @@ import {globalStyle, style} from '@vanilla-extract/css';
 import {mq, skinVars} from '../src';
 import {sprinkles} from '../src/sprinkles.css';
 
+export const controlsHeight = style({
+    height: 57,
+    '@media': {
+        [mq.desktopOrBigger]: {
+            height: 59,
+        },
+    },
+});
+
 export const controls = style([
     sprinkles({
         position: 'fixed',
@@ -16,13 +25,8 @@ export const controls = style([
         zIndex: 2,
         background: 'white',
         borderBottom: `1px solid ${skinVars.colors.divider}`,
-        height: 57,
-        '@media': {
-            [mq.desktopOrBigger]: {
-                height: 59,
-            },
-        },
     },
+    controlsHeight,
 ]);
 
 globalStyle(`${controls} *`, {outline: 'none'});
