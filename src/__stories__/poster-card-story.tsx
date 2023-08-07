@@ -41,6 +41,8 @@ type PosterCardArgs = {
     withTopAction: boolean;
     width: string;
     height: string;
+    inverse: boolean;
+    backgroundColor?: string;
     aspectRatio: '1:1' | '16:9' | '7:10' | '9:10' | 'auto';
 };
 
@@ -58,6 +60,8 @@ export const Default: StoryComponent<PosterCardArgs> = ({
     width,
     height,
     aspectRatio,
+    inverse,
+    backgroundColor,
 }) => {
     let icon;
     if (asset === 'circle + icon') {
@@ -123,6 +127,8 @@ export const Default: StoryComponent<PosterCardArgs> = ({
                 width={width}
                 height={height}
                 aspectRatio={aspectRatio}
+                isInverse={inverse}
+                backgroundColor={backgroundColor}
                 onPress={onPress ? () => null : undefined}
             />
 
@@ -138,6 +144,7 @@ export const Default: StoryComponent<PosterCardArgs> = ({
                 width={width}
                 height={height}
                 aspectRatio={aspectRatio}
+                isInverse={inverse}
                 onPress={onPress ? () => null : undefined}
             />
 
@@ -155,7 +162,9 @@ export const Default: StoryComponent<PosterCardArgs> = ({
                         width={width}
                         height={height}
                         aspectRatio={aspectRatio}
+                        // isInverse={inverse}
                         onPress={onPress ? () => null : undefined}
+                        backgroundColor={backgroundColor}
                     />
                 </Box>
             </ResponsiveLayout>
@@ -178,6 +187,8 @@ Default.args = {
     width: 'auto',
     height: 'auto',
     aspectRatio: 'auto',
+    inverse: false,
+    backgroundColor: 'red',
 };
 Default.argTypes = {
     asset: {

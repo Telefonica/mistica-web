@@ -1173,6 +1173,8 @@ interface PosterCardBaseProps {
     titleLinesMax?: number;
     description?: string;
     descriptionLinesMax?: number;
+    isInverse?: boolean;
+    backgroundColor?: string;
 }
 
 interface PosterCardWithImageProps extends PosterCardBaseProps {
@@ -1212,6 +1214,8 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
             titleLinesMax,
             description,
             descriptionLinesMax,
+            isInverse = true,
+            backgroundColor,
             ...touchableProps
         },
         ref
@@ -1247,7 +1251,7 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                     className={styles.boxed}
                     width="100%"
                     minHeight="100%"
-                    isInverse
+                    isInverse={isInverse}
                     background={
                         backgroundImage || backgroundVideo
                             ? isExternalInverse
@@ -1264,7 +1268,10 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                     >
                         {isTouchable && <div className={styles.touchableCardOverlayMedia} />}
 
-                        <div className={styles.displayCardContainer}>
+                        <div
+                            className={styles.displayCardContainer}
+                            style={backgroundColor ? {background: backgroundColor} : undefined}
+                        >
                             <ThemeVariant isInverse={isExternalInverse}>
                                 <div className={styles.displayCardBackground}>
                                     {backgroundVideo ? video : backgroundImage ? image : undefined}

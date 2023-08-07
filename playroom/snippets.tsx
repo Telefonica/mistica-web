@@ -764,6 +764,7 @@ const cardSnippets: Array<Snippet> = [
           headline={<Tag type="promo">Headline</Tag>}
           pretitle="Pretitle"
           title="Title"
+          isInverse={true}
           description="Description"
           backgroundImage="https://source.unsplash.com/900x900/?landscape"
           onClose={() => {}}
@@ -785,6 +786,7 @@ const cardSnippets: Array<Snippet> = [
           headline={<Tag type="promo">Headline</Tag>}
           pretitle="Pretitle"
           title="Title"
+          isInverse={true}
           description="Description"
           backgroundVideo="https://fr-cert1-es.mytelco.io/2O4-xBJqiMlAfLkseq8RkXs_mv2ACV7Hnt20HqXxNl-mK7KLI3M2dAw"
           poster="https://source.unsplash.com/900x900/?landscape"
