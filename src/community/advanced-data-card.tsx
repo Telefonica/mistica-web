@@ -10,7 +10,7 @@ import {vars} from '../skins/skin-contract.css';
 import Box from '../box';
 import Touchable from '../touchable';
 import classNames from 'classnames';
-import {CardActionsGroup} from '../card';
+import {CardActionsGroup, TOP_ACTION_BUTTON_SIZE} from '../card';
 import {useTheme} from '../hooks';
 import {getPrefixedDataAttributes} from '../utils/dom';
 import Inline from '../inline';
@@ -30,8 +30,6 @@ import type {
     SimpleBlock,
     ValueBlock,
 } from './blocks';
-
-const TOP_ACTION_BUTTON_SIZE = 48;
 
 type CardContentProps = {
     headline?: string | RendersNullableElement<typeof Tag>;
@@ -316,6 +314,7 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
                                             descriptionLinesMax={descriptionLinesMax}
                                         />
                                     </Stack>
+                                    {/** Hack to avoid content from rendering on top of the top action buttons */}
                                     {!stackingGroup && <div style={topActionsStylesWithoutIcon} />}
                                 </Inline>
                             </Box>
