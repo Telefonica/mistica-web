@@ -94,11 +94,7 @@ export const Header: React.FC<HeaderProps> = ({
                 <Box paddingRight={16}>
                     <Stack space={8}>
                         {pretitle && renderRichText(pretitle, {color: vars.colors.textPrimary})}
-                        {small ? (
-                            <Title2 aria-level={2}>{title}</Title2>
-                        ) : (
-                            <Title3 aria-level={2}>{title}</Title3>
-                        )}
+                        {small ? <Title2>{title}</Title2> : <Title3>{title}</Title3>}
                         {description &&
                             (small ? (
                                 <Text2 regular color={vars.colors.textSecondary}>
