@@ -171,7 +171,7 @@ const PreviewToolsControls: React.FC<PreviewToolsControlsProps> = ({
         );
     } else {
         return (
-            <div className={`${styles.controls} ${styles.desktopControls}`}>
+            <div className={styles.controls}>
                 <div className={styles.tabs}>
                     <Tabs
                         tabs={Object.values(themesMap).map(({icon}) => ({text: '', icon}))}

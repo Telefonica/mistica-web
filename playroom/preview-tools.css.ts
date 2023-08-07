@@ -15,18 +15,19 @@ export const controls = style([
         gap: 16,
         zIndex: 2,
         background: 'white',
+        borderBottom: `1px solid ${skinVars.colors.divider}`,
+        height: 57,
+        '@media': {
+            [mq.desktopOrBigger]: {
+                height: 59,
+            },
+        },
     },
 ]);
 
 globalStyle(`${controls} *`, {outline: 'none'});
 
 export const flexSpacer = sprinkles({flex: 1});
-
-export const desktopControls = style({
-    borderBottom: `1px solid ${skinVars.colors.divider}`,
-    height: 57,
-    paddingRight: 16,
-});
 
 export const tabs = style({
     flexBasis: '73%',
