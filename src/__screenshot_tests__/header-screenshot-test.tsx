@@ -99,7 +99,7 @@ test('Header with truncation and color overrides', async () => {
         id: 'components-headers-header--default',
         device: 'MOBILE_IOS',
         args: {
-            pretitle: ' - more text'.repeat(20),
+            pretitle: Array(20).fill('more text').join(' - '),
             truncatePretitle: true,
         },
     });
