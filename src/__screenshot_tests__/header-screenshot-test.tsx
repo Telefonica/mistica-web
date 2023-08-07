@@ -5,25 +5,22 @@ import type {Device} from '../test-utils';
 const DEVICES: Array<Device> = ['MOBILE_IOS', 'DESKTOP'];
 
 test.each`
-    device          | isInverse
+    device          | inverse
     ${'MOBILE_IOS'} | ${true}
     ${'MOBILE_IOS'} | ${false}
     ${'DESKTOP'}    | ${true}
     ${'DESKTOP'}    | ${false}
-`(
-    'Header in $device isInverse=$isInverse',
-    async ({device, isInverse}: {device: Device; isInverse: boolean}) => {
-        await openStoryPage({
-            id: 'components-headers-header--default',
-            device,
-            args: {isInverse},
-        });
+`('Header in $device inverse=$inverse', async ({device, inverse}: {device: Device; inverse: boolean}) => {
+    await openStoryPage({
+        id: 'components-headers-header--default',
+        device,
+        args: {inverse},
+    });
 
-        const story = await screen.findByTestId('header-layout');
-        const image = await story.screenshot();
-        expect(image).toMatchImageSnapshot();
-    }
-);
+    const story = await screen.findByTestId('header-layout');
+    const image = await story.screenshot();
+    expect(image).toMatchImageSnapshot();
+});
 
 test('Header vertical extra in desktop', async () => {
     await openStoryPage({
@@ -99,8 +96,12 @@ test.each(DEVICES)('Header with large text', async (device) => {
 
 test('Header with truncation and color overrides', async () => {
     await openStoryPage({
-        id: 'components-headers-header--rich-texts',
+        id: 'components-headers-header--default',
         device: 'MOBILE_IOS',
+        args: {
+            pretitle: Array(20).fill('more text').join(' - '),
+            truncatePretitle: true,
+        },
     });
 
     const story = await screen.findByTestId('header-layout');

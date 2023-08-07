@@ -20,10 +20,11 @@ export default {
 type Args = {
     withHeader: boolean;
     pretitle: string;
+    truncatePretitle: boolean;
     title: string;
     description: string;
     small: boolean;
-    isInverse: boolean;
+    inverse: boolean;
     withExtraContent: boolean;
     sideBySideExtraOnDesktop: boolean;
     withBreadcrumbs: boolean;
@@ -33,11 +34,12 @@ type Args = {
 
 export const Default: StoryComponent<Args> = ({
     withHeader,
-    isInverse,
+    inverse,
     bleed,
     sideBySideExtraOnDesktop,
     withBreadcrumbs,
     pretitle,
+    truncatePretitle,
     title,
     description,
     small,
@@ -48,7 +50,7 @@ export const Default: StoryComponent<Args> = ({
         <Stack space={16}>
             <HeaderLayout
                 dataAttributes={{testid: 'header-layout'}}
-                isInverse={isInverse}
+                isInverse={inverse}
                 bleed={bleed}
                 sideBySideExtraOnDesktop={sideBySideExtraOnDesktop}
                 noPaddingY={noPaddingY}
@@ -62,7 +64,12 @@ export const Default: StoryComponent<Args> = ({
                 }
                 header={
                     withHeader ? (
-                        <Header pretitle={pretitle} title={title} description={description} small={small} />
+                        <Header
+                            pretitle={truncatePretitle ? {text: pretitle, truncate: true} : pretitle}
+                            title={title}
+                            description={description}
+                            small={small}
+                        />
                     ) : undefined
                 }
                 extra={withExtraContent ? <Placeholder /> : undefined}
@@ -87,13 +94,15 @@ Default.args = {
     title: 'December bill is now available',
     description: 'This is a description',
     small: false,
-    isInverse: true,
+    truncatePretitle: false,
+    inverse: true,
     withBreadcrumbs: true,
     noPaddingY: false,
     withExtraContent: true,
     sideBySideExtraOnDesktop: true,
     bleed: false,
 };
+
 Default.argTypes = {
     pretitle: {if: {arg: 'withHeader'}},
     title: {if: {arg: 'withHeader'}},
@@ -101,22 +110,4 @@ Default.argTypes = {
     small: {if: {arg: 'withHeader'}},
     sideBySideExtraOnDesktop: {if: {arg: 'withExtraContent'}},
     bleed: {if: {arg: 'withExtraContent'}},
-};
-
-export const RichTexts: StoryComponent = () => {
-    const filler = ' - more text'.repeat(20);
-    return (
-        <HeaderLayout
-            dataAttributes={{testid: 'header-layout'}}
-            header={
-                <Header
-                    pretitle={{
-                        text: `Pretitle (truncated to one line) ${filler}}`,
-                        truncate: true,
-                    }}
-                    title="Title is always a plain string"
-                />
-            }
-        />
-    );
 };

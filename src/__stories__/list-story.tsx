@@ -326,9 +326,9 @@ const defaultArgs = {
 };
 
 export const RowListStory: StoryComponent<Args> = (args) => <Template {...args} />;
-RowListStory.storyName = 'Row list';
+RowListStory.storyName = 'RowList';
 RowListStory.args = defaultArgs;
 
 export const BoxedRowListStory: StoryComponent<Args> = (args) => <Template boxed {...args} />;
-BoxedRowListStory.storyName = 'Boxed row list';
+BoxedRowListStory.storyName = 'BoxedRowList';
 BoxedRowListStory.args = defaultArgs;
