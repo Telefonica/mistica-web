@@ -52,3 +52,20 @@ test('Advanced Data Card inside Carousel', async () => {
 
     expect(image).toMatchImageSnapshot();
 });
+
+test('Advanced Data Card without stackingGroup, with top actions and too long title', async () => {
+    const page = await openStoryPage({
+        id: 'community-advanceddatacard--default',
+        device: 'MOBILE_IOS',
+        args: {
+            stackingGroup: false,
+            headline: '',
+            pretitle: '',
+            title: 'Too long title too long title too long titltoo long title too long title',
+        },
+    });
+
+    const image = await page.screenshot({fullPage: true});
+
+    expect(image).toMatchImageSnapshot();
+});

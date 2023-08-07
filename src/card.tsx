@@ -64,7 +64,7 @@ type CardActionsGroupProps = {
     type?: 'default' | 'inverse' | 'media';
 };
 
-const TOP_ACTION_BUTTON_SIZE = 48;
+export const TOP_ACTION_BUTTON_SIZE = 48;
 
 export const CardActionsGroup = ({
     actions,
@@ -796,6 +796,7 @@ export const DataCard = React.forwardRef<HTMLDivElement, DataCardProps>(
                                         descriptionLinesMax={descriptionLinesMax}
                                     />
                                 </Stack>
+                                {/** Hack to avoid content from rendering on top of the top action buttons */}
                                 {!hasIcon && <div style={topActionsStylesWithoutIcon} />}
                             </Inline>
 
