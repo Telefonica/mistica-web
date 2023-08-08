@@ -566,7 +566,7 @@ const tabsSnippets: Array<Snippet> = [
             tabs={[
                 {text: 'Tab 1'},
                 {text: 'Tab 2'},
-                {text: 'Tab 2'},
+                {text: 'Tab 3'},
             ]}
         />`,
     },

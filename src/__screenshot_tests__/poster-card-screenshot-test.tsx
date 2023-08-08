@@ -111,3 +111,17 @@ test('PosterCard with video', async () => {
 
     expect(image).toMatchImageSnapshot();
 });
+
+test.each(TESTABLE_DEVICES)('PosterCard with asset in %s', async (device) => {
+    await openStoryPage({
+        id: 'components-cards-poster-card--default',
+        device,
+        args: {asset: 'circle with icon'},
+    });
+
+    const posterCard = await screen.findByTestId('poster-card');
+
+    const image = await posterCard.screenshot();
+
+    expect(image).toMatchImageSnapshot();
+});

@@ -88,3 +88,17 @@ test('MediaCard with top actions', async () => {
 
     expect(image).toMatchImageSnapshot();
 });
+
+test.each(TESTABLE_DEVICES)('MediaCard with asset in %s', async (device) => {
+    const page = await openStoryPage({
+        id: 'components-cards-media-card--default',
+        device,
+        args: {
+            asset: 'circle with icon',
+        },
+    });
+
+    const image = await page.screenshot({fullPage: true});
+
+    expect(image).toMatchImageSnapshot();
+});
