@@ -206,7 +206,7 @@ Default.args = {
     asset: 'icon',
     headlineType: 'promo',
     background: 'image',
-    backgroundColor: 'backgroundContainerBrandrror',
+    backgroundColor: 'backgroundContainerBrand',
     headline: 'Priority',
     pretitle: 'Pretitle',
     title: 'Title',
