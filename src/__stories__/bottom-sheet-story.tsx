@@ -2,9 +2,7 @@ import * as React from 'react';
 import {
     BottomSheet,
     Box,
-    ButtonFixedFooterLayout,
     ButtonPrimary,
-    ButtonSecondary,
     Circle,
     IconCheckRegular,
     IconCocktailRegular,
@@ -31,10 +29,6 @@ export default {
 
 export const Default: StoryComponent = () => {
     const [open, setOpen] = React.useState(false);
-    const [fixedFooter, setFixedFooter] = React.useState(false);
-    const [counter, setCounter] = React.useState(1);
-
-    const inc = () => setCounter((c) => c + 1);
 
     return (
         <Box paddingY={24}>
@@ -43,85 +37,27 @@ export const Default: StoryComponent = () => {
                     disabled={open}
                     onPress={() => {
                         setOpen(true);
-                        setFixedFooter(false);
                     }}
                 >
                     Open sheet
                 </ButtonPrimary>
-
-                <ButtonPrimary
-                    disabled={open}
-                    onPress={() => {
-                        setOpen(true);
-                        setFixedFooter(true);
-                    }}
-                >
-                    Open fixed footer sheet
-                </ButtonPrimary>
-                <Placeholder />
-                <Placeholder />
-                <Placeholder />
-                <Placeholder />
-                <Placeholder />
-                <Placeholder />
-                <Placeholder />
-                <Placeholder />
-                <ButtonPrimary
-                    disabled={open}
-                    onPress={() => {
-                        setOpen(true);
-                        setFixedFooter(false);
-                    }}
-                >
-                    Open sheet
-                </ButtonPrimary>
-
-                <ButtonPrimary
-                    disabled={open}
-                    onPress={() => {
-                        setOpen(true);
-                        setFixedFooter(true);
-                    }}
-                >
-                    Open fixed footer sheet
-                </ButtonPrimary>
-                <Placeholder />
-                <Placeholder />
-                <Placeholder />
-                <Placeholder />
 
                 {open && (
                     <BottomSheet
                         onClose={() => {
                             setOpen(false);
-                            setCounter(1);
                         }}
                     >
-                        {({closeModal}) =>
-                            fixedFooter ? (
-                                <ButtonFixedFooterLayout
-                                    button={<ButtonPrimary onPress={closeModal}>Close</ButtonPrimary>}
-                                    secondaryButton={
-                                        <ButtonSecondary onPress={inc}>More content</ButtonSecondary>
-                                    }
+                        {() => (
+                            <ResponsiveLayout>
+                                <Box
+                                    paddingBottom={{mobile: 16, desktop: 40}}
+                                    paddingTop={{mobile: 0, desktop: 40}}
                                 >
-                                    {Array.from({length: counter}).map((_, i) => (
-                                        <Placeholder key={i} />
-                                    ))}
-                                </ButtonFixedFooterLayout>
-                            ) : (
-                                <ResponsiveLayout>
-                                    <Box
-                                        paddingBottom={{mobile: 16, desktop: 40}}
-                                        paddingTop={{mobile: 0, desktop: 40}}
-                                    >
-                                        {Array.from({length: counter}).map((_, i) => (
-                                            <Placeholder key={i} />
-                                        ))}
-                                    </Box>
-                                </ResponsiveLayout>
-                            )
-                        }
+                                    <Placeholder />
+                                </Box>
+                            </ResponsiveLayout>
+                        )}
                     </BottomSheet>
                 )}
             </ResponsiveLayout>
@@ -131,7 +67,17 @@ export const Default: StoryComponent = () => {
 
 Default.storyName = 'BottomSheet';
 
-export const RadioList: StoryComponent = () => {
+type SheetArgs = {
+    title: string;
+    subtitle: string;
+    description: string;
+};
+
+type RadioListSheetArgs = SheetArgs & {
+    selectedId: string;
+};
+
+export const RadioList: StoryComponent<RadioListSheetArgs> = ({title, subtitle, description, selectedId}) => {
     const [open, setOpen] = React.useState(false);
     const [selected, setSelected] = React.useState<string | null>(null);
 
@@ -163,10 +109,10 @@ export const RadioList: StoryComponent = () => {
                         onSelect={(item) => {
                             setSelected(item);
                         }}
-                        title="Select an fruit"
-                        subitile="Subtitle"
-                        description="Description"
-                        selectedId="2"
+                        title={title}
+                        subtitle={subtitle}
+                        description={description}
+                        selectedId={selectedId === 'none' ? undefined : selectedId}
                         items={[
                             'Apple',
                             'Banana',
@@ -199,8 +145,20 @@ export const RadioList: StoryComponent = () => {
 };
 
 RadioList.storyName = 'RadioListBottomSheet';
+RadioList.args = {
+    title: 'Select a fruit',
+    subtitle: 'Subtitle',
+    description: 'Description',
+    selectedId: 'none',
+};
+RadioList.argTypes = {
+    selectedId: {
+        control: {type: 'select'},
+        options: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', 'none'],
+    },
+};
 
-export const ActionList: StoryComponent = () => {
+export const ActionList: StoryComponent<SheetArgs> = ({title, subtitle, description}) => {
     const [open, setOpen] = React.useState(false);
     const [selected, setSelected] = React.useState<string | null>(null);
 
@@ -232,9 +190,9 @@ export const ActionList: StoryComponent = () => {
                         onSelect={(item) => {
                             setSelected(item);
                         }}
-                        title="Title"
-                        subitile="Subtitle"
-                        description="Description"
+                        title={title}
+                        subtitle={subtitle}
+                        description={description}
                         items={[
                             {
                                 id: '1',
@@ -265,8 +223,18 @@ export const ActionList: StoryComponent = () => {
 };
 
 ActionList.storyName = 'ActionListBottomSheet';
+ActionList.args = {
+    title: 'Title',
+    subtitle: 'Subtitle',
+    description: 'Description',
+};
 
-export const Info: StoryComponent = () => {
+type InfoSheetArgs = SheetArgs & {
+    numItems: number;
+    iconType: 'bullet' | 'regular' | 'small';
+};
+
+export const Info: StoryComponent<InfoSheetArgs> = ({title, subtitle, description, numItems, iconType}) => {
     const [open, setOpen] = React.useState(false);
 
     return (
@@ -286,29 +254,22 @@ export const Info: StoryComponent = () => {
                         onClose={() => {
                             setOpen(false);
                         }}
-                        title="Title"
-                        subitile="Subtitle"
-                        description="Description"
-                        items={[
-                            {
-                                id: '1',
-                                title: 'List item',
-                                description: 'Description',
-                                icon: {type: 'bullet'},
+                        title={title}
+                        subtitle={subtitle}
+                        description={description}
+                        items={Array.from({length: numItems}, (_, idx) => ({
+                            id: String(idx),
+                            title: 'Item ' + idx,
+                            description: 'Description',
+                            icon: {
+                                type: iconType,
+                                Icon: {
+                                    regular: IconCocktailRegular,
+                                    small: IconCheckRegular,
+                                    bullet: undefined as never,
+                                }[iconType],
                             },
-                            {
-                                id: '2',
-                                title: 'List item two',
-                                description: 'Description',
-                                icon: {type: 'regular', Icon: IconCocktailRegular},
-                            },
-                            {
-                                id: '3',
-                                title: 'List item three',
-                                description: 'Description',
-                                icon: {type: 'small', Icon: IconCheckRegular},
-                            },
-                        ]}
+                        }))}
                     />
                 )}
             </ResponsiveLayout>
@@ -317,8 +278,36 @@ export const Info: StoryComponent = () => {
 };
 
 Info.storyName = 'InfoBottomSheet';
+Info.args = {
+    title: 'Title',
+    subtitle: 'Subtitle',
+    description: 'Description',
+    numItems: 5,
+    iconType: 'bullet',
+};
+Info.argTypes = {
+    iconType: {
+        control: {type: 'select'},
+        options: ['bullet', 'regular', 'small'],
+    },
+};
 
-export const Actions: StoryComponent = () => {
+type ActionsSheetArgs = SheetArgs & {
+    buttonText: string;
+    secondaryButtonText: string;
+    buttonLinkText: string;
+    withChevron: boolean;
+};
+
+export const Actions: StoryComponent<ActionsSheetArgs> = ({
+    title,
+    subtitle,
+    description,
+    buttonText,
+    secondaryButtonText,
+    buttonLinkText,
+    withChevron,
+}) => {
     const [open, setOpen] = React.useState(false);
     const [pressedButton, setPressedButton] = React.useState<string | null>(null);
 
@@ -348,19 +337,27 @@ export const Actions: StoryComponent = () => {
                             setOpen(false);
                         }}
                         onPressButton={setPressedButton}
-                        title="Title"
-                        subitile="Subtitle"
-                        description={'Description '.repeat(500)}
+                        title={title}
+                        subtitle={subtitle}
+                        description={description}
                         button={{
-                            text: 'Button with a long text to force next button',
+                            text: buttonText,
                         }}
-                        secondaryButton={{
-                            text: 'Secondary button',
-                        }}
-                        buttonLink={{
-                            text: 'Link',
-                            withChevron: true,
-                        }}
+                        secondaryButton={
+                            secondaryButtonText
+                                ? {
+                                      text: secondaryButtonText,
+                                  }
+                                : undefined
+                        }
+                        buttonLink={
+                            buttonLinkText
+                                ? {
+                                      text: buttonLinkText,
+                                      withChevron,
+                                  }
+                                : undefined
+                        }
                     />
                 )}
             </ResponsiveLayout>
@@ -369,3 +366,18 @@ export const Actions: StoryComponent = () => {
 };
 
 Actions.storyName = 'ActionsBottomSheet';
+Actions.args = {
+    title: 'Title',
+    subtitle: 'Subtitle',
+    description: 'Description',
+    buttonText: 'Button',
+    secondaryButtonText: 'Secondary button',
+    buttonLinkText: 'Link',
+    withChevron: false,
+};
+Actions.argTypes = {
+    withChevron: {
+        control: {type: 'boolean'},
+        if: {arg: 'buttonLinkText'},
+    },
+};

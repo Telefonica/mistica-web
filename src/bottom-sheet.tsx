@@ -286,7 +286,7 @@ const BottomSheet = React.forwardRef<HTMLDivElement, BottomSheetProps>(
 
 type SheetBodyProps = {
     title?: string;
-    subitile?: string;
+    subtitle?: string;
     description?: string;
     button?: RendersNullableElement<typeof ButtonPrimary>;
     secondaryButton?: RendersNullableElement<typeof ButtonSecondary>;
@@ -297,7 +297,7 @@ type SheetBodyProps = {
 
 const SheetBody = ({
     title,
-    subitile,
+    subtitle,
     description,
     modalTitleId,
     button,
@@ -342,11 +342,11 @@ const SheetBody = ({
             <Box paddingBottom={hasButtons ? 0 : {desktop: 40, mobile: 0}}>
                 <ResponsiveLayout>
                     <Stack space={8}>
-                        {subitile || description ? (
+                        {subtitle || description ? (
                             <Stack space={{mobile: 8, desktop: 16}}>
-                                {subitile && (
+                                {subtitle && (
                                     <Text3 as="p" regular>
-                                        {subitile}
+                                        {subtitle}
                                     </Text3>
                                 )}
                                 {description && (
@@ -380,7 +380,7 @@ const SheetBody = ({
 
 type RadioListBottomSheetProps = {
     title?: string;
-    subitile?: string;
+    subtitle?: string;
     description?: string;
     items: Array<{
         id: string;
@@ -398,7 +398,7 @@ type RadioListBottomSheetProps = {
 };
 
 export const RadioListBottomSheet = React.forwardRef<HTMLDivElement, RadioListBottomSheetProps>(
-    ({title, subitile, description, items, selectedId, onClose, onSelect, button, dataAttributes}, ref) => {
+    ({title, subtitle, description, items, selectedId, onClose, onSelect, button, dataAttributes}, ref) => {
         const [selectedItemId, setSelectedItemId] = React.useState(selectedId);
         const hasSelectedRef = React.useRef(false);
         const {isDesktopOrBigger} = useScreenSize();
@@ -413,7 +413,7 @@ export const RadioListBottomSheet = React.forwardRef<HTMLDivElement, RadioListBo
                 {({closeModal, modalTitleId}) => (
                     <SheetBody
                         title={title}
-                        subitile={subitile}
+                        subtitle={subtitle}
                         description={description}
                         modalTitleId={modalTitleId}
                         button={
@@ -474,12 +474,12 @@ export const RadioListBottomSheet = React.forwardRef<HTMLDivElement, RadioListBo
 
 type ActionsListSheetProps = {
     title?: string;
-    subitile?: string;
+    subtitle?: string;
     description?: string;
     items: Array<{
         id: string;
         title: string;
-        style?: 'default' | 'destructive'; // "normal" by default
+        style?: 'normal' | 'destructive'; // "normal" by default
         Icon?: React.ComponentType<IconProps>;
     }>;
     onClose?: () => void;
@@ -488,7 +488,7 @@ type ActionsListSheetProps = {
 };
 
 export const ActionsListBottomSheet = React.forwardRef<HTMLDivElement, ActionsListSheetProps>(
-    ({title, subitile, description, items, onClose, onSelect, dataAttributes}, ref) => {
+    ({title, subtitle, description, items, onClose, onSelect, dataAttributes}, ref) => {
         return (
             <BottomSheet
                 onClose={onClose}
@@ -498,7 +498,7 @@ export const ActionsListBottomSheet = React.forwardRef<HTMLDivElement, ActionsLi
                 {({closeModal, modalTitleId}) => (
                     <SheetBody
                         title={title}
-                        subitile={subitile}
+                        subtitle={subtitle}
                         description={description}
                         modalTitleId={modalTitleId}
                     >
@@ -547,7 +547,7 @@ export const ActionsListBottomSheet = React.forwardRef<HTMLDivElement, ActionsLi
 
 type InfoBottomSheetProps = {
     title?: string;
-    subitile?: string;
+    subtitle?: string;
     description?: string;
     items: Array<{
         id?: string;
@@ -565,7 +565,7 @@ type InfoBottomSheetProps = {
 };
 
 export const InfoBottomSheet = React.forwardRef<HTMLDivElement, InfoBottomSheetProps>(
-    ({title, subitile, description, items, onClose, dataAttributes}, ref) => {
+    ({title, subtitle, description, items, onClose, dataAttributes}, ref) => {
         return (
             <BottomSheet
                 onClose={onClose}
@@ -575,7 +575,7 @@ export const InfoBottomSheet = React.forwardRef<HTMLDivElement, InfoBottomSheetP
                 {({modalTitleId}) => (
                     <SheetBody
                         title={title}
-                        subitile={subitile}
+                        subtitle={subtitle}
                         description={description}
                         modalTitleId={modalTitleId}
                     >
@@ -622,7 +622,7 @@ type ButtonProps = {
 
 type ActionsBottomSheetProps = {
     title?: string;
-    subitile?: string;
+    subtitle?: string;
     description?: string;
     button: ButtonProps;
     secondaryButton?: ButtonProps;
@@ -636,7 +636,7 @@ export const ActionsBottomSheet = React.forwardRef<HTMLDivElement, ActionsBottom
     (
         {
             title,
-            subitile,
+            subtitle,
             description,
             button,
             secondaryButton,
@@ -666,7 +666,7 @@ export const ActionsBottomSheet = React.forwardRef<HTMLDivElement, ActionsBottom
                 {({modalTitleId, closeModal}) => (
                     <SheetBody
                         title={title}
-                        subitile={subitile}
+                        subtitle={subtitle}
                         description={description}
                         modalTitleId={modalTitleId}
                         button={
