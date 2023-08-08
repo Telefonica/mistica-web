@@ -143,9 +143,9 @@ export const textAlign = style({
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-        } 
-    }
-})
+        },
+    },
+});
 
 export const enter = style({
     transform: enterTransform,
