@@ -181,7 +181,7 @@ export const Default: StoryComponent<PosterCardArgs> = ({
                 </Box>
             </ResponsiveLayout>
 
-            <Title1>NO MIDIA</Title1>
+            <Title1>NO MEDIA</Title1>
             <PosterCard
                 {...backgroundColorProps}
                 icon={icon}
