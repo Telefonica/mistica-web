@@ -60,8 +60,8 @@ export const Default: StoryComponent<PosterCardArgs> = ({
     width,
     height,
     aspectRatio,
-    inverse,
     backgroundColor,
+    inverse,
 }) => {
     let icon;
     if (asset === 'circle + icon') {
@@ -114,6 +114,20 @@ export const Default: StoryComponent<PosterCardArgs> = ({
                   poster: 'test',
               };
 
+    const backgroundColorProps = {
+        onClose: closable ? () => {} : undefined,
+        actions: withTopAction
+            ? [
+                  {
+                      Icon: IconLightningRegular,
+                      onPress: () => {},
+                      label: 'Lightning',
+                  },
+              ]
+            : undefined,
+        backgroundColor: 'test',
+    };
+
     return (
         <Stack space={32} dataAttributes={{testid: 'poster-card'}}>
             <PosterCard
@@ -128,7 +142,6 @@ export const Default: StoryComponent<PosterCardArgs> = ({
                 height={height}
                 aspectRatio={aspectRatio}
                 isInverse={inverse}
-                backgroundColor={backgroundColor}
                 onPress={onPress ? () => null : undefined}
             />
 
@@ -162,12 +175,28 @@ export const Default: StoryComponent<PosterCardArgs> = ({
                         width={width}
                         height={height}
                         aspectRatio={aspectRatio}
-                        // isInverse={inverse}
+                        isInverse={inverse}
                         onPress={onPress ? () => null : undefined}
-                        backgroundColor={backgroundColor}
                     />
                 </Box>
             </ResponsiveLayout>
+
+            <Title1>NO MIDIA</Title1>
+            <PosterCard
+                {...backgroundColorProps}
+                icon={icon}
+                headline={headline ? <Tag type={headlineType}>{headline}</Tag> : undefined}
+                pretitle={pretitle}
+                title={title}
+                description={description}
+                aria-label="Poster card fallback inverse label"
+                width={width}
+                height={height}
+                aspectRatio={aspectRatio}
+                isInverse={inverse}
+                onPress={onPress ? () => null : undefined}
+                backgroundColor={backgroundColor}
+            />
         </Stack>
     );
 };
@@ -177,6 +206,7 @@ Default.args = {
     asset: 'icon',
     headlineType: 'promo',
     background: 'image',
+    backgroundColor: 'backgroundContainerBrandrror',
     headline: 'Priority',
     pretitle: 'Pretitle',
     title: 'Title',
@@ -187,8 +217,7 @@ Default.args = {
     width: 'auto',
     height: 'auto',
     aspectRatio: 'auto',
-    inverse: false,
-    backgroundColor: 'red',
+    inverse: true,
 };
 Default.argTypes = {
     asset: {
@@ -206,6 +235,10 @@ Default.argTypes = {
     aspectRatio: {
         options: ['1:1', '16:9', '7:10', '9:10', 'auto'],
         control: {type: 'select'},
+    },
+    backgroundColor: {
+        mapping: skinVars.colors,
+        control: {type: 'text'},
     },
 };
 

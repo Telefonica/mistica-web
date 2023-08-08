@@ -801,6 +801,27 @@ const cardSnippets: Array<Snippet> = [
 
     {
         group: 'Cards',
+        name: 'PosterCard background color',
+        code: `
+      <PosterCard
+        headline={<Tag type="promo">Headline</Tag>}
+        pretitle="Pretitle"
+        title="Title"
+        isInverse={true}
+        description="Description"
+        backgroundColor={colors.backgroundBrandSecondary}
+        poster="https://source.unsplash.com/900x900/?landscape"
+        onPress={() => {alert({ title: "pressed" });}}
+        button={
+          <ButtonPrimary small href="https://google.com">
+            Action
+          </ButtonPrimary>
+        }
+      />`,
+    },
+
+    {
+        group: 'Cards',
         name: 'NakedCard with Image',
         code: `
         <NakedCard

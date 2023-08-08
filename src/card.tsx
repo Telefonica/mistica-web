@@ -1178,11 +1178,11 @@ interface PosterCardBaseProps {
 }
 
 interface PosterCardWithImageProps extends PosterCardBaseProps {
-    backgroundImage: string;
+    backgroundImage?: string;
 }
 
 type PosterCardWithVideoProps = Omit<PosterCardBaseProps, 'actions' | 'onClose'> & {
-    backgroundVideo: VideoSource;
+    backgroundVideo?: VideoSource;
     poster?: string;
     backgroundVideoRef?: React.RefObject<VideoElement>;
 };
