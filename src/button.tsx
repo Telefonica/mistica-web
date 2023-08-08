@@ -515,7 +515,7 @@ export const ButtonLink = React.forwardRef<TouchableElement, ButtonLinkProps>((p
     const commonProps = {
         className: classnames(styles.link, {
             [styles.inverseLink]: isInverse,
-            [styles.alignedLeftLink]: !!props.bleedLeft,
+            [styles.alignedLeftLink]: !!props.bleedLeft || !!props.aligned,
             [styles.alignedRightLink]: !!props.bleedRight,
             [styles.alignedVerticalLink]: !!props.bleedY,
             [styles.isLoading]: showSpinner,
