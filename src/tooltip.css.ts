@@ -112,6 +112,8 @@ export const wrapper = sprinkles({
     display: 'inline-block',
 });
 
+export const tooltipMinWidth = 40;
+
 export const container = style([
     sprinkles({
         position: 'absolute',
@@ -122,7 +124,7 @@ export const container = style([
         border: 'regular',
     }),
     {
-        minWidth: 40,
+        minWidth: tooltipMinWidth,
         maxWidth: 496,
         zIndex: 50,
         boxShadow: `0 2px 4px 0 rgba(0, 0, 0, ${shadowAlpha})`,
@@ -135,9 +137,15 @@ export const container = style([
     },
 ]);
 
-export const fullWidth = style({
-    width: '100%',
-});
+export const textAlign = style({
+    '@media': {
+        [`(max-width: ${tooltipMinWidth}px)`]: {
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+        } 
+    }
+})
 
 export const enter = style({
     transform: enterTransform,
