@@ -42,7 +42,6 @@ import Image from '../image';
 <PosterCard title="title" trackingEvent={{name: 'do-something'}} />;
 // @ts-expect-error backgroundImage and backgroundVideo can't be used together
 <PosterCard title="title" backgroundImage="" backgroundVideo="" />;
-// @ts-expect-error backgroundImage or backgroundVideo are mandatory
 <PosterCard title="title" />;
 
 (isTouchable: boolean) => <SnapCard title="title" href={isTouchable ? '/' : undefined} />;
