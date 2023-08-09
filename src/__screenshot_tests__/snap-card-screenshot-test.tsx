@@ -2,6 +2,8 @@ import {openStoryPage, screen, setRootFontSize} from '../test-utils';
 
 import type {Device, StoryArgs} from '../test-utils';
 
+const ASPECT_RATIO_VALUES = ['1:1', '16:9', '7:10', '9:10'];
+
 const renderSnapCard = async ({device, args}: {device: Device; args?: StoryArgs}) => {
     await openStoryPage({
         id: 'components-cards-snap-card--default',
@@ -43,6 +45,19 @@ test('SnapCard', async () => {
     expect(await desktopSnapCard.screenshot()).toMatchImageSnapshot({
         customSnapshotIdentifier: 'snapcard-screenshot-test-desktop',
     });
+});
+
+test.each(ASPECT_RATIO_VALUES)('SnapCard with aspect ratio %s', async (aspectRatio) => {
+    await openStoryPage({
+        id: 'components-cards-snap-card--default',
+        args: {aspectRatio: aspectRatio.replace(':', ' ')},
+    });
+
+    const snapCard = await screen.findByTestId('snap-card');
+
+    const image = await snapCard.screenshot();
+
+    expect(image).toMatchImageSnapshot();
 });
 
 test('SnapCard group', async () => {

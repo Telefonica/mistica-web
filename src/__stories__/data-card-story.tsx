@@ -15,6 +15,7 @@ import {
 import {Placeholder} from '../placeholder';
 import avatarImg from './images/avatar.jpg';
 
+import type {AspectRatio} from '../card';
 import type {TagType} from '..';
 
 export default {
@@ -33,7 +34,10 @@ type DataCardArgs = {
     actions: 'button' | 'link' | 'button and link' | 'on press';
     closable: boolean;
     withTopAction: boolean;
+    aspectRatio: AspectRatio;
 };
+
+const fixedAspectRatioValues = ['1 1', '16 9', '7 10', '9 10'];
 
 export const Default: StoryComponent<DataCardArgs> = ({
     asset = 'icon',
@@ -47,6 +51,7 @@ export const Default: StoryComponent<DataCardArgs> = ({
     actions = 'button',
     closable,
     withTopAction,
+    aspectRatio,
 }) => {
     let icon;
     if (asset === 'icon') {
@@ -76,6 +81,10 @@ export const Default: StoryComponent<DataCardArgs> = ({
               buttonLink,
           };
 
+    const aspectRatioValue = fixedAspectRatioValues.includes(aspectRatio)
+        ? aspectRatio.replace(' ', ':')
+        : aspectRatio;
+
     return (
         <DataCard
             onClose={closable ? () => {} : undefined}
@@ -87,6 +96,7 @@ export const Default: StoryComponent<DataCardArgs> = ({
             description={description}
             extra={withExtra ? <Placeholder /> : undefined}
             {...interactiveActions}
+            aspectRatio={aspectRatioValue as AspectRatio}
             dataAttributes={{testid: 'data-card'}}
             aria-label="Data card label"
             actions={
@@ -119,6 +129,7 @@ Default.args = {
     actions: 'button',
     closable: false,
     withTopAction: false,
+    aspectRatio: 'auto',
 };
 Default.argTypes = {
     asset: {
@@ -132,6 +143,18 @@ Default.argTypes = {
     actions: {
         options: ['button', 'link', 'button and link', 'on press', 'none'],
         control: {type: 'select'},
+    },
+    aspectRatio: {
+        options: ['auto', '1 1', '16 9', '7 10', '9 10'],
+        control: {
+            type: 'select',
+            labels: {
+                '1 1': '1:1',
+                '16 9': '16:9',
+                '7 10': '7:10',
+                '9 10': '9:10',
+            },
+        },
     },
 };
 
