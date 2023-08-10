@@ -1185,6 +1185,7 @@ interface PosterCardBaseProps {
     description?: string;
     descriptionLinesMax?: number;
     isInverse?: boolean;
+    background?: boolean;
     backgroundColor?: string;
 }
 
@@ -1209,6 +1210,7 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
             dataAttributes,
             backgroundImage,
             backgroundVideo,
+            background,
             poster,
             backgroundVideoRef,
             width,
@@ -1242,9 +1244,19 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
         const withGradient = !!backgroundImage || !!backgroundVideo;
         const textShadow = withGradient ? '0 0 16px rgba(0,0,0,0.4)' : undefined;
         const hasTopActions = actions?.length || onClose;
-        const {textPresets} = useTheme();
+        const {textPresets, isDarkMode} = useTheme();
 
         const isTouchable = touchableProps.href || touchableProps.to || touchableProps.onPress;
+
+        const hasMedia = !backgroundImage && !backgroundVideo ? isInverse : true;
+
+        const textInvert = isDarkMode
+            ? hasMedia
+                ? vars.colors.textPrimary
+                : vars.colors.backgroundBrandSecondary
+            : hasMedia
+            ? vars.colors.textPrimaryInverse
+            : vars.colors.textPrimary;
 
         return (
             <CardContainer
@@ -1262,7 +1274,7 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                     className={styles.boxed}
                     width="100%"
                     minHeight="100%"
-                    isInverse={isInverse}
+                    isInverse={hasMedia}
                     background={
                         backgroundImage || backgroundVideo
                             ? isExternalInverse
@@ -1327,6 +1339,7 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                                                             <Stack space={4}>
                                                                 {pretitle && (
                                                                     <Text2
+                                                                        color={textInvert}
                                                                         forceMobileSizes
                                                                         truncate={pretitleLinesMax}
                                                                         as="div"
@@ -1338,6 +1351,7 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                                                                     </Text2>
                                                                 )}
                                                                 <Text
+                                                                    color={textInvert}
                                                                     desktopSize={20}
                                                                     mobileSize={18}
                                                                     mobileLineHeight="24px"
@@ -1355,6 +1369,7 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                                                 )}
                                                 {description && (
                                                     <Text2
+                                                        color={textInvert}
                                                         forceMobileSizes
                                                         truncate={descriptionLinesMax}
                                                         as="p"
