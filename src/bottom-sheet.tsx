@@ -22,7 +22,9 @@ import {ButtonLink, ButtonPrimary, ButtonSecondary} from './button';
 import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
 import IconButton from './icon-button';
 import ButtonLayout from './button-layout';
+import Image from './image';
 
+import type {ExclusifyUnion} from './utils/utility-types';
 import type {DataAttributes, IconProps, RendersNullableElement, TrackingEvent} from './utils/types';
 
 const getClientY = (ev: TouchEvent | MouseEvent | React.TouchEvent | React.MouseEvent) => {
@@ -179,7 +181,9 @@ const modalReducer = (state: ModalState, action: ModalAction): ModalState =>
 type BottomSheetProps = {
     onClose?: () => void;
     dataAttributes?: DataAttributes;
-    children: (renderParams: {closeModal: () => void; modalTitleId: string}) => React.ReactNode;
+    children:
+        | React.ReactNode
+        | ((renderParams: {closeModal: () => void; modalTitleId: string}) => React.ReactNode);
 };
 
 const BottomSheet = React.forwardRef<HTMLDivElement, BottomSheetProps>(
@@ -268,7 +272,9 @@ const BottomSheet = React.forwardRef<HTMLDivElement, BottomSheetProps>(
                                     onScroll={onScroll}
                                     className={styles.children}
                                 >
-                                    {children({closeModal, modalTitleId})}
+                                    {typeof children === 'function'
+                                        ? children({closeModal, modalTitleId})
+                                        : children}
                                 </section>
                             </div>
                             <div className={styles.modalCloseButton}>
@@ -295,7 +301,7 @@ type SheetBodyProps = {
     children?: React.ReactNode;
 };
 
-const SheetBody = ({
+export const SheetBody = ({
     title,
     subtitle,
     description,
@@ -304,7 +310,7 @@ const SheetBody = ({
     secondaryButton,
     link,
     children,
-}: SheetBodyProps) => {
+}: SheetBodyProps): JSX.Element => {
     const topScrollSignalRef = React.useRef<HTMLDivElement>(null);
     const bottomScrollSignalRef = React.useRef<HTMLDivElement>(null);
     const scrollableParentRef = React.useRef<HTMLElement | null>(null);
@@ -363,7 +369,7 @@ const SheetBody = ({
             {hasButtons && (
                 <div className={styles.stickyButtons}>
                     {showButtonsDivider && <Divider />}
-                    <Box paddingY={16}>
+                    <Box paddingY={{mobile: 16, desktop: 40}}>
                         <ResponsiveLayout>
                             <ButtonLayout align="full-width" link={link}>
                                 {button}
@@ -480,7 +486,15 @@ type ActionsListSheetProps = {
         id: string;
         title: string;
         style?: 'normal' | 'destructive'; // "normal" by default
-        Icon?: React.ComponentType<IconProps>;
+        icon?: ExclusifyUnion<
+            | {
+                  Icon: React.ComponentType<IconProps>;
+              }
+            | {
+                  url: string;
+                  urlDark?: string;
+              }
+        >;
     }>;
     onClose?: () => void;
     onSelect?: (id: string) => void;
@@ -489,6 +503,8 @@ type ActionsListSheetProps = {
 
 export const ActionsListBottomSheet = React.forwardRef<HTMLDivElement, ActionsListSheetProps>(
     ({title, subtitle, description, items, onClose, onSelect, dataAttributes}, ref) => {
+        const {isDarkMode} = useTheme();
+
         return (
             <BottomSheet
                 onClose={onClose}
@@ -503,7 +519,7 @@ export const ActionsListBottomSheet = React.forwardRef<HTMLDivElement, ActionsLi
                         modalTitleId={modalTitleId}
                     >
                         <NegativeBox>
-                            {items.map(({id, style, title, Icon}) => (
+                            {items.map(({id, style, title, icon}) => (
                                 <Touchable
                                     key={id}
                                     onPress={() => {
@@ -512,16 +528,28 @@ export const ActionsListBottomSheet = React.forwardRef<HTMLDivElement, ActionsLi
                                     }}
                                 >
                                     <div className={styles.sheetActionRow}>
-                                        {Icon && (
+                                        {icon && (
                                             <Box paddingRight={16}>
-                                                <Icon
-                                                    size={24}
-                                                    color={
-                                                        style === 'destructive'
-                                                            ? skinVars.colors.textLinkDanger
-                                                            : skinVars.colors.neutralHigh
-                                                    }
-                                                />
+                                                {icon.Icon ? (
+                                                    <icon.Icon
+                                                        size={24}
+                                                        color={
+                                                            style === 'destructive'
+                                                                ? skinVars.colors.textLinkDanger
+                                                                : skinVars.colors.neutralHigh
+                                                        }
+                                                    />
+                                                ) : (
+                                                    <Image
+                                                        circular
+                                                        src={
+                                                            isDarkMode && icon.urlDark
+                                                                ? icon.urlDark
+                                                                : icon.url
+                                                        }
+                                                        width={40}
+                                                    />
+                                                )}
                                             </Box>
                                         )}
                                         <Text3
@@ -553,12 +581,18 @@ type InfoBottomSheetProps = {
         id?: string;
         title: string;
         description?: string;
-        icon:
+        icon: ExclusifyUnion<
             | {
                   type: 'regular' | 'small';
                   Icon: React.ComponentType<IconProps>;
               }
-            | {type: 'bullet'};
+            | {
+                  type: 'regular' | 'small';
+                  url: string;
+                  urlDark?: string;
+              }
+            | {type: 'bullet'}
+        >;
     }>;
     onClose?: () => void;
     dataAttributes?: DataAttributes;
@@ -566,6 +600,7 @@ type InfoBottomSheetProps = {
 
 export const InfoBottomSheet = React.forwardRef<HTMLDivElement, InfoBottomSheetProps>(
     ({title, subtitle, description, items, onClose, dataAttributes}, ref) => {
+        const {isDarkMode} = useTheme();
         return (
             <BottomSheet
                 onClose={onClose}
@@ -589,8 +624,18 @@ export const InfoBottomSheet = React.forwardRef<HTMLDivElement, InfoBottomSheetP
                                                     size={8}
                                                     backgroundColor={skinVars.colors.textPrimary}
                                                 />
-                                            ) : (
+                                            ) : item.icon.Icon ? (
                                                 <item.icon.Icon size={item.icon.type === 'small' ? 16 : 24} />
+                                            ) : (
+                                                <Image
+                                                    src={
+                                                        isDarkMode && item.icon.urlDark
+                                                            ? item.icon.urlDark
+                                                            : item.icon.url
+                                                    }
+                                                    width={item.icon.type === 'small' ? 16 : 24}
+                                                    height={item.icon.type === 'small' ? 16 : 24}
+                                                />
                                             )}
                                         </div>
                                         <Stack space={2}>

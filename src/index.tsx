@@ -105,7 +105,19 @@ export {default as Video} from './video';
 export type {VideoElement} from './video';
 export {Carousel, CenteredCarousel, Slideshow, PageBullets} from './carousel';
 export {Grid, GridItem} from './grid';
-export {default as BottomSheet} from './bottom-sheet';
+export {
+    default as BottomSheet,
+    ActionsBottomSheet,
+    InfoBottomSheet,
+    ActionsListBottomSheet,
+    RadioListBottomSheet,
+    SheetBody,
+} from './bottom-sheet';
+export {
+    default as BottomSheetRoot,
+    createNativeSheetImplementationFromWebviewBridge,
+    showBottomSheet,
+} from './bottom-sheet-root';
 export {default as StackingGroup} from './stacking-group';
 
 // Forms

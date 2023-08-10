@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {
     BottomSheet,
+    BottomSheetRoot,
     Box,
     ButtonPrimary,
     Circle,
@@ -9,11 +10,15 @@ import {
     IconLightningRegular,
     IconMobileDeviceRegular,
     IconTrashCanRegular,
+    Inline,
     Placeholder,
     ResponsiveLayout,
+    showBottomSheet,
     skinVars,
     Stack,
+    Text2,
     Text3,
+    Title1,
 } from '..';
 import {
     ActionsBottomSheet,
@@ -21,10 +26,14 @@ import {
     InfoBottomSheet,
     RadioListBottomSheet,
 } from '../bottom-sheet';
+import avatarImg from './images/avatar.jpg';
 
 export default {
     title: 'Components/BottomSheet',
     component: BottomSheet,
+    parameters: {
+        fullScreen: true,
+    },
 };
 
 export const Default: StoryComponent = () => {
@@ -39,7 +48,7 @@ export const Default: StoryComponent = () => {
                         setOpen(true);
                     }}
                 >
-                    Open sheet
+                    Open
                 </ButtonPrimary>
 
                 {open && (
@@ -48,16 +57,14 @@ export const Default: StoryComponent = () => {
                             setOpen(false);
                         }}
                     >
-                        {() => (
-                            <ResponsiveLayout>
-                                <Box
-                                    paddingBottom={{mobile: 16, desktop: 40}}
-                                    paddingTop={{mobile: 0, desktop: 40}}
-                                >
-                                    <Placeholder />
-                                </Box>
-                            </ResponsiveLayout>
-                        )}
+                        <ResponsiveLayout>
+                            <Box
+                                paddingBottom={{mobile: 16, desktop: 40}}
+                                paddingTop={{mobile: 0, desktop: 40}}
+                            >
+                                <Placeholder />
+                            </Box>
+                        </ResponsiveLayout>
                     </BottomSheet>
                 )}
             </ResponsiveLayout>
@@ -92,7 +99,7 @@ export const RadioList: StoryComponent<RadioListSheetArgs> = ({title, subtitle, 
                             setSelected(null);
                         }}
                     >
-                        Open sheet
+                        Open
                     </ButtonPrimary>
                     {selected && (
                         <Text3 regular as="p">
@@ -173,7 +180,7 @@ export const ActionList: StoryComponent<SheetArgs> = ({title, subtitle, descript
                             setSelected(null);
                         }}
                     >
-                        Open sheet
+                        Open
                     </ButtonPrimary>
                     {selected && (
                         <Text3 regular as="p">
@@ -197,12 +204,16 @@ export const ActionList: StoryComponent<SheetArgs> = ({title, subtitle, descript
                             {
                                 id: '1',
                                 title: 'Action one',
-                                Icon: IconLightningRegular,
+                                icon: {
+                                    Icon: IconLightningRegular,
+                                },
                             },
                             {
                                 id: '2',
                                 title: 'Action two',
-                                Icon: IconLightningRegular,
+                                icon: {
+                                    Icon: IconLightningRegular,
+                                },
                             },
                             {
                                 id: '3',
@@ -212,7 +223,9 @@ export const ActionList: StoryComponent<SheetArgs> = ({title, subtitle, descript
                                 id: '4',
                                 title: 'Destructive action',
                                 style: 'destructive',
-                                Icon: IconTrashCanRegular,
+                                icon: {
+                                    Icon: IconTrashCanRegular,
+                                },
                             },
                         ]}
                     />
@@ -246,7 +259,7 @@ export const Info: StoryComponent<InfoSheetArgs> = ({title, subtitle, descriptio
                         setOpen(true);
                     }}
                 >
-                    Open sheet
+                    Open
                 </ButtonPrimary>
 
                 {open && (
@@ -261,14 +274,16 @@ export const Info: StoryComponent<InfoSheetArgs> = ({title, subtitle, descriptio
                             id: String(idx),
                             title: 'Item ' + idx,
                             description: 'Description',
-                            icon: {
-                                type: iconType,
-                                Icon: {
-                                    regular: IconCocktailRegular,
-                                    small: IconCheckRegular,
-                                    bullet: undefined as never,
-                                }[iconType],
-                            },
+                            icon:
+                                iconType === 'bullet'
+                                    ? {type: 'bullet'}
+                                    : {
+                                          type: iconType,
+                                          Icon: {
+                                              regular: IconCocktailRegular,
+                                              small: IconCheckRegular,
+                                          }[iconType],
+                                      },
                         }))}
                     />
                 )}
@@ -322,7 +337,7 @@ export const Actions: StoryComponent<ActionsSheetArgs> = ({
                             setPressedButton(null);
                         }}
                     >
-                        Open sheet
+                        Open
                     </ButtonPrimary>
                     {pressedButton && (
                         <Text3 regular as="p">
@@ -380,4 +395,154 @@ Actions.argTypes = {
         control: {type: 'boolean'},
         if: {arg: 'buttonLinkText'},
     },
+};
+
+type RootArgs = {
+    title: string;
+    subtitle: string;
+    description: string;
+};
+
+export const Root: StoryComponent<RootArgs> = ({title, subtitle, description}) => {
+    const [response, setResponse] = React.useState<unknown>();
+    return (
+        <Box paddingY={24}>
+            <ResponsiveLayout>
+                <BottomSheetRoot />
+                <Stack space={16}>
+                    <Inline space={16}>
+                        <ButtonPrimary
+                            onPress={() => {
+                                setResponse(undefined);
+                                showBottomSheet({
+                                    type: 'INFO',
+                                    props: {
+                                        title,
+                                        subtitle,
+                                        description,
+                                        items: [
+                                            {
+                                                id: '1',
+                                                title: 'Item 1',
+                                                description: 'Description',
+                                                icon: {
+                                                    type: 'bullet',
+                                                },
+                                            },
+                                            {
+                                                id: '2',
+                                                title: 'Item 2',
+                                                description: 'Description',
+                                                icon: {
+                                                    type: 'bullet',
+                                                },
+                                            },
+                                        ],
+                                    },
+                                }).then(setResponse);
+                            }}
+                        >
+                            'INFO'
+                        </ButtonPrimary>
+                        <ButtonPrimary
+                            onPress={() => {
+                                setResponse(undefined);
+                                showBottomSheet({
+                                    type: 'ACTIONS_LIST',
+                                    props: {
+                                        title,
+                                        subtitle,
+                                        description,
+                                        items: [
+                                            {
+                                                id: '1',
+                                                title: 'Action 1',
+                                                icon: {
+                                                    url: avatarImg,
+                                                },
+                                            },
+                                            {
+                                                id: '2',
+                                                title: 'Destructive',
+                                                style: 'destructive',
+                                            },
+                                        ],
+                                    },
+                                }).then(setResponse);
+                            }}
+                        >
+                            'ACTIONS_LIST'
+                        </ButtonPrimary>
+                        <ButtonPrimary
+                            onPress={() => {
+                                setResponse(undefined);
+                                showBottomSheet({
+                                    type: 'ACTIONS',
+                                    props: {
+                                        title,
+                                        subtitle,
+                                        description,
+                                        button: {
+                                            text: 'Button',
+                                        },
+                                        link: {
+                                            text: 'Link',
+                                            withChevron: true,
+                                        },
+                                    },
+                                }).then(setResponse);
+                            }}
+                        >
+                            'ACTIONS'
+                        </ButtonPrimary>
+                        <ButtonPrimary
+                            onPress={() => {
+                                setResponse(undefined);
+                                showBottomSheet({
+                                    type: 'RADIO_LIST',
+                                    props: {
+                                        title,
+                                        subtitle,
+                                        description,
+                                        selectedId: '1',
+                                        items: [
+                                            {
+                                                id: '1',
+                                                title: 'Item 1',
+                                                description: 'Description',
+                                                icon: {
+                                                    url: avatarImg,
+                                                },
+                                            },
+                                            {
+                                                id: '2',
+                                                title: 'Item 2',
+                                                description: 'Description',
+                                                icon: {
+                                                    url: 'unknownurl',
+                                                },
+                                            },
+                                        ],
+                                    },
+                                }).then(setResponse);
+                            }}
+                        >
+                            'RADIO_LIST'
+                        </ButtonPrimary>
+                    </Inline>
+                    <Title1>Response:</Title1>
+                    <Text2 regular as="pre">
+                        {JSON.stringify(response, null, 2)}
+                    </Text2>
+                </Stack>
+            </ResponsiveLayout>
+        </Box>
+    );
+};
+
+Root.storyName = 'BottomSheetRoot';
+Root.args = {
+    title: 'Title',
+    subtitle: 'Subtitle',
+    description: 'Description',
 };
