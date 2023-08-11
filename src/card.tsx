@@ -1403,7 +1403,17 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                         </div>
                     </BaseTouchable>
                 </InternalBoxed>
-                <CardActionsGroup onClose={onClose} actions={actions} type="media" />
+                <CardActionsGroup
+                    onClose={onClose}
+                    actions={actions}
+                    type={
+                        !!backgroundImage || !!backgroundVideo
+                            ? 'media'
+                            : normalizedVariant === 'inverse'
+                            ? 'inverse'
+                            : 'default'
+                    }
+                />
             </CardContainer>
         );
     }
