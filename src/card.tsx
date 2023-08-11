@@ -1256,13 +1256,12 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
         const {textPresets} = useTheme();
 
         const isTouchable = touchableProps.href || touchableProps.to || touchableProps.onPress;
+        const normalizedVariant = variant || (isInverse ? 'inverse' : 'default');
 
         const calcBackgroundColor = () => {
             if (backgroundColor) {
                 return backgroundColor;
             }
-
-            const normalizedVariant = variant || (isInverse ? 'inverse' : 'default');
 
             return {
                 default: vars.colors.backgroundContainer,
@@ -1272,6 +1271,13 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                 alternative: vars.colors.backgroundAlternative,
             }[normalizedVariant];
         };
+
+        const overlayStyle =
+            backgroundImage || backgroundVideo
+                ? styles.touchableCardOverlayMedia
+                : normalizedVariant === 'inverse'
+                ? styles.touchableCardOverlayInverse
+                : styles.touchableCardOverlay;
 
         return (
             <CardContainer
@@ -1289,7 +1295,7 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                     className={styles.boxed}
                     width="100%"
                     minHeight="100%"
-                    isInverse={!!backgroundImage || !!backgroundVideo || isInverse || variant === 'inverse'}
+                    isInverse={!!backgroundImage || !!backgroundVideo || normalizedVariant === 'inverse'}
                     background={
                         backgroundImage || backgroundVideo
                             ? isExternalInverse
@@ -1304,7 +1310,7 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                         className={styles.touchable}
                         aria-label={ariaLabel}
                     >
-                        {isTouchable && <div className={styles.touchableCardOverlayMedia} />}
+                        {isTouchable && <div className={overlayStyle} />}
 
                         <div className={styles.displayCardContainer}>
                             <ThemeVariant isInverse={isExternalInverse}>

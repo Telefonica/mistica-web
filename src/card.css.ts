@@ -279,22 +279,6 @@ export const snapCardTouchableHover = style([
     },
 ]);
 
-export const snapCardTouchableHoverTransparent = style([
-    snapCardTouchableBase,
-    {
-        display: 'flex',
-        height: '100%',
-
-        '@media': {
-            [mq.supportsHover]: {
-                ':hover': {
-                    backgroundColor: 'transparent',
-                },
-            },
-        },
-    },
-]);
-
 export const displayCardContainer = sprinkles({
     width: '100%',
     height: '100%',
