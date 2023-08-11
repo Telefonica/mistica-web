@@ -43,3 +43,15 @@ test('Feedback screen with large fontSize', async () => {
     const image = await page.screenshot();
     expect(image).toMatchImageSnapshot();
 });
+
+test('Info feedback screen with custom icon', async () => {
+    const page = await openStoryPage({
+        id: 'patterns-feedback-infofeedbackscreen--info',
+        skin: MOVISTAR_SKIN,
+        device: 'MOBILE_IOS',
+        args: {icon: 'custom'},
+    });
+
+    const image = await page.screenshot();
+    expect(image).toMatchImageSnapshot();
+});

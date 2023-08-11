@@ -16,7 +16,7 @@ type Props = {
     skipAnimation?: boolean;
 };
 
-const IconSuccessO2: React.FC<Props> = ({size = 64, color, skipAnimation = false}) => {
+const IconSuccessO2: React.FC<Props> = ({size = 48, color, skipAnimation = false}) => {
     const isInverse = useIsInverseVariant();
     const {platformOverrides} = useTheme();
 
@@ -58,7 +58,7 @@ const IconSuccessO2: React.FC<Props> = ({size = 64, color, skipAnimation = false
     );
 };
 
-const IconSuccessDefault: React.FC<Props> = ({size = 64, color, skipAnimation = false}) => {
+const IconSuccessDefault: React.FC<Props> = ({size = 48, color, skipAnimation = false}) => {
     const isInverse = useIsInverseVariant();
     const {platformOverrides} = useTheme();
 

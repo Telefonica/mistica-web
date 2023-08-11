@@ -4,10 +4,10 @@ import {ThemeVariant, useIsInverseVariant} from './theme-variant-context';
 import ButtonFixedFooterLayout from './button-fixed-footer-layout';
 import OverscrollColor from './overscroll-color-context';
 import {O2_CLASSIC_SKIN, VIVO_SKIN} from './skins/constants';
-import IcnSuccess from './icons/icon-success';
+import IconSuccess from './icons/icon-success';
 import IconSuccessVivo from './icons/icon-success-vivo';
-import IcnError from './icons/icon-error';
-import IcnInfo from './icons/icon-info';
+import IconError from './icons/icon-error';
+import IconInfo from './icons/icon-info';
 import {
     isWebViewBridgeAvailable,
     requestVibration as requestVibrationNative,
@@ -24,7 +24,7 @@ import {vars} from './skins/skin-contract.css';
 import * as styles from './feedback.css';
 
 import type {Theme} from './theme';
-import type {DataAttributes} from './utils/types';
+import type {DataAttributes, IconProps} from './utils/types';
 import type {ButtonGroupProps} from './button-group';
 
 const areAnimationsSupported = (platformOverrides: Theme['platformOverrides']) =>
@@ -107,7 +107,7 @@ const renderFeedbackBody = (
         );
     return (
         <Stack space={24}>
-            {icon}
+            <div className={styles.iconContainer}>{icon}</div>
             <Stack
                 space={16}
                 className={classnames(
@@ -306,7 +306,7 @@ export const SuccessFeedbackScreen: React.FC<AssetFeedbackProps> = ({dataAttribu
             {...props}
             isInverse={!props.unstable_inlineInDesktop || isTabletOrSmaller}
             hapticFeedback="success"
-            icon={skinName === VIVO_SKIN ? <IconSuccessVivo /> : <IcnSuccess />}
+            icon={skinName === VIVO_SKIN ? <IconSuccessVivo size="100%" /> : <IconSuccess size="100%" />}
             animateText
             imageUrl={props.imageUrl}
             imageFit={props.imageFit}
@@ -329,7 +329,7 @@ export const ErrorFeedbackScreen: React.FC<ErrorFeedbackScreenProps> = ({
         <FeedbackScreen
             {...otherProps}
             hapticFeedback="error"
-            icon={<IcnError />}
+            icon={<IconError size="100%" />}
             animateText
             dataAttributes={{'component-name': 'ErrorFeedbackScreen', ...dataAttributes}}
         >
@@ -343,11 +343,19 @@ export const ErrorFeedbackScreen: React.FC<ErrorFeedbackScreenProps> = ({
     );
 };
 
-export const InfoFeedbackScreen: React.FC<FeedbackProps> = ({dataAttributes, ...props}) => {
+interface InfoFeedbackScreenProps extends FeedbackProps {
+    Icon?: React.FC<IconProps>;
+}
+
+export const InfoFeedbackScreen: React.FC<InfoFeedbackScreenProps> = ({
+    dataAttributes,
+    Icon = IconInfo,
+    ...props
+}) => {
     return (
         <FeedbackScreen
             dataAttributes={{'component-name': 'InfoFeedbackScreen', ...dataAttributes}}
-            icon={<IcnInfo />}
+            icon={<Icon size="100%" />}
             {...props}
         />
     );
@@ -370,7 +378,7 @@ export const SuccessFeedback: React.FC<AssetFeedbackProps> = ({
 
     const appear = useAppearStatus();
 
-    const icon = skinName === VIVO_SKIN ? <IconSuccessVivo /> : <IcnSuccess />;
+    const icon = skinName === VIVO_SKIN ? <IconSuccessVivo size="100%" /> : <IconSuccess size="100%" />;
     const feedbackBody = renderFeedbackBody(
         {icon, title, description, children},
         areAnimationsSupported(platformOverrides),

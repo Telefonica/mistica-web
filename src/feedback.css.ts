@@ -30,9 +30,14 @@ export const container = style([
 
 export const innerContainer = style({
     textAlign: 'left',
-    padding: '64px 8px 16px',
+    padding: '64px 0px 16px',
     zIndex: 1, // needed to support hack for o2-classic
     position: 'relative', // needed to support hack for o2-classic
+});
+
+export const iconContainer = sprinkles({
+    width: 48,
+    height: 48,
 });
 
 export const feedbackDataAppear = style({opacity: 0, transform: 'translate(0, 20px)'});
