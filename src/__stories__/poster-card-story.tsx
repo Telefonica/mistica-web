@@ -30,7 +30,7 @@ const BACKGROUND_VIDEO_POSTER_SRC = beachImg;
 
 type PosterCardArgs = {
     asset: 'circle with icon' | 'circle with image' | 'none';
-    background: 'image' | 'video' | 'color' | 'custom color' | 'color from skin';
+    background: 'image' | 'video' | 'custom color' | 'color from skin';
     backgroundColorCustom: string;
     backgroundColorFromSkin: string;
     variant: 'default' | 'inverse' | 'alternative';
