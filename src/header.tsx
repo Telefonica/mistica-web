@@ -5,11 +5,12 @@ import {useIsInverseVariant} from './theme-variant-context';
 import ResponsiveLayout from './responsive-layout';
 import GridLayout from './grid-layout';
 import OverscrollColor from './overscroll-color-context';
-import {Text8, Text7, Text6, Text3, Text4, Text2} from './text';
+import {Text8, Text7, Text6, Text3, Text2} from './text';
 import ButtonGroup from './button-group';
 import {vars} from './skins/skin-contract.css';
 import * as styles from './header.css';
 import {getPrefixedDataAttributes} from './utils/dom';
+import {Title2, Title3} from './title';
 
 import type NavigationBreadcrumbs from './navigation-breadcrumbs';
 import type {ButtonPrimary, ButtonSecondary} from './button';
@@ -93,15 +94,7 @@ export const Header: React.FC<HeaderProps> = ({
                 <Box paddingRight={16}>
                     <Stack space={8}>
                         {pretitle && renderRichText(pretitle, {color: vars.colors.textPrimary})}
-                        {small ? (
-                            <Text4 regular role="heading" aria-level={2}>
-                                {title}
-                            </Text4>
-                        ) : (
-                            <Text6 role="heading" aria-level={2}>
-                                {title}
-                            </Text6>
-                        )}
+                        {small ? <Title2 as="h2">{title}</Title2> : <Title3 as="h2">{title}</Title3>}
                         {description &&
                             (small ? (
                                 <Text2 regular color={vars.colors.textSecondary}>

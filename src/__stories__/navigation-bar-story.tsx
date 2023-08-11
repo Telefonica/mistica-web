@@ -5,11 +5,10 @@ import {
     NavigationBarActionGroup,
     useScreenSize,
     IconSearchRegular,
-    Avatar,
 } from '..';
 
 export default {
-    title: 'Components/Navigation bars/Navigation bar',
+    title: 'Components/Navigation bars/NavigationBar',
     component: NavigationBar,
     parameters: {
         fullScreen: true,
@@ -38,32 +37,9 @@ export const Default: StoryComponent<Args> = ({isInverse, withBorder}) => {
     );
 };
 
-Default.storyName = 'Navigation bar';
+Default.storyName = 'NavigationBar';
 
 Default.args = {
-    isInverse: false,
-    withBorder: true,
-};
-
-export const Custom: StoryComponent<Args> = ({isInverse, withBorder}) => {
-    return (
-        <NavigationBar
-            withBorder={withBorder}
-            isInverse={isInverse}
-            onBack={() => {}}
-            title="Settings"
-            right={
-                <NavigationBarActionGroup>
-                    <Avatar size={32} />
-                </NavigationBarActionGroup>
-            }
-        />
-    );
-};
-
-Custom.storyName = 'Navigation bar custom right children';
-
-Custom.args = {
     isInverse: false,
     withBorder: true,
 };
