@@ -102,6 +102,7 @@ let listener: BottomSheetPropsListener | null = null;
 let sheetPromiseResolve: SheetPromiseResolve | null = null;
 let nativeImplementation: NativeSheetImplementation | null = null;
 
+let isBottomSheetOpen = false;
 export const showBottomSheet = <T extends SheetType>(
     sheetProps: SheetTypeWithProps<T>
 ): Promise<SheetResultByType[T]> => {
@@ -110,14 +111,27 @@ export const showBottomSheet = <T extends SheetType>(
     }
 
     if (!listener) {
-        throw Error('Tried to show a bottomSheet but the BottomSheetRoot component was not mounted');
+        return Promise.reject(
+            new Error('Tried to show a BottomSheet but the BottomSheetRoot component was not mounted')
+        );
     }
 
+    if (isBottomSheetOpen) {
+        return Promise.reject(new Error('Tried to show a BottomSheet but there is already one open'));
+    }
+
+    isBottomSheetOpen = true;
     listener(sheetProps as SheetTypeWithPropsUnion);
 
-    return new Promise((resolve) => {
-        sheetPromiseResolve = resolve as SheetPromiseResolve;
+    const sheetPromise = new Promise((resolve) => {
+        sheetPromiseResolve = resolve;
     });
+
+    sheetPromise.then(() => {
+        isBottomSheetOpen = false;
+    });
+
+    return sheetPromise as Promise<SheetResultByType[T]>;
 };
 
 // This is the subset of methods needed in @tef-novum/webview-bridge to implement all the bottom sheet types
@@ -178,12 +192,7 @@ export const BottomSheetRoot = (props: Props): React.ReactElement | null => {
     React.useEffect(() => {
         listener = <T extends SheetType>(newSheetProps: SheetTypeWithProps<T>) => {
             selectionRef.current = null;
-            setSheetProps((sheetProps) => {
-                if (sheetProps) {
-                    throw new Error('Tried to show a bottom sheet while another one is already visible');
-                }
-                return newSheetProps as SheetTypeWithPropsUnion;
-            });
+            setSheetProps(newSheetProps as SheetTypeWithPropsUnion);
         };
         return () => {
             listener = null;

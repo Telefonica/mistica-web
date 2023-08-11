@@ -29,7 +29,7 @@ import {
 import avatarImg from './images/avatar.jpg';
 
 export default {
-    title: 'Components/BottomSheet',
+    title: 'Components/Modals/BottomSheet',
     component: BottomSheet,
     parameters: {
         fullScreen: true,
@@ -165,7 +165,7 @@ RadioList.argTypes = {
     },
 };
 
-export const ActionList: StoryComponent<SheetArgs> = ({title, subtitle, description}) => {
+export const ActionsList: StoryComponent<SheetArgs> = ({title, subtitle, description}) => {
     const [open, setOpen] = React.useState(false);
     const [selected, setSelected] = React.useState<string | null>(null);
 
@@ -203,24 +203,17 @@ export const ActionList: StoryComponent<SheetArgs> = ({title, subtitle, descript
                         items={[
                             {
                                 id: '1',
-                                title: 'Action one',
+                                title: 'Action with icon',
                                 icon: {
                                     Icon: IconLightningRegular,
                                 },
                             },
                             {
                                 id: '2',
-                                title: 'Action two',
-                                icon: {
-                                    Icon: IconLightningRegular,
-                                },
-                            },
-                            {
-                                id: '3',
                                 title: 'Action without icon',
                             },
                             {
-                                id: '4',
+                                id: '3',
                                 title: 'Destructive action',
                                 style: 'destructive',
                                 icon: {
@@ -235,8 +228,8 @@ export const ActionList: StoryComponent<SheetArgs> = ({title, subtitle, descript
     );
 };
 
-ActionList.storyName = 'ActionListBottomSheet';
-ActionList.args = {
+ActionsList.storyName = 'ActionsListBottomSheet';
+ActionsList.args = {
     title: 'Title',
     subtitle: 'Subtitle',
     description: 'Description',

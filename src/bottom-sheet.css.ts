@@ -3,7 +3,7 @@ import * as mq from './media-queries.css';
 import {vars as skinVars} from './skins/skin-contract.css';
 import {sprinkles} from './sprinkles.css';
 
-export const transitionDuration = 400;
+export const transitionDuration = process.env.NODE_ENV === 'test' ? 0 : 400;
 
 const sheetClosedStyle = {
     transform: 'translateY(100%)',

@@ -137,7 +137,9 @@ const useLockBodyScroll = () => {
         // When the modal is shown, we want a fixed body (no-scroll)
         document.body.style.top = `-${scrollY}px`;
         return () => {
-            window.scrollTo(0, scrollY);
+            if (process.env.NODE_ENV !== 'test') {
+                window.scrollTo(0, scrollY);
+            }
         };
     }, []);
 
@@ -268,7 +270,7 @@ const BottomSheet = React.forwardRef<HTMLDivElement, BottomSheetProps>(
                                 <section
                                     role="dialog"
                                     aria-modal="true"
-                                    aria-describedby={modalTitleId}
+                                    aria-labelledby={modalTitleId}
                                     onScroll={onScroll}
                                     className={styles.children}
                                 >
