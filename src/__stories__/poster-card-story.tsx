@@ -128,6 +128,7 @@ export const Default: StoryComponent<PosterCardArgs> = ({
     return (
         <Stack space={32} dataAttributes={{testid: 'poster-card'}}>
             <PosterCard
+                dataAttributes={{testid: 'main-poster-card'}}
                 {...backgroundProps}
                 icon={icon}
                 headline={headline ? <Tag type={headlineType}>{headline}</Tag> : undefined}
