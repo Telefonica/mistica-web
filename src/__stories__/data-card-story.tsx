@@ -145,7 +145,7 @@ Default.argTypes = {
         control: {type: 'select'},
     },
     aspectRatio: {
-        options: ['auto', '1 1', '16 9', '7 10', '9 10'],
+        options: ['auto', ...fixedAspectRatioValues],
         control: {
             type: 'select',
             labels: {

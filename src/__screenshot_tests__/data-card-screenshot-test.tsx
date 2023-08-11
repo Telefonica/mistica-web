@@ -3,7 +3,7 @@ import {openStoryPage, screen, setRootFontSize} from '../test-utils';
 import type {Device} from '../test-utils';
 
 const TESTABLE_DEVICES: Array<Device> = ['MOBILE_IOS', 'DESKTOP'];
-const ASPECT_RATIO_VALUES = ['1:1', '16:9', '7:10', '9:10'];
+const ASPECT_RATIO_VALUES = ['1:1', '7:10', '9:10'];
 
 test.each(TESTABLE_DEVICES)('DataCard in %s', async (device) => {
     await openStoryPage({
@@ -98,6 +98,7 @@ test('DataCard without icon, with top actions and too long title', async () => {
 test.each(ASPECT_RATIO_VALUES)('DataCard with aspect ratio %s', async (aspectRatio) => {
     await openStoryPage({
         id: 'components-cards-data-card--default',
+        device: 'MOBILE_IOS',
         args: {aspectRatio: aspectRatio.replace(':', ' ')},
     });
 

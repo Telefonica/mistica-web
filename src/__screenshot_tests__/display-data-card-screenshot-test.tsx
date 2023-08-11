@@ -1,6 +1,6 @@
 import {openStoryPage, screen} from '../test-utils';
 
-const ASPECT_RATIO_VALUES = ['1:1', '16:9', '7:10', '9:10'];
+const ASPECT_RATIO_VALUES = ['1:1', '7:10', '9:10'];
 
 test('DisplayDataCard', async () => {
     await openStoryPage({
@@ -56,6 +56,7 @@ test('DisplayDataCard with top actions inverse', async () => {
 test.each(ASPECT_RATIO_VALUES)('DisplayDataCard with aspect ratio %s', async (aspectRatio) => {
     await openStoryPage({
         id: 'components-cards-display-data-card--default',
+        device: 'MOBILE_IOS',
         args: {aspectRatio: aspectRatio.replace(':', ' ')},
     });
 
