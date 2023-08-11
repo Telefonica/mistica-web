@@ -119,7 +119,7 @@ export const CardActionsGroup = ({
     );
 };
 
-type AspectRatio = '1:1' | '16:9' | '7:10' | '9:10' | 'auto';
+export type AspectRatio = '1:1' | '16:9' | '7:10' | '9:10' | 'auto';
 
 const aspectRatioToNumber = (aspectRatio?: AspectRatio | number): number => {
     if (!aspectRatio) {
@@ -716,6 +716,7 @@ interface DataCardBaseProps {
     descriptionLinesMax?: number;
     extra?: React.ReactNode;
     actions?: Array<CardAction>;
+    aspectRatio?: AspectRatio | number;
     children?: void;
     /** "data-" prefix is automatically added. For example, use "testid" instead of "data-testid" */
     dataAttributes?: DataAttributes;
@@ -752,6 +753,7 @@ export const DataCard = React.forwardRef<HTMLDivElement, DataCardProps>(
             dataAttributes,
             'aria-label': ariaLabel,
             onClose,
+            aspectRatio,
             ...touchableProps
         },
         ref
@@ -772,8 +774,9 @@ export const DataCard = React.forwardRef<HTMLDivElement, DataCardProps>(
                 ref={ref}
                 aria-label={ariaLabel}
                 className={styles.touchableContainer}
+                aspectRatio={aspectRatio}
             >
-                <Boxed className={styles.boxed} width="100%" height="100%">
+                <Boxed className={styles.boxed} width="100%" minHeight="100%">
                     <BaseTouchable
                         maybe
                         {...touchableProps}
@@ -828,6 +831,7 @@ type SnapCardProps = MaybeTouchableCard<{
     'aria-label'?: string;
     extra?: React.ReactNode;
     isInverse?: boolean;
+    aspectRatio?: AspectRatio | number;
     children?: void;
 }>;
 
@@ -843,6 +847,7 @@ export const SnapCard = React.forwardRef<HTMLDivElement, SnapCardProps>(
             'aria-label': ariaLabel,
             extra,
             isInverse = false,
+            aspectRatio,
             ...touchableProps
         },
         ref
@@ -855,8 +860,9 @@ export const SnapCard = React.forwardRef<HTMLDivElement, SnapCardProps>(
                 dataAttributes={{'component-name': 'SnapCard', ...dataAttributes}}
                 ref={ref}
                 className={styles.touchableContainer}
+                aspectRatio={aspectRatio}
             >
-                <Boxed className={styles.boxed} isInverse={isInverse} width="100%" height="100%">
+                <Boxed className={styles.boxed} isInverse={isInverse} width="100%" minHeight="100%">
                     <BaseTouchable
                         maybe
                         {...touchableProps}
@@ -911,10 +917,10 @@ interface CommonDisplayCardProps {
     description?: string;
     descriptionLinesMax?: number;
     'aria-label'?: string;
+    aspectRatio?: AspectRatio | number;
 }
 
 type DisplayMediaCardBaseProps = {
-    aspectRatio?: AspectRatio | number;
     width?: number | string;
     height?: number | string;
 };
