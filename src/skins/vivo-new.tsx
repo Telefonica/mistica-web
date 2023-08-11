@@ -48,7 +48,7 @@ export const getVivoNewSkin: GetKnownSkin = () => {
             background: palette.white,
             backgroundAlternative: palette.grey1,
             backgroundBrand: palette.vivoPurple,
-            backgroundBrandSecondary: palette.vivoPurple,
+            backgroundBrandSecondary: palette.vivoPurpleLight90,
             backgroundContainer: palette.white,
             backgroundContainerHover: applyAlpha(palette.darkModeBlack, 0.03),
             backgroundContainerPressed: applyAlpha(palette.darkModeBlack, 0.05),
