@@ -796,6 +796,49 @@ const cardSnippets: Array<Snippet> = [
           }
         />`,
     },
+    {
+        group: 'Cards',
+        name: 'PosterCard inverse',
+        code: `
+        <PosterCard
+          headline={<Tag type="promo">Headline</Tag>}
+          pretitle="Pretitle"
+          title="Title"
+          description="Description"
+          isInverse
+          onClose={() => {}}
+          onPress={() => {alert({ title: "pressed" });}}
+          actions={[
+            {
+              Icon: IconLightningRegular,
+              onPress: () => {},
+              label: "Lightning",
+            },
+          ]}
+        />`,
+    },
+    {
+        group: 'Cards',
+        name: 'PosterCard with backgroundColor',
+        code: `
+        <PosterCard
+          headline={<Tag type="promo">Headline</Tag>}
+          pretitle="Pretitle"
+          title="Title"
+          description="Description"
+          backgroundColor={colors.promo}
+          isInverse
+          onClose={() => {}}
+          onPress={() => {alert({ title: "pressed" });}}
+          actions={[
+            {
+              Icon: IconLightningRegular,
+              onPress: () => {},
+              label: "Lightning",
+            },
+          ]}
+        />`,
+    },
 
     {
         group: 'Cards',

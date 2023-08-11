@@ -125,3 +125,42 @@ test.each(TESTABLE_DEVICES)('PosterCard with asset in %s', async (device) => {
 
     expect(image).toMatchImageSnapshot();
 });
+
+test.each(['inverse', 'alternative', 'default'])('PosterCard with variant %s', async (variant) => {
+    await openStoryPage({
+        id: 'components-cards-poster-card--default',
+        args: {variant, background: 'color from skin'},
+    });
+
+    const posterCard = await screen.findByTestId('main-poster-card');
+
+    const image = await posterCard.screenshot();
+
+    expect(image).toMatchImageSnapshot();
+});
+
+test('PosterCard with custom background color', async () => {
+    await openStoryPage({
+        id: 'components-cards-poster-card--default',
+        args: {background: 'custom color', backgroundColorCustom: '#ff0'},
+    });
+
+    const posterCard = await screen.findByTestId('main-poster-card');
+
+    const image = await posterCard.screenshot();
+
+    expect(image).toMatchImageSnapshot();
+});
+
+test('PosterCard with custom background color inverse', async () => {
+    await openStoryPage({
+        id: 'components-cards-poster-card--default',
+        args: {background: 'custom color', backgroundColorCustom: '#000', variant: 'inverse'},
+    });
+
+    const posterCard = await screen.findByTestId('main-poster-card');
+
+    const image = await posterCard.screenshot();
+
+    expect(image).toMatchImageSnapshot();
+});

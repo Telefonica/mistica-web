@@ -24,6 +24,7 @@ import {assignInlineVars} from '@vanilla-extract/dynamic';
 import Inline from './inline';
 import {getPrefixedDataAttributes} from './utils/dom';
 
+import type {Variant} from './theme-variant-context';
 import type {PressHandler} from './touchable';
 import type {VideoElement, VideoSource} from './video';
 import type {ButtonLink, ButtonPrimary, ButtonSecondary} from './button';
@@ -1196,8 +1197,19 @@ type PosterCardWithVideoProps = Omit<PosterCardBaseProps, 'actions' | 'onClose'>
     backgroundVideoRef?: React.RefObject<VideoElement>;
 };
 
+type PosterCardWithBackgroundColorProps = PosterCardBaseProps & {
+    backgroundColor?: string;
+} & ExclusifyUnion<
+        | {
+              variant: Variant;
+          }
+        | {
+              isInverse: boolean;
+          }
+    >;
+
 type PosterCardProps = MaybeTouchableCard<
-    ExclusifyUnion<PosterCardWithImageProps | PosterCardWithVideoProps>
+    ExclusifyUnion<PosterCardWithImageProps | PosterCardWithVideoProps | PosterCardWithBackgroundColorProps>
 >;
 
 const POSTER_CARD_MIN_WIDTH = 140;
@@ -1223,6 +1235,9 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
             titleLinesMax,
             description,
             descriptionLinesMax,
+            variant,
+            isInverse,
+            backgroundColor,
             ...touchableProps
         },
         ref
@@ -1241,6 +1256,28 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
         const {textPresets} = useTheme();
 
         const isTouchable = touchableProps.href || touchableProps.to || touchableProps.onPress;
+        const normalizedVariant = variant || (isInverse ? 'inverse' : 'default');
+
+        const calcBackgroundColor = () => {
+            if (backgroundColor) {
+                return backgroundColor;
+            }
+
+            return {
+                default: vars.colors.backgroundContainer,
+                inverse: isExternalInverse
+                    ? vars.colors.backgroundContainerBrandOverInverse
+                    : vars.colors.backgroundBrand,
+                alternative: vars.colors.backgroundAlternative,
+            }[normalizedVariant];
+        };
+
+        const overlayStyle =
+            backgroundImage || backgroundVideo
+                ? styles.touchableCardOverlayMedia
+                : normalizedVariant === 'inverse'
+                ? styles.touchableCardOverlayInverse
+                : styles.touchableCardOverlay;
 
         return (
             <CardContainer
@@ -1258,13 +1295,13 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                     className={styles.boxed}
                     width="100%"
                     minHeight="100%"
-                    isInverse
+                    isInverse={!!backgroundImage || !!backgroundVideo || normalizedVariant === 'inverse'}
                     background={
                         backgroundImage || backgroundVideo
                             ? isExternalInverse
                                 ? vars.colors.backgroundContainerBrandOverInverse
                                 : vars.colors.backgroundContainer
-                            : undefined
+                            : calcBackgroundColor()
                     }
                 >
                     <BaseTouchable
@@ -1273,7 +1310,7 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                         className={styles.touchable}
                         aria-label={ariaLabel}
                     >
-                        {isTouchable && <div className={styles.touchableCardOverlayMedia} />}
+                        {isTouchable && <div className={overlayStyle} />}
 
                         <div className={styles.displayCardContainer}>
                             <ThemeVariant isInverse={isExternalInverse}>
@@ -1366,7 +1403,17 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                         </div>
                     </BaseTouchable>
                 </InternalBoxed>
-                <CardActionsGroup onClose={onClose} actions={actions} type="media" />
+                <CardActionsGroup
+                    onClose={onClose}
+                    actions={actions}
+                    type={
+                        !!backgroundImage || !!backgroundVideo
+                            ? 'media'
+                            : normalizedVariant === 'inverse'
+                            ? 'inverse'
+                            : 'default'
+                    }
+                />
             </CardContainer>
         );
     }
