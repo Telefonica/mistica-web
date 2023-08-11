@@ -30,8 +30,9 @@ const BACKGROUND_VIDEO_POSTER_SRC = beachImg;
 
 type PosterCardArgs = {
     asset: 'circle with icon' | 'circle with image' | 'none';
-    background: 'image' | 'video' | 'color';
-    backgroundColor: string;
+    background: 'image' | 'video' | 'color' | 'custom color' | 'color from skin';
+    backgroundColorCustom: string;
+    backgroundColorFromSkin: string;
     variant: 'default' | 'inverse' | 'alternative';
     headlineType: TagType;
     headline: string;
@@ -49,7 +50,8 @@ type PosterCardArgs = {
 export const Default: StoryComponent<PosterCardArgs> = ({
     asset,
     background,
-    backgroundColor,
+    backgroundColorCustom,
+    backgroundColorFromSkin,
     variant,
     headline,
     headlineType,
@@ -95,7 +97,7 @@ export const Default: StoryComponent<PosterCardArgs> = ({
                   poster: BACKGROUND_VIDEO_POSTER_SRC,
               }
             : {
-                  backgroundColor,
+                  backgroundColor: backgroundColorFromSkin || backgroundColorCustom,
                   variant,
               };
 
@@ -177,7 +179,8 @@ Default.args = {
     asset: 'none',
     headlineType: 'promo',
     background: 'image',
-    backgroundColor: '',
+    backgroundColorCustom: '',
+    backgroundColorFromSkin: '',
     variant: 'default',
     headline: 'Priority',
     pretitle: 'Pretitle',
@@ -190,6 +193,7 @@ Default.args = {
     height: 'auto',
     aspectRatio: 'auto',
 };
+
 Default.argTypes = {
     asset: {
         options: ['circle with icon', 'circle with image', 'none'],
@@ -200,17 +204,23 @@ Default.argTypes = {
         control: {type: 'select'},
     },
     background: {
-        options: ['image', 'video', 'color'],
+        options: ['image', 'video', 'color from skin', 'custom color'],
         control: {type: 'select'},
     },
-    backgroundColor: {
+    backgroundColorCustom: {
         control: {type: 'color'},
-        if: {arg: 'background', eq: 'color'},
+        if: {arg: 'background', eq: 'custom color'},
+    },
+    backgroundColorFromSkin: {
+        control: {type: 'select'},
+        options: {'none (determined by variant)': '', ...skinVars.colors},
+        if: {arg: 'background', eq: 'color from skin'},
     },
     variant: {
         options: ['default', 'inverse', 'alternative'],
         control: {type: 'select'},
-        if: {arg: 'background', eq: 'color'},
+        // this control should only be visible when background is set to 'color from skin' or 'custom color'
+        // if: {arg: 'background', eq: 'color'},
     },
     aspectRatio: {
         options: ['1:1', '16:9', '7:10', '9:10', 'auto'],
