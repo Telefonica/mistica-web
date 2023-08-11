@@ -81,7 +81,7 @@ const renderButtonElement = ({
 
 const ButtonLinkChevron: React.FC = () => {
     return (
-        <svg width="8" height="20" viewBox="0 0 8 20">
+        <svg width="0.5em" height="1.25em" viewBox="0 0 8 20">
             <path
                 d="M6.32595 11.0107L3.03801 7.7086L3.03292 7.70375L3.032 7.70291L3.02931 7.70047L3.02848 7.69974L3.02248 7.69436C2.88533 7.57121 2.71386 7.53733 2.56343 7.55395C2.41648 7.57018 2.27272 7.63567 2.16886 7.73711C2.06893 7.83185 2.01209 7.97816 2.00175 8.11707C1.99083 8.26377 2.02925 8.43959 2.16869 8.57393L5.24446 11.5515L2.15859 14.512L2.15375 14.5171L2.1529 14.518L2.15046 14.5207L2.14974 14.5215L2.14435 14.5275C2.02121 14.6647 1.98733 14.8361 2.00394 14.9866C2.02017 15.1335 2.08567 15.2773 2.18711 15.3811C2.28184 15.4811 2.42816 15.5379 2.56706 15.5483C2.71377 15.5592 2.88958 15.5208 3.02392 15.3813L6.32595 12.0922C6.6246 11.7936 6.6246 11.3094 6.32595 11.0107Z"
                 fill="currentColor"
@@ -515,7 +515,7 @@ export const ButtonLink = React.forwardRef<TouchableElement, ButtonLinkProps>((p
     const commonProps = {
         className: classnames(styles.link, {
             [styles.inverseLink]: isInverse,
-            [styles.alignedLeftLink]: !!props.bleedLeft,
+            [styles.alignedLeftLink]: !!props.bleedLeft || !!props.aligned,
             [styles.alignedRightLink]: !!props.bleedRight,
             [styles.alignedVerticalLink]: !!props.bleedY,
             [styles.isLoading]: showSpinner,

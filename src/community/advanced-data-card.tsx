@@ -10,9 +10,10 @@ import {vars} from '../skins/skin-contract.css';
 import Box from '../box';
 import Touchable from '../touchable';
 import classNames from 'classnames';
-import {CardActionsGroup} from '../card';
+import {CardActionsGroup, TOP_ACTION_BUTTON_SIZE} from '../card';
 import {useTheme} from '../hooks';
 import {getPrefixedDataAttributes} from '../utils/dom';
+import Inline from '../inline';
 
 import type {CardAction} from '../card';
 import type StackingGroup from '../stacking-group';
@@ -265,6 +266,13 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
         const hasFooter = !!button || !!footerImage || !!footerText || !!buttonLink;
         const hasExtras = !!extra?.length;
 
+        const topActionsCount = (actions?.length || 0) + (onClose ? 1 : 0);
+        const topActionsStylesWithoutIcon = {
+            marginRight: -16,
+            marginTop: -24,
+            width: TOP_ACTION_BUTTON_SIZE * topActionsCount,
+        } as const;
+
         return (
             <section
                 className={sprinkles({
@@ -289,27 +297,31 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
                             )}
                         >
                             <Box paddingTop={8}>
-                                <Stack space={8}>
-                                    {stackingGroup}
-                                    <CardContent
-                                        headline={headline}
-                                        pretitle={pretitle}
-                                        pretitleAs={pretitleAs}
-                                        pretitleLinesMax={pretitleLinesMax}
-                                        title={title}
-                                        titleAs={titleAs}
-                                        titleLinesMax={titleLinesMax}
-                                        subtitle={subtitle}
-                                        subtitleLinesMax={subtitleLinesMax}
-                                        description={description}
-                                        descriptionLinesMax={descriptionLinesMax}
-                                    />
-                                </Stack>
+                                <Inline space={0}>
+                                    <Stack space={8}>
+                                        {stackingGroup}
+                                        <CardContent
+                                            headline={headline}
+                                            pretitle={pretitle}
+                                            pretitleAs={pretitleAs}
+                                            pretitleLinesMax={pretitleLinesMax}
+                                            title={title}
+                                            titleAs={titleAs}
+                                            titleLinesMax={titleLinesMax}
+                                            subtitle={subtitle}
+                                            subtitleLinesMax={subtitleLinesMax}
+                                            description={description}
+                                            descriptionLinesMax={descriptionLinesMax}
+                                        />
+                                    </Stack>
+                                    {/** Hack to avoid content from rendering on top of the top action buttons */}
+                                    {!stackingGroup && <div style={topActionsStylesWithoutIcon} />}
+                                </Inline>
                             </Box>
                         </div>
                         <div style={{flexGrow: 1}} />
                         {hasExtras && (
-                            <Box paddingTop={16} paddingBottom={24}>
+                            <Box paddingTop={16} paddingBottom={24} width="100%">
                                 {extra.map((item, index) => {
                                     return (
                                         <div key={index}>

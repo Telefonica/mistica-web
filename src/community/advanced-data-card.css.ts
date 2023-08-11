@@ -42,6 +42,7 @@ export const touchableContainer = style([
     {
         // not defined in sprinkles to avoid touchable style override
         display: 'flex',
+        flexGrow: 1,
     },
     sprinkles({
         height: '100%',
@@ -52,14 +53,14 @@ export const touchableContainer = style([
 export const hoverEffect = style({
     '@media': {
         [mq.supportsHover]: {
+            transition: 'background-color 0.1s ease-in-out',
+
             selectors: {
                 '&:hover': {
                     backgroundColor: vars.colors.backgroundContainerHover,
-                    transition: '0.15s ease-in-out',
                 },
                 '&:active': {
                     backgroundColor: vars.colors.backgroundContainerPressed,
-                    transition: '0.1s ease-in-out',
                 },
             },
         },

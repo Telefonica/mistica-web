@@ -49,7 +49,7 @@ export {default as Text, Text1, Text2, Text3, Text4, Text5, Text6, Text7, Text8,
 export {default as Tag} from './tag';
 export type {TagType} from './tag';
 export {Placeholder} from './placeholder';
-export {Title1, Title2} from './title';
+export {Title1, Title2, Title3} from './title';
 export {RowList, Row, BoxedRowList, BoxedRow} from './list';
 export {default as Switch} from './switch-component';
 export {default as Checkbox} from './checkbox';
@@ -1620,6 +1620,11 @@ export {default as IconSubscriptionRegular} from './generated/mistica-icons/icon
 export {default as IconSubtitlesFilled} from './generated/mistica-icons/icon-subtitles-filled';
 export {default as IconSubtitlesLight} from './generated/mistica-icons/icon-subtitles-light';
 export {default as IconSubtitlesRegular} from './generated/mistica-icons/icon-subtitles-regular';
+export {default as IconSubtractCircleFilled} from './generated/mistica-icons/icon-subtract-circle-filled';
+export {default as IconSubtractCircleLight} from './generated/mistica-icons/icon-subtract-circle-light';
+export {default as IconSubtractCircleRegular} from './generated/mistica-icons/icon-subtract-circle-regular';
+export {default as IconSubtractLight} from './generated/mistica-icons/icon-subtract-light';
+export {default as IconSubtractRegular} from './generated/mistica-icons/icon-subtract-regular';
 export {default as IconSunFilled} from './generated/mistica-icons/icon-sun-filled';
 export {default as IconSunLight} from './generated/mistica-icons/icon-sun-light';
 export {default as IconSunRegular} from './generated/mistica-icons/icon-sun-regular';

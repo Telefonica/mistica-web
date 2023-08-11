@@ -11,20 +11,20 @@ import {
 import {vars} from '../skins/skin-contract.css';
 
 export default {
-    title: 'Components/Navigation bars/Funnel navigation bar',
+    title: 'Components/Navigation bars/FunnelNavigationBar',
     component: FunnelNavigationBar,
     parameters: {
         fullScreen: true,
     },
 };
 
-type Args = {isInverse: boolean};
+type Args = {inverse: boolean};
 
-export const Default: StoryComponent<Args> = ({isInverse}) => {
+export const Default: StoryComponent<Args> = ({inverse}) => {
     const {isDesktopOrBigger} = useScreenSize();
     return (
         <FunnelNavigationBar
-            isInverse={isInverse}
+            isInverse={inverse}
             right={
                 <NavigationBarActionGroup>
                     <NavigationBarAction aria-label="need help?" href="/help">
@@ -45,8 +45,8 @@ export const Default: StoryComponent<Args> = ({isInverse}) => {
     );
 };
 
-Default.storyName = 'Funnel navigation bar';
+Default.storyName = 'FunnelNavigationBar';
 
 Default.args = {
-    isInverse: false,
+    inverse: false,
 };
