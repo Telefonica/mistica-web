@@ -51,7 +51,7 @@ import Image from '../image';
 <PosterCard title="title" backgroundImage="" backgroundColor="" />;
 // @ts-expect-error backgroundVideo and backgroundColor can't be used together
 <PosterCard title="title" backgroundVideo="" backgroundColor="" />;
-// @ts-expect-error backtroundColor, backgroundImage or backgroundVideo are mandatory
+// @ts-expect-error backgroundColor, backgroundImage or backgroundVideo are mandatory
 <PosterCard title="title" />;
 // @ts-expect-error if you set a custom backgroundColor, you should specify the variant
 <PosterCard title="title" backgroundColor="red" />;
