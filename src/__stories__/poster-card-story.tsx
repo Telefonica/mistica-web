@@ -76,19 +76,22 @@ export const Default: StoryComponent<PosterCardArgs> = ({
         icon = <Circle size={40} backgroundImage={avatarImg} />;
     }
 
+    const topActionsProps = {
+        onClose: closable ? () => {} : undefined,
+        actions: withTopAction
+            ? [
+                  {
+                      Icon: IconLightningRegular,
+                      onPress: () => {},
+                      label: 'Lightning',
+                  },
+              ]
+            : undefined,
+    };
     const backgroundProps =
         background === 'image'
             ? {
-                  onClose: closable ? () => {} : undefined,
-                  actions: withTopAction
-                      ? [
-                            {
-                                Icon: IconLightningRegular,
-                                onPress: () => {},
-                                label: 'Lightning',
-                            },
-                        ]
-                      : undefined,
+                  ...topActionsProps,
                   backgroundImage: BACKGROUND_IMAGE_SRC,
               }
             : background === 'video'
@@ -97,6 +100,7 @@ export const Default: StoryComponent<PosterCardArgs> = ({
                   poster: BACKGROUND_VIDEO_POSTER_SRC,
               }
             : {
+                  ...topActionsProps,
                   backgroundColor: backgroundColorFromSkin || backgroundColorCustom,
                   variant,
               };
