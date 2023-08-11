@@ -118,6 +118,7 @@ export {
     createNativeSheetImplementationFromWebviewBridge,
     showBottomSheet,
 } from './bottom-sheet-root';
+export type {NativeSheetImplementation} from './bottom-sheet-root';
 export {default as StackingGroup} from './stacking-group';
 
 // Forms

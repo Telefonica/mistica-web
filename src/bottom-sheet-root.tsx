@@ -89,7 +89,7 @@ type SheetTypeWithPropsUnion = {
     [T in SheetType]: SheetTypeWithProps<T>;
 }[SheetType];
 
-type NativeSheetImplementation = {
+export type NativeSheetImplementation = {
     [T in SheetType]: (props: SheetPropsByType[T]) => Promise<SheetResultByType[T]>;
 };
 
