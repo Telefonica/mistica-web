@@ -11,25 +11,41 @@ const feedbackTypes = [
     'infofeedbackscreen--info',
 ];
 
-const cases: Array<[string, string, Device]> = [];
-for (const skin of testableSkins) {
-    for (const device of testableDevices) {
-        for (const feedbackType of feedbackTypes) {
-            cases.push([feedbackType, skin, device]);
+const getCases = () => {
+    const cases: Array<[string, string, Device]> = [];
+    for (const skin of testableSkins) {
+        for (const device of testableDevices) {
+            for (const feedbackType of feedbackTypes) {
+                cases.push([feedbackType, skin, device]);
+            }
         }
     }
-}
+    return cases;
+};
 
-test.each(cases)('Feedback %s screen appears properly on %s and %s', async (feedbackType, skin, device) => {
-    const page = await openStoryPage({
-        id: `patterns-feedback-${feedbackType}`,
-        skin: skin as never,
-        device,
-    });
+const getExtraContentCases = () => {
+    const cases: Array<[string, Device]> = [];
+    for (const device of testableDevices) {
+        for (const feedbackType of feedbackTypes) {
+            cases.push([feedbackType, device]);
+        }
+    }
+    return cases;
+};
 
-    const image = await page.screenshot();
-    expect(image).toMatchImageSnapshot();
-});
+test.each(getCases())(
+    'Feedback %s screen appears properly on %s and %s',
+    async (feedbackType, skin, device) => {
+        const page = await openStoryPage({
+            id: `patterns-feedback-${feedbackType}`,
+            skin: skin as never,
+            device,
+        });
+
+        const image = await page.screenshot();
+        expect(image).toMatchImageSnapshot();
+    }
+);
 
 test('Feedback screen with large fontSize', async () => {
     const page = await openStoryPage({
@@ -55,3 +71,17 @@ test('Info feedback screen with custom icon', async () => {
     const image = await page.screenshot();
     expect(image).toMatchImageSnapshot();
 });
+
+test.each(getExtraContentCases())(
+    'Feedback %s screen with extra content appears properly on %s',
+    async (feedbackType, device) => {
+        const page = await openStoryPage({
+            id: `patterns-feedback-${feedbackType}`,
+            device,
+            args: {extra: true},
+        });
+
+        const image = await page.screenshot();
+        expect(image).toMatchImageSnapshot();
+    }
+);

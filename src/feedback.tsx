@@ -91,7 +91,8 @@ const renderFeedbackBody = (
         title,
         description,
         children,
-    }: Pick<FeedbackScreenProps, 'icon' | 'title' | 'description' | 'children'>,
+        extra,
+    }: Pick<FeedbackScreenProps, 'icon' | 'title' | 'description' | 'children' | 'extra'>,
     animateText: boolean,
     appear: boolean
 ) => {
@@ -122,7 +123,7 @@ const renderFeedbackBody = (
                         {normalizedDescription}
                     </Text3>
                 )}
-                {children}
+                {extra ?? children}
             </Stack>
         </Stack>
     );
@@ -175,7 +176,11 @@ type FeedbackButtonsProps = ButtonGroupProps;
 interface FeedbackProps extends FeedbackButtonsProps {
     title: string;
     description?: string | Array<string>;
+    /**
+     * @deprecated This field is deprecated, please use extra instead.
+     */
     children?: React.ReactNode;
+    extra?: React.ReactNode;
     unstable_inlineInDesktop?: boolean;
     dataAttributes?: DataAttributes;
 }
@@ -196,6 +201,7 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
     title,
     description,
     children,
+    extra,
     primaryButton,
     secondaryButton,
     link,
@@ -228,7 +234,7 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
     }, []);
 
     const feedbackBody = renderFeedbackBody(
-        {icon, title, description, children},
+        {icon, title, description, children, extra},
         animateText && areAnimationsSupported(platformOverrides),
         appear
     );
@@ -321,6 +327,7 @@ interface ErrorFeedbackScreenProps extends FeedbackProps {
 
 export const ErrorFeedbackScreen: React.FC<ErrorFeedbackScreenProps> = ({
     children,
+    extra,
     errorReference,
     dataAttributes,
     ...otherProps
@@ -332,14 +339,17 @@ export const ErrorFeedbackScreen: React.FC<ErrorFeedbackScreenProps> = ({
             icon={<IconError size="100%" />}
             animateText
             dataAttributes={{'component-name': 'ErrorFeedbackScreen', ...dataAttributes}}
-        >
-            {children}
-            {errorReference && (
-                <Text2 color={vars.colors.textSecondary} regular>
-                    {errorReference}
-                </Text2>
-            )}
-        </FeedbackScreen>
+            extra={
+                <Stack space={16}>
+                    {extra ?? children}
+                    {errorReference && (
+                        <Text2 color={vars.colors.textSecondary} regular>
+                            {errorReference}
+                        </Text2>
+                    )}
+                </Stack>
+            }
+        ></FeedbackScreen>
     );
 };
 
@@ -365,6 +375,7 @@ export const SuccessFeedback: React.FC<AssetFeedbackProps> = ({
     title,
     description,
     children,
+    extra,
     primaryButton,
     secondaryButton,
     link,
@@ -380,7 +391,7 @@ export const SuccessFeedback: React.FC<AssetFeedbackProps> = ({
 
     const icon = skinName === VIVO_SKIN ? <IconSuccessVivo size="100%" /> : <IconSuccess size="100%" />;
     const feedbackBody = renderFeedbackBody(
-        {icon, title, description, children},
+        {icon, title, description, children, extra},
         areAnimationsSupported(platformOverrides),
         appear
     );
