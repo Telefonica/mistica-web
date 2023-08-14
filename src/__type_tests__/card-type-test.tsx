@@ -31,6 +31,11 @@ import Image from '../image';
     onPress={() => {}}
     trackingEvent={{name: 'do-something'}}
 />;
+<PosterCard title="title" isInverse />;
+<PosterCard title="title" variant="inverse" />;
+<PosterCard title="title" variant="alternative" />;
+<PosterCard title="title" isInverse backgroundColor="red" />;
+<PosterCard title="title" variant="inverse" backgroundColor="red" />;
 
 // @ts-expect-error onPress and href can't be used together
 <PosterCard title="title" onPress={() => {}} href="/" />;
@@ -42,8 +47,14 @@ import Image from '../image';
 <PosterCard title="title" trackingEvent={{name: 'do-something'}} />;
 // @ts-expect-error backgroundImage and backgroundVideo can't be used together
 <PosterCard title="title" backgroundImage="" backgroundVideo="" />;
-// @ts-expect-error backgroundImage or backgroundVideo are mandatory
+// @ts-expect-error backgroundImage and backgroundColor can't be used together
+<PosterCard title="title" backgroundImage="" backgroundColor="" />;
+// @ts-expect-error backgroundVideo and backgroundColor can't be used together
+<PosterCard title="title" backgroundVideo="" backgroundColor="" />;
+// @ts-expect-error backgroundColor, backgroundImage or backgroundVideo are mandatory
 <PosterCard title="title" />;
+// @ts-expect-error if you set a custom backgroundColor, you should specify the variant
+<PosterCard title="title" backgroundColor="red" />;
 
 (isTouchable: boolean) => <SnapCard title="title" href={isTouchable ? '/' : undefined} />;
 (isTouchable: boolean) => <SnapCard title="title" to={isTouchable ? '/' : undefined} />;

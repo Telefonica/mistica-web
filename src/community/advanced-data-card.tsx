@@ -321,7 +321,7 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
                         </div>
                         <div style={{flexGrow: 1}} />
                         {hasExtras && (
-                            <Box paddingTop={16} paddingBottom={24}>
+                            <Box paddingTop={16} paddingBottom={24} width="100%">
                                 {extra.map((item, index) => {
                                     return (
                                         <div key={index}>

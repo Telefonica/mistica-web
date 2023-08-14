@@ -14,6 +14,8 @@ import {
 import {Placeholder} from '../placeholder';
 import avatarImg from './images/avatar.jpg';
 
+import type {AspectRatio} from '../card';
+
 export default {
     title: 'Components/Cards/Snap card',
 };
@@ -25,9 +27,20 @@ type Args = {
     touchable: boolean;
     isInverse: boolean;
     withExtra: boolean;
+    aspectRatio: AspectRatio;
 };
 
-export const Default: StoryComponent<Args> = ({asset, title, subtitle, touchable, isInverse, withExtra}) => {
+const fixedAspectRatioValues = ['1 1', '16 9', '7 10', '9 10'];
+
+export const Default: StoryComponent<Args> = ({
+    asset,
+    title,
+    subtitle,
+    touchable,
+    isInverse,
+    withExtra,
+    aspectRatio,
+}) => {
     const assetToIcon: {
         [asset in Args['asset']]: React.ReactElement | undefined;
     } = {
@@ -46,6 +59,10 @@ export const Default: StoryComponent<Args> = ({asset, title, subtitle, touchable
         none: undefined,
     };
 
+    const aspectRatioValue = fixedAspectRatioValues.includes(aspectRatio)
+        ? aspectRatio.replace(' ', ':')
+        : aspectRatio;
+
     return (
         <SnapCard
             icon={assetToIcon[asset]}
@@ -62,6 +79,7 @@ export const Default: StoryComponent<Args> = ({asset, title, subtitle, touchable
                       }
                     : undefined
             }
+            aspectRatio={aspectRatioValue as AspectRatio}
         />
     );
 };
@@ -74,11 +92,24 @@ Default.args = {
     touchable: true,
     isInverse: false,
     withExtra: false,
+    aspectRatio: 'auto',
 };
 Default.argTypes = {
     asset: {
         options: ['icon in circle', 'icon', 'image', 'none'],
         control: {type: 'select'},
+    },
+    aspectRatio: {
+        options: ['auto', '1 1', '16 9', '7 10', '9 10'],
+        control: {
+            type: 'select',
+            labels: {
+                '1 1': '1:1',
+                '16 9': '16:9',
+                '7 10': '7:10',
+                '9 10': '9:10',
+            },
+        },
     },
 };
 

@@ -30,7 +30,10 @@ const BACKGROUND_VIDEO_POSTER_SRC = beachImg;
 
 type PosterCardArgs = {
     asset: 'circle with icon' | 'circle with image' | 'none';
-    background: 'image' | 'video';
+    background: 'image' | 'video' | 'custom color' | 'color from skin';
+    backgroundColorCustom: string;
+    backgroundColorFromSkin: string;
+    variant: 'default' | 'inverse' | 'alternative';
     headlineType: TagType;
     headline: string;
     pretitle: string;
@@ -47,6 +50,9 @@ type PosterCardArgs = {
 export const Default: StoryComponent<PosterCardArgs> = ({
     asset,
     background,
+    backgroundColorCustom,
+    backgroundColorFromSkin,
+    variant,
     headline,
     headlineType,
     pretitle,
@@ -70,24 +76,33 @@ export const Default: StoryComponent<PosterCardArgs> = ({
         icon = <Circle size={40} backgroundImage={avatarImg} />;
     }
 
+    const topActionsProps = {
+        onClose: closable ? () => {} : undefined,
+        actions: withTopAction
+            ? [
+                  {
+                      Icon: IconLightningRegular,
+                      onPress: () => {},
+                      label: 'Lightning',
+                  },
+              ]
+            : undefined,
+    };
     const backgroundProps =
         background === 'image'
             ? {
-                  onClose: closable ? () => {} : undefined,
-                  actions: withTopAction
-                      ? [
-                            {
-                                Icon: IconLightningRegular,
-                                onPress: () => {},
-                                label: 'Lightning',
-                            },
-                        ]
-                      : undefined,
+                  ...topActionsProps,
                   backgroundImage: BACKGROUND_IMAGE_SRC,
               }
-            : {
+            : background === 'video'
+            ? {
                   backgroundVideo: BACKGROUND_VIDEO_SRC,
                   poster: BACKGROUND_VIDEO_POSTER_SRC,
+              }
+            : {
+                  ...topActionsProps,
+                  backgroundColor: backgroundColorFromSkin || backgroundColorCustom,
+                  variant,
               };
 
     const wrongBackgroundProps =
@@ -113,6 +128,7 @@ export const Default: StoryComponent<PosterCardArgs> = ({
     return (
         <Stack space={32} dataAttributes={{testid: 'poster-card'}}>
             <PosterCard
+                dataAttributes={{testid: 'main-poster-card'}}
                 {...backgroundProps}
                 icon={icon}
                 headline={headline ? <Tag type={headlineType}>{headline}</Tag> : undefined}
@@ -168,6 +184,9 @@ Default.args = {
     asset: 'none',
     headlineType: 'promo',
     background: 'image',
+    backgroundColorCustom: '',
+    backgroundColorFromSkin: '',
+    variant: 'default',
     headline: 'Priority',
     pretitle: 'Pretitle',
     title: 'Title',
@@ -179,6 +198,7 @@ Default.args = {
     height: 'auto',
     aspectRatio: 'auto',
 };
+
 Default.argTypes = {
     asset: {
         options: ['circle with icon', 'circle with image', 'none'],
@@ -189,8 +209,23 @@ Default.argTypes = {
         control: {type: 'select'},
     },
     background: {
-        options: ['image', 'video'],
+        options: ['image', 'video', 'color from skin', 'custom color'],
         control: {type: 'select'},
+    },
+    backgroundColorCustom: {
+        control: {type: 'color'},
+        if: {arg: 'background', eq: 'custom color'},
+    },
+    backgroundColorFromSkin: {
+        control: {type: 'select'},
+        options: {'none (determined by variant)': '', ...skinVars.colors},
+        if: {arg: 'background', eq: 'color from skin'},
+    },
+    variant: {
+        options: ['default', 'inverse', 'alternative'],
+        control: {type: 'select'},
+        // this control should only be visible when background is set to 'color from skin' or 'custom color'
+        // if: {arg: 'background', eq: 'color'},
     },
     aspectRatio: {
         options: ['1:1', '16:9', '7:10', '9:10', 'auto'],
