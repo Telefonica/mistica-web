@@ -364,11 +364,16 @@ const Tooltip: React.FC<Props> = ({
 
     React.useEffect(() => {
         if (position && tooltipRef.current && isVisible) {
-            setTooltipClientRect(tooltipBoundingClientRect);
             const widthAux = width ? width : 0;
             setContainerPosition(getContainerPosition(position, widthAux));
         }
-    }, [isVisible, getContainerPosition, position, width, tooltipBoundingClientRect]);
+    }, [isVisible, getContainerPosition, position, width]);
+
+    React.useEffect(() => {
+        if (isVisible) {
+            setTooltipClientRect(tooltipBoundingClientRect);
+        }
+    }, [isVisible, tooltipBoundingClientRect]);
 
     return (
         <>
