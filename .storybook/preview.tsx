@@ -118,6 +118,8 @@ export const decorators = [withLayoutDecorator, withMisticaThemeProvider];
 export const parameters = {
     // https://storybook.js.org/docs/react/configure/story-layout
     layout: 'fullscreen',
+
+    // https://storybook.js.org/docs/7.2/react/writing-stories/naming-components-and-hierarchy#sorting-stories
     options: {
         storySort: {
             method: 'alphabetical',
