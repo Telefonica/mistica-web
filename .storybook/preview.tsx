@@ -15,6 +15,7 @@ import {
 } from '../src';
 import {AVAILABLE_THEMES, Movistar} from './themes';
 import {addons} from '@storybook/addons';
+import {addParameters} from '@storybook/react';
 
 import type {ColorScheme, ThemeConfig} from '../src';
 
@@ -122,3 +123,23 @@ export const parameters = {
     // Workaround for: https://github.com/storybookjs/storybook/issues/17098
     docs: {source: {type: 'code'}},
 };
+
+addParameters({
+    options: {
+        storySort: {
+            method: 'alphabetical',
+            order: [
+                'Welcome',
+                'Components',
+                'Layout',
+                'Icons',
+                'Patterns',
+                'Utilities',
+                'Hooks',
+                'Mística Lab',
+                'Community',
+            ],
+            locales: 'en-US',
+        },
+    },
+});
