@@ -126,9 +126,9 @@ export const parameters = {
             order: [
                 'Welcome',
                 'Components',
+                'Patterns',
                 'Layout',
                 'Icons',
-                'Patterns',
                 'Utilities',
                 'Hooks',
                 'Mística Lab',
