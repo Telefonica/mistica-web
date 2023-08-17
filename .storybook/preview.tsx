@@ -134,7 +134,6 @@ export const parameters = {
                 'Mística Lab',
                 'Community',
             ],
-            locales: 'en-US',
         },
     },
     // Workaround for: https://github.com/storybookjs/storybook/issues/17098
