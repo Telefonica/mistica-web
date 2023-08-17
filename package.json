@@ -200,5 +200,8 @@
         "@types/react-dom": "^18.0.10",
         "@testing-library/dom": "^8.19.1"
     },
-    "packageManager": "yarn@3.6.1"
+    "packageManager": "yarn@3.6.1",
+    "engines": {
+        "node": ">=18.0.0 <19"
+    }
 }
