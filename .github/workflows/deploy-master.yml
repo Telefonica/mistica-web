@@ -11,6 +11,10 @@ jobs:
         steps:
             - uses: actions/checkout@v3
 
+            - uses: actions/setup-node@v3
+              with:
+                  node-version: 18
+
             - uses: amondnet/vercel-action@master
               with:
                   github-token: ${{ secrets.GITHUB_TOKEN }} # needed to allow comments on prs
