@@ -15,10 +15,6 @@ jobs:
               with:
                   token: ${{ secrets.FLOW_GITHUB_TOKEN }}
 
-            - uses: actions/setup-node@v3
-              with:
-                  node-version: 18
-
             - name: Install dependencies
               env:
                   PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: 'true'
