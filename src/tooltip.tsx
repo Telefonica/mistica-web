@@ -102,7 +102,7 @@ type Props = {
     delay?: boolean;
     dataAttributes?: DataAttributes;
     targetStyle?: React.CSSProperties;
-    changedPosition?: string;
+    unstable_offsetX?: number;
 };
 
 const Tooltip: React.FC<Props> = ({
@@ -115,7 +115,7 @@ const Tooltip: React.FC<Props> = ({
     delay = true,
     dataAttributes,
     targetStyle,
-    changedPosition,
+    unstable_offsetX,
     ...rest
 }) => {
     const {isDarkMode} = useTheme();
@@ -138,75 +138,53 @@ const Tooltip: React.FC<Props> = ({
 
     const [containerPosition, setContainerPosition] = React.useState({});
 
-    const getPosition = React.useCallback(
-        (position: Position | undefined) =>
-            isTabletOrSmaller ? position || defaultPositionMobile : position || defaultPositionDesktop,
-        [isTabletOrSmaller]
-    );
+    const getPosition = (position: Position | undefined) =>
+        isTabletOrSmaller ? position || defaultPositionMobile : position || defaultPositionDesktop;
 
     const [tooltipClientRect, setTooltipClientRect] = React.useState<DOMRect | undefined>(undefined);
 
-    const tooltipBoundingClientRect = React.useCallback(() => {
-        if (!tooltipRef.current) return undefined;
+    const validatePosition = (position: Position) => {
+        if (!tooltipClientRect) return position;
 
-        return tooltipRef.current.getBoundingClientRect();
-    }, []);
+        const validatePositionLeft = (position: Position) => {
+            const hasTopSpace = targetBoundingClientRect.current.top > tooltipClientRect.height;
+            return targetBoundingClientRect.current.left < tooltipClientRect.width
+                ? hasTopSpace
+                    ? 'top'
+                    : 'bottom'
+                : position;
+        };
 
-    const hasRightSpace = React.useCallback(() => {
-        if (!tooltipClientRect) return undefined;
+        const alternativePosition = (position: Position) => {
+            return targetBoundingClientRect.current.right + tooltipClientRect.width > window.innerWidth
+                ? validatePositionLeft('left')
+                : position;
+        };
 
-        return targetBoundingClientRect.current.right + tooltipClientRect.width > window.innerWidth;
-    }, [tooltipClientRect]);
+        const positionValidated = {
+            top:
+                targetBoundingClientRect.current.top < tooltipClientRect.height
+                    ? alternativePosition('bottom')
+                    : alternativePosition(position),
+            right: alternativePosition(position),
+            left:
+                targetBoundingClientRect.current.left < tooltipClientRect.width
+                    ? targetBoundingClientRect.current.right + tooltipClientRect.width > window.innerWidth
+                        ? targetBoundingClientRect.current.top < tooltipClientRect.height
+                            ? 'bottom'
+                            : 'top'
+                        : 'right'
+                    : position,
+            bottom:
+                targetBoundingClientRect.current.bottom + tooltipClientRect.height > window.innerHeight
+                    ? alternativePosition('top')
+                    : alternativePosition(position),
+        };
 
-    const hasLeftSpace = React.useCallback(() => {
-        if (!tooltipClientRect) return undefined;
+        return positionValidated[position];
+    };
 
-        return targetBoundingClientRect.current.left < tooltipClientRect.width;
-    }, [tooltipClientRect]);
-
-    const validatePosition = React.useCallback(
-        (position: Position) => {
-            if (!tooltipClientRect) return position;
-
-            const validatePositionLeft = (position: Position) => {
-                const hasTopSpace = targetBoundingClientRect.current.top > tooltipClientRect.height;
-                return hasLeftSpace() ? (hasTopSpace ? 'top' : 'bottom') : position;
-            };
-
-            const alternativePosition = (position: Position) => {
-                return hasRightSpace() ? validatePositionLeft('left') : position;
-            };
-
-            const positionValidated = {
-                top:
-                    targetBoundingClientRect.current.top < tooltipClientRect.height
-                        ? alternativePosition('bottom')
-                        : alternativePosition(position),
-                right: alternativePosition(position),
-                left:
-                    targetBoundingClientRect.current.left < tooltipClientRect.width
-                        ? hasRightSpace()
-                            ? targetBoundingClientRect.current.top < tooltipClientRect.height
-                                ? 'bottom'
-                                : 'top'
-                            : 'right'
-                        : position,
-                bottom:
-                    targetBoundingClientRect.current.bottom + tooltipClientRect.height > window.innerHeight
-                        ? alternativePosition('top')
-                        : alternativePosition(position),
-            };
-
-            return positionValidated[position];
-        },
-        [hasLeftSpace, hasRightSpace, tooltipClientRect]
-    );
-
-    const [position, setPosition] = React.useState<Position | undefined>(rest.position);
-
-    React.useEffect(() => {
-        setPosition(validatePosition(getPosition(rest.position)));
-    }, [getPosition, rest.position, validatePosition]);
+    const position = validatePosition(getPosition(rest.position));
 
     const isTouchableDevice = isClientSide() ? window.matchMedia('(pointer: coarse)').matches : false;
 
@@ -275,8 +253,8 @@ const Tooltip: React.FC<Props> = ({
                     ? Math.round(tooltipClientRect.width / 2 - targetBoundingClientRect.current.width / 2)
                     : 0;
 
-            const bottomAdjustment = changedPosition
-                ? changedPosition
+            const bottomAdjustment = unstable_offsetX
+                ? unstable_offsetX
                 : !width
                 ? window.pageXOffset +
                   targetBoundingClientRect.current.left +
@@ -288,57 +266,69 @@ const Tooltip: React.FC<Props> = ({
                   targetBoundingClientRect.current.width / 2 -
                   width / 2;
 
-            const leftAdjustment = hasLeftSpace()
-                ? bottomAdjustment
-                : !width
-                ? targetBoundingClientRect.current.left - tooltipClientRect.width - distanceToTarget
-                : targetBoundingClientRect.current.left - width - distanceToTarget;
+            const leftAdjustment =
+                targetBoundingClientRect.current.left < tooltipClientRect.width
+                    ? bottomAdjustment
+                    : !width
+                    ? targetBoundingClientRect.current.left - tooltipClientRect.width - distanceToTarget
+                    : targetBoundingClientRect.current.left - width - distanceToTarget;
 
-            const topAdjustment = hasLeftSpace()
-                ? targetBoundingClientRect.current.top < tooltipClientRect.height
-                    ? window.pageYOffset + targetBoundingClientRect.current.bottom + distanceToTarget
-                    : window.pageYOffset + targetBoundingClientRect.current.top - distanceToTarget
-                : changedPosition
-                ? changedPosition
-                : window.pageYOffset +
-                  targetBoundingClientRect.current.top +
-                  targetBoundingClientRect.current.height / 2;
+            const topAdjustment =
+                targetBoundingClientRect.current.left < tooltipClientRect.width
+                    ? targetBoundingClientRect.current.top < tooltipClientRect.height
+                        ? window.pageYOffset + targetBoundingClientRect.current.bottom + distanceToTarget
+                        : window.pageYOffset + targetBoundingClientRect.current.top - distanceToTarget
+                    : unstable_offsetX
+                    ? unstable_offsetX
+                    : window.pageYOffset +
+                      targetBoundingClientRect.current.top +
+                      targetBoundingClientRect.current.height / 2;
 
             const containerPos = {
                 right: {
-                    left: hasRightSpace()
-                        ? leftAdjustment
-                        : targetBoundingClientRect.current.right + distanceToTarget,
-                    top: hasRightSpace()
-                        ? topAdjustment
-                        : changedPosition
-                        ? changedPosition
-                        : window.pageYOffset +
-                          targetBoundingClientRect.current.top +
-                          targetBoundingClientRect.current.height / 2,
+                    left:
+                        targetBoundingClientRect.current.right + tooltipClientRect.width > window.innerWidth
+                            ? leftAdjustment
+                            : targetBoundingClientRect.current.right + distanceToTarget,
+                    top:
+                        targetBoundingClientRect.current.right + tooltipClientRect.width > window.innerWidth
+                            ? topAdjustment
+                            : unstable_offsetX
+                            ? unstable_offsetX
+                            : window.pageYOffset +
+                              targetBoundingClientRect.current.top +
+                              targetBoundingClientRect.current.height / 2,
                 },
                 left: {
                     left: leftAdjustment,
                     top: topAdjustment,
                 },
                 top: {
-                    top: hasRightSpace()
-                        ? topAdjustment
-                        : window.pageYOffset + targetBoundingClientRect.current.top - distanceToTarget,
+                    top:
+                        targetBoundingClientRect.current.right + tooltipClientRect.width > window.innerWidth
+                            ? topAdjustment
+                            : window.pageYOffset + targetBoundingClientRect.current.top - distanceToTarget,
 
-                    left: hasRightSpace() ? leftAdjustment : bottomAdjustment,
+                    left:
+                        targetBoundingClientRect.current.right + tooltipClientRect.width > window.innerWidth
+                            ? leftAdjustment
+                            : bottomAdjustment,
                 },
                 bottom: {
-                    top: hasRightSpace()
-                        ? topAdjustment
-                        : window.pageYOffset + targetBoundingClientRect.current.bottom + distanceToTarget,
-                    left: hasRightSpace() ? leftAdjustment : bottomAdjustment,
+                    top:
+                        targetBoundingClientRect.current.right + tooltipClientRect.width > window.innerWidth
+                            ? topAdjustment
+                            : window.pageYOffset + targetBoundingClientRect.current.bottom + distanceToTarget,
+                    left:
+                        targetBoundingClientRect.current.right + tooltipClientRect.width > window.innerWidth
+                            ? leftAdjustment
+                            : bottomAdjustment,
                 },
             };
 
             return containerPos[position];
         },
-        [changedPosition, hasLeftSpace, hasRightSpace, tooltipClientRect]
+        [unstable_offsetX, tooltipClientRect]
     );
 
     const getWidth = () => rest.width;
@@ -370,10 +360,14 @@ const Tooltip: React.FC<Props> = ({
     }, [isVisible, getContainerPosition, position, width]);
 
     React.useEffect(() => {
+        if (!tooltipRef.current) return undefined;
+
+        tooltipRef.current.getBoundingClientRect();
+
         if (isVisible) {
-            setTooltipClientRect(tooltipBoundingClientRect);
+            setTooltipClientRect(tooltipRef.current.getBoundingClientRect());
         }
-    }, [isVisible, tooltipBoundingClientRect]);
+    }, [isVisible]);
 
     return (
         <>
@@ -478,11 +472,8 @@ const Tooltip: React.FC<Props> = ({
                         }
                     >
                         <div
-                            style={getArrowStyles(getPosition(position))}
-                            className={classnames(
-                                styles.arrowWrapper,
-                                arrowClassNameByPosition[getPosition(position)]
-                            )}
+                            style={getArrowStyles(position)}
+                            className={classnames(styles.arrowWrapper, arrowClassNameByPosition[position])}
                         >
                             <div className={styles.arrow} />
                         </div>
