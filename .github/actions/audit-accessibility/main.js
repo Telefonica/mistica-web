@@ -1,22 +1,21 @@
 // @ts-check
-const path = require('path');
-const os = require('os');
-const {execSync} = require('child_process');
-const handler = require('serve-handler');
-const http = require('http');
-const {AxePuppeteer} = require('@axe-core/puppeteer');
-const {createHtmlReport} = require('axe-html-reporter');
-const puppeteer = require('puppeteer');
-const fs = require('fs');
-const mkdirp = require('mkdirp');
-const rimraf = require('rimraf');
-const {uploadFile} = require('../utils/azure-storage');
-const core = require('@actions/core');
-/** @type any */
-const PromisePool = require('es6-promise-pool');
+import {join, relative} from 'path';
+import {cpus} from 'os';
+import {execSync} from 'child_process';
+import handler from 'serve-handler';
+import {createServer} from 'http';
+import {AxePuppeteer} from '@axe-core/puppeteer';
+import {createHtmlReport} from 'axe-html-reporter';
+import {launch} from 'puppeteer';
+import {writeFileSync} from 'fs';
+import {sync as mkdirpSync} from 'mkdirp';
+import {sync as rimrafSync} from 'rimraf';
+import {uploadFile} from '../utils/azure-storage';
+import {setFailed} from '@actions/core';
+import PromisePool from 'es6-promise-pool';
 
-const PATH_REPO_ROOT = path.join(__dirname, '../../..');
-const PATH_REPORTS = path.join(PATH_REPO_ROOT, 'reports/accessibility');
+const PATH_REPO_ROOT = join(__dirname, '../../..');
+const PATH_REPORTS = join(PATH_REPO_ROOT, 'reports/accessibility');
 
 const STORIES_BLACKLIST = new Set([
     'welcome-welcome--mistica',
@@ -46,7 +45,7 @@ const startStorybook = () => {
     return new Promise((resolve) => {
         const port = 6006;
 
-        const storybookServer = http.createServer((request, response) => {
+        const storybookServer = createServer((request, response) => {
             return handler(request, response, {
                 public: 'public',
                 cleanUrls: ['/'],
@@ -103,18 +102,18 @@ const audit = async (browser, url, disabledRules = []) => {
  * @returns {Promise<Map<string, {json: String, html: string}>>}
  */
 const writeReportsToDisk = async (results) => {
-    rimraf.sync(PATH_REPORTS);
-    mkdirp.sync(PATH_REPORTS);
+    rimrafSync(PATH_REPORTS);
+    mkdirpSync(PATH_REPORTS);
     const files = new Map();
     for (const [name, result] of results) {
-        const jsonFilename = path.join(PATH_REPORTS, name + '.json');
-        const htmlFilename = path.join(PATH_REPORTS, name + '.html');
+        const jsonFilename = join(PATH_REPORTS, name + '.json');
+        const htmlFilename = join(PATH_REPORTS, name + '.html');
 
-        fs.writeFileSync(jsonFilename, JSON.stringify(result, null, 2));
+        writeFileSync(jsonFilename, JSON.stringify(result, null, 2));
         createHtmlReport({
             results: result,
             options: {
-                outputDir: path.relative(process.cwd(), PATH_REPORTS),
+                outputDir: relative(process.cwd(), PATH_REPORTS),
                 reportFileName: name + '.html',
             },
         });
@@ -155,7 +154,7 @@ const generateReportForGithub = async (results) => {
     const problemsCount = results.reduce((acc, [, result]) => acc + result.violations.length, 0);
 
     if (problemsCount > 0) {
-        core.setFailed('Accessibility problems detected');
+        setFailed('Accessibility problems detected');
         lines.push(`<details>`);
         lines.push(`<summary>❌ <b>${problemsCount}</b> problems detected</summary><br />`);
 
@@ -203,7 +202,7 @@ const main = async () => {
     const stories = getStories().filter((story) => !STORIES_BLACKLIST.has(story));
     const {closeStorybook, getStoryUrl} = await startStorybook();
 
-    const browser = await puppeteer.launch({
+    const browser = await launch({
         // Launch chromium installed in docker in CI
         ...(isCi ? {executablePath: '/usr/bin/chromium'} : {}),
         args: ['--incognito', '--no-sandbox'],
@@ -214,11 +213,11 @@ const main = async () => {
 
     const t = Date.now();
 
-    /** @returns {null | Promise<void>} */
+    /** @returns {void | Promise<void>} */
     const job = () => {
         const story = stories.shift();
         if (!story) {
-            return null;
+            return;
         }
         return new Promise((resolve) => {
             console.log(story);
@@ -229,7 +228,7 @@ const main = async () => {
         });
     };
 
-    const pool = new PromisePool(job, os.cpus().length);
+    const pool = new PromisePool(job, cpus().length);
     await pool.start();
 
     console.log('total time:', Date.now() - t, 'ms');
