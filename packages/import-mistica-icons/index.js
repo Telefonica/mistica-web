@@ -6,8 +6,7 @@ import {execSync} from 'child_process';
 import svgr from '@svgr/core';
 import prettier from 'prettier';
 import {camelCase, kebabCase, upperFirst, uniq} from 'lodash-es';
-// eslint-disable-next-line import/extensions
-import colors from 'colors/safe.js';
+import colors from 'colors/safe.js'; // eslint-disable-line import/extensions
 import {glob} from 'glob';
 import {fileURLToPath} from 'url';
 
