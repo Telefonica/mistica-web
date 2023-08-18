@@ -1,14 +1,14 @@
 // @ts-check
 const {BlobServiceClient, StorageSharedKeyCredential} = require('@azure/storage-blob');
-const {once} = require('lodash-es');
+const {once} = require('lodash');
 const {basename} = require('path');
 const {promisify} = require('util');
 const fs = require('fs');
 const readFile = promisify(fs.readFile);
 const core = require('@actions/core');
 
-const ACCOUNT_NAME = core.getInput('azure-account-name') || process.env.INPUT_AZURE_ACCOUNT_NAME || '';
-const ACCOUNT_KEY = core.getInput('azure-account-key') || process.env.INPUT_AZURE_ACCOUNT_KEY || '';
+const ACCOUNT_NAME = core.getInput('azure-account-name') || process.env.INPUT_AZURE_ACCOUNT_NAME;
+const ACCOUNT_KEY = core.getInput('azure-account-key') || process.env.INPUT_AZURE_ACCOUNT_KEY;
 
 const CONTAINER_NAME = 'mistica-web-' + Date.now();
 
