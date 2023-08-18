@@ -1,8 +1,8 @@
-const fs = require('fs');
-const path = require('path');
+import {readFileSync, existsSync, writeFileSync} from 'fs';
+import {join} from 'path';
 
-const DESIGN_TOKENS_FOLDER = path.join(__dirname, '..', '..', '.github', 'mistica-design', 'tokens');
-const SKINS_FOLDER = path.join(__dirname, '..', '..', 'src', 'skins');
+const DESIGN_TOKENS_FOLDER = join(__dirname, '..', '..', '.github', 'mistica-design', 'tokens');
+const SKINS_FOLDER = join(__dirname, '..', '..', 'src', 'skins');
 
 const capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1);
 const toCamelCase = (str) => str.replace(/-([a-z])/g, (g) => g[1].toUpperCase());
@@ -42,7 +42,7 @@ const buildRadius = (radiusDescription) => {
 };
 
 const generateSkinSrc = (skinName) => {
-    const designTokensFile = fs.readFileSync(path.join(DESIGN_TOKENS_FOLDER, `${skinName}.json`), 'utf8');
+    const designTokensFile = readFileSync(join(DESIGN_TOKENS_FOLDER, `${skinName}.json`), 'utf8');
     const needsApplyAlphaImport = designTokensFile.includes('rgba');
     const designTokens = JSON.parse(designTokensFile);
     const skinConstantName = `${skinName.toUpperCase().replace(/-/g, '_')}_SKIN`;
@@ -98,7 +98,7 @@ export const get${toPascalCase(skinName)}Skin: GetKnownSkin = () => {
 };
 
 const generateColorTypesSrc = (skinName) => {
-    const designTokensFile = fs.readFileSync(path.join(DESIGN_TOKENS_FOLDER, `${skinName}.json`), 'utf8');
+    const designTokensFile = readFileSync(join(DESIGN_TOKENS_FOLDER, `${skinName}.json`), 'utf8');
     const designTokens = JSON.parse(designTokensFile);
 
     return `
@@ -117,19 +117,19 @@ const generateSkinFiles = () => {
     KNOWN_SKINS.forEach((skinName) => {
         console.log('Generating tokens for skin', skinName);
 
-        if (!fs.existsSync(path.join(DESIGN_TOKENS_FOLDER, `${skinName}.json`))) {
+        if (!existsSync(join(DESIGN_TOKENS_FOLDER, `${skinName}.json`))) {
             console.error(`Missing ${skinName}.json file`);
             return;
         }
 
         const skinSrc = generateSkinSrc(skinName);
-        fs.writeFileSync(path.join(SKINS_FOLDER, `${skinName}.tsx`), skinSrc);
+        writeFileSync(join(SKINS_FOLDER, `${skinName}.tsx`), skinSrc);
         anyGeneratedSkin = skinName;
     });
 
     if (anyGeneratedSkin) {
         const typesSrc = generateColorTypesSrc(anyGeneratedSkin);
-        fs.writeFileSync(path.join(SKINS_FOLDER, 'types', 'colors.tsx'), typesSrc);
+        writeFileSync(join(SKINS_FOLDER, 'types', 'colors.tsx'), typesSrc);
     }
 };
 

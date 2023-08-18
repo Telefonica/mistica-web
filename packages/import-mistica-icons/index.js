@@ -1,13 +1,13 @@
-const fs = require('fs');
-const mkdirp = require('mkdirp');
-const rimraf = require('rimraf');
-const {join, basename} = require('path');
-const {execSync} = require('child_process');
-const svgr = require('@svgr/core').default;
-const prettier = require('prettier');
-const {camelCase, kebabCase, upperFirst, uniq} = require('lodash');
-const {yellow, green} = require('colors/safe');
-const glob = require('glob');
+import {existsSync, readdirSync, readFileSync, writeFileSync} from 'fs';
+import {sync as mkdirpSync} from 'mkdirp';
+import {sync as rimrafSync} from 'rimraf';
+import {join, basename} from 'path';
+import {execSync} from 'child_process';
+import svgr from '@svgr/core';
+import {format as prettierFormat, resolveConfig} from 'prettier';
+import {camelCase, kebabCase, upperFirst, uniq} from 'lodash';
+import {yellow, green} from 'colors/safe';
+import {sync as globSync} from 'glob';
 
 const pascalCase = (s) => upperFirst(camelCase(s));
 
@@ -22,9 +22,9 @@ const GIT_MISTICA_ICONS = 'git@github.com:Telefonica/mistica-icons.git';
 const SKIN_BLACKLIST = [];
 
 const checkoutMisticaIconsRepo = () => {
-    mkdirp.sync(PATH_CACHE);
+    mkdirpSync(PATH_CACHE);
 
-    if (!fs.existsSync(PATH_MISTICA_ICONS_REPO)) {
+    if (!existsSync(PATH_MISTICA_ICONS_REPO)) {
         execSync(`git clone ${GIT_MISTICA_ICONS} ${PATH_MISTICA_ICONS_REPO}`, {
             cwd: PATH_CACHE,
             stdio: 'inherit',
@@ -56,7 +56,7 @@ const checkoutMisticaIconsRepo = () => {
  */
 const getSvgIconsInfo = () => {
     const basePath = join(PATH_MISTICA_ICONS_REPO, 'icons');
-    const skins = fs.readdirSync(basePath);
+    const skins = readdirSync(basePath);
 
     /** @type {svgIconsInfo} */
     const result = {};
@@ -66,7 +66,7 @@ const getSvgIconsInfo = () => {
             continue;
         }
 
-        const filenames = glob.sync(join(basePath, skin, '**/*.svg'));
+        const filenames = globSync(join(basePath, skin, '**/*.svg'));
 
         /** @type {Map<name, filename>} */
         const icons = new Map();
@@ -92,15 +92,14 @@ const getAllIconNames = (svgIconsInfo) => {
     return uniq(allIconNames).sort();
 };
 
-const format = async (src) =>
-    prettier.format(src, {...(await prettier.resolveConfig('.')), parser: 'babel-ts'});
+const format = async (src) => prettierFormat(src, {...(await resolveConfig('.')), parser: 'babel-ts'});
 
 /**
  * @param {string} svgFilename
  * @returns {string}
  */
 const getIconJsx = (svgFilename) => {
-    const svgSource = fs.readFileSync(svgFilename, 'utf8');
+    const svgSource = readFileSync(svgFilename, 'utf8');
     const jsx = svgr.sync(svgSource, {
         ref: false,
         titleProp: false,
@@ -200,8 +199,8 @@ const main = async () => {
     const svgIconsInfo = getSvgIconsInfo();
     const allIconNames = getAllIconNames(svgIconsInfo);
 
-    rimraf.sync(PATH_OUTPUT);
-    mkdirp.sync(PATH_OUTPUT);
+    rimrafSync(PATH_OUTPUT);
+    mkdirpSync(PATH_OUTPUT);
 
     /** @type Array<[string, string]> */
     const components = [];
@@ -212,7 +211,7 @@ const main = async () => {
         const source = await createIconComponentSource(name, componentName, svgIconsInfo);
         const filename = `${importName}.tsx`;
         components.push([componentName, importName]);
-        fs.writeFileSync(join(PATH_OUTPUT, filename), source);
+        writeFileSync(join(PATH_OUTPUT, filename), source);
     }
 
     const index = components
@@ -223,7 +222,7 @@ const main = async () => {
         )
         .join('\n');
 
-    fs.writeFileSync(PATH_OUTPUT_INDEX_FILENAME, index, 'utf8');
+    writeFileSync(PATH_OUTPUT_INDEX_FILENAME, index, 'utf8');
 
     console.log();
     console.log(`Done! (${allIconNames.length} components).`);
