@@ -1,8 +1,11 @@
 import {readFileSync, existsSync, writeFileSync} from 'fs';
-import {join} from 'path';
+import {join, dirname} from 'path';
+import {fileURLToPath} from 'url';
 
-const DESIGN_TOKENS_FOLDER = join(__dirname, '..', '..', '.github', 'mistica-design', 'tokens');
-const SKINS_FOLDER = join(__dirname, '..', '..', 'src', 'skins');
+const scriptPath = dirname(fileURLToPath(import.meta.url));
+
+const DESIGN_TOKENS_FOLDER = join(scriptPath, '..', '..', '.github', 'mistica-design', 'tokens');
+const SKINS_FOLDER = join(scriptPath, '..', '..', 'src', 'skins');
 
 const capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1);
 const toCamelCase = (str) => str.replace(/-([a-z])/g, (g) => g[1].toUpperCase());
