@@ -5,7 +5,7 @@ const {join, basename} = require('path');
 const {execSync} = require('child_process');
 const svgr = require('@svgr/core').default;
 const prettier = require('prettier');
-const {camelCase, kebabCase, upperFirst, uniq} = require('lodash');
+const {camelCase, kebabCase, upperFirst, uniq} = require('lodash-es');
 const {yellow, green} = require('colors/safe');
 const glob = require('glob');
 

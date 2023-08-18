@@ -1,7 +1,6 @@
 // @ts-check
 const path = require('path');
 const os = require('os');
-const _ = require('lodash');
 const {execSync} = require('child_process');
 const handler = require('serve-handler');
 const http = require('http');

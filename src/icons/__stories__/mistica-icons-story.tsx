@@ -2,7 +2,7 @@ import * as React from 'react';
 import {useCheckbox} from '../../__stories__/helpers';
 import {ThemeVariant, Box, Stack, SearchField, Inline, DoubleField, Text, skinVars} from '../..';
 import IntegerField from '../../integer-field';
-import {kebabCase, camelCase, upperFirst} from 'lodash';
+import {kebabCase, camelCase, upperFirst} from 'lodash-es';
 
 /**
  * './path/icon-name-filled.tsx' => 'IconNameFilled'

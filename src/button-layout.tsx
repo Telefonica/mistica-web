@@ -4,7 +4,7 @@ import {useIsomorphicLayoutEffect} from './hooks';
 import {ButtonPrimary, ButtonSecondary, ButtonDanger} from './button';
 import {BUTTON_MIN_WIDTH} from './button.css';
 import classnames from 'classnames';
-import debounce from 'lodash/debounce';
+import {debounce} from 'lodash-es';
 import {getPrefixedDataAttributes} from './utils/dom';
 import * as styles from './button-layout.css';
 
