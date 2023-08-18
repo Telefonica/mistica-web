@@ -5,7 +5,7 @@ import {join, basename} from 'path';
 import {execSync} from 'child_process';
 import svgr from '@svgr/core';
 import {format as prettierFormat, resolveConfig} from 'prettier';
-import {camelCase, kebabCase, upperFirst, uniq} from 'lodash';
+import {camelCase, kebabCase, upperFirst, uniq} from 'lodash-es';
 import {yellow, green} from 'colors/safe';
 import {sync as globSync} from 'glob';
 
