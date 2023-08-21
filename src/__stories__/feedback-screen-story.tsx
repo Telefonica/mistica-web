@@ -29,7 +29,7 @@ export default {
 const IconOrders = (): JSX.Element => {
     const {inverse, brand} = skinVars.colors;
     return (
-        <svg role="presentation" width="64" height="64" viewBox="0 0 64 64">
+        <svg role="presentation" width="100%" height="100%" viewBox="0 0 64 64">
             <path
                 fill={useIsInverseVariant() ? inverse : brand}
                 fillRule="evenodd"
