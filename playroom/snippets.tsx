@@ -1592,6 +1592,124 @@ const alertSnippets = [
 </ButtonPrimary>
     `,
     },
+    {
+        group: 'Modals',
+        name: 'Sheet (info)',
+        code: `
+<ButtonPrimary
+  onPress={() => {
+    showSheet({
+      type: "INFO",
+      props: {
+        title: "Title",
+        items: [
+          { id: "1", title: "Item 1", icon: { type: "bullet" } },
+          { id: "2", title: "Item 2", icon: { type: "bullet" } },
+        ],
+      },
+    });
+  }}
+>
+  Open sheet
+</ButtonPrimary>`,
+    },
+    {
+        group: 'Modals',
+        name: 'Sheet (actions list)',
+        code: `
+<ButtonPrimary
+  onPress={() => {
+    showSheet({
+      type: "ACTIONS_LIST",
+      props: {
+        title: "Title",
+        subtitle: "Subtitle",
+        description: "Description",
+        items: [
+          {
+            id: "1",
+            title: "Action 1",
+            icon: {
+              url: "https://source.unsplash.com/600x600/?face",
+            },
+          },
+          {
+            id: "2",
+            title: "Destructive",
+            style: "destructive",
+          },
+        ],
+      },
+    });
+  }}
+>
+  Open sheet
+</ButtonPrimary>`,
+    },
+    {
+        group: 'Modals',
+        name: 'Sheet (actions)',
+        code: `
+<ButtonPrimary
+  onPress={() => {
+    showSheet({
+      type: "ACTIONS",
+      props: {
+        title: "Title",
+        subtitle: "Subtitle",
+        description: "Description",
+        button: {
+          text: "Button",
+        },
+        link: {
+          text: "Link",
+          withChevron: true,
+        },
+      },
+    });
+  }}
+>
+  Open sheet
+</ButtonPrimary>`,
+    },
+    {
+        group: 'Modals',
+        name: 'Sheet (radio list)',
+        code: `
+<ButtonPrimary
+  onPress={() => {
+    showSheet({
+      type: "RADIO_LIST",
+      props: {
+        title: "Title",
+        subtitle: "Subtitle",
+        description: "Description",
+        selectedId: "1",
+        items: [
+          {
+            id: "1",
+            title: "Item 1",
+            description: "Description",
+            icon: {
+              url: "https://source.unsplash.com/600x600/?face",
+            },
+          },
+          {
+            id: "2",
+            title: "Item 2",
+            description: "Description",
+            icon: {
+              url: "unknownurl",
+            },
+          },
+        ],
+      },
+    });
+  }}
+>
+  Open sheet
+</ButtonPrimary>`,
+    },
 ];
 
 const skeletonSnippets = [
