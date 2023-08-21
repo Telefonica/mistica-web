@@ -110,7 +110,7 @@ const MyComponent = () => {
 };
 ```
 
-### native implementation
+### Native implementation
 
 If you are using mistica inside Novum app, you can configure `showSheet` to use the native sheet
 implementation with the webview bridge.

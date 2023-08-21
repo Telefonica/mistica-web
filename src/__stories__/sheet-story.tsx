@@ -36,33 +36,28 @@ export const Default: StoryComponent = () => {
 
     return (
         <Box paddingY={24}>
-            <ResponsiveLayout>
-                <ButtonPrimary
-                    disabled={open}
-                    onPress={() => {
-                        setOpen(true);
+            <ButtonPrimary
+                disabled={open}
+                onPress={() => {
+                    setOpen(true);
+                }}
+            >
+                Open
+            </ButtonPrimary>
+
+            {open && (
+                <Sheet
+                    onClose={() => {
+                        setOpen(false);
                     }}
                 >
-                    Open
-                </ButtonPrimary>
-
-                {open && (
-                    <Sheet
-                        onClose={() => {
-                            setOpen(false);
-                        }}
-                    >
-                        <ResponsiveLayout>
-                            <Box
-                                paddingBottom={{mobile: 16, desktop: 40}}
-                                paddingTop={{mobile: 0, desktop: 40}}
-                            >
-                                <Placeholder />
-                            </Box>
-                        </ResponsiveLayout>
-                    </Sheet>
-                )}
-            </ResponsiveLayout>
+                    <ResponsiveLayout>
+                        <Box paddingBottom={{mobile: 16, desktop: 40}} paddingTop={{mobile: 0, desktop: 40}}>
+                            <Placeholder />
+                        </Box>
+                    </ResponsiveLayout>
+                </Sheet>
+            )}
         </Box>
     );
 };
@@ -85,63 +80,61 @@ export const RadioList: StoryComponent<RadioListSheetArgs> = ({title, subtitle, 
 
     return (
         <Box paddingY={24}>
-            <ResponsiveLayout>
-                <Stack space={16}>
-                    <ButtonPrimary
-                        disabled={open}
-                        onPress={() => {
-                            setOpen(true);
-                            setSelected(null);
-                        }}
-                    >
-                        Open
-                    </ButtonPrimary>
-                    {selected && (
-                        <Text3 regular as="p">
-                            selectedId: {selected}
-                        </Text3>
-                    )}
-                </Stack>
-
-                {open && (
-                    <RadioListSheet
-                        onClose={() => {
-                            setOpen(false);
-                        }}
-                        onSelect={(item) => {
-                            setSelected(item);
-                        }}
-                        title={title}
-                        subtitle={subtitle}
-                        description={description}
-                        selectedId={selectedId === 'none' ? undefined : selectedId}
-                        items={[
-                            'Apple',
-                            'Banana',
-                            'Pineapple',
-                            'Mango',
-                            'Peach',
-                            'Pear',
-                            'Strawberry',
-                            'Watermelon',
-                            'Kiwi',
-                            'Cherry',
-                            'Grape',
-                            'Lemon',
-                            'Lime',
-                        ].map((fruit, idx) => ({
-                            id: String(idx),
-                            title: fruit,
-                            description: 'Description',
-                            asset: (
-                                <Circle backgroundColor={skinVars.colors.brandLow} size={40}>
-                                    <IconMobileDeviceRegular color={skinVars.colors.brand} />
-                                </Circle>
-                            ),
-                        }))}
-                    />
+            <Stack space={16}>
+                <ButtonPrimary
+                    disabled={open}
+                    onPress={() => {
+                        setOpen(true);
+                        setSelected(null);
+                    }}
+                >
+                    Open
+                </ButtonPrimary>
+                {selected && (
+                    <Text3 regular as="p">
+                        selectedId: {selected}
+                    </Text3>
                 )}
-            </ResponsiveLayout>
+            </Stack>
+
+            {open && (
+                <RadioListSheet
+                    onClose={() => {
+                        setOpen(false);
+                    }}
+                    onSelect={(item) => {
+                        setSelected(item);
+                    }}
+                    title={title}
+                    subtitle={subtitle}
+                    description={description}
+                    selectedId={selectedId === 'none' ? undefined : selectedId}
+                    items={[
+                        'Apple',
+                        'Banana',
+                        'Pineapple',
+                        'Mango',
+                        'Peach',
+                        'Pear',
+                        'Strawberry',
+                        'Watermelon',
+                        'Kiwi',
+                        'Cherry',
+                        'Grape',
+                        'Lemon',
+                        'Lime',
+                    ].map((fruit, idx) => ({
+                        id: String(idx),
+                        title: fruit,
+                        description: 'Description',
+                        asset: (
+                            <Circle backgroundColor={skinVars.colors.brandLow} size={40}>
+                                <IconMobileDeviceRegular color={skinVars.colors.brand} />
+                            </Circle>
+                        ),
+                    }))}
+                />
+            )}
         </Box>
     );
 };
@@ -166,59 +159,57 @@ export const ActionsList: StoryComponent<SheetArgs> = ({title, subtitle, descrip
 
     return (
         <Box paddingY={24}>
-            <ResponsiveLayout>
-                <Stack space={16}>
-                    <ButtonPrimary
-                        disabled={open}
-                        onPress={() => {
-                            setOpen(true);
-                            setSelected(null);
-                        }}
-                    >
-                        Open
-                    </ButtonPrimary>
-                    {selected && (
-                        <Text3 regular as="p">
-                            selectedId: {selected}
-                        </Text3>
-                    )}
-                </Stack>
-
-                {open && (
-                    <ActionsListSheet
-                        onClose={() => {
-                            setOpen(false);
-                        }}
-                        onSelect={(item) => {
-                            setSelected(item);
-                        }}
-                        title={title}
-                        subtitle={subtitle}
-                        description={description}
-                        items={[
-                            {
-                                id: '1',
-                                title: 'Action with icon',
-                                icon: {
-                                    Icon: IconLightningRegular,
-                                },
-                            },
-                            {
-                                id: '2',
-                                title: 'Action without icon',
-                            },
-                            {
-                                id: '3',
-                                title: 'Destructive action',
-                                style: 'destructive',
-                                icon: {
-                                    Icon: IconTrashCanRegular,
-                                },
-                            },
-                        ]}
-                    />
+            <Stack space={16}>
+                <ButtonPrimary
+                    disabled={open}
+                    onPress={() => {
+                        setOpen(true);
+                        setSelected(null);
+                    }}
+                >
+                    Open
+                </ButtonPrimary>
+                {selected && (
+                    <Text3 regular as="p">
+                        selectedId: {selected}
+                    </Text3>
                 )}
-            </ResponsiveLayout>
+            </Stack>
+
+            {open && (
+                <ActionsListSheet
+                    onClose={() => {
+                        setOpen(false);
+                    }}
+                    onSelect={(item) => {
+                        setSelected(item);
+                    }}
+                    title={title}
+                    subtitle={subtitle}
+                    description={description}
+                    items={[
+                        {
+                            id: '1',
+                            title: 'Action with icon',
+                            icon: {
+                                Icon: IconLightningRegular,
+                            },
+                        },
+                        {
+                            id: '2',
+                            title: 'Action without icon',
+                        },
+                        {
+                            id: '3',
+                            title: 'Destructive action',
+                            style: 'destructive',
+                            icon: {
+                                Icon: IconTrashCanRegular,
+                            },
+                        },
+                    ]}
+                />
+            )}
         </Box>
     );
 };
@@ -240,42 +231,40 @@ export const Info: StoryComponent<InfoSheetArgs> = ({title, subtitle, descriptio
 
     return (
         <Box paddingY={24}>
-            <ResponsiveLayout>
-                <ButtonPrimary
-                    disabled={open}
-                    onPress={() => {
-                        setOpen(true);
-                    }}
-                >
-                    Open
-                </ButtonPrimary>
+            <ButtonPrimary
+                disabled={open}
+                onPress={() => {
+                    setOpen(true);
+                }}
+            >
+                Open
+            </ButtonPrimary>
 
-                {open && (
-                    <InfoSheet
-                        onClose={() => {
-                            setOpen(false);
-                        }}
-                        title={title}
-                        subtitle={subtitle}
-                        description={description}
-                        items={Array.from({length: numItems}, (_, idx) => ({
-                            id: String(idx),
-                            title: 'Item ' + idx,
-                            description: 'Description',
-                            icon:
-                                iconType === 'bullet'
-                                    ? {type: 'bullet'}
-                                    : {
-                                          type: iconType,
-                                          Icon: {
-                                              regular: IconCocktailRegular,
-                                              small: IconCheckRegular,
-                                          }[iconType],
-                                      },
-                        }))}
-                    />
-                )}
-            </ResponsiveLayout>
+            {open && (
+                <InfoSheet
+                    onClose={() => {
+                        setOpen(false);
+                    }}
+                    title={title}
+                    subtitle={subtitle}
+                    description={description}
+                    items={Array.from({length: numItems}, (_, idx) => ({
+                        id: String(idx),
+                        title: 'Item ' + idx,
+                        description: 'Description',
+                        icon:
+                            iconType === 'bullet'
+                                ? {type: 'bullet'}
+                                : {
+                                      type: iconType,
+                                      Icon: {
+                                          regular: IconCocktailRegular,
+                                          small: IconCheckRegular,
+                                      }[iconType],
+                                  },
+                    }))}
+                />
+            )}
         </Box>
     );
 };
@@ -316,54 +305,52 @@ export const Actions: StoryComponent<ActionsSheetArgs> = ({
 
     return (
         <Box paddingY={24}>
-            <ResponsiveLayout>
-                <Stack space={16}>
-                    <ButtonPrimary
-                        disabled={open}
-                        onPress={() => {
-                            setOpen(true);
-                            setPressedButton(null);
-                        }}
-                    >
-                        Open
-                    </ButtonPrimary>
-                    {pressedButton && (
-                        <Text3 regular as="p">
-                            pressedButton: {pressedButton}
-                        </Text3>
-                    )}
-                </Stack>
-
-                {open && (
-                    <ActionsSheet
-                        onClose={() => {
-                            setOpen(false);
-                        }}
-                        onPressButton={setPressedButton}
-                        title={title}
-                        subtitle={subtitle}
-                        description={description}
-                        button={{
-                            text: buttonText,
-                        }}
-                        secondaryButton={
-                            secondaryButtonText
-                                ? {
-                                      text: secondaryButtonText,
-                                  }
-                                : undefined
-                        }
-                        buttonLink={
-                            buttonLinkText
-                                ? {
-                                      text: buttonLinkText,
-                                      withChevron,
-                                  }
-                                : undefined
-                        }
-                    />
+            <Stack space={16}>
+                <ButtonPrimary
+                    disabled={open}
+                    onPress={() => {
+                        setOpen(true);
+                        setPressedButton(null);
+                    }}
+                >
+                    Open
+                </ButtonPrimary>
+                {pressedButton && (
+                    <Text3 regular as="p">
+                        pressedButton: {pressedButton}
+                    </Text3>
                 )}
-            </ResponsiveLayout>
+            </Stack>
+
+            {open && (
+                <ActionsSheet
+                    onClose={() => {
+                        setOpen(false);
+                    }}
+                    onPressButton={setPressedButton}
+                    title={title}
+                    subtitle={subtitle}
+                    description={description}
+                    button={{
+                        text: buttonText,
+                    }}
+                    secondaryButton={
+                        secondaryButtonText
+                            ? {
+                                  text: secondaryButtonText,
+                              }
+                            : undefined
+                    }
+                    buttonLink={
+                        buttonLinkText
+                            ? {
+                                  text: buttonLinkText,
+                                  withChevron,
+                              }
+                            : undefined
+                    }
+                />
+            )}
         </Box>
     );
 };
@@ -395,135 +382,133 @@ export const Root: StoryComponent<RootArgs> = ({title, subtitle, description}) =
     const [response, setResponse] = React.useState<unknown>();
     return (
         <Box paddingY={24}>
-            <ResponsiveLayout>
-                <SheetRoot />
-                <Stack space={16}>
-                    <Inline space={16}>
-                        <ButtonPrimary
-                            onPress={() => {
-                                setResponse(undefined);
-                                showSheet({
-                                    type: 'INFO',
-                                    props: {
-                                        title,
-                                        subtitle,
-                                        description,
-                                        items: [
-                                            {
-                                                id: '1',
-                                                title: 'Item 1',
-                                                description: 'Description',
-                                                icon: {
-                                                    type: 'bullet',
-                                                },
+            <SheetRoot />
+            <Stack space={16}>
+                <Inline space={16}>
+                    <ButtonPrimary
+                        onPress={() => {
+                            setResponse(undefined);
+                            showSheet({
+                                type: 'INFO',
+                                props: {
+                                    title,
+                                    subtitle,
+                                    description,
+                                    items: [
+                                        {
+                                            id: '1',
+                                            title: 'Item 1',
+                                            description: 'Description',
+                                            icon: {
+                                                type: 'bullet',
                                             },
-                                            {
-                                                id: '2',
-                                                title: 'Item 2',
-                                                description: 'Description',
-                                                icon: {
-                                                    type: 'bullet',
-                                                },
-                                            },
-                                        ],
-                                    },
-                                }).then(setResponse);
-                            }}
-                        >
-                            'INFO'
-                        </ButtonPrimary>
-                        <ButtonPrimary
-                            onPress={() => {
-                                setResponse(undefined);
-                                showSheet({
-                                    type: 'ACTIONS_LIST',
-                                    props: {
-                                        title,
-                                        subtitle,
-                                        description,
-                                        items: [
-                                            {
-                                                id: '1',
-                                                title: 'Action 1',
-                                                icon: {
-                                                    url: avatarImg,
-                                                },
-                                            },
-                                            {
-                                                id: '2',
-                                                title: 'Destructive',
-                                                style: 'destructive',
-                                            },
-                                        ],
-                                    },
-                                }).then(setResponse);
-                            }}
-                        >
-                            'ACTIONS_LIST'
-                        </ButtonPrimary>
-                        <ButtonPrimary
-                            onPress={() => {
-                                setResponse(undefined);
-                                showSheet({
-                                    type: 'ACTIONS',
-                                    props: {
-                                        title,
-                                        subtitle,
-                                        description,
-                                        button: {
-                                            text: 'Button',
                                         },
-                                        link: {
-                                            text: 'Link',
-                                            withChevron: true,
+                                        {
+                                            id: '2',
+                                            title: 'Item 2',
+                                            description: 'Description',
+                                            icon: {
+                                                type: 'bullet',
+                                            },
                                         },
-                                    },
-                                }).then(setResponse);
-                            }}
-                        >
-                            'ACTIONS'
-                        </ButtonPrimary>
-                        <ButtonPrimary
-                            onPress={() => {
-                                setResponse(undefined);
-                                showSheet({
-                                    type: 'RADIO_LIST',
-                                    props: {
-                                        title,
-                                        subtitle,
-                                        description,
-                                        selectedId: '1',
-                                        items: [
-                                            {
-                                                id: '1',
-                                                title: 'Item 1',
-                                                description: 'Description',
-                                                icon: {
-                                                    url: avatarImg,
-                                                },
+                                    ],
+                                },
+                            }).then(setResponse);
+                        }}
+                    >
+                        'INFO'
+                    </ButtonPrimary>
+                    <ButtonPrimary
+                        onPress={() => {
+                            setResponse(undefined);
+                            showSheet({
+                                type: 'ACTIONS_LIST',
+                                props: {
+                                    title,
+                                    subtitle,
+                                    description,
+                                    items: [
+                                        {
+                                            id: '1',
+                                            title: 'Action 1',
+                                            icon: {
+                                                url: avatarImg,
                                             },
-                                            {
-                                                id: '2',
-                                                title: 'Item 2',
-                                                description: 'Description',
-                                                icon: {
-                                                    url: 'unknownurl',
-                                                },
-                                            },
-                                        ],
+                                        },
+                                        {
+                                            id: '2',
+                                            title: 'Destructive',
+                                            style: 'destructive',
+                                        },
+                                    ],
+                                },
+                            }).then(setResponse);
+                        }}
+                    >
+                        'ACTIONS_LIST'
+                    </ButtonPrimary>
+                    <ButtonPrimary
+                        onPress={() => {
+                            setResponse(undefined);
+                            showSheet({
+                                type: 'ACTIONS',
+                                props: {
+                                    title,
+                                    subtitle,
+                                    description,
+                                    button: {
+                                        text: 'Button',
                                     },
-                                }).then(setResponse);
-                            }}
-                        >
-                            'RADIO_LIST'
-                        </ButtonPrimary>
-                    </Inline>
-                    <Title1>Response:</Title1>
-                    <Text2 regular as="pre">
-                        {JSON.stringify(response, null, 2)}
-                    </Text2>
-                </Stack>
-            </ResponsiveLayout>
+                                    link: {
+                                        text: 'Link',
+                                        withChevron: true,
+                                    },
+                                },
+                            }).then(setResponse);
+                        }}
+                    >
+                        'ACTIONS'
+                    </ButtonPrimary>
+                    <ButtonPrimary
+                        onPress={() => {
+                            setResponse(undefined);
+                            showSheet({
+                                type: 'RADIO_LIST',
+                                props: {
+                                    title,
+                                    subtitle,
+                                    description,
+                                    selectedId: '1',
+                                    items: [
+                                        {
+                                            id: '1',
+                                            title: 'Item 1',
+                                            description: 'Description',
+                                            icon: {
+                                                url: avatarImg,
+                                            },
+                                        },
+                                        {
+                                            id: '2',
+                                            title: 'Item 2',
+                                            description: 'Description',
+                                            icon: {
+                                                url: 'unknownurl',
+                                            },
+                                        },
+                                    ],
+                                },
+                            }).then(setResponse);
+                        }}
+                    >
+                        'RADIO_LIST'
+                    </ButtonPrimary>
+                </Inline>
+                <Title1>Response:</Title1>
+                <Text2 regular as="pre">
+                    {JSON.stringify(response, null, 2)}
+                </Text2>
+            </Stack>
         </Box>
     );
 };
