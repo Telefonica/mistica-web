@@ -1602,6 +1602,8 @@ const alertSnippets = [
       type: "INFO",
       props: {
         title: "Title",
+        subtitle: "Subtitle",
+        description: "Description",
         items: [
           { id: "1", title: "Item 1", icon: { type: "bullet" } },
           { id: "2", title: "Item 2", icon: { type: "bullet" } },
