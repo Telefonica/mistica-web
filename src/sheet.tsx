@@ -281,7 +281,7 @@ const Sheet = React.forwardRef<HTMLDivElement, SheetProps>(({onClose, children, 
                         <div className={styles.modalCloseButton}>
                             <IconButton size={32} onPress={closeModal} aria-label={texts.modalClose}>
                                 <div className={styles.modalCloseButtonIcon}>
-                                    <IconCloseRegular />
+                                    <IconCloseRegular size={20} />
                                 </div>
                             </IconButton>
                         </div>
