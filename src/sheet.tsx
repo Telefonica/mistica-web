@@ -1,6 +1,6 @@
 import classnames from 'classnames';
 import * as React from 'react';
-import * as styles from './bottom-sheet.css';
+import * as styles from './sheet.css';
 import FocusTrap from './focus-trap';
 import {useAriaId, useIsInViewport, useScreenSize, useTheme} from './hooks';
 import {useSetModalStateEffect} from './modal-context-provider';
@@ -34,7 +34,7 @@ const getClientY = (ev: TouchEvent | MouseEvent | React.TouchEvent | React.Mouse
     return ev.clientY;
 };
 
-const useDraggableSheet = ({closeModal}: {closeModal: () => void}) => {
+const useDraggableSheetProps = ({closeModal}: {closeModal: () => void}) => {
     const [dragDistance, setDragDistance] = React.useState(0);
     const isDraggingRef = React.useRef(false);
     const initialMoveEventsCount = React.useRef(0);
@@ -131,7 +131,7 @@ const useDraggableSheet = ({closeModal}: {closeModal: () => void}) => {
     };
 };
 
-const useLockBodyScroll = () => {
+const useLockBodyScrollStyleElement = () => {
     React.useLayoutEffect(() => {
         const scrollY = window.scrollY;
         // When the modal is shown, we want a fixed body (no-scroll)
@@ -180,7 +180,7 @@ const transitions: Record<ModalState, Partial<Record<ModalAction, ModalState>>> 
 const modalReducer = (state: ModalState, action: ModalAction): ModalState =>
     transitions[state][action] || state;
 
-type BottomSheetProps = {
+type SheetProps = {
     onClose?: () => void;
     dataAttributes?: DataAttributes;
     children:
@@ -188,109 +188,107 @@ type BottomSheetProps = {
         | ((renderParams: {closeModal: () => void; modalTitleId: string}) => React.ReactNode);
 };
 
-const BottomSheet = React.forwardRef<HTMLDivElement, BottomSheetProps>(
-    ({onClose, children, dataAttributes}, ref) => {
-        const {texts} = useTheme();
-        const [modalState, dispatch] = React.useReducer(modalReducer, 'closed');
-        const initRef = React.useRef(false);
-        const modalTitleId = useAriaId();
+const Sheet = React.forwardRef<HTMLDivElement, SheetProps>(({onClose, children, dataAttributes}, ref) => {
+    const {texts} = useTheme();
+    const [modalState, dispatch] = React.useReducer(modalReducer, 'closed');
+    const initRef = React.useRef(false);
+    const modalTitleId = useAriaId();
 
-        const handleTransitionEnd = React.useCallback((ev: React.AnimationEvent | React.TransitionEvent) => {
-            // Don't trigger transitionEnd if the event is not triggered by the sheet element.
-            if (ev.target === ev.currentTarget) {
-                dispatch('transitionEnd');
-            }
-        }, []);
-
-        const closeModal = () => {
-            if (modalState === 'open') {
-                dispatch('close');
-            }
-        };
-
-        // transitionEnd/animationEnd dom events may not trigger in some cases, so we use a timeout as fallback
-        React.useEffect(() => {
-            if (modalState === 'opening' || modalState === 'closing') {
-                const tid = setTimeout(() => {
-                    dispatch('transitionEnd');
-                }, styles.transitionDuration);
-
-                return () => clearTimeout(tid);
-            }
-        }, [modalState]);
-
-        React.useEffect(() => {
-            if (modalState === 'closed') {
-                if (initRef.current) {
-                    onClose?.();
-                } else {
-                    dispatch('open');
-                }
-            } else {
-                initRef.current = true;
-            }
-        }, [modalState, onClose]);
-
-        const {onScroll, overlayStyle, ...dragableSheetProps} = useDraggableSheet({closeModal});
-
-        useSetModalStateEffect();
-        const bodyStyle = useLockBodyScroll();
-
-        if (modalState === 'closed') {
-            return null;
+    const handleTransitionEnd = React.useCallback((ev: React.AnimationEvent | React.TransitionEvent) => {
+        // Don't trigger transitionEnd if the event is not triggered by the sheet element.
+        if (ev.target === ev.currentTarget) {
+            dispatch('transitionEnd');
         }
+    }, []);
 
-        return (
-            <Portal>
-                <FocusTrap>
-                    {bodyStyle}
-                    {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
-                    <div
-                        className={classnames(styles.overlay, {
-                            [styles.closingOverlay]: modalState === 'closing',
-                        })}
-                        style={overlayStyle}
-                        onClick={closeModal}
-                    />
-                    <div
-                        className={classnames(styles.bottomSheetContainer, {
-                            [styles.closingSheet]: modalState === 'closing',
-                        })}
-                        onTransitionEnd={handleTransitionEnd}
-                        onAnimationEnd={handleTransitionEnd}
-                        {...dragableSheetProps}
-                        {...getPrefixedDataAttributes(dataAttributes, 'BottomSheet')}
-                        ref={ref}
-                    >
-                        <div className={styles.bottomSheet}>
-                            <div className={styles.bottomSheetContent}>
-                                <div className={styles.handleContainer}>
-                                    <div className={styles.handle} />
-                                </div>
-                                <section
-                                    role="dialog"
-                                    aria-modal="true"
-                                    aria-labelledby={modalTitleId}
-                                    onScroll={onScroll}
-                                    className={styles.children}
-                                >
-                                    {typeof children === 'function'
-                                        ? children({closeModal, modalTitleId})
-                                        : children}
-                                </section>
+    const closeModal = () => {
+        if (modalState === 'open') {
+            dispatch('close');
+        }
+    };
+
+    // transitionEnd/animationEnd dom events may not trigger in some cases, so we use a timeout as fallback
+    React.useEffect(() => {
+        if (modalState === 'opening' || modalState === 'closing') {
+            const tid = setTimeout(() => {
+                dispatch('transitionEnd');
+            }, styles.transitionDuration);
+
+            return () => clearTimeout(tid);
+        }
+    }, [modalState]);
+
+    React.useEffect(() => {
+        if (modalState === 'closed') {
+            if (initRef.current) {
+                onClose?.();
+            } else {
+                dispatch('open');
+            }
+        } else {
+            initRef.current = true;
+        }
+    }, [modalState, onClose]);
+
+    const {onScroll, overlayStyle, ...dragableSheetProps} = useDraggableSheetProps({closeModal});
+
+    useSetModalStateEffect();
+    const bodyStyle = useLockBodyScrollStyleElement();
+
+    if (modalState === 'closed') {
+        return null;
+    }
+
+    return (
+        <Portal>
+            <FocusTrap>
+                {bodyStyle}
+                {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
+                <div
+                    className={classnames(styles.overlay, {
+                        [styles.closingOverlay]: modalState === 'closing',
+                    })}
+                    style={overlayStyle}
+                    onClick={closeModal}
+                />
+                <div
+                    className={classnames(styles.SheetContainer, {
+                        [styles.closingSheet]: modalState === 'closing',
+                    })}
+                    onTransitionEnd={handleTransitionEnd}
+                    onAnimationEnd={handleTransitionEnd}
+                    {...dragableSheetProps}
+                    {...getPrefixedDataAttributes(dataAttributes, 'Sheet')}
+                    ref={ref}
+                >
+                    <div className={styles.Sheet}>
+                        <div className={styles.SheetContent}>
+                            <div className={styles.handleContainer}>
+                                <div className={styles.handle} />
                             </div>
-                            <div className={styles.modalCloseButton}>
-                                <IconButton size={32} onPress={closeModal} aria-label={texts.modalClose}>
-                                    <IconCloseRegular />
-                                </IconButton>
-                            </div>
+                            <section
+                                role="dialog"
+                                aria-modal="true"
+                                aria-labelledby={modalTitleId}
+                                onScroll={onScroll}
+                                className={styles.children}
+                            >
+                                {typeof children === 'function'
+                                    ? children({closeModal, modalTitleId})
+                                    : children}
+                            </section>
+                        </div>
+                        <div className={styles.modalCloseButton}>
+                            <IconButton size={32} onPress={closeModal} aria-label={texts.modalClose}>
+                                <IconCloseRegular />
+                            </IconButton>
                         </div>
                     </div>
-                </FocusTrap>
-            </Portal>
-        );
-    }
-);
+                </div>
+            </FocusTrap>
+        </Portal>
+    );
+});
 
 type SheetBodyProps = {
     title?: string;
@@ -386,7 +384,7 @@ export const SheetBody = ({
     );
 };
 
-type RadioListBottomSheetProps = {
+type RadioListSheetProps = {
     title?: string;
     subtitle?: string;
     description?: string;
@@ -405,7 +403,7 @@ type RadioListBottomSheetProps = {
     };
 };
 
-export const RadioListBottomSheet = React.forwardRef<HTMLDivElement, RadioListBottomSheetProps>(
+export const RadioListSheet = React.forwardRef<HTMLDivElement, RadioListSheetProps>(
     ({title, subtitle, description, items, selectedId, onClose, onSelect, button, dataAttributes}, ref) => {
         const [selectedItemId, setSelectedItemId] = React.useState(selectedId);
         const hasSelectedRef = React.useRef(false);
@@ -413,10 +411,10 @@ export const RadioListBottomSheet = React.forwardRef<HTMLDivElement, RadioListBo
         const {texts} = useTheme();
 
         return (
-            <BottomSheet
+            <Sheet
                 onClose={onClose}
                 ref={ref}
-                dataAttributes={{...dataAttributes, 'component-name': 'RadioListBottomSheet'}}
+                dataAttributes={{...dataAttributes, 'component-name': 'RadioListSheet'}}
             >
                 {({closeModal, modalTitleId}) => (
                     <SheetBody
@@ -434,7 +432,7 @@ export const RadioListBottomSheet = React.forwardRef<HTMLDivElement, RadioListBo
                                         closeModal();
                                     }}
                                 >
-                                    {button?.text ?? texts.bottomSheetConfirmButton}
+                                    {button?.text ?? texts.SheetConfirmButton}
                                 </ButtonPrimary>
                             ) : undefined
                         }
@@ -475,7 +473,7 @@ export const RadioListBottomSheet = React.forwardRef<HTMLDivElement, RadioListBo
                         </NegativeBox>
                     </SheetBody>
                 )}
-            </BottomSheet>
+            </Sheet>
         );
     }
 );
@@ -503,15 +501,15 @@ type ActionsListSheetProps = {
     dataAttributes?: DataAttributes;
 };
 
-export const ActionsListBottomSheet = React.forwardRef<HTMLDivElement, ActionsListSheetProps>(
+export const ActionsListSheet = React.forwardRef<HTMLDivElement, ActionsListSheetProps>(
     ({title, subtitle, description, items, onClose, onSelect, dataAttributes}, ref) => {
         const {isDarkMode} = useTheme();
 
         return (
-            <BottomSheet
+            <Sheet
                 onClose={onClose}
                 ref={ref}
-                dataAttributes={{...dataAttributes, 'component-name': 'ActionsListBottomSheet'}}
+                dataAttributes={{...dataAttributes, 'component-name': 'ActionsListSheet'}}
             >
                 {({closeModal, modalTitleId}) => (
                     <SheetBody
@@ -570,12 +568,12 @@ export const ActionsListBottomSheet = React.forwardRef<HTMLDivElement, ActionsLi
                         </NegativeBox>
                     </SheetBody>
                 )}
-            </BottomSheet>
+            </Sheet>
         );
     }
 );
 
-type InfoBottomSheetProps = {
+type InfoSheetProps = {
     title?: string;
     subtitle?: string;
     description?: string;
@@ -600,14 +598,14 @@ type InfoBottomSheetProps = {
     dataAttributes?: DataAttributes;
 };
 
-export const InfoBottomSheet = React.forwardRef<HTMLDivElement, InfoBottomSheetProps>(
+export const InfoSheet = React.forwardRef<HTMLDivElement, InfoSheetProps>(
     ({title, subtitle, description, items, onClose, dataAttributes}, ref) => {
         const {isDarkMode} = useTheme();
         return (
-            <BottomSheet
+            <Sheet
                 onClose={onClose}
                 ref={ref}
-                dataAttributes={{...dataAttributes, 'component-name': 'InfoBottomSheet'}}
+                dataAttributes={{...dataAttributes, 'component-name': 'InfoSheet'}}
             >
                 {({modalTitleId}) => (
                     <SheetBody
@@ -654,7 +652,7 @@ export const InfoBottomSheet = React.forwardRef<HTMLDivElement, InfoBottomSheetP
                         </Box>
                     </SheetBody>
                 )}
-            </BottomSheet>
+            </Sheet>
         );
     }
 );
@@ -667,7 +665,7 @@ type ButtonProps = {
     trackEvent?: boolean;
 };
 
-type ActionsBottomSheetProps = {
+type ActionsSheetProps = {
     title?: string;
     subtitle?: string;
     description?: string;
@@ -679,7 +677,7 @@ type ActionsBottomSheetProps = {
     dataAttributes?: DataAttributes;
 };
 
-export const ActionsBottomSheet = React.forwardRef<HTMLDivElement, ActionsBottomSheetProps>(
+export const ActionsSheet = React.forwardRef<HTMLDivElement, ActionsSheetProps>(
     (
         {
             title,
@@ -705,10 +703,10 @@ export const ActionsBottomSheet = React.forwardRef<HTMLDivElement, ActionsBottom
         });
 
         return (
-            <BottomSheet
+            <Sheet
                 onClose={onClose}
                 ref={ref}
-                dataAttributes={{...dataAttributes, 'component-name': 'ActionsBottomSheet'}}
+                dataAttributes={{...dataAttributes, 'component-name': 'ActionsSheet'}}
             >
                 {({modalTitleId, closeModal}) => (
                     <SheetBody
@@ -740,9 +738,9 @@ export const ActionsBottomSheet = React.forwardRef<HTMLDivElement, ActionsBottom
                         }
                     />
                 )}
-            </BottomSheet>
+            </Sheet>
         );
     }
 );
 
-export default BottomSheet;
+export default Sheet;

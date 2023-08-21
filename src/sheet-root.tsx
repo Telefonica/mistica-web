@@ -1,10 +1,5 @@
 import * as React from 'react';
-import {
-    ActionsBottomSheet,
-    ActionsListBottomSheet,
-    InfoBottomSheet,
-    RadioListBottomSheet,
-} from './bottom-sheet';
+import {ActionsSheet, ActionsListSheet, InfoSheet, RadioListSheet} from './sheet';
 import Image from './image';
 import {useTheme} from './hooks';
 
@@ -93,17 +88,17 @@ export type NativeSheetImplementation = {
     [T in SheetType]: (props: SheetPropsByType[T]) => Promise<SheetResultByType[T]>;
 };
 
-type BottomSheetPropsListener = (sheetProps: SheetTypeWithPropsUnion) => void;
+type SheetPropsListener = (sheetProps: SheetTypeWithPropsUnion) => void;
 type SheetPromiseResolve = <T>(
     value: T extends SheetType ? SheetResultByType[T] : 'You must provide a type parameter'
 ) => void;
 
-let listener: BottomSheetPropsListener | null = null;
+let listener: SheetPropsListener | null = null;
 let sheetPromiseResolve: SheetPromiseResolve | null = null;
 let nativeImplementation: NativeSheetImplementation | null = null;
 
-let isBottomSheetOpen = false;
-export const showBottomSheet = <T extends SheetType>(
+let isSheetOpen = false;
+export const showSheet = <T extends SheetType>(
     sheetProps: SheetTypeWithProps<T>
 ): Promise<SheetResultByType[T]> => {
     if (nativeImplementation) {
@@ -111,16 +106,14 @@ export const showBottomSheet = <T extends SheetType>(
     }
 
     if (!listener) {
-        return Promise.reject(
-            new Error('Tried to show a BottomSheet but the BottomSheetRoot component was not mounted')
-        );
+        return Promise.reject(new Error('Tried to show a Sheet but the SheetRoot component was not mounted'));
     }
 
-    if (isBottomSheetOpen) {
-        return Promise.reject(new Error('Tried to show a BottomSheet but there is already one open'));
+    if (isSheetOpen) {
+        return Promise.reject(new Error('Tried to show a Sheet but there is already one open'));
     }
 
-    isBottomSheetOpen = true;
+    isSheetOpen = true;
     listener(sheetProps as SheetTypeWithPropsUnion);
 
     const sheetPromise = new Promise((resolve) => {
@@ -128,23 +121,21 @@ export const showBottomSheet = <T extends SheetType>(
     });
 
     sheetPromise.then(() => {
-        isBottomSheetOpen = false;
+        isSheetOpen = false;
     });
 
     return sheetPromise as Promise<SheetResultByType[T]>;
 };
 
-// This is the subset of methods needed in @tef-novum/webview-bridge to implement all the bottom sheet types
+// This is the subset of methods needed in @tef-novum/webview-bridge to implement all the sheet types
 type WebviewBridge = {
     isWebViewBridgeAvailable: () => boolean;
-    bottomSheetInfo: (props: SheetPropsByType['INFO']) => Promise<void>;
-    bottomSheetActionSelector: (
+    SheetInfo: (props: SheetPropsByType['INFO']) => Promise<void>;
+    SheetActionSelector: (
         props: SheetPropsByType['ACTIONS_LIST']
     ) => Promise<SheetResultByType['ACTIONS_LIST']>;
-    bottomSheetSingleSelector: (
-        props: SheetPropsByType['RADIO_LIST']
-    ) => Promise<SheetResultByType['RADIO_LIST']>;
-    bottomSheetActions: (props: SheetPropsByType['ACTIONS']) => Promise<SheetResultByType['ACTIONS']>;
+    SheetSingleSelector: (props: SheetPropsByType['RADIO_LIST']) => Promise<SheetResultByType['RADIO_LIST']>;
+    SheetActions: (props: SheetPropsByType['ACTIONS']) => Promise<SheetResultByType['ACTIONS']>;
 };
 
 /**
@@ -154,7 +145,7 @@ type WebviewBridge = {
  *
  * const nativeImplementation = createNativeSheetImplementationFromWebviewBridge(webviewBridge);
  *
- * <BottomSheetRoot nativeImplementation={nativeImplementation} />
+ * <SheetRoot nativeImplementation={nativeImplementation} />
  * ```
  */
 export const createNativeSheetImplementationFromWebviewBridge = (
@@ -162,10 +153,10 @@ export const createNativeSheetImplementationFromWebviewBridge = (
 ): NativeSheetImplementation | undefined => {
     if (webviewBridge.isWebViewBridgeAvailable()) {
         return {
-            INFO: webviewBridge.bottomSheetInfo,
-            ACTIONS_LIST: webviewBridge.bottomSheetActionSelector,
-            RADIO_LIST: webviewBridge.bottomSheetSingleSelector,
-            ACTIONS: webviewBridge.bottomSheetActions,
+            INFO: webviewBridge.SheetInfo,
+            ACTIONS_LIST: webviewBridge.SheetActionSelector,
+            RADIO_LIST: webviewBridge.SheetSingleSelector,
+            ACTIONS: webviewBridge.SheetActions,
         };
     }
     return undefined;
@@ -175,7 +166,7 @@ type Props = {
     nativeImplementation?: NativeSheetImplementation;
 };
 
-export const BottomSheetRoot = (props: Props): React.ReactElement | null => {
+export const SheetRoot = (props: Props): React.ReactElement | null => {
     const {isDarkMode} = useTheme();
     const [sheetProps, setSheetProps] = React.useState<SheetTypeWithPropsUnion | null>(null);
     const selectionRef = React.useRef<string | null>(null);
@@ -249,14 +240,12 @@ export const BottomSheetRoot = (props: Props): React.ReactElement | null => {
 
     switch (sheetProps.type) {
         case 'INFO':
-            return <InfoBottomSheet {...sheetProps.props} onClose={handleClose} />;
+            return <InfoSheet {...sheetProps.props} onClose={handleClose} />;
         case 'ACTIONS_LIST':
-            return (
-                <ActionsListBottomSheet {...sheetProps.props} onClose={handleClose} onSelect={handleSelect} />
-            );
+            return <ActionsListSheet {...sheetProps.props} onClose={handleClose} onSelect={handleSelect} />;
         case 'RADIO_LIST':
             return (
-                <RadioListBottomSheet
+                <RadioListSheet
                     {...sheetProps.props}
                     items={sheetProps.props.items.map((item) => ({
                         ...item,
@@ -274,7 +263,7 @@ export const BottomSheetRoot = (props: Props): React.ReactElement | null => {
             );
         case 'ACTIONS':
             return (
-                <ActionsBottomSheet
+                <ActionsSheet
                     {...sheetProps.props}
                     buttonLink={sheetProps.props.link}
                     onClose={handleClose}
@@ -287,4 +276,4 @@ export const BottomSheetRoot = (props: Props): React.ReactElement | null => {
     }
 };
 
-export default BottomSheetRoot;
+export default SheetRoot;

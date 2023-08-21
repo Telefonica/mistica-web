@@ -10,7 +10,7 @@ import {
     skinVars,
     VIVO_NEW_SKIN,
     TELEFONICA_SKIN,
-    BottomSheetRoot,
+    SheetRoot,
 } from '../src';
 
 import type {ThemeConfig} from '../src';
@@ -62,7 +62,7 @@ const FrameComponent = ({children, theme}: Props): React.ReactNode => (
     <ThemeOverriderContextProvider>
         {(overridenTheme) => (
             <ThemeContextProvider theme={overridenTheme ?? theme}>
-                <BottomSheetRoot />
+                <SheetRoot />
                 <OverscrollColorProvider>
                     <App skinName={(overridenTheme ?? theme).skin.name}>{children}</App>
                 </OverscrollColorProvider>

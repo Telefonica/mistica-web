@@ -1,24 +1,24 @@
-# BottomSheet
+# Sheet
 
-Mística provides a bottom sheet component that can be used to display a modal-like content from over the main
-content of the screen.
+Mística provides a sheet component that can be used to display a modal-like content from over the main content
+of the screen.
 
 ## Basic usage
 
-You can show any content you want inside the bottom sheet by passing it as a child of the component.
+You can show any content you want inside the sheet by passing it as a child of the component.
 
 ```jsx
-import {BottomSheet} from 'mistica';
+import {Sheet} from 'mistica';
 
 const MyComponent = () => {
   const [showSheet, setShowSheet] = useState(false);
   return (
     <>
-      <ButtonPrimary onPress={() => setShowSheet(true)}>show bottom sheet</ButtonPrimary>
+      <ButtonPrimary onPress={() => setShowSheet(true)}>show sheet</ButtonPrimary>
       {showSheet && (
-        <BottomSheet onClose={() => setShowSheet(false)}>
+        <Sheet onClose={() => setShowSheet(false)}>
           <Placeholder />
-        </BottomSheet>
+        </Sheet>
       )}
     </>
   );
@@ -32,15 +32,15 @@ as shown in the example above.
 You can also close the sheet programmatically using the render prop:
 
 ```jsx
-import {BottomSheet} from 'mistica';
+import {Sheet} from 'mistica';
 
 const MyComponent = () => {
   const [showSheet, setShowSheet] = useState(false);
   return (
     <>
-      <ButtonPrimary onPress={() => setShowSheet(true)}>show bottom sheet</ButtonPrimary>
+      <ButtonPrimary onPress={() => setShowSheet(true)}>show sheet</ButtonPrimary>
       {showSheet && (
-        <BottomSheet onClose={() => setShowSheet(false)}>
+        <Sheet onClose={() => setShowSheet(false)}>
           {({closeModal, modalTitleId}) => (
             <>
               <Title1 id={modalTitleId}>My sheet</Title1>
@@ -48,7 +48,7 @@ const MyComponent = () => {
               <ButtonPrimary onPress={closeModal}>Close</ButtonPrimary>
             </>
           )}
-        </BottomSheet>
+        </Sheet>
       )}
     </>
   );
@@ -57,38 +57,38 @@ const MyComponent = () => {
 
 ## Sheet with predefined content
 
-Mística predefines some common bottom sheet patterns for you to use: `RadioListBottomSheet`,
-`ActionsListBottomSheet`, `InfoBottomSheet` and `ActionsBottomSheet`. You can see examples in the storybook.
+Mística predefines some common sheet patterns for you to use: `RadioListSheet`, `ActionsListSheet`,
+`InfoSheet` and `ActionsSheet`. You can see examples in the storybook.
 
-## `showBottomSheet` imperative api
+## `showSheet` imperative api
 
-Instead of using React components, there is an alternative way to show a bottom sheet: using the
-`showBottomSheet` function. For this to work, you need to render a `<BottomSheetRoot/>` somewhere in your app,
-typically where you render the mistica `<ThemeContextProvider/>`, but it could be anywhere.
+Instead of using React components, there is an alternative way to show a sheet: using the `showSheet`
+function. For this to work, you need to render a `<SheetRoot/>` somewhere in your app, typically where you
+render the mistica `<ThemeContextProvider/>`, but it could be anywhere.
 
 ```jsx
-import {BottomSheetRoot} from '@telefonica/mistica';
+import {SheetRoot} from '@telefonica/mistica';
 
 export const App = () => {
   return (
     <>
-      <BottomSheetRoot />
+      <SheetRoot />
       <RestOfYourApp />
     </>
   );
 };
 ```
 
-Then you can call `showBottomSheet` from anywhere:
+Then you can call `showSheet` from anywhere:
 
 ```jsx
-import {BottomSheet} from 'mistica';
+import {showSheet} from '@telefonica/mistica';
 
 const MyComponent = () => {
   return (
     <ButtonPrimary
       onPress={() =>
-        showBottomSheet({
+        showSheet({
           type: 'RADIO_LIST',
           props: {
             title: 'Select an fruit',
@@ -104,7 +104,7 @@ const MyComponent = () => {
         })
       }
     >
-      show bottom sheet
+      show sheet
     </ButtonPrimary>
   );
 };
@@ -112,11 +112,11 @@ const MyComponent = () => {
 
 ### native implementation
 
-If you are using mistica inside Novum app, you can configure `showBottomSheet` to use the native sheet
+If you are using mistica inside Novum app, you can configure `showSheet` to use the native sheet
 implementation with the webview bridge.
 
 ```jsx
-import {BottomSheetRoot} from '@telefonica/mistica';
+import {SheetRoot} from '@telefonica/mistica';
 import * as webviewBridge from '@tef-novum/webview-bridge';
 
 const nativeImplementation = createNativeSheetImplementationFromWebviewBridge(webviewBridge);
@@ -124,12 +124,12 @@ const nativeImplementation = createNativeSheetImplementationFromWebviewBridge(we
 export const App = () => {
   return (
     <>
-      <BottomSheetRoot nativeImplementation={nativeImplementation} />
+      <SheetRoot nativeImplementation={nativeImplementation} />
       <RestOfYourApp />
     </>
   );
 };
 ```
 
-Then when you call `showBottomSheet`, if the code is running inside a webview, it will use the native
-implementation instead of the web one.
+Then when you call `showSheet`, if the code is running inside a webview, it will use the native implementation
+instead of the web one.

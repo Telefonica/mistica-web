@@ -2,9 +2,9 @@ import {openStoryPage, screen} from '../test-utils';
 
 const TESTABLE_DEVICES = ['MOBILE_IOS', 'DESKTOP'] as const;
 
-test.each(TESTABLE_DEVICES)('BottomSheet in %s', async (device) => {
+test.each(TESTABLE_DEVICES)('Sheet in %s', async (device) => {
     const page = await openStoryPage({
-        id: 'components-modals-bottomsheet--default',
+        id: 'components-modals-Sheet--default',
         device,
     });
 
@@ -18,9 +18,9 @@ test.each(TESTABLE_DEVICES)('BottomSheet in %s', async (device) => {
     expect(image).toMatchImageSnapshot();
 });
 
-test.each(TESTABLE_DEVICES)('ActionsListBottomSheet in %s', async (device) => {
+test.each(TESTABLE_DEVICES)('ActionsListSheet in %s', async (device) => {
     const page = await openStoryPage({
-        id: 'components-modals-bottomsheet--actions-list',
+        id: 'components-modals-Sheet--actions-list',
         device,
     });
 
@@ -34,9 +34,9 @@ test.each(TESTABLE_DEVICES)('ActionsListBottomSheet in %s', async (device) => {
     expect(image).toMatchImageSnapshot();
 });
 
-test.each(TESTABLE_DEVICES)('RadioListBottomSheet in %s', async (device) => {
+test.each(TESTABLE_DEVICES)('RadioListSheet in %s', async (device) => {
     const page = await openStoryPage({
-        id: 'components-modals-bottomsheet--radio-list',
+        id: 'components-modals-Sheet--radio-list',
         device,
     });
 
@@ -50,9 +50,9 @@ test.each(TESTABLE_DEVICES)('RadioListBottomSheet in %s', async (device) => {
     expect(image).toMatchImageSnapshot();
 });
 
-test.each(TESTABLE_DEVICES)('InfoBottomSheet in %s', async (device) => {
+test.each(TESTABLE_DEVICES)('InfoSheet in %s', async (device) => {
     const page = await openStoryPage({
-        id: 'components-modals-bottomsheet--info',
+        id: 'components-modals-Sheet--info',
         device,
     });
 
@@ -66,9 +66,9 @@ test.each(TESTABLE_DEVICES)('InfoBottomSheet in %s', async (device) => {
     expect(image).toMatchImageSnapshot();
 });
 
-test.each(TESTABLE_DEVICES)('ActionsBottomSheet in %s', async (device) => {
+test.each(TESTABLE_DEVICES)('ActionsSheet in %s', async (device) => {
     const page = await openStoryPage({
-        id: 'components-modals-bottomsheet--actions',
+        id: 'components-modals-Sheet--actions',
         device,
     });
 

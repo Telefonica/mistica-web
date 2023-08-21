@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {
-    BottomSheet,
-    BottomSheetRoot,
+    Sheet,
+    SheetRoot,
     Box,
     ButtonPrimary,
     Circle,
@@ -13,24 +13,19 @@ import {
     Inline,
     Placeholder,
     ResponsiveLayout,
-    showBottomSheet,
+    showSheet,
     skinVars,
     Stack,
     Text2,
     Text3,
     Title1,
 } from '..';
-import {
-    ActionsBottomSheet,
-    ActionsListBottomSheet,
-    InfoBottomSheet,
-    RadioListBottomSheet,
-} from '../bottom-sheet';
+import {ActionsSheet, ActionsListSheet, InfoSheet, RadioListSheet} from '../sheet';
 import avatarImg from './images/avatar.jpg';
 
 export default {
-    title: 'Components/Modals/BottomSheet',
-    component: BottomSheet,
+    title: 'Components/Modals/Sheet',
+    component: Sheet,
     parameters: {
         fullScreen: true,
     },
@@ -52,7 +47,7 @@ export const Default: StoryComponent = () => {
                 </ButtonPrimary>
 
                 {open && (
-                    <BottomSheet
+                    <Sheet
                         onClose={() => {
                             setOpen(false);
                         }}
@@ -65,14 +60,14 @@ export const Default: StoryComponent = () => {
                                 <Placeholder />
                             </Box>
                         </ResponsiveLayout>
-                    </BottomSheet>
+                    </Sheet>
                 )}
             </ResponsiveLayout>
         </Box>
     );
 };
 
-Default.storyName = 'BottomSheet';
+Default.storyName = 'Sheet';
 
 type SheetArgs = {
     title: string;
@@ -109,7 +104,7 @@ export const RadioList: StoryComponent<RadioListSheetArgs> = ({title, subtitle, 
                 </Stack>
 
                 {open && (
-                    <RadioListBottomSheet
+                    <RadioListSheet
                         onClose={() => {
                             setOpen(false);
                         }}
@@ -151,7 +146,7 @@ export const RadioList: StoryComponent<RadioListSheetArgs> = ({title, subtitle, 
     );
 };
 
-RadioList.storyName = 'RadioListBottomSheet';
+RadioList.storyName = 'RadioListSheet';
 RadioList.args = {
     title: 'Select a fruit',
     subtitle: 'Subtitle',
@@ -190,7 +185,7 @@ export const ActionsList: StoryComponent<SheetArgs> = ({title, subtitle, descrip
                 </Stack>
 
                 {open && (
-                    <ActionsListBottomSheet
+                    <ActionsListSheet
                         onClose={() => {
                             setOpen(false);
                         }}
@@ -228,7 +223,7 @@ export const ActionsList: StoryComponent<SheetArgs> = ({title, subtitle, descrip
     );
 };
 
-ActionsList.storyName = 'ActionsListBottomSheet';
+ActionsList.storyName = 'ActionsListSheet';
 ActionsList.args = {
     title: 'Title',
     subtitle: 'Subtitle',
@@ -256,7 +251,7 @@ export const Info: StoryComponent<InfoSheetArgs> = ({title, subtitle, descriptio
                 </ButtonPrimary>
 
                 {open && (
-                    <InfoBottomSheet
+                    <InfoSheet
                         onClose={() => {
                             setOpen(false);
                         }}
@@ -285,7 +280,7 @@ export const Info: StoryComponent<InfoSheetArgs> = ({title, subtitle, descriptio
     );
 };
 
-Info.storyName = 'InfoBottomSheet';
+Info.storyName = 'InfoSheet';
 Info.args = {
     title: 'Title',
     subtitle: 'Subtitle',
@@ -340,7 +335,7 @@ export const Actions: StoryComponent<ActionsSheetArgs> = ({
                 </Stack>
 
                 {open && (
-                    <ActionsBottomSheet
+                    <ActionsSheet
                         onClose={() => {
                             setOpen(false);
                         }}
@@ -373,7 +368,7 @@ export const Actions: StoryComponent<ActionsSheetArgs> = ({
     );
 };
 
-Actions.storyName = 'ActionsBottomSheet';
+Actions.storyName = 'ActionsSheet';
 Actions.args = {
     title: 'Title',
     subtitle: 'Subtitle',
@@ -401,13 +396,13 @@ export const Root: StoryComponent<RootArgs> = ({title, subtitle, description}) =
     return (
         <Box paddingY={24}>
             <ResponsiveLayout>
-                <BottomSheetRoot />
+                <SheetRoot />
                 <Stack space={16}>
                     <Inline space={16}>
                         <ButtonPrimary
                             onPress={() => {
                                 setResponse(undefined);
-                                showBottomSheet({
+                                showSheet({
                                     type: 'INFO',
                                     props: {
                                         title,
@@ -440,7 +435,7 @@ export const Root: StoryComponent<RootArgs> = ({title, subtitle, description}) =
                         <ButtonPrimary
                             onPress={() => {
                                 setResponse(undefined);
-                                showBottomSheet({
+                                showSheet({
                                     type: 'ACTIONS_LIST',
                                     props: {
                                         title,
@@ -469,7 +464,7 @@ export const Root: StoryComponent<RootArgs> = ({title, subtitle, description}) =
                         <ButtonPrimary
                             onPress={() => {
                                 setResponse(undefined);
-                                showBottomSheet({
+                                showSheet({
                                     type: 'ACTIONS',
                                     props: {
                                         title,
@@ -491,7 +486,7 @@ export const Root: StoryComponent<RootArgs> = ({title, subtitle, description}) =
                         <ButtonPrimary
                             onPress={() => {
                                 setResponse(undefined);
-                                showBottomSheet({
+                                showSheet({
                                     type: 'RADIO_LIST',
                                     props: {
                                         title,
@@ -533,7 +528,7 @@ export const Root: StoryComponent<RootArgs> = ({title, subtitle, description}) =
     );
 };
 
-Root.storyName = 'BottomSheetRoot';
+Root.storyName = 'SheetRoot';
 Root.args = {
     title: 'Title',
     subtitle: 'Subtitle',

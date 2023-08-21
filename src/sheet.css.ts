@@ -28,7 +28,7 @@ const timmingFunction = 'cubic-bezier(0.32, 0.72, 0, 1)';
 
 const topMargin = 64;
 
-export const bottomSheetContainer = style([
+export const SheetContainer = style([
     sprinkles({
         position: 'fixed',
         left: 0,
@@ -54,7 +54,7 @@ export const bottomSheetContainer = style([
     },
 ]);
 
-export const bottomSheet = style([
+export const Sheet = style([
     sprinkles({
         background: skinVars.colors.background,
     }),
@@ -79,7 +79,7 @@ export const bottomSheet = style([
         '@media': {
             [mq.desktopOrBigger]: {
                 position: 'relative',
-                pointerEvents: 'initial', // restore pointer events (disabled by parent bottomSheetContainer) to work inside the modal
+                pointerEvents: 'initial', // restore pointer events (disabled by parent SheetContainer) to work inside the modal
                 borderRadius: skinVars.borderRadii.sheet,
                 overflow: 'hidden',
                 userSelect: 'initial',
@@ -99,7 +99,7 @@ export const closingSheet = style({
     },
 });
 
-export const bottomSheetContent = style([
+export const SheetContent = style([
     sprinkles({
         paddingTop: 32, // drag handle height
         display: 'flex',

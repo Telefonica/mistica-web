@@ -1,23 +1,18 @@
 import * as React from 'react';
-import BottomSheet, {
-    ActionsBottomSheet,
-    ActionsListBottomSheet,
-    InfoBottomSheet,
-    RadioListBottomSheet,
-} from '../bottom-sheet';
+import Sheet, {ActionsSheet, ActionsListSheet, InfoSheet, RadioListSheet} from '../sheet';
 import {act, render, screen, waitForElementToBeRemoved, within} from '@testing-library/react';
-import {BottomSheetRoot, ButtonPrimary, showBottomSheet, ThemeContextProvider, Title1} from '..';
+import {SheetRoot, ButtonPrimary, showSheet, ThemeContextProvider, Title1} from '..';
 import {makeTheme} from './test-utils';
 import userEvent from '@testing-library/user-event';
 
-test('BottomSheet', async () => {
+test('Sheet', async () => {
     const TestComponent = () => {
         const [showModal, setShowModal] = React.useState(false);
         return (
             <>
                 <ButtonPrimary onPress={() => setShowModal(true)}>Open</ButtonPrimary>
                 {showModal && (
-                    <BottomSheet
+                    <Sheet
                         onClose={() => {
                             setShowModal(false);
                         }}
@@ -28,7 +23,7 @@ test('BottomSheet', async () => {
                                 <ButtonPrimary onPress={closeModal}>Close</ButtonPrimary>
                             </>
                         )}
-                    </BottomSheet>
+                    </Sheet>
                 )}
             </>
         );
@@ -52,7 +47,7 @@ test('BottomSheet', async () => {
     await waitForElementToBeRemoved(sheet);
 });
 
-test('RadioListBottomSheet', async () => {
+test('RadioListSheet', async () => {
     const selectSpy = jest.fn();
 
     const TestComponent = () => {
@@ -61,7 +56,7 @@ test('RadioListBottomSheet', async () => {
             <>
                 <ButtonPrimary onPress={() => setShowModal(true)}>Open</ButtonPrimary>
                 {showModal && (
-                    <RadioListBottomSheet
+                    <RadioListSheet
                         title="Choose an item"
                         onSelect={selectSpy}
                         onClose={() => {
@@ -102,7 +97,7 @@ test('RadioListBottomSheet', async () => {
     expect(selectSpy).toHaveBeenCalledWith('1');
 });
 
-test('ActionsListBottomSheet', async () => {
+test('ActionsListSheet', async () => {
     const selectSpy = jest.fn();
 
     const TestComponent = () => {
@@ -111,7 +106,7 @@ test('ActionsListBottomSheet', async () => {
             <>
                 <ButtonPrimary onPress={() => setShowModal(true)}>Open</ButtonPrimary>
                 {showModal && (
-                    <ActionsListBottomSheet
+                    <ActionsListSheet
                         title="Choose an action"
                         onSelect={selectSpy}
                         onClose={() => {
@@ -151,14 +146,14 @@ test('ActionsListBottomSheet', async () => {
     expect(selectSpy).toHaveBeenCalledWith('1');
 });
 
-test('InfoBottomSheet', async () => {
+test('InfoSheet', async () => {
     const TestComponent = () => {
         const [showModal, setShowModal] = React.useState(false);
         return (
             <>
                 <ButtonPrimary onPress={() => setShowModal(true)}>Open</ButtonPrimary>
                 {showModal && (
-                    <InfoBottomSheet
+                    <InfoSheet
                         title="Title"
                         subtitle="Subtitle"
                         description="Description"
@@ -200,7 +195,7 @@ test('InfoBottomSheet', async () => {
     expect(items).toHaveLength(2);
 });
 
-test('ActionsBottomSheet', async () => {
+test('ActionsSheet', async () => {
     const onPressButtonSpy = jest.fn();
 
     const TestComponent = () => {
@@ -209,7 +204,7 @@ test('ActionsBottomSheet', async () => {
             <>
                 <ButtonPrimary onPress={() => setShowModal(true)}>Open</ButtonPrimary>
                 {showModal && (
-                    <ActionsBottomSheet
+                    <ActionsSheet
                         title="Title"
                         subtitle="Subtitle"
                         description="Description"
@@ -256,16 +251,16 @@ test('ActionsBottomSheet', async () => {
     expect(onPressButtonSpy).toHaveBeenCalledWith('SECONDARY');
 });
 
-test('showBottomSheet INFO', async () => {
+test('showSheet INFO', async () => {
     const resultSpy = jest.fn();
     render(
         <ThemeContextProvider theme={makeTheme()}>
-            <BottomSheetRoot />
+            <SheetRoot />
         </ThemeContextProvider>
     );
 
     act(() => {
-        showBottomSheet({
+        showSheet({
             type: 'INFO',
             props: {
                 title: 'Title',
@@ -284,16 +279,16 @@ test('showBottomSheet INFO', async () => {
     expect(resultSpy).toHaveBeenCalledWith(undefined);
 });
 
-test('showBottomSheet ACTIONS_LIST', async () => {
+test('showSheet ACTIONS_LIST', async () => {
     const resultSpy = jest.fn();
     render(
         <ThemeContextProvider theme={makeTheme()}>
-            <BottomSheetRoot />
+            <SheetRoot />
         </ThemeContextProvider>
     );
 
     act(() => {
-        showBottomSheet({
+        showSheet({
             type: 'ACTIONS_LIST',
             props: {
                 title: 'Title',
@@ -316,16 +311,16 @@ test('showBottomSheet ACTIONS_LIST', async () => {
     expect(resultSpy).toHaveBeenCalledWith({action: 'SUBMIT', selectedId: '2'});
 });
 
-test('showBottomSheet ACTIONS_LIST dismiss', async () => {
+test('showSheet ACTIONS_LIST dismiss', async () => {
     const resultSpy = jest.fn();
     render(
         <ThemeContextProvider theme={makeTheme()}>
-            <BottomSheetRoot />
+            <SheetRoot />
         </ThemeContextProvider>
     );
 
     act(() => {
-        showBottomSheet({
+        showSheet({
             type: 'ACTIONS_LIST',
             props: {
                 title: 'Title',
@@ -347,16 +342,16 @@ test('showBottomSheet ACTIONS_LIST dismiss', async () => {
     expect(resultSpy).toHaveBeenCalledWith({action: 'DISMISS'});
 });
 
-test('showBottomSheet RADIO_LIST', async () => {
+test('showSheet RADIO_LIST', async () => {
     const resultSpy = jest.fn();
     render(
         <ThemeContextProvider theme={makeTheme()}>
-            <BottomSheetRoot />
+            <SheetRoot />
         </ThemeContextProvider>
     );
 
     act(() => {
-        showBottomSheet({
+        showSheet({
             type: 'RADIO_LIST',
             props: {
                 title: 'Title',
@@ -381,16 +376,16 @@ test('showBottomSheet RADIO_LIST', async () => {
     expect(resultSpy).toHaveBeenCalledWith({action: 'SUBMIT', selectedId: '2'});
 });
 
-test('showBottomSheet RADIO_LIST dismiss', async () => {
+test('showSheet RADIO_LIST dismiss', async () => {
     const resultSpy = jest.fn();
     render(
         <ThemeContextProvider theme={makeTheme()}>
-            <BottomSheetRoot />
+            <SheetRoot />
         </ThemeContextProvider>
     );
 
     act(() => {
-        showBottomSheet({
+        showSheet({
             type: 'RADIO_LIST',
             props: {
                 title: 'Title',
@@ -412,16 +407,16 @@ test('showBottomSheet RADIO_LIST dismiss', async () => {
     expect(resultSpy).toHaveBeenCalledWith({action: 'DISMISS'});
 });
 
-test('showBottomSheet ACTIONS', async () => {
+test('showSheet ACTIONS', async () => {
     const resultSpy = jest.fn();
     render(
         <ThemeContextProvider theme={makeTheme()}>
-            <BottomSheetRoot />
+            <SheetRoot />
         </ThemeContextProvider>
     );
 
     act(() => {
-        showBottomSheet({
+        showSheet({
             type: 'ACTIONS',
             props: {
                 title: 'Title',
@@ -451,16 +446,16 @@ test('showBottomSheet ACTIONS', async () => {
     expect(resultSpy).toHaveBeenCalledWith({action: 'LINK'});
 });
 
-test('showBottomSheet ACTIONS dismiss', async () => {
+test('showSheet ACTIONS dismiss', async () => {
     const resultSpy = jest.fn();
     render(
         <ThemeContextProvider theme={makeTheme()}>
-            <BottomSheetRoot />
+            <SheetRoot />
         </ThemeContextProvider>
     );
 
     act(() => {
-        showBottomSheet({
+        showSheet({
             type: 'ACTIONS',
             props: {
                 title: 'Title',
@@ -483,27 +478,27 @@ test('showBottomSheet ACTIONS dismiss', async () => {
     expect(resultSpy).toHaveBeenCalledWith({action: 'DISMISS'});
 });
 
-test('showBottomSheet fails if BottomSheetRoot is not rendered', async () => {
+test('showSheet fails if SheetRoot is not rendered', async () => {
     await expect(
-        showBottomSheet({
+        showSheet({
             type: 'INFO',
             props: {
                 title: 'Title',
                 items: [{id: '1', title: 'Item 1', icon: {type: 'bullet'}}],
             },
         })
-    ).rejects.toThrow('Tried to show a BottomSheet but the BottomSheetRoot component was not mounted');
+    ).rejects.toThrow('Tried to show a Sheet but the SheetRoot component was not mounted');
 });
 
-test('showBottomSheet fails if there is already a sheet open', async () => {
+test('showSheet fails if there is already a sheet open', async () => {
     render(
         <ThemeContextProvider theme={makeTheme()}>
-            <BottomSheetRoot />
+            <SheetRoot />
         </ThemeContextProvider>
     );
 
     act(() => {
-        showBottomSheet({
+        showSheet({
             type: 'INFO',
             props: {
                 title: 'Title',
@@ -513,17 +508,17 @@ test('showBottomSheet fails if there is already a sheet open', async () => {
     });
 
     await expect(
-        showBottomSheet({
+        showSheet({
             type: 'INFO',
             props: {
                 title: 'Title',
                 items: [{id: '1', title: 'Item 1', icon: {type: 'bullet'}}],
             },
         })
-    ).rejects.toThrow('Tried to show a BottomSheet but there is already one open');
+    ).rejects.toThrow('Tried to show a Sheet but there is already one open');
 });
 
-test('showBottomSheet with native implementation INFO', async () => {
+test('showSheet with native implementation INFO', async () => {
     const resultSpy = jest.fn();
 
     const nativeImplementation = {
@@ -534,12 +529,12 @@ test('showBottomSheet with native implementation INFO', async () => {
     };
     render(
         <ThemeContextProvider theme={makeTheme()}>
-            <BottomSheetRoot nativeImplementation={nativeImplementation} />
+            <SheetRoot nativeImplementation={nativeImplementation} />
         </ThemeContextProvider>
     );
 
     await act(() =>
-        showBottomSheet({
+        showSheet({
             type: 'INFO',
             props: {
                 title: 'Title',
@@ -556,7 +551,7 @@ test('showBottomSheet with native implementation INFO', async () => {
     expect(resultSpy).toHaveBeenCalled();
 });
 
-test('showBottomSheet with native implementation ACTIONS_LIST', async () => {
+test('showSheet with native implementation ACTIONS_LIST', async () => {
     const resultSpy = jest.fn();
     const nativeImplementation = {
         INFO: jest.fn(),
@@ -567,12 +562,12 @@ test('showBottomSheet with native implementation ACTIONS_LIST', async () => {
 
     render(
         <ThemeContextProvider theme={makeTheme()}>
-            <BottomSheetRoot nativeImplementation={nativeImplementation} />
+            <SheetRoot nativeImplementation={nativeImplementation} />
         </ThemeContextProvider>
     );
 
     await act(() =>
-        showBottomSheet({
+        showSheet({
             type: 'ACTIONS_LIST',
             props: {
                 title: 'Title',
@@ -595,7 +590,7 @@ test('showBottomSheet with native implementation ACTIONS_LIST', async () => {
     expect(resultSpy).toHaveBeenCalledWith({action: 'SUBMIT', selectedId: '2'});
 });
 
-test('showBottomSheet with native implementation RADIO_LIST', async () => {
+test('showSheet with native implementation RADIO_LIST', async () => {
     const resultSpy = jest.fn();
     const nativeImplementation = {
         INFO: jest.fn(),
@@ -606,12 +601,12 @@ test('showBottomSheet with native implementation RADIO_LIST', async () => {
 
     render(
         <ThemeContextProvider theme={makeTheme()}>
-            <BottomSheetRoot nativeImplementation={nativeImplementation} />
+            <SheetRoot nativeImplementation={nativeImplementation} />
         </ThemeContextProvider>
     );
 
     await act(() =>
-        showBottomSheet({
+        showSheet({
             type: 'RADIO_LIST',
             props: {
                 title: 'Title',
@@ -634,7 +629,7 @@ test('showBottomSheet with native implementation RADIO_LIST', async () => {
     expect(resultSpy).toHaveBeenCalledWith({action: 'SUBMIT', selectedId: '2'});
 });
 
-test('showBottomSheet with native implementation ACTIONS', async () => {
+test('showSheet with native implementation ACTIONS', async () => {
     const resultSpy = jest.fn();
     const nativeImplementation = {
         INFO: jest.fn(),
@@ -645,12 +640,12 @@ test('showBottomSheet with native implementation ACTIONS', async () => {
 
     render(
         <ThemeContextProvider theme={makeTheme()}>
-            <BottomSheetRoot nativeImplementation={nativeImplementation} />
+            <SheetRoot nativeImplementation={nativeImplementation} />
         </ThemeContextProvider>
     );
 
     await act(() =>
-        showBottomSheet({
+        showSheet({
             type: 'ACTIONS',
             props: {
                 title: 'Title',

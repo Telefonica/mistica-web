@@ -106,19 +106,19 @@ export type {VideoElement} from './video';
 export {Carousel, CenteredCarousel, Slideshow, PageBullets} from './carousel';
 export {Grid, GridItem} from './grid';
 export {
-    default as BottomSheet,
-    ActionsBottomSheet,
-    InfoBottomSheet,
-    ActionsListBottomSheet,
-    RadioListBottomSheet,
+    default as Sheet,
+    ActionsSheet,
+    InfoSheet,
+    ActionsListSheet,
+    RadioListSheet,
     SheetBody,
-} from './bottom-sheet';
+} from './sheet';
 export {
-    default as BottomSheetRoot,
+    default as SheetRoot,
     createNativeSheetImplementationFromWebviewBridge,
-    showBottomSheet,
-} from './bottom-sheet-root';
-export type {NativeSheetImplementation} from './bottom-sheet-root';
+    showSheet,
+} from './sheet-root';
+export type {NativeSheetImplementation} from './sheet-root';
 export {default as StackingGroup} from './stacking-group';
 
 // Forms
