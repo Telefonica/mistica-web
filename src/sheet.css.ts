@@ -170,6 +170,32 @@ export const modalCloseButton = style([
     },
 ]);
 
+export const modalCloseButtonIcon = style([
+    sprinkles({
+        width: 32,
+        height: 32,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: '50%',
+    }),
+    {
+        transition: 'background-color 0.2s ease-in-out',
+        '@media': {
+            [mq.supportsHover]: {
+                selectors: {
+                    ':not(:disabled) > &:hover': {
+                        background: skinVars.colors.backgroundContainerHover,
+                    },
+                    ':not(:disabled) > &:active': {
+                        background: skinVars.colors.backgroundContainerPressed,
+                    },
+                },
+            },
+        },
+    },
+]);
+
 const overlayClosedStyle = {opacity: 0};
 const overlayAnimation = keyframes({
     '0%': overlayClosedStyle,
