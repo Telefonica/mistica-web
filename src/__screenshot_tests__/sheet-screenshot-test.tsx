@@ -4,7 +4,7 @@ const TESTABLE_DEVICES = ['MOBILE_IOS', 'DESKTOP'] as const;
 
 test.each(TESTABLE_DEVICES)('Sheet in %s', async (device) => {
     const page = await openStoryPage({
-        id: 'components-modals-Sheet--default',
+        id: 'components-modals-sheet--default',
         device,
     });
 
@@ -20,7 +20,7 @@ test.each(TESTABLE_DEVICES)('Sheet in %s', async (device) => {
 
 test.each(TESTABLE_DEVICES)('ActionsListSheet in %s', async (device) => {
     const page = await openStoryPage({
-        id: 'components-modals-Sheet--actions-list',
+        id: 'components-modals-sheet--actions-list',
         device,
     });
 
@@ -36,7 +36,7 @@ test.each(TESTABLE_DEVICES)('ActionsListSheet in %s', async (device) => {
 
 test.each(TESTABLE_DEVICES)('RadioListSheet in %s', async (device) => {
     const page = await openStoryPage({
-        id: 'components-modals-Sheet--radio-list',
+        id: 'components-modals-sheet--radio-list',
         device,
     });
 
@@ -52,7 +52,7 @@ test.each(TESTABLE_DEVICES)('RadioListSheet in %s', async (device) => {
 
 test.each(TESTABLE_DEVICES)('InfoSheet in %s', async (device) => {
     const page = await openStoryPage({
-        id: 'components-modals-Sheet--info',
+        id: 'components-modals-sheet--info',
         device,
     });
 
@@ -68,7 +68,7 @@ test.each(TESTABLE_DEVICES)('InfoSheet in %s', async (device) => {
 
 test.each(TESTABLE_DEVICES)('ActionsSheet in %s', async (device) => {
     const page = await openStoryPage({
-        id: 'components-modals-Sheet--actions',
+        id: 'components-modals-sheet--actions',
         device,
     });
 

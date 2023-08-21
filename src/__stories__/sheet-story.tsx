@@ -35,7 +35,7 @@ export const Default: StoryComponent = () => {
     const [open, setOpen] = React.useState(false);
 
     return (
-        <Box paddingY={24}>
+        <Box paddingY={24} paddingX={16}>
             <ButtonPrimary
                 disabled={open}
                 onPress={() => {
@@ -79,7 +79,7 @@ export const RadioList: StoryComponent<RadioListSheetArgs> = ({title, subtitle, 
     const [selected, setSelected] = React.useState<string | null>(null);
 
     return (
-        <Box paddingY={24}>
+        <Box paddingY={24} paddingX={16}>
             <Stack space={16}>
                 <ButtonPrimary
                     disabled={open}
@@ -158,7 +158,7 @@ export const ActionsList: StoryComponent<SheetArgs> = ({title, subtitle, descrip
     const [selected, setSelected] = React.useState<string | null>(null);
 
     return (
-        <Box paddingY={24}>
+        <Box paddingY={24} paddingX={16}>
             <Stack space={16}>
                 <ButtonPrimary
                     disabled={open}
@@ -230,7 +230,7 @@ export const Info: StoryComponent<InfoSheetArgs> = ({title, subtitle, descriptio
     const [open, setOpen] = React.useState(false);
 
     return (
-        <Box paddingY={24}>
+        <Box paddingY={24} paddingX={16}>
             <ButtonPrimary
                 disabled={open}
                 onPress={() => {
@@ -304,7 +304,7 @@ export const Actions: StoryComponent<ActionsSheetArgs> = ({
     const [pressedButton, setPressedButton] = React.useState<string | null>(null);
 
     return (
-        <Box paddingY={24}>
+        <Box paddingY={24} paddingX={16}>
             <Stack space={16}>
                 <ButtonPrimary
                     disabled={open}
@@ -381,7 +381,7 @@ type RootArgs = {
 export const Root: StoryComponent<RootArgs> = ({title, subtitle, description}) => {
     const [response, setResponse] = React.useState<unknown>();
     return (
-        <Box paddingY={24}>
+        <Box paddingY={24} paddingX={16}>
             <SheetRoot />
             <Stack space={16}>
                 <Inline space={16}>
