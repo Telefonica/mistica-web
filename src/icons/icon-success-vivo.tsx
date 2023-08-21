@@ -8,14 +8,13 @@ type Props = {
     size?: number | string;
 };
 
-const IconSuccessVivo: React.FC<Props> = ({size = 48}) => {
+const IconSuccessVivo = ({size = 48}: Props): JSX.Element => {
     const isInverse = useIsInverseVariant();
     const {platformOverrides} = useTheme();
 
     return (
-        <svg width={size} height={size} viewBox="0 0 64 64" style={{marginLeft: -10}}>
+        <svg width={size} height={size} viewBox="0 0 64 64" overflow="visible">
             <g
-                transform="translate(17, 10)"
                 fill={isInverse ? vars.colors.inverse : vars.colors.brand}
                 stroke={isInverse ? vars.colors.inverse : vars.colors.brand}
             >

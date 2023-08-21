@@ -7,7 +7,7 @@ type Props = {
     size?: number | string;
 };
 
-const IconInfoO2: React.FC<Props> = ({size = 48}) => {
+const IconInfoO2 = ({size = 48}: Props): JSX.Element => {
     return (
         <svg width={size} height={size} viewBox="0 0 64 64">
             <g
@@ -29,7 +29,7 @@ const IconInfoO2: React.FC<Props> = ({size = 48}) => {
     );
 };
 
-const IconInfoDefault: React.FC<Props> = ({size = 48}) => {
+const IconInfoDefault = ({size = 48}: Props): JSX.Element => {
     return (
         <svg width={size} height={size} viewBox="0 0 64 64">
             <g fill={vars.colors.brand}>
@@ -43,7 +43,7 @@ const IconInfoDefault: React.FC<Props> = ({size = 48}) => {
     );
 };
 
-const IconInfo: React.FC<Props> = (props) => {
+const IconInfo = (props: Props): JSX.Element => {
     const {skinName} = useTheme();
     return skinName === O2_CLASSIC_SKIN || skinName === O2_SKIN ? (
         <IconInfoO2 {...props} />

@@ -86,13 +86,7 @@ const useAppearStatus = (): boolean => {
 };
 
 const renderFeedbackBody = (
-    {
-        icon,
-        title,
-        description,
-        children,
-        extra,
-    }: Pick<FeedbackScreenProps, 'icon' | 'title' | 'description' | 'children' | 'extra'>,
+    {icon, title, description, extra}: Pick<FeedbackScreenProps, 'icon' | 'title' | 'description' | 'extra'>,
     animateText: boolean,
     appear: boolean
 ) => {
@@ -123,7 +117,7 @@ const renderFeedbackBody = (
                         {normalizedDescription}
                     </Text3>
                 )}
-                {extra ?? children}
+                {extra}
             </Stack>
         </Stack>
     );
@@ -234,7 +228,7 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
     }, []);
 
     const feedbackBody = renderFeedbackBody(
-        {icon, title, description, children, extra},
+        {icon, title, description, extra: extra ?? children},
         animateText && areAnimationsSupported(platformOverrides),
         appear
     );
@@ -321,13 +315,12 @@ export const SuccessFeedbackScreen: React.FC<AssetFeedbackProps> = ({dataAttribu
     );
 };
 
-interface ErrorFeedbackScreenProps extends FeedbackProps {
+interface ErrorFeedbackScreenProps extends Omit<FeedbackProps, 'extra'> {
     errorReference?: string;
 }
 
 export const ErrorFeedbackScreen: React.FC<ErrorFeedbackScreenProps> = ({
     children,
-    extra,
     errorReference,
     dataAttributes,
     ...otherProps
@@ -341,7 +334,7 @@ export const ErrorFeedbackScreen: React.FC<ErrorFeedbackScreenProps> = ({
             dataAttributes={{'component-name': 'ErrorFeedbackScreen', ...dataAttributes}}
             extra={
                 <Stack space={16}>
-                    {extra ?? children}
+                    {children}
                     {errorReference && (
                         <Text2 color={vars.colors.textSecondary} regular>
                             {errorReference}
@@ -391,7 +384,7 @@ export const SuccessFeedback: React.FC<AssetFeedbackProps> = ({
 
     const icon = skinName === VIVO_SKIN ? <IconSuccessVivo size="100%" /> : <IconSuccess size="100%" />;
     const feedbackBody = renderFeedbackBody(
-        {icon, title, description, children, extra},
+        {icon, title, description, extra: extra ?? children},
         areAnimationsSupported(platformOverrides),
         appear
     );

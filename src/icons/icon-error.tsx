@@ -9,7 +9,7 @@ type Props = {
     size?: number | string;
 };
 
-const IconErrorO2: React.FC<Props> = ({size = 48}) => {
+const IconErrorO2 = ({size = 48}: Props): JSX.Element => {
     const {platformOverrides} = useTheme();
 
     return (
@@ -57,7 +57,7 @@ const IconErrorO2: React.FC<Props> = ({size = 48}) => {
     );
 };
 
-const IconErrorDefault: React.FC<Props> = ({size = 48}) => {
+const IconErrorDefault = ({size = 48}: Props): JSX.Element => {
     const {platformOverrides} = useTheme();
 
     return (
@@ -103,7 +103,7 @@ const IconErrorDefault: React.FC<Props> = ({size = 48}) => {
     );
 };
 
-const IconError: React.FC<Props> = (props) => {
+const IconError = (props: Props): JSX.Element => {
     const {skinName} = useTheme();
 
     return skinName === O2_SKIN || skinName === O2_CLASSIC_SKIN ? (
