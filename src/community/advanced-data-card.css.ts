@@ -42,6 +42,7 @@ export const touchableContainer = style([
     {
         // not defined in sprinkles to avoid touchable style override
         display: 'flex',
+        flexGrow: 1,
     },
     sprinkles({
         height: '100%',
