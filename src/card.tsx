@@ -835,6 +835,8 @@ type SnapCardProps = MaybeTouchableCard<{
     children?: void;
 }>;
 
+const SNAP_CARD_MIN_WIDTH = 104;
+
 export const SnapCard = React.forwardRef<HTMLDivElement, SnapCardProps>(
     (
         {
@@ -860,6 +862,7 @@ export const SnapCard = React.forwardRef<HTMLDivElement, SnapCardProps>(
                 dataAttributes={{'component-name': 'SnapCard', ...dataAttributes}}
                 ref={ref}
                 className={styles.touchableContainer}
+                minWidth={SNAP_CARD_MIN_WIDTH}
                 aspectRatio={aspectRatio}
             >
                 <Boxed className={styles.boxed} isInverse={isInverse} width="100%" minHeight="100%">
