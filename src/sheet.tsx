@@ -434,7 +434,7 @@ export const RadioListSheet = React.forwardRef<HTMLDivElement, RadioListSheetPro
                                         closeModal();
                                     }}
                                 >
-                                    {button?.text ?? texts.SheetConfirmButton}
+                                    {button?.text ?? texts.sheetConfirmButton}
                                 </ButtonPrimary>
                             ) : undefined
                         }
