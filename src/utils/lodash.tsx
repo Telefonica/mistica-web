@@ -84,7 +84,7 @@ export const isEqual = (a: unknown, b: unknown): boolean => {
     }
 
     if (isPrimitive(a) || isPrimitive(b)) {
-        return a === b;
+        return false;
     }
 
     if (typeof a !== typeof b) {
