@@ -95,8 +95,11 @@ export const isEqual = (a: unknown, b: unknown): boolean => {
         return false;
     }
 
-    if (Array.isArray(a) && Array.isArray(b)) {
-        return a.length === b.length && a.every((value, index) => isEqual(value, b[index]));
+    if (Array.isArray(a) || Array.isArray(b)) {
+        if (Array.isArray(a) && Array.isArray(b)) {
+            return a.length === b.length && a.every((value, index) => isEqual(value, b[index]));
+        }
+        return false;
     }
 
     if (a instanceof Date || b instanceof Date) {
