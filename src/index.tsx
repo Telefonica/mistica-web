@@ -204,6 +204,22 @@ if (process.env.NODE_ENV !== 'production' && isClientSide()) {
     }
 }
 
+/*
+ * Temporary solution to export Community components until Mistica gets migrated to ESModules
+ * the community.js export has issues because it exports an ES module and next12 interterprets it as a CommonJS module
+ * importing from /dist/ is not an option because those modules don't get the context from the theme provider
+ */
+export {default as CommunityExampleComponent} from './community/example-component';
+export {default as CommunityAdvancedDataCard} from './community/advanced-data-card';
+export {
+    RowBlock as CommunityRowBlock,
+    SimpleBlock as CommunitySimpleBlock,
+    InformationBlock as CommunityInformationBlock,
+    HighlightedValueBlock as CommunityHighlightedValueBlock,
+    ValueBlock as CommunityValueBlock,
+    ProgressBlock as CommunityProgressBlock,
+} from './community/blocks';
+
 // Exported this way to facilitate tree-shaking
 export {default as Icon2GFilled} from './generated/mistica-icons/icon-2-g-filled';
 export {default as Icon2GRegular} from './generated/mistica-icons/icon-2-g-regular';

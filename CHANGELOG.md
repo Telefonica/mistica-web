@@ -1,3 +1,10 @@
+## [14.20.1](https://github.com/Telefonica/mistica-web/compare/v14.20.0...v14.20.1) (2023-08-18)
+
+
+### Bug Fixes
+
+* **Community:** export community components with namespace ([#855](https://github.com/Telefonica/mistica-web/issues/855)) ([8326117](https://github.com/Telefonica/mistica-web/commit/832611759d0ed6c763884597de8f5f20380e4abf))
+
 # [14.20.0](https://github.com/Telefonica/mistica-web/compare/v14.19.0...v14.20.0) (2023-08-11)
 
 
