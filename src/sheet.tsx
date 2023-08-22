@@ -336,8 +336,8 @@ export const SheetBody = ({
     return (
         <>
             {!isDesktopOrBigger && <div ref={topScrollSignalRef} />}
-            {title && (
-                <div className={styles.stickyTitle}>
+            <div className={styles.stickyTitle}>
+                {title ? (
                     <Box paddingBottom={8} paddingTop={{mobile: 0, desktop: 40}}>
                         <ResponsiveLayout>
                             <Text5 as="h2" id={modalTitleId} truncate>
@@ -345,9 +345,11 @@ export const SheetBody = ({
                             </Text5>
                         </ResponsiveLayout>
                     </Box>
-                    {showTitleDivider && <Divider />}
-                </div>
-            )}
+                ) : (
+                    <Box paddingTop={{mobile: 0, desktop: 40}} />
+                )}
+                {showTitleDivider && <Divider />}
+            </div>
             <div className={styles.bodyContent}>
                 {/* this div is only scrollable in desktop, in mobile the whole sheet is scrollable */}
                 {isDesktopOrBigger && <div ref={topScrollSignalRef} />}
