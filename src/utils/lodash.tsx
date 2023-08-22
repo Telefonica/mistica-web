@@ -91,7 +91,8 @@ export const isEqual = (a: unknown, b: unknown): boolean => {
         return false;
     }
 
-    if (typeof a === 'function' || typeof b === 'function') {
+    if (typeof a === 'function') {
+        // no need to check typeof b === 'function' because of the previous check
         return false;
     }
 
