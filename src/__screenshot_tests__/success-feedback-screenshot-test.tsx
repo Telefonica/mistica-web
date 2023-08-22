@@ -1,5 +1,5 @@
 import {openStoryPage} from '../test-utils';
-import {MOVISTAR_SKIN, VIVO_SKIN, O2_SKIN} from '../skins/constants';
+import {MOVISTAR_SKIN, VIVO_SKIN, O2_SKIN, VIVO_NEW_SKIN} from '../skins/constants';
 
 import type {Device} from '../test-utils';
 
@@ -30,6 +30,20 @@ test.each(testableDevices)(
         const page = await openStoryPage({
             id: 'patterns-feedback-successfeedback--success-as-header',
             skin: MOVISTAR_SKIN,
+            device,
+        });
+
+        const image = await page.screenshot();
+        expect(image).toMatchImageSnapshot();
+    }
+);
+
+test.each(testableDevices)(
+    'Success Feedback component appears properly with Vivo New skin on %s',
+    async (device) => {
+        const page = await openStoryPage({
+            id: `patterns-feedback-successfeedback--success`,
+            skin: VIVO_NEW_SKIN,
             device,
         });
 

@@ -1,5 +1,5 @@
 import {openStoryPage, setRootFontSize} from '../test-utils';
-import {MOVISTAR_SKIN, VIVO_SKIN, O2_SKIN} from '../skins/constants';
+import {MOVISTAR_SKIN, VIVO_SKIN, O2_SKIN, VIVO_NEW_SKIN} from '../skins/constants';
 
 import type {Device} from '../test-utils';
 
@@ -49,6 +49,20 @@ test.each(getCases())(
     }
 );
 
+test.each(getExtraContentCases())(
+    'Feedback %s screen with extra content appears properly on %s',
+    async (feedbackType, device) => {
+        const page = await openStoryPage({
+            id: `patterns-feedback-${feedbackType}`,
+            device,
+            args: {extra: true},
+        });
+
+        const image = await page.screenshot();
+        expect(image).toMatchImageSnapshot();
+    }
+);
+
 test('Feedback screen with large fontSize', async () => {
     const page = await openStoryPage({
         id: 'patterns-feedback-successfeedbackscreen--success',
@@ -74,13 +88,13 @@ test('Info feedback screen with custom icon', async () => {
     expect(image).toMatchImageSnapshot();
 });
 
-test.each(getExtraContentCases())(
-    'Feedback %s screen with extra content appears properly on %s',
-    async (feedbackType, device) => {
+test.each(testableDevices)(
+    'Success feedback screen appears properly with Vivo New skin on %s',
+    async (device) => {
         const page = await openStoryPage({
-            id: `patterns-feedback-${feedbackType}`,
+            id: 'patterns-feedback-successfeedbackscreen--success',
+            skin: VIVO_NEW_SKIN,
             device,
-            args: {extra: true},
         });
 
         const image = await page.screenshot();
