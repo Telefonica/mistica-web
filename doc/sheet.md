@@ -117,14 +117,12 @@ implementation with the webview bridge.
 
 ```jsx
 import {SheetRoot} from '@telefonica/mistica';
-import * as webviewBridge from '@tef-novum/webview-bridge';
-
-const nativeImplementation = createNativeSheetImplementationFromWebviewBridge(webviewBridge);
+import {bottomSheet, isWebViewBridgeAvailable} from '@tef-novum/webview-bridge';
 
 export const App = () => {
   return (
     <>
-      <SheetRoot nativeImplementation={nativeImplementation} />
+      <SheetRoot nativeImplementation={isWebViewBridgeAvailable() ? bottomSheet : undefined} />
       <RestOfYourApp />
     </>
   );

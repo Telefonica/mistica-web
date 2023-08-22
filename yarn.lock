@@ -4991,10 +4991,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tef-novum/webview-bridge@npm:^3.8.0":
-  version: 3.8.0
-  resolution: "@tef-novum/webview-bridge@npm:3.8.0"
-  checksum: 0438e76a70b1f41c883380009a71eecbf7fcf78bf7f0a5ec243400841d17b4ba95b5827d9cce3ca6d0276f21dc1cc614ec77fe2f2946d36c81cec6735c66569a
+"@tef-novum/webview-bridge@npm:^3.27.0":
+  version: 3.27.0
+  resolution: "@tef-novum/webview-bridge@npm:3.27.0"
+  checksum: acbbb406bca0b7a836274f0630852837c1ab1369c3128f95086b47469124c16e7b498779af4d3a15a5cfe6cd87ca55d31c5106379bfe40ea80ee9e7a131de9ce
   languageName: node
   linkType: hard
 
@@ -5018,9 +5018,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@telefonica/eslint-config@npm:^1.6.0":
-  version: 1.6.0
-  resolution: "@telefonica/eslint-config@npm:1.6.0"
+"@telefonica/eslint-config@npm:^1.7.0":
+  version: 1.7.0
+  resolution: "@telefonica/eslint-config@npm:1.7.0"
   dependencies:
     "@babel/eslint-parser": ^7.22.5
     "@babel/preset-react": ^7.22.5
@@ -5038,7 +5038,7 @@ __metadata:
     eslint-plugin-testing-library: ^5.11.0
   peerDependencies:
     eslint: ">=7"
-  checksum: 4a4d122daf6464af6b80088b0bd885c28a9e0e54170bf86bf388b7ccbe5c8f032ee824e3155c0467f0cab62b09b1dad6acd6c1b7816fd8dbb2e26f35077f0ca0
+  checksum: 94619bec6692c9bf2e7348b9b115c83d62db6f8286992fdfecb145e9beaa7f994e99052c8252b5c94bcdf5dacffb6bc5c77bb03523f5e3ae530e59e38c269e39
   languageName: node
   linkType: hard
 
@@ -5094,9 +5094,9 @@ __metadata:
     "@swc/cli": ^0.1.62
     "@swc/core": ^1.3.61
     "@swc/jest": ^0.2.26
-    "@tef-novum/webview-bridge": ^3.8.0
+    "@tef-novum/webview-bridge": ^3.27.0
     "@telefonica/acceptance-testing": 2.13.0
-    "@telefonica/eslint-config": ^1.6.0
+    "@telefonica/eslint-config": ^1.7.0
     "@telefonica/libphonenumber": ^2.8.1
     "@telefonica/prettier-config": ^1.1.0
     "@testing-library/jest-dom": ^5.16.5

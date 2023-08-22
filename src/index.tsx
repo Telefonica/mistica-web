@@ -113,11 +113,7 @@ export {
     RadioListSheet,
     SheetBody,
 } from './sheet';
-export {
-    default as SheetRoot,
-    createNativeSheetImplementationFromWebviewBridge,
-    showSheet,
-} from './sheet-root';
+export {default as SheetRoot, showSheet} from './sheet-root';
 export type {NativeSheetImplementation} from './sheet-root';
 export {default as StackingGroup} from './stacking-group';
 

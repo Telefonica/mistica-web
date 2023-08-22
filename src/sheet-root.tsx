@@ -84,9 +84,7 @@ type SheetTypeWithPropsUnion = {
     [T in SheetType]: SheetTypeWithProps<T>;
 }[SheetType];
 
-export type NativeSheetImplementation = {
-    [T in SheetType]: (props: SheetPropsByType[T]) => Promise<SheetResultByType[T]>;
-};
+export type NativeSheetImplementation = typeof import('@tef-novum/webview-bridge')['bottomSheet'];
 
 type SheetPropsListener = (sheetProps: SheetTypeWithPropsUnion) => void;
 type SheetPromiseResolve = <T>(
@@ -95,14 +93,151 @@ type SheetPromiseResolve = <T>(
 
 let listener: SheetPropsListener | null = null;
 let sheetPromiseResolve: SheetPromiseResolve | null = null;
-let nativeImplementation: NativeSheetImplementation | null = null;
+let nativeSheetImplementation: NativeSheetImplementation | null = null;
+
+const showRadioListNativeSheet = ({
+    title,
+    subtitle,
+    description,
+    selectedId,
+    items,
+}: SheetPropsByType['RADIO_LIST']) =>
+    (nativeSheetImplementation as NativeSheetImplementation)({
+        title,
+        subtitle,
+        description,
+        content: [
+            {
+                type: 'LIST',
+                id: 'list-0',
+                listType: 'SINGLE_SELECTION',
+                autoSubmit: true,
+                selectedIds: typeof selectedId === 'string' ? [selectedId] : [],
+                items,
+            },
+        ],
+    }).then(({action, result}) => {
+        if (action === 'SUBMIT') {
+            return {
+                action,
+                selectedId: result[0].selectedIds[0],
+            };
+        } else {
+            return {
+                action,
+                selectedId: null,
+            };
+        }
+    });
+
+const showActionsListNativeSheet = ({
+    title,
+    subtitle,
+    description,
+    items,
+}: SheetPropsByType['ACTIONS_LIST']) =>
+    (nativeSheetImplementation as NativeSheetImplementation)({
+        title,
+        subtitle,
+        description,
+        content: [
+            {
+                type: 'LIST',
+                id: 'list-0',
+                listType: 'ACTIONS',
+                autoSubmit: true,
+                selectedIds: [],
+                items,
+            },
+        ],
+    }).then(({action, result}) => {
+        if (action === 'SUBMIT') {
+            return {
+                action,
+                selectedId: result[0].selectedIds[0],
+            };
+        } else {
+            return {
+                action,
+                selectedId: null,
+            };
+        }
+    });
+
+const showInfoNativeSheet = async ({title, subtitle, description, items}: SheetPropsByType['INFO']) => {
+    await (nativeSheetImplementation as NativeSheetImplementation)({
+        title,
+        subtitle,
+        description,
+        content: [
+            {
+                type: 'LIST',
+                id: 'list-0',
+                listType: 'INFORMATIVE',
+                autoSubmit: false,
+                selectedIds: [],
+                items,
+            },
+        ],
+    });
+};
+
+const showActionsNativeSheet = async ({
+    title,
+    subtitle,
+    description,
+    button,
+    secondaryButton,
+    link,
+}: SheetPropsByType['ACTIONS']) => {
+    return (nativeSheetImplementation as NativeSheetImplementation)({
+        title,
+        subtitle,
+        description,
+        content: [
+            {
+                type: 'BOTTOM_ACTIONS',
+                id: 'bottom-actions-0',
+                button,
+                secondaryButton,
+                link,
+            },
+        ],
+    }).then(({action, result}) => {
+        if (action === 'SUBMIT') {
+            const bottomActionsResult = result.find(({id}) => id === 'bottom-actions-0');
+            const pressedAction = bottomActionsResult?.selectedIds[0];
+            if (pressedAction === 'PRIMARY' || pressedAction === 'SECONDARY' || pressedAction === 'LINK') {
+                return {
+                    action: pressedAction,
+                };
+            }
+        }
+        return {
+            action: 'DISMISS',
+        };
+    });
+};
 
 let isSheetOpen = false;
 export const showSheet = <T extends SheetType>(
     sheetProps: SheetTypeWithProps<T>
 ): Promise<SheetResultByType[T]> => {
-    if (nativeImplementation) {
-        return nativeImplementation[sheetProps.type](sheetProps.props);
+    if (nativeSheetImplementation) {
+        const {type, props} = sheetProps as SheetTypeWithPropsUnion;
+        switch (type) {
+            case 'INFO':
+                return showInfoNativeSheet(props) as Promise<SheetResultByType[T]>;
+            case 'ACTIONS_LIST':
+                return showActionsListNativeSheet(props) as Promise<SheetResultByType[T]>;
+            case 'RADIO_LIST':
+                return showRadioListNativeSheet(props) as Promise<SheetResultByType[T]>;
+            case 'ACTIONS':
+                return showActionsNativeSheet(props) as Promise<SheetResultByType[T]>;
+            default:
+                const unknownType: never = type;
+                throw new Error(`Unknown sheet type: ${unknownType}`);
+        }
     }
 
     if (!listener) {
@@ -127,43 +262,6 @@ export const showSheet = <T extends SheetType>(
     return sheetPromise as Promise<SheetResultByType[T]>;
 };
 
-// This is the subset of methods needed in @tef-novum/webview-bridge to implement all the sheet types
-type WebviewBridge = {
-    isWebViewBridgeAvailable: () => boolean;
-    bottomSheetInfo: (props: SheetPropsByType['INFO']) => Promise<void>;
-    bottomSheetActionSelector: (
-        props: SheetPropsByType['ACTIONS_LIST']
-    ) => Promise<SheetResultByType['ACTIONS_LIST']>;
-    bottomSheetSingleSelector: (
-        props: SheetPropsByType['RADIO_LIST']
-    ) => Promise<SheetResultByType['RADIO_LIST']>;
-    bottomSheetActions: (props: SheetPropsByType['ACTIONS']) => Promise<SheetResultByType['ACTIONS']>;
-};
-
-/**
- * Example usage:
- * ```
- * import * as webviewBridge from '@tef-novum/webview-bridge';
- *
- * const nativeImplementation = createNativeSheetImplementationFromWebviewBridge(webviewBridge);
- *
- * <SheetRoot nativeImplementation={nativeImplementation} />
- * ```
- */
-export const createNativeSheetImplementationFromWebviewBridge = (
-    webviewBridge: WebviewBridge
-): NativeSheetImplementation | undefined => {
-    if (webviewBridge.isWebViewBridgeAvailable()) {
-        return {
-            INFO: webviewBridge.bottomSheetInfo,
-            ACTIONS_LIST: webviewBridge.bottomSheetActionSelector,
-            RADIO_LIST: webviewBridge.bottomSheetSingleSelector,
-            ACTIONS: webviewBridge.bottomSheetActions,
-        };
-    }
-    return undefined;
-};
-
 type Props = {
     nativeImplementation?: NativeSheetImplementation;
 };
@@ -175,9 +273,9 @@ export const SheetRoot = (props: Props): React.ReactElement | null => {
 
     React.useEffect(() => {
         if (props.nativeImplementation) {
-            nativeImplementation = props.nativeImplementation;
+            nativeSheetImplementation = props.nativeImplementation;
             return () => {
-                nativeImplementation = null;
+                nativeSheetImplementation = null;
             };
         }
     }, [props.nativeImplementation]);

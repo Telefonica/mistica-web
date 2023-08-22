@@ -521,12 +521,7 @@ test('showSheet fails if there is already a sheet open', async () => {
 test('showSheet with native implementation INFO', async () => {
     const resultSpy = jest.fn();
 
-    const nativeImplementation = {
-        INFO: jest.fn(() => Promise.resolve()),
-        ACTIONS_LIST: jest.fn(),
-        RADIO_LIST: jest.fn(),
-        ACTIONS: jest.fn(),
-    };
+    const nativeImplementation = jest.fn();
     render(
         <ThemeContextProvider theme={makeTheme()}>
             <SheetRoot nativeImplementation={nativeImplementation} />
@@ -543,9 +538,18 @@ test('showSheet with native implementation INFO', async () => {
         }).then(resultSpy)
     );
 
-    expect(nativeImplementation.INFO).toHaveBeenCalledWith({
+    expect(nativeImplementation).toHaveBeenCalledWith({
         title: 'Title',
-        items: [{id: '1', title: 'Item 1', icon: {type: 'bullet'}}],
+        content: [
+            {
+                type: 'LIST',
+                id: 'list-0',
+                listType: 'INFORMATIVE',
+                autoSubmit: false,
+                selectedIds: [],
+                items: [{id: '1', title: 'Item 1', icon: {type: 'bullet'}}],
+            },
+        ],
     });
 
     expect(resultSpy).toHaveBeenCalled();
@@ -553,12 +557,12 @@ test('showSheet with native implementation INFO', async () => {
 
 test('showSheet with native implementation ACTIONS_LIST', async () => {
     const resultSpy = jest.fn();
-    const nativeImplementation = {
-        INFO: jest.fn(),
-        ACTIONS_LIST: jest.fn(() => Promise.resolve({action: 'SUBMIT', selectedId: '2'} as const)),
-        RADIO_LIST: jest.fn(),
-        ACTIONS: jest.fn(),
-    };
+    const nativeImplementation = jest.fn(() =>
+        Promise.resolve({
+            action: 'SUBMIT' as const,
+            result: [{id: 'list-0', selectedIds: ['2']}],
+        })
+    );
 
     render(
         <ThemeContextProvider theme={makeTheme()}>
@@ -579,11 +583,20 @@ test('showSheet with native implementation ACTIONS_LIST', async () => {
         }).then(resultSpy)
     );
 
-    expect(nativeImplementation.ACTIONS_LIST).toHaveBeenCalledWith({
+    expect(nativeImplementation).toHaveBeenCalledWith({
         title: 'Title',
-        items: [
-            {id: '1', title: 'Item 1'},
-            {id: '2', title: 'Item 2'},
+        content: [
+            {
+                type: 'LIST',
+                id: 'list-0',
+                listType: 'ACTIONS',
+                autoSubmit: true,
+                selectedIds: [],
+                items: [
+                    {id: '1', title: 'Item 1'},
+                    {id: '2', title: 'Item 2'},
+                ],
+            },
         ],
     });
 
@@ -592,12 +605,12 @@ test('showSheet with native implementation ACTIONS_LIST', async () => {
 
 test('showSheet with native implementation RADIO_LIST', async () => {
     const resultSpy = jest.fn();
-    const nativeImplementation = {
-        INFO: jest.fn(),
-        ACTIONS_LIST: jest.fn(),
-        RADIO_LIST: jest.fn(() => Promise.resolve({action: 'SUBMIT', selectedId: '2'} as const)),
-        ACTIONS: jest.fn(),
-    };
+    const nativeImplementation = jest.fn(() =>
+        Promise.resolve({
+            action: 'SUBMIT' as const,
+            result: [{id: 'list-0', selectedIds: ['2']}],
+        })
+    );
 
     render(
         <ThemeContextProvider theme={makeTheme()}>
@@ -610,6 +623,7 @@ test('showSheet with native implementation RADIO_LIST', async () => {
             type: 'RADIO_LIST',
             props: {
                 title: 'Title',
+                selectedId: '1',
                 items: [
                     {id: '1', title: 'Item 1'},
                     {id: '2', title: 'Item 2'},
@@ -618,11 +632,20 @@ test('showSheet with native implementation RADIO_LIST', async () => {
         }).then(resultSpy)
     );
 
-    expect(nativeImplementation.RADIO_LIST).toHaveBeenCalledWith({
+    expect(nativeImplementation).toHaveBeenCalledWith({
         title: 'Title',
-        items: [
-            {id: '1', title: 'Item 1'},
-            {id: '2', title: 'Item 2'},
+        content: [
+            {
+                type: 'LIST',
+                id: 'list-0',
+                listType: 'SINGLE_SELECTION',
+                autoSubmit: true,
+                selectedIds: ['1'],
+                items: [
+                    {id: '1', title: 'Item 1'},
+                    {id: '2', title: 'Item 2'},
+                ],
+            },
         ],
     });
 
@@ -631,12 +654,12 @@ test('showSheet with native implementation RADIO_LIST', async () => {
 
 test('showSheet with native implementation ACTIONS', async () => {
     const resultSpy = jest.fn();
-    const nativeImplementation = {
-        INFO: jest.fn(),
-        ACTIONS_LIST: jest.fn(),
-        RADIO_LIST: jest.fn(),
-        ACTIONS: jest.fn(() => Promise.resolve({action: 'LINK'} as const)),
-    };
+    const nativeImplementation = jest.fn(() =>
+        Promise.resolve({
+            action: 'SUBMIT' as const,
+            result: [{id: 'bottom-actions-0', selectedIds: ['LINK']}],
+        })
+    );
 
     render(
         <ThemeContextProvider theme={makeTheme()}>
@@ -658,13 +681,19 @@ test('showSheet with native implementation ACTIONS', async () => {
         }).then(resultSpy)
     );
 
-    expect(nativeImplementation.ACTIONS).toHaveBeenCalledWith({
+    expect(nativeImplementation).toHaveBeenCalledWith({
         title: 'Title',
         subtitle: 'Subtitle',
         description: 'Description',
-        button: {text: 'Button'},
-        secondaryButton: {text: 'Secondary button'},
-        link: {text: 'Button link', withChevron: true},
+        content: [
+            {
+                type: 'BOTTOM_ACTIONS',
+                id: 'bottom-actions-0',
+                button: {text: 'Button'},
+                secondaryButton: {text: 'Secondary button'},
+                link: {text: 'Button link', withChevron: true},
+            },
+        ],
     });
 
     expect(resultSpy).toHaveBeenCalledWith({action: 'LINK'});
