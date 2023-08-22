@@ -92,7 +92,7 @@ export const isEqual = (a: unknown, b: unknown): boolean => {
     }
 
     if (typeof a === 'function') {
-        return a === b;
+        return false;
     }
 
     if (Array.isArray(a) && Array.isArray(b)) {
