@@ -19,6 +19,9 @@ import {
     Text2,
     Text3,
     Title1,
+    Callout,
+    IconInformationRegular,
+    ButtonLink,
 } from '..';
 import {ActionsSheet, ActionsListSheet, InfoSheet, RadioListSheet} from '../sheet';
 import avatarImg from './images/avatar.jpg';
@@ -36,14 +39,25 @@ export const Default: StoryComponent = () => {
 
     return (
         <Box paddingY={24} paddingX={16}>
-            <ButtonPrimary
-                disabled={open}
-                onPress={() => {
-                    setOpen(true);
-                }}
-            >
-                Open
-            </ButtonPrimary>
+            <Stack space={16}>
+                <ButtonPrimary
+                    disabled={open}
+                    onPress={() => {
+                        setOpen(true);
+                    }}
+                >
+                    Open
+                </ButtonPrimary>
+                <Callout
+                    description="Check Sheet component docs for more info."
+                    icon={<IconInformationRegular />}
+                    buttonLink={
+                        <ButtonLink href="https://github.com/Telefonica/mistica-web/blob/master/doc/sheet.md">
+                            See docs
+                        </ButtonLink>
+                    }
+                />
+            </Stack>
 
             {open && (
                 <Sheet
