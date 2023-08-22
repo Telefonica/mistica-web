@@ -141,7 +141,6 @@ type CardContainerProps = {
     children: React.ReactNode;
     width?: string | number;
     height?: string | number;
-    minWidth?: string | number;
     aspectRatio?: AspectRatio | number;
     dataAttributes?: DataAttributes;
     className?: string;
@@ -154,7 +153,6 @@ const CardContainer = React.forwardRef<HTMLDivElement, CardContainerProps>(
             children,
             width = '100%',
             height = '100%',
-            minWidth,
             aspectRatio,
             dataAttributes,
             className,
@@ -173,7 +171,6 @@ const CardContainer = React.forwardRef<HTMLDivElement, CardContainerProps>(
                 style={{
                     width,
                     height,
-                    minWidth,
                     ...(cssAspectRatio
                         ? assignInlineVars({[styles.vars.aspectRatio]: String(cssAspectRatio)})
                         : {}),
@@ -835,8 +832,6 @@ type SnapCardProps = MaybeTouchableCard<{
     children?: void;
 }>;
 
-const SNAP_CARD_MIN_WIDTH = 104;
-
 export const SnapCard = React.forwardRef<HTMLDivElement, SnapCardProps>(
     (
         {
@@ -862,7 +857,6 @@ export const SnapCard = React.forwardRef<HTMLDivElement, SnapCardProps>(
                 dataAttributes={{'component-name': 'SnapCard', ...dataAttributes}}
                 ref={ref}
                 className={styles.touchableContainer}
-                minWidth={SNAP_CARD_MIN_WIDTH}
                 aspectRatio={aspectRatio}
             >
                 <Boxed className={styles.boxed} isInverse={isInverse} width="100%" minHeight="100%">
@@ -965,7 +959,6 @@ type GenericDisplayCardProps = ExclusifyUnion<
     (DisplayMediaCardProps & {isInverse: true}) | DisplayDataCardProps
 >;
 
-const DISPLAY_CARD_MIN_WIDTH = 264;
 const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
     (
         {
@@ -1025,7 +1018,6 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
                 height={height}
                 aspectRatio={aspectRatio}
                 aria-label={ariaLabel}
-                minWidth={DISPLAY_CARD_MIN_WIDTH}
                 className={styles.touchableContainer}
             >
                 <InternalBoxed
@@ -1221,7 +1213,6 @@ type PosterCardProps = MaybeTouchableCard<
     ExclusifyUnion<PosterCardWithImageProps | PosterCardWithVideoProps | PosterCardWithBackgroundColorProps>
 >;
 
-const POSTER_CARD_MIN_WIDTH = 140;
 export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
     (
         {
@@ -1294,7 +1285,6 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                 height={height}
                 dataAttributes={{...dataAttributes, 'component-name': 'PosterCard'}}
                 ref={ref}
-                minWidth={POSTER_CARD_MIN_WIDTH}
                 aspectRatio={aspectRatio}
                 aria-label={ariaLabel}
                 className={styles.touchableContainer}
