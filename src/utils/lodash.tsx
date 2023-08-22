@@ -57,6 +57,11 @@ export const debounce = <T extends (...args: Array<any>) => any>(
     debounced.cancel = () => {
         if (debounceTimeoutId) {
             clearTimeout(debounceTimeoutId);
+            debounceTimeoutId = undefined;
+        }
+        if (maxWaitTimeoutId) {
+            clearTimeout(maxWaitTimeoutId);
+            maxWaitTimeoutId = undefined;
         }
     };
 
