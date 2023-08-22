@@ -1,10 +1,10 @@
 /**
- * This file implements lodash alternatives
+ * This file implements lodash alternatives used by components
  *
  * Importing the lodash library causes problems when building Mística as an ES module.
  * Importing lodash-es causes problems when running ssr tests (not sure why)
  *
- * Once Mística gets migrated to a proper ES module, we can try to remove this file and use lodash-es
+ * Once Mística gets migrated to a proper ES module, we can consider to remove this file and use lodash-es
  */
 
 type Debounced<T> = T & {cancel: () => void};

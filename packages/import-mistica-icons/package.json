@@ -8,15 +8,14 @@
     "scripts": {
         "start": "yarn && node index.js"
     },
-    "type": "module",
     "dependencies": {
-        "@svgr/core": "^8.1.0",
-        "@svgr/plugin-jsx": "^8.1.0",
-        "@svgr/plugin-svgo": "^8.1.0",
+        "@svgr/core": "^5.4.0",
+        "@svgr/plugin-jsx": "^5.4.0",
+        "@svgr/plugin-svgo": "^5.5.0",
         "colors": "^1.4.0",
-        "glob": "^10.3.3",
-        "lodash-es": "^4.17.21",
-        "mkdirp": "^3.0.1",
-        "rimraf": "^5.0.1"
+        "glob": "^7.2.0",
+        "lodash": "^4.17.20",
+        "mkdirp": "^1.0.4",
+        "rimraf": "^3.0.2"
     }
 }

@@ -1,21 +1,18 @@
-import {existsSync, readdirSync, readFileSync, writeFileSync} from 'fs';
-import {mkdirp} from 'mkdirp';
-import {rimraf} from 'rimraf';
-import {join, basename, dirname} from 'path';
-import {execSync} from 'child_process';
-import svgr from '@svgr/core';
-import prettier from 'prettier';
-import {camelCase, kebabCase, upperFirst, uniq} from 'lodash-es';
-import colors from 'colors/safe.js'; // eslint-disable-line import/extensions
-import {glob} from 'glob';
-import {fileURLToPath} from 'url';
-
-const scriptPath = dirname(fileURLToPath(import.meta.url));
+const fs = require('fs');
+const mkdirp = require('mkdirp');
+const rimraf = require('rimraf');
+const {join, basename} = require('path');
+const {execSync} = require('child_process');
+const svgr = require('@svgr/core').default;
+const prettier = require('prettier');
+const {camelCase, kebabCase, upperFirst, uniq} = require('lodash');
+const {yellow, green} = require('colors/safe');
+const glob = require('glob');
 
 const pascalCase = (s) => upperFirst(camelCase(s));
 
-const PATH_REPO_ROOT = join(scriptPath, '..', '..');
-const PATH_CACHE = join(scriptPath, 'node_modules', '.cache');
+const PATH_REPO_ROOT = join(__dirname, '..', '..');
+const PATH_CACHE = join(__dirname, 'node_modules', '.cache');
 const PATH_MISTICA_ICONS_REPO = join(PATH_CACHE, 'mistica-icons');
 const PATH_OUTPUT = join(PATH_REPO_ROOT, 'src', 'generated/mistica-icons');
 const PATH_OUTPUT_INDEX_FILENAME = join(PATH_OUTPUT, 'index.tsx.txt');
@@ -27,7 +24,7 @@ const SKIN_BLACKLIST = [];
 const checkoutMisticaIconsRepo = () => {
     mkdirp.sync(PATH_CACHE);
 
-    if (!existsSync(PATH_MISTICA_ICONS_REPO)) {
+    if (!fs.existsSync(PATH_MISTICA_ICONS_REPO)) {
         execSync(`git clone ${GIT_MISTICA_ICONS} ${PATH_MISTICA_ICONS_REPO}`, {
             cwd: PATH_CACHE,
             stdio: 'inherit',
@@ -59,7 +56,7 @@ const checkoutMisticaIconsRepo = () => {
  */
 const getSvgIconsInfo = () => {
     const basePath = join(PATH_MISTICA_ICONS_REPO, 'icons');
-    const skins = readdirSync(basePath);
+    const skins = fs.readdirSync(basePath);
 
     /** @type {svgIconsInfo} */
     const result = {};
@@ -103,9 +100,8 @@ const format = async (src) =>
  * @returns {string}
  */
 const getIconJsx = (svgFilename) => {
-    const svgSource = readFileSync(svgFilename, 'utf8');
-
-    const jsx = svgr.transform.sync(svgSource, {
+    const svgSource = fs.readFileSync(svgFilename, 'utf8');
+    const jsx = svgr.sync(svgSource, {
         ref: false,
         titleProp: false,
         typescript: true,
@@ -150,9 +146,9 @@ const createIconComponentSource = async (name, componentName, svgIconsInfo) => {
     }
 
     console.log(
-        colors.yellow(basename(name)),
+        yellow(basename(name)),
         `[${availableIcons.map(([skin]) => skin).join(', ')}] =>`,
-        colors.green(componentName)
+        green(componentName)
     );
 
     const hasVariants = availableIcons.length > 1;
@@ -216,7 +212,7 @@ const main = async () => {
         const source = await createIconComponentSource(name, componentName, svgIconsInfo);
         const filename = `${importName}.tsx`;
         components.push([componentName, importName]);
-        writeFileSync(join(PATH_OUTPUT, filename), source);
+        fs.writeFileSync(join(PATH_OUTPUT, filename), source);
     }
 
     const index = components
@@ -227,11 +223,11 @@ const main = async () => {
         )
         .join('\n');
 
-    writeFileSync(PATH_OUTPUT_INDEX_FILENAME, index, 'utf8');
+    fs.writeFileSync(PATH_OUTPUT_INDEX_FILENAME, index, 'utf8');
 
     console.log();
     console.log(`Done! (${allIconNames.length} components).`);
-    console.log(`Copy exports in `, colors.yellow(PATH_OUTPUT_INDEX_FILENAME), ' to src/index.tsx');
+    console.log(`Copy exports in `, yellow(PATH_OUTPUT_INDEX_FILENAME), ' to src/index.tsx');
     console.log();
 };
 

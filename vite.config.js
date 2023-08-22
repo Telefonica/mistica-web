@@ -15,8 +15,9 @@ export default defineConfig({
     ],
     resolve: {
         alias: {
-            lodash: '',
-            'lodash-es': '',
+            // forbid lodash usage
+            lodash: '/dev/null',
+            'lodash-es': '/dev/null',
         },
     },
     publicDir: false,

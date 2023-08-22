@@ -1,4 +1,4 @@
-import {capitalize} from 'lodash-es';
+import {capitalize} from 'lodash';
 import * as React from 'react';
 import {Inline, Text2, skinVars, Tag, Avatar} from '..';
 import {Placeholder} from '../placeholder';

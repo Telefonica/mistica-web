@@ -1,6 +1,6 @@
 {
     "compilerOptions": {
-        "module": "Node16",
+        "module": "CommonJS",
         "target": "es2020",
         "checkJs": true
     },
