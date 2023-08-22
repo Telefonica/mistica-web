@@ -91,7 +91,7 @@ export const isEqual = (a: unknown, b: unknown): boolean => {
         return false;
     }
 
-    if (typeof a === 'function') {
+    if (typeof a === 'function' || typeof b === 'function') {
         return false;
     }
 
