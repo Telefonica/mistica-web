@@ -63,40 +63,32 @@ const CardContent: React.FC<CardContentProps> = ({
     return (
         <Stack space={4}>
             {headline}
-            <Stack space={4}>
-                {pretitle && (
-                    <Text2
-                        color={vars.colors.textPrimary}
-                        truncate={pretitleLinesMax}
-                        as={pretitleAs}
-                        regular
-                        hyphens="auto"
-                    >
-                        {pretitle}
-                    </Text2>
-                )}
-                <Text
-                    mobileSize={18}
-                    mobileLineHeight="24px"
-                    desktopSize={20}
-                    desktopLineHeight="28px"
-                    truncate={titleLinesMax}
-                    weight={textPresets.cardTitle.weight}
-                    as={titleAs}
-                    hyphens="auto"
-                >
-                    {title}
-                </Text>
+            {pretitle && (
                 <Text2
                     color={vars.colors.textPrimary}
-                    truncate={subtitleLinesMax}
-                    as="p"
+                    truncate={pretitleLinesMax}
+                    as={pretitleAs}
                     regular
                     hyphens="auto"
                 >
-                    {subtitle}
+                    {pretitle}
                 </Text2>
-            </Stack>
+            )}
+            <Text
+                mobileSize={18}
+                mobileLineHeight="24px"
+                desktopSize={20}
+                desktopLineHeight="28px"
+                truncate={titleLinesMax}
+                weight={textPresets.cardTitle.weight}
+                as={titleAs}
+                hyphens="auto"
+            >
+                {title}
+            </Text>
+            <Text2 color={vars.colors.textPrimary} truncate={subtitleLinesMax} as="p" regular hyphens="auto">
+                {subtitle}
+            </Text2>
             {description && (
                 <Text2
                     truncate={descriptionLinesMax}
@@ -289,6 +281,7 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
                         maybe
                         className={classNames(styles.touchableContainer, {[styles.hoverEffect]: !!onPress})}
                         aria-label={ariaLabel}
+                        role="link"
                     >
                         <div
                             className={classNames(
