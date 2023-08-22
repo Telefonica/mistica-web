@@ -316,6 +316,7 @@ export const SheetBody = ({
     const topScrollSignalRef = React.useRef<HTMLDivElement>(null);
     const bottomScrollSignalRef = React.useRef<HTMLDivElement>(null);
     const scrollableParentRef = React.useRef<HTMLElement | null>(null);
+    const {isDesktopOrBigger} = useScreenSize();
 
     React.useEffect(() => {
         if (bottomScrollSignalRef.current) {
@@ -334,7 +335,7 @@ export const SheetBody = ({
     const hasButtons = !!button || !!secondaryButton || !!link;
     return (
         <>
-            <div ref={topScrollSignalRef} />
+            {!isDesktopOrBigger && <div ref={topScrollSignalRef} />}
             {title && (
                 <div className={styles.stickyTitle}>
                     <Box paddingBottom={8} paddingTop={{mobile: 0, desktop: 40}}>
@@ -347,27 +348,32 @@ export const SheetBody = ({
                     {showTitleDivider && <Divider />}
                 </div>
             )}
-            <Box paddingBottom={hasButtons ? 0 : {desktop: 40, mobile: 0}}>
-                <ResponsiveLayout>
-                    <Stack space={8}>
-                        {subtitle || description ? (
-                            <Stack space={{mobile: 8, desktop: 16}}>
-                                {subtitle && (
-                                    <Text3 as="p" regular>
-                                        {subtitle}
-                                    </Text3>
-                                )}
-                                {description && (
-                                    <Text2 as="p" regular color={skinVars.colors.textSecondary}>
-                                        {description}
-                                    </Text2>
-                                )}
-                            </Stack>
-                        ) : null}
-                        {children}
-                    </Stack>
-                </ResponsiveLayout>
-            </Box>
+            <div className={styles.bodyContent}>
+                {/* this div is only scrollable in desktop, in mobile the whole sheet is scrollable */}
+                {isDesktopOrBigger && <div ref={topScrollSignalRef} />}
+                <Box paddingBottom={hasButtons ? 0 : {desktop: 40, mobile: 0}}>
+                    <ResponsiveLayout>
+                        <Stack space={8}>
+                            {subtitle || description ? (
+                                <Stack space={{mobile: 8, desktop: 16}}>
+                                    {subtitle && (
+                                        <Text3 as="p" regular>
+                                            {subtitle}
+                                        </Text3>
+                                    )}
+                                    {description && (
+                                        <Text2 as="p" regular color={skinVars.colors.textSecondary}>
+                                            {description}
+                                        </Text2>
+                                    )}
+                                </Stack>
+                            ) : null}
+                            {children}
+                        </Stack>
+                    </ResponsiveLayout>
+                </Box>
+                {isDesktopOrBigger && <div ref={bottomScrollSignalRef} />}
+            </div>
             {hasButtons && (
                 <div className={styles.stickyButtons}>
                     {showButtonsDivider && <Divider />}
@@ -381,7 +387,7 @@ export const SheetBody = ({
                     </Box>
                 </div>
             )}
-            <div ref={bottomScrollSignalRef} />
+            {!isDesktopOrBigger && <div ref={bottomScrollSignalRef} />}
         </>
     );
 };

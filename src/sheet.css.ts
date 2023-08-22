@@ -122,6 +122,8 @@ export const SheetContent = style([
 export const children = sprinkles({
     overflowY: 'auto',
     flex: 1,
+    display: 'flex',
+    flexDirection: 'column',
 });
 
 export const handleContainer = style([
@@ -229,6 +231,15 @@ export const stickyButtons = sprinkles({
     position: 'sticky',
     bottom: 0,
     background: skinVars.colors.background,
+});
+
+export const bodyContent = style({
+    '@media': {
+        [mq.desktopOrBigger]: {
+            overflowY: 'auto',
+            flex: 1,
+        },
+    },
 });
 
 export const sheetActionRow = style([
