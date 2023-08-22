@@ -130,12 +130,14 @@ export const showSheet = <T extends SheetType>(
 // This is the subset of methods needed in @tef-novum/webview-bridge to implement all the sheet types
 type WebviewBridge = {
     isWebViewBridgeAvailable: () => boolean;
-    SheetInfo: (props: SheetPropsByType['INFO']) => Promise<void>;
-    SheetActionSelector: (
+    bottomSheetInfo: (props: SheetPropsByType['INFO']) => Promise<void>;
+    bottomSheetActionSelector: (
         props: SheetPropsByType['ACTIONS_LIST']
     ) => Promise<SheetResultByType['ACTIONS_LIST']>;
-    SheetSingleSelector: (props: SheetPropsByType['RADIO_LIST']) => Promise<SheetResultByType['RADIO_LIST']>;
-    SheetActions: (props: SheetPropsByType['ACTIONS']) => Promise<SheetResultByType['ACTIONS']>;
+    bottomSheetSingleSelector: (
+        props: SheetPropsByType['RADIO_LIST']
+    ) => Promise<SheetResultByType['RADIO_LIST']>;
+    bottomSheetActions: (props: SheetPropsByType['ACTIONS']) => Promise<SheetResultByType['ACTIONS']>;
 };
 
 /**
@@ -153,10 +155,10 @@ export const createNativeSheetImplementationFromWebviewBridge = (
 ): NativeSheetImplementation | undefined => {
     if (webviewBridge.isWebViewBridgeAvailable()) {
         return {
-            INFO: webviewBridge.SheetInfo,
-            ACTIONS_LIST: webviewBridge.SheetActionSelector,
-            RADIO_LIST: webviewBridge.SheetSingleSelector,
-            ACTIONS: webviewBridge.SheetActions,
+            INFO: webviewBridge.bottomSheetInfo,
+            ACTIONS_LIST: webviewBridge.bottomSheetActionSelector,
+            RADIO_LIST: webviewBridge.bottomSheetSingleSelector,
+            ACTIONS: webviewBridge.bottomSheetActions,
         };
     }
     return undefined;
