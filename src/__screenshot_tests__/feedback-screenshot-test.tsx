@@ -3,7 +3,7 @@ import {MOVISTAR_SKIN, VIVO_SKIN, O2_SKIN, VIVO_NEW_SKIN} from '../skins/constan
 
 import type {Device} from '../test-utils';
 
-const testableSkins = [MOVISTAR_SKIN, VIVO_SKIN, O2_SKIN];
+const testableSkins = [MOVISTAR_SKIN, VIVO_SKIN, O2_SKIN] as const;
 const testableDevices: Array<Device> = ['MOBILE_IOS', 'DESKTOP'];
 const feedbackTypes = [
     'successfeedbackscreen--success',
@@ -40,7 +40,7 @@ test.each(getCases())(
     async (feedbackType, skin, device) => {
         const page = await openStoryPage({
             id: `patterns-feedback-${feedbackType}`,
-            skin: skin as never,
+            skin: skin as (typeof testableSkins)[number],
             device,
         });
 

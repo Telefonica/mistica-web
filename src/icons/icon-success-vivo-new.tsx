@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useTheme} from '../hooks';
+import {useAriaId, useTheme} from '../hooks';
 import {getAnimateCircleScaleInProps, getAnimateDrawLineProps} from '../utils/animation';
 
 type Props = {
@@ -8,6 +8,7 @@ type Props = {
 
 const IconSuccessVivoNew = ({size = 48}: Props): JSX.Element => {
     const {platformOverrides} = useTheme();
+    const gradientId = useAriaId();
 
     return (
         <svg width={size} height={size} viewBox="0 0 64 64" fill="none">
@@ -15,7 +16,7 @@ const IconSuccessVivoNew = ({size = 48}: Props): JSX.Element => {
                 cx="32"
                 cy="32"
                 r="24.9375"
-                stroke="url(#vivoNewGradient)"
+                stroke={`url(#${gradientId})`}
                 strokeWidth="0.791667"
                 {...getAnimateCircleScaleInProps('24.9375', platformOverrides)}
             />
@@ -32,7 +33,7 @@ const IconSuccessVivoNew = ({size = 48}: Props): JSX.Element => {
 
             <defs>
                 <linearGradient
-                    id="vivoNewGradient"
+                    id={gradientId}
                     x1="6.66663"
                     y1="6.66669"
                     x2="58.3441"
