@@ -30,6 +30,7 @@ export const Default: StoryComponent = () => {
                     targetLabel="help text"
                     target={<Text2 regular>Tooltip default (bottom)</Text2>}
                     description={description}
+                    width={300}
                 />
                 <Tooltip
                     targetLabel="help text"
@@ -73,12 +74,14 @@ export const Default: StoryComponent = () => {
                     }
                     position="top"
                     description={description}
+                    width={300}
                     extra={<Placeholder />}
                 />
                 <Tooltip
                     targetLabel="help text"
                     target={<Text2 regular>Tooltip without delay</Text2>}
                     description={description}
+                    width={300}
                     delay={false}
                 />
             </div>
