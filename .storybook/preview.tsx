@@ -119,6 +119,23 @@ export const parameters = {
     // https://storybook.js.org/docs/react/configure/story-layout
     layout: 'fullscreen',
 
+    // https://storybook.js.org/docs/7.2/react/writing-stories/naming-components-and-hierarchy#sorting-stories
+    options: {
+        storySort: {
+            method: 'alphabetical',
+            order: [
+                'Welcome',
+                'Components',
+                'Patterns',
+                'Layout',
+                'Icons',
+                'Utilities',
+                'Hooks',
+                'Mística Lab',
+                'Community',
+            ],
+        },
+    },
     // Workaround for: https://github.com/storybookjs/storybook/issues/17098
     docs: {source: {type: 'code'}},
 };
