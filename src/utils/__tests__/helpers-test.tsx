@@ -1,4 +1,4 @@
-import {debounce, isEqual} from '../lodash';
+import {debounce, isEqual} from '../helpers';
 
 beforeEach(() => {
     jest.useFakeTimers();

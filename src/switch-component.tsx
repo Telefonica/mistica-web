@@ -4,7 +4,7 @@ this storybook bug:
 https://github.com/storybookjs/storybook/issues/11980
 */
 import * as React from 'react';
-import {debounce} from './utils/lodash';
+import {debounce} from './utils/helpers';
 import {SPACE} from './utils/key-codes';
 import {useControlProps} from './form-context';
 import {Text3} from './text';
