@@ -247,7 +247,6 @@ export const snapCard = style([
     }),
     {
         minHeight: 80,
-        minWidth: 104,
         zIndex: 2,
         '@media': {
             [mq.desktopOrBigger]: {
