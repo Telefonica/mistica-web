@@ -99,7 +99,7 @@ const config = {
                     ],
                 },
                 {
-                    test: /(reset|roboto|vivo-font|telefonica-font)\.css$/,
+                    test: /(reset|roboto|vivo-font|telefonica-font|onair-font)\.css$/,
                     use: ['style-loader', 'css-loader'],
                 },
                 {
