@@ -1,6 +1,7 @@
 import './css/roboto.css';
 import './css/vivo-font.css';
 import './css/telefonica-font.css';
+import './css/onair-font.css';
 import './css/main.css';
 import * as React from 'react';
 import {
@@ -72,6 +73,7 @@ const MisticaThemeProvider = ({Story, context}): React.ReactElement => {
         <ThemeContextProvider theme={getTheme(skin as string, platform, colorScheme)}>
             {skin === VIVO_NEW_SKIN && <style>{`body {font-family: "Vivo Type"}`}</style>}
             {skin === TELEFONICA_SKIN && <style>{`body {font-family: "Telefonica Sans"}`}</style>}
+            {skin === O2_SKIN && <style>{`body {font-family: "On Air"}`}</style>}
             <Story {...context} />
         </ThemeContextProvider>
     );
@@ -119,6 +121,23 @@ export const parameters = {
     // https://storybook.js.org/docs/react/configure/story-layout
     layout: 'fullscreen',
 
+    // https://storybook.js.org/docs/7.2/react/writing-stories/naming-components-and-hierarchy#sorting-stories
+    options: {
+        storySort: {
+            method: 'alphabetical',
+            order: [
+                'Welcome',
+                'Components',
+                'Patterns',
+                'Layout',
+                'Icons',
+                'Utilities',
+                'Hooks',
+                'Mística Lab',
+                'Community',
+            ],
+        },
+    },
     // Workaround for: https://github.com/storybookjs/storybook/issues/17098
     docs: {source: {type: 'code'}},
 };

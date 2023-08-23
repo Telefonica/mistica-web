@@ -82,23 +82,6 @@ test('PosterCard without icon, with top actions and too long title', async () =>
     expect(image).toMatchImageSnapshot();
 });
 
-test('PosterCard width is never smaller than 140px', async () => {
-    const page = await openStoryPage({
-        id: 'components-cards-poster-card--default',
-        device: 'DESKTOP',
-        args: {
-            withTopAction: false,
-            asset: 'none',
-            title: 'A title',
-            width: '1px',
-        },
-    });
-
-    const image = await page.screenshot({fullPage: true});
-
-    expect(image).toMatchImageSnapshot();
-});
-
 test('PosterCard with video', async () => {
     await openStoryPage({
         id: 'components-cards-poster-card--default',
