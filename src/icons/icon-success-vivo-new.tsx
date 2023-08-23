@@ -15,10 +15,9 @@ const IconSuccessVivoNew = ({size = 48}: Props): JSX.Element => {
             <circle
                 cx="32"
                 cy="32"
-                r="24.9375"
+                r="25"
                 stroke={`url(#${gradientId})`}
-                strokeWidth="0.791667"
-                {...getAnimateCircleScaleInProps('24.9375', platformOverrides)}
+                {...getAnimateCircleScaleInProps('25', platformOverrides)}
             />
 
             <polyline
