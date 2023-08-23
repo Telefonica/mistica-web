@@ -104,21 +104,41 @@ const renderFeedbackBody = (
     return (
         <Stack space={24}>
             <div className={styles.iconContainer}>{icon}</div>
-            <Stack
-                space={16}
-                className={classnames(
-                    styles.feedbackData,
-                    animateText && styles.feedbackDataAppear,
-                    animateText && appear && styles.feedbackDataAppearActive
-                )}
-            >
-                <Text6 as="h1">{title}</Text6>
-                {normalizedDescription && (
-                    <Text3 regular color={vars.colors.textSecondary}>
-                        {normalizedDescription}
-                    </Text3>
-                )}
-                {extra}
+            <Stack space={16} className={classnames(styles.feedbackData)}>
+                <div
+                    className={classnames(
+                        animateText && styles.feedbackDataAppear,
+                        animateText && appear && styles.feedbackDataAppearActiveFast
+                    )}
+                >
+                    <Text6 as="h1">{title}</Text6>
+                </div>
+
+                <div
+                    className={classnames(
+                        animateText && styles.feedbackDataAppear,
+                        animateText && appear && styles.feedbackDataAppearActiveMedium
+                    )}
+                >
+                    {normalizedDescription && (
+                        <Text3 regular color={vars.colors.textSecondary}>
+                            {normalizedDescription}
+                        </Text3>
+                    )}
+                </div>
+
+                <div
+                    className={classnames(
+                        animateText && styles.feedbackDataAppear,
+                        animateText &&
+                            appear &&
+                            (normalizedDescription
+                                ? styles.feedbackDataAppearActiveSlow
+                                : styles.feedbackDataAppearActiveMedium)
+                    )}
+                >
+                    {extra}
+                </div>
             </Stack>
         </Stack>
     );
