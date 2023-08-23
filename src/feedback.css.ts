@@ -40,19 +40,19 @@ export const iconContainer = sprinkles({
     height: 48,
 });
 
-export const feedbackDataAppear = style({opacity: 0, transform: 'translate(0, 20px)'});
+export const feedbackDataAppear = style({opacity: 0, transform: 'translate(0, 56px)'});
 
 const feedbackDataAppearActive = style({
     transitionProperty: 'opacity, transform',
-    transitionDuration: '0.8s',
+    transitionDuration: '1s',
     transitionTimingFunction: 'cubic-bezier(0.215, 0.61, 0.355, 1)',
     opacity: 1,
     transform: 'translate(0, 0)',
 });
 
 export const feedbackDataAppearActiveFast = style([feedbackDataAppearActive, {transitionDelay: '0.6s'}]);
-export const feedbackDataAppearActiveMedium = style([feedbackDataAppearActive, {transitionDelay: '0.9s'}]);
-export const feedbackDataAppearActiveSlow = style([feedbackDataAppearActive, {transitionDelay: '1.2s'}]);
+export const feedbackDataAppearActiveMedium = style([feedbackDataAppearActive, {transitionDelay: '0.8s'}]);
+export const feedbackDataAppearActiveSlow = style([feedbackDataAppearActive, {transitionDelay: '1s'}]);
 
 export const feedbackData = style({
     maxWidth: 496,
