@@ -13,6 +13,13 @@ export default defineConfig({
             fileNames: ({name}) => `${name.replace(/\.css$/, '.css-mistica')}.js`,
         }),
     ],
+    resolve: {
+        alias: {
+            // forbid lodash usage
+            lodash: '/dev/null',
+            'lodash-es': '/dev/null',
+        },
+    },
     publicDir: false,
     build: {
         lib: {

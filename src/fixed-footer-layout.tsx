@@ -1,6 +1,6 @@
 import * as React from 'react';
 import classnames from 'classnames';
-import debounce from 'lodash/debounce';
+import {debounce} from './utils/helpers';
 import {isRunningAcceptanceTest} from './utils/platform';
 import {
     useElementDimensions,
