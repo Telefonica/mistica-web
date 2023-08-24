@@ -1,3 +1,18 @@
+# [14.21.0](https://github.com/Telefonica/mistica-web/compare/v14.20.1...v14.21.0) (2023-08-24)
+
+
+### Bug Fixes
+
+* **Cards:** remove min width from all the cards ([#858](https://github.com/Telefonica/mistica-web/issues/858)) ([029a6ea](https://github.com/Telefonica/mistica-web/commit/029a6ea401d54429718c9d3dce0c5220322e1519))
+* **Tabs:** remove extra margin in safari ([#857](https://github.com/Telefonica/mistica-web/issues/857)) ([be8c2f2](https://github.com/Telefonica/mistica-web/commit/be8c2f29d5734a4315cbd6723675d9c58ecd3938))
+
+
+### Features
+
+* **FeedbackScreens:** updates in icons, paddings and styling ([#852](https://github.com/Telefonica/mistica-web/issues/852)) ([4b231e6](https://github.com/Telefonica/mistica-web/commit/4b231e694e13506d17e7ccfd019c2d6504f50cae))
+* **Sheet:** new component ([#840](https://github.com/Telefonica/mistica-web/issues/840)) ([f03ca7c](https://github.com/Telefonica/mistica-web/commit/f03ca7cbccc196504f16c6b93779d13506a2aaf9))
+* **utilities:** Remove lodash dependency and replace it with custom functions ([#856](https://github.com/Telefonica/mistica-web/issues/856)) ([dcaf691](https://github.com/Telefonica/mistica-web/commit/dcaf691935c0b0331fdb8b15b28f0d6f2bb8955b))
+
 ## [14.20.1](https://github.com/Telefonica/mistica-web/compare/v14.20.0...v14.20.1) (2023-08-18)
 
 
