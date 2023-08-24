@@ -42,9 +42,14 @@ type Props = {
     dataAttributes?: DataAttributes;
 };
 
-const Stack: React.FC<Props> = (props) => {
-    const {space, className, children, role} = props;
-
+const Stack: React.FC<Props> = ({
+    space,
+    className,
+    children,
+    role,
+    'aria-labelledby': ariaLabelledby,
+    dataAttributes,
+}) => {
     const isFlexStack = typeof space === 'string';
 
     return (
@@ -52,11 +57,11 @@ const Stack: React.FC<Props> = (props) => {
             className={classnames(className, isFlexStack ? styles.flexStack : styles.marginStack)}
             style={assignInlineVars(calcInlineVars(space))}
             role={role}
-            aria-labelledby={props['aria-labelledby']}
-            {...getPrefixedDataAttributes(props.dataAttributes)}
+            aria-labelledby={ariaLabelledby}
+            {...getPrefixedDataAttributes(dataAttributes)}
         >
             {React.Children.map(children, (child) => (
-                <div>{child}</div>
+                <div role={role === 'list' ? 'listitem' : undefined}>{child}</div>
             ))}
         </div>
     );

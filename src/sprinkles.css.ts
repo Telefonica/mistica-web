@@ -42,7 +42,7 @@ const responsiveProperties = defineProperties({
 
 const commonProperties = defineProperties({
     properties: {
-        position: ['relative', 'absolute', 'fixed', 'static'],
+        position: ['relative', 'absolute', 'fixed', 'static', 'sticky'],
         display: ['none', 'flex', 'inline-flex', 'block', 'inline', 'inline-block'],
         flexDirection: ['row', 'column'],
         justifyContent: ['stretch', 'flex-start', 'center', 'flex-end', 'space-around', 'space-between'],
@@ -62,7 +62,8 @@ const commonProperties = defineProperties({
         },
         borderRadius: ['50%', 2, 4, 8, 16, 20, ...Object.values(vars.borderRadii)],
         cursor: ['pointer'],
-        overflow: ['hidden', 'visible'],
+        overflow: ['hidden', 'visible', 'auto'],
+        overflowY: ['hidden', 'visible', 'auto'],
         top: sizes,
         left: sizes,
         right: sizes,

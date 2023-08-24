@@ -6,6 +6,7 @@ import '../css/reset.css';
 import * as React from 'react';
 import {
     ThemeContextProvider,
+    SheetRoot,
     useModalState,
     OverscrollColorProvider,
     skinVars,
@@ -64,6 +65,7 @@ const FrameComponent = ({children, theme}: Props): React.ReactNode => (
     <ThemeOverriderContextProvider>
         {(overridenTheme) => (
             <ThemeContextProvider theme={overridenTheme ?? theme}>
+                <SheetRoot />
                 <OverscrollColorProvider>
                     <App skinName={(overridenTheme ?? theme).skin.name}>{children}</App>
                 </OverscrollColorProvider>
