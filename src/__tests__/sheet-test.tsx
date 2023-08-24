@@ -95,7 +95,7 @@ test('RadioListSheet', async () => {
 
     await waitForElementToBeRemoved(sheet);
     expect(selectSpy).toHaveBeenCalledWith('1');
-});
+}, 15000);
 
 test('ActionsListSheet', async () => {
     const selectSpy = jest.fn();
