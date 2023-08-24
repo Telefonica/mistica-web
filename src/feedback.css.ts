@@ -40,7 +40,7 @@ export const iconContainer = sprinkles({
     height: 48,
 });
 
-export const feedbackDataAppear = style({opacity: 0, transform: 'translate(0, 56px)'});
+export const feedbackDataAppear = style({opacity: 0, transform: 'translate(0, 40px)'});
 
 const feedbackDataAppearActive = style({
     transitionProperty: 'opacity, transform',

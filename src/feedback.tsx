@@ -144,10 +144,14 @@ const renderFeedbackBody = (
     );
 };
 
-const renderInlineFeedbackBody = (feedbackBody: React.ReactNode, buttons: ButtonGroupProps) => {
+const renderInlineFeedbackBody = (
+    feedbackBody: React.ReactNode,
+    buttons: ButtonGroupProps,
+    isTabletOrSmaller: boolean
+) => {
     const hasButtons = checkHasButtons(buttons);
     return (
-        <Stack space={24}>
+        <Stack space={isTabletOrSmaller ? 24 : 40}>
             {feedbackBody}
             {hasButtons && <ButtonGroup {...buttons} />}
         </Stack>
@@ -253,11 +257,15 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
         animateText && areAnimationsSupported(platformOverrides),
         appear
     );
-    const inlineFeedbackBody = renderInlineFeedbackBody(feedbackBody, {
-        primaryButton,
-        secondaryButton,
-        link,
-    });
+    const inlineFeedbackBody = renderInlineFeedbackBody(
+        feedbackBody,
+        {
+            primaryButton,
+            secondaryButton,
+            link,
+        },
+        isTabletOrSmaller
+    );
 
     if (!isTabletOrSmaller && unstable_inlineInDesktop) {
         return inlineFeedbackBody;
@@ -424,11 +432,15 @@ export const SuccessFeedback: React.FC<AssetFeedbackProps> = ({
         areAnimationsSupported(platformOverrides),
         appear
     );
-    const inlineFeedbackBody = renderInlineFeedbackBody(feedbackBody, {
-        primaryButton,
-        secondaryButton,
-        link,
-    });
+    const inlineFeedbackBody = renderInlineFeedbackBody(
+        feedbackBody,
+        {
+            primaryButton,
+            secondaryButton,
+            link,
+        },
+        isTabletOrSmaller
+    );
 
     return isTabletOrSmaller ? (
         <ResponsiveLayout isInverse>
