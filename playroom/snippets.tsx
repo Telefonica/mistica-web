@@ -2026,7 +2026,7 @@ const advancedDataCardSnippets = [
           }
           footerText="footer text"
           onClose={() => window.alert("close")}
-          onPress={() => window.alert("click")}
+          href="asdf"
         />
         `,
         group: 'AdvancedDataCard',

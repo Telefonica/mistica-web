@@ -193,7 +193,7 @@ type AllowedExtra =
 type TextAs = 'h1' | 'h2' | 'h3' | 'h4';
 
 interface AdvancedDataCardProps {
-    onPress?: () => void;
+    href?: string | undefined;
     stackingGroup?: RendersNullableElement<typeof StackingGroup>;
     headline?: RendersNullableElement<typeof Tag>;
     pretitle?: string;
@@ -222,7 +222,7 @@ interface AdvancedDataCardProps {
 export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCardProps>(
     (
         {
-            onPress,
+            href,
 
             stackingGroup,
             headline,
@@ -276,12 +276,12 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
             >
                 <Boxed className={styles.dataCard} height="100%">
                     <Touchable
-                        onPress={onPress}
                         tabIndex={0}
                         maybe
-                        className={classNames(styles.touchableContainer, {[styles.hoverEffect]: !!onPress})}
+                        className={classNames(styles.touchableContainer, {[styles.hoverEffect]: !!href})}
                         aria-label={ariaLabel}
-                        role="link"
+                        as="a"
+                        href={href}
                     >
                         <div
                             className={classNames(

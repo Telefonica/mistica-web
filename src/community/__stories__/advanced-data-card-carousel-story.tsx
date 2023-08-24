@@ -8,10 +8,10 @@ export default {
     title: 'Community/AdvancedDataCards in Carousel',
 };
 
-type Args = {onPress: boolean};
+type Args = {href: boolean};
 
-export const Default: StoryComponent<Args> = ({onPress}) => {
-    const onPressHandler = onPress ? () => {} : undefined;
+export const Default: StoryComponent<Args> = ({href}) => {
+    const hasHref = href ? 'https://mistica-web.vercel.app/?path=/story/welcome--welcome' : undefined;
     return (
         <Carousel
             dataAttributes={{testid: 'advanced-data-card-carousel'}}
@@ -22,7 +22,7 @@ export const Default: StoryComponent<Args> = ({onPress}) => {
                     description="Description 1"
                     footerText="Footer 1"
                     onClose={() => {}}
-                    onPress={onPressHandler}
+                    href={hasHref}
                 />,
                 <AdvancedDataCard
                     title="Title 2"
@@ -30,7 +30,7 @@ export const Default: StoryComponent<Args> = ({onPress}) => {
                     extra={[<Placeholder height={48} />]}
                     footerText="Footer 2"
                     onClose={() => {}}
-                    onPress={onPressHandler}
+                    href={hasHref}
                 />,
                 <AdvancedDataCard
                     title="Title 3"
@@ -38,7 +38,7 @@ export const Default: StoryComponent<Args> = ({onPress}) => {
                     extra={[<Placeholder height={48} />, <Placeholder height={48} />]}
                     footerText="Footer 3"
                     onClose={() => {}}
-                    onPress={onPressHandler}
+                    href={hasHref}
                 />,
                 <AdvancedDataCard
                     title="Title 4"
@@ -49,7 +49,7 @@ export const Default: StoryComponent<Args> = ({onPress}) => {
                     ]}
                     footerText="Footer 4"
                     onClose={() => {}}
-                    onPress={onPressHandler}
+                    href={hasHref}
                 />,
             ]}
         />
@@ -58,5 +58,5 @@ export const Default: StoryComponent<Args> = ({onPress}) => {
 
 Default.storyName = 'AdvancedDataCards in Carousel';
 Default.args = {
-    onPress: true,
+    href: true,
 };
