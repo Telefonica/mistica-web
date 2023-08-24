@@ -105,6 +105,16 @@ export {default as Video} from './video';
 export type {VideoElement} from './video';
 export {Carousel, CenteredCarousel, Slideshow, PageBullets} from './carousel';
 export {Grid, GridItem} from './grid';
+export {
+    default as Sheet,
+    ActionsSheet,
+    InfoSheet,
+    ActionsListSheet,
+    RadioListSheet,
+    SheetBody,
+} from './sheet';
+export {default as SheetRoot, showSheet} from './sheet-root';
+export type {NativeSheetImplementation} from './sheet-root';
 export {default as StackingGroup} from './stacking-group';
 
 // Forms
