@@ -18,6 +18,12 @@ export const debounce = <T extends (...args: Array<any>) => any>(
             clearTimeout(debounceTimeoutId);
         }
 
+        if (isLeading && options.leading) {
+            isLeading = false;
+            func(...args);
+            return;
+        }
+
         currentArgs = args;
 
         if (!maxWaitTimeoutId && options.maxWait) {
@@ -26,12 +32,6 @@ export const debounce = <T extends (...args: Array<any>) => any>(
                 maxWaitTimeoutId = undefined;
                 clearTimeout(debounceTimeoutId);
             }, options.maxWait);
-        }
-
-        if (isLeading && options.leading) {
-            isLeading = false;
-            func(...args);
-            return;
         }
 
         debounceTimeoutId = setTimeout(() => {

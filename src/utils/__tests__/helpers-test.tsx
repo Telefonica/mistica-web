@@ -56,6 +56,16 @@ test('debounce with maxWait', () => {
     expect(fn.mock.calls).toEqual([[3], [4]]);
 });
 
+test("debounce with leading and maxWait don't gets called twice", () => {
+    const fn = jest.fn().mockImplementation((a) => a);
+    const debounced = debounce(fn, 2500, {maxWait: 1000, leading: true});
+
+    debounced(1);
+    jest.runAllTimers();
+
+    expect(fn.mock.calls).toEqual([[1]]);
+});
+
 test('debounce cancel', () => {
     const fn = jest.fn().mockImplementation((a) => a);
     const debounced = debounce(fn, 5000);
