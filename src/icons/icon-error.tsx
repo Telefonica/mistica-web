@@ -5,11 +5,15 @@ import {O2_SKIN, O2_CLASSIC_SKIN} from '../skins/constants';
 import {vars} from '../skins/skin-contract.css';
 import * as styles from './icon-error.css';
 
-const IconErrorO2 = (): JSX.Element => {
+type Props = {
+    size?: number | string;
+};
+
+const IconErrorO2 = ({size = 48}: Props): JSX.Element => {
     const {platformOverrides} = useTheme();
 
     return (
-        <svg width="72" height="64" viewBox="0 0 72 64">
+        <svg width={size} height={size} viewBox="0 0 64 64" overflow="visible">
             <g
                 stroke={vars.colors.error}
                 fill={vars.colors.error}
@@ -53,11 +57,11 @@ const IconErrorO2 = (): JSX.Element => {
     );
 };
 
-const IconErrorDefault = (): JSX.Element => {
+const IconErrorDefault = ({size = 48}: Props): JSX.Element => {
     const {platformOverrides} = useTheme();
 
     return (
-        <svg width="72" height="64" viewBox="0 0 72 64">
+        <svg width={size} height={size} viewBox="0 0 64 64" overflow="visible">
             <g
                 stroke={vars.colors.error}
                 fill="none"
@@ -99,10 +103,14 @@ const IconErrorDefault = (): JSX.Element => {
     );
 };
 
-const IconError = (): JSX.Element => {
+const IconError = (props: Props): JSX.Element => {
     const {skinName} = useTheme();
 
-    return skinName === O2_SKIN || skinName === O2_CLASSIC_SKIN ? <IconErrorO2 /> : <IconErrorDefault />;
+    return skinName === O2_SKIN || skinName === O2_CLASSIC_SKIN ? (
+        <IconErrorO2 {...props} />
+    ) : (
+        <IconErrorDefault {...props} />
+    );
 };
 
 export default IconError;

@@ -3,11 +3,11 @@ import {useTheme, useScreenSize, useWindowHeight, useIsomorphicLayoutEffect} fro
 import {ThemeVariant, useIsInverseVariant} from './theme-variant-context';
 import ButtonFixedFooterLayout from './button-fixed-footer-layout';
 import OverscrollColor from './overscroll-color-context';
-import {O2_CLASSIC_SKIN, VIVO_SKIN} from './skins/constants';
-import IcnSuccess from './icons/icon-success';
+import {O2_CLASSIC_SKIN, VIVO_NEW_SKIN, VIVO_SKIN} from './skins/constants';
+import IconSuccess from './icons/icon-success';
 import IconSuccessVivo from './icons/icon-success-vivo';
-import IcnError from './icons/icon-error';
-import IcnInfo from './icons/icon-info';
+import IconError from './icons/icon-error';
+import IconInfo from './icons/icon-info';
 import {
     isWebViewBridgeAvailable,
     requestVibration as requestVibrationNative,
@@ -22,9 +22,10 @@ import classnames from 'classnames';
 import ButtonGroup from './button-group';
 import {vars} from './skins/skin-contract.css';
 import * as styles from './feedback.css';
+import IconSuccessVivoNew from './icons/icon-success-vivo-new';
 
 import type {Theme} from './theme';
-import type {DataAttributes} from './utils/types';
+import type {DataAttributes, IconProps} from './utils/types';
 import type {ButtonGroupProps} from './button-group';
 
 const areAnimationsSupported = (platformOverrides: Theme['platformOverrides']) =>
@@ -86,12 +87,7 @@ const useAppearStatus = (): boolean => {
 };
 
 const renderFeedbackBody = (
-    {
-        icon,
-        title,
-        description,
-        children,
-    }: Pick<FeedbackScreenProps, 'icon' | 'title' | 'description' | 'children'>,
+    {icon, title, description, extra}: Pick<FeedbackScreenProps, 'icon' | 'title' | 'description' | 'extra'>,
     animateText: boolean,
     appear: boolean
 ) => {
@@ -107,31 +103,55 @@ const renderFeedbackBody = (
         );
     return (
         <Stack space={24}>
-            {icon}
-            <Stack
-                space={16}
-                className={classnames(
-                    styles.feedbackData,
-                    animateText && styles.feedbackDataAppear,
-                    animateText && appear && styles.feedbackDataAppearActive
-                )}
-            >
-                <Text6 as="h1">{title}</Text6>
-                {normalizedDescription && (
-                    <Text3 regular color={vars.colors.textSecondary}>
-                        {normalizedDescription}
-                    </Text3>
-                )}
-                {children}
+            <div className={styles.iconContainer}>{icon}</div>
+            <Stack space={16} className={classnames(styles.feedbackData)}>
+                <div
+                    className={classnames(
+                        animateText && styles.feedbackDataAppear,
+                        animateText && appear && styles.feedbackDataAppearActiveFast
+                    )}
+                >
+                    <Text6 as="h1">{title}</Text6>
+                </div>
+
+                <div
+                    className={classnames(
+                        animateText && styles.feedbackDataAppear,
+                        animateText && appear && styles.feedbackDataAppearActiveMedium
+                    )}
+                >
+                    {normalizedDescription && (
+                        <Text3 regular color={vars.colors.textSecondary}>
+                            {normalizedDescription}
+                        </Text3>
+                    )}
+                </div>
+
+                <div
+                    className={classnames(
+                        animateText && styles.feedbackDataAppear,
+                        animateText &&
+                            appear &&
+                            (normalizedDescription
+                                ? styles.feedbackDataAppearActiveSlow
+                                : styles.feedbackDataAppearActiveMedium)
+                    )}
+                >
+                    {extra}
+                </div>
             </Stack>
         </Stack>
     );
 };
 
-const renderInlineFeedbackBody = (feedbackBody: React.ReactNode, buttons: ButtonGroupProps) => {
+const renderInlineFeedbackBody = (
+    feedbackBody: React.ReactNode,
+    buttons: ButtonGroupProps,
+    isTabletOrSmaller: boolean
+) => {
     const hasButtons = checkHasButtons(buttons);
     return (
-        <Stack space={24}>
+        <Stack space={isTabletOrSmaller ? 24 : 40}>
             {feedbackBody}
             {hasButtons && <ButtonGroup {...buttons} />}
         </Stack>
@@ -175,7 +195,11 @@ type FeedbackButtonsProps = ButtonGroupProps;
 interface FeedbackProps extends FeedbackButtonsProps {
     title: string;
     description?: string | Array<string>;
+    /**
+     * @deprecated This field is deprecated, please use extra instead.
+     */
     children?: React.ReactNode;
+    extra?: React.ReactNode;
     unstable_inlineInDesktop?: boolean;
     dataAttributes?: DataAttributes;
 }
@@ -196,6 +220,7 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
     title,
     description,
     children,
+    extra,
     primaryButton,
     secondaryButton,
     link,
@@ -228,15 +253,19 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
     }, []);
 
     const feedbackBody = renderFeedbackBody(
-        {icon, title, description, children},
+        {icon, title, description, extra: extra ?? children},
         animateText && areAnimationsSupported(platformOverrides),
         appear
     );
-    const inlineFeedbackBody = renderInlineFeedbackBody(feedbackBody, {
-        primaryButton,
-        secondaryButton,
-        link,
-    });
+    const inlineFeedbackBody = renderInlineFeedbackBody(
+        feedbackBody,
+        {
+            primaryButton,
+            secondaryButton,
+            link,
+        },
+        isTabletOrSmaller
+    );
 
     if (!isTabletOrSmaller && unstable_inlineInDesktop) {
         return inlineFeedbackBody;
@@ -306,7 +335,15 @@ export const SuccessFeedbackScreen: React.FC<AssetFeedbackProps> = ({dataAttribu
             {...props}
             isInverse={!props.unstable_inlineInDesktop || isTabletOrSmaller}
             hapticFeedback="success"
-            icon={skinName === VIVO_SKIN ? <IconSuccessVivo /> : <IcnSuccess />}
+            icon={
+                skinName === VIVO_SKIN ? (
+                    <IconSuccessVivo size="100%" />
+                ) : skinName === VIVO_NEW_SKIN ? (
+                    <IconSuccessVivoNew size="100%" />
+                ) : (
+                    <IconSuccess size="100%" />
+                )
+            }
             animateText
             imageUrl={props.imageUrl}
             imageFit={props.imageFit}
@@ -315,7 +352,7 @@ export const SuccessFeedbackScreen: React.FC<AssetFeedbackProps> = ({dataAttribu
     );
 };
 
-interface ErrorFeedbackScreenProps extends FeedbackProps {
+interface ErrorFeedbackScreenProps extends Omit<FeedbackProps, 'extra'> {
     errorReference?: string;
 }
 
@@ -329,25 +366,36 @@ export const ErrorFeedbackScreen: React.FC<ErrorFeedbackScreenProps> = ({
         <FeedbackScreen
             {...otherProps}
             hapticFeedback="error"
-            icon={<IcnError />}
+            icon={<IconError size="100%" />}
             animateText
             dataAttributes={{'component-name': 'ErrorFeedbackScreen', ...dataAttributes}}
-        >
-            {children}
-            {errorReference && (
-                <Text2 color={vars.colors.textSecondary} regular>
-                    {errorReference}
-                </Text2>
-            )}
-        </FeedbackScreen>
+            extra={
+                <Stack space={16}>
+                    {children}
+                    {errorReference && (
+                        <Text2 color={vars.colors.textSecondary} regular>
+                            {errorReference}
+                        </Text2>
+                    )}
+                </Stack>
+            }
+        ></FeedbackScreen>
     );
 };
 
-export const InfoFeedbackScreen: React.FC<FeedbackProps> = ({dataAttributes, ...props}) => {
+interface InfoFeedbackScreenProps extends FeedbackProps {
+    Icon?: React.FC<IconProps>;
+}
+
+export const InfoFeedbackScreen: React.FC<InfoFeedbackScreenProps> = ({
+    dataAttributes,
+    Icon = IconInfo,
+    ...props
+}) => {
     return (
         <FeedbackScreen
             dataAttributes={{'component-name': 'InfoFeedbackScreen', ...dataAttributes}}
-            icon={<IcnInfo />}
+            icon={<Icon size="100%" />}
             {...props}
         />
     );
@@ -357,6 +405,7 @@ export const SuccessFeedback: React.FC<AssetFeedbackProps> = ({
     title,
     description,
     children,
+    extra,
     primaryButton,
     secondaryButton,
     link,
@@ -370,17 +419,28 @@ export const SuccessFeedback: React.FC<AssetFeedbackProps> = ({
 
     const appear = useAppearStatus();
 
-    const icon = skinName === VIVO_SKIN ? <IconSuccessVivo /> : <IcnSuccess />;
+    const icon =
+        skinName === VIVO_SKIN ? (
+            <IconSuccessVivo size="100%" />
+        ) : skinName === VIVO_NEW_SKIN ? (
+            <IconSuccessVivoNew size="100%" />
+        ) : (
+            <IconSuccess size="100%" />
+        );
     const feedbackBody = renderFeedbackBody(
-        {icon, title, description, children},
+        {icon, title, description, extra: extra ?? children},
         areAnimationsSupported(platformOverrides),
         appear
     );
-    const inlineFeedbackBody = renderInlineFeedbackBody(feedbackBody, {
-        primaryButton,
-        secondaryButton,
-        link,
-    });
+    const inlineFeedbackBody = renderInlineFeedbackBody(
+        feedbackBody,
+        {
+            primaryButton,
+            secondaryButton,
+            link,
+        },
+        isTabletOrSmaller
+    );
 
     return isTabletOrSmaller ? (
         <ResponsiveLayout isInverse>
