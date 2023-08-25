@@ -223,43 +223,61 @@ let isSheetOpen = false;
 export const showSheet = <T extends SheetType>(
     sheetProps: SheetTypeWithProps<T>
 ): Promise<SheetResultByType[T]> => {
+    const webImplementation = () => {
+        if (!listener) {
+            return Promise.reject(
+                new Error('Tried to show a Sheet but the SheetRoot component was not mounted')
+            );
+        }
+
+        if (isSheetOpen) {
+            return Promise.reject(new Error('Tried to show a Sheet but there is already one open'));
+        }
+
+        isSheetOpen = true;
+        listener(sheetProps as SheetTypeWithPropsUnion);
+
+        const sheetPromise = new Promise((resolve) => {
+            sheetPromiseResolve = resolve;
+        });
+
+        sheetPromise.finally(() => {
+            isSheetOpen = false;
+        });
+
+        return sheetPromise as Promise<SheetResultByType[T]>;
+    };
+
     if (nativeSheetImplementation) {
+        let nativeResponse: Promise<SheetResultByType[T]>;
         const {type, props} = sheetProps as SheetTypeWithPropsUnion;
         switch (type) {
             case 'INFO':
-                return showInfoNativeSheet(props) as Promise<SheetResultByType[T]>;
+                nativeResponse = showInfoNativeSheet(props) as Promise<SheetResultByType[T]>;
+                break;
             case 'ACTIONS_LIST':
-                return showActionsListNativeSheet(props) as Promise<SheetResultByType[T]>;
+                nativeResponse = showActionsListNativeSheet(props) as Promise<SheetResultByType[T]>;
+                break;
             case 'RADIO_LIST':
-                return showRadioListNativeSheet(props) as Promise<SheetResultByType[T]>;
+                nativeResponse = showRadioListNativeSheet(props) as Promise<SheetResultByType[T]>;
+                break;
             case 'ACTIONS':
-                return showActionsNativeSheet(props) as Promise<SheetResultByType[T]>;
+                nativeResponse = showActionsNativeSheet(props) as Promise<SheetResultByType[T]>;
+                break;
             default:
                 const unknownType: never = type;
                 throw new Error(`Unknown sheet type: ${unknownType}`);
         }
+        return nativeResponse.catch((error) => {
+            if (error.code === '400') {
+                return webImplementation();
+            } else {
+                throw error;
+            }
+        });
+    } else {
+        return webImplementation();
     }
-
-    if (!listener) {
-        return Promise.reject(new Error('Tried to show a Sheet but the SheetRoot component was not mounted'));
-    }
-
-    if (isSheetOpen) {
-        return Promise.reject(new Error('Tried to show a Sheet but there is already one open'));
-    }
-
-    isSheetOpen = true;
-    listener(sheetProps as SheetTypeWithPropsUnion);
-
-    const sheetPromise = new Promise((resolve) => {
-        sheetPromiseResolve = resolve;
-    });
-
-    sheetPromise.then(() => {
-        isSheetOpen = false;
-    });
-
-    return sheetPromise as Promise<SheetResultByType[T]>;
 };
 
 type Props = {
@@ -290,7 +308,7 @@ export const SheetRoot = (props: Props): React.ReactElement | null => {
         };
     }, []);
 
-    if (!sheetProps || props.nativeImplementation) {
+    if (!sheetProps) {
         return null;
     }
 
