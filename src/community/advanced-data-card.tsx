@@ -273,13 +273,13 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
                 })}
                 {...getPrefixedDataAttributes(dataAttributes, 'AdvancedDataCard')}
                 ref={ref}
+                aria-label={ariaLabel}
             >
                 <Boxed className={styles.dataCard} height="100%">
                     <Touchable
                         tabIndex={0}
                         maybe
                         className={classNames(styles.touchableContainer, {[styles.hoverEffect]: !!href})}
-                        aria-label={ariaLabel}
                         as="a"
                         href={href}
                     >
@@ -331,9 +331,9 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
                             </Box>
                         )}
                     </Touchable>
+                    <CardActionsGroup actions={actions} onClose={onClose} />
                     {hasFooter && <CardFooter {...footerProps} />}
                 </Boxed>
-                <CardActionsGroup actions={actions} onClose={onClose} />
             </section>
         );
     }
