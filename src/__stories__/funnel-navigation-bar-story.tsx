@@ -18,12 +18,13 @@ export default {
     },
 };
 
-type Args = {inverse: boolean};
+type Args = {inverse: boolean; withDivider: boolean};
 
-export const Default: StoryComponent<Args> = ({inverse}) => {
+export const Default: StoryComponent<Args> = ({inverse, withDivider}) => {
     const {isDesktopOrBigger} = useScreenSize();
     return (
         <FunnelNavigationBar
+            withDivider={withDivider}
             isInverse={inverse}
             right={
                 <NavigationBarActionGroup>
@@ -49,4 +50,5 @@ Default.storyName = 'FunnelNavigationBar';
 
 Default.args = {
     inverse: false,
+    withDivider: true,
 };

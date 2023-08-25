@@ -93,3 +93,23 @@ test.each`
         expect(image).toMatchImageSnapshot();
     }
 );
+
+test.each`
+    type                     | device
+    ${'NavigationBar'}       | ${'DESKTOP'}
+    ${'MainNavigationBar'}   | ${'DESKTOP'}
+    ${'FunnelNavigationBar'} | ${'DESKTOP'}
+    ${'NavigationBar'}       | ${'MOBILE_IOS'}
+    ${'MainNavigationBar'}   | ${'MOBILE_IOS'}
+    ${'FunnelNavigationBar'} | ${'MOBILE_IOS'}
+`('$type without divider. device={$device}', async ({type, device}) => {
+    await openStoryPage({
+        id: `components-navigation-bars-${type.toLowerCase()}--default`,
+        device,
+        args: {withDivider: false},
+    });
+
+    const image = await page.screenshot();
+
+    expect(image).toMatchImageSnapshot();
+});

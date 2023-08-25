@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {CSSTransition} from 'react-transition-group';
+import {Transition} from 'react-transition-group';
 import classnames from 'classnames';
 import ResponsiveLayout from './responsive-layout';
 import Inline from './inline';
@@ -23,6 +23,7 @@ import {vars} from './skins/skin-contract.css';
 import * as styles from './navigation-bar.css';
 import {sprinkles} from './sprinkles.css';
 import {getPrefixedDataAttributes} from './utils/dom';
+import Stack from './stack';
 
 import type {Props as TouchableProps} from './touchable';
 import type {DataAttributes} from './utils/types';
@@ -49,16 +50,23 @@ type HeaderProps = {
     withBorder?: boolean;
     isMenuOpen?: boolean;
     dataAttributes?: DataAttributes;
+    withDivider?: boolean;
 };
 
-const Header = ({children, topFixed, withBorder, isMenuOpen, isInverse, dataAttributes}: HeaderProps) => {
+const Header = ({
+    children,
+    topFixed,
+    withBorder,
+    isMenuOpen,
+    isInverse,
+    withDivider,
+    dataAttributes,
+}: HeaderProps) => {
     const {isDarkMode} = useTheme();
 
     const getBorderClass = () => {
         const inverse = isInverse && !isDarkMode;
-
-        if (isMenuOpen || inverse) return styles.navbarBorderColorVariants.inverse;
-
+        if (isMenuOpen || inverse || !withDivider) return styles.navbarBorderColorVariants.noBorder;
         if (isMenuOpen && !inverse) return styles.navbarBorderColorVariants.menuOpen;
 
         return styles.navbarBorderColorVariants.default;
@@ -91,6 +99,8 @@ type MainNavigationBarPropsBase = {
     isInverse?: boolean;
     children?: undefined;
     topFixed?: boolean;
+    withDivider?: boolean;
+    burgerMenuExtra?: React.ReactNode;
 };
 
 type MainNavigationBarProps = MainNavigationBarPropsBase;
@@ -103,6 +113,8 @@ export const MainNavigationBar: React.FC<MainNavigationBarProps> = ({
     right,
     isInverse = false,
     topFixed = true,
+    withDivider = true,
+    burgerMenuExtra,
     logo,
 }) => {
     const {texts, isDarkMode} = useTheme();
@@ -139,6 +151,7 @@ export const MainNavigationBar: React.FC<MainNavigationBarProps> = ({
                             withBorder
                             isMenuOpen={isMenuOpen}
                             isInverse={isInverse}
+                            withDivider={withDivider}
                             dataAttributes={{'component-name': 'MainNavigationBar'}}
                         >
                             <ResponsiveLayout>
@@ -171,7 +184,7 @@ export const MainNavigationBar: React.FC<MainNavigationBarProps> = ({
                 {showBurger && (
                     <Portal>
                         <FocusTrap disabled={disableFocusTrap} group="burger-menu-lock">
-                            <CSSTransition
+                            <Transition
                                 onEntering={() => {
                                     setMenuTransitionState('opening');
                                 }}
@@ -186,40 +199,44 @@ export const MainNavigationBar: React.FC<MainNavigationBarProps> = ({
                                 }}
                                 in={isMenuOpen}
                                 timeout={BURGER_MENU_ANIMATION_DURATION_MS}
-                                classNames={{
-                                    enter: styles.burgerMenuEnter,
-                                    enterActive: styles.burgerMenuEnterActive,
-                                    exit: styles.burgerMenuExit,
-                                    exitActive: styles.burgerMenuExitActive,
-                                }}
                                 unmountOnExit
                             >
-                                {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
-                                <nav
-                                    className={styles.burgerMenu}
-                                    style={{
-                                        boxShadow:
-                                            menuTransitionState !== 'closed'
-                                                ? `6px 0 4px -4px rgba(0, 0, 0, ${shadowAlpha})`
-                                                : 'none',
-                                    }}
-                                    id={menuId}
-                                    onClick={() => {
-                                        // Capture bubbling click events to close the burger menu when any row is pressed
-                                        closeMenu();
-                                    }}
-                                >
-                                    <ResponsiveLayout>
-                                        <NegativeBox>
-                                            <RowList>
-                                                {sections.map((section, index) => (
-                                                    <Row key={index} {...section} />
-                                                ))}
-                                            </RowList>
-                                        </NegativeBox>
-                                    </ResponsiveLayout>
-                                </nav>
-                            </CSSTransition>
+                                {(burgerMenuState) => (
+                                    <>
+                                        {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
+                                        <nav
+                                            className={classnames(
+                                                styles.burgerMenu,
+                                                styles.burgerMenuTransition[burgerMenuState]
+                                            )}
+                                            style={{
+                                                boxShadow:
+                                                    menuTransitionState !== 'closed'
+                                                        ? `6px 0 4px -4px rgba(0, 0, 0, ${shadowAlpha})`
+                                                        : 'none',
+                                            }}
+                                            id={menuId}
+                                            onClick={() => {
+                                                // Capture bubbling click events to close the burger menu when any row is pressed
+                                                closeMenu();
+                                            }}
+                                        >
+                                            <ResponsiveLayout>
+                                                <Stack space={32}>
+                                                    <NegativeBox>
+                                                        <RowList>
+                                                            {sections.map((section, index) => (
+                                                                <Row key={index} {...section} />
+                                                            ))}
+                                                        </RowList>
+                                                    </NegativeBox>
+                                                    {burgerMenuExtra}
+                                                </Stack>
+                                            </ResponsiveLayout>
+                                        </nav>
+                                    </>
+                                )}
+                            </Transition>
                         </FocusTrap>
                     </Portal>
                 )}
@@ -234,6 +251,7 @@ export const MainNavigationBar: React.FC<MainNavigationBarProps> = ({
                 withBorder
                 isMenuOpen={isMenuOpen}
                 isInverse={isInverse}
+                withDivider={withDivider}
                 dataAttributes={{'component-name': 'MainNavigationBar'}}
             >
                 <ResponsiveLayout>
@@ -284,6 +302,7 @@ interface NavigationBarCommonProps {
     right?: React.ReactElement;
     withBorder?: boolean;
     children?: undefined;
+    withDivider?: boolean;
 }
 
 interface NavigationBarTopFixedProps extends NavigationBarCommonProps {
@@ -306,6 +325,7 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
     topFixed = true,
     paddingX = 0,
     withBorder = true,
+    withDivider = true,
 }) => {
     const {texts} = useTheme();
     const content = (
@@ -334,6 +354,7 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
                 withBorder={withBorder}
                 isInverse={isInverse}
                 dataAttributes={{'component-name': 'NavigationBar'}}
+                withDivider={withDivider}
             >
                 {topFixed ? (
                     <ResponsiveLayout>{content}</ResponsiveLayout>
@@ -361,6 +382,7 @@ type FunnelNavigationBarProps = {
     right?: React.ReactElement;
     topFixed?: boolean;
     children?: undefined;
+    withDivider?: boolean;
 };
 
 export const FunnelNavigationBar: React.FC<FunnelNavigationBarProps> = ({
@@ -368,6 +390,7 @@ export const FunnelNavigationBar: React.FC<FunnelNavigationBarProps> = ({
     right,
     isInverse = false,
     topFixed = true,
+    withDivider = true,
 }) => {
     const {isTabletOrSmaller} = useScreenSize();
 
@@ -380,6 +403,7 @@ export const FunnelNavigationBar: React.FC<FunnelNavigationBarProps> = ({
                 withBorder
                 isInverse={isInverse}
                 dataAttributes={{'component-name': 'FunnelNavigationBar'}}
+                withDivider={withDivider}
             >
                 <ResponsiveLayout>
                     <GridLayout template="10">

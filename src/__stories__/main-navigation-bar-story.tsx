@@ -20,14 +20,15 @@ export default {
 
 const sections = ['Start', 'Account', 'Explore', 'Support'];
 
-type Args = {inverse: boolean};
+type Args = {inverse: boolean; withDivider: boolean};
 
-export const Default: StoryComponent<Args> = ({inverse}) => {
+export const Default: StoryComponent<Args> = ({inverse, withDivider}) => {
     const [selectedIndex, setSelectedIndex] = React.useState(0);
     const {isDesktopOrBigger} = useScreenSize();
     return (
         <MainNavigationBar
             isInverse={inverse}
+            withDivider={withDivider}
             sections={sections.map((title, idx) => ({title, onPress: () => setSelectedIndex(idx)}))}
             selectedIndex={selectedIndex}
             right={
@@ -51,4 +52,5 @@ Default.storyName = 'MainNavigationBar';
 
 Default.args = {
     inverse: false,
+    withDivider: true,
 };

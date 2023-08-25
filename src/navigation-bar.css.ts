@@ -27,6 +27,8 @@ const iconBase = style([
     }),
     {
         opacity: 1,
+        top: 0,
+        left: 0,
         transform: 'rotate(0) scale(1)',
         transition: 'transform 300ms, opacity 100ms',
     },
@@ -83,7 +85,7 @@ const navbarBase = style([
 
 export const navbarBorderColorVariants = styleVariants({
     default: [navbarBase, {borderColor: colorVars.colors.divider}],
-    inverse: [navbarBase, {borderColor: 'transparent'}],
+    noBorder: [navbarBase, {borderColor: 'transparent'}],
     menuOpen: [
         navbarBase,
         {
@@ -154,20 +156,20 @@ export const spacer = style([
     },
 ]);
 
-export const burgerMenuEnter = style({
-    transform: 'translate(-100vw)',
-});
-
-export const burgerMenuEnterActive = style({
-    transform: 'translate(0)',
-});
-
-export const burgerMenuExit = style({
-    transform: 'translate(0)',
-});
-
-export const burgerMenuExitActive = style({
-    transform: 'translate(-100vw)',
+export const burgerMenuTransition = styleVariants({
+    entering: {
+        transform: 'translate(0vw)',
+    },
+    entered: {
+        transform: 'translate(0vw)',
+    },
+    exiting: {
+        transform: 'translate(-100vw)',
+    },
+    exited: {
+        transform: 'translate(-100vw)',
+    },
+    unmounted: {},
 });
 
 export const logoContainer = sprinkles({
