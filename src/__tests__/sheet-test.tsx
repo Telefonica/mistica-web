@@ -507,6 +507,9 @@ test('showSheet fails if there is already a sheet open', async () => {
         });
     });
 
+    const sheet = await screen.findByRole('dialog', {name: 'Title'});
+    expect(sheet).toBeInTheDocument();
+
     await expect(
         showSheet({
             type: 'INFO',
@@ -516,6 +519,11 @@ test('showSheet fails if there is already a sheet open', async () => {
             },
         })
     ).rejects.toThrow('Tried to show a Sheet but there is already one open');
+
+    const closeButton = await screen.findByRole('button', {name: 'Cerrar'});
+    await userEvent.click(closeButton);
+
+    await waitForElementToBeRemoved(sheet);
 });
 
 test('showSheet with native implementation INFO', async () => {
@@ -696,5 +704,43 @@ test('showSheet with native implementation ACTIONS', async () => {
         ],
     });
 
+    expect(resultSpy).toHaveBeenCalledWith({action: 'LINK'});
+});
+
+test('showSheet with native implementation fallbacks to web if native fails', async () => {
+    const nativeImplementation = jest.fn(() =>
+        Promise.reject({
+            code: '400',
+        })
+    );
+
+    const resultSpy = jest.fn();
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <SheetRoot nativeImplementation={nativeImplementation} />
+        </ThemeContextProvider>
+    );
+
+    act(() => {
+        showSheet({
+            type: 'ACTIONS',
+            props: {
+                title: 'Title',
+                button: {text: 'Button'},
+                link: {text: 'Button link'},
+            },
+        }).then(resultSpy);
+    });
+
+    expect(nativeImplementation).toHaveBeenCalled();
+
+    // web implementation is shown:
+    const sheet = await screen.findByRole('dialog', {name: 'Title'});
+    expect(sheet).toBeInTheDocument();
+
+    const link = await screen.findByRole('button', {name: 'Button link'});
+    await userEvent.click(link);
+
+    await waitForElementToBeRemoved(sheet);
     expect(resultSpy).toHaveBeenCalledWith({action: 'LINK'});
 });
