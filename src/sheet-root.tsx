@@ -270,6 +270,7 @@ export const showSheet = <T extends SheetType>(
         }
         return nativeResponse.catch((error) => {
             if (error.code === '400') {
+                // fallback to web implementation if native implementation doesn't support the sheet type
                 return webImplementation();
             } else {
                 throw error;
