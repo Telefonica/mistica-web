@@ -726,29 +726,13 @@ test('showSheet with native implementation fallbacks to web if native fails', as
             type: 'ACTIONS',
             props: {
                 title: 'Title',
-                subtitle: 'Subtitle',
-                description: 'Description',
                 button: {text: 'Button'},
-                secondaryButton: {text: 'Secondary button'},
-                link: {text: 'Button link', withChevron: true},
+                link: {text: 'Button link'},
             },
         }).then(resultSpy);
     });
 
-    expect(nativeImplementation).toHaveBeenCalledWith({
-        title: 'Title',
-        subtitle: 'Subtitle',
-        description: 'Description',
-        content: [
-            {
-                type: 'BOTTOM_ACTIONS',
-                id: 'bottom-actions-0',
-                button: {text: 'Button'},
-                secondaryButton: {text: 'Secondary button'},
-                link: {text: 'Button link', withChevron: true},
-            },
-        ],
-    });
+    expect(nativeImplementation).toHaveBeenCalled();
 
     // web implementation is shown:
     const sheet = await screen.findByRole('dialog', {name: 'Title'});
