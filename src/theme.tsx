@@ -173,6 +173,7 @@ export const getTexts = (locale: Locale): typeof TEXTS_ES => {
 
 export const NAVBAR_HEIGHT_MOBILE = 56;
 export const NAVBAR_HEIGHT_DESKTOP = 80;
+export const NAVBAR_HEIGHT_DESKTOP_LARGE = 2 * NAVBAR_HEIGHT_DESKTOP;
 
 export const dimensions = {
     headerMobileHeight: NAVBAR_HEIGHT_MOBILE,

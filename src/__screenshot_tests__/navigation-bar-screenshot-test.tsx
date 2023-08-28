@@ -42,6 +42,18 @@ test.each`
     expect(menuOpenImage).toMatchImageSnapshot();
 });
 
+test('MainNavigationBar large', async () => {
+    await openStoryPage({
+        id: 'components-navigation-bars-mainnavigationbar--default',
+        device: 'DESKTOP',
+        args: {large: true},
+    });
+
+    const image = await page.screenshot();
+
+    expect(image).toMatchImageSnapshot();
+});
+
 test.each`
     inverse  | isDarkMode | device
     ${false} | ${false}   | ${'DESKTOP'}

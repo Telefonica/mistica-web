@@ -1,6 +1,6 @@
 import {style, styleVariants} from '@vanilla-extract/css';
 import {sprinkles} from './sprinkles.css';
-import {NAVBAR_HEIGHT_DESKTOP, NAVBAR_HEIGHT_MOBILE} from './theme';
+import {NAVBAR_HEIGHT_DESKTOP, NAVBAR_HEIGHT_DESKTOP_LARGE, NAVBAR_HEIGHT_MOBILE} from './theme';
 import * as mq from './media-queries.css';
 import {vars as colorVars} from './skins/skin-contract.css';
 
@@ -54,6 +54,18 @@ export const topFixed = style([
     sprinkles({
         position: 'fixed',
         top: 0,
+        left: 0,
+        right: 0,
+    }),
+    {
+        zIndex: NAVBAR_ZINDEX,
+    },
+]);
+
+export const topFixedBottomRow = style([
+    sprinkles({
+        position: 'fixed',
+        top: NAVBAR_HEIGHT_DESKTOP,
         left: 0,
         right: 0,
     }),
@@ -143,17 +155,39 @@ export const textWrapperVariants = styleVariants({
     },
 });
 
+export const navigationBarContent = style({
+    alignItems: 'center',
+    width: '100%',
+    display: 'flex',
+});
+
+export const navigationBarContentRight = style({
+    display: 'flex',
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'end',
+});
+
+const spacerMobile = style({
+    '@media': {
+        [mq.tabletOrSmaller]: {
+            height: NAVBAR_HEIGHT_MOBILE,
+        },
+    },
+});
+
 export const spacer = style([
     sprinkles({
         height: NAVBAR_HEIGHT_DESKTOP,
     }),
+    spacerMobile,
+]);
+
+export const spacerLarge = style([
     {
-        '@media': {
-            [mq.tabletOrSmaller]: {
-                height: NAVBAR_HEIGHT_MOBILE,
-            },
-        },
+        height: NAVBAR_HEIGHT_DESKTOP_LARGE,
     },
+    spacerMobile,
 ]);
 
 export const burgerMenuTransition = styleVariants({

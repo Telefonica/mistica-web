@@ -3,7 +3,6 @@ import {Transition} from 'react-transition-group';
 import classnames from 'classnames';
 import ResponsiveLayout from './responsive-layout';
 import Inline from './inline';
-import Box from './box';
 import {BaseTouchable} from './touchable';
 import {Text2, Text3} from './text';
 import {useScreenSize, useTheme, useAriaId} from './hooks';
@@ -51,6 +50,7 @@ type HeaderProps = {
     isMenuOpen?: boolean;
     dataAttributes?: DataAttributes;
     withDivider?: boolean;
+    isBottomRow?: boolean;
 };
 
 const Header = ({
@@ -61,6 +61,7 @@ const Header = ({
     isInverse,
     withDivider,
     dataAttributes,
+    isBottomRow = false,
 }: HeaderProps) => {
     const {isDarkMode} = useTheme();
 
@@ -74,7 +75,10 @@ const Header = ({
 
     return (
         <header
-            className={classnames(getBorderClass(), {[styles.topFixed]: topFixed})}
+            className={classnames(getBorderClass(), {
+                [styles.topFixed]: topFixed && !isBottomRow,
+                [styles.topFixedBottomRow]: topFixed && isBottomRow,
+            })}
             style={{
                 borderBottomWidth: withBorder ? 1 : 0,
                 background: isInverse ? vars.colors.navigationBarBackground : vars.colors.background,
@@ -83,6 +87,34 @@ const Header = ({
         >
             {children}
         </header>
+    );
+};
+
+type NavigationBarContentContainerProps = {
+    right?: React.ReactNode;
+    children?: React.ReactNode;
+};
+
+const NAVIGATION_BAR_RIGHT_CONTENT_PADDING = 136;
+const NAVIGATION_BAR_RIGHT_CONTENT_PADDING_MOBILE = 24;
+
+const NavigationBarContentContainer: React.FC<NavigationBarContentContainerProps> = ({right, children}) => {
+    const {isTabletOrSmaller} = useScreenSize();
+
+    return (
+        <div className={styles.navigationBarContent}>
+            {children}
+            <div
+                className={styles.navigationBarContentRight}
+                style={{
+                    marginLeft: isTabletOrSmaller
+                        ? NAVIGATION_BAR_RIGHT_CONTENT_PADDING_MOBILE
+                        : NAVIGATION_BAR_RIGHT_CONTENT_PADDING,
+                }}
+            >
+                {right}
+            </div>
+        </div>
     );
 };
 
@@ -101,6 +133,7 @@ type MainNavigationBarPropsBase = {
     topFixed?: boolean;
     withDivider?: boolean;
     burgerMenuExtra?: React.ReactNode;
+    large?: boolean;
 };
 
 type MainNavigationBarProps = MainNavigationBarPropsBase;
@@ -116,6 +149,7 @@ export const MainNavigationBar: React.FC<MainNavigationBarProps> = ({
     withDivider = true,
     burgerMenuExtra,
     logo,
+    large = false,
 }) => {
     const {texts, isDarkMode} = useTheme();
     const [isMenuOpen, setIsMenuOpen] = React.useState(false);
@@ -155,7 +189,7 @@ export const MainNavigationBar: React.FC<MainNavigationBarProps> = ({
                             dataAttributes={{'component-name': 'MainNavigationBar'}}
                         >
                             <ResponsiveLayout>
-                                <Inline space="between" alignItems="center">
+                                <NavigationBarContentContainer right={right}>
                                     <Inline space={24} alignItems="center">
                                         {showBurger && (
                                             <IconButton
@@ -174,8 +208,7 @@ export const MainNavigationBar: React.FC<MainNavigationBarProps> = ({
                                         )}
                                         <div className={styles.logoContainer}>{logo}</div>
                                     </Inline>
-                                    {right}
-                                </Inline>
+                                </NavigationBarContentContainer>
                             </ResponsiveLayout>
                         </Header>
                     </ThemeVariant>
@@ -222,7 +255,7 @@ export const MainNavigationBar: React.FC<MainNavigationBarProps> = ({
                                             }}
                                         >
                                             <ResponsiveLayout>
-                                                <Stack space={32}>
+                                                <Stack space={16}>
                                                     <NegativeBox>
                                                         <RowList>
                                                             {sections.map((section, index) => (
@@ -244,53 +277,72 @@ export const MainNavigationBar: React.FC<MainNavigationBarProps> = ({
         );
     }
 
+    const renderSections = () => {
+        return (
+            <nav>
+                <Inline space={32}>
+                    {sections.map(({title, ...touchableProps}, idx) => (
+                        <BaseTouchable
+                            {...touchableProps}
+                            key={idx}
+                            className={classnames(
+                                styles.section,
+                                {
+                                    [styles.selectedSectionVariantes[isInverse ? 'inverse' : 'default']]:
+                                        idx === selectedIndex,
+                                },
+                                styles.textWrapperVariants[isInverse ? 'inverse' : 'default']
+                            )}
+                        >
+                            <Text3 regular color="inherit">
+                                {title}
+                            </Text3>
+                        </BaseTouchable>
+                    ))}
+                </Inline>
+            </nav>
+        );
+    };
+
+    const hasBottomSections = large && sections.length > 0;
+
     return (
         <ThemeVariant isInverse={isInverse}>
             <Header
                 topFixed={topFixed}
-                withBorder
+                withBorder={!hasBottomSections}
                 isMenuOpen={isMenuOpen}
                 isInverse={isInverse}
-                withDivider={withDivider}
+                withDivider={withDivider && !hasBottomSections}
                 dataAttributes={{'component-name': 'MainNavigationBar'}}
             >
                 <ResponsiveLayout>
-                    <Inline space="between" alignItems="center">
+                    <NavigationBarContentContainer right={right}>
                         <Inline space={48} alignItems="center">
                             <div className={styles.logoContainer}>{logo}</div>
-                            <nav>
-                                <Inline space={32}>
-                                    {sections.map(({title, ...touchableProps}, idx) => (
-                                        <BaseTouchable
-                                            {...touchableProps}
-                                            key={idx}
-                                            className={classnames(styles.section, {
-                                                [styles.selectedSectionVariantes[
-                                                    isInverse ? 'inverse' : 'default'
-                                                ]]: idx === selectedIndex,
-                                            })}
-                                        >
-                                            <div
-                                                className={
-                                                    styles.textWrapperVariants[
-                                                        isInverse ? 'inverse' : 'default'
-                                                    ]
-                                                }
-                                            >
-                                                <Text3 regular color="inherit">
-                                                    {title}
-                                                </Text3>
-                                            </div>
-                                        </BaseTouchable>
-                                    ))}
-                                </Inline>
-                            </nav>
+                            {!hasBottomSections && renderSections()}
                         </Inline>
-                        {right}
-                    </Inline>
+                    </NavigationBarContentContainer>
                 </ResponsiveLayout>
             </Header>
-            {topFixed && <div className={styles.spacer} />}
+
+            {hasBottomSections && (
+                <Header
+                    topFixed={topFixed}
+                    withBorder
+                    isBottomRow
+                    isMenuOpen={isMenuOpen}
+                    isInverse={isInverse}
+                    withDivider={withDivider}
+                    dataAttributes={{'component-name': 'MainNavigationBar'}}
+                >
+                    <ResponsiveLayout>
+                        <NavigationBarContentContainer>{renderSections()}</NavigationBarContentContainer>
+                    </ResponsiveLayout>
+                </Header>
+            )}
+
+            {topFixed && <div className={hasBottomSections ? styles.spacerLarge : styles.spacer} />}
         </ThemeVariant>
     );
 };
@@ -329,7 +381,7 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
 }) => {
     const {texts} = useTheme();
     const content = (
-        <Inline space="between" alignItems="center">
+        <NavigationBarContentContainer right={right}>
             <Inline space={24} alignItems="center">
                 {onBack && (
                     <IconButton
@@ -344,8 +396,7 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
                     {title}
                 </Text3>
             </Inline>
-            <Box paddingLeft={24}>{right}</Box>
-        </Inline>
+        </NavigationBarContentContainer>
     );
     return (
         <ThemeVariant isInverse={isInverse}>
@@ -407,10 +458,7 @@ export const FunnelNavigationBar: React.FC<FunnelNavigationBarProps> = ({
             >
                 <ResponsiveLayout>
                     <GridLayout template="10">
-                        <Inline space="between" alignItems="center">
-                            {logo}
-                            {right}
-                        </Inline>
+                        <NavigationBarContentContainer right={right}>{logo}</NavigationBarContentContainer>
                     </GridLayout>
                 </ResponsiveLayout>
             </Header>
