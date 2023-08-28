@@ -26,11 +26,17 @@ const iconBase = style([
         position: 'absolute',
     }),
     {
-        opacity: 1,
         top: 0,
         left: 0,
-        transform: 'rotate(0) scale(1)',
         transition: 'transform 300ms, opacity 100ms',
+    },
+]);
+
+export const iconCloseOpen = style([
+    iconBase,
+    {
+        opacity: 1,
+        transform: 'rotate(0) scale(1)',
     },
 ]);
 
@@ -42,11 +48,19 @@ export const iconCloseHidden = style([
     },
 ]);
 
+export const iconMenuOpen = style([
+    iconBase,
+    {
+        opacity: 1,
+        transform: 'scale(1)',
+    },
+]);
+
 export const iconMenuHidden = style([
     iconBase,
     {
         opacity: 0,
-        transform: 'rotate(0deg) scale(0.7)',
+        transform: 'scale(0.7)',
     },
 ]);
 

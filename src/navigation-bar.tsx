@@ -30,10 +30,10 @@ import type {DataAttributes} from './utils/types';
 const BurgerMenuIcon = ({isOpen}: {isOpen: boolean}) => {
     return (
         <div className={styles.burgerIconContainer} role="presentation" data-component-name="BurgerMenuIcon">
-            <div className={isOpen ? '' : styles.iconCloseHidden}>
+            <div className={isOpen ? styles.iconCloseOpen : styles.iconCloseHidden}>
                 <IconCloseRegular />
             </div>
-            <div className={isOpen ? styles.iconMenuHidden : ''}>
+            <div className={isOpen ? styles.iconMenuHidden : styles.iconMenuOpen}>
                 <IconMenuRegular />
             </div>
         </div>
