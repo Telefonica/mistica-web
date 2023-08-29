@@ -23,6 +23,7 @@ import * as styles from './navigation-bar.css';
 import {sprinkles} from './sprinkles.css';
 import {getPrefixedDataAttributes} from './utils/dom';
 import Stack from './stack';
+import Box from './box';
 
 import type {Props as TouchableProps} from './touchable';
 import type {DataAttributes} from './utils/types';
@@ -49,7 +50,6 @@ type HeaderProps = {
     withBorder?: boolean;
     isMenuOpen?: boolean;
     dataAttributes?: DataAttributes;
-    withDivider?: boolean;
     isBottomRow?: boolean;
 };
 
@@ -59,7 +59,6 @@ const Header = ({
     withBorder,
     isMenuOpen,
     isInverse,
-    withDivider,
     dataAttributes,
     isBottomRow = false,
 }: HeaderProps) => {
@@ -67,7 +66,7 @@ const Header = ({
 
     const getBorderClass = () => {
         const inverse = isInverse && !isDarkMode;
-        if (isMenuOpen || inverse || !withDivider) return styles.navbarBorderColorVariants.noBorder;
+        if (isMenuOpen || inverse || !withBorder) return styles.navbarBorderColorVariants.noBorder;
         if (isMenuOpen && !inverse) return styles.navbarBorderColorVariants.menuOpen;
 
         return styles.navbarBorderColorVariants.default;
@@ -104,16 +103,18 @@ const NavigationBarContentContainer: React.FC<NavigationBarContentContainerProps
     return (
         <div className={styles.navigationBarContent}>
             {children}
-            <div
-                className={styles.navigationBarContentRight}
-                style={{
-                    marginLeft: isTabletOrSmaller
-                        ? NAVIGATION_BAR_RIGHT_CONTENT_PADDING_MOBILE
-                        : NAVIGATION_BAR_RIGHT_CONTENT_PADDING,
-                }}
-            >
-                {right}
-            </div>
+            {right && (
+                <div
+                    className={styles.navigationBarContentRight}
+                    style={{
+                        marginLeft: isTabletOrSmaller
+                            ? NAVIGATION_BAR_RIGHT_CONTENT_PADDING_MOBILE
+                            : NAVIGATION_BAR_RIGHT_CONTENT_PADDING,
+                    }}
+                >
+                    {right}
+                </div>
+            )}
         </div>
     );
 };
@@ -131,7 +132,7 @@ type MainNavigationBarPropsBase = {
     isInverse?: boolean;
     children?: undefined;
     topFixed?: boolean;
-    withDivider?: boolean;
+    withBorder?: boolean;
     burgerMenuExtra?: React.ReactNode;
     large?: boolean;
 };
@@ -146,7 +147,7 @@ export const MainNavigationBar: React.FC<MainNavigationBarProps> = ({
     right,
     isInverse = false,
     topFixed = true,
-    withDivider = true,
+    withBorder = true,
     burgerMenuExtra,
     logo,
     large = false,
@@ -182,10 +183,9 @@ export const MainNavigationBar: React.FC<MainNavigationBarProps> = ({
                     <ThemeVariant isInverse={isInverse}>
                         <Header
                             topFixed={topFixed}
-                            withBorder
+                            withBorder={withBorder}
                             isMenuOpen={isMenuOpen}
                             isInverse={isInverse}
-                            withDivider={withDivider}
                             dataAttributes={{'component-name': 'MainNavigationBar'}}
                         >
                             <ResponsiveLayout>
@@ -263,7 +263,9 @@ export const MainNavigationBar: React.FC<MainNavigationBarProps> = ({
                                                             ))}
                                                         </RowList>
                                                     </NegativeBox>
-                                                    {burgerMenuExtra}
+                                                    {burgerMenuExtra && (
+                                                        <Box paddingBottom={16}>{burgerMenuExtra}</Box>
+                                                    )}
                                                 </Stack>
                                             </ResponsiveLayout>
                                         </nav>
@@ -310,10 +312,9 @@ export const MainNavigationBar: React.FC<MainNavigationBarProps> = ({
         <ThemeVariant isInverse={isInverse}>
             <Header
                 topFixed={topFixed}
-                withBorder={!hasBottomSections}
+                withBorder={withBorder && !hasBottomSections}
                 isMenuOpen={isMenuOpen}
                 isInverse={isInverse}
-                withDivider={withDivider && !hasBottomSections}
                 dataAttributes={{'component-name': 'MainNavigationBar'}}
             >
                 <ResponsiveLayout>
@@ -329,11 +330,10 @@ export const MainNavigationBar: React.FC<MainNavigationBarProps> = ({
             {hasBottomSections && (
                 <Header
                     topFixed={topFixed}
-                    withBorder
+                    withBorder={withBorder}
                     isBottomRow
                     isMenuOpen={isMenuOpen}
                     isInverse={isInverse}
-                    withDivider={withDivider}
                     dataAttributes={{'component-name': 'MainNavigationBar'}}
                 >
                     <ResponsiveLayout>
@@ -354,7 +354,6 @@ interface NavigationBarCommonProps {
     right?: React.ReactElement;
     withBorder?: boolean;
     children?: undefined;
-    withDivider?: boolean;
 }
 
 interface NavigationBarTopFixedProps extends NavigationBarCommonProps {
@@ -377,7 +376,6 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
     topFixed = true,
     paddingX = 0,
     withBorder = true,
-    withDivider = true,
 }) => {
     const {texts} = useTheme();
     const content = (
@@ -405,7 +403,6 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
                 withBorder={withBorder}
                 isInverse={isInverse}
                 dataAttributes={{'component-name': 'NavigationBar'}}
-                withDivider={withDivider}
             >
                 {topFixed ? (
                     <ResponsiveLayout>{content}</ResponsiveLayout>
@@ -433,7 +430,7 @@ type FunnelNavigationBarProps = {
     right?: React.ReactElement;
     topFixed?: boolean;
     children?: undefined;
-    withDivider?: boolean;
+    withBorder?: boolean;
 };
 
 export const FunnelNavigationBar: React.FC<FunnelNavigationBarProps> = ({
@@ -441,7 +438,7 @@ export const FunnelNavigationBar: React.FC<FunnelNavigationBarProps> = ({
     right,
     isInverse = false,
     topFixed = true,
-    withDivider = true,
+    withBorder = true,
 }) => {
     const {isTabletOrSmaller} = useScreenSize();
 
@@ -451,10 +448,9 @@ export const FunnelNavigationBar: React.FC<FunnelNavigationBarProps> = ({
         <ThemeVariant isInverse={isInverse}>
             <Header
                 topFixed={topFixed}
-                withBorder
+                withBorder={withBorder}
                 isInverse={isInverse}
                 dataAttributes={{'component-name': 'FunnelNavigationBar'}}
-                withDivider={withDivider}
             >
                 <ResponsiveLayout>
                     <GridLayout template="10">

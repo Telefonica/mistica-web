@@ -42,6 +42,19 @@ test.each`
     expect(menuOpenImage).toMatchImageSnapshot();
 });
 
+test('MainNavigationBar mobile with burger menu extra', async () => {
+    const page = await openStoryPage({
+        id: 'components-navigation-bars-mainnavigationbar--default',
+        device: 'MOBILE_IOS',
+        args: {withBurgerMenuExtra: true},
+    });
+
+    await page.click(await screen.findByRole('button', {name: 'Abrir menú de navegación'}));
+
+    const menuOpenImage = await page.screenshot();
+    expect(menuOpenImage).toMatchImageSnapshot();
+});
+
 test('MainNavigationBar large', async () => {
     await openStoryPage({
         id: 'components-navigation-bars-mainnavigationbar--default',
@@ -114,11 +127,11 @@ test.each`
     ${'NavigationBar'}       | ${'MOBILE_IOS'}
     ${'MainNavigationBar'}   | ${'MOBILE_IOS'}
     ${'FunnelNavigationBar'} | ${'MOBILE_IOS'}
-`('$type without divider. device={$device}', async ({type, device}) => {
+`('$type without border. device={$device}', async ({type, device}) => {
     await openStoryPage({
         id: `components-navigation-bars-${type.toLowerCase()}--default`,
         device,
-        args: {withDivider: false},
+        args: {withBorder: false},
     });
 
     const image = await page.screenshot();

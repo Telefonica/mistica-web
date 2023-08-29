@@ -6,6 +6,7 @@ import {
     MainNavigationBar,
     NavigationBarAction,
     NavigationBarActionGroup,
+    Placeholder,
     useScreenSize,
 } from '..';
 import avatarImg from './images/avatar.jpg';
@@ -20,16 +21,17 @@ export default {
 
 const sections = ['Start', 'Account', 'Explore', 'Support'];
 
-type Args = {inverse: boolean; withDivider: boolean; large: boolean};
+type Args = {inverse: boolean; withBorder: boolean; withBurgerMenuExtra: boolean; large: boolean};
 
-export const Default: StoryComponent<Args> = ({inverse, withDivider, large}) => {
+export const Default: StoryComponent<Args> = ({inverse, withBorder, withBurgerMenuExtra, large}) => {
     const [selectedIndex, setSelectedIndex] = React.useState(0);
     const {isDesktopOrBigger} = useScreenSize();
     return (
         <MainNavigationBar
             isInverse={inverse}
             large={large}
-            withDivider={withDivider}
+            withBorder={withBorder}
+            burgerMenuExtra={withBurgerMenuExtra ? <Placeholder /> : undefined}
             sections={sections.map((title, idx) => ({title, onPress: () => setSelectedIndex(idx)}))}
             selectedIndex={selectedIndex}
             right={
@@ -53,6 +55,7 @@ Default.storyName = 'MainNavigationBar';
 
 Default.args = {
     inverse: false,
-    withDivider: true,
+    withBorder: true,
+    withBurgerMenuExtra: false,
     large: false,
 };
