@@ -1,4 +1,4 @@
-import {openStoryPage, screen} from '../test-utils';
+import {openStoryPage, screen, setRootFontSize} from '../test-utils';
 
 import type {Device} from '../test-utils';
 
@@ -31,7 +31,7 @@ test.each(BUTTONS)('Buttons - %s - inverse', async (button) => {
     await openStoryPage({
         id: `components-buttons--${button.toLowerCase().replace(' ', '-')}`,
         device: 'MOBILE_IOS',
-        args: {isInverse: true},
+        args: {inverse: true},
     });
 
     const story = await screen.findByTestId('content');
@@ -122,3 +122,20 @@ test.each(getLinkWithChevronCases())(
         expect(image).toMatchImageSnapshot();
     }
 );
+
+test('Buttons - Link button with chevron and big font size', async () => {
+    await openStoryPage({
+        id: 'components-buttons--link-button',
+        device: 'MOBILE_IOS',
+        args: {
+            withChevron: true,
+        },
+    });
+
+    await setRootFontSize(32);
+
+    const story = await screen.findByTestId('content');
+
+    const image = await story.screenshot();
+    expect(image).toMatchImageSnapshot();
+});

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import classnames from 'classnames';
 import {SkeletonRectangle} from './skeletons';
-import {AspectRatioElement} from './utils/aspect-ratio-support';
+import {AspectRatioContainer} from './utils/aspect-ratio-support';
 import {getPrefixedDataAttributes} from './utils/dom';
 import {useIsInverseVariant} from './theme-variant-context';
 import {useTheme} from './hooks';
@@ -10,7 +10,9 @@ import {sprinkles} from './sprinkles.css';
 import * as styles from './image.css';
 import {vars} from './skins/skin-contract.css';
 import {combineRefs} from './utils/common';
+import SkeletonBase from './skeleton-base';
 
+import type {ExclusifyUnion} from './utils/utility-types';
 import type {DataAttributes} from './utils/types';
 
 /**
@@ -49,12 +51,13 @@ const VivoLogo = ({style}: VivoLogoProps) => {
 
 type ImageErrorProps = {
     noBorderRadius?: boolean;
+    circular?: boolean;
     withIcon?: boolean;
     border?: boolean;
 };
 
 export const ImageError = React.forwardRef<HTMLDivElement, ImageErrorProps>(
-    ({noBorderRadius, withIcon = true, border}, ref) => {
+    ({noBorderRadius, circular, withIcon = true, border}, ref) => {
         const isInverse = useIsInverseVariant();
         const {skinName} = useTheme();
         return (
@@ -70,7 +73,7 @@ export const ImageError = React.forwardRef<HTMLDivElement, ImageErrorProps>(
                         : vars.colors.backgroundSkeleton,
                     boxSizing: 'border-box',
                     border: border ? `1px solid ${vars.colors.borderLow}` : 'none',
-                    borderRadius: noBorderRadius ? undefined : vars.borderRadii.container,
+                    borderRadius: circular ? '50%' : noBorderRadius ? undefined : vars.borderRadii.container,
                 }}
                 ref={ref}
             >
@@ -105,13 +108,8 @@ export const RATIO = {
     '4:3': 4 / 3,
 };
 
-export type ImageProps = {
+type CommonImageProps = {
     src: string;
-    /** defaults to 100% when no width and no height are given */
-    width?: string | number;
-    height?: string | number;
-    /** defaults to 1:1, if both width and height are given, aspectRatio is ignored. To use original image proportions, set aspectRatio to 0  */
-    aspectRatio?: AspectRatio | number;
     /** defaults to empty string */
     alt?: string;
     children?: void;
@@ -124,10 +122,34 @@ export type ImageProps = {
     border?: boolean;
 };
 
+type RectangularImageProps = {
+    /** defaults to 1:1, if both width and height are given, aspectRatio is ignored. To use original image proportions, set aspectRatio to 0  */
+    aspectRatio?: AspectRatio | number;
+    /** defaults to 100% when no width and no height are given */
+    width?: string | number;
+    height?: string | number;
+    noBorderRadius?: boolean;
+};
+
+const DEFAULT_ASPECT_RATIO = '1:1';
+
+type CircularImageProps = {
+    circular?: boolean;
+} & ExclusifyUnion<
+    | {
+          width?: string | number;
+      }
+    | {
+          height?: string | number;
+      }
+>;
+
+type ImageProps = CommonImageProps & ExclusifyUnion<RectangularImageProps | CircularImageProps>;
+
 export const ImageContent = React.forwardRef<HTMLImageElement, ImageProps>(
     (
         {
-            aspectRatio = '1:1',
+            aspectRatio = DEFAULT_ASPECT_RATIO,
             alt = '',
             dataAttributes,
             noBorderRadius,
@@ -144,11 +166,11 @@ export const ImageContent = React.forwardRef<HTMLImageElement, ImageProps>(
         const borderRadiusContext = useMediaBorderRadius();
         const border = props.border ? `1px solid ${vars.colors.borderLow}` : 'none';
         const noBorderSetting = noBorderRadius ?? !borderRadiusContext;
-        const [isError, setIsError] = React.useState(false);
+        const [isError, setIsError] = React.useState(!src);
         const [isLoading, setIsLoading] = React.useState(true);
         const [hideLoadingFallback, setHideLoadingFallback] = React.useState(false);
 
-        const ratio = typeof aspectRatio === 'number' ? aspectRatio : RATIO[aspectRatio];
+        const ratio = props.circular ? 1 : typeof aspectRatio === 'number' ? aspectRatio : RATIO[aspectRatio];
 
         const withLoadingFallback = loadingFallback && !!(ratio !== 0 || (props.width && props.height));
         const withErrorFallback = errorFallback && !!(ratio !== 0 || (props.width && props.height));
@@ -167,7 +189,6 @@ export const ImageContent = React.forwardRef<HTMLImageElement, ImageProps>(
             // https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/issues/309
             // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
             <img
-                {...getPrefixedDataAttributes(dataAttributes)}
                 style={{
                     ...(isLoading && withLoadingFallback ? {opacity: 0} : {opacity: 1}),
                     boxSizing: 'border-box',
@@ -179,7 +200,11 @@ export const ImageContent = React.forwardRef<HTMLImageElement, ImageProps>(
                     styles.image,
                     sprinkles({
                         position: ratio !== 0 ? 'absolute' : 'static',
-                        borderRadius: noBorderSetting ? undefined : vars.borderRadii.container,
+                        borderRadius: props.circular
+                            ? '50%'
+                            : noBorderSetting
+                            ? undefined
+                            : vars.borderRadii.container,
                     })
                 )}
                 alt={alt}
@@ -205,11 +230,15 @@ export const ImageContent = React.forwardRef<HTMLImageElement, ImageProps>(
             <>
                 {withLoadingFallback && !hideLoadingFallback && (
                     <div style={{position: 'absolute', width: '100%', height: '100%'}}>
-                        <SkeletonRectangle
-                            width={props.width}
-                            height={props.height}
-                            noBorderRadius={noBorderSetting}
-                        />
+                        {props.circular ? (
+                            <SkeletonBase width="100%" height="100%" radius="50%" />
+                        ) : (
+                            <SkeletonRectangle
+                                width={props.width}
+                                height={props.height}
+                                noBorderRadius={noBorderSetting}
+                            />
+                        )}
                     </div>
                 )}
                 {isError && withErrorFallback && (
@@ -221,7 +250,11 @@ export const ImageContent = React.forwardRef<HTMLImageElement, ImageProps>(
                             zIndex: 1,
                         }}
                     >
-                        <ImageError noBorderRadius={noBorderSetting} border={props.border} />
+                        <ImageError
+                            circular={props.circular}
+                            noBorderRadius={noBorderSetting}
+                            border={props.border}
+                        />
                     </div>
                 )}
                 {!isError && img}
@@ -230,18 +263,23 @@ export const ImageContent = React.forwardRef<HTMLImageElement, ImageProps>(
     }
 );
 
-const Image = React.forwardRef<HTMLImageElement, ImageProps>(({aspectRatio = '1:1', ...props}, ref) => {
-    const ratio = typeof aspectRatio === 'number' ? aspectRatio : RATIO[aspectRatio];
+const Image = React.forwardRef<HTMLImageElement, ImageProps>((props, ref) => {
+    const ratio = props.circular
+        ? 1
+        : typeof props.aspectRatio === 'number'
+        ? props.aspectRatio
+        : RATIO[props.aspectRatio ?? DEFAULT_ASPECT_RATIO];
 
     return (
-        <AspectRatioElement
+        <AspectRatioContainer
             style={{position: 'relative'}}
             aspectRatio={ratio}
             width={props.width}
             height={props.height}
+            dataAttributes={getPrefixedDataAttributes(props.dataAttributes, 'Image')}
         >
-            <ImageContent aspectRatio={aspectRatio} {...props} ref={ref} />
-        </AspectRatioElement>
+            <ImageContent {...props} ref={ref} />
+        </AspectRatioContainer>
     );
 });
 

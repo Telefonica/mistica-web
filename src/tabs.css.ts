@@ -13,9 +13,9 @@ export const outerBorder = style({
 
 export const outer = style([
     sprinkles({
-        height: TAB_HEIGHT,
+        minHeight: TAB_HEIGHT,
+        width: '100%',
         position: 'relative',
-        overflow: 'hidden',
     }),
     {
         '@media': {
@@ -25,42 +25,48 @@ export const outer = style([
         },
     },
 ]);
-export const inner = style([
-    sprinkles({
-        position: 'absolute',
-        left: 0,
-        right: 0,
-        // this height is to hide the scrollbar
-        height: 80,
-    }),
-    {
-        // if tabs don't fit horizontally they can be scrolled
-        overflowX: 'scroll',
-        overflowY: 'hidden',
+export const inner = style({
+    position: 'relative',
+    width: '100%',
+    // if tabs don't fit horizontally they can be scrolled
+    overflowX: 'scroll',
+
+    // hide scrollbar
+    scrollbarWidth: 'none', // Firefox
+    '::-webkit-scrollbar': {
+        display: 'none', // Chrome/Safari
     },
-]);
+});
 export const tabsContainer = sprinkles({
-    height: TAB_HEIGHT,
+    minHeight: TAB_HEIGHT,
+    width: '100%',
     display: 'flex',
 });
 
 const baseTab = style([
     sprinkles({
         display: 'inline-flex',
+        flexShrink: 0,
         alignItems: 'center',
         justifyContent: 'center',
-        paddingLeft: 16,
-        paddingRight: 16,
-        height: TAB_HEIGHT,
+        paddingX: 16,
+        minWidth: 80,
+        minHeight: TAB_HEIGHT,
         background: 'transparent',
     }),
     {
-        flex: '1 0 80px',
+        /**
+         * Setting margin to 0, in order to avoid Safari from automatically adding extra margin to
+         * the touchable container (https://stackoverflow.com/a/71093016)
+         */
+        margin: 0,
+        textAlign: 'center',
         verticalAlign: 'baseline',
         borderBottom: '2px solid transparent',
         borderTop: 'initial',
         borderRight: 'initial',
         borderLeft: 'initial',
+        maxWidth: TAB_MAX_WIDTH,
         '@media': {
             [mq.supportsHover]: {
                 ':hover': {
@@ -68,45 +74,27 @@ const baseTab = style([
                 },
             },
             [mq.desktopOrBigger]: {
-                flex: '0 1 208px',
                 padding: `16px 32px`,
-                maxWidth: TAB_MAX_WIDTH,
             },
         },
     },
 ]);
 
 export const tabVariants = styleVariants({
-    default: [
+    default: [baseTab],
+    fullWidth: [
         baseTab,
-        style({
-            maxWidth: TAB_MAX_WIDTH,
-        }),
-    ],
-    tabs2: [
-        baseTab,
-        style({
-            maxWidth: [`max(50%, ${TAB_MAX_WIDTH}px)`, TAB_MAX_WIDTH], // max() is not supported by all browsers
-        }),
-    ],
-    tabs3: [
-        baseTab,
-        style({
-            maxWidth: [`max(33.33%, ${TAB_MAX_WIDTH}px)`, TAB_MAX_WIDTH], // max() is not supported by all browsers
-        }),
-    ],
-});
-
-export const tabWithIcon = style({
-    flexBasis: 112,
-    '@media': {
-        [mq.desktopOrBigger]: {
-            flexBasis: 208,
+        {
+            '@media': {
+                [mq.tabletOrSmaller]: {
+                    flex: '1 1 0px',
+                },
+            },
         },
-    },
+    ],
 });
 
-const tabSelectedBae = sprinkles({
+const tabSelectedBase = sprinkles({
     color: vars.colors.textPrimary,
 });
 
@@ -117,13 +105,13 @@ export const tabSelectionVariants = styleVariants({
         }),
     ],
     selected: [
-        tabSelectedBae,
+        tabSelectedBase,
         style({
             borderBottom: `2px solid ${vars.colors.controlActivated}`,
         }),
     ],
     selectedAnimating: [
-        tabSelectedBae,
+        tabSelectedBase,
         style({
             borderBottom: '2px solid transparent',
         }),
@@ -131,7 +119,6 @@ export const tabSelectionVariants = styleVariants({
 });
 
 export const icon = style({
-    marginRight: 8,
     height: pxToRem(24),
     width: pxToRem(24),
 });

@@ -4991,10 +4991,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tef-novum/webview-bridge@npm:^3.8.0":
-  version: 3.8.0
-  resolution: "@tef-novum/webview-bridge@npm:3.8.0"
-  checksum: 0438e76a70b1f41c883380009a71eecbf7fcf78bf7f0a5ec243400841d17b4ba95b5827d9cce3ca6d0276f21dc1cc614ec77fe2f2946d36c81cec6735c66569a
+"@tef-novum/webview-bridge@npm:^3.27.0":
+  version: 3.27.0
+  resolution: "@tef-novum/webview-bridge@npm:3.27.0"
+  checksum: acbbb406bca0b7a836274f0630852837c1ab1369c3128f95086b47469124c16e7b498779af4d3a15a5cfe6cd87ca55d31c5106379bfe40ea80ee9e7a131de9ce
   languageName: node
   linkType: hard
 
@@ -5018,9 +5018,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@telefonica/eslint-config@npm:^1.6.0":
-  version: 1.6.0
-  resolution: "@telefonica/eslint-config@npm:1.6.0"
+"@telefonica/eslint-config@npm:^1.7.0":
+  version: 1.7.0
+  resolution: "@telefonica/eslint-config@npm:1.7.0"
   dependencies:
     "@babel/eslint-parser": ^7.22.5
     "@babel/preset-react": ^7.22.5
@@ -5038,7 +5038,7 @@ __metadata:
     eslint-plugin-testing-library: ^5.11.0
   peerDependencies:
     eslint: ">=7"
-  checksum: 4a4d122daf6464af6b80088b0bd885c28a9e0e54170bf86bf388b7ccbe5c8f032ee824e3155c0467f0cab62b09b1dad6acd6c1b7816fd8dbb2e26f35077f0ca0
+  checksum: 94619bec6692c9bf2e7348b9b115c83d62db6f8286992fdfecb145e9beaa7f994e99052c8252b5c94bcdf5dacffb6bc5c77bb03523f5e3ae530e59e38c269e39
   languageName: node
   linkType: hard
 
@@ -5094,9 +5094,9 @@ __metadata:
     "@swc/cli": ^0.1.62
     "@swc/core": ^1.3.61
     "@swc/jest": ^0.2.26
-    "@tef-novum/webview-bridge": ^3.8.0
+    "@tef-novum/webview-bridge": ^3.27.0
     "@telefonica/acceptance-testing": 2.13.0
-    "@telefonica/eslint-config": ^1.6.0
+    "@telefonica/eslint-config": ^1.7.0
     "@telefonica/libphonenumber": ^2.8.1
     "@telefonica/prettier-config": ^1.1.0
     "@testing-library/jest-dom": ^5.16.5
@@ -12527,7 +12527,7 @@ __metadata:
 
 "fsevents@patch:fsevents@^1.0.0#~builtin<compat/fsevents>, fsevents@patch:fsevents@^1.2.7#~builtin<compat/fsevents>":
   version: 1.2.13
-  resolution: "fsevents@patch:fsevents@npm%3A1.2.13#~builtin<compat/fsevents>::version=1.2.13&hash=18f3a7"
+  resolution: "fsevents@patch:fsevents@npm%3A1.2.13#~builtin<compat/fsevents>::version=1.2.13&hash=d11327"
   dependencies:
     bindings: ^1.5.0
     nan: ^2.12.1
@@ -12537,7 +12537,7 @@ __metadata:
 
 "fsevents@patch:fsevents@^2.3.2#~builtin<compat/fsevents>, fsevents@patch:fsevents@~2.3.2#~builtin<compat/fsevents>":
   version: 2.3.2
-  resolution: "fsevents@patch:fsevents@npm%3A2.3.2#~builtin<compat/fsevents>::version=2.3.2&hash=18f3a7"
+  resolution: "fsevents@patch:fsevents@npm%3A2.3.2#~builtin<compat/fsevents>::version=2.3.2&hash=df0bf1"
   dependencies:
     node-gyp: latest
   conditions: os=darwin
@@ -20752,7 +20752,7 @@ __metadata:
 
 "resolve@patch:resolve@^1.1.6#~builtin<compat/resolve>, resolve@patch:resolve@^1.1.7#~builtin<compat/resolve>, resolve@patch:resolve@^1.10.0#~builtin<compat/resolve>, resolve@patch:resolve@^1.14.2#~builtin<compat/resolve>, resolve@patch:resolve@^1.19.0#~builtin<compat/resolve>, resolve@patch:resolve@^1.20.0#~builtin<compat/resolve>, resolve@patch:resolve@^1.22.1#~builtin<compat/resolve>, resolve@patch:resolve@^1.3.2#~builtin<compat/resolve>":
   version: 1.22.3
-  resolution: "resolve@patch:resolve@npm%3A1.22.3#~builtin<compat/resolve>::version=1.22.3&hash=07638b"
+  resolution: "resolve@patch:resolve@npm%3A1.22.3#~builtin<compat/resolve>::version=1.22.3&hash=c3c19d"
   dependencies:
     is-core-module: ^2.12.0
     path-parse: ^1.0.7
@@ -20765,7 +20765,7 @@ __metadata:
 
 "resolve@patch:resolve@^2.0.0-next.4#~builtin<compat/resolve>":
   version: 2.0.0-next.4
-  resolution: "resolve@patch:resolve@npm%3A2.0.0-next.4#~builtin<compat/resolve>::version=2.0.0-next.4&hash=07638b"
+  resolution: "resolve@patch:resolve@npm%3A2.0.0-next.4#~builtin<compat/resolve>::version=2.0.0-next.4&hash=c3c19d"
   dependencies:
     is-core-module: ^2.9.0
     path-parse: ^1.0.7
@@ -23120,11 +23120,11 @@ __metadata:
 
 "typescript@patch:typescript@^4.4.3#~builtin<compat/typescript>, typescript@patch:typescript@^4.5.4#~builtin<compat/typescript>, typescript@patch:typescript@^4.6.3#~builtin<compat/typescript>":
   version: 4.9.4
-  resolution: "typescript@patch:typescript@npm%3A4.9.4#~builtin<compat/typescript>::version=4.9.4&hash=701156"
+  resolution: "typescript@patch:typescript@npm%3A4.9.4#~builtin<compat/typescript>::version=4.9.4&hash=289587"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 37f6e2c3c5e2aa5934b85b0fddbf32eeac8b1bacf3a5b51d01946936d03f5377fe86255d4e5a4ae628fd0cd553386355ad362c57f13b4635064400f3e8e05b9d
+  checksum: 2160f7ad975c59b2f5816817d3916be1d156c5688a7517602b3b640c5015e740f4ba933996ac85371d68f7bbdd41602150fb8b68334122ac637fdb5418085e7a
   languageName: node
   linkType: hard
 

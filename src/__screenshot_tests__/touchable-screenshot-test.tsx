@@ -1,9 +1,9 @@
-import {openStoryPage} from '../test-utils';
+import {openStoryPage, screen} from '../test-utils';
 
 test('Touchable', async () => {
     await openStoryPage({id: 'components-primitives-touchable--default'});
 
-    const image = await page.screenshot({fullPage: true});
+    const story = await screen.findByTestId('touchable');
 
-    expect(image).toMatchImageSnapshot();
+    expect(await story.screenshot()).toMatchImageSnapshot();
 });

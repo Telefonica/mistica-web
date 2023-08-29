@@ -18,6 +18,7 @@ import {
 import {Placeholder} from '../placeholder';
 import avatarImg from './images/avatar.jpg';
 
+import type {AspectRatio} from '../card';
 import type {TagType} from '..';
 
 export default {
@@ -36,7 +37,10 @@ type DisplayDataCardArgs = {
     withTopAction: boolean;
     actions: 'button' | 'link' | 'button and link' | 'button and secondary button';
     isInverse: boolean;
+    aspectRatio: AspectRatio;
 };
+
+const fixedAspectRatioValues = ['1 1', '16 9', '7 10', '9 10'];
 
 export const Default: StoryComponent<DisplayDataCardArgs> = ({
     asset = 'icon',
@@ -50,6 +54,7 @@ export const Default: StoryComponent<DisplayDataCardArgs> = ({
     closable,
     withTopAction,
     isInverse,
+    aspectRatio,
 }) => {
     let icon;
     if (asset === 'circle + icon') {
@@ -89,6 +94,10 @@ export const Default: StoryComponent<DisplayDataCardArgs> = ({
               secondaryButton,
           };
 
+    const aspectRatioValue = fixedAspectRatioValues.includes(aspectRatio)
+        ? aspectRatio.replace(' ', ':')
+        : aspectRatio;
+
     return (
         <DisplayDataCard
             isInverse={isInverse}
@@ -109,6 +118,7 @@ export const Default: StoryComponent<DisplayDataCardArgs> = ({
             pretitle={pretitle}
             title={title}
             description={description}
+            aspectRatio={aspectRatioValue as AspectRatio}
             extra={withExtra ? <Placeholder /> : undefined}
             {...interactiveActions}
             dataAttributes={{testid: 'display-data-card'}}
@@ -130,6 +140,7 @@ Default.args = {
     closable: false,
     withTopAction: false,
     isInverse: false,
+    aspectRatio: 'auto',
 };
 Default.argTypes = {
     asset: {
@@ -143,6 +154,18 @@ Default.argTypes = {
     actions: {
         options: ['button', 'link', 'button and link', 'button and secondary button', 'on press'],
         control: {type: 'select'},
+    },
+    aspectRatio: {
+        options: ['auto', '1 1', '16 9', '7 10', '9 10'],
+        control: {
+            type: 'select',
+            labels: {
+                '1 1': '1:1',
+                '16 9': '16:9',
+                '7 10': '7:10',
+                '9 10': '9:10',
+            },
+        },
     },
 };
 

@@ -339,6 +339,7 @@ const Select: React.FC<SelectProps> = ({
                 style={{
                     paddingTop: label ? 24 : 16,
                     paddingBottom: label ? 8 : 16,
+                    paddingRight: 48,
                     // Override default browser opacity when disabled. This opacity also affects the label.
                     // Without this fix, the label is invisible when disabled
                     opacity: 1,

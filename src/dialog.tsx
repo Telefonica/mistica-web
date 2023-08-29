@@ -13,7 +13,7 @@ import {Text5, Text4, Text3} from './text';
 import {ESC} from './utils/key-codes';
 import Box from './box';
 import {isRunningAcceptanceTest} from './utils/platform';
-import {useSetModalState} from './modal-context-provider';
+import {useSetModalStateEffect} from './modal-context-provider';
 import Stack from './stack';
 import * as styles from './dialog.css';
 import {vars} from './skins/skin-contract.css';
@@ -303,13 +303,7 @@ const ModalDialog = (props: ModalDialogProps) => {
         };
     }, [addKeyDownListener, handleKeyDown, props, renderNative, platformOverrides]);
 
-    const setModalState = useSetModalState();
-    React.useEffect(() => {
-        setModalState({isModalOpen: true});
-        return () => {
-            setModalState({isModalOpen: false});
-        };
-    }, [setModalState]);
+    useSetModalStateEffect();
 
     /* eslint-disable jsx-a11y/no-noninteractive-element-interactions, jsx-a11y/no-static-element-interactions */
     return renderNative ? (

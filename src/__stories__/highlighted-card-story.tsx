@@ -39,7 +39,7 @@ export const Default: StoryComponent<Args> = ({
                 );
             case 'ButtonLink':
                 return (
-                    <ButtonLink href="#" aligned>
+                    <ButtonLink href="#" bleedLeft>
                         TextLink
                     </ButtonLink>
                 );

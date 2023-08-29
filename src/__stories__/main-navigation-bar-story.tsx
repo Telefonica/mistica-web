@@ -11,7 +11,7 @@ import {
 import avatarImg from './images/avatar.jpg';
 
 export default {
-    title: 'Components/Navigation bars/Main navigation bar',
+    title: 'Components/Navigation bars/MainNavigationBar',
     component: MainNavigationBar,
     parameters: {
         fullScreen: true,
@@ -20,14 +20,14 @@ export default {
 
 const sections = ['Start', 'Account', 'Explore', 'Support'];
 
-type Args = {isInverse: boolean};
+type Args = {inverse: boolean};
 
-export const Default: StoryComponent<Args> = ({isInverse}) => {
+export const Default: StoryComponent<Args> = ({inverse}) => {
     const [selectedIndex, setSelectedIndex] = React.useState(0);
     const {isDesktopOrBigger} = useScreenSize();
     return (
         <MainNavigationBar
-            isInverse={isInverse}
+            isInverse={inverse}
             sections={sections.map((title, idx) => ({title, onPress: () => setSelectedIndex(idx)}))}
             selectedIndex={selectedIndex}
             right={
@@ -47,8 +47,8 @@ export const Default: StoryComponent<Args> = ({isInverse}) => {
     );
 };
 
-Default.storyName = 'Main navigation bar';
+Default.storyName = 'MainNavigationBar';
 
 Default.args = {
-    isInverse: false,
+    inverse: false,
 };

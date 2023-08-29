@@ -280,7 +280,13 @@ export const getTelefonicaSkin: GetKnownSkin = () => {
             },
             link: {weight: 'medium'},
             title1: {weight: 'medium'},
+            title2: {
+                weight: 'regular',
+                size: {mobile: 20, desktop: 28},
+                lineHeight: {mobile: 24, desktop: 32},
+            },
             indicator: {weight: 'medium'},
+            navigationBar: {weight: 'medium'},
             text5: {weight: 'regular'},
             text6: {weight: 'regular'},
             text7: {weight: 'regular'},

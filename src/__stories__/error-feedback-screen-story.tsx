@@ -18,4 +18,5 @@ export const Error: StoryComponent = () => (
         errorReference="Error reference: #95001"
     />
 );
+
 Error.storyName = 'ErrorFeedbackScreen';

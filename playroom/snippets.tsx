@@ -472,7 +472,7 @@ const headerSnippets: Array<Snippet> = [
     },
     {
         group: 'Headers',
-        name: 'Basic header layout (white)',
+        name: 'Basic header layout (no inverse)',
         code: `
         <HeaderLayout
             isInverse={false}
@@ -507,7 +507,7 @@ const headerSnippets: Array<Snippet> = [
     },
     {
         group: 'Headers',
-        name: 'Header layout (with breadcrumbs)(white)',
+        name: 'Header layout (with breadcrumbs)(no inverse)',
         code: `
         <HeaderLayout
             isInverse={false}
@@ -541,7 +541,7 @@ const headerSnippets: Array<Snippet> = [
     },
     {
         group: 'Headers',
-        name: 'Main section header layout (white)',
+        name: 'Main section header layout (no inverse)',
         code: `
         <MainSectionHeaderLayout
             isInverse={false}>
@@ -566,7 +566,7 @@ const tabsSnippets: Array<Snippet> = [
             tabs={[
                 {text: 'Tab 1'},
                 {text: 'Tab 2'},
-                {text: 'Tab 2'},
+                {text: 'Tab 3'},
             ]}
         />`,
     },
@@ -615,6 +615,7 @@ const cardSnippets: Array<Snippet> = [
             title="Title"
             subtitle="Subtitle"
             description="Description"
+            icon={<Avatar size={40} src="https://source.unsplash.com/600x600/?face" />}
             extra={<Placeholder />}
             button={
                 <ButtonPrimary small onPress={() => {}}>
@@ -635,6 +636,7 @@ const cardSnippets: Array<Snippet> = [
             title="Title"
             subtitle="Subtitle"
             description="Description"
+            icon={<Avatar size={40} src="https://source.unsplash.com/600x600/?face" />}
             extra={<Placeholder />}
             button={
                 <ButtonPrimary small onPress={() => {}}>
@@ -794,6 +796,102 @@ const cardSnippets: Array<Snippet> = [
           }
         />`,
     },
+    {
+        group: 'Cards',
+        name: 'PosterCard inverse',
+        code: `
+        <PosterCard
+          headline={<Tag type="promo">Headline</Tag>}
+          pretitle="Pretitle"
+          title="Title"
+          description="Description"
+          isInverse
+          onClose={() => {}}
+          onPress={() => {alert({ title: "pressed" });}}
+          actions={[
+            {
+              Icon: IconLightningRegular,
+              onPress: () => {},
+              label: "Lightning",
+            },
+          ]}
+        />`,
+    },
+    {
+        group: 'Cards',
+        name: 'PosterCard with backgroundColor',
+        code: `
+        <PosterCard
+          headline={<Tag type="promo">Headline</Tag>}
+          pretitle="Pretitle"
+          title="Title"
+          description="Description"
+          backgroundColor={colors.promo}
+          isInverse
+          onClose={() => {}}
+          onPress={() => {alert({ title: "pressed" });}}
+          actions={[
+            {
+              Icon: IconLightningRegular,
+              onPress: () => {},
+              label: "Lightning",
+            },
+          ]}
+        />`,
+    },
+
+    {
+        group: 'Cards',
+        name: 'NakedCard with Image',
+        code: `
+        <NakedCard
+            media={<Image src="https://picsum.photos/1200/1200" aspectRatio="16:9"/>}
+            headline={<Tag type="promo">Headline</Tag>}
+            pretitle="Pretitle"
+            title="Title"
+            subtitle="Subtitle"
+            description="Description"
+            extra={<Placeholder />}
+            button={
+                <ButtonPrimary small onPress={() => {}}>
+                    Action
+                </ButtonPrimary>
+            }
+            buttonLink={<ButtonLink onPress={() => {}}>Link</ButtonLink>}
+        />`,
+    },
+    {
+        group: 'Cards',
+        name: 'NakedCard with Video',
+        code: `
+        <NakedCard
+            media={<Video src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4" aspectRatio="16:9" />}
+            headline={<Tag color={colors.promo}>headline</Tag>}
+            pretitle="Pretitle"
+            title="Title"
+            subtitle="Subtitle"
+            description="Description"
+            extra={<Placeholder />}
+            button={
+                <ButtonPrimary small onPress={() => {}}>
+                    Action
+                </ButtonPrimary>
+            }
+            buttonLink={<ButtonLink onPress={() => {}}>Link</ButtonLink>}
+        />`,
+    },
+
+    {
+        group: 'Cards',
+        name: 'SmallNakedCard',
+        code: `
+        <SmallNakedCard
+            media={<Image src="https://picsum.photos/1200/1200" aspectRatio="16:9"/>}
+            title="Title"
+            subtitle="Subtitle"
+            description="Description"
+        />`,
+    },
 ];
 
 const titlesSnippets: Array<Snippet> = [
@@ -803,7 +901,7 @@ const titlesSnippets: Array<Snippet> = [
     },
     {
         name: 'Title1 (with link)',
-        code: '<Title1 right={<TextLink onPress={() => {}}>Link</TextLink>}>Some title</Title1>',
+        code: '<Title1 right={<ButtonLink onPress={() => {}} withChevron bleedRight bleedY>Link</ButtonLink>}>Some title</Title1>',
     },
     {
         name: 'Title2',
@@ -811,7 +909,7 @@ const titlesSnippets: Array<Snippet> = [
     },
     {
         name: 'Title2 (with link)',
-        code: '<Title2 right={<TextLink onPress={() => {}}>Link</TextLink>}>Some title</Title2>',
+        code: '<Title2 right={<ButtonLink onPress={() => {}} withChevron bleedRight bleedY>Link</ButtonLink>}>Some title</Title2>',
     },
 ].map((snippet) => ({...snippet, group: 'Titles'}));
 
@@ -1156,7 +1254,7 @@ const exampleScreens: Array<Snippet> = [
                     label="Password"
                     helperText="Helper text"
                   />
-                  <ButtonLink aligned onPress>
+                  <ButtonLink bleedLeft onPress>
                     I’m having problems with my password
                   </ButtonLink>
                 </Stack>
@@ -1169,7 +1267,7 @@ const exampleScreens: Array<Snippet> = [
                   </Text3>
                   <TextField name="phone" label="Phone number" prefix="+34" />
 
-                  <ButtonLink aligned onPress>
+                  <ButtonLink bleedLeft onPress>
                     I’m having access problems
                   </ButtonLink>
                 </Stack>
@@ -1493,6 +1591,323 @@ const alertSnippets = [
     Open dialog
 </ButtonPrimary>
     `,
+    },
+    {
+        group: 'Modals',
+        name: 'showSheet (info)',
+        code: `
+<ButtonPrimary
+  onPress={() => {
+    showSheet({
+      type: "INFO",
+      props: {
+        title: "Title",
+        subtitle: "Subtitle",
+        description: "Description",
+        items: [
+          { id: "1", title: "Item 1", icon: { type: "bullet" } },
+          { id: "2", title: "Item 2", icon: { type: "bullet" } },
+        ],
+      },
+    });
+  }}
+>
+  Open sheet
+</ButtonPrimary>`,
+    },
+    {
+        group: 'Modals',
+        name: 'showSheet (actions list)',
+        code: `
+<ButtonPrimary
+  onPress={() => {
+    showSheet({
+      type: "ACTIONS_LIST",
+      props: {
+        title: "Title",
+        subtitle: "Subtitle",
+        description: "Description",
+        items: [
+          {
+            id: "1",
+            title: "Action 1",
+            icon: {
+              url: "https://source.unsplash.com/600x600/?face",
+            },
+          },
+          {
+            id: "2",
+            title: "Destructive",
+            style: "destructive",
+          },
+        ],
+      },
+    });
+  }}
+>
+  Open sheet
+</ButtonPrimary>`,
+    },
+    {
+        group: 'Modals',
+        name: 'showSheet (actions)',
+        code: `
+<ButtonPrimary
+  onPress={() => {
+    showSheet({
+      type: "ACTIONS",
+      props: {
+        title: "Title",
+        subtitle: "Subtitle",
+        description: "Description",
+        button: {
+          text: "Button",
+        },
+        link: {
+          text: "Link",
+          withChevron: true,
+        },
+      },
+    });
+  }}
+>
+  Open sheet
+</ButtonPrimary>`,
+    },
+    {
+        group: 'Modals',
+        name: 'showSheet (radio list)',
+        code: `
+<ButtonPrimary
+  onPress={() => {
+    showSheet({
+      type: "RADIO_LIST",
+      props: {
+        title: "Title",
+        subtitle: "Subtitle",
+        description: "Description",
+        selectedId: "1",
+        items: [
+          {
+            id: "1",
+            title: "Item 1",
+            description: "Description",
+            icon: {
+              url: "https://source.unsplash.com/600x600/?face",
+            },
+          },
+          {
+            id: "2",
+            title: "Item 2",
+            description: "Description",
+            icon: {
+              url: "unknownurl",
+            },
+          },
+        ],
+      },
+    });
+  }}
+>
+  Open sheet
+</ButtonPrimary>`,
+    },
+    {
+        group: 'Modals',
+        name: 'Sheet',
+        code: `
+<ButtonPrimary
+  disabled={getState("isSheetOpen")}
+  onPress={() => {
+    setState("isSheetOpen", true);
+  }}
+>
+  Open
+</ButtonPrimary>
+
+{getState("isSheetOpen") && (
+  <Sheet
+    onClose={() => {
+      setState("isSheetOpen", false);
+    }}
+  >
+    <ResponsiveLayout>
+      <Box
+        paddingBottom={{ mobile: 16, desktop: 40 }}
+        paddingTop={{ mobile: 0, desktop: 40 }}
+      >
+        <Placeholder />
+      </Box>
+    </ResponsiveLayout>
+  </Sheet>
+)}`,
+    },
+    {
+        group: 'Modals',
+        name: 'InfoSheet',
+        code: `
+<ButtonPrimary
+  disabled={getState("isSheetOpen")}
+  onPress={() => {
+    setState("isSheetOpen", true);
+  }}
+>
+  Open
+</ButtonPrimary>
+
+{getState("isSheetOpen") && (
+  <InfoSheet
+    onClose={() => {
+      setState("isSheetOpen", false);
+    }}
+    title="Title"
+    subtitle="Subtitle"
+    description="Description"
+    items={[
+      {
+        id: "1",
+        title: "Item 1",
+        description: "Description",
+        icon: { type: "bullet" },
+      },
+      {
+        id: "2",
+        title: "Item 2",
+        description: "Description",
+        icon: { type: "regular", Icon: IconCocktailRegular },
+      },
+      {
+        id: "3",
+        title: "Item 3",
+        description: "Description",
+        icon: { type: "small", Icon: IconCheckRegular },
+      },
+    ]}
+  />
+)}`,
+    },
+    {
+        group: 'Modals',
+        name: 'RadioListSheet',
+        code: `
+<ButtonPrimary
+  disabled={getState("isSheetOpen")}
+  onPress={() => {
+    setState("isSheetOpen", true);
+  }}
+>
+  Open
+</ButtonPrimary>
+
+{getState("isSheetOpen") && (
+  <RadioListSheet
+    onClose={() => {
+      setState("isSheetOpen", false);
+    }}
+    onSelect={(selected) => console.log(selected)}
+    title="Title"
+    subtitle="Subtitle"
+    description="Description"
+    items={[
+      "Apple",
+      "Banana",
+      "Pineapple",
+      "Mango",
+      "Peach",
+      "Pear",
+      "Strawberry",
+      "Watermelon",
+      "Kiwi",
+      "Cherry",
+      "Grape",
+      "Lemon",
+      "Lime",
+    ].map((fruit, idx) => ({
+      id: String(idx),
+      title: fruit,
+      description: "Description",
+      asset: (
+        <Circle backgroundColor={skinVars.colors.brandLow} size={40}>
+          <IconMobileDeviceRegular color={skinVars.colors.brand} />
+        </Circle>
+      ),
+    }))}
+  />
+)}`,
+    },
+    {
+        group: 'Modals',
+        name: 'ActionsListSheet',
+        code: `
+<ButtonPrimary
+  disabled={getState("isSheetOpen")}
+  onPress={() => {
+    setState("isSheetOpen", true);
+  }}
+>
+  Open
+</ButtonPrimary>
+
+{getState("isSheetOpen") && (
+  <ActionsListSheet
+    onClose={() => {
+      setState("isSheetOpen", false);
+    }}
+    onSelect={(selected) => console.log(selected)}
+    title="Title"
+    subtitle="Subtitle"
+    description="Description"
+    items={[
+      {
+        id: "1",
+        title: "Action with icon",
+        icon: {
+          Icon: IconLightningRegular,
+        },
+      },
+      {
+        id: "2",
+        title: "Action without icon",
+      },
+      {
+        id: "3",
+        title: "Destructive action",
+        style: "destructive",
+        icon: {
+          Icon: IconTrashCanRegular,
+        },
+      },
+    ]}
+  />
+)}`,
+    },
+    {
+        group: 'Modals',
+        name: 'ActionsSheet',
+        code: `
+<ButtonPrimary
+  disabled={getState("isSheetOpen")}
+  onPress={() => {
+    setState("isSheetOpen", true);
+  }}
+>
+  Open
+</ButtonPrimary>
+
+{getState("isSheetOpen") && (
+  <ActionsSheet
+    onClose={() => {
+      setState("isSheetOpen", false);
+    }}
+    onPressButton={(selected) => console.log(selected)}
+    title="Title"
+    subtitle="Subtitle"
+    description="Description"
+    button={{ text: "Primary" }}
+    secondaryButton={{ text: "Secondary" }}
+    buttonLink={{ text: "Link", withChevron: true }}
+  />
+)}`,
     },
 ];
 
@@ -1858,6 +2273,171 @@ const stackingGroupSnippets = [
     },
 ];
 
+const advancedDataCardSnippets = [
+    {
+        name: 'Advanced Data Card',
+        code: `
+        <AdvancedDataCard
+          title="title"
+          titleAs="h2"
+          subtitle="subtitle"
+          pretitle="pretitle"
+          pretitleAs="h4"
+          description="description"
+          extra={[
+            <RowBlock title="RowBlock" description="description" />,
+            <SimpleBlock
+              image={
+                <Image src="https://source.unsplash.com/600x600/?face" height={40} />
+              }
+              description="SimpleBlock"
+            />,
+            <InformationBlock
+              title="InformationBlock"
+              description="description"
+              value="20"
+              secondaryValue="20"
+            />,
+            <HighlightedValueBlock
+              headline={
+                <Tag type="promo" Icon={IconStarFilled}>
+                  Promo
+                </Tag>
+              }
+              mainHeading={{ text: "text", value: "20" }}
+              secondHeading={{ text: "text", value: "20" }}
+              title="HighlightedValueBlock"
+              description="description"
+            />,
+            <ValueBlock title="ValueBlock" description="description" value="20" />,
+            <ProgressBlock
+              title="Progress Block"
+              heading={{
+                value: "20 GB",
+                text: "text",
+              }}
+              progressPercent={20}
+              description="description"
+            />,
+            <StackingGroup maxItems={5} moreItemsStyle={{ type: "circle", size: 64 }}>
+              <Avatar size={64} src="https://source.unsplash.com/600x600/?face" />
+              <Avatar size={64} src="https://source.unsplash.com/600x600/?face" />
+              <Avatar size={64} src="https://source.unsplash.com/600x600/?face" />
+              <Avatar size={64} src="https://source.unsplash.com/600x600/?face" />
+              <Avatar size={64} src="https://source.unsplash.com/600x600/?face" />
+              <Avatar size={64} src="https://source.unsplash.com/600x600/?face" />
+            </StackingGroup>,
+          ]}
+          button={
+            <ButtonPrimary small onPress={() => window.alert("click")}>
+              Action
+            </ButtonPrimary>
+          }
+          buttonLink={
+            <ButtonLink small onPress={() => window.alert("click")}>
+              Action
+            </ButtonLink>
+          }
+          footerImage={
+            <Image src="https://source.unsplash.com/600x600/?face" height={40} />
+          }
+          footerText="footer text"
+          onClose={() => window.alert("close")}
+          onPress={() => window.alert("click")}
+        />
+        `,
+        group: 'AdvancedDataCard',
+    },
+];
+
+const RowBlockSnippets = [
+    {
+        name: 'Row Block',
+        code: `
+          <RowBlock title="title" description="description" />
+      `,
+        group: 'Blocks',
+    },
+];
+
+const SimpleBlockSnippets = [
+    {
+        name: 'Simple Block',
+        code: `
+        <SimpleBlock
+          image={
+            <Image src="https://source.unsplash.com/600x600/?face" height={40} />
+          }
+          description="description"
+        />
+      `,
+        group: 'Blocks',
+    },
+];
+
+const InformationBlockSnippets = [
+    {
+        name: 'Information Block',
+        code: `
+        <InformationBlock
+          title="title"
+          description="description"
+          value="value"
+          secondaryValue="secondaryValue"
+        />
+      `,
+        group: 'Blocks',
+    },
+];
+
+const HighlightedValueBlockSnippets = [
+    {
+        name: 'Highlighted Value Block',
+        code: `
+        <HighlightedValueBlock
+          headline={
+            <Tag type="promo" Icon={IconStarFilled}>
+              Promo
+            </Tag>
+          }
+          mainHeading={{ text: "text", value: "value" }}
+          secondHeading={{ text: "text", value: "value" }}
+          title="title"
+          description="description"
+        />
+      `,
+        group: 'Blocks',
+    },
+];
+
+const ValueBlockSnippets = [
+    {
+        name: 'Value Block',
+        code: `
+        <ValueBlock title="title" description="description" value="value" />
+      `,
+        group: 'Blocks',
+    },
+];
+
+const ProgressBlockSnippets = [
+    {
+        name: 'Progress Block',
+        code: `
+      <ProgressBlock
+        title="title"
+        heading={{
+          value: "20 GB",
+          text: "text",
+        }}
+        progressPercent={20}
+        description="description"
+      />
+      `,
+        group: 'Blocks',
+    },
+];
+
 export default [
     ...buttonSnippets,
     ...formSnippets,
@@ -1984,6 +2564,11 @@ export default [
         name: 'Image',
         code: `<Image src="https://picsum.photos/1200/1200" aspectRatio="16:9" />`,
     },
+    {
+        group: 'Media',
+        name: 'Image circular',
+        code: `<Image circular src="https://picsum.photos/1200/1200" />`,
+    },
     ...carouselSnippets,
     ...avatarSnippets,
     ...alertSnippets,
@@ -1994,4 +2579,11 @@ export default [
     ...logoSnippets,
     ...gridSnippets,
     ...stackingGroupSnippets,
+    ...advancedDataCardSnippets,
+    ...RowBlockSnippets,
+    ...SimpleBlockSnippets,
+    ...InformationBlockSnippets,
+    ...HighlightedValueBlockSnippets,
+    ...ValueBlockSnippets,
+    ...ProgressBlockSnippets,
 ].sort((s1, s2) => s1.group.localeCompare(s2.group)) as Array<Snippet>;

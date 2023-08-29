@@ -10,6 +10,7 @@ export {default as Touchable} from './touchable';
 export type {TouchableElement} from './touchable';
 export {default as Spinner} from './spinner';
 export {default as FadeIn} from './fade-in';
+
 export {ButtonPrimary, ButtonSecondary, ButtonDanger, ButtonLink} from './button';
 export {default as ButtonLayout} from './button-layout';
 export {default as FixedFooterLayout} from './fixed-footer-layout';
@@ -48,7 +49,7 @@ export {default as Text, Text1, Text2, Text3, Text4, Text5, Text6, Text7, Text8,
 export {default as Tag} from './tag';
 export type {TagType} from './tag';
 export {Placeholder} from './placeholder';
-export {Title1, Title2} from './title';
+export {Title1, Title2, Title3} from './title';
 export {RowList, Row, BoxedRowList, BoxedRow} from './list';
 export {default as Switch} from './switch-component';
 export {default as Checkbox} from './checkbox';
@@ -60,7 +61,17 @@ export {default as HorizontalScroll} from './horizontal-scroll';
 export {default as HighlightedCard} from './highlighted-card';
 export {default as Stepper} from './stepper';
 export {default as ProgressBar} from './progress-bar';
-export {MediaCard, DataCard, SnapCard, DisplayDataCard, DisplayMediaCard, PosterCard} from './card';
+export {
+    MediaCard,
+    DataCard,
+    SnapCard,
+    DisplayDataCard,
+    DisplayMediaCard,
+    PosterCard,
+    NakedCard,
+    SmallNakedCard,
+    CardActionSpinner,
+} from './card';
 export {default as Hero} from './hero';
 export {default as Divider} from './divider';
 export {default as Menu} from './menu';
@@ -94,6 +105,16 @@ export {default as Video} from './video';
 export type {VideoElement} from './video';
 export {Carousel, CenteredCarousel, Slideshow, PageBullets} from './carousel';
 export {Grid, GridItem} from './grid';
+export {
+    default as Sheet,
+    ActionsSheet,
+    InfoSheet,
+    ActionsListSheet,
+    RadioListSheet,
+    SheetBody,
+} from './sheet';
+export {default as SheetRoot, showSheet} from './sheet-root';
+export type {NativeSheetImplementation} from './sheet-root';
 export {default as StackingGroup} from './stacking-group';
 
 // Forms
@@ -125,6 +146,7 @@ export {default as IconChevron} from './icons/icon-chevron';
 export {default as IconError} from './icons/icon-error';
 export {default as IconSuccess} from './icons/icon-success';
 export {default as IconSuccessVivo} from './icons/icon-success-vivo';
+export {default as IconSuccessVivoNew} from './icons/icon-success-vivo-new';
 
 export {SkeletonCircle, SkeletonRow, SkeletonLine, SkeletonRectangle, SkeletonText} from './skeletons';
 
@@ -192,6 +214,22 @@ if (process.env.NODE_ENV !== 'production' && isClientSide()) {
         window['__mistica_version__'] = PACKAGE_VERSION;
     }
 }
+
+/*
+ * Temporary solution to export Community components until Mistica gets migrated to ESModules
+ * the community.js export has issues because it exports an ES module and next12 interterprets it as a CommonJS module
+ * importing from /dist/ is not an option because those modules don't get the context from the theme provider
+ */
+export {default as CommunityExampleComponent} from './community/example-component';
+export {default as CommunityAdvancedDataCard} from './community/advanced-data-card';
+export {
+    RowBlock as CommunityRowBlock,
+    SimpleBlock as CommunitySimpleBlock,
+    InformationBlock as CommunityInformationBlock,
+    HighlightedValueBlock as CommunityHighlightedValueBlock,
+    ValueBlock as CommunityValueBlock,
+    ProgressBlock as CommunityProgressBlock,
+} from './community/blocks';
 
 // Exported this way to facilitate tree-shaking
 export {default as Icon2GFilled} from './generated/mistica-icons/icon-2-g-filled';
@@ -1595,6 +1633,11 @@ export {default as IconSubscriptionRegular} from './generated/mistica-icons/icon
 export {default as IconSubtitlesFilled} from './generated/mistica-icons/icon-subtitles-filled';
 export {default as IconSubtitlesLight} from './generated/mistica-icons/icon-subtitles-light';
 export {default as IconSubtitlesRegular} from './generated/mistica-icons/icon-subtitles-regular';
+export {default as IconSubtractCircleFilled} from './generated/mistica-icons/icon-subtract-circle-filled';
+export {default as IconSubtractCircleLight} from './generated/mistica-icons/icon-subtract-circle-light';
+export {default as IconSubtractCircleRegular} from './generated/mistica-icons/icon-subtract-circle-regular';
+export {default as IconSubtractLight} from './generated/mistica-icons/icon-subtract-light';
+export {default as IconSubtractRegular} from './generated/mistica-icons/icon-subtract-regular';
 export {default as IconSunFilled} from './generated/mistica-icons/icon-sun-filled';
 export {default as IconSunLight} from './generated/mistica-icons/icon-sun-light';
 export {default as IconSunRegular} from './generated/mistica-icons/icon-sun-regular';

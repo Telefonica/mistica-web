@@ -1,15 +1,22 @@
 import * as React from 'react';
-import {Placeholder, Stack} from '..';
+import {Placeholder} from '..';
 
 export default {
     title: 'Components/Primitives/Placeholder',
+    argTypes: {
+        height: {
+            control: {type: 'range', min: 120, max: 300, step: 10},
+        },
+    },
 };
 
-export const Default: StoryComponent = () => (
-    <Stack space={16}>
-        <Placeholder />
-        <Placeholder height={200} />
-    </Stack>
-);
+type Args = {
+    height: number;
+};
+
+export const Default: StoryComponent<Args> = ({height}) => <Placeholder height={height} />;
 
 Default.storyName = 'Placeholder';
+Default.args = {
+    height: 120,
+};

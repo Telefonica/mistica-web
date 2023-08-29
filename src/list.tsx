@@ -213,33 +213,33 @@ interface BasicRowContentProps extends CommonProps {
 }
 
 interface SwitchRowContentProps extends CommonProps {
-    onPress?: () => void;
+    onPress?: (() => void) | undefined;
 
     switch: ControlProps | undefined;
 }
 
 interface CheckboxRowContentProps extends CommonProps {
-    onPress?: () => void;
+    onPress?: (() => void) | undefined;
 
     checkbox: ControlProps | undefined;
 }
 
 interface RadioRowContentProps extends CommonProps {
-    onPress?: () => void;
+    onPress?: (() => void) | undefined;
 
     radioValue: string;
 }
 
 interface HrefRowContentProps extends CommonProps {
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
-    href: string;
+    href: string | undefined;
     newTab?: boolean;
     right?: Right;
 }
 
 interface ToRowContentProps extends CommonProps {
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
-    to: string;
+    to: string | undefined;
     fullPageOnWebView?: boolean;
     replace?: boolean;
     right?: Right;
@@ -247,7 +247,7 @@ interface ToRowContentProps extends CommonProps {
 
 interface OnPressRowContentProps extends CommonProps {
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
-    onPress: () => void;
+    onPress: (() => void) | undefined;
     right?: Right;
 }
 
@@ -322,6 +322,8 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
 
     const radioContext = useRadioContext();
     const disabled = props.disabled || (props.radioValue !== undefined && radioContext.disabled);
+    const hasHoverDefault = !disabled && !isInverse;
+    const hasHoverInverse = !disabled && isInverse;
 
     const [isChecked, toggle] = useControlState(props.switch || props.checkbox || {});
 
@@ -384,7 +386,8 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
             <BaseTouchable
                 ref={ref}
                 className={classNames(styles.rowContent, {
-                    [styles.hoverBackground]: !(disabled || isInverse),
+                    [styles.touchableBackground]: hasHoverDefault,
+                    [styles.touchableBackgroundInverse]: hasHoverInverse,
                     [styles.pointer]: !disabled,
                 })}
                 trackingEvent={props.trackingEvent}
@@ -402,7 +405,8 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
         return (
             <BaseTouchable
                 className={classNames(styles.rowContent, {
-                    [styles.hoverBackground]: !(disabled || isInverse),
+                    [styles.touchableBackground]: hasHoverDefault,
+                    [styles.touchableBackgroundInverse]: hasHoverInverse,
                     [styles.pointer]: !disabled,
                 })}
                 trackingEvent={props.trackingEvent}
@@ -421,7 +425,8 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
         return (
             <BaseTouchable
                 className={classNames(styles.rowContent, {
-                    [styles.hoverBackground]: !(disabled || isInverse),
+                    [styles.touchableBackground]: hasHoverDefault,
+                    [styles.touchableBackgroundInverse]: hasHoverInverse,
                     [styles.pointer]: !disabled,
                 })}
                 trackingEvent={props.trackingEvent}
@@ -447,7 +452,8 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
                     onPress={props.onPress}
                     role={role}
                     className={classNames(styles.dualActionLeft, {
-                        [styles.hoverBackground]: !(disabled || isInverse),
+                        [styles.touchableBackground]: hasHoverDefault,
+                        [styles.touchableBackgroundInverse]: hasHoverInverse,
                     })}
                 >
                     {renderContent({type: 'basic', labelId: titleId})}
@@ -468,7 +474,8 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
         ) : (
             <div
                 className={classNames(styles.rowContent, {
-                    [styles.hoverBackground]: !(disabled || isInverse),
+                    [styles.touchableBackground]: hasHoverDefault,
+                    [styles.touchableBackgroundInverse]: hasHoverInverse,
                     [styles.pointer]: !disabled,
                 })}
             >
@@ -508,7 +515,8 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
                     onPress={props.onPress}
                     role={role}
                     className={classNames(styles.dualActionLeft, {
-                        [styles.hoverBackground]: !(disabled || isInverse),
+                        [styles.touchableBackground]: hasHoverDefault,
+                        [styles.touchableBackgroundInverse]: hasHoverInverse,
                     })}
                 >
                     {renderContent({type: 'basic', labelId: titleId})}
@@ -528,7 +536,8 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
         ) : (
             <div
                 className={classNames(styles.rowContent, {
-                    [styles.hoverBackground]: !(disabled || isInverse),
+                    [styles.touchableBackground]: hasHoverDefault,
+                    [styles.touchableBackgroundInverse]: hasHoverInverse,
                     [styles.pointer]: !disabled,
                 })}
                 role={role}
