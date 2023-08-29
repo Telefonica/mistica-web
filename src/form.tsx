@@ -47,12 +47,12 @@ const Form: React.FC<FormProps> = ({
     const {texts} = useTheme();
     const id = useAriaId(idProp);
 
-    React.useEffect(
-        () => () => {
+    React.useEffect(() => {
+        isMountedRef.current = true;
+        return () => {
             isMountedRef.current = false;
-        },
-        []
-    );
+        };
+    }, []);
 
     const register = React.useCallback(
         (name: string, {input, validator, focusableElement}: FieldRegistration) => {
