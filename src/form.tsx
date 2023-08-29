@@ -48,6 +48,12 @@ const Form: React.FC<FormProps> = ({
     const id = useAriaId(idProp);
 
     React.useEffect(() => {
+        /**
+         * When using React with Strict Mode on, the components are rendered twice. If we don't set the ref's value to true
+         * every time the component is mounted, during the second mount this value will be equal to false, preventing handleSubmit()
+         * from resetting the formStatus to filling after the submit action is handled.
+         * https://stackoverflow.com/questions/60618844/react-hooks-useeffect-is-called-twice-even-if-an-empty-array-is-used-as-an-ar/60619061#60619061
+         */
         isMountedRef.current = true;
         return () => {
             isMountedRef.current = false;
