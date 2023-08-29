@@ -52,7 +52,7 @@ const Form: React.FC<FormProps> = ({
          * When using React with Strict Mode on, the component's effects are executed twice. If we don't set the ref's value to true
          * the first time the effect is triggered, this value will be set to false forever, preventing handleSubmit()
          * from resetting the formStatus to filling after the submit action is handled.
-         * https://stackoverflow.com/questions/60618844/react-hooks-useeffect-is-called-twice-even-if-an-empty-array-is-used-as-an-ar/60619061#60619061
+         * https://react.dev/reference/react/StrictMode#strictmode
          */
         isMountedRef.current = true;
         return () => {
