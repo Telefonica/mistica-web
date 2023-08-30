@@ -56,7 +56,7 @@ test('set default width', () => {
     const content = screen.getByText('Content');
 
     expect(content).toBeInTheDocument();
-    expect(content.parentElement).toHaveStyle('width: 340px; top: 16px; left: -170px;');
+    expect(content.parentElement).toHaveStyle('width: auto; top: 16px; left: 0px;');
 });
 
 test('set custom width', () => {
@@ -86,8 +86,6 @@ const targetHeight = 100;
 const targetWidth = 100;
 const distanceToTarget = 16;
 const scrollY = 0;
-const scrollX = 0;
-const defaultWidth = 340;
 
 const getBoundingClientRect = () =>
     ({
@@ -108,7 +106,7 @@ test('check container styles for right position', () => {
     const content = screen.getByText('Content');
 
     expect(content).toBeInTheDocument();
-    expect(content.parentElement).toHaveStyle(`width: ${defaultWidth}px;
+    expect(content.parentElement).toHaveStyle(`width: auto;
         top: ${scrollY + targetTop + targetHeight / 2}px;
         left: ${targetRight + distanceToTarget}px;`);
 });
@@ -122,9 +120,9 @@ test('check container styles for left position', () => {
     const content = screen.getByText('Content');
 
     expect(content).toBeInTheDocument();
-    expect(content.parentElement).toHaveStyle(`width: ${defaultWidth}px;
+    expect(content.parentElement).toHaveStyle(`width: auto;
         top: ${scrollY + targetTop + targetHeight / 2}px;
-        left: ${targetLeft - defaultWidth - distanceToTarget}px;`);
+        left: 384px;`);
 });
 
 test('check container styles for top position', () => {
@@ -136,9 +134,9 @@ test('check container styles for top position', () => {
     const content = screen.getByText('Content');
 
     expect(content).toBeInTheDocument();
-    expect(content.parentElement).toHaveStyle(`width: ${defaultWidth}px;
+    expect(content.parentElement).toHaveStyle(`width: auto;
     top: ${scrollY + targetTop - distanceToTarget}px;
-    left: ${scrollX + targetLeft + targetWidth / 2 - defaultWidth / 2}px;`);
+    left: 500px;`);
 });
 
 test('check container styles for bottom position', () => {
@@ -150,9 +148,9 @@ test('check container styles for bottom position', () => {
     const content = screen.getByText('Content');
 
     expect(content).toBeInTheDocument();
-    expect(content.parentElement).toHaveStyle(`width: ${defaultWidth}px;
+    expect(content.parentElement).toHaveStyle(`width: auto;
     top: ${scrollY + targetBottom + distanceToTarget}px;
-    left: ${scrollX + targetLeft + targetWidth / 2 - defaultWidth / 2}px;`);
+    left: 500px;`);
 });
 
 test('click anchor does not close tooltip', () => {
