@@ -147,6 +147,10 @@ export const textAlign = style({
     },
 });
 
+export const textCenter = style({
+    textAlign: 'center',
+});
+
 export const enter = style({
     transform: enterTransform,
 });

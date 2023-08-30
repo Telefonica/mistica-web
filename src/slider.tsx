@@ -238,11 +238,11 @@ const Slider: React.FC<SliderProps> = ({
                     description={
                         Array.isArray(steps) ? steps[valueRanger].toString() : valueRanger.toString()
                     }
-                    fullWidth
                     width={isTabletOrSmaller ? 42 : 45}
                     targetLabel=""
-                    changedPosition={setPosition(true)}
-                    textAlign="center"
+                    textCenter
+                    unstable_offsetX={setPosition(true)}
+                    targetStyle={{width: '100%'}}
                     position="top"
                     target={fieldContent()}
                 />
