@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Avatar, IconBrainRegular, IconFireRegular, IconStarFilled, ResponsiveLayout, Box} from '..';
+import {ResponsiveLayout, Box} from '..';
 import avatarImg from './images/avatar.jpg';
 
 const badgeOptions = ['true', 'false', 'undefined', '0', '1', '5', '10'];
@@ -37,22 +37,7 @@ type Args = {
     border: boolean;
 };
 
-export const Default: StoryComponent<Args> = ({
-    size,
-    initials,
-    badge,
-    src,
-    icon,
-    inverse,
-    hideImage,
-    hideInitials,
-    ariaLabel,
-    border,
-}) => {
-    // eslint-disable-next-line no-eval
-    const badgeValue = badgeOptions.includes(badge) ? eval(badge) : undefined;
-    const Icon = {IconStarFilled, IconFireRegular, IconBrainRegular}[icon];
-
+export const Default: StoryComponent<Args> = ({inverse}) => {
     return (
         <ResponsiveLayout isInverse={inverse} fullWidth>
             <Box padding={16} width="fit-content" dataAttributes={{testid: 'avatar'}}>
@@ -63,15 +48,7 @@ export const Default: StoryComponent<Args> = ({
                         lineHeight: 0,
                     }}
                 >
-                    <Avatar
-                        size={size}
-                        src={hideImage ? undefined : src || undefined}
-                        initials={hideInitials ? undefined : initials}
-                        badge={badgeValue}
-                        Icon={Icon}
-                        aria-label={ariaLabel}
-                        border={border}
-                    />
+                    test
                 </div>
             </Box>
         </ResponsiveLayout>
