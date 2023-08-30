@@ -71,7 +71,7 @@ jobs:
         runs-on: ubuntu-latest
         container: telefonica/web-builder:chromium93.0.4577-1.2.4
         needs: [build, build-acceptance]
-        if: always()
+        if: '!cancelled()'
 
         steps:
             - uses: actions/checkout@v3
