@@ -7,10 +7,11 @@ export default {
     component: Select,
 };
 
-const fruitOptions = fruitEntries.map(([text, value]) => ({text, value}));
-
 export const Default: StoryComponent = () => {
     const [value, setValue] = React.useState('');
+
+    const fruitOptions = fruitEntries.map(([text, value]) => ({text, value}));
+    fruitOptions.push({value: 'longValue', text: 'A very very long text value for this option'});
 
     return (
         <>

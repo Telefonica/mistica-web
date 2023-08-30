@@ -1,12 +1,14 @@
 import * as React from 'react';
-import {Hero, ButtonPrimary, ButtonLink, Tag, Image, Placeholder} from '..';
+import {Hero, ButtonPrimary, ButtonLink, Tag, Image, Placeholder, Video} from '..';
 import usingVrImg from './images/using-vr.jpg';
+import beachImg from './images/beach.jpg';
+import beachVideo from './videos/beach.mp4';
 
 import type {TagType} from '..';
-import type {AspectRatio} from '../image';
+import type {AspectRatio} from '../video';
 
 export default {
-    title: 'Components/Hero/Component',
+    title: 'Components/Hero',
     parameters: {
         fullScreen: true,
     },
@@ -24,7 +26,7 @@ type HeroArgs = {
     background: 'default' | 'alternative' | 'brand' | 'brand-secondary';
     desktopMediaPosition: 'left' | 'right';
     height?: string;
-    aspectRatio: AspectRatio;
+    aspectRatio: string;
 };
 
 export const Default: StoryComponent<HeroArgs> = ({
@@ -43,9 +45,18 @@ export const Default: StoryComponent<HeroArgs> = ({
 }) => {
     const mediaComponent =
         media === 'video' ? (
-            <Placeholder />
+            <Video
+                src={beachVideo}
+                poster={beachImg}
+                aspectRatio={aspectRatio.replace(' ', ':') as AspectRatio}
+                height="100%"
+            />
         ) : (
-            <Image src={usingVrImg} aspectRatio={aspectRatio} height="100%" />
+            <Image
+                src={usingVrImg}
+                aspectRatio={aspectRatio.replace(' ', ':') as AspectRatio}
+                height="100%"
+            />
         );
 
     const button = actions.includes('button') ? <ButtonPrimary fake>Action</ButtonPrimary> : undefined;
@@ -69,7 +80,7 @@ export const Default: StoryComponent<HeroArgs> = ({
     );
 };
 
-Default.storyName = 'Component';
+Default.storyName = 'Hero';
 
 Default.args = {
     media: 'image',
@@ -83,7 +94,7 @@ Default.args = {
     background: 'default',
     desktopMediaPosition: 'right',
     height: '100vh',
-    aspectRatio: '16:9',
+    aspectRatio: '16 9',
 };
 
 Default.argTypes = {
@@ -106,5 +117,16 @@ Default.argTypes = {
     desktopMediaPosition: {
         options: ['left', 'right'],
         control: {type: 'select'},
+    },
+    aspectRatio: {
+        options: ['1 1', '16 9', '4 3'],
+        control: {
+            type: 'select',
+            labels: {
+                '1 1': '1:1',
+                '16 9': '16:9',
+                '4 3': '4:3',
+            },
+        },
     },
 };

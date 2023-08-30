@@ -1,6 +1,7 @@
 import {createVar, keyframes, style} from '@vanilla-extract/css';
 import {vars as skinVars} from './skins/skin-contract.css';
 import {sprinkles} from './sprinkles.css';
+import * as mq from './media-queries.css';
 
 const arrowSize = 12;
 const arrowWrapperWidth = 24; // arrowSize * 2;
@@ -111,6 +112,8 @@ export const wrapper = sprinkles({
     display: 'inline-block',
 });
 
+export const tooltipMinWidth = 40;
+
 export const container = style([
     sprinkles({
         position: 'absolute',
@@ -121,11 +124,28 @@ export const container = style([
         border: 'regular',
     }),
     {
+        minWidth: tooltipMinWidth,
+        maxWidth: 496,
         zIndex: 50,
         boxShadow: `0 2px 4px 0 rgba(0, 0, 0, ${shadowAlpha})`,
         backgroundColor: skinVars.colors.backgroundContainer,
+        '@media': {
+            [mq.mobile]: {
+                marginRight: 16,
+            },
+        },
     },
 ]);
+
+export const textAlign = style({
+    '@media': {
+        [`(max-width: ${tooltipMinWidth}px)`]: {
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+        },
+    },
+});
 
 export const enter = style({
     transform: enterTransform,

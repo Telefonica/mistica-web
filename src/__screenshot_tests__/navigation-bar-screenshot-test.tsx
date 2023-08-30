@@ -1,70 +1,89 @@
 import {openStoryPage, screen} from '../test-utils';
 
 test.each`
-    isInverse | isDarkMode
-    ${false}  | ${false}
-    ${false}  | ${true}
-    ${true}   | ${false}
-    ${true}   | ${true}
-`(
-    'MainNavigationBar desktop. isInverse={$isInverse} isDarkMode={$isDarkMode}',
-    async ({isInverse, isDarkMode}) => {
-        await openStoryPage({
-            id: 'components-navigation-bars-main-navigation-bar--default',
-            device: 'DESKTOP',
-            args: {isInverse},
-            isDarkMode,
-        });
+    inverse  | isDarkMode
+    ${false} | ${false}
+    ${false} | ${true}
+    ${true}  | ${false}
+    ${true}  | ${true}
+`('MainNavigationBar desktop. inverse={$inverse} isDarkMode={$isDarkMode}', async ({inverse, isDarkMode}) => {
+    await openStoryPage({
+        id: 'components-navigation-bars-mainnavigationbar--default',
+        device: 'DESKTOP',
+        args: {inverse},
+        isDarkMode,
+    });
 
-        const image = await page.screenshot();
+    const image = await page.screenshot();
 
-        expect(image).toMatchImageSnapshot();
-    }
-);
+    expect(image).toMatchImageSnapshot();
+});
 
 test.each`
-    isInverse | isDarkMode
-    ${false}  | ${false}
-    ${false}  | ${true}
-    ${true}   | ${false}
-    ${true}   | ${true}
-`(
-    'MainNavigationBar mobile. isInverse={$isInverse} isDarkMode={$isDarkMode}',
-    async ({isInverse, isDarkMode}) => {
-        const page = await openStoryPage({
-            id: 'components-navigation-bars-main-navigation-bar--default',
-            device: 'MOBILE_IOS',
-            args: {isInverse},
-            isDarkMode,
-        });
+    inverse  | isDarkMode
+    ${false} | ${false}
+    ${false} | ${true}
+    ${true}  | ${false}
+    ${true}  | ${true}
+`('MainNavigationBar mobile. inverse={$inverse} isDarkMode={$isDarkMode}', async ({inverse, isDarkMode}) => {
+    const page = await openStoryPage({
+        id: 'components-navigation-bars-mainnavigationbar--default',
+        device: 'MOBILE_IOS',
+        args: {inverse},
+        isDarkMode,
+    });
 
-        const menuCloseImage = await page.screenshot();
-        expect(menuCloseImage).toMatchImageSnapshot();
+    const menuCloseImage = await page.screenshot();
+    expect(menuCloseImage).toMatchImageSnapshot();
 
-        await page.click(await screen.findByRole('button', {name: 'Abrir menú de navegación'}));
+    await page.click(await screen.findByRole('button', {name: 'Abrir menú de navegación'}));
 
-        const menuOpenImage = await page.screenshot();
-        expect(menuOpenImage).toMatchImageSnapshot();
-    }
-);
+    const menuOpenImage = await page.screenshot();
+    expect(menuOpenImage).toMatchImageSnapshot();
+});
+
+test('MainNavigationBar mobile with burger menu extra', async () => {
+    const page = await openStoryPage({
+        id: 'components-navigation-bars-mainnavigationbar--default',
+        device: 'MOBILE_IOS',
+        args: {withBurgerMenuExtra: true},
+    });
+
+    await page.click(await screen.findByRole('button', {name: 'Abrir menú de navegación'}));
+
+    const menuOpenImage = await page.screenshot();
+    expect(menuOpenImage).toMatchImageSnapshot();
+});
+
+test('MainNavigationBar large', async () => {
+    await openStoryPage({
+        id: 'components-navigation-bars-mainnavigationbar--default',
+        device: 'DESKTOP',
+        args: {large: true},
+    });
+
+    const image = await page.screenshot();
+
+    expect(image).toMatchImageSnapshot();
+});
 
 test.each`
-    isInverse | isDarkMode | device
-    ${false}  | ${false}   | ${'DESKTOP'}
-    ${false}  | ${true}    | ${'DESKTOP'}
-    ${true}   | ${false}   | ${'DESKTOP'}
-    ${true}   | ${true}    | ${'DESKTOP'}
-    ${false}  | ${false}   | ${'MOBILE_IOS'}
-    ${false}  | ${true}    | ${'MOBILE_IOS'}
-    ${true}   | ${false}   | ${'MOBILE_IOS'}
-    ${true}   | ${true}    | ${'MOBILE_IOS'}
+    inverse  | isDarkMode | device
+    ${false} | ${false}   | ${'DESKTOP'}
+    ${false} | ${true}    | ${'DESKTOP'}
+    ${true}  | ${false}   | ${'DESKTOP'}
+    ${true}  | ${true}    | ${'DESKTOP'}
+    ${false} | ${false}   | ${'MOBILE_IOS'}
+    ${false} | ${true}    | ${'MOBILE_IOS'}
+    ${true}  | ${false}   | ${'MOBILE_IOS'}
+    ${true}  | ${true}    | ${'MOBILE_IOS'}
 `(
-    'NavigationBar. isInverse={$isInverse} isDarkMode={$isDarkMode} device={$device}',
-    async ({isInverse, isDarkMode, device}) => {
+    'NavigationBar. inverse={$inverse} isDarkMode={$isDarkMode} device={$device}',
+    async ({inverse, isDarkMode, device}) => {
         await openStoryPage({
-            id: 'components-navigation-bars-navigation-bar--default',
+            id: 'components-navigation-bars-navigationbar--default',
             device,
-            args: {isInverse},
+            args: {inverse},
             isDarkMode,
         });
 
@@ -75,22 +94,22 @@ test.each`
 );
 
 test.each`
-    isInverse | isDarkMode | device
-    ${false}  | ${false}   | ${'DESKTOP'}
-    ${false}  | ${true}    | ${'DESKTOP'}
-    ${true}   | ${false}   | ${'DESKTOP'}
-    ${true}   | ${true}    | ${'DESKTOP'}
-    ${false}  | ${false}   | ${'MOBILE_IOS'}
-    ${false}  | ${true}    | ${'MOBILE_IOS'}
-    ${true}   | ${false}   | ${'MOBILE_IOS'}
-    ${true}   | ${true}    | ${'MOBILE_IOS'}
+    inverse  | isDarkMode | device
+    ${false} | ${false}   | ${'DESKTOP'}
+    ${false} | ${true}    | ${'DESKTOP'}
+    ${true}  | ${false}   | ${'DESKTOP'}
+    ${true}  | ${true}    | ${'DESKTOP'}
+    ${false} | ${false}   | ${'MOBILE_IOS'}
+    ${false} | ${true}    | ${'MOBILE_IOS'}
+    ${true}  | ${false}   | ${'MOBILE_IOS'}
+    ${true}  | ${true}    | ${'MOBILE_IOS'}
 `(
-    'FunnelNavigationBar. isInverse={$isInverse} isDarkMode={$isDarkMode} device={$device}',
-    async ({isInverse, isDarkMode, device}) => {
+    'FunnelNavigationBar. inverse={$inverse} isDarkMode={$isDarkMode} device={$device}',
+    async ({inverse, isDarkMode, device}) => {
         await openStoryPage({
-            id: 'components-navigation-bars-funnel-navigation-bar--default',
+            id: 'components-navigation-bars-funnelnavigationbar--default',
             device,
-            args: {isInverse},
+            args: {inverse},
             isDarkMode,
         });
 
@@ -99,3 +118,23 @@ test.each`
         expect(image).toMatchImageSnapshot();
     }
 );
+
+test.each`
+    type                     | device
+    ${'NavigationBar'}       | ${'DESKTOP'}
+    ${'MainNavigationBar'}   | ${'DESKTOP'}
+    ${'FunnelNavigationBar'} | ${'DESKTOP'}
+    ${'NavigationBar'}       | ${'MOBILE_IOS'}
+    ${'MainNavigationBar'}   | ${'MOBILE_IOS'}
+    ${'FunnelNavigationBar'} | ${'MOBILE_IOS'}
+`('$type without border. device={$device}', async ({type, device}) => {
+    await openStoryPage({
+        id: `components-navigation-bars-${type.toLowerCase()}--default`,
+        device,
+        args: {withBorder: false},
+    });
+
+    const image = await page.screenshot();
+
+    expect(image).toMatchImageSnapshot();
+});

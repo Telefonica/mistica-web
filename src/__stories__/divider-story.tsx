@@ -1,18 +1,18 @@
 import * as React from 'react';
-import {Divider, ThemeVariant, useIsInverseVariant, skinVars} from '..';
-import {StorySection} from './helpers';
+import {Divider, ResponsiveLayout, skinVars} from '..';
 
 export default {
     title: 'Components/Divider',
 };
 
-const Container = ({children}: {children: React.ReactNode}) => {
-    const isInverse = useIsInverseVariant();
+type Args = {
+    inverse: boolean;
+};
 
+const Container = ({children}: {children: React.ReactNode}) => {
     return (
         <div
             style={{
-                background: isInverse ? skinVars.colors.backgroundBrand : skinVars.colors.background,
                 padding: 16,
                 height: 96,
                 display: 'flex',
@@ -26,24 +26,17 @@ const Container = ({children}: {children: React.ReactNode}) => {
     );
 };
 
-export const Default: StoryComponent = () => {
+export const Default: StoryComponent<Args> = ({inverse}) => {
     return (
-        <div data-testid="divider-story">
-            <StorySection title="Divider">
-                <Container>
-                    <Divider />
-                </Container>
-            </StorySection>
-
-            <StorySection title="Divider inverse">
-                <ThemeVariant isInverse>
-                    <Container>
-                        <Divider />
-                    </Container>
-                </ThemeVariant>
-            </StorySection>
-        </div>
+        <ResponsiveLayout fullWidth isInverse={inverse} dataAttributes={{testid: 'divider-story'}}>
+            <Container>
+                <Divider />
+            </Container>
+        </ResponsiveLayout>
     );
 };
 
 Default.storyName = 'Divider';
+Default.args = {
+    inverse: false,
+};

@@ -9,7 +9,7 @@ import {Text3, Text6} from './text';
 import ButtonGroup from './button-group';
 import * as styles from './empty-state.css';
 import {vars} from './skins/skin-contract.css';
-import {AspectRatioElement} from './utils/aspect-ratio-support';
+import {AspectRatioContainer} from './utils/aspect-ratio-support';
 import {getPrefixedDataAttributes} from './utils/dom';
 import {sprinkles} from './sprinkles.css';
 
@@ -109,7 +109,7 @@ const EmptyState: React.FC<Props> = ({
             </div>
             <div style={{flex: 1, position: 'relative'}}>
                 {largeImageUrl && (
-                    <AspectRatioElement
+                    <AspectRatioContainer
                         aspectRatio={16 / 9}
                         className={styles.largeImageContainer}
                         height="100%"
@@ -118,7 +118,7 @@ const EmptyState: React.FC<Props> = ({
                             className={styles.largeImage}
                             style={{backgroundImage: `url(${largeImageUrl})`}}
                         />
-                    </AspectRatioElement>
+                    </AspectRatioContainer>
                 )}
             </div>
         </div>

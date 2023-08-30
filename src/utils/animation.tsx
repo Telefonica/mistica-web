@@ -13,10 +13,32 @@ type AnimationProps = {
     opacity?: number;
 };
 
+export const getAnimateCircleScaleInProps = (
+    to: string | number,
+    platformOverrides: Theme['platformOverrides']
+): null | AnimationProps =>
+    areAnimationsSupported(platformOverrides)
+        ? {
+              children: (
+                  <animate
+                      attributeName="r"
+                      begin="0s"
+                      dur="0.9s"
+                      from="0"
+                      to={to}
+                      keyTimes="0;1"
+                      calcMode="spline"
+                      keySplines="0.56 0 0.2 1"
+                  />
+              ),
+          }
+        : null;
+
 export const getAnimateDrawLineProps = (
     from: string,
     begin: string,
-    platformOverrides: Theme['platformOverrides']
+    platformOverrides: Theme['platformOverrides'],
+    keySplines?: string
 ): null | AnimationProps =>
     areAnimationsSupported(platformOverrides)
         ? {
@@ -33,7 +55,7 @@ export const getAnimateDrawLineProps = (
                       fill="freeze"
                       keyTimes="0;1"
                       calcMode="spline"
-                      keySplines="0.75 0 0.25 1"
+                      keySplines={keySplines ?? '0.75 0 0.25 1'}
                   />
               ),
           }

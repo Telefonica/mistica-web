@@ -19,7 +19,7 @@ const compile = () => {
 
     // Entry point for community folder (import {Component} from '@telefonica/mistica/community')
     run(`echo "export * from './dist/community';" > community.d.ts`);
-    run(`echo "export * from './dist/community';" > community.js`);
+    run(`echo "export * from './dist-es/community';" > community.js`);
     run(`yarn swc community.js -o community.js --source-maps=false -C module.type=commonjs`);
 };
 

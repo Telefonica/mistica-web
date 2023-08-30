@@ -29,7 +29,7 @@ export default {
 const IconOrders = (): JSX.Element => {
     const {inverse, brand} = skinVars.colors;
     return (
-        <svg role="presentation" width="64" height="64" viewBox="0 0 64 64">
+        <svg role="presentation" width="100%" height="100%" viewBox="0 0 64 64">
             <path
                 fill={useIsInverseVariant() ? inverse : brand}
                 fillRule="evenodd"
@@ -117,16 +117,17 @@ export const FeedbackScreenStory: StoryComponent<FeedbackScreenArgs> = ({
                             ) : undefined
                         }
                         link={linkText ? <ButtonLink href="#">{linkText}</ButtonLink> : undefined}
-                    >
-                        <Stack space={16}>
-                            <Text2 regular as="p">
-                                Your content goes here.
-                            </Text2>
-                            <Text2 regular as="p">
-                                You can customize this story. Check the "Controls" tab.
-                            </Text2>
-                        </Stack>
-                    </FeedbackScreen>
+                        extra={
+                            <Stack space={16}>
+                                <Text2 regular as="p">
+                                    Your content goes here.
+                                </Text2>
+                                <Text2 regular as="p">
+                                    You can customize this story. Check the "Controls" tab.
+                                </Text2>
+                            </Stack>
+                        }
+                    />
                 </Box>
             </>
         )}

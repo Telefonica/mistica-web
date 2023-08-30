@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {
+    Box,
     Checkbox,
     Chip,
     IconLightningFilled,
@@ -7,146 +8,157 @@ import {
     RadioButton,
     RadioGroup,
     ResponsiveLayout,
-    skinVars,
 } from '..';
-import {StorySection} from './helpers';
 
-const badgeOptions = ['false', 'true', 'undefined', '0', '1', '5', '10'];
+import type {DataAttributes} from '../utils/types';
+
+const badgeOptions = ['0', '2', '14', 'undefined'];
 
 export default {
     title: 'Components/Chip',
-    argTypes: {
-        badge: {
-            options: badgeOptions,
-            control: {type: 'select'},
-        },
-    },
+    parameters: {fullScreen: true},
 };
 
 type Args = {
-    badge: string;
     inverse: boolean;
+    withIcon: boolean;
+    closable: boolean;
+    badge: string;
 };
 
-export const Default: StoryComponent<Args> = ({badge, inverse}) => {
-    // eslint-disable-next-line no-eval
-    const badgeValue = badgeOptions.includes(badge) ? eval(badge) : undefined;
+type Props = {
+    inverse: boolean;
+    children: React.ReactNode;
+    dataAttributes: DataAttributes;
+};
+
+const ChipBackgroundContainer: React.FC<Props> = ({inverse, dataAttributes, children}) => (
+    <ResponsiveLayout isInverse={inverse} fullWidth>
+        <Box padding={16} width="fit-content" dataAttributes={dataAttributes}>
+            <div
+                style={{
+                    // prevent line-height from affecting the height of the container;
+                    // happens when changing the base font size
+                    lineHeight: 0,
+                }}
+            >
+                {children}
+            </div>
+        </Box>
+    </ResponsiveLayout>
+);
+
+export const Default: StoryComponent<Args> = ({inverse, withIcon, closable, badge}) => {
+    const props = {
+        Icon: withIcon ? IconLightningFilled : undefined,
+        badge: badge !== 'undefined' ? +badge : undefined,
+    };
 
     return (
-        <div
-            style={{
-                padding: 16,
-                width: 'fit-content',
-                background: inverse ? skinVars.colors.backgroundBrand : skinVars.colors.background,
-                // prevent line-height from affecting the height of the container;
-                // happens when changing the base font size
-                lineHeight: 0,
-            }}
-            data-testid="chip-story"
-        >
-            <ResponsiveLayout>
-                <StorySection title="Default">
-                    <Chip>Chip</Chip>
-                </StorySection>
-                <StorySection title="Closeable">
-                    <Chip
-                        onClose={() => {
-                            window.alert('closed');
-                        }}
-                    >
-                        Chip closeable
-                    </Chip>
-                </StorySection>
-                <StorySection title="With icon">
-                    <Chip Icon={IconLightningFilled}>Chip with icon</Chip>
-                </StorySection>
-                <StorySection title="No icon and badge">
-                    <Chip badge={badgeValue} onClose={() => {}}>
-                        Chip with icon and badge
-                    </Chip>
-                </StorySection>
-                <StorySection title="With icon and badge">
-                    <Chip Icon={IconLightningFilled} badge={badgeValue} onClose={() => {}}>
-                        Chip with icon and badge
-                    </Chip>
-                </StorySection>
-                <StorySection title="With icon and closeable">
-                    <Chip
-                        Icon={IconLightningFilled}
-                        onClose={() => {
-                            window.alert('closed');
-                        }}
-                    >
-                        Chip with icon and closeable
-                    </Chip>
-                </StorySection>
-                <StorySection title="Multiple selection">
-                    <Inline space={8}>
-                        <Checkbox
-                            name="chip-checkbox-1"
-                            render={({labelId, checked}) => (
-                                <Chip active={checked} id={labelId} Icon={IconLightningFilled}>
-                                    Chip 1
-                                </Chip>
-                            )}
-                        />
-                        <Checkbox
-                            name="chip-checkbox-2"
-                            render={({labelId, checked}) => (
-                                <Chip active={checked} id={labelId} Icon={IconLightningFilled}>
-                                    Chip 2
-                                </Chip>
-                            )}
-                        />
-                        <Checkbox
-                            name="chip-checkbox-3"
-                            render={({labelId, checked}) => (
-                                <Chip active={checked} id={labelId} Icon={IconLightningFilled}>
-                                    Chip 3
-                                </Chip>
-                            )}
-                        />
-                    </Inline>
-                </StorySection>
-
-                <StorySection title="Single selection">
-                    <RadioGroup name="chip-group" defaultValue="1">
-                        <Inline space={8}>
-                            <RadioButton
-                                value="1"
-                                render={({checked, labelId}) => (
-                                    <Chip active={checked} id={labelId} Icon={IconLightningFilled}>
-                                        Chip 1
-                                    </Chip>
-                                )}
-                            />
-                            <RadioButton
-                                value="2"
-                                render={({checked, labelId}) => (
-                                    <Chip active={checked} id={labelId} Icon={IconLightningFilled}>
-                                        Chip 2
-                                    </Chip>
-                                )}
-                            />
-                            <RadioButton
-                                value="3"
-                                render={({checked, labelId}) => (
-                                    <Chip active={checked} id={labelId} Icon={IconLightningFilled}>
-                                        Chip 3
-                                    </Chip>
-                                )}
-                            />
-                        </Inline>
-                    </RadioGroup>
-                </StorySection>
-            </ResponsiveLayout>
-        </div>
+        <ChipBackgroundContainer dataAttributes={{testid: 'chip'}} inverse={inverse}>
+            {closable ? (
+                <Chip onClose={() => window.alert('closed')} {...props}>
+                    Chip
+                </Chip>
+            ) : (
+                <Chip {...props}>Chip</Chip>
+            )}
+        </ChipBackgroundContainer>
     );
 };
 
-Default.storyName = 'Chip';
-Default.parameters = {fullScreen: false};
-Default.args = {
-    badge: '5',
-    inverse: false,
+export const SingleSelection: StoryComponent<Omit<Args, 'closable' | 'badge'>> = ({inverse, withIcon}) => {
+    const props = {
+        Icon: withIcon ? IconLightningFilled : undefined,
+    };
+
+    return (
+        <ChipBackgroundContainer dataAttributes={{testid: 'chip-single-selection'}} inverse={inverse}>
+            <RadioGroup name="chip-group" defaultValue="1">
+                <Inline space={8}>
+                    <RadioButton
+                        value="1"
+                        render={({checked, labelId}) => (
+                            <Chip active={checked} id={labelId} {...props}>
+                                Chip 1
+                            </Chip>
+                        )}
+                    />
+                    <RadioButton
+                        value="2"
+                        render={({checked, labelId}) => (
+                            <Chip active={checked} id={labelId} {...props}>
+                                Chip 2
+                            </Chip>
+                        )}
+                    />
+                    <RadioButton
+                        value="3"
+                        render={({checked, labelId}) => (
+                            <Chip active={checked} id={labelId} {...props}>
+                                Chip 3
+                            </Chip>
+                        )}
+                    />
+                </Inline>
+            </RadioGroup>
+        </ChipBackgroundContainer>
+    );
 };
+
+export const MultipleSelection: StoryComponent<Omit<Args, 'closable' | 'badge'>> = ({inverse, withIcon}) => {
+    const props = {
+        Icon: withIcon ? IconLightningFilled : undefined,
+    };
+
+    return (
+        <ChipBackgroundContainer dataAttributes={{testid: 'chip-multiple-selection'}} inverse={inverse}>
+            <Inline space={8}>
+                <Checkbox
+                    name="chip-checkbox-1"
+                    render={({labelId, checked}) => (
+                        <Chip active={checked} id={labelId} {...props}>
+                            Chip 1
+                        </Chip>
+                    )}
+                />
+                <Checkbox
+                    name="chip-checkbox-2"
+                    render={({labelId, checked}) => (
+                        <Chip active={checked} id={labelId} {...props}>
+                            Chip 2
+                        </Chip>
+                    )}
+                />
+                <Checkbox
+                    name="chip-checkbox-3"
+                    render={({labelId, checked}) => (
+                        <Chip active={checked} id={labelId} {...props}>
+                            Chip 3
+                        </Chip>
+                    )}
+                />
+            </Inline>
+        </ChipBackgroundContainer>
+    );
+};
+
+const defaultArgs = {
+    inverse: false,
+    badge: '0',
+    withIcon: false,
+    closable: false,
+};
+
+Default.storyName = 'Chip';
+
+Default.argTypes = {
+    badge: {
+        options: badgeOptions,
+        control: {type: 'select'},
+    },
+};
+
+Default.args = defaultArgs;
+SingleSelection.args = {...(({closable, badge, ...o}) => o)(defaultArgs)};
+MultipleSelection.args = {...(({closable, badge, ...o}) => o)(defaultArgs)};

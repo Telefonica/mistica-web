@@ -22,7 +22,9 @@ import {ThemeVariant, useIsInverseVariant} from './theme-variant-context';
 import classNames from 'classnames';
 import {assignInlineVars} from '@vanilla-extract/dynamic';
 import Inline from './inline';
+import {getPrefixedDataAttributes} from './utils/dom';
 
+import type {Variant} from './theme-variant-context';
 import type {PressHandler} from './touchable';
 import type {VideoElement, VideoSource} from './video';
 import type {ButtonLink, ButtonPrimary, ButtonSecondary} from './button';
@@ -35,14 +37,11 @@ import type {
     TrackingEvent,
 } from './utils/types';
 
-type CardAction = {
+export type CardAction = {
     label: string;
     onPress: () => void;
-    Icon?: React.FC<IconProps>;
-    iconSize?: number;
-    iconColor?: string;
-    iconBackground?: string;
-    iconBackgroundInverse?: string;
+    Icon: React.FC<IconProps>;
+    disabled?: boolean;
 };
 
 const useTopActions = (actions?: Array<CardAction>, onClose?: () => void) => {
@@ -66,9 +65,13 @@ type CardActionsGroupProps = {
     type?: 'default' | 'inverse' | 'media';
 };
 
-const TOP_ACTION_BUTTON_SIZE = 48;
+export const TOP_ACTION_BUTTON_SIZE = 48;
 
-const CardActionsGroup = ({actions, onClose, type = 'default'}: CardActionsGroupProps): JSX.Element => {
+export const CardActionsGroup = ({
+    actions,
+    onClose,
+    type = 'default',
+}: CardActionsGroupProps): JSX.Element => {
     const finalActions = useTopActions(actions, onClose);
     const hasActions = finalActions.length > 0;
 
@@ -94,24 +97,21 @@ const CardActionsGroup = ({actions, onClose, type = 'default'}: CardActionsGroup
             }}
         >
             <div className={sprinkles({display: 'flex'})}>
-                {finalActions.map(({onPress, label, Icon, iconSize = 20}, index) =>
-                    Icon ? (
-                        <IconButton
-                            size={TOP_ACTION_BUTTON_SIZE}
-                            key={index}
-                            onPress={onPress}
-                            aria-label={label}
-                            className={styles.cardActionIconButton}
-                            style={{display: 'flex'}}
-                        >
-                            <div className={iconBackgroundStyle[type]}>
-                                <Icon color={iconColor[type]} size={iconSize} />
-                            </div>
-                        </IconButton>
-                    ) : (
-                        <div key={index} className={styles.cardActionIconButton} />
-                    )
-                )}
+                {finalActions.map(({onPress, label, Icon, disabled = false}, index) => (
+                    <IconButton
+                        disabled={disabled}
+                        size={TOP_ACTION_BUTTON_SIZE}
+                        key={index}
+                        onPress={onPress}
+                        aria-label={label}
+                        className={styles.cardActionIconButton}
+                        style={{display: 'flex'}}
+                    >
+                        <div className={iconBackgroundStyle[type]}>
+                            <Icon color={iconColor[type]} size={20} />
+                        </div>
+                    </IconButton>
+                ))}
             </div>
         </div>
     ) : (
@@ -119,7 +119,7 @@ const CardActionsGroup = ({actions, onClose, type = 'default'}: CardActionsGroup
     );
 };
 
-type AspectRatio = '1:1' | '16:9' | '7:10' | '9:10' | 'auto';
+export type AspectRatio = '1:1' | '16:9' | '7:10' | '9:10' | 'auto';
 
 const aspectRatioToNumber = (aspectRatio?: AspectRatio | number): number => {
     if (!aspectRatio) {
@@ -141,40 +141,46 @@ type CardContainerProps = {
     children: React.ReactNode;
     width?: string | number;
     height?: string | number;
-    minWidth?: string | number;
     aspectRatio?: AspectRatio | number;
+    dataAttributes?: DataAttributes;
     className?: string;
     'aria-label'?: string;
 };
 
-const CardContainer = ({
-    children,
-    width = '100%',
-    height = '100%',
-    minWidth,
-    aspectRatio,
-    className,
-    'aria-label': ariaLabel,
-}: CardContainerProps): JSX.Element => {
-    const cssAspectRatio = aspectRatioToNumber(aspectRatio);
+const CardContainer = React.forwardRef<HTMLDivElement, CardContainerProps>(
+    (
+        {
+            children,
+            width = '100%',
+            height = '100%',
+            aspectRatio,
+            dataAttributes,
+            className,
+            'aria-label': ariaLabel,
+        },
+        ref
+    ): JSX.Element => {
+        const cssAspectRatio = aspectRatioToNumber(aspectRatio);
 
-    return (
-        <section
-            aria-label={ariaLabel}
-            className={classNames(className, styles.cardContainer)}
-            style={{
-                width,
-                height,
-                minWidth,
-                ...(cssAspectRatio
-                    ? assignInlineVars({[styles.vars.aspectRatio]: String(cssAspectRatio)})
-                    : {}),
-            }}
-        >
-            {children}
-        </section>
-    );
-};
+        return (
+            <section
+                {...getPrefixedDataAttributes(dataAttributes)}
+                ref={ref}
+                aria-label={ariaLabel}
+                className={classNames(className, styles.cardContainer)}
+                style={{
+                    width,
+                    height,
+                    ...(cssAspectRatio
+                        ? assignInlineVars({[styles.vars.aspectRatio]: String(cssAspectRatio)})
+                        : {}),
+                }}
+            >
+                {children}
+            </section>
+        );
+    }
+);
 
 const renderBackgroundImage = (src?: string) => {
     // Adding '//:0' to force an error in case src is undefined
@@ -219,27 +225,20 @@ const transitions: Record<VideoState, Partial<Record<VideoAction, VideoState>>> 
 const videoReducer = (state: VideoState, action: VideoAction): VideoState =>
     transitions[state][action] || state;
 
-const VideoSpinner = ({size, color}: IconProps) => <Spinner size={size} color={color} delay="0" />;
+export const CardActionSpinner = ({color}: IconProps): React.ReactElement => (
+    <Spinner color={color} size={16} delay="0" />
+);
 
-const getVideoActionIcon = (state: VideoState) => {
-    switch (state) {
-        case 'playing':
-        case 'loading':
-            return IconPauseFilled;
-        case 'paused':
-            return IconPlayFilled;
-        case 'loadingTimeout':
-            return VideoSpinner;
-        default:
-            return undefined;
-    }
-};
+const CardActionPauseIcon = ({color}: IconProps) => <IconPauseFilled color={color} size={12} />;
+
+const CardActionPlayIcon = ({color}: IconProps) => <IconPlayFilled color={color} size={12} />;
 
 const useVideoWithControls = (
     videoSrc?: VideoSource,
     poster?: string,
     videoRef?: React.RefObject<VideoElement>
 ) => {
+    const {texts} = useTheme();
     const videoController = React.useRef<VideoElement>(null);
     const [videoStatus, dispatch] = React.useReducer(videoReducer, 'loading');
 
@@ -281,10 +280,30 @@ const useVideoWithControls = (
         }
     };
 
+    if (videoStatus === 'error') {
+        return {video};
+    }
+
+    const videoAction: CardAction = {
+        Icon: {
+            playing: CardActionPauseIcon,
+            loading: CardActionPauseIcon,
+            paused: CardActionPlayIcon,
+            loadingTimeout: CardActionSpinner,
+        }[videoStatus],
+        onPress: onVideoControlPress,
+        label: {
+            playing: texts.pauseIconButtonLabel,
+            loading: texts.pauseIconButtonLabel,
+            paused: texts.playIconButtonLabel,
+            loadingTimeout: '',
+        }[videoStatus],
+        disabled: videoStatus === 'loadingTimeout',
+    };
+
     return {
         video,
-        videoStatus,
-        onVideoControlPress,
+        videoAction,
     };
 };
 
@@ -393,12 +412,20 @@ const CardContent: React.FC<CardContentProps> = ({
     );
 };
 
-type BaseCardTouchableProps = ExclusifyUnion<
-    {href?: string; newTab?: boolean} | {to?: string; fullPageOnWebView?: boolean} | {onPress?: PressHandler}
+type TouchableProps = {
+    trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
+} & ExclusifyUnion<
+    | {href: string | undefined; newTab?: boolean}
+    | {to: string | undefined; fullPageOnWebView?: boolean}
+    | {onPress: PressHandler | undefined}
 >;
+
+type TouchableCard<T> = T & TouchableProps;
+type MaybeTouchableCard<T> = ExclusifyUnion<TouchableCard<T> | T>;
 
 interface MediaCardBaseProps {
     media: RendersElement<typeof Image> | RendersElement<typeof Video>;
+    icon?: React.ReactElement;
     headline?: string | RendersNullableElement<typeof Tag>;
     pretitle?: string;
     pretitleLinesMax?: number;
@@ -418,7 +445,7 @@ interface MediaCardBaseProps {
 
 type MediaCardProps = MediaCardBaseProps &
     ExclusifyUnion<
-        | BaseCardTouchableProps
+        | TouchableProps
         | {
               button?: RendersNullableElement<typeof ButtonPrimary>;
               buttonLink?: RendersNullableElement<typeof ButtonLink>;
@@ -429,6 +456,7 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
     (
         {
             media,
+            icon,
             headline,
             pretitle,
             pretitleLinesMax,
@@ -450,24 +478,22 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
         ref
     ) => {
         const isTouchable = touchableProps.href || touchableProps.to || touchableProps.onPress;
-        const overlayStyle = styles.touchableMediaCardOverlay;
 
         return (
-            <CardContainer aria-label={ariaLabel} className={styles.touchableContainer}>
-                <Boxed
-                    className={styles.boxed}
-                    dataAttributes={{'component-name': 'MediaCard', ...dataAttributes}}
-                    ref={ref}
-                    width="100%"
-                    height="100%"
-                >
+            <CardContainer
+                dataAttributes={{'component-name': 'MediaCard', ...dataAttributes}}
+                ref={ref}
+                aria-label={ariaLabel}
+                className={styles.touchableContainer}
+            >
+                <Boxed className={styles.boxed} width="100%" height="100%">
                     <BaseTouchable
                         maybe
                         {...touchableProps}
                         className={styles.touchable}
                         aria-label={ariaLabel}
                     >
-                        {isTouchable && <div className={overlayStyle} />}
+                        {isTouchable && <div className={styles.touchableMediaCardOverlay} />}
                         <div className={styles.mediaCard}>
                             <MediaBorderRadiusProvider value={false}>{media}</MediaBorderRadiusProvider>
                             <div className={styles.mediaCardContent}>
@@ -486,10 +512,186 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
                                     buttonLink={buttonLink}
                                 />
                             </div>
+                            {icon && (
+                                <Box
+                                    className={styles.mediaCardIcon}
+                                    paddingLeft={{mobile: 16, desktop: 24}}
+                                    paddingTop={{mobile: 16, desktop: 24}}
+                                >
+                                    {icon}
+                                </Box>
+                            )}
                         </div>
                     </BaseTouchable>
                 </Boxed>
                 <CardActionsGroup onClose={onClose} actions={actions} type="media" />
+            </CardContainer>
+        );
+    }
+);
+
+export const NakedCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
+    (
+        {
+            media,
+            icon,
+            headline,
+            pretitle,
+            pretitleLinesMax,
+            subtitle,
+            subtitleLinesMax,
+            title,
+            titleLinesMax,
+            description,
+            descriptionLinesMax,
+            extra,
+            actions,
+            button,
+            buttonLink,
+            dataAttributes,
+            'aria-label': ariaLabel,
+            onClose,
+            ...touchableProps
+        },
+        ref
+    ) => {
+        const isTouchable = touchableProps.href || touchableProps.to || touchableProps.onPress;
+        const isCircularMedia = media && media.type === Image && (media.props as any).circular;
+
+        return (
+            <CardContainer
+                ref={ref}
+                dataAttributes={{'component-name': 'NakedCard', ...dataAttributes}}
+                aria-label={ariaLabel}
+                className={isTouchable ? styles.touchableContainer : undefined}
+            >
+                <BaseTouchable maybe {...touchableProps} className={styles.touchable} aria-label={ariaLabel}>
+                    <div className={styles.mediaCard}>
+                        <div style={{position: 'relative'}}>
+                            {isTouchable && (
+                                <div
+                                    className={classNames(styles.touchableNakedMediaOverlay, {
+                                        [styles.circularMediaOverlay]: isCircularMedia,
+                                    })}
+                                />
+                            )}
+                            {media}
+                        </div>
+                        <div className={styles.nakedCardContent}>
+                            <CardContent
+                                headline={headline}
+                                pretitle={pretitle}
+                                pretitleLinesMax={pretitleLinesMax}
+                                title={title}
+                                titleLinesMax={titleLinesMax}
+                                subtitle={subtitle}
+                                subtitleLinesMax={subtitleLinesMax}
+                                description={description}
+                                descriptionLinesMax={descriptionLinesMax}
+                                extra={extra}
+                                button={button}
+                                buttonLink={buttonLink}
+                            />
+                        </div>
+                        {icon && (
+                            <Box
+                                className={styles.mediaCardIcon}
+                                paddingLeft={{mobile: 16, desktop: 24}}
+                                paddingTop={{mobile: 16, desktop: 24}}
+                            >
+                                {icon}
+                            </Box>
+                        )}
+                    </div>
+                </BaseTouchable>
+                <CardActionsGroup onClose={onClose} actions={actions} type="media" />
+            </CardContainer>
+        );
+    }
+);
+
+type SmallNakedCardProps = MaybeTouchableCard<{
+    media: RendersElement<typeof Image> | RendersElement<typeof Video>;
+    title?: string;
+    titleLinesMax?: number;
+    subtitle?: string;
+    subtitleLinesMax?: number;
+    description?: string;
+    descriptionLinesMax?: number;
+    extra?: React.ReactNode;
+    dataAttributes?: DataAttributes;
+    'aria-label'?: string;
+}>;
+
+export const SmallNakedCard = React.forwardRef<HTMLDivElement, SmallNakedCardProps>(
+    (
+        {
+            media,
+            title,
+            titleLinesMax,
+            subtitle,
+            subtitleLinesMax,
+            description,
+            descriptionLinesMax,
+            extra,
+            dataAttributes,
+            'aria-label': ariaLabel,
+            ...touchableProps
+        },
+        ref
+    ) => {
+        const isTouchable = touchableProps.href || touchableProps.to || touchableProps.onPress;
+        const isCircularMedia = media && media.type === Image && (media.props as any).circular;
+
+        return (
+            <CardContainer
+                ref={ref}
+                dataAttributes={{'component-name': 'SmallNakedCard', ...dataAttributes}}
+                aria-label={ariaLabel}
+                className={isTouchable ? styles.touchableContainer : undefined}
+            >
+                <BaseTouchable maybe {...touchableProps} className={styles.touchable} aria-label={ariaLabel}>
+                    <div className={styles.mediaCard}>
+                        <div style={{position: 'relative'}}>
+                            {isTouchable && (
+                                <div
+                                    className={classNames(styles.touchableNakedMediaOverlay, {
+                                        [styles.circularMediaOverlay]: isCircularMedia,
+                                    })}
+                                />
+                            )}
+                            {media}
+                        </div>
+                        <div className={styles.nakedCardContent}>
+                            <div>
+                                <Stack space={8}>
+                                    {title && (
+                                        <Text2 truncate={titleLinesMax} as="h3" regular hyphens="auto">
+                                            {title}
+                                        </Text2>
+                                    )}
+                                    {subtitle && (
+                                        <Text2 truncate={subtitleLinesMax} regular as="p" hyphens="auto">
+                                            {subtitle}
+                                        </Text2>
+                                    )}
+                                </Stack>
+                                {description && (
+                                    <Text2
+                                        truncate={descriptionLinesMax}
+                                        regular
+                                        as="p"
+                                        color={vars.colors.textSecondary}
+                                        hyphens="auto"
+                                    >
+                                        {description}
+                                    </Text2>
+                                )}
+                            </div>
+                            {extra && <div>{extra}</div>}
+                        </div>
+                    </div>
+                </BaseTouchable>
             </CardContainer>
         );
     }
@@ -511,6 +713,7 @@ interface DataCardBaseProps {
     descriptionLinesMax?: number;
     extra?: React.ReactNode;
     actions?: Array<CardAction>;
+    aspectRatio?: AspectRatio | number;
     children?: void;
     /** "data-" prefix is automatically added. For example, use "testid" instead of "data-testid" */
     dataAttributes?: DataAttributes;
@@ -520,7 +723,7 @@ interface DataCardBaseProps {
 
 type DataCardProps = DataCardBaseProps &
     ExclusifyUnion<
-        | BaseCardTouchableProps
+        | TouchableProps
         | {
               button?: RendersNullableElement<typeof ButtonPrimary>;
               buttonLink?: RendersNullableElement<typeof ButtonLink>;
@@ -547,13 +750,13 @@ export const DataCard = React.forwardRef<HTMLDivElement, DataCardProps>(
             dataAttributes,
             'aria-label': ariaLabel,
             onClose,
+            aspectRatio,
             ...touchableProps
         },
         ref
     ) => {
         const hasIcon = !!icon;
         const isTouchable = touchableProps.href || touchableProps.to || touchableProps.onPress;
-        const overlayStyle = styles.touchableCardOverlay;
 
         const finalActions = useTopActions(actions, onClose);
         const topActionsStylesWithoutIcon = {
@@ -563,21 +766,21 @@ export const DataCard = React.forwardRef<HTMLDivElement, DataCardProps>(
         } as const;
 
         return (
-            <CardContainer aria-label={ariaLabel} className={styles.touchableContainer}>
-                <Boxed
-                    className={styles.boxed}
-                    dataAttributes={{'component-name': 'DataCard', ...dataAttributes}}
-                    ref={ref}
-                    width="100%"
-                    height="100%"
-                >
+            <CardContainer
+                dataAttributes={{'component-name': 'DataCard', ...dataAttributes}}
+                ref={ref}
+                aria-label={ariaLabel}
+                className={styles.touchableContainer}
+                aspectRatio={aspectRatio}
+            >
+                <Boxed className={styles.boxed} width="100%" minHeight="100%">
                     <BaseTouchable
                         maybe
                         {...touchableProps}
                         className={styles.touchable}
                         aria-label={ariaLabel}
                     >
-                        {isTouchable && <div className={overlayStyle} />}
+                        {isTouchable && <div className={styles.touchableCardOverlay} />}
                         <div className={styles.dataCard}>
                             <Inline space={0}>
                                 <Stack space={16}>
@@ -594,6 +797,7 @@ export const DataCard = React.forwardRef<HTMLDivElement, DataCardProps>(
                                         descriptionLinesMax={descriptionLinesMax}
                                     />
                                 </Stack>
+                                {/** Hack to avoid content from rendering on top of the top action buttons */}
                                 {!hasIcon && <div style={topActionsStylesWithoutIcon} />}
                             </Inline>
 
@@ -613,7 +817,7 @@ export const DataCard = React.forwardRef<HTMLDivElement, DataCardProps>(
     }
 );
 
-interface SnapCardBaseProps {
+type SnapCardProps = MaybeTouchableCard<{
     icon?: React.ReactElement;
     title?: string;
     titleLinesMax?: number;
@@ -624,11 +828,9 @@ interface SnapCardBaseProps {
     'aria-label'?: string;
     extra?: React.ReactNode;
     isInverse?: boolean;
-    trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
+    aspectRatio?: AspectRatio | number;
     children?: void;
-}
-
-type SnapCardProps = SnapCardBaseProps & BaseCardTouchableProps;
+}>;
 
 export const SnapCard = React.forwardRef<HTMLDivElement, SnapCardProps>(
     (
@@ -642,6 +844,7 @@ export const SnapCard = React.forwardRef<HTMLDivElement, SnapCardProps>(
             'aria-label': ariaLabel,
             extra,
             isInverse = false,
+            aspectRatio,
             ...touchableProps
         },
         ref
@@ -650,15 +853,13 @@ export const SnapCard = React.forwardRef<HTMLDivElement, SnapCardProps>(
         const overlayStyle = isInverse ? styles.touchableCardOverlayInverse : styles.touchableCardOverlay;
 
         return (
-            <CardContainer className={styles.touchableContainer}>
-                <Boxed
-                    className={styles.boxed}
-                    dataAttributes={{'component-name': 'SnapCard', ...dataAttributes}}
-                    ref={ref}
-                    isInverse={isInverse}
-                    width="100%"
-                    height="100%"
-                >
+            <CardContainer
+                dataAttributes={{'component-name': 'SnapCard', ...dataAttributes}}
+                ref={ref}
+                className={styles.touchableContainer}
+                aspectRatio={aspectRatio}
+            >
+                <Boxed className={styles.boxed} isInverse={isInverse} width="100%" minHeight="100%">
                     <BaseTouchable
                         maybe
                         {...touchableProps}
@@ -713,10 +914,10 @@ interface CommonDisplayCardProps {
     description?: string;
     descriptionLinesMax?: number;
     'aria-label'?: string;
+    aspectRatio?: AspectRatio | number;
 }
 
 type DisplayMediaCardBaseProps = {
-    aspectRatio?: AspectRatio | number;
     width?: number | string;
     height?: number | string;
 };
@@ -734,7 +935,7 @@ type DisplayMediaCardWithVideoProps = Omit<CommonDisplayCardProps, 'actions' | '
 type DisplayMediaCardProps = DisplayMediaCardBaseProps &
     ExclusifyUnion<DisplayMediaCardWithImageProps | DisplayMediaCardWithVideoProps> &
     ExclusifyUnion<
-        | BaseCardTouchableProps
+        | TouchableProps
         | {
               button?: React.ReactComponentElement<typeof ButtonPrimary>;
               secondaryButton?: React.ReactComponentElement<typeof ButtonSecondary>;
@@ -746,7 +947,7 @@ type DisplayDataCardProps = CommonDisplayCardProps & {
     extra?: React.ReactNode;
     isInverse?: boolean;
 } & ExclusifyUnion<
-        | BaseCardTouchableProps
+        | TouchableProps
         | {
               button?: React.ReactComponentElement<typeof ButtonPrimary>;
               secondaryButton?: React.ReactComponentElement<typeof ButtonSecondary>;
@@ -758,7 +959,6 @@ type GenericDisplayCardProps = ExclusifyUnion<
     (DisplayMediaCardProps & {isInverse: true}) | DisplayDataCardProps
 >;
 
-const DISPLAY_CARD_MIN_WIDTH = 264;
 const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
     (
         {
@@ -791,24 +991,10 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
         ref
     ) => {
         const image = renderBackgroundImage(backgroundImage);
-        const {video, videoStatus, onVideoControlPress} = useVideoWithControls(
-            backgroundVideo,
-            poster,
-            backgroundVideoRef
-        );
+        const {video, videoAction} = useVideoWithControls(backgroundVideo, poster, backgroundVideoRef);
 
         if (backgroundVideo) {
-            actions = [
-                {
-                    Icon: getVideoActionIcon(videoStatus),
-                    onPress: onVideoControlPress,
-                    label: 'Video controls',
-                    iconSize: videoStatus === 'loadingTimeout' ? 16 : 12,
-                    iconColor: vars.colors.inverse,
-                    iconBackground: styles.videoAction,
-                    iconBackgroundInverse: styles.videoAction,
-                },
-            ];
+            actions = videoAction ? [videoAction] : [];
         }
 
         const isExternalInverse = useIsInverseVariant();
@@ -826,18 +1012,17 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
 
         return (
             <CardContainer
+                dataAttributes={dataAttributes}
+                ref={ref}
                 width={width}
                 height={height}
                 aspectRatio={aspectRatio}
                 aria-label={ariaLabel}
-                minWidth={DISPLAY_CARD_MIN_WIDTH}
                 className={styles.touchableContainer}
             >
                 <InternalBoxed
                     borderRadius={vars.borderRadii.legacyDisplay}
                     className={styles.boxed}
-                    dataAttributes={dataAttributes}
-                    ref={ref}
                     width="100%"
                     minHeight="100%"
                     isInverse={isInverse}
@@ -867,7 +1052,8 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
                             <div
                                 className={styles.displayCardContent}
                                 style={{
-                                    paddingTop: withGradient && !icon && !hasTopActions ? 0 : 24,
+                                    paddingTop:
+                                        withGradient && !icon && !hasTopActions && !backgroundVideo ? 0 : 24,
                                 }}
                             >
                                 {icon ? (
@@ -877,7 +1063,7 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
                                 ) : (
                                     <Box
                                         paddingBottom={
-                                            actions?.length || onClose ? (withGradient ? 24 : 64) : 0
+                                            hasTopActions || backgroundVideo ? (withGradient ? 24 : 64) : 0
                                         }
                                     />
                                 )}
@@ -1012,10 +1198,21 @@ type PosterCardWithVideoProps = Omit<PosterCardBaseProps, 'actions' | 'onClose'>
     backgroundVideoRef?: React.RefObject<VideoElement>;
 };
 
-type PosterCardProps = ExclusifyUnion<PosterCardWithImageProps | PosterCardWithVideoProps> &
-    BaseCardTouchableProps;
+type PosterCardWithBackgroundColorProps = PosterCardBaseProps & {
+    backgroundColor?: string;
+} & ExclusifyUnion<
+        | {
+              variant: Variant;
+          }
+        | {
+              isInverse: boolean;
+          }
+    >;
 
-const POSTER_CARD_MIN_WIDTH = 140;
+type PosterCardProps = MaybeTouchableCard<
+    ExclusifyUnion<PosterCardWithImageProps | PosterCardWithVideoProps | PosterCardWithBackgroundColorProps>
+>;
+
 export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
     (
         {
@@ -1038,29 +1235,18 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
             titleLinesMax,
             description,
             descriptionLinesMax,
+            variant,
+            isInverse,
+            backgroundColor,
             ...touchableProps
         },
         ref
     ) => {
         const image = renderBackgroundImage(backgroundImage);
-        const {video, videoStatus, onVideoControlPress} = useVideoWithControls(
-            backgroundVideo,
-            poster,
-            backgroundVideoRef
-        );
+        const {video, videoAction} = useVideoWithControls(backgroundVideo, poster, backgroundVideoRef);
 
         if (backgroundVideo) {
-            actions = [
-                {
-                    Icon: getVideoActionIcon(videoStatus),
-                    onPress: onVideoControlPress,
-                    label: 'Video controls',
-                    iconSize: videoStatus === 'loadingTimeout' ? 16 : 12,
-                    iconColor: vars.colors.inverse,
-                    iconBackground: styles.videoAction,
-                    iconBackgroundInverse: styles.videoAction,
-                },
-            ];
+            actions = videoAction ? [videoAction] : [];
         }
 
         const isExternalInverse = useIsInverseVariant();
@@ -1070,13 +1256,35 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
         const {textPresets} = useTheme();
 
         const isTouchable = touchableProps.href || touchableProps.to || touchableProps.onPress;
-        const overlayStyle = styles.touchableCardOverlayMedia;
+        const normalizedVariant = variant || (isInverse ? 'inverse' : 'default');
+
+        const calcBackgroundColor = () => {
+            if (backgroundColor) {
+                return backgroundColor;
+            }
+
+            return {
+                default: vars.colors.backgroundContainer,
+                inverse: isExternalInverse
+                    ? vars.colors.backgroundContainerBrandOverInverse
+                    : vars.colors.backgroundBrand,
+                alternative: vars.colors.backgroundAlternative,
+            }[normalizedVariant];
+        };
+
+        const overlayStyle =
+            backgroundImage || backgroundVideo
+                ? styles.touchableCardOverlayMedia
+                : normalizedVariant === 'inverse'
+                ? styles.touchableCardOverlayInverse
+                : styles.touchableCardOverlay;
 
         return (
             <CardContainer
                 width={width}
                 height={height}
-                minWidth={POSTER_CARD_MIN_WIDTH}
+                dataAttributes={{...dataAttributes, 'component-name': 'PosterCard'}}
+                ref={ref}
                 aspectRatio={aspectRatio}
                 aria-label={ariaLabel}
                 className={styles.touchableContainer}
@@ -1084,17 +1292,15 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                 <InternalBoxed
                     borderRadius={vars.borderRadii.legacyDisplay}
                     className={styles.boxed}
-                    dataAttributes={dataAttributes}
-                    ref={ref}
                     width="100%"
                     minHeight="100%"
-                    isInverse
+                    isInverse={!!backgroundImage || !!backgroundVideo || normalizedVariant === 'inverse'}
                     background={
                         backgroundImage || backgroundVideo
                             ? isExternalInverse
                                 ? vars.colors.backgroundContainerBrandOverInverse
                                 : vars.colors.backgroundContainer
-                            : undefined
+                            : calcBackgroundColor()
                     }
                 >
                     <BaseTouchable
@@ -1112,25 +1318,30 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                                 </div>
                             </ThemeVariant>
 
-                            <div
+                            <Box
                                 className={styles.displayCardContent}
-                                style={{
-                                    paddingTop: withGradient && !icon && !hasTopActions ? 0 : 24,
-                                }}
+                                paddingTop={
+                                    withGradient && !icon && !hasTopActions && !backgroundVideo
+                                        ? 0
+                                        : {mobile: icon ? 16 : 24, desktop: 24}
+                                }
                             >
                                 {icon ? (
-                                    <Box paddingBottom={withGradient ? 0 : 40} paddingX={24}>
+                                    <Box
+                                        paddingBottom={withGradient ? 0 : 40}
+                                        paddingX={{mobile: 16, desktop: 24}}
+                                    >
                                         {icon}
                                     </Box>
                                 ) : (
                                     <Box
                                         paddingBottom={
-                                            actions?.length || onClose ? (withGradient ? 24 : 64) : 0
+                                            hasTopActions || backgroundVideo ? (withGradient ? 24 : 64) : 0
                                         }
                                     />
                                 )}
                                 <Box
-                                    paddingX={16}
+                                    paddingX={{mobile: 16, desktop: 24}}
                                     paddingTop={withGradient ? 40 : 0}
                                     paddingBottom={24}
                                     className={withGradient ? styles.displayCardGradient : undefined}
@@ -1187,11 +1398,21 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                                         </div>
                                     </Stack>
                                 </Box>
-                            </div>
+                            </Box>
                         </div>
                     </BaseTouchable>
                 </InternalBoxed>
-                <CardActionsGroup onClose={onClose} actions={actions} type="media" />
+                <CardActionsGroup
+                    onClose={onClose}
+                    actions={actions}
+                    type={
+                        !!backgroundImage || !!backgroundVideo
+                            ? 'media'
+                            : normalizedVariant === 'inverse'
+                            ? 'inverse'
+                            : 'default'
+                    }
+                />
             </CardContainer>
         );
     }

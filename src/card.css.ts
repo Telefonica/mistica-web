@@ -20,6 +20,7 @@ export const touchableContainer = style({});
 
 export const touchable = style({
     display: 'flex',
+    flexDirection: 'column',
     minHeight: '100%',
     width: '100%',
     position: 'relative',
@@ -42,7 +43,7 @@ export const touchableMediaCardOverlay = style([
         zIndex: 2,
         '@media': {
             [mq.supportsHover]: {
-                transition: 'background-color 0.1s',
+                transition: 'background-color 0.1s ease-in-out',
                 selectors: {
                     [`${touchableContainer}:hover &`]: {
                         backgroundColor: skinVars.colors.backgroundContainerHover,
@@ -56,13 +57,41 @@ export const touchableMediaCardOverlay = style([
     },
 ]);
 
+export const circularMediaOverlay = style({});
+
+export const touchableNakedMediaOverlay = style([
+    touchableCardOverlayBase,
+    {
+        zIndex: 2,
+        borderRadius: skinVars.borderRadii.container,
+        selectors: {
+            [`${circularMediaOverlay}&`]: {
+                borderRadius: '50%',
+            },
+        },
+        '@media': {
+            [mq.supportsHover]: {
+                transition: 'background-color 0.1s ease-in-out',
+                selectors: {
+                    [`${touchableContainer}:hover &`]: {
+                        backgroundColor: skinVars.colors.coverBackgroundHover,
+                    },
+                    [`${touchable}:active &`]: {
+                        backgroundColor: skinVars.colors.coverBackgroundPressed,
+                    },
+                },
+            },
+        },
+    },
+]);
+
 export const touchableCardOverlay = style([
     touchableCardOverlayBase,
     {
         zIndex: 1,
         '@media': {
             [mq.supportsHover]: {
-                transition: 'background-color 0.1s',
+                transition: 'background-color 0.1s ease-in-out',
                 selectors: {
                     [`${touchableContainer}:hover &`]: {
                         backgroundColor: skinVars.colors.backgroundContainerHover,
@@ -82,7 +111,7 @@ export const touchableCardOverlayInverse = style([
         zIndex: 1,
         '@media': {
             [mq.supportsHover]: {
-                transition: 'background-color 0.1s',
+                transition: 'background-color 0.1s ease-in-out',
                 selectors: {
                     [`${touchableContainer}:hover &`]: {
                         backgroundColor: skinVars.colors.backgroundContainerBrandHover,
@@ -102,7 +131,7 @@ export const touchableCardOverlayMedia = style([
         zIndex: 1,
         '@media': {
             [mq.supportsHover]: {
-                transition: 'background-color 0.1s',
+                transition: 'background-color 0.1s ease-in-out',
                 selectors: {
                     [`${touchableContainer}:hover &`]: {
                         backgroundColor: skinVars.colors.coverBackgroundHover,
@@ -121,6 +150,7 @@ export const mediaCard = sprinkles({
     flexDirection: 'column',
     height: '100%',
     width: '100%',
+    flex: 1,
 });
 
 export const mediaCardContent = style([
@@ -142,6 +172,40 @@ export const mediaCardContent = style([
                 paddingRight: 24,
                 paddingTop: 24,
                 paddingBottom: 32,
+            },
+        },
+    },
+]);
+
+export const mediaCardIcon = style([
+    {
+        position: 'absolute',
+        zIndex: 1,
+    },
+]);
+
+export const nakedCardContent = style([
+    sprinkles({
+        display: 'flex',
+        flex: 1,
+        position: 'relative',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        paddingTop: 16,
+    }),
+    {
+        '@media': {
+            [mq.supportsHover]: {
+                transition: 'opacity 0.15s ease-in-out',
+                selectors: {
+                    [`${touchableContainer}:hover &`]: {
+                        opacity: 0.8,
+                    },
+                    [`${touchableContainer} ${touchable}:active &`]: {
+                        transitionDuration: '0.1s',
+                        opacity: 0.6,
+                    },
+                },
             },
         },
     },
@@ -177,12 +241,12 @@ export const snapCard = style([
         height: '100%',
         flexDirection: 'column',
         justifyContent: 'space-between',
+        width: '100%',
         padding: 16,
         flex: 1,
     }),
     {
         minHeight: 80,
-        minWidth: 104,
         zIndex: 2,
         '@media': {
             [mq.desktopOrBigger]: {
@@ -208,22 +272,6 @@ export const snapCardTouchableHover = style([
             [mq.supportsHover]: {
                 ':hover': {
                     backgroundColor: skinVars.colors.backgroundAlternative,
-                },
-            },
-        },
-    },
-]);
-
-export const snapCardTouchableHoverTransparent = style([
-    snapCardTouchableBase,
-    {
-        display: 'flex',
-        height: '100%',
-
-        '@media': {
-            [mq.supportsHover]: {
-                ':hover': {
-                    backgroundColor: 'transparent',
                 },
             },
         },
@@ -281,11 +329,13 @@ export const cardAction = style([
         transition: 'background-color 0.2s ease-in-out',
         '@media': {
             [mq.supportsHover]: {
-                ':hover': {
-                    background: skinVars.colors.backgroundContainerHover,
-                },
-                ':active': {
-                    background: skinVars.colors.backgroundContainerPressed,
+                selectors: {
+                    ':not(:disabled) > &:hover': {
+                        background: skinVars.colors.backgroundContainerHover,
+                    },
+                    ':not(:disabled) > &:active': {
+                        background: skinVars.colors.backgroundContainerPressed,
+                    },
                 },
             },
         },
@@ -298,11 +348,13 @@ export const cardActionInverse = style([
         transition: 'background-color 0.2s ease-in-out',
         '@media': {
             [mq.supportsHover]: {
-                ':hover': {
-                    background: skinVars.colors.backgroundContainerBrandHover,
-                },
-                ':active': {
-                    background: skinVars.colors.backgroundContainerBrandPressed,
+                selectors: {
+                    ':not(:disabled) > &:hover': {
+                        background: skinVars.colors.backgroundContainerBrandHover,
+                    },
+                    ':not(:disabled) > &:active': {
+                        background: skinVars.colors.backgroundContainerBrandPressed,
+                    },
                 },
             },
         },
@@ -316,26 +368,13 @@ export const cardActionMedia = style([
         transition: 'background-color 0.2s ease-in-out',
         '@media': {
             [mq.supportsHover]: {
-                ':hover': {
-                    backgroundColor: applyAlpha(skinVars.rawColors.inverse, 0.9),
-                },
-                ':active': {
-                    backgroundColor: applyAlpha(skinVars.rawColors.inverse, 1.0),
-                },
-            },
-        },
-    },
-]);
-
-export const videoAction = style([
-    cardActionBase,
-    {
-        background: applyAlpha('#000000', 0.4),
-        transition: 'background-color 0.2s ease-in-out',
-        '@media': {
-            [mq.supportsHover]: {
-                ':hover': {
-                    background: applyAlpha('#000000', 0.6),
+                selectors: {
+                    ':not(:disabled) > &:hover': {
+                        backgroundColor: applyAlpha(skinVars.rawColors.inverse, 0.9),
+                    },
+                    ':not(:disabled) > &:active': {
+                        backgroundColor: applyAlpha(skinVars.rawColors.inverse, 1.0),
+                    },
                 },
             },
         },

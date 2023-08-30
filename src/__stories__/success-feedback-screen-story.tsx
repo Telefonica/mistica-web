@@ -2,6 +2,7 @@ import * as React from 'react';
 import {SuccessFeedbackScreen} from '../feedback';
 import {ButtonPrimary, ButtonSecondary} from '../button';
 import emptyStateImg from './images/empty-state.png';
+import {Placeholder} from '../placeholder';
 
 export default {
     title: 'Patterns/Feedback/SuccessFeedbackScreen',
@@ -16,11 +17,16 @@ export default {
     },
 };
 
-type SuccessArgs = {imageUrl: string | null; imageFit: 'fit' | 'fill'; multipleParagraphs: boolean};
+type SuccessArgs = {
+    imageUrl: string | null;
+    imageFit: 'fit' | 'fill';
+    multipleParagraphs: boolean;
+    extra: boolean;
+};
 
 const defaultDescription = "I'm the description";
 
-export const Success: StoryComponent<SuccessArgs> = ({imageUrl, imageFit, multipleParagraphs}) => (
+export const Success: StoryComponent<SuccessArgs> = ({imageUrl, imageFit, multipleParagraphs, extra}) => (
     <SuccessFeedbackScreen
         title="I'm the title"
         description={
@@ -30,7 +36,8 @@ export const Success: StoryComponent<SuccessArgs> = ({imageUrl, imageFit, multip
         secondaryButton={<ButtonSecondary onPress={() => {}}>Action2</ButtonSecondary>}
         imageUrl={imageUrl ?? undefined}
         imageFit={imageFit}
+        extra={extra ? <Placeholder /> : undefined}
     />
 );
 Success.storyName = 'SuccessFeedbackScreen';
-Success.args = {imageUrl: emptyStateImg, imageFit: 'fit', multipleParagraphs: false};
+Success.args = {imageUrl: emptyStateImg, imageFit: 'fit', multipleParagraphs: false, extra: false};

@@ -1,7 +1,12 @@
 import {openStoryPage, screen} from '../test-utils';
 
-test('Circle', async () => {
-    await openStoryPage({id: 'components-primitives-circle--default'});
+const CONTENT_OPTIONS = ['color', 'image', 'icon', 'none'];
+
+test.each(CONTENT_OPTIONS)('Circle - %s', async (content) => {
+    await openStoryPage({
+        id: 'components-primitives-circle--default',
+        args: {content, border: content === 'none', size: 100},
+    });
 
     const story = await screen.findByTestId('circle');
 

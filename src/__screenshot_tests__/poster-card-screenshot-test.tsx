@@ -82,23 +82,6 @@ test('PosterCard without icon, with top actions and too long title', async () =>
     expect(image).toMatchImageSnapshot();
 });
 
-test('PosterCard width is never smaller than 140px', async () => {
-    const page = await openStoryPage({
-        id: 'components-cards-poster-card--default',
-        device: 'DESKTOP',
-        args: {
-            withTopAction: false,
-            asset: 'none',
-            title: 'A title',
-            width: '1px',
-        },
-    });
-
-    const image = await page.screenshot({fullPage: true});
-
-    expect(image).toMatchImageSnapshot();
-});
-
 test('PosterCard with video', async () => {
     await openStoryPage({
         id: 'components-cards-poster-card--default',
@@ -106,6 +89,59 @@ test('PosterCard with video', async () => {
     });
 
     const posterCard = await screen.findByTestId('poster-card');
+
+    const image = await posterCard.screenshot();
+
+    expect(image).toMatchImageSnapshot();
+});
+
+test.each(TESTABLE_DEVICES)('PosterCard with asset in %s', async (device) => {
+    await openStoryPage({
+        id: 'components-cards-poster-card--default',
+        device,
+        args: {asset: 'circle with icon'},
+    });
+
+    const posterCard = await screen.findByTestId('poster-card');
+
+    const image = await posterCard.screenshot();
+
+    expect(image).toMatchImageSnapshot();
+});
+
+test.each(['inverse', 'alternative', 'default'])('PosterCard with variant %s', async (variant) => {
+    await openStoryPage({
+        id: 'components-cards-poster-card--default',
+        args: {variant, background: 'color from skin'},
+    });
+
+    const posterCard = await screen.findByTestId('main-poster-card');
+
+    const image = await posterCard.screenshot();
+
+    expect(image).toMatchImageSnapshot();
+});
+
+test('PosterCard with custom background color', async () => {
+    await openStoryPage({
+        id: 'components-cards-poster-card--default',
+        args: {background: 'custom color', backgroundColorCustom: '#ff0'},
+    });
+
+    const posterCard = await screen.findByTestId('main-poster-card');
+
+    const image = await posterCard.screenshot();
+
+    expect(image).toMatchImageSnapshot();
+});
+
+test('PosterCard with custom background color inverse', async () => {
+    await openStoryPage({
+        id: 'components-cards-poster-card--default',
+        args: {background: 'custom color', backgroundColorCustom: '#000', variant: 'inverse'},
+    });
+
+    const posterCard = await screen.findByTestId('main-poster-card');
 
     const image = await posterCard.screenshot();
 

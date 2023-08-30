@@ -1,3 +1,92 @@
+# [14.21.0](https://github.com/Telefonica/mistica-web/compare/v14.20.1...v14.21.0) (2023-08-24)
+
+
+### Bug Fixes
+
+* **Cards:** remove min width from all the cards ([#858](https://github.com/Telefonica/mistica-web/issues/858)) ([029a6ea](https://github.com/Telefonica/mistica-web/commit/029a6ea401d54429718c9d3dce0c5220322e1519))
+* **Tabs:** remove extra margin in safari ([#857](https://github.com/Telefonica/mistica-web/issues/857)) ([be8c2f2](https://github.com/Telefonica/mistica-web/commit/be8c2f29d5734a4315cbd6723675d9c58ecd3938))
+
+
+### Features
+
+* **FeedbackScreens:** updates in icons, paddings and styling ([#852](https://github.com/Telefonica/mistica-web/issues/852)) ([4b231e6](https://github.com/Telefonica/mistica-web/commit/4b231e694e13506d17e7ccfd019c2d6504f50cae))
+* **Sheet:** new component ([#840](https://github.com/Telefonica/mistica-web/issues/840)) ([f03ca7c](https://github.com/Telefonica/mistica-web/commit/f03ca7cbccc196504f16c6b93779d13506a2aaf9))
+* **utilities:** Remove lodash dependency and replace it with custom functions ([#856](https://github.com/Telefonica/mistica-web/issues/856)) ([dcaf691](https://github.com/Telefonica/mistica-web/commit/dcaf691935c0b0331fdb8b15b28f0d6f2bb8955b))
+
+## [14.20.1](https://github.com/Telefonica/mistica-web/compare/v14.20.0...v14.20.1) (2023-08-18)
+
+
+### Bug Fixes
+
+* **Community:** export community components with namespace ([#855](https://github.com/Telefonica/mistica-web/issues/855)) ([8326117](https://github.com/Telefonica/mistica-web/commit/832611759d0ed6c763884597de8f5f20380e4abf))
+
+# [14.20.0](https://github.com/Telefonica/mistica-web/compare/v14.19.0...v14.20.0) (2023-08-11)
+
+
+### Bug Fixes
+
+* **AdvancedDataCard:** avoid content overflow with top actions ([#839](https://github.com/Telefonica/mistica-web/issues/839)) ([a1eae2d](https://github.com/Telefonica/mistica-web/commit/a1eae2db01d490249084ec8a2d2210cc0230eccb))
+* **AdvancedDataCard:** Fix Touchable layout, extras positioning, closable DOM position... ([#833](https://github.com/Telefonica/mistica-web/issues/833)) ([21dea84](https://github.com/Telefonica/mistica-web/commit/21dea840aceb4cb19cf580daabe2ddc4ec912f3f))
+* **AdvancedDataCard:** touchable area didn't cover the whole card in some cases ([#847](https://github.com/Telefonica/mistica-web/issues/847)) ([31ec606](https://github.com/Telefonica/mistica-web/commit/31ec606ed89d46dd34f3fdd64ed47aebe6b70e96))
+* **ButtonLink:** add aligned prop back until next major release ([#846](https://github.com/Telefonica/mistica-web/issues/846)) ([3de841c](https://github.com/Telefonica/mistica-web/commit/3de841c03a8644e57ff598d8589916d90a230168))
+* **Tabs:** style fixes and align with design spec ([#832](https://github.com/Telefonica/mistica-web/issues/832)) ([37de417](https://github.com/Telefonica/mistica-web/commit/37de417d98c2790d3dec9a3346194633f2e4581a))
+
+
+### Features
+
+* **ButtonLink:** scale chevron according to font size ([#849](https://github.com/Telefonica/mistica-web/issues/849)) ([b69b651](https://github.com/Telefonica/mistica-web/commit/b69b6517ee25407893725474aa5e2f11b44a4739))
+* **Icons:** new Subtract icons ([#845](https://github.com/Telefonica/mistica-web/issues/845)) ([5f0a5f0](https://github.com/Telefonica/mistica-web/commit/5f0a5f0b5f908de2f8629c8b9934224791815f75))
+* **NakedCard:** add support for top icon ([#836](https://github.com/Telefonica/mistica-web/issues/836)) ([f438079](https://github.com/Telefonica/mistica-web/commit/f438079fdefe5bb91f3df19ef44956f3368d77b6))
+* **PosterCard:** allow backgroundColor/variant ([#841](https://github.com/Telefonica/mistica-web/issues/841)) ([f8e1f37](https://github.com/Telefonica/mistica-web/commit/f8e1f3727d5df1cfb8a0eb75d03e8f84d86cd536))
+* **Row,BoxedRow:** add pressed style to list rows ([#838](https://github.com/Telefonica/mistica-web/issues/838)) ([8437198](https://github.com/Telefonica/mistica-web/commit/8437198047f467647cf70054793647f677858e40))
+* **skin:** update design tokens ([#851](https://github.com/Telefonica/mistica-web/issues/851)) ([544f812](https://github.com/Telefonica/mistica-web/commit/544f812aac558d2a13374b4c1143611da26b3332))
+* **SnapCard, DataCard, DisplayDataCard:** add aspect ratio support ([#848](https://github.com/Telefonica/mistica-web/issues/848)) ([b3e1639](https://github.com/Telefonica/mistica-web/commit/b3e1639a41f0f1656ca7498bf019ff179e439247))
+* **Title:** add tokens for Title2 and create Title3 ([#835](https://github.com/Telefonica/mistica-web/issues/835)) ([e218ba1](https://github.com/Telefonica/mistica-web/commit/e218ba17106838912e63be0641979067d0893312))
+
+# [14.19.0](https://github.com/Telefonica/mistica-web/compare/v14.18.2...v14.19.0) (2023-07-28)
+
+
+### Bug Fixes
+
+* **ButtonLink, Title:** update alignments ([#829](https://github.com/Telefonica/mistica-web/issues/829)) ([87bd3e3](https://github.com/Telefonica/mistica-web/commit/87bd3e35de3a1e69b43a3c48b73761555b67e483))
+* **Cards:** CardAction type ([#831](https://github.com/Telefonica/mistica-web/issues/831)) ([6631788](https://github.com/Telefonica/mistica-web/commit/6631788588cddbe247f8ae70308ba1d5c0492dc5))
+
+
+### Features
+
+* **MediaCard:** add top icon support ([#824](https://github.com/Telefonica/mistica-web/issues/824)) ([e9a79a3](https://github.com/Telefonica/mistica-web/commit/e9a79a3fc389106906b647fe1b6f90482ffa5e1d))
+
+## [14.18.2](https://github.com/Telefonica/mistica-web/compare/v14.18.1...v14.18.2) (2023-07-24)
+
+
+### Bug Fixes
+
+* **community:** issue with community build preventing import of community components ([#828](https://github.com/Telefonica/mistica-web/issues/828)) ([fd59552](https://github.com/Telefonica/mistica-web/commit/fd595524052147926b61228c017a631bf014a23d))
+* **Select:** long value overflow ([#827](https://github.com/Telefonica/mistica-web/issues/827)) ([ec0e43c](https://github.com/Telefonica/mistica-web/commit/ec0e43cd401436376315b75a18db4f22b835c836))
+
+## [14.18.1](https://github.com/Telefonica/mistica-web/compare/v14.18.0...v14.18.1) (2023-07-21)
+
+
+### Bug Fixes
+
+* **Row:** improve onPress/to/href types ([#825](https://github.com/Telefonica/mistica-web/issues/825)) ([2214c1f](https://github.com/Telefonica/mistica-web/commit/2214c1f7ebe57a47bf8eba2fe645df94e3220dbb))
+
+# [14.18.0](https://github.com/Telefonica/mistica-web/compare/v14.17.1...v14.18.0) (2023-07-20)
+
+
+### Bug Fixes
+
+* **DisplayMediaCard, PosterCard:** add label to video control ([#823](https://github.com/Telefonica/mistica-web/issues/823)) ([dc765ef](https://github.com/Telefonica/mistica-web/commit/dc765efd8906850eed971e894cbc1a0e0ea4c704))
+* **row:** add missing dataAttributes ([#815](https://github.com/Telefonica/mistica-web/issues/815)) ([47e7cab](https://github.com/Telefonica/mistica-web/commit/47e7cab4b3d5fecbd7d9b0633cc343e855356982))
+
+
+### Features
+
+* **AdvancedDataCard:** new community component ([#780](https://github.com/Telefonica/mistica-web/issues/780)) ([2803b9c](https://github.com/Telefonica/mistica-web/commit/2803b9c5f7286cedaba762d6387d6f291b6fbe5e))
+* **Blocks:** new Mistica Community Components ([#770](https://github.com/Telefonica/mistica-web/issues/770)) ([8fc368a](https://github.com/Telefonica/mistica-web/commit/8fc368a66e3df0f24aa3ba5c5e5fe3ddb1c3801f))
+* **Header:** small version, allow removing vertical padding ([#822](https://github.com/Telefonica/mistica-web/issues/822)) ([448387e](https://github.com/Telefonica/mistica-web/commit/448387e4d7b5203983a5b11ac31156de3ef6d05f))
+* **Nakedcard:** new component ([#819](https://github.com/Telefonica/mistica-web/issues/819)) ([688bb8e](https://github.com/Telefonica/mistica-web/commit/688bb8e7dce5f0bc2011aacc0b6aeabf99e261b9))
+
 ## [14.17.1](https://github.com/Telefonica/mistica-web/compare/v14.17.0...v14.17.1) (2023-07-07)
 
 
