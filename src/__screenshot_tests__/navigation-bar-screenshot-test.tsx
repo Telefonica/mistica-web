@@ -42,6 +42,31 @@ test.each`
     expect(menuOpenImage).toMatchImageSnapshot();
 });
 
+test('MainNavigationBar mobile with burger menu extra', async () => {
+    const page = await openStoryPage({
+        id: 'components-navigation-bars-mainnavigationbar--default',
+        device: 'MOBILE_IOS',
+        args: {withBurgerMenuExtra: true},
+    });
+
+    await page.click(await screen.findByRole('button', {name: 'Abrir menú de navegación'}));
+
+    const menuOpenImage = await page.screenshot();
+    expect(menuOpenImage).toMatchImageSnapshot();
+});
+
+test('MainNavigationBar large', async () => {
+    await openStoryPage({
+        id: 'components-navigation-bars-mainnavigationbar--default',
+        device: 'DESKTOP',
+        args: {large: true},
+    });
+
+    const image = await page.screenshot();
+
+    expect(image).toMatchImageSnapshot();
+});
+
 test.each`
     inverse  | isDarkMode | device
     ${false} | ${false}   | ${'DESKTOP'}
@@ -93,3 +118,23 @@ test.each`
         expect(image).toMatchImageSnapshot();
     }
 );
+
+test.each`
+    type                     | device
+    ${'NavigationBar'}       | ${'DESKTOP'}
+    ${'MainNavigationBar'}   | ${'DESKTOP'}
+    ${'FunnelNavigationBar'} | ${'DESKTOP'}
+    ${'NavigationBar'}       | ${'MOBILE_IOS'}
+    ${'MainNavigationBar'}   | ${'MOBILE_IOS'}
+    ${'FunnelNavigationBar'} | ${'MOBILE_IOS'}
+`('$type without border. device={$device}', async ({type, device}) => {
+    await openStoryPage({
+        id: `components-navigation-bars-${type.toLowerCase()}--default`,
+        device,
+        args: {withBorder: false},
+    });
+
+    const image = await page.screenshot();
+
+    expect(image).toMatchImageSnapshot();
+});
