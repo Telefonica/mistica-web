@@ -81,7 +81,7 @@ export const Default: StoryComponent<Args> = ({
 Default.storyName = 'Avatar';
 
 Default.args = {
-    size: 48,
+    size: 50,
     hideImage: false,
     src: avatarImg,
     hideInitials: false,
