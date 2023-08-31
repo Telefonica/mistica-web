@@ -58,7 +58,7 @@ const Slider: React.FC<SliderProps> = ({
         [valueRanger, minSlider, maxSlider]
     );
 
-    const getClosestNumber = React.useCallback(
+    const getApproximation = React.useCallback(
         (value: number) => {
             let finalValue = value;
             if (Array.isArray(steps)) {
@@ -71,7 +71,15 @@ const Slider: React.FC<SliderProps> = ({
         [steps]
     );
 
-    const getValidSliderValue = React.useCallback(
+    const getOrder = React.useCallback(() => {
+        if (Array.isArray(steps)) {
+            steps.sort((a, b) => {
+                return a - b;
+            });
+        }
+    }, [steps]);
+
+    const getValidValue = React.useCallback(
         (fieldValue: number) => {
             let value = 0;
             for (let i = fieldValue; ; i--) {
@@ -87,10 +95,8 @@ const Slider: React.FC<SliderProps> = ({
 
     const getValidNumber = React.useCallback(
         (fieldValue: number | string) =>
-            Array.isArray(steps)
-                ? steps.indexOf(getClosestNumber(+fieldValue))
-                : getValidSliderValue(+fieldValue),
-        [steps, getClosestNumber, getValidSliderValue]
+            Array.isArray(steps) ? steps.indexOf(getApproximation(+fieldValue)) : getValidValue(+fieldValue),
+        [steps, getApproximation, getValidValue]
     );
 
     const handleField = (fieldValue: number) => {
@@ -140,7 +146,7 @@ const Slider: React.FC<SliderProps> = ({
 
             if (value !== undefined) {
                 const condition = steps[0] > value || value > steps[steps.length - 1];
-                valueIndex = steps.indexOf(getClosestNumber(value));
+                valueIndex = steps.indexOf(getApproximation(value));
                 field = value;
                 error = !steps.includes(value) ? invalidText : error;
                 error = condition
@@ -160,7 +166,7 @@ const Slider: React.FC<SliderProps> = ({
             let field = min.toString();
             let error = '';
             if (value !== undefined) {
-                const finalValue = getValidSliderValue(value);
+                const finalValue = getValidValue(value);
                 ranger = finalValue;
                 field = value.toString();
                 if (step !== 1 && value % step !== 0) {
@@ -178,7 +184,7 @@ const Slider: React.FC<SliderProps> = ({
             setFieldValue(field);
             setStep(steps);
         }
-    }, [steps, max, min, getClosestNumber, value, getValidSliderValue, invalidText, step]);
+    }, [steps, max, min, getApproximation, value, getValidValue, invalidText, step, getOrder]);
 
     const fieldContent = () => {
         return (
@@ -195,6 +201,7 @@ const Slider: React.FC<SliderProps> = ({
                             styles.sliderVariant[isIos ? 'ios' : 'default'],
                             sliderDisabled
                         )}
+                        aria-label="Slider"
                         type="range"
                         min={minSlider}
                         max={maxSlider}
@@ -225,6 +232,7 @@ const Slider: React.FC<SliderProps> = ({
                             error={!!error}
                             disabled={disabled}
                             value={fieldValue}
+                            maxLength={maxSlider}
                             helperText={error}
                             label="Value"
                             name="Value"
