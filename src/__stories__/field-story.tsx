@@ -765,7 +765,7 @@ type SliderArgs = {
     max: number;
     min: number;
     field: boolean;
-    stepsInArray: boolean;
+    tooltip: boolean;
     invalidText: string;
 };
 
@@ -775,21 +775,20 @@ export const SliderStory: StoryComponent<SliderArgs> = ({
     max,
     min,
     field,
-    stepsInArray,
+    tooltip,
     invalidText,
 }) => {
-    const step = stepsInArray ? [0, 8, 12, 16, 24, 40] : steps;
-
     return (
         <div data-testid="slider">
             <div style={{marginTop: 54}}>
                 <Slider
                     invalidText={invalidText}
                     disabled={disabled}
-                    steps={step}
+                    steps={steps}
                     max={max}
                     min={min}
                     field={field}
+                    tooltip={tooltip}
                 />
             </div>
         </div>
@@ -804,6 +803,6 @@ SliderStory.args = {
     max: 100,
     min: 0,
     field: false,
-    stepsInArray: false,
+    tooltip: true,
     invalidText: 'Invalid',
 };

@@ -16,6 +16,9 @@ interface SliderProps {
     getStepArrayIndex?: (value: number) => void;
     invalidText?: string;
     'arial-label'?: string;
+    tooltip?: boolean;
+    helperText?: string;
+    error?: boolean;
 }
 
 const Slider: React.FC<SliderProps> = ({
@@ -29,6 +32,9 @@ const Slider: React.FC<SliderProps> = ({
     getStepArrayIndex,
     invalidText = ' ',
     'arial-label': arialLabel,
+    tooltip,
+    helperText,
+    error,
 }) => {
     const {isIos} = useTheme();
     const {isTabletOrSmaller} = useScreenSize();
@@ -37,7 +43,7 @@ const Slider: React.FC<SliderProps> = ({
     const [maxSlider, setMaxSlider] = React.useState(max);
     const [step, setStep] = React.useState(1);
     const [fieldValue, setFieldValue] = React.useState('');
-    const [error, setError] = React.useState('');
+    const [err, setError] = React.useState('');
     const sliderRef = React.useRef<HTMLDivElement>(null);
     const opacity = React.useMemo(() => (disabled ? '0.5' : '1'), [disabled]);
     const sliderPaddingTop = field ? 24 : 0;
@@ -214,7 +220,6 @@ const Slider: React.FC<SliderProps> = ({
                         style={{left: setPosition(), top: sliderTop}}
                         className={classnames(styles.sliderThumbVariant[isIos ? 'ios' : 'default'])}
                     />
-
                     <div className={styles.progress} style={{width: setPosition(), top: sliderTop}} />
                 </div>
             </div>
@@ -229,11 +234,11 @@ const Slider: React.FC<SliderProps> = ({
 
                     <div className={styles.fieldContainer}>
                         <IntegerField
-                            error={!!error}
+                            error={error ?? !!err}
                             disabled={disabled}
                             value={fieldValue}
                             maxLength={maxSlider}
-                            helperText={error}
+                            helperText={helperText ?? err}
                             label="Value"
                             name="Value"
                             onChange={(e) => handleField(+e.target.value)}
@@ -241,7 +246,7 @@ const Slider: React.FC<SliderProps> = ({
                         />
                     </div>
                 </div>
-            ) : (
+            ) : tooltip ? (
                 <Tooltip
                     description={
                         Array.isArray(steps) ? steps[valueRanger].toString() : valueRanger.toString()
@@ -254,6 +259,8 @@ const Slider: React.FC<SliderProps> = ({
                     position="top"
                     target={fieldContent()}
                 />
+            ) : (
+                fieldContent()
             )}
         </section>
     );

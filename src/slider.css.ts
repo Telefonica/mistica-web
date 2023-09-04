@@ -3,6 +3,8 @@ import {vars} from './skins/skin-contract.css';
 import {style, styleVariants} from '@vanilla-extract/css';
 import {mq} from '.';
 
+const transition = '0.8s cubic-bezier(0.215, 0.61, 0.355, 1)';
+
 export const container = style([
     sprinkles({
         display: 'flex',
@@ -44,7 +46,7 @@ export const sliderBase = style([
 
             zIndex: 3,
             position: 'relative',
-            borderRadius: vars.borderRadii.bar,
+            borderRadius: vars.borderRadii.indicator,
         },
 
         '@media': {
@@ -78,11 +80,13 @@ export const sliderVariant = styleVariants({
                     cursor: 'grab',
                     opacity: 0.2,
                     boxShadow: `0px 0px 0px 6px ${vars.colors.controlActivated}`,
+                    transition: `${transition}`,
                 },
                 '&::-webkit-slider-thumb:active': {
                     cursor: 'grabbing',
                     opacity: 0.2,
                     boxShadow: `0px 0px 0px 10px ${vars.colors.controlActivated}`,
+                    transition: `${transition}`,
                 },
             },
         },
