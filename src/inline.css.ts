@@ -21,7 +21,7 @@ export const fullWidth = style([
 export const wrap = style([
     inline,
     {
-        display: 'flex',
+        display: 'inline-flex',
         flexWrap: 'wrap',
     },
 ]);
