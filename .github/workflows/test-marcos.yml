@@ -1,0 +1,10 @@
+name: Testing marcos
+on: [pull_request]
+
+jobs:
+    do_it:
+        name: 'executing test'
+        runs-on: ubuntu-latest
+        steps:
+            - name: first step
+              run: echo "Executed :)"
