@@ -7,4 +7,4 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: first step
-              run: echo "Executed :)"
+              run: echo "Executed 2.0 :)"
