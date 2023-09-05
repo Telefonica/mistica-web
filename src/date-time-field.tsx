@@ -33,7 +33,7 @@ const FormDateField: React.FC<DateFieldProps> = ({
     value,
     defaultValue,
     min,
-    max,
+    max = new Date('9999-12-31T23:59'),
     ...rest
 }) => {
     const hasNativePicker = React.useMemo(() => {
