@@ -109,7 +109,7 @@ export const arrowWrapper = sprinkles({
 });
 
 export const wrapper = sprinkles({
-    display: 'inline-block',
+    display: 'inline-flex',
 });
 
 export const tooltipMinWidth = 40;

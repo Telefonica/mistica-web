@@ -779,19 +779,19 @@ export const SliderStory: StoryComponent<SliderArgs> = ({
     invalidText,
 }) => {
     return (
-        <div data-testid="slider">
-            <div style={{marginTop: 54}}>
-                <Slider
-                    invalidText={invalidText}
-                    disabled={disabled}
-                    steps={steps}
-                    max={max}
-                    min={min}
-                    field={field}
-                    tooltip={tooltip}
-                />
-            </div>
-        </div>
+            <Box paddingY={48} dataAttributes={{testid: "slider"}}>
+                <Stack space={24} >
+                    <Slider
+                        invalidText={invalidText}
+                        disabled={disabled}
+                        steps={steps}
+                        max={max}
+                        min={min}
+                        field={field}
+                        tooltip={tooltip}
+                    />
+                </Stack>
+            </Box>
     );
 };
 
