@@ -38,28 +38,39 @@ export const actions = style([
     },
 ]);
 
-export const touchableContainer = style([
-    {
-        // not defined in sprinkles to avoid touchable style override
-        display: 'flex',
-        flexGrow: 1,
-    },
-    sprinkles({
-        height: '100%',
-        flexDirection: 'column',
-    }),
-]);
+export const touchableContainer = style({
+    display: 'flex',
+    position: 'relative',
+    width: '100%',
+    height: '100%',
+});
 
-export const hoverEffect = style({
+export const touchable = style({
+    display: 'flex',
+    flexDirection: 'column',
+    minHeight: '100%',
+    width: '100%',
+    position: 'relative',
+    padding: 0,
+    border: 'none',
+    background: 'transparent',
+});
+
+export const touchableCardOverlay = style({
+    height: '100%',
+    width: '100%',
+    pointerEvents: 'none',
+    position: 'absolute',
+    backgroundColor: 'transparent',
     '@media': {
         [mq.supportsHover]: {
             transition: 'background-color 0.1s ease-in-out',
 
             selectors: {
-                '&:hover': {
+                [`${touchableContainer}:hover &`]: {
                     backgroundColor: vars.colors.backgroundContainerHover,
                 },
-                '&:active': {
+                [`${touchable}:active &`]: {
                     backgroundColor: vars.colors.backgroundContainerPressed,
                 },
             },
@@ -72,6 +83,7 @@ export const cardContentStyle = style([
     sprinkles({
         paddingTop: 8,
         paddingBottom: 24,
+        position: 'relative',
     }),
     {
         '@media': {

@@ -62,6 +62,7 @@ const useTopActions = (actions?: Array<CardAction>, onClose?: () => void) => {
 type CardActionsGroupProps = {
     actions?: Array<CardAction>;
     onClose?: () => void;
+    padding?: number;
     type?: 'default' | 'inverse' | 'media';
 };
 
@@ -69,6 +70,7 @@ export const TOP_ACTION_BUTTON_SIZE = 48;
 
 export const CardActionsGroup = ({
     actions,
+    padding = 8,
     onClose,
     type = 'default',
 }: CardActionsGroupProps): JSX.Element => {
@@ -91,8 +93,8 @@ export const CardActionsGroup = ({
         <div
             style={{
                 position: 'absolute',
-                right: 8,
-                top: 8,
+                right: padding,
+                top: padding,
                 zIndex: 3, // needed because images has zIndex 1 and touchable overlay has zIndex 2
             }}
         >
