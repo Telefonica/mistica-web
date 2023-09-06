@@ -290,7 +290,7 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
                             onPress={onPress}
                             tabIndex={0}
                             maybe
-                            className={classNames(styles.touchable)}
+                            className={styles.touchable}
                             aria-label={ariaLabel}
                         >
                             {isTouchable && <div className={styles.touchableCardOverlay} />}
