@@ -5,13 +5,15 @@ const LOGO_TYPES = ['imagotype', 'vertical', 'isotype'];
 const INVERSE_VALUES = [false, true];
 const DARK_MODE_VALUES = [false, true];
 
-const getCases = () => {
+const getBrandLogoCases = () => {
     const cases = [];
     for (const skin of SKINS) {
-        for (const type of LOGO_TYPES) {
-            for (const isInverse of INVERSE_VALUES) {
-                for (const isDarkMode of DARK_MODE_VALUES) {
-                    cases.push([skin, type, isInverse, isDarkMode]);
+        if (skin !== 'Vivo-new') {
+            for (const type of LOGO_TYPES) {
+                for (const isInverse of INVERSE_VALUES) {
+                    for (const isDarkMode of DARK_MODE_VALUES) {
+                        cases.push([skin, type, isInverse, isDarkMode]);
+                    }
                 }
             }
         }
@@ -19,7 +21,7 @@ const getCases = () => {
     return cases;
 };
 
-test.each(getCases())(
+test.each(getBrandLogoCases())(
     'Logo. brand={%s} type={%s} isInverse={%s} isDarkMode={%s}',
     async (brand, type, isInverse, isDarkMode) => {
         await openStoryPage({
