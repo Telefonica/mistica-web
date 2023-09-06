@@ -23,7 +23,6 @@ export const rangeSlider = style([
         position: 'relative',
         width: '100%',
     }),
-    {},
 ]);
 
 export const sliderBase = style([
@@ -61,14 +60,22 @@ export const sliderVariant = styleVariants({
     ios: [
         sliderBase,
         {
-            '::-webkit-slider-thumb': {
-                WebkitAppearance: 'none',
-                width: 28,
-                height: 28,
+            selectors: {
+                '&::-webkit-slider-thumb': {
+                    WebkitAppearance: 'none',
+                    width: 28,
+                    height: 28,
 
-                background: vars.colors.iosControlKnob,
-                border: ' 0.5px solid rgba(0, 0, 0, 0.04)',
-                boxShadow: '0px 0.5px 4px rgba(0, 0, 0, 0.12), 0px 6px 13px rgba(0, 0, 0, 0.12)',
+                    background: vars.colors.iosControlKnob,
+                    border: ' 0.5px solid rgba(0, 0, 0, 0.04)',
+                    boxShadow: '0px 0.5px 4px rgba(0, 0, 0, 0.12), 0px 6px 13px rgba(0, 0, 0, 0.12)',
+                },
+                '&::-webkit-slider-thumb:hover': {
+                    cursor: 'grab',
+                },
+                '&::-webkit-slider-thumb:active': {
+                    cursor: 'grabbing',
+                },
             },
         },
     ],
