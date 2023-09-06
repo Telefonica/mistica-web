@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {Stack, Text, Text1, Text10, Text2, Text3, Text4, Text5, Text6, Text7, Text8, Text9} from '../../..';
 
-const FormTest = (): JSX.Element => (
+const TextTest = (): JSX.Element => (
     <Stack space={8}>
         <Text>Text</Text>
         <Text1 regular>Text1</Text1>
@@ -17,4 +17,4 @@ const FormTest = (): JSX.Element => (
     </Stack>
 );
 
-export default FormTest;
+export default TextTest;
