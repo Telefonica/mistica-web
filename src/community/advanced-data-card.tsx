@@ -343,6 +343,11 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
                                 </Box>
                             )}
                         </Touchable>
+                        {/**
+                         * Given that the actions are inside the card content, there is a 1px padding that affects their position in the card.
+                         * By default, all the other cards use padding of 8px for the actions, so we use 7px in here to compensate for
+                         * that extra pixel that was added by the <Boxed/> component.
+                         */}
                         <CardActionsGroup actions={actions} onClose={onClose} padding={7} />
                     </div>
                     {hasFooter && <CardFooter {...footerProps} />}
