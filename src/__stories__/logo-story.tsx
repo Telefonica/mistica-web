@@ -14,7 +14,7 @@ type Args = {
     type: 'isotype' | 'imagotype' | 'vertical';
     size: number;
     inverse: boolean;
-    action: string;
+    action: 'none' | 'onPress' | 'href' | 'to';
     forceBrandLogo: boolean;
     brand: 'Movistar' | 'O2' | 'Vivo' | 'Telefonica' | 'Blau';
 };
