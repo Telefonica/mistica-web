@@ -11,11 +11,12 @@ export default {
 };
 
 type Args = {
-    skin: 'default' | 'Movistar' | 'O2' | 'Vivo' | 'Vivo-new' | 'Telefonica' | 'Blau';
     type: 'isotype' | 'imagotype' | 'vertical';
     size: number;
     inverse: boolean;
     action: string;
+    forceBrandLogo: boolean;
+    brand: 'Movistar' | 'O2' | 'Vivo' | 'Vivo-new' | 'Telefonica' | 'Blau';
 };
 
 const getLogoActionProps = (action: string) => {
@@ -41,7 +42,7 @@ const getLogoActionProps = (action: string) => {
         : {};
 };
 
-export const Default: StoryComponent<Args> = ({type, size, inverse, action, skin}) => {
+export const Default: StoryComponent<Args> = ({type, size, inverse, action, forceBrandLogo, brand}) => {
     const logoProps = {
         ...getLogoActionProps(action),
         type,
@@ -56,7 +57,7 @@ export const Default: StoryComponent<Args> = ({type, size, inverse, action, skin
         O2: O2Logo,
         Telefonica: TelefonicaLogo,
         Blau: BlauLogo,
-    }[skin];
+    }[forceBrandLogo ? brand : 'default'];
 
     return (
         <ResponsiveLayout isInverse={inverse} fullWidth>
@@ -70,17 +71,19 @@ export const Default: StoryComponent<Args> = ({type, size, inverse, action, skin
 Default.storyName = 'Logo';
 
 Default.args = {
-    skin: 'default',
     type: 'isotype',
     action: 'none',
     size: 48,
     inverse: false,
+    forceBrandLogo: false,
+    brand: 'Movistar',
 };
 
 Default.argTypes = {
-    skin: {
-        options: ['default', 'Movistar', 'O2', 'Vivo', 'Vivo-new', 'Telefonica', 'Blau'],
+    brand: {
+        options: ['Movistar', 'O2', 'Vivo', 'Vivo-new', 'Telefonica', 'Blau'],
         control: {type: 'select'},
+        if: {arg: 'forceBrandLogo'},
     },
     type: {
         options: ['isotype', 'imagotype', 'vertical'],

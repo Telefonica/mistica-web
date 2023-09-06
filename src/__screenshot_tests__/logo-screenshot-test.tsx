@@ -20,12 +20,12 @@ const getCases = () => {
 };
 
 test.each(getCases())(
-    'Logo. skin={%s} type={%s} isInverse={%s} isDarkMode={%s}',
-    async (skin, type, isInverse, isDarkMode) => {
+    'Logo. brand={%s} type={%s} isInverse={%s} isDarkMode={%s}',
+    async (brand, type, isInverse, isDarkMode) => {
         await openStoryPage({
             id: 'components-logo--default',
             device: 'DESKTOP',
-            args: {skin, type, isInverse},
+            args: {forceBrandLogo: true, brand, type, isInverse},
             isDarkMode: isDarkMode as boolean,
         });
 
@@ -36,7 +36,7 @@ test.each(getCases())(
     }
 );
 
-test.each(SKINS)('Logo with defaults and skin %s', async (skin) => {
+test.each(SKINS)('Logo. Default brand with skin={%s}', async (skin) => {
     await openStoryPage({
         id: 'components-logo--default',
         device: 'DESKTOP',
