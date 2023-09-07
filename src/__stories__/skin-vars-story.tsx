@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Stack, Text2, skinVars} from '..';
+import {Stack, Text2, skinVars, getCssVarValue, useTheme} from '..';
 import {useIsInverseVariant} from '../theme-variant-context';
 
 export default {
@@ -10,6 +10,14 @@ const CodeText = ({children}: {children: React.ReactNode}) => <Text2 medium>{chi
 
 const ColorsTable = () => {
     const isInverse = useIsInverseVariant();
+
+    const {skinName, isDarkMode} = useTheme();
+    const [, forceUpdate] = React.useState(0);
+
+    React.useEffect(() => {
+        // force a re-render when skin or darkMode changes to be able to re-calculate css variable values
+        forceUpdate((n) => n + 1);
+    }, [skinName, isDarkMode]);
 
     return (
         <table>
@@ -29,7 +37,7 @@ const ColorsTable = () => {
             <tbody>
                 {Object.entries(skinVars.colors)
                     .sort(([name1], [name2]) => (name1 > name2 ? 1 : -1))
-                    .map(([name, value]) => (
+                    .map(([name, cssVar]) => (
                         <tr key={name}>
                             <td>
                                 <Text2 regular as="pre">
@@ -38,15 +46,13 @@ const ColorsTable = () => {
                             </td>
                             <td>
                                 <Text2 regular as="pre">
-                                    {getComputedStyle(document.documentElement).getPropertyValue(
-                                        value.replace('var(', '').replace(')', '')
-                                    )}
+                                    {getCssVarValue(cssVar)}
                                 </Text2>
                             </td>
                             <td
-                                title={`${name}: ${value}`}
+                                title={`${name}: ${cssVar}`}
                                 style={{
-                                    backgroundColor: value,
+                                    backgroundColor: cssVar,
                                     border: `1px dashed ${
                                         isInverse ? skinVars.colors.borderLow : skinVars.colors.borderHigh
                                     }`,

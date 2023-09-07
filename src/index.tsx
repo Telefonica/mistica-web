@@ -167,6 +167,7 @@ export type {ThemeConfig, ColorScheme, EventFormat} from './theme';
 export {pxToRem} from './utils/css';
 
 export {applyAlpha} from './utils/color';
+export {getCssVarValue} from './utils/dom';
 
 export {TrackingConfig, useTrackingConfig} from './utils/analytics';
 
