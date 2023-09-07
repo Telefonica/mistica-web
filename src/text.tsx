@@ -37,7 +37,7 @@ export interface TextPresetProps {
     truncate?: boolean | number;
     wordBreak?: boolean;
     hyphens?: 'auto' | 'manual' | 'none';
-    textAlign?: 'center';
+    textAlign?: 'center' | 'right';
     id?: string;
     as?: React.ComponentType<any> | string;
     role?: string;
