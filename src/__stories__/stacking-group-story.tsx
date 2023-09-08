@@ -59,7 +59,7 @@ export const Default: StoryComponent<Args> = ({
     );
 };
 
-Default.storyName = 'Stacking Group';
+Default.storyName = 'StackingGroup';
 Default.argTypes = {
     size: {
         control: {type: 'range', min: 24, max: 128, step: 4},

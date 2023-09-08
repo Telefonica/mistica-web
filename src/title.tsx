@@ -29,7 +29,7 @@ const TitleLayout = ({title, right, dataAttributes}: TitleLayoutProps): React.Re
     );
 };
 
-type TitleProps = {
+export type TitleProps = {
     children: React.ReactNode;
     id?: string;
     right?: React.ReactNode;

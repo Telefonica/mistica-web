@@ -3,7 +3,7 @@ import {ThemeVariant, skinVars} from '..';
 import {SkeletonLine} from '../skeletons';
 
 export default {
-    title: 'Components/Skeletons/Skeleton Line',
+    title: 'Components/Skeletons/SkeletonLine',
     parameters: {
         fullScreen: true,
     },
@@ -36,7 +36,7 @@ export const Default: StoryComponent<Args> = ({inverse, ariaLabel, width}) => {
     );
 };
 
-Default.storyName = 'Skeleton Line';
+Default.storyName = 'SkeletonLine';
 
 Default.args = {
     inverse: false,
