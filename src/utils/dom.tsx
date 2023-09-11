@@ -121,3 +121,32 @@ export const listenResize = (element: Element, handler: ResizeListener): (() => 
         }
     };
 };
+
+const parseVarCall = (cssVar: string) => {
+    const [varName, fallback] = cssVar
+        .replace(/^var\(/, '')
+        .replace(/\)$/, '')
+        .split(/\s*,\s*(.*)/);
+    return {varName, fallback};
+};
+
+const isCssVar = (cssVar: string) => cssVar.startsWith('var(') || cssVar.startsWith('--');
+
+export const getCssVarValue = (cssVar: string, element?: Element): string => {
+    if (!isCssVar(cssVar)) {
+        throw new Error(`Invalid css var: ${cssVar}`);
+    }
+
+    if (cssVar.startsWith('var(')) {
+        const {varName, fallback} = parseVarCall(cssVar);
+        const value = getCssVarValue(varName, element);
+        if (!value && fallback) {
+            if (!isCssVar(fallback)) {
+                return fallback;
+            }
+            return getCssVarValue(fallback, element);
+        }
+        return value;
+    }
+    return getComputedStyle(element ?? document.documentElement).getPropertyValue(cssVar);
+};
