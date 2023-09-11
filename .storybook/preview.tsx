@@ -71,14 +71,16 @@ const MisticaThemeProvider = ({Story, context}): React.ReactElement => {
     }, []);
 
     return (
-        <ThemeContextProvider theme={getTheme(skin as string, platform, colorScheme)}>
-            <OverscrollColorProvider>
-                {skin === VIVO_NEW_SKIN && <style>{`body {font-family: "Vivo Type"}`}</style>}
-                {skin === TELEFONICA_SKIN && <style>{`body {font-family: "Telefonica Sans"}`}</style>}
-                {skin === O2_SKIN && <style>{`body {font-family: "On Air"}`}</style>}
-                <Story {...context} />
-            </OverscrollColorProvider>
-        </ThemeContextProvider>
+        <React.StrictMode>
+            <ThemeContextProvider theme={getTheme(skin as string, platform, colorScheme)}>
+                <OverscrollColorProvider>
+                    {skin === VIVO_NEW_SKIN && <style>{`body {font-family: "Vivo Type"}`}</style>}
+                    {skin === TELEFONICA_SKIN && <style>{`body {font-family: "Telefonica Sans"}`}</style>}
+                    {skin === O2_SKIN && <style>{`body {font-family: "On Air"}`}</style>}
+                    <Story {...context} />
+                </OverscrollColorProvider>
+            </ThemeContextProvider>
+        </React.StrictMode>
     );
 };
 
