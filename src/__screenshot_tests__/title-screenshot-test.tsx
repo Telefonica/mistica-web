@@ -1,4 +1,4 @@
-import {openStoryPage} from '../test-utils';
+import {openStoryPage, screen} from '../test-utils';
 
 import type {Device} from '../test-utils';
 
@@ -31,7 +31,7 @@ const getCases = () => {
     return cases;
 };
 
-test.each(getCases())('%s (%s) - %s', async (_, caseName, device, storyName) => {
+test.each(getCases())('%s (%s) - %s', async (component, caseName, device, storyName) => {
     const args = caseArgs[caseName as (typeof CASE_NAMES)[number]];
 
     await openStoryPage({
@@ -39,6 +39,8 @@ test.each(getCases())('%s (%s) - %s', async (_, caseName, device, storyName) => 
         device: device as Device,
         args: {title: args.title, linkText: args.linkText},
     });
-    const image = await page.screenshot();
+
+    const element = await screen.findByTestId(component);
+    const image = await element.screenshot();
     expect(image).toMatchImageSnapshot();
 });

@@ -4,6 +4,7 @@ import Inline from './inline';
 import Box from './box';
 import {vars} from './skins/skin-contract.css';
 import {useTheme} from './hooks';
+import {getPrefixedDataAttributes} from './utils/dom';
 
 import type {DataAttributes} from './utils/types';
 
@@ -16,7 +17,7 @@ type TitleLayoutProps = {
 const TitleLayout = ({title, right, dataAttributes}: TitleLayoutProps): React.ReactElement => {
     const {textPresets} = useTheme();
     if (!right) {
-        return title;
+        return <div {...getPrefixedDataAttributes(dataAttributes)}>{title}</div>;
     }
 
     return (

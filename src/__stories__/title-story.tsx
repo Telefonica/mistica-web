@@ -28,6 +28,7 @@ const TitleComponent = ({
 }: renderTitleComponentProps): JSX.Element => (
     <TitleComponent
         as={as}
+        dataAttributes={{testid: defaultTitle}}
         right={
             linkText ? (
                 <ButtonLink href="https://google.com" bleedRight bleedY>
