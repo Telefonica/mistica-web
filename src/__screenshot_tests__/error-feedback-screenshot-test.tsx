@@ -18,6 +18,9 @@ test.each(cases)('ErrorFeedback on %s and %s', async (skin, device) => {
         id: `patterns-feedback-errorfeedback--error-feedback-story`,
         skin,
         device,
+        args: {
+            errorReference: 'E-1234',
+        },
     });
 
     const errorFeedback = await screen.findByTestId('error-feedback');
