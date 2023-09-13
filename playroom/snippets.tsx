@@ -149,6 +149,7 @@ const feedbackSnippets: Array<Snippet> = [
     'ErrorFeedbackScreen',
     'InfoFeedbackScreen',
     'SuccessFeedback',
+    'ErrorFeedback',
 ].map((name) => ({
     group: 'Feedbacks',
     name,

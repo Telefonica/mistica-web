@@ -23,6 +23,7 @@ import ButtonGroup from './button-group';
 import {vars} from './skins/skin-contract.css';
 import * as styles from './feedback.css';
 import IconSuccessVivoNew from './icons/icon-success-vivo-new';
+import {getPrefixedDataAttributes} from './utils/dom';
 
 import type {Theme} from './theme';
 import type {DataAttributes, IconProps} from './utils/types';
@@ -144,14 +145,10 @@ const renderFeedbackBody = (
     );
 };
 
-const renderInlineFeedbackBody = (
-    feedbackBody: React.ReactNode,
-    buttons: ButtonGroupProps,
-    isTabletOrSmaller: boolean
-) => {
+const renderInlineFeedbackBody = (feedbackBody: React.ReactNode, buttons: ButtonGroupProps) => {
     const hasButtons = checkHasButtons(buttons);
     return (
-        <Stack space={isTabletOrSmaller ? 24 : 40}>
+        <Stack space={{mobile: 24, desktop: 40}}>
             {feedbackBody}
             {hasButtons && <ButtonGroup {...buttons} />}
         </Stack>
@@ -257,15 +254,11 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
         animateText && areAnimationsSupported(platformOverrides),
         appear
     );
-    const inlineFeedbackBody = renderInlineFeedbackBody(
-        feedbackBody,
-        {
-            primaryButton,
-            secondaryButton,
-            link,
-        },
-        isTabletOrSmaller
-    );
+    const inlineFeedbackBody = renderInlineFeedbackBody(feedbackBody, {
+        primaryButton,
+        secondaryButton,
+        link,
+    });
 
     if (!isTabletOrSmaller && unstable_inlineInDesktop) {
         return inlineFeedbackBody;
@@ -432,15 +425,11 @@ export const SuccessFeedback: React.FC<AssetFeedbackProps> = ({
         areAnimationsSupported(platformOverrides),
         appear
     );
-    const inlineFeedbackBody = renderInlineFeedbackBody(
-        feedbackBody,
-        {
-            primaryButton,
-            secondaryButton,
-            link,
-        },
-        isTabletOrSmaller
-    );
+    const inlineFeedbackBody = renderInlineFeedbackBody(feedbackBody, {
+        primaryButton,
+        secondaryButton,
+        link,
+    });
 
     return isTabletOrSmaller ? (
         <ResponsiveLayout isInverse>
@@ -456,6 +445,55 @@ export const SuccessFeedback: React.FC<AssetFeedbackProps> = ({
             imageFit,
             imageUrl,
             dataAttributes: {'component-name': 'SuccessFeedback', ...dataAttributes},
+        })
+    );
+};
+
+export const ErrorFeedback: React.FC<ErrorFeedbackScreenProps> = ({
+    title,
+    description,
+    primaryButton,
+    secondaryButton,
+    link,
+    errorReference,
+    dataAttributes,
+}) => {
+    useHapticFeedback('error');
+    const {isTabletOrSmaller} = useScreenSize();
+    const {platformOverrides} = useTheme();
+
+    const appear = useAppearStatus();
+
+    const icon = <IconError size="100%" />;
+    const feedbackBody = renderFeedbackBody(
+        {
+            icon,
+            title,
+            description,
+            extra: errorReference ? (
+                <Text2 color={vars.colors.textSecondary} regular>
+                    {errorReference}
+                </Text2>
+            ) : undefined,
+        },
+        areAnimationsSupported(platformOverrides),
+        appear
+    );
+    const inlineFeedbackBody = renderInlineFeedbackBody(feedbackBody, {
+        primaryButton,
+        secondaryButton,
+        link,
+    });
+
+    return isTabletOrSmaller ? (
+        <div {...getPrefixedDataAttributes({'component-name': 'ErrorFeedback', ...dataAttributes})}>
+            {inlineFeedbackBody}
+        </div>
+    ) : (
+        renderFeedbackInDesktop({
+            isInverse: false,
+            inlineFeedbackBody,
+            dataAttributes: {'component-name': 'ErrorFeedback', ...dataAttributes},
         })
     );
 };

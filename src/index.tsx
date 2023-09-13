@@ -28,6 +28,7 @@ export {
     InfoFeedbackScreen,
     SuccessFeedbackScreen,
     SuccessFeedback,
+    ErrorFeedback,
 } from './feedback';
 export {default as IconButton} from './icon-button';
 export {default as Popover} from './popover';
