@@ -116,6 +116,7 @@ export {
 export {default as SheetRoot, showSheet} from './sheet-root';
 export type {NativeSheetImplementation} from './sheet-root';
 export {default as StackingGroup} from './stacking-group';
+export {Accordion, BoxedAccordion} from './accordion';
 
 // Forms
 export {default as Form} from './form';
@@ -146,7 +147,6 @@ export {default as IconChevron} from './icons/icon-chevron';
 export {default as IconError} from './icons/icon-error';
 export {default as IconSuccess} from './icons/icon-success';
 export {default as IconSuccessVivo} from './icons/icon-success-vivo';
-export {default as IconSuccessVivoNew} from './icons/icon-success-vivo-new';
 
 export {SkeletonCircle, SkeletonRow, SkeletonLine, SkeletonRectangle, SkeletonText} from './skeletons';
 
@@ -167,7 +167,6 @@ export type {ThemeConfig, ColorScheme, EventFormat} from './theme';
 export {pxToRem} from './utils/css';
 
 export {applyAlpha} from './utils/color';
-export {getCssVarValue} from './utils/dom';
 
 export {TrackingConfig, useTrackingConfig} from './utils/analytics';
 
