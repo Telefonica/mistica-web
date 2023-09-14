@@ -99,7 +99,7 @@ export const minHeight = style({minHeight: 216});
 
 export const dataCard = style([
     {
-        isolation: 'isolate',
+        isolation: 'isolate', // Needed to preserve border-radius with Video component and Safari
     },
     sprinkles({
         position: 'relative',
