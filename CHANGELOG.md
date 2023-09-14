@@ -1,3 +1,10 @@
+## [14.22.1](https://github.com/Telefonica/mistica-web/compare/v14.22.0...v14.22.1) (2023-09-14)
+
+
+### Bug Fixes
+
+* **AdvancedDataCard:** add isolation to container ([#884](https://github.com/Telefonica/mistica-web/issues/884)) ([53a1dbe](https://github.com/Telefonica/mistica-web/commit/53a1dbe4121deabd96c1504a66d584958a42f17d))
+
 # [14.22.0](https://github.com/Telefonica/mistica-web/compare/v14.21.0...v14.22.0) (2023-09-11)
 
 
