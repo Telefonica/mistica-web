@@ -27,6 +27,11 @@ export const touchable = style({
     padding: 0,
     border: 'none',
     background: 'transparent',
+    /**
+     * Setting margin to 0, in order to avoid Safari from automatically adding extra margin to
+     * the touchable container (https://stackoverflow.com/a/71093016)
+     */
+    margin: 0,
 });
 
 const touchableCardOverlayBase = style({
