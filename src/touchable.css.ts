@@ -2,6 +2,13 @@ import {style} from '@vanilla-extract/css';
 import {sprinkles} from './sprinkles.css';
 
 export const base = style([
+    {
+        /**
+         * Setting default margin to 0, in order to avoid Safari from automatically adding extra margin
+         * (https://stackoverflow.com/a/71093016)
+         */
+        margin: 0,
+    },
     sprinkles({
         cursor: 'pointer',
     }),
