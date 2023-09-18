@@ -515,11 +515,19 @@ export const ButtonLink = React.forwardRef<TouchableElement, ButtonLinkProps>((p
     const commonProps = {
         className: classnames(styles.link, {
             [styles.inverseLink]: isInverse,
-            [styles.alignedLeftLink]: !!props.bleedLeft || !!props.aligned,
-            [styles.alignedRightLink]: !!props.bleedRight,
-            [styles.alignedVerticalLink]: !!props.bleedY,
             [styles.isLoading]: showSpinner,
         }),
+        /**
+         * Setting bleed classes with style to override the margin:0 set by the Touchable component.
+         * If we set it using className, it may not work depending on the order in which the styles are applied.
+         */
+        style: {
+            ...(props.bleedLeft || props.aligned ? {marginLeft: -styles.PADDING_X_LINK} : undefined),
+            ...(props.bleedRight ? {marginRight: -styles.PADDING_X_LINK} : undefined),
+            ...(props.bleedY
+                ? {marginTop: -styles.PADDING_Y_LINK, marginBottom: -styles.PADDING_Y_LINK}
+                : undefined),
+        },
         trackingEvent: props.trackingEvent ?? (props.trackEvent ? createDefaultTrackingEvent() : undefined),
         dataAttributes: {'component-name': 'ButtonLink', ...props.dataAttributes},
         children: renderButtonContent({
