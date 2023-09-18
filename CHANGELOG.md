@@ -1,3 +1,10 @@
+## [14.22.2](https://github.com/Telefonica/mistica-web/compare/v14.22.1...v14.22.2) (2023-09-18)
+
+
+### Bug Fixes
+
+* **Touchable:** add margin 0 as default to prevent Safari issues ([#885](https://github.com/Telefonica/mistica-web/issues/885)) ([9c1b470](https://github.com/Telefonica/mistica-web/commit/9c1b47073c5a543e17c351cb2863610c5ce7e31f))
+
 ## [14.22.1](https://github.com/Telefonica/mistica-web/compare/v14.22.0...v14.22.1) (2023-09-14)
 
 
