@@ -130,16 +130,24 @@ const Video = React.forwardRef<VideoElement, VideoProps>(
         const videoRef = React.useRef<HTMLVideoElement>(null);
         const loadedSource = React.useRef<VideoSource>();
         const posterRef = React.useRef<HTMLDivElement>(null);
+        const [failedTimes, setFailedTimes] = React.useState(0);
 
         const borderRadiusContext = useMediaBorderRadius();
         const ratio = typeof aspectRatio === 'number' ? aspectRatio : RATIO[aspectRatio];
 
         const handleError = React.useCallback(() => {
             if (videoStatus === 'loading') {
-                dispatch('fail');
-                onError?.();
+                if (failedTimes < 10) {
+                    loadedSource.current = undefined;
+                    setFailedTimes(failedTimes + 1);
+                } else {
+                    dispatch('fail');
+                    onError?.();
+                }
             }
-        }, [onError, videoStatus]);
+        }, [onError, videoStatus, failedTimes]);
+
+        React.useEffect(() => setFailedTimes(0), []);
 
         React.useEffect(() => {
             if (loadedSource.current !== src) {
@@ -152,7 +160,7 @@ const Video = React.forwardRef<VideoElement, VideoProps>(
                     clearTimeout(loadingTimeoutId);
                 };
             }
-        }, [src, loadingTimeout, handleError]);
+        }, [src, loadingTimeout, handleError, failedTimes]);
 
         const handleLoadFinish = () => {
             onLoad?.();
