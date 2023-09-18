@@ -31,8 +31,8 @@ export const Default: StoryComponent<Args> = ({
     inverse = false,
 }) => {
     return (
-        <ResponsiveLayout isInverse={inverse}>
-            <Box paddingY={24} width="max-content" dataAttributes={{testid: 'stacking-group'}}>
+        <ResponsiveLayout isInverse={inverse} fullWidth>
+            <Box padding={16} width="max-content" dataAttributes={{testid: 'stacking-group'}}>
                 <StackingGroup stacked={stacked} maxItems={maxItems} moreItemsStyle={{type, size}}>
                     {Array.from({length: itemsToInclude}, (_, idx) =>
                         type === 'circle' ? (
