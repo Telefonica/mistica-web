@@ -387,20 +387,19 @@ export const vars = {aspectRatio};
 
 export const cardContainer = style({
     position: 'relative',
-    aspectRatio,
-    '@supports': {
-        'not (aspect-ratio: 1 / 1)': {
-            display: 'flex',
-            ':before': {
-                float: 'left',
-                content: '""',
-                paddingTop: `calc(100% / ${aspectRatio})`,
-            },
-            ':after': {
-                display: 'block',
-                content: '""',
-                clear: 'both',
-            },
-        },
-    },
+    ...(aspectRatio
+        ? {
+              display: 'flex',
+              ':before': {
+                  float: 'left',
+                  content: '""',
+                  paddingTop: `calc(100% / ${aspectRatio})`,
+              },
+              ':after': {
+                  display: 'block',
+                  content: '""',
+                  clear: 'both',
+              },
+          }
+        : {}),
 });
