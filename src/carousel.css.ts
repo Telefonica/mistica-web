@@ -88,6 +88,7 @@ const arrowButtonBase = style([
 ]);
 
 export const carouselContainer = sprinkles({
+    isolation: 'isolate',
     // This minWidth value is a workaround to solve an issue when the page is rendered in a hidden webview
     // in that case the window size is reported as 0 and the scroll snap is placed at the wrong slide
     minWidth: 64,
@@ -99,16 +100,19 @@ const itemsPerPageMobile = createVar();
 const itemsPerPageTablet = createVar();
 const itemsPerPageDesktop = createVar();
 const gap = createVar();
+const mobilePageOffset = createVar();
 
 export const vars = {
     itemsPerPageMobile,
     itemsPerPageTablet,
     itemsPerPageDesktop,
     gap,
+    mobilePageOffset,
 };
 
 export const DEFAULT_DESKTOP_GAP = 16;
 const DEFAULT_MOBILE_GAP = 8;
+const DEFAULT_MOBILE_PAGE_OFFSET = '16px';
 
 export const carousel = style([
     hideScrollbar,
@@ -121,6 +125,7 @@ export const carousel = style([
 
         vars: {
             [gap]: String(DEFAULT_MOBILE_GAP),
+            [mobilePageOffset]: DEFAULT_MOBILE_PAGE_OFFSET,
         },
 
         '@media': {
@@ -134,7 +139,6 @@ export const carousel = style([
 ]);
 
 const responsiveLayoutSideMargin = fallbackVar(responsiveLayoutVars.sideMargin, '0px');
-const mobilePageOffset = fallbackVar(responsiveLayoutVars.sideMargin, '16px');
 
 export const carouselWithScroll = style({
     margin: `0 calc(${responsiveLayoutSideMargin} * -1)`,

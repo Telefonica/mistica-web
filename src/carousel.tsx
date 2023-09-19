@@ -15,6 +15,7 @@ import * as styles from './carousel.css';
 import {assignInlineVars} from '@vanilla-extract/dynamic';
 import {sprinkles} from './sprinkles.css';
 import {useDesktopContainerType} from './desktop-container-type-context';
+import {VIVO_NEW_SKIN} from './skins/constants';
 
 import type {DesktopContainerType} from './desktop-container-type-context';
 import type {DataAttributes} from './utils/types';
@@ -167,6 +168,7 @@ type BaseCarouselProps = {
     itemsPerPage?: ItemsPerPageProp;
     /** scrolls one page by default */
     itemsToScroll?: number;
+    mobilePageOffset?: 'regular' | 'large';
     /** If true, scroll snap doesn't apply and the user has a free scroll */
     free?: boolean;
     gap?: number;
@@ -187,6 +189,7 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
     initialActiveItem,
     itemsPerPage,
     itemsToScroll,
+    mobilePageOffset,
     gap,
     free,
     centered,
@@ -194,7 +197,7 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
     onPageChange,
     dataAttributes,
 }) => {
-    const {texts, platformOverrides} = useTheme();
+    const {texts, platformOverrides, skinName} = useTheme();
 
     const desktopContainerType = useDesktopContainerType();
     const itemsPerPageConfig = normalizeItemsPerPage(desktopContainerType || 'large', itemsPerPage);
@@ -372,6 +375,9 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
         );
     }
 
+    const largePageOffset = '64px';
+    const regularPageOffset = skinName === VIVO_NEW_SKIN ? '36px' : '16px';
+
     return (
         <Stack space={24} dataAttributes={{'component-name': 'Carousel', ...dataAttributes}}>
             <div className={styles.carouselContainer}>
@@ -395,6 +401,13 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
                             [styles.vars.itemsPerPageDesktop]: String(itemsPerPageConfig.desktop),
                             [styles.vars.itemsPerPageTablet]: String(itemsPerPageConfig.tablet),
                             [styles.vars.itemsPerPageMobile]: String(itemsPerPageConfig.mobile),
+                            ...(mobilePageOffset === 'large'
+                                ? {
+                                      [styles.vars.mobilePageOffset]: largePageOffset,
+                                  }
+                                : {
+                                      [styles.vars.mobilePageOffset]: regularPageOffset,
+                                  }),
                             ...(gap !== undefined ? {[styles.vars.gap]: String(gap)} : {}),
                         }),
                         scrollSnapType: free ? 'initial' : 'x mandatory',
@@ -441,6 +454,7 @@ type CarouselProps = {
     itemsPerPage?: ItemsPerPageProp;
     /** scrolls one page by default */
     itemsToScroll?: number;
+    mobilePageOffset?: 'regular' | 'large';
     /** If true, scroll snap doesn't apply and the user has a free scroll */
     free?: boolean;
     autoplay?: boolean | {time: number; loop?: boolean};

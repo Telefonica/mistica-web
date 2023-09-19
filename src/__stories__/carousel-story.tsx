@@ -18,6 +18,8 @@ export default {
     title: 'Components/Carousels/Carousel',
 };
 
+const mobilePageOffsetOptions = ['regular', 'large'] as const;
+
 type Args = {
     numItems: number;
     itemsPerPageMobile: number;
@@ -26,6 +28,7 @@ type Args = {
     withBullets: boolean;
     free: boolean;
     itemsToScroll: number;
+    mobilePageOffset: (typeof mobilePageOffsetOptions)[number];
     autoplay: boolean;
     loop: boolean;
     initialActiveItem: number;
@@ -39,6 +42,7 @@ export const Default: StoryComponent<Args> = ({
     itemsPerPageDesktop,
     free,
     itemsToScroll,
+    mobilePageOffset,
     autoplay,
     loop,
     initialActiveItem,
@@ -65,6 +69,7 @@ export const Default: StoryComponent<Args> = ({
                             desktop: itemsPerPageDesktop,
                         }}
                         itemsToScroll={itemsToScroll}
+                        mobilePageOffset={mobilePageOffset}
                         autoplay={autoplay ? {time: 5000, loop} : false}
                         onPageChange={setPageInfo}
                         items={Array.from({length: numItems}, (_, idx) => (
@@ -106,4 +111,11 @@ Default.args = {
     loop: false,
     itemsToScroll: 0,
     initialActiveItem: 0,
+    mobilePageOffset: 'regular',
+};
+Default.argTypes = {
+    mobilePageOffset: {
+        options: mobilePageOffsetOptions,
+        control: {type: 'select'},
+    },
 };
