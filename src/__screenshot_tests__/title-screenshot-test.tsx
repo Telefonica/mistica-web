@@ -7,16 +7,18 @@ const COMPONENT_TYPES = [
     {component: 'Title2', storyName: 'title-2'},
     {component: 'Title3', storyName: 'title-3'},
 ];
-const CASE_NAMES = ['without-link', 'with-link', 'with-link-and-long-text'] as const;
+const CASE_NAMES = ['without-link', 'with-link', 'with-link-and-long-text', 'with-icon'] as const;
 const DEVICES = ['DESKTOP', 'MOBILE_IOS'] as const;
 
 const caseArgs = {
-    'without-link': {title: 'This is a title', linkText: ''},
-    'with-link': {title: 'This is a title with link', linkText: 'Link'},
+    'without-link': {title: 'This is a title', right: 'undefined', linkText: undefined},
+    'with-link': {title: 'This is a title with link', right: 'link', linkText: 'Link'},
     'with-link-and-long-text': {
         title: 'This is a title with link and with a very long text that may wrap to multiple lines in small screens',
+        right: 'link',
         linkText: 'Link',
     },
+    'with-icon': {title: 'This is a title', right: 'icon', linkText: undefined},
 };
 
 const getCases = () => {
@@ -37,7 +39,7 @@ test.each(getCases())('%s (%s) - %s', async (component, caseName, device, storyN
     await openStoryPage({
         id: `components-titles--${storyName}-story`,
         device: device as Device,
-        args: {title: args.title, linkText: args.linkText},
+        args: {title: args.title, right: args.right, ...(args.linkText ? {linkText: args.linkText} : {})},
     });
 
     const element = await screen.findByTestId(component);
