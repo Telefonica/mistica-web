@@ -44,10 +44,11 @@ export const accordionContent = style([
     sprinkles({
     }),
     {
+        maxHeight: 0,
         overflow: 'hidden',
-        height: 0,
-        opacity: 0,
-        transition: 'all .3s ease-in-out',
+       // height: 0,
+       // opacity: 0,
+        transition: 'max-height 50s ease-in-out',
     },
 ]);
 
@@ -226,7 +227,7 @@ export const contentVariants = styleVariants({
             color: vars.colors.textSecondary
         }),
         {
-            transition: 'height 3s ease-in-out ',
+            transition: 'max-height 0.4s ease-in-out ',
         },
     ],
 
@@ -251,11 +252,11 @@ export const contentShow = style([
     sprinkles({
     }),
     {
-       // maxHeight: 0,
+      //  maxHeight: 0,
        // maxHeight: '100%',
         
         overflow: 'hidden',
-        transition: 'max-height 1s ease-in-out',
+        transition: 'max-height 2s ease-in-out',
 
 
     },
