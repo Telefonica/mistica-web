@@ -401,13 +401,8 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
                             [styles.vars.itemsPerPageDesktop]: String(itemsPerPageConfig.desktop),
                             [styles.vars.itemsPerPageTablet]: String(itemsPerPageConfig.tablet),
                             [styles.vars.itemsPerPageMobile]: String(itemsPerPageConfig.mobile),
-                            ...(mobilePageOffset === 'large'
-                                ? {
-                                      [styles.vars.mobilePageOffset]: largePageOffset,
-                                  }
-                                : {
-                                      [styles.vars.mobilePageOffset]: regularPageOffset,
-                                  }),
+                            [styles.vars.mobilePageOffset]:
+                                mobilePageOffset === 'large' ? largePageOffset : regularPageOffset,
                             ...(gap !== undefined ? {[styles.vars.gap]: String(gap)} : {}),
                         }),
                         scrollSnapType: free ? 'initial' : 'x mandatory',
