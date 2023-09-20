@@ -29,15 +29,6 @@ export const fixedFooter = style({
     },
 });
 
-export const contentWithFixedFooter = style({
-    '@media': {
-        [mq.tabletOrSmaller]: {
-            position: 'relative',
-            zIndex: 0,
-        },
-    },
-});
-
 export const elevated = style([
     sprinkles({
         background: skinVars.colors.backgroundContainer,
@@ -56,6 +47,7 @@ export const withoutFooter = sprinkles({display: 'none'});
 export const container = style({
     '@media': {
         [mq.tabletOrSmaller]: {
+            isolation: 'isolate',
             paddingBottom: footerHeight,
             background: fallbackVar(backgroundColor, skinVars.colors.background),
         },
