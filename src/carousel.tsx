@@ -16,7 +16,6 @@ import {assignInlineVars} from '@vanilla-extract/dynamic';
 import {sprinkles} from './sprinkles.css';
 import {useDesktopContainerType} from './desktop-container-type-context';
 import {VIVO_NEW_SKIN} from './skins/constants';
-import {mobile} from './media-queries.css';
 
 import type {DesktopContainerType} from './desktop-container-type-context';
 import type {DataAttributes} from './utils/types';
