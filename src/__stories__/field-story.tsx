@@ -768,27 +768,20 @@ type SliderArgs = {
     tooltip: boolean;
 };
 
-export const SliderStory: StoryComponent<SliderArgs> = ({
-    disabled,
-    steps,
-    max,
-    min,
-    field,
-    tooltip,
-}) => {
+export const SliderStory: StoryComponent<SliderArgs> = ({disabled, steps, max, min, field, tooltip}) => {
     return (
-            <Box paddingY={48} dataAttributes={{testid: "slider"}}>
-                <Stack space={24} >
-                    <Slider
-                        disabled={disabled}
-                        steps={steps}
-                        max={max}
-                        min={min}
-                        field={field}
-                        tooltip={tooltip}
-                    />
-                </Stack>
-            </Box>
+        <Box paddingY={48} dataAttributes={{testid: 'slider'}}>
+            <Stack space={24}>
+                <Slider
+                    disabled={disabled}
+                    steps={steps}
+                    max={max}
+                    min={min}
+                    field={field}
+                    tooltip={tooltip}
+                />
+            </Stack>
+        </Box>
     );
 };
 

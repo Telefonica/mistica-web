@@ -47,7 +47,7 @@ const Slider: React.FC<SliderProps> = ({
     const sliderPaddingTop = field ? 24 : 0;
     const sliderTop = field ? '93%' : '50%';
     const sliderDisabled = React.useMemo(() => disabled && styles.sliderDisabled, [disabled]);
-    const invalidText = ' '
+    const invalidText = ' ';
 
     const setPosition = React.useCallback(
         (withMultiplyValue = false) => {
