@@ -10,7 +10,7 @@ test.each`
     ${'circle'} | ${true}  | ${true}
     ${'square'} | ${false} | ${true}
     ${'circle'} | ${false} | ${true}
-`('Stacking Group', async ({type, stacked, inverse}) => {
+`('Stacking Group. type={$type} stacked={$stacked} inverse={$inverse}', async ({type, stacked, inverse}) => {
     await openStoryPage({
         id: 'components-stackinggroup--default',
         device: 'DESKTOP',
