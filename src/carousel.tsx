@@ -16,6 +16,7 @@ import {assignInlineVars} from '@vanilla-extract/dynamic';
 import {sprinkles} from './sprinkles.css';
 import {useDesktopContainerType} from './desktop-container-type-context';
 import {VIVO_NEW_SKIN} from './skins/constants';
+import {mobile} from './media-queries.css';
 
 import type {DesktopContainerType} from './desktop-container-type-context';
 import type {DataAttributes} from './utils/types';
@@ -376,7 +377,7 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
     }
 
     const largePageOffset = '64px';
-    const regularPageOffset = skinName === VIVO_NEW_SKIN ? '36px' : '16px';
+    const vivoNewMobilePageOffset = '36px';
 
     return (
         <Stack space={24} dataAttributes={{'component-name': 'Carousel', ...dataAttributes}}>
@@ -401,8 +402,11 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
                             [styles.vars.itemsPerPageDesktop]: String(itemsPerPageConfig.desktop),
                             [styles.vars.itemsPerPageTablet]: String(itemsPerPageConfig.tablet),
                             [styles.vars.itemsPerPageMobile]: String(itemsPerPageConfig.mobile),
-                            [styles.vars.mobilePageOffset]:
-                                mobilePageOffset === 'large' ? largePageOffset : regularPageOffset,
+                            ...(mobilePageOffset === 'large'
+                                ? {[styles.vars.mobilePageOffset]: largePageOffset}
+                                : skinName === VIVO_NEW_SKIN
+                                ? {[styles.vars.mobilePageOffset]: vivoNewMobilePageOffset}
+                                : {}),
                             ...(gap !== undefined ? {[styles.vars.gap]: String(gap)} : {}),
                         }),
                         scrollSnapType: free ? 'initial' : 'x mandatory',
