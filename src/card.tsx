@@ -23,6 +23,7 @@ import classNames from 'classnames';
 import {assignInlineVars} from '@vanilla-extract/dynamic';
 import Inline from './inline';
 import {getPrefixedDataAttributes} from './utils/dom';
+import {isRunningAcceptanceTest} from './utils/platform';
 
 import type {Variant} from './theme-variant-context';
 import type {PressHandler} from './touchable';
@@ -291,7 +292,7 @@ const useVideoWithControls = (
             playing: CardActionPauseIcon,
             loading: CardActionPauseIcon,
             paused: CardActionPlayIcon,
-            loadingTimeout: CardActionSpinner,
+            loadingTimeout: isRunningAcceptanceTest() ? CardActionPauseIcon : CardActionSpinner,
         }[videoStatus],
         onPress: onVideoControlPress,
         label: {
