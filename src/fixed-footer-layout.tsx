@@ -111,7 +111,9 @@ const FixedFooterLayout: React.FC<Props> = ({
         <>
             <div
                 ref={containerRef}
-                className={styles.container}
+                className={classnames(styles.container, {
+                    [styles.contentWithFixedFooter]: isFixedFooter,
+                })}
                 style={assignInlineVars({
                     ...(containerBgColor && {
                         [styles.vars.backgroundColor]: containerBgColor,

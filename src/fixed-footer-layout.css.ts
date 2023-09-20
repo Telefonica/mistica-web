@@ -29,6 +29,15 @@ export const fixedFooter = style({
     },
 });
 
+export const contentWithFixedFooter = style({
+    '@media': {
+        [mq.tabletOrSmaller]: {
+            position: 'relative',
+            zIndex: 0,
+        },
+    },
+});
+
 export const elevated = style([
     sprinkles({
         background: skinVars.colors.backgroundContainer,
