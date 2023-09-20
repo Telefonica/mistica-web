@@ -5,7 +5,6 @@ import type {ThemeConfig} from '../src/theme';
 const common: Partial<ThemeConfig> = {
     enableTabFocus: true,
     colorScheme: 'auto',
-    i18n: {locale: 'en-US', phoneNumberFormattingRegionCode: 'ES'},
     dimensions: {
         headerMobileHeight: 0,
     },
