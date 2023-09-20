@@ -1,3 +1,5 @@
+/** These functions are copies of the ones located in webapp packages */
+
 type Debounced<T> = T & {cancel: () => void; flush: () => void};
 
 /**
@@ -131,6 +133,9 @@ const isPrimitive = (v: unknown): v is string | number | undefined | null | bool
     return true;
 };
 
+/**
+ * Performs a deep comparison between two values to determine if they are equivalent.
+ */
 export const isEqual = (a: unknown, b: unknown): boolean => {
     if (a === b) {
         return true;
