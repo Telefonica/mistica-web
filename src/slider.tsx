@@ -14,7 +14,6 @@ interface SliderProps {
     value?: number;
     onChange?: (value: number) => void;
     getStepArrayIndex?: (value: number) => void;
-    invalidText?: string;
     'arial-label'?: string;
     tooltip?: boolean;
     helperText?: string;
@@ -30,7 +29,6 @@ const Slider: React.FC<SliderProps> = ({
     value,
     onChange,
     getStepArrayIndex,
-    invalidText = ' ',
     'arial-label': arialLabel,
     tooltip,
     helperText,
@@ -49,6 +47,7 @@ const Slider: React.FC<SliderProps> = ({
     const sliderPaddingTop = field ? 24 : 0;
     const sliderTop = field ? '93%' : '50%';
     const sliderDisabled = React.useMemo(() => disabled && styles.sliderDisabled, [disabled]);
+    const invalidText = ' '
 
     const setPosition = React.useCallback(
         (withMultiplyValue = false) => {
