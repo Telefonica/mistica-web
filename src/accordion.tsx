@@ -32,55 +32,111 @@ interface accordionProps {
 }
 
 
+
+
 export const Accordion = ({ sections = [], isInverse, allowMultipleOpen }: accordionProps): JSX.Element => {
     const [activeSections, setActiveSections] = React.useState(
         Array.from({ length: sections?.length }, () => false)
-    );
-    const [height, setHeight] = React.useState(() => sections.map(() => 0))
+      );
+    
+      const sectionRefs = React.useRef<Array<HTMLDivElement | null>>(sections.map(() => null));
+      const teste = React.useRef<HTMLInputElement | null>(null);
+    
+      const targeExtratRef = React.useRef<HTMLDivElement>(null);
+      const [height, setHeight] = React.useState<Array<number>>([0]);
+const [isTransitioning, setIsTransitioning] = React.useState<boolean>(false);
+    
+const calculateHeight = React.useCallback((index: number) => {
+    if (activeSections[index]) {
+      if (index >= 0 && index < sections.length) {
+        const sectionRef = sectionRefs.current[index];
+        console.log(`Calcula altura da seção ${index}`);
+        if (sectionRef) {
+          const newHeight = sectionRef.scrollHeight;
+          console.log(`Nova altura da seção ${index}: ${newHeight}px`);
+          const newHeights = [...height];
+          newHeights[index] = newHeight;
+          return newHeights;
+        }
+      }
+    }
+  
+   
+    return height;
+  }, [activeSections, height, sections]);
+  const handleTransitionEnd = (index: number) => {
+    console.log(`Transição finalizada para a seção ${index}`);
+    setIsTransitioning(false);
+    
+    
+    
+      handleResize();
+   
+  };
+    
+      
+    
+      const toggleSection = (index: number) => {
+        let sectionAux = [...activeSections];
+        if (allowMultipleOpen) {
+          sectionAux = activeSections.map((section) => (section ? false : section));
+        }
+        sectionAux[index] = !activeSections[index];
+        setActiveSections(sectionAux);
+      };
+    
+      const centerY = (title: string | undefined, subtitle: string | undefined) => {
+        const numTextLines = [title, subtitle].filter(Boolean).length;
+        return numTextLines === 1;
+      };
+    
+      const handleResize = React.useCallback(() => {
+        console.log('Janela redimensionada');
+        sections.forEach((_, index) => {
+          const newHeights = calculateHeight(index);
+          if (newHeights[index] !== height[index]) {
+            setHeight(newHeights);
+          }
+        });
+      }, [calculateHeight, height, sections]);
+      
+      React.useLayoutEffect(() => {
+        sections.forEach((_, index) => {
+          if (height[index] !== 0) {
+            console.log(`A altura da seção ${index} foi calculada`);
+          } else {
+            console.log(`A altura da seção ${index} ainda não foi calculada`);
+          }
+      
+          const newHeights = calculateHeight(index);
+          if (newHeights[index] !== height[index]) {
+            setHeight(newHeights);
+            
+            
+            window.requestAnimationFrame(() => {
+              handleResize();
+            });
+          }
+        });
+      
+       
+      
+       
+        return () => {
+          window.removeEventListener('resize', handleResize);
+        };
+      }, [calculateHeight, height, sections, handleResize]);
+      
     
 
 
-    const sectionRefs = React.useRef<Array<HTMLDivElement | null>>(sections.map(() => null));
-
-    const toggleSection = (index: number) => {
-        let sectionAux = [...activeSections];
-        if (allowMultipleOpen) {
-            sectionAux[index] = !sectionAux[index];
-        } else {
-            sectionAux = sectionAux.map((section, i) => (i === index ? !section : false));
-        }
-        setActiveSections(sectionAux);
-    };
-
-    const centerY = (title: string | undefined, subtitle: string | undefined) => {
-        const numTextLines = [title, subtitle].filter(Boolean).length;
-        return numTextLines === 1;
-    };
-
-
-   
-    const calculateHeight = React.useCallback((index: number) => {
-        if (activeSections[index]) {
-            const sectionRef = sectionRefs.current[index];
-           // console.log(sectionRef)
-            if (sectionRef) {
-                const newHeight = sectionRef.scrollHeight;
-                const newHeights = [...height];
-                newHeights[index] = newHeight;
-                setHeight(newHeights);
-            }
-        }
-    }, [activeSections, height]);
-
-    React.useEffect(() => {
-        sections.forEach((_, index) => calculateHeight(index));
-    }, [calculateHeight, sections]);
+     
 
     return (
         <ThemeVariant isInverse={isInverse}>
             {sections?.length &&
                 sections.map((section, index) => (
-                    <Box className={styles.containerBase} key={index}>
+                    <Box className={styles.containerBase} key={index} ref={teste} >
                         <BaseTouchable className={styles.touchable} onPress={() => toggleSection(index)}>
                             <Box
                                 paddingY={16}
@@ -122,8 +178,8 @@ export const Accordion = ({ sections = [], isInverse, allowMultipleOpen }: accor
                                                 isInverse
                                                     ? vars.colors.inverse
                                                     : activeSections
-                                                        ? vars.colors.neutralMedium
-                                                        : 'default'
+                                                    ? vars.colors.neutralMedium
+                                                    : 'default'
                                             }
                                             direction={activeSections[index] ? 'down' : 'up'}
                                         />
@@ -133,16 +189,20 @@ export const Accordion = ({ sections = [], isInverse, allowMultipleOpen }: accor
                         </BaseTouchable>
                         <div
                             className={styles.contentShow}
-                            ref={(ref) => (sectionRefs.current[index] = ref)}
-                            style={{ maxHeight: activeSections[index] ? `${height[index]}px` : '0', transition: '1s' }}
-                        >
+                             ref={(ref) => (sectionRefs.current[index] = ref)}
+                             style={{
+                                maxHeight: activeSections[index] ? `${height[index] }px` : '0', 
+                                transition: isTransitioning ? 'none' : '0.4s',
+                              }}
+                              onTransitionEnd={() => handleTransitionEnd(index)}
+                            >
                             <Box>
                                 <div>
                                     <Text3 as="p" regular color={vars.colors.textSecondary}>
                                         {section.panel}
                                     </Text3>
                                     {section.slot && <div className={styles.slot}>{section.extra}</div>}
-                                    <div  >
+                                    <div ref={targeExtratRef} style={{height: 'auto'}}>
                                         {section.extra}
                                     </div>
                                 </div>

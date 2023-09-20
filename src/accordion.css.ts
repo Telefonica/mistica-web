@@ -4,61 +4,6 @@ import { vars } from './skins/skin-contract.css';
 import * as mq from './media-queries.css';
 
 
-export const accordion = style([
-    sprinkles({
-        width: '100%',
-    }),
-    {
-    },
-]);
-
-export const accordionSection = style([
-    sprinkles({
-    }),
-    {
-        border: '1px solid #ccc',
-        margin: 10,
-    },
-]);
-
-export const accordionHeader = style([
-    sprinkles({
-    }),
-    {
-        cursor: 'pointer',
-        padding: 10,
-        backgroundColor: '#f2f2f2',
-        borderBottom: '1px solid #ccc'
-    },
-]);
-
-export const accordionHeaderActive = style([
-    sprinkles({
-    }),
-    {
-        backgroundColor: '#e0e0e0'
-    },
-]);
-
-export const accordionContent = style([
-    sprinkles({
-    }),
-    {
-        maxHeight: 0,
-        overflow: 'hidden',
-       // height: 0,
-       // opacity: 0,
-        transition: 'max-height 50s ease-in-out',
-    },
-]);
-
-export const accordionContentOpen = style([
-    sprinkles({
-    }),
-    {
-        opacity: 1,
-    },
-]);
 
 export const containerBase = style([
     sprinkles({
@@ -67,7 +12,8 @@ export const containerBase = style([
         // borderRadius: 8,
     }),
     {
-          // border: '1px solid red',
+        overscrollBehaviorY: 'auto'
+       
     },
 ]);
 
@@ -217,20 +163,16 @@ export const contentVariants = styleVariants({
             height: 0,
             overflow: 'hidden',
         },
-
     ],
     selected: [
         content,
         sprinkles({
-            // paddingX: 16,
-            //   paddingBottom: 16,
             color: vars.colors.textSecondary
         }),
         {
-            transition: 'max-height 0.4s ease-in-out ',
+            transition: 'opacity 0.4s ease-in-out', // Apenas a transição de opacidade
         },
     ],
-
 });
 
 export const slot = style({
@@ -252,11 +194,12 @@ export const contentShow = style([
     sprinkles({
     }),
     {
-      //  maxHeight: 0,
+       // maxHeight: 0,
        // maxHeight: '100%',
         
         overflow: 'hidden',
         transition: 'max-height 2s ease-in-out',
+        
 
 
     },
