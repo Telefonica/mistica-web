@@ -141,7 +141,7 @@ test('change input value with array steps and show on slider', () => {
 test('change input value with invalid value', () => {
     render(
         <ThemeContextProvider theme={makeTheme()}>
-            <Slider field steps={10} invalidText="Invalid" />
+            <Slider field steps={10} max={100} value={1000} />
         </ThemeContextProvider>
     );
 
