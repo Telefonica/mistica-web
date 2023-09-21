@@ -22,7 +22,6 @@ import {
     Form,
     Title1,
     Stack,
-    Slider,
 } from '..';
 import {inspect} from 'util';
 import IconMusicRegular from '../generated/mistica-icons/icon-music-regular';
@@ -758,40 +757,3 @@ export const DateTimeLimits: StoryComponent = () => {
 };
 
 DateTimeLimits.storyName = 'Date with time limits';
-
-type SliderArgs = {
-    disabled: boolean;
-    steps: number;
-    max: number;
-    min: number;
-    field: boolean;
-    tooltip: boolean;
-};
-
-export const SliderStory: StoryComponent<SliderArgs> = ({disabled, steps, max, min, field, tooltip}) => {
-    return (
-        <Box paddingY={48} dataAttributes={{testid: 'slider'}}>
-            <Stack space={24}>
-                <Slider
-                    disabled={disabled}
-                    steps={steps}
-                    max={max}
-                    min={min}
-                    field={field}
-                    tooltip={tooltip}
-                />
-            </Stack>
-        </Box>
-    );
-};
-
-SliderStory.storyName = 'Slider';
-
-SliderStory.args = {
-    disabled: false,
-    steps: 1,
-    max: 100,
-    min: 0,
-    field: false,
-    tooltip: true,
-};
