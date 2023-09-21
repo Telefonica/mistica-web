@@ -39,5 +39,5 @@ Default.args = {
     max: 100,
     min: 0,
     field: false,
-    tooltip: true,
+    tooltip: false,
 };
