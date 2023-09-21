@@ -74,7 +74,13 @@ export {
 } from './card';
 export {default as Hero} from './hero';
 export {default as Divider} from './divider';
-export {default as Menu} from './menu';
+export {
+    /**
+     * @deprecated This component is deprecated, please use DropdownMenu instead
+     */
+    DropdownMenu as Menu,
+    DropdownMenu,
+} from './dropdown-menu';
 export {default as EmptyState} from './empty-state';
 export {default as EmptyStateCard} from './empty-state-card';
 export {default as Callout} from './callout';

@@ -1,8 +1,7 @@
 import * as React from 'react';
 import userEvent from '@testing-library/user-event';
 import {render, screen} from '@testing-library/react';
-import {ThemeContextProvider, Touchable, Text3} from '..';
-import Menu from '../menu';
+import {ThemeContextProvider, Touchable, Text3, DropdownMenu} from '..';
 import {makeTheme} from './test-utils';
 
 const options = [
@@ -23,7 +22,7 @@ const options = [
 test('close option', async () => {
     render(
         <ThemeContextProvider theme={makeTheme()}>
-            <Menu
+            <DropdownMenu
                 width={400}
                 renderTarget={({ref, onPress, isMenuOpen}) => (
                     <Touchable ref={ref} onPress={onPress}>

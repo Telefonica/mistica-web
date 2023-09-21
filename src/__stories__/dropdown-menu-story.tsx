@@ -1,9 +1,20 @@
 import * as React from 'react';
-import {Touchable, Menu, Stack, Inline, Text3, Box, Checkbox, IconKebabMenuLight, DataCard, Text2} from '..';
+import {
+    Touchable,
+    DropdownMenu,
+    Stack,
+    Inline,
+    Text3,
+    Box,
+    Checkbox,
+    IconKebabMenuLight,
+    DataCard,
+    Text2,
+} from '..';
 
 export default {
-    title: 'Components/Menu',
-    component: Menu,
+    title: 'Components/DropdownMenu',
+    component: DropdownMenu,
     argTypes: {
         horizontalPosition: {
             options: ['right', 'left'],
@@ -16,13 +27,13 @@ export default {
     },
 };
 
-type MenuArgs = {
+type DropdownMenuArgs = {
     menuOptionsCount: number;
     horizontalPosition: 'right' | 'left';
     verticalPosition: 'top' | 'bottom';
 };
 
-export const Default: StoryComponent<MenuArgs> = ({
+export const Default: StoryComponent<DropdownMenuArgs> = ({
     menuOptionsCount,
     horizontalPosition,
     verticalPosition,
@@ -53,7 +64,7 @@ export const Default: StoryComponent<MenuArgs> = ({
                         justifyContent: horizontalPosition === 'left' ? 'initial' : 'end',
                     }}
                 >
-                    <Menu
+                    <DropdownMenu
                         position={horizontalPosition}
                         width={320}
                         renderTarget={({ref, onPress, isMenuOpen}) => (
@@ -108,7 +119,7 @@ export const Default: StoryComponent<MenuArgs> = ({
     );
 };
 
-Default.storyName = 'Menu';
+Default.storyName = 'DropdownMenu';
 Default.args = {
     menuOptionsCount: 4,
     horizontalPosition: 'right',
@@ -126,7 +137,7 @@ export const InsideCard: StoryComponent = () => {
                 title="Data card"
                 extra={
                     <div style={{display: 'flex', justifyContent: 'right'}}>
-                        <Menu
+                        <DropdownMenu
                             position="right"
                             width={200}
                             renderTarget={({ref, onPress}) => (
@@ -153,4 +164,4 @@ export const InsideCard: StoryComponent = () => {
     );
 };
 
-InsideCard.storyName = 'Menu inside a card';
+InsideCard.storyName = 'DropdownMenu inside a card';

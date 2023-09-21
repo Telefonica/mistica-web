@@ -7,7 +7,7 @@ type Snippet = {group: string; name: string; code: string};
 const menuSnippet = {
     name: 'Menu',
     code: `
-    <Menu
+    <DropdownMenu
       width={400}
       renderTarget={({ ref, onPress, isMenuOpen }) => (
         <Touchable ref={ref} onPress={onPress} style={{ width: 100 }}>

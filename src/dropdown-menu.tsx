@@ -3,7 +3,7 @@ import classnames from 'classnames';
 import {ESC, TAB} from './utils/key-codes';
 import {cancelEvent, getPrefixedDataAttributes} from './utils/dom';
 import Overlay from './overlay';
-import * as styles from './menu.css';
+import * as styles from './dropdown-menu.css';
 import {useWindowSize} from './hooks';
 import {Portal} from './portal';
 import {assignInlineVars} from '@vanilla-extract/dynamic';
@@ -35,7 +35,7 @@ export type MenuProps = {
     dataAttributes?: DataAttributes;
 };
 
-const Menu: React.FC<MenuProps> = ({
+export const DropdownMenu: React.FC<MenuProps> = ({
     renderTarget,
     renderMenu,
     width = DEFAULT_MENU_WIDTH,
@@ -202,5 +202,3 @@ const Menu: React.FC<MenuProps> = ({
         </div>
     );
 };
-
-export default Menu;

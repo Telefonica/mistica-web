@@ -29,10 +29,10 @@ const viewport = {
 };
 
 test.each(testCases)(
-    'Menu positioned at %s,%s',
+    'DropdownMenu positioned at %s,%s',
     async (verticalPosition, horizontalPosition, menuOptionsCount, isDarkMode) => {
         const page = await openStoryPage({
-            id: 'components-menu--default',
+            id: 'components-dropdownmenu--default',
             device: 'MOBILE_IOS',
             viewport,
             isDarkMode,
@@ -52,10 +52,10 @@ const maxHeightTestCases = [
 ] as const;
 
 test.each(maxHeightTestCases)(
-    'Menu respect max height when options overflow and positioned at %s,%s',
+    'DropdownMenu respect max height when options overflow and positioned at %s,%s',
     async (verticalPosition, horizontalPosition) => {
         const page = await openStoryPage({
-            id: 'components-menu--default',
+            id: 'components-dropdownmenu--default',
             device: 'MOBILE_IOS',
             args: {menuOptionsCount: 30, horizontalPosition, verticalPosition},
         });
@@ -65,9 +65,9 @@ test.each(maxHeightTestCases)(
     }
 );
 
-test('Menu is rendered inside a datacard', async () => {
+test('DropdownMenu is rendered inside a datacard', async () => {
     const page = await openStoryPage({
-        id: 'components-menu--inside-card',
+        id: 'components-dropdownmenu--inside-card',
         device: 'MOBILE_IOS',
     });
 

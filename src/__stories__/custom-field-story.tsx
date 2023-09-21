@@ -3,10 +3,10 @@ import classNames from 'classnames';
 import {StorySection} from './helpers';
 import {
     skinVars,
+    DropdownMenu,
     Text2,
     Text3,
     TextField,
-    Menu,
     Touchable,
     Box,
     Text1,
@@ -244,7 +244,7 @@ const AutocompleteSelectField = ({name, options}: AutocompleteSelectFieldProps) 
         }
     };
     return (
-        <Menu
+        <DropdownMenu
             renderTarget={({ref, onPress, isMenuOpen}) => (
                 <TextField
                     {...fieldProps}
