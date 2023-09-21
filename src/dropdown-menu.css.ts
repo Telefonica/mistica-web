@@ -6,13 +6,18 @@ const top = createVar();
 const bottom = createVar();
 const left = createVar();
 const width = createVar();
+const right = createVar();
 const maxHeight = createVar();
 const transformOrigin = createVar();
+
+const MENU_MIN_WIDTH = 136;
+const MENU_MAX_WIDTH = 280;
 
 export const vars = {
     top,
     bottom,
     left,
+    right,
     width,
     maxHeight,
     transformOrigin,
@@ -20,9 +25,9 @@ export const vars = {
 
 export const menuContainer = style([
     sprinkles({
-        padding: 0,
+        padding: 8,
         background: skinVars.colors.backgroundContainer,
-        borderRadius: skinVars.borderRadii.container,
+        borderRadius: skinVars.borderRadii.popup,
         display: 'flex',
         flexDirection: 'column',
         position: 'absolute',
@@ -31,7 +36,10 @@ export const menuContainer = style([
         top,
         bottom,
         left,
+        right,
         width,
+        minWidth: MENU_MIN_WIDTH,
+        maxWidth: MENU_MAX_WIDTH,
         maxHeight,
         transformOrigin,
         listStyleType: 'none',

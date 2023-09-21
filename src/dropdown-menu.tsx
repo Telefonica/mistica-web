@@ -10,9 +10,8 @@ import {assignInlineVars} from '@vanilla-extract/dynamic';
 
 import type {DataAttributes} from './utils/types';
 
-const DEFAULT_MENU_WIDTH = 350;
-const DEFAULT_MENU_HEIGHT = 400;
 const MARGIN_THRESHOLD = 12;
+const MENU_OFFSET_FROM_TARGET = 8;
 
 type MenuRenderProps = {
     ref: (element: HTMLElement | null) => void;
@@ -38,7 +37,7 @@ export type MenuProps = {
 export const DropdownMenu: React.FC<MenuProps> = ({
     renderTarget,
     renderMenu,
-    width = DEFAULT_MENU_WIDTH,
+    width,
     position = 'left',
     dataAttributes,
 }) => {
@@ -48,10 +47,11 @@ export const DropdownMenu: React.FC<MenuProps> = ({
 
     const [animateShowItems, setAnimateShowItems] = React.useState(false);
     const [itemsComputedProps, setItemsComputedProps] = React.useState<{
-        left: number;
+        left?: number;
+        right?: number;
         top: string;
         bottom: string;
-        maxHeight: number;
+        maxHeight?: number;
         transformOrigin: string;
     } | null>(null);
 
@@ -65,47 +65,55 @@ export const DropdownMenu: React.FC<MenuProps> = ({
             return;
         }
 
-        const {top: topTarget, width: widthTarget, left: leftTarget, bottom: bottomTarget} = targetRect;
+        const {top: topTarget, right: rightTarget, left: leftTarget, bottom: bottomTarget} = targetRect;
 
-        const heightMenu = parseInt(window.getComputedStyle(menu).getPropertyValue('height')) ?? 0;
+        const heightMenu = menu.scrollHeight;
 
-        const leftDirection = position === 'left' ? leftTarget : leftTarget + widthTarget - width;
+        const leftDirection = position === 'left' ? leftTarget : undefined;
+        const rightDirection = position === 'right' ? windowSize.width - rightTarget : undefined;
 
-        const availableSpaceOnBottom = windowSize.height - bottomTarget - MARGIN_THRESHOLD;
-        const availableSpaceOnTop = topTarget - MARGIN_THRESHOLD;
+        const topTargetWithOffset = topTarget - MENU_OFFSET_FROM_TARGET;
+        const bottomTargetWithOffset = bottomTarget + MENU_OFFSET_FROM_TARGET;
+
+        const availableSpaceOnBottom = windowSize.height - bottomTargetWithOffset - MARGIN_THRESHOLD;
+        const availableSpaceOnTop = topTargetWithOffset - MARGIN_THRESHOLD;
         const menuFitsOnBottom = availableSpaceOnBottom > heightMenu;
         const menuFitsOnTop = availableSpaceOnTop > heightMenu;
 
         if (menuFitsOnBottom) {
             setItemsComputedProps({
                 left: leftDirection,
-                top: `${bottomTarget}px`,
+                right: rightDirection,
+                top: `${bottomTargetWithOffset}px`,
                 bottom: 'auto',
-                maxHeight: DEFAULT_MENU_HEIGHT,
+                maxHeight: undefined,
                 transformOrigin: 'center top',
             });
         } else if (menuFitsOnTop) {
             setItemsComputedProps({
                 left: leftDirection,
-                top: `${topTarget - heightMenu}px`,
+                right: rightDirection,
+                top: `${topTargetWithOffset - heightMenu}px`,
                 bottom: 'auto',
-                maxHeight: DEFAULT_MENU_HEIGHT,
+                maxHeight: undefined,
                 transformOrigin: 'center bottom',
             });
         } else if (availableSpaceOnBottom > availableSpaceOnTop) {
             setItemsComputedProps({
                 left: leftDirection,
-                top: `${bottomTarget}px`,
+                right: rightDirection,
+                top: `${bottomTargetWithOffset}px`,
                 bottom: 'auto',
-                maxHeight: Math.min(availableSpaceOnBottom, DEFAULT_MENU_HEIGHT),
+                maxHeight: availableSpaceOnBottom,
                 transformOrigin: 'center top',
             });
         } else {
             setItemsComputedProps({
                 left: leftDirection,
+                right: rightDirection,
                 top: 'auto',
-                bottom: `${windowSize.height - topTarget}px`,
-                maxHeight: Math.min(availableSpaceOnTop, DEFAULT_MENU_HEIGHT),
+                bottom: `${windowSize.height - topTargetWithOffset}px`,
+                maxHeight: availableSpaceOnTop,
                 transformOrigin: 'center bottom',
             });
         }
@@ -166,7 +174,7 @@ export const DropdownMenu: React.FC<MenuProps> = ({
     });
 
     return (
-        <div {...getPrefixedDataAttributes(dataAttributes, 'Menu')}>
+        <div {...getPrefixedDataAttributes(dataAttributes, 'DropdownMenu')}>
             {renderTarget({...targetProps, isMenuOpen})}
             {isMenuOpen ? (
                 <Portal>
@@ -184,7 +192,11 @@ export const DropdownMenu: React.FC<MenuProps> = ({
                                         ? {
                                               [styles.vars.top]: itemsComputedProps.top,
                                               [styles.vars.bottom]: itemsComputedProps.bottom,
-                                              [styles.vars.left]: `${itemsComputedProps.left}px`,
+                                              ...(itemsComputedProps.left
+                                                  ? {
+                                                        [styles.vars.left]: `${itemsComputedProps.left}px`,
+                                                    }
+                                                  : {[styles.vars.right]: `${itemsComputedProps.right}px`}),
                                               [styles.vars.transformOrigin]:
                                                   itemsComputedProps.transformOrigin,
                                               [styles.vars.maxHeight]: `${itemsComputedProps.maxHeight}px`,
