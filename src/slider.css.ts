@@ -1,7 +1,7 @@
 import {sprinkles} from './sprinkles.css';
 import {vars} from './skins/skin-contract.css';
 import {style, styleVariants} from '@vanilla-extract/css';
-import {mq} from '.';
+import * as mq from './media-queries.css';
 
 const transition = '0.8s cubic-bezier(0.215, 0.61, 0.355, 1)';
 
