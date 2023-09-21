@@ -26,7 +26,7 @@ const IconSuccessVivoNew = ({size = 48}: Props): JSX.Element => {
                 strokeWidth="1.5"
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                points="24,31.75 30,38 40.5,23.5"
+                points="24,32.75 30,39 40.5,24.5"
                 {...getAnimateDrawLineProps('44', '0.4s', platformOverrides, '0.5 0 0.83 0.83')}
             />
 
