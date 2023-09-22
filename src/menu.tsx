@@ -15,44 +15,26 @@ import {vars} from './skins/skin-contract.css';
 import Divider from './divider';
 import Checkbox from './checkbox';
 
-import type {ExclusifyUnion} from './utils/utility-types';
 import type {DataAttributes, IconProps} from './utils/types';
 
-type MenuItemBaseProps = {
+type MenuItemProps = {
     text: string;
     Icon?: React.FC<IconProps>;
     destructive?: boolean;
     disabled?: boolean;
     children?: undefined;
-};
-
-type MenuItemPressableProps = {
     onPress?: (label: string) => void;
+    checked?: boolean;
 };
 
-type MenuItemControlProps = {
-    onChange?: (value: boolean) => void;
-    checked: boolean;
-};
-
-type MenuItemProps = MenuItemBaseProps & ExclusifyUnion<MenuItemPressableProps | MenuItemControlProps>;
-
-export const MenuItem: React.FC<MenuItemProps> = ({
-    text,
-    Icon,
-    destructive,
-    disabled,
-    onPress,
-    onChange,
-    checked,
-}) => {
+export const MenuItem: React.FC<MenuItemProps> = ({text, Icon, destructive, disabled, onPress, checked}) => {
     const contentColor = destructive ? vars.colors.textLinkDanger : vars.colors.neutralHigh;
 
     return checked !== undefined ? (
         <Checkbox
             name={text}
             checked={checked}
-            onChange={onChange}
+            onChange={() => onPress?.(text)}
             disabled={disabled}
             render={({controlElement, labelId}) => (
                 <Box
@@ -73,13 +55,7 @@ export const MenuItem: React.FC<MenuItemProps> = ({
             )}
         />
     ) : (
-        <Touchable
-            onPress={(e) => {
-                e.stopPropagation();
-                if (onPress) onPress(text);
-            }}
-            disabled={disabled}
-        >
+        <Touchable onPress={() => onPress?.(text)} disabled={disabled}>
             <Box paddingX={8} paddingY={12} className={disabled ? styles.menuItemDisabled : styles.menuItem}>
                 <Inline space={8} alignItems="center">
                     {Icon && <Icon size={24} color={contentColor} />}

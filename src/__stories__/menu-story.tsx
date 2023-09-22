@@ -1,31 +1,39 @@
 import * as React from 'react';
-import {Touchable, Menu, Stack, Inline, Text3, Box, Checkbox, IconKebabMenuLight, DataCard, Text2} from '..';
+import {
+    Touchable,
+    Menu,
+    Stack,
+    Inline,
+    Text3,
+    IconKebabMenuLight,
+    DataCard,
+    Text2,
+    MenuItem,
+    IconLightningRegular,
+    MenuSection,
+} from '..';
 
 export default {
     title: 'Components/Menu',
     component: Menu,
-    argTypes: {
-        horizontalPosition: {
-            options: ['right', 'left'],
-            control: {type: 'select'},
-        },
-        verticalPosition: {
-            options: ['top', 'bottom'],
-            control: {type: 'select'},
-        },
-    },
 };
 
 type MenuArgs = {
     menuOptionsCount: number;
     horizontalPosition: 'right' | 'left';
     verticalPosition: 'top' | 'bottom';
+    icon: boolean;
+    destructive: boolean;
+    checkbox: boolean;
 };
 
 export const Default: StoryComponent<MenuArgs> = ({
     menuOptionsCount,
     horizontalPosition,
     verticalPosition,
+    icon,
+    destructive,
+    checkbox,
 }) => {
     const [valuesState, setValuesState] = React.useState<ReadonlyArray<string>>([]);
 
@@ -36,6 +44,7 @@ export const Default: StoryComponent<MenuArgs> = ({
             setValuesState([...valuesState, val]);
         }
     };
+
     return (
         <div
             style={{
@@ -55,7 +64,7 @@ export const Default: StoryComponent<MenuArgs> = ({
                 >
                     <Menu
                         position={horizontalPosition}
-                        width={320}
+                        width={280}
                         renderTarget={({ref, onPress, isMenuOpen}) => (
                             <Touchable
                                 ref={ref}
@@ -71,34 +80,30 @@ export const Default: StoryComponent<MenuArgs> = ({
                         )}
                         renderMenu={({ref, className, close}) => (
                             <div ref={ref} className={className}>
-                                {[...Array(menuOptionsCount).keys()].map((optionIndex) => (
-                                    <Box paddingX={16} paddingY={8} key={optionIndex}>
-                                        <Checkbox
-                                            name={`Option ${optionIndex}`}
-                                            onChange={() => {
-                                                setValues(`value${optionIndex}`);
-                                            }}
-                                            checked={valuesState.includes(`value${optionIndex}`)}
-                                        >
-                                            {`Option ${optionIndex + 1}`}
-                                        </Checkbox>
-                                    </Box>
-                                ))}
-                                <Box paddingX={16} paddingY={8} key="closingOption">
-                                    <Checkbox
-                                        name="closing"
-                                        onChange={() => {
-                                            setTimeout(() => {
-                                                close();
-                                            }, 400);
-
-                                            setValues('closing');
-                                        }}
-                                        checked={valuesState.includes('closing')}
-                                    >
-                                        Click to close the menu
-                                    </Checkbox>
-                                </Box>
+                                <MenuSection>
+                                    {[...Array(menuOptionsCount).keys()].map((optionIndex) => (
+                                        <MenuItem
+                                            key={optionIndex + 1}
+                                            text={`Option ${optionIndex + 1}`}
+                                            onPress={(value) => setValues(value)}
+                                            checked={
+                                                checkbox
+                                                    ? valuesState.includes(`Option ${optionIndex + 1}`)
+                                                    : undefined
+                                            }
+                                            Icon={icon ? IconLightningRegular : undefined}
+                                            destructive={destructive}
+                                        />
+                                    ))}
+                                </MenuSection>
+                                <MenuSection>
+                                    <MenuItem
+                                        key="closingOption"
+                                        text="Click to close the menu"
+                                        onPress={() => close()}
+                                        destructive={destructive}
+                                    />
+                                </MenuSection>
                             </div>
                         )}
                     />
@@ -113,6 +118,22 @@ Default.args = {
     menuOptionsCount: 4,
     horizontalPosition: 'right',
     verticalPosition: 'top',
+    icon: false,
+    destructive: false,
+    checkbox: true,
+};
+Default.argTypes = {
+    horizontalPosition: {
+        options: ['right', 'left'],
+        control: {type: 'select'},
+    },
+    verticalPosition: {
+        options: ['top', 'bottom'],
+        control: {type: 'select'},
+    },
+    menuOptionsCount: {
+        control: {type: 'range', min: 1, max: 30, step: 1},
+    },
 };
 
 export const InsideCard: StoryComponent = () => {
@@ -139,9 +160,7 @@ export const InsideCard: StoryComponent = () => {
                             renderMenu={({ref, className}) => (
                                 <div ref={ref} className={className}>
                                     {[...Array(3).keys()].map((optionIndex) => (
-                                        <Box paddingX={16} paddingY={8} key={optionIndex}>
-                                            <Text2 regular>{`Option ${optionIndex}`}</Text2>
-                                        </Box>
+                                        <MenuItem key={optionIndex + 1} text={`Option ${optionIndex + 1}`} />
                                     ))}
                                 </div>
                             )}

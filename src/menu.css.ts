@@ -1,7 +1,7 @@
 import {createVar, style} from '@vanilla-extract/css';
 import {sprinkles} from './sprinkles.css';
 import {vars as skinVars} from './skins/skin-contract.css';
-import {mq} from '.';
+import * as mq from './media-queries.css';
 
 const top = createVar();
 const bottom = createVar();

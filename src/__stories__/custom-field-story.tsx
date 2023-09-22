@@ -3,10 +3,10 @@ import classNames from 'classnames';
 import {StorySection} from './helpers';
 import {
     skinVars,
-    Menu,
     Text2,
     Text3,
     TextField,
+    Menu,
     Touchable,
     Box,
     Text1,
