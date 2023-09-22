@@ -3,7 +3,7 @@ import classnames from 'classnames';
 import {ESC, TAB} from './utils/key-codes';
 import {cancelEvent, getPrefixedDataAttributes} from './utils/dom';
 import Overlay from './overlay';
-import * as styles from './dropdown-menu.css';
+import * as styles from './menu.css';
 import {useWindowSize} from './hooks';
 import {Portal} from './portal';
 import {assignInlineVars} from '@vanilla-extract/dynamic';
@@ -13,37 +13,74 @@ import Touchable from './touchable';
 import {Text3} from './text';
 import {vars} from './skins/skin-contract.css';
 import Divider from './divider';
+import Checkbox from './checkbox';
 
+import type {ExclusifyUnion} from './utils/utility-types';
 import type {DataAttributes, IconProps} from './utils/types';
 
-type DropdownMenuItemProps = {
+type MenuItemBaseProps = {
     text: string;
     Icon?: React.FC<IconProps>;
     destructive?: boolean;
-    onPress?: (text: string) => void;
     disabled?: boolean;
     children?: undefined;
 };
 
-export const DropdownMenuItem: React.FC<DropdownMenuItemProps> = ({
+type MenuItemPressableProps = {
+    onPress?: (label: string) => void;
+};
+
+type MenuItemControlProps = {
+    onChange?: (value: boolean) => void;
+    checked: boolean;
+};
+
+type MenuItemProps = MenuItemBaseProps & ExclusifyUnion<MenuItemPressableProps | MenuItemControlProps>;
+
+export const MenuItem: React.FC<MenuItemProps> = ({
     text,
     Icon,
     destructive,
-    onPress,
     disabled,
+    onPress,
+    onChange,
+    checked,
 }) => {
     const contentColor = destructive ? vars.colors.textLinkDanger : vars.colors.neutralHigh;
 
-    return (
+    return checked !== undefined ? (
+        <Checkbox
+            name={text}
+            checked={checked}
+            onChange={onChange}
+            disabled={disabled}
+            render={({controlElement, labelId}) => (
+                <Box
+                    paddingX={8}
+                    paddingY={12}
+                    className={disabled ? styles.menuItemDisabled : styles.menuItem}
+                >
+                    <Inline space="between" alignItems="center">
+                        <Inline space={8} alignItems="center">
+                            {Icon && <Icon size={24} color={contentColor} />}
+                            <Text3 regular color={contentColor} id={labelId}>
+                                {text}
+                            </Text3>
+                        </Inline>
+                        <Box paddingLeft={8}>{controlElement}</Box>
+                    </Inline>
+                </Box>
+            )}
+        />
+    ) : (
         <Touchable
             onPress={(e) => {
                 e.stopPropagation();
                 if (onPress) onPress(text);
             }}
-            className={disabled ? styles.menuItemDisabled : styles.menuItem}
             disabled={disabled}
         >
-            <Box paddingX={8} paddingY={12}>
+            <Box paddingX={8} paddingY={12} className={disabled ? styles.menuItemDisabled : styles.menuItem}>
                 <Inline space={8} alignItems="center">
                     {Icon && <Icon size={24} color={contentColor} />}
                     <Text3 regular color={contentColor}>
@@ -55,11 +92,11 @@ export const DropdownMenuItem: React.FC<DropdownMenuItemProps> = ({
     );
 };
 
-type DropdownMenuSectionProps = {
+type MenuSectionProps = {
     children?: React.ReactNode;
 };
 
-export const DropdownMenuSection: React.FC<DropdownMenuSectionProps> = ({children}) => {
+export const MenuSection: React.FC<MenuSectionProps> = ({children}) => {
     return (
         <>
             {children}
@@ -94,7 +131,7 @@ export type MenuProps = {
     dataAttributes?: DataAttributes;
 };
 
-export const DropdownMenu: React.FC<MenuProps> = ({
+export const Menu: React.FC<MenuProps> = ({
     renderTarget,
     renderMenu,
     width,
@@ -234,7 +271,7 @@ export const DropdownMenu: React.FC<MenuProps> = ({
     });
 
     return (
-        <div {...getPrefixedDataAttributes(dataAttributes, 'DropdownMenu')}>
+        <div {...getPrefixedDataAttributes(dataAttributes, 'Menu')}>
             {renderTarget({...targetProps, isMenuOpen})}
             {isMenuOpen ? (
                 <Portal>

@@ -62,6 +62,7 @@ export const hideItems = style({
 });
 
 export const menuItem = style({
+    userSelect: 'none',
     transition: 'background-color 0.15s ease-in-out',
     '@media': {
         [mq.supportsHover]: {
@@ -76,6 +77,7 @@ export const menuItem = style({
 });
 
 export const menuItemDisabled = style({
+    userSelect: 'none',
     opacity: 0.5,
 });
 

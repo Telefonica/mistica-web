@@ -1,20 +1,9 @@
 import * as React from 'react';
-import {
-    Touchable,
-    DropdownMenu,
-    Stack,
-    Inline,
-    Text3,
-    Box,
-    Checkbox,
-    IconKebabMenuLight,
-    DataCard,
-    Text2,
-} from '..';
+import {Touchable, Menu, Stack, Inline, Text3, Box, Checkbox, IconKebabMenuLight, DataCard, Text2} from '..';
 
 export default {
-    title: 'Components/DropdownMenu',
-    component: DropdownMenu,
+    title: 'Components/Menu',
+    component: Menu,
     argTypes: {
         horizontalPosition: {
             options: ['right', 'left'],
@@ -27,13 +16,13 @@ export default {
     },
 };
 
-type DropdownMenuArgs = {
+type MenuArgs = {
     menuOptionsCount: number;
     horizontalPosition: 'right' | 'left';
     verticalPosition: 'top' | 'bottom';
 };
 
-export const Default: StoryComponent<DropdownMenuArgs> = ({
+export const Default: StoryComponent<MenuArgs> = ({
     menuOptionsCount,
     horizontalPosition,
     verticalPosition,
@@ -64,7 +53,7 @@ export const Default: StoryComponent<DropdownMenuArgs> = ({
                         justifyContent: horizontalPosition === 'left' ? 'initial' : 'end',
                     }}
                 >
-                    <DropdownMenu
+                    <Menu
                         position={horizontalPosition}
                         width={320}
                         renderTarget={({ref, onPress, isMenuOpen}) => (
@@ -119,7 +108,7 @@ export const Default: StoryComponent<DropdownMenuArgs> = ({
     );
 };
 
-Default.storyName = 'DropdownMenu';
+Default.storyName = 'Menu';
 Default.args = {
     menuOptionsCount: 4,
     horizontalPosition: 'right',
@@ -137,7 +126,7 @@ export const InsideCard: StoryComponent = () => {
                 title="Data card"
                 extra={
                     <div style={{display: 'flex', justifyContent: 'right'}}>
-                        <DropdownMenu
+                        <Menu
                             position="right"
                             width={200}
                             renderTarget={({ref, onPress}) => (
@@ -164,4 +153,4 @@ export const InsideCard: StoryComponent = () => {
     );
 };
 
-InsideCard.storyName = 'DropdownMenu inside a card';
+InsideCard.storyName = 'Menu inside a card';

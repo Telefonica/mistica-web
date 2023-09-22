@@ -1,14 +1,7 @@
 import * as React from 'react';
 import userEvent from '@testing-library/user-event';
 import {render, screen} from '@testing-library/react';
-import {
-    ThemeContextProvider,
-    Touchable,
-    Text3,
-    DropdownMenu,
-    DropdownMenuSection,
-    DropdownMenuItem,
-} from '..';
+import {ThemeContextProvider, Touchable, Text3, Menu, MenuSection, MenuItem} from '..';
 import {makeTheme} from './test-utils';
 
 const options = ['Option 1', 'Option 2', 'Option 3'];
@@ -16,7 +9,7 @@ const options = ['Option 1', 'Option 2', 'Option 3'];
 test('close option', async () => {
     render(
         <ThemeContextProvider theme={makeTheme()}>
-            <DropdownMenu
+            <Menu
                 renderTarget={({ref, onPress, isMenuOpen}) => (
                     <Touchable ref={ref} onPress={onPress}>
                         <Text3 regular>{isMenuOpen ? 'menu is open' : 'menu is close'}</Text3>
@@ -24,9 +17,9 @@ test('close option', async () => {
                 )}
                 renderMenu={({ref, className, close}) => (
                     <div ref={ref} className={className}>
-                        <DropdownMenuSection>
+                        <MenuSection>
                             {options.map((option) => (
-                                <DropdownMenuItem
+                                <MenuItem
                                     key={option}
                                     text={option}
                                     onPress={(value) => {
@@ -36,7 +29,7 @@ test('close option', async () => {
                                     }}
                                 />
                             ))}
-                        </DropdownMenuSection>
+                        </MenuSection>
                     </div>
                 )}
             />
