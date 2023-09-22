@@ -1,3 +1,23 @@
+# [14.23.0](https://github.com/Telefonica/mistica-web/compare/v14.22.2...v14.23.0) (2023-09-22)
+
+
+### Bug Fixes
+
+* **Cards:** use polyfill for aspectRatio to prevent Safari from behaving different than other browsers ([#890](https://github.com/Telefonica/mistica-web/issues/890)) ([f81490f](https://github.com/Telefonica/mistica-web/commit/f81490f0861d5671f7364d87694a8205d0a317c8))
+* **FixedFooterLayout:** prevent content from being rendered on top of the footer ([#891](https://github.com/Telefonica/mistica-web/issues/891)) ([dc861d5](https://github.com/Telefonica/mistica-web/commit/dc861d5bfa4c36e55e3db7ee80e73b6d4ba86452))
+
+
+### Features
+
+* **Carousel:** large mobilePageOffset support ([#887](https://github.com/Telefonica/mistica-web/issues/887)) ([803506a](https://github.com/Telefonica/mistica-web/commit/803506af37d3c4e3dd5315ea0baad0d04177e95e))
+
+## [14.22.2](https://github.com/Telefonica/mistica-web/compare/v14.22.1...v14.22.2) (2023-09-18)
+
+
+### Bug Fixes
+
+* **Touchable:** add margin 0 as default to prevent Safari issues ([#885](https://github.com/Telefonica/mistica-web/issues/885)) ([9c1b470](https://github.com/Telefonica/mistica-web/commit/9c1b47073c5a543e17c351cb2863610c5ce7e31f))
+
 ## [14.22.1](https://github.com/Telefonica/mistica-web/compare/v14.22.0...v14.22.1) (2023-09-14)
 
 

@@ -19,7 +19,7 @@ export const SMALL_ICON_SIZE = 20;
 export const SPINNER_SIZE = 20;
 export const SMALL_SPINNER_SIZE = 16;
 export const PADDING_Y_LINK = 6;
-const PADDING_X_LINK = 12;
+export const PADDING_X_LINK = 12;
 export const CHEVRON_MARGIN_LEFT_LINK = 2;
 
 const disabledStyle = {opacity: 0.5};
@@ -357,10 +357,6 @@ export const textContentLink = style([
 globalStyle(`${textContentLink} svg`, {
     display: 'block',
 });
-
-export const alignedLeftLink = style({marginLeft: -PADDING_X_LINK});
-export const alignedRightLink = style({marginRight: -PADDING_X_LINK});
-export const alignedVerticalLink = style({marginTop: -PADDING_Y_LINK, marginBottom: -PADDING_Y_LINK});
 
 export const variants = styleVariants({
     primary: lightPrimary,

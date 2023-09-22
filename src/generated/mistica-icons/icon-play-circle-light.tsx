@@ -18,7 +18,7 @@ const IconPlayCircleLight = ({color, size = 24, ...rest}: IconProps): JSX.Elemen
         <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
             <path
                 fill={fillColor}
-                d="M8.956 16.325a.258.258 0 01-.258-.258V7.835a.26.26 0 01.39-.224l7.128 4.115a.26.26 0 010 .448l-7.132 4.118a.26.26 0 01-.128.033zm.26-8.039v7.33l6.347-3.663-6.347-3.667z"
+                d="M8.956 16.325a.257.257 0 01-.258-.258V7.835a.26.26 0 01.39-.224l7.128 4.115a.26.26 0 010 .448l-7.132 4.118a.26.26 0 01-.128.033zm.26-8.039v7.33l6.347-3.663-6.347-3.667z"
             />
             <path
                 fill={fillColor}

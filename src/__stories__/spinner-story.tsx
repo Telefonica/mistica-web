@@ -1,27 +1,25 @@
 import * as React from 'react';
-import {Spinner, IntegerField, Stack} from '..';
-import {StorySection} from './helpers';
+import {Spinner} from '..';
 
 export default {
     title: 'Components/Spinner',
     component: Spinner,
+    argTypes: {
+        size: {
+            control: {type: 'range', min: 24, max: 100, step: 4},
+        },
+    },
 };
 
-export const Default: StoryComponent = () => {
-    const [size, setSize] = React.useState(24);
-    return (
-        <StorySection title="Spinner">
-            <Stack space={16}>
-                <IntegerField
-                    name="size"
-                    label="Size"
-                    value={String(size)}
-                    onChangeValue={(newValue) => setSize(Number(newValue))}
-                />
-                <Spinner size={size} />
-            </Stack>
-        </StorySection>
-    );
+type Args = {
+    size: number;
+};
+
+export const Default: StoryComponent<Args> = ({size}) => {
+    return <Spinner size={size} />;
 };
 
 Default.storyName = 'Spinner';
+Default.args = {
+    size: 24,
+};

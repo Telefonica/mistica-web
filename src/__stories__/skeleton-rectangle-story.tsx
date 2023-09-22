@@ -3,7 +3,7 @@ import {SkeletonRectangle} from '../skeletons';
 import {ThemeVariant, skinVars} from '..';
 
 export default {
-    title: 'Components/Skeletons/Skeleton Rectangle',
+    title: 'Components/Skeletons/SkeletonRectangle',
     parameters: {
         fullScreen: true,
     },
@@ -38,7 +38,7 @@ export const Default: StoryComponent<Args> = ({height, width, inverse, ariaLabel
     );
 };
 
-Default.storyName = 'Skeleton Rectangle';
+Default.storyName = 'SkeletonRectangle';
 
 Default.args = {
     height: '100',
