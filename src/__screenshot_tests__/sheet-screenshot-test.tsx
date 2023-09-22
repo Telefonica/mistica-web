@@ -66,6 +66,26 @@ test.each(TESTABLE_DEVICES)('InfoSheet in %s', async (device) => {
     expect(image).toMatchImageSnapshot();
 });
 
+test('InfoSheet with multiple description paragraphs', async () => {
+    const page = await openStoryPage({
+        id: 'components-modals-sheet--info',
+        device: 'MOBILE_IOS',
+        args: {
+            description: 'Description paragraph',
+            multilineDescription: true,
+        },
+    });
+
+    const button = await screen.findByRole('button', {name: 'Open'});
+    await button.click();
+
+    await screen.findByRole('dialog');
+
+    const image = await page.screenshot();
+
+    expect(image).toMatchImageSnapshot();
+});
+
 test.each(TESTABLE_DEVICES)('ActionsSheet in %s', async (device) => {
     const page = await openStoryPage({
         id: 'components-modals-sheet--actions',
