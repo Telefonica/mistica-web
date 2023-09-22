@@ -1,29 +1,22 @@
 import * as React from 'react';
 import userEvent from '@testing-library/user-event';
 import {render, screen} from '@testing-library/react';
-import {ThemeContextProvider, Touchable, Text3, DropdownMenu} from '..';
+import {
+    ThemeContextProvider,
+    Touchable,
+    Text3,
+    DropdownMenu,
+    DropdownMenuSection,
+    DropdownMenuItem,
+} from '..';
 import {makeTheme} from './test-utils';
 
-const options = [
-    {
-        text: 'Option 1',
-        value: 'option1',
-    },
-    {
-        text: 'Option 2',
-        value: 'option2',
-    },
-    {
-        text: 'Option 3',
-        value: 'option3',
-    },
-];
+const options = ['Option 1', 'Option 2', 'Option 3'];
 
 test('close option', async () => {
     render(
         <ThemeContextProvider theme={makeTheme()}>
             <DropdownMenu
-                width={400}
                 renderTarget={({ref, onPress, isMenuOpen}) => (
                     <Touchable ref={ref} onPress={onPress}>
                         <Text3 regular>{isMenuOpen ? 'menu is open' : 'menu is close'}</Text3>
@@ -31,18 +24,19 @@ test('close option', async () => {
                 )}
                 renderMenu={({ref, className, close}) => (
                     <div ref={ref} className={className}>
-                        {options.map((option) => (
-                            <Touchable
-                                key={option.value}
-                                onPress={() => {
-                                    if (option.value === 'option3') {
-                                        close();
-                                    }
-                                }}
-                            >
-                                {option.text}
-                            </Touchable>
-                        ))}
+                        <DropdownMenuSection>
+                            {options.map((option) => (
+                                <DropdownMenuItem
+                                    key={option}
+                                    text={option}
+                                    onPress={(value) => {
+                                        if (value === 'Option 3') {
+                                            close();
+                                        }
+                                    }}
+                                />
+                            ))}
+                        </DropdownMenuSection>
                     </div>
                 )}
             />

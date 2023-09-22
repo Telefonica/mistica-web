@@ -7,8 +7,68 @@ import * as styles from './dropdown-menu.css';
 import {useWindowSize} from './hooks';
 import {Portal} from './portal';
 import {assignInlineVars} from '@vanilla-extract/dynamic';
+import Box from './box';
+import Inline from './inline';
+import Touchable from './touchable';
+import {Text3} from './text';
+import {vars} from './skins/skin-contract.css';
+import Divider from './divider';
 
-import type {DataAttributes} from './utils/types';
+import type {DataAttributes, IconProps} from './utils/types';
+
+type DropdownMenuItemProps = {
+    text: string;
+    Icon?: React.FC<IconProps>;
+    destructive?: boolean;
+    onPress?: (text: string) => void;
+    disabled?: boolean;
+    children?: undefined;
+};
+
+export const DropdownMenuItem: React.FC<DropdownMenuItemProps> = ({
+    text,
+    Icon,
+    destructive,
+    onPress,
+    disabled,
+}) => {
+    const contentColor = destructive ? vars.colors.textLinkDanger : vars.colors.neutralHigh;
+
+    return (
+        <Touchable
+            onPress={(e) => {
+                e.stopPropagation();
+                if (onPress) onPress(text);
+            }}
+            className={disabled ? styles.menuItemDisabled : styles.menuItem}
+            disabled={disabled}
+        >
+            <Box paddingX={8} paddingY={12}>
+                <Inline space={8} alignItems="center">
+                    {Icon && <Icon size={24} color={contentColor} />}
+                    <Text3 regular color={contentColor}>
+                        {text}
+                    </Text3>
+                </Inline>
+            </Box>
+        </Touchable>
+    );
+};
+
+type DropdownMenuSectionProps = {
+    children?: React.ReactNode;
+};
+
+export const DropdownMenuSection: React.FC<DropdownMenuSectionProps> = ({children}) => {
+    return (
+        <>
+            {children}
+            <Box paddingY={8} className={styles.menuSectionDivider}>
+                <Divider />
+            </Box>
+        </>
+    );
+};
 
 const MARGIN_THRESHOLD = 12;
 const MENU_OFFSET_FROM_TARGET = 8;

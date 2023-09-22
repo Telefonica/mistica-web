@@ -80,6 +80,8 @@ export {
      */
     DropdownMenu as Menu,
     DropdownMenu,
+    DropdownMenuItem,
+    DropdownMenuSection,
 } from './dropdown-menu';
 export {default as EmptyState} from './empty-state';
 export {default as EmptyStateCard} from './empty-state-card';

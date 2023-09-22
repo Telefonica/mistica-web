@@ -1,6 +1,7 @@
 import {createVar, style} from '@vanilla-extract/css';
 import {sprinkles} from './sprinkles.css';
 import {vars as skinVars} from './skins/skin-contract.css';
+import {mq} from '.';
 
 const top = createVar();
 const bottom = createVar();
@@ -46,8 +47,7 @@ export const menuContainer = style([
         margin: 0,
         overflowY: 'auto',
         transition: 'opacity .03s linear,transform .12s cubic-bezier(0,0,.2,1) .15s',
-        boxShadow:
-            '0px 5px 5px -3px rgba(0,0,0,0.2), 0px 8px 10px 1px rgba(0,0,0,0.14), 0px 3px 14px 2px rgba(0,0,0,0.12)',
+        boxShadow: '0px 2px 4px rgba(0,0,0,0.2)',
     },
 ]);
 
@@ -59,4 +59,28 @@ export const showItems = style({
 export const hideItems = style({
     opacity: 0,
     transform: 'scale(0)',
+});
+
+export const menuItem = style({
+    transition: 'background-color 0.15s ease-in-out',
+    '@media': {
+        [mq.supportsHover]: {
+            ':hover': {
+                backgroundColor: skinVars.colors.backgroundContainerHover,
+            },
+            ':active': {
+                backgroundColor: skinVars.colors.backgroundContainerPressed,
+            },
+        },
+    },
+});
+
+export const menuItemDisabled = style({
+    opacity: 0.5,
+});
+
+export const menuSectionDivider = style({
+    ':last-child': {
+        display: 'none',
+    },
 });
