@@ -95,6 +95,17 @@ let listener: SheetPropsListener | null = null;
 let sheetPromiseResolve: SheetPromiseResolve | null = null;
 let nativeSheetImplementation: NativeSheetImplementation | null = null;
 
+const normalizeDescriptionForNative = (description?: string | Array<string>): string | undefined => {
+    if (Array.isArray(description)) {
+        if (description.length) {
+            return description.join('\n\n');
+        } else {
+            return undefined;
+        }
+    }
+    return description;
+};
+
 const showRadioListNativeSheet = ({
     title,
     subtitle,
@@ -106,7 +117,7 @@ const showRadioListNativeSheet = ({
         title,
         subtitle,
         // TODO: add multiline support to native sheet
-        description: Array.isArray(description) ? description.join('\n') : description,
+        description: normalizeDescriptionForNative(description),
         content: [
             {
                 type: 'LIST',
@@ -141,7 +152,7 @@ const showActionsListNativeSheet = ({
         title,
         subtitle,
         // TODO: add multiline support to native sheet
-        description: Array.isArray(description) ? description.join('\n') : description,
+        description: normalizeDescriptionForNative(description),
         content: [
             {
                 type: 'LIST',
@@ -171,7 +182,7 @@ const showInfoNativeSheet = async ({title, subtitle, description, items}: SheetP
         title,
         subtitle,
         // TODO: add multiline support to native sheet
-        description: Array.isArray(description) ? description.join('\n') : description,
+        description: normalizeDescriptionForNative(description),
         content: [
             {
                 type: 'LIST',
@@ -197,7 +208,7 @@ const showActionsNativeSheet = async ({
         title,
         subtitle,
         // TODO: add multiline support to native sheet
-        description: Array.isArray(description) ? description.join('\n') : description,
+        description: normalizeDescriptionForNative(description),
         content: [
             {
                 type: 'BOTTOM_ACTIONS',
