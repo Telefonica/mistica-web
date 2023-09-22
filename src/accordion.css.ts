@@ -1,19 +1,14 @@
-import { style, styleVariants } from '@vanilla-extract/css';
-import { sprinkles } from './sprinkles.css';
-import { vars } from './skins/skin-contract.css';
+import {style, styleVariants} from '@vanilla-extract/css';
+import {sprinkles} from './sprinkles.css';
+import {vars} from './skins/skin-contract.css';
 import * as mq from './media-queries.css';
-
-
 
 export const containerBase = style([
     sprinkles({
         width: '100%',
-       height: '100%'
-        // borderRadius: 8,
+        height: '100%',
     }),
     {
-        overscrollBehaviorY: 'auto'
-       
     },
 ]);
 
@@ -22,7 +17,6 @@ export const header = style([
         display: 'flex',
         width: '100%',
         padding: 16,
-
     }),
     {
         minHeight: 59,
@@ -51,20 +45,16 @@ export const headerVariants = styleVariants({
         sprinkles({
             background: 'transparent',
         }),
-        {
-        },
+        {},
     ],
     inverse: [
         header,
         sprinkles({
-
             background: vars.colors.backgroundContainerBrand,
-            color: vars.colors.textLinkDanger
+            color: vars.colors.textLinkDanger,
         }),
     ],
 });
-
-
 
 export const rowBody = sprinkles({
     display: 'flex',
@@ -80,11 +70,8 @@ export const touchable = style([
         border: 'none',
         background: 'transparent',
     }),
-    {
-    },
+    {},
 ]);
-
-
 
 export const textAlign = style([
     sprinkles({
@@ -93,10 +80,8 @@ export const textAlign = style([
         height: '100%',
         width: '100%',
     }),
-    {
-    },
+    {},
 ]);
-
 
 export const textContent = style({
     textAlign: 'left',
@@ -114,13 +99,9 @@ export const icon = style([
     sprinkles({
         display: 'flex',
         alignItems: 'center',
-        paddingRight: 16,
-
+        paddingLeft: 16,
     }),
-    {
-       
-        
-    },
+    {},
 ]);
 
 export const iconVariants = styleVariants({
@@ -129,18 +110,15 @@ export const iconVariants = styleVariants({
         sprinkles({
             background: 'transparent',
         }),
-        {
-        },
+        {},
     ],
     inverse: [
         header,
         sprinkles({
-            color: vars.colors.inverse
+            color: vars.colors.inverse,
         }),
     ],
 });
-
-
 
 export const content = style([
     sprinkles({
@@ -149,8 +127,7 @@ export const content = style([
         paddingX: 16,
         paddingBottom: 16,
     }),
-    {
-    },
+    {},
 ]);
 
 export const contentVariants = styleVariants({
@@ -167,10 +144,10 @@ export const contentVariants = styleVariants({
     selected: [
         content,
         sprinkles({
-            color: vars.colors.textSecondary
+            color: vars.colors.textSecondary,
         }),
         {
-            transition: 'opacity 0.4s ease-in-out', // Apenas a transição de opacidade
+            transition: 'opacity 0.4s ease-in-out', 
         },
     ],
 });
@@ -180,7 +157,7 @@ export const slot = style({
     justifyContent: 'center',
     textAlign: 'center',
     width: '100%',
-    height: 500,
+    height: 80,
     backgroundColor: '#20FFB1',
     borderBottom: '1px solid #20E466',
 });
@@ -191,52 +168,19 @@ export const center = sprinkles({
 });
 
 export const contentShow = style([
-    sprinkles({
-    }),
+    sprinkles({}),
     {
-       // maxHeight: 0,
-       // maxHeight: '100%',
-        
+
+        maxHeight: 0,
         overflow: 'hidden',
-        transition: 'max-height 2s ease-in-out',
-        
-
-
+        transition: 'max-height 0.4s ease-in-out',
     },
 ]);
-
-
-
-
-
-// export const contentShowVariants = styleVariants({
-//     default: [
-//         contentShow,
-//         sprinkles({
-
-//         }),
-//         {
-//         },
-
-//     ],
-//     inverse: [
-//         contentShow,
-//         sprinkles({
-//             height: 80,
-//             background: vars.colors.error,
-//         }),
-//         {
-//         },
-//     ],
-
-// });
-
-
-
-
-
-
-
-
-
+export const sectionPanel = style([
+    sprinkles({
+        paddingX: 16,
+        paddingBottom: 16,
+    }),
+    {},
+]);
 

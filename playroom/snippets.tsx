@@ -2069,6 +2069,232 @@ const heroSnippets = [
     },
 ];
 
+const accordionSnippets: Array<Snippet> = [
+    {
+        group: 'Accordion',
+        name: 'Accordion fullwidth',
+        code: `
+    <ResponsiveLayout>
+      <Box padding={20}>
+          <Accordion
+            sections={[
+              {
+                asset: (
+                  <Circle size={40} backgroundColor={colors.brandLow}>
+                    <IconLightningLight color={colors.brand} />
+                  </Circle>
+                ),
+                icon: 'icon',
+                title: 'Title 1',
+                subtitle: 'Subtitle',
+                panel: \`Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+                Nulla eget nisi nec risus sodales ultricies. Curabitur tristique 
+                urna quis erat malesuada, eu suscipit libero efficitur.
+                \`,
+                slot: {},
+              },
+            ]}
+          ></Accordion>
+          <Accordion
+            sections={[
+              {
+                asset: (
+                  
+                    <IconLightningLight color={colors.brand} size={24}/>
+                  
+                ),
+                icon: 'icon',
+                title: 'Title 2',
+                subtitle: 'Subtitle',
+                panel: \`Praesent auctor, metus eget hendrerit pharetra.\`,
+              },
+            ]}
+          ></Accordion>
+          <Accordion
+            sections={[
+              {
+                icon: 'icon',
+                title: 'Title 3',
+                panel: \`Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quis sapiente
+                laborum cupiditate possimus labore, hic temporibus velit dicta earum
+                suscipit commodi eum enim atque at? Et perspiciatis dolore iure
+                voluptatem.
+                \`,
+              },
+            ]}
+          ></Accordion>
+          </Box>
+        </ResponsiveLayout>
+    `,
+    },
+    {
+        group: 'Accordion',
+        name: 'Accordion Group',
+        code: `
+    <ResponsiveLayout>
+      <Box padding={20}>
+          <Accordion
+            sections={[
+              {
+                asset: (
+                  <Circle size={40} backgroundColor={colors.brandLow}>
+                    <IconLightningLight color={colors.brand} />
+                  </Circle>
+                ),
+                icon: 'icon',
+                title: 'Grouped Header',
+                subtitle: 'Subtitle',
+                extra: [
+                  <Accordion
+                    sections={[
+                      {
+                        asset: (
+                          <IconLightningLight color={colors.brand} size={24} />
+                        ),
+                        icon: 'icon',
+                        title: 'Title 1',
+                        panel: \`Modernipsum dolor sit amet deformalism new
+                          objectivity, video art stuckism international
+                          young british artists les nabis, post-impressionism
+                          modern art fauvism post-impressionism. Primitivism
+                          carolingian superstroke futurism lowbrow tonalism,
+                          lyrical abstraction synchromism maximalism color
+                          field painting renaissance, installation art pop art
+                          barbizon school remodernism.\`,
+                        slot: {},
+                      },
+                    ]}
+                  ></Accordion>,
+                  <Accordion
+                  sections={[
+                    {
+                      asset: (
+                        <IconLightningLight color={colors.brand} size={24} />
+                      ),
+                      icon: 'icon',
+                      title: 'Title 2',
+                      panel: \`Modernipsum dolor sit amet deformalism new
+                        objectivity, video art stuckism international
+                        young british artists les nabis, post-impressionism
+                        modern art fauvism post-impressionism. Primitivism
+                        carolingian superstroke futurism lowbrow tonalism,
+                        lyrical abstraction synchromism maximalism color
+                        field painting renaissance, installation art pop art
+                        barbizon school remodernism.\`,
+                      slot: {},
+                    },
+                  ]}
+                ></Accordion>,
+                <Accordion
+                  sections={[
+                    {
+                      asset: (
+                        <IconLightningLight color={colors.brand} size={24} />
+                      ),
+                      icon: 'icon',
+                      title: 'Title 3',
+                      panel: \`Modernipsum dolor sit amet deformalism new
+                        objectivity, video art stuckism international
+                        young british artists les nabis, post-impressionism
+                        modern art fauvism post-impressionism. Primitivism
+                        carolingian superstroke futurism lowbrow tonalism,
+                        lyrical abstraction synchromism maximalism color
+                        field painting renaissance, installation art pop art
+                        barbizon school remodernism.\`,
+                      slot: {},
+                    },
+                  ]}
+                ></Accordion>,
+                ],
+              },
+            ]}
+          ></Accordion>
+          </Box>
+        </ResponsiveLayout>
+    `,
+    },
+    {
+        group: 'Accordion',
+        name: 'Accordion Group no touchable header',
+        code: `
+      <Box padding={20}>
+        <ResponsiveLayout>
+          <Accordion
+            sections={[
+              {
+                title: 'Group no Touchable Header',
+                notTouchable: true,
+                extra: [
+                  <Accordion
+                    sections={[
+                      {
+                        asset: (
+                          <IconLightningLight color={colors.brand} size={24} />
+                        ),
+                        icon: 'icon',
+                        title: 'Title 1',
+                        panel: \`Modernipsum dolor sit amet deformalism new
+                          objectivity, video art stuckism international
+                          young british artists les nabis, post-impressionism
+                          modern art fauvism post-impressionism. Primitivism
+                          carolingian superstroke futurism lowbrow tonalism,
+                          lyrical abstraction synchromism maximalism color
+                          field painting renaissance, installation art pop art
+                          barbizon school remodernism.\`,
+                        slot: {},
+                      },
+                    ]}
+                  ></Accordion>,
+                  <Accordion
+                    sections={[
+                      {
+                        asset: (
+                          <IconLightningLight color={colors.brand} size={24} />
+                        ),
+                        icon: 'icon',
+                        title: 'Title 2',
+                        panel: \`Modernipsum dolor sit amet deformalism new
+                          objectivity, video art stuckism international
+                          young british artists les nabis, post-impressionism
+                          modern art fauvism post-impressionism. Primitivism
+                          carolingian superstroke futurism lowbrow tonalism,
+                          lyrical abstraction synchromism maximalism color
+                          field painting renaissance, installation art pop art
+                          barbizon school remodernism.\`,
+                        slot: {},
+                      },
+                    ]}
+                  ></Accordion>,
+                  <Accordion
+                    sections={[
+                      {
+                        asset: (
+                          <IconLightningLight color={colors.brand} size={24} />
+                        ),
+                        icon: 'icon',
+                        title: 'Title 3',
+                        panel: \`Modernipsum dolor sit amet deformalism new
+                          objectivity, video art stuckism international
+                          young british artists les nabis, post-impressionism
+                          modern art fauvism post-impressionism. Primitivism
+                          carolingian superstroke futurism lowbrow tonalism,
+                          lyrical abstraction synchromism maximalism color
+                          field painting renaissance, installation art pop art
+                          barbizon school remodernism.\`,
+                        slot: {},
+                      },
+                    ]}
+                  ></Accordion>,
+                ],
+              },
+            ]}
+          ></Accordion>
+        </ResponsiveLayout>
+      </Box>
+    `,
+    },
+];
+
 const loaderSnippets = [
     {
         name: 'Loader with url',
@@ -2445,6 +2671,7 @@ export default [
     ...skeletonSnippets,
     {group: 'Feedbacks', name: 'Snackbar', code: '<Snackbar message="Some message here" />'},
     ...layoutSnippets,
+    ...accordionSnippets,
     {
         group: 'Layout',
         name: 'FixedFooterLayout',
