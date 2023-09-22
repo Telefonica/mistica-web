@@ -82,13 +82,20 @@ type SheetArgs = {
     title: string;
     subtitle: string;
     description: string;
+    multilineDescription: boolean;
 };
 
 type RadioListSheetArgs = SheetArgs & {
     selectedId: string;
 };
 
-export const RadioList: StoryComponent<RadioListSheetArgs> = ({title, subtitle, description, selectedId}) => {
+export const RadioList: StoryComponent<RadioListSheetArgs> = ({
+    title,
+    subtitle,
+    description,
+    multilineDescription,
+    selectedId,
+}) => {
     const [open, setOpen] = React.useState(false);
     const [selected, setSelected] = React.useState<string | null>(null);
 
@@ -121,7 +128,9 @@ export const RadioList: StoryComponent<RadioListSheetArgs> = ({title, subtitle, 
                     }}
                     title={title}
                     subtitle={subtitle}
-                    description={description}
+                    description={
+                        description && multilineDescription ? [description, description] : description
+                    }
                     selectedId={selectedId === 'none' ? undefined : selectedId}
                     items={[
                         'Apple',
@@ -158,6 +167,7 @@ RadioList.args = {
     title: 'Select a fruit',
     subtitle: 'Subtitle',
     description: 'Description',
+    multilineDescription: false,
     selectedId: 'none',
 };
 RadioList.argTypes = {
@@ -165,9 +175,17 @@ RadioList.argTypes = {
         control: {type: 'select'},
         options: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', 'none'],
     },
+    multilineDescription: {
+        if: {arg: 'description'},
+    },
 };
 
-export const ActionsList: StoryComponent<SheetArgs> = ({title, subtitle, description}) => {
+export const ActionsList: StoryComponent<SheetArgs> = ({
+    title,
+    subtitle,
+    description,
+    multilineDescription,
+}) => {
     const [open, setOpen] = React.useState(false);
     const [selected, setSelected] = React.useState<string | null>(null);
 
@@ -200,7 +218,9 @@ export const ActionsList: StoryComponent<SheetArgs> = ({title, subtitle, descrip
                     }}
                     title={title}
                     subtitle={subtitle}
-                    description={description}
+                    description={
+                        description && multilineDescription ? [description, description] : description
+                    }
                     items={[
                         {
                             id: '1',
@@ -233,6 +253,12 @@ ActionsList.args = {
     title: 'Title',
     subtitle: 'Subtitle',
     description: 'Description',
+    multilineDescription: false,
+};
+ActionsList.argTypes = {
+    multilineDescription: {
+        if: {arg: 'description'},
+    },
 };
 
 type InfoSheetArgs = SheetArgs & {
@@ -240,7 +266,14 @@ type InfoSheetArgs = SheetArgs & {
     iconType: 'bullet' | 'regular' | 'small';
 };
 
-export const Info: StoryComponent<InfoSheetArgs> = ({title, subtitle, description, numItems, iconType}) => {
+export const Info: StoryComponent<InfoSheetArgs> = ({
+    title,
+    subtitle,
+    description,
+    multilineDescription,
+    numItems,
+    iconType,
+}) => {
     const [open, setOpen] = React.useState(false);
 
     return (
@@ -261,7 +294,9 @@ export const Info: StoryComponent<InfoSheetArgs> = ({title, subtitle, descriptio
                     }}
                     title={title}
                     subtitle={subtitle}
-                    description={description}
+                    description={
+                        description && multilineDescription ? [description, description] : description
+                    }
                     items={Array.from({length: numItems}, (_, idx) => ({
                         id: String(idx),
                         title: 'Item ' + idx,
@@ -290,11 +325,15 @@ Info.args = {
     description: 'Description',
     numItems: 5,
     iconType: 'bullet',
+    multilineDescription: false,
 };
 Info.argTypes = {
     iconType: {
         control: {type: 'select'},
         options: ['bullet', 'regular', 'small'],
+    },
+    multilineDescription: {
+        if: {arg: 'description'},
     },
 };
 
@@ -309,6 +348,7 @@ export const Actions: StoryComponent<ActionsSheetArgs> = ({
     title,
     subtitle,
     description,
+    multilineDescription,
     buttonText,
     secondaryButtonText,
     buttonLinkText,
@@ -344,7 +384,9 @@ export const Actions: StoryComponent<ActionsSheetArgs> = ({
                     onPressButton={setPressedButton}
                     title={title}
                     subtitle={subtitle}
-                    description={description}
+                    description={
+                        description && multilineDescription ? [description, description] : description
+                    }
                     button={{
                         text: buttonText,
                     }}
@@ -374,6 +416,7 @@ Actions.args = {
     title: 'Title',
     subtitle: 'Subtitle',
     description: 'Description',
+    multilineDescription: false,
     buttonText: 'Button',
     secondaryButtonText: 'Secondary button',
     buttonLinkText: 'Link',
@@ -384,15 +427,19 @@ Actions.argTypes = {
         control: {type: 'boolean'},
         if: {arg: 'buttonLinkText'},
     },
+    multilineDescription: {
+        if: {arg: 'description'},
+    },
 };
 
 type RootArgs = {
     title: string;
     subtitle: string;
     description: string;
+    multilineDescription: boolean;
 };
 
-export const Root: StoryComponent<RootArgs> = ({title, subtitle, description}) => {
+export const Root: StoryComponent<RootArgs> = ({title, subtitle, description, multilineDescription}) => {
     const [response, setResponse] = React.useState<unknown>();
     return (
         <Box paddingY={24} paddingX={16}>
@@ -407,7 +454,10 @@ export const Root: StoryComponent<RootArgs> = ({title, subtitle, description}) =
                                 props: {
                                     title,
                                     subtitle,
-                                    description,
+                                    description:
+                                        description && multilineDescription
+                                            ? [description, description]
+                                            : description,
                                     items: [
                                         {
                                             id: '1',
@@ -440,7 +490,10 @@ export const Root: StoryComponent<RootArgs> = ({title, subtitle, description}) =
                                 props: {
                                     title,
                                     subtitle,
-                                    description,
+                                    description:
+                                        description && multilineDescription
+                                            ? [description, description]
+                                            : description,
                                     items: [
                                         {
                                             id: '1',
@@ -469,7 +522,10 @@ export const Root: StoryComponent<RootArgs> = ({title, subtitle, description}) =
                                 props: {
                                     title,
                                     subtitle,
-                                    description,
+                                    description:
+                                        description && multilineDescription
+                                            ? [description, description]
+                                            : description,
                                     button: {
                                         text: 'Button',
                                     },
@@ -491,7 +547,10 @@ export const Root: StoryComponent<RootArgs> = ({title, subtitle, description}) =
                                 props: {
                                     title,
                                     subtitle,
-                                    description,
+                                    description:
+                                        description && multilineDescription
+                                            ? [description, description]
+                                            : description,
                                     selectedId: '1',
                                     items: [
                                         {
@@ -532,4 +591,10 @@ Root.args = {
     title: 'Title',
     subtitle: 'Subtitle',
     description: 'Description',
+    multilineDescription: false,
+};
+Root.argTypes = {
+    multilineDescription: {
+        if: {arg: 'description'},
+    },
 };

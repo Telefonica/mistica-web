@@ -18,7 +18,7 @@ type SheetProps<T> = Id<
     {
         title?: string;
         subtitle?: string;
-        description?: string;
+        description?: string | Array<string>;
     } & T
 >;
 
@@ -105,7 +105,8 @@ const showRadioListNativeSheet = ({
     (nativeSheetImplementation as NativeSheetImplementation)({
         title,
         subtitle,
-        description,
+        // TODO: add multiline support to native sheet
+        description: Array.isArray(description) ? description.join('\n') : description,
         content: [
             {
                 type: 'LIST',
@@ -139,7 +140,8 @@ const showActionsListNativeSheet = ({
     (nativeSheetImplementation as NativeSheetImplementation)({
         title,
         subtitle,
-        description,
+        // TODO: add multiline support to native sheet
+        description: Array.isArray(description) ? description.join('\n') : description,
         content: [
             {
                 type: 'LIST',
@@ -168,7 +170,8 @@ const showInfoNativeSheet = async ({title, subtitle, description, items}: SheetP
     await (nativeSheetImplementation as NativeSheetImplementation)({
         title,
         subtitle,
-        description,
+        // TODO: add multiline support to native sheet
+        description: Array.isArray(description) ? description.join('\n') : description,
         content: [
             {
                 type: 'LIST',
@@ -193,7 +196,8 @@ const showActionsNativeSheet = async ({
     return (nativeSheetImplementation as NativeSheetImplementation)({
         title,
         subtitle,
-        description,
+        // TODO: add multiline support to native sheet
+        description: Array.isArray(description) ? description.join('\n') : description,
         content: [
             {
                 type: 'BOTTOM_ACTIONS',
