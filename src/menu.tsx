@@ -17,6 +17,8 @@ import Checkbox from './checkbox';
 
 import type {DataAttributes, IconProps} from './utils/types';
 
+const CLOSE_MENU_DELAY = 150;
+
 type MenuItemProps = {
     text: string;
     Icon?: React.FC<IconProps>;
@@ -117,6 +119,7 @@ export const Menu: React.FC<MenuProps> = ({
     const [isMenuOpen, setIsMenuOpen] = React.useState(false);
     const [target, setTarget] = React.useState<HTMLElement | null>(null);
     const [menu, setMenu] = React.useState<HTMLElement | null>(null);
+    const [isMenuClosing, setIsMenuClosing] = React.useState(false);
 
     const [animateShowItems, setAnimateShowItems] = React.useState(false);
     const [itemsComputedProps, setItemsComputedProps] = React.useState<{
@@ -133,7 +136,7 @@ export const Menu: React.FC<MenuProps> = ({
     React.useEffect(() => {
         const targetRect = target?.getBoundingClientRect();
 
-        if (!menu || !targetRect || !isMenuOpen) {
+        if (!menu || !targetRect || !isMenuOpen || isMenuClosing) {
             setAnimateShowItems(false);
             return;
         }
@@ -203,16 +206,17 @@ export const Menu: React.FC<MenuProps> = ({
                 cancelAnimationFrame(requestAnimationFrameId);
             }
         };
-    }, [position, isMenuOpen, menu, target, width, windowSize]);
+    }, [position, isMenuOpen, menu, target, width, windowSize, isMenuClosing]);
 
     const targetProps = React.useMemo(
         () => ({
             ref: setTarget,
             onPress: () => {
-                setIsMenuOpen(!isMenuOpen);
+                if (isMenuOpen) setIsMenuClosing(true);
+                else setIsMenuOpen(true);
             },
         }),
-        [setTarget, isMenuOpen, setIsMenuOpen]
+        [setTarget, isMenuOpen]
     );
 
     const menuProps = React.useMemo(
@@ -222,12 +226,21 @@ export const Menu: React.FC<MenuProps> = ({
                 styles.menuContainer,
                 animateShowItems ? styles.showItems : styles.hideItems
             ),
-            close: () => {
-                setIsMenuOpen(false);
-            },
+            close: () => setIsMenuClosing(true),
         }),
         [animateShowItems]
     );
+
+    React.useEffect(() => {
+        let closingTimeout: NodeJS.Timeout;
+        if (isMenuClosing) {
+            closingTimeout = setTimeout(() => {
+                setIsMenuOpen(false);
+                setIsMenuClosing(false);
+            }, CLOSE_MENU_DELAY);
+        }
+        return () => clearTimeout(closingTimeout);
+    }, [isMenuClosing]);
 
     React.useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
@@ -236,7 +249,7 @@ export const Menu: React.FC<MenuProps> = ({
                     cancelEvent(e);
                 }
                 if (e.keyCode === ESC) {
-                    setIsMenuOpen(false);
+                    setIsMenuClosing(true);
                 }
             }
         };
@@ -254,7 +267,7 @@ export const Menu: React.FC<MenuProps> = ({
                     <Overlay
                         onPress={(e) => {
                             cancelEvent(e);
-                            setIsMenuOpen(false);
+                            setIsMenuClosing(true);
                         }}
                         disableScroll
                     >

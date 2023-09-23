@@ -46,7 +46,7 @@ export const menuContainer = style([
         listStyleType: 'none',
         margin: 0,
         overflowY: 'auto',
-        transition: 'opacity .03s linear,transform .12s cubic-bezier(0,0,.2,1) .15s',
+        transition: 'opacity .12s linear,transform .12s cubic-bezier(0,0,.2,1) .15s',
         boxShadow: '0px 2px 4px rgba(0,0,0,0.2)',
     },
 ]);

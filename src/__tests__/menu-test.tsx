@@ -1,6 +1,6 @@
 import * as React from 'react';
 import userEvent from '@testing-library/user-event';
-import {render, screen} from '@testing-library/react';
+import {render, screen, waitFor} from '@testing-library/react';
 import {ThemeContextProvider, Touchable, Text3, Menu, MenuSection, MenuItem} from '..';
 import {makeTheme} from './test-utils';
 
@@ -54,7 +54,10 @@ test('close option', async () => {
 
     await userEvent.click(screen.getByText('Option 3'));
 
-    expect(screen.getByText('menu is close')).toBeInTheDocument();
+    /** There is a forced delay when closing the menu to show the CSS transitions */
+    await waitFor(() => {
+        expect(screen.getByText('menu is close')).toBeInTheDocument();
+    });
     expect(screen.queryByText('Option 1')).not.toBeInTheDocument();
     expect(screen.queryByText('Option 2')).not.toBeInTheDocument();
     expect(screen.queryByText('Option 3')).not.toBeInTheDocument();
