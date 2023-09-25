@@ -38,6 +38,7 @@ export const MenuItem: React.FC<MenuItemProps> = ({text, Icon, destructive, disa
             checked={checked}
             onChange={() => onPress?.(text)}
             disabled={disabled}
+            role="menuitemcheckbox"
             render={({controlElement, labelId}) => (
                 <Box
                     paddingX={8}
@@ -57,7 +58,7 @@ export const MenuItem: React.FC<MenuItemProps> = ({text, Icon, destructive, disa
             )}
         />
     ) : (
-        <Touchable onPress={() => onPress?.(text)} disabled={disabled}>
+        <Touchable onPress={() => onPress?.(text)} disabled={disabled} role="menuitem">
             <Box paddingX={8} paddingY={12} className={disabled ? styles.menuItemDisabled : styles.menuItem}>
                 <Inline space={8} alignItems="center">
                     {Icon && <Icon size={24} color={contentColor} />}
@@ -278,15 +279,25 @@ export const Menu: React.FC<MenuProps> = ({
                                         ? {
                                               [styles.vars.top]: itemsComputedProps.top,
                                               [styles.vars.bottom]: itemsComputedProps.bottom,
-                                              ...(itemsComputedProps.left
-                                                  ? {
-                                                        [styles.vars.left]: `${itemsComputedProps.left}px`,
-                                                    }
-                                                  : {[styles.vars.right]: `${itemsComputedProps.right}px`}),
                                               [styles.vars.transformOrigin]:
                                                   itemsComputedProps.transformOrigin,
-                                              [styles.vars.maxHeight]: `${itemsComputedProps.maxHeight}px`,
-                                              [styles.vars.width]: `${width}px`,
+
+                                              ...(itemsComputedProps.left !== undefined && {
+                                                  [styles.vars.left]: `${itemsComputedProps.left}px`,
+                                              }),
+
+                                              ...(itemsComputedProps.right !== undefined && {
+                                                  [styles.vars.right]: `${itemsComputedProps.right}px`,
+                                              }),
+
+                                              ...(itemsComputedProps.maxHeight !== undefined && {
+                                                  [styles.vars
+                                                      .maxHeight]: `${itemsComputedProps.maxHeight}px`,
+                                              }),
+
+                                              ...(width !== undefined && {
+                                                  [styles.vars.width]: width ? `${width}px` : '',
+                                              }),
                                           }
                                         : {}),
                                 }),

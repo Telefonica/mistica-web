@@ -64,6 +64,7 @@ type RenderProps = {
     disabled?: boolean;
     'aria-labelledby'?: string;
     'aria-label'?: string;
+    role?: 'checkbox' | 'menuitemcheckbox';
     dataAttributes?: DataAttributes;
 };
 
@@ -78,6 +79,7 @@ type ChildrenProps = {
     disabled?: boolean;
     'aria-label'?: string;
     'aria-labelledby'?: string;
+    role?: 'checkbox' | 'menuitemcheckbox';
     dataAttributes?: DataAttributes;
 };
 
@@ -117,10 +119,10 @@ const Checkbox: React.FC<RenderProps | ChildrenProps> = (props) => {
 
     return (
         // When the checkbox is disabled, it shouldn't be focusable
-        // eslint-disable-next-line jsx-a11y/interactive-supports-focus
+        // eslint-disable-next-line jsx-a11y/no-static-element-interactions
         <div
             id={props.id}
-            role="checkbox"
+            role={props.role || 'checkbox'}
             aria-checked={value ?? checkedState}
             onKeyDown={disabled ? undefined : handleKeyDown}
             onClick={(e) => {
