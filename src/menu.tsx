@@ -1,6 +1,6 @@
 import * as React from 'react';
 import classnames from 'classnames';
-import {ESC, TAB} from './utils/key-codes';
+import {ESC, TAB, LEFT, RIGHT, UP, DOWN, ENTER} from './utils/key-codes';
 import {cancelEvent, getPrefixedDataAttributes} from './utils/dom';
 import Overlay from './overlay';
 import * as styles from './menu.css';
@@ -39,7 +39,8 @@ export const MenuItem: React.FC<MenuItemProps> = ({text, Icon, destructive, disa
             onChange={() => onPress?.(text)}
             disabled={disabled}
             role="menuitemcheckbox"
-            render={({controlElement, labelId}) => (
+            aria-label={text}
+            render={({controlElement}) => (
                 <Box
                     paddingX={8}
                     paddingY={12}
@@ -48,7 +49,7 @@ export const MenuItem: React.FC<MenuItemProps> = ({text, Icon, destructive, disa
                     <Inline space="between" alignItems="center">
                         <Inline space={8} alignItems="center">
                             {Icon && <Icon size={24} color={contentColor} />}
-                            <Text3 regular color={contentColor} id={labelId}>
+                            <Text3 regular color={contentColor}>
                                 {text}
                             </Text3>
                         </Inline>
@@ -58,7 +59,13 @@ export const MenuItem: React.FC<MenuItemProps> = ({text, Icon, destructive, disa
             )}
         />
     ) : (
-        <Touchable onPress={() => onPress?.(text)} disabled={disabled} role="menuitem">
+        <Touchable
+            onPress={() => onPress?.(text)}
+            disabled={disabled}
+            role="menuitem"
+            aria-label={text}
+            tabIndex={disabled ? undefined : 0}
+        >
             <Box paddingX={8} paddingY={12} className={disabled ? styles.menuItemDisabled : styles.menuItem}>
                 <Inline space={8} alignItems="center">
                     {Icon && <Icon size={24} color={contentColor} />}
@@ -121,6 +128,7 @@ export const Menu: React.FC<MenuProps> = ({
     const [target, setTarget] = React.useState<HTMLElement | null>(null);
     const [menu, setMenu] = React.useState<HTMLElement | null>(null);
     const [isMenuClosing, setIsMenuClosing] = React.useState(false);
+    const [focusedItem, setFocusedItem] = React.useState<number>(-1);
 
     const [animateShowItems, setAnimateShowItems] = React.useState(false);
     const [itemsComputedProps, setItemsComputedProps] = React.useState<{
@@ -243,17 +251,84 @@ export const Menu: React.FC<MenuProps> = ({
         return () => clearTimeout(closingTimeout);
     }, [isMenuClosing]);
 
+    const getMenuItems = React.useCallback(
+        (): Array<HTMLElement> =>
+            menu ? Array.from(menu.querySelectorAll('[role=menuitem],[role=menuitemcheckbox]')) : [],
+        [menu]
+    );
+
+    const focusNextItem = React.useCallback(() => {
+        const items = getMenuItems();
+
+        let nextItem = items.findIndex(
+            (value, index) => !value.getAttribute('aria-disabled') && index > focusedItem
+        );
+        if (nextItem === -1) {
+            nextItem = items.findIndex((value) => !value.getAttribute('aria-disabled'));
+        }
+
+        if (nextItem !== -1) items[nextItem].focus();
+        setFocusedItem(nextItem);
+    }, [focusedItem, getMenuItems]);
+
+    const focusPrevItem = React.useCallback(() => {
+        const items = getMenuItems();
+        items.reverse();
+
+        const focusedItemReversedIndex = items.length - focusedItem - 1;
+
+        let nextItem = items.findIndex(
+            (value, index) => !value.getAttribute('aria-disabled') && index > focusedItemReversedIndex
+        );
+        if (nextItem === -1) {
+            nextItem = items.findIndex((value) => !value.getAttribute('aria-disabled'));
+        }
+
+        if (nextItem !== -1) items[nextItem].focus();
+        setFocusedItem(nextItem < 0 ? nextItem : items.length - nextItem - 1);
+    }, [focusedItem, getMenuItems]);
+
+    React.useEffect(() => {
+        if (!isMenuOpen) {
+            setFocusedItem(-1);
+        }
+    }, [isMenuOpen]);
+
     React.useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
             if (isMenuOpen) {
-                if (e.keyCode === TAB) {
-                    cancelEvent(e);
-                }
-                if (e.keyCode === ESC) {
-                    setIsMenuClosing(true);
+                switch (e.keyCode) {
+                    case RIGHT:
+                    case DOWN:
+                        focusNextItem();
+                        e.preventDefault();
+                        e.stopPropagation();
+                        break;
+                    case LEFT:
+                    case UP:
+                        focusPrevItem();
+                        e.preventDefault();
+                        e.stopPropagation();
+                        break;
+                    case ESC:
+                        setIsMenuClosing(true);
+                        break;
+                    case ENTER:
+                        if (focusedItem >= 0) {
+                            getMenuItems()[focusedItem].click();
+                        }
+                        setIsMenuClosing(true);
+                        break;
+                    case TAB:
+                        cancelEvent(e);
+                        break;
+
+                    default:
+                    // do nothing
                 }
             }
         };
+
         document.addEventListener('keydown', handleKeyDown, false);
         return () => {
             document.removeEventListener('keydown', handleKeyDown, false);
