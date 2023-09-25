@@ -1,3 +1,12 @@
+## [14.23.1](https://github.com/Telefonica/mistica-web/compare/v14.23.0...v14.23.1) (2023-09-25)
+
+
+### Bug Fixes
+
+* **Header:** don't render title when not provided ([#898](https://github.com/Telefonica/mistica-web/issues/898)) ([b760243](https://github.com/Telefonica/mistica-web/commit/b760243d6c905befb8e5c97e80e5e59b9075e916))
+* **Snackbar:** z-index conflict with FixedFooterLayout ([#897](https://github.com/Telefonica/mistica-web/issues/897)) ([0d86e02](https://github.com/Telefonica/mistica-web/commit/0d86e027ba73937b091f1c04bf1099fdb21aa72d))
+* **SuccessFeedback:** Vivo-new icon size change ([#895](https://github.com/Telefonica/mistica-web/issues/895)) ([71c5297](https://github.com/Telefonica/mistica-web/commit/71c5297fcef8be8c9ec7b0c1aee8b3972a4b76df))
+
 # [14.23.0](https://github.com/Telefonica/mistica-web/compare/v14.22.2...v14.23.0) (2023-09-22)
 
 
