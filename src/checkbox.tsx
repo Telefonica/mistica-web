@@ -65,6 +65,7 @@ type RenderProps = {
     'aria-labelledby'?: string;
     'aria-label'?: string;
     role?: 'checkbox' | 'menuitemcheckbox';
+    tabIndex?: number;
     dataAttributes?: DataAttributes;
 };
 
@@ -80,6 +81,7 @@ type ChildrenProps = {
     'aria-label'?: string;
     'aria-labelledby'?: string;
     role?: 'checkbox' | 'menuitemcheckbox';
+    tabIndex?: number;
     dataAttributes?: DataAttributes;
 };
 
@@ -131,7 +133,7 @@ const Checkbox: React.FC<RenderProps | ChildrenProps> = (props) => {
                     handleChange();
                 }
             }}
-            tabIndex={disabled ? undefined : 0}
+            tabIndex={props.tabIndex !== undefined ? props.tabIndex : disabled ? undefined : 0}
             ref={focusableRef}
             className={disabled ? styles.checkboxContainerDisabled : styles.checkboxContainer}
             aria-label={ariaLabel}
