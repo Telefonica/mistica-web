@@ -69,10 +69,10 @@ export const Default: StoryComponent<MenuArgs> = ({
                             <Touchable
                                 ref={ref}
                                 onPress={onPress}
-                                style={{width: 100}}
+                                style={{width: 'fit-content'}}
                                 data-testid="menuTarget"
                             >
-                                <Inline space={16}>
+                                <Inline space={16} alignItems="center">
                                     <IconKebabMenuLight />
                                     <Text3 regular>{isMenuOpen ? 'Close' : 'Open'}</Text3>
                                 </Inline>
@@ -84,7 +84,7 @@ export const Default: StoryComponent<MenuArgs> = ({
                                     {[...Array(menuOptionsCount).keys()].map((optionIndex) => (
                                         <MenuItem
                                             key={optionIndex + 1}
-                                            text={`Option ${optionIndex + 1}`}
+                                            label={`Option ${optionIndex + 1}`}
                                             onPress={(value) => setValues(value)}
                                             checked={
                                                 checkbox
@@ -99,7 +99,7 @@ export const Default: StoryComponent<MenuArgs> = ({
                                 <MenuSection>
                                     <MenuItem
                                         key="closingOption"
-                                        text="Click to close the menu"
+                                        label="Click to close the menu"
                                         onPress={() => close()}
                                         destructive={destructive}
                                     />
@@ -160,7 +160,11 @@ export const InsideCard: StoryComponent = () => {
                             renderMenu={({ref, className}) => (
                                 <div ref={ref} className={className}>
                                     {[...Array(3).keys()].map((optionIndex) => (
-                                        <MenuItem key={optionIndex + 1} text={`Option ${optionIndex + 1}`} />
+                                        <MenuItem
+                                            key={optionIndex + 1}
+                                            label={`Option ${optionIndex + 1}`}
+                                            onPress={() => null}
+                                        />
                                     ))}
                                 </div>
                             )}

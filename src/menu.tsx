@@ -28,28 +28,37 @@ export const useMenuContext = (): MenuContextType => React.useContext(MenuContex
 const CLOSE_MENU_DELAY = 150;
 
 type MenuItemProps = {
-    text: string;
+    label: string;
     Icon?: React.FC<IconProps>;
     destructive?: boolean;
     disabled?: boolean;
+    ariaLabel?: string;
     children?: undefined;
-    onPress?: (label: string) => void;
+    onPress: (label: string) => void;
     checked?: boolean;
 };
 
-export const MenuItem: React.FC<MenuItemProps> = ({text, Icon, destructive, disabled, onPress, checked}) => {
+export const MenuItem: React.FC<MenuItemProps> = ({
+    label,
+    Icon,
+    destructive,
+    disabled,
+    ariaLabel,
+    onPress,
+    checked,
+}) => {
     const {focusableValue} = useMenuContext();
     const contentColor = destructive ? vars.colors.textLinkDanger : vars.colors.neutralHigh;
 
     return checked !== undefined ? (
         <Checkbox
-            name={text}
+            name={label}
             checked={checked}
-            onChange={() => onPress?.(text)}
+            onChange={() => onPress(label)}
             disabled={disabled}
             role="menuitemcheckbox"
-            aria-label={text}
-            tabIndex={focusableValue === text ? 0 : -1}
+            aria-label={ariaLabel ?? label}
+            tabIndex={focusableValue === label ? 0 : -1}
             render={({controlElement}) => (
                 <Box
                     paddingX={8}
@@ -60,7 +69,7 @@ export const MenuItem: React.FC<MenuItemProps> = ({text, Icon, destructive, disa
                         <Inline space={8} alignItems="center">
                             {Icon && <Icon size={24} color={contentColor} />}
                             <Text3 regular color={contentColor}>
-                                {text}
+                                {label}
                             </Text3>
                         </Inline>
                         <Box paddingLeft={8}>{controlElement}</Box>
@@ -70,17 +79,17 @@ export const MenuItem: React.FC<MenuItemProps> = ({text, Icon, destructive, disa
         />
     ) : (
         <Touchable
-            onPress={() => onPress?.(text)}
+            onPress={() => onPress(label)}
             disabled={disabled}
             role="menuitem"
-            aria-label={text}
-            tabIndex={focusableValue === text ? 0 : -1}
+            aria-label={label}
+            tabIndex={focusableValue === label ? 0 : -1}
         >
             <Box paddingX={8} paddingY={12} className={disabled ? styles.menuItemDisabled : styles.menuItem}>
                 <Inline space={8} alignItems="center">
                     {Icon && <Icon size={24} color={contentColor} />}
                     <Text3 regular color={contentColor}>
-                        {text}
+                        {label}
                     </Text3>
                 </Inline>
             </Box>

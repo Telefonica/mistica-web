@@ -63,7 +63,8 @@ export const hideItems = style({
 
 export const menuItem = style({
     userSelect: 'none',
-    transition: 'background-color 0.15s ease-in-out',
+    transition: 'background-color 0.1s ease-in-out',
+    borderRadius: skinVars.borderRadii.popup,
     '@media': {
         [mq.supportsHover]: {
             ':hover': {
@@ -78,6 +79,7 @@ export const menuItem = style({
 
 export const menuItemDisabled = style({
     userSelect: 'none',
+    borderRadius: skinVars.borderRadii.popup,
     opacity: 0.5,
 });
 

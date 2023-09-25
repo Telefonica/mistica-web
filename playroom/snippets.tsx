@@ -25,26 +25,37 @@ const menuSnippet = {
       renderMenu={({ ref, className, close }) => (
         <div ref={ref} className={className}>
           <MenuSection>
-            <MenuItem text={"option 1"} />
+            <MenuItem label="option 1" onPress={() => {}} />
             <MenuItem
-              text={"option 2"}
+              label="option 2"
               checked={getState("option 2", false)}
               onPress={() =>
                 setState("option 2", getState("option 2", false) ? false : true)
               }
               withControl
             />
-            <MenuItem text={"option 3"} disabled />
+            <MenuItem label="option 3" disabled onPress={() => {}} />
           </MenuSection>
 
           <MenuSection>
-            <MenuItem text={"option 4"} destructive Icon={IconLightningRegular} />
-          </MenuSection>
-
-          <MenuSection>
-            <MenuItem text={"option 5"} disabled Icon={IconLightningRegular} />
             <MenuItem
-              text={"An option with a really long text to verify overflow"}
+              label="option 4"
+              destructive
+              Icon={IconLightningRegular}
+              onPress={() => {}}
+            />
+          </MenuSection>
+
+          <MenuSection>
+            <MenuItem
+              label="option 5"
+              disabled
+              Icon={IconLightningRegular}
+              onPress={() => {}}
+            />
+            <MenuItem
+              label="An option with a really long text to verify overflow"
+              onPress={() => {}}
             />
           </MenuSection>
         </div>

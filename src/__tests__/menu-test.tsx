@@ -21,7 +21,7 @@ test('close option', async () => {
                             {options.map((option) => (
                                 <MenuItem
                                     key={option}
-                                    text={option}
+                                    label={option}
                                     onPress={(value) => {
                                         if (value === 'Option 3') {
                                             close();
