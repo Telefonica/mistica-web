@@ -19,11 +19,13 @@ import type {DataAttributes, IconProps} from './utils/types';
 
 type MenuContextType = {
     focusableValue: string | null;
+    isMenuOpen: boolean;
     setFocusableValue: (value: string | null) => void;
     closeMenu: () => void;
 };
 const MenuContext = React.createContext<MenuContextType>({
     focusableValue: null,
+    isMenuOpen: false,
     setFocusableValue: () => {},
     closeMenu: () => {},
 });
@@ -63,7 +65,7 @@ export const MenuItem: React.FC<MenuItemProps> = ({
     controlType,
     checked,
 }) => {
-    const {focusableValue, setFocusableValue, closeMenu} = useMenuContext();
+    const {focusableValue, setFocusableValue, closeMenu, isMenuOpen} = useMenuContext();
     const contentColor = destructive ? vars.colors.textLinkDanger : vars.colors.neutralHigh;
 
     const renderContent = () =>
@@ -72,8 +74,10 @@ export const MenuItem: React.FC<MenuItemProps> = ({
                 name={label}
                 checked={checked}
                 onChange={() => {
-                    onPress(label);
-                    closeMenu();
+                    if (isMenuOpen) {
+                        onPress(label);
+                        closeMenu();
+                    }
                 }}
                 disabled={disabled}
                 role="menuitemcheckbox"
@@ -95,8 +99,10 @@ export const MenuItem: React.FC<MenuItemProps> = ({
         ) : (
             <Touchable
                 onPress={() => {
-                    onPress(label);
-                    closeMenu();
+                    if (isMenuOpen) {
+                        onPress(label);
+                        closeMenu();
+                    }
                 }}
                 disabled={disabled}
                 role="menuitem"
@@ -445,6 +451,7 @@ export const Menu: React.FC<MenuProps> = ({
                         >
                             <MenuContext.Provider
                                 value={{
+                                    isMenuOpen: isMenuOpen && !isMenuClosing,
                                     focusableValue,
                                     setFocusableValue,
                                     closeMenu: () => setIsMenuClosing(true),
