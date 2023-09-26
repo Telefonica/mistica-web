@@ -6,7 +6,7 @@ import {makeTheme} from './test-utils';
 
 const options = ['Option 1', 'Option 2', 'Option 3'];
 
-test('close option', async () => {
+test('Menu closes after pressing an option', async () => {
     render(
         <ThemeContextProvider theme={makeTheme()}>
             <Menu
@@ -15,19 +15,11 @@ test('close option', async () => {
                         <Text3 regular>{isMenuOpen ? 'menu is open' : 'menu is close'}</Text3>
                     </Touchable>
                 )}
-                renderMenu={({ref, className, close}) => (
+                renderMenu={({ref, className}) => (
                     <div ref={ref} className={className}>
                         <MenuSection>
                             {options.map((option) => (
-                                <MenuItem
-                                    key={option}
-                                    label={option}
-                                    onPress={(value) => {
-                                        if (value === 'Option 3') {
-                                            close();
-                                        }
-                                    }}
-                                />
+                                <MenuItem key={option} label={option} onPress={() => {}} />
                             ))}
                         </MenuSection>
                     </div>
@@ -47,17 +39,11 @@ test('close option', async () => {
 
     await userEvent.click(screen.getByText('Option 1'));
 
-    expect(screen.getByText('menu is open')).toBeInTheDocument();
-    expect(screen.getByText('Option 1')).toBeInTheDocument();
-    expect(screen.getByText('Option 2')).toBeInTheDocument();
-    expect(screen.getByText('Option 3')).toBeInTheDocument();
-
-    await userEvent.click(screen.getByText('Option 3'));
-
     /** There is a forced delay when closing the menu to show the CSS transitions */
     await waitFor(() => {
         expect(screen.getByText('menu is close')).toBeInTheDocument();
     });
+
     expect(screen.queryByText('Option 1')).not.toBeInTheDocument();
     expect(screen.queryByText('Option 2')).not.toBeInTheDocument();
     expect(screen.queryByText('Option 3')).not.toBeInTheDocument();
