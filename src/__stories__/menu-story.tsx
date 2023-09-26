@@ -11,6 +11,7 @@ import {
     MenuItem,
     IconLightningRegular,
     MenuSection,
+    alert,
 } from '..';
 
 export default {
@@ -23,7 +24,6 @@ type MenuArgs = {
     horizontalPosition: 'right' | 'left';
     verticalPosition: 'top' | 'bottom';
     icon: boolean;
-    destructive: boolean;
     checkbox: boolean;
 };
 
@@ -41,7 +41,6 @@ export const Default: StoryComponent<MenuArgs> = ({
     horizontalPosition,
     verticalPosition,
     icon,
-    destructive,
     checkbox,
 }) => {
     const [valuesState, setValuesState] = React.useState<ReadonlyArray<string>>([]);
@@ -94,13 +93,18 @@ export const Default: StoryComponent<MenuArgs> = ({
                                         <MenuItem
                                             key={optionIndex + 1}
                                             label={`Option ${optionIndex + 1}`}
-                                            onPress={(value) => setValues(value)}
+                                            onPress={(value) => {
+                                                if (checkbox) {
+                                                    setValues(value);
+                                                } else {
+                                                    alert({title: value, message: 'pressed'});
+                                                }
+                                            }}
                                             {...getMenuItemControlProps(
                                                 checkbox,
                                                 valuesState.includes(`Option ${optionIndex + 1}`)
                                             )}
                                             Icon={icon ? IconLightningRegular : undefined}
-                                            destructive={destructive}
                                         />
                                     ))}
                                 </MenuSection>
@@ -109,7 +113,7 @@ export const Default: StoryComponent<MenuArgs> = ({
                                         key="closingOption"
                                         label="Click to close the menu"
                                         onPress={() => close()}
-                                        destructive={destructive}
+                                        destructive
                                     />
                                 </MenuSection>
                             </div>
@@ -127,7 +131,6 @@ Default.args = {
     horizontalPosition: 'right',
     verticalPosition: 'top',
     icon: false,
-    destructive: false,
     checkbox: true,
 };
 Default.argTypes = {
