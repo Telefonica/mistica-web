@@ -72,7 +72,7 @@ test('InfoSheet with multiple description paragraphs', async () => {
         device: 'MOBILE_IOS',
         args: {
             description: 'Description paragraph',
-            multilineDescription: true,
+            multiparagraphDescription: true,
         },
     });
 
