@@ -17,21 +17,21 @@ import Checkbox from './checkbox';
 
 import type {DataAttributes, IconProps} from './utils/types';
 
+const CLOSE_MENU_DELAY = 150;
+
 type MenuContextType = {
-    focusableValue: string | null;
+    focusedValue: string | null;
     isMenuOpen: boolean;
-    setFocusableValue: (value: string | null) => void;
+    setFocusedValue: (value: string | null) => void;
     closeMenu: () => void;
 };
 const MenuContext = React.createContext<MenuContextType>({
-    focusableValue: null,
+    focusedValue: null,
     isMenuOpen: false,
-    setFocusableValue: () => {},
+    setFocusedValue: () => {},
     closeMenu: () => {},
 });
 export const useMenuContext = (): MenuContextType => React.useContext(MenuContext);
-
-const CLOSE_MENU_DELAY = 150;
 
 interface MenuItemBaseProps {
     label: string;
@@ -65,7 +65,7 @@ export const MenuItem: React.FC<MenuItemProps> = ({
     controlType,
     checked,
 }) => {
-    const {focusableValue, setFocusableValue, closeMenu, isMenuOpen} = useMenuContext();
+    const {focusedValue, setFocusedValue, closeMenu, isMenuOpen} = useMenuContext();
     const contentColor = destructive ? vars.colors.textLinkDanger : vars.colors.neutralHigh;
 
     const renderContent = () =>
@@ -123,10 +123,10 @@ export const MenuItem: React.FC<MenuItemProps> = ({
         <div
             className={classnames(styles.menuItem, {
                 [styles.menuItemDisabled]: disabled,
-                [styles.menuItemHovered]: !disabled && focusableValue === label,
+                [styles.menuItemHovered]: !disabled && focusedValue === label,
             })}
-            onMouseMove={() => setFocusableValue(disabled ? null : label)}
-            onMouseLeave={() => setFocusableValue(null)}
+            onMouseMove={() => setFocusedValue(disabled ? null : label)}
+            onMouseLeave={() => setFocusedValue(null)}
         >
             {renderContent()}
         </div>
@@ -183,7 +183,7 @@ export const Menu: React.FC<MenuProps> = ({
     const [target, setTarget] = React.useState<HTMLElement | null>(null);
     const [menu, setMenu] = React.useState<HTMLElement | null>(null);
     const [isMenuClosing, setIsMenuClosing] = React.useState(false);
-    const [focusableValue, setFocusableValue] = React.useState<string | null>(null);
+    const [focusedValue, setFocusedValue] = React.useState<string | null>(null);
     const [isOpenedwithKeyboard, setIsOpenedwithKeyboard] = React.useState(false);
 
     const [animateShowItems, setAnimateShowItems] = React.useState(false);
@@ -316,7 +316,7 @@ export const Menu: React.FC<MenuProps> = ({
     const setFirstFocusableItem = React.useCallback(() => {
         const items = getMenuItems();
         const nextItem = items.findIndex((value) => !value.getAttribute('aria-disabled'));
-        setFocusableValue(nextItem < 0 ? null : items[nextItem].getAttribute('aria-label'));
+        setFocusedValue(nextItem < 0 ? null : items[nextItem].getAttribute('aria-label'));
     }, [getMenuItems]);
 
     const setNextFocusableItem = React.useCallback(
@@ -325,24 +325,24 @@ export const Menu: React.FC<MenuProps> = ({
             if (reverse) {
                 items.reverse();
             }
-            const focusableId = items.findIndex((item) => item.getAttribute('aria-label') === focusableValue);
+            const focusedId = items.findIndex((item) => item.getAttribute('aria-label') === focusedValue);
 
             let nextItem = items.findIndex(
-                (value, index) => !value.getAttribute('aria-disabled') && index > focusableId
+                (value, index) => !value.getAttribute('aria-disabled') && index > focusedId
             );
             if (nextItem === -1) {
                 nextItem = items.findIndex((value) => !value.getAttribute('aria-disabled'));
             }
 
-            setFocusableValue(nextItem < 0 ? null : items[nextItem].getAttribute('aria-label'));
+            setFocusedValue(nextItem < 0 ? null : items[nextItem].getAttribute('aria-label'));
             items[nextItem]?.focus();
         },
-        [focusableValue, getMenuItems]
+        [focusedValue, getMenuItems]
     );
 
     React.useEffect(() => {
         if (!isMenuOpen) {
-            setFocusableValue(null);
+            setFocusedValue(null);
         } else if (isOpenedwithKeyboard && menu) {
             setFirstFocusableItem();
             setIsOpenedwithKeyboard(false);
@@ -372,7 +372,7 @@ export const Menu: React.FC<MenuProps> = ({
                     case ENTER:
                         cancelEvent(e);
                         getMenuItems()
-                            .find((item) => item.getAttribute('aria-label') === focusableValue)
+                            .find((item) => item.getAttribute('aria-label') === focusedValue)
                             ?.click();
                         break;
                     case TAB:
@@ -452,8 +452,8 @@ export const Menu: React.FC<MenuProps> = ({
                             <MenuContext.Provider
                                 value={{
                                     isMenuOpen: isMenuOpen && !isMenuClosing,
-                                    focusableValue,
-                                    setFocusableValue,
+                                    focusedValue,
+                                    setFocusedValue,
                                     closeMenu: () => setIsMenuClosing(true),
                                 }}
                             >
