@@ -38,7 +38,7 @@ interface MenuItemBaseProps {
     Icon?: React.FC<IconProps>;
     destructive?: boolean;
     disabled?: boolean;
-    ariaLabel?: string;
+    'aria-label'?: string;
     children?: undefined;
     onPress: (label: string) => void;
 }
@@ -60,7 +60,7 @@ export const MenuItem: React.FC<MenuItemProps> = ({
     Icon,
     destructive,
     disabled,
-    ariaLabel,
+    'aria-label': ariaLabel,
     onPress,
     controlType,
     checked,
