@@ -27,6 +27,15 @@ type MenuArgs = {
     checkbox: boolean;
 };
 
+const getMenuItemControlProps = (withCheckbox: boolean, checked: boolean) => {
+    return withCheckbox
+        ? {
+              controlType: 'checkbox' as const,
+              checked,
+          }
+        : {};
+};
+
 export const Default: StoryComponent<MenuArgs> = ({
     menuOptionsCount,
     horizontalPosition,
@@ -86,11 +95,10 @@ export const Default: StoryComponent<MenuArgs> = ({
                                             key={optionIndex + 1}
                                             label={`Option ${optionIndex + 1}`}
                                             onPress={(value) => setValues(value)}
-                                            checked={
-                                                checkbox
-                                                    ? valuesState.includes(`Option ${optionIndex + 1}`)
-                                                    : undefined
-                                            }
+                                            {...getMenuItemControlProps(
+                                                checkbox,
+                                                valuesState.includes(`Option ${optionIndex + 1}`)
+                                            )}
                                             Icon={icon ? IconLightningRegular : undefined}
                                             destructive={destructive}
                                         />

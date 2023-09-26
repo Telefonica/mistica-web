@@ -65,11 +65,13 @@ export const menuItem = style({
     userSelect: 'none',
     transition: 'background-color 0.1s ease-in-out',
     borderRadius: skinVars.borderRadii.popup,
+    backgroundColor: 'transparent',
+});
+
+export const menuItemHovered = style({
+    backgroundColor: skinVars.colors.backgroundContainerHover,
     '@media': {
         [mq.supportsHover]: {
-            ':hover': {
-                backgroundColor: skinVars.colors.backgroundContainerHover,
-            },
             ':active': {
                 backgroundColor: skinVars.colors.backgroundContainerPressed,
             },
