@@ -22,17 +22,15 @@ const menuSnippet = {
           </Touchable>
         </Box>
       )}
-      renderMenu={({ ref, className, close }) => (
+      renderMenu={({ ref, className }) => (
         <div ref={ref} className={className}>
           <MenuSection>
             <MenuItem label="option 1" onPress={() => {}} />
             <MenuItem
               label="option 2"
+              onPress={() => setState("option 2", !getState("option 2", false))}
+              controlType="checkbox"
               checked={getState("option 2", false)}
-              onPress={() =>
-                setState("option 2", getState("option 2", false) ? false : true)
-              }
-              withControl
             />
             <MenuItem label="option 3" disabled onPress={() => {}} />
           </MenuSection>
