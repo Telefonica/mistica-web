@@ -9,6 +9,7 @@ export const accordionContent = sprinkles({
     background: 'transparent',
     display: 'block',
     height: '100%',
+    padding: 0,
 });
 
 export const touchableBackground = style({
@@ -39,26 +40,23 @@ export const touchableBackgroundInverse = style({
     },
 });
 
-const baseChevron = style({
+export const chevronContainer = style({
     height: '100%',
     display: 'flex',
     alignItems: 'center',
-    transition: 'transform 0.4s',
 });
 
-export const openChevron = style([
-    baseChevron,
-    {
-        transform: 'rotate(-90deg)',
-    },
-]);
+export const openChevron = style({
+    display: 'flex',
+    transition: 'transform 0.4s',
+    transform: 'rotate(-90deg)',
+});
 
-export const closeChevron = style([
-    baseChevron,
-    {
-        transform: 'rotate(90deg)',
-    },
-]);
+export const closeChevron = style({
+    display: 'flex',
+    transition: 'transform 0.4s',
+    transform: 'rotate(90deg)',
+});
 
 const basePanel = style({
     display: 'grid',

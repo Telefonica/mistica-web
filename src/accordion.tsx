@@ -88,8 +88,16 @@ const AccordionContent = React.forwardRef<TouchableElement, AccordionContentProp
                             type="custom"
                             {...props}
                             right={
-                                <div className={isOpen ? styles.openChevron : styles.closeChevron}>
-                                    <IconChevron size={24} />
+                                <div className={styles.chevronContainer}>
+                                    <IconChevron
+                                        size={24}
+                                        className={isOpen ? styles.openChevron : styles.closeChevron}
+                                        color={
+                                            isInverse
+                                                ? skinVars.colors.inverse
+                                                : skinVars.colors.neutralMedium
+                                        }
+                                    />
                                 </div>
                             }
                         />
