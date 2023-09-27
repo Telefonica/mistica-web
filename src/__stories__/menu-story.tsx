@@ -86,7 +86,7 @@ export const Default: StoryComponent<MenuArgs> = ({
                                 </Inline>
                             </Touchable>
                         )}
-                        renderMenu={({ref, className, close}) => (
+                        renderMenu={({ref, className}) => (
                             <div ref={ref} className={className}>
                                 <MenuSection>
                                     {[...Array(menuOptionsCount).keys()].map((optionIndex) => (
@@ -112,7 +112,7 @@ export const Default: StoryComponent<MenuArgs> = ({
                                     <MenuItem
                                         key="closingOption"
                                         label="Click to close the menu"
-                                        onPress={() => close()}
+                                        onPress={() => {}}
                                         destructive
                                     />
                                 </MenuSection>
