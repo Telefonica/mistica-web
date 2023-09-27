@@ -138,13 +138,15 @@ type MenuSectionProps = {
 };
 
 export const MenuSection: React.FC<MenuSectionProps> = ({children}) => {
-    return (
+    return children ? (
         <>
             {children}
             <Box paddingY={8} className={styles.menuSectionDivider}>
                 <Divider />
             </Box>
         </>
+    ) : (
+        <></>
     );
 };
 
@@ -302,10 +304,11 @@ export const Menu: React.FC<MenuProps> = ({
             closingTimeout = setTimeout(() => {
                 setIsMenuOpen(false);
                 setIsMenuClosing(false);
+                target?.focus();
             }, CLOSE_MENU_DELAY);
         }
         return () => clearTimeout(closingTimeout);
-    }, [isMenuClosing]);
+    }, [isMenuClosing, target]);
 
     const getMenuItems = React.useCallback(
         (): Array<HTMLElement> =>
