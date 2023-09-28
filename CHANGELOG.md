@@ -1,3 +1,10 @@
+# [14.24.0](https://github.com/Telefonica/mistica-web/compare/v14.23.1...v14.24.0) (2023-09-28)
+
+
+### Features
+
+* **Sheet:** multiline support for description ([#896](https://github.com/Telefonica/mistica-web/issues/896)) ([0c328bf](https://github.com/Telefonica/mistica-web/commit/0c328bf4c2c19cc4f57438416e479326988a2999))
+
 ## [14.23.1](https://github.com/Telefonica/mistica-web/compare/v14.23.0...v14.23.1) (2023-09-25)
 
 
