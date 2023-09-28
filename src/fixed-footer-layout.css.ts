@@ -47,6 +47,7 @@ export const withoutFooter = sprinkles({display: 'none'});
 export const container = style({
     '@media': {
         [mq.tabletOrSmaller]: {
+            isolation: 'isolate',
             paddingBottom: footerHeight,
             background: fallbackVar(backgroundColor, skinVars.colors.background),
         },

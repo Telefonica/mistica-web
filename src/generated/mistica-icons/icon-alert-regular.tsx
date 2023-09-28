@@ -20,7 +20,7 @@ const IconAlertRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element =
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
-                    d="M11.35 9.766a.625.625 0 111.25 0v4.25a.625.625 0 11-1.25 0v-4.25zm.625 7.365a.625.625 0 100-1.25.625.625 0 000 1.25z"
+                    d="M11.35 9.766v4.25a.625.625 0 101.25 0v-4.25a.625.625 0 10-1.25 0zm.625 7.365a.625.625 0 100-1.25.625.625 0 000 1.25z"
                 />
                 <path
                     fill={fillColor}

@@ -8,6 +8,7 @@ import * as styles from './snackbar.css';
 import {sprinkles} from './sprinkles.css';
 import {vars} from './skins/skin-contract.css';
 import {getPrefixedDataAttributes} from './utils/dom';
+import {Portal} from './portal';
 
 import type {DataAttributes} from './utils/types';
 
@@ -58,54 +59,56 @@ const SnackbarComponent: React.FC<Props> = ({
     }, [close, duration]);
 
     return (
-        <div className={classNames(styles.snackbar, {[styles.snackbarOpen]: isOpen})}>
-            <div
-                role="alert"
-                className={classNames(
-                    styles.wrapper,
-                    type === 'CRITICAL' ? styles.wrapperCritical : styles.wrapperInfo,
-                    {[styles.wrapperOpen]: isOpen}
-                )}
-                {...getPrefixedDataAttributes(dataAttributes, 'SnackBar')}
-            >
+        <Portal>
+            <div className={classNames(styles.snackbar, {[styles.snackbarOpen]: isOpen})}>
                 <div
+                    role="alert"
                     className={classNames(
-                        styles.content,
-                        sprinkles({
-                            flexDirection: hasLongButton ? 'column' : 'row',
-                            alignItems: hasLongButton ? undefined : 'center',
-                        })
+                        styles.wrapper,
+                        type === 'CRITICAL' ? styles.wrapperCritical : styles.wrapperInfo,
+                        {[styles.wrapperOpen]: isOpen}
                     )}
+                    {...getPrefixedDataAttributes(dataAttributes, 'SnackBar')}
                 >
-                    <Text2 regular color={vars.colors.textPrimaryInverse}>
-                        {message}
-                    </Text2>
-                    {buttonText && (
-                        <div
-                            className={classNames(
-                                styles.button,
-                                type === 'CRITICAL' ? styles.buttonCritical : styles.buttonInfo,
-                                {[styles.longButton]: hasLongButton}
-                            )}
-                        >
-                            <BaseTouchable
-                                className={sprinkles({
-                                    border: 'none',
-                                    padding: 0,
-                                    background: 'transparent',
-                                    color: 'inherit',
-                                })}
-                                style={{lineHeight: 'inherit', fontWeight: 'inherit'}}
-                                ref={buttonRef}
-                                onPress={close}
+                    <div
+                        className={classNames(
+                            styles.content,
+                            sprinkles({
+                                flexDirection: hasLongButton ? 'column' : 'row',
+                                alignItems: hasLongButton ? undefined : 'center',
+                            })
+                        )}
+                    >
+                        <Text2 regular color={vars.colors.textPrimaryInverse}>
+                            {message}
+                        </Text2>
+                        {buttonText && (
+                            <div
+                                className={classNames(
+                                    styles.button,
+                                    type === 'CRITICAL' ? styles.buttonCritical : styles.buttonInfo,
+                                    {[styles.longButton]: hasLongButton}
+                                )}
                             >
-                                {buttonText}
-                            </BaseTouchable>
-                        </div>
-                    )}
+                                <BaseTouchable
+                                    className={sprinkles({
+                                        border: 'none',
+                                        padding: 0,
+                                        background: 'transparent',
+                                        color: 'inherit',
+                                    })}
+                                    style={{lineHeight: 'inherit', fontWeight: 'inherit'}}
+                                    ref={buttonRef}
+                                    onPress={close}
+                                >
+                                    {buttonText}
+                                </BaseTouchable>
+                            </div>
+                        )}
+                    </div>
                 </div>
             </div>
-        </div>
+        </Portal>
     );
 };
 

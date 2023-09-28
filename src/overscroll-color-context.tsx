@@ -39,7 +39,7 @@ export const OverscrollColorProvider = ({children}: ProviderProps): JSX.Element 
                                         500 +
                                         (isInsideNovumNativeApp(platformOverrides)
                                             ? 0
-                                            : theme.dimensions.headerMobileHeight),
+                                            : theme.dimensions.headerMobileHeight || 0),
                                     left: 0,
                                     marginTop: -500,
                                     transform: 'translate3d(0,0,0)',

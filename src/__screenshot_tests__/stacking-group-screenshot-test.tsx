@@ -1,4 +1,4 @@
-import {openStoryPage, screen} from '../test-utils';
+import {openStoryPage, screen, ssimScreenshotConfig} from '../test-utils';
 
 test.each`
     type        | stacked  | inverse
@@ -10,7 +10,7 @@ test.each`
     ${'circle'} | ${true}  | ${true}
     ${'square'} | ${false} | ${true}
     ${'circle'} | ${false} | ${true}
-`('Stacking Group', async ({type, stacked, inverse}) => {
+`('Stacking Group. type={$type} stacked={$stacked} inverse={$inverse}', async ({type, stacked, inverse}) => {
     await openStoryPage({
         id: 'components-stackinggroup--default',
         device: 'DESKTOP',
@@ -20,5 +20,5 @@ test.each`
     const element = await screen.findByTestId('stacking-group');
     const image = await element.screenshot();
 
-    expect(image).toMatchImageSnapshot();
+    expect(image).toMatchImageSnapshot(ssimScreenshotConfig);
 });

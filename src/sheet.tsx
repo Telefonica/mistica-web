@@ -295,7 +295,7 @@ const Sheet = React.forwardRef<HTMLDivElement, SheetProps>(({onClose, children, 
 type SheetBodyProps = {
     title?: string;
     subtitle?: string;
-    description?: string;
+    description?: string | Array<string>;
     button?: RendersNullableElement<typeof ButtonPrimary>;
     secondaryButton?: RendersNullableElement<typeof ButtonSecondary>;
     link?: RendersNullableElement<typeof ButtonLink>;
@@ -360,11 +360,29 @@ export const SheetBody = ({
                                             {subtitle}
                                         </Text3>
                                     )}
-                                    {description && (
-                                        <Text2 as="p" regular color={skinVars.colors.textSecondary}>
-                                            {description}
-                                        </Text2>
-                                    )}
+                                    {description &&
+                                        (Array.isArray(description) ? (
+                                            <Text2 as="div" regular color={skinVars.colors.textSecondary}>
+                                                {description.map((text, index) => (
+                                                    <p
+                                                        key={index}
+                                                        style={{
+                                                            margin: 0,
+                                                            marginBottom:
+                                                                index < description.length - 1
+                                                                    ? '1em'
+                                                                    : undefined,
+                                                        }}
+                                                    >
+                                                        {text}
+                                                    </p>
+                                                ))}
+                                            </Text2>
+                                        ) : (
+                                            <Text2 as="p" regular color={skinVars.colors.textSecondary}>
+                                                {description}
+                                            </Text2>
+                                        ))}
                                 </Stack>
                             ) : null}
                             {children}
@@ -393,7 +411,7 @@ export const SheetBody = ({
 type RadioListSheetProps = {
     title?: string;
     subtitle?: string;
-    description?: string;
+    description?: string | Array<string>;
     items: Array<{
         id: string;
         title?: string;
@@ -487,7 +505,7 @@ export const RadioListSheet = React.forwardRef<HTMLDivElement, RadioListSheetPro
 type ActionsListSheetProps = {
     title?: string;
     subtitle?: string;
-    description?: string;
+    description?: string | Array<string>;
     items: Array<{
         id: string;
         title: string;
@@ -582,7 +600,7 @@ export const ActionsListSheet = React.forwardRef<HTMLDivElement, ActionsListShee
 type InfoSheetProps = {
     title?: string;
     subtitle?: string;
-    description?: string;
+    description?: string | Array<string>;
     items: Array<{
         id?: string;
         title: string;
@@ -674,7 +692,7 @@ type ButtonProps = {
 type ActionsSheetProps = {
     title?: string;
     subtitle?: string;
-    description?: string;
+    description?: string | Array<string>;
     button: ButtonProps;
     secondaryButton?: ButtonProps;
     buttonLink?: ButtonProps & {withChevron?: boolean};

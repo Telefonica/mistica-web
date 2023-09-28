@@ -1,4 +1,5 @@
 import {openStoryPage, screen} from '../test-utils';
+import {VIVO_NEW_SKIN} from '../skins/constants';
 
 import type {ElementHandle} from 'puppeteer';
 
@@ -9,6 +10,34 @@ const isDisabled = async (element: ElementHandle) => {
 
 test('Carousel mobile', async () => {
     const page = await openStoryPage({id: 'components-carousels-carousel--default', device: 'MOBILE_IOS'});
+
+    expect(await page.screenshot()).toMatchImageSnapshot();
+
+    await (await screen.findByLabelText('Carousel item 2')).evaluate((el) => el.scrollIntoView());
+
+    expect(await page.screenshot()).toMatchImageSnapshot();
+});
+
+test('Carousel mobile in Vivo new', async () => {
+    const page = await openStoryPage({
+        id: 'components-carousels-carousel--default',
+        device: 'MOBILE_IOS',
+        skin: VIVO_NEW_SKIN,
+    });
+
+    expect(await page.screenshot()).toMatchImageSnapshot();
+
+    await (await screen.findByLabelText('Carousel item 2')).evaluate((el) => el.scrollIntoView());
+
+    expect(await page.screenshot()).toMatchImageSnapshot();
+});
+
+test('Carousel mobile with large mobilePageOffset', async () => {
+    const page = await openStoryPage({
+        id: 'components-carousels-carousel--default',
+        device: 'MOBILE_IOS',
+        args: {mobilePageOffset: 'large'},
+    });
 
     expect(await page.screenshot()).toMatchImageSnapshot();
 

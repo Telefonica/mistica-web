@@ -62,16 +62,18 @@ const App = ({children, skinName}: {children: React.ReactNode; skinName: string}
 type Props = {children: React.ReactNode; theme: ThemeConfig};
 
 const FrameComponent = ({children, theme}: Props): React.ReactNode => (
-    <ThemeOverriderContextProvider>
-        {(overridenTheme) => (
-            <ThemeContextProvider theme={overridenTheme ?? theme}>
-                <SheetRoot />
-                <OverscrollColorProvider>
-                    <App skinName={(overridenTheme ?? theme).skin.name}>{children}</App>
-                </OverscrollColorProvider>
-            </ThemeContextProvider>
-        )}
-    </ThemeOverriderContextProvider>
+    <React.StrictMode>
+        <ThemeOverriderContextProvider>
+            {(overridenTheme) => (
+                <ThemeContextProvider theme={overridenTheme ?? theme}>
+                    <SheetRoot />
+                    <OverscrollColorProvider>
+                        <App skinName={(overridenTheme ?? theme).skin.name}>{children}</App>
+                    </OverscrollColorProvider>
+                </ThemeContextProvider>
+            )}
+        </ThemeOverriderContextProvider>
+    </React.StrictMode>
 );
 
 export default FrameComponent;

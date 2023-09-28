@@ -18,7 +18,7 @@ type SheetProps<T> = Id<
     {
         title?: string;
         subtitle?: string;
-        description?: string;
+        description?: string | Array<string>;
     } & T
 >;
 
@@ -95,6 +95,17 @@ let listener: SheetPropsListener | null = null;
 let sheetPromiseResolve: SheetPromiseResolve | null = null;
 let nativeSheetImplementation: NativeSheetImplementation | null = null;
 
+const normalizeDescriptionForNative = (description?: string | Array<string>): string | undefined => {
+    if (Array.isArray(description)) {
+        if (description.length) {
+            return description.join('\n\n');
+        } else {
+            return undefined;
+        }
+    }
+    return description;
+};
+
 const showRadioListNativeSheet = ({
     title,
     subtitle,
@@ -105,7 +116,8 @@ const showRadioListNativeSheet = ({
     (nativeSheetImplementation as NativeSheetImplementation)({
         title,
         subtitle,
-        description,
+        // TODO: add multiline support to native sheet
+        description: normalizeDescriptionForNative(description),
         content: [
             {
                 type: 'LIST',
@@ -139,7 +151,8 @@ const showActionsListNativeSheet = ({
     (nativeSheetImplementation as NativeSheetImplementation)({
         title,
         subtitle,
-        description,
+        // TODO: add multiline support to native sheet
+        description: normalizeDescriptionForNative(description),
         content: [
             {
                 type: 'LIST',
@@ -168,7 +181,8 @@ const showInfoNativeSheet = async ({title, subtitle, description, items}: SheetP
     await (nativeSheetImplementation as NativeSheetImplementation)({
         title,
         subtitle,
-        description,
+        // TODO: add multiline support to native sheet
+        description: normalizeDescriptionForNative(description),
         content: [
             {
                 type: 'LIST',
@@ -193,7 +207,8 @@ const showActionsNativeSheet = async ({
     return (nativeSheetImplementation as NativeSheetImplementation)({
         title,
         subtitle,
-        description,
+        // TODO: add multiline support to native sheet
+        description: normalizeDescriptionForNative(description),
         content: [
             {
                 type: 'BOTTOM_ACTIONS',

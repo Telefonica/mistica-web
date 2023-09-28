@@ -33,7 +33,12 @@ const FormDateField: React.FC<DateFieldProps> = ({
     value,
     defaultValue,
     min,
-    max,
+    /**
+     * When typing a datetime value into the input field (inside a test for example), some browsers like Chrome
+     * force the year to have exactly 6 digits. In order to prevent this, in case max value was not provided we
+     * set it so that it only accepts datetime values with years having up to 4 digits.
+     */
+    max = new Date('9999-12-31T23:59'),
     ...rest
 }) => {
     const hasNativePicker = React.useMemo(() => {

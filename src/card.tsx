@@ -23,6 +23,7 @@ import classNames from 'classnames';
 import {assignInlineVars} from '@vanilla-extract/dynamic';
 import Inline from './inline';
 import {getPrefixedDataAttributes} from './utils/dom';
+import {isRunningAcceptanceTest} from './utils/platform';
 
 import type {Variant} from './theme-variant-context';
 import type {PressHandler} from './touchable';
@@ -62,6 +63,7 @@ const useTopActions = (actions?: Array<CardAction>, onClose?: () => void) => {
 type CardActionsGroupProps = {
     actions?: Array<CardAction>;
     onClose?: () => void;
+    padding?: number;
     type?: 'default' | 'inverse' | 'media';
 };
 
@@ -69,6 +71,7 @@ export const TOP_ACTION_BUTTON_SIZE = 48;
 
 export const CardActionsGroup = ({
     actions,
+    padding = 8,
     onClose,
     type = 'default',
 }: CardActionsGroupProps): JSX.Element => {
@@ -91,8 +94,8 @@ export const CardActionsGroup = ({
         <div
             style={{
                 position: 'absolute',
-                right: 8,
-                top: 8,
+                right: padding,
+                top: padding,
                 zIndex: 3, // needed because images has zIndex 1 and touchable overlay has zIndex 2
             }}
         >
@@ -289,7 +292,7 @@ const useVideoWithControls = (
             playing: CardActionPauseIcon,
             loading: CardActionPauseIcon,
             paused: CardActionPlayIcon,
-            loadingTimeout: CardActionSpinner,
+            loadingTimeout: isRunningAcceptanceTest() ? CardActionPauseIcon : CardActionSpinner,
         }[videoStatus],
         onPress: onVideoControlPress,
         label: {
