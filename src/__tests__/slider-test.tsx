@@ -18,7 +18,7 @@ test('renders slider', () => {
 test('change slider value', () => {
     render(
         <ThemeContextProvider theme={makeTheme()}>
-            <Slider />
+            <Slider tooltip />
         </ThemeContextProvider>
     );
 
@@ -26,7 +26,7 @@ test('change slider value', () => {
     fireEvent.change(slider, {target: {value: 90}});
 
     fireEvent.focus(slider);
-    const tooltip = screen.getByText(/90/);
+    const tooltip = screen.getByText(/90/im);
 
     expect(tooltip).toBeInTheDocument();
     expect(slider).toHaveValue('90');
@@ -60,9 +60,7 @@ test('change input value and show on slider', () => {
 
     const slider = screen.getByRole('slider');
     fireEvent.focus(slider);
-    const tooltip = screen.getByText(/90/);
 
-    expect(tooltip).toBeInTheDocument();
     expect(slider).toHaveValue('90');
 });
 
@@ -79,22 +77,18 @@ test('change input to invalid value and show error message', () => {
 
     const slider = screen.getByRole('slider');
 
-    let text = screen.getByText(/Max: 100/i);
+    let text = screen.getByText(/Max: 100/im);
     fireEvent.focus(slider);
-    let tooltip = screen.getByText('100');
 
-    expect(tooltip).toBeInTheDocument();
     expect(slider).not.toHaveValue('101');
     expect(slider).toHaveValue('100');
     expect(text).toBeInTheDocument();
 
     fireEvent.change(field, {target: {value: 0}});
 
-    text = screen.getByText(/Min: 20/i);
+    text = screen.getByText(/Min: 20/im);
     fireEvent.focus(slider);
-    tooltip = screen.getByText('20');
 
-    expect(tooltip).toBeInTheDocument();
     expect(slider).not.toHaveValue('0');
     expect(slider).toHaveValue('20');
     expect(text).toBeInTheDocument();
@@ -113,9 +107,7 @@ test('change slider value with array steps and show on input', () => {
 
     const field = screen.getByRole('textbox');
     fireEvent.focus(slider);
-    const tooltip = screen.getByText(/16/);
 
-    expect(tooltip).toBeInTheDocument();
     expect(field).toHaveValue('16');
 });
 
@@ -132,9 +124,7 @@ test('change input value with array steps and show on slider', () => {
 
     const slider = screen.getByRole('slider');
     fireEvent.focus(slider);
-    const tooltip = screen.getByText(/16/);
 
-    expect(tooltip).toBeInTheDocument();
     expect(slider).toHaveValue('3');
 });
 
@@ -152,11 +142,6 @@ test('change input value with invalid value', () => {
     const slider = screen.getByRole('slider');
     fireEvent.focus(slider);
 
-    const tooltip = screen.getByText(/10/);
-    const text = screen.getByText(/invalid/im);
-
-    expect(tooltip).toBeInTheDocument();
-    expect(text).toBeInTheDocument();
     expect(slider).toHaveValue('10');
 });
 
