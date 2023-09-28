@@ -11,13 +11,7 @@ export type {TouchableElement} from './touchable';
 export {default as Spinner} from './spinner';
 export {default as FadeIn} from './fade-in';
 
-export {
-    Accordion,
-    BoxedAccordion,
-    AccordionList,
-    BoxedAccordionList,
-    GroupedAccordionList,
-} from './accordion';
+export {AccordionItem, BoxedAccordionItem, Accordion, BoxedAccordion, GroupedAccordion} from './accordion';
 export {ButtonPrimary, ButtonSecondary, ButtonDanger, ButtonLink} from './button';
 export {default as ButtonLayout} from './button-layout';
 export {default as FixedFooterLayout} from './fixed-footer-layout';

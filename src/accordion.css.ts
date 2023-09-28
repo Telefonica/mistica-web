@@ -3,7 +3,7 @@ import * as mq from './media-queries.css';
 import {vars} from './skins/skin-contract.css';
 import {sprinkles} from './sprinkles.css';
 
-export const accordionContent = sprinkles({
+export const itemContent = sprinkles({
     width: '100%',
     border: 'none',
     background: 'transparent',
