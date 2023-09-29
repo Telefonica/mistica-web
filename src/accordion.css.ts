@@ -58,25 +58,27 @@ export const closeChevron = style({
     transform: 'rotate(90deg)',
 });
 
-const basePanel = style({
+export const panelContainer = style({
     display: 'grid',
-    transition: 'grid-template-rows 0.4s',
 });
 
-export const openPanel = style([
-    basePanel,
-    {
-        gridTemplateRows: '1fr',
-    },
-]);
-
-export const closePanel = style([
-    basePanel,
-    {
+export const panelTransitionClasses = {
+    enter: style({
         gridTemplateRows: '0fr',
-    },
-]);
+    }),
+    enterActive: style({
+        gridTemplateRows: '1fr',
+        transition: 'grid-template-rows 0.4s',
+    }),
+    exit: style({
+        gridTemplateRows: '1fr',
+    }),
+    exitActive: style({
+        gridTemplateRows: '0fr',
+        transition: 'grid-template-rows 0.4s',
+    }),
+};
 
-export const panelContent = style({
+export const panel = style({
     overflow: 'hidden',
 });

@@ -12,9 +12,12 @@ import Divider from './divider';
 import {Boxed} from './boxed';
 import {useIsInverseVariant} from './theme-variant-context';
 import {useAriaId} from './hooks';
+import {CSSTransition} from 'react-transition-group';
 
 import type {DataAttributes, TrackingEvent} from './utils/types';
 import type {TouchableElement} from './touchable';
+
+const ACCORDION_TRANSITION_DURATION_IN_MS = 400;
 
 type AccordionContextType = {
     index?: Array<number>;
@@ -82,13 +85,14 @@ const getAccordionItemIndex = (element: Element | null) => {
 
 const AccordionItemContent = React.forwardRef<TouchableElement, AccordionItemContentProps>(
     ({content, dataAttributes, trackingEvent, ...props}, ref) => {
+        const panelContainerRef = React.useRef<HTMLDivElement | null>(null);
         const itemRef = React.useRef<HTMLDivElement | null>(null);
-        const labelId = useAriaId();
-        const panelId = useAriaId();
         const {index, defaultIndex, onChange} = useAccordionContext();
         const isInverse = useIsInverseVariant();
+        const labelId = useAriaId();
+        const panelId = useAriaId();
 
-        const itemIndex = getAccordionItemIndex(itemRef.current);
+        const [itemIndex, setItemIndex] = React.useState<number>();
 
         const [isOpen, toggle] = useAccordionItemState({
             value: itemIndex !== undefined ? index?.includes(itemIndex) : undefined,
@@ -99,6 +103,10 @@ const AccordionItemContent = React.forwardRef<TouchableElement, AccordionItemCon
                 }
             },
         });
+
+        React.useEffect(() => {
+            setItemIndex(getAccordionItemIndex(itemRef.current));
+        }, []);
 
         return (
             <div ref={itemRef} {...getPrefixedDataAttributes({...dataAttributes, 'accordion-item': ''})}>
@@ -134,13 +142,22 @@ const AccordionItemContent = React.forwardRef<TouchableElement, AccordionItemCon
                         />
                     </Box>
                 </BaseTouchable>
-                <div className={isOpen ? styles.openPanel : styles.closePanel}>
-                    <div className={styles.panelContent} role="region" aria-labelledby={labelId} id={panelId}>
-                        <Box paddingX={16} paddingBottom={16}>
-                            {content}
-                        </Box>
+                <CSSTransition
+                    in={isOpen}
+                    timeout={ACCORDION_TRANSITION_DURATION_IN_MS}
+                    nodeRef={panelContainerRef}
+                    classNames={styles.panelTransitionClasses}
+                    mountOnEnter
+                    unmountOnExit
+                >
+                    <div className={styles.panelContainer} ref={panelContainerRef}>
+                        <div className={styles.panel} role="region" aria-labelledby={labelId} id={panelId}>
+                            <Box paddingX={16} paddingBottom={16}>
+                                {content}
+                            </Box>
+                        </div>
                     </div>
-                </div>
+                </CSSTransition>
             </div>
         );
     }
