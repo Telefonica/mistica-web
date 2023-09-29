@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Content} from './list';
+import {Content as HeaderContent} from './list';
 import IconChevron from './icons/icon-chevron';
 import Box from './box';
 import * as styles from './accordion.css';
@@ -14,20 +14,19 @@ import {useIsInverseVariant} from './theme-variant-context';
 import {useAriaId} from './hooks';
 import {CSSTransition} from 'react-transition-group';
 
+import type {ExclusifyUnion} from './utils/utility-types';
 import type {DataAttributes, TrackingEvent} from './utils/types';
 import type {TouchableElement} from './touchable';
 
 const ACCORDION_TRANSITION_DURATION_IN_MS = 400;
 
 type AccordionContextType = {
-    index?: Array<number>;
-    defaultIndex?: Array<number>;
-    onChange?: (index: number, value: boolean) => void;
+    index: Array<number>;
+    toogle: (item: number) => void;
 };
 const AccordionContext = React.createContext<AccordionContextType>({
-    index: undefined,
-    defaultIndex: undefined,
-    onChange: () => {},
+    index: [],
+    toogle: () => {},
 });
 export const useAccordionContext = (): AccordionContextType => React.useContext(AccordionContext);
 
@@ -44,34 +43,68 @@ interface AccordionItemContentProps {
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
 }
 
-const useAccordionItemState = ({
+const useAccordionState = ({
     value,
     defaultValue,
     onChange,
+    singleOpen,
 }: {
-    value?: boolean;
-    defaultValue?: boolean;
-    onChange?: (value: boolean) => void;
-}): [boolean, () => void] => {
+    value?: number | Array<number>;
+    defaultValue?: number | Array<number>;
+    onChange?: (item: number, value: boolean) => void;
+    singleOpen?: boolean;
+}): [Array<number>, (value: number) => void] => {
     const isControlledByParent = value !== undefined;
-    const [isOpen, setIsOpen] = React.useState<boolean>(!!defaultValue);
 
-    React.useEffect(() => setIsOpen(!!defaultValue), [defaultValue]);
+    const getValueAsList = (value?: number | Array<number>) => {
+        return value === undefined ? [] : typeof value === 'number' ? [value] : value;
+    };
 
-    const toggle = () => {
+    const [index, setIndex] = React.useState<Array<number>>(getValueAsList(defaultValue));
+
+    React.useEffect(() => setIndex(getValueAsList(defaultValue)), [defaultValue]);
+
+    React.useEffect(() => {
+        if (index.length > 1 && singleOpen) {
+            index.splice(1);
+            setIndex([...index]);
+        }
+    }, [singleOpen, index]);
+
+    const updateIndexOnToogle = (item: number, index?: Array<number>) => {
+        if (!index) {
+            return [item];
+        }
+
+        const valueIndex = index.indexOf(item);
+        if (valueIndex === -1) {
+            if (singleOpen) {
+                index = [item];
+            } else {
+                index.push(item);
+            }
+        } else {
+            index.splice(valueIndex, 1);
+        }
+
+        return [...index];
+    };
+
+    const toggle = (item: number) => {
         if (!isControlledByParent) {
-            setIsOpen(!isOpen);
+            setIndex(updateIndexOnToogle(item, index));
         }
         if (onChange) {
-            onChange(isControlledByParent ? !value : !isOpen);
+            const currentItemValue = (isControlledByParent ? getValueAsList(value) : index).includes(item);
+            onChange(item, !currentItemValue);
         }
     };
 
     if (isControlledByParent) {
-        return [!!value, toggle];
+        return [getValueAsList(value), toggle];
     }
 
-    return [isOpen, toggle];
+    return [index, toggle];
 };
 
 const getAccordionItemIndex = (element: Element | null) => {
@@ -87,42 +120,35 @@ const AccordionItemContent = React.forwardRef<TouchableElement, AccordionItemCon
     ({content, dataAttributes, trackingEvent, ...props}, ref) => {
         const panelContainerRef = React.useRef<HTMLDivElement | null>(null);
         const itemRef = React.useRef<HTMLDivElement | null>(null);
-        const {index, defaultIndex, onChange} = useAccordionContext();
+        const {index, toogle} = useAccordionContext();
         const isInverse = useIsInverseVariant();
         const labelId = useAriaId();
         const panelId = useAriaId();
 
         const [itemIndex, setItemIndex] = React.useState<number>();
-
-        const [isOpen, toggle] = useAccordionItemState({
-            value: itemIndex !== undefined ? index?.includes(itemIndex) : undefined,
-            defaultValue: itemIndex !== undefined ? defaultIndex?.includes(itemIndex) : undefined,
-            onChange: (value) => {
-                if (itemIndex) {
-                    onChange?.(itemIndex, value);
-                }
-            },
-        });
+        const isOpen = itemIndex !== undefined && index?.includes(itemIndex);
 
         React.useEffect(() => {
             setItemIndex(getAccordionItemIndex(itemRef.current));
         }, []);
 
         return (
-            <div ref={itemRef} {...getPrefixedDataAttributes({...dataAttributes, 'accordion-item': ''})}>
+            <div ref={itemRef} {...getPrefixedDataAttributes({...dataAttributes, 'accordion-item': true})}>
                 <BaseTouchable
                     ref={ref}
                     className={classNames(styles.itemContent, {
                         [styles.touchableBackground]: !isInverse,
                         [styles.touchableBackgroundInverse]: isInverse,
                     })}
-                    onPress={toggle}
+                    onPress={() => {
+                        if (itemIndex !== undefined) toogle(itemIndex);
+                    }}
                     trackingEvent={trackingEvent}
                     aria-expanded={isOpen}
                     aria-controls={panelId}
                 >
                     <Box paddingX={16}>
-                        <Content
+                        <HeaderContent
                             labelId={labelId}
                             type="custom"
                             {...props}
@@ -173,42 +199,48 @@ export const AccordionItem = React.forwardRef<TouchableElement, AccordionItemCon
     )
 );
 
-type AccordionProps = {
+type AccordionBaseProps = {
     children: React.ReactNode;
-    ariaLabelledby?: string;
     noLastDivider?: boolean;
     dataAttributes?: DataAttributes;
-    index?: number | Array<number>;
-    defaultIndex?: number | Array<number>;
     onChange?: (index: number, value: boolean) => void;
 };
 
+type SingleOpenProps = {
+    singleOpen: true;
+    index?: number;
+    defaultIndex?: number;
+};
+
+type MultipleOpenProps = {
+    singleOpen?: false;
+    index?: number | Array<number>;
+    defaultIndex?: number | Array<number>;
+};
+
+type AccordionProps = AccordionBaseProps & ExclusifyUnion<SingleOpenProps | MultipleOpenProps>;
+
 export const Accordion: React.FC<AccordionProps> = ({
     children,
-    ariaLabelledby,
     dataAttributes,
     noLastDivider,
     index,
     defaultIndex,
     onChange,
+    singleOpen,
 }) => {
+    const [indexList, toogle] = useAccordionState({
+        value: index,
+        defaultValue: defaultIndex,
+        onChange,
+        singleOpen,
+    });
     const lastIndex = React.Children.count(children) - 1;
     const showLastDivider = !noLastDivider;
 
-    const indexList = index === undefined ? undefined : typeof index === 'number' ? [index] : index;
-    const defaultIndexList =
-        defaultIndex === undefined
-            ? undefined
-            : typeof defaultIndex === 'number'
-            ? [defaultIndex]
-            : defaultIndex;
-
     return (
-        <AccordionContext.Provider value={{index: indexList, defaultIndex: defaultIndexList, onChange}}>
-            <div
-                aria-labelledby={ariaLabelledby}
-                {...getPrefixedDataAttributes({...dataAttributes, accordion: ''}, 'Accordion')}
-            >
+        <AccordionContext.Provider value={{index: indexList, toogle}}>
+            <div {...getPrefixedDataAttributes({...dataAttributes, accordion: true}, 'Accordion')}>
                 {React.Children.toArray(children)
                     .filter(Boolean)
                     .map((child, index) => (
@@ -242,37 +274,28 @@ export const BoxedAccordionItem = React.forwardRef<HTMLDivElement, BoxedAccordio
     )
 );
 
-type BoxedAccordionProps = {
-    children: React.ReactNode;
-    ariaLabelledby?: string;
-    dataAttributes?: DataAttributes;
-    index?: number | Array<number>;
-    defaultIndex?: number | Array<number>;
-    onChange?: (index: number, value: boolean) => void;
-};
+type BoxedAccordionProps = Omit<AccordionProps, 'noLastDivider'>;
 
 export const BoxedAccordion: React.FC<BoxedAccordionProps> = ({
     children,
-    ariaLabelledby,
     dataAttributes,
     index,
     defaultIndex,
     onChange,
+    singleOpen,
 }) => {
-    const indexList = index === undefined ? undefined : typeof index === 'number' ? [index] : index;
-    const defaultIndexList =
-        defaultIndex === undefined
-            ? undefined
-            : typeof defaultIndex === 'number'
-            ? [defaultIndex]
-            : defaultIndex;
+    const [indexList, toogle] = useAccordionState({
+        value: index,
+        defaultValue: defaultIndex,
+        onChange,
+        singleOpen,
+    });
 
     return (
-        <AccordionContext.Provider value={{index: indexList, defaultIndex: defaultIndexList, onChange}}>
+        <AccordionContext.Provider value={{index: indexList, toogle}}>
             <Stack
                 space={16}
-                aria-labelledby={ariaLabelledby}
-                dataAttributes={{'component-name': 'BoxedAccordion', accordion: '', ...dataAttributes}}
+                dataAttributes={{'component-name': 'BoxedAccordion', accordion: true, ...dataAttributes}}
             >
                 {children}
             </Stack>
@@ -280,41 +303,30 @@ export const BoxedAccordion: React.FC<BoxedAccordionProps> = ({
     );
 };
 
-type GroupedAccordionProps = {
-    children: React.ReactNode;
-    ariaLabelledby?: string;
-    dataAttributes?: DataAttributes;
-    isInverse?: boolean;
-    index?: number | Array<number>;
-    defaultIndex?: number | Array<number>;
-    onChange?: (index: number, value: boolean) => void;
-};
+type GroupedAccordionProps = Omit<AccordionProps, 'noLastDivider'> & {isInverse?: boolean};
 
 export const GroupedAccordion: React.FC<GroupedAccordionProps> = ({
     children,
-    ariaLabelledby,
     dataAttributes,
     isInverse,
     index,
     defaultIndex,
     onChange,
+    singleOpen,
 }) => {
+    const [indexList, toogle] = useAccordionState({
+        value: index,
+        defaultValue: defaultIndex,
+        onChange,
+        singleOpen,
+    });
     const lastIndex = React.Children.count(children) - 1;
 
-    const indexList = index === undefined ? undefined : typeof index === 'number' ? [index] : index;
-    const defaultIndexList =
-        defaultIndex === undefined
-            ? undefined
-            : typeof defaultIndex === 'number'
-            ? [defaultIndex]
-            : defaultIndex;
-
     return (
-        <AccordionContext.Provider value={{index: indexList, defaultIndex: defaultIndexList, onChange}}>
+        <AccordionContext.Provider value={{index: indexList, toogle}}>
             <Boxed
                 isInverse={isInverse}
-                dataAttributes={{'component-name': 'GroupedAccordion', accordion: '', ...dataAttributes}}
-                aria-labelledby={ariaLabelledby}
+                dataAttributes={{'component-name': 'GroupedAccordion', accordion: true, ...dataAttributes}}
             >
                 {React.Children.toArray(children)
                     .filter(Boolean)
