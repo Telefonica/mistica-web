@@ -5,8 +5,20 @@ import {TextFieldBaseAutosuggest} from './text-field-base';
 
 import type {CommonFormFieldProps} from './text-field-base';
 
-export const IntegerInput: React.FC<any> = ({inputRef, value, defaultValue, ...rest}: any) => {
-    const format = (v?: string) => String(v ?? '').replace(/[^\d]/g, '');
+type IntegerInputProps = Omit<
+    React.InputHTMLAttributes<HTMLInputElement>,
+    'inputMode' | 'pattern' | 'onInput' | 'type'
+> & {
+    inputRef: React.ForwardedRef<HTMLInputElement>;
+};
+
+export const IntegerInput = ({
+    inputRef,
+    value,
+    defaultValue,
+    ...rest
+}: IntegerInputProps): React.ReactElement => {
+    const format = (v?: unknown) => String(v ?? '').replace(/[^\d]/g, '');
 
     const handleInput = (e: React.FormEvent<HTMLInputElement>) => {
         // strip all non numeric characters
