@@ -103,7 +103,7 @@ jobs:
     sonarqube-scan:
         runs-on: ubuntu-latest
         needs: [build, build-acceptance]
-        if: !cancelled() && (needs.build.result != 'failure' || needs.build-acceptance.result != 'failure')
+        if: !cancelled() && needs.build.result != 'failure' && needs.build-acceptance.result != 'failure'
         steps:
             - uses: actions/checkout@v3
 
