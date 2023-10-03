@@ -372,6 +372,13 @@ export const Menu: React.FC<MenuProps> = ({
         };
     });
 
+    React.useEffect(() => {
+        if (target) {
+            target.setAttribute('role', 'menu');
+            target.setAttribute('aria-expanded', String(isMenuOpen));
+        }
+    }, [target, isMenuOpen]);
+
     return (
         <div {...getPrefixedDataAttributes(dataAttributes, 'Menu')}>
             {renderTarget({...targetProps, isMenuOpen})}
