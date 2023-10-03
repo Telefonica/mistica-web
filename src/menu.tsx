@@ -17,6 +17,7 @@ import Checkbox from './checkbox';
 import {CSSTransition} from 'react-transition-group';
 import {combineRefs} from './utils/common';
 
+import type {ExclusifyUnion} from './utils/utility-types';
 import type {DataAttributes, IconProps} from './utils/types';
 
 const MENU_TRANSITION_DURATION_IN_MS = 120;
@@ -27,13 +28,15 @@ type MenuContextType = {
     setFocusedValue: (value: string | null) => void;
     closeMenu: () => void;
 };
+
 const MenuContext = React.createContext<MenuContextType>({
     focusedValue: null,
     isMenuOpen: false,
     setFocusedValue: () => {},
     closeMenu: () => {},
 });
-export const useMenuContext = (): MenuContextType => React.useContext(MenuContext);
+
+const useMenuContext = (): MenuContextType => React.useContext(MenuContext);
 
 interface MenuItemBaseProps {
     label: string;
@@ -41,7 +44,6 @@ interface MenuItemBaseProps {
     destructive?: boolean;
     disabled?: boolean;
     'aria-label'?: string;
-    children?: undefined;
     onPress: (label: string) => void;
 }
 
@@ -51,18 +53,17 @@ interface MenuItemWithoutControlProps extends MenuItemBaseProps {
 }
 
 interface MenuItemWithControlProps extends MenuItemBaseProps {
-    controlType: 'checkbox';
+    controlType?: 'checkbox';
     checked?: boolean;
 }
 
-type MenuItemProps = MenuItemWithControlProps | MenuItemWithoutControlProps;
+type MenuItemProps = ExclusifyUnion<MenuItemWithControlProps | MenuItemWithoutControlProps>;
 
 export const MenuItem: React.FC<MenuItemProps> = ({
     label,
     Icon,
     destructive,
     disabled,
-    'aria-label': ariaLabel,
     onPress,
     controlType,
     checked,
@@ -83,7 +84,7 @@ export const MenuItem: React.FC<MenuItemProps> = ({
                 }}
                 disabled={disabled}
                 role="menuitemcheckbox"
-                aria-label={ariaLabel ?? label}
+                aria-label={label}
                 render={({controlElement}) => (
                     <Box paddingX={8} paddingY={12}>
                         <Inline space="between" alignItems="center">

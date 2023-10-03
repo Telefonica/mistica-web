@@ -120,7 +120,7 @@ const RawTouchable = React.forwardRef<TouchableElement, Props>((props, ref) => {
         style: props.style,
         role: props.role,
         'aria-checked': props['aria-checked'],
-        'aria-disabled': props.disabled,
+        'aria-disabled': props.disabled ? true : undefined,
         'aria-controls': props['aria-controls'],
         'aria-expanded': props['aria-expanded'],
         'aria-hidden': props['aria-hidden'],
