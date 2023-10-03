@@ -39,8 +39,8 @@ jobs:
             - uses: actions/upload-artifact@v3
               if: always()
               with:
-                  name: coverage-report
-                  path: reports/coverage/**
+                  name: failed-screenshots
+                  path: src/**/__diff_output__/*-diff.png
 
     build-acceptance:
         runs-on: ubuntu-latest
@@ -67,16 +67,10 @@ jobs:
                   name: failed-screenshots
                   path: src/**/__diff_output__/*-diff.png
 
-            - uses: actions/upload-artifact@v3
-              if: always()
-              with:
-                  name: coverage-report
-                  path: reports/coverage/**
-
     build-upload-failed-screenshots:
         runs-on: ubuntu-latest
         container: telefonica/web-builder:chromium93.0.4577-1.2.4
-        needs: [build-acceptance]
+        needs: [build, build-acceptance]
         if: '!cancelled()'
 
         steps:
@@ -87,7 +81,7 @@ jobs:
                   PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: 'true'
               run: yarn install --immutable --immutable-cache
 
-            - if: needs.build-acceptance.result == 'failure'
+            - if: needs.build.result == 'failure' || needs.build-acceptance.result == 'failure'
               uses: actions/download-artifact@v3
               with:
                   name: failed-screenshots
@@ -99,20 +93,4 @@ jobs:
                   github-token: ${{ secrets.GITHUB_TOKEN }}
                   azure-account-name: ${{ secrets.AZURE_ACCOUNT_NAME }}
                   azure-account-key: ${{ secrets.AZURE_ACCOUNT_KEY }}
-
-    sonarqube-scan:
-        runs-on: [self-hosted, cdorunner-life-novum, Linux]
-        # needs: [build, build-acceptance]
-        # if: "!cancelled() && needs.build.result == 'success' && needs.build-acceptance.result == 'success'"
-        steps:
-            - uses: actions/checkout@v3
-
-            # - name: Download coverage report
-            #   uses: actions/download-artifact@v3
-            #   with:
-            #       name: coverage-report
-            #       path: reports/coverage
-
-            - name: SonarQube scan
-              run: ./scripts/sonarqube-scan.sh
 ###
