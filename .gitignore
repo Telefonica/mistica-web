@@ -28,3 +28,5 @@ community.d.ts
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+# SonarQube scan
+.scannerwork
