@@ -34,9 +34,9 @@ export const Default: StoryComponent<MenuArgs> = ({
     icon,
     checkbox,
 }) => {
-    const [valuesState, setValuesState] = React.useState<ReadonlyArray<string>>([]);
+    const [valuesState, setValuesState] = React.useState<ReadonlyArray<number>>([]);
 
-    const setValues = (val: string) => {
+    const setValues = (val: number) => {
         if (valuesState.includes(val)) {
             setValuesState(valuesState.filter((value) => value !== val));
         } else {
@@ -82,18 +82,18 @@ export const Default: StoryComponent<MenuArgs> = ({
                                 <MenuSection>
                                     {[...Array(menuOptionsCount).keys()].map((optionIndex) => (
                                         <MenuItem
-                                            key={optionIndex + 1}
+                                            key={optionIndex}
                                             label={`Option ${optionIndex + 1}`}
-                                            onPress={(value) => {
+                                            onPress={(item) => {
                                                 if (checkbox) {
-                                                    setValues(value);
+                                                    setValues(item);
                                                 } else {
-                                                    alert({title: value, message: 'pressed'});
+                                                    alert({title: `Item ${item + 1}`, message: 'pressed'});
                                                 }
                                             }}
                                             {...(checkbox && {
                                                 controlType: 'checkbox' as const,
-                                                checked: valuesState.includes(`Option ${optionIndex + 1}`),
+                                                checked: valuesState.includes(optionIndex),
                                             })}
                                             Icon={icon ? IconLightningRegular : undefined}
                                         />

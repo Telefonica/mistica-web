@@ -8,6 +8,7 @@ import classnames from 'classnames';
 import {getPrefixedDataAttributes} from './utils/dom';
 import * as styles from './checkbox.css';
 import {vars} from './skins/skin-contract.css';
+import {combineRefs} from './utils/common';
 
 import type {DataAttributes} from './utils/types';
 
@@ -83,7 +84,7 @@ type ChildrenProps = {
     dataAttributes?: DataAttributes;
 };
 
-const Checkbox: React.FC<RenderProps | ChildrenProps> = (props) => {
+const Checkbox = React.forwardRef<HTMLDivElement, RenderProps | ChildrenProps>((props, ref) => {
     const labelId = useAriaId(props['aria-labelledby']);
     const ariaLabel = props['aria-label'];
     const hasExternalLabel = ariaLabel || props['aria-labelledby'];
@@ -132,7 +133,7 @@ const Checkbox: React.FC<RenderProps | ChildrenProps> = (props) => {
                 }
             }}
             tabIndex={disabled ? undefined : 0}
-            ref={focusableRef}
+            ref={combineRefs(ref, focusableRef)}
             className={disabled ? styles.checkboxContainerDisabled : styles.checkboxContainer}
             aria-label={ariaLabel}
             aria-labelledby={ariaLabel ? undefined : labelId}
@@ -166,6 +167,6 @@ const Checkbox: React.FC<RenderProps | ChildrenProps> = (props) => {
             )}
         </div>
     );
-};
+});
 
 export default Checkbox;
