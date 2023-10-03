@@ -46,20 +46,28 @@ export const menuContainer = style([
         listStyleType: 'none',
         margin: 0,
         overflowY: 'auto',
-        transition: 'opacity .12s linear,transform .12s cubic-bezier(0,0,.2,1) .15s',
         boxShadow: '0px 2px 4px rgba(0,0,0,0.2)',
     },
 ]);
 
-export const showItems = style({
-    opacity: 1,
-    transform: 'scale(1)',
-});
-
-export const hideItems = style({
-    opacity: 0,
-    transform: 'scale(0)',
-});
+export const menuTransitionClasses = {
+    enter: style({
+        opacity: 0,
+        transform: 'scale(0)',
+    }),
+    enterActive: style({
+        opacity: 1,
+        transform: 'scale(1)',
+        transition: 'opacity .12s linear,transform .12s cubic-bezier(0,0,.2,1)',
+    }),
+    exit: style({
+        opacity: 1,
+    }),
+    exitActive: style({
+        opacity: 0,
+        transition: 'opacity .12s linear',
+    }),
+};
 
 export const menuItem = style({
     userSelect: 'none',

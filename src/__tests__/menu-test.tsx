@@ -39,12 +39,11 @@ test('Menu closes after pressing an option', async () => {
 
     await userEvent.click(screen.getByText('Option 1'));
 
-    /** There is a forced delay when closing the menu to show the CSS transitions */
+    /** We have to wait until the CSS transition finishes when closing the menu */
     await waitFor(() => {
         expect(screen.getByText('menu is close')).toBeInTheDocument();
+        expect(screen.queryByText('Option 1')).not.toBeInTheDocument();
+        expect(screen.queryByText('Option 2')).not.toBeInTheDocument();
+        expect(screen.queryByText('Option 3')).not.toBeInTheDocument();
     });
-
-    expect(screen.queryByText('Option 1')).not.toBeInTheDocument();
-    expect(screen.queryByText('Option 2')).not.toBeInTheDocument();
-    expect(screen.queryByText('Option 3')).not.toBeInTheDocument();
 });

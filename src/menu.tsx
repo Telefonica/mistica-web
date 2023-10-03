@@ -14,10 +14,12 @@ import {Text3} from './text';
 import {vars} from './skins/skin-contract.css';
 import Divider from './divider';
 import Checkbox from './checkbox';
+import {CSSTransition} from 'react-transition-group';
+import {combineRefs} from './utils/common';
 
 import type {DataAttributes, IconProps} from './utils/types';
 
-const CLOSE_MENU_DELAY = 150;
+const MENU_TRANSITION_DURATION_IN_MS = 120;
 
 type MenuContextType = {
     focusedValue: string | null;
@@ -184,11 +186,10 @@ export const Menu: React.FC<MenuProps> = ({
     const [isMenuOpen, setIsMenuOpen] = React.useState(false);
     const [target, setTarget] = React.useState<HTMLElement | null>(null);
     const [menu, setMenu] = React.useState<HTMLElement | null>(null);
-    const [isMenuClosing, setIsMenuClosing] = React.useState(false);
     const [focusedValue, setFocusedValue] = React.useState<string | null>(null);
     const [isOpenedwithKeyboard, setIsOpenedwithKeyboard] = React.useState(false);
+    const menuRef = React.useRef<HTMLDivElement | null>(null);
 
-    const [animateShowItems, setAnimateShowItems] = React.useState(false);
     const [itemsComputedProps, setItemsComputedProps] = React.useState<{
         left?: number;
         right?: number;
@@ -203,8 +204,7 @@ export const Menu: React.FC<MenuProps> = ({
     React.useEffect(() => {
         const targetRect = target?.getBoundingClientRect();
 
-        if (!menu || !targetRect || !isMenuOpen || isMenuClosing) {
-            setAnimateShowItems(false);
+        if (!menu || !targetRect || !isMenuOpen) {
             return;
         }
 
@@ -223,31 +223,16 @@ export const Menu: React.FC<MenuProps> = ({
         const menuFitsOnBottom = availableSpaceOnBottom > heightMenu;
         const menuFitsOnTop = availableSpaceOnTop > heightMenu;
 
-        if (menuFitsOnBottom) {
+        const isMenuOnBottom =
+            menuFitsOnBottom || (!menuFitsOnTop && availableSpaceOnBottom > availableSpaceOnTop);
+
+        if (isMenuOnBottom) {
             setItemsComputedProps({
                 left: leftDirection,
                 right: rightDirection,
                 top: `${bottomTargetWithOffset}px`,
                 bottom: 'auto',
-                maxHeight: undefined,
-                transformOrigin: 'center top',
-            });
-        } else if (menuFitsOnTop) {
-            setItemsComputedProps({
-                left: leftDirection,
-                right: rightDirection,
-                top: `${topTargetWithOffset - heightMenu}px`,
-                bottom: 'auto',
-                maxHeight: undefined,
-                transformOrigin: 'center bottom',
-            });
-        } else if (availableSpaceOnBottom > availableSpaceOnTop) {
-            setItemsComputedProps({
-                left: leftDirection,
-                right: rightDirection,
-                top: `${bottomTargetWithOffset}px`,
-                bottom: 'auto',
-                maxHeight: availableSpaceOnBottom,
+                maxHeight: menuFitsOnBottom ? undefined : availableSpaceOnBottom,
                 transformOrigin: 'center top',
             });
         } else {
@@ -256,59 +241,28 @@ export const Menu: React.FC<MenuProps> = ({
                 right: rightDirection,
                 top: 'auto',
                 bottom: `${windowSize.height - topTargetWithOffset}px`,
-                maxHeight: availableSpaceOnTop,
+                maxHeight: menuFitsOnTop ? undefined : availableSpaceOnTop,
                 transformOrigin: 'center bottom',
             });
         }
-
-        let requestAnimationFrameId: number;
-        if (isMenuOpen) {
-            requestAnimationFrameId = requestAnimationFrame(() => {
-                setAnimateShowItems(true);
-            });
-        }
-
-        return () => {
-            if (requestAnimationFrameId) {
-                cancelAnimationFrame(requestAnimationFrameId);
-            }
-        };
-    }, [position, isMenuOpen, menu, target, width, windowSize, isMenuClosing]);
+    }, [position, isMenuOpen, menu, target, width, windowSize]);
 
     const targetProps = React.useMemo(
         () => ({
             ref: setTarget,
             onPress: () => {
-                if (isMenuOpen) setIsMenuClosing(true);
+                if (isMenuOpen) setIsMenuOpen(false);
                 else setIsMenuOpen(true);
             },
         }),
         [setTarget, isMenuOpen]
     );
 
-    const menuProps = React.useMemo(
-        () => ({
-            ref: setMenu,
-            className: classnames(
-                styles.menuContainer,
-                animateShowItems ? styles.showItems : styles.hideItems
-            ),
-            close: () => setIsMenuClosing(true),
-        }),
-        [animateShowItems]
-    );
-
-    React.useEffect(() => {
-        let closingTimeout: NodeJS.Timeout;
-        if (isMenuClosing) {
-            closingTimeout = setTimeout(() => {
-                setIsMenuOpen(false);
-                setIsMenuClosing(false);
-                target?.focus();
-            }, CLOSE_MENU_DELAY);
-        }
-        return () => clearTimeout(closingTimeout);
-    }, [isMenuClosing, target]);
+    const menuProps = {
+        ref: combineRefs(setMenu, menuRef),
+        className: styles.menuContainer,
+        close: () => setIsMenuOpen(false),
+    };
 
     const getMenuItems = React.useCallback(
         (): Array<HTMLElement> =>
@@ -369,7 +323,7 @@ export const Menu: React.FC<MenuProps> = ({
                         e.stopPropagation();
                         break;
                     case ESC:
-                        setIsMenuClosing(true);
+                        setIsMenuOpen(false);
                         break;
                     case SPACE:
                     case ENTER:
@@ -412,12 +366,21 @@ export const Menu: React.FC<MenuProps> = ({
     return (
         <div {...getPrefixedDataAttributes(dataAttributes, 'Menu')}>
             {renderTarget({...targetProps, isMenuOpen})}
-            {isMenuOpen ? (
-                <Portal>
+
+            <Portal>
+                <CSSTransition
+                    in={isMenuOpen}
+                    nodeRef={menuRef}
+                    timeout={MENU_TRANSITION_DURATION_IN_MS}
+                    classNames={styles.menuTransitionClasses}
+                    mountOnEnter
+                    unmountOnExit
+                    onExited={() => target?.focus()}
+                >
                     <Overlay
                         onPress={(e) => {
                             cancelEvent(e);
-                            setIsMenuClosing(true);
+                            setIsMenuOpen(false);
                         }}
                         disableScroll
                     >
@@ -454,18 +417,18 @@ export const Menu: React.FC<MenuProps> = ({
                         >
                             <MenuContext.Provider
                                 value={{
-                                    isMenuOpen: isMenuOpen && !isMenuClosing,
+                                    isMenuOpen,
                                     focusedValue,
                                     setFocusedValue,
-                                    closeMenu: () => setIsMenuClosing(true),
+                                    closeMenu: () => setIsMenuOpen(false),
                                 }}
                             >
                                 {renderMenu(menuProps)}
                             </MenuContext.Provider>
                         </div>
                     </Overlay>
-                </Portal>
-            ) : null}
+                </CSSTransition>
+            </Portal>
         </div>
     );
 };
