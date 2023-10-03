@@ -6,6 +6,7 @@ export const base = style([
         cursor: 'pointer',
     }),
     {
+        margin: 0,
         verticalAlign: 'bottom', // required to remove bottom gap when rendered as inline-block div
         fontFamily: 'inherit',
         appearance: 'none',
