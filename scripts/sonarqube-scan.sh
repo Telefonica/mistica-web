@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# To run this script you need to have the SONAR_TOKEN environment variable set
+
 # Change working directory to the root of the project
 cd "$(dirname "$0")"/..
 
