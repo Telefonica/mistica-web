@@ -10,22 +10,14 @@ type Args = {
     steps: number;
     max: number;
     min: number;
-    field: boolean;
     tooltip: boolean;
 };
 
-export const Default: StoryComponent<Args> = ({disabled, steps, max, min, field, tooltip}) => {
+export const Default: StoryComponent<Args> = ({disabled, steps, max, min, tooltip}) => {
     return (
         <Box paddingY={48} dataAttributes={{testid: 'slider'}}>
             <Stack space={24}>
-                <Slider
-                    disabled={disabled}
-                    steps={steps}
-                    max={max}
-                    min={min}
-                    field={field}
-                    tooltip={tooltip}
-                />
+                <Slider disabled={disabled} steps={steps} max={max} min={min} tooltip={tooltip} />
             </Stack>
         </Box>
     );
@@ -38,6 +30,5 @@ Default.args = {
     steps: 1,
     max: 100,
     min: 0,
-    field: false,
     tooltip: false,
 };

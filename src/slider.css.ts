@@ -162,9 +162,3 @@ export const progress = style([
         pointerEvents: 'none',
     },
 ]);
-
-export const fieldContainer = style({
-    display: 'inline-block',
-    width: '100px',
-    marginLeft: '16px',
-});
