@@ -42,6 +42,7 @@ const responsiveProperties = defineProperties({
 
 const commonProperties = defineProperties({
     properties: {
+        isolation: ['isolate'],
         position: ['relative', 'absolute', 'fixed', 'static', 'sticky'],
         display: ['none', 'flex', 'inline-flex', 'block', 'inline', 'inline-block'],
         flexDirection: ['row', 'column'],

@@ -98,6 +98,9 @@ export const cardContentStyle = style([
 export const minHeight = style({minHeight: 216});
 
 export const dataCard = style([
+    {
+        isolation: 'isolate', // This avoids problems with some screenshot tests in webapp
+    },
     sprinkles({
         position: 'relative',
         display: 'flex',

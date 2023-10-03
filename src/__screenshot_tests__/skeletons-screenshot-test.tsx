@@ -12,7 +12,7 @@ test.each`
     `Skeleton circle given inverse $givenStoryPageArgs.inverse and size of $givenStoryPageArgs.size`,
     async ({givenStoryPageArgs}) => {
         await openStoryPage({
-            id: 'components-skeletons-skeleton-circle',
+            id: 'components-skeletons-skeletoncircle',
             device: 'MOBILE_IOS',
             args: givenStoryPageArgs,
         });
@@ -28,7 +28,7 @@ test.each`
     ${{inverse: true}}
 `(`Skeleton row given inverse $givenStoryPageArgs.inverse`, async ({givenStoryPageArgs}) => {
     await openStoryPage({
-        id: 'components-skeletons-skeleton-row',
+        id: 'components-skeletons-skeletonrow',
         device: 'MOBILE_IOS',
         args: givenStoryPageArgs,
     });
@@ -48,7 +48,7 @@ test.each`
     `Skeleton rectangle given inverse $givenStoryPageArgs.inverse and height $givenStoryPageArgs.height and width $givenStoryPageArgs.width`,
     async ({givenStoryPageArgs}) => {
         await openStoryPage({
-            id: 'components-skeletons-skeleton-rectangle',
+            id: 'components-skeletons-skeletonrectangle',
             device: 'MOBILE_IOS',
             args: givenStoryPageArgs,
         });
@@ -64,7 +64,7 @@ test.each`
     ${{inverse: true}}
 `(`Skeleton text given inverse $givenStoryPageArgs.inverse`, async ({givenStoryPageArgs}) => {
     await openStoryPage({
-        id: 'components-skeletons-skeleton-text',
+        id: 'components-skeletons-skeletontext',
         device: 'MOBILE_IOS',
         args: givenStoryPageArgs,
     });
@@ -79,7 +79,7 @@ test.each`
     ${{inverse: true}}
 `(`Skeleton line given inverse $givenStoryPageArgs.inverse`, async ({givenStoryPageArgs}) => {
     await openStoryPage({
-        id: 'components-skeletons-skeleton-line',
+        id: 'components-skeletons-skeletonline',
         device: 'MOBILE_IOS',
         args: givenStoryPageArgs,
     });

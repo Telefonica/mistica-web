@@ -3,7 +3,7 @@ import {ThemeVariant, skinVars} from '..';
 import {SkeletonCircle} from '../skeletons';
 
 export default {
-    title: 'Components/Skeletons/Skeleton Circle',
+    title: 'Components/Skeletons/SkeletonCircle',
     parameters: {
         fullScreen: true,
     },
@@ -34,7 +34,7 @@ export const Default: StoryComponent<Args> = ({size, inverse, ariaValueText}) =>
     );
 };
 
-Default.storyName = 'Skeleton Circle';
+Default.storyName = 'SkeletonCircle';
 
 Default.args = {
     size: 40,
