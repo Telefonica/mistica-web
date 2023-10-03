@@ -32,11 +32,10 @@ test('change slider value', () => {
     expect(slider).toHaveValue('90');
 });
 
-
-test('disabled slider and input', () => {
+test('disabled slider', () => {
     render(
         <ThemeContextProvider theme={makeTheme()}>
-            <Slider  disabled />
+            <Slider disabled />
         </ThemeContextProvider>
     );
 
