@@ -87,12 +87,16 @@ export const MenuItem: React.FC<MenuItemProps> = ({
                 render={({controlElement}) => (
                     <Box paddingX={8} paddingY={12}>
                         <Inline space="between" alignItems="center">
-                            <Inline space={8} alignItems="center">
-                                {Icon && <Icon size={24} color={contentColor} />}
+                            <div className={styles.itemContent}>
+                                {Icon && (
+                                    <div className={styles.iconContainer}>
+                                        <Icon size={24} color={contentColor} />
+                                    </div>
+                                )}
                                 <Text3 regular color={contentColor}>
                                     {label}
                                 </Text3>
-                            </Inline>
+                            </div>
                             <Box paddingLeft={16}>{controlElement}</Box>
                         </Inline>
                     </Box>
@@ -111,12 +115,16 @@ export const MenuItem: React.FC<MenuItemProps> = ({
                 aria-label={label}
             >
                 <Box paddingX={8} paddingY={12}>
-                    <Inline space={8} alignItems="center">
-                        {Icon && <Icon size={24} color={contentColor} />}
+                    <div className={styles.itemContent}>
+                        {Icon && (
+                            <div className={styles.iconContainer}>
+                                <Icon size={24} color={contentColor} />
+                            </div>
+                        )}
                         <Text3 regular color={contentColor}>
                             {label}
                         </Text3>
-                    </Inline>
+                    </div>
                 </Box>
             </Touchable>
         );

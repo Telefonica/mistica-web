@@ -98,3 +98,13 @@ export const menuSectionDivider = style({
         display: 'none',
     },
 });
+
+export const itemContent = style({
+    display: 'flex',
+    alignItems: 'center',
+});
+
+export const iconContainer = style({
+    display: 'flex',
+    paddingRight: 8,
+});
