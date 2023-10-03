@@ -79,7 +79,7 @@ const Slider: React.FC<SliderProps> = ({
     };
 
     React.useEffect(() => {
-        onChange?.(valueRanger)
+        onChange?.(valueRanger);
         getStepArrayIndex?.(valueRanger);
     }, [onChange, getStepArrayIndex, valueRanger]);
 
