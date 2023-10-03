@@ -1,19 +1,15 @@
 import {openStoryPage, screen} from '../test-utils';
 
 test.each`
-    component              | inverse  | singleOpen
-    ${'Accordion'}         | ${false} | ${false}
-    ${'Accordion'}         | ${false} | ${true}
-    ${'Accordion'}         | ${true}  | ${false}
-    ${'Accordion'}         | ${true}  | ${true}
-    ${'Boxed accordion'}   | ${false} | ${false}
-    ${'Boxed accordion'}   | ${false} | ${true}
-    ${'Boxed accordion'}   | ${true}  | ${false}
-    ${'Boxed accordion'}   | ${true}  | ${true}
-    ${'Grouped accordion'} | ${false} | ${false}
-    ${'Grouped accordion'} | ${false} | ${true}
-    ${'Grouped accordion'} | ${true}  | ${false}
-    ${'Grouped accordion'} | ${true}  | ${true}
+    component            | inverse  | singleOpen
+    ${'Accordion'}       | ${false} | ${false}
+    ${'Accordion'}       | ${false} | ${true}
+    ${'Accordion'}       | ${true}  | ${false}
+    ${'Accordion'}       | ${true}  | ${true}
+    ${'Boxed accordion'} | ${false} | ${false}
+    ${'Boxed accordion'} | ${false} | ${true}
+    ${'Boxed accordion'} | ${true}  | ${false}
+    ${'Boxed accordion'} | ${true}  | ${true}
 `('$component. inverse($inverse) singleOpen($singleOpen)', async ({component, inverse, singleOpen}) => {
     await openStoryPage({
         id: `components-accordions--${component.toLowerCase().replace(' ', '-')}-story`,

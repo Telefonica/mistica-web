@@ -156,10 +156,13 @@ const AccordionItemContent = React.forwardRef<TouchableElement, AccordionItemCon
                                 <div className={styles.chevronContainer}>
                                     <IconChevron
                                         size={24}
+                                        transitionDuration={400}
                                         className={isOpen ? styles.openChevron : styles.closeChevron}
                                         color={
                                             isInverse
                                                 ? skinVars.colors.inverse
+                                                : isOpen
+                                                ? skinVars.colors.neutralHigh
                                                 : skinVars.colors.neutralMedium
                                         }
                                     />
@@ -299,48 +302,6 @@ export const BoxedAccordion: React.FC<BoxedAccordionProps> = ({
             >
                 {children}
             </Stack>
-        </AccordionContext.Provider>
-    );
-};
-
-type GroupedAccordionProps = Omit<AccordionProps, 'noLastDivider'> & {isInverse?: boolean};
-
-export const GroupedAccordion: React.FC<GroupedAccordionProps> = ({
-    children,
-    dataAttributes,
-    isInverse,
-    index,
-    defaultIndex,
-    onChange,
-    singleOpen,
-}) => {
-    const [indexList, toogle] = useAccordionState({
-        value: index,
-        defaultValue: defaultIndex,
-        onChange,
-        singleOpen,
-    });
-    const lastIndex = React.Children.count(children) - 1;
-
-    return (
-        <AccordionContext.Provider value={{index: indexList, toogle}}>
-            <Boxed
-                isInverse={isInverse}
-                dataAttributes={{'component-name': 'GroupedAccordion', accordion: true, ...dataAttributes}}
-            >
-                {React.Children.toArray(children)
-                    .filter(Boolean)
-                    .map((child, index) => (
-                        <React.Fragment key={index}>
-                            {child}
-                            {index < lastIndex && (
-                                <Box paddingX={16}>
-                                    <Divider />
-                                </Box>
-                            )}
-                        </React.Fragment>
-                    ))}
-            </Boxed>
         </AccordionContext.Provider>
     );
 };

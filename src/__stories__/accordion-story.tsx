@@ -7,13 +7,12 @@ import {
     BoxedAccordion,
     BoxedAccordionItem,
     Circle,
-    GroupedAccordion,
     IconLikeFilled,
     IconMobileDeviceRegular,
     Image,
+    Placeholder,
     ResponsiveLayout,
     skinVars,
-    Text3,
 } from '..';
 import usingVrImg from './images/using-vr.jpg';
 import laptopImg from './images/laptop.jpg';
@@ -28,31 +27,16 @@ export default {
 
 type Args = {title: string; subtitle: string; singleOpen: boolean; inverse: boolean};
 
-const Template: StoryComponent<Args & {type?: 'boxed' | 'grouped'}> = ({
-    title,
-    subtitle,
-    singleOpen,
-    inverse,
-    type,
-}) => {
-    const content = (
-        <Text3 regular color={inverse ? skinVars.colors.inverse : skinVars.colors.neutralMedium}>
-            Content
-        </Text3>
-    );
+const Template: StoryComponent<Args & {type?: 'boxed'}> = ({title, subtitle, singleOpen, inverse, type}) => {
+    const content = <Placeholder height={100} />;
 
-    const AccordionComponent =
-        type === 'boxed' ? BoxedAccordion : type === 'grouped' ? GroupedAccordion : Accordion;
+    const AccordionComponent = type === 'boxed' ? BoxedAccordion : Accordion;
     const ItemComponent = type === 'boxed' ? BoxedAccordionItem : AccordionItem;
 
     return (
         <ResponsiveLayout fullWidth isInverse={inverse}>
             <Box padding={16}>
-                <AccordionComponent
-                    singleOpen={singleOpen}
-                    dataAttributes={{testid: 'accordion'}}
-                    {...(type === 'grouped' && {isInverse: inverse})}
-                >
+                <AccordionComponent singleOpen={singleOpen} dataAttributes={{testid: 'accordion'}}>
                     <ItemComponent
                         title={title}
                         subtitle={subtitle}
@@ -154,7 +138,3 @@ AccordionStory.args = defaultArgs;
 export const BoxedAccordionStory: StoryComponent<Args> = (args) => <Template type="boxed" {...args} />;
 BoxedAccordionStory.storyName = 'BoxedAccordion';
 BoxedAccordionStory.args = defaultArgs;
-
-export const GroupedAccordionStory: StoryComponent<Args> = (args) => <Template type="grouped" {...args} />;
-GroupedAccordionStory.storyName = 'GroupedAccordion';
-GroupedAccordionStory.args = defaultArgs;
