@@ -373,11 +373,11 @@ export const Menu: React.FC<MenuProps> = ({
     });
 
     React.useEffect(() => {
-        if (target) {
-            target.setAttribute('role', 'menu');
-            target.setAttribute('aria-expanded', String(isMenuOpen));
+        if (menu) {
+            menu.setAttribute('role', 'menu');
+            menu.setAttribute('aria-expanded', String(isMenuOpen));
         }
-    }, [target, isMenuOpen]);
+    }, [menu, isMenuOpen]);
 
     return (
         <div {...getPrefixedDataAttributes(dataAttributes, 'Menu')}>
