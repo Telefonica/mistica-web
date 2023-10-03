@@ -43,6 +43,7 @@ type CardContentProps = {
     subtitleLinesMax?: number;
     description?: string;
     descriptionLinesMax?: number;
+    href?: string;
 };
 
 const CardContent: React.FC<CardContentProps> = ({
@@ -57,6 +58,7 @@ const CardContent: React.FC<CardContentProps> = ({
     subtitleLinesMax,
     description,
     descriptionLinesMax,
+    href,
 }) => {
     const {textPresets} = useTheme();
 
@@ -74,6 +76,17 @@ const CardContent: React.FC<CardContentProps> = ({
                     {pretitle}
                 </Text2>
             )}
+            <Touchable
+                tabIndex={0}
+                maybe
+                className={classNames(styles.touchableContainer, styles.touchableAccessibility, {
+                    [styles.hoverEffect]: !!href,
+                })}
+                as="a"
+                href={href}
+            >
+                <div />
+            </Touchable>
             <Text
                 mobileSize={18}
                 mobileLineHeight="24px"
@@ -276,16 +289,11 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
                 aria-label={ariaLabel}
             >
                 <Boxed className={styles.dataCard} height="100%">
-                    <Touchable
-                        tabIndex={0}
-                        maybe
-                        className={classNames(styles.touchableContainer, {[styles.hoverEffect]: !!href})}
-                        as="a"
-                        href={href}
-                    >
+                    <div className={styles.wrapper}>
                         <div
                             className={classNames(
                                 styles.cardContentStyle,
+                                styles.touchableContainer,
                                 !hasFooter && !hasExtras ? styles.minHeight : ''
                             )}
                         >
@@ -305,6 +313,7 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
                                             subtitleLinesMax={subtitleLinesMax}
                                             description={description}
                                             descriptionLinesMax={descriptionLinesMax}
+                                            href={href}
                                         />
                                     </Stack>
                                     {/** Hack to avoid content from rendering on top of the top action buttons */}
@@ -312,7 +321,9 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
                                 </Inline>
                             </Box>
                         </div>
+
                         <div style={{flexGrow: 1}} />
+
                         {hasExtras && (
                             <Box paddingTop={16} paddingBottom={24} width="100%">
                                 {extra.map((item, index) => {
@@ -330,7 +341,7 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
                                 })}
                             </Box>
                         )}
-                    </Touchable>
+                    </div>
                     <CardActionsGroup actions={actions} onClose={onClose} />
                     {hasFooter && <CardFooter {...footerProps} />}
                 </Boxed>

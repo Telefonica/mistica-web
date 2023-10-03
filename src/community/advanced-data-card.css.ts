@@ -50,6 +50,21 @@ export const touchableContainer = style([
     }),
 ]);
 
+export const touchableAccessibility = style({
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    height: '100%',
+    width: '100%',
+});
+
+export const wrapper = style({
+    position: 'relative',
+    display: 'flex',
+    flexDirection: 'column',
+    height: '100%',
+});
+
 export const hoverEffect = style({
     '@media': {
         [mq.supportsHover]: {
