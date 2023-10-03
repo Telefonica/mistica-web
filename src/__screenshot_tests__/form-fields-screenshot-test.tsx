@@ -171,7 +171,7 @@ test('date-time field', async () => {
     expect(emptyScreenshot).toMatchImageSnapshot();
 
     await field.focus();
-    await field.type('06' + '10' + '001980' + '13' + '14', {delay: 0});
+    await field.type('06' + '10' + '1980' + '13' + '14', {delay: 0});
 
     const filledScreenshot = await fieldWrapper.screenshot();
 

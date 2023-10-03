@@ -38,43 +38,39 @@ export const actions = style([
     },
 ]);
 
-export const touchableContainer = style([
-    {
-        // not defined in sprinkles to avoid touchable style override
-        display: 'flex',
-        flexGrow: 1,
-    },
-    sprinkles({
-        height: '100%',
-        flexDirection: 'column',
-    }),
-]);
-
-export const touchableAccessibility = style({
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    height: '100%',
+export const touchableContainer = style({
+    display: 'flex',
+    position: 'relative',
     width: '100%',
+    height: '100%',
 });
 
-export const wrapper = style({
-    position: 'relative',
+export const touchable = style({
     display: 'flex',
     flexDirection: 'column',
-    height: '100%',
+    minHeight: '100%',
+    width: '100%',
+    position: 'relative',
+    padding: 0,
+    border: 'none',
+    background: 'transparent',
 });
 
-export const hoverEffect = style({
+export const touchableCardOverlay = style({
+    height: '100%',
+    width: '100%',
+    pointerEvents: 'none',
+    position: 'absolute',
+    backgroundColor: 'transparent',
     '@media': {
         [mq.supportsHover]: {
             transition: 'background-color 0.1s ease-in-out',
 
             selectors: {
-                '&:hover': {
+                [`${touchableContainer}:hover &`]: {
                     backgroundColor: vars.colors.backgroundContainerHover,
                 },
-                '&:active': {
+                [`${touchable}:active &`]: {
                     backgroundColor: vars.colors.backgroundContainerPressed,
                 },
             },
@@ -87,6 +83,7 @@ export const cardContentStyle = style([
     sprinkles({
         paddingTop: 8,
         paddingBottom: 24,
+        position: 'relative',
     }),
     {
         '@media': {
@@ -101,6 +98,9 @@ export const cardContentStyle = style([
 export const minHeight = style({minHeight: 216});
 
 export const dataCard = style([
+    {
+        isolation: 'isolate', // This avoids problems with some screenshot tests in webapp
+    },
     sprinkles({
         position: 'relative',
         display: 'flex',

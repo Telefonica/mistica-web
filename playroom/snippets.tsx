@@ -1592,6 +1592,323 @@ const alertSnippets = [
 </ButtonPrimary>
     `,
     },
+    {
+        group: 'Modals',
+        name: 'showSheet (info)',
+        code: `
+<ButtonPrimary
+  onPress={() => {
+    showSheet({
+      type: "INFO",
+      props: {
+        title: "Title",
+        subtitle: "Subtitle",
+        description: "Description",
+        items: [
+          { id: "1", title: "Item 1", icon: { type: "bullet" } },
+          { id: "2", title: "Item 2", icon: { type: "bullet" } },
+        ],
+      },
+    });
+  }}
+>
+  Open sheet
+</ButtonPrimary>`,
+    },
+    {
+        group: 'Modals',
+        name: 'showSheet (actions list)',
+        code: `
+<ButtonPrimary
+  onPress={() => {
+    showSheet({
+      type: "ACTIONS_LIST",
+      props: {
+        title: "Title",
+        subtitle: "Subtitle",
+        description: "Description",
+        items: [
+          {
+            id: "1",
+            title: "Action 1",
+            icon: {
+              url: "https://source.unsplash.com/600x600/?face",
+            },
+          },
+          {
+            id: "2",
+            title: "Destructive",
+            style: "destructive",
+          },
+        ],
+      },
+    });
+  }}
+>
+  Open sheet
+</ButtonPrimary>`,
+    },
+    {
+        group: 'Modals',
+        name: 'showSheet (actions)',
+        code: `
+<ButtonPrimary
+  onPress={() => {
+    showSheet({
+      type: "ACTIONS",
+      props: {
+        title: "Title",
+        subtitle: "Subtitle",
+        description: "Description",
+        button: {
+          text: "Button",
+        },
+        link: {
+          text: "Link",
+          withChevron: true,
+        },
+      },
+    });
+  }}
+>
+  Open sheet
+</ButtonPrimary>`,
+    },
+    {
+        group: 'Modals',
+        name: 'showSheet (radio list)',
+        code: `
+<ButtonPrimary
+  onPress={() => {
+    showSheet({
+      type: "RADIO_LIST",
+      props: {
+        title: "Title",
+        subtitle: "Subtitle",
+        description: "Description",
+        selectedId: "1",
+        items: [
+          {
+            id: "1",
+            title: "Item 1",
+            description: "Description",
+            icon: {
+              url: "https://source.unsplash.com/600x600/?face",
+            },
+          },
+          {
+            id: "2",
+            title: "Item 2",
+            description: "Description",
+            icon: {
+              url: "unknownurl",
+            },
+          },
+        ],
+      },
+    });
+  }}
+>
+  Open sheet
+</ButtonPrimary>`,
+    },
+    {
+        group: 'Modals',
+        name: 'Sheet',
+        code: `
+<ButtonPrimary
+  disabled={getState("isSheetOpen")}
+  onPress={() => {
+    setState("isSheetOpen", true);
+  }}
+>
+  Open
+</ButtonPrimary>
+
+{getState("isSheetOpen") && (
+  <Sheet
+    onClose={() => {
+      setState("isSheetOpen", false);
+    }}
+  >
+    <ResponsiveLayout>
+      <Box
+        paddingBottom={{ mobile: 16, desktop: 40 }}
+        paddingTop={{ mobile: 0, desktop: 40 }}
+      >
+        <Placeholder />
+      </Box>
+    </ResponsiveLayout>
+  </Sheet>
+)}`,
+    },
+    {
+        group: 'Modals',
+        name: 'InfoSheet',
+        code: `
+<ButtonPrimary
+  disabled={getState("isSheetOpen")}
+  onPress={() => {
+    setState("isSheetOpen", true);
+  }}
+>
+  Open
+</ButtonPrimary>
+
+{getState("isSheetOpen") && (
+  <InfoSheet
+    onClose={() => {
+      setState("isSheetOpen", false);
+    }}
+    title="Title"
+    subtitle="Subtitle"
+    description="Description"
+    items={[
+      {
+        id: "1",
+        title: "Item 1",
+        description: "Description",
+        icon: { type: "bullet" },
+      },
+      {
+        id: "2",
+        title: "Item 2",
+        description: "Description",
+        icon: { type: "regular", Icon: IconCocktailRegular },
+      },
+      {
+        id: "3",
+        title: "Item 3",
+        description: "Description",
+        icon: { type: "small", Icon: IconCheckRegular },
+      },
+    ]}
+  />
+)}`,
+    },
+    {
+        group: 'Modals',
+        name: 'RadioListSheet',
+        code: `
+<ButtonPrimary
+  disabled={getState("isSheetOpen")}
+  onPress={() => {
+    setState("isSheetOpen", true);
+  }}
+>
+  Open
+</ButtonPrimary>
+
+{getState("isSheetOpen") && (
+  <RadioListSheet
+    onClose={() => {
+      setState("isSheetOpen", false);
+    }}
+    onSelect={(selected) => console.log(selected)}
+    title="Title"
+    subtitle="Subtitle"
+    description="Description"
+    items={[
+      "Apple",
+      "Banana",
+      "Pineapple",
+      "Mango",
+      "Peach",
+      "Pear",
+      "Strawberry",
+      "Watermelon",
+      "Kiwi",
+      "Cherry",
+      "Grape",
+      "Lemon",
+      "Lime",
+    ].map((fruit, idx) => ({
+      id: String(idx),
+      title: fruit,
+      description: "Description",
+      asset: (
+        <Circle backgroundColor={skinVars.colors.brandLow} size={40}>
+          <IconMobileDeviceRegular color={skinVars.colors.brand} />
+        </Circle>
+      ),
+    }))}
+  />
+)}`,
+    },
+    {
+        group: 'Modals',
+        name: 'ActionsListSheet',
+        code: `
+<ButtonPrimary
+  disabled={getState("isSheetOpen")}
+  onPress={() => {
+    setState("isSheetOpen", true);
+  }}
+>
+  Open
+</ButtonPrimary>
+
+{getState("isSheetOpen") && (
+  <ActionsListSheet
+    onClose={() => {
+      setState("isSheetOpen", false);
+    }}
+    onSelect={(selected) => console.log(selected)}
+    title="Title"
+    subtitle="Subtitle"
+    description="Description"
+    items={[
+      {
+        id: "1",
+        title: "Action with icon",
+        icon: {
+          Icon: IconLightningRegular,
+        },
+      },
+      {
+        id: "2",
+        title: "Action without icon",
+      },
+      {
+        id: "3",
+        title: "Destructive action",
+        style: "destructive",
+        icon: {
+          Icon: IconTrashCanRegular,
+        },
+      },
+    ]}
+  />
+)}`,
+    },
+    {
+        group: 'Modals',
+        name: 'ActionsSheet',
+        code: `
+<ButtonPrimary
+  disabled={getState("isSheetOpen")}
+  onPress={() => {
+    setState("isSheetOpen", true);
+  }}
+>
+  Open
+</ButtonPrimary>
+
+{getState("isSheetOpen") && (
+  <ActionsSheet
+    onClose={() => {
+      setState("isSheetOpen", false);
+    }}
+    onPressButton={(selected) => console.log(selected)}
+    title="Title"
+    subtitle="Subtitle"
+    description="Description"
+    button={{ text: "Primary" }}
+    secondaryButton={{ text: "Secondary" }}
+    buttonLink={{ text: "Link", withChevron: true }}
+  />
+)}`,
+    },
 ];
 
 const skeletonSnippets = [

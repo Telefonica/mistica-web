@@ -105,6 +105,16 @@ export {default as Video} from './video';
 export type {VideoElement} from './video';
 export {Carousel, CenteredCarousel, Slideshow, PageBullets} from './carousel';
 export {Grid, GridItem} from './grid';
+export {
+    default as Sheet,
+    ActionsSheet,
+    InfoSheet,
+    ActionsListSheet,
+    RadioListSheet,
+    SheetBody,
+} from './sheet';
+export {default as SheetRoot, showSheet} from './sheet-root';
+export type {NativeSheetImplementation} from './sheet-root';
 export {default as StackingGroup} from './stacking-group';
 
 // Forms
@@ -136,6 +146,7 @@ export {default as IconChevron} from './icons/icon-chevron';
 export {default as IconError} from './icons/icon-error';
 export {default as IconSuccess} from './icons/icon-success';
 export {default as IconSuccessVivo} from './icons/icon-success-vivo';
+export {default as IconSuccessVivoNew} from './icons/icon-success-vivo-new';
 
 export {SkeletonCircle, SkeletonRow, SkeletonLine, SkeletonRectangle, SkeletonText} from './skeletons';
 
@@ -156,6 +167,7 @@ export type {ThemeConfig, ColorScheme, EventFormat} from './theme';
 export {pxToRem} from './utils/css';
 
 export {applyAlpha} from './utils/color';
+export {getCssVarValue} from './utils/dom';
 
 export {TrackingConfig, useTrackingConfig} from './utils/analytics';
 

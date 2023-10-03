@@ -37,7 +37,7 @@ export interface TextPresetProps {
     truncate?: boolean | number;
     wordBreak?: boolean;
     hyphens?: 'auto' | 'manual' | 'none';
-    textAlign?: 'center';
+    textAlign?: 'center' | 'right';
     id?: string;
     as?: React.ComponentType<any> | string;
     role?: string;
@@ -108,10 +108,10 @@ export const Text: React.FC<TextProps> = ({
     });
 
     const sizeVars = assignInlineVars({
-        [styles.vars.mobileSize]: mobileSize ? pxToRem(mobileSize) : '',
-        [styles.vars.mobileLineHeight]: mobileLineHeight ? pxToRem(mobileLineHeight) : '',
-        [styles.vars.desktopSize]: desktopSize ? pxToRem(desktopSize) : '',
-        [styles.vars.desktopLineHeight]: desktopLineHeight ? pxToRem(desktopLineHeight) : '',
+        [styles.vars.mobileSize]: mobileSize ? pxToRem(mobileSize) : 'inherit',
+        [styles.vars.mobileLineHeight]: mobileLineHeight ? pxToRem(mobileLineHeight) : 'inherit',
+        [styles.vars.desktopSize]: desktopSize ? pxToRem(desktopSize) : 'inherit',
+        [styles.vars.desktopLineHeight]: desktopLineHeight ? pxToRem(desktopLineHeight) : 'inherit',
     });
     const textVars = truncate
         ? assignInlineVars({

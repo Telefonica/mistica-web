@@ -1,45 +1,52 @@
-import {openStoryPage} from '../test-utils';
+import {openStoryPage, screen} from '../test-utils';
 
-test.each`
-    isInverse | isDarkMode | type           | size
-    ${false}  | ${false}   | ${'imagotype'} | ${48}
-    ${false}  | ${false}   | ${'vertical'}  | ${48}
-    ${false}  | ${false}   | ${'isotype'}   | ${48}
-    ${false}  | ${true}    | ${'imagotype'} | ${48}
-    ${false}  | ${true}    | ${'vertical'}  | ${48}
-    ${false}  | ${true}    | ${'isotype'}   | ${48}
-    ${true}   | ${false}   | ${'imagotype'} | ${48}
-    ${true}   | ${false}   | ${'vertical'}  | ${48}
-    ${true}   | ${false}   | ${'isotype'}   | ${48}
-    ${true}   | ${true}    | ${'imagotype'} | ${48}
-    ${true}   | ${true}    | ${'vertical'}  | ${48}
-    ${true}   | ${true}    | ${'isotype'}   | ${48}
-`(
-    'Logo. isInverse={$isInverse} isDarkMode={$isDarkMode} type={$type}',
-    async ({isInverse, isDarkMode, type, size}) => {
+const SKINS = ['Movistar', 'O2', 'Vivo', 'Vivo-new', 'Telefonica', 'Blau'] as const;
+const LOGO_TYPES = ['imagotype', 'vertical', 'isotype'];
+const INVERSE_VALUES = [false, true];
+const DARK_MODE_VALUES = [false, true];
+
+const getBrandLogoCases = () => {
+    const cases = [];
+    for (const skin of SKINS) {
+        if (skin !== 'Vivo-new') {
+            for (const type of LOGO_TYPES) {
+                for (const isInverse of INVERSE_VALUES) {
+                    for (const isDarkMode of DARK_MODE_VALUES) {
+                        cases.push([skin, type, isInverse, isDarkMode]);
+                    }
+                }
+            }
+        }
+    }
+    return cases;
+};
+
+test.each(getBrandLogoCases())(
+    'Logo. brand={%s} type={%s} isInverse={%s} isDarkMode={%s}',
+    async (brand, type, isInverse, isDarkMode) => {
         await openStoryPage({
             id: 'components-logo--default',
             device: 'DESKTOP',
-            args: {isInverse, type, size},
-            isDarkMode,
+            args: {forceBrandLogo: true, brand, type, isInverse},
+            isDarkMode: isDarkMode as boolean,
         });
 
-        const image = await page.screenshot();
+        const story = await screen.findByTestId('logo');
 
+        const image = await story.screenshot();
         expect(image).toMatchImageSnapshot();
     }
 );
 
-const SKINS = ['Movistar', 'O2', 'Vivo', 'Vivo-new', 'Telefonica', 'Blau'] as const;
-
-test.each(SKINS)('Logo with defaults and skin %s', async (skin) => {
-    const page = await openStoryPage({
+test.each(SKINS)('Logo. Default brand with skin={%s}', async (skin) => {
+    await openStoryPage({
         id: 'components-logo--default',
         device: 'DESKTOP',
         skin: skin as (typeof SKINS)[number],
     });
 
-    const image = await page.screenshot();
+    const story = await screen.findByTestId('logo');
 
+    const image = await story.screenshot();
     expect(image).toMatchImageSnapshot();
 });

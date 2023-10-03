@@ -1,3 +1,53 @@
+## [14.22.2](https://github.com/Telefonica/mistica-web/compare/v14.22.1...v14.22.2) (2023-09-18)
+
+
+### Bug Fixes
+
+* **Touchable:** add margin 0 as default to prevent Safari issues ([#885](https://github.com/Telefonica/mistica-web/issues/885)) ([9c1b470](https://github.com/Telefonica/mistica-web/commit/9c1b47073c5a543e17c351cb2863610c5ce7e31f))
+
+## [14.22.1](https://github.com/Telefonica/mistica-web/compare/v14.22.0...v14.22.1) (2023-09-14)
+
+
+### Bug Fixes
+
+* **AdvancedDataCard:** add isolation to container ([#884](https://github.com/Telefonica/mistica-web/issues/884)) ([53a1dbe](https://github.com/Telefonica/mistica-web/commit/53a1dbe4121deabd96c1504a66d584958a42f17d))
+
+# [14.22.0](https://github.com/Telefonica/mistica-web/compare/v14.21.0...v14.22.0) (2023-09-11)
+
+
+### Bug Fixes
+
+* **AdvancedDataCard:** fix hover on actions removing hover on card ([#876](https://github.com/Telefonica/mistica-web/issues/876)) ([742a9d2](https://github.com/Telefonica/mistica-web/commit/742a9d292513aaa956394b7db08b53f07c47b51f))
+* **DateTimeField:** add default value for max ([#873](https://github.com/Telefonica/mistica-web/issues/873)) ([1bd25a7](https://github.com/Telefonica/mistica-web/commit/1bd25a7fd8569317a87a6d8638b2735b5c2174e4))
+* **Form:** set mountedRef value to true on client side first render ([#863](https://github.com/Telefonica/mistica-web/issues/863)) ([68f7f99](https://github.com/Telefonica/mistica-web/commit/68f7f9912334b38deadbe8b20684de5943afd805))
+* **icons:** esim and funnel icons ([#874](https://github.com/Telefonica/mistica-web/issues/874)) ([ed39d6d](https://github.com/Telefonica/mistica-web/commit/ed39d6d2d4d93382a25a38e973a2d6d6c595e227))
+* **Inline:** avoid content overflow with wrap and negative space ([#872](https://github.com/Telefonica/mistica-web/issues/872)) ([5c7f89f](https://github.com/Telefonica/mistica-web/commit/5c7f89f094ffa464ca2fe92256348356a5223806))
+* **OverscrollColor:** add provider to storybook and fix possibly undefined height ([#879](https://github.com/Telefonica/mistica-web/issues/879)) ([f2d7edf](https://github.com/Telefonica/mistica-web/commit/f2d7edf82c8ef19f0a0c872a96840a210964941d))
+* **ProgressBlock:** fix undefined check when progressPercent is 0 ([#862](https://github.com/Telefonica/mistica-web/issues/862)) ([abce1cf](https://github.com/Telefonica/mistica-web/commit/abce1cf717c3cabe47845c59a6f10b3108bad7d6))
+
+
+### Features
+
+* **getCssVarValue:** utility function ([#877](https://github.com/Telefonica/mistica-web/issues/877)) ([1fd0d3e](https://github.com/Telefonica/mistica-web/commit/1fd0d3e2530d357eac38a5cbcda986921d03ffb8))
+* **Logo:** update component, story and screenshot tests ([#875](https://github.com/Telefonica/mistica-web/issues/875)) ([556a9f0](https://github.com/Telefonica/mistica-web/commit/556a9f0fff45f76166a69abd083c5590a93fae45))
+* **showSheet:** fallback to web implementation when native one fails ([#860](https://github.com/Telefonica/mistica-web/issues/860)) ([8741a28](https://github.com/Telefonica/mistica-web/commit/8741a28480b843128cddf7ccf3120d9a8487da59))
+* **Text:** support textAlign right ([#878](https://github.com/Telefonica/mistica-web/issues/878)) ([9cdc6b7](https://github.com/Telefonica/mistica-web/commit/9cdc6b7c1217b9e95e77682335791488b621f8bc))
+
+# [14.21.0](https://github.com/Telefonica/mistica-web/compare/v14.20.1...v14.21.0) (2023-08-24)
+
+
+### Bug Fixes
+
+* **Cards:** remove min width from all the cards ([#858](https://github.com/Telefonica/mistica-web/issues/858)) ([029a6ea](https://github.com/Telefonica/mistica-web/commit/029a6ea401d54429718c9d3dce0c5220322e1519))
+* **Tabs:** remove extra margin in safari ([#857](https://github.com/Telefonica/mistica-web/issues/857)) ([be8c2f2](https://github.com/Telefonica/mistica-web/commit/be8c2f29d5734a4315cbd6723675d9c58ecd3938))
+
+
+### Features
+
+* **FeedbackScreens:** updates in icons, paddings and styling ([#852](https://github.com/Telefonica/mistica-web/issues/852)) ([4b231e6](https://github.com/Telefonica/mistica-web/commit/4b231e694e13506d17e7ccfd019c2d6504f50cae))
+* **Sheet:** new component ([#840](https://github.com/Telefonica/mistica-web/issues/840)) ([f03ca7c](https://github.com/Telefonica/mistica-web/commit/f03ca7cbccc196504f16c6b93779d13506a2aaf9))
+* **utilities:** Remove lodash dependency and replace it with custom functions ([#856](https://github.com/Telefonica/mistica-web/issues/856)) ([dcaf691](https://github.com/Telefonica/mistica-web/commit/dcaf691935c0b0331fdb8b15b28f0d6f2bb8955b))
+
 ## [14.20.1](https://github.com/Telefonica/mistica-web/compare/v14.20.0...v14.20.1) (2023-08-18)
 
 

@@ -30,6 +30,7 @@ export const responsiveLayout = style({
     '@media': {
         [mq.largeDesktop]: {
             width: LARGE_DESKTOP_MAX_WIDTH,
+            maxWidth: `calc(100% - ${SMALL_DESKTOP_SIDE_MARGIN * 2}px)`, // to make ResponsiveLayout work inside desktop modals
         },
         [mq.desktop]: {
             margin: `0 ${SMALL_DESKTOP_SIDE_MARGIN}px`,
