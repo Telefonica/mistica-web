@@ -70,14 +70,9 @@ export const ProgressBarStepped: React.FC<ProgressBarSteppedProps> = ({
     const [step, setStep] = React.useState(reverse ? steps : 0);
     const [isAnimating, setIsAnimating] = React.useState(false);
 
-    /** If reverse value changed, we reset the initial state of all the progress bars */
-    const reverseValue = React.useRef(reverse);
+    /** If reverse or steps value changed, we reset the initial state of all the progress bars */
     React.useEffect(() => {
-        const initialStep = reverse ? steps : 0;
-        if (reverseValue.current !== reverse) {
-            reverseValue.current = reverse;
-            setStep(initialStep);
-        }
+        setStep(reverse ? steps : 0);
     }, [reverse, steps]);
 
     React.useEffect(() => {
@@ -108,8 +103,8 @@ export const ProgressBarStepped: React.FC<ProgressBarSteppedProps> = ({
             {Array.from({length: steps}, (_, idx) => {
                 return (
                     <ProgressBar
-                        // this key allows to reset all the progress bars if reverse value changed
-                        key={String(idx) + String(reverseValue.current)}
+                        // this key allows to reset all the progress bars if reverse or steps values changed
+                        key={String(idx) + String(reverse) + String(steps)}
                         progressPercent={idx < step ? 100 : 0}
                         color={color}
                         reverse={reverse}
