@@ -99,6 +99,7 @@ module.exports = {
         './dark-mode-addon/register',
         './font-size-addon/register',
         '@storybook/addon-controls',
+        'addon-screen-reader',
     ],
     webpackFinal: async (config) => {
         config.watchOptions = {
