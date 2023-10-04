@@ -92,7 +92,6 @@ export const cardContentStyle = style([
     sprinkles({
         paddingTop: 8,
         paddingBottom: 24,
-        position: 'relative',
     }),
     {
         '@media': {
@@ -103,6 +102,8 @@ export const cardContentStyle = style([
         },
     },
 ]);
+
+export const zindex = style({zIndex: -20});
 
 export const minHeight = style({minHeight: 216});
 

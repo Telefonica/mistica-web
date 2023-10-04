@@ -44,6 +44,7 @@ type CardContentProps = {
     description?: string;
     descriptionLinesMax?: number;
     href?: string;
+    ariaLabel?: string;
 };
 
 const CardContent: React.FC<CardContentProps> = ({
@@ -59,6 +60,7 @@ const CardContent: React.FC<CardContentProps> = ({
     description,
     descriptionLinesMax,
     href,
+    ariaLabel,
 }) => {
     const {textPresets} = useTheme();
 
@@ -82,6 +84,7 @@ const CardContent: React.FC<CardContentProps> = ({
                 className={classNames(styles.touchableAccessibility)}
                 as="a"
                 href={href}
+                aria-label={ariaLabel}
             >
                 <div />
             </Touchable>
@@ -315,6 +318,7 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
                                             description={description}
                                             descriptionLinesMax={descriptionLinesMax}
                                             href={href}
+                                            ariaLabel={ariaLabel}
                                         />
                                     </Stack>
                                     {/** Hack to avoid content from rendering on top of the top action buttons */}
@@ -324,7 +328,7 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
                         </div>
                         <div style={{flexGrow: 1}} />
                         {hasExtras && (
-                            <Box paddingTop={16} paddingBottom={24} width="100%">
+                            <Box paddingTop={16} paddingBottom={24} width="100%" className={styles.zindex}>
                                 {extra.map((item, index) => {
                                     return (
                                         <div key={index}>
