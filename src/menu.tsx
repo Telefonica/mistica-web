@@ -333,15 +333,13 @@ export const Menu: React.FC<MenuProps> = ({
                 switch (e.keyCode) {
                     case RIGHT:
                     case DOWN:
+                        cancelEvent(e);
                         setNextFocusableItem();
-                        e.preventDefault();
-                        e.stopPropagation();
                         break;
                     case LEFT:
                     case UP:
+                        cancelEvent(e);
                         setNextFocusableItem(true);
-                        e.preventDefault();
-                        e.stopPropagation();
                         break;
                     case ESC:
                         setIsMenuOpen(false);
