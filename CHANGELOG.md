@@ -1,3 +1,10 @@
+## [14.24.1](https://github.com/Telefonica/mistica-web/compare/v14.24.0...v14.24.1) (2023-10-04)
+
+
+### Bug Fixes
+
+* **reset.css:** avoid iOS Safari to unexpectedly zoom some font sizes ([#904](https://github.com/Telefonica/mistica-web/issues/904)) ([92f7258](https://github.com/Telefonica/mistica-web/commit/92f7258f6825e379d0d43cabb39cd19970edeaaf))
+
 # [14.24.0](https://github.com/Telefonica/mistica-web/compare/v14.23.1...v14.24.0) (2023-09-28)
 
 
