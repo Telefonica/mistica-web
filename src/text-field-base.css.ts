@@ -3,6 +3,9 @@ import {sprinkles} from './sprinkles.css';
 import {vars} from './skins/skin-contract.css';
 import * as mq from './media-queries.css';
 
+export const mobileFontSize = 16;
+export const desktopFontSize = 18;
+
 const commonInputStyles = style([
     sprinkles({
         border: 'none',
@@ -14,10 +17,10 @@ const commonInputStyles = style([
         background: 'none',
         outline: 0,
         lineHeight: '24px',
-        fontSize: 16,
+        fontSize: mobileFontSize,
         '@media': {
             [mq.desktopOrBigger]: {
-                fontSize: 18,
+                fontSize: desktopFontSize,
             },
         },
         caretColor: vars.colors.controlActivated,

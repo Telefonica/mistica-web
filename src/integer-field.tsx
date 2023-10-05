@@ -10,12 +10,14 @@ type IntegerInputProps = Omit<
     'inputMode' | 'pattern' | 'onInput' | 'type'
 > & {
     inputRef: React.ForwardedRef<HTMLInputElement>;
+    type?: 'text' | 'password';
 };
 
 export const IntegerInput = ({
     inputRef,
     value,
     defaultValue,
+    type = 'text',
     ...rest
 }: IntegerInputProps): React.ReactElement => {
     const format = (v?: unknown) => String(v ?? '').replace(/[^\d]/g, '');
@@ -31,7 +33,7 @@ export const IntegerInput = ({
             pattern="[0-9]*" // shows numeric keypad in iOS
             onInput={handleInput}
             ref={inputRef}
-            type="text"
+            type={type}
             value={value === undefined ? undefined : format(value)}
             defaultValue={defaultValue === undefined ? undefined : format(defaultValue)}
         />

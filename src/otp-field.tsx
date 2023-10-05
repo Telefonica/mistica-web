@@ -6,27 +6,54 @@ import * as styles from './otp-field.css';
 import {useAriaId} from './hooks';
 import ScreenReaderOnly from './screen-reader-only';
 import {IntegerInput} from './integer-field';
+import {useFieldProps} from './form-context';
+import {createChangeEvent} from './utils/dom';
+import {HelperText} from './text-field-components';
 
-type OtpFieldProps = {
+type OtpInputProps = {
     length?: number;
+    hideCode?: boolean;
     disabled?: boolean;
     readOnly?: boolean;
-    'aria-label'?: string;
-    'aria-labelledby'?: string;
+    value?: string;
+    defaultValue?: string;
+    onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    inputRef: (field: HTMLInputElement | null) => void;
 };
 
-const OtpField = ({
+const OtpInput = ({
     length = 6,
+    hideCode = false,
     disabled,
     readOnly,
-    'aria-label': ariaLabel,
-    'aria-labelledby': ariaLabelledBy,
-}: OtpFieldProps): React.ReactElement => {
-    const [inputValues, setInputValues] = React.useState<Array<string>>(Array.from({length}, () => ''));
+    value,
+    defaultValue,
+    onChange,
+    inputRef,
+}: OtpInputProps): React.ReactElement => {
+    const [selfValue, setSelfValue] = React.useState<string>(defaultValue?.slice(0, length) ?? '');
     const [focusIndex, setFocusIndex] = React.useState<number | undefined>(undefined);
 
-    const inputsMap = React.useRef(new Map<number, HTMLInputElement>()).current;
-    const otpLabelId = useAriaId();
+    const inputsList: Array<HTMLInputElement | null> = React.useRef(Array.from({length}, () => null)).current;
+
+    const isControlledByParent = typeof value !== 'undefined';
+    const controlledValue: string = isControlledByParent ? value.slice(0, length) : selfValue;
+
+    const changeValue = React.useCallback(
+        (newValue: string) => {
+            if (newValue === controlledValue) {
+                return;
+            }
+            if (!isControlledByParent) {
+                setSelfValue(newValue);
+            }
+            const firstInput = inputsList[0];
+            if (firstInput) {
+                onChange?.(createChangeEvent(firstInput, newValue));
+            }
+        },
+        [controlledValue, inputsList, isControlledByParent, onChange]
+    );
 
     React.useEffect(() => {
         if ('OTPCredential' in window) {
@@ -40,9 +67,8 @@ const OtpField = ({
                 .then((otp) => {
                     if (otp) {
                         // @ts-expect-error: otp is not in the types yet
-                        const code = otp.code;
-                        const codeArray = code.split('').slice(0, length);
-                        setInputValues(codeArray);
+                        const code = otp.code.slice(0, length);
+                        changeValue(code);
                     }
                 })
                 .catch(() => {
@@ -52,23 +78,27 @@ const OtpField = ({
                 abortController.abort();
             };
         }
-    }, [length]);
+    }, [changeValue, length]);
 
     const createInputChangeHandler = (index: number) => (event: React.ChangeEvent<HTMLInputElement>) => {
         const eventValue = event.target.value;
 
         // digit was deleted
         if (eventValue === '') {
-            setInputValues((currentValues) => {
-                const newValues = [...currentValues];
-                newValues[index] = '';
-                return newValues;
-            });
+            // remove the char:
+            changeValue(controlledValue.slice(0, index) + controlledValue.slice(index + 1));
+            if (index > 0) {
+                const prevInput = inputsList[index - 1];
+                prevInput?.focus();
+                requestAnimationFrame(() => {
+                    prevInput?.setSelectionRange(1, 1);
+                });
+            }
             return;
         }
 
         let indexToFocus = index;
-        const currentValue = inputValues[index];
+        const currentValue = controlledValue[index];
         let newValue: string = eventValue;
         if (!currentValue || currentValue === eventValue) {
             newValue = eventValue;
@@ -81,26 +111,151 @@ const OtpField = ({
         // in the case of an autocomplete or copy and paste
         if (newValue.length >= 2) {
             const toPaste = newValue.slice(0, length - index);
-            setInputValues((currentValues) => {
-                const prevValues = currentValues.slice(0, index);
-                const newValues = [...prevValues, ...toPaste];
-                return newValues;
-            });
+            const prevChars = controlledValue.slice(0, index);
+            changeValue(prevChars + toPaste);
 
             indexToFocus = index + toPaste.length;
-        } else if (newValue.match(/^[0-9]$/)) {
-            setInputValues((currentValues) => {
-                const newValues = [...currentValues];
-                newValues[index] = newValue;
-                return newValues;
-            });
+        } else {
+            changeValue(controlledValue.slice(0, index) + newValue + controlledValue.slice(index + 1));
             indexToFocus = index + 1;
         }
 
         if (indexToFocus !== index && indexToFocus <= length - 1) {
-            inputsMap.get(indexToFocus)?.focus();
+            inputsList[indexToFocus]?.focus();
         }
     };
+    const firstIndexWithoutValue = inputsList.findIndex((input) => !input?.value);
+
+    return (
+        <Inline space={8}>
+            {Array.from({length}).map((_, index) => (
+                <div
+                    key={index}
+                    className={
+                        readOnly
+                            ? styles.readOnlyField
+                            : index === focusIndex
+                            ? styles.focusedField
+                            : styles.field
+                    }
+                >
+                    <IntegerInput
+                        type={hideCode ? 'password' : 'text'}
+                        tabIndex={index > firstIndexWithoutValue ? -1 : undefined}
+                        required
+                        onFocus={() => {
+                            const firstIndexWithoutValue = inputsList.findIndex((input) => !input?.value);
+                            if (firstIndexWithoutValue >= 0 && firstIndexWithoutValue < index) {
+                                inputsList[firstIndexWithoutValue]?.focus();
+                            } else {
+                                setFocusIndex(index);
+                            }
+                        }}
+                        onBlur={() => {
+                            setFocusIndex(undefined);
+                        }}
+                        inputRef={(el) => {
+                            inputsList[index] = el;
+
+                            if (index === 0) {
+                                inputRef(el);
+                            }
+                        }}
+                        className={classNames(
+                            textFieldStyles.input,
+                            textFieldStyles.inputWithoutLabel,
+                            styles.input,
+                            {
+                                [styles.passwordInput]: hideCode,
+                            }
+                        )}
+                        disabled={disabled}
+                        readOnly={readOnly}
+                        autoComplete="one-time-code"
+                        value={controlledValue[index] ?? ''}
+                        onChange={createInputChangeHandler(index)}
+                        onKeyDown={(event) => {
+                            switch (event.key) {
+                                case 'ArrowLeft':
+                                    if (index > 0) {
+                                        const prevInput = inputsList[index - 1];
+                                        if (prevInput) {
+                                            prevInput.focus();
+                                            requestAnimationFrame(() => {
+                                                prevInput.setSelectionRange(1, 1);
+                                            });
+                                        }
+                                    }
+                                    break;
+                                case 'ArrowRight':
+                                    if (index < length - 1) {
+                                        const nextInput = inputsList[index + 1];
+                                        if (nextInput) {
+                                            nextInput.focus();
+                                            requestAnimationFrame(() => {
+                                                nextInput.setSelectionRange(0, 0);
+                                            });
+                                        }
+                                    }
+                                    break;
+                                default:
+                                // ignore
+                            }
+                        }}
+                    />
+                    {hideCode && controlledValue[index] && <div className={styles.passwordDot}>•</div>}
+                </div>
+            ))}
+        </Inline>
+    );
+};
+
+type OtpFieldProps = {
+    length?: number;
+    hideCode?: boolean;
+    disabled?: boolean;
+    readOnly?: boolean;
+    name: string;
+    value?: string;
+    defaultValue?: string;
+    helperText?: string;
+    error?: boolean;
+    onChangeValue?: (value: string, rawValue: string) => void;
+    onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    'aria-label'?: string;
+    'aria-labelledby'?: string;
+};
+
+const OtpField = ({
+    length = 6,
+    hideCode = false,
+    disabled,
+    readOnly,
+    name,
+    value,
+    defaultValue,
+    helperText,
+    error,
+    onChangeValue,
+    onChange,
+    'aria-label': ariaLabel,
+    'aria-labelledby': ariaLabelledBy,
+}: OtpFieldProps): React.ReactElement => {
+    const fieldProps = useFieldProps({
+        name,
+        value,
+        defaultValue,
+        processValue: (s) => s,
+        helperText,
+        optional: false,
+        error,
+        disabled,
+        onChangeValue,
+        onChange,
+    });
+
+    const otpLabelId = useAriaId();
+
     return (
         <div
             role="group"
@@ -112,59 +267,17 @@ const OtpField = ({
                     <div id={otpLabelId}>{ariaLabel}</div>
                 </ScreenReaderOnly>
             )}
-            <Inline space={8}>
-                {Array.from({length}).map((_, index) => (
-                    <div
-                        key={index}
-                        className={
-                            readOnly
-                                ? styles.readOnlyField
-                                : index === focusIndex
-                                ? styles.focusedField
-                                : styles.field
-                        }
-                    >
-                        <IntegerInput
-                            onFocus={() => {
-                                setFocusIndex(index);
-                            }}
-                            onBlur={() => {
-                                setFocusIndex(undefined);
-                            }}
-                            inputRef={(el) => {
-                                if (el) {
-                                    inputsMap.set(index, el);
-                                } else {
-                                    inputsMap.delete(index);
-                                }
-                            }}
-                            className={classNames(
-                                textFieldStyles.input,
-                                textFieldStyles.inputWithoutLabel,
-                                styles.input
-                            )}
-                            disabled={disabled}
-                            readOnly={readOnly}
-                            autoComplete="one-time-code"
-                            value={inputValues[index]}
-                            onChange={createInputChangeHandler(index)}
-                            onKeyDown={(event) => {
-                                // focus previous input if we are deleting and the current one is empty
-                                if (
-                                    event.key === 'Backspace' &&
-                                    event.currentTarget.value === '' &&
-                                    index > 0
-                                ) {
-                                    const prevInput = inputsMap.get(index - 1);
-                                    if (prevInput) {
-                                        prevInput.focus();
-                                    }
-                                }
-                            }}
-                        />
-                    </div>
-                ))}
-            </Inline>
+            <OtpInput
+                inputRef={fieldProps.inputRef}
+                length={length}
+                hideCode={hideCode}
+                value={fieldProps.value}
+                defaultValue={fieldProps.defaultValue}
+                disabled={fieldProps.disabled}
+                onChange={fieldProps.onChange}
+                readOnly={readOnly}
+            />
+            <HelperText error={fieldProps.error} leftText={fieldProps.helperText} />
         </div>
     );
 };

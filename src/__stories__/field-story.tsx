@@ -22,6 +22,7 @@ import {
     Form,
     Title1,
     Stack,
+    OtpField,
 } from '..';
 import {inspect} from 'util';
 import IconMusicRegular from '../generated/mistica-icons/icon-music-regular';
@@ -461,6 +462,31 @@ export const TypesUncontrolled: StoryComponent = () => (
                 />
             )}
         </Uncontrolled>
+
+        <Uncontrolled title="OtpField">
+            {(handleChange, handleChangeValue) => (
+                <OtpField
+                    name="otp"
+                    aria-label="OTP"
+                    defaultValue=""
+                    onChange={handleChange}
+                    onChangeValue={handleChangeValue}
+                />
+            )}
+        </Uncontrolled>
+
+        {/* <Uncontrolled title="OtpField (hideCode)">
+            {(handleChange, handleChangeValue) => (
+                <OtpField
+                    hideCode
+                    name="otp2"
+                    aria-label="OTP"
+                    defaultValue=""
+                    onChange={handleChange}
+                    onChangeValue={handleChangeValue}
+                />
+            )}
+        </Uncontrolled> */}
     </>
 );
 
@@ -706,6 +732,31 @@ export const TypesControlled = (): React.ReactNode => (
                         value={value}
                     />
                 </div>
+            )}
+        </Controlled>
+
+        <Controlled title="OtpField" initialValue="">
+            {(handleChange, handleChangeValue, value) => (
+                <OtpField
+                    name="otp"
+                    aria-label="OTP"
+                    onChange={handleChange}
+                    onChangeValue={handleChangeValue}
+                    value={value}
+                />
+            )}
+        </Controlled>
+
+        <Controlled title="OtpField (hideCode)" initialValue="">
+            {(handleChange, handleChangeValue, value) => (
+                <OtpField
+                    hideCode
+                    name="otp2"
+                    aria-label="OTP"
+                    onChange={handleChange}
+                    onChangeValue={handleChangeValue}
+                    value={value}
+                />
             )}
         </Controlled>
     </>

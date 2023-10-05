@@ -107,17 +107,17 @@ export const useFieldProps = ({
     onChangeValue,
 }: {
     name: string;
-    value: string | undefined;
-    defaultValue: string | undefined;
+    value?: string;
+    defaultValue?: string;
     processValue: (value: string) => unknown;
-    helperText: string | undefined;
-    optional: boolean | undefined;
-    error: boolean | undefined;
-    disabled: boolean | undefined;
+    helperText?: string;
+    optional?: boolean;
+    error?: boolean;
+    disabled?: boolean;
     onBlur?: React.FocusEventHandler;
-    validate: undefined | ((value: any, rawValue: string) => string | undefined);
-    onChange: undefined | ((event: React.ChangeEvent<HTMLInputElement>) => void);
-    onChangeValue: undefined | ((value: any, rawValue: string) => void);
+    validate?: (value: any, rawValue: string) => string | undefined;
+    onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    onChangeValue?: (value: any, rawValue: string) => void;
 }): {
     value?: string;
     defaultValue?: string;
