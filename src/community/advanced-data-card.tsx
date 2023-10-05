@@ -67,6 +67,16 @@ const CardContent: React.FC<CardContentProps> = ({
     return (
         <Stack space={4}>
             {headline}
+            <Touchable
+                tabIndex={0}
+                maybe
+                className={classNames(styles.touchableAccessibility)}
+                as="a"
+                href={href}
+                aria-label={ariaLabel}
+            >
+                <div />
+            </Touchable>
             {pretitle && (
                 <Text2
                     color={vars.colors.textPrimary}
@@ -78,16 +88,7 @@ const CardContent: React.FC<CardContentProps> = ({
                     {pretitle}
                 </Text2>
             )}
-            <Touchable
-                tabIndex={0}
-                maybe
-                className={classNames(styles.touchableAccessibility)}
-                as="a"
-                href={href}
-                aria-label={ariaLabel}
-            >
-                <div />
-            </Touchable>
+
             <Text
                 mobileSize={18}
                 mobileLineHeight="24px"

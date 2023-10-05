@@ -23,6 +23,7 @@ export const Default: StoryComponent<Args> = ({href}) => {
                     footerText="Footer 1"
                     onClose={() => {}}
                     href={hasHref}
+                    aria-label="aria-label"
                 />,
                 <AdvancedDataCard
                     title="Title 2"
@@ -31,6 +32,7 @@ export const Default: StoryComponent<Args> = ({href}) => {
                     footerText="Footer 2"
                     onClose={() => {}}
                     href={hasHref}
+                    aria-label="aria-label"
                 />,
                 <AdvancedDataCard
                     title="Title 3"
@@ -39,6 +41,7 @@ export const Default: StoryComponent<Args> = ({href}) => {
                     footerText="Footer 3"
                     onClose={() => {}}
                     href={hasHref}
+                    aria-label="aria-label"
                 />,
                 <AdvancedDataCard
                     title="Title 4"
@@ -50,6 +53,7 @@ export const Default: StoryComponent<Args> = ({href}) => {
                     footerText="Footer 4"
                     onClose={() => {}}
                     href={hasHref}
+                    aria-label="aria-label"
                 />,
             ]}
         />
