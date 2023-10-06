@@ -2343,7 +2343,7 @@ const advancedDataCardSnippets = [
           }
           footerText="footer text"
           onClose={() => window.alert("close")}
-          href="asdf"
+          href="https://google.com"
         />
         `,
         group: 'AdvancedDataCard',
