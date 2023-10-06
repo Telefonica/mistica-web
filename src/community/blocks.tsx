@@ -118,7 +118,7 @@ export const InformationBlock: React.FC<InformationBlockProps> = ({
         <Inline space="between" alignItems="flex-end" aria-label={ariaLabel}>
             <BlockContent title={title} description={description} />
             <div className={classNames(styles.column, styles.rightContent)}>
-                <Text2 regular color={vars.colors.textSecondary}>
+                <Text2 regular color={vars.colors.textSecondary} decoration="line-through">
                     {secondaryValue}
                 </Text2>
                 <Text5 color={valueColor}>{value}</Text5>
