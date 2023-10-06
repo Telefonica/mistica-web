@@ -148,7 +148,7 @@ const OtpInput = ({
                 >
                     <IntegerInput
                         aria-label={texts.otpFieldInputLabel
-                            .replace('1$s', String(index))
+                            .replace('1$s', String(index + 1))
                             .replace('2$s', String(length))}
                         type={hideCode ? 'password' : 'text'}
                         tabIndex={index > controlledValue.length ? -1 : undefined}

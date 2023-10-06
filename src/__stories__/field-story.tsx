@@ -475,18 +475,18 @@ export const TypesUncontrolled: StoryComponent = () => (
             )}
         </Uncontrolled>
 
-        {/* <Uncontrolled title="OtpField (hideCode)">
+        <Uncontrolled title="OtpField (hideCode)">
             {(handleChange, handleChangeValue) => (
                 <OtpField
                     hideCode
-                    name="otp2"
-                    aria-label="OTP"
+                    name="pin"
+                    aria-label="PIN"
                     defaultValue=""
                     onChange={handleChange}
                     onChangeValue={handleChangeValue}
                 />
             )}
-        </Uncontrolled> */}
+        </Uncontrolled>
     </>
 );
 
@@ -751,8 +751,8 @@ export const TypesControlled = (): React.ReactNode => (
             {(handleChange, handleChangeValue, value) => (
                 <OtpField
                     hideCode
-                    name="otp2"
-                    aria-label="OTP"
+                    name="pin"
+                    aria-label="PIN"
                     onChange={handleChange}
                     onChangeValue={handleChangeValue}
                     value={value}
