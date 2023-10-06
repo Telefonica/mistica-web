@@ -9,6 +9,7 @@ import {IntegerInput} from './integer-field';
 import {useFieldProps} from './form-context';
 import {createChangeEvent} from './utils/dom';
 import {HelperText} from './text-field-components';
+import {flushSync} from 'react-dom';
 
 // Protection for when there is more than one OtpField in the page.
 // This should't be a supported use case, but we need it in storybook/playroom, and for some reason
@@ -93,46 +94,44 @@ const OtpInput = ({
 
         // digit was deleted
         if (eventValue === '') {
-            // remove the char:
-            changeValue(controlledValue.slice(0, index) + controlledValue.slice(index + 1));
-            if (index > 0) {
-                const prevInput = inputsList[index - 1];
-                prevInput?.focus();
-                requestAnimationFrame(() => {
-                    prevInput?.setSelectionRange(1, 1);
-                });
-            }
+            // case already handled in onKeyDown
             return;
         }
 
-        let indexToFocus = index;
         const currentValue = controlledValue[index];
-        let newValue: string = eventValue;
+        let newInputValue: string = eventValue;
         if (!currentValue || currentValue === eventValue) {
-            newValue = eventValue;
+            newInputValue = eventValue;
         } else if (currentValue === eventValue[0]) {
-            newValue = eventValue.slice(1);
+            newInputValue = eventValue.slice(1);
         } else if (currentValue === eventValue[eventValue.length - 1]) {
-            newValue = eventValue.slice(0, -1);
+            newInputValue = eventValue.slice(0, -1);
         }
 
-        // in the case of an autocomplete or copy and paste
-        if (newValue.length >= 2) {
-            const toPaste = newValue.slice(0, length - index);
-            const prevChars = controlledValue.slice(0, index);
-            changeValue(prevChars + toPaste);
+        let indexToFocus = index;
+        let newControlledValue = controlledValue;
 
-            indexToFocus = index + toPaste.length;
+        // in the case of an autocomplete or copy and paste
+        if (newInputValue.length >= 2) {
+            const toPaste = newInputValue.slice(0, length - index);
+            const prevChars = controlledValue.slice(0, index);
+
+            newControlledValue = prevChars + toPaste;
+            indexToFocus = Math.min(index + toPaste.length, length - 1);
         } else {
-            changeValue(controlledValue.slice(0, index) + newValue + controlledValue.slice(index + 1));
+            newControlledValue =
+                controlledValue.slice(0, index) + newInputValue + controlledValue.slice(index + 1);
             indexToFocus = index + 1;
         }
 
+        // need to flush sync to be commit the new values to the dom before changing the focus
+        flushSync(() => {
+            changeValue(newControlledValue);
+        });
         if (indexToFocus !== index && indexToFocus <= length - 1) {
             inputsList[indexToFocus]?.focus();
         }
     };
-    const firstIndexWithoutValue = inputsList.findIndex((input) => !input?.value);
 
     return (
         <Inline space={8}>
@@ -152,10 +151,11 @@ const OtpInput = ({
                             .replace('1$s', String(index))
                             .replace('2$s', String(length))}
                         type={hideCode ? 'password' : 'text'}
-                        tabIndex={index > firstIndexWithoutValue ? -1 : undefined}
+                        tabIndex={index > controlledValue.length ? -1 : undefined}
                         required
                         onFocus={() => {
-                            const firstIndexWithoutValue = inputsList.findIndex((input) => !input?.value);
+                            const firstIndexWithoutValue =
+                                controlledValue.length === length ? -1 : controlledValue.length;
                             if (firstIndexWithoutValue >= 0 && firstIndexWithoutValue < index) {
                                 inputsList[firstIndexWithoutValue]?.focus();
                             } else {
@@ -187,14 +187,24 @@ const OtpInput = ({
                         onChange={createInputChangeHandler(index)}
                         onKeyDown={(event) => {
                             switch (event.key) {
+                                case 'Backspace':
+                                case 'Delete':
+                                    if (event.currentTarget.value) {
+                                        // remove the char independently of caret position
+                                        changeValue(
+                                            controlledValue.slice(0, index) + controlledValue.slice(index + 1)
+                                        );
+                                    }
+                                    if (index > 0 && index >= controlledValue.length - 1) {
+                                        const prevInput = inputsList[index - 1];
+                                        prevInput?.focus();
+                                    }
+                                    break;
                                 case 'ArrowLeft':
                                     if (index > 0) {
                                         const prevInput = inputsList[index - 1];
                                         if (prevInput) {
                                             prevInput.focus();
-                                            requestAnimationFrame(() => {
-                                                prevInput.setSelectionRange(1, 1);
-                                            });
                                         }
                                     }
                                     break;
@@ -203,9 +213,6 @@ const OtpInput = ({
                                         const nextInput = inputsList[index + 1];
                                         if (nextInput) {
                                             nextInput.focus();
-                                            requestAnimationFrame(() => {
-                                                nextInput.setSelectionRange(0, 0);
-                                            });
                                         }
                                     }
                                     break;
