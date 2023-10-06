@@ -102,7 +102,8 @@ type Props = {
     delay?: boolean;
     dataAttributes?: DataAttributes;
     targetStyle?: React.CSSProperties;
-    unstable_offsetX?: number;
+    unstable_offsetX?: number | string;
+    textCenter?: boolean;
 };
 
 const Tooltip: React.FC<Props> = ({
@@ -116,6 +117,7 @@ const Tooltip: React.FC<Props> = ({
     dataAttributes,
     targetStyle,
     unstable_offsetX,
+    textCenter,
     ...rest
 }) => {
     const {isDarkMode} = useTheme();
@@ -445,7 +447,11 @@ const Tooltip: React.FC<Props> = ({
                         {...getPrefixedDataAttributes(dataAttributes, 'Tooltip')}
                         role="tooltip"
                         id={ariaId}
-                        className={classnames(styles.container, styles.textAlign)}
+                        className={classnames(
+                            styles.container,
+                            styles.textAlign,
+                            textCenter ? styles.textCenter : ''
+                        )}
                         style={{
                             width,
                             ...containerPosition,

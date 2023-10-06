@@ -13,7 +13,7 @@ export const Movistar = {
 } as const;
 
 export const O2 = {
-    i18n: {locale: 'en-US', phoneNumberFormattingRegionCode: 'GB'},
+    i18n: {locale: 'en-GB', phoneNumberFormattingRegionCode: 'GB'},
     skin: getO2Skin(),
 } as const;
 
