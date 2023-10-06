@@ -73,6 +73,10 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-family: -apple-system, 'Roboto', 'Helvetica', 'Arial', sans-serif;
+
+    /* https://stackoverflow.com/questions/20924039/wrong-font-size-when-using-float-right-in-css-on-mobile-safari/22417120#22417120 */
+    text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
 }
 *,
 *:before,
