@@ -117,6 +117,8 @@ const formSnippets: Array<Snippet> = [
             '  </Stack>\n' +
             '</RadioGroup>',
     ],
+    ['OtpField', '<OtpField name="otp" aria-label="OTP" />'],
+    ['OtpField (hideCode)', '<OtpField hideCode name="pin" aria-label="PIN" />'],
     [
         'Form',
         `<Form
