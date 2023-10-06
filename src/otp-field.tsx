@@ -63,6 +63,7 @@ const OtpInput = ({
     );
 
     React.useEffect(() => {
+        // https://developer.mozilla.org/en-US/docs/Web/API/WebOTP_API
         if ('OTPCredential' in window && !isWaitingForSms) {
             isWaitingForSms = true;
             const abortController = new AbortController();
