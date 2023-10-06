@@ -3,12 +3,17 @@ import * as React from 'react';
 import Inline from './inline';
 import * as textFieldStyles from './text-field-base.css';
 import * as styles from './otp-field.css';
-import {useAriaId} from './hooks';
+import {useAriaId, useTheme} from './hooks';
 import ScreenReaderOnly from './screen-reader-only';
 import {IntegerInput} from './integer-field';
 import {useFieldProps} from './form-context';
 import {createChangeEvent} from './utils/dom';
 import {HelperText} from './text-field-components';
+
+// Protection for when there is more than one OtpField in the page.
+// This should't be a supported use case, but we need it in storybook/playroom, and for some reason
+// some Chrome versions crash when using navigator.credentials.get() more than once simultaneously.
+let isWaitingForSms = false;
 
 type OtpInputProps = {
     length?: number;
@@ -31,6 +36,7 @@ const OtpInput = ({
     onChange,
     inputRef,
 }: OtpInputProps): React.ReactElement => {
+    const {texts} = useTheme();
     const [selfValue, setSelfValue] = React.useState<string>(defaultValue?.slice(0, length) ?? '');
     const [focusIndex, setFocusIndex] = React.useState<number | undefined>(undefined);
 
@@ -56,7 +62,8 @@ const OtpInput = ({
     );
 
     React.useEffect(() => {
-        if ('OTPCredential' in window) {
+        if ('OTPCredential' in window && !isWaitingForSms) {
+            isWaitingForSms = true;
             const abortController = new AbortController();
             navigator.credentials
                 .get({
@@ -75,6 +82,7 @@ const OtpInput = ({
                     // ignore;
                 });
             return () => {
+                isWaitingForSms = false;
                 abortController.abort();
             };
         }
@@ -140,6 +148,9 @@ const OtpInput = ({
                     }
                 >
                     <IntegerInput
+                        aria-label={texts.otpFieldInputLabel
+                            .replace('1$s', String(index))
+                            .replace('2$s', String(length))}
                         type={hideCode ? 'password' : 'text'}
                         tabIndex={index > firstIndexWithoutValue ? -1 : undefined}
                         required
