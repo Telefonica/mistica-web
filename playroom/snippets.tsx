@@ -8,44 +8,54 @@ const menuSnippet = {
     name: 'Menu',
     code: `
     <Menu
-      width={400}
       renderTarget={({ ref, onPress, isMenuOpen }) => (
-        <Touchable ref={ref} onPress={onPress} style={{ width: 100 }}>
-          <Inline space={16}>
-            <IconKebabMenuLight />
-            <Text3 regular>{isMenuOpen ? "Close" : "Open"}</Text3>
-          </Inline>
-        </Touchable>
+        <Box padding={16}>
+          <Touchable
+            ref={ref}
+            onPress={onPress}
+            style={{ maxWidth: "fit-content" }}
+          >
+            <Inline space={16}>
+              <IconKebabMenuLight />
+              <Text3 regular>{isMenuOpen ? "Close" : "Open"}</Text3>
+            </Inline>
+          </Touchable>
+        </Box>
       )}
-      renderMenu={({ ref, className, close }) => (
+      renderMenu={({ ref, className }) => (
         <div ref={ref} className={className}>
-          {[
-            {
-              text: "Option 1",
-              value: "option1",
-            },
-            {
-              text: "Option 2",
-              value: "option2",
-            },
-          ].map((option) => (
-            <Box paddingX={16} paddingY={8} key={option.value}>
-              <Checkbox
-                name={option.text}
-                onChange={() => {
-                  if (option.value === "option3") {
-                    setTimeout(() => {
-                      close();
-                    }, 400);
-                  }
-                  setState("setValues", option.value);
-                }}
-                checked={getState("setValues", []).includes(option.value)}
-              >
-                {option.text}
-              </Checkbox>
-            </Box>
-          ))}
+          <MenuSection>
+            <MenuItem label="option 1" onPress={() => {}} />
+            <MenuItem
+              label="option 2"
+              onPress={() => setState("option 2", !getState("option 2", false))}
+              controlType="checkbox"
+              checked={getState("option 2", false)}
+            />
+            <MenuItem label="option 3" disabled onPress={() => {}} />
+          </MenuSection>
+
+          <MenuSection>
+            <MenuItem
+              label="option 4"
+              destructive
+              Icon={IconLightningRegular}
+              onPress={() => {}}
+            />
+          </MenuSection>
+
+          <MenuSection>
+            <MenuItem
+              label="option 5"
+              disabled
+              Icon={IconLightningRegular}
+              onPress={() => {}}
+            />
+            <MenuItem
+              label="An option with a really long text to verify overflow"
+              onPress={() => {}}
+            />
+          </MenuSection>
         </div>
       )}
     />`,

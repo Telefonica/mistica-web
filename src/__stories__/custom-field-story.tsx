@@ -260,6 +260,7 @@ const AutocompleteSelectField = ({name, options}: AutocompleteSelectFieldProps) 
                     onChangeValue={(value) => filterOptions(value, onPress, isMenuOpen)}
                     onBlur={checkIfRightOption}
                     autoComplete="off"
+                    role="combobox"
                 />
             )}
             renderMenu={({ref, className, close}) => (

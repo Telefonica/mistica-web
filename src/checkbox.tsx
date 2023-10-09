@@ -8,6 +8,7 @@ import classnames from 'classnames';
 import {getPrefixedDataAttributes} from './utils/dom';
 import * as styles from './checkbox.css';
 import {vars} from './skins/skin-contract.css';
+import {combineRefs} from './utils/common';
 
 import type {DataAttributes} from './utils/types';
 
@@ -64,6 +65,7 @@ type RenderProps = {
     disabled?: boolean;
     'aria-labelledby'?: string;
     'aria-label'?: string;
+    role?: 'checkbox' | 'menuitemcheckbox';
     dataAttributes?: DataAttributes;
 };
 
@@ -78,10 +80,11 @@ type ChildrenProps = {
     disabled?: boolean;
     'aria-label'?: string;
     'aria-labelledby'?: string;
+    role?: 'checkbox' | 'menuitemcheckbox';
     dataAttributes?: DataAttributes;
 };
 
-const Checkbox: React.FC<RenderProps | ChildrenProps> = (props) => {
+const Checkbox = React.forwardRef<HTMLDivElement, RenderProps | ChildrenProps>((props, ref) => {
     const labelId = useAriaId(props['aria-labelledby']);
     const ariaLabel = props['aria-label'];
     const hasExternalLabel = ariaLabel || props['aria-labelledby'];
@@ -117,10 +120,10 @@ const Checkbox: React.FC<RenderProps | ChildrenProps> = (props) => {
 
     return (
         // When the checkbox is disabled, it shouldn't be focusable
-        // eslint-disable-next-line jsx-a11y/interactive-supports-focus
+        // eslint-disable-next-line jsx-a11y/no-static-element-interactions
         <div
             id={props.id}
-            role="checkbox"
+            role={props.role || 'checkbox'}
             aria-checked={value ?? checkedState}
             onKeyDown={disabled ? undefined : handleKeyDown}
             onClick={(e) => {
@@ -130,7 +133,7 @@ const Checkbox: React.FC<RenderProps | ChildrenProps> = (props) => {
                 }
             }}
             tabIndex={disabled ? undefined : 0}
-            ref={focusableRef}
+            ref={combineRefs(ref, focusableRef)}
             className={disabled ? styles.checkboxContainerDisabled : styles.checkboxContainer}
             aria-label={ariaLabel}
             aria-labelledby={ariaLabel ? undefined : labelId}
@@ -164,6 +167,6 @@ const Checkbox: React.FC<RenderProps | ChildrenProps> = (props) => {
             )}
         </div>
     );
-};
+});
 
 export default Checkbox;
