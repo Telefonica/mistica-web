@@ -27,9 +27,14 @@ export const ProgressBar: React.FC<ProgressBarProps> = ({
     reverse = false,
 }) => {
     const {texts} = useTheme();
-    const defaultLabel = texts.loading;
-    const label = ariaLabelledBy ? undefined : ariaLabel || defaultLabel;
     const progressValue = Math.max(0, Math.min(100, progressPercent));
+
+    const getFormattedLabel = () => {
+        return `${ariaLabel || texts.loading}, ${progressValue}% ${texts.progressBarCompletedLabel}`;
+    };
+
+    const label = ariaLabelledBy ? undefined : getFormattedLabel();
+
     return (
         <div
             {...getPrefixedDataAttributes(dataAttributes, 'ProgressBar')}
@@ -57,7 +62,8 @@ type ProgressBarSteppedProps = {
     currentStep?: number;
     color?: string;
     dataAttributes?: DataAttributes;
-    reverse?: boolean;
+    'aria-label'?: string;
+    'aria-labelledby'?: string;
 };
 
 export const ProgressBarStepped: React.FC<ProgressBarSteppedProps> = ({
@@ -65,52 +71,59 @@ export const ProgressBarStepped: React.FC<ProgressBarSteppedProps> = ({
     currentStep = 0,
     color,
     dataAttributes,
-    reverse = false,
+    'aria-label': ariaLabel,
+    'aria-labelledby': ariaLabelledBy,
 }) => {
-    const [step, setStep] = React.useState(reverse ? steps : 0);
-    const [isAnimating, setIsAnimating] = React.useState(false);
+    const {texts} = useTheme();
+    const step = Math.max(0, Math.min(steps, Math.ceil(currentStep)));
+    const previousStepRef = React.useRef(step);
+    const isBack = previousStepRef.current > step;
 
-    /** If reverse or steps value changed, we reset the initial state of all the progress bars */
-    React.useEffect(() => {
-        setStep(reverse ? steps : 0);
-    }, [reverse, steps]);
+    const getFormattedLabel = () => {
+        const label = texts.progressBarStepLabel.replace('1$s', String(step)).replace('2$s', String(steps));
+        return ariaLabel ? `${ariaLabel}, ${label.toLowerCase()}` : label;
+    };
+
+    const label = ariaLabelledBy ? undefined : getFormattedLabel();
 
     React.useEffect(() => {
-        const currentStepValue = Math.max(0, Math.min(steps, Math.ceil(currentStep)));
-        let timeoutId: NodeJS.Timeout;
-        if (!isAnimating && step !== currentStepValue) {
-            setIsAnimating(true);
-            if (step < currentStepValue) {
-                setStep(step + 1);
-            } else {
-                setStep(step - 1);
-            }
-            timeoutId = setTimeout(() => setIsAnimating(false), 1000);
-        }
-        return () => {
-            if (isAnimating) {
-                clearTimeout(timeoutId);
-            }
-        };
-    }, [isAnimating, step, currentStep, steps]);
+        previousStepRef.current = step;
+    }, [step]);
 
     return (
-        <Inline
-            space={8}
-            fullWidth
-            dataAttributes={{'component-name': 'ProgressBarStepped', ...dataAttributes}}
+        <div
+            {...getPrefixedDataAttributes(dataAttributes, 'ProgressBarStepped')}
+            role="progressbar"
+            aria-valuenow={step}
+            aria-valuemin={0}
+            aria-valuemax={steps}
+            aria-label={label}
+            aria-labelledby={ariaLabelledBy}
         >
-            {Array.from({length: steps}, (_, idx) => {
-                return (
-                    <ProgressBar
-                        // this key allows to reset all the progress bars if reverse or steps values changed
-                        key={String(idx) + String(reverse) + String(steps)}
-                        progressPercent={idx < step ? 100 : 0}
-                        color={color}
-                        reverse={reverse}
-                    />
-                );
-            })}
-        </Inline>
+            <Inline space={8} fullWidth>
+                {Array.from({length: steps}, (_, index) => {
+                    const isCurrent = index === step;
+                    const isCompleted = index < step;
+                    const hasAnimation = index === step - 1;
+
+                    return (
+                        <div key={index} className={styles.barBackground} aria-hidden="true">
+                            {(isCompleted || isCurrent) && (
+                                <div
+                                    className={classNames(styles.bar, {
+                                        [styles.normal]: hasAnimation && !isBack,
+                                        [styles.inverse]: isCurrent && isBack,
+                                    })}
+                                    style={{
+                                        backgroundColor: color ?? vars.colors.controlActivated,
+                                        maxWidth: isCompleted || (hasAnimation && !isBack) ? '100%' : '0',
+                                    }}
+                                />
+                            )}
+                        </div>
+                    );
+                })}
+            </Inline>
+        </div>
     );
 };

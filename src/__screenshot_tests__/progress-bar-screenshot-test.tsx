@@ -11,3 +11,13 @@ test.each(COLORS)('ProgressBar - color={%s}', async (color) => {
 
     expect(image).toMatchImageSnapshot();
 });
+
+test.each(COLORS)('ProgressBarStepped - color={%s}', async (color) => {
+    await openStoryPage({id: 'components-progress-bar--progress-bar-stepped-story', args: {color}});
+
+    const stepper = await screen.findByTestId('progress-bar-stepped');
+
+    const image = await stepper.screenshot();
+
+    expect(image).toMatchImageSnapshot();
+});
