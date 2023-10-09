@@ -134,7 +134,7 @@ export const getTelefonicaSkin: GetKnownSkin = () => {
             warningLow: palette.ambar10,
             errorLow: palette.coral10,
             promoLow: palette.orchid10,
-            brandLow: palette.grey1,
+            brandLow: palette.telefonicaBlue10,
             successHigh: palette.turquoise70,
             warningHigh: palette.ambar70,
             errorHigh: palette.coral70,
@@ -268,7 +268,7 @@ export const getTelefonicaSkin: GetKnownSkin = () => {
             input: '0px',
             legacyDisplay: '0px',
             popup: '0px',
-            sheet: '8px',
+            sheet: '0px',
         },
         textPresets: {
             cardTitle: {weight: 'regular'},

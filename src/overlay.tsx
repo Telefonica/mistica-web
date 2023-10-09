@@ -33,7 +33,6 @@ const Overlay: React.FC<Props> = ({
     disableScroll = false,
     dataAttributes,
 }) => {
-    const [showChildren, setChildrenVisibility] = React.useState(true);
     useDisableBodyScroll(disableScroll);
     const {platformOverrides} = useTheme();
 
@@ -52,10 +51,8 @@ const Overlay: React.FC<Props> = ({
             className={className}
             onPointerDown={(e) => {
                 // We use listen to and cancel pointerdown to close overlay if user scrolls on iOS.
-                // In Android with children we hide children and onPress later in onClick to ensure click event doesn't hit element below overlay.
                 if ((e.target as any).dataset.overlay && onPress) {
                     if (children && isAndroid(platformOverrides) && isChrome(platformOverrides)) {
-                        setChildrenVisibility(false);
                         e.stopPropagation();
                     } else {
                         onPress(e);
@@ -71,7 +68,6 @@ const Overlay: React.FC<Props> = ({
                     isAndroid(platformOverrides) &&
                     isChrome(platformOverrides)
                 ) {
-                    setChildrenVisibility(true);
                     onPress(e);
                 }
             }}
@@ -81,7 +77,7 @@ const Overlay: React.FC<Props> = ({
             role="button"
             tabIndex={0}
         >
-            {showChildren && children}
+            {children}
         </div>
     );
 };

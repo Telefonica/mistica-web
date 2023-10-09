@@ -153,7 +153,7 @@ export const getVivoNewSkin: GetKnownSkin = () => {
         },
         darkModeColors: {
             background: palette.darkModeBlack,
-            backgroundAlternative: palette.darkModeGrey,
+            backgroundAlternative: palette.darkModeBlack,
             backgroundBrand: palette.darkModeBlack,
             backgroundBrandSecondary: palette.darkModeBlack,
             backgroundContainer: palette.darkModeGrey,

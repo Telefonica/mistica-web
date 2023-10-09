@@ -107,6 +107,7 @@ interface TextFieldBaseProps {
     readOnly?: boolean;
     min?: string;
     max?: string;
+    role?: string;
 }
 
 export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(

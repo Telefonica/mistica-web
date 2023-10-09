@@ -28,6 +28,24 @@ const viewport = {
     isLandscape: true,
 };
 
+test.each`
+    icon     | checkbox
+    ${false} | ${false}
+    ${false} | ${true}
+    ${true}  | ${false}
+    ${true}  | ${true}
+`('Menu. icon={$icon} checkbox={$checkbox} ', async ({icon, checkbox}) => {
+    const page = await openStoryPage({
+        id: 'components-menu--default',
+        device: 'MOBILE_IOS',
+        viewport,
+        args: {icon, checkbox},
+    });
+
+    await (await screen.findByRole('button')).click();
+    expect(await page.screenshot()).toMatchImageSnapshot();
+});
+
 test.each(testCases)(
     'Menu positioned at %s,%s',
     async (verticalPosition, horizontalPosition, menuOptionsCount, isDarkMode) => {
