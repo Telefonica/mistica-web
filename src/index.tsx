@@ -74,7 +74,7 @@ export {
 } from './card';
 export {default as Hero} from './hero';
 export {default as Divider} from './divider';
-export {default as Menu} from './menu';
+export {Menu, MenuItem, MenuSection} from './menu';
 export {default as EmptyState} from './empty-state';
 export {default as EmptyStateCard} from './empty-state-card';
 export {default as Callout} from './callout';
