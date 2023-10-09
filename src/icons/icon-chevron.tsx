@@ -24,14 +24,13 @@ const IconChevronRightSvg: React.FC<IcnChevronRightSvgProps> = ({
         height={size}
         viewBox="0 0 24 24"
         className={className}
-        style={style}
+        style={{transform, transition: `transform ${transitionDuration}ms`, ...style}}
     >
         <path
-            style={{transition: `transform ${transitionDuration}ms,fill ${transitionDuration}ms`}}
+            style={{transition: `fill ${transitionDuration}ms`}}
             fill={color}
             fillRule="evenodd"
             d="M14.338 11.478a.75.75 0 0 1 0 1.044l-3.837 3.997a.75.75 0 1 1-1.082-1.038L12.76 12 9.42 8.52a.75.75 0 0 1 1.082-1.04l3.837 3.998z"
-            transform={transform}
         />
     </svg>
 );
@@ -66,7 +65,7 @@ const IconChevron: React.FC<Props> = ({
     const props = {
         size,
         color: fillColor,
-        transform: `rotate(${rotateAngleByDirection[direction]} 12 12)`,
+        transform: `rotate(${rotateAngleByDirection[direction]}deg)`,
         className,
         transitionDuration,
         style,

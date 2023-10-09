@@ -46,18 +46,6 @@ export const chevronContainer = style({
     alignItems: 'center',
 });
 
-export const openChevron = style({
-    display: 'flex',
-    transition: 'transform 0.4s',
-    transform: 'rotate(-90deg)',
-});
-
-export const closeChevron = style({
-    display: 'flex',
-    transition: 'transform 0.4s',
-    transform: 'rotate(90deg)',
-});
-
 export const panelContainer = style({
     display: 'grid',
 });

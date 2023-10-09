@@ -136,10 +136,10 @@ const AccordionItemContent = React.forwardRef<TouchableElement, AccordionItemCon
             <div ref={itemRef} {...getPrefixedDataAttributes({...dataAttributes, 'accordion-item': true})}>
                 <BaseTouchable
                     ref={ref}
-                    className={classNames(styles.itemContent, {
-                        [styles.touchableBackground]: !isInverse,
-                        [styles.touchableBackgroundInverse]: isInverse,
-                    })}
+                    className={classNames(
+                        styles.itemContent,
+                        isInverse ? styles.touchableBackgroundInverse : styles.touchableBackground
+                    )}
                     onPress={() => {
                         if (itemIndex !== undefined) toogle(itemIndex);
                     }}
@@ -157,7 +157,7 @@ const AccordionItemContent = React.forwardRef<TouchableElement, AccordionItemCon
                                     <IconChevron
                                         size={24}
                                         transitionDuration={400}
-                                        className={isOpen ? styles.openChevron : styles.closeChevron}
+                                        direction={isOpen ? 'up' : 'down'}
                                         color={
                                             isInverse
                                                 ? skinVars.colors.inverse
