@@ -1,3 +1,11 @@
+# [14.25.0](https://github.com/Telefonica/mistica-web/compare/v14.24.1...v14.25.0) (2023-10-09)
+
+
+### Features
+
+* **skin:** update design tokens ([#893](https://github.com/Telefonica/mistica-web/issues/893)) ([736a655](https://github.com/Telefonica/mistica-web/commit/736a655fd6eff911bce9d1b99e90d80f9dd15342))
+* **Slider:** new component ([#867](https://github.com/Telefonica/mistica-web/issues/867)) ([4e02a0d](https://github.com/Telefonica/mistica-web/commit/4e02a0da103ebc4f3ad5e73d5d1c006fae38ee1c))
+
 ## [14.24.1](https://github.com/Telefonica/mistica-web/compare/v14.24.0...v14.24.1) (2023-10-04)
 
 
