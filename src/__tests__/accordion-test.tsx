@@ -80,9 +80,9 @@ test('Accordion with index', async () => {
     await userEvent.click(screen.getByText('Title 3'));
 
     /** We need to wait for CSS transition to finish in order for panel to be removed */
-    await waitForElementToBeRemoved(() => screen.queryByText('Content 1'));
+    await waitForElementToBeRemoved(screen.queryByText('Content 1'));
     expect(screen.getByText('Content 2')).toBeInTheDocument();
-    await waitForElementToBeRemoved(() => screen.queryByText('Content 3'));
+    await waitForElementToBeRemoved(screen.queryByText('Content 3'));
 });
 
 test('Accordion with default index', async () => {
@@ -104,7 +104,7 @@ test('Accordion with default index', async () => {
     await userEvent.click(screen.getByText('Title 2'));
 
     /** We need to wait for CSS transition to finish in order for panel to be removed */
-    await waitForElementToBeRemoved(() => screen.queryByText('Content 1'));
+    await waitForElementToBeRemoved(screen.queryByText('Content 1'));
     expect(screen.getByText('Content 2')).toBeInTheDocument();
     expect(screen.getByText('Content 3')).toBeInTheDocument();
 });
@@ -129,7 +129,7 @@ test('Accordion with singleOpen', async () => {
     await userEvent.click(screen.getByText('Title 3'));
 
     /** We need to wait for CSS transition to finish in order for panel to be removed */
-    await waitForElementToBeRemoved(() => screen.queryByText('Content 1'));
-    await waitForElementToBeRemoved(() => screen.queryByText('Content 2'));
+    await waitForElementToBeRemoved(screen.queryByText('Content 1'));
+    await waitForElementToBeRemoved(screen.queryByText('Content 2'));
     expect(screen.getByText('Content 3')).toBeInTheDocument();
 });
