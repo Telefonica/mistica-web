@@ -148,6 +148,7 @@ const OtpInput = ({
                     }
                 >
                     <IntegerInput
+                        placeholder={hideCode ? '○' : undefined}
                         aria-label={texts.otpFieldInputLabel
                             .replace('1$s', String(index + 1))
                             .replace('2$s', String(length))}
@@ -222,7 +223,11 @@ const OtpInput = ({
                             }
                         }}
                     />
-                    {hideCode && controlledValue[index] && <div className={styles.passwordDot}>•</div>}
+                    {hideCode && controlledValue[index] && (
+                        <div aria-hidden className={styles.passwordDot}>
+                            •
+                        </div>
+                    )}
                 </div>
             ))}
         </Inline>
