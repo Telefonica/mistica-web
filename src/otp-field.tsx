@@ -82,6 +82,9 @@ const OtpInput = ({
                 })
                 .catch(() => {
                     // ignore;
+                })
+                .finally(() => {
+                    isWaitingForSms = false;
                 });
             return () => {
                 isWaitingForSms = false;
@@ -125,7 +128,7 @@ const OtpInput = ({
             indexToFocus = index + 1;
         }
 
-        // need to flush sync to be commit the new values to the dom before changing the focus
+        // need to flush sync to commit the new values to the dom before changing the focus
         flushSync(() => {
             changeValue(newControlledValue);
         });

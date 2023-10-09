@@ -66,6 +66,7 @@ const passwordDotAnimation = keyframes({
 });
 
 export const passwordDot = style({
+    userSelect: 'none',
     pointerEvents: 'none',
     fontFamily: 'Lucida Grande, Arial, sans-serif', // same font we use for password input
     fontSize: mobileFontSize,
