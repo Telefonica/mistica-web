@@ -41,17 +41,10 @@ export const touchableMediaCardOverlay = style([
     touchableCardOverlayBase,
     {
         zIndex: 2,
-        '@media': {
-            [mq.supportsHover]: {
-                transition: 'background-color 0.1s ease-in-out',
-                selectors: {
-                    [`${touchableContainer}:hover &`]: {
-                        backgroundColor: skinVars.colors.backgroundContainerHover,
-                    },
-                    [`${touchable}:active &`]: {
-                        backgroundColor: skinVars.colors.backgroundContainerPressed,
-                    },
-                },
+        transition: 'background-color 0.1s ease-in-out',
+        selectors: {
+            [`${touchable}:active &`]: {
+                backgroundColor: skinVars.colors.backgroundContainerPressed,
             },
         },
     },
