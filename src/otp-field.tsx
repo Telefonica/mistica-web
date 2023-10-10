@@ -44,7 +44,7 @@ const OtpInput = ({
     const inputsList: Array<HTMLInputElement | null> = React.useRef(Array.from({length}, () => null)).current;
 
     const isControlledByParent = typeof value !== 'undefined';
-    const controlledValue: string = isControlledByParent ? value.slice(0, length) : selfValue;
+    const controlledValue: string = isControlledByParent ? value : selfValue;
 
     const changeValue = React.useCallback(
         (newValue: string) => {
@@ -56,11 +56,16 @@ const OtpInput = ({
             }
             const firstInput = inputsList[0];
             if (firstInput) {
-                onChange?.(createChangeEvent(firstInput, newValue));
+                onChange?.(createChangeEvent({...firstInput}, newValue));
             }
         },
         [controlledValue, inputsList, isControlledByParent, onChange]
     );
+
+    // sync controlled value if length changes
+    React.useEffect(() => {
+        changeValue(controlledValue.slice(0, length));
+    }, [length, controlledValue, changeValue]);
 
     React.useEffect(() => {
         // https://developer.mozilla.org/en-US/docs/Web/API/WebOTP_API
