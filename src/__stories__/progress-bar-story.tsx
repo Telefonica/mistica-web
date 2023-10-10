@@ -1,11 +1,12 @@
 import * as React from 'react';
 import {ProgressBar, ProgressBarStepped} from '..';
+import {vars} from '../skins/skin-contract.css';
 
 export default {
     title: 'Components/Progress bar',
     argTypes: {
         color: {
-            options: ['default', 'red'],
+            options: ['default', 'error'],
             control: {type: 'select'},
         },
     },
@@ -14,7 +15,7 @@ export default {
 type ProgressBarStoryArgs = {
     reverse: boolean;
     progressPercent: number;
-    color: 'default' | 'red';
+    color: 'default' | 'error';
 };
 
 export const ProgressBarStory: StoryComponent<ProgressBarStoryArgs> = ({reverse, progressPercent, color}) => (
@@ -22,14 +23,14 @@ export const ProgressBarStory: StoryComponent<ProgressBarStoryArgs> = ({reverse,
         dataAttributes={{testid: 'progress-bar'}}
         progressPercent={progressPercent}
         reverse={reverse}
-        color={color === 'default' ? undefined : color}
+        color={color === 'error' ? vars.colors.error : undefined}
     />
 );
 
 type ProgressBarSteppedStoryArgs = {
     steps: number;
     currentStep: number;
-    color: 'default' | 'red';
+    color: 'default' | 'error';
 };
 
 export const ProgressBarSteppedStory: StoryComponent<ProgressBarSteppedStoryArgs> = ({
@@ -41,7 +42,7 @@ export const ProgressBarSteppedStory: StoryComponent<ProgressBarSteppedStoryArgs
         steps={steps}
         currentStep={currentStep}
         dataAttributes={{testid: 'progress-bar-stepped'}}
-        color={color === 'default' ? undefined : color}
+        color={color === 'error' ? vars.colors.error : undefined}
     />
 );
 

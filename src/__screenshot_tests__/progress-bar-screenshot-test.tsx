@@ -1,6 +1,6 @@
 import {openStoryPage, screen} from '../test-utils';
 
-const COLORS = ['default', 'red'];
+const COLORS = ['default', 'error'];
 
 test.each(COLORS)('ProgressBar - color={%s}', async (color) => {
     await openStoryPage({id: 'components-progress-bar--progress-bar-story', args: {color}});
