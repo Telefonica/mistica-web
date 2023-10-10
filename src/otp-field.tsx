@@ -128,6 +128,9 @@ const OtpInput = ({
             indexToFocus = index + 1;
         }
 
+        if (newControlledValue === controlledValue) {
+            return;
+        }
         // need to flush sync to commit the new values to the dom before changing the focus
         flushSync(() => {
             changeValue(newControlledValue);
