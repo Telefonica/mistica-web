@@ -6,7 +6,6 @@ import {vars as skinVars} from './skins/skin-contract.css';
 export const MOBILE_SIDE_MARGIN = 16;
 export const TABLET_SIDE_MARGIN = 32;
 export const SMALL_DESKTOP_SIDE_MARGIN = 40;
-export const LARGE_DESKTOP_MAX_WIDTH = 1224;
 
 const sideMargin = createVar();
 export const vars = {sideMargin};
@@ -15,7 +14,7 @@ export const container = style([
     sprinkles({width: '100%'}),
     {
         vars: {
-            [sideMargin]: 'auto',
+            [sideMargin]: '0px',
         },
         '@media': {
             [mq.desktopOrBigger]: {
