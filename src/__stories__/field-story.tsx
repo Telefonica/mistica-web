@@ -22,7 +22,7 @@ import {
     Form,
     Title1,
     Stack,
-    OtpField,
+    PinField,
 } from '..';
 import {inspect} from 'util';
 import IconMusicRegular from '../generated/mistica-icons/icon-music-regular';
@@ -463,9 +463,9 @@ export const TypesUncontrolled: StoryComponent = () => (
             )}
         </Uncontrolled>
 
-        <Uncontrolled title="OtpField">
+        <Uncontrolled title="PinField">
             {(handleChange, handleChangeValue) => (
-                <OtpField
+                <PinField
                     name="otp"
                     aria-label="OTP"
                     defaultValue=""
@@ -475,9 +475,9 @@ export const TypesUncontrolled: StoryComponent = () => (
             )}
         </Uncontrolled>
 
-        <Uncontrolled title="OtpField (hideCode)">
+        <Uncontrolled title="PinField (hideCode)">
             {(handleChange, handleChangeValue) => (
-                <OtpField
+                <PinField
                     hideCode
                     name="pin"
                     aria-label="PIN"
@@ -735,9 +735,9 @@ export const TypesControlled = (): React.ReactNode => (
             )}
         </Controlled>
 
-        <Controlled title="OtpField" initialValue="">
+        <Controlled title="PinField" initialValue="">
             {(handleChange, handleChangeValue, value) => (
-                <OtpField
+                <PinField
                     name="otp"
                     aria-label="OTP"
                     onChange={handleChange}
@@ -747,9 +747,9 @@ export const TypesControlled = (): React.ReactNode => (
             )}
         </Controlled>
 
-        <Controlled title="OtpField (hideCode)" initialValue="">
+        <Controlled title="PinField (hideCode)" initialValue="">
             {(handleChange, handleChangeValue, value) => (
-                <OtpField
+                <PinField
                     hideCode
                     name="pin"
                     aria-label="PIN"

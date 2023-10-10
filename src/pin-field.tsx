@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import * as React from 'react';
 import Inline from './inline';
 import * as textFieldStyles from './text-field-base.css';
-import * as styles from './otp-field.css';
+import * as styles from './pin-field.css';
 import {useAriaId, useTheme} from './hooks';
 import ScreenReaderOnly from './screen-reader-only';
 import {IntegerInput} from './integer-field';
@@ -16,7 +16,7 @@ import {flushSync} from 'react-dom';
 // some Chrome versions crash when using navigator.credentials.get() more than once simultaneously.
 let isWaitingForSms = false;
 
-type OtpInputProps = {
+type PinInputProps = {
     length?: number;
     hideCode?: boolean;
     disabled?: boolean;
@@ -27,7 +27,7 @@ type OtpInputProps = {
     inputRef: (field: HTMLInputElement | null) => void;
 };
 
-const OtpInput = ({
+const PinInput = ({
     length = 6,
     hideCode = false,
     disabled,
@@ -36,7 +36,7 @@ const OtpInput = ({
     defaultValue,
     onChange,
     inputRef,
-}: OtpInputProps): React.ReactElement => {
+}: PinInputProps): React.ReactElement => {
     const {texts} = useTheme();
     const [selfValue, setSelfValue] = React.useState<string>(defaultValue?.slice(0, length) ?? '');
     const [focusIndex, setFocusIndex] = React.useState<number | undefined>(undefined);
@@ -160,7 +160,7 @@ const OtpInput = ({
                 >
                     <IntegerInput
                         placeholder={hideCode ? '○' : undefined}
-                        aria-label={texts.otpFieldInputLabel
+                        aria-label={texts.pinFieldInputLabel
                             .replace('1$s', String(index + 1))
                             .replace('2$s', String(length))}
                         type={hideCode ? 'password' : 'text'}
@@ -261,7 +261,7 @@ type OtpFieldProps = {
     'aria-labelledby'?: string;
 };
 
-const OtpField = ({
+const PinField = ({
     length = 6,
     hideCode = false,
     disabled,
@@ -302,7 +302,7 @@ const OtpField = ({
                     <div id={otpLabelId}>{ariaLabel}</div>
                 </ScreenReaderOnly>
             )}
-            <OtpInput
+            <PinInput
                 inputRef={fieldProps.inputRef}
                 length={length}
                 hideCode={hideCode}
@@ -317,4 +317,4 @@ const OtpField = ({
     );
 };
 
-export default OtpField;
+export default PinField;

@@ -203,7 +203,7 @@ test.each(STORY_TYPES)('SearchField (%s)', async (storyType) => {
     expect(await getValue(field)).toBe('');
 });
 
-test.each(STORY_TYPES)('OtpField (%s)', async (storyType) => {
+test.each(STORY_TYPES)('PinField (%s)', async (storyType) => {
     await openStoryPage(getStoryOfType(storyType));
 
     const fieldGroup = await screen.findByLabelText('OTP');
@@ -214,7 +214,7 @@ test.each(STORY_TYPES)('OtpField (%s)', async (storyType) => {
     await screen.findByText("onChangeValue: (string) '123456'");
 });
 
-test.each(STORY_TYPES)('OtpField (hideCode) (%s)', async (storyType) => {
+test.each(STORY_TYPES)('PinField (hideCode) (%s)', async (storyType) => {
     await openStoryPage(getStoryOfType(storyType));
 
     const fieldGroup = await screen.findByLabelText('PIN');
@@ -225,7 +225,7 @@ test.each(STORY_TYPES)('OtpField (hideCode) (%s)', async (storyType) => {
     await screen.findByText("onChangeValue: (string) '123456'");
 });
 
-test('OtpField focus management', async () => {
+test('PinField focus management', async () => {
     await openStoryPage(CONTROLLED_STORY);
 
     const fieldGroup = await screen.findByLabelText('OTP');

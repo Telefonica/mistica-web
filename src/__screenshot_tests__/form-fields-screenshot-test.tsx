@@ -221,7 +221,7 @@ test('Very long label should show ellipsis', async () => {
     expect(await fieldWrapper.screenshot()).toMatchImageSnapshot();
 });
 
-test('OtpField', async () => {
+test('PinField', async () => {
     await openStoryPage({
         id: 'components-input-fields--types-uncontrolled',
         device: 'MOBILE_IOS',
@@ -238,7 +238,7 @@ test('OtpField', async () => {
     expect(await fieldGroup.screenshot()).toMatchImageSnapshot();
 });
 
-test('OtpField (hideCode)', async () => {
+test('PinField (hideCode)', async () => {
     await openStoryPage({
         id: 'components-input-fields--types-uncontrolled',
         device: 'MOBILE_IOS',

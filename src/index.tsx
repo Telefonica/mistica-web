@@ -122,7 +122,7 @@ export {default as StackingGroup} from './stacking-group';
 export {default as Form} from './form';
 export {default as Select} from './select';
 export {default as TextField} from './text-field';
-export {default as OtpField} from './otp-field';
+export {default as PinField} from './pin-field';
 export {TextFieldBase} from './text-field-base';
 export {default as SearchField} from './search-field';
 export {default as EmailField} from './email-field';
