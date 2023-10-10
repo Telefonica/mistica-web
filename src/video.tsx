@@ -143,10 +143,16 @@ const Video = React.forwardRef<VideoElement, VideoProps>(
 
         React.useEffect(() => {
             if (loadedSource.current !== src) {
+                let loadingTimeoutId: NodeJS.Timeout;
                 loadedSource.current = src;
-                const loadingTimeoutId = setTimeout(handleError, loadingTimeout);
                 dispatch('reset');
-                videoRef.current?.load();
+
+                if (src) {
+                    loadingTimeoutId = setTimeout(handleError, loadingTimeout);
+                    videoRef.current?.load();
+                } else {
+                    handleError();
+                }
 
                 return () => {
                     clearTimeout(loadingTimeoutId);

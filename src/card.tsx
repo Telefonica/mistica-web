@@ -186,9 +186,7 @@ const CardContainer = React.forwardRef<HTMLDivElement, CardContainerProps>(
 );
 
 const renderBackgroundImage = (src?: string) => {
-    // Adding '//:0' to force an error in case src is undefined
-    // https://stackoverflow.com/a/5775621
-    return <Image width="100%" height="100%" src={src ?? '//:0'} />;
+    return <Image width="100%" height="100%" src={src || ''} />;
 };
 
 type VideoState = 'loading' | 'loadingTimeout' | 'playing' | 'paused' | 'error';
@@ -256,7 +254,7 @@ const useVideoWithControls = (
     }, [videoSrc]);
 
     const video = React.useMemo(() => {
-        return videoSrc ? (
+        return videoSrc !== undefined ? (
             <Video
                 ref={combineRefs(videoController, videoRef)}
                 src={videoSrc}
@@ -993,21 +991,25 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
         },
         ref
     ) => {
+        const hasImage = backgroundImage !== undefined;
+        const hasVideo = backgroundVideo !== undefined;
         const image = renderBackgroundImage(backgroundImage);
         const {video, videoAction} = useVideoWithControls(backgroundVideo, poster, backgroundVideoRef);
 
-        if (backgroundVideo) {
+        console.log(hasImage, hasVideo);
+
+        if (hasVideo) {
             actions = videoAction ? [videoAction] : [];
         }
 
         const isExternalInverse = useIsInverseVariant();
-        const withGradient = !!backgroundImage || !!backgroundVideo;
+        const withGradient = hasImage || hasVideo;
         const textShadow = withGradient ? '0 0 16px rgba(0,0,0,0.4)' : undefined;
         const hasTopActions = actions?.length || onClose;
 
         const isTouchable = touchableProps.href || touchableProps.to || touchableProps.onPress;
         const overlayStyle =
-            backgroundImage || backgroundVideo
+            hasImage || hasVideo
                 ? styles.touchableCardOverlayMedia
                 : isInverse
                 ? styles.touchableCardOverlayInverse
@@ -1030,7 +1032,7 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
                     minHeight="100%"
                     isInverse={isInverse}
                     background={
-                        backgroundImage || backgroundVideo
+                        hasImage || hasVideo
                             ? isExternalInverse
                                 ? vars.colors.backgroundContainerBrandOverInverse
                                 : vars.colors.backgroundContainer
@@ -1046,17 +1048,18 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
                         {isTouchable && <div className={overlayStyle} />}
 
                         <div className={styles.displayCardContainer}>
-                            <ThemeVariant isInverse={isExternalInverse}>
-                                <div className={styles.displayCardBackground}>
-                                    {backgroundVideo ? video : backgroundImage ? image : undefined}
-                                </div>
-                            </ThemeVariant>
+                            {(hasImage || hasVideo) && (
+                                <ThemeVariant isInverse={isExternalInverse}>
+                                    <div className={styles.displayCardBackground}>
+                                        {hasVideo ? video : image}
+                                    </div>
+                                </ThemeVariant>
+                            )}
 
                             <div
                                 className={styles.displayCardContent}
                                 style={{
-                                    paddingTop:
-                                        withGradient && !icon && !hasTopActions && !backgroundVideo ? 0 : 24,
+                                    paddingTop: withGradient && !icon && !hasTopActions && !hasVideo ? 0 : 24,
                                 }}
                             >
                                 {icon ? (
@@ -1066,7 +1069,7 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
                                 ) : (
                                     <Box
                                         paddingBottom={
-                                            hasTopActions || backgroundVideo ? (withGradient ? 24 : 64) : 0
+                                            hasTopActions || hasVideo ? (withGradient ? 24 : 64) : 0
                                         }
                                     />
                                 )}
@@ -1145,7 +1148,7 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
                 <CardActionsGroup
                     onClose={onClose}
                     actions={actions}
-                    type={backgroundImage || backgroundVideo ? 'media' : isInverse ? 'inverse' : 'default'}
+                    type={hasImage || hasVideo ? 'media' : isInverse ? 'inverse' : 'default'}
                 />
             </CardContainer>
         );
@@ -1245,15 +1248,17 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
         },
         ref
     ) => {
+        const hasImage = backgroundImage !== undefined;
+        const hasVideo = backgroundVideo !== undefined;
         const image = renderBackgroundImage(backgroundImage);
         const {video, videoAction} = useVideoWithControls(backgroundVideo, poster, backgroundVideoRef);
 
-        if (backgroundVideo) {
+        if (hasVideo) {
             actions = videoAction ? [videoAction] : [];
         }
 
         const isExternalInverse = useIsInverseVariant();
-        const withGradient = !!backgroundImage || !!backgroundVideo;
+        const withGradient = hasImage || hasVideo;
         const textShadow = withGradient ? '0 0 16px rgba(0,0,0,0.4)' : undefined;
         const hasTopActions = actions?.length || onClose;
         const {textPresets} = useTheme();
@@ -1276,7 +1281,7 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
         };
 
         const overlayStyle =
-            backgroundImage || backgroundVideo
+            hasImage || hasVideo
                 ? styles.touchableCardOverlayMedia
                 : normalizedVariant === 'inverse'
                 ? styles.touchableCardOverlayInverse
@@ -1297,9 +1302,9 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                     className={styles.boxed}
                     width="100%"
                     minHeight="100%"
-                    isInverse={!!backgroundImage || !!backgroundVideo || normalizedVariant === 'inverse'}
+                    isInverse={hasImage || hasVideo || normalizedVariant === 'inverse'}
                     background={
-                        backgroundImage || backgroundVideo
+                        hasImage || hasVideo
                             ? isExternalInverse
                                 ? vars.colors.backgroundContainerBrandOverInverse
                                 : vars.colors.backgroundContainer
@@ -1315,16 +1320,17 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                         {isTouchable && <div className={overlayStyle} />}
 
                         <div className={styles.displayCardContainer}>
-                            <ThemeVariant isInverse={isExternalInverse}>
-                                <div className={styles.displayCardBackground}>
-                                    {backgroundVideo ? video : backgroundImage ? image : undefined}
-                                </div>
-                            </ThemeVariant>
-
+                            {(hasImage || hasVideo) && (
+                                <ThemeVariant isInverse={isExternalInverse}>
+                                    <div className={styles.displayCardBackground}>
+                                        {hasVideo ? video : image}
+                                    </div>
+                                </ThemeVariant>
+                            )}
                             <Box
                                 className={styles.displayCardContent}
                                 paddingTop={
-                                    withGradient && !icon && !hasTopActions && !backgroundVideo
+                                    withGradient && !icon && !hasTopActions && !hasVideo
                                         ? 0
                                         : {mobile: icon ? 16 : 24, desktop: 24}
                                 }
@@ -1339,7 +1345,7 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                                 ) : (
                                     <Box
                                         paddingBottom={
-                                            hasTopActions || backgroundVideo ? (withGradient ? 24 : 64) : 0
+                                            hasTopActions || hasVideo ? (withGradient ? 24 : 64) : 0
                                         }
                                     />
                                 )}
@@ -1409,7 +1415,7 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                     onClose={onClose}
                     actions={actions}
                     type={
-                        !!backgroundImage || !!backgroundVideo
+                        hasImage || hasVideo
                             ? 'media'
                             : normalizedVariant === 'inverse'
                             ? 'inverse'
