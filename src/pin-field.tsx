@@ -19,6 +19,7 @@ let isWaitingForSms = false;
 type PinInputProps = {
     length?: number;
     hideCode?: boolean;
+    readSms?: boolean;
     disabled?: boolean;
     readOnly?: boolean;
     value?: string;
@@ -30,6 +31,7 @@ type PinInputProps = {
 const PinInput = ({
     length = 6,
     hideCode = false,
+    readSms,
     disabled,
     readOnly,
     value,
@@ -69,7 +71,7 @@ const PinInput = ({
 
     React.useEffect(() => {
         // https://developer.mozilla.org/en-US/docs/Web/API/WebOTP_API
-        if ('OTPCredential' in window && !isWaitingForSms) {
+        if (readSms && 'OTPCredential' in window && !isWaitingForSms) {
             isWaitingForSms = true;
             const abortController = new AbortController();
             navigator.credentials
@@ -96,7 +98,7 @@ const PinInput = ({
                 abortController.abort();
             };
         }
-    }, [changeValue, length]);
+    }, [changeValue, length, readSms]);
 
     const createInputChangeHandler = (index: number) => (event: React.ChangeEvent<HTMLInputElement>) => {
         const eventValue = event.target.value;
@@ -195,7 +197,7 @@ const PinInput = ({
                         )}
                         disabled={disabled}
                         readOnly={readOnly}
-                        autoComplete="one-time-code"
+                        autoComplete={readSms ? 'one-time-code' : undefined}
                         value={controlledValue[index] ?? ''}
                         onChange={createInputChangeHandler(index)}
                         onKeyDown={(event) => {
@@ -247,7 +249,14 @@ const PinInput = ({
 
 type OtpFieldProps = {
     length?: number;
+    /**
+     * Whether to hide the input code (password like input), false by default.
+     */
     hideCode?: boolean;
+    /**
+     * Whether to read incoming SMS with OTP codes. It's true by default if hideCode is false, and false otherwise.
+     */
+    readSms?: boolean;
     disabled?: boolean;
     readOnly?: boolean;
     name: string;
@@ -264,6 +273,7 @@ type OtpFieldProps = {
 const PinField = ({
     length = 6,
     hideCode = false,
+    readSms = !hideCode, // by default, don't read sms if the code is hidden (password input type)
     disabled,
     readOnly,
     name,
@@ -306,6 +316,7 @@ const PinField = ({
                 inputRef={fieldProps.inputRef}
                 length={length}
                 hideCode={hideCode}
+                readSms={readSms}
                 value={fieldProps.value}
                 defaultValue={fieldProps.defaultValue}
                 disabled={fieldProps.disabled}
