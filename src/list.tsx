@@ -66,7 +66,7 @@ interface ContentProps extends CommonProps {
     labelId?: string;
 }
 
-const Content: React.FC<ContentProps> = ({
+export const Content: React.FC<ContentProps> = ({
     withChevron,
     headline,
     title,
