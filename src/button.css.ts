@@ -5,7 +5,7 @@ import * as mq from './media-queries.css';
 
 import type {ComplexStyleRule} from '@vanilla-extract/css';
 
-const transitionTiming = '0.3s cubic-bezier(0.77, 0, 0.175, 1)';
+const transitionTiming = '0.1s ease-in-out';
 
 export const BUTTON_MIN_WIDTH = 104;
 const BORDER_PX = 1.5;
@@ -38,12 +38,9 @@ const button = style([
     {
         border: `${BORDER_PX}px solid transparent`,
         minWidth: BUTTON_MIN_WIDTH,
+        transition: `background-color ${transitionTiming}, color ${transitionTiming}, border-color ${transitionTiming}`,
 
         selectors: {
-            '&:hover:not([disabled])': {
-                transition: `background-color ${transitionTiming}, color ${transitionTiming}, border-color ${transitionTiming}`,
-            },
-
             [`&[disabled]:not(${isLoading})`]: disabledStyle,
         },
     },

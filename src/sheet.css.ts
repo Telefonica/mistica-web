@@ -182,7 +182,7 @@ export const modalCloseButtonIcon = style([
         borderRadius: '50%',
     }),
     {
-        transition: 'background-color 0.2s ease-in-out',
+        transition: 'background-color 0.1s ease-in-out',
         selectors: {
             ':not(:disabled) > &:active': {
                 background: skinVars.colors.backgroundContainerPressed,

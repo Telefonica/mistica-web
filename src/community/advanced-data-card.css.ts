@@ -137,7 +137,7 @@ export const cardAction = style([
     cardActionBase,
     {
         background: vars.colors.backgroundContainer,
-        transition: 'background-color 0.2s ease-in-out',
+        transition: 'background-color 0.1s ease-in-out',
         '@media': {
             [mq.supportsHover]: {
                 ':hover': {
@@ -152,7 +152,7 @@ export const cardActionInverse = style([
     cardActionBase,
     {
         background: applyAlpha(vars.rawColors.backgroundContainer, 0.7),
-        transition: 'background-color 0.2s ease-in-out',
+        transition: 'background-color 0.1s ease-in-out',
         '@media': {
             [mq.supportsHover]: {
                 ':hover': {

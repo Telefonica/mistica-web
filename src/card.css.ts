@@ -355,7 +355,7 @@ const cardActionBase = sprinkles({
 export const cardAction = style([
     cardActionBase,
     {
-        transition: 'background-color 0.2s ease-in-out',
+        transition: 'background-color 0.1s ease-in-out',
         selectors: {
             ':not(:disabled) > &:active': {
                 background: skinVars.colors.backgroundContainerPressed,
@@ -379,7 +379,7 @@ export const cardAction = style([
 export const cardActionInverse = style([
     cardActionBase,
     {
-        transition: 'background-color 0.2s ease-in-out',
+        transition: 'background-color 0.1s ease-in-out',
         selectors: {
             ':not(:disabled) > &:active': {
                 background: skinVars.colors.backgroundContainerBrandPressed,
@@ -404,7 +404,7 @@ export const cardActionMedia = style([
     cardActionBase,
     {
         backgroundColor: applyAlpha(skinVars.rawColors.inverse, 0.7),
-        transition: 'background-color 0.2s ease-in-out',
+        transition: 'background-color 0.1s ease-in-out',
         selectors: {
             ':not(:disabled) > &:active': {
                 backgroundColor: applyAlpha(skinVars.rawColors.inverse, 1.0),
