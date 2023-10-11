@@ -48,3 +48,8 @@ export const inverse = style({
         },
     },
 });
+
+export const progressBarSteppedContainer = style({
+    display: 'inline-block',
+    width: '100%',
+});

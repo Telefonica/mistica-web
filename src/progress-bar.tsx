@@ -99,6 +99,7 @@ export const ProgressBarStepped: React.FC<ProgressBarSteppedProps> = ({
             aria-valuemax={steps}
             aria-label={label}
             aria-labelledby={ariaLabelledBy}
+            className={styles.progressBarSteppedContainer}
         >
             <Inline space={8} fullWidth>
                 {Array.from({length: steps}, (_, index) => {
