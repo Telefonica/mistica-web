@@ -5,6 +5,7 @@ type IcnChevronRightSvgProps = {
     size: number;
     color: string;
     transform: string;
+    transitionDuration?: number;
     className?: string;
     style?: React.CSSProperties;
 };
@@ -13,6 +14,7 @@ const IconChevronRightSvg: React.FC<IcnChevronRightSvgProps> = ({
     size,
     color,
     transform,
+    transitionDuration,
     className,
     style,
 }) => (
@@ -22,14 +24,13 @@ const IconChevronRightSvg: React.FC<IcnChevronRightSvgProps> = ({
         height={size}
         viewBox="0 0 24 24"
         className={className}
-        style={style}
+        style={{transform, transition: `transform ${transitionDuration}ms`, ...style}}
     >
         <path
-            style={{transition: 'transform 0.3s'}}
+            style={{transition: `fill ${transitionDuration}ms`}}
             fill={color}
             fillRule="evenodd"
             d="M14.338 11.478a.75.75 0 0 1 0 1.044l-3.837 3.997a.75.75 0 1 1-1.082-1.038L12.76 12 9.42 8.52a.75.75 0 0 1 1.082-1.04l3.837 3.998z"
-            transform={transform}
         />
     </svg>
 );
@@ -49,15 +50,24 @@ type Props = {
     className?: string;
     style?: React.CSSProperties;
     direction?: Direction;
+    transitionDuration?: number;
 };
 
-const IconChevron: React.FC<Props> = ({size = 24, color, className, style, direction = 'right'}) => {
+const IconChevron: React.FC<Props> = ({
+    size = 24,
+    color,
+    className,
+    style,
+    transitionDuration = 300,
+    direction = 'right',
+}) => {
     const fillColor = color || vars.colors.neutralHigh;
     const props = {
         size,
         color: fillColor,
-        transform: `rotate(${rotateAngleByDirection[direction]} 12 12)`,
+        transform: `rotate(${rotateAngleByDirection[direction]}deg)`,
         className,
+        transitionDuration,
         style,
     };
 

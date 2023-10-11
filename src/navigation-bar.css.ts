@@ -179,7 +179,7 @@ export const navigationBarContentRight = style({
     display: 'flex',
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'end',
+    justifyContent: 'flex-end',
 });
 
 const spacerMobile = style({
