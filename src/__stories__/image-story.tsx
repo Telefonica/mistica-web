@@ -71,8 +71,8 @@ export const Default: StoryComponent<Args> = ({
     const emptySourceImage = <Image src="" {...props} />;
 
     /**
-     * For some reason, if we write this logic with a conditional (isInvalidSource ? error : image),
-     * the image element triggers an error when switching the isInvalidSource control from true to false
+     * For some reason, if we write this logic with a conditional (isEmptySource ? error : image),
+     * the image element triggers an error when switching the isEmptySource control from true to false
      */
     return (
         <>
