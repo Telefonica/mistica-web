@@ -80,7 +80,7 @@ test('Accordion with index', async () => {
     await userEvent.click(screen.getByText('Title 3'));
 
     /** We need to wait for CSS transition to finish in order for panels to be removed */
-    await waitFor(async () => {
+    await waitFor(() => {
         expect(screen.queryByText('Content 1')).not.toBeInTheDocument();
         expect(screen.queryByText('Content 3')).not.toBeInTheDocument();
     });
@@ -106,7 +106,7 @@ test('Accordion with default index', async () => {
     await userEvent.click(screen.getByText('Title 2'));
 
     /** We need to wait for CSS transition to finish in order for panels to be removed */
-    await waitFor(async () => {
+    await waitFor(() => {
         expect(screen.queryByText('Content 1')).not.toBeInTheDocument();
     });
     expect(screen.getByText('Content 2')).toBeInTheDocument();
@@ -133,7 +133,7 @@ test('Accordion with singleOpen', async () => {
     await userEvent.click(screen.getByText('Title 3'));
 
     /** We need to wait for CSS transition to finish in order for panels to be removed */
-    await waitFor(async () => {
+    await waitFor(() => {
         expect(screen.queryByText('Content 1')).not.toBeInTheDocument();
         expect(screen.queryByText('Content 2')).not.toBeInTheDocument();
     });
