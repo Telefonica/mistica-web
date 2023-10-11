@@ -49,7 +49,7 @@ type Args = {
     aspectRatio: string;
     autoPlay: boolean;
     withPoster: boolean;
-    isInvalidSource: boolean;
+    isEmptySource: boolean;
 };
 
 export const Default: StoryComponent<Args> = ({
@@ -59,7 +59,7 @@ export const Default: StoryComponent<Args> = ({
     aspectRatio,
     autoPlay,
     withPoster,
-    isInvalidSource,
+    isEmptySource,
 }) => {
     const videoRef = React.useRef<VideoElement>(null);
 
@@ -77,12 +77,7 @@ export const Default: StoryComponent<Args> = ({
         dataAttributes: {testid: 'video'},
     };
 
-    const video = <Video src={VIDEO_SRC} {...props} ref={videoRef} />;
-    /**
-     * using src="data:video/webm;" will always trigger an error and show the error fallback
-     * https://stackoverflow.com/a/53665311
-     * */
-    const error = <Video src="data:video/webm;" {...props} />;
+    const video = <Video src={!isEmptySource ? VIDEO_SRC : ''} {...props} ref={videoRef} />;
 
     return (
         <Stack space={32}>
@@ -124,8 +119,7 @@ export const Default: StoryComponent<Args> = ({
                         Stop
                     </ButtonPrimary>
                 </Inline>
-
-                {isInvalidSource ? error : video}
+                {video}
             </Stack>
         </Stack>
     );
@@ -139,5 +133,5 @@ Default.args = {
     aspectRatio: '1 1',
     autoPlay: true,
     withPoster: true,
-    isInvalidSource: false,
+    isEmptySource: false,
 };

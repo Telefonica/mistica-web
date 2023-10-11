@@ -996,8 +996,6 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
         const image = renderBackgroundImage(backgroundImage);
         const {video, videoAction} = useVideoWithControls(backgroundVideo, poster, backgroundVideoRef);
 
-        console.log(hasImage, hasVideo);
-
         if (hasVideo) {
             actions = videoAction ? [videoAction] : [];
         }

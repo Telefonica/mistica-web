@@ -151,7 +151,7 @@ const Video = React.forwardRef<VideoElement, VideoProps>(
                     loadingTimeoutId = setTimeout(handleError, loadingTimeout);
                     videoRef.current?.load();
                 } else {
-                    handleError();
+                    dispatch('fail');
                 }
 
                 return () => {
