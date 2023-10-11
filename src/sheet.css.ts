@@ -183,6 +183,11 @@ export const modalCloseButtonIcon = style([
     }),
     {
         transition: 'background-color 0.2s ease-in-out',
+        selectors: {
+            ':not(:disabled) > &:active': {
+                background: skinVars.colors.backgroundContainerPressed,
+            },
+        },
         '@media': {
             [mq.supportsHover]: {
                 selectors: {

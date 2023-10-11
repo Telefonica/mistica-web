@@ -1,7 +1,6 @@
 import {createVar, style} from '@vanilla-extract/css';
 import {sprinkles} from './sprinkles.css';
 import {vars as skinVars} from './skins/skin-contract.css';
-import * as mq from './media-queries.css';
 
 const top = createVar();
 const bottom = createVar();
@@ -77,13 +76,10 @@ export const menuItem = style({
 });
 
 export const menuItemHovered = style({
+    transition: 'background-color 0.1s ease-in-out',
     backgroundColor: skinVars.colors.backgroundContainerHover,
-    '@media': {
-        [mq.supportsHover]: {
-            ':active': {
-                backgroundColor: skinVars.colors.backgroundContainerPressed,
-            },
-        },
+    ':active': {
+        backgroundColor: skinVars.colors.backgroundContainerPressed,
     },
 });
 

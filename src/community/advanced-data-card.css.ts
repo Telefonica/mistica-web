@@ -62,10 +62,14 @@ export const touchableCardOverlay = style({
     pointerEvents: 'none',
     position: 'absolute',
     backgroundColor: 'transparent',
+    transition: 'background-color 0.1s ease-in-out',
+    selectors: {
+        [`${touchable}:active &`]: {
+            backgroundColor: vars.colors.backgroundContainerPressed,
+        },
+    },
     '@media': {
         [mq.supportsHover]: {
-            transition: 'background-color 0.1s ease-in-out',
-
             selectors: {
                 [`${touchableContainer}:hover &`]: {
                     backgroundColor: vars.colors.backgroundContainerHover,
