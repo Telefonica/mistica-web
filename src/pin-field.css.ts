@@ -19,17 +19,13 @@ const fieldCommonStyles: Sprinkles = {
     position: 'relative',
     width: 48,
     height: 48,
+    background: vars.colors.backgroundContainer,
 };
 
-export const field = sprinkles({
-    ...fieldCommonStyles,
-    background: vars.colors.backgroundContainer,
-});
+export const field = sprinkles(fieldCommonStyles);
 
 export const focusedField = style([
-    sprinkles({
-        ...fieldCommonStyles,
-    }),
+    field,
     {
         border: `1px solid ${vars.colors.controlActivated}`,
     },
