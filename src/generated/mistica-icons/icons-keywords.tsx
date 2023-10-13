@@ -5,7 +5,7 @@
  */
 
 const iconKeywords: {[key: string]: Array<string>} = {
-    '2g': [
+    '2-g': [
         'second generation',
         'dual generation',
         'double generation',
@@ -13,7 +13,7 @@ const iconKeywords: {[key: string]: Array<string>} = {
         'segunda geração',
         'zweite Generation',
     ],
-    '3d-view': [
+    '3-d-view': [
         'three-dimensional view',
         '3d perspective',
         'spatial visualization',
@@ -21,7 +21,7 @@ const iconKeywords: {[key: string]: Array<string>} = {
         'visualização 3D',
         'räumliche Visualisierung',
     ],
-    '3g': [
+    '3-g': [
         'third generation',
         'tertiary generation',
         'tri-gen',
@@ -29,7 +29,7 @@ const iconKeywords: {[key: string]: Array<string>} = {
         'terceira geração',
         'dritte Generation',
     ],
-    '4g': [
+    '4-g': [
         'fourth generation',
         'quaternary generation',
         '4th gen',
@@ -37,7 +37,7 @@ const iconKeywords: {[key: string]: Array<string>} = {
         'quarta geração',
         'vierte Generation',
     ],
-    '5g': [
+    '5-g': [
         'fifth generation',
         'quinary generation',
         'high-speed generation',
@@ -1375,7 +1375,7 @@ const iconKeywords: {[key: string]: Array<string>} = {
         'documento de imagem jpeg',
         'JPEG-Format',
     ],
-    'file-mp3': [
+    'file-mp-3': [
         'mp3 file',
         'audio document',
         'sound file',
@@ -1383,7 +1383,7 @@ const iconKeywords: {[key: string]: Array<string>} = {
         'documento de áudio',
         'Sounddatei',
     ],
-    'file-mp4': [
+    'file-mp-4': [
         'mp4 file',
         'video document',
         'mpeg-4 format',
@@ -1715,7 +1715,7 @@ const iconKeywords: {[key: string]: Array<string>} = {
         'arquivo de plano de fatura',
         'Rechnungsplan-Datei',
     ],
-    'iot-sensor-co2': [
+    'iot-sensor-co-2': [
         'iot co2 sensor',
         'internet of things carbon dioxide sensor',
         'smart sensor for co2',
@@ -2832,7 +2832,7 @@ const iconKeywords: {[key: string]: Array<string>} = {
     ],
     'trash-can': ['waste bin', 'garbage receptacle', 'dustbin', 'cubo de basura', 'lixeira', 'Mülltonne'],
     'travel-bag': ['luggage', 'suitcase', 'baggage', 'equipaje', 'bagagem', 'Reisetasche'],
-    tree2: [
+    'tree-2': [
         'second tree',
         'additional tree',
         'duplicate tree',
@@ -3072,4 +3072,5 @@ const iconKeywords: {[key: string]: Array<string>} = {
         'Weltweites Gerät',
     ],
 };
+
 export default iconKeywords;
