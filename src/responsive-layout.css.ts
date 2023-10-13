@@ -14,10 +14,11 @@ export const LARGE_DESKTOP_MAX_WIDTH = 1224;
 const sideMargin = createVar();
 const insideDialog = createVar();
 const notInsideDialog = createVar();
-const insideFixedFooter = createVar();
+const notInsideFixedFooter = createVar();
 export const vars = {sideMargin};
 
 export const responsiveLayoutContainer = style([
+    sprinkles({width: '100%'}),
     {
         vars: {
             [sideMargin]: '0px',
@@ -27,7 +28,7 @@ export const responsiveLayoutContainer = style([
                 sheetVars.insideSheetDialog,
                 '0'
             )})`,
-            [insideFixedFooter]: `${fallbackVar(fixedFooterVars.insideFixedFooter, '0')}`,
+            [notInsideFixedFooter]: `(1 - ${fallbackVar(fixedFooterVars.insideFixedFooter, '0')})`,
         },
         '@media': {
             [mq.desktop]: {
@@ -49,7 +50,8 @@ export const responsiveLayoutContainer = style([
 
         selectors: {
             '& &': {
-                margin: `0 calc(-1 * ${insideFixedFooter} * ${sideMargin})`,
+                width: 'auto',
+                margin: `0 calc(-1 * ${notInsideFixedFooter} * ${sideMargin})`,
                 '@media': {
                     [mq.desktop]: {
                         margin: `0 calc(-1 * ${sideMargin})`,

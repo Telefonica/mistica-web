@@ -15,6 +15,9 @@ export const footer = style([
         background: skinVars.colors.background,
     }),
     {
+        vars: {
+            [insideFixedFooter]: '1',
+        },
         transition: 'box-shadow 0.2s linear',
     },
 ]);
@@ -46,9 +49,6 @@ export const elevated = style([
 export const withoutFooter = sprinkles({display: 'none'});
 
 export const container = style({
-    vars: {
-        [insideFixedFooter]: '1',
-    },
     '@media': {
         [mq.tabletOrSmaller]: {
             isolation: 'isolate',
