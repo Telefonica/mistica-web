@@ -89,14 +89,26 @@ export const menuItemHovered = style({
     },
     '@media': {
         [mq.touchableOnly]: {
+            backgroundColor: 'transparent',
             transition: 'none',
+        },
+    },
+});
+
+export const menuItemEnabled = style({
+    '@media': {
+        [mq.touchableOnly]: {
+            selectors: {
+                '&:active:not([menuItemDisabled])': {
+                    backgroundColor: skinVars.colors.backgroundContainerPressed,
+                },
+            },
         },
     },
 });
 
 export const menuItemDisabled = style({
     userSelect: 'none',
-    borderRadius: skinVars.borderRadii.popup,
     opacity: 0.5,
 });
 
