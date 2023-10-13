@@ -199,12 +199,12 @@ const createIconComponentSource = async (name, componentName, svgIconsInfo) => {
 };
 
 /**
- * @typedef {{[key: string]: Array<string>}} iconKeywordsInfo
+ * @typedef {{[key: string]: Array<string>}} IconKeywordsInfo
  */
 const createAllIconKeywordsSource = () => {
     const keywordsPath = join(PATH_MISTICA_ICONS_REPO, 'icons', 'icons-keywords.json');
     const keywordsSource = fs.readFileSync(keywordsPath, 'utf8');
-    /** @type {iconKeywordsInfo} */
+    /** @type {IconKeywordsInfo} */
     const keywordsMap = JSON.parse(keywordsSource);
 
     // map icon names to kebab case
