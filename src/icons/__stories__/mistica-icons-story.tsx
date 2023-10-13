@@ -3,6 +3,7 @@ import {useCheckbox} from '../../__stories__/helpers';
 import {ThemeVariant, Box, Stack, SearchField, Inline, DoubleField, Text, skinVars} from '../..';
 import IntegerField from '../../integer-field';
 import {kebabCase, camelCase, upperFirst} from 'lodash';
+import iconKeywords from '../../generated/mistica-icons/icons-keywords';
 
 /**
  * './path/icon-name-filled.tsx' => 'IconNameFilled'
@@ -57,8 +58,9 @@ export const Catalog = (): JSX.Element => {
             return false;
         }
 
-        if (filter && !getRealName(name).toLowerCase().includes(filter.toLocaleLowerCase())) {
-            return false;
+        if (filter) {
+            const keywords = [...(iconKeywords[name] || []), getRealName(name).toLowerCase()];
+            return keywords.some((key) => key.includes(filter.toLocaleLowerCase()));
         }
 
         return true;
