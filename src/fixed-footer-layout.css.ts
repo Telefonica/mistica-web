@@ -5,8 +5,9 @@ import * as mq from './media-queries.css';
 
 const footerHeight = createVar();
 const backgroundColor = createVar();
+const insideFixedFooter = createVar();
 
-export const vars = {footerHeight, backgroundColor};
+export const vars = {footerHeight, backgroundColor, insideFixedFooter};
 
 export const footer = style([
     sprinkles({
@@ -45,6 +46,9 @@ export const elevated = style([
 export const withoutFooter = sprinkles({display: 'none'});
 
 export const container = style({
+    vars: {
+        [insideFixedFooter]: '1',
+    },
     '@media': {
         [mq.tabletOrSmaller]: {
             isolation: 'isolate',
