@@ -1,8 +1,11 @@
-import {style, keyframes, styleVariants} from '@vanilla-extract/css';
+import {style, keyframes, styleVariants, createVar} from '@vanilla-extract/css';
 import * as mq from './media-queries.css';
-import {vars} from './skins/skin-contract.css';
+import {vars as skinVars} from './skins/skin-contract.css';
 import {sprinkles} from './sprinkles.css';
 import {pxToRem} from './utils/css';
+
+const insideDialog = createVar();
+export const vars = {insideDialog};
 
 const fadeIn = keyframes({
     '0%': {opacity: 0},
@@ -43,7 +46,7 @@ export const modalOpacityLayer = style([
         right: 0,
         bottom: 0,
         left: 0,
-        background: vars.colors.backgroundOverlay,
+        background: skinVars.colors.backgroundOverlay,
     }),
     {
         zIndex: Z_INDEX,
@@ -72,8 +75,8 @@ export const modalCloseButtonContainer = style([
 
 export const modalContent = style([
     sprinkles({
-        background: vars.colors.background,
-        borderRadius: vars.borderRadii.container,
+        background: skinVars.colors.background,
+        borderRadius: skinVars.borderRadii.container,
     }),
     {
         animation: `${fadeScale} .2s ease-in-out`,
@@ -91,6 +94,10 @@ const dialogContainer = style([
         justifyContent: 'space-between',
     }),
     {
+        vars: {
+            [insideDialog]: '1',
+        },
+
         width: 'calc(100vw - 48px)',
         margin: 'auto',
 

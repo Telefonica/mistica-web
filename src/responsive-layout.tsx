@@ -33,7 +33,7 @@ const ResponsiveLayout: React.FC<Props> = ({
         <ThemeVariant variant={internalVariant ?? outsideVariant}>
             <div
                 className={classnames(
-                    styles.container,
+                    fullWidth ? styles.fullwidthContainer : styles.responsiveLayoutContainer,
                     className,
                     internalVariant &&
                         internalVariant !== 'default' &&

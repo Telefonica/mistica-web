@@ -1,9 +1,12 @@
 import {createVar, style} from '@vanilla-extract/css';
 import * as mq from './media-queries.css';
 import {sprinkles} from './sprinkles.css';
-import {MOBILE_SIDE_MARGIN, SMALL_DESKTOP_SIDE_MARGIN, TABLET_SIDE_MARGIN} from './responsive-layout.css';
-
-const LARGE_DESKTOP_MAX_WIDTH = 1224;
+import {
+    MOBILE_SIDE_MARGIN,
+    SMALL_DESKTOP_SIDE_MARGIN,
+    TABLET_SIDE_MARGIN,
+    LARGE_DESKTOP_MAX_WIDTH,
+} from './responsive-layout.css';
 
 const height = createVar();
 
