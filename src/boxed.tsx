@@ -16,6 +16,7 @@ type Props = {
     /** "data-" prefix is automatically added. For example, use "testid" instead of "data-testid" */
     dataAttributes?: DataAttributes;
     'aria-label'?: string;
+    'aria-labelledby'?: string;
     width?: number | string;
     height?: number | string;
     minHeight?: number | string;
@@ -42,6 +43,7 @@ export const InternalBoxed = React.forwardRef<HTMLDivElement, Props & InternalPr
             role,
             dataAttributes,
             'aria-label': ariaLabel,
+            'aria-labelledby': ariaLabelledby,
             width,
             height,
             minHeight,
@@ -72,6 +74,7 @@ export const InternalBoxed = React.forwardRef<HTMLDivElement, Props & InternalPr
                 )}
                 role={role}
                 aria-label={ariaLabel}
+                aria-labelledby={ariaLabelledby}
                 {...getPrefixedDataAttributes(dataAttributes)}
             >
                 <ThemeVariant isInverse={isInverseInside}>{children}</ThemeVariant>
