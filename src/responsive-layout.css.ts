@@ -19,7 +19,7 @@ export const responsiveLayoutContainer = style([
         vars: {
             [sideMargin]: '0px',
             [insideDialog]: `${fallbackVar(dialogVars.insideDialog, '0')}`,
-            [notInsideDialog]: `1 - ${fallbackVar(dialogVars.insideDialog, '0')}`,
+            [notInsideDialog]: `(1 - ${fallbackVar(dialogVars.insideDialog, '0')})`,
         },
         '@media': {
             [mq.desktop]: {
@@ -44,7 +44,10 @@ export const responsiveLayoutContainer = style([
                 margin: `0 calc(-1 * ${sideMargin})`,
                 '@media': {
                     [mq.largeDesktop]: {
-                        margin: `0 calc(-1 * ((${notInsideDialog}) * (100vw - ${LARGE_DESKTOP_MAX_WIDTH}px) / 2 + ${insideDialog} * ${SMALL_DESKTOP_SIDE_MARGIN}px))`,
+                        margin: `0 calc(-1 * (
+                            ${notInsideDialog} * (100vw - ${LARGE_DESKTOP_MAX_WIDTH}px) / 2 +
+                            ${insideDialog} * ${SMALL_DESKTOP_SIDE_MARGIN}px
+                        ))`,
                     },
                 },
             },
@@ -72,9 +75,12 @@ export const responsiveLayout = style({
     margin: `0 ${sideMargin}`,
     '@media': {
         [mq.largeDesktop]: {
-            margin: `0 calc((${notInsideDialog}) * (100vw - ${LARGE_DESKTOP_MAX_WIDTH}px) / 2 + ${insideDialog} * ${SMALL_DESKTOP_SIDE_MARGIN}px)`,
-            width: `calc((${notInsideDialog}) * ${LARGE_DESKTOP_MAX_WIDTH}px)`,
-            minWidth: `calc((${insideDialog}) * (100% - ${SMALL_DESKTOP_SIDE_MARGIN * 2}px))`,
+            margin: `0 calc(
+                ${notInsideDialog} * (100vw - ${LARGE_DESKTOP_MAX_WIDTH}px) / 2 +
+                ${insideDialog} * ${SMALL_DESKTOP_SIDE_MARGIN}px
+            )`,
+            width: `calc(${notInsideDialog} * ${LARGE_DESKTOP_MAX_WIDTH}px)`,
+            minWidth: `calc(${insideDialog} * (100% - ${SMALL_DESKTOP_SIDE_MARGIN * 2}px))`,
         },
     },
 });
