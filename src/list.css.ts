@@ -21,6 +21,9 @@ export const touchableBackground = style({
                 background: vars.colors.backgroundContainerPressed,
             },
         },
+        [mq.touchableOnly]: {
+            transition: 'none',
+        },
     },
 });
 
@@ -37,6 +40,9 @@ export const touchableBackgroundInverse = style({
             ':active': {
                 background: vars.colors.backgroundContainerBrandPressed,
             },
+        },
+        [mq.touchableOnly]: {
+            transition: 'none',
         },
     },
 });

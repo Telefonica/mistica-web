@@ -199,6 +199,9 @@ export const modalCloseButtonIcon = style([
                     },
                 },
             },
+            [mq.touchableOnly]: {
+                transition: 'none',
+            },
         },
     },
 ]);
@@ -268,6 +271,9 @@ export const sheetActionRow = style([
                 ':active': {
                     background: skinVars.colors.backgroundContainerPressed,
                 },
+            },
+            [mq.touchableOnly]: {
+                transition: 'none',
             },
         },
     },

@@ -1,6 +1,7 @@
 import {createVar, style} from '@vanilla-extract/css';
 import {sprinkles} from './sprinkles.css';
 import {vars as skinVars} from './skins/skin-contract.css';
+import * as mq from './media-queries.css';
 
 const top = createVar();
 const bottom = createVar();
@@ -73,6 +74,11 @@ export const menuItem = style({
     transition: 'background-color 0.1s ease-in-out',
     borderRadius: skinVars.borderRadii.popup,
     backgroundColor: 'transparent',
+    '@media': {
+        [mq.touchableOnly]: {
+            transition: 'none',
+        },
+    },
 });
 
 export const menuItemHovered = style({
@@ -80,6 +86,11 @@ export const menuItemHovered = style({
     backgroundColor: skinVars.colors.backgroundContainerHover,
     ':active': {
         backgroundColor: skinVars.colors.backgroundContainerPressed,
+    },
+    '@media': {
+        [mq.touchableOnly]: {
+            transition: 'none',
+        },
     },
 });
 

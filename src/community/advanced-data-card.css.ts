@@ -79,6 +79,9 @@ export const touchableCardOverlay = style({
                 },
             },
         },
+        [mq.touchableOnly]: {
+            transition: 'none',
+        },
     },
 });
 
@@ -144,6 +147,9 @@ export const cardAction = style([
                     background: vars.colors.backgroundAlternative,
                 },
             },
+            [mq.touchableOnly]: {
+                transition: 'none',
+            },
         },
     },
 ]);
@@ -158,6 +164,9 @@ export const cardActionInverse = style([
                 ':hover': {
                     background: applyAlpha(vars.rawColors.backgroundContainer, 0.9),
                 },
+            },
+            [mq.touchableOnly]: {
+                transition: 'none',
             },
         },
     },

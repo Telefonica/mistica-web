@@ -154,6 +154,8 @@ export const MenuItem: React.FC<MenuItemProps> = ({
             })}
             onMouseMove={() => setFocusedItem(disabled ? null : itemIndex)}
             onMouseLeave={() => setFocusedItem(null)}
+            onTouchMove={() => setFocusedItem(disabled ? null : itemIndex)}
+            onTouchEnd={() => setFocusedItem(null)}
         >
             {renderContent()}
         </div>

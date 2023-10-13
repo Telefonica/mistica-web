@@ -43,6 +43,11 @@ const button = style([
         selectors: {
             [`&[disabled]:not(${isLoading})`]: disabledStyle,
         },
+        '@media': {
+            [mq.touchableOnly]: {
+                transition: 'none',
+            },
+        },
     },
 ]);
 
@@ -312,6 +317,9 @@ export const link = style([
                         backgroundColor: vars.colors.buttonLinkBackgroundSelected,
                     },
                 },
+            },
+            [mq.touchableOnly]: {
+                transition: 'none',
             },
         },
     },

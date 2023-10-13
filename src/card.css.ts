@@ -58,6 +58,9 @@ export const touchableMediaCardOverlay = style([
                     },
                 },
             },
+            [mq.touchableOnly]: {
+                transition: 'none',
+            },
         },
     },
 ]);
@@ -89,6 +92,9 @@ export const touchableNakedMediaOverlay = style([
                     },
                 },
             },
+            [mq.touchableOnly]: {
+                transition: 'none',
+            },
         },
     },
 ]);
@@ -113,6 +119,9 @@ export const touchableCardOverlay = style([
                         backgroundColor: skinVars.colors.backgroundContainerPressed,
                     },
                 },
+            },
+            [mq.touchableOnly]: {
+                transition: 'none',
             },
         },
     },
@@ -139,6 +148,9 @@ export const touchableCardOverlayInverse = style([
                     },
                 },
             },
+            [mq.touchableOnly]: {
+                transition: 'none',
+            },
         },
     },
 ]);
@@ -163,6 +175,9 @@ export const touchableCardOverlayMedia = style([
                         backgroundColor: skinVars.colors.coverBackgroundPressed,
                     },
                 },
+            },
+            [mq.touchableOnly]: {
+                transition: 'none',
             },
         },
     },
@@ -217,7 +232,7 @@ export const nakedCardContent = style([
         paddingTop: 16,
     }),
     {
-        transition: 'opacity 0.15s ease-in-out',
+        transition: 'opacity 0.1s ease-in-out',
         selectors: {
             [`${touchableContainer} ${touchable}:active &`]: {
                 transitionDuration: '0.1s',
@@ -235,6 +250,9 @@ export const nakedCardContent = style([
                         opacity: 0.6,
                     },
                 },
+            },
+            [mq.touchableOnly]: {
+                transition: 'none',
             },
         },
     },
@@ -372,6 +390,9 @@ export const cardAction = style([
                     },
                 },
             },
+            [mq.touchableOnly]: {
+                transition: 'none',
+            },
         },
     },
 ]);
@@ -395,6 +416,9 @@ export const cardActionInverse = style([
                         background: skinVars.colors.backgroundContainerBrandPressed,
                     },
                 },
+            },
+            [mq.touchableOnly]: {
+                transition: 'none',
             },
         },
     },
@@ -420,6 +444,9 @@ export const cardActionMedia = style([
                         backgroundColor: applyAlpha(skinVars.rawColors.inverse, 1.0),
                     },
                 },
+            },
+            [mq.touchableOnly]: {
+                transition: 'none',
             },
         },
     },
