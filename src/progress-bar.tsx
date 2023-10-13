@@ -75,9 +75,17 @@ export const ProgressBarStepped: React.FC<ProgressBarSteppedProps> = ({
     'aria-labelledby': ariaLabelledBy,
 }) => {
     const {texts} = useTheme();
-    const step = Math.max(0, Math.min(steps, Math.ceil(currentStep)));
-    const previousStepRef = React.useRef(step);
-    const isBack = previousStepRef.current > step;
+
+    const [step, setStep] = React.useState(Math.ceil(currentStep));
+    const [isBack, setIsBack] = React.useState(false);
+
+    React.useEffect(() => {
+        const newStep = Math.ceil(currentStep);
+        if (step !== newStep) {
+            setIsBack(newStep < step);
+            setStep(newStep);
+        }
+    }, [currentStep, steps, step]);
 
     const getFormattedLabel = () => {
         const label = texts.progressBarStepLabel.replace('1$s', String(step)).replace('2$s', String(steps));
@@ -85,10 +93,6 @@ export const ProgressBarStepped: React.FC<ProgressBarSteppedProps> = ({
     };
 
     const label = ariaLabelledBy ? undefined : getFormattedLabel();
-
-    React.useEffect(() => {
-        previousStepRef.current = step;
-    }, [step]);
 
     return (
         <div
