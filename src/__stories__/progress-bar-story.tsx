@@ -27,6 +27,13 @@ export const ProgressBarStory: StoryComponent<ProgressBarStoryArgs> = ({reverse,
     />
 );
 
+ProgressBarStory.storyName = 'ProgressBar';
+ProgressBarStory.args = {
+    reverse: false,
+    progressPercent: 30,
+    color: 'default',
+};
+
 type ProgressBarSteppedStoryArgs = {
     steps: number;
     currentStep: number;
@@ -46,21 +53,12 @@ export const ProgressBarSteppedStory: StoryComponent<ProgressBarSteppedStoryArgs
     />
 );
 
-ProgressBarStory.storyName = 'ProgressBar';
 ProgressBarSteppedStory.storyName = 'ProgressBarStepped';
-
-ProgressBarStory.args = {
-    reverse: false,
-    progressPercent: 30,
-    color: 'default',
-};
-
 ProgressBarSteppedStory.args = {
     steps: 4,
     currentStep: 3,
     color: 'default',
 };
-
 ProgressBarSteppedStory.argTypes = {
     steps: {
         control: {type: 'range', min: 1, max: 6, step: 1},

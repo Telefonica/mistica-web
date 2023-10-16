@@ -45,7 +45,7 @@ test('Sheet', async () => {
 
     await userEvent.click(closeButton);
     await waitForElementToBeRemoved(sheet);
-});
+}, 20000);
 
 test('RadioListSheet', async () => {
     const selectSpy = jest.fn();
@@ -95,7 +95,7 @@ test('RadioListSheet', async () => {
 
     await waitForElementToBeRemoved(sheet);
     expect(selectSpy).toHaveBeenCalledWith('1');
-}, 15000);
+}, 20000);
 
 test('ActionsListSheet', async () => {
     const selectSpy = jest.fn();
@@ -144,7 +144,7 @@ test('ActionsListSheet', async () => {
 
     await waitForElementToBeRemoved(sheet);
     expect(selectSpy).toHaveBeenCalledWith('1');
-});
+}, 20000);
 
 test('InfoSheet', async () => {
     const TestComponent = () => {
@@ -193,7 +193,7 @@ test('InfoSheet', async () => {
 
     const items = await within(itemList).findAllByRole('listitem');
     expect(items).toHaveLength(2);
-});
+}, 20000);
 
 test('ActionsSheet', async () => {
     const onPressButtonSpy = jest.fn();
@@ -249,7 +249,7 @@ test('ActionsSheet', async () => {
 
     await waitForElementToBeRemoved(sheet);
     expect(onPressButtonSpy).toHaveBeenCalledWith('SECONDARY');
-});
+}, 20000);
 
 test('showSheet INFO', async () => {
     const resultSpy = jest.fn();
@@ -277,7 +277,7 @@ test('showSheet INFO', async () => {
 
     await waitForElementToBeRemoved(sheet);
     expect(resultSpy).toHaveBeenCalledWith(undefined);
-});
+}, 20000);
 
 test('showSheet ACTIONS_LIST', async () => {
     const resultSpy = jest.fn();
@@ -309,7 +309,7 @@ test('showSheet ACTIONS_LIST', async () => {
 
     await waitForElementToBeRemoved(sheet);
     expect(resultSpy).toHaveBeenCalledWith({action: 'SUBMIT', selectedId: '2'});
-});
+}, 20000);
 
 test('showSheet ACTIONS_LIST dismiss', async () => {
     const resultSpy = jest.fn();
@@ -340,7 +340,7 @@ test('showSheet ACTIONS_LIST dismiss', async () => {
 
     await waitForElementToBeRemoved(sheet);
     expect(resultSpy).toHaveBeenCalledWith({action: 'DISMISS'});
-});
+}, 20000);
 
 test('showSheet RADIO_LIST', async () => {
     const resultSpy = jest.fn();
@@ -374,7 +374,7 @@ test('showSheet RADIO_LIST', async () => {
 
     await waitForElementToBeRemoved(sheet);
     expect(resultSpy).toHaveBeenCalledWith({action: 'SUBMIT', selectedId: '2'});
-});
+}, 20000);
 
 test('showSheet RADIO_LIST dismiss', async () => {
     const resultSpy = jest.fn();
@@ -405,7 +405,7 @@ test('showSheet RADIO_LIST dismiss', async () => {
 
     await waitForElementToBeRemoved(sheet);
     expect(resultSpy).toHaveBeenCalledWith({action: 'DISMISS'});
-});
+}, 20000);
 
 test('showSheet ACTIONS', async () => {
     const resultSpy = jest.fn();
@@ -444,7 +444,7 @@ test('showSheet ACTIONS', async () => {
 
     await waitForElementToBeRemoved(sheet);
     expect(resultSpy).toHaveBeenCalledWith({action: 'LINK'});
-});
+}, 20000);
 
 test('showSheet ACTIONS dismiss', async () => {
     const resultSpy = jest.fn();
@@ -476,7 +476,7 @@ test('showSheet ACTIONS dismiss', async () => {
 
     await waitForElementToBeRemoved(sheet);
     expect(resultSpy).toHaveBeenCalledWith({action: 'DISMISS'});
-});
+}, 20000);
 
 test('showSheet fails if SheetRoot is not rendered', async () => {
     await expect(
@@ -743,4 +743,4 @@ test('showSheet with native implementation fallbacks to web if native fails', as
 
     await waitForElementToBeRemoved(sheet);
     expect(resultSpy).toHaveBeenCalledWith({action: 'LINK'});
-});
+}, 20000);

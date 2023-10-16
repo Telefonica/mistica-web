@@ -43,7 +43,7 @@ type Args = {
     height: number;
     aspectRatio: string;
     borderRadius: boolean;
-    isInvalidSource: boolean;
+    isEmptySource: boolean;
 };
 
 export const Default: StoryComponent<Args> = ({
@@ -52,7 +52,7 @@ export const Default: StoryComponent<Args> = ({
     height,
     aspectRatio,
     borderRadius,
-    isInvalidSource,
+    isEmptySource,
 }) => {
     const props = {
         width: type !== 'full width' ? width : undefined,
@@ -68,20 +68,16 @@ export const Default: StoryComponent<Args> = ({
     };
 
     const image = <Image src={usingVrImg} {...props} />;
-    /**
-     * using src="data:image/jpg;" will always trigger an error and show the error fallback
-     * https://stackoverflow.com/a/53665311
-     * */
-    const error = <Image src="data:image/jpg;" {...props} />;
+    const emptySourceImage = <Image src="" {...props} />;
 
     /**
-     * For some reason, if we write this logic with a conditional (isInvalidSource ? error : image),
-     * the image element triggers an error when switching the isInvalidSource control from true to false
+     * For some reason, if we write this logic with a conditional (isEmptySource ? error : image),
+     * the image element triggers an error when switching the isEmptySource control from true to false
      */
     return (
         <>
-            {!isInvalidSource && image}
-            {isInvalidSource && error}
+            {!isEmptySource && image}
+            {isEmptySource && emptySourceImage}
         </>
     );
 };
@@ -93,5 +89,5 @@ Default.args = {
     height: 240,
     aspectRatio: '1 1',
     borderRadius: true,
-    isInvalidSource: false,
+    isEmptySource: false,
 };

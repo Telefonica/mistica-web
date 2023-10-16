@@ -11,6 +11,7 @@ export type {TouchableElement} from './touchable';
 export {default as Spinner} from './spinner';
 export {default as FadeIn} from './fade-in';
 
+export {AccordionItem, BoxedAccordionItem, Accordion, BoxedAccordion} from './accordion';
 export {ButtonPrimary, ButtonSecondary, ButtonDanger, ButtonLink} from './button';
 export {default as ButtonLayout} from './button-layout';
 export {default as FixedFooterLayout} from './fixed-footer-layout';
@@ -122,6 +123,7 @@ export {default as StackingGroup} from './stacking-group';
 export {default as Form} from './form';
 export {default as Select} from './select';
 export {default as TextField} from './text-field';
+export {default as PinField} from './pin-field';
 export {TextFieldBase} from './text-field-base';
 export {default as SearchField} from './search-field';
 export {default as EmailField} from './email-field';
