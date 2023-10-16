@@ -5060,10 +5060,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@telefonica/libphonenumber@npm:^2.8.1":
-  version: 2.8.1
-  resolution: "@telefonica/libphonenumber@npm:2.8.1"
-  checksum: f51a07fd300337f8fd681f469411d9f8506899d30fbd3af9e757a8780ee020db7a80527bba35a9377fd0c18ae8d288237fedd35bf896e6c55b5aef957f8d2f8f
+"@telefonica/libphonenumber@npm:^2.9.0-beta0":
+  version: 2.9.0-beta0
+  resolution: "@telefonica/libphonenumber@npm:2.9.0-beta0"
+  checksum: 14e1199da0e5091becee0efa3554c509c9cf84619df16b39e966b909c956437849d0efdb4447f78b97af10181d3f8b4bf2f8ed5c5c71cc8a6ffc48fbdf5de9ab
   languageName: node
   linkType: hard
 
@@ -5097,7 +5097,7 @@ __metadata:
     "@tef-novum/webview-bridge": ^3.27.0
     "@telefonica/acceptance-testing": 2.13.0
     "@telefonica/eslint-config": ^1.7.0
-    "@telefonica/libphonenumber": ^2.8.1
+    "@telefonica/libphonenumber": ^2.9.0-beta0
     "@telefonica/prettier-config": ^1.1.0
     "@testing-library/jest-dom": ^5.16.5
     "@testing-library/react": ^13.4.0
