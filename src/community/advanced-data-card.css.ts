@@ -38,7 +38,7 @@ export const actions = style([
     },
 ]);
 
-export const touchableAccessibility = style({
+export const touchableArea = style({
     position: 'absolute',
     top: 0,
     left: 0,

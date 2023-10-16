@@ -70,7 +70,7 @@ const CardContent: React.FC<CardContentProps> = ({
             <Touchable
                 tabIndex={0}
                 maybe
-                className={classNames(styles.touchableAccessibility)}
+                className={classNames(styles.touchableArea)}
                 as="a"
                 href={href}
                 aria-label={ariaLabel}
