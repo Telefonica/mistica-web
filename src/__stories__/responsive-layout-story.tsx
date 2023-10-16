@@ -34,3 +34,17 @@ Default.args = {
     isInverse: false,
     withBackgroundColor: false,
 };
+
+export const Nested: StoryComponent = () => (
+    <ResponsiveLayout variant="alternative">
+        <Placeholder />
+        <ResponsiveLayout variant="inverse">
+            <Placeholder />
+            <ResponsiveLayout variant="default" backgroundColor="gray">
+                <Placeholder />
+            </ResponsiveLayout>
+        </ResponsiveLayout>
+    </ResponsiveLayout>
+);
+
+Nested.storyName = 'Nested responsive layouts';
