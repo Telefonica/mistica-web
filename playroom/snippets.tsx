@@ -2635,6 +2635,11 @@ export default [
         code: '<ProgressBar progressPercent={35} />',
     },
     {
+        group: 'Progress',
+        name: 'ProgressBarStepped',
+        code: '<ProgressBarStepped steps={6} currentStep={3} />',
+    },
+    {
         group: 'NavigationBreadcrumbs',
         name: 'NavigationBreadcrumbs',
         code: '<NavigationBreadcrumbs title="Facturas" breadcrumbs={[{title: "Cuenta", url: "/consumptions"}]} />',

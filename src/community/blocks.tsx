@@ -5,7 +5,7 @@ import {Text2, Text3, Text5, Text8} from '../text';
 import {vars} from '../skins/skin-contract.css';
 import Inline from '../inline';
 import Box from '../box';
-import ProgressBar from '../progress-bar';
+import {ProgressBar} from '../progress-bar';
 import classNames from 'classnames';
 
 import type StackingGroup from '../stacking-group';
