@@ -161,7 +161,6 @@ const PinInput = ({
                     }
                 >
                     <IntegerInput
-                        placeholder={hideCode ? '○' : undefined}
                         aria-label={texts.pinFieldInputLabel
                             .replace('1$s', String(index + 1))
                             .replace('2$s', String(length))}

@@ -38,14 +38,6 @@ export const readOnlyField = sprinkles({
 
 export const input = style({
     textAlign: 'center',
-    selectors: {
-        '&::placeholder': {
-            opacity: 0.5,
-        },
-        '&:focus::placeholder': {
-            opacity: 0,
-        },
-    },
 });
 
 export const passwordInput = sprinkles({
