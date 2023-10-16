@@ -42,6 +42,8 @@ export const Default: StoryComponent = () => {
             <Stack space={16}>
                 <ButtonPrimary
                     disabled={open}
+                    aria-expanded={open}
+                    aria-haspopup="dialog"
                     onPress={() => {
                         setOpen(true);
                     }}
@@ -104,6 +106,8 @@ export const RadioList: StoryComponent<RadioListSheetArgs> = ({
             <Stack space={16}>
                 <ButtonPrimary
                     disabled={open}
+                    aria-expanded={open}
+                    aria-haspopup="dialog"
                     onPress={() => {
                         setOpen(true);
                         setSelected(null);
@@ -194,6 +198,8 @@ export const ActionsList: StoryComponent<SheetArgs> = ({
             <Stack space={16}>
                 <ButtonPrimary
                     disabled={open}
+                    aria-expanded={open}
+                    aria-haspopup="dialog"
                     onPress={() => {
                         setOpen(true);
                         setSelected(null);
@@ -280,6 +286,8 @@ export const Info: StoryComponent<InfoSheetArgs> = ({
         <Box paddingY={24} paddingX={16}>
             <ButtonPrimary
                 disabled={open}
+                aria-expanded={open}
+                aria-haspopup="dialog"
                 onPress={() => {
                     setOpen(true);
                 }}
@@ -362,6 +370,8 @@ export const Actions: StoryComponent<ActionsSheetArgs> = ({
             <Stack space={16}>
                 <ButtonPrimary
                     disabled={open}
+                    aria-expanded={open}
+                    aria-haspopup="dialog"
                     onPress={() => {
                         setOpen(true);
                         setPressedButton(null);
@@ -441,14 +451,18 @@ type RootArgs = {
 
 export const Root: StoryComponent<RootArgs> = ({title, subtitle, description, multiparagraphDescription}) => {
     const [response, setResponse] = React.useState<unknown>();
+    const [openDialogType, setOpenDialogType] = React.useState<string>();
     return (
         <Box paddingY={24} paddingX={16}>
             <SheetRoot />
             <Stack space={16}>
                 <Inline space={16}>
                     <ButtonPrimary
+                        aria-haspopup="dialog"
+                        aria-expanded={openDialogType === 'INFO'}
                         onPress={() => {
                             setResponse(undefined);
+                            setOpenDialogType('INFO');
                             showSheet({
                                 type: 'INFO',
                                 props: {
@@ -477,14 +491,20 @@ export const Root: StoryComponent<RootArgs> = ({title, subtitle, description, mu
                                         },
                                     ],
                                 },
-                            }).then(setResponse);
+                            }).then((response) => {
+                                setOpenDialogType(undefined);
+                                setResponse(response);
+                            });
                         }}
                     >
                         'INFO'
                     </ButtonPrimary>
                     <ButtonPrimary
+                        aria-haspopup="dialog"
+                        aria-expanded={openDialogType === 'ACTIONS_LIST'}
                         onPress={() => {
                             setResponse(undefined);
+                            setOpenDialogType('ACTIONS_LIST');
                             showSheet({
                                 type: 'ACTIONS_LIST',
                                 props: {
@@ -509,14 +529,20 @@ export const Root: StoryComponent<RootArgs> = ({title, subtitle, description, mu
                                         },
                                     ],
                                 },
-                            }).then(setResponse);
+                            }).then((response) => {
+                                setOpenDialogType(undefined);
+                                setResponse(response);
+                            });
                         }}
                     >
                         'ACTIONS_LIST'
                     </ButtonPrimary>
                     <ButtonPrimary
+                        aria-haspopup="dialog"
+                        aria-expanded={openDialogType === 'ACTIONS'}
                         onPress={() => {
                             setResponse(undefined);
+                            setOpenDialogType('ACTIONS');
                             showSheet({
                                 type: 'ACTIONS',
                                 props: {
@@ -534,14 +560,20 @@ export const Root: StoryComponent<RootArgs> = ({title, subtitle, description, mu
                                         withChevron: true,
                                     },
                                 },
-                            }).then(setResponse);
+                            }).then((response) => {
+                                setOpenDialogType(undefined);
+                                setResponse(response);
+                            });
                         }}
                     >
                         'ACTIONS'
                     </ButtonPrimary>
                     <ButtonPrimary
+                        aria-haspopup="dialog"
+                        aria-expanded={openDialogType === 'RADIO_LIST'}
                         onPress={() => {
                             setResponse(undefined);
+                            setOpenDialogType('RADIO_LIST');
                             showSheet({
                                 type: 'RADIO_LIST',
                                 props: {
@@ -571,7 +603,10 @@ export const Root: StoryComponent<RootArgs> = ({title, subtitle, description, mu
                                         },
                                     ],
                                 },
-                            }).then(setResponse);
+                            }).then((response) => {
+                                setOpenDialogType(undefined);
+                                setResponse(response);
+                            });
                         }}
                     >
                         'RADIO_LIST'

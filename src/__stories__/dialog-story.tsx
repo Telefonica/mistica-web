@@ -21,6 +21,7 @@ export const Alert: StoryComponent = () => {
     return (
         <ButtonLayout>
             <ButtonPrimary
+                aria-haspopup="dialog"
                 onPress={() =>
                     alert({
                         title: 'Profile updated',
@@ -39,6 +40,7 @@ export const Confirm: StoryComponent<{destructive: boolean}> = ({destructive}) =
     return (
         <ButtonLayout>
             <ButtonPrimary
+                aria-haspopup="dialog"
                 onPress={() =>
                     confirm({
                         message:
@@ -58,6 +60,7 @@ export const Dialog: StoryComponent = () => {
     return (
         <ButtonLayout>
             <ButtonPrimary
+                aria-haspopup="dialog"
                 onPress={() =>
                     dialog({
                         title: 'Title',

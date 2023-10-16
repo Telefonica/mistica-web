@@ -383,6 +383,7 @@ export const Menu: React.FC<MenuProps> = ({
     });
 
     React.useEffect(() => {
+        target?.setAttribute('aria-haspopup', 'menu');
         target?.setAttribute('aria-expanded', String(isMenuOpen));
     }, [target, isMenuOpen]);
 

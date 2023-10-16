@@ -33,7 +33,9 @@ interface CommonProps {
     dataAttributes?: DataAttributes;
     'aria-checked'?: 'true' | 'false' | boolean;
     'aria-controls'?: string;
+    'aria-busy'?: 'true' | 'false' | boolean;
     'aria-expanded'?: 'true' | 'false' | boolean;
+    'aria-haspopup'?: 'true' | 'false' | 'menu' | 'dialog' | boolean;
     'aria-hidden'?: 'true' | 'false' | boolean;
     'aria-selected'?: 'true' | 'false' | boolean;
     'aria-labelledby'?: string;
@@ -121,8 +123,10 @@ const RawTouchable = React.forwardRef<TouchableElement, Props>((props, ref) => {
         role: props.role,
         'aria-checked': props['aria-checked'],
         'aria-disabled': props.disabled ? true : undefined,
+        'aria-busy': props['aria-busy'],
         'aria-controls': props['aria-controls'],
         'aria-expanded': props['aria-expanded'],
+        'aria-haspopup': props['aria-haspopup'],
         'aria-hidden': props['aria-hidden'],
         'aria-selected': props['aria-selected'],
         'aria-live': props['aria-live'],
