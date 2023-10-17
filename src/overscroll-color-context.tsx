@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useIsInverseVariant} from './theme-variant-context';
+import {useThemeVariant} from './theme-variant-context';
 import {useTheme, useScreenSize} from './hooks';
 import createNestableContext from './nestable-context';
 import {isInsideNovumNativeApp, getPlatform} from './utils/platform';
@@ -55,8 +55,14 @@ export const OverscrollColorProvider = ({children}: ProviderProps): JSX.Element 
 };
 
 const OverscrollColorComponent = () => {
-    const isInverseVariant = useIsInverseVariant();
-    useSetValue(isInverseVariant ? vars.colors.navigationBarBackground : vars.colors.background);
+    const variant = useThemeVariant();
+    useSetValue(
+        variant === 'inverse'
+            ? vars.colors.backgroundBrand
+            : variant === 'alternative'
+            ? vars.colors.backgroundAlternative
+            : vars.colors.background
+    );
 
     return null;
 };
