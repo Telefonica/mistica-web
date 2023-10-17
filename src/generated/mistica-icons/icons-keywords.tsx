@@ -381,7 +381,7 @@ const iconKeywords: {[key: string]: Array<string>} = {
     ],
     audio: ['sound', 'audio signal', 'soundwave', 'sonido', 'sinal de áudio', 'Ton'],
     aura: ['assistant', 'virtual', 'helper', 'aura', 'aura virtual', 'Helfer'],
-    'authentication-failure': [
+    'autentication-failure': [
         'login error',
         'access denied',
         'error de autenticación',
@@ -389,7 +389,7 @@ const iconKeywords: {[key: string]: Array<string>} = {
         'Authentifizierungsfehler',
         'Zugriff verweigert',
     ],
-    'authentication-success': [
+    'autentication-success': [
         'login confirmation',
         'access granted',
         'confirmación de inicio de sesión',
