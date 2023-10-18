@@ -1878,7 +1878,7 @@ const alertSnippets = [
         name: 'Sheet',
         code: `
 <ButtonPrimary
-  aria-expanded={getState("isSheetOpen")}
+  aria-expanded={getState("isSheetOpen", false)}
   aria-haspopup="dialog"
   disabled={getState("isSheetOpen")}
   onPress={() => {
@@ -1910,7 +1910,7 @@ const alertSnippets = [
         name: 'InfoSheet',
         code: `
 <ButtonPrimary
-  aria-expanded={getState("isSheetOpen")}
+  aria-expanded={getState("isSheetOpen",false)}
   aria-haspopup="dialog"
   disabled={getState("isSheetOpen")}
   onPress={() => {
@@ -1956,7 +1956,7 @@ const alertSnippets = [
         name: 'RadioListSheet',
         code: `
 <ButtonPrimary
-  aria-expanded={getState("isSheetOpen")}
+  aria-expanded={getState("isSheetOpen", false)}
   aria-haspopup="dialog"
   disabled={getState("isSheetOpen")}
   onPress={() => {
@@ -2007,7 +2007,7 @@ const alertSnippets = [
         name: 'ActionsListSheet',
         code: `
 <ButtonPrimary
-  aria-expanded={getState("isSheetOpen")}
+  aria-expanded={getState("isSheetOpen", false)}
   aria-haspopup="dialog"
   disabled={getState("isSheetOpen")}
   onPress={() => {
@@ -2055,7 +2055,7 @@ const alertSnippets = [
         name: 'ActionsSheet',
         code: `
 <ButtonPrimary
-  aria-expanded={getState("isSheetOpen")}
+  aria-expanded={getState("isSheetOpen", false)}
   aria-haspopup="dialog"
   disabled={getState("isSheetOpen")}
   onPress={() => {
