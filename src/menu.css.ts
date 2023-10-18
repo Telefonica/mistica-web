@@ -74,14 +74,34 @@ export const menuItem = style({
     transition: 'background-color 0.1s ease-in-out',
     borderRadius: skinVars.borderRadii.popup,
     backgroundColor: 'transparent',
+    '@media': {
+        [mq.touchableOnly]: {
+            transition: 'none',
+        },
+    },
 });
 
 export const menuItemHovered = style({
+    transition: 'background-color 0.1s ease-in-out',
     backgroundColor: skinVars.colors.backgroundContainerHover,
+    ':active': {
+        backgroundColor: skinVars.colors.backgroundContainerPressed,
+    },
     '@media': {
-        [mq.supportsHover]: {
-            ':active': {
-                backgroundColor: skinVars.colors.backgroundContainerPressed,
+        [mq.touchableOnly]: {
+            backgroundColor: 'transparent',
+            transition: 'none',
+        },
+    },
+});
+
+export const menuItemEnabled = style({
+    '@media': {
+        [mq.touchableOnly]: {
+            selectors: {
+                '&:active:not([menuItemDisabled])': {
+                    backgroundColor: skinVars.colors.backgroundContainerPressed,
+                },
             },
         },
     },
@@ -89,7 +109,6 @@ export const menuItemHovered = style({
 
 export const menuItemDisabled = style({
     userSelect: 'none',
-    borderRadius: skinVars.borderRadii.popup,
     opacity: 0.5,
 });
 

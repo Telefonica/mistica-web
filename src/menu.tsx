@@ -149,6 +149,7 @@ export const MenuItem: React.FC<MenuItemProps> = ({
     return (
         <div
             className={classnames(styles.menuItem, {
+                [styles.menuItemEnabled]: !disabled,
                 [styles.menuItemDisabled]: disabled,
                 [styles.menuItemHovered]: !disabled && itemIndex !== null && focusedItem === itemIndex,
             })}

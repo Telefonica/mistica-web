@@ -62,10 +62,14 @@ export const touchableCardOverlay = style({
     pointerEvents: 'none',
     position: 'absolute',
     backgroundColor: 'transparent',
+    transition: 'background-color 0.1s ease-in-out',
+    selectors: {
+        [`${touchable}:active &`]: {
+            backgroundColor: vars.colors.backgroundContainerPressed,
+        },
+    },
     '@media': {
         [mq.supportsHover]: {
-            transition: 'background-color 0.1s ease-in-out',
-
             selectors: {
                 [`${touchableContainer}:hover &`]: {
                     backgroundColor: vars.colors.backgroundContainerHover,
@@ -74,6 +78,9 @@ export const touchableCardOverlay = style({
                     backgroundColor: vars.colors.backgroundContainerPressed,
                 },
             },
+        },
+        [mq.touchableOnly]: {
+            transition: 'none',
         },
     },
 });
@@ -133,12 +140,15 @@ export const cardAction = style([
     cardActionBase,
     {
         background: vars.colors.backgroundContainer,
-        transition: 'background-color 0.2s ease-in-out',
+        transition: 'background-color 0.1s ease-in-out',
         '@media': {
             [mq.supportsHover]: {
                 ':hover': {
                     background: vars.colors.backgroundAlternative,
                 },
+            },
+            [mq.touchableOnly]: {
+                transition: 'none',
             },
         },
     },
@@ -148,12 +158,15 @@ export const cardActionInverse = style([
     cardActionBase,
     {
         background: applyAlpha(vars.rawColors.backgroundContainer, 0.7),
-        transition: 'background-color 0.2s ease-in-out',
+        transition: 'background-color 0.1s ease-in-out',
         '@media': {
             [mq.supportsHover]: {
                 ':hover': {
                     background: applyAlpha(vars.rawColors.backgroundContainer, 0.9),
                 },
+            },
+            [mq.touchableOnly]: {
+                transition: 'none',
             },
         },
     },

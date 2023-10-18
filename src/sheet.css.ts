@@ -182,7 +182,12 @@ export const modalCloseButtonIcon = style([
         borderRadius: '50%',
     }),
     {
-        transition: 'background-color 0.2s ease-in-out',
+        transition: 'background-color 0.1s ease-in-out',
+        selectors: {
+            ':not(:disabled) > &:active': {
+                background: skinVars.colors.backgroundContainerPressed,
+            },
+        },
         '@media': {
             [mq.supportsHover]: {
                 selectors: {
@@ -193,6 +198,9 @@ export const modalCloseButtonIcon = style([
                         background: skinVars.colors.backgroundContainerPressed,
                     },
                 },
+            },
+            [mq.touchableOnly]: {
+                transition: 'none',
             },
         },
     },
@@ -263,6 +271,9 @@ export const sheetActionRow = style([
                 ':active': {
                     background: skinVars.colors.backgroundContainerPressed,
                 },
+            },
+            [mq.touchableOnly]: {
+                transition: 'none',
             },
         },
     },
