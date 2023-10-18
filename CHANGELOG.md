@@ -1,3 +1,22 @@
+# [14.26.0](https://github.com/Telefonica/mistica-web/compare/v14.25.0...v14.26.0) (2023-10-18)
+
+
+### Bug Fixes
+
+* **Carousel:** cards bottom border being partially cut in iOS ([#920](https://github.com/Telefonica/mistica-web/issues/920)) ([754acc6](https://github.com/Telefonica/mistica-web/commit/754acc663866203a2fb8352e1f4a4ad5f0ab479c))
+* **Video, DisplayMediaCard, PosterCard:** show fallback on empty src ([#910](https://github.com/Telefonica/mistica-web/issues/910)) ([4e366d3](https://github.com/Telefonica/mistica-web/commit/4e366d3bece91cbb16b6ca6b83e1e864d8473b38))
+
+
+### Features
+
+* **Accordion:** create Accordion and BoxedAccordion components ([#900](https://github.com/Telefonica/mistica-web/issues/900)) ([7062a43](https://github.com/Telefonica/mistica-web/commit/7062a432c09ee574c130c5f437e3c5cdba6cf0df))
+* **Icons:** use icon keywords from mistica design in catalog story ([#914](https://github.com/Telefonica/mistica-web/issues/914)) ([286e385](https://github.com/Telefonica/mistica-web/commit/286e38523d62e3c79342a6b166643e78179c2deb))
+* **Menu:** fix component styles and add MenuItem/MenuSection ([#892](https://github.com/Telefonica/mistica-web/issues/892)) ([d7a7e30](https://github.com/Telefonica/mistica-web/commit/d7a7e30ff9002c81a86e532b6cbe4ee009a0287c)), closes [#901](https://github.com/Telefonica/mistica-web/issues/901)
+* **Mobile:** add interaction states when pressing touchable elements ([#912](https://github.com/Telefonica/mistica-web/issues/912)) ([dbd8ac0](https://github.com/Telefonica/mistica-web/commit/dbd8ac0914b7a6647fda5778613cbe533cb44c03))
+* **OverscrollColor, Storybook:** overscroll alternative variant and storybook default platform detection ([#919](https://github.com/Telefonica/mistica-web/issues/919)) ([77d9b45](https://github.com/Telefonica/mistica-web/commit/77d9b459d3a9fa4548814d0fb981a8b43061efe4))
+* **PinField:** new component ([#902](https://github.com/Telefonica/mistica-web/issues/902)) ([484dbc7](https://github.com/Telefonica/mistica-web/commit/484dbc7ca4dd0cec5fc3bb908c5c46cc69b35f39)), closes [#893](https://github.com/Telefonica/mistica-web/issues/893)
+* **ProgressBarStepped:** create component ([#905](https://github.com/Telefonica/mistica-web/issues/905)) ([25ed4eb](https://github.com/Telefonica/mistica-web/commit/25ed4eb567e7c7cffde7fb76a72e0967741500f9))
+
 # [14.25.0](https://github.com/Telefonica/mistica-web/compare/v14.24.1...v14.25.0) (2023-10-09)
 
 
