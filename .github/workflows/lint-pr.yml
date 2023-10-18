@@ -1,0 +1,21 @@
+name: 'Lint PR'
+
+on:
+    pull_request:
+        branches: [master]
+
+jobs:
+    lint-pr:
+        # This job validates the PR title against the conventional commit format. Needed for semantic-release to generate release notes.
+        name: Validate PR title
+        runs-on: ubuntu-latest
+        steps:
+            - uses: amannn/action-semantic-pull-request@v5
+              with:
+                  types: |
+                      fix
+                      feat
+                      chore
+                      revert
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
