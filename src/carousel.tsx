@@ -413,7 +413,7 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
                         // Hack to fix https://jira.tid.es/browse/NOVUMCC-8988
                         // there is a webkit rendering bug that causes a half pixel white line to appear at
                         // the bottom of the scrollable area in retina displays when it has a height with
-                        // decimals. This extra padding avoid that line to partially cover the carousel
+                        // decimals. This extra padding avoids that line to partially cover the carousel
                         // slides border:
                         paddingBottom: isIos(platformOverrides) ? 0.5 : undefined,
                     }}
