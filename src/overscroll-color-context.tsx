@@ -5,6 +5,7 @@ import createNestableContext from './nestable-context';
 import {isInsideNovumNativeApp, getPlatform} from './utils/platform';
 import {vars} from './skins/skin-contract.css';
 
+import type {Variant} from './theme-variant-context';
 import type {Theme} from './theme';
 
 const {Provider, Getter, useSetValue} = createNestableContext('');
@@ -54,15 +55,23 @@ export const OverscrollColorProvider = ({children}: ProviderProps): JSX.Element 
     );
 };
 
+const getColorFromVariant = (themeVariant: Variant): string => {
+    switch (themeVariant) {
+        case 'default':
+            return vars.colors.background;
+        case 'alternative':
+            return vars.colors.backgroundAlternative;
+        case 'inverse':
+            return vars.colors.backgroundBrand;
+        default:
+            const exhaustiveCheck: never = themeVariant;
+            throw new Error(`Invalid variant: ${exhaustiveCheck}`);
+    }
+};
+
 const OverscrollColorComponent = () => {
     const variant = useThemeVariant();
-    useSetValue(
-        variant === 'inverse'
-            ? vars.colors.backgroundBrand
-            : variant === 'alternative'
-            ? vars.colors.backgroundAlternative
-            : vars.colors.background
-    );
+    useSetValue(getColorFromVariant(variant));
 
     return null;
 };
