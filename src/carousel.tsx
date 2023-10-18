@@ -9,7 +9,7 @@ import classNames from 'classnames';
 import {useIsInverseVariant, ThemeVariant} from './theme-variant-context';
 import {MediaBorderRadiusProvider} from './image';
 import {getPrefixedDataAttributes, listenResize} from './utils/dom';
-import {isAndroid, isIos} from './utils/platform';
+import {isAndroid, isIos, isRunningAcceptanceTest} from './utils/platform';
 import {useDocumentVisibility} from './utils/document-visibility';
 import * as styles from './carousel.css';
 import {assignInlineVars} from '@vanilla-extract/dynamic';
@@ -415,7 +415,10 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
                         // the bottom of the scrollable area in retina displays when it has a height with
                         // decimals. This extra padding avoids that line to partially cover the carousel
                         // slides border:
-                        paddingBottom: isIos(platformOverrides) ? 0.5 : undefined,
+                        paddingBottom:
+                            isIos(platformOverrides) && !isRunningAcceptanceTest(platformOverrides)
+                                ? 0.5
+                                : undefined,
                     }}
                     ref={carouselRef}
                 >
