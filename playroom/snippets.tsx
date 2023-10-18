@@ -1754,6 +1754,7 @@ const alertSnippets = [
         name: 'showSheet (info)',
         code: `
 <ButtonPrimary
+  aria-haspopup="dialog"
   onPress={() => {
     showSheet({
       type: "INFO",
@@ -1777,6 +1778,7 @@ const alertSnippets = [
         name: 'showSheet (actions list)',
         code: `
 <ButtonPrimary
+  aria-haspopup="dialog"
   onPress={() => {
     showSheet({
       type: "ACTIONS_LIST",
@@ -1810,6 +1812,7 @@ const alertSnippets = [
         name: 'showSheet (actions)',
         code: `
 <ButtonPrimary
+  aria-haspopup="dialog"
   onPress={() => {
     showSheet({
       type: "ACTIONS",
@@ -1836,6 +1839,7 @@ const alertSnippets = [
         name: 'showSheet (radio list)',
         code: `
 <ButtonPrimary
+  aria-haspopup="dialog"
   onPress={() => {
     showSheet({
       type: "RADIO_LIST",
@@ -1874,6 +1878,8 @@ const alertSnippets = [
         name: 'Sheet',
         code: `
 <ButtonPrimary
+  aria-expanded={getState("isSheetOpen")}
+  aria-haspopup="dialog"
   disabled={getState("isSheetOpen")}
   onPress={() => {
     setState("isSheetOpen", true);
@@ -1904,6 +1910,8 @@ const alertSnippets = [
         name: 'InfoSheet',
         code: `
 <ButtonPrimary
+  aria-expanded={getState("isSheetOpen")}
+  aria-haspopup="dialog"
   disabled={getState("isSheetOpen")}
   onPress={() => {
     setState("isSheetOpen", true);
@@ -1948,6 +1956,8 @@ const alertSnippets = [
         name: 'RadioListSheet',
         code: `
 <ButtonPrimary
+  aria-expanded={getState("isSheetOpen")}
+  aria-haspopup="dialog"
   disabled={getState("isSheetOpen")}
   onPress={() => {
     setState("isSheetOpen", true);
@@ -1997,6 +2007,8 @@ const alertSnippets = [
         name: 'ActionsListSheet',
         code: `
 <ButtonPrimary
+  aria-expanded={getState("isSheetOpen")}
+  aria-haspopup="dialog"
   disabled={getState("isSheetOpen")}
   onPress={() => {
     setState("isSheetOpen", true);
@@ -2043,6 +2055,8 @@ const alertSnippets = [
         name: 'ActionsSheet',
         code: `
 <ButtonPrimary
+  aria-expanded={getState("isSheetOpen")}
+  aria-haspopup="dialog"
   disabled={getState("isSheetOpen")}
   onPress={() => {
     setState("isSheetOpen", true);

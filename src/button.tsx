@@ -360,7 +360,6 @@ const Button = React.forwardRef<TouchableElement, ButtonProps & {type: ButtonTyp
         'aria-controls': props['aria-controls'],
         'aria-expanded': props['aria-expanded'],
         'aria-haspopup': props['aria-haspopup'],
-        'aria-busy': showSpinner ? true : undefined,
         tabIndex: props.tabIndex,
         children: renderButtonContent({
             showSpinner,
@@ -543,7 +542,6 @@ export const ButtonLink = React.forwardRef<TouchableElement, ButtonLinkProps>((p
         'aria-controls': props['aria-controls'],
         'aria-expanded': props['aria-expanded'],
         'aria-haspopup': props['aria-haspopup'],
-        'aria-busy': showSpinner ? true : undefined,
         children: renderButtonContent({
             showSpinner,
             shouldRenderSpinner,
