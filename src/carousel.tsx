@@ -9,7 +9,7 @@ import classNames from 'classnames';
 import {useIsInverseVariant, ThemeVariant} from './theme-variant-context';
 import {MediaBorderRadiusProvider} from './image';
 import {getPrefixedDataAttributes, listenResize} from './utils/dom';
-import {isAndroid} from './utils/platform';
+import {isAndroid, isIos} from './utils/platform';
 import {useDocumentVisibility} from './utils/document-visibility';
 import * as styles from './carousel.css';
 import {assignInlineVars} from '@vanilla-extract/dynamic';
@@ -409,6 +409,13 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
                             ...(gap !== undefined ? {[styles.vars.gap]: String(gap)} : {}),
                         }),
                         scrollSnapType: free ? 'initial' : 'x mandatory',
+
+                        // Hack to fix https://jira.tid.es/browse/NOVUMCC-8988
+                        // there is a webkit rendering bug that causes a half pixel white line to appear at
+                        // the bottom of the scrollable area in retina displays when it has a height with
+                        // decimals. This extra padding avoid that line to partially cover the carousel
+                        // slides border:
+                        paddingBottom: isIos(platformOverrides) ? 0.5 : undefined,
                     }}
                     ref={carouselRef}
                 >
