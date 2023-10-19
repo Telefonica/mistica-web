@@ -1,11 +1,8 @@
-import {style, keyframes, styleVariants, createVar} from '@vanilla-extract/css';
+import {style, keyframes, styleVariants} from '@vanilla-extract/css';
 import * as mq from './media-queries.css';
 import {vars as skinVars} from './skins/skin-contract.css';
 import {sprinkles} from './sprinkles.css';
 import {pxToRem} from './utils/css';
-
-const insideDialog = createVar();
-export const vars = {insideDialog};
 
 const fadeIn = keyframes({
     '0%': {opacity: 0},
@@ -94,10 +91,6 @@ const dialogContainer = style([
         justifyContent: 'space-between',
     }),
     {
-        vars: {
-            [insideDialog]: '1',
-        },
-
         width: 'calc(100vw - 48px)',
         margin: 'auto',
 

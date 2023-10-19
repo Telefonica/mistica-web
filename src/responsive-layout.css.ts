@@ -1,10 +1,7 @@
-import {createVar, fallbackVar, style} from '@vanilla-extract/css';
+import {createVar, style} from '@vanilla-extract/css';
 import * as mq from './media-queries.css';
 import {sprinkles} from './sprinkles.css';
 import {vars as skinVars} from './skins/skin-contract.css';
-import {vars as dialogVars} from './dialog.css';
-import {vars as sheetVars} from './sheet.css';
-import {vars as fixedFooterVars} from './fixed-footer-layout.css';
 
 export const MOBILE_SIDE_MARGIN = 16;
 export const TABLET_SIDE_MARGIN = 32;
@@ -12,9 +9,6 @@ export const SMALL_DESKTOP_SIDE_MARGIN = 40;
 export const LARGE_DESKTOP_MAX_WIDTH = 1224;
 
 const sideMargin = createVar();
-const insideDialog = createVar();
-const notInsideDialog = createVar();
-const notInsideFixedFooter = createVar();
 export const vars = {sideMargin};
 
 export const responsiveLayoutContainer = style([
@@ -22,16 +16,9 @@ export const responsiveLayoutContainer = style([
     {
         vars: {
             [sideMargin]: '0px',
-            [insideDialog]: `${fallbackVar(dialogVars.insideDialog, sheetVars.insideSheetDialog, '0')}`,
-            [notInsideDialog]: `(1 - ${fallbackVar(
-                dialogVars.insideDialog,
-                sheetVars.insideSheetDialog,
-                '0'
-            )})`,
-            [notInsideFixedFooter]: `(1 - ${fallbackVar(fixedFooterVars.insideFixedFooter, '0')})`,
         },
         '@media': {
-            [mq.desktop]: {
+            [mq.desktopOrBigger]: {
                 vars: {
                     [sideMargin]: `${SMALL_DESKTOP_SIDE_MARGIN}px`,
                 },
@@ -47,20 +34,21 @@ export const responsiveLayoutContainer = style([
                 },
             },
         },
+    },
+]);
 
+export const expandedResponsiveLayoutContainer = style([
+    {
         selectors: {
             '& &': {
                 width: 'auto',
-                margin: `0 calc(-1 * ${notInsideFixedFooter} * ${sideMargin})`,
+                margin: `0 calc(-1 * ${sideMargin})`,
                 '@media': {
                     [mq.desktop]: {
                         margin: `0 calc(-1 * ${sideMargin})`,
                     },
                     [mq.largeDesktop]: {
-                        margin: `0 calc(-1 * (
-                            ${notInsideDialog} * (100vw - ${LARGE_DESKTOP_MAX_WIDTH}px) / 2 +
-                            ${insideDialog} * ${SMALL_DESKTOP_SIDE_MARGIN}px
-                        ))`,
+                        margin: `0 calc(-1 * (100vw - ${LARGE_DESKTOP_MAX_WIDTH}px) / 2)`,
                     },
                 },
             },
@@ -86,14 +74,12 @@ export const responsiveLayout = style({
     paddingRight: 'env(safe-area-inset-right)',
 
     margin: `0 ${sideMargin}`,
+});
+
+export const expandedResponsiveLayout = style({
     '@media': {
         [mq.largeDesktop]: {
-            margin: `0 calc(
-                ${notInsideDialog} * (100vw - ${LARGE_DESKTOP_MAX_WIDTH}px) / 2 +
-                ${insideDialog} * ${SMALL_DESKTOP_SIDE_MARGIN}px
-            )`,
-            width: `calc(${notInsideDialog} * ${LARGE_DESKTOP_MAX_WIDTH}px)`,
-            minWidth: `calc(${insideDialog} * (100% - ${SMALL_DESKTOP_SIDE_MARGIN * 2}px))`,
+            margin: `0 calc((100vw - ${LARGE_DESKTOP_MAX_WIDTH}px) / 2)`,
         },
     },
 });

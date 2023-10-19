@@ -5,9 +5,8 @@ import * as mq from './media-queries.css';
 
 const footerHeight = createVar();
 const backgroundColor = createVar();
-const insideFixedFooter = createVar();
 
-export const vars = {footerHeight, backgroundColor, insideFixedFooter};
+export const vars = {footerHeight, backgroundColor};
 
 export const footer = style([
     sprinkles({
@@ -15,9 +14,6 @@ export const footer = style([
         background: skinVars.colors.background,
     }),
     {
-        vars: {
-            [insideFixedFooter]: '1',
-        },
         transition: 'box-shadow 0.2s linear',
     },
 ]);

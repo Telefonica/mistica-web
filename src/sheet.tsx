@@ -9,7 +9,6 @@ import {Text2, Text3, Text5} from './text';
 import {vars as skinVars} from './skins/skin-contract.css';
 import {RadioGroup} from './radio-button';
 import {Row, RowList} from './list';
-import ResponsiveLayout from './responsive-layout';
 import NegativeBox from './negative-box';
 import Stack from './stack';
 import Box from './box';
@@ -23,6 +22,7 @@ import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
 import IconButton from './icon-button';
 import ButtonLayout from './button-layout';
 import Image from './image';
+import {InternalResponsiveLayout} from './responsive-layout';
 
 import type {ExclusifyUnion} from './utils/utility-types';
 import type {DataAttributes, IconProps, RendersNullableElement, TrackingEvent} from './utils/types';
@@ -338,11 +338,11 @@ export const SheetBody = ({
             <div className={styles.stickyTitle}>
                 {title ? (
                     <Box paddingBottom={8} paddingTop={{mobile: 0, desktop: 40}}>
-                        <ResponsiveLayout>
+                        <InternalResponsiveLayout>
                             <Text5 as="h2" id={modalTitleId} truncate>
                                 {title}
                             </Text5>
-                        </ResponsiveLayout>
+                        </InternalResponsiveLayout>
                     </Box>
                 ) : (
                     <Box paddingTop={{mobile: 0, desktop: 40}} />
@@ -351,7 +351,7 @@ export const SheetBody = ({
             </div>
             <div className={styles.bodyContent}>
                 <Box paddingBottom={hasButtons ? 0 : {desktop: 40, mobile: 0}}>
-                    <ResponsiveLayout>
+                    <InternalResponsiveLayout>
                         <Stack space={8}>
                             {subtitle || description ? (
                                 <Stack space={{mobile: 8, desktop: 16}}>
@@ -387,19 +387,19 @@ export const SheetBody = ({
                             ) : null}
                             {children}
                         </Stack>
-                    </ResponsiveLayout>
+                    </InternalResponsiveLayout>
                 </Box>
             </div>
             {hasButtons && (
                 <div className={styles.stickyButtons}>
                     {showButtonsDivider && <Divider />}
                     <Box paddingY={{mobile: 16, desktop: 40}}>
-                        <ResponsiveLayout>
+                        <InternalResponsiveLayout>
                             <ButtonLayout align="full-width" link={link}>
                                 {button}
                                 {secondaryButton}
                             </ButtonLayout>
-                        </ResponsiveLayout>
+                        </InternalResponsiveLayout>
                     </Box>
                 </div>
             )}
