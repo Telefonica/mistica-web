@@ -1,3 +1,10 @@
+## [14.26.1](https://github.com/Telefonica/mistica-web/compare/v14.26.0...v14.26.1) (2023-10-19)
+
+
+### Bug Fixes
+
+* **Tabs:** text alignment ([6152970](https://github.com/Telefonica/mistica-web/commit/6152970c565a13fdd4eb1d56d1cdcc747875284b))
+
 # [14.26.0](https://github.com/Telefonica/mistica-web/compare/v14.25.0...v14.26.0) (2023-10-18)
 
 
