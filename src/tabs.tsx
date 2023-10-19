@@ -111,6 +111,7 @@ const Tabs: React.FC<TabsProps> = ({selectedIndex, onChange, tabs, dataAttribute
                                         <Inline space={!!icon && !!text ? 8 : 0} alignItems="center">
                                             {icon && <div className={styles.icon}>{icon}</div>}
                                             <Text
+                                                as="div"
                                                 desktopSize={textPresets.tabsLabel.size.desktop}
                                                 mobileSize={textPresets.tabsLabel.size.mobile}
                                                 desktopLineHeight={textPresets.tabsLabel.lineHeight.desktop}
