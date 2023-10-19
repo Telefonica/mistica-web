@@ -1,6 +1,6 @@
 import {style, keyframes, styleVariants} from '@vanilla-extract/css';
 import * as mq from './media-queries.css';
-import {vars as skinVars} from './skins/skin-contract.css';
+import {vars} from './skins/skin-contract.css';
 import {sprinkles} from './sprinkles.css';
 import {pxToRem} from './utils/css';
 
@@ -43,7 +43,7 @@ export const modalOpacityLayer = style([
         right: 0,
         bottom: 0,
         left: 0,
-        background: skinVars.colors.backgroundOverlay,
+        background: vars.colors.backgroundOverlay,
     }),
     {
         zIndex: Z_INDEX,
@@ -72,8 +72,8 @@ export const modalCloseButtonContainer = style([
 
 export const modalContent = style([
     sprinkles({
-        background: skinVars.colors.background,
-        borderRadius: skinVars.borderRadii.container,
+        background: vars.colors.background,
+        borderRadius: vars.borderRadii.container,
     }),
     {
         animation: `${fadeScale} .2s ease-in-out`,
