@@ -230,8 +230,10 @@ interface CommonProps {
     trackEvent?: boolean;
     /** "data-" prefix is automatically added. For example, use "testid" instead of "data-testid" */
     dataAttributes?: DataAttributes;
+    'aria-label'?: string;
     'aria-controls'?: string;
-    'aria-expanded'?: 'true' | 'false';
+    'aria-expanded'?: 'true' | 'false' | boolean;
+    'aria-haspopup'?: 'true' | 'false' | 'menu' | 'dialog' | boolean;
     tabIndex?: number;
     StartIcon?: React.FC<IconProps>;
     EndIcon?: React.FC<IconProps>;
@@ -354,8 +356,10 @@ const Button = React.forwardRef<TouchableElement, ButtonProps & {type: ButtonTyp
         style: {cursor: props.fake ? 'pointer' : undefined, ...props.style},
         trackingEvent: props.trackingEvent ?? (props.trackEvent ? createDefaultTrackingEvent() : undefined),
         dataAttributes: props.dataAttributes,
+        'aria-label': props['aria-label'],
         'aria-controls': props['aria-controls'],
         'aria-expanded': props['aria-expanded'],
+        'aria-haspopup': props['aria-haspopup'],
         tabIndex: props.tabIndex,
         children: renderButtonContent({
             showSpinner,
@@ -445,6 +449,10 @@ interface ButtonLinkCommonProps {
     bleedLeft?: boolean;
     bleedRight?: boolean;
     bleedY?: boolean;
+    'aria-label'?: string;
+    'aria-controls'?: string;
+    'aria-expanded'?: 'true' | 'false' | boolean;
+    'aria-haspopup'?: 'true' | 'false' | 'menu' | 'dialog' | boolean;
 }
 interface ButtonLinkOnPressProps extends ButtonLinkCommonProps {
     onPress: (event: React.MouseEvent<HTMLElement>) => void | undefined | Promise<void>;
@@ -530,6 +538,10 @@ export const ButtonLink = React.forwardRef<TouchableElement, ButtonLinkProps>((p
         },
         trackingEvent: props.trackingEvent ?? (props.trackEvent ? createDefaultTrackingEvent() : undefined),
         dataAttributes: {'component-name': 'ButtonLink', ...props.dataAttributes},
+        'aria-label': props['aria-label'],
+        'aria-controls': props['aria-controls'],
+        'aria-expanded': props['aria-expanded'],
+        'aria-haspopup': props['aria-haspopup'],
         children: renderButtonContent({
             showSpinner,
             shouldRenderSpinner,
