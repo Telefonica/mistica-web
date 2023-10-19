@@ -1,3 +1,10 @@
+# [14.27.0](https://github.com/Telefonica/mistica-web/compare/v14.26.1...v14.27.0) (2023-10-19)
+
+
+### Features
+
+* **Buttons, Touchable, Menu:** accessibility improvements ([#917](https://github.com/Telefonica/mistica-web/issues/917)) ([9580cfe](https://github.com/Telefonica/mistica-web/commit/9580cfe3ff7a8291510f3dfb21043b10cf17f895))
+
 ## [14.26.1](https://github.com/Telefonica/mistica-web/compare/v14.26.0...v14.26.1) (2023-10-19)
 
 
