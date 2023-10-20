@@ -144,7 +144,7 @@ const Tooltip: React.FC<Props> = ({
         top?: number;
     } | null>(null);
 
-    const targetRef = React.useRef<HTMLDivElement | null>(null);
+    const targetRef = React.useRef<Element | null>(null);
     const tooltipRef = React.useRef<HTMLDivElement | null>(null);
     const [tooltip, setTooltip] = React.useState<HTMLElement | null>(null);
     const isTouchableDevice = isClientSide() ? window.matchMedia('(pointer: coarse)').matches : false;
@@ -233,7 +233,6 @@ const Tooltip: React.FC<Props> = ({
                     case ESC:
                         cancelEvent(e);
                         if (isTooltipOpen) {
-                            targetRef.current?.blur();
                             setIsMouseOverTarget(false);
                             setIsTooltipOpen(false);
                         }
@@ -281,7 +280,17 @@ const Tooltip: React.FC<Props> = ({
             )}
             {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
             <div
-                ref={targetRef}
+                ref={(element) => {
+                    /**
+                     * Hack to set the target ref to the target element that was actually passed as prop.
+                     * If the target is absolutely positioned and we attach targetRef to the container div instead,
+                     * its size will be 0 (and we need the target dimensions to compute the tooltip's position).
+                     */
+                    const targetElement = element?.firstElementChild;
+                    if (targetElement) {
+                        targetRef.current = targetElement;
+                    }
+                }}
                 onMouseEnter={() => {
                     if (!isTouchableDevice) {
                         setIsMouseOverTarget(true);
