@@ -16,7 +16,7 @@ import Overlay from './overlay';
 import type {BoundingRect} from './hooks';
 import type {DataAttributes} from './utils/types';
 
-const TOOLTIP_TRANSITION_DURATION_IN_MS = 800;
+const TOOLTIP_TRANSITION_DURATION_IN_MS = 500;
 const TOOLTIP_TRANSITION_DELAY_IN_MS = 500;
 const TOOLTIP_VIEWPORT_MARGIN = 16;
 
@@ -122,7 +122,6 @@ type Props = {
     delay?: boolean;
     dataAttributes?: DataAttributes;
     targetStyle?: React.CSSProperties;
-    offsetX?: number;
     textCenter?: boolean;
 };
 
@@ -136,10 +135,8 @@ const Tooltip: React.FC<Props> = ({
     width,
     position = 'top',
     dataAttributes,
-    offsetX = 0,
     delay = true,
-    // targetStyle,
-    // textCenter,
+    textCenter,
 }) => {
     const ariaLabel = useAriaId();
     const [itemsComputedProps, setItemsComputedProps] = React.useState<{
@@ -191,7 +188,7 @@ const Tooltip: React.FC<Props> = ({
             case 'top':
                 leftOffset = Math.max(
                     TOOLTIP_VIEWPORT_MARGIN,
-                    Math.min(maxLeftOffset, (left + right - tooltipWidth) / 2 + offsetX)
+                    Math.min(maxLeftOffset, (left + right - tooltipWidth) / 2)
                 );
                 topOffset = top - tooltipHeight;
                 break;
@@ -227,7 +224,7 @@ const Tooltip: React.FC<Props> = ({
             top: topOffset,
             left: leftOffset,
         });
-    }, [tooltip, targetRect, isTooltipOpen, position, windowSize, offsetX]);
+    }, [tooltip, targetRect, isTooltipOpen, position, windowSize]);
 
     React.useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
@@ -348,7 +345,11 @@ const Tooltip: React.FC<Props> = ({
                             >
                                 <div
                                     className={styles.container}
-                                    style={{width}}
+                                    style={{
+                                        width,
+                                        display: 'flex',
+                                        justifyContent: textCenter ? 'center' : undefined,
+                                    }}
                                     ref={combineRefs(tooltipRef, setTooltip)}
                                     aria-label={targetLabel}
                                     onMouseEnter={() => {

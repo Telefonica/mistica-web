@@ -108,8 +108,8 @@ const Slider: React.FC<SliderProps> = ({
         }
     }, [steps, max, min, getApproximation, value, step, getOrder]);
 
-    const fieldContent = () => {
-        return (
+    return (
+        <section className={styles.container} aria-label={arialLabel}>
             <div className={styles.targetContainer}>
                 <div
                     ref={sliderRef}
@@ -131,35 +131,33 @@ const Slider: React.FC<SliderProps> = ({
                         step={step}
                         onChange={(e) => handleSlider(+e.target.value)}
                     />
-
-                    <div
-                        style={{left: setPosition(), top: sliderTop}}
-                        className={classnames(styles.sliderThumbVariant[isIos ? 'ios' : 'default'])}
-                    />
+                    {tooltip ? (
+                        <Tooltip
+                            description={
+                                Array.isArray(steps) ? steps[valueRanger].toString() : valueRanger.toString()
+                            }
+                            width={isTabletOrSmaller ? 42 : 45}
+                            targetLabel=""
+                            textCenter
+                            position="top"
+                            target={
+                                <div
+                                    style={{left: setPosition(), top: sliderTop}}
+                                    className={classnames(
+                                        styles.sliderThumbVariant[isIos ? 'ios' : 'default']
+                                    )}
+                                />
+                            }
+                        />
+                    ) : (
+                        <div
+                            style={{left: setPosition(), top: sliderTop}}
+                            className={classnames(styles.sliderThumbVariant[isIos ? 'ios' : 'default'])}
+                        />
+                    )}
                     <div className={styles.progress} style={{width: setPosition(), top: sliderTop}} />
                 </div>
             </div>
-        );
-    };
-
-    return (
-        <section className={styles.container} aria-label={arialLabel}>
-            {tooltip ? (
-                <Tooltip
-                    description={
-                        Array.isArray(steps) ? steps[valueRanger].toString() : valueRanger.toString()
-                    }
-                    width={isTabletOrSmaller ? 42 : 45}
-                    targetLabel=""
-                    textCenter
-                    unstable_offsetX={setPosition(true)}
-                    targetStyle={{width: '100%'}}
-                    position="top"
-                    target={fieldContent()}
-                />
-            ) : (
-                fieldContent()
-            )}
         </section>
     );
 };

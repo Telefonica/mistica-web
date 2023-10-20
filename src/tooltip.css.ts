@@ -20,7 +20,7 @@ export const tooltipTransitionClasses = {
     enterActive: style({
         opacity: 1,
         transform: 'translateY(0)',
-        transition: `opacity .3s linear ${delay},transform .8s cubic-bezier(0.215,0.61,0.335,1) ${delay}`,
+        transition: `opacity .3s linear ${delay},transform .5s cubic-bezier(0.215,0.61,0.335,1) ${delay}`,
     }),
     exit: style({
         opacity: 1,
