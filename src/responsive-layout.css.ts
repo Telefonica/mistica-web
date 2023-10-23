@@ -44,9 +44,6 @@ export const expandedResponsiveLayoutContainer = style([
                 width: 'auto',
                 margin: `0 calc(-1 * ${sideMargin})`,
                 '@media': {
-                    [mq.desktop]: {
-                        margin: `0 calc(-1 * ${sideMargin})`,
-                    },
                     [mq.largeDesktop]: {
                         margin: `0 calc(-1 * (100vw - ${LARGE_DESKTOP_MAX_WIDTH}px) / 2)`,
                     },
