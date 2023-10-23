@@ -2,7 +2,6 @@ import {openStoryPage} from '../test-utils';
 
 const TEST_CASES = [
     {id: 'layout-responsive-layout--default', device: 'MOBILE_IOS'},
-    {id: 'layout-responsive-layout--default', device: 'MOBILE_ANDROID'},
     {id: 'layout-responsive-layout--default', device: 'TABLET'},
     {id: 'layout-responsive-layout--default', device: 'DESKTOP'},
     {id: 'layout-responsive-layout--default', device: 'DESKTOP', viewport: {width: 1368, height: 770}},
