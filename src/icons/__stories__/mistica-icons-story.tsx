@@ -1,8 +1,7 @@
 import * as React from 'react';
-import {useCheckbox} from '../../__stories__/helpers';
-import {ThemeVariant, Box, Stack, SearchField, Inline, DoubleField, Text, skinVars} from '../..';
-import IntegerField from '../../integer-field';
+import {Box, ResponsiveLayout, Text} from '../..';
 import {kebabCase, camelCase, upperFirst} from 'lodash';
+import iconKeywords from '../../generated/mistica-icons/icons-keywords';
 
 /**
  * './path/icon-name-filled.tsx' => 'IconNameFilled'
@@ -19,22 +18,39 @@ const misticaIcons = ((requireContext) => {
         component.componentName = fileNameToComponentName(id);
         return component;
     });
-})(require.context('../../generated/mistica-icons/', true, /\.tsx$/));
+})(require.context('../../generated/mistica-icons/', true, /^(?!\.\/icons\-keywords\.tsx$).+\.(?:tsx)$/));
 
 export default {
     title: 'Icons/Catalog',
+    argTypes: {
+        size: {
+            control: {type: 'range', min: 24, max: 48, step: 4},
+        },
+    },
+    parameters: {fullScreen: true},
 };
 
-export const Catalog = (): JSX.Element => {
-    const [showRegular, regularCheckbox] = useCheckbox('Regular', true);
-    const [showLight, lightCheckbox] = useCheckbox('Light', true);
-    const [showFilled, filledCheckbox] = useCheckbox('Filled', true);
-    const [isInverse, inverseCheckbox] = useCheckbox('Inverse', false);
-    const [showNames, showNamesCheckbox] = useCheckbox('Show names', true);
-    const [showIConBackground, showIConBackgroundCheckbox] = useCheckbox('Show background', false);
-    const [filter, setFilter] = React.useState('');
-    const [size, setSize] = React.useState(32);
+type Args = {
+    filter: string;
+    size: number;
+    regular: boolean;
+    light: boolean;
+    filled: boolean;
+    inverse: boolean;
+    names: boolean;
+    background: boolean;
+};
 
+export const Catalog: StoryComponent<Args> = ({
+    filter,
+    size,
+    regular,
+    light,
+    filled,
+    inverse,
+    names,
+    background,
+}) => {
     const getRealName = (name: string) => name.replace(/^Icon/, '').replace(/(Regular|Filled|Light)$/, '');
     const getTypeSortValue = (name: string) => {
         if (name.endsWith('Regular')) {
@@ -47,18 +63,20 @@ export const Catalog = (): JSX.Element => {
     };
 
     const filterIcon = (name: string): boolean => {
-        if (!showFilled && name.endsWith('Filled')) {
+        if (!filled && name.endsWith('Filled')) {
             return false;
         }
-        if (!showLight && name.endsWith('Light')) {
+        if (!light && name.endsWith('Light')) {
             return false;
         }
-        if (!showRegular && name.endsWith('Regular')) {
+        if (!regular && name.endsWith('Regular')) {
             return false;
         }
 
-        if (filter && !getRealName(name).toLowerCase().includes(filter.toLocaleLowerCase())) {
-            return false;
+        if (filter) {
+            const realName = getRealName(name);
+            const keywords = [...(iconKeywords[kebabCase(realName)] || []), realName.toLowerCase()];
+            return keywords.some((key) => key.includes(filter.toLocaleLowerCase()));
         }
 
         return true;
@@ -87,72 +105,55 @@ export const Catalog = (): JSX.Element => {
                 </span>
             ));
 
-    const backgroundColor = isInverse ? skinVars.colors.backgroundBrand : skinVars.colors.background;
-    const iconBackgroundColor = showIConBackground ? '#aaa' : 'none';
+    const iconBackgroundColor = background ? '#aaa' : 'none';
 
     return (
-        <div>
-            <Box paddingY={16}>
-                <Inline space={16}>
-                    <DoubleField>
-                        <SearchField name="filter" value={filter} label="Filter" onChangeValue={setFilter} />
-                        <IntegerField
-                            name="size"
-                            value={String(size || 0)}
-                            label="Size (px)"
-                            onChangeValue={(v) => setSize(Number(v) || 0)}
-                        />
-                    </DoubleField>
-                    <Stack space={8}>
-                        <Inline space={16}>
-                            {regularCheckbox}
-                            {lightCheckbox}
-                            {filledCheckbox}
-                        </Inline>
-                        <Inline space={16}>
-                            {inverseCheckbox}
-                            {showNamesCheckbox}
-                            {showIConBackgroundCheckbox}
-                        </Inline>
-                    </Stack>
-                </Inline>
-            </Box>
-
-            <ThemeVariant isInverse={isInverse}>
-                <div style={{background: backgroundColor}}>
-                    {misticaIcons
-                        .filter(({componentName}) => filterIcon(componentName))
-                        .sort((a, b) => compareNames(a.componentName, b.componentName))
-                        .map((Icon) => (
-                            <div style={{display: 'inline-block', verticalAlign: 'top', textAlign: 'center'}}>
-                                <div
-                                    style={{
-                                        textAlign: 'center',
-                                        padding: 16,
-                                        width: size,
-                                        minWidth: showNames ? 100 : 0,
-                                    }}
-                                >
-                                    <div
-                                        style={{
-                                            width: size,
-                                            margin: 'auto',
-                                            background: iconBackgroundColor,
-                                            fontSize: 0,
-                                        }}
-                                    >
-                                        <Icon size={size} />
-                                    </div>
-                                    {showNames && (
-                                        <Box paddingTop={8}>
-                                            <Text size={13}>{breakName(Icon.componentName)}</Text>
-                                        </Box>
-                                    )}
-                                </div>
+        <ResponsiveLayout fullWidth isInverse={inverse}>
+            {misticaIcons
+                .filter(({componentName}) => filterIcon(componentName))
+                .sort((a, b) => compareNames(a.componentName, b.componentName))
+                .map((Icon, index) => (
+                    <div
+                        key={index}
+                        style={{display: 'inline-block', verticalAlign: 'top', textAlign: 'center'}}
+                    >
+                        <div
+                            style={{
+                                textAlign: 'center',
+                                padding: 16,
+                                width: size,
+                                minWidth: names ? 100 : 0,
+                            }}
+                        >
+                            <div
+                                style={{
+                                    width: size,
+                                    margin: 'auto',
+                                    background: iconBackgroundColor,
+                                    fontSize: 0,
+                                }}
+                            >
+                                <Icon size={size} />
                             </div>
-                        ))}
-                </div>
-            </ThemeVariant>
-        </div>
+                            {names && (
+                                <Box paddingTop={8}>
+                                    <Text size={13}>{breakName(Icon.componentName)}</Text>
+                                </Box>
+                            )}
+                        </div>
+                    </div>
+                ))}
+        </ResponsiveLayout>
     );
+};
+
+Catalog.args = {
+    filter: '',
+    size: 32,
+    regular: true,
+    light: true,
+    filled: true,
+    inverse: false,
+    names: true,
+    background: false,
 };

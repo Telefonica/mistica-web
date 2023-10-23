@@ -1,34 +1,26 @@
-import {openStoryPage, screen} from '../test-utils';
+import {openStoryPage} from '../test-utils';
 
 const SKINS = ['Movistar', 'O2', 'Blau'] as const;
+const ICON_TYPES = ['light', 'regular', 'filled'];
 
-test.each(SKINS)('Icons catalog for %s', async ([skin]) => {
+const getCases = () => {
+    const cases = [];
+    for (const skin of SKINS) {
+        for (const type of ICON_TYPES) {
+            cases.push([skin, type]);
+        }
+    }
+    return cases;
+};
+
+test.each(getCases())('Icons catalog for %s (%s)', async (skin, type) => {
     const page = await openStoryPage({
         id: 'icons-catalog--catalog',
         device: 'DESKTOP',
         skin: skin as (typeof SKINS)[number],
+        args: {light: type === 'light', regular: type === 'regular', filled: type === 'filled'},
     });
 
-    const lightCheckbox = await screen.findByLabelText('Light');
-    const filledCheckbox = await screen.findByLabelText('Filled');
-    const regularCheckbox = await screen.findByLabelText('Regular');
-    // initially all checkboxes are checked
-
-    await filledCheckbox.click();
-    await regularCheckbox.click();
-
-    const light = await page.screenshot({fullPage: true});
-    expect(light).toMatchImageSnapshot();
-
-    await lightCheckbox.click();
-    await regularCheckbox.click();
-
-    const regular = await page.screenshot({fullPage: true});
-    expect(regular).toMatchImageSnapshot();
-
-    await regularCheckbox.click();
-    await filledCheckbox.click();
-
-    const filled = await page.screenshot({fullPage: true});
-    expect(filled).toMatchImageSnapshot();
+    const icons = await page.screenshot({fullPage: true});
+    expect(icons).toMatchImageSnapshot();
 });

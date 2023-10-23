@@ -274,6 +274,8 @@ const formSnippets: Array<Snippet> = [
             '  </Stack>\n' +
             '</RadioGroup>',
     ],
+    ['PinField', '<PinField name="otp" aria-label="OTP" />'],
+    ['PinField (hideCode)', '<PinField hideCode name="pin" aria-label="PIN" />'],
     [
         'Form',
         `<Form
@@ -1754,6 +1756,7 @@ const alertSnippets = [
         name: 'showSheet (info)',
         code: `
 <ButtonPrimary
+  aria-haspopup="dialog"
   onPress={() => {
     showSheet({
       type: "INFO",
@@ -1777,6 +1780,7 @@ const alertSnippets = [
         name: 'showSheet (actions list)',
         code: `
 <ButtonPrimary
+  aria-haspopup="dialog"
   onPress={() => {
     showSheet({
       type: "ACTIONS_LIST",
@@ -1810,6 +1814,7 @@ const alertSnippets = [
         name: 'showSheet (actions)',
         code: `
 <ButtonPrimary
+  aria-haspopup="dialog"
   onPress={() => {
     showSheet({
       type: "ACTIONS",
@@ -1836,6 +1841,7 @@ const alertSnippets = [
         name: 'showSheet (radio list)',
         code: `
 <ButtonPrimary
+  aria-haspopup="dialog"
   onPress={() => {
     showSheet({
       type: "RADIO_LIST",
@@ -1874,6 +1880,8 @@ const alertSnippets = [
         name: 'Sheet',
         code: `
 <ButtonPrimary
+  aria-expanded={getState("isSheetOpen", false)}
+  aria-haspopup="dialog"
   disabled={getState("isSheetOpen")}
   onPress={() => {
     setState("isSheetOpen", true);
@@ -1904,6 +1912,8 @@ const alertSnippets = [
         name: 'InfoSheet',
         code: `
 <ButtonPrimary
+  aria-expanded={getState("isSheetOpen",false)}
+  aria-haspopup="dialog"
   disabled={getState("isSheetOpen")}
   onPress={() => {
     setState("isSheetOpen", true);
@@ -1948,6 +1958,8 @@ const alertSnippets = [
         name: 'RadioListSheet',
         code: `
 <ButtonPrimary
+  aria-expanded={getState("isSheetOpen", false)}
+  aria-haspopup="dialog"
   disabled={getState("isSheetOpen")}
   onPress={() => {
     setState("isSheetOpen", true);
@@ -1997,6 +2009,8 @@ const alertSnippets = [
         name: 'ActionsListSheet',
         code: `
 <ButtonPrimary
+  aria-expanded={getState("isSheetOpen", false)}
+  aria-haspopup="dialog"
   disabled={getState("isSheetOpen")}
   onPress={() => {
     setState("isSheetOpen", true);
@@ -2043,6 +2057,8 @@ const alertSnippets = [
         name: 'ActionsSheet',
         code: `
 <ButtonPrimary
+  aria-expanded={getState("isSheetOpen", false)}
+  aria-haspopup="dialog"
   disabled={getState("isSheetOpen")}
   onPress={() => {
     setState("isSheetOpen", true);
@@ -2631,6 +2647,11 @@ export default [
         group: 'Progress',
         name: 'ProgressBar',
         code: '<ProgressBar progressPercent={35} />',
+    },
+    {
+        group: 'Progress',
+        name: 'ProgressBarStepped',
+        code: '<ProgressBarStepped steps={6} currentStep={3} />',
     },
     {
         group: 'NavigationBreadcrumbs',

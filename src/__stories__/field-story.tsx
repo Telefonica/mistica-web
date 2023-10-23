@@ -22,6 +22,7 @@ import {
     Form,
     Title1,
     Stack,
+    PinField,
 } from '..';
 import {inspect} from 'util';
 import IconMusicRegular from '../generated/mistica-icons/icon-music-regular';
@@ -461,6 +462,31 @@ export const TypesUncontrolled: StoryComponent = () => (
                 />
             )}
         </Uncontrolled>
+
+        <Uncontrolled title="PinField">
+            {(handleChange, handleChangeValue) => (
+                <PinField
+                    name="otp"
+                    aria-label="OTP"
+                    defaultValue=""
+                    onChange={handleChange}
+                    onChangeValue={handleChangeValue}
+                />
+            )}
+        </Uncontrolled>
+
+        <Uncontrolled title="PinField (hideCode)">
+            {(handleChange, handleChangeValue) => (
+                <PinField
+                    hideCode
+                    name="pin"
+                    aria-label="PIN"
+                    defaultValue=""
+                    onChange={handleChange}
+                    onChangeValue={handleChangeValue}
+                />
+            )}
+        </Uncontrolled>
     </>
 );
 
@@ -706,6 +732,31 @@ export const TypesControlled = (): React.ReactNode => (
                         value={value}
                     />
                 </div>
+            )}
+        </Controlled>
+
+        <Controlled title="PinField" initialValue="">
+            {(handleChange, handleChangeValue, value) => (
+                <PinField
+                    name="otp"
+                    aria-label="OTP"
+                    onChange={handleChange}
+                    onChangeValue={handleChangeValue}
+                    value={value}
+                />
+            )}
+        </Controlled>
+
+        <Controlled title="PinField (hideCode)" initialValue="">
+            {(handleChange, handleChangeValue, value) => (
+                <PinField
+                    hideCode
+                    name="pin"
+                    aria-label="PIN"
+                    onChange={handleChange}
+                    onChangeValue={handleChangeValue}
+                    value={value}
+                />
             )}
         </Controlled>
     </>

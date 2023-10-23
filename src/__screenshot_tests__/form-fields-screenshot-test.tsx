@@ -1,4 +1,5 @@
 import {openStoryPage, screen} from '../test-utils';
+import {within} from '@telefonica/acceptance-testing';
 
 import type {Device} from '../test-utils';
 
@@ -218,4 +219,34 @@ test('Very long label should show ellipsis', async () => {
     await field.type('Some text');
 
     expect(await fieldWrapper.screenshot()).toMatchImageSnapshot();
+});
+
+test('PinField', async () => {
+    await openStoryPage({
+        id: 'components-input-fields--types-uncontrolled',
+        device: 'MOBILE_IOS',
+    });
+
+    const fieldGroup = await screen.findByLabelText('OTP');
+    expect(await fieldGroup.screenshot()).toMatchImageSnapshot();
+
+    const firstDigitField = await within(fieldGroup).findByLabelText('Dígito 1 de 6');
+    await firstDigitField.focus();
+    expect(await fieldGroup.screenshot()).toMatchImageSnapshot();
+
+    await firstDigitField.type('1');
+    expect(await fieldGroup.screenshot()).toMatchImageSnapshot();
+});
+
+test('PinField (hideCode)', async () => {
+    await openStoryPage({
+        id: 'components-input-fields--types-uncontrolled',
+        device: 'MOBILE_IOS',
+    });
+
+    const fieldGroup = await screen.findByLabelText('PIN');
+
+    const firstDigitField = await within(fieldGroup).findByLabelText('Dígito 1 de 6');
+    await firstDigitField.type('1');
+    expect(await fieldGroup.screenshot()).toMatchImageSnapshot();
 });

@@ -5,8 +5,22 @@ import {TextFieldBaseAutosuggest} from './text-field-base';
 
 import type {CommonFormFieldProps} from './text-field-base';
 
-export const IntegerInput: React.FC<any> = ({inputRef, value, defaultValue, ...rest}: any) => {
-    const format = (v?: string) => String(v ?? '').replace(/[^\d]/g, '');
+type IntegerInputProps = Omit<
+    React.InputHTMLAttributes<HTMLInputElement>,
+    'inputMode' | 'pattern' | 'onInput' | 'type'
+> & {
+    inputRef: React.ForwardedRef<HTMLInputElement>;
+    type?: 'text' | 'password';
+};
+
+export const IntegerInput = ({
+    inputRef,
+    value,
+    defaultValue,
+    type = 'text',
+    ...rest
+}: IntegerInputProps): React.ReactElement => {
+    const format = (v?: unknown) => String(v ?? '').replace(/[^\d]/g, '');
 
     const handleInput = (e: React.FormEvent<HTMLInputElement>) => {
         // strip all non numeric characters
@@ -19,7 +33,7 @@ export const IntegerInput: React.FC<any> = ({inputRef, value, defaultValue, ...r
             pattern="[0-9]*" // shows numeric keypad in iOS
             onInput={handleInput}
             ref={inputRef}
-            type="text"
+            type={type}
             value={value === undefined ? undefined : format(value)}
             defaultValue={defaultValue === undefined ? undefined : format(defaultValue)}
         />

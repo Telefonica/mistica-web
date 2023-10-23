@@ -149,6 +149,7 @@ export const MenuItem: React.FC<MenuItemProps> = ({
     return (
         <div
             className={classnames(styles.menuItem, {
+                [styles.menuItemEnabled]: !disabled,
                 [styles.menuItemDisabled]: disabled,
                 [styles.menuItemHovered]: !disabled && itemIndex !== null && focusedItem === itemIndex,
             })}
@@ -383,6 +384,7 @@ export const Menu: React.FC<MenuProps> = ({
     });
 
     React.useEffect(() => {
+        target?.setAttribute('aria-haspopup', 'menu');
         target?.setAttribute('aria-expanded', String(isMenuOpen));
     }, [target, isMenuOpen]);
 

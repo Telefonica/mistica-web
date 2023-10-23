@@ -41,6 +41,9 @@ const TEXTS_ES = {
     playIconButtonLabel: 'Reproducir',
     pauseIconButtonLabel: 'Pausar',
     sheetConfirmButton: 'Continuar',
+    progressBarCompletedLabel: 'completo',
+    progressBarStepLabel: 'Paso 1$s de 2$s',
+    pinFieldInputLabel: 'Dígito 1$s de 2$s',
 };
 
 const TEXTS_EN: ThemeTexts = {
@@ -77,6 +80,9 @@ const TEXTS_EN: ThemeTexts = {
     playIconButtonLabel: 'Play',
     pauseIconButtonLabel: 'Pause',
     sheetConfirmButton: 'Continue',
+    progressBarCompletedLabel: 'completed',
+    progressBarStepLabel: 'Step 1$s of 2$s',
+    pinFieldInputLabel: 'Digit 1$s of 2$s',
 };
 
 const TEXTS_DE: ThemeTexts = {
@@ -113,6 +119,9 @@ const TEXTS_DE: ThemeTexts = {
     playIconButtonLabel: 'Abspielen',
     pauseIconButtonLabel: 'Pausieren',
     sheetConfirmButton: 'Fortfahren',
+    progressBarCompletedLabel: 'vollendet',
+    progressBarStepLabel: 'Schritt 1$s von 2$s',
+    pinFieldInputLabel: 'Ziffer 1$s von 2$s',
 };
 
 const TEXTS_PT: ThemeTexts = {
@@ -149,6 +158,9 @@ const TEXTS_PT: ThemeTexts = {
     playIconButtonLabel: 'Reproduzir',
     pauseIconButtonLabel: 'Pausar',
     sheetConfirmButton: 'Continuar',
+    progressBarCompletedLabel: 'concluído',
+    progressBarStepLabel: 'Etapa 1$s de 2$s',
+    pinFieldInputLabel: 'Dígito 1$s de 2$s',
 };
 
 export const getTexts = (locale: Locale): typeof TEXTS_ES => {

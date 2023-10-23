@@ -29,12 +29,17 @@ const Stepper: React.FC<StepperProps> = ({
     const {isDesktopOrBigger} = useScreenSize();
     const {height, ref} = useElementDimensions();
     const textContainerHeight = height;
-    const previousIndexRef = React.useRef(currentIndex);
-    const isBack = previousIndexRef.current > currentIndex;
 
-    if (currentIndex !== previousIndexRef.current) {
-        previousIndexRef.current = currentIndex;
-    }
+    const [step, setStep] = React.useState(Math.ceil(currentIndex));
+    const [isBack, setIsBack] = React.useState(false);
+
+    React.useEffect(() => {
+        const newStep = Math.ceil(currentIndex);
+        if (step !== newStep) {
+            setIsBack(newStep < step);
+            setStep(newStep);
+        }
+    }, [currentIndex, steps, step]);
 
     return (
         <div
@@ -45,10 +50,10 @@ const Stepper: React.FC<StepperProps> = ({
             {...getPrefixedDataAttributes(dataAttributes, 'Stepper')}
         >
             {steps.map((text, index) => {
-                const isCurrent = index === currentIndex;
+                const isCurrent = index === step;
                 const isLastStep = index === steps.length - 1;
-                const isCompleted = index < currentIndex;
-                const hasAnimation = index === currentIndex - 1;
+                const isCompleted = index < step;
+                const hasAnimation = index === step - 1;
 
                 return (
                     <React.Fragment key={index}>

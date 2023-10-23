@@ -1,21 +1,31 @@
 import * as React from 'react';
-import {OverscrollColor, skinVars, Text2, Box, ThemeVariant} from '..';
+import {OverscrollColor, skinVars, Text2, Box, ResponsiveLayout} from '..';
 
 export default {
     title: 'Utilities/OverscrollColor',
     parameters: {
         fullScreen: true,
     },
+    argTypes: {
+        theme: {
+            options: ['default', 'inverse', 'alternative'],
+            control: {type: 'select'},
+        },
+    },
 };
 
-export const Default: StoryComponent = () => {
+type Args = {
+    theme: 'default' | 'inverse' | 'alternative';
+};
+
+export const Default: StoryComponent<Args> = ({theme}) => {
     return (
         <>
-            <ThemeVariant isInverse>
-                <div style={{background: skinVars.colors.backgroundBrand, height: 200}}>
-                    <OverscrollColor />
-                </div>
-            </ThemeVariant>
+            <ResponsiveLayout fullWidth variant={theme}>
+                <div style={{height: 200}} />
+                <OverscrollColor />
+            </ResponsiveLayout>
+
             <Box padding={16}>
                 <Text2 regular color={skinVars.colors.textSecondary}>
                     Try to overscroll this screen in iOS. You'll see how the header color remains above the
@@ -27,3 +37,6 @@ export const Default: StoryComponent = () => {
 };
 
 Default.storyName = 'OverscrollColor';
+Default.args = {
+    theme: 'inverse',
+};

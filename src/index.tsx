@@ -61,7 +61,7 @@ export {default as Inline} from './inline';
 export {default as HorizontalScroll} from './horizontal-scroll';
 export {default as HighlightedCard} from './highlighted-card';
 export {default as Stepper} from './stepper';
-export {default as ProgressBar} from './progress-bar';
+export {ProgressBar, ProgressBarStepped} from './progress-bar';
 export {
     MediaCard,
     DataCard,
@@ -123,6 +123,7 @@ export {default as StackingGroup} from './stacking-group';
 export {default as Form} from './form';
 export {default as Select} from './select';
 export {default as TextField} from './text-field';
+export {default as PinField} from './pin-field';
 export {TextFieldBase} from './text-field-base';
 export {default as SearchField} from './search-field';
 export {default as EmailField} from './email-field';

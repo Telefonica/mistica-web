@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {useScreenSize, useTheme, skinVars} from '../src';
 import curry from 'lodash/curry';
+import iconKeywords from '../src/generated/mistica-icons/icons-keywords';
 
 import type {Colors} from '../src/skins/types';
 import type {Theme} from '../src/theme';
@@ -43,7 +44,12 @@ const usePlayroomState = () => {
     };
 };
 
-const useScope = (): {theme: Theme; colors: Colors; rawColors: Colors} => {
+const useScope = (): {
+    theme: Theme;
+    colors: Colors;
+    rawColors: Colors;
+    iconKeywords: typeof iconKeywords;
+} => {
     const theme = useTheme();
     const screenSize = useScreenSize();
     const playroomState = usePlayroomState();
@@ -52,6 +58,7 @@ const useScope = (): {theme: Theme; colors: Colors; rawColors: Colors} => {
         theme,
         colors: skinVars.colors,
         rawColors: skinVars.rawColors,
+        iconKeywords,
         ...playroomState,
         ...screenSize,
     };

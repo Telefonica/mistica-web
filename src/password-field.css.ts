@@ -12,7 +12,7 @@ export const shadow = style([
     {
         backgroundSize: '200%',
         margin: -8,
-        transition: 'background-color 0.2s ease-in-out',
+        transition: 'background-color 0.1s ease-in-out',
 
         '@media': {
             [mq.supportsHover]: {

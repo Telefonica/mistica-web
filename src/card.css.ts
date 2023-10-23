@@ -41,9 +41,14 @@ export const touchableMediaCardOverlay = style([
     touchableCardOverlayBase,
     {
         zIndex: 2,
+        transition: 'background-color 0.1s ease-in-out',
+        selectors: {
+            [`${touchable}:active &`]: {
+                backgroundColor: skinVars.colors.backgroundContainerPressed,
+            },
+        },
         '@media': {
             [mq.supportsHover]: {
-                transition: 'background-color 0.1s ease-in-out',
                 selectors: {
                     [`${touchableContainer}:hover &`]: {
                         backgroundColor: skinVars.colors.backgroundContainerHover,
@@ -52,6 +57,9 @@ export const touchableMediaCardOverlay = style([
                         backgroundColor: skinVars.colors.backgroundContainerPressed,
                     },
                 },
+            },
+            [mq.touchableOnly]: {
+                transition: 'none',
             },
         },
     },
@@ -64,14 +72,17 @@ export const touchableNakedMediaOverlay = style([
     {
         zIndex: 2,
         borderRadius: skinVars.borderRadii.container,
+        transition: 'background-color 0.1s ease-in-out',
         selectors: {
             [`${circularMediaOverlay}&`]: {
                 borderRadius: '50%',
             },
+            [`${touchable}:active &`]: {
+                backgroundColor: skinVars.colors.coverBackgroundPressed,
+            },
         },
         '@media': {
             [mq.supportsHover]: {
-                transition: 'background-color 0.1s ease-in-out',
                 selectors: {
                     [`${touchableContainer}:hover &`]: {
                         backgroundColor: skinVars.colors.coverBackgroundHover,
@@ -80,6 +91,9 @@ export const touchableNakedMediaOverlay = style([
                         backgroundColor: skinVars.colors.coverBackgroundPressed,
                     },
                 },
+            },
+            [mq.touchableOnly]: {
+                transition: 'none',
             },
         },
     },
@@ -89,9 +103,14 @@ export const touchableCardOverlay = style([
     touchableCardOverlayBase,
     {
         zIndex: 1,
+        transition: 'background-color 0.1s ease-in-out',
+        selectors: {
+            [`${touchable}:active &`]: {
+                backgroundColor: skinVars.colors.backgroundContainerPressed,
+            },
+        },
         '@media': {
             [mq.supportsHover]: {
-                transition: 'background-color 0.1s ease-in-out',
                 selectors: {
                     [`${touchableContainer}:hover &`]: {
                         backgroundColor: skinVars.colors.backgroundContainerHover,
@@ -101,6 +120,9 @@ export const touchableCardOverlay = style([
                     },
                 },
             },
+            [mq.touchableOnly]: {
+                transition: 'none',
+            },
         },
     },
 ]);
@@ -109,9 +131,14 @@ export const touchableCardOverlayInverse = style([
     touchableCardOverlayBase,
     {
         zIndex: 1,
+        transition: 'background-color 0.1s ease-in-out',
+        selectors: {
+            [`${touchable}:active &`]: {
+                backgroundColor: skinVars.colors.backgroundContainerBrandPressed,
+            },
+        },
         '@media': {
             [mq.supportsHover]: {
-                transition: 'background-color 0.1s ease-in-out',
                 selectors: {
                     [`${touchableContainer}:hover &`]: {
                         backgroundColor: skinVars.colors.backgroundContainerBrandHover,
@@ -121,6 +148,9 @@ export const touchableCardOverlayInverse = style([
                     },
                 },
             },
+            [mq.touchableOnly]: {
+                transition: 'none',
+            },
         },
     },
 ]);
@@ -129,9 +159,14 @@ export const touchableCardOverlayMedia = style([
     touchableCardOverlayBase,
     {
         zIndex: 1,
+        transition: 'background-color 0.1s ease-in-out',
+        selectors: {
+            [`${touchable}:active &`]: {
+                backgroundColor: skinVars.colors.coverBackgroundPressed,
+            },
+        },
         '@media': {
             [mq.supportsHover]: {
-                transition: 'background-color 0.1s ease-in-out',
                 selectors: {
                     [`${touchableContainer}:hover &`]: {
                         backgroundColor: skinVars.colors.coverBackgroundHover,
@@ -140,6 +175,9 @@ export const touchableCardOverlayMedia = style([
                         backgroundColor: skinVars.colors.coverBackgroundPressed,
                     },
                 },
+            },
+            [mq.touchableOnly]: {
+                transition: 'none',
             },
         },
     },
@@ -194,9 +232,15 @@ export const nakedCardContent = style([
         paddingTop: 16,
     }),
     {
+        transition: 'opacity 0.1s ease-in-out',
+        selectors: {
+            [`${touchableContainer} ${touchable}:active &`]: {
+                transitionDuration: '0.1s',
+                opacity: 0.6,
+            },
+        },
         '@media': {
             [mq.supportsHover]: {
-                transition: 'opacity 0.15s ease-in-out',
                 selectors: {
                     [`${touchableContainer}:hover &`]: {
                         opacity: 0.8,
@@ -206,6 +250,9 @@ export const nakedCardContent = style([
                         opacity: 0.6,
                     },
                 },
+            },
+            [mq.touchableOnly]: {
+                transition: 'none',
             },
         },
     },
@@ -326,7 +373,12 @@ const cardActionBase = sprinkles({
 export const cardAction = style([
     cardActionBase,
     {
-        transition: 'background-color 0.2s ease-in-out',
+        transition: 'background-color 0.1s ease-in-out',
+        selectors: {
+            ':not(:disabled) > &:active': {
+                background: skinVars.colors.backgroundContainerPressed,
+            },
+        },
         '@media': {
             [mq.supportsHover]: {
                 selectors: {
@@ -338,6 +390,9 @@ export const cardAction = style([
                     },
                 },
             },
+            [mq.touchableOnly]: {
+                transition: 'none',
+            },
         },
     },
 ]);
@@ -345,7 +400,12 @@ export const cardAction = style([
 export const cardActionInverse = style([
     cardActionBase,
     {
-        transition: 'background-color 0.2s ease-in-out',
+        transition: 'background-color 0.1s ease-in-out',
+        selectors: {
+            ':not(:disabled) > &:active': {
+                background: skinVars.colors.backgroundContainerBrandPressed,
+            },
+        },
         '@media': {
             [mq.supportsHover]: {
                 selectors: {
@@ -357,6 +417,9 @@ export const cardActionInverse = style([
                     },
                 },
             },
+            [mq.touchableOnly]: {
+                transition: 'none',
+            },
         },
     },
 ]);
@@ -365,7 +428,12 @@ export const cardActionMedia = style([
     cardActionBase,
     {
         backgroundColor: applyAlpha(skinVars.rawColors.inverse, 0.7),
-        transition: 'background-color 0.2s ease-in-out',
+        transition: 'background-color 0.1s ease-in-out',
+        selectors: {
+            ':not(:disabled) > &:active': {
+                backgroundColor: applyAlpha(skinVars.rawColors.inverse, 1.0),
+            },
+        },
         '@media': {
             [mq.supportsHover]: {
                 selectors: {
@@ -376,6 +444,9 @@ export const cardActionMedia = style([
                         backgroundColor: applyAlpha(skinVars.rawColors.inverse, 1.0),
                     },
                 },
+            },
+            [mq.touchableOnly]: {
+                transition: 'none',
             },
         },
     },

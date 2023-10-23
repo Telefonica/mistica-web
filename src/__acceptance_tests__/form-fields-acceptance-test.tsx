@@ -1,4 +1,5 @@
 import {openStoryPage, screen, waitFor} from '../test-utils';
+import {within} from '@telefonica/acceptance-testing';
 
 import type {ElementHandle, PageApi} from '../test-utils';
 
@@ -201,3 +202,92 @@ test.each(STORY_TYPES)('SearchField (%s)', async (storyType) => {
     await page.click(await screen.findByLabelText('Borrar búsqueda'));
     expect(await getValue(field)).toBe('');
 });
+
+test.each(STORY_TYPES)('PinField (%s)', async (storyType) => {
+    await openStoryPage(getStoryOfType(storyType));
+
+    const fieldGroup = await screen.findByLabelText('OTP');
+    const firstDigitField = await within(fieldGroup).findByLabelText('Dígito 1 de 6');
+    await firstDigitField.type('123456');
+
+    await screen.findByText("onChange: (string) '123456'");
+    await screen.findByText("onChangeValue: (string) '123456'");
+});
+
+test.each(STORY_TYPES)('PinField (hideCode) (%s)', async (storyType) => {
+    await openStoryPage(getStoryOfType(storyType));
+
+    const fieldGroup = await screen.findByLabelText('PIN');
+    const firstDigitField = await within(fieldGroup).findByLabelText('Dígito 1 de 6');
+    await firstDigitField.type('123456');
+
+    await screen.findByText("onChange: (string) '123456'");
+    await screen.findByText("onChangeValue: (string) '123456'");
+});
+
+test('PinField focus management', async () => {
+    await openStoryPage(CONTROLLED_STORY);
+
+    const fieldGroup = await screen.findByLabelText('OTP');
+
+    const firstDigitField = await within(fieldGroup).findByLabelText('Dígito 1 de 6');
+    const secondDigitField = await within(fieldGroup).findByLabelText('Dígito 2 de 6');
+    const thirdDigitField = await within(fieldGroup).findByLabelText('Dígito 3 de 6');
+    const forthDigitField = await within(fieldGroup).findByLabelText('Dígito 4 de 6');
+
+    // try to focus forth field, but the first one is focused instead
+    await forthDigitField.focus();
+    expect(await forthDigitField.evaluate((el) => el === document.activeElement)).toBe(false);
+    expect(await firstDigitField.evaluate((el) => el === document.activeElement)).toBe(true);
+
+    // focus is moved to second field after typing
+    await firstDigitField.type('1');
+    expect(await secondDigitField.evaluate((el) => el === document.activeElement)).toBe(true);
+
+    await secondDigitField.evaluate((el) => (el as HTMLInputElement).blur());
+    expect(await secondDigitField.evaluate((el) => el === document.activeElement)).toBe(false);
+
+    // try to focus forth field, but the second one is focused instead
+    await forthDigitField.focus();
+    expect(await secondDigitField.evaluate((el) => el === document.activeElement)).toBe(true);
+
+    // focus is moved to third field after typing
+    await secondDigitField.type('2');
+    expect(await thirdDigitField.evaluate((el) => el === document.activeElement)).toBe(true);
+
+    // move to previous field with left arrow
+    await thirdDigitField.press('ArrowLeft');
+    expect(await secondDigitField.evaluate((el) => el === document.activeElement)).toBe(true);
+    await secondDigitField.press('ArrowLeft');
+    expect(await firstDigitField.evaluate((el) => el === document.activeElement)).toBe(true);
+
+    // type a number to overwrite the first field value
+    await firstDigitField.type('9');
+    await screen.findByText("onChange: (string) '92'");
+    expect(await secondDigitField.evaluate((el) => el === document.activeElement)).toBe(true);
+
+    // move to next field with right arrow
+    await secondDigitField.press('ArrowRight');
+    expect(await thirdDigitField.evaluate((el) => el === document.activeElement)).toBe(true);
+
+    // type a new number
+    await thirdDigitField.type('3');
+    await screen.findByText("onChange: (string) '923'");
+    expect(await forthDigitField.evaluate((el) => el === document.activeElement)).toBe(true);
+
+    // go back with Backspace
+    await forthDigitField.press('Backspace');
+    await screen.findByText("onChange: (string) '923'");
+    expect(await thirdDigitField.evaluate((el) => el === document.activeElement)).toBe(true);
+
+    // delete with Backspace
+    await thirdDigitField.press('Backspace');
+    await screen.findByText("onChange: (string) '92'");
+    expect(await secondDigitField.evaluate((el) => el === document.activeElement)).toBe(true);
+
+    // move left with left arrow and delete with Delete key
+    await secondDigitField.press('ArrowLeft');
+    expect(await firstDigitField.evaluate((el) => el === document.activeElement)).toBe(true);
+    await firstDigitField.press('Delete');
+    await screen.findByText("onChange: (string) '2'");
+}, 1200000);

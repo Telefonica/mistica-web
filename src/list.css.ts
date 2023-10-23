@@ -8,9 +8,12 @@ export const disabled = style({
 });
 
 export const touchableBackground = style({
+    transition: 'background-color 0.1s ease-in-out',
+    ':active': {
+        background: vars.colors.backgroundContainerPressed,
+    },
     '@media': {
         [mq.supportsHover]: {
-            transition: 'background-color 0.1s ease-in-out',
             ':hover': {
                 background: vars.colors.backgroundContainerHover,
             },
@@ -18,19 +21,28 @@ export const touchableBackground = style({
                 background: vars.colors.backgroundContainerPressed,
             },
         },
+        [mq.touchableOnly]: {
+            transition: 'none',
+        },
     },
 });
 
 export const touchableBackgroundInverse = style({
+    transition: 'background-color 0.1s ease-in-out',
+    ':active': {
+        background: vars.colors.backgroundContainerBrandPressed,
+    },
     '@media': {
         [mq.supportsHover]: {
-            transition: 'background-color 0.1s ease-in-out',
             ':hover': {
                 background: vars.colors.backgroundContainerBrandHover,
             },
             ':active': {
                 background: vars.colors.backgroundContainerBrandPressed,
             },
+        },
+        [mq.touchableOnly]: {
+            transition: 'none',
         },
     },
 });
