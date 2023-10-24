@@ -1,8 +1,9 @@
-import {style} from '@vanilla-extract/css';
+import {style, styleVariants} from '@vanilla-extract/css';
 import {vars} from './skins/skin-contract.css';
 import {sprinkles} from './sprinkles.css';
 import * as mq from './media-queries.css';
 import {pxToRem} from './utils/css';
+import {applyAlpha} from './utils/color';
 
 export const TRANSITION_TIME_IN_MS = 300;
 
@@ -63,25 +64,55 @@ export const content = sprinkles({
     justifyContent: 'space-between',
 });
 
-export const button = style({
-    marginTop: -6,
-    marginLeft: 16,
-    marginBottom: -6,
-    marginRight: -8,
-    fontWeight: 500,
-    fontSize: pxToRem(16),
-    lineHeight: '24px',
-    padding: '4px 8px',
-    whiteSpace: 'nowrap',
-    width: 'auto',
-    cursor: 'pointer',
+export const textContainer = sprinkles({
+    display: 'flex',
+    alignItems: 'flex-start',
+    justifyContent: 'space-between',
+});
 
+const hoverStyles = {
+    transition: 'background-color 0.1s ease-in-out',
+    ':active': {
+        background: applyAlpha(vars.rawColors.inverse, 0.2),
+    },
     '@media': {
-        [mq.desktopOrBigger]: {
-            marginLeft: 48,
+        [mq.supportsHover]: {
+            ':hover': {
+                background: applyAlpha(vars.rawColors.inverse, 0.1),
+            },
+            ':active': {
+                background: applyAlpha(vars.rawColors.inverse, 0.2),
+            },
+        },
+        [mq.touchableOnly]: {
+            transition: 'none',
         },
     },
-});
+} as const;
+
+export const button = style([
+    {
+        marginTop: -6,
+        marginLeft: 16,
+        marginBottom: -6,
+        marginRight: -8,
+        fontWeight: 500,
+        fontSize: pxToRem(16),
+        lineHeight: '24px',
+        padding: '4px 8px',
+        whiteSpace: 'nowrap',
+        width: 'auto',
+        cursor: 'pointer',
+        borderRadius: vars.borderRadii.button,
+
+        '@media': {
+            [mq.desktopOrBigger]: {
+                marginLeft: 48,
+            },
+        },
+    },
+    hoverStyles,
+]);
 
 export const longButton = style({
     marginTop: 18,
@@ -91,3 +122,28 @@ export const longButton = style({
 
 export const buttonInfo = sprinkles({color: vars.colors.textLinkSnackbar});
 export const buttonCritical = sprinkles({color: vars.colors.textPrimaryInverse});
+
+const dismissButtonBase = sprinkles({
+    display: 'flex',
+    position: 'absolute',
+    alignItems: 'center',
+    justifyContent: 'center',
+    right: 8,
+});
+
+export const dismissButton = styleVariants({
+    centered: [dismissButtonBase, {top: 'calc(50% - 16px)'}],
+    topRight: [dismissButtonBase, sprinkles({top: 8})],
+});
+
+export const dismissIcon = style([
+    sprinkles({
+        width: 32,
+        height: 32,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: '50%',
+    }),
+    hoverStyles,
+]);
