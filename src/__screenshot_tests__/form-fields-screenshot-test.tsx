@@ -250,3 +250,23 @@ test('PinField (hideCode)', async () => {
     await firstDigitField.type('1');
     expect(await fieldGroup.screenshot()).toMatchImageSnapshot();
 });
+
+test.each`
+    skin          | number
+    ${'Vivo'}     | ${'2145678901'}
+    ${'Vivo'}     | ${'+34654834455'}
+    ${'Movistar'} | ${'654834455'}
+`('Phone number field $skin $number', async ({skin, number}) => {
+    await openStoryPage({
+        id: 'components-input-fields--types-uncontrolled',
+        device: 'MOBILE_IOS',
+        skin,
+    });
+
+    const field = await screen.findByLabelText('Phone');
+
+    await field.click({clickCount: 3});
+    await field.type(number);
+
+    expect(await field.screenshot()).toMatchImageSnapshot();
+});

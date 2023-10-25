@@ -83,7 +83,7 @@ const PhoneInput: React.FC<InputProps> = ({
         format,
         value: controlledValue,
         onChange: handleChangeValue,
-        accept: /[\d\-()+#*]+/g,
+        accept: /[\d\-+#*]+/g,
         replace: (s) => s.replace(/@/g, '-'),
     });
 
