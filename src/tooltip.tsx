@@ -8,11 +8,13 @@ import {Text2} from './text';
 import {combineRefs} from './utils/common';
 import {assignInlineVars} from '@vanilla-extract/dynamic';
 import {Boxed} from './boxed';
-import {cancelEvent, getPrefixedDataAttributes} from './utils/dom';
+import {cancelEvent, getCssVarValue, getPrefixedDataAttributes} from './utils/dom';
 import {ESC} from './utils/key-codes';
 import {isClientSide} from './utils/environment';
 import Overlay from './overlay';
 import {isEqual} from 'lodash';
+import classNames from 'classnames';
+import {vars} from './skins/skin-contract.css';
 
 import type {BoundingRect} from './hooks';
 import type {DataAttributes} from './utils/types';
@@ -20,6 +22,7 @@ import type {DataAttributes} from './utils/types';
 const TOOLTIP_TRANSITION_DURATION_IN_MS = 500;
 const TOOLTIP_TRANSITION_DELAY_IN_MS = 500;
 const TOOLTIP_OFFSET_FROM_TARGET = 8;
+const ARROW_SIZE = 12;
 
 type Position = 'top' | 'bottom' | 'left' | 'right';
 
@@ -133,6 +136,12 @@ const Tooltip: React.FC<Props> = ({
         padding: string;
     } | null>(null);
 
+    const [arrowComputedProps, setArrowComputedProps] = React.useState<{
+        left: number;
+        top: number;
+        borderStyle: string;
+    } | null>(null);
+
     const targetRef = React.useRef<Element | null>(null);
     const tooltipRef = React.useRef<HTMLDivElement | null>(null);
     const [tooltip, setTooltip] = React.useState<HTMLElement | null>(null);
@@ -169,12 +178,21 @@ const Tooltip: React.FC<Props> = ({
             padding: string;
         };
 
+        let arrowProps: {
+            left: number;
+            top: number;
+            borderStyle: string;
+        };
+
         const {left, right, top, bottom} = targetRect;
         const tooltipWidth = tooltip.clientWidth;
         const tooltipHeight = tooltip.clientHeight;
 
         const maxLeftOffset = windowSize.width - tooltipWidth;
         const maxTopOffset = windowSize.height - tooltipHeight;
+
+        const arrowOffsetFromViewport =
+            ARROW_SIZE + (parseInt(getCssVarValue(vars.borderRadii.container)) || 8);
 
         switch (finalPosition) {
             case 'top':
@@ -215,10 +233,67 @@ const Tooltip: React.FC<Props> = ({
                 break;
         }
 
+        switch (finalPosition) {
+            case 'top':
+                arrowProps = {
+                    left: Math.max(
+                        arrowOffsetFromViewport,
+                        Math.min(windowSize.width - arrowOffsetFromViewport, (left + right - ARROW_SIZE) / 2)
+                    ),
+                    top: top - TOOLTIP_OFFSET_FROM_TARGET - ARROW_SIZE / 2,
+                    borderStyle: styles.topArrowBorder,
+                };
+
+                break;
+
+            case 'bottom':
+                arrowProps = {
+                    left: Math.max(
+                        arrowOffsetFromViewport,
+                        Math.min(windowSize.width - arrowOffsetFromViewport, (left + right - ARROW_SIZE) / 2)
+                    ),
+                    top: bottom + TOOLTIP_OFFSET_FROM_TARGET - ARROW_SIZE / 2 + 1 / Math.sqrt(2),
+                    borderStyle: styles.bottomArrowBorder,
+                };
+
+                break;
+
+            case 'left':
+                arrowProps = {
+                    left: left - TOOLTIP_OFFSET_FROM_TARGET - ARROW_SIZE / 2 - 1 / Math.sqrt(2),
+                    top: Math.max(
+                        arrowOffsetFromViewport,
+                        Math.min(windowSize.height - arrowOffsetFromViewport, (top + bottom - ARROW_SIZE) / 2)
+                    ),
+                    borderStyle: styles.leftArrowBorder,
+                };
+
+                break;
+
+            case 'right':
+            default:
+                arrowProps = {
+                    left: right + TOOLTIP_OFFSET_FROM_TARGET - ARROW_SIZE / 2 + 1 / Math.sqrt(2),
+                    top: Math.max(
+                        arrowOffsetFromViewport,
+                        Math.min(windowSize.height - arrowOffsetFromViewport, (top + bottom - ARROW_SIZE) / 2)
+                    ),
+                    borderStyle: styles.rightArrowBorder,
+                };
+
+                break;
+        }
+
+        arrowProps.top -= tooltipProps.top;
+        arrowProps.left -= tooltipProps.left;
+
         if (!isEqual(tooltipProps, tooltipComputedProps)) {
             setTooltipComputedProps(tooltipProps);
         }
-    }, [tooltip, targetRect, isTooltipOpen, position, windowSize, tooltipComputedProps]);
+        if (!isEqual(arrowProps, arrowComputedProps)) {
+            setArrowComputedProps(arrowProps);
+        }
+    }, [tooltip, targetRect, isTooltipOpen, position, windowSize, tooltipComputedProps, arrowComputedProps]);
 
     React.useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
@@ -328,6 +403,14 @@ const Tooltip: React.FC<Props> = ({
                                                   [styles.tooltipVars.padding]: tooltipComputedProps.padding,
                                               }
                                             : {}),
+                                        ...(arrowComputedProps
+                                            ? {
+                                                  [styles.tooltipVars
+                                                      .arrowTop]: `${arrowComputedProps.top}px`,
+                                                  [styles.tooltipVars
+                                                      .arrowLeft]: `${arrowComputedProps.left}px`,
+                                              }
+                                            : {}),
 
                                         [styles.tooltipVars.delay]: `${
                                             delay ? TOOLTIP_TRANSITION_DELAY_IN_MS : 0
@@ -374,6 +457,14 @@ const Tooltip: React.FC<Props> = ({
                                         )}
                                         {extra || children}
                                     </Boxed>
+                                    <div className={styles.arrowContainer}>
+                                        <div
+                                            className={classNames(
+                                                styles.arrow,
+                                                arrowComputedProps?.borderStyle
+                                            )}
+                                        />
+                                    </div>
                                 </div>
                             </div>
                         );
