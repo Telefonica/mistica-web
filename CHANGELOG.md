@@ -1,3 +1,11 @@
+# [14.28.0](https://github.com/Telefonica/mistica-web/compare/v14.27.0...v14.28.0) (2023-10-25)
+
+
+### Features
+
+* **PhoneNumberField:** Update formatting for Brazil ([#915](https://github.com/Telefonica/mistica-web/issues/915)) ([102466b](https://github.com/Telefonica/mistica-web/commit/102466b0f0fa443a055a859e5ba57ad44c525005))
+* **ResponsiveLayout:** nested ResponsiveLayout background takes precedence ([#909](https://github.com/Telefonica/mistica-web/issues/909)) ([3c0fe11](https://github.com/Telefonica/mistica-web/commit/3c0fe113cad6d521ee2622e2b18dfcf1fdf59c3f))
+
 # [14.27.0](https://github.com/Telefonica/mistica-web/compare/v14.26.1...v14.27.0) (2023-10-19)
 
 
