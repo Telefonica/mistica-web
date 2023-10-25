@@ -6,7 +6,6 @@ import * as styles from './tooltip.css';
 import Stack from './stack';
 import {Text2} from './text';
 import {assignInlineVars} from '@vanilla-extract/dynamic';
-import {Boxed} from './boxed';
 import {cancelEvent, getCssVarValue, getPrefixedDataAttributes} from './utils/dom';
 import {ESC} from './utils/key-codes';
 import {isClientSide} from './utils/environment';
@@ -14,11 +13,16 @@ import Overlay from './overlay';
 import {isEqual} from './utils/helpers';
 import classNames from 'classnames';
 import {vars} from './skins/skin-contract.css';
-import {useIsInverseVariant} from './theme-variant-context';
+import {ThemeVariant, useIsInverseVariant} from './theme-variant-context';
 import {combineRefs} from './utils/common';
+import {sprinkles} from './sprinkles.css';
 
 import type {BoundingRect} from './hooks';
 import type {DataAttributes} from './utils/types';
+
+const getBorderStyle = (isInverse: boolean) => {
+    return sprinkles({border: isInverse ? 'none' : 'regular'});
+};
 
 const TOOLTIP_TRANSITION_DURATION_IN_MS = 500;
 const TOOLTIP_TRANSITION_DELAY_IN_MS = 500;
@@ -345,18 +349,29 @@ const Tooltip: React.FC<Props> = ({
     );
 
     const renderTooltipContent = () => (
-        <Boxed
-            className={classNames(styles.tooltip, textCenter ? styles.tooltipCenter : undefined)}
-            width={width}
-        >
-            {(title || description) && (
-                <Stack space={4}>
-                    {title && <Text2 medium>{title}</Text2>}
-                    {description && <Text2 regular>{description}</Text2>}
-                </Stack>
+        <div
+            style={{width, boxSizing: 'border-box'}}
+            className={classNames(
+                styles.tooltip,
+                textCenter ? styles.tooltipCenter : undefined,
+                getBorderStyle(isInverse),
+                sprinkles({
+                    borderRadius: vars.borderRadii.popup,
+                    overflow: 'hidden',
+                    background: vars.colors.backgroundContainer,
+                })
             )}
-            {extra || children}
-        </Boxed>
+        >
+            <ThemeVariant isInverse={false}>
+                {(title || description) && (
+                    <Stack space={4}>
+                        {title && <Text2 medium>{title}</Text2>}
+                        {description && <Text2 regular>{description}</Text2>}
+                    </Stack>
+                )}
+                {extra || children}
+            </ThemeVariant>
+        </div>
     );
 
     return (
