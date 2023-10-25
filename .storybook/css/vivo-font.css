@@ -14,6 +14,14 @@
     src: url('./fonts/vivo-type-light.woff2') format('woff2');
 }
 
+/* Medium */
+@font-face {
+    font-family: 'Vivo Type';
+    font-style: normal;
+    font-weight: 500;
+    src: url('./fonts/vivo-type-bold.woff2') format('woff2');
+}
+
 /* Bold */
 @font-face {
     font-family: 'Vivo Type';
