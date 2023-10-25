@@ -5,7 +5,6 @@ import {CSSTransition} from 'react-transition-group';
 import * as styles from './tooltip.css';
 import Stack from './stack';
 import {Text2} from './text';
-import {combineRefs} from './utils/common';
 import {assignInlineVars} from '@vanilla-extract/dynamic';
 import {Boxed} from './boxed';
 import {cancelEvent, getCssVarValue, getPrefixedDataAttributes} from './utils/dom';
@@ -187,8 +186,8 @@ const Tooltip: React.FC<Props> = ({
         };
 
         const {left, right, top, bottom} = targetRect;
-        const tooltipWidth = tooltip.clientWidth;
-        const tooltipHeight = tooltip.clientHeight;
+        const tooltipWidth = tooltip.offsetWidth;
+        const tooltipHeight = tooltip.offsetHeight;
 
         const maxLeftOffset = windowSize.width - tooltipWidth;
         const maxTopOffset = windowSize.height - tooltipHeight;
@@ -341,6 +340,21 @@ const Tooltip: React.FC<Props> = ({
         windowSize.width
     );
 
+    const renderTooltipContent = () => (
+        <Boxed
+            className={classNames(styles.tooltip, textCenter ? styles.tooltipCenter : undefined)}
+            width={width}
+        >
+            {(title || description) && (
+                <Stack space={4}>
+                    {title && <Text2 medium>{title}</Text2>}
+                    {description && <Text2 regular>{description}</Text2>}
+                </Stack>
+            )}
+            {extra || children}
+        </Boxed>
+    );
+
     return (
         <>
             {isTooltipOpen && isTouchableDevice && (
@@ -436,9 +450,22 @@ const Tooltip: React.FC<Props> = ({
                                 aria-label={ariaLabel}
                                 tabIndex={-1}
                             >
+                                {/**
+                                 * Hack to prevent text from wrapping automatically when touching the viewport's edges,
+                                 * even if the content's width didn't reach the max width.
+                                 * https://stackoverflow.com/questions/66106629/how-to-disable-text-wrapping-when-viewport-border-is-reached
+                                 */}
                                 <div
                                     className={styles.container}
-                                    ref={combineRefs(tooltipRef, setTooltip)}
+                                    style={{top: -100000, left: -100000}}
+                                    ref={setTooltip}
+                                >
+                                    {renderTooltipContent()}
+                                </div>
+
+                                <div
+                                    className={styles.container}
+                                    ref={tooltipRef}
                                     aria-label={targetLabel}
                                     onMouseEnter={() => {
                                         if (
@@ -455,21 +482,7 @@ const Tooltip: React.FC<Props> = ({
                                         }
                                     }}
                                 >
-                                    <Boxed
-                                        className={classNames(
-                                            styles.tooltip,
-                                            textCenter ? styles.tooltipCenter : undefined
-                                        )}
-                                        width={width}
-                                    >
-                                        {(title || description) && (
-                                            <Stack space={4}>
-                                                {title && <Text2 medium>{title}</Text2>}
-                                                {description && <Text2 regular>{description}</Text2>}
-                                            </Stack>
-                                        )}
-                                        {extra || children}
-                                    </Boxed>
+                                    {renderTooltipContent()}
                                     <div className={styles.arrowContainer}>
                                         <div
                                             className={classNames(
