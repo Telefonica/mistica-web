@@ -57,6 +57,12 @@ export const tooltip = style({
     maxWidth: 496,
 });
 
+export const tooltipCenter = style({
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+});
+
 export const arrowContainer = style({
     width: ARROW_SIZE,
     height: ARROW_SIZE,

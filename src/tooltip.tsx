@@ -426,11 +426,6 @@ const Tooltip: React.FC<Props> = ({
                             >
                                 <div
                                     className={styles.container}
-                                    style={{
-                                        width,
-                                        display: 'flex',
-                                        justifyContent: textCenter ? 'center' : undefined,
-                                    }}
                                     ref={combineRefs(tooltipRef, setTooltip)}
                                     aria-label={targetLabel}
                                     onMouseEnter={() => {
@@ -448,7 +443,13 @@ const Tooltip: React.FC<Props> = ({
                                         }
                                     }}
                                 >
-                                    <Boxed className={styles.tooltip}>
+                                    <Boxed
+                                        className={classNames(
+                                            styles.tooltip,
+                                            textCenter ? styles.tooltipCenter : undefined
+                                        )}
+                                        width={width}
+                                    >
                                         {(title || description) && (
                                             <Stack space={4}>
                                                 {title && <Text2 medium>{title}</Text2>}
