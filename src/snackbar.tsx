@@ -15,7 +15,7 @@ import IconButton from './icon-button';
 import type {DataAttributes} from './utils/types';
 
 type SnackbarType = 'INFORMATIVE' | 'CRITICAL';
-type SnackbarCloseHandler = (result: {action: 'DISMISS' | 'TIMEOUT' | 'BUTTON'}) => unknown;
+type SnackbarCloseHandler = (result: {action: 'DISMISS' | 'TIMEOUT' | 'BUTTON' | 'CONSECUTIVE'}) => unknown;
 
 type Props = {
     buttonText?: string;
