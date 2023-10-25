@@ -12,7 +12,7 @@ import {cancelEvent, getCssVarValue, getPrefixedDataAttributes} from './utils/do
 import {ESC} from './utils/key-codes';
 import {isClientSide} from './utils/environment';
 import Overlay from './overlay';
-import {isEqual} from 'lodash';
+import {isEqual} from './utils/helpers';
 import classNames from 'classnames';
 import {vars} from './skins/skin-contract.css';
 import {useIsInverseVariant} from './theme-variant-context';
@@ -426,6 +426,7 @@ const Tooltip: React.FC<Props> = ({
                                         [styles.tooltipVars.delay]: `${
                                             delay ? TOOLTIP_TRANSITION_DELAY_IN_MS : 0
                                         }ms`,
+                                        [styles.tooltipVars.maxWidth]: `${Math.min(496, windowSize.width)}px`,
                                         [styles.tooltipVars.enterTransform]:
                                             getTooltipEnterTransform(currentPosition),
                                     }),

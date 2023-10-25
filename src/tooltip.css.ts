@@ -8,6 +8,7 @@ const left = createVar();
 const padding = createVar();
 const delay = createVar();
 const enterTransform = createVar();
+const maxWidth = createVar();
 
 const arrowTop = createVar();
 const arrowLeft = createVar();
@@ -20,6 +21,7 @@ export const tooltipVars = {
     enterTransform,
     arrowTop,
     arrowLeft,
+    maxWidth,
 };
 
 export const tooltipTransitionClasses = {
@@ -54,7 +56,7 @@ export const tooltip = style({
     padding: 8,
     position: 'relative',
     minWidth: 40,
-    maxWidth: 496,
+    maxWidth,
 });
 
 export const tooltipCenter = style({

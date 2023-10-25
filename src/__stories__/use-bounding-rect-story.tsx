@@ -1,4 +1,5 @@
 import * as React from 'react';
+import Tooltip from '../tooltip';
 import {useBoundingRect} from '../hooks';
 import {Text2} from '../text';
 import Stack from '../stack';
@@ -8,23 +9,31 @@ export default {
     parameters: {
         fullScreen: true,
     },
+    argTypes: {
+        position: {
+            options: ['left', 'right', 'top', 'bottom'],
+            control: {type: 'select'},
+        },
+    },
 };
 
 type Args = {
-    offsetX: number;
-    offsetY: number;
-    width: number;
-    height: number;
-    trackIfNotVisible: boolean;
+    top: number;
+    left: number;
+    position: 'left' | 'right' | 'top' | 'bottom';
+    title: string;
+    description: string;
+    delay: boolean;
 };
 
-export const Default: StoryComponent<Args> = ({offsetX, offsetY, width, height, trackIfNotVisible}) => {
+export const Default: StoryComponent<Args> = ({top, left, position, title, description, delay}) => {
     const ref = React.useRef<HTMLDivElement | null>(null);
-    const rect = useBoundingRect(ref, trackIfNotVisible);
+
+    const rect = useBoundingRect(ref);
 
     return (
         <div style={{position: 'relative'}}>
-            <div style={{position: 'fixed', top: 0, left: 0, zIndex: 1, userSelect: 'none'}}>
+            <div style={{position: 'relative'}}>
                 <Stack space={16}>
                     <Text2 regular>Top: {rect?.top}</Text2>
                     <Text2 regular>Bottom: {rect?.bottom}</Text2>
@@ -36,20 +45,31 @@ export const Default: StoryComponent<Args> = ({offsetX, offsetY, width, height, 
             </div>
             <div
                 style={{
-                    position: 'relative',
-                    paddingLeft: offsetX,
-                    paddingTop: offsetY,
+                    position: 'absolute',
+                    zIndex: 1,
+                    top,
+                    left,
                     transition: 'all 1s',
                 }}
             >
-                <div
-                    ref={ref}
-                    style={{
-                        width,
-                        height,
-                        boxSizing: 'border-box',
-                        border: `2px solid red`,
-                    }}
+                <Tooltip
+                    targetLabel="test"
+                    target={
+                        <div
+                            ref={ref}
+                            style={{
+                                width: 100,
+                                height: 100,
+                                boxSizing: 'border-box',
+                                border: `2px solid red`,
+                            }}
+                        />
+                    }
+                    position={position}
+                    title={title}
+                    delay={delay}
+                    description={description}
+                    textCenter
                 />
             </div>
         </div>
@@ -59,9 +79,10 @@ export const Default: StoryComponent<Args> = ({offsetX, offsetY, width, height, 
 Default.storyName = 'useBoundingRect';
 
 Default.args = {
-    offsetX: 0,
-    offsetY: 0,
-    width: 100,
-    height: 100,
-    trackIfNotVisible: true,
+    top: 0,
+    left: 0,
+    position: 'top',
+    title: 'title',
+    description: 'description',
+    delay: true,
 };
