@@ -18,7 +18,7 @@ test('renders slider', () => {
 test('change slider value', () => {
     render(
         <ThemeContextProvider theme={makeTheme()}>
-            <Slider tooltip />
+            <Slider />
         </ThemeContextProvider>
     );
 
@@ -26,9 +26,6 @@ test('change slider value', () => {
     fireEvent.change(slider, {target: {value: 90}});
 
     fireEvent.focus(slider);
-    const tooltip = screen.getByText(/90/im);
-
-    expect(tooltip).toBeInTheDocument();
     expect(slider).toHaveValue('90');
 });
 

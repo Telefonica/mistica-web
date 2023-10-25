@@ -28,7 +28,7 @@ export const Default: StoryComponent = () => {
             >
                 <Tooltip
                     targetLabel="help text"
-                    target={<Text2 regular>Tooltip default (bottom)</Text2>}
+                    target={<Text2 regular>Tooltip default (top)</Text2>}
                     description={description}
                     width={300}
                 />
