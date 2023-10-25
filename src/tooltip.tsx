@@ -122,6 +122,7 @@ const Tooltip: React.FC<Props> = ({
     extra,
     description,
     target,
+    targetStyle,
     title,
     targetLabel,
     width,
@@ -171,6 +172,8 @@ const Tooltip: React.FC<Props> = ({
         );
 
         if (!finalPosition) {
+            setTooltipComputedProps(null);
+            setArrowComputedProps(null);
             return;
         }
 
@@ -373,7 +376,7 @@ const Tooltip: React.FC<Props> = ({
                     }}
                 />
             )}
-            {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
+            {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions, jsx-a11y/mouse-events-have-key-events */}
             <div
                 ref={(element) => {
                     /**
@@ -391,7 +394,6 @@ const Tooltip: React.FC<Props> = ({
                         setIsMouseOverTarget(true);
                     }
                 }}
-                onFocus={() => {}}
                 onMouseLeave={() => {
                     if (!isTouchableDevice) {
                         setIsMouseOverTarget(false);
@@ -401,6 +403,7 @@ const Tooltip: React.FC<Props> = ({
                     setIsTooltipOpen(true);
                 }}
                 aria-describedby={ariaLabel}
+                style={targetStyle}
             >
                 {target}
             </div>
@@ -431,6 +434,7 @@ const Tooltip: React.FC<Props> = ({
                                     top: 0,
                                     left: 0,
                                     position: 'fixed',
+                                    visibility: tooltipComputedProps ? 'visible' : 'hidden',
                                     ...assignInlineVars({
                                         ...(tooltipComputedProps
                                             ? {
