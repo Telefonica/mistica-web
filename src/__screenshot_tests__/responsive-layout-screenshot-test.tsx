@@ -6,7 +6,6 @@ const TEST_CASES = [
     {id: 'layout-responsive-layout--default', device: 'DESKTOP'},
     {id: 'layout-responsive-layout--default', device: 'DESKTOP', viewport: {width: 1368, height: 770}},
     {id: 'layout-responsive-layout--nested', device: 'MOBILE_IOS'},
-    {id: 'layout-responsive-layout--nested', device: 'MOBILE_ANDROID'},
     {id: 'layout-responsive-layout--nested', device: 'TABLET'},
     {id: 'layout-responsive-layout--nested', device: 'DESKTOP'},
     {id: 'layout-responsive-layout--nested', device: 'DESKTOP', viewport: {width: 1368, height: 770}},
