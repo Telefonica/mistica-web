@@ -25,6 +25,32 @@ test('Snackbar', async () => {
     });
 });
 
+test('Snackbar auto dismisses', async () => {
+    const onCloseSpy = jest.fn();
+
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Snackbar message="Some message" onClose={onCloseSpy} />
+        </ThemeContextProvider>
+    );
+
+    expect(await screen.findByRole('alert')).toBeInTheDocument();
+    expect(screen.getByText('Some message')).toBeInTheDocument();
+
+    await waitFor(
+        () => {
+            expect(onCloseSpy).toHaveBeenCalledWith({action: 'TIMEOUT'});
+        },
+        {
+            // the Snackbar should dismiss after 5 seconds, so giving it a bit more to prevent test flakiness
+            // we could use jest fake timers here, but that makes tests more complicated and less black-box
+            timeout: 6000,
+        }
+    );
+
+    expect(screen.queryByRole('alert')).toBeNull();
+});
+
 test('Snackbar with dismiss button', async () => {
     const onCloseSpy = jest.fn();
 
