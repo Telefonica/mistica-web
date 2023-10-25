@@ -24,6 +24,7 @@ const getBorderStyle = (isInverse: boolean) => {
     return sprinkles({border: isInverse ? 'none' : 'regular'});
 };
 
+const TOOLTIP_MAX_WIDTH = 496;
 const TOOLTIP_TRANSITION_DURATION_IN_MS = 500;
 const TOOLTIP_TRANSITION_DELAY_IN_MS = 500;
 const TOOLTIP_OFFSET_FROM_TARGET = 8;
@@ -445,7 +446,7 @@ const Tooltip: React.FC<Props> = ({
                                      * even if the content's width didn't reach the max width.
                                      * https://stackoverflow.com/questions/66106629/how-to-disable-text-wrapping-when-viewport-border-is-reached
                                      */
-                                    width: 'calc(100vw + 496px)',
+                                    width: `calc(100vw + ${TOOLTIP_MAX_WIDTH}px)`,
                                     top: 0,
                                     left: 0,
                                     position: 'fixed',
@@ -470,7 +471,10 @@ const Tooltip: React.FC<Props> = ({
                                         [styles.tooltipVars.delay]: `${
                                             delay ? TOOLTIP_TRANSITION_DELAY_IN_MS : 0
                                         }ms`,
-                                        [styles.tooltipVars.maxWidth]: `${Math.min(496, windowSize.width)}px`,
+                                        [styles.tooltipVars.maxWidth]: `${Math.min(
+                                            TOOLTIP_MAX_WIDTH,
+                                            windowSize.width
+                                        )}px`,
                                         [styles.tooltipVars.enterTransform]:
                                             getTooltipEnterTransform(currentPosition),
                                     }),
