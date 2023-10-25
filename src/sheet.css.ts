@@ -1,7 +1,10 @@
-import {keyframes, style} from '@vanilla-extract/css';
+import {createVar, keyframes, style} from '@vanilla-extract/css';
 import * as mq from './media-queries.css';
 import {vars as skinVars} from './skins/skin-contract.css';
 import {sprinkles} from './sprinkles.css';
+
+const insideSheetDialog = createVar();
+export const vars = {insideSheetDialog};
 
 export const transitionDuration = process.env.NODE_ENV === 'test' ? 0 : 400;
 
@@ -41,6 +44,10 @@ export const SheetContainer = style([
 
         '@media': {
             [mq.desktopOrBigger]: {
+                vars: {
+                    [insideSheetDialog]: '1',
+                },
+
                 pointerEvents: 'none', // allow clicks to go through this layer and hit the overlay
                 top: 0,
                 display: 'flex',
