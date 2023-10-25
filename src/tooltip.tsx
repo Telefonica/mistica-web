@@ -15,6 +15,7 @@ import {isEqual} from './utils/helpers';
 import classNames from 'classnames';
 import {vars} from './skins/skin-contract.css';
 import {useIsInverseVariant} from './theme-variant-context';
+import {combineRefs} from './utils/common';
 
 import type {BoundingRect} from './hooks';
 import type {DataAttributes} from './utils/types';
@@ -385,11 +386,12 @@ const Tooltip: React.FC<Props> = ({
                         targetRef.current = targetElement;
                     }
                 }}
-                onMouseEnter={() => {
+                onMouseOver={() => {
                     if (!isTouchableDevice) {
                         setIsMouseOverTarget(true);
                     }
                 }}
+                onFocus={() => {}}
                 onMouseLeave={() => {
                     if (!isTouchableDevice) {
                         setIsMouseOverTarget(false);
@@ -420,6 +422,15 @@ const Tooltip: React.FC<Props> = ({
                         return (
                             <div
                                 style={{
+                                    /**
+                                     * Hack to prevent text from wrapping automatically when touching the viewport's edges,
+                                     * even if the content's width didn't reach the max width.
+                                     * https://stackoverflow.com/questions/66106629/how-to-disable-text-wrapping-when-viewport-border-is-reached
+                                     */
+                                    width: 'calc(100vw + 496px)',
+                                    top: 0,
+                                    left: 0,
+                                    position: 'fixed',
                                     ...assignInlineVars({
                                         ...(tooltipComputedProps
                                             ? {
@@ -450,22 +461,9 @@ const Tooltip: React.FC<Props> = ({
                                 aria-label={ariaLabel}
                                 tabIndex={-1}
                             >
-                                {/**
-                                 * Hack to prevent text from wrapping automatically when touching the viewport's edges,
-                                 * even if the content's width didn't reach the max width.
-                                 * https://stackoverflow.com/questions/66106629/how-to-disable-text-wrapping-when-viewport-border-is-reached
-                                 */}
                                 <div
                                     className={styles.container}
-                                    style={{top: -100000, left: -100000}}
-                                    ref={setTooltip}
-                                >
-                                    {renderTooltipContent()}
-                                </div>
-
-                                <div
-                                    className={styles.container}
-                                    ref={tooltipRef}
+                                    ref={combineRefs(setTooltip, tooltipRef)}
                                     aria-label={targetLabel}
                                     onMouseEnter={() => {
                                         if (
