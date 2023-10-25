@@ -2,12 +2,14 @@ import {createVar, style} from '@vanilla-extract/css';
 
 const top = createVar();
 const left = createVar();
+const padding = createVar();
 const delay = createVar();
 const enterTransform = createVar();
 
-export const vars = {
+export const tooltipVars = {
     top,
     left,
+    padding,
     delay,
     enterTransform,
 };
@@ -34,12 +36,15 @@ export const tooltipTransitionClasses = {
 export const container = style({
     top,
     left,
+    zIndex: 10000,
+    position: 'fixed',
+    filter: 'drop-shadow(0px 2px 2px rgba(0,0,0,0.2))',
+    padding,
     minWidth: 40,
     maxWidth: 496,
-    position: 'fixed',
 });
 
 export const tooltip = style({
     padding: 8,
-    boxShadow: '0px 2px 4px rgba(0,0,0,0.2)',
+    position: 'relative',
 });

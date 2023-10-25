@@ -12,13 +12,14 @@ import {cancelEvent, getPrefixedDataAttributes} from './utils/dom';
 import {ESC} from './utils/key-codes';
 import {isClientSide} from './utils/environment';
 import Overlay from './overlay';
+import {isEqual} from 'lodash';
 
 import type {BoundingRect} from './hooks';
 import type {DataAttributes} from './utils/types';
 
 const TOOLTIP_TRANSITION_DURATION_IN_MS = 500;
 const TOOLTIP_TRANSITION_DELAY_IN_MS = 500;
-const TOOLTIP_VIEWPORT_MARGIN = 16;
+const TOOLTIP_OFFSET_FROM_TARGET = 8;
 
 type Position = 'top' | 'bottom' | 'left' | 'right';
 
@@ -47,8 +48,8 @@ const getFinalPosition = (
     if (!targetRect || !tooltip) {
         return undefined;
     }
-    const tooltipWidth = tooltip.clientWidth;
-    const tooltipHeight = tooltip.clientHeight;
+    const tooltipWidth = tooltip.offsetWidth + TOOLTIP_OFFSET_FROM_TARGET;
+    const tooltipHeight = tooltip.offsetHeight + TOOLTIP_OFFSET_FROM_TARGET;
     const {top, bottom, left, right} = targetRect;
 
     const availableSpaceOnBottom = windowHeight - bottom;
@@ -56,54 +57,41 @@ const getFinalPosition = (
     const availableSpaceOnTop = top;
     const availableSpaceOnLeft = left;
 
+    const fitsHorizontal = tooltipWidth <= Math.max(availableSpaceOnLeft, availableSpaceOnRight);
+    const fitsVertical = tooltipHeight <= Math.max(availableSpaceOnBottom, availableSpaceOnTop);
+
+    if (!fitsVertical && !fitsHorizontal) {
+        return undefined;
+    }
+
     switch (position) {
         case 'left':
-            if (tooltipWidth <= availableSpaceOnLeft) {
-                return 'left';
+            if (fitsHorizontal) {
+                return tooltipWidth <= availableSpaceOnLeft ? 'left' : 'right';
+            } else {
+                return availableSpaceOnBottom > availableSpaceOnTop ? 'bottom' : 'top';
             }
-            if (tooltipWidth <= availableSpaceOnRight) {
-                return 'right';
-            }
-            if (tooltipHeight > Math.max(availableSpaceOnBottom, availableSpaceOnTop)) {
-                return undefined;
-            }
-            return availableSpaceOnBottom > availableSpaceOnTop ? 'bottom' : 'top';
 
         case 'right':
-            if (tooltipWidth <= availableSpaceOnRight) {
-                return 'right';
+            if (fitsHorizontal) {
+                return tooltipWidth <= availableSpaceOnRight ? 'right' : 'left';
+            } else {
+                return availableSpaceOnBottom > availableSpaceOnTop ? 'bottom' : 'top';
             }
-            if (tooltipWidth <= availableSpaceOnLeft) {
-                return 'left';
-            }
-            if (tooltipHeight > Math.max(availableSpaceOnBottom, availableSpaceOnTop)) {
-                return undefined;
-            }
-            return availableSpaceOnBottom > availableSpaceOnTop ? 'bottom' : 'top';
 
         case 'top':
-            if (tooltipHeight <= availableSpaceOnTop) {
-                return 'top';
+            if (fitsVertical) {
+                return tooltipHeight <= availableSpaceOnTop ? 'top' : 'bottom';
+            } else {
+                return availableSpaceOnLeft > availableSpaceOnRight ? 'left' : 'right';
             }
-            if (tooltipHeight <= availableSpaceOnBottom) {
-                return 'bottom';
-            }
-            if (tooltipWidth > Math.max(availableSpaceOnLeft, availableSpaceOnRight)) {
-                return undefined;
-            }
-            return availableSpaceOnLeft > availableSpaceOnRight ? 'left' : 'right';
 
         case 'bottom':
-            if (tooltipHeight <= availableSpaceOnBottom) {
-                return 'bottom';
+            if (fitsVertical) {
+                return tooltipHeight <= availableSpaceOnBottom ? 'bottom' : 'top';
+            } else {
+                return availableSpaceOnLeft > availableSpaceOnRight ? 'left' : 'right';
             }
-            if (tooltipHeight <= availableSpaceOnTop) {
-                return 'top';
-            }
-            if (tooltipWidth > Math.max(availableSpaceOnLeft, availableSpaceOnRight)) {
-                return undefined;
-            }
-            return availableSpaceOnLeft > availableSpaceOnRight ? 'left' : 'right';
 
         default:
             return undefined;
@@ -139,9 +127,10 @@ const Tooltip: React.FC<Props> = ({
     textCenter,
 }) => {
     const ariaLabel = useAriaId();
-    const [itemsComputedProps, setItemsComputedProps] = React.useState<{
-        left?: number;
-        top?: number;
+    const [tooltipComputedProps, setTooltipComputedProps] = React.useState<{
+        left: number;
+        top: number;
+        padding: string;
     } | null>(null);
 
     const targetRef = React.useRef<Element | null>(null);
@@ -174,57 +163,62 @@ const Tooltip: React.FC<Props> = ({
             return;
         }
 
-        let leftOffset;
-        let topOffset;
+        let tooltipProps: {
+            left: number;
+            top: number;
+            padding: string;
+        };
 
         const {left, right, top, bottom} = targetRect;
-        const tooltipWidth = tooltip.offsetWidth;
-        const tooltipHeight = tooltip.offsetHeight;
+        const tooltipWidth = tooltip.clientWidth;
+        const tooltipHeight = tooltip.clientHeight;
 
-        const maxLeftOffset = windowSize.width - tooltipWidth - TOOLTIP_VIEWPORT_MARGIN;
-        const maxTopOffset = windowSize.height - tooltipHeight - TOOLTIP_VIEWPORT_MARGIN;
+        const maxLeftOffset = windowSize.width - tooltipWidth;
+        const maxTopOffset = windowSize.height - tooltipHeight;
 
         switch (finalPosition) {
             case 'top':
-                leftOffset = Math.max(
-                    TOOLTIP_VIEWPORT_MARGIN,
-                    Math.min(maxLeftOffset, (left + right - tooltipWidth) / 2)
-                );
-                topOffset = top - tooltipHeight;
+                tooltipProps = {
+                    left: Math.max(0, Math.min(maxLeftOffset, (left + right - tooltipWidth) / 2)),
+                    top: top - tooltipHeight,
+                    padding: `0px 0px ${TOOLTIP_OFFSET_FROM_TARGET}px 0px`,
+                };
+
                 break;
 
             case 'bottom':
-                leftOffset = Math.max(
-                    TOOLTIP_VIEWPORT_MARGIN,
-                    Math.min(maxLeftOffset, (left + right - tooltipWidth) / 2)
-                );
-                topOffset = bottom;
+                tooltipProps = {
+                    left: Math.max(0, Math.min(maxLeftOffset, (left + right - tooltipWidth) / 2)),
+                    top: bottom,
+                    padding: `${TOOLTIP_OFFSET_FROM_TARGET}px 0px 0px 0px`,
+                };
+
                 break;
 
             case 'left':
-                leftOffset = left - tooltipWidth;
-                topOffset = Math.max(
-                    TOOLTIP_VIEWPORT_MARGIN,
-                    Math.min(maxTopOffset, (top + bottom - tooltipHeight) / 2)
-                );
+                tooltipProps = {
+                    left: left - tooltipWidth,
+                    top: Math.max(0, Math.min(maxTopOffset, (top + bottom - tooltipHeight) / 2)),
+                    padding: `0px ${TOOLTIP_OFFSET_FROM_TARGET}px 0px 0px`,
+                };
+
                 break;
 
             case 'right':
-                leftOffset = right;
-                topOffset = Math.max(
-                    TOOLTIP_VIEWPORT_MARGIN,
-                    Math.min(maxTopOffset, (top + bottom - tooltipHeight) / 2)
-                );
-                break;
-
             default:
+                tooltipProps = {
+                    left: right,
+                    top: Math.max(0, Math.min(maxTopOffset, (top + bottom - tooltipHeight) / 2)),
+                    padding: `0px 0px 0px ${TOOLTIP_OFFSET_FROM_TARGET}px`,
+                };
+
+                break;
         }
 
-        setItemsComputedProps({
-            top: topOffset,
-            left: leftOffset,
-        });
-    }, [tooltip, targetRect, isTooltipOpen, position, windowSize]);
+        if (!isEqual(tooltipProps, tooltipComputedProps)) {
+            setTooltipComputedProps(tooltipProps);
+        }
+    }, [tooltip, targetRect, isTooltipOpen, position, windowSize, tooltipComputedProps]);
 
     React.useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
@@ -301,9 +295,6 @@ const Tooltip: React.FC<Props> = ({
                         setIsMouseOverTarget(false);
                     }
                 }}
-                style={{
-                    display: 'inline-flex',
-                }}
                 onClick={() => {
                     setIsTooltipOpen(true);
                 }}
@@ -330,20 +321,18 @@ const Tooltip: React.FC<Props> = ({
                             <div
                                 style={{
                                     ...assignInlineVars({
-                                        ...(itemsComputedProps
+                                        ...(tooltipComputedProps
                                             ? {
-                                                  ...(itemsComputedProps.top !== undefined && {
-                                                      [styles.vars.top]: `${itemsComputedProps.top}px`,
-                                                  }),
-                                                  ...(itemsComputedProps.left !== undefined && {
-                                                      [styles.vars.left]: `${itemsComputedProps.left}px`,
-                                                  }),
+                                                  [styles.tooltipVars.top]: `${tooltipComputedProps.top}px`,
+                                                  [styles.tooltipVars.left]: `${tooltipComputedProps.left}px`,
+                                                  [styles.tooltipVars.padding]: tooltipComputedProps.padding,
                                               }
                                             : {}),
-                                        [styles.vars.delay]: `${
+
+                                        [styles.tooltipVars.delay]: `${
                                             delay ? TOOLTIP_TRANSITION_DELAY_IN_MS : 0
                                         }ms`,
-                                        [styles.vars.enterTransform]:
+                                        [styles.tooltipVars.enterTransform]:
                                             getTooltipEnterTransform(currentPosition),
                                     }),
                                 }}
