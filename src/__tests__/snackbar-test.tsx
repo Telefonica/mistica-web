@@ -118,7 +118,37 @@ test('nativeMessage is called when webview bridge is available', async () => {
             buttonText: 'any-button-text',
             message: 'any-message',
             type: 'INFORMATIVE',
-            duration: 'TEN_SECONDS',
+        });
+    });
+
+    await waitFor(() => {
+        expect(onCloseSpy).toHaveBeenCalledWith({action: 'DISMISS'});
+    });
+});
+
+test('nativeMessage is called with duration PERSISTENT when duration is Infinity', async () => {
+    jest.spyOn(bridge, 'isWebViewBridgeAvailable').mockReturnValue(true);
+    const nativeMessageMock = jest.spyOn(bridge, 'nativeMessage').mockResolvedValue();
+
+    const onCloseSpy = jest.fn();
+
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Snackbar
+                message="any-message"
+                onClose={onCloseSpy}
+                buttonText="any-button-text"
+                duration={Infinity}
+            />
+        </ThemeContextProvider>
+    );
+
+    await waitFor(() => {
+        expect(nativeMessageMock).toHaveBeenCalledWith({
+            buttonText: 'any-button-text',
+            message: 'any-message',
+            type: 'INFORMATIVE',
+            duration: 'PERSISTENT',
         });
     });
 
@@ -160,7 +190,6 @@ test('nativeMessage should be called once, even if the component re-renders', as
         expect(nativeMessageMock).toHaveBeenCalledWith({
             buttonText: 'any-button-text',
             message: 'any-message',
-            duration: 'TEN_SECONDS',
             type: 'INFORMATIVE',
         });
     });

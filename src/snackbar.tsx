@@ -165,15 +165,11 @@ const Snackbar: React.FC<Props> = ({
     React.useEffect(() => {
         if (renderNative) {
             // these are the duration values understood by native app, other values will be ignored
-            const nativeDuration = {
-                [Infinity]: 'PERSISTENT',
-                5000: 'FIVE_SECONDS',
-                10000: 'TEN_SECONDS',
-            }[duration];
 
             nativeMessage({
                 message,
-                duration: nativeDuration as any,
+                // @ts-expect-error duration can be 'PERSISTENT' in new webview-bridge lib versions, and old apps will ignore it
+                duration: duration === Infinity ? 'PERSISTENT' : undefined,
                 buttonText,
                 type,
                 ...{withDismiss},
