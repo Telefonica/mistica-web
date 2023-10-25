@@ -15,6 +15,7 @@ import Overlay from './overlay';
 import {isEqual} from 'lodash';
 import classNames from 'classnames';
 import {vars} from './skins/skin-contract.css';
+import {useIsInverseVariant} from './theme-variant-context';
 
 import type {BoundingRect} from './hooks';
 import type {DataAttributes} from './utils/types';
@@ -139,7 +140,7 @@ const Tooltip: React.FC<Props> = ({
     const [arrowComputedProps, setArrowComputedProps] = React.useState<{
         left: number;
         top: number;
-        borderStyle: string;
+        borderStyle?: string;
     } | null>(null);
 
     const targetRef = React.useRef<Element | null>(null);
@@ -150,6 +151,7 @@ const Tooltip: React.FC<Props> = ({
     const [isMouseOverTooltip, setIsMouseOverTooltip] = React.useState(false);
     const [isMouseOverTarget, setIsMouseOverTarget] = React.useState(false);
     const [isTooltipOpen, setIsTooltipOpen] = React.useState(false);
+    const isInverse = useIsInverseVariant();
 
     const targetRect = useBoundingRect(targetRef);
 
@@ -181,7 +183,7 @@ const Tooltip: React.FC<Props> = ({
         let arrowProps: {
             left: number;
             top: number;
-            borderStyle: string;
+            borderStyle?: string;
         };
 
         const {left, right, top, bottom} = targetRect;
@@ -241,7 +243,7 @@ const Tooltip: React.FC<Props> = ({
                         Math.min(windowSize.width - arrowOffsetFromViewport, (left + right - ARROW_SIZE) / 2)
                     ),
                     top: top - TOOLTIP_OFFSET_FROM_TARGET - ARROW_SIZE / 2,
-                    borderStyle: styles.topArrowBorder,
+                    borderStyle: !isInverse ? styles.topArrowBorder : undefined,
                 };
 
                 break;
@@ -253,7 +255,7 @@ const Tooltip: React.FC<Props> = ({
                         Math.min(windowSize.width - arrowOffsetFromViewport, (left + right - ARROW_SIZE) / 2)
                     ),
                     top: bottom + TOOLTIP_OFFSET_FROM_TARGET - ARROW_SIZE / 2 + 1 / Math.sqrt(2),
-                    borderStyle: styles.bottomArrowBorder,
+                    borderStyle: !isInverse ? styles.bottomArrowBorder : undefined,
                 };
 
                 break;
@@ -265,7 +267,7 @@ const Tooltip: React.FC<Props> = ({
                         arrowOffsetFromViewport,
                         Math.min(windowSize.height - arrowOffsetFromViewport, (top + bottom - ARROW_SIZE) / 2)
                     ),
-                    borderStyle: styles.leftArrowBorder,
+                    borderStyle: !isInverse ? styles.leftArrowBorder : undefined,
                 };
 
                 break;
@@ -278,7 +280,7 @@ const Tooltip: React.FC<Props> = ({
                         arrowOffsetFromViewport,
                         Math.min(windowSize.height - arrowOffsetFromViewport, (top + bottom - ARROW_SIZE) / 2)
                     ),
-                    borderStyle: styles.rightArrowBorder,
+                    borderStyle: !isInverse ? styles.rightArrowBorder : undefined,
                 };
 
                 break;
@@ -293,7 +295,16 @@ const Tooltip: React.FC<Props> = ({
         if (!isEqual(arrowProps, arrowComputedProps)) {
             setArrowComputedProps(arrowProps);
         }
-    }, [tooltip, targetRect, isTooltipOpen, position, windowSize, tooltipComputedProps, arrowComputedProps]);
+    }, [
+        tooltip,
+        targetRect,
+        isTooltipOpen,
+        position,
+        windowSize,
+        tooltipComputedProps,
+        arrowComputedProps,
+        isInverse,
+    ]);
 
     React.useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {

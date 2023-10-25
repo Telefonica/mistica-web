@@ -44,7 +44,7 @@ export const tooltipTransitionClasses = {
 export const container = style({
     top,
     left,
-    zIndex: 10000,
+    zIndex: 1,
     position: 'fixed',
     filter: 'drop-shadow(0px 2px 2px rgba(0,0,0,0.2))',
     padding,
