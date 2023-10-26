@@ -11,14 +11,14 @@ export const createStorybookTheme = (skinName) => {
     return create({
         base: 'light',
 
-        brandTitle: 'Mistica',
+        brandTitle: 'Mística',
         brandUrl: 'https://github.com/Telefonica/mistica',
         brandImage: logo,
 
         colorSecondary: colors.primary,
 
         // Typography
-        fontBase: "-apple-system, 'Roboto', 'Helvetica', 'Arial', sans-serif",
+        fontBase: "Telefonica Sans, -apple-system, 'Roboto', 'Helvetica', 'Arial', sans-serif",
         fontCode: 'monospace',
 
         // Text colors
@@ -28,5 +28,9 @@ export const createStorybookTheme = (skinName) => {
         // Toolbar default and active colors
         barTextColor: colors.textSecondary,
         barSelectedColor: colors.primary,
+
+        // UI
+        appBg: '#ffffff',
+        appContentBg: '#ffffff',
     });
 };

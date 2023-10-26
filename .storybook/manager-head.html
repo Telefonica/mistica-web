@@ -1,0 +1,105 @@
+<style type="text/css">
+    /* styles for the storybook sidebar */
+    @import 'css/telefonica-font.css';
+    .search-result-item {
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1) !important;
+    }
+    .search-result-item--label span {
+        margin-top: 4px !important;
+    }
+    .sidebar-item,
+    .search-result-item {
+        padding-top: 0.875em !important;
+        padding-bottom: 0.875em !important;
+        font-size: 14px !important;
+        font-family: 'Telefonica Sans', sans-serif !important;
+        font-weight: 500 !important;
+        line-height: normal !important;
+        display: flex !important;
+        align-items: center !important;
+    }
+    .sidebar-item:first-of-type {
+        border-bottom: none !important;
+    }
+
+    /* let flex and align-items control alignment */
+    .sidebar-item > span,
+    .sidebar-item > svg {
+        margin-top: 0 !important;
+    }
+
+    /* icon size */
+    .sidebar-svg-icon,
+    .sidebar-item svg,
+    .search-result-item svg {
+        width: 4px !important;
+        height: 4px !important;
+        color: inherit !important;
+        opacity: 0 !important; /* hide icon to keep aligment with the rest of list elements */
+    }
+
+    /* www should be in lowercase */
+    .sidebar-item#www {
+        text-transform: lowercase;
+    }
+
+    /* create illusion of hrs between sidebar sections */
+    .sidebar-item#www,
+    .sidebar-item#appendix {
+        border-top: 2px solid rgba(0, 0, 0, 0.1);
+        margin-top: 0.5rem;
+        padding-top: 1rem !important;
+    }
+
+    /* logo placement tweaks */
+    .sidebar-header > div {
+        margin-right: 0 !important;
+    }
+    .sidebar-header a {
+        margin: 6px 0 !important;
+    }
+    .sidebar-header img {
+        width: 104px !important;
+    }
+    .sidebar-subheading {
+        border-top: 1px solid rgba(0, 0, 0, 0.1) !important;
+    }
+    .sidebar-subheading:last-child {
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1) !important;
+        padding-bottom: 16px !important;
+    }
+    .sidebar-subheading button,
+    .search-result-recentlyOpened {
+        letter-spacing: normal !important;
+        margin-top: 16px !important;
+    }
+    .sidebar-subheading span {
+        margin-right: 12px !important;
+    }
+
+    /* Search input */
+    .search-field input {
+        height: 40px !important;
+        padding-left: 32px !important;
+    }
+    .search-field svg:nth-child(1) {
+        top: 13px !important;
+        left: 13px !important;
+    }
+    .search-field svg:nth-child(4) {
+        top: 13px !important;
+        right: 13px !important;
+    }
+    .search-field code {
+        top: 13px !important;
+        right: 13px !important;
+    }
+
+    /* Main block */
+    [role='main'] > div {
+        border: 1px solid rgba(0, 0, 0, 0.1) !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        box-sizing: content-box !important;
+    }
+</style>
