@@ -110,8 +110,13 @@ export const button = style([
 
 export const longButton = style({
     marginTop: 18,
-    marginLeft: 0,
+    marginLeft: -8,
     alignSelf: 'flex-end',
+    '@media': {
+        [mq.desktopOrBigger]: {
+            marginLeft: -8,
+        },
+    },
 });
 
 const dismissButtonBase = sprinkles({
