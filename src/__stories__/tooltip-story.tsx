@@ -85,7 +85,7 @@ export const Default: StoryComponent = () => {
                     delay={false}
                 />
             </div>
-            <div style={{width: 600}} />
+            <div style={{width: 600, paddingTop: 1000}} />
             <Stack space={16}>
                 <Text2 medium>Mobile examples: (look on mobile mode)</Text2>
                 <div

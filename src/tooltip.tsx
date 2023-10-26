@@ -6,7 +6,7 @@ import * as styles from './tooltip.css';
 import Stack from './stack';
 import {Text2} from './text';
 import {assignInlineVars} from '@vanilla-extract/dynamic';
-import {cancelEvent, getCssVarValue, getPrefixedDataAttributes} from './utils/dom';
+import {getCssVarValue, getPrefixedDataAttributes} from './utils/dom';
 import {ESC} from './utils/key-codes';
 import {isClientSide} from './utils/environment';
 import Overlay from './overlay';
@@ -156,6 +156,7 @@ const Tooltip: React.FC<Props> = ({
 
     const [isMouseOverTooltip, setIsMouseOverTooltip] = React.useState(false);
     const [isMouseOverTarget, setIsMouseOverTarget] = React.useState(false);
+    const [isFocused, setIsFocused] = React.useState(false);
     const [isTooltipOpen, setIsTooltipOpen] = React.useState(false);
     const isInverse = useIsInverseVariant();
 
@@ -165,6 +166,8 @@ const Tooltip: React.FC<Props> = ({
 
     React.useEffect(() => {
         if (!tooltip || !targetRect || !isTooltipOpen) {
+            setTooltipComputedProps(null);
+            setArrowComputedProps(null);
             return;
         }
 
@@ -319,7 +322,6 @@ const Tooltip: React.FC<Props> = ({
             if (isTooltipOpen) {
                 switch (e.keyCode) {
                     case ESC:
-                        cancelEvent(e);
                         if (isTooltipOpen) {
                             setIsMouseOverTarget(false);
                             setIsTooltipOpen(false);
@@ -338,8 +340,8 @@ const Tooltip: React.FC<Props> = ({
     });
 
     React.useEffect(() => {
-        setIsTooltipOpen(isMouseOverTarget || isMouseOverTooltip);
-    }, [isMouseOverTarget, isMouseOverTooltip]);
+        setIsTooltipOpen(isMouseOverTarget || isMouseOverTooltip || isFocused);
+    }, [isMouseOverTarget, isMouseOverTooltip, isFocused]);
 
     const currentPosition = getFinalPosition(
         targetRect,
@@ -348,6 +350,8 @@ const Tooltip: React.FC<Props> = ({
         windowSize.height,
         windowSize.width
     );
+
+    const currentTargetBoundingRect = targetRef.current?.getBoundingClientRect();
 
     const renderTooltipContent = () => (
         <div
@@ -424,6 +428,31 @@ const Tooltip: React.FC<Props> = ({
                 {target}
             </div>
 
+            {currentTargetBoundingRect && (
+                <div
+                    onFocus={() => {
+                        if (!isTouchableDevice) {
+                            targetRef.current?.scrollIntoView();
+                            setIsFocused(true);
+                        }
+                    }}
+                    onBlur={() => {
+                        if (!isTouchableDevice) {
+                            setIsFocused(false);
+                        }
+                    }}
+                    style={{
+                        position: 'fixed',
+                        zIndex: -1,
+                        left: currentTargetBoundingRect.x,
+                        top: currentTargetBoundingRect.y,
+                        width: currentTargetBoundingRect.width,
+                        height: currentTargetBoundingRect.height,
+                    }}
+                    // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
+                    tabIndex={0}
+                />
+            )}
             <Portal>
                 <CSSTransition
                     in={isTooltipOpen}
@@ -489,11 +518,7 @@ const Tooltip: React.FC<Props> = ({
                                     ref={combineRefs(setTooltip, tooltipRef)}
                                     aria-label={targetLabel}
                                     onMouseEnter={() => {
-                                        if (
-                                            !isTouchableDevice &&
-                                            (transitionStatus === 'entered' ||
-                                                transitionStatus === 'entering')
-                                        ) {
+                                        if (!isTouchableDevice && transitionStatus === 'entered') {
                                             setIsMouseOverTooltip(true);
                                         }
                                     }}
