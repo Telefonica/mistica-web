@@ -2,7 +2,6 @@ import {style, styleVariants} from '@vanilla-extract/css';
 import {vars} from './skins/skin-contract.css';
 import {sprinkles} from './sprinkles.css';
 import * as mq from './media-queries.css';
-import {pxToRem} from './utils/css';
 import {applyAlpha} from './utils/color';
 
 export const TRANSITION_TIME_IN_MS = 300;
@@ -92,16 +91,11 @@ const hoverStyles = {
 
 export const button = style([
     {
+        flexShrink: 0,
         marginTop: -6,
         marginLeft: 16,
         marginBottom: -6,
         marginRight: -8,
-        fontWeight: 500,
-        fontSize: pxToRem(16),
-        lineHeight: '24px',
-        padding: '4px 8px',
-        whiteSpace: 'nowrap',
-        width: 'auto',
         cursor: 'pointer',
         borderRadius: vars.borderRadii.button,
 
@@ -119,9 +113,6 @@ export const longButton = style({
     marginLeft: 0,
     alignSelf: 'flex-end',
 });
-
-export const buttonInfo = sprinkles({color: vars.colors.textLinkSnackbar});
-export const buttonCritical = sprinkles({color: vars.colors.textPrimaryInverse});
 
 const dismissButtonBase = sprinkles({
     display: 'flex',

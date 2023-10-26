@@ -33,16 +33,16 @@ export const Default: StoryComponent<Args> = ({buttonText, message, duration, ty
 Default.storyName = 'Snackbar';
 
 Default.args = {
-    buttonText: 'Action',
-    message: 'Some message',
     type: 'INFORMATIVE',
-    duration: 'Default',
+    message: 'Some message',
+    buttonText: 'Action',
     withDismiss: false,
+    duration: 'Default',
 };
 
 Default.argTypes = {
     duration: {
-        options: ['Default', '5000', '10000', 'Infinity'],
+        options: ['Default', 'Infinity'],
         control: {type: 'select'},
     },
     type: {

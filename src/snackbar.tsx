@@ -3,7 +3,7 @@ import {BaseTouchable} from './touchable';
 import classNames from 'classnames';
 import {isWebViewBridgeAvailable, nativeMessage} from '@tef-novum/webview-bridge';
 import {useElementDimensions, useScreenSize, useTheme} from './hooks';
-import {Text2} from './text';
+import {Text2, Text3} from './text';
 import * as styles from './snackbar.css';
 import {sprinkles} from './sprinkles.css';
 import {vars} from './skins/skin-contract.css';
@@ -101,27 +101,32 @@ const SnackbarComponent: React.FC<Props> = ({
                             </Text2>
                         </div>
                         {buttonText && (
-                            <div
-                                className={classNames(
-                                    styles.button,
-                                    type === 'CRITICAL' ? styles.buttonCritical : styles.buttonInfo,
-                                    {[styles.longButton]: hasLongButton}
-                                )}
-                            >
+                            <div className={classNames(styles.button, {[styles.longButton]: hasLongButton})}>
                                 <BaseTouchable
                                     className={sprinkles({
+                                        paddingY: 4,
+                                        paddingX: 8,
                                         border: 'none',
                                         padding: 0,
                                         background: 'transparent',
-                                        color: 'inherit',
                                     })}
-                                    style={{lineHeight: 'inherit', fontWeight: 'inherit'}}
                                     ref={buttonRef}
                                     onPress={() => {
                                         close({action: 'BUTTON'});
                                     }}
                                 >
-                                    {buttonText}
+                                    <Text3
+                                        medium
+                                        forceMobileSizes
+                                        truncate
+                                        color={
+                                            type === 'CRITICAL'
+                                                ? vars.colors.textPrimaryInverse
+                                                : vars.colors.textLinkSnackbar
+                                        }
+                                    >
+                                        {buttonText}
+                                    </Text3>
                                 </BaseTouchable>
                             </div>
                         )}
