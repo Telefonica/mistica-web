@@ -105,7 +105,7 @@ const getIconJsx = (svgFilename) => {
         ref: false,
         titleProp: false,
         typescript: true,
-        plugins: ['@svgr/plugin-svgo', '@svgr/plugin-jsx'],
+        plugins: ['@svgr/plugin-jsx'],
     });
     // this generates a complete component, but we only need the JSX
     const matches = jsx.match(/<svg(.*)<\/svg>/);

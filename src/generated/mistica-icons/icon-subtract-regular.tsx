@@ -18,7 +18,7 @@ const IconSubtractRegular = ({color, size = 24, ...rest}: IconProps): JSX.Elemen
         <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
             <path
                 fill={fillColor}
-                d="M3.001 12.047a.879.879 0 01.828-.924h16.34a.876.876 0 01.003 1.752H3.829A.876.876 0 013 12.047z"
+                d="M3.001 12.047a.879.879 0 0 1 .828-.924h16.34a.876.876 0 0 1 .003 1.752H3.829A.876.876 0 0 1 3 12.047Z"
             />
         </svg>
     );

@@ -18,7 +18,7 @@ const IconAddMoreFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element 
         <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
             <path
                 fill={fillColor}
-                d="M12 4a1 1 0 00-1 1v5.498H6.002a1.002 1.002 0 100 2.004H11V18a1 1 0 102 0v-5.498h4.998a1.002 1.002 0 100-2.004H13V5a1 1 0 00-1-1z"
+                d="M12 4a1 1 0 0 0-1 1v5.498H6.002a1.002 1.002 0 1 0 0 2.004H11V18a1 1 0 1 0 2 0v-5.498h4.998a1.002 1.002 0 1 0 0-2.004H13V5a1 1 0 0 0-1-1Z"
             />
         </svg>
     );

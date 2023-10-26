@@ -18,7 +18,7 @@ const IconSubtractLight = ({color, size = 24, ...rest}: IconProps): JSX.Element 
         <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
             <path
                 fill={fillColor}
-                d="M3 12.001a.6.6 0 01.6-.6h16.803a.6.6 0 01-.002 1.199H3.599A.6.6 0 013 12.002z"
+                d="M3 12.001c0-.333.269-.6.6-.6h16.803a.6.6 0 0 1-.002 1.199H3.599A.6.6 0 0 1 3 12.002Z"
             />
         </svg>
     );
