@@ -18,7 +18,7 @@ export const createStorybookTheme = (skinName) => {
         colorSecondary: colors.primary,
 
         // Typography
-        fontBase: "Telefonica Sans, -apple-system, 'Roboto', 'Helvetica', 'Arial', sans-serif",
+        fontBase: "-apple-system, 'Roboto', 'Helvetica', 'Arial', sans-serif",
         fontCode: 'monospace',
 
         // Text colors
