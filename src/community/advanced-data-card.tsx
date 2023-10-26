@@ -32,6 +32,7 @@ import type {
 } from './blocks';
 
 type CardContentProps = {
+    onPress?: () => void;
     headline?: string | RendersNullableElement<typeof Tag>;
     pretitle?: string;
     pretitleAs?: string;
@@ -44,10 +45,12 @@ type CardContentProps = {
     description?: string;
     descriptionLinesMax?: number;
     href?: string;
+    to?: undefined;
     ariaLabel?: string;
 };
 
 const CardContent: React.FC<CardContentProps> = ({
+    onPress,
     headline,
     pretitle,
     pretitleAs = 'p',
@@ -60,6 +63,7 @@ const CardContent: React.FC<CardContentProps> = ({
     description,
     descriptionLinesMax,
     href,
+    to,
     ariaLabel,
 }) => {
     const {textPresets} = useTheme();
@@ -67,16 +71,30 @@ const CardContent: React.FC<CardContentProps> = ({
     return (
         <Stack space={4}>
             {headline}
-            <Touchable
-                tabIndex={0}
-                maybe
-                className={classNames(styles.touchableArea)}
-                as="a"
-                href={href}
-                aria-label={ariaLabel}
-            >
-                <div />
-            </Touchable>
+            {href ? (
+                <Touchable
+                    tabIndex={0}
+                    maybe
+                    className={classNames(styles.touchableArea)}
+                    as="a"
+                    href={href}
+                    to={to}
+                    aria-label={ariaLabel}
+                >
+                    <div />
+                </Touchable>
+            ) : (
+                <Touchable
+                    tabIndex={0}
+                    maybe
+                    className={classNames(styles.touchableArea)}
+                    onPress={onPress}
+                    to={to}
+                    aria-label={ariaLabel}
+                >
+                    <div />
+                </Touchable>
+            )}
             {pretitle && (
                 <Text2
                     color={vars.colors.textPrimary}
@@ -208,7 +226,9 @@ type AllowedExtra =
 type TextAs = 'h1' | 'h2' | 'h3' | 'h4';
 
 interface AdvancedDataCardProps {
+    onPress?: () => void;
     href?: string | undefined;
+    to?: undefined;
     stackingGroup?: RendersNullableElement<typeof StackingGroup>;
     headline?: RendersNullableElement<typeof Tag>;
     pretitle?: string;
@@ -238,6 +258,8 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
     (
         {
             href,
+            to,
+            onPress,
 
             stackingGroup,
             headline,
@@ -268,7 +290,7 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
         },
         ref
     ) => {
-        const isTouchable = !!href;
+        const isTouchable = !!href || !!onPress;
 
         const footerProps = {button, footerImage, footerText, footerTextLinesMax, buttonLink};
 
@@ -319,6 +341,8 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
                                             description={description}
                                             descriptionLinesMax={descriptionLinesMax}
                                             href={href}
+                                            to={to}
+                                            onPress={onPress}
                                             ariaLabel={ariaLabel}
                                         />
                                     </Stack>
