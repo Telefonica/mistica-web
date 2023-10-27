@@ -202,7 +202,7 @@ const Snackbar: React.FC<Props> = ({
     return (
         <SnackbarComponent
             message={message}
-            duration={duration}
+            duration={Math.max(duration, buttonText ? 10000 : 5000)}
             buttonText={buttonText}
             type={type}
             onClose={onCloseRef.current}
