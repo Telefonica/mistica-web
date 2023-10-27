@@ -53,7 +53,7 @@ const SnackbarComponent: React.FC<Props> = ({
         (result) => {
             setIsOpen(false);
             setTimeout(() => {
-                onClose(result);
+                onClose?.(result);
             }, styles.TRANSITION_TIME_IN_MS);
         },
         [onClose]
