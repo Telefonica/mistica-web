@@ -44,6 +44,9 @@ const TEXTS_ES = {
     progressBarCompletedLabel: 'completo',
     progressBarStepLabel: 'Paso 1$s de 2$s',
     pinFieldInputLabel: 'Dígito 1$s de 2$s',
+    counterRemoveLabel: 'Borrar elemento',
+    counterIncreaseLabel: 'Incrementar valor',
+    counterDecreaseLabel: 'Decrementar valor',
 };
 
 const TEXTS_EN: ThemeTexts = {
@@ -83,6 +86,9 @@ const TEXTS_EN: ThemeTexts = {
     progressBarCompletedLabel: 'completed',
     progressBarStepLabel: 'Step 1$s of 2$s',
     pinFieldInputLabel: 'Digit 1$s of 2$s',
+    counterRemoveLabel: 'Remove element',
+    counterIncreaseLabel: 'Increase value',
+    counterDecreaseLabel: 'Decrease value',
 };
 
 const TEXTS_DE: ThemeTexts = {
@@ -122,6 +128,9 @@ const TEXTS_DE: ThemeTexts = {
     progressBarCompletedLabel: 'vollendet',
     progressBarStepLabel: 'Schritt 1$s von 2$s',
     pinFieldInputLabel: 'Ziffer 1$s von 2$s',
+    counterRemoveLabel: 'Element entfernen',
+    counterIncreaseLabel: 'Wert steigern',
+    counterDecreaseLabel: 'Wert verringern',
 };
 
 const TEXTS_PT: ThemeTexts = {
@@ -161,6 +170,9 @@ const TEXTS_PT: ThemeTexts = {
     progressBarCompletedLabel: 'concluído',
     progressBarStepLabel: 'Etapa 1$s de 2$s',
     pinFieldInputLabel: 'Dígito 1$s de 2$s',
+    counterRemoveLabel: 'Remover elemento',
+    counterIncreaseLabel: 'aumentar valor',
+    counterDecreaseLabel: 'diminuir valor',
 };
 
 export const getTexts = (locale: Locale): typeof TEXTS_ES => {
