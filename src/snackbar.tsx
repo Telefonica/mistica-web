@@ -17,6 +17,9 @@ import type {DataAttributes} from './utils/types';
 type SnackbarType = 'INFORMATIVE' | 'CRITICAL';
 type SnackbarCloseHandler = (result: {action: 'DISMISS' | 'TIMEOUT' | 'BUTTON' | 'CONSECUTIVE'}) => unknown;
 
+const DEFAULT_DURATION_WITHOUT_BUTTON = 5000;
+const DEFAULT_DURATION_WITH_BUTTON = 10000;
+
 type Props = {
     buttonText?: string;
     duration?: number;
@@ -31,9 +34,9 @@ type Props = {
 const SnackbarComponent: React.FC<Props> = ({
     message,
     buttonText,
-    duration = buttonText ? 10000 : 5000,
-    onClose = () => {},
-    type = 'INFORMATIVE',
+    duration,
+    onClose,
+    type,
     withDismiss = false,
     dataAttributes,
 }) => {
@@ -155,11 +158,13 @@ const SnackbarComponent: React.FC<Props> = ({
 const Snackbar: React.FC<Props> = ({
     message,
     buttonText,
-    duration = buttonText ? 10000 : 5000,
+    duration,
     onClose: onCloseProp = () => {},
     type = 'INFORMATIVE',
     withDismiss,
 }) => {
+    const defaultDuration = buttonText ? DEFAULT_DURATION_WITH_BUTTON : DEFAULT_DURATION_WITHOUT_BUTTON;
+    duration = Math.max(duration ?? defaultDuration, defaultDuration);
     const renderNative = isWebViewBridgeAvailable();
     const onCloseRef = React.useRef(onCloseProp);
 
@@ -202,7 +207,7 @@ const Snackbar: React.FC<Props> = ({
     return (
         <SnackbarComponent
             message={message}
-            duration={Math.max(duration, buttonText ? 10000 : 5000)}
+            duration={duration}
             buttonText={buttonText}
             type={type}
             onClose={onCloseRef.current}
