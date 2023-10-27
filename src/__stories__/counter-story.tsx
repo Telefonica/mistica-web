@@ -2,7 +2,7 @@ import * as React from 'react';
 import {ResponsiveLayout, Box, Counter} from '..';
 
 export default {
-    title: 'Components/Primitives/Counter',
+    title: 'Components/Counter',
     parameters: {fullScreen: true},
 };
 
