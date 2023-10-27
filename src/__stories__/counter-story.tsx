@@ -31,7 +31,7 @@ export const Default: StoryComponent<Args> = ({min, max, defaultValue, removable
     );
 };
 
-Default.storyName = 'Circle';
+Default.storyName = 'Counter';
 Default.args = {
     min: 0,
     max: 10,
