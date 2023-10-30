@@ -1,10 +1,10 @@
 <style type="text/css">
     /* styles for the storybook sidebar */
     .search-result-item {
-        border-bottom: 1px solid rgba(0, 0, 0, 0.1) !important;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     }
     .search-result-item--label span {
-        margin-top: 4px !important;
+        margin-top: 4px;
     }
     .sidebar-item,
     .search-result-item {
@@ -12,28 +12,28 @@
         padding-bottom: 0.875em !important;
         font-size: 14px !important;
         font-weight: 400 !important;
-        line-height: normal !important;
-        display: flex !important;
+        line-height: normal;
+        display: flex;
         align-items: center !important;
     }
     .sidebar-item:first-of-type {
-        border-bottom: none !important;
+        border-bottom: none;
     }
 
     /* let flex and align-items control alignment */
     .sidebar-item > span,
     .sidebar-item > svg {
-        margin-top: 0 !important;
+        margin-top: 0;
+        margin-right: 5px;
     }
 
     /* icon size */
     .sidebar-svg-icon,
     .sidebar-item svg,
     .search-result-item svg {
-        width: 4px !important;
-        height: 4px !important;
-        color: inherit !important;
-        opacity: 0 !important; /* hide icon to keep aligment with the rest of list elements */
+        color: inherit;
+        visibility: hidden; /* hide icon to keep aligment with the rest of list elements */
+        display: none;
     }
 
     /* www should be in lowercase */
@@ -46,58 +46,63 @@
     .sidebar-item#appendix {
         border-top: 2px solid rgba(0, 0, 0, 0.1);
         margin-top: 0.5rem;
-        padding-top: 1rem !important;
+        padding-top: 1rem;
     }
 
     /* logo placement tweaks */
     .sidebar-header > div {
-        margin-right: 0 !important;
+        margin-right: 0;
     }
     .sidebar-header a {
-        margin: 6px 0 !important;
+        margin: 6px 0;
     }
     .sidebar-header img {
-        width: 104px !important;
+        width: 104px;
     }
     .sidebar-subheading {
-        border-top: 1px solid rgba(0, 0, 0, 0.1) !important;
+        border-top: 1px solid rgba(0, 0, 0, 0.1);
     }
+
+    .sidebar-subheading button span:first-of-type {
+        margin-right: 5px;
+    }
+
     .sidebar-subheading:last-child {
-        border-bottom: 1px solid rgba(0, 0, 0, 0.1) !important;
-        padding-bottom: 16px !important;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        padding-bottom: 16px;
     }
     .sidebar-subheading button,
     .search-result-recentlyOpened {
         letter-spacing: normal !important;
-        margin-top: 16px !important;
+        margin-top: 16px;
     }
     .sidebar-subheading span {
-        margin-right: 12px !important;
+        margin-right: 5px;
     }
 
     /* Search input */
     .search-field input {
-        height: 40px !important;
-        padding-left: 32px !important;
+        height: 40px;
+        padding-left: 32px;
     }
     .search-field svg:nth-child(1) {
-        top: 14px !important;
-        left: 14px !important;
+        top: 14px;
+        left: 14px;
     }
     .search-field svg:nth-child(4) {
-        top: 12px !important;
-        right: 13px !important;
+        top: 12px;
+        right: 13px;
     }
     .search-field code {
-        top: 12px !important;
-        right: 13px !important;
+        top: 12px;
+        right: 13px;
     }
 
     /* Main block */
     [role='main'] > div {
-        border: 1px solid rgba(0, 0, 0, 0.1) !important;
-        border-radius: 0 !important;
-        box-shadow: none !important;
-        box-sizing: content-box !important;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        border-radius: 0;
+        box-shadow: none;
+        box-sizing: content-box;
     }
 </style>
