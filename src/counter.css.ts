@@ -3,12 +3,14 @@ import * as mq from './media-queries.css';
 import {vars} from './skins/skin-contract.css';
 
 const transitionTiming = '0.2s ease-in-out';
+const COUNTER_HEIGHT = 40;
+const BUTTON_SIZE = 32;
 
 export const isTrashIconVisible = style({});
 export const isButtonDisabled = style({});
 
 export const counter = style({
-    height: 40,
+    minHeight: COUNTER_HEIGHT,
     padding: 3,
     boxSizing: 'border-box',
     borderRadius: vars.borderRadii.button,
@@ -16,6 +18,12 @@ export const counter = style({
     display: 'inline-block',
     cursor: 'default',
     overflow: 'hidden',
+});
+
+export const valueContainer = style({
+    display: 'flex',
+    justifyContent: 'center',
+    position: 'relative',
 });
 
 export const buttonContainer = style({
@@ -26,8 +34,8 @@ export const buttonIcon = style({
     position: 'absolute',
     top: 0,
     left: 0,
-    width: 32,
-    height: 32,
+    width: BUTTON_SIZE,
+    height: BUTTON_SIZE,
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
@@ -37,7 +45,7 @@ export const trashButtonIcon = style([
     buttonIcon,
     {
         opacity: 0,
-        transform: 'translateY(40px)',
+        transform: `translateY(${COUNTER_HEIGHT}px)`,
         transition: `opacity ${transitionTiming}, transform ${transitionTiming}`,
         selectors: {
             [`${isTrashIconVisible} &`]: {
@@ -55,7 +63,7 @@ export const decreaseButtonIcon = style([
         transition: `opacity ${transitionTiming}, transform ${transitionTiming}`,
         selectors: {
             [`${isTrashIconVisible} &`]: {
-                transform: 'translateY(-40px)',
+                transform: `translateY(-${COUNTER_HEIGHT}px)`,
                 opacity: 0,
             },
         },
@@ -64,8 +72,8 @@ export const decreaseButtonIcon = style([
 
 const baseButtonBackground = style({
     position: 'relative',
-    width: 32,
-    height: 32,
+    width: BUTTON_SIZE,
+    height: BUTTON_SIZE,
     borderRadius: vars.borderRadii.button,
     transform: 'scale(0)',
     transition: 'transform 0.15s ease-in-out',

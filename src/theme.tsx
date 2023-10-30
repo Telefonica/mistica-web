@@ -47,6 +47,9 @@ const TEXTS_ES = {
     counterRemoveLabel: 'Borrar elemento',
     counterIncreaseLabel: 'Incrementar valor',
     counterDecreaseLabel: 'Decrementar valor',
+    counterQuantity: 'cantidad',
+    counterMinValue: 'mínimo',
+    counterMaxValue: 'máximo',
 };
 
 const TEXTS_EN: ThemeTexts = {
@@ -89,6 +92,9 @@ const TEXTS_EN: ThemeTexts = {
     counterRemoveLabel: 'Remove element',
     counterIncreaseLabel: 'Increase value',
     counterDecreaseLabel: 'Decrease value',
+    counterQuantity: 'quantity',
+    counterMinValue: 'minimum of',
+    counterMaxValue: 'maximum of',
 };
 
 const TEXTS_DE: ThemeTexts = {
@@ -131,6 +137,9 @@ const TEXTS_DE: ThemeTexts = {
     counterRemoveLabel: 'Element entfernen',
     counterIncreaseLabel: 'Wert steigern',
     counterDecreaseLabel: 'Wert verringern',
+    counterQuantity: 'menge',
+    counterMinValue: 'minimal',
+    counterMaxValue: 'maximal',
 };
 
 const TEXTS_PT: ThemeTexts = {
@@ -173,6 +182,9 @@ const TEXTS_PT: ThemeTexts = {
     counterRemoveLabel: 'Remover elemento',
     counterIncreaseLabel: 'aumentar valor',
     counterDecreaseLabel: 'diminuir valor',
+    counterQuantity: 'quantidade',
+    counterMinValue: 'mínimo',
+    counterMaxValue: 'máximo',
 };
 
 export const getTexts = (locale: Locale): typeof TEXTS_ES => {

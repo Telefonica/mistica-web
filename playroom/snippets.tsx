@@ -2630,6 +2630,17 @@ export default [
     {group: 'Badge', name: 'Badge non numeric', code: '<Badge />'},
     {group: 'Badge', name: 'Icon with badge', code: '<Badge value="5"><IconSettingsRegular /></Badge>'},
     {group: 'Text', name: 'Text', code: '<Text>some text</Text>'},
+    {
+        group: 'Counter',
+        name: 'Counter',
+        code: `
+        <Counter
+          min={0}
+          max={5}
+          onRemove={() => window.alert("removed")}
+          defaultValue={2}
+        />`,
+    },
     ...headerSnippets,
     ...accordionSnippets,
     ...listSnippets,
