@@ -26,6 +26,8 @@ export const disabled = style({
 
 export const valueContainer = style({
     position: 'relative',
+    display: 'flex',
+    justifyContent: 'center',
 });
 
 export const buttonContainer = style({
