@@ -10,6 +10,7 @@ const base = style([
         cursor: 'pointer',
     }),
     {
+        userSelect: 'text',
         lineHeight: 'inherit',
         wordBreak: 'break-word',
         '@media': {
