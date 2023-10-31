@@ -130,7 +130,7 @@ const lightPrimary: ComplexStyleRule = [
     }),
     {
         selectors: {
-            '&:enabled:active': {
+            '&:not([disabled]):active': {
                 backgroundColor: vars.colors.buttonPrimaryBackgroundSelected,
             },
         },
@@ -141,7 +141,7 @@ const lightPrimary: ComplexStyleRule = [
                     '&:hover:not([disabled])': {
                         backgroundColor: vars.colors.buttonPrimaryBackgroundHover,
                     },
-                    '&:enabled:active': {
+                    '&:not([disabled]):active': {
                         backgroundColor: vars.colors.buttonPrimaryBackgroundSelected,
                     },
                 },
@@ -158,7 +158,7 @@ const lightPrimaryInverse: ComplexStyleRule = [
     }),
     {
         selectors: {
-            '&:enabled:active': {
+            '&:not([disabled]):active': {
                 backgroundColor: vars.colors.buttonPrimaryBackgroundInverseSelected,
                 color: vars.colors.textButtonPrimaryInverseSelected,
             },
@@ -171,7 +171,7 @@ const lightPrimaryInverse: ComplexStyleRule = [
                         color: vars.colors.textButtonPrimaryInverseSelected,
                         backgroundColor: vars.colors.buttonPrimaryBackgroundInverseSelected,
                     },
-                    '&:enabled:active': {
+                    '&:not([disabled]):active': {
                         backgroundColor: vars.colors.buttonPrimaryBackgroundInverseSelected,
                         color: vars.colors.textButtonPrimaryInverseSelected,
                     },
@@ -191,7 +191,7 @@ const lightSecondary: ComplexStyleRule = [
         borderColor: vars.colors.buttonSecondaryBorder,
 
         selectors: {
-            '&:enabled:active': {
+            '&:not([disabled]):active': {
                 color: vars.colors.textButtonSecondarySelected,
                 borderColor: vars.colors.buttonSecondaryBorderSelected,
                 backgroundColor: vars.colors.buttonSecondaryBackgroundSelected,
@@ -206,7 +206,7 @@ const lightSecondary: ComplexStyleRule = [
                         borderColor: vars.colors.buttonSecondaryBorderSelected,
                         backgroundColor: vars.colors.buttonSecondaryBackgroundHover,
                     },
-                    '&:enabled:active': {
+                    '&:not([disabled]):active': {
                         color: vars.colors.textButtonSecondarySelected,
                         borderColor: vars.colors.buttonSecondaryBorderSelected,
                         backgroundColor: vars.colors.buttonSecondaryBackgroundSelected,
@@ -227,7 +227,7 @@ const lightSecondaryInverse: ComplexStyleRule = [
         borderColor: vars.colors.buttonSecondaryBorderInverse,
 
         selectors: {
-            '&:enabled:active': {
+            '&:not([disabled]):active': {
                 borderColor: vars.colors.buttonSecondaryBorderInverseSelected,
                 color: vars.colors.textButtonSecondaryInverseSelected,
                 backgroundColor: vars.colors.buttonSecondaryBackgroundInverseSelected,
@@ -242,7 +242,7 @@ const lightSecondaryInverse: ComplexStyleRule = [
                         color: vars.colors.textButtonSecondaryInverseSelected,
                         backgroundColor: vars.colors.buttonSecondaryBackgroundInverseHover,
                     },
-                    '&:enabled:active': {
+                    '&:not([disabled]):active': {
                         borderColor: vars.colors.buttonSecondaryBorderInverseSelected,
                         color: vars.colors.textButtonSecondaryInverseSelected,
                         backgroundColor: vars.colors.buttonSecondaryBackgroundInverseSelected,
@@ -261,7 +261,7 @@ const danger: ComplexStyleRule = [
     }),
     {
         selectors: {
-            '&:enabled:active': {
+            '&:not([disabled]):active': {
                 backgroundColor: vars.colors.buttonDangerBackgroundSelected,
             },
         },
@@ -272,7 +272,7 @@ const danger: ComplexStyleRule = [
                     '&:hover:not([disabled])': {
                         backgroundColor: vars.colors.buttonDangerBackgroundHover,
                     },
-                    '&:enabled:active': {
+                    '&:not([disabled]):active': {
                         backgroundColor: vars.colors.buttonDangerBackgroundSelected,
                     },
                 },
@@ -302,7 +302,7 @@ export const link = style([
 
         selectors: {
             [`&[disabled]:not(${isLoading})`]: disabledStyle,
-            '&:enabled:active': {
+            '&:not([disabled]):active': {
                 backgroundColor: vars.colors.buttonLinkBackgroundSelected,
             },
         },
@@ -313,7 +313,7 @@ export const link = style([
                     '&:hover:not([disabled])': {
                         backgroundColor: vars.colors.buttonLinkBackgroundSelected,
                     },
-                    '&:enabled:active': {
+                    '&:not([disabled]):active': {
                         backgroundColor: vars.colors.buttonLinkBackgroundSelected,
                     },
                 },
@@ -331,7 +331,7 @@ export const inverseLink = style([
     }),
     {
         selectors: {
-            '&:enabled:active': {
+            '&:not([disabled]):active': {
                 backgroundColor: vars.colors.buttonLinkBackgroundInverseSelected,
             },
         },
@@ -342,7 +342,7 @@ export const inverseLink = style([
                     '&:hover:not([disabled])': {
                         backgroundColor: vars.colors.buttonLinkBackgroundInverseSelected,
                     },
-                    '&:enabled:active': {
+                    '&:not([disabled]):active': {
                         backgroundColor: vars.colors.buttonLinkBackgroundInverseSelected,
                     },
                 },
