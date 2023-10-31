@@ -89,7 +89,7 @@ const Counter: React.FC<Props> = ({
     const {texts} = useTheme();
 
     const minValue = min === undefined ? 0 : min;
-    const maxValue = max === undefined ? 999 : max;
+    const maxValue = Math.max(minValue, max === undefined ? 999 : max);
 
     const [currentValue, setCurrentValue] = useCounterState({
         value,
@@ -178,7 +178,7 @@ const Counter: React.FC<Props> = ({
                          * having different widths. Using fontVariantNumeric tabular-nums is not supported
                          * for new Vivo font.
                          * */
-                        style={{width: `${String(currentValue).length * 1.25}ch`}}
+                        style={{width: `${Math.max(3, String(maxValue).length) * 1.25}ch`}}
                     >
                         <div aria-hidden>
                             <Text3 regular color={vars.colors.textPrimary}>

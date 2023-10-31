@@ -3,14 +3,12 @@ import * as mq from './media-queries.css';
 import {vars} from './skins/skin-contract.css';
 
 const transitionTiming = '0.2s ease-in-out';
-const COUNTER_HEIGHT = 40;
 const BUTTON_SIZE = 32;
 
 export const isTrashIconVisible = style({});
 export const isButtonDisabled = style({});
 
 export const counter = style({
-    minHeight: COUNTER_HEIGHT,
     padding: 3,
     boxSizing: 'border-box',
     borderRadius: vars.borderRadii.button,
@@ -49,7 +47,7 @@ export const trashButtonIcon = style([
     buttonIcon,
     {
         opacity: 0,
-        transform: `translateY(${COUNTER_HEIGHT}px)`,
+        transform: `translateY(100%)`,
         transition: `opacity ${transitionTiming}, transform ${transitionTiming}`,
         selectors: {
             [`${isTrashIconVisible} &`]: {
@@ -67,7 +65,7 @@ export const decreaseButtonIcon = style([
         transition: `opacity ${transitionTiming}, transform ${transitionTiming}`,
         selectors: {
             [`${isTrashIconVisible} &`]: {
-                transform: `translateY(-${COUNTER_HEIGHT}px)`,
+                transform: `translateY(-100%)`,
                 opacity: 0,
             },
         },
