@@ -4,6 +4,7 @@ import {vars} from './skins/skin-contract.css';
 
 const transitionTiming = '0.2s ease-in-out';
 const BUTTON_SIZE = 32;
+const TOUCHABLE_AREA_WIDTH = 40;
 
 export const isTrashIconVisible = style({});
 export const isButtonDisabled = style({});
@@ -34,10 +35,10 @@ export const buttonContainer = style({
 
 export const buttonIcon = style({
     position: 'absolute',
-    top: 0,
-    left: 0,
-    width: BUTTON_SIZE,
-    height: BUTTON_SIZE,
+    top: -(TOUCHABLE_AREA_WIDTH - BUTTON_SIZE) / 2,
+    left: -(TOUCHABLE_AREA_WIDTH - BUTTON_SIZE) / 2,
+    width: TOUCHABLE_AREA_WIDTH,
+    height: TOUCHABLE_AREA_WIDTH,
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
