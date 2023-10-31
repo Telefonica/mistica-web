@@ -15,14 +15,16 @@ export const counter = style({
     boxSizing: 'border-box',
     borderRadius: vars.borderRadii.button,
     background: vars.colors.backgroundContainer,
-    display: 'inline-block',
+    display: 'inline-flex',
     cursor: 'default',
     overflow: 'hidden',
 });
 
+export const disabled = style({
+    opacity: '50%',
+});
+
 export const valueContainer = style({
-    display: 'flex',
-    justifyContent: 'center',
     position: 'relative',
 });
 

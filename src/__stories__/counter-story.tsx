@@ -22,6 +22,7 @@ export const Default: StoryComponent<Args> = ({min, max, defaultValue, removable
                 <Counter
                     min={min}
                     max={max}
+                    dataAttributes={{testid: 'counter'}}
                     defaultValue={defaultValue}
                     disabled={disabled}
                     {...(removable ? {onRemove: () => alert('removed!')} : {})}

@@ -121,7 +121,7 @@ const Counter: React.FC<Props> = ({
 
     return (
         <div
-            className={styles.counter}
+            className={classNames(styles.counter, {[styles.disabled]: disabled})}
             {...getPrefixedDataAttributes(dataAttributes, 'Counter')}
             style={{
                 border: `1px solid ${
@@ -134,6 +134,7 @@ const Counter: React.FC<Props> = ({
                     className={classNames(styles.buttonContainer, {
                         [styles.isTrashIconVisible]: hasTrashIcon,
                         [styles.isButtonDisabled]: disabled || (!hasTrashIcon && currentValue === minValue),
+                        [styles.disabled]: !disabled && !hasTrashIcon && currentValue === minValue,
                     })}
                 >
                     <div
@@ -142,10 +143,11 @@ const Counter: React.FC<Props> = ({
                         }
                     />
                     <Touchable
-                        className={classNames(styles.decreaseButtonIcon)}
+                        className={styles.decreaseButtonIcon}
                         disabled={hasTrashIcon || currentValue === minValue || disabled}
                         onPress={() => setCurrentValue(currentValue - 1)}
                         aria-label={getDecreaseLabel()}
+                        aria-hidden={hasTrashIcon}
                     >
                         <IconSubtractRegular
                             size={ICON_SIZE}
@@ -158,15 +160,13 @@ const Counter: React.FC<Props> = ({
                     </Touchable>
 
                     <Touchable
-                        className={classNames(styles.trashButtonIcon)}
+                        className={styles.trashButtonIcon}
                         disabled={!hasTrashIcon || disabled}
                         onPress={() => onRemove?.()}
                         aria-label={getRemoveLabel()}
+                        aria-hidden={!hasTrashIcon}
                     >
-                        <IconTrashCanRegular
-                            size={ICON_SIZE}
-                            color={disabled ? vars.colors.control : vars.colors.controlError}
-                        />
+                        <IconTrashCanRegular size={ICON_SIZE} color={vars.colors.controlError} />
                     </Touchable>
                 </div>
 
@@ -194,6 +194,7 @@ const Counter: React.FC<Props> = ({
                 <div
                     className={classNames(styles.buttonContainer, {
                         [styles.isButtonDisabled]: disabled || currentValue === maxValue,
+                        [styles.disabled]: !disabled && currentValue === maxValue,
                     })}
                 >
                     <div className={styles.defaultButtonBackground} />
