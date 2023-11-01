@@ -148,6 +148,9 @@ const Counter: React.FC<Props> = ({
                         onPress={() => setCurrentValue(currentValue - 1)}
                         aria-label={getDecreaseLabel()}
                         aria-hidden={hasTrashIcon}
+                        style={{
+                            pointerEvents: hasTrashIcon ? 'none' : 'auto',
+                        }}
                     >
                         <IconSubtractRegular
                             size={ICON_SIZE}
@@ -165,6 +168,9 @@ const Counter: React.FC<Props> = ({
                         onPress={() => onRemove?.()}
                         aria-label={getRemoveLabel()}
                         aria-hidden={!hasTrashIcon}
+                        style={{
+                            pointerEvents: hasTrashIcon ? 'auto' : 'none',
+                        }}
                     >
                         <IconTrashCanRegular size={ICON_SIZE} color={vars.colors.controlError} />
                     </Touchable>
