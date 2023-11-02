@@ -25,8 +25,9 @@ const getBorderStyle = (isInverse: boolean) => {
 };
 
 const TOOLTIP_MAX_WIDTH = 496;
-const TOOLTIP_TRANSITION_DURATION_IN_MS = 500;
-const TOOLTIP_TRANSITION_DELAY_IN_MS = 500;
+const TOOLTIP_ENTER_TRANSITION_DURATION_IN_MS = 500;
+const TOOLTIP_ENTER_TRANSITION_DELAY_IN_MS = 500;
+const TOOLTIP_EXIT_TRANSITION_DURATION_IN_MS = 300;
 const TOOLTIP_OFFSET_FROM_TARGET = 8;
 const ARROW_SIZE = 12;
 
@@ -166,8 +167,6 @@ const Tooltip: React.FC<Props> = ({
 
     React.useEffect(() => {
         if (!tooltip || !targetRect || !isTooltipOpen) {
-            setTooltipComputedProps(null);
-            setArrowComputedProps(null);
             return;
         }
 
@@ -351,8 +350,6 @@ const Tooltip: React.FC<Props> = ({
         windowSize.width
     );
 
-    const currentTargetBoundingRect = targetRef.current?.getBoundingClientRect();
-
     const renderTooltipContent = () => (
         <div
             style={{width, boxSizing: 'border-box'}}
@@ -396,7 +393,7 @@ const Tooltip: React.FC<Props> = ({
                     }}
                 />
             )}
-            {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions, jsx-a11y/mouse-events-have-key-events */}
+            {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
             <div
                 ref={(element) => {
                     /**
@@ -422,45 +419,31 @@ const Tooltip: React.FC<Props> = ({
                 onClick={() => {
                     setIsTooltipOpen(true);
                 }}
+                onFocus={() => {
+                    if (!isTouchableDevice) {
+                        setIsFocused(true);
+                    }
+                }}
+                onBlur={() => {
+                    if (!isTouchableDevice) {
+                        setIsFocused(false);
+                    }
+                }}
                 aria-describedby={ariaLabel}
                 style={targetStyle}
             >
                 {target}
             </div>
 
-            {currentTargetBoundingRect && (
-                <div
-                    onFocus={() => {
-                        if (!isTouchableDevice) {
-                            targetRef.current?.scrollIntoView();
-                            setIsFocused(true);
-                        }
-                    }}
-                    onBlur={() => {
-                        if (!isTouchableDevice) {
-                            setIsFocused(false);
-                        }
-                    }}
-                    style={{
-                        position: 'fixed',
-                        zIndex: -1,
-                        left: currentTargetBoundingRect.x,
-                        top: currentTargetBoundingRect.y,
-                        width: currentTargetBoundingRect.width,
-                        height: currentTargetBoundingRect.height,
-                    }}
-                    // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
-                    tabIndex={0}
-                />
-            )}
             <Portal>
                 <CSSTransition
                     in={isTooltipOpen}
                     nodeRef={tooltipRef}
                     timeout={{
                         enter:
-                            TOOLTIP_TRANSITION_DURATION_IN_MS + (delay ? TOOLTIP_TRANSITION_DELAY_IN_MS : 0),
-                        exit: TOOLTIP_TRANSITION_DURATION_IN_MS,
+                            TOOLTIP_ENTER_TRANSITION_DURATION_IN_MS +
+                            (delay ? TOOLTIP_ENTER_TRANSITION_DELAY_IN_MS : 0),
+                        exit: TOOLTIP_EXIT_TRANSITION_DURATION_IN_MS,
                     }}
                     classNames={styles.tooltipTransitionClasses}
                     mountOnEnter
@@ -498,7 +481,7 @@ const Tooltip: React.FC<Props> = ({
                                             : {}),
 
                                         [styles.tooltipVars.delay]: `${
-                                            delay ? TOOLTIP_TRANSITION_DELAY_IN_MS : 0
+                                            delay ? TOOLTIP_ENTER_TRANSITION_DELAY_IN_MS : 0
                                         }ms`,
                                         [styles.tooltipVars.maxWidth]: `${Math.min(
                                             TOOLTIP_MAX_WIDTH,
