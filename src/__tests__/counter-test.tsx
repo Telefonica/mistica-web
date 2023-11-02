@@ -23,10 +23,10 @@ test('Counter with default value', async () => {
 
     expect(screen.getByText('4')).toBeInTheDocument();
 
-    const increaseButton = screen.getByRole('button', {name: 'Incrementar valor'});
+    const increaseButton = screen.getByRole('button', {name: 'Aumentar valor'});
     expect(increaseButton).toBeInTheDocument();
 
-    const decreaseButton = screen.getByRole('button', {name: 'Decrementar valor'});
+    const decreaseButton = screen.getByRole('button', {name: 'Disminuir valor'});
     expect(decreaseButton).toBeInTheDocument();
 
     await userEvent.click(increaseButton);
@@ -54,10 +54,10 @@ test('Counter with controlled value', async () => {
 
     expect(screen.getByText('3')).toBeInTheDocument();
 
-    const increaseButton = screen.getByRole('button', {name: 'Incrementar valor'});
+    const increaseButton = screen.getByRole('button', {name: 'Aumentar valor'});
     expect(increaseButton).toBeInTheDocument();
 
-    const decreaseButton = screen.getByRole('button', {name: 'Decrementar valor'});
+    const decreaseButton = screen.getByRole('button', {name: 'Disminuir valor'});
     expect(decreaseButton).toBeInTheDocument();
 
     await userEvent.click(increaseButton);
@@ -99,9 +99,9 @@ test('Counter with onRemove has remove button and callback is executed on press'
         </ThemeContextProvider>
     );
 
-    await userEvent.click(screen.getByRole('button', {name: 'Decrementar valor'}));
+    await userEvent.click(screen.getByRole('button', {name: 'Disminuir valor'}));
 
-    expect(screen.queryByRole('button', {name: 'Decrementar valor'})).not.toBeInTheDocument();
+    expect(screen.queryByRole('button', {name: 'Disminuir valor'})).not.toBeInTheDocument();
 
     const removeButton = screen.getByRole('button', {name: 'Borrar elemento'});
     expect(removeButton).toBeInTheDocument();
