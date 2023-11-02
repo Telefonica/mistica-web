@@ -132,60 +132,44 @@ const Counter: React.FC<Props> = ({
             <Inline space={8} alignItems="center">
                 <div
                     className={classNames(styles.buttonContainer, {
-                        [styles.isTrashIconVisible]: hasTrashIcon,
+                        [styles.hasTrashIcon]: hasTrashIcon,
                         [styles.isButtonDisabled]: disabled || (!hasTrashIcon && currentValue === minValue),
                         [styles.disabled]: !disabled && !hasTrashIcon && currentValue === minValue,
                     })}
                 >
-                    <div
-                        className={
-                            hasTrashIcon ? styles.trashButtonBackground : styles.defaultButtonBackground
-                        }
-                    />
                     <Touchable
-                        className={styles.decreaseButtonIcon}
-                        disabled={hasTrashIcon || currentValue === minValue || disabled}
-                        onPress={() => setCurrentValue(currentValue - 1)}
-                        aria-label={getDecreaseLabel()}
-                        aria-hidden={hasTrashIcon}
-                        style={{
-                            pointerEvents: hasTrashIcon ? 'none' : 'auto',
-                        }}
+                        className={styles.button}
+                        disabled={(!hasTrashIcon && currentValue === minValue) || disabled}
+                        onPress={() => (hasTrashIcon ? onRemove?.() : setCurrentValue(currentValue - 1))}
+                        aria-label={hasTrashIcon ? getRemoveLabel() : getDecreaseLabel()}
                     >
-                        <IconSubtractRegular
-                            size={ICON_SIZE}
-                            color={
-                                (currentValue === minValue && !hasTrashIcon) || disabled
-                                    ? vars.colors.control
-                                    : vars.colors.controlActivated
-                            }
-                        />
-                    </Touchable>
-
-                    <Touchable
-                        className={styles.trashButtonIcon}
-                        disabled={!hasTrashIcon || disabled}
-                        onPress={() => onRemove?.()}
-                        aria-label={getRemoveLabel()}
-                        aria-hidden={!hasTrashIcon}
-                        style={{
-                            pointerEvents: hasTrashIcon ? 'auto' : 'none',
-                        }}
-                    >
-                        <IconTrashCanRegular size={ICON_SIZE} color={vars.colors.controlError} />
+                        <div className={styles.buttonBackground} />
+                        <div className={styles.decreaseButtonIcon} aria-hidden={hasTrashIcon}>
+                            <IconSubtractRegular
+                                size={ICON_SIZE}
+                                color={
+                                    (currentValue === minValue && !hasTrashIcon) || disabled
+                                        ? vars.colors.control
+                                        : vars.colors.controlActivated
+                                }
+                            />
+                        </div>
+                        <div className={styles.trashButtonIcon} aria-hidden={!hasTrashIcon}>
+                            <IconTrashCanRegular size={ICON_SIZE} color={vars.colors.controlError} />
+                        </div>
                     </Touchable>
                 </div>
 
-                <ThemeVariant variant="default">
-                    <div
-                        className={styles.valueContainer}
-                        /**
-                         * Hack to avoid counter's width from changing because of some characters
-                         * having different widths. Using fontVariantNumeric tabular-nums is not supported
-                         * for new Vivo font.
-                         * */
-                        style={{width: `${Math.max(3, String(maxValue).length) * 1.25}ch`}}
-                    >
+                <div
+                    className={styles.valueContainer}
+                    /**
+                     * Hack to avoid counter's width from changing because of some characters
+                     * having different widths. Using fontVariantNumeric tabular-nums is not supported
+                     * for new Vivo font.
+                     * */
+                    style={{width: `${Math.max(3, String(maxValue).length) * 1.25}ch`}}
+                >
+                    <ThemeVariant variant="default">
                         <div aria-hidden>
                             <Text3 regular color={vars.colors.textPrimary}>
                                 {currentValue}
@@ -194,8 +178,8 @@ const Counter: React.FC<Props> = ({
                         <ScreenReaderOnly>
                             <span>{getValueLabel()}</span>
                         </ScreenReaderOnly>
-                    </div>
-                </ThemeVariant>
+                    </ThemeVariant>
+                </div>
 
                 <div
                     className={classNames(styles.buttonContainer, {
@@ -203,21 +187,23 @@ const Counter: React.FC<Props> = ({
                         [styles.disabled]: !disabled && currentValue === maxValue,
                     })}
                 >
-                    <div className={styles.defaultButtonBackground} />
                     <Touchable
-                        className={styles.buttonIcon}
+                        className={styles.button}
                         disabled={currentValue === maxValue || disabled}
                         onPress={() => setCurrentValue(currentValue + 1)}
                         aria-label={getIncreaseLabel()}
                     >
-                        <IconAddMoreRegular
-                            size={ICON_SIZE}
-                            color={
-                                currentValue === maxValue || disabled
-                                    ? vars.colors.control
-                                    : vars.colors.controlActivated
-                            }
-                        />
+                        <div className={styles.buttonBackground} />
+                        <div className={styles.defaultButtonIcon}>
+                            <IconAddMoreRegular
+                                size={ICON_SIZE}
+                                color={
+                                    currentValue === maxValue || disabled
+                                        ? vars.colors.control
+                                        : vars.colors.controlActivated
+                                }
+                            />
+                        </div>
                     </Touchable>
                 </div>
             </Inline>
