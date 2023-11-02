@@ -1,134 +1,120 @@
 import * as React from 'react';
-import {Tooltip, Text2, Text1, Stack, skinVars, Placeholder} from '..';
-import {StorySection} from './helpers';
-import IconCloseRegular from '../generated/mistica-icons/icon-close-regular';
-import IconInformationRegular from '../generated/mistica-icons/icon-information-regular';
-import IconVisa from '../icons/icon-visa';
-import IconMastercard from '../icons/icon-mastercard';
+import {Tooltip, Placeholder, ButtonPrimary, ResponsiveLayout} from '..';
 
 export default {
     title: 'Components/Tooltip',
+    argTypes: {
+        targetHorizontalPosition: {
+            options: ['left', 'center', 'right'],
+            control: {type: 'select'},
+        },
+        targetVerticalPosition: {
+            options: ['top', 'center', 'bottom'],
+            control: {type: 'select'},
+        },
+        position: {
+            options: ['top', 'bottom', 'left', 'right'],
+            control: {type: 'select'},
+        },
+    },
+    parameters: {fullScreen: true},
 };
 
-export const Default: StoryComponent = () => {
-    const description =
-        'When working on a project and the customer has not yet delivered the copy, something is missing...';
+type Args = {
+    targetHorizontalPosition: 'left' | 'center' | 'right';
+    targetVerticalPosition: 'top' | 'center' | 'bottom';
+    position: 'top' | 'bottom' | 'left' | 'right';
+    title: string;
+    description: string;
+    extra: boolean;
+    delay: boolean;
+    inverse: boolean;
+};
+
+export const Default: StoryComponent<Args> = ({
+    targetHorizontalPosition,
+    targetVerticalPosition,
+    position,
+    title,
+    description,
+    extra,
+    delay,
+    inverse,
+}) => {
+    let left,
+        right,
+        top,
+        bottom,
+        translateX = '0',
+        translateY = '0';
+
+    switch (targetHorizontalPosition) {
+        case 'left':
+            left = '0';
+            break;
+        case 'right':
+            right = '0';
+            break;
+        case 'center':
+            left = '50%';
+            translateX = '-50%';
+            break;
+        default:
+    }
+
+    switch (targetVerticalPosition) {
+        case 'top':
+            top = '0';
+            break;
+        case 'bottom':
+            bottom = '0';
+            break;
+        case 'center':
+            top = '50%';
+            translateY = '-50%';
+            break;
+        default:
+    }
+
     return (
-        <StorySection title="Tooltip">
-            <Text2 medium>Desktop examples:</Text2>
-            <div
-                style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    justifyContent: 'space-around',
-                    width: '100%',
-                    height: 300,
-                }}
-            >
+        <ResponsiveLayout fullWidth isInverse={inverse}>
+            <div style={{width: '100vw', height: '100vh'}}>
                 <Tooltip
-                    targetLabel="help text"
-                    target={<Text2 regular>Tooltip default (top)</Text2>}
-                    description={description}
-                    width={300}
-                />
-                <Tooltip
-                    targetLabel="help text"
-                    target={<Text2 regular>Tooltip top</Text2>}
-                    position="top"
-                    description={description}
-                    width={360}
-                />
-                <Tooltip
-                    targetLabel="help text"
-                    target={<Text2 regular>Tooltip bottom</Text2>}
-                    position="bottom"
-                    description={description}
-                    width={260}
-                />
-                <Tooltip
-                    targetLabel="help text"
-                    target={<Text2 regular>Tooltip left</Text2>}
-                    position="left"
-                    description={description}
-                    width={100}
-                />
-                <Tooltip
-                    targetLabel="help text"
-                    target={<Text2 regular>Tooltip right</Text2>}
-                    position="right"
-                    description={description}
-                    width={150}
-                />
-                <Tooltip
-                    targetLabel="help text"
+                    position={position}
+                    targetLabel=""
                     target={
-                        <div style={{textAlign: 'center'}}>
-                            <Stack space={0}>
-                                <Text2 regular>Tooltip with custom elements</Text2>
-                                <Text1 regular color={skinVars.colors.textSecondary}>
-                                    (do not use interactive elements inside)
-                                </Text1>
-                            </Stack>
+                        <div
+                            style={{
+                                position: 'absolute',
+                                left,
+                                right,
+                                top,
+                                bottom,
+                                transform: `translate(${translateX}, ${translateY})`,
+                            }}
+                        >
+                            <ButtonPrimary onPress={() => {}}>Target</ButtonPrimary>
                         </div>
                     }
-                    position="top"
+                    title={title}
+                    delay={delay}
                     description={description}
-                    width={300}
-                    extra={<Placeholder />}
-                />
-                <Tooltip
-                    targetLabel="help text"
-                    target={<Text2 regular>Tooltip without delay</Text2>}
-                    description={description}
-                    width={300}
-                    delay={false}
+                    extra={extra ? <Placeholder width={300} /> : undefined}
                 />
             </div>
-            <div style={{width: 600}} />
-            <Stack space={16}>
-                <Text2 medium>Mobile examples: (look on mobile mode)</Text2>
-                <div
-                    style={{
-                        display: 'flex',
-                        justifyContent: 'space-around',
-                        paddingTop: 20,
-                        borderTop: `1px solid ${skinVars.colors.border}`,
-                        alignItems: 'center',
-                    }}
-                >
-                    <Tooltip
-                        targetLabel="help text"
-                        target={<IconCloseRegular />}
-                        position="left"
-                        description={description}
-                        width={100}
-                    />
-                    <Tooltip
-                        targetLabel="help text"
-                        target={<IconInformationRegular size={16} />}
-                        position="right"
-                        description={description}
-                        width={100}
-                    />
-                    <Tooltip
-                        targetLabel="help text"
-                        target={<IconVisa />}
-                        position="top"
-                        description={description}
-                        width={100}
-                    />
-                    <Tooltip
-                        targetLabel="help text"
-                        target={<IconMastercard />}
-                        position="bottom"
-                        description={description}
-                        width={100}
-                    />
-                </div>
-            </Stack>
-        </StorySection>
+        </ResponsiveLayout>
     );
 };
 
 Default.storyName = 'Tooltip';
+
+Default.args = {
+    targetHorizontalPosition: 'center',
+    targetVerticalPosition: 'center',
+    position: 'top',
+    title: 'Title',
+    description: 'Description',
+    extra: false,
+    delay: false,
+    inverse: false,
+};

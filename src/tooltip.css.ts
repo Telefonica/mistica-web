@@ -53,7 +53,7 @@ export const container = style({
 });
 
 export const tooltip = style({
-    padding: 8,
+    padding: 7,
     position: 'relative',
     minWidth: 40,
     maxWidth,

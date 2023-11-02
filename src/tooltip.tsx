@@ -20,8 +20,8 @@ import {sprinkles} from './sprinkles.css';
 import type {BoundingRect} from './hooks';
 import type {DataAttributes} from './utils/types';
 
-const getBorderStyle = (isInverse: boolean) => {
-    return sprinkles({border: isInverse ? 'none' : 'regular'});
+const getBorderStyle = (isInverse: boolean): React.CSSProperties => {
+    return {border: `1px solid ${isInverse ? vars.colors.backgroundContainer : vars.colors.border}`};
 };
 
 const TOOLTIP_MAX_WIDTH = 496;
@@ -372,11 +372,11 @@ const Tooltip: React.FC<Props> = ({
 
     const renderTooltipContent = () => (
         <div
-            style={{width, boxSizing: 'border-box'}}
+            style={{width, boxSizing: 'border-box', ...getBorderStyle(isInverse)}}
             className={classNames(
                 styles.tooltip,
                 textCenter ? styles.tooltipCenter : undefined,
-                getBorderStyle(isInverse),
+
                 sprinkles({
                     borderRadius: vars.borderRadii.popup,
                     overflow: 'hidden',
