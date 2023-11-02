@@ -7,7 +7,7 @@ import Stack from './stack';
 import {Text2} from './text';
 import {assignInlineVars} from '@vanilla-extract/dynamic';
 import {getCssVarValue, getPrefixedDataAttributes} from './utils/dom';
-import {ESC} from './utils/key-codes';
+import {ESC, TAB} from './utils/key-codes';
 import {isClientSide} from './utils/environment';
 import Overlay from './overlay';
 import {isEqual} from './utils/helpers';
@@ -166,7 +166,7 @@ const Tooltip: React.FC<Props> = ({
     const windowSize = useWindowSize();
 
     React.useEffect(() => {
-        if (!tooltip || !targetRect || !isTooltipOpen) {
+        if (!tooltip || !isTooltipOpen) {
             return;
         }
 
@@ -178,9 +178,10 @@ const Tooltip: React.FC<Props> = ({
             windowSize.width
         );
 
-        if (!finalPosition) {
+        if (!finalPosition || !targetRect) {
             setTooltipComputedProps(null);
             setArrowComputedProps(null);
+            setIsTooltipOpen(false);
             return;
         }
 
@@ -203,8 +204,7 @@ const Tooltip: React.FC<Props> = ({
         const maxLeftOffset = windowSize.width - tooltipWidth;
         const maxTopOffset = windowSize.height - tooltipHeight;
 
-        const arrowOffsetFromViewport =
-            ARROW_SIZE + (parseInt(getCssVarValue(vars.borderRadii.container)) || 8);
+        const arrowOffsetFromViewport = parseInt(getCssVarValue(vars.borderRadii.container)) || 8;
 
         switch (finalPosition) {
             case 'top':
@@ -250,7 +250,10 @@ const Tooltip: React.FC<Props> = ({
                 arrowProps = {
                     left: Math.max(
                         arrowOffsetFromViewport,
-                        Math.min(windowSize.width - arrowOffsetFromViewport, (left + right - ARROW_SIZE) / 2)
+                        Math.min(
+                            windowSize.width - arrowOffsetFromViewport - ARROW_SIZE,
+                            (left + right - ARROW_SIZE) / 2
+                        )
                     ),
                     top: top - TOOLTIP_OFFSET_FROM_TARGET - ARROW_SIZE / 2,
                     borderStyle: !isInverse ? styles.topArrowBorder : undefined,
@@ -262,7 +265,10 @@ const Tooltip: React.FC<Props> = ({
                 arrowProps = {
                     left: Math.max(
                         arrowOffsetFromViewport,
-                        Math.min(windowSize.width - arrowOffsetFromViewport, (left + right - ARROW_SIZE) / 2)
+                        Math.min(
+                            windowSize.width - arrowOffsetFromViewport - ARROW_SIZE,
+                            (left + right - ARROW_SIZE) / 2
+                        )
                     ),
                     top: bottom + TOOLTIP_OFFSET_FROM_TARGET - ARROW_SIZE / 2 + 1 / Math.sqrt(2),
                     borderStyle: !isInverse ? styles.bottomArrowBorder : undefined,
@@ -275,7 +281,10 @@ const Tooltip: React.FC<Props> = ({
                     left: left - TOOLTIP_OFFSET_FROM_TARGET - ARROW_SIZE / 2 - 1 / Math.sqrt(2),
                     top: Math.max(
                         arrowOffsetFromViewport,
-                        Math.min(windowSize.height - arrowOffsetFromViewport, (top + bottom - ARROW_SIZE) / 2)
+                        Math.min(
+                            windowSize.height - arrowOffsetFromViewport - ARROW_SIZE,
+                            (top + bottom - ARROW_SIZE) / 2
+                        )
                     ),
                     borderStyle: !isInverse ? styles.leftArrowBorder : undefined,
                 };
@@ -288,7 +297,10 @@ const Tooltip: React.FC<Props> = ({
                     left: right + TOOLTIP_OFFSET_FROM_TARGET - ARROW_SIZE / 2 + 1 / Math.sqrt(2),
                     top: Math.max(
                         arrowOffsetFromViewport,
-                        Math.min(windowSize.height - arrowOffsetFromViewport, (top + bottom - ARROW_SIZE) / 2)
+                        Math.min(
+                            windowSize.height - arrowOffsetFromViewport - ARROW_SIZE,
+                            (top + bottom - ARROW_SIZE) / 2
+                        )
                     ),
                     borderStyle: !isInverse ? styles.rightArrowBorder : undefined,
                 };
@@ -314,27 +326,35 @@ const Tooltip: React.FC<Props> = ({
         tooltipComputedProps,
         arrowComputedProps,
         isInverse,
+        isTouchableDevice,
     ]);
+
+    const isTabKeyDownRef = React.useRef(false);
 
     React.useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
-            if (isTooltipOpen) {
-                switch (e.keyCode) {
-                    case ESC:
-                        if (isTooltipOpen) {
-                            setIsMouseOverTarget(false);
-                            setIsTooltipOpen(false);
-                        }
-                        break;
-                    default:
-                    // do nothing
-                }
+            switch (e.keyCode) {
+                case ESC:
+                    if (isTooltipOpen) {
+                        setIsMouseOverTarget(false);
+                        setIsTooltipOpen(false);
+                    }
+                    break;
+                case TAB:
+                    isTabKeyDownRef.current = true;
+                    break;
+                default:
+                // do nothing
             }
         };
 
+        const handleKeyUp = () => (isTabKeyDownRef.current = false);
+
         document.addEventListener('keydown', handleKeyDown, false);
+        document.addEventListener('keyup', handleKeyUp, false);
         return () => {
             document.removeEventListener('keydown', handleKeyDown, false);
+            document.removeEventListener('keyup', handleKeyUp, false);
         };
     });
 
@@ -417,10 +437,12 @@ const Tooltip: React.FC<Props> = ({
                     }
                 }}
                 onClick={() => {
-                    setIsTooltipOpen(true);
+                    if (isTouchableDevice) {
+                        setIsTooltipOpen(true);
+                    }
                 }}
                 onFocus={() => {
-                    if (!isTouchableDevice) {
+                    if (isTabKeyDownRef.current) {
                         setIsFocused(true);
                     }
                 }}
