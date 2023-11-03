@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {useAriaId, useBoundingRect, useWindowSize} from './hooks';
 import {Portal} from './portal';
-import {CSSTransition} from 'react-transition-group';
+import {Transition} from 'react-transition-group';
 import * as styles from './tooltip.css';
 import Stack from './stack';
 import {Text2} from './text';
@@ -473,7 +473,7 @@ const Tooltip: React.FC<Props> = ({
             </div>
 
             <Portal>
-                <CSSTransition
+                <Transition
                     in={isTooltipOpen}
                     nodeRef={tooltipRef}
                     timeout={{
@@ -482,7 +482,6 @@ const Tooltip: React.FC<Props> = ({
                             (delay ? TOOLTIP_ENTER_TRANSITION_DELAY_IN_MS : 0),
                         exit: TOOLTIP_EXIT_TRANSITION_DURATION_IN_MS,
                     }}
-                    classNames={styles.tooltipTransitionClasses}
                     mountOnEnter
                     unmountOnExit
                 >
@@ -534,7 +533,10 @@ const Tooltip: React.FC<Props> = ({
                                 tabIndex={-1}
                             >
                                 <div
-                                    className={styles.container}
+                                    className={classNames(
+                                        styles.container,
+                                        styles.tooltipTransitionClasses[transitionStatus]
+                                    )}
                                     style={{
                                         pointerEvents: transitionStatus === 'entered' ? 'auto' : 'none',
                                     }}
@@ -564,7 +566,7 @@ const Tooltip: React.FC<Props> = ({
                             </div>
                         );
                     }}
-                </CSSTransition>
+                </Transition>
             </Portal>
         </>
     );
