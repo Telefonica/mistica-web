@@ -30,7 +30,7 @@ const TOOLTIP_ENTER_TRANSITION_DELAY_IN_MS = 500;
 const TOOLTIP_EXIT_TRANSITION_DURATION_IN_MS = 100;
 const ARROW_SIZE = 12;
 const TOOLTIP_OFFSET_FROM_TARGET = 8;
-const TOOLTIP_PADDING_FROM_TARGET = TOOLTIP_OFFSET_FROM_TARGET + ARROW_SIZE / 2;
+const TOOLTIP_PADDING_FROM_TARGET = TOOLTIP_OFFSET_FROM_TARGET + ARROW_SIZE / 2 + 1;
 
 type Position = 'top' | 'bottom' | 'left' | 'right';
 
@@ -287,7 +287,7 @@ const Tooltip: React.FC<Props> = ({
                             (left + right - ARROW_SIZE) / 2
                         )
                     ),
-                    top: bottom,
+                    top: bottom + 1,
                     borderStyle: !isInverse ? styles.bottomArrowBorder : undefined,
                 };
 
@@ -311,7 +311,7 @@ const Tooltip: React.FC<Props> = ({
             case 'right':
             default:
                 arrowProps = {
-                    left: right,
+                    left: right + 1,
                     top: Math.max(
                         arrowOffsetFromViewport,
                         Math.min(
