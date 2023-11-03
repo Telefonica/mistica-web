@@ -8,3 +8,4 @@ export {
     ValueBlock,
     ProgressBlock,
 } from './blocks';
+export {default as FeedbackLoader} from './feedback-loader';
