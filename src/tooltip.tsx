@@ -520,6 +520,9 @@ const Tooltip: React.FC<Props> = ({
                             >
                                 <div
                                     className={styles.container}
+                                    style={{
+                                        pointerEvents: transitionStatus === 'entered' ? 'auto' : 'none',
+                                    }}
                                     ref={combineRefs(setTooltip, tooltipRef)}
                                     aria-label={targetLabel}
                                     onMouseEnter={() => {
