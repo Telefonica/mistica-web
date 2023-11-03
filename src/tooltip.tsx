@@ -350,6 +350,7 @@ const Tooltip: React.FC<Props> = ({
                 case ESC:
                     if (isTooltipOpen) {
                         setIsMouseOverTarget(false);
+                        setIsFocused(false);
                         setIsTooltipOpen(false);
                     }
                     break;
