@@ -28,8 +28,8 @@ const TOOLTIP_MAX_WIDTH = 496;
 const TOOLTIP_ENTER_TRANSITION_DURATION_IN_MS = 500;
 const TOOLTIP_ENTER_TRANSITION_DELAY_IN_MS = 500;
 const TOOLTIP_EXIT_TRANSITION_DURATION_IN_MS = 300;
-const TOOLTIP_OFFSET_FROM_TARGET = 8;
 const ARROW_SIZE = 12;
+const TOOLTIP_OFFSET_FROM_TARGET = 8 + ARROW_SIZE / 2;
 
 type Position = 'top' | 'bottom' | 'left' | 'right';
 
@@ -53,13 +53,16 @@ const getFinalPosition = (
     tooltip: HTMLElement | undefined | null,
     position: Position,
     windowHeight: number,
-    windowWidth: number
+    windowWidth: number,
+    currentPosition: 'vertical' | 'horizontal' | null
 ): Position | undefined => {
     if (!targetRect || !tooltip) {
         return undefined;
     }
-    const tooltipWidth = tooltip.offsetWidth + TOOLTIP_OFFSET_FROM_TARGET;
-    const tooltipHeight = tooltip.offsetHeight + TOOLTIP_OFFSET_FROM_TARGET;
+    const tooltipWidth =
+        tooltip.offsetWidth + (currentPosition === 'horizontal' ? 0 : TOOLTIP_OFFSET_FROM_TARGET);
+    const tooltipHeight =
+        tooltip.offsetHeight + (currentPosition === 'vertical' ? 0 : TOOLTIP_OFFSET_FROM_TARGET);
     const {top, bottom, left, right} = targetRect;
 
     const availableSpaceOnBottom = windowHeight - bottom;
@@ -160,6 +163,9 @@ const Tooltip: React.FC<Props> = ({
     const [isFocused, setIsFocused] = React.useState(false);
     const [isTooltipOpen, setIsTooltipOpen] = React.useState(false);
     const isInverse = useIsInverseVariant();
+    const [tooltipCurrentOffset, setTooltipCurrentOffset] = React.useState<'vertical' | 'horizontal' | null>(
+        null
+    );
 
     const targetRect = useBoundingRect(targetRef);
 
@@ -175,12 +181,18 @@ const Tooltip: React.FC<Props> = ({
             tooltip,
             position,
             windowSize.height,
-            windowSize.width
+            windowSize.width,
+            tooltipCurrentOffset
+        );
+
+        setTooltipCurrentOffset(
+            finalPosition === 'top' || finalPosition === 'bottom' ? 'vertical' : 'horizontal'
         );
 
         if (!finalPosition || !targetRect) {
             setTooltipComputedProps(null);
             setArrowComputedProps(null);
+            setTooltipCurrentOffset(null);
             setIsTooltipOpen(false);
             return;
         }
@@ -327,6 +339,7 @@ const Tooltip: React.FC<Props> = ({
         arrowComputedProps,
         isInverse,
         isTouchableDevice,
+        tooltipCurrentOffset,
     ]);
 
     const isTabKeyDownRef = React.useRef(false);
@@ -367,7 +380,8 @@ const Tooltip: React.FC<Props> = ({
         tooltip,
         position,
         windowSize.height,
-        windowSize.width
+        windowSize.width,
+        tooltipCurrentOffset
     );
 
     const renderTooltipContent = () => (
