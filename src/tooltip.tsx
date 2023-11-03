@@ -29,23 +29,38 @@ const TOOLTIP_ENTER_TRANSITION_DURATION_IN_MS = 300;
 const TOOLTIP_ENTER_TRANSITION_DELAY_IN_MS = 500;
 const TOOLTIP_EXIT_TRANSITION_DURATION_IN_MS = 100;
 const ARROW_SIZE = 12;
-const TOOLTIP_OFFSET_FROM_TARGET = 8 + ARROW_SIZE / 2;
+const TOOLTIP_OFFSET_FROM_TARGET = 8;
+const TOOLTIP_PADDING_FROM_TARGET = TOOLTIP_OFFSET_FROM_TARGET + ARROW_SIZE / 2;
 
 type Position = 'top' | 'bottom' | 'left' | 'right';
 
 const getTooltipEnterTransform = (position?: Position) => {
     switch (position) {
         case 'left':
-            return 'translateX(8px)';
+            return `translateX(-${TOOLTIP_OFFSET_FROM_TARGET}px)`;
         case 'right':
-            return 'translateX(-8px)';
+            return `translateX(${TOOLTIP_OFFSET_FROM_TARGET}px)`;
         case 'top':
-            return 'translateY(8px)';
+            return `translateY(-${TOOLTIP_OFFSET_FROM_TARGET}px)`;
         case 'bottom':
-            return 'translateY(-8px)';
+            return `translateY(${TOOLTIP_OFFSET_FROM_TARGET}px)`;
         default:
             return '';
     }
+};
+
+const getElementDimensionsWithoutPadding = (element: HTMLElement) => {
+    const horizontalPadding =
+        parseFloat(getComputedStyle(element, null).paddingLeft) +
+        parseFloat(getComputedStyle(element, null).paddingRight);
+
+    const verticalPadding =
+        parseFloat(getComputedStyle(element, null).paddingTop) +
+        parseFloat(getComputedStyle(element, null).paddingBottom);
+
+    const width = element.offsetWidth - horizontalPadding;
+    const height = element.offsetHeight - verticalPadding;
+    return {width, height};
 };
 
 const getFinalPosition = (
@@ -53,22 +68,22 @@ const getFinalPosition = (
     tooltip: HTMLElement | undefined | null,
     position: Position,
     windowHeight: number,
-    windowWidth: number,
-    currentPosition: 'vertical' | 'horizontal' | null
+    windowWidth: number
 ): Position | undefined => {
     if (!targetRect || !tooltip) {
         return undefined;
     }
-    const tooltipWidth =
-        tooltip.offsetWidth + (currentPosition === 'horizontal' ? 0 : TOOLTIP_OFFSET_FROM_TARGET);
-    const tooltipHeight =
-        tooltip.offsetHeight + (currentPosition === 'vertical' ? 0 : TOOLTIP_OFFSET_FROM_TARGET);
     const {top, bottom, left, right} = targetRect;
 
     const availableSpaceOnBottom = windowHeight - bottom;
     const availableSpaceOnRight = windowWidth - right;
     const availableSpaceOnTop = top;
     const availableSpaceOnLeft = left;
+
+    const {width, height} = getElementDimensionsWithoutPadding(tooltip);
+
+    const tooltipWidth = width + TOOLTIP_PADDING_FROM_TARGET;
+    const tooltipHeight = height + TOOLTIP_PADDING_FROM_TARGET;
 
     const fitsHorizontal = tooltipWidth <= Math.max(availableSpaceOnLeft, availableSpaceOnRight);
     const fitsVertical = tooltipHeight <= Math.max(availableSpaceOnBottom, availableSpaceOnTop);
@@ -163,9 +178,6 @@ const Tooltip: React.FC<Props> = ({
     const [isFocused, setIsFocused] = React.useState(false);
     const [isTooltipOpen, setIsTooltipOpen] = React.useState(false);
     const isInverse = useIsInverseVariant();
-    const [tooltipCurrentOffset, setTooltipCurrentOffset] = React.useState<'vertical' | 'horizontal' | null>(
-        null
-    );
 
     const targetRect = useBoundingRect(targetRef);
 
@@ -181,18 +193,12 @@ const Tooltip: React.FC<Props> = ({
             tooltip,
             position,
             windowSize.height,
-            windowSize.width,
-            tooltipCurrentOffset
-        );
-
-        setTooltipCurrentOffset(
-            finalPosition === 'top' || finalPosition === 'bottom' ? 'vertical' : 'horizontal'
+            windowSize.width
         );
 
         if (!finalPosition || !targetRect) {
             setTooltipComputedProps(null);
             setArrowComputedProps(null);
-            setTooltipCurrentOffset(null);
             setIsTooltipOpen(false);
             return;
         }
@@ -210,8 +216,7 @@ const Tooltip: React.FC<Props> = ({
         };
 
         const {left, right, top, bottom} = targetRect;
-        const tooltipWidth = tooltip.offsetWidth;
-        const tooltipHeight = tooltip.offsetHeight;
+        const {width: tooltipWidth, height: tooltipHeight} = getElementDimensionsWithoutPadding(tooltip);
 
         const maxLeftOffset = windowSize.width - tooltipWidth;
         const maxTopOffset = windowSize.height - tooltipHeight;
@@ -222,8 +227,8 @@ const Tooltip: React.FC<Props> = ({
             case 'top':
                 tooltipProps = {
                     left: Math.max(0, Math.min(maxLeftOffset, (left + right - tooltipWidth) / 2)),
-                    top: top - tooltipHeight,
-                    padding: `0px 0px ${TOOLTIP_OFFSET_FROM_TARGET}px 0px`,
+                    top: top - tooltipHeight - ARROW_SIZE / 2,
+                    padding: `0px 0px ${TOOLTIP_PADDING_FROM_TARGET}px 0px`,
                 };
 
                 break;
@@ -231,17 +236,17 @@ const Tooltip: React.FC<Props> = ({
             case 'bottom':
                 tooltipProps = {
                     left: Math.max(0, Math.min(maxLeftOffset, (left + right - tooltipWidth) / 2)),
-                    top: bottom,
-                    padding: `${TOOLTIP_OFFSET_FROM_TARGET}px 0px 0px 0px`,
+                    top: bottom - TOOLTIP_OFFSET_FROM_TARGET,
+                    padding: `${TOOLTIP_PADDING_FROM_TARGET}px 0px 0px 0px`,
                 };
 
                 break;
 
             case 'left':
                 tooltipProps = {
-                    left: left - tooltipWidth,
+                    left: left - tooltipWidth - ARROW_SIZE / 2,
                     top: Math.max(0, Math.min(maxTopOffset, (top + bottom - tooltipHeight) / 2)),
-                    padding: `0px ${TOOLTIP_OFFSET_FROM_TARGET}px 0px 0px`,
+                    padding: `0px ${TOOLTIP_PADDING_FROM_TARGET}px 0px 0px`,
                 };
 
                 break;
@@ -249,9 +254,9 @@ const Tooltip: React.FC<Props> = ({
             case 'right':
             default:
                 tooltipProps = {
-                    left: right,
+                    left: right - TOOLTIP_OFFSET_FROM_TARGET,
                     top: Math.max(0, Math.min(maxTopOffset, (top + bottom - tooltipHeight) / 2)),
-                    padding: `0px 0px 0px ${TOOLTIP_OFFSET_FROM_TARGET}px`,
+                    padding: `0px 0px 0px ${TOOLTIP_PADDING_FROM_TARGET}px`,
                 };
 
                 break;
@@ -267,7 +272,7 @@ const Tooltip: React.FC<Props> = ({
                             (left + right - ARROW_SIZE) / 2
                         )
                     ),
-                    top: top - TOOLTIP_OFFSET_FROM_TARGET - ARROW_SIZE / 2,
+                    top: top - ARROW_SIZE,
                     borderStyle: !isInverse ? styles.topArrowBorder : undefined,
                 };
 
@@ -282,7 +287,7 @@ const Tooltip: React.FC<Props> = ({
                             (left + right - ARROW_SIZE) / 2
                         )
                     ),
-                    top: bottom + TOOLTIP_OFFSET_FROM_TARGET - ARROW_SIZE / 2 + 1 / Math.sqrt(2),
+                    top: bottom,
                     borderStyle: !isInverse ? styles.bottomArrowBorder : undefined,
                 };
 
@@ -290,7 +295,7 @@ const Tooltip: React.FC<Props> = ({
 
             case 'left':
                 arrowProps = {
-                    left: left - TOOLTIP_OFFSET_FROM_TARGET - ARROW_SIZE / 2 - 1 / Math.sqrt(2),
+                    left: left - ARROW_SIZE,
                     top: Math.max(
                         arrowOffsetFromViewport,
                         Math.min(
@@ -306,7 +311,7 @@ const Tooltip: React.FC<Props> = ({
             case 'right':
             default:
                 arrowProps = {
-                    left: right + TOOLTIP_OFFSET_FROM_TARGET - ARROW_SIZE / 2 + 1 / Math.sqrt(2),
+                    left: right,
                     top: Math.max(
                         arrowOffsetFromViewport,
                         Math.min(
@@ -339,7 +344,6 @@ const Tooltip: React.FC<Props> = ({
         arrowComputedProps,
         isInverse,
         isTouchableDevice,
-        tooltipCurrentOffset,
     ]);
 
     const isTabKeyDownRef = React.useRef(false);
@@ -381,8 +385,7 @@ const Tooltip: React.FC<Props> = ({
         tooltip,
         position,
         windowSize.height,
-        windowSize.width,
-        tooltipCurrentOffset
+        windowSize.width
     );
 
     const renderTooltipContent = () => (
@@ -535,10 +538,13 @@ const Tooltip: React.FC<Props> = ({
                                 <div
                                     className={classNames(
                                         styles.container,
-                                        styles.tooltipTransitionClasses[transitionStatus]
+                                        transitionStatus === 'entering'
+                                            ? styles.enterTransition
+                                            : styles.exitTransition
                                     )}
                                     style={{
                                         pointerEvents: transitionStatus === 'entered' ? 'auto' : 'none',
+                                        ...styles.tooltipTransitionClasses[transitionStatus],
                                     }}
                                     ref={combineRefs(setTooltip, tooltipRef)}
                                     aria-label={targetLabel}

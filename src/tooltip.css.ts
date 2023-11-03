@@ -25,21 +25,19 @@ export const tooltipVars = {
 };
 
 export const tooltipTransitionClasses = {
-    entering: style({
-        opacity: 0,
-        transform: enterTransform,
-    }),
-    entered: style({
+    entering: {
         opacity: 1,
-        transform: 'translateY(0)',
-    }),
-    exiting: style({
+    },
+    entered: {
+        opacity: 1,
+    },
+    exiting: {
         opacity: 0,
-    }),
-    exited: style({
+    },
+    exited: {
         opacity: 0,
-    }),
-    unmounted: style({}),
+    },
+    unmounted: {},
 };
 
 export const container = style({
@@ -48,9 +46,18 @@ export const container = style({
     zIndex: 1,
     position: 'absolute',
     filter: 'drop-shadow(0px 2px 2px rgba(0,0,0,0.2))',
-    transition: `opacity .1s linear ${delay},transform .3s cubic-bezier(0.215,0.61,0.335,1) ${delay}`,
+    opacity: 0,
     padding,
+    transform: enterTransform,
     cursor: 'default',
+});
+
+export const enterTransition = style({
+    transition: `opacity .1s linear ${delay},transform .3s cubic-bezier(0.215,0.61,0.335,1) ${delay}`,
+});
+
+export const exitTransition = style({
+    transition: `opacity .1s linear`,
 });
 
 export const tooltip = style({
