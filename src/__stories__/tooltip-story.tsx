@@ -113,7 +113,7 @@ Default.args = {
     targetVerticalPosition: 'center',
     position: 'top',
     title: 'Title',
-    description: 'Description',
+    description: 'A description',
     extra: false,
     delay: false,
     inverse: false,

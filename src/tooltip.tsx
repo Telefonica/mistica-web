@@ -422,7 +422,7 @@ const Tooltip: React.FC<Props> = ({
                      * its size will be 0 (and we need the target dimensions to compute the tooltip's position).
                      */
                     const targetElement = element?.firstElementChild;
-                    if (targetElement) {
+                    if (targetElement && targetElement !== targetRef.current) {
                         targetRef.current = targetElement;
                     }
                 }}
