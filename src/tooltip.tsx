@@ -15,6 +15,7 @@ import {vars} from './skins/skin-contract.css';
 import {ThemeVariant, useIsInverseVariant} from './theme-variant-context';
 import {combineRefs} from './utils/common';
 import {sprinkles} from './sprinkles.css';
+import {useSetTooltipState, useTooltipState} from './tooltip-context-provider';
 
 import type {BoundingRect} from './hooks';
 import type {DataAttributes} from './utils/types';
@@ -154,7 +155,10 @@ const Tooltip: React.FC<Props> = ({
     delay = true,
     textCenter,
 }) => {
-    const ariaLabel = useAriaId();
+    const tooltipId = useAriaId();
+    const {openTooltipId} = useTooltipState();
+    const {open, close} = useSetTooltipState();
+
     const [tooltipComputedProps, setTooltipComputedProps] = React.useState<{
         left: number;
         top: number;
@@ -179,8 +183,23 @@ const Tooltip: React.FC<Props> = ({
     const isInverse = useIsInverseVariant();
 
     const targetRect = useBoundingRect(targetRef);
-
     const windowSize = useWindowSize();
+
+    React.useEffect(() => {
+        setIsTooltipOpen(tooltipId === openTooltipId);
+    }, [tooltipId, openTooltipId]);
+
+    const resetTooltipInteractions = React.useCallback(() => {
+        setIsFocused(false);
+        setIsMouseOverTooltip(false);
+        setIsMouseOverTarget(false);
+    }, []);
+
+    React.useEffect(() => {
+        if (!isTooltipOpen) {
+            resetTooltipInteractions();
+        }
+    }, [isTooltipOpen, resetTooltipInteractions]);
 
     React.useEffect(() => {
         if (!tooltip || !isTooltipOpen) {
@@ -198,7 +217,7 @@ const Tooltip: React.FC<Props> = ({
         if (!finalPosition || !targetRect) {
             setTooltipComputedProps(null);
             setArrowComputedProps(null);
-            setIsTooltipOpen(false);
+            resetTooltipInteractions();
             return;
         }
 
@@ -343,6 +362,8 @@ const Tooltip: React.FC<Props> = ({
         arrowComputedProps,
         isInverse,
         isTouchableDevice,
+        tooltipId,
+        resetTooltipInteractions,
     ]);
 
     const isTabKeyDownRef = React.useRef(false);
@@ -351,11 +372,7 @@ const Tooltip: React.FC<Props> = ({
         const handleKeyDown = (e: KeyboardEvent) => {
             switch (e.keyCode) {
                 case ESC:
-                    if (isTooltipOpen) {
-                        setIsMouseOverTarget(false);
-                        setIsFocused(false);
-                        setIsTooltipOpen(false);
-                    }
+                    resetTooltipInteractions();
                     break;
                 case TAB:
                     isTabKeyDownRef.current = true;
@@ -376,7 +393,7 @@ const Tooltip: React.FC<Props> = ({
                     e.clientY < targetRect.top ||
                     e.clientY > targetRect.bottom)
             ) {
-                setIsTooltipOpen(false);
+                resetTooltipInteractions();
             }
         };
 
@@ -391,8 +408,12 @@ const Tooltip: React.FC<Props> = ({
     });
 
     React.useEffect(() => {
-        setIsTooltipOpen(isMouseOverTarget || isMouseOverTooltip || isFocused);
-    }, [isMouseOverTarget, isMouseOverTooltip, isFocused]);
+        if (isMouseOverTarget || isMouseOverTooltip || isFocused) {
+            open(tooltipId);
+        } else {
+            close(tooltipId);
+        }
+    }, [isMouseOverTarget, isMouseOverTooltip, isFocused, tooltipId, open, close]);
 
     const currentPosition = getFinalPosition(
         targetRect,
@@ -455,7 +476,7 @@ const Tooltip: React.FC<Props> = ({
                 }}
                 onClick={() => {
                     if (isTouchableDevice) {
-                        setIsTooltipOpen(true);
+                        setIsMouseOverTarget(true);
                     }
                 }}
                 onFocus={() => {
@@ -468,7 +489,7 @@ const Tooltip: React.FC<Props> = ({
                         setIsFocused(false);
                     }
                 }}
-                aria-describedby={ariaLabel}
+                aria-describedby={tooltipId}
                 style={targetStyle}
             >
                 {target}
@@ -531,7 +552,7 @@ const Tooltip: React.FC<Props> = ({
                                 }}
                                 {...getPrefixedDataAttributes(dataAttributes, 'Tooltip')}
                                 role="tooltip"
-                                aria-label={ariaLabel}
+                                aria-label={tooltipId}
                                 tabIndex={-1}
                             >
                                 <div

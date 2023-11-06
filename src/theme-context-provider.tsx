@@ -15,6 +15,7 @@ import {TrackingConfig} from './utils/analytics';
 import {vars} from './skins/skin-contract.css';
 import {fromHexToRgb} from './utils/color';
 import {defaultBorderRadiiConfig, defaultTextPresetsConfig} from './skins/defaults';
+import TooltipContextProvider from './tooltip-context-provider';
 
 import type {Colors} from './skins/types';
 import type {Theme, ThemeConfig} from './theme';
@@ -145,31 +146,33 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children, as}) => {
     return (
         <TabFocus disabled={!theme.enableTabFocus}>
             <ModalContextProvider>
-                <ThemeContext.Provider value={contextTheme}>
-                    <TrackingConfig eventFormat={contextTheme.analytics.eventFormat}>
-                        <AspectRatioSupportProvider>
-                            <DocumentVisibilityProvider>
-                                <AriaIdGetterContext.Provider value={getAriaId}>
-                                    <ScreenSizeContextProvider>
-                                        <DialogRoot>
-                                            {as ? (
-                                                React.createElement(as, {style: themeVars}, children)
-                                            ) : (
-                                                <>
-                                                    {(process.env.NODE_ENV !== 'test' ||
-                                                        process.env.SSR_TEST) && (
-                                                        <style>{`:root {${themeVars}}`}</style>
-                                                    )}
-                                                    {children}
-                                                </>
-                                            )}
-                                        </DialogRoot>
-                                    </ScreenSizeContextProvider>
-                                </AriaIdGetterContext.Provider>
-                            </DocumentVisibilityProvider>
-                        </AspectRatioSupportProvider>
-                    </TrackingConfig>
-                </ThemeContext.Provider>
+                <TooltipContextProvider>
+                    <ThemeContext.Provider value={contextTheme}>
+                        <TrackingConfig eventFormat={contextTheme.analytics.eventFormat}>
+                            <AspectRatioSupportProvider>
+                                <DocumentVisibilityProvider>
+                                    <AriaIdGetterContext.Provider value={getAriaId}>
+                                        <ScreenSizeContextProvider>
+                                            <DialogRoot>
+                                                {as ? (
+                                                    React.createElement(as, {style: themeVars}, children)
+                                                ) : (
+                                                    <>
+                                                        {(process.env.NODE_ENV !== 'test' ||
+                                                            process.env.SSR_TEST) && (
+                                                            <style>{`:root {${themeVars}}`}</style>
+                                                        )}
+                                                        {children}
+                                                    </>
+                                                )}
+                                            </DialogRoot>
+                                        </ScreenSizeContextProvider>
+                                    </AriaIdGetterContext.Provider>
+                                </DocumentVisibilityProvider>
+                            </AspectRatioSupportProvider>
+                        </TrackingConfig>
+                    </ThemeContext.Provider>
+                </TooltipContextProvider>
             </ModalContextProvider>
         </TabFocus>
     );
