@@ -99,7 +99,7 @@ export const Default: StoryComponent<Args> = ({
                     title={title}
                     delay={delay}
                     description={description}
-                    extra={extra ? <Placeholder width={300} /> : undefined}
+                    extra={extra ? <Placeholder /> : undefined}
                 />
             </div>
         </ResponsiveLayout>

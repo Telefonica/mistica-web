@@ -46,6 +46,19 @@ test('Tooltip - inverse', async () => {
     expect(image).toMatchImageSnapshot();
 });
 
+test('Tooltip - extra content', async () => {
+    const page = await openStoryPage({
+        id: 'components-tooltip--default',
+        device: 'MOBILE_IOS',
+        args: {extra: true},
+    });
+
+    await page.click(await screen.findByRole('button'));
+
+    const image = await page.screenshot();
+    expect(image).toMatchImageSnapshot();
+});
+
 test('Tooltip - max width is 496px', async () => {
     const page = await openStoryPage({
         id: 'components-tooltip--default',

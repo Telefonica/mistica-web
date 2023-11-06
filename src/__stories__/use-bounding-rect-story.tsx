@@ -5,6 +5,12 @@ import Stack from '../stack';
 
 export default {
     title: 'Hooks/useBoundingRect',
+    argTypes: {
+        offsetX: {control: {type: 'range', min: 0, max: 1500, step: 100}},
+        offsetY: {control: {type: 'range', min: 0, max: 1500, step: 100}},
+        width: {control: {type: 'range', min: 50, max: 250, step: 50}},
+        height: {control: {type: 'range', min: 50, max: 250, step: 50}},
+    },
     parameters: {
         fullScreen: true,
     },
