@@ -9,7 +9,6 @@ import {assignInlineVars} from '@vanilla-extract/dynamic';
 import {getCssVarValue, getPrefixedDataAttributes} from './utils/dom';
 import {ESC, TAB} from './utils/key-codes';
 import {isClientSide} from './utils/environment';
-import Overlay from './overlay';
 import {isEqual} from './utils/helpers';
 import classNames from 'classnames';
 import {vars} from './skins/skin-contract.css';
@@ -368,11 +367,26 @@ const Tooltip: React.FC<Props> = ({
 
         const handleKeyUp = () => (isTabKeyDownRef.current = false);
 
+        const handleOnClick = (e: MouseEvent) => {
+            if (
+                isTouchableDevice &&
+                targetRect &&
+                (e.clientX < targetRect.left ||
+                    e.clientX > targetRect.right ||
+                    e.clientY < targetRect.top ||
+                    e.clientY > targetRect.bottom)
+            ) {
+                setIsTooltipOpen(false);
+            }
+        };
+
         document.addEventListener('keydown', handleKeyDown, false);
         document.addEventListener('keyup', handleKeyUp, false);
+        document.addEventListener('click', handleOnClick, false);
         return () => {
             document.removeEventListener('keydown', handleKeyDown, false);
             document.removeEventListener('keyup', handleKeyUp, false);
+            document.removeEventListener('click', handleOnClick, false);
         };
     });
 
@@ -416,21 +430,6 @@ const Tooltip: React.FC<Props> = ({
 
     return (
         <>
-            {isTooltipOpen && isTouchableDevice && (
-                <Overlay
-                    onPress={(e) => {
-                        if (
-                            !targetRect ||
-                            e.clientX < targetRect.left ||
-                            e.clientX > targetRect.right ||
-                            e.clientY < targetRect.top ||
-                            e.clientY > targetRect.bottom
-                        ) {
-                            setIsTooltipOpen(false);
-                        }
-                    }}
-                />
-            )}
             {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
             <div
                 ref={(element) => {
