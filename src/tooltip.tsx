@@ -14,7 +14,6 @@ import classNames from 'classnames';
 import {vars} from './skins/skin-contract.css';
 import {ThemeVariant, useIsInverseVariant} from './theme-variant-context';
 import {combineRefs} from './utils/common';
-import {sprinkles} from './sprinkles.css';
 import {useSetTooltipState, useTooltipState} from './tooltip-context-provider';
 
 import type {BoundingRect} from './hooks';
@@ -28,7 +27,7 @@ const TOOLTIP_MAX_WIDTH = 496;
 const TOOLTIP_ENTER_TRANSITION_DURATION_IN_MS = 300;
 const TOOLTIP_ENTER_TRANSITION_DELAY_IN_MS = 500;
 const TOOLTIP_EXIT_TRANSITION_DURATION_IN_MS = 100;
-const ARROW_SIZE = 12;
+const ARROW_SIZE = 20;
 const TOOLTIP_OFFSET_FROM_TARGET = 8;
 const TOOLTIP_PADDING_FROM_TARGET = TOOLTIP_OFFSET_FROM_TARGET + ARROW_SIZE / 2 + 1;
 
@@ -165,11 +164,7 @@ const Tooltip: React.FC<Props> = ({
         padding: string;
     } | null>(null);
 
-    const [arrowComputedProps, setArrowComputedProps] = React.useState<{
-        left: number;
-        top: number;
-        borderStyle?: string;
-    } | null>(null);
+    const [arrowComputedProps, setArrowComputedProps] = React.useState<React.CSSProperties>({});
 
     const targetRef = React.useRef<Element | null>(null);
     const tooltipRef = React.useRef<HTMLDivElement | null>(null);
@@ -216,7 +211,7 @@ const Tooltip: React.FC<Props> = ({
 
         if (!finalPosition || !targetRect) {
             setTooltipComputedProps(null);
-            setArrowComputedProps(null);
+            setArrowComputedProps({});
             resetTooltipInteractions();
             return;
         }
@@ -227,11 +222,7 @@ const Tooltip: React.FC<Props> = ({
             padding: string;
         };
 
-        let arrowProps: {
-            left: number;
-            top: number;
-            borderStyle?: string;
-        };
+        let arrowProps: React.CSSProperties;
 
         const {left, right, top, bottom} = targetRect;
         const {width: tooltipWidth, height: tooltipHeight} = getElementDimensionsWithoutPadding(tooltip);
@@ -290,8 +281,7 @@ const Tooltip: React.FC<Props> = ({
                             (left + right - ARROW_SIZE) / 2
                         )
                     ),
-                    top: top - ARROW_SIZE,
-                    borderStyle: !isInverse ? styles.topArrowBorder : undefined,
+                    top: '100%',
                 };
 
                 break;
@@ -305,15 +295,14 @@ const Tooltip: React.FC<Props> = ({
                             (left + right - ARROW_SIZE) / 2
                         )
                     ),
-                    top: bottom + 1,
-                    borderStyle: !isInverse ? styles.bottomArrowBorder : undefined,
+                    bottom: '100%',
+                    transform: 'rotate(180deg)',
                 };
 
                 break;
 
             case 'left':
                 arrowProps = {
-                    left: left - ARROW_SIZE,
                     top: Math.max(
                         arrowOffsetFromViewport,
                         Math.min(
@@ -321,7 +310,9 @@ const Tooltip: React.FC<Props> = ({
                             (top + bottom - ARROW_SIZE) / 2
                         )
                     ),
-                    borderStyle: !isInverse ? styles.leftArrowBorder : undefined,
+                    left: '100%',
+                    transform: 'rotate(-90deg)',
+                    transformOrigin: 'bottom',
                 };
 
                 break;
@@ -329,7 +320,6 @@ const Tooltip: React.FC<Props> = ({
             case 'right':
             default:
                 arrowProps = {
-                    left: right + 1,
                     top: Math.max(
                         arrowOffsetFromViewport,
                         Math.min(
@@ -337,14 +327,20 @@ const Tooltip: React.FC<Props> = ({
                             (top + bottom - ARROW_SIZE) / 2
                         )
                     ),
-                    borderStyle: !isInverse ? styles.rightArrowBorder : undefined,
+                    right: '100%',
+                    transform: 'rotate(90deg)',
+                    transformOrigin: 'bottom',
                 };
 
                 break;
         }
 
-        arrowProps.top -= tooltipProps.top;
-        arrowProps.left -= tooltipProps.left;
+        if (typeof arrowProps.top === 'number') {
+            arrowProps.top -= tooltipProps.top;
+        }
+        if (typeof arrowProps.left === 'number') {
+            arrowProps.left -= tooltipProps.left;
+        }
 
         if (!isEqual(tooltipProps, tooltipComputedProps)) {
             setTooltipComputedProps(tooltipProps);
@@ -425,27 +421,31 @@ const Tooltip: React.FC<Props> = ({
 
     const renderTooltipContent = () => (
         <div
-            style={{width, boxSizing: 'border-box', ...getBorderStyle(isInverse)}}
-            className={classNames(
-                styles.tooltip,
-                textCenter ? styles.tooltipCenter : undefined,
-
-                sprinkles({
-                    borderRadius: vars.borderRadii.popup,
-                    overflow: 'hidden',
-                    background: vars.colors.backgroundContainer,
-                })
-            )}
+            className={styles.tooltip}
+            style={{
+                width,
+                ...getBorderStyle(isInverse),
+            }}
         >
-            <ThemeVariant isInverse={false}>
-                {(title || description) && (
-                    <Stack space={4}>
-                        {title && <Text2 medium>{title}</Text2>}
-                        {description && <Text2 regular>{description}</Text2>}
-                    </Stack>
-                )}
-                {extra || children}
-            </ThemeVariant>
+            <div className={classNames(styles.content, textCenter ? styles.tooltipCenter : undefined)}>
+                <ThemeVariant isInverse={false}>
+                    {(title || description) && (
+                        <Stack space={4}>
+                            {title && <Text2 medium>{title}</Text2>}
+                            {description && <Text2 regular>{description}</Text2>}
+                        </Stack>
+                    )}
+                    {extra || children}
+                </ThemeVariant>
+            </div>
+            <div
+                className={styles.arrowContainer}
+                style={{
+                    ...arrowComputedProps,
+                }}
+            >
+                <div className={classNames(styles.arrow)} style={{...getBorderStyle(isInverse)}} />
+            </div>
         </div>
     );
 
@@ -530,14 +530,6 @@ const Tooltip: React.FC<Props> = ({
                                                   [styles.tooltipVars.padding]: tooltipComputedProps.padding,
                                               }
                                             : {}),
-                                        ...(arrowComputedProps
-                                            ? {
-                                                  [styles.tooltipVars
-                                                      .arrowTop]: `${arrowComputedProps.top}px`,
-                                                  [styles.tooltipVars
-                                                      .arrowLeft]: `${arrowComputedProps.left}px`,
-                                              }
-                                            : {}),
 
                                         [styles.tooltipVars.delay]: `${
                                             delay ? TOOLTIP_ENTER_TRANSITION_DELAY_IN_MS : 0
@@ -580,14 +572,6 @@ const Tooltip: React.FC<Props> = ({
                                     }}
                                 >
                                     {renderTooltipContent()}
-                                    <div className={styles.arrowContainer}>
-                                        <div
-                                            className={classNames(
-                                                styles.arrow,
-                                                arrowComputedProps?.borderStyle
-                                            )}
-                                        />
-                                    </div>
                                 </div>
                             </div>
                         );

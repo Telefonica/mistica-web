@@ -1,6 +1,7 @@
 import {createVar, style} from '@vanilla-extract/css';
 import {vars} from './skins/skin-contract.css';
 
+const ARROW_CONTAINER_SIZE = 20;
 const ARROW_SIZE = 12;
 
 const top = createVar();
@@ -10,17 +11,12 @@ const delay = createVar();
 const enterTransform = createVar();
 const maxWidth = createVar();
 
-const arrowTop = createVar();
-const arrowLeft = createVar();
-
 export const tooltipVars = {
     top,
     left,
     padding,
     delay,
     enterTransform,
-    arrowTop,
-    arrowLeft,
     maxWidth,
 };
 
@@ -46,7 +42,7 @@ export const container = style({
     zIndex: 1,
     position: 'absolute',
     filter: 'drop-shadow(0px 2px 2px rgba(0,0,0,0.2))',
-    opacity: 0,
+    opacity: 1,
     padding,
     transform: enterTransform,
     cursor: 'default',
@@ -61,10 +57,18 @@ export const exitTransition = style({
 });
 
 export const tooltip = style({
+    position: 'relative',
+    boxSizing: 'border-box',
+    borderRadius: vars.borderRadii.popup,
+    background: vars.colors.backgroundContainer,
+});
+
+export const content = style({
     padding: 7,
     position: 'relative',
     minWidth: 40,
     maxWidth,
+    overflow: 'hidden',
 });
 
 export const tooltipCenter = style({
@@ -74,40 +78,20 @@ export const tooltipCenter = style({
 });
 
 export const arrowContainer = style({
-    width: ARROW_SIZE,
-    height: ARROW_SIZE,
     position: 'absolute',
-    top: arrowTop,
-    left: arrowLeft,
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
+    width: ARROW_CONTAINER_SIZE,
+    height: ARROW_CONTAINER_SIZE / 2,
+    overflow: 'hidden',
 });
 
 export const arrow = style({
-    width: (ARROW_SIZE / 2) * Math.sqrt(2),
-    height: (ARROW_SIZE / 2) * Math.sqrt(2),
-    transform: 'rotate(45deg)',
+    width: ARROW_SIZE,
+    height: ARROW_SIZE,
+    position: 'absolute',
+    top: 0,
     background: vars.colors.backgroundContainer,
+    left: '50%',
+    transform: 'translate(-50%, -50%) rotate(45deg)',
     boxSizing: 'border-box',
-});
-
-export const leftArrowBorder = style({
-    borderTop: `1px solid ${vars.colors.border}`,
-    borderRight: `1px solid ${vars.colors.border}`,
-});
-
-export const rightArrowBorder = style({
-    borderBottom: `1px solid ${vars.colors.border}`,
-    borderLeft: `1px solid ${vars.colors.border}`,
-});
-
-export const topArrowBorder = style({
-    borderBottom: `1px solid ${vars.colors.border}`,
-    borderRight: `1px solid ${vars.colors.border}`,
-});
-
-export const bottomArrowBorder = style({
-    borderTop: `1px solid ${vars.colors.border}`,
-    borderLeft: `1px solid ${vars.colors.border}`,
+    borderRadius: '0 0 2px 0',
 });
