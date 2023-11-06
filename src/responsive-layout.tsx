@@ -17,7 +17,7 @@ type Props = {
     dataAttributes?: DataAttributes;
 };
 
-const ResponsiveLayout: React.FC<Props> = ({
+export const InternalResponsiveLayout: React.FC<Props & {shouldExpandWhenNested?: boolean}> = ({
     children,
     isInverse = false,
     variant,
@@ -25,6 +25,7 @@ const ResponsiveLayout: React.FC<Props> = ({
     className,
     fullWidth,
     dataAttributes,
+    shouldExpandWhenNested = false,
 }) => {
     const outsideVariant: Variant = useThemeVariant();
     const internalVariant: Variant | undefined = variant || (isInverse && 'inverse') || undefined;
@@ -33,19 +34,33 @@ const ResponsiveLayout: React.FC<Props> = ({
         <ThemeVariant variant={internalVariant ?? outsideVariant}>
             <div
                 className={classnames(
-                    styles.container,
+                    fullWidth ? styles.fullwidthContainer : styles.responsiveLayoutContainer,
                     className,
                     internalVariant &&
                         internalVariant !== 'default' &&
-                        styles.backgroundVariant[internalVariant]
+                        styles.backgroundVariant[internalVariant],
+                    shouldExpandWhenNested && !fullWidth && styles.expandedResponsiveLayoutContainer
                 )}
                 style={backgroundColor ? {background: backgroundColor} : undefined}
                 {...getPrefixedDataAttributes(dataAttributes)}
             >
-                <div className={fullWidth ? styles.fullWidth : styles.responsiveLayout}>{children}</div>
+                <div
+                    className={classnames(
+                        fullWidth ? styles.fullWidth : styles.responsiveLayout,
+                        shouldExpandWhenNested && !fullWidth && styles.expandedResponsiveLayout
+                    )}
+                >
+                    {children}
+                </div>
             </div>
         </ThemeVariant>
     );
 };
+
+const ResponsiveLayout: React.FC<Props> = ({children, ...props}) => (
+    <InternalResponsiveLayout {...props} shouldExpandWhenNested>
+        {children}
+    </InternalResponsiveLayout>
+);
 
 export default ResponsiveLayout;

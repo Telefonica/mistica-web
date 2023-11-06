@@ -147,7 +147,12 @@ export const carousel = style([
 const responsiveLayoutSideMargin = fallbackVar(responsiveLayoutVars.sideMargin, '0px');
 
 export const carouselWithScroll = style({
-    margin: `0 calc(${responsiveLayoutSideMargin} * -1)`,
+    margin: 0,
+    '@media': {
+        [mq.tabletOrSmaller]: {
+            margin: `0 calc(${responsiveLayoutSideMargin} * -1)`,
+        },
+    },
 });
 
 export const centeredCarousel = style({

@@ -12,13 +12,20 @@ type Args = {
     message: string;
     duration: string;
     type: React.ComponentProps<typeof Snackbar>['type'];
+    withDismiss: boolean;
 };
 
-export const Default: StoryComponent<Args> = ({buttonText, message, duration, type}) => {
+export const Default: StoryComponent<Args> = ({buttonText, message, duration, type, withDismiss}) => {
     const snackbarDuration = duration !== 'Default' ? +duration : undefined;
     return (
         <StorySection title="Snackbar">
-            <Snackbar buttonText={buttonText} type={type} message={message} duration={snackbarDuration} />
+            <Snackbar
+                buttonText={buttonText}
+                type={type}
+                message={message}
+                duration={snackbarDuration}
+                withDismiss={withDismiss}
+            />
         </StorySection>
     );
 };
@@ -26,15 +33,16 @@ export const Default: StoryComponent<Args> = ({buttonText, message, duration, ty
 Default.storyName = 'Snackbar';
 
 Default.args = {
-    buttonText: 'Action',
-    message: 'Some message',
     type: 'INFORMATIVE',
+    message: 'Some message',
+    buttonText: 'Action',
+    withDismiss: false,
     duration: 'Default',
 };
 
 Default.argTypes = {
     duration: {
-        options: ['Default', '1000', '2000', '5000', '10000', '15000'],
+        options: ['Default', 'Infinity'],
         control: {type: 'select'},
     },
     type: {
