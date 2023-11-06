@@ -1,3 +1,4 @@
+'use client';
 import * as React from 'react';
 import classnames from 'classnames';
 import {CSSTransition} from 'react-transition-group';
@@ -8,9 +9,9 @@ import {Text2} from './text';
 import * as key from './utils/key-codes';
 import Stack from './stack';
 import * as styles from './tooltip.css';
-import {assignInlineVars} from '@vanilla-extract/dynamic';
 import {getPrefixedDataAttributes} from './utils/dom';
 import {isClientSide, isServerSide} from './utils/environment';
+import {applyCssVars} from './utils/css';
 
 import type {DataAttributes} from './utils/types';
 
@@ -345,7 +346,7 @@ const Tooltip: React.FC<Props> = ({
 
     const vars =
         position &&
-        assignInlineVars({
+        applyCssVars({
             [styles.vars.enterTransform]: getEnterTransform(position),
             [styles.vars.exitTransform]: getExitTransform(position),
             [styles.vars.enterActiveAnimationName]: getEnterActiveAnimationName(position),

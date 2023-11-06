@@ -1,3 +1,4 @@
+'use client';
 import * as React from 'react';
 
 export type DesktopContainerType = 'small' | 'medium' | 'large';
@@ -7,4 +8,4 @@ const DesktopContainerTypeContext = React.createContext<DesktopContainerType | n
 export const useDesktopContainerType = (): DesktopContainerType | null =>
     React.useContext(DesktopContainerTypeContext);
 
-export default DesktopContainerTypeContext;
+export default DesktopContainerTypeContext.Provider;

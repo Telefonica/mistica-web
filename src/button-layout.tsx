@@ -1,5 +1,5 @@
+'use client';
 import * as React from 'react';
-import {assignInlineVars} from '@vanilla-extract/dynamic';
 import {useIsomorphicLayoutEffect} from './hooks';
 import {ButtonPrimary, ButtonSecondary, ButtonDanger} from './button';
 import {BUTTON_MIN_WIDTH} from './button.css';
@@ -7,6 +7,7 @@ import classnames from 'classnames';
 import {debounce} from './utils/helpers';
 import {getPrefixedDataAttributes} from './utils/dom';
 import * as styles from './button-layout.css';
+import {applyCssVars} from './utils/css';
 
 import type {DataAttributes, RendersNullableElement} from './utils/types';
 import type {NullableButtonElement, ButtonLink} from './button';
@@ -142,7 +143,7 @@ const ButtonLayout: React.FC<ButtonLayoutProps> = ({
                     [styles.alignMoreThanOneChildred]: childrenCount > 1,
                 }
             )}
-            style={assignInlineVars({
+            style={applyCssVars({
                 [styles.vars.buttonWidth]: buttonStatus.buttonWidth
                     ? `${buttonStatus.buttonWidth}px`
                     : 'auto',

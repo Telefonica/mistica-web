@@ -1,3 +1,4 @@
+'use client';
 import * as React from 'react';
 import {useScreenSize, useTheme} from './hooks';
 import * as styles from './slider.css';

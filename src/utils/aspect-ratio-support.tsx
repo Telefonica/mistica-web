@@ -1,8 +1,9 @@
-import {assignInlineVars} from '@vanilla-extract/dynamic';
+'use client';
 import classNames from 'classnames';
 import * as React from 'react';
 import {useIsomorphicLayoutEffect} from '../hooks';
 import * as styles from './aspect-ratio-support.css';
+import {applyCssVars} from './css';
 
 import type {DataAttributes} from './types';
 
@@ -86,7 +87,7 @@ export const AspectRatioContainer = (props: AspectRatioContainerProps): JSX.Elem
                           width: !isNaN(Number(width)) ? Number(width) : width,
                           height: !isNaN(Number(height)) ? Number(height) : height,
                       }),
-                ...assignInlineVars({
+                ...applyCssVars({
                     [styles.vars.aspectRatio]: aspectRatio ? String(aspectRatio) : 'unset',
                 }),
             },

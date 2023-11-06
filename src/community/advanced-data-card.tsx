@@ -1,4 +1,6 @@
 // https://www.figma.com/file/35iS2dwoogulJZPgFGKmCX/Explora%C3%A7%C3%A3o-Data-Card-%2F-Slots?type=design&node-id=443-32508&mode=design&t=wwoi2TRLVsjwGYAb-0
+
+'use client';
 import * as React from 'react';
 import {Boxed} from '../boxed';
 import {sprinkles} from '../sprinkles.css';

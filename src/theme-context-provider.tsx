@@ -1,3 +1,4 @@
+'use client';
 import * as React from 'react';
 import {assignInlineVars} from '@vanilla-extract/dynamic';
 import DialogRoot from './dialog';
@@ -15,9 +16,22 @@ import {TrackingConfig} from './utils/analytics';
 import {vars} from './skins/skin-contract.css';
 import {fromHexToRgb} from './utils/color';
 import {defaultBorderRadiiConfig, defaultTextPresetsConfig} from './skins/defaults';
+import {isClientSide} from './utils/environment';
+import {PACKAGE_VERSION} from './package-version';
 
 import type {Colors} from './skins/types';
 import type {Theme, ThemeConfig} from './theme';
+
+// Check there is only one version of mistica installed in the page.
+if (process.env.NODE_ENV !== 'production' && isClientSide()) {
+    // @ts-expect-error __mistica_version__ does not exist in window
+    if (window['__mistica_version__'] && window['__mistica_version__'] !== PACKAGE_VERSION) {
+        throw new Error(`There is more than one version of @telefonica/mistica running on the same page`);
+    } else {
+        // @ts-expect-error __mistica_version__ does not exist in window
+        window['__mistica_version__'] = PACKAGE_VERSION;
+    }
+}
 
 const darkModeMedia = '(prefers-color-scheme: dark)';
 export const useIsOsDarkModeEnabled = (): boolean => {

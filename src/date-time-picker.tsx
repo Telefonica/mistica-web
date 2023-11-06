@@ -4,6 +4,8 @@
  *
  * This component is a fallback for browsers that don't support datetime-local or date inputs
  */
+
+'use client';
 import * as React from 'react';
 import {TextFieldBaseAutosuggest} from './text-field-base';
 import IconCalendarRegular from './generated/mistica-icons/icon-calendar-regular';

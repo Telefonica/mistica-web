@@ -1,3 +1,4 @@
+'use client';
 import * as React from 'react';
 import {Label, HelperText, FieldContainer} from './text-field-components';
 import {LABEL_LEFT_POSITION, LABEL_SCALE_MOBILE, LABEL_SCALE_DESKTOP} from './text-field-components.css';

@@ -1,3 +1,4 @@
+'use client';
 import * as React from 'react';
 import {getPlatform} from './utils/platform';
 import FadeIn from './fade-in';

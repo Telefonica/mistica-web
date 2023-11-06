@@ -1,11 +1,11 @@
+'use client';
 import * as React from 'react';
 import classnames from 'classnames';
 import {Text2, Text1} from './text';
 import {useScreenSize, useElementDimensions, useTheme} from './hooks';
 import IconSuccess from './icons/icon-success';
 import * as styles from './stepper.css';
-import {pxToRem} from './utils/css';
-import {assignInlineVars} from '@vanilla-extract/dynamic';
+import {pxToRem, applyCssVars} from './utils/css';
 import {vars} from './skins/skin-contract.css';
 import {getPrefixedDataAttributes} from './utils/dom';
 
@@ -44,7 +44,7 @@ const Stepper: React.FC<StepperProps> = ({
     return (
         <div
             className={styles.stepper}
-            style={assignInlineVars({
+            style={applyCssVars({
                 [styles.vars.stepperMinHeight]: pxToRem(40 + textContainerHeight),
             })}
             {...getPrefixedDataAttributes(dataAttributes, 'Stepper')}
