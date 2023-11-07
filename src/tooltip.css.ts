@@ -1,5 +1,6 @@
 import {createVar, style} from '@vanilla-extract/css';
 import {vars} from './skins/skin-contract.css';
+import {sprinkles} from './sprinkles.css';
 
 const ARROW_CONTAINER_SIZE = 20;
 const ARROW_SIZE = 12;
@@ -71,7 +72,7 @@ export const content = style({
     overflow: 'hidden',
 });
 
-export const tooltipCenter = style({
+export const tooltipCenter = sprinkles({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
