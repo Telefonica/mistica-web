@@ -22,8 +22,8 @@ test.each(getCases())(
     async (position, targetHorizontalPosition, targetVerticalPosition) => {
         const page = await openStoryPage({
             id: 'components-tooltip--default',
-            device: 'MOBILE_IOS',
-            args: {position, targetHorizontalPosition, targetVerticalPosition},
+            device: 'DESKTOP',
+            args: {position, targetHorizontalPosition, targetVerticalPosition, extra: true},
         });
 
         await page.click(await screen.findByRole('button'));
@@ -36,21 +36,8 @@ test.each(getCases())(
 test('Tooltip - inverse', async () => {
     const page = await openStoryPage({
         id: 'components-tooltip--default',
-        device: 'MOBILE_IOS',
+        device: 'DESKTOP',
         args: {inverse: true},
-    });
-
-    await page.click(await screen.findByRole('button'));
-
-    const image = await page.screenshot();
-    expect(image).toMatchImageSnapshot();
-});
-
-test('Tooltip - extra content', async () => {
-    const page = await openStoryPage({
-        id: 'components-tooltip--default',
-        device: 'MOBILE_IOS',
-        args: {extra: true},
     });
 
     await page.click(await screen.findByRole('button'));

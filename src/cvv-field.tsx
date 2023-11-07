@@ -116,7 +116,6 @@ const CvvField: React.FC<CvvFieldProps> = ({
                 <Tooltip
                     position="top"
                     children={<TooltipContent acceptedCards={acceptedCards} />}
-                    targetLabel={texts.formCreditCardCvvTooltipVisaMcButton}
                     target={
                         <div style={{width: 16, height: 16}}>
                             <IconButton
@@ -129,6 +128,7 @@ const CvvField: React.FC<CvvFieldProps> = ({
                                     left: -12, // (40 - 16) / 2
                                     top: -12,
                                 }}
+                                aria-label={texts.formCreditCardCvvTooltipVisaMcButton}
                             >
                                 <IconInformationRegular size={16} color={vars.colors.neutralMedium} />
                             </IconButton>

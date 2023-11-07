@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Tooltip, Placeholder, ButtonPrimary, ResponsiveLayout} from '..';
+import {Tooltip, Placeholder, ResponsiveLayout, IconButton, IconShopRegular} from '..';
 
 export default {
     title: 'Components/Tooltip',
@@ -89,10 +89,13 @@ export const Default: StoryComponent<Args> = ({
                                 right,
                                 top,
                                 bottom,
+                                margin: 16,
                                 transform: `translate(${translateX}, ${translateY})`,
                             }}
                         >
-                            <ButtonPrimary onPress={() => {}}>Target</ButtonPrimary>
+                            <IconButton onPress={() => {}}>
+                                <IconShopRegular />
+                            </IconButton>
                         </div>
                     }
                     title={title}

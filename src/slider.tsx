@@ -137,7 +137,7 @@ const Slider: React.FC<SliderProps> = ({
                                 Array.isArray(steps) ? steps[valueRanger].toString() : valueRanger.toString()
                             }
                             width={isTabletOrSmaller ? 42 : 45}
-                            textCenter
+                            centerContent
                             position="top"
                             target={
                                 <div

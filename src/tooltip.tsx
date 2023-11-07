@@ -133,10 +133,9 @@ type Props = {
     title?: string;
     position?: Position;
     width?: number;
-    targetLabel?: string;
     delay?: boolean;
     dataAttributes?: DataAttributes;
-    textCenter?: boolean;
+    centerContent?: boolean;
 };
 
 const Tooltip: React.FC<Props> = ({
@@ -145,12 +144,11 @@ const Tooltip: React.FC<Props> = ({
     description,
     target,
     title,
-    targetLabel,
     width,
     position = 'top',
     dataAttributes,
     delay = true,
-    textCenter,
+    centerContent,
 }) => {
     const tooltipId = useAriaId();
     const {openTooltipId} = useTooltipState();
@@ -425,7 +423,7 @@ const Tooltip: React.FC<Props> = ({
                 ...getBorderStyle(isInverse),
             }}
         >
-            <div className={classNames(styles.content, textCenter ? styles.tooltipCenter : undefined)}>
+            <div className={classNames(styles.content, centerContent ? styles.tooltipCenter : undefined)}>
                 <ThemeVariant isInverse={false}>
                     {(title || description) && (
                         <Stack space={4}>
@@ -488,7 +486,6 @@ const Tooltip: React.FC<Props> = ({
                     }
                 }}
                 aria-describedby={tooltipId}
-                aria-label={targetLabel}
             >
                 {target}
             </div>
