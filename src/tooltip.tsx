@@ -133,10 +133,9 @@ type Props = {
     title?: string;
     position?: Position;
     width?: number;
-    targetLabel: string;
+    targetLabel?: string;
     delay?: boolean;
     dataAttributes?: DataAttributes;
-    targetStyle?: React.CSSProperties;
     textCenter?: boolean;
 };
 
@@ -145,7 +144,6 @@ const Tooltip: React.FC<Props> = ({
     extra,
     description,
     target,
-    targetStyle,
     title,
     targetLabel,
     width,
@@ -490,7 +488,7 @@ const Tooltip: React.FC<Props> = ({
                     }
                 }}
                 aria-describedby={tooltipId}
-                style={targetStyle}
+                aria-label={targetLabel}
             >
                 {target}
             </div>
@@ -559,7 +557,6 @@ const Tooltip: React.FC<Props> = ({
                                         ...styles.tooltipTransitionClasses[transitionStatus],
                                     }}
                                     ref={combineRefs(setTooltip, tooltipRef)}
-                                    aria-label={targetLabel}
                                     onMouseEnter={() => {
                                         if (!isTouchableDevice && transitionStatus === 'entered') {
                                             setIsMouseOverTooltip(true);

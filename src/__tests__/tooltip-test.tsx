@@ -4,13 +4,12 @@ import Tooltip from '../tooltip';
 import {ThemeContextProvider} from '..';
 import {makeTheme} from './test-utils';
 
-type Props = Omit<React.ComponentProps<typeof Tooltip>, 'children' | 'targetLabel' | 'target'>;
+type Props = Omit<React.ComponentProps<typeof Tooltip>, 'children' | 'target'>;
 
 const TestTooltip: React.FC<Props> = (props) => (
     <ThemeContextProvider theme={makeTheme()}>
         <Tooltip
             {...props}
-            targetLabel="help text"
             target={<span className="target">Press me!</span>}
             extra={<div className="content">Content</div>}
             delay={false}
@@ -56,7 +55,7 @@ test('click anchor does not close tooltip', () => {
 
     render(
         <ThemeContextProvider theme={makeTheme()}>
-            <Tooltip targetLabel="help text" target={<span className="target">Press me!</span>} delay={false}>
+            <Tooltip target={<span className="target">Press me!</span>} delay={false}>
                 <div className="content">
                     Content
                     <a tabIndex={-1} role="link" onClick={() => linkSpy()}>
