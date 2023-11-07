@@ -1,6 +1,7 @@
 import {style} from '@vanilla-extract/css';
 import * as mq from './media-queries.css';
 import {vars} from './skins/skin-contract.css';
+import {sprinkles} from './sprinkles.css';
 
 const transitionTiming = '0.2s ease-in-out';
 const BUTTON_SIZE = 32;
@@ -9,50 +10,60 @@ const TOUCHABLE_AREA_WIDTH = 40;
 export const hasTrashIcon = style({});
 export const isButtonDisabled = style({});
 
-export const counter = style({
-    padding: 3,
-    boxSizing: 'border-box',
-    borderRadius: vars.borderRadii.button,
-    background: vars.colors.backgroundContainer,
-    display: 'inline-flex',
-    cursor: 'default',
-    overflow: 'hidden',
-});
+export const counter = style([
+    sprinkles({
+        borderRadius: vars.borderRadii.button,
+        background: vars.colors.backgroundContainer,
+        display: 'inline-flex',
+        overflow: 'hidden',
+    }),
+    {
+        padding: 3,
+    },
+]);
 
 export const disabled = style({
     opacity: '50%',
 });
 
-export const valueContainer = style({
+export const valueContainer = sprinkles({
     position: 'relative',
     display: 'flex',
     justifyContent: 'center',
 });
 
-export const buttonContainer = style({
+export const buttonContainer = sprinkles({
     position: 'relative',
     width: BUTTON_SIZE,
     height: BUTTON_SIZE,
 });
 
-export const button = style({
-    position: 'absolute',
-    top: -(TOUCHABLE_AREA_WIDTH - BUTTON_SIZE) / 2,
-    left: -(TOUCHABLE_AREA_WIDTH - BUTTON_SIZE) / 2,
-    width: TOUCHABLE_AREA_WIDTH,
-    height: TOUCHABLE_AREA_WIDTH,
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-});
-
-export const defaultButtonIcon = style([
-    {
+export const button = style([
+    sprinkles({
+        background: 'transparent',
+        border: 'none',
         position: 'absolute',
-        zIndex: 1,
+        width: TOUCHABLE_AREA_WIDTH,
+        height: TOUCHABLE_AREA_WIDTH,
+    }),
+    {
+        top: -(TOUCHABLE_AREA_WIDTH - BUTTON_SIZE) / 2,
+        left: -(TOUCHABLE_AREA_WIDTH - BUTTON_SIZE) / 2,
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
+    },
+]);
+
+export const defaultButtonIcon = style([
+    sprinkles({
+        position: 'absolute',
+    }),
+    {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        zIndex: 1,
     },
 ]);
 
@@ -89,44 +100,48 @@ export const decreaseButtonIcon = style([
     },
 ]);
 
-export const buttonBackground = style({
-    width: BUTTON_SIZE,
-    height: BUTTON_SIZE,
-    position: 'absolute',
-    borderRadius: vars.borderRadii.button,
-    transform: 'scale(0)',
-    transition: `transform ${transitionTiming}, background ${transitionTiming}`,
-    background: vars.colors.brandLow,
+export const buttonBackground = style([
+    sprinkles({
+        width: BUTTON_SIZE,
+        height: BUTTON_SIZE,
+        position: 'absolute',
+        borderRadius: vars.borderRadii.button,
+        background: vars.colors.brandLow,
+    }),
+    {
+        transform: 'scale(0)',
+        transition: `transform ${transitionTiming}, background ${transitionTiming}`,
 
-    selectors: {
-        [`${buttonContainer}:active:not(${isButtonDisabled}) &`]: {
-            transform: 'scale(1.06)',
-        },
-        [`${hasTrashIcon} &`]: {
-            background: vars.colors.errorLow,
-        },
-    },
-
-    '@media': {
-        ['(prefers-reduced-motion)']: {
-            transition: 'none',
-        },
-
-        [mq.supportsHover]: {
-            selectors: {
-                [`${buttonContainer}:hover:not(${isButtonDisabled}) &`]: {
-                    transform: 'scale(1)',
-                },
-                [`${buttonContainer}:active:not(${isButtonDisabled}) &`]: {
-                    transform: 'scale(1.06)',
-                },
-                [`${hasTrashIcon} &`]: {
-                    background: vars.colors.errorLow,
-                },
+        selectors: {
+            [`${buttonContainer}:active:not(${isButtonDisabled}) &`]: {
+                transform: 'scale(1.06)',
+            },
+            [`${hasTrashIcon} &`]: {
+                background: vars.colors.errorLow,
             },
         },
-        [mq.touchableOnly]: {
-            transition: 'none',
+
+        '@media': {
+            ['(prefers-reduced-motion)']: {
+                transition: 'none',
+            },
+
+            [mq.supportsHover]: {
+                selectors: {
+                    [`${buttonContainer}:hover:not(${isButtonDisabled}) &`]: {
+                        transform: 'scale(1)',
+                    },
+                    [`${buttonContainer}:active:not(${isButtonDisabled}) &`]: {
+                        transform: 'scale(1.06)',
+                    },
+                    [`${hasTrashIcon} &`]: {
+                        background: vars.colors.errorLow,
+                    },
+                },
+            },
+            [mq.touchableOnly]: {
+                transition: 'none',
+            },
         },
     },
-});
+]);

@@ -43,7 +43,7 @@ test('Counter with controlled value', async () => {
     const CounterWrapper = () => {
         const [value, setValue] = React.useState<number>(3);
 
-        return <Counter min={3} max={5} value={value} onChange={(newValue) => setValue(newValue)} />;
+        return <Counter min={3} max={5} value={value} onChangeValue={(newValue) => setValue(newValue)} />;
     };
 
     render(

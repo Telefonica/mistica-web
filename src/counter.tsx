@@ -5,7 +5,7 @@ import {ThemeVariant, useThemeVariant} from './theme-variant-context';
 import {vars} from './skins/skin-contract.css';
 import Inline from './inline';
 import {Text3} from './text';
-import Touchable from './touchable';
+import {BaseTouchable} from './touchable';
 import IconSubtractRegular from './generated/mistica-icons/icon-subtract-regular';
 import IconAddMoreRegular from './generated/mistica-icons/icon-add-more-regular';
 import IconTrashCanRegular from './generated/mistica-icons/icon-trash-can-regular';
@@ -22,13 +22,13 @@ const useCounterState = ({
     defaultValue,
     min,
     max,
-    onChange,
+    onChangeValue,
 }: {
     value?: number;
     defaultValue?: number;
     min: number;
     max: number;
-    onChange?: (value: number) => void;
+    onChangeValue?: (value: number) => void;
 }): [number, (value: number) => void] => {
     const isControlledByParent = value !== undefined;
 
@@ -47,9 +47,7 @@ const useCounterState = ({
         if (!isControlledByParent) {
             setCurrentValue(newValue);
         }
-        if (onChange) {
-            onChange(newValue);
-        }
+        onChangeValue?.(newValue);
     };
 
     return [isControlledByParent ? getValueInRange(value) : currentValue, updateValue];
@@ -60,7 +58,7 @@ type Props = {
     defaultValue?: number;
     min?: number;
     max?: number;
-    onChange?: (value: number) => void;
+    onChangeValue?: (value: number) => void;
     onRemove?: () => void;
     children?: void;
     disabled?: boolean;
@@ -74,7 +72,7 @@ type Props = {
 const Counter: React.FC<Props> = ({
     value,
     defaultValue,
-    onChange,
+    onChangeValue,
     onRemove,
     min,
     max,
@@ -96,7 +94,7 @@ const Counter: React.FC<Props> = ({
         defaultValue,
         min: minValue,
         max: maxValue,
-        onChange,
+        onChangeValue,
     });
 
     const hasTrashIcon = !!onRemove && currentValue === minValue;
@@ -137,7 +135,7 @@ const Counter: React.FC<Props> = ({
                         [styles.disabled]: !disabled && !hasTrashIcon && currentValue === minValue,
                     })}
                 >
-                    <Touchable
+                    <BaseTouchable
                         className={styles.button}
                         disabled={(!hasTrashIcon && currentValue === minValue) || disabled}
                         onPress={() => (hasTrashIcon ? onRemove?.() : setCurrentValue(currentValue - 1))}
@@ -157,7 +155,7 @@ const Counter: React.FC<Props> = ({
                         <div className={styles.trashButtonIcon} aria-hidden={!hasTrashIcon}>
                             <IconTrashCanRegular size={ICON_SIZE} color={vars.colors.controlError} />
                         </div>
-                    </Touchable>
+                    </BaseTouchable>
                 </div>
 
                 <div
@@ -187,7 +185,7 @@ const Counter: React.FC<Props> = ({
                         [styles.disabled]: !disabled && currentValue === maxValue,
                     })}
                 >
-                    <Touchable
+                    <BaseTouchable
                         className={styles.button}
                         disabled={currentValue === maxValue || disabled}
                         onPress={() => setCurrentValue(currentValue + 1)}
@@ -204,7 +202,7 @@ const Counter: React.FC<Props> = ({
                                 }
                             />
                         </div>
-                    </Touchable>
+                    </BaseTouchable>
                 </div>
             </Inline>
         </div>
