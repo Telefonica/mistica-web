@@ -204,6 +204,9 @@ export const AccordionItem = React.forwardRef<TouchableElement, AccordionItemCon
 
 type AccordionBaseProps = {
     children: React.ReactNode;
+    /**
+     * @deprecated This field is deprecated and it has no effect.
+     */
     noLastDivider?: boolean;
     dataAttributes?: DataAttributes;
     onChange?: (index: number, value: boolean) => void;
@@ -226,7 +229,6 @@ type AccordionProps = AccordionBaseProps & ExclusifyUnion<SingleOpenProps | Mult
 export const Accordion: React.FC<AccordionProps> = ({
     children,
     dataAttributes,
-    noLastDivider,
     index,
     defaultIndex,
     onChange,
@@ -239,7 +241,6 @@ export const Accordion: React.FC<AccordionProps> = ({
         singleOpen,
     });
     const lastIndex = React.Children.count(children) - 1;
-    const showLastDivider = !noLastDivider;
 
     return (
         <AccordionContext.Provider value={{index: indexList, toogle}}>
@@ -249,7 +250,7 @@ export const Accordion: React.FC<AccordionProps> = ({
                     .map((child, index) => (
                         <React.Fragment key={index}>
                             {child}
-                            {(index < lastIndex || showLastDivider) && (
+                            {index < lastIndex && (
                                 <Box paddingX={16}>
                                     <Divider />
                                 </Box>
