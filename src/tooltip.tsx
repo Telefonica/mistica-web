@@ -136,6 +136,22 @@ type Props = {
     delay?: boolean;
     dataAttributes?: DataAttributes;
     centerContent?: boolean;
+    /**
+     * @deprecated This field is deprecated.
+     */
+    targetLabel?: string;
+    /**
+     * @deprecated This field is deprecated.
+     */
+    targetStyle?: React.CSSProperties;
+    /**
+     * @deprecated This field is deprecated.
+     */
+    unstable_offsetX?: number | string;
+    /**
+     * @deprecated This field is deprecated, use centerContent instead.
+     */
+    textCenter?: boolean;
 };
 
 const Tooltip: React.FC<Props> = ({
