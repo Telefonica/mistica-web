@@ -41,8 +41,6 @@ const useCounterState = ({
 
     const [currentValue, setCurrentValue] = React.useState<number>(getValueInRange(defaultValue));
 
-    React.useEffect(() => setCurrentValue(getValueInRange(defaultValue)), [defaultValue, getValueInRange]);
-
     const updateValue = (newValue: number) => {
         if (!isControlledByParent) {
             setCurrentValue(newValue);
