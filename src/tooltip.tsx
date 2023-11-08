@@ -15,6 +15,7 @@ import {vars} from './skins/skin-contract.css';
 import {ThemeVariant, useIsInverseVariant} from './theme-variant-context';
 import {combineRefs} from './utils/common';
 import {useSetTooltipState, useTooltipState} from './tooltip-context-provider';
+import {isRunningAcceptanceTest} from './utils/platform';
 
 import type {BoundingRect} from './hooks';
 import type {DataAttributes} from './utils/types';
@@ -165,6 +166,7 @@ const Tooltip: React.FC<Props> = ({
     dataAttributes,
     delay = true,
     centerContent,
+    textCenter,
 }) => {
     const tooltipId = useAriaId();
     const {openTooltipId} = useTooltipState();
@@ -431,36 +433,6 @@ const Tooltip: React.FC<Props> = ({
         windowSize.width
     );
 
-    const renderTooltipContent = () => (
-        <div
-            className={styles.tooltip}
-            style={{
-                width,
-                ...getBorderStyle(isInverse),
-            }}
-        >
-            <div className={classNames(styles.content, centerContent ? styles.tooltipCenter : undefined)}>
-                <ThemeVariant isInverse={false}>
-                    {(title || description) && (
-                        <Stack space={4}>
-                            {title && <Text2 medium>{title}</Text2>}
-                            {description && <Text2 regular>{description}</Text2>}
-                        </Stack>
-                    )}
-                    {extra || children}
-                </ThemeVariant>
-            </div>
-            <div
-                className={styles.arrowContainer}
-                style={{
-                    ...arrowComputedProps,
-                }}
-            >
-                <div className={classNames(styles.arrow)} style={{...getBorderStyle(isInverse)}} />
-            </div>
-        </div>
-    );
-
     return (
         <>
             {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
@@ -510,12 +482,16 @@ const Tooltip: React.FC<Props> = ({
                 <Transition
                     in={isTooltipOpen}
                     nodeRef={tooltipRef}
-                    timeout={{
-                        enter:
-                            TOOLTIP_ENTER_TRANSITION_DURATION_IN_MS +
-                            (delay ? TOOLTIP_ENTER_TRANSITION_DELAY_IN_MS : 0),
-                        exit: TOOLTIP_EXIT_TRANSITION_DURATION_IN_MS,
-                    }}
+                    timeout={
+                        isRunningAcceptanceTest()
+                            ? 0
+                            : {
+                                  enter:
+                                      TOOLTIP_ENTER_TRANSITION_DURATION_IN_MS +
+                                      (delay ? TOOLTIP_ENTER_TRANSITION_DELAY_IN_MS : 0),
+                                  exit: TOOLTIP_EXIT_TRANSITION_DURATION_IN_MS,
+                              }
+                    }
                     mountOnEnter
                     unmountOnExit
                 >
@@ -581,7 +557,41 @@ const Tooltip: React.FC<Props> = ({
                                         }
                                     }}
                                 >
-                                    {renderTooltipContent()}
+                                    <div
+                                        className={styles.tooltip}
+                                        style={{
+                                            width,
+                                            ...getBorderStyle(isInverse),
+                                        }}
+                                    >
+                                        <div
+                                            className={classNames(
+                                                styles.content,
+                                                centerContent || textCenter ? styles.tooltipCenter : undefined
+                                            )}
+                                        >
+                                            <ThemeVariant isInverse={false}>
+                                                {(title || description) && (
+                                                    <Stack space={4}>
+                                                        {title && <Text2 medium>{title}</Text2>}
+                                                        {description && <Text2 regular>{description}</Text2>}
+                                                    </Stack>
+                                                )}
+                                                {extra || children}
+                                            </ThemeVariant>
+                                        </div>
+                                        <div
+                                            className={styles.arrowContainer}
+                                            style={{
+                                                ...arrowComputedProps,
+                                            }}
+                                        >
+                                            <div
+                                                className={classNames(styles.arrow)}
+                                                style={{...getBorderStyle(isInverse)}}
+                                            />
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         );
