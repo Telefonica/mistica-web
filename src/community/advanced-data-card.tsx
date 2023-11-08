@@ -254,9 +254,7 @@ type AdvancedDataCardProps = {
     'aria-label'?: string;
     onClose?: () => void;
 } & ExclusifyUnion<
-    | {href: string | undefined;}
-    | {to: string | undefined;}
-    | {onPress: PressHandler | undefined}
+    {href: string | undefined} | {to: string | undefined} | {onPress: PressHandler | undefined}
 >;
 export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCardProps>(
     (
