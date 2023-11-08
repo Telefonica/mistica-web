@@ -103,7 +103,7 @@ export const cardContentStyle = style([
     },
 ]);
 
-export const zindex = style({zIndex: -20});
+export const zindex = style({zIndex: -1});
 
 export const minHeight = style({minHeight: 216});
 

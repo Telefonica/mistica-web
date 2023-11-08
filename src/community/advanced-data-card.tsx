@@ -15,6 +15,8 @@ import {useTheme} from '../hooks';
 import {getPrefixedDataAttributes} from '../utils/dom';
 import Inline from '../inline';
 
+import type {PressHandler} from '../touchable';
+import type {ExclusifyUnion} from '../utils/utility-types';
 import type {CardAction} from '../card';
 import type StackingGroup from '../stacking-group';
 import type Image from '../image';
@@ -76,7 +78,6 @@ const CardContent: React.FC<CardContentProps> = ({
                     tabIndex={0}
                     maybe
                     className={classNames(styles.touchableArea)}
-                    as="a"
                     href={href}
                     to={to}
                     aria-label={ariaLabel}
@@ -225,7 +226,7 @@ type AllowedExtra =
 
 type TextAs = 'h1' | 'h2' | 'h3' | 'h4';
 
-interface AdvancedDataCardProps {
+type AdvancedDataCardProps = {
     onPress?: () => void;
     href?: string | undefined;
     to?: undefined;
@@ -252,8 +253,11 @@ interface AdvancedDataCardProps {
     actions?: Array<CardAction>;
     'aria-label'?: string;
     onClose?: () => void;
-}
-
+} & ExclusifyUnion<
+    | {href: string | undefined; newTab?: boolean}
+    | {to: string | undefined; fullPageOnWebView?: boolean}
+    | {onPress: PressHandler | undefined}
+>;
 export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCardProps>(
     (
         {
@@ -290,7 +294,7 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
         },
         ref
     ) => {
-        const isTouchable = !!href || !!onPress;
+        const isTouchable = !!href || !!onPress || !!to;
 
         const footerProps = {button, footerImage, footerText, footerTextLinesMax, buttonLink};
 
