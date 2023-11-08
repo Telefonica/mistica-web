@@ -73,6 +73,7 @@ export {
     NakedCard,
     SmallNakedCard,
     CardActionSpinner,
+    CardActionIconButton,
 } from './card';
 export {default as Hero} from './hero';
 export {default as Divider} from './divider';
