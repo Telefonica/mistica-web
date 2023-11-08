@@ -32,7 +32,7 @@ export const valueContainer = sprinkles({
     justifyContent: 'center',
 });
 
-export const buttonContainer = sprinkles({
+export const buttonContainer = style({
     position: 'relative',
     width: BUTTON_SIZE,
     height: BUTTON_SIZE,
