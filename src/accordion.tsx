@@ -13,6 +13,7 @@ import {Boxed} from './boxed';
 import {useIsInverseVariant} from './theme-variant-context';
 import {useAriaId} from './hooks';
 import {CSSTransition} from 'react-transition-group';
+import {isRunningAcceptanceTest} from './utils/platform';
 
 import type {ExclusifyUnion} from './utils/utility-types';
 import type {DataAttributes, TrackingEvent} from './utils/types';
@@ -173,7 +174,7 @@ const AccordionItemContent = React.forwardRef<TouchableElement, AccordionItemCon
                 </BaseTouchable>
                 <CSSTransition
                     in={isOpen}
-                    timeout={ACCORDION_TRANSITION_DURATION_IN_MS}
+                    timeout={isRunningAcceptanceTest() ? 0 : ACCORDION_TRANSITION_DURATION_IN_MS}
                     nodeRef={panelContainerRef}
                     classNames={styles.panelTransitionClasses}
                     mountOnEnter
