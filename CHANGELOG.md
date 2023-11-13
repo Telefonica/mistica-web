@@ -1,3 +1,18 @@
+# [14.29.0](https://github.com/Telefonica/mistica-web/compare/v14.28.1...v14.29.0) (2023-11-13)
+
+
+### Bug Fixes
+
+* **Accordion, RowList:** remove last divider ([#929](https://github.com/Telefonica/mistica-web/issues/929)) ([e9de2b4](https://github.com/Telefonica/mistica-web/commit/e9de2b495a13076b623c18e98bdbce2c2327591c))
+* **Carousel:** change regular mobilePageOffset to 24px ([#935](https://github.com/Telefonica/mistica-web/issues/935)) ([13d8864](https://github.com/Telefonica/mistica-web/commit/13d88642a446529a2ca465bf8b4d16a57b4bdb10))
+
+
+### Features
+
+* **ButtonLayout:** every button has their own size ([#933](https://github.com/Telefonica/mistica-web/issues/933)) ([007d948](https://github.com/Telefonica/mistica-web/commit/007d948f179dde327b586d1455b2d12502f203d3))
+* **Counter:** create component ([#927](https://github.com/Telefonica/mistica-web/issues/927)) ([211f826](https://github.com/Telefonica/mistica-web/commit/211f82612989d9a6ea4d4f0d75fd835b42567a09))
+* **Snackbar:** support persistent snackbars and dismiss button ([#924](https://github.com/Telefonica/mistica-web/issues/924)) ([dd522d5](https://github.com/Telefonica/mistica-web/commit/dd522d5bd577a774f0d152f7042159882ef71d68))
+
 ## [14.28.1](https://github.com/Telefonica/mistica-web/compare/v14.28.0...v14.28.1) (2023-10-27)
 
 
