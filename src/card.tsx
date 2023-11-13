@@ -126,7 +126,7 @@ export const CardActionsGroup = ({
                 <div className={sprinkles({display: 'flex'})}>
                     {finalActions.map((action, index) => {
                         if ('label' in action) {
-                            // action it's a CardAction object
+                            // action is a CardAction object
                             return <CardActionIconButton key={index} {...action} />;
                         }
                         // action it's a React.ReactElement
