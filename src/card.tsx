@@ -129,7 +129,7 @@ export const CardActionsGroup = ({
                             // action is a CardAction object
                             return <CardActionIconButton key={index} {...action} />;
                         }
-                        // action it's a React.ReactElement
+                        // action is a React.ReactElement
                         return action;
                     })}
                 </div>
