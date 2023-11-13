@@ -29,7 +29,7 @@ const Template: React.FC<Props> = ({align = 'full-width'}) => (
             <Title1 as="h2">Long captions</Title1>
             <ButtonLayout align={align}>
                 <ButtonSecondary fake>The text in this button is very long</ButtonSecondary>
-                <ButtonPrimary fake>The text in this button is very long</ButtonPrimary>
+                <ButtonPrimary fake>This one isn't so long</ButtonPrimary>
             </ButtonLayout>
 
             <Title1 as="h2">One button with link</Title1>
