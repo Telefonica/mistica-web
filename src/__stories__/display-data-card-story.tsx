@@ -22,7 +22,7 @@ import type {AspectRatio} from '../card';
 import type {TagType} from '..';
 
 export default {
-    title: 'Components/Cards/Display data card',
+    title: 'Components/Cards/DisplayDataCard',
 };
 
 type DisplayDataCardArgs = {
@@ -127,7 +127,7 @@ export const Default: StoryComponent<DisplayDataCardArgs> = ({
     );
 };
 
-Default.storyName = 'Display Data card';
+Default.storyName = 'DisplayDataCard';
 Default.args = {
     asset: 'icon',
     headlineType: 'promo',
@@ -209,4 +209,4 @@ export const Group: StoryComponent = () => {
     );
 };
 
-Group.storyName = 'Display data card group';
+Group.storyName = 'DisplayDataCard group';

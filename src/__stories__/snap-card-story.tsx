@@ -17,7 +17,7 @@ import avatarImg from './images/avatar.jpg';
 import type {AspectRatio} from '../card';
 
 export default {
-    title: 'Components/Cards/Snap card',
+    title: 'Components/Cards/SnapCard',
 };
 
 type Args = {
@@ -84,7 +84,7 @@ export const Default: StoryComponent<Args> = ({
     );
 };
 
-Default.storyName = 'Snap card';
+Default.storyName = 'SnapCard';
 Default.args = {
     asset: 'icon in circle',
     title: 'Some title',
@@ -154,7 +154,7 @@ export const Group: StoryComponent = () => {
     );
 };
 
-Group.storyName = 'Snap card group';
+Group.storyName = 'SnapCard group';
 Group.parameters = {
     fullScreen: true,
 };

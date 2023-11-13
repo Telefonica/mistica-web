@@ -1,9 +1,18 @@
 import * as React from 'react';
-import {HighlightedCard, Box, ButtonPrimary, ButtonSecondary, ButtonLink} from '..';
+import {
+    HighlightedCard,
+    ButtonPrimary,
+    ButtonSecondary,
+    ButtonLink,
+    ResponsiveLayout,
+    Stack,
+    Text2,
+    Inline,
+} from '..';
 import personPortraitImg from './images/person-portrait.jpg';
 
 export default {
-    title: 'Components/Cards/Highlighted card',
+    title: 'Components/Cards/HighlightedCard',
 };
 
 type Args = {
@@ -64,7 +73,7 @@ export const Default: StoryComponent<Args> = ({
     );
 };
 
-Default.storyName = 'Highlighted card';
+Default.storyName = 'HighlightedCard';
 Default.args = {
     title: 'Resolver problema técnico',
     description: 'Usa nuestra herramienta para resolver tus problemas técnicos',
@@ -85,105 +94,49 @@ Default.argTypes = {
     },
 };
 
-export const CustomCardSize: StoryComponent = () => {
+export const Group: StoryComponent = () => {
     return (
-        <div
-            style={{display: 'flex', background: '#eee', overflowX: 'auto', justifyContent: 'flex-start'}}
-            data-testid="highlighted-card"
-        >
-            <HighlightedCard
-                width={250}
-                title="Title 1"
-                description="Some description here"
-                imageUrl={personPortraitImg}
-                imageFit="fit"
-                onClose={() => {}}
-            />
-
-            <Box paddingRight={8} />
-
-            <HighlightedCard
-                width={250}
-                title="Title 2"
-                description="Some description here"
-                imageUrl={personPortraitImg}
-                imageFit="fit"
-                button={
-                    <ButtonPrimary small href="https://google.com">
-                        Action
-                    </ButtonPrimary>
-                }
-            />
-
-            <Box paddingRight={8} />
-
-            <HighlightedCard
-                width={250}
-                title="Title 3"
-                description="Some description here. Some description here."
-                imageUrl={personPortraitImg}
-                imageFit="fit"
-                button={
-                    <ButtonPrimary small href="https://google.com">
-                        Action
-                    </ButtonPrimary>
-                }
-            />
-
-            <Box paddingRight={8} />
-
-            <HighlightedCard
-                width={250}
-                onClose={() => {}}
-                onPress={() => {}}
-                title="Title 4"
-                description="Some description here. Some description here. Some description here. "
-                imageUrl={personPortraitImg}
-                imageFit="fit"
-            />
-        </div>
+        <ResponsiveLayout>
+            <Stack space={16}>
+                <Text2 regular>
+                    We can group multiple cards and they adjust to the same height. The card actions are
+                    always fixed on bottom
+                </Text2>
+                <style>{`.group > * {display: flex}`}</style>
+                <Inline space={16} className="group">
+                    <HighlightedCard
+                        width={250}
+                        title="Title 1"
+                        description="Some description here"
+                        imageUrl={personPortraitImg}
+                        imageFit="fill"
+                        onClose={() => {}}
+                    />
+                    <HighlightedCard
+                        width={250}
+                        title="Title 2"
+                        description="Some description here"
+                        imageUrl={personPortraitImg}
+                        imageFit="fill"
+                        button={
+                            <ButtonPrimary small href="https://google.com">
+                                Action
+                            </ButtonPrimary>
+                        }
+                    />
+                    <HighlightedCard
+                        width={250}
+                        onClose={() => {}}
+                        onPress={() => {}}
+                        title="Title 4"
+                        description="Some description here. Some description here. Some description here. "
+                        imageUrl={personPortraitImg}
+                        imageFit="fill"
+                    />
+                </Inline>
+            </Stack>
+        </ResponsiveLayout>
     );
 };
 
-CustomCardSize.storyName = ' Custom card size';
-
-const CardWrapper = ({children}: {children: React.ReactNode}) => (
-    <div style={{display: 'flex', width: '18%', marginRight: 8}}>{children}</div>
-);
-
-export const CustomCardSizeInsideWrapper: StoryComponent = () => {
-    return (
-        <div style={{display: 'flex', background: '#eee'}} data-testid="highlighted-card">
-            <CardWrapper>
-                <HighlightedCard title="Title1" description="Simple" />
-            </CardWrapper>
-
-            <CardWrapper>
-                <HighlightedCard title="Title2" description="Dismisseable" onClose={() => {}} />
-            </CardWrapper>
-
-            <CardWrapper>
-                <HighlightedCard title="Title3" description="Touchable card" onPress={() => {}} />
-            </CardWrapper>
-
-            <CardWrapper>
-                <HighlightedCard
-                    title="Title4"
-                    description="Touchable and dismisseable"
-                    onPress={() => {}}
-                    onClose={() => {}}
-                />
-            </CardWrapper>
-
-            <CardWrapper>
-                <HighlightedCard
-                    title="Title5"
-                    description="Super long description. Super long description. Super long description. Super long description."
-                    onClose={() => {}}
-                />
-            </CardWrapper>
-        </div>
-    );
-};
-
-CustomCardSizeInsideWrapper.storyName = ' Custom card size inside wrapper';
+Group.storyName = 'HighlightedCard group';

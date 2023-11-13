@@ -231,7 +231,7 @@ export const Group: StoryComponent = () => {
                 <Stack space={16}>
                     <Text2 regular>
                         We can group multiple cards and they adjust to the same height. The card actions are
-                        always fixed on bottom:
+                        always fixed on bottom
                     </Text2>
                     <style>{`.group > * {width: 300px}`}</style>
                     <Inline space={16} className="group">

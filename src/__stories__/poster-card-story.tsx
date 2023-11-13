@@ -9,7 +9,6 @@ import {
     Stack,
     Text2,
     Inline,
-    Title1,
     Box,
 } from '..';
 import {PosterCard} from '../card';
@@ -21,7 +20,7 @@ import beachImg from './images/beach.jpg';
 import type {TagType} from '..';
 
 export default {
-    title: 'Components/Cards/Poster card',
+    title: 'Components/Cards/PosterCard',
 };
 
 const BACKGROUND_IMAGE_SRC = usingVrImg;
@@ -45,6 +44,8 @@ type PosterCardArgs = {
     width: string;
     height: string;
     aspectRatio: '1:1' | '16:9' | '7:10' | '9:10' | 'auto';
+    isEmptySource: boolean;
+    inverse: boolean;
 };
 
 export const Default: StoryComponent<PosterCardArgs> = ({
@@ -64,6 +65,8 @@ export const Default: StoryComponent<PosterCardArgs> = ({
     width,
     height,
     aspectRatio,
+    isEmptySource,
+    inverse,
 }) => {
     let icon;
     if (asset === 'circle with icon') {
@@ -92,12 +95,12 @@ export const Default: StoryComponent<PosterCardArgs> = ({
         background === 'image'
             ? {
                   ...topActionsProps,
-                  backgroundImage: BACKGROUND_IMAGE_SRC,
+                  backgroundImage: isEmptySource ? '' : BACKGROUND_IMAGE_SRC,
               }
             : background === 'video'
             ? {
-                  backgroundVideo: BACKGROUND_VIDEO_SRC,
-                  poster: BACKGROUND_VIDEO_POSTER_SRC,
+                  backgroundVideo: isEmptySource ? '' : BACKGROUND_VIDEO_SRC,
+                  poster: isEmptySource ? '' : BACKGROUND_VIDEO_POSTER_SRC,
               }
             : {
                   ...topActionsProps,
@@ -105,81 +108,29 @@ export const Default: StoryComponent<PosterCardArgs> = ({
                   variant,
               };
 
-    const wrongBackgroundProps =
-        background === 'image'
-            ? {
-                  onClose: closable ? () => {} : undefined,
-                  actions: withTopAction
-                      ? [
-                            {
-                                Icon: IconLightningRegular,
-                                onPress: () => {},
-                                label: 'Lightning',
-                            },
-                        ]
-                      : undefined,
-                  backgroundImage: 'test',
-              }
-            : {
-                  backgroundVideo: 'test',
-                  poster: 'test',
-              };
-
     return (
-        <Stack space={32} dataAttributes={{testid: 'poster-card'}}>
-            <PosterCard
-                dataAttributes={{testid: 'main-poster-card'}}
-                {...backgroundProps}
-                icon={icon}
-                headline={headline ? <Tag type={headlineType}>{headline}</Tag> : undefined}
-                pretitle={pretitle}
-                title={title}
-                description={description}
-                aria-label="Poster card label"
-                width={width}
-                height={height}
-                aspectRatio={aspectRatio}
-                onPress={onPress ? () => null : undefined}
-            />
-
-            <Title1>Wrong source for media</Title1>
-            <PosterCard
-                {...wrongBackgroundProps}
-                icon={icon}
-                headline={headline ? <Tag type={headlineType}>{headline}</Tag> : undefined}
-                pretitle={pretitle}
-                title={title}
-                description={description}
-                aria-label="Poster card fallback label"
-                width={width}
-                height={height}
-                aspectRatio={aspectRatio}
-                onPress={onPress ? () => null : undefined}
-            />
-
-            <Title1>Wrong source for media with inverse</Title1>
-            <ResponsiveLayout isInverse>
-                <Box paddingY={8}>
-                    <PosterCard
-                        {...wrongBackgroundProps}
-                        icon={icon}
-                        headline={headline ? <Tag type={headlineType}>{headline}</Tag> : undefined}
-                        pretitle={pretitle}
-                        title={title}
-                        description={description}
-                        aria-label="Poster card fallback inverse label"
-                        width={width}
-                        height={height}
-                        aspectRatio={aspectRatio}
-                        onPress={onPress ? () => null : undefined}
-                    />
-                </Box>
-            </ResponsiveLayout>
-        </Stack>
+        <ResponsiveLayout isInverse={inverse} fullWidth>
+            <Box padding={16}>
+                <PosterCard
+                    dataAttributes={{testid: 'poster-card'}}
+                    {...backgroundProps}
+                    icon={icon}
+                    headline={headline ? <Tag type={headlineType}>{headline}</Tag> : undefined}
+                    pretitle={pretitle}
+                    title={title}
+                    description={description}
+                    aria-label="Poster card label"
+                    width={width}
+                    height={height}
+                    aspectRatio={aspectRatio}
+                    onPress={onPress ? () => null : undefined}
+                />
+            </Box>
+        </ResponsiveLayout>
     );
 };
 
-Default.storyName = 'Poster card';
+Default.storyName = 'PosterCard';
 Default.args = {
     asset: 'none',
     headlineType: 'promo',
@@ -197,6 +148,8 @@ Default.args = {
     width: 'auto',
     height: 'auto',
     aspectRatio: 'auto',
+    isEmptySource: false,
+    inverse: false,
 };
 
 Default.argTypes = {
@@ -233,6 +186,8 @@ Default.argTypes = {
     },
 };
 
+Default.parameters = {fullScreen: true};
+
 export const Group: StoryComponent = () => {
     return (
         <ResponsiveLayout>
@@ -258,4 +213,4 @@ export const Group: StoryComponent = () => {
     );
 };
 
-Group.storyName = 'Poster Card group';
+Group.storyName = 'PosterCard group';

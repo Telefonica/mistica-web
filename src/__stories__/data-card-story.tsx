@@ -19,7 +19,7 @@ import type {AspectRatio} from '../card';
 import type {TagType} from '..';
 
 export default {
-    title: 'Components/Cards/Data card',
+    title: 'Components/Cards/DataCard',
 };
 
 type DataCardArgs = {
@@ -116,7 +116,7 @@ export const Default: StoryComponent<DataCardArgs> = ({
     );
 };
 
-Default.storyName = 'Data card';
+Default.storyName = 'DataCard';
 Default.args = {
     asset: 'icon',
     headlineType: 'promo',
@@ -164,7 +164,7 @@ export const Group: StoryComponent = () => {
             <Stack space={16}>
                 <Text2 regular>
                     We can group multiple cards and they adjust to the same height. The card actions are
-                    always fixed on bottom:
+                    always fixed on bottom
                 </Text2>
                 <style>{`.group > * {width: 300px}`}</style>
                 <Inline space={16} className="group">
@@ -197,4 +197,4 @@ export const Group: StoryComponent = () => {
     );
 };
 
-Group.storyName = 'Data card group';
+Group.storyName = 'DataCard group';

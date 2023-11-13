@@ -22,7 +22,7 @@ import avatarImg from './images/avatar.jpg';
 import type {TagType} from '..';
 
 export default {
-    title: 'Components/Cards/Media card',
+    title: 'Components/Cards/MediaCard',
 };
 
 const VIDEO_SRC = confettiVideo;
@@ -123,7 +123,7 @@ export const Default: StoryComponent<Args> = ({
     );
 };
 
-Default.storyName = 'Media card';
+Default.storyName = 'MediaCard';
 Default.args = {
     asset: 'none',
     media: 'image',
@@ -163,7 +163,7 @@ export const Group: StoryComponent = () => {
             <Stack space={16}>
                 <Text2 regular>
                     We can group multiple cards and they adjust to the same height. The card actions are
-                    always fixed on bottom:
+                    always fixed on bottom
                 </Text2>
                 <style>{`.group > * {width: 300px}`}</style>
                 <Inline space={16} className="group">
@@ -188,4 +188,4 @@ export const Group: StoryComponent = () => {
     );
 };
 
-Group.storyName = 'Media card group';
+Group.storyName = 'MediaCard group';
