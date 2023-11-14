@@ -24,7 +24,7 @@ test('TextField with suggestions', async () => {
         args: {suggestions: true},
     });
 
-    const field = await screen.findByLabelText('Label');
+    const field = await screen.findByTestId('text-field');
 
     await clearAndType(page, field, 'a'); // start typing to trigger suggestions list
     const items = await screen.findAllByRole('option');
@@ -33,13 +33,13 @@ test('TextField with suggestions', async () => {
     const item = await screen.findByText('Algeria');
 
     await page.click(item);
-    await expect(getValue(screen.findByLabelText('Label'))).resolves.toBe('Algeria');
+    await expect(getValue(screen.findByTestId('text-field'))).resolves.toBe('Algeria');
 });
 
 test.each(STORY_TYPES)('IntegerField (%s)', async (storyType) => {
     const page = await openStoryPage(getStoryOfType('integerfield', storyType));
 
-    const field = await screen.findByLabelText('Label');
+    const field = await screen.findByTestId('integer-field');
 
     await clearAndType(page, field, '+-1,2.3e4$5i%');
     expect(await getValue(field)).toBe('12345');
@@ -48,7 +48,7 @@ test.each(STORY_TYPES)('IntegerField (%s)', async (storyType) => {
 test.each(STORY_TYPES)('DecimalField (%s)', async (storyType) => {
     const page = await openStoryPage(getStoryOfType('decimalfield', storyType));
 
-    const field = await screen.findByLabelText('Label');
+    const field = await screen.findByTestId('decimal-field');
 
     await clearAndType(page, field, '123,456');
     expect(await getValue(field)).toBe('123,456');
@@ -83,7 +83,7 @@ test.each(STORY_TYPES)('DecimalField (%s)', async (storyType) => {
 test.each(STORY_TYPES)('CreditCardNumberField (%s)', async (storyType) => {
     const page = await openStoryPage(getStoryOfType('creditcardnumberfield', storyType));
 
-    const field = await screen.findByLabelText('Label');
+    const field = await screen.findByTestId('credit-card-number-field');
 
     await clearAndType(page, field, '1234567890123456');
     expect(await getValue(field)).toBe('1234 5678 9012 3456');
@@ -104,7 +104,7 @@ test.each(STORY_TYPES)('CreditCardNumberField (%s)', async (storyType) => {
 test.each(STORY_TYPES)('CreditCardExpirationField (%s)', async (storyType) => {
     const page = await openStoryPage(getStoryOfType('creditcardexpirationfield', storyType));
 
-    const field = await screen.findByLabelText('Label');
+    const field = await screen.findByTestId('credit-card-expiration-field');
 
     await clearAndType(page, field, '1234');
     expect(await getValue(field)).toBe('12/34');
@@ -122,7 +122,7 @@ test.each(STORY_TYPES)('CreditCardExpirationField (%s)', async (storyType) => {
 test.each(STORY_TYPES)('PasswordField (%s)', async (storyType) => {
     const page = await openStoryPage(getStoryOfType('passwordfield', storyType));
 
-    const field = await screen.findByLabelText('Label');
+    const field = await screen.findByTestId('password-field');
 
     await clearAndType(page, field, 'patata123');
     expect(await getValue(field)).toBe('patata123');
@@ -149,7 +149,7 @@ test.each(STORY_TYPES)('PasswordField (%s)', async (storyType) => {
 
 test.each(STORY_TYPES)('DateField (%s)', async (storyType) => {
     await openStoryPage(getStoryOfType('datefield', storyType));
-    const field = await screen.findByLabelText('Label');
+    const field = await screen.findByTestId('date-field');
     await field.focus();
     await field.type('06101980');
     expect(await getValue(field)).toBe('1980-10-06');
@@ -158,7 +158,7 @@ test.each(STORY_TYPES)('DateField (%s)', async (storyType) => {
 test.each(STORY_TYPES)('PhoneNumberField (%s)', async (storyType) => {
     const page = await openStoryPage(getStoryOfType('phonenumberfield', storyType));
 
-    const field = await screen.findByLabelText('Label');
+    const field = await screen.findByTestId('phone-number-field');
 
     await clearAndType(page, field, '654834455');
     expect(await getValue(field)).toBe('654 83 44 55');
@@ -182,7 +182,7 @@ test.each(STORY_TYPES)('PhoneNumberField (%s)', async (storyType) => {
 test.each(STORY_TYPES)('SearchField (%s)', async (storyType) => {
     const page = await openStoryPage(getStoryOfType('searchfield', storyType));
 
-    const field = await screen.findByLabelText('Label');
+    const field = await screen.findByTestId('search-field');
 
     await clearAndType(page, field, 'something');
     expect(await getValue(field)).toBe('something');
