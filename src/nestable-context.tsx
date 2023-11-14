@@ -44,7 +44,10 @@ export type NestableContext<Value> = {
     useSetValue: (value: Value) => void;
 };
 
-const createNestableContext = <Value,>(defaultValue: Value): NestableContext<Value> => {
+const createNestableContext = <Value,>(
+    defaultValue: Value,
+    valuesReducer?: (values: Array<Value>) => Value
+): NestableContext<Value> => {
     const DispatchContext = React.createContext<Dispatch<Value>>(() => {});
     const ValueContext = React.createContext<Value>(defaultValue);
 
@@ -94,7 +97,11 @@ const createNestableContext = <Value,>(defaultValue: Value): NestableContext<Val
         let computedValue: Value = defaultValue;
         if (values.length) {
             if (isObject(values[0])) {
-                computedValue = Object.assign({}, defaultValue, ...values);
+                if (valuesReducer) {
+                    computedValue = valuesReducer(values);
+                } else {
+                    computedValue = Object.assign({}, defaultValue, ...values);
+                }
             } else {
                 computedValue = values[values.length - 1];
             }

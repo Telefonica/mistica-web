@@ -132,3 +132,74 @@ test('works as expected with transitions', async () => {
 
     expect(await screen.findByText('The value is: b')).toBeInTheDocument();
 });
+
+test('when value is an object, nested values are merged', () => {
+    type Value = {foo?: string; bar?: string};
+
+    const {Provider, Getter, Setter} = createContext<Value>({});
+
+    const C = () => <Setter value={{bar: 'c'}} />;
+
+    const B = () => (
+        <>
+            <Setter value={{bar: 'b'}} />
+            <C />
+        </>
+    );
+
+    const A = () => (
+        <>
+            <Setter value={{foo: 'a'}} />
+            <B />
+        </>
+    );
+
+    render(
+        <Provider>
+            <Getter>{({foo, bar}) => `foo is ${foo} and bar is ${bar}`}</Getter>
+            <A />
+        </Provider>
+    );
+
+    expect(screen.getByText('foo is a and bar is c')).toBeInTheDocument();
+});
+
+test('can use a custom valuesReducer', () => {
+    type Value = {foo?: string; bar?: string; reset?: boolean};
+
+    const valuesReducer = (values: Array<Value>): Value => {
+        return values.reduce((acc, value) => {
+            if (value.reset) {
+                return value;
+            }
+            return {...acc, ...value};
+        }, {});
+    };
+
+    const {Provider, Getter, Setter} = createContext<Value>({}, valuesReducer);
+
+    const C = () => <Setter value={{bar: 'c'}} />;
+
+    const B = () => (
+        <>
+            <Setter value={{bar: 'b', reset: true}} />
+            <C />
+        </>
+    );
+
+    const A = () => (
+        <>
+            <Setter value={{foo: 'a'}} />
+            <B />
+        </>
+    );
+
+    render(
+        <Provider>
+            <Getter>{({foo, bar}) => `foo is ${foo} and bar is ${bar}`}</Getter>
+            <A />
+        </Provider>
+    );
+
+    expect(screen.getByText('foo is undefined and bar is c')).toBeInTheDocument();
+});
