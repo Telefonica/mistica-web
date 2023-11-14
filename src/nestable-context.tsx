@@ -44,7 +44,7 @@ export type NestableContext<Value> = {
     useSetValue: (value: Value) => void;
 };
 
-const createNestableContext = <Value,>(
+export const createNestableContext = <Value,>(
     defaultValue: Value,
     valuesReducer?: (values: Array<Value>) => Value
 ): NestableContext<Value> => {
@@ -138,5 +138,3 @@ const createNestableContext = <Value,>(
 
     return {Setter, Provider, Getter, useSetValue, useValue};
 };
-
-export default createNestableContext;
