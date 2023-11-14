@@ -1,0 +1,171 @@
+import * as React from 'react';
+import {Box, Text1, Stack, ResponsiveLayout, MonthField} from '..';
+import {inspect} from 'util';
+import {getLocalYearMonthString} from '../utils/time';
+
+export default {
+    title: 'Components/Input fields/MonthField',
+    parameters: {fullScreen: true},
+};
+
+const ONE_MONTH_IN_MS = 31 * 24 * 60 * 60 * 1000;
+
+interface MonthFieldBaseArgs {
+    label: string;
+    placeholder: string;
+    error: boolean;
+    inverse: boolean;
+    optional: boolean;
+    disabled: boolean;
+    readOnly: boolean;
+    min: boolean;
+    max: boolean;
+}
+
+const defaultBaseArgs: MonthFieldBaseArgs = {
+    label: 'Label',
+    placeholder: '',
+    error: false,
+    inverse: false,
+    optional: false,
+    disabled: false,
+    readOnly: false,
+    min: false,
+    max: false,
+};
+
+interface MonthFieldControlledArgs extends MonthFieldBaseArgs {
+    initialValue: string;
+}
+
+export const Controlled: StoryComponent<MonthFieldControlledArgs> = ({
+    inverse,
+    initialValue,
+    min,
+    max,
+    ...rest
+}) => {
+    const [rawValue, setRawValue] = React.useState<any>(initialValue);
+    const [value, setValue] = React.useState<any>(undefined);
+
+    const minDate = new Date(Date.now() - 4 * ONE_MONTH_IN_MS);
+    const maxDate = new Date(Date.now() + 4 * ONE_MONTH_IN_MS);
+
+    return (
+        <ResponsiveLayout isInverse={inverse} fullWidth>
+            <Box padding={16}>
+                <Box paddingBottom={8}>
+                    <Text1 regular>
+                        ⚠️ Uses browser's native date picker when available. Otherwise renders a React
+                        datepicker (eg. Safari Desktop)
+                    </Text1>
+                </Box>
+                <Stack space={16}>
+                    <div data-testid="month-field-wrapper">
+                        <MonthField
+                            value={rawValue}
+                            onChange={(e) => setRawValue(e.target.value)}
+                            onChangeValue={(value) => setValue(value)}
+                            name="month"
+                            autoComplete="off"
+                            data-testid="month-field"
+                            min={min ? minDate : undefined}
+                            max={max ? maxDate : undefined}
+                            helperText={`min: ${min ? getLocalYearMonthString(minDate) : '-'} / max: ${
+                                max ? getLocalYearMonthString(maxDate) : '-'
+                            }`}
+                            {...rest}
+                        />
+                    </div>
+                    <Stack space={8}>
+                        <Text1 regular>
+                            onChange:{' '}
+                            {typeof rawValue === 'undefined'
+                                ? ''
+                                : `(${typeof rawValue}) ${inspect(rawValue)}`}
+                        </Text1>
+
+                        <Text1 regular>
+                            onChangeValue:{' '}
+                            {typeof value === 'undefined' ? '' : `(${typeof value}) ${inspect(value)}`}
+                        </Text1>
+                    </Stack>
+                </Stack>
+            </Box>
+        </ResponsiveLayout>
+    );
+};
+
+Controlled.storyName = 'controlled';
+Controlled.args = {
+    initialValue: '2023-10',
+    ...defaultBaseArgs,
+};
+
+interface MonthFieldUncontrolledArgs extends MonthFieldBaseArgs {
+    defaultValue: string;
+}
+
+export const Uncontrolled: StoryComponent<MonthFieldUncontrolledArgs> = ({
+    inverse,
+    defaultValue,
+    min,
+    max,
+    ...rest
+}) => {
+    const [rawValue, setRawValue] = React.useState<any>(undefined);
+    const [value, setValue] = React.useState<any>(undefined);
+
+    const minDate = new Date(Date.now() - 4 * ONE_MONTH_IN_MS);
+    const maxDate = new Date(Date.now() + 4 * ONE_MONTH_IN_MS);
+
+    return (
+        <ResponsiveLayout isInverse={inverse} fullWidth>
+            <Box padding={16}>
+                <Box paddingBottom={8}>
+                    <Text1 regular>
+                        ⚠️ Uses browser's native date picker when available. Otherwise renders a React
+                        datepicker (eg. Safari Desktop)
+                    </Text1>
+                </Box>
+                <Stack space={16}>
+                    <div data-testid="month-field-wrapper">
+                        <MonthField
+                            defaultValue={defaultValue}
+                            onChange={(e) => setRawValue(e.target.value)}
+                            onChangeValue={(value) => setValue(value)}
+                            name="month"
+                            autoComplete="off"
+                            data-testid="month-field"
+                            min={min ? minDate : undefined}
+                            max={max ? maxDate : undefined}
+                            helperText={`min: ${min ? getLocalYearMonthString(minDate) : '-'} / max: ${
+                                max ? getLocalYearMonthString(maxDate) : '-'
+                            }`}
+                            {...rest}
+                        />
+                    </div>
+                    <Stack space={8}>
+                        <Text1 regular>
+                            onChange:{' '}
+                            {typeof rawValue === 'undefined'
+                                ? ''
+                                : `(${typeof rawValue}) ${inspect(rawValue)}`}
+                        </Text1>
+
+                        <Text1 regular>
+                            onChangeValue:{' '}
+                            {typeof value === 'undefined' ? '' : `(${typeof value}) ${inspect(value)}`}
+                        </Text1>
+                    </Stack>
+                </Stack>
+            </Box>
+        </ResponsiveLayout>
+    );
+};
+
+Uncontrolled.storyName = 'uncontrolled';
+Uncontrolled.args = {
+    defaultValue: '2023-10',
+    ...defaultBaseArgs,
+};

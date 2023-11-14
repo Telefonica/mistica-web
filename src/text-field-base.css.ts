@@ -72,16 +72,16 @@ export const textArea = style([
 ]);
 
 export const textAreaWithLabel = style({
-    marginTop: 28,
+    paddingTop: 28,
     '@media': {
         [mq.tabletOrSmaller]: {
-            marginTop: 24,
+            paddingTop: 24,
         },
     },
 });
 
 export const textAreaWithoutLabel = style({
-    marginTop: 16,
+    paddingTop: 16,
 });
 
 export const input = style([
