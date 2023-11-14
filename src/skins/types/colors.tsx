@@ -55,6 +55,8 @@ export type Colors = {
     textLinkSnackbar: string;
     control: string;
     controlActivated: string;
+    controlInverse: string;
+    controlActivatedInverse: string;
     controlError: string;
     loadingBar: string;
     loadingBarBackground: string;
