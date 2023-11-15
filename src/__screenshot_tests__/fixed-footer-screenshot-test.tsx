@@ -47,7 +47,9 @@ test('Fixed footer with safe inset at the bottom', async () => {
     const image = await page.screenshot();
     expect(image).toMatchImageSnapshot();
 
-    await (await screen.findByRole('button', {name: 'Load more text'})).click({clickCount: 3});
+    await (await screen.findByRole('button', {name: 'Load more text'})).click();
+    await (await screen.findByRole('button', {name: 'Load more text'})).click();
+    await (await screen.findByRole('button', {name: 'Load more text'})).click();
     await (await screen.findByTestId('line-15')).evaluate((el) => el.scrollIntoView());
 
     const imageOverflowLinesInset = await page.screenshot({fullPage: false});
