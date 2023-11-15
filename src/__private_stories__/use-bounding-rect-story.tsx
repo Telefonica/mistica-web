@@ -4,7 +4,7 @@ import {Text2} from '../text';
 import Stack from '../stack';
 
 export default {
-    title: 'Hooks/useBoundingRect',
+    title: 'Private/useBoundingRect',
     argTypes: {
         offsetX: {control: {type: 'range', min: 0, max: 1500, step: 100}},
         offsetY: {control: {type: 'range', min: 0, max: 1500, step: 100}},
@@ -21,12 +21,11 @@ type Args = {
     offsetY: number;
     width: number;
     height: number;
-    trackIfNotVisible: boolean;
 };
 
-export const Default: StoryComponent<Args> = ({offsetX, offsetY, width, height, trackIfNotVisible}) => {
+export const Default: StoryComponent<Args> = ({offsetX, offsetY, width, height}) => {
     const ref = React.useRef<HTMLDivElement | null>(null);
-    const rect = useBoundingRect(ref, trackIfNotVisible);
+    const rect = useBoundingRect(ref);
 
     return (
         <div style={{position: 'relative'}}>
@@ -69,5 +68,4 @@ Default.args = {
     offsetY: 0,
     width: 100,
     height: 100,
-    trackIfNotVisible: true,
 };

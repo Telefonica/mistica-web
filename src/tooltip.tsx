@@ -172,13 +172,13 @@ const Tooltip: React.FC<Props> = ({
     const {openTooltipId} = useTooltipState();
     const {open, close} = useSetTooltipState();
 
-    const [tooltipComputedProps, setTooltipComputedProps] = React.useState<{
+    const [tooltipComputedStyles, setTooltipComputedStyles] = React.useState<{
         left: number;
         top: number;
         padding: string;
     } | null>(null);
 
-    const [arrowComputedProps, setArrowComputedProps] = React.useState<React.CSSProperties>({});
+    const [arrowComputedStyles, setArrowComputedStyles] = React.useState<React.CSSProperties>({});
 
     const targetRef = React.useRef<Element | null>(null);
     const tooltipRef = React.useRef<HTMLDivElement | null>(null);
@@ -188,15 +188,11 @@ const Tooltip: React.FC<Props> = ({
     const [isMouseOverTooltip, setIsMouseOverTooltip] = React.useState(false);
     const [isMouseOverTarget, setIsMouseOverTarget] = React.useState(false);
     const [isFocused, setIsFocused] = React.useState(false);
-    const [isTooltipOpen, setIsTooltipOpen] = React.useState(false);
+    const isTooltipOpen = tooltipId === openTooltipId;
     const isInverse = useIsInverseVariant();
 
     const targetRect = useBoundingRect(targetRef);
     const windowSize = useWindowSize();
-
-    React.useEffect(() => {
-        setIsTooltipOpen(tooltipId === openTooltipId);
-    }, [tooltipId, openTooltipId]);
 
     const resetTooltipInteractions = React.useCallback(() => {
         setIsFocused(false);
@@ -224,19 +220,19 @@ const Tooltip: React.FC<Props> = ({
         );
 
         if (!finalPosition || !targetRect) {
-            setTooltipComputedProps(null);
-            setArrowComputedProps({});
+            setTooltipComputedStyles(null);
+            setArrowComputedStyles({});
             resetTooltipInteractions();
             return;
         }
 
-        let tooltipProps: {
+        let tooltipStyles: {
             left: number;
             top: number;
             padding: string;
         };
 
-        let arrowProps: React.CSSProperties;
+        let arrowStyles: React.CSSProperties;
 
         const {left, right, top, bottom} = targetRect;
         const {width: tooltipWidth, height: tooltipHeight} = getElementDimensionsWithoutPadding(tooltip);
@@ -248,46 +244,13 @@ const Tooltip: React.FC<Props> = ({
 
         switch (finalPosition) {
             case 'top':
-                tooltipProps = {
+                tooltipStyles = {
                     left: Math.max(0, Math.min(maxLeftOffset, (left + right - tooltipWidth) / 2)),
                     top: top - tooltipHeight - ARROW_SIZE / 2,
                     padding: `0px 0px ${TOOLTIP_PADDING_FROM_TARGET}px 0px`,
                 };
 
-                break;
-
-            case 'bottom':
-                tooltipProps = {
-                    left: Math.max(0, Math.min(maxLeftOffset, (left + right - tooltipWidth) / 2)),
-                    top: bottom - TOOLTIP_OFFSET_FROM_TARGET,
-                    padding: `${TOOLTIP_PADDING_FROM_TARGET}px 0px 0px 0px`,
-                };
-
-                break;
-
-            case 'left':
-                tooltipProps = {
-                    left: left - tooltipWidth - ARROW_SIZE / 2,
-                    top: Math.max(0, Math.min(maxTopOffset, (top + bottom - tooltipHeight) / 2)),
-                    padding: `0px ${TOOLTIP_PADDING_FROM_TARGET}px 0px 0px`,
-                };
-
-                break;
-
-            case 'right':
-            default:
-                tooltipProps = {
-                    left: right - TOOLTIP_OFFSET_FROM_TARGET,
-                    top: Math.max(0, Math.min(maxTopOffset, (top + bottom - tooltipHeight) / 2)),
-                    padding: `0px 0px 0px ${TOOLTIP_PADDING_FROM_TARGET}px`,
-                };
-
-                break;
-        }
-
-        switch (finalPosition) {
-            case 'top':
-                arrowProps = {
+                arrowStyles = {
                     left: Math.max(
                         arrowOffsetFromViewport,
                         Math.min(
@@ -301,7 +264,13 @@ const Tooltip: React.FC<Props> = ({
                 break;
 
             case 'bottom':
-                arrowProps = {
+                tooltipStyles = {
+                    left: Math.max(0, Math.min(maxLeftOffset, (left + right - tooltipWidth) / 2)),
+                    top: bottom - TOOLTIP_OFFSET_FROM_TARGET,
+                    padding: `${TOOLTIP_PADDING_FROM_TARGET}px 0px 0px 0px`,
+                };
+
+                arrowStyles = {
                     left: Math.max(
                         arrowOffsetFromViewport,
                         Math.min(
@@ -316,7 +285,13 @@ const Tooltip: React.FC<Props> = ({
                 break;
 
             case 'left':
-                arrowProps = {
+                tooltipStyles = {
+                    left: left - tooltipWidth - ARROW_SIZE / 2,
+                    top: Math.max(0, Math.min(maxTopOffset, (top + bottom - tooltipHeight) / 2)),
+                    padding: `0px ${TOOLTIP_PADDING_FROM_TARGET}px 0px 0px`,
+                };
+
+                arrowStyles = {
                     top: Math.max(
                         arrowOffsetFromViewport,
                         Math.min(
@@ -333,7 +308,13 @@ const Tooltip: React.FC<Props> = ({
 
             case 'right':
             default:
-                arrowProps = {
+                tooltipStyles = {
+                    left: right - TOOLTIP_OFFSET_FROM_TARGET,
+                    top: Math.max(0, Math.min(maxTopOffset, (top + bottom - tooltipHeight) / 2)),
+                    padding: `0px 0px 0px ${TOOLTIP_PADDING_FROM_TARGET}px`,
+                };
+
+                arrowStyles = {
                     top: Math.max(
                         arrowOffsetFromViewport,
                         Math.min(
@@ -349,18 +330,18 @@ const Tooltip: React.FC<Props> = ({
                 break;
         }
 
-        if (typeof arrowProps.top === 'number') {
-            arrowProps.top -= tooltipProps.top;
+        if (typeof arrowStyles.top === 'number') {
+            arrowStyles.top -= tooltipStyles.top;
         }
-        if (typeof arrowProps.left === 'number') {
-            arrowProps.left -= tooltipProps.left;
+        if (typeof arrowStyles.left === 'number') {
+            arrowStyles.left -= tooltipStyles.left;
         }
 
-        if (!isEqual(tooltipProps, tooltipComputedProps)) {
-            setTooltipComputedProps(tooltipProps);
+        if (!isEqual(tooltipStyles, tooltipComputedStyles)) {
+            setTooltipComputedStyles(tooltipStyles);
         }
-        if (!isEqual(arrowProps, arrowComputedProps)) {
-            setArrowComputedProps(arrowProps);
+        if (!isEqual(arrowStyles, arrowComputedStyles)) {
+            setArrowComputedStyles(arrowStyles);
         }
     }, [
         tooltip,
@@ -368,8 +349,8 @@ const Tooltip: React.FC<Props> = ({
         isTooltipOpen,
         position,
         windowSize,
-        tooltipComputedProps,
-        arrowComputedProps,
+        tooltipComputedStyles,
+        arrowComputedStyles,
         isInverse,
         isTouchableDevice,
         tooltipId,
@@ -415,7 +396,7 @@ const Tooltip: React.FC<Props> = ({
             document.removeEventListener('keyup', handleKeyUp, false);
             document.removeEventListener('click', handleOnClick, false);
         };
-    });
+    }, [isTouchableDevice, resetTooltipInteractions, targetRect]);
 
     React.useEffect(() => {
         if (isMouseOverTarget || isMouseOverTooltip || isFocused) {
@@ -508,13 +489,14 @@ const Tooltip: React.FC<Props> = ({
                                     top: 0,
                                     left: 0,
                                     position: 'fixed',
-                                    visibility: tooltipComputedProps ? 'visible' : 'hidden',
+                                    visibility: tooltipComputedStyles ? 'visible' : 'hidden',
                                     ...assignInlineVars({
-                                        ...(tooltipComputedProps
+                                        ...(tooltipComputedStyles
                                             ? {
-                                                  [styles.tooltipVars.top]: `${tooltipComputedProps.top}px`,
-                                                  [styles.tooltipVars.left]: `${tooltipComputedProps.left}px`,
-                                                  [styles.tooltipVars.padding]: tooltipComputedProps.padding,
+                                                  [styles.tooltipVars.top]: `${tooltipComputedStyles.top}px`,
+                                                  [styles.tooltipVars
+                                                      .left]: `${tooltipComputedStyles.left}px`,
+                                                  [styles.tooltipVars.padding]: tooltipComputedStyles.padding,
                                               }
                                             : {}),
 
@@ -580,15 +562,10 @@ const Tooltip: React.FC<Props> = ({
                                                 {extra || children}
                                             </ThemeVariant>
                                         </div>
-                                        <div
-                                            className={styles.arrowContainer}
-                                            style={{
-                                                ...arrowComputedProps,
-                                            }}
-                                        >
+                                        <div className={styles.arrowContainer} style={arrowComputedStyles}>
                                             <div
                                                 className={classNames(styles.arrow)}
-                                                style={{...getBorderStyle(isInverse)}}
+                                                style={getBorderStyle(isInverse)}
                                             />
                                         </div>
                                     </div>

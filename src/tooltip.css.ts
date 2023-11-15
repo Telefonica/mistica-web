@@ -67,6 +67,7 @@ export const tooltip = style([
         background: vars.colors.backgroundContainer,
     }),
     {
+        // needed because the tooltip minWidth/maxWidth are being set with inline styles
         boxSizing: 'border-box',
     },
 ]);

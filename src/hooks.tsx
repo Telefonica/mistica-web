@@ -239,10 +239,7 @@ const getBoundingClientRect = (element: Element): BoundingRect => {
     return {top, right, bottom, left, width, height, x, y};
 };
 
-export const useBoundingRect = (
-    ref: React.RefObject<Element>,
-    trackIfNotVisible?: boolean
-): BoundingRect | undefined => {
+export const useBoundingRect = (ref: React.RefObject<Element>): BoundingRect | undefined => {
     const [rect, setRect] = React.useState<BoundingRect>();
     const isVisible = useIsInViewport(ref, false);
 
@@ -250,7 +247,7 @@ export const useBoundingRect = (
         let id: number;
 
         const check = () => {
-            if (ref.current && (isVisible || trackIfNotVisible)) {
+            if (ref.current && isVisible) {
                 const current = getBoundingClientRect(ref.current);
                 if (!isEqual(rect, current)) {
                     setRect(current);
@@ -267,7 +264,7 @@ export const useBoundingRect = (
         return () => {
             cancelAnimationFrame(id);
         };
-    }, [ref, rect, isVisible, trackIfNotVisible]);
+    }, [ref, rect, isVisible]);
 
     return rect;
 };

@@ -1,8 +1,9 @@
 import * as React from 'react';
-import {render, fireEvent, screen, act} from '@testing-library/react';
+import {render, fireEvent, screen} from '@testing-library/react';
 import Tooltip from '../tooltip';
 import {ThemeContextProvider} from '..';
 import {makeTheme} from './test-utils';
+import userEvent from '@testing-library/user-event';
 
 type Props = Omit<React.ComponentProps<typeof Tooltip>, 'children' | 'target'>;
 
@@ -29,28 +30,24 @@ test('does not render content initially', () => {
     expect(screen.queryByText('Content')).toBe(null);
 });
 
-test('render content after press down target', () => {
+test('render content after press down target', async () => {
     render(<TestTooltip position="bottom" />);
 
-    act(() => {
-        screen.getByText('Press me!').click();
-    });
+    await userEvent.click(screen.getByText('Press me!'));
 
     expect(screen.getByText('Content')).toBeInTheDocument();
 });
 
-test('set title and description', () => {
+test('set title and description', async () => {
     render(<TestTooltip title="Title" description="Description" />);
 
-    act(() => {
-        screen.getByText('Press me!').click();
-    });
+    await userEvent.click(screen.getByText('Press me!'));
 
     expect(screen.getByText('Title')).toBeInTheDocument();
     expect(screen.getByText('Description')).toBeInTheDocument();
 });
 
-test('click anchor does not close tooltip', () => {
+test('click anchor does not close tooltip', async () => {
     const linkSpy = jest.fn();
 
     render(
@@ -66,9 +63,7 @@ test('click anchor does not close tooltip', () => {
         </ThemeContextProvider>
     );
 
-    act(() => {
-        screen.getByText('Press me!').click();
-    });
+    await userEvent.click(screen.getByText('Press me!'));
 
     fireEvent.click(screen.getByText('Link'));
 
