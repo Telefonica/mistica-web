@@ -1,3 +1,10 @@
+# [14.30.0](https://github.com/Telefonica/mistica-web/compare/v14.29.0...v14.30.0) (2023-11-13)
+
+
+### Features
+
+* **CardActionIconButton:** element to use in card actions ([#936](https://github.com/Telefonica/mistica-web/issues/936)) ([ac1a6c4](https://github.com/Telefonica/mistica-web/commit/ac1a6c4ecfd6eeabb0a98d8cdd332ece480af382))
+
 # [14.29.0](https://github.com/Telefonica/mistica-web/compare/v14.28.1...v14.29.0) (2023-11-13)
 
 

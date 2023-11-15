@@ -222,7 +222,7 @@ interface AdvancedDataCardProps {
     footerTextLinesMax?: number;
     buttonLink?: RendersNullableElement<typeof ButtonLink>;
     dataAttributes?: DataAttributes;
-    actions?: Array<CardAction>;
+    actions?: Array<CardAction | React.ReactElement>;
     'aria-label'?: string;
     onClose?: () => void;
 }
