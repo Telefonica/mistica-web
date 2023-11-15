@@ -4,13 +4,13 @@ import {
     DataCard,
     ButtonPrimary,
     ButtonLink,
-    Inline,
     Text2,
     ResponsiveLayout,
     IconMobileDeviceRegular,
     skinVars,
     Circle,
     Tag,
+    Carousel,
 } from '..';
 import {Placeholder} from '../placeholder';
 import avatarImg from './images/avatar.jpg';
@@ -164,34 +164,35 @@ export const Group: StoryComponent = () => {
             <Stack space={16}>
                 <Text2 regular>
                     We can group multiple cards and they adjust to the same height. The card actions are
-                    always fixed on bottom
+                    always fixed on bottom.
                 </Text2>
-                <style>{`.group > * {width: 300px}`}</style>
-                <Inline space={16} className="group">
-                    <DataCard
-                        headline={<Tag type="promo">Headline</Tag>}
-                        pretitle="Pretitle"
-                        title="Title"
-                        subtitle="Subtitle"
-                        description="Description"
-                        icon={
-                            <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
-                                <IconMobileDeviceRegular color={skinVars.colors.brand} />
-                            </Circle>
-                        }
-                        buttonLink={<ButtonLink href="https://google.com">Link</ButtonLink>}
-                    />
-                    <DataCard
-                        title="Title"
-                        description="Description"
-                        icon={
-                            <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
-                                <IconMobileDeviceRegular color={skinVars.colors.brand} />
-                            </Circle>
-                        }
-                        buttonLink={<ButtonLink href="https://google.com">Link</ButtonLink>}
-                    />
-                </Inline>
+                <Carousel
+                    items={[
+                        <DataCard
+                            headline={<Tag type="promo">Headline</Tag>}
+                            pretitle="Pretitle"
+                            title="Title"
+                            subtitle="Subtitle"
+                            description="Description"
+                            icon={
+                                <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
+                                    <IconMobileDeviceRegular color={skinVars.colors.brand} />
+                                </Circle>
+                            }
+                            buttonLink={<ButtonLink href="https://google.com">Link</ButtonLink>}
+                        />,
+                        <DataCard
+                            title="Title"
+                            description="Description"
+                            icon={
+                                <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
+                                    <IconMobileDeviceRegular color={skinVars.colors.brand} />
+                                </Circle>
+                            }
+                            buttonLink={<ButtonLink href="https://google.com">Link</ButtonLink>}
+                        />,
+                    ]}
+                />
             </Stack>
         </ResponsiveLayout>
     );

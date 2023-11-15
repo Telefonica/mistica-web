@@ -4,7 +4,6 @@ import {
     MediaCard,
     ButtonPrimary,
     ButtonLink,
-    Inline,
     Text2,
     Video,
     Image,
@@ -12,11 +11,12 @@ import {
     IconMobileDeviceRegular,
     Circle,
     skinVars,
+    Carousel,
 } from '..';
 import ResponsiveLayout from '../responsive-layout';
 import {Placeholder} from '../placeholder';
 import tennisImg from './images/tennis.jpg';
-import confettiVideo from './videos/confetti.mp4';
+import beachVideo from './videos/beach.mp4';
 import avatarImg from './images/avatar.jpg';
 
 import type {TagType} from '..';
@@ -25,7 +25,7 @@ export default {
     title: 'Components/Cards/MediaCard',
 };
 
-const VIDEO_SRC = confettiVideo;
+const VIDEO_SRC = beachVideo;
 const IMAGE_SRC = tennisImg;
 
 type Args = {
@@ -41,6 +41,7 @@ type Args = {
     actions: 'button' | 'link' | 'button and link' | 'on press' | 'none';
     closable: boolean;
     withTopAction: boolean;
+    isEmptySource: boolean;
 };
 
 export const Default: StoryComponent<Args> = ({
@@ -56,6 +57,7 @@ export const Default: StoryComponent<Args> = ({
     withTopAction,
     media,
     asset,
+    isEmptySource,
 }) => {
     let icon;
     if (asset === 'circle with icon') {
@@ -98,9 +100,13 @@ export const Default: StoryComponent<Args> = ({
             icon={icon}
             media={
                 media === 'video' ? (
-                    <Video src={VIDEO_SRC} aspectRatio="16:9" dataAttributes={{qsysid: 'video'}} />
+                    <Video
+                        src={isEmptySource ? '' : VIDEO_SRC}
+                        aspectRatio="16:9"
+                        dataAttributes={{qsysid: 'video'}}
+                    />
                 ) : (
-                    <Image aspectRatio="16:9" src={IMAGE_SRC} />
+                    <Image aspectRatio="16:9" src={isEmptySource ? '' : IMAGE_SRC} />
                 )
             }
             {...interactiveActions}
@@ -137,6 +143,7 @@ Default.args = {
     actions: 'button',
     closable: false,
     withTopAction: false,
+    isEmptySource: false,
 };
 Default.argTypes = {
     asset: {
@@ -163,26 +170,27 @@ export const Group: StoryComponent = () => {
             <Stack space={16}>
                 <Text2 regular>
                     We can group multiple cards and they adjust to the same height. The card actions are
-                    always fixed on bottom
+                    always fixed on bottom.
                 </Text2>
-                <style>{`.group > * {width: 300px}`}</style>
-                <Inline space={16} className="group">
-                    <MediaCard
-                        headline={<Tag type="promo">Headline</Tag>}
-                        pretitle="Pretitle"
-                        title="Title"
-                        subtitle="Subtitle"
-                        description="Description"
-                        media={<Image aspectRatio="16:9" src={IMAGE_SRC} />}
-                        buttonLink={<ButtonLink href="https://google.com">Link</ButtonLink>}
-                    />
-                    <MediaCard
-                        title="Title"
-                        description="Description"
-                        media={<Image aspectRatio="16:9" src={IMAGE_SRC} />}
-                        buttonLink={<ButtonLink href="https://google.com">Link</ButtonLink>}
-                    />
-                </Inline>
+                <Carousel
+                    items={[
+                        <MediaCard
+                            headline={<Tag type="promo">Headline</Tag>}
+                            pretitle="Pretitle"
+                            title="Title"
+                            subtitle="Subtitle"
+                            description="Description"
+                            media={<Image aspectRatio="16:9" src={IMAGE_SRC} />}
+                            buttonLink={<ButtonLink href="https://google.com">Link</ButtonLink>}
+                        />,
+                        <MediaCard
+                            title="Title"
+                            description="Description"
+                            media={<Image aspectRatio="16:9" src={IMAGE_SRC} />}
+                            buttonLink={<ButtonLink href="https://google.com">Link</ButtonLink>}
+                        />,
+                    ]}
+                />
             </Stack>
         </ResponsiveLayout>
     );

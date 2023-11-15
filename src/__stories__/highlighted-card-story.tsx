@@ -7,7 +7,7 @@ import {
     ResponsiveLayout,
     Stack,
     Text2,
-    Inline,
+    Carousel,
 } from '..';
 import personPortraitImg from './images/person-portrait.jpg';
 
@@ -18,7 +18,7 @@ export default {
 type Args = {
     title: string;
     description: string;
-    action: 'ButtonPrimary' | 'ButtonSecondary' | 'ButtonLink' | 'touchable' | 'none';
+    actions: 'ButtonPrimary' | 'ButtonSecondary' | 'ButtonLink' | 'on press' | 'none';
     image: 'fit' | 'fill' | 'none';
     inverse: boolean;
     closable: boolean;
@@ -27,7 +27,7 @@ type Args = {
 export const Default: StoryComponent<Args> = ({
     title,
     description,
-    action = 'ButtonPrimary',
+    actions = 'ButtonPrimary',
     image = 'fit',
     inverse,
     closable,
@@ -65,8 +65,8 @@ export const Default: StoryComponent<Args> = ({
             imageUrl={image !== 'none' ? personPortraitImg : undefined}
             imageFit={image !== 'none' ? image : undefined}
             dataAttributes={{testid: 'highlighted-card'}}
-            button={getButton(action) as any}
-            onPress={action === 'touchable' ? () => {} : undefined}
+            button={getButton(actions) as any}
+            onPress={actions === 'on press' ? () => {} : undefined}
             isInverse={inverse}
             onClose={closable ? () => {} : undefined}
         />
@@ -77,15 +77,15 @@ Default.storyName = 'HighlightedCard';
 Default.args = {
     title: 'Resolver problema técnico',
     description: 'Usa nuestra herramienta para resolver tus problemas técnicos',
-    action: 'ButtonPrimary',
+    actions: 'ButtonPrimary',
     image: 'fit',
     inverse: false,
     closable: false,
 };
 
 Default.argTypes = {
-    action: {
-        options: ['ButtonPrimary', 'ButtonSecondary', 'ButtonLink', 'touchable', 'none'],
+    actions: {
+        options: ['ButtonPrimary', 'ButtonSecondary', 'ButtonLink', 'on press', 'none'],
         control: {type: 'select'},
     },
     image: {
@@ -100,40 +100,39 @@ export const Group: StoryComponent = () => {
             <Stack space={16}>
                 <Text2 regular>
                     We can group multiple cards and they adjust to the same height. The card actions are
-                    always fixed on bottom
+                    always fixed on bottom.
                 </Text2>
-                <style>{`.group > * {display: flex}`}</style>
-                <Inline space={16} className="group">
-                    <HighlightedCard
-                        width={250}
-                        title="Title 1"
-                        description="Some description here"
-                        imageUrl={personPortraitImg}
-                        imageFit="fill"
-                        onClose={() => {}}
-                    />
-                    <HighlightedCard
-                        width={250}
-                        title="Title 2"
-                        description="Some description here"
-                        imageUrl={personPortraitImg}
-                        imageFit="fill"
-                        button={
-                            <ButtonPrimary small href="https://google.com">
-                                Action
-                            </ButtonPrimary>
-                        }
-                    />
-                    <HighlightedCard
-                        width={250}
-                        onClose={() => {}}
-                        onPress={() => {}}
-                        title="Title 4"
-                        description="Some description here. Some description here. Some description here. "
-                        imageUrl={personPortraitImg}
-                        imageFit="fill"
-                    />
-                </Inline>
+                <Carousel
+                    itemsPerPage={3}
+                    items={[
+                        <HighlightedCard
+                            title="Title 1"
+                            description="Some description here"
+                            imageUrl={personPortraitImg}
+                            imageFit="fill"
+                            onClose={() => {}}
+                        />,
+                        <HighlightedCard
+                            title="Title 2"
+                            description="Some description here"
+                            imageUrl={personPortraitImg}
+                            imageFit="fill"
+                            button={
+                                <ButtonPrimary small href="https://google.com">
+                                    Action
+                                </ButtonPrimary>
+                            }
+                        />,
+                        <HighlightedCard
+                            onClose={() => {}}
+                            onPress={() => {}}
+                            title="Title 4"
+                            description="Some description here. Some description here. Some description here. "
+                            imageUrl={personPortraitImg}
+                            imageFit="fill"
+                        />,
+                    ]}
+                />
             </Stack>
         </ResponsiveLayout>
     );

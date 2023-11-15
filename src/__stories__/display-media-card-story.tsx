@@ -12,8 +12,8 @@ import {
     ResponsiveLayout,
     Stack,
     Text2,
-    Inline,
     Box,
+    Carousel,
 } from '..';
 import usingVrImg from './images/using-vr.jpg';
 import avatarImg from './images/avatar.jpg';
@@ -185,29 +185,31 @@ export const Group: StoryComponent = () => {
             <Stack space={16}>
                 <Text2 regular>
                     We can group multiple cards and they adjust to the same height. The card content is
-                    aligned to the bottom
+                    aligned to the bottom.
                 </Text2>
-                <style>{`.group > * {width: 300px}`}</style>
-                <Inline space={16} className="group">
-                    <DisplayMediaCard
-                        headline={<Tag type="promo">Headline</Tag>}
-                        pretitle="Pretitle"
-                        title="Title"
-                        description="Description"
-                        backgroundImage={BACKGROUND_IMAGE_SRC}
-                        button={
-                            <ButtonPrimary small href="https://google.com">
-                                Action
-                            </ButtonPrimary>
-                        }
-                    />
-                    <DisplayMediaCard title="Title" backgroundImage={BACKGROUND_IMAGE_SRC} />
-                    <DisplayMediaCard
-                        title="Title"
-                        backgroundImage={BACKGROUND_IMAGE_SRC}
-                        onClose={() => {}}
-                    />
-                </Inline>
+                <Carousel
+                    itemsPerPage={3}
+                    items={[
+                        <DisplayMediaCard
+                            headline={<Tag type="promo">Headline</Tag>}
+                            pretitle="Pretitle"
+                            title="Title"
+                            description="Description"
+                            backgroundImage={BACKGROUND_IMAGE_SRC}
+                            button={
+                                <ButtonPrimary small href="https://google.com">
+                                    Action
+                                </ButtonPrimary>
+                            }
+                        />,
+                        <DisplayMediaCard title="Title" backgroundImage={BACKGROUND_IMAGE_SRC} />,
+                        <DisplayMediaCard
+                            title="Title"
+                            backgroundImage={BACKGROUND_IMAGE_SRC}
+                            onClose={() => {}}
+                        />,
+                    ]}
+                />
             </Stack>
         </ResponsiveLayout>
     );

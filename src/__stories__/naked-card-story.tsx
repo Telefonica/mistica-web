@@ -11,13 +11,13 @@ import {
     Box,
     Stack,
     Text2,
-    Inline,
     Circle,
     skinVars,
+    Carousel,
 } from '..';
 import {Placeholder} from '../placeholder';
 import tennisImg from './images/tennis.jpg';
-import confettiVideo from './videos/confetti.mp4';
+import beachVideo from './videos/beach.mp4';
 import {SmallNakedCard} from '../card';
 import avatarImg from './images/avatar.jpg';
 
@@ -30,7 +30,7 @@ export default {
     },
 };
 
-const VIDEO_SRC = confettiVideo;
+const VIDEO_SRC = beachVideo;
 const IMAGE_SRC = tennisImg;
 
 type Args = {
@@ -46,6 +46,7 @@ type Args = {
     actions: 'button' | 'link' | 'button and link' | 'on press' | 'none';
     closable: boolean;
     withTopAction: boolean;
+    isEmptySource: boolean;
 };
 
 export const Default: StoryComponent<Args> = ({
@@ -61,6 +62,7 @@ export const Default: StoryComponent<Args> = ({
     withTopAction,
     media,
     asset,
+    isEmptySource,
 }) => {
     let icon;
     if (asset === 'circle with icon') {
@@ -104,11 +106,11 @@ export const Default: StoryComponent<Args> = ({
                     description={description}
                     media={
                         media === 'video' ? (
-                            <Video src={VIDEO_SRC} aspectRatio="16:9" />
+                            <Video src={isEmptySource ? '' : VIDEO_SRC} aspectRatio="16:9" />
                         ) : media === 'image' ? (
-                            <Image aspectRatio="16:9" src={IMAGE_SRC} />
+                            <Image aspectRatio="16:9" src={isEmptySource ? '' : IMAGE_SRC} />
                         ) : (
-                            <Image circular src={IMAGE_SRC} />
+                            <Image circular src={isEmptySource ? '' : IMAGE_SRC} />
                         )
                     }
                     icon={icon}
@@ -148,6 +150,7 @@ Default.args = {
     actions: 'button',
     closable: false,
     withTopAction: false,
+    isEmptySource: false,
 };
 Default.argTypes = {
     asset: {
@@ -175,6 +178,7 @@ type SmallArgs = {
     description: string;
     withExtra: boolean;
     touchable: boolean;
+    isEmptySource: boolean;
 };
 
 export const Small: StoryComponent<SmallArgs> = ({
@@ -184,6 +188,7 @@ export const Small: StoryComponent<SmallArgs> = ({
     description,
     withExtra,
     touchable,
+    isEmptySource,
 }) => {
     return (
         <ResponsiveLayout>
@@ -192,9 +197,9 @@ export const Small: StoryComponent<SmallArgs> = ({
                     dataAttributes={{testid: 'small-naked-card'}}
                     media={
                         media === 'image' ? (
-                            <Image aspectRatio="16:9" src={IMAGE_SRC} />
+                            <Image aspectRatio="16:9" src={isEmptySource ? '' : IMAGE_SRC} />
                         ) : (
-                            <Image circular src={IMAGE_SRC} />
+                            <Image circular src={isEmptySource ? '' : IMAGE_SRC} />
                         )
                     }
                     title={title}
@@ -216,6 +221,7 @@ Small.args = {
     description: 'This is a description for the card',
     withExtra: false,
     touchable: true,
+    isEmptySource: false,
 };
 Small.argTypes = {
     media: {
@@ -231,36 +237,37 @@ export const Group: StoryComponent = () => {
                 <Stack space={16}>
                     <Text2 regular>
                         We can group multiple cards and they adjust to the same height. The card actions are
-                        always fixed on bottom
+                        always fixed on bottom.
                     </Text2>
-                    <style>{`.group > * {width: 300px}`}</style>
-                    <Inline space={16} className="group">
-                        <NakedCard
-                            headline={<Tag type="promo">Headline</Tag>}
-                            pretitle="Pretitle"
-                            title="Title"
-                            subtitle="Subtitle"
-                            description="Description"
-                            media={<Image aspectRatio="16:9" src={IMAGE_SRC} />}
-                            button={
-                                <ButtonPrimary small href="https://google.com">
-                                    Action
-                                </ButtonPrimary>
-                            }
-                            buttonLink={<ButtonLink href="https://google.com">Link</ButtonLink>}
-                        />
-                        <NakedCard
-                            title="Title"
-                            description="Description"
-                            media={<Image aspectRatio="16:9" src={IMAGE_SRC} />}
-                            button={
-                                <ButtonPrimary small href="https://google.com">
-                                    Action
-                                </ButtonPrimary>
-                            }
-                            buttonLink={<ButtonLink href="https://google.com">Link</ButtonLink>}
-                        />
-                    </Inline>
+                    <Carousel
+                        items={[
+                            <NakedCard
+                                headline={<Tag type="promo">Headline</Tag>}
+                                pretitle="Pretitle"
+                                title="Title"
+                                subtitle="Subtitle"
+                                description="Description"
+                                media={<Image aspectRatio="16:9" src={IMAGE_SRC} />}
+                                button={
+                                    <ButtonPrimary small href="https://google.com">
+                                        Action
+                                    </ButtonPrimary>
+                                }
+                                buttonLink={<ButtonLink href="https://google.com">Link</ButtonLink>}
+                            />,
+                            <NakedCard
+                                title="Title"
+                                description="Description"
+                                media={<Image aspectRatio="16:9" src={IMAGE_SRC} />}
+                                button={
+                                    <ButtonPrimary small href="https://google.com">
+                                        Action
+                                    </ButtonPrimary>
+                                }
+                                buttonLink={<ButtonLink href="https://google.com">Link</ButtonLink>}
+                            />,
+                        ]}
+                    />
                 </Stack>
             </Box>
         </ResponsiveLayout>

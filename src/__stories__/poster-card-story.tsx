@@ -8,8 +8,8 @@ import {
     ResponsiveLayout,
     Stack,
     Text2,
-    Inline,
     Box,
+    Carousel,
 } from '..';
 import {PosterCard} from '../card';
 import usingVrImg from './images/using-vr.jpg';
@@ -39,7 +39,7 @@ type PosterCardArgs = {
     title: string;
     description: string;
     closable: boolean;
-    onPress: boolean;
+    actions: 'on press' | 'none';
     withTopAction: boolean;
     width: string;
     height: string;
@@ -60,7 +60,7 @@ export const Default: StoryComponent<PosterCardArgs> = ({
     title,
     description,
     closable,
-    onPress,
+    actions,
     withTopAction,
     width,
     height,
@@ -123,7 +123,7 @@ export const Default: StoryComponent<PosterCardArgs> = ({
                     width={width}
                     height={height}
                     aspectRatio={aspectRatio}
-                    onPress={onPress ? () => null : undefined}
+                    onPress={actions === 'on press' ? () => {} : undefined}
                 />
             </Box>
         </ResponsiveLayout>
@@ -143,7 +143,7 @@ Default.args = {
     title: 'Title',
     description: 'This is a description for the card',
     closable: false,
-    onPress: false,
+    actions: 'none',
     withTopAction: false,
     width: 'auto',
     height: 'auto',
@@ -184,6 +184,10 @@ Default.argTypes = {
         options: ['1:1', '16:9', '7:10', '9:10', 'auto'],
         control: {type: 'select'},
     },
+    actions: {
+        options: ['on press', 'none'],
+        control: {type: 'select'},
+    },
 };
 
 Default.parameters = {fullScreen: true};
@@ -194,20 +198,26 @@ export const Group: StoryComponent = () => {
             <Stack space={16}>
                 <Text2 regular>
                     We can group multiple cards and they adjust to the same height. The card content is
-                    aligned to the bottom
+                    aligned to the bottom.
                 </Text2>
-                <style>{`.group > * {width: 300px}`}</style>
-                <Inline space={16} className="group">
-                    <PosterCard
-                        headline={<Tag type="promo">Headline</Tag>}
-                        pretitle="Pretitle"
-                        title="Title"
-                        description="Description"
-                        backgroundImage={BACKGROUND_IMAGE_SRC}
-                    />
-                    <PosterCard title="Title" backgroundImage={BACKGROUND_IMAGE_SRC} />
-                    <PosterCard title="Title" backgroundImage={BACKGROUND_IMAGE_SRC} onClose={() => {}} />
-                </Inline>
+                <Carousel
+                    itemsPerPage={3}
+                    items={[
+                        <PosterCard
+                            headline={<Tag type="promo">Headline</Tag>}
+                            pretitle="Pretitle"
+                            title="Title"
+                            description="Description"
+                            backgroundImage={BACKGROUND_IMAGE_SRC}
+                        />,
+                        <PosterCard title="Title" backgroundImage={BACKGROUND_IMAGE_SRC} />,
+                        <PosterCard
+                            title="Title"
+                            backgroundImage={BACKGROUND_IMAGE_SRC}
+                            onClose={() => {}}
+                        />,
+                    ]}
+                />
             </Stack>
         </ResponsiveLayout>
     );
