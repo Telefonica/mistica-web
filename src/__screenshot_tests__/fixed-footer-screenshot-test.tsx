@@ -37,7 +37,6 @@ test('Fixed footer with static position when height is smaller than the footer i
     const imageOverflowScrolled = await page.screenshot({fullPage: false});
     expect(imageOverflowScrolled).toMatchImageSnapshot();
 });
-jest.setTimeout(999999);
 
 test('Fixed footer with safe inset at the bottom', async () => {
     const page = await openStoryPage({
@@ -69,7 +68,4 @@ test('Fixed footer with safe inset at the bottom', async () => {
     await (await screen.findByRole('button', {name: 'Load more text'})).evaluate((el) => el.scrollIntoView());
     const imageOverflowLinesInsetHorizontal = await page.screenshot({fullPage: false});
     expect(imageOverflowLinesInsetHorizontal).toMatchImageSnapshot();
-    //
-    // const imageOverflowScrolled = await page.screenshot({fullPage: false});
-    // expect(imageOverflowScrolled).toMatchImageSnapshot();
 });
