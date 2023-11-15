@@ -1,25 +1,9 @@
-import {createVar, style} from '@vanilla-extract/css';
+import {style} from '@vanilla-extract/css';
 import {vars} from './skins/skin-contract.css';
 import {sprinkles} from './sprinkles.css';
 
 const ARROW_CONTAINER_SIZE = 20;
 const ARROW_SIZE = 12;
-
-const top = createVar();
-const left = createVar();
-const padding = createVar();
-const delay = createVar();
-const enterTransform = createVar();
-const maxWidth = createVar();
-
-export const tooltipVars = {
-    top,
-    left,
-    padding,
-    delay,
-    enterTransform,
-    maxWidth,
-};
 
 export const tooltipTransitionClasses = {
     entering: {
@@ -42,23 +26,11 @@ export const container = style([
         position: 'absolute',
     }),
     {
-        top,
-        left,
-        padding,
         zIndex: 1,
         opacity: 1,
-        transform: enterTransform,
         filter: 'drop-shadow(0px 2px 2px rgba(0,0,0,0.2))',
     },
 ]);
-
-export const enterTransition = style({
-    transition: `opacity .1s linear ${delay},transform .3s cubic-bezier(0.215,0.61,0.335,1) ${delay}`,
-});
-
-export const exitTransition = style({
-    transition: `opacity .1s linear`,
-});
 
 export const tooltip = style([
     sprinkles({
@@ -80,7 +52,6 @@ export const content = style([
     }),
     {
         padding: 7,
-        maxWidth,
     },
 ]);
 

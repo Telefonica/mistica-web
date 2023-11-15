@@ -5,7 +5,6 @@ import {Transition} from 'react-transition-group';
 import * as styles from './tooltip.css';
 import Stack from './stack';
 import {Text2} from './text';
-import {assignInlineVars} from '@vanilla-extract/dynamic';
 import {getCssVarValue, getPrefixedDataAttributes} from './utils/dom';
 import {ESC, TAB} from './utils/key-codes';
 import {isClientSide} from './utils/environment';
@@ -184,6 +183,7 @@ const Tooltip: React.FC<Props> = ({
     const tooltipRef = React.useRef<HTMLDivElement | null>(null);
     const [tooltip, setTooltip] = React.useState<HTMLElement | null>(null);
     const isTouchableDevice = isClientSide() ? window.matchMedia('(pointer: coarse)').matches : false;
+    const tooltipEnterDelay = delay ? TOOLTIP_ENTER_TRANSITION_DELAY_IN_MS : 0;
 
     const [isMouseOverTooltip, setIsMouseOverTooltip] = React.useState(false);
     const [isMouseOverTarget, setIsMouseOverTarget] = React.useState(false);
@@ -467,9 +467,7 @@ const Tooltip: React.FC<Props> = ({
                         isRunningAcceptanceTest()
                             ? 0
                             : {
-                                  enter:
-                                      TOOLTIP_ENTER_TRANSITION_DURATION_IN_MS +
-                                      (delay ? TOOLTIP_ENTER_TRANSITION_DELAY_IN_MS : 0),
+                                  enter: TOOLTIP_ENTER_TRANSITION_DURATION_IN_MS + tooltipEnterDelay,
                                   exit: TOOLTIP_EXIT_TRANSITION_DURATION_IN_MS,
                               }
                     }
@@ -490,26 +488,6 @@ const Tooltip: React.FC<Props> = ({
                                     left: 0,
                                     position: 'fixed',
                                     visibility: tooltipComputedStyles ? 'visible' : 'hidden',
-                                    ...assignInlineVars({
-                                        ...(tooltipComputedStyles
-                                            ? {
-                                                  [styles.tooltipVars.top]: `${tooltipComputedStyles.top}px`,
-                                                  [styles.tooltipVars
-                                                      .left]: `${tooltipComputedStyles.left}px`,
-                                                  [styles.tooltipVars.padding]: tooltipComputedStyles.padding,
-                                              }
-                                            : {}),
-
-                                        [styles.tooltipVars.delay]: `${
-                                            delay ? TOOLTIP_ENTER_TRANSITION_DELAY_IN_MS : 0
-                                        }ms`,
-                                        [styles.tooltipVars.maxWidth]: `${Math.min(
-                                            TOOLTIP_MAX_WIDTH,
-                                            windowSize.width
-                                        )}px`,
-                                        [styles.tooltipVars.enterTransform]:
-                                            getTooltipEnterTransform(currentPosition),
-                                    }),
                                 }}
                                 {...getPrefixedDataAttributes(dataAttributes, 'Tooltip')}
                                 role="tooltip"
@@ -517,15 +495,16 @@ const Tooltip: React.FC<Props> = ({
                                 tabIndex={-1}
                             >
                                 <div
-                                    className={classNames(
-                                        styles.container,
-                                        transitionStatus === 'entering'
-                                            ? styles.enterTransition
-                                            : styles.exitTransition
-                                    )}
+                                    className={classNames(styles.container)}
                                     style={{
                                         pointerEvents: transitionStatus === 'entered' ? 'auto' : 'none',
+                                        transform: getTooltipEnterTransform(currentPosition),
+                                        ...tooltipComputedStyles,
                                         ...styles.tooltipTransitionClasses[transitionStatus],
+                                        transition:
+                                            transitionStatus === 'entering'
+                                                ? `opacity .1s linear ${tooltipEnterDelay}ms,transform .3s cubic-bezier(0.215,0.61,0.335,1) ${tooltipEnterDelay}ms`
+                                                : `opacity .1s linear`,
                                     }}
                                     ref={combineRefs(setTooltip, tooltipRef)}
                                     onMouseEnter={() => {
@@ -551,6 +530,9 @@ const Tooltip: React.FC<Props> = ({
                                                 styles.content,
                                                 centerContent || textCenter ? styles.tooltipCenter : undefined
                                             )}
+                                            style={{
+                                                maxWidth: Math.min(TOOLTIP_MAX_WIDTH, windowSize.width),
+                                            }}
                                         >
                                             <ThemeVariant isInverse={false}>
                                                 {(title || description) && (
