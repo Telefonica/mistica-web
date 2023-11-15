@@ -1,14 +1,16 @@
 import {openPage, serverHostName, screen, getGlobalPage, PageApi} from '@telefonica/acceptance-testing';
 import {MOVISTAR_SKIN} from '../skins/constants';
 
-import type {Viewport} from '@telefonica/acceptance-testing';
+import type {TestViewport} from '@telefonica/acceptance-testing';
 
 export type {ElementHandle} from '@telefonica/acceptance-testing';
+
 export {screen, PageApi};
 
 export type StoryArgs = {[key: string]: string | number | boolean};
 
 const MOBILE_DEVICE_IOS_SMALL = 'MOBILE_IOS_SMALL';
+const MOBILE_DEVICE_IOS_INSET = 'MOBILE_IOS_INSET';
 const MOBILE_DEVICE_IOS = 'MOBILE_IOS';
 const MOBILE_DEVICE_ANDROID = 'MOBILE_ANDROID';
 const TABLET_DEVICE = 'TABLET';
@@ -16,6 +18,7 @@ const DESKTOP_DEVICE = 'DESKTOP';
 
 export type Device =
     | typeof MOBILE_DEVICE_IOS_SMALL
+    | typeof MOBILE_DEVICE_IOS_INSET
     | typeof MOBILE_DEVICE_IOS
     | typeof MOBILE_DEVICE_ANDROID
     | typeof TABLET_DEVICE
@@ -26,7 +29,7 @@ type DeviceCollection = Record<
     {
         platform?: string;
         userAgent?: string;
-        viewport: Viewport;
+        viewport: TestViewport;
     }
 >;
 
@@ -55,6 +58,23 @@ const DEVICES: DeviceCollection = {
             isMobile: true,
             hasTouch: true,
             isLandscape: false,
+        },
+    },
+    [MOBILE_DEVICE_IOS_INSET]: {
+        userAgent:
+            'Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Mobile/15A372 Safari/604.1',
+        platform: 'ios',
+        viewport: {
+            width: 375,
+            height: 667,
+            deviceScaleFactor: 2,
+            isMobile: true,
+            hasTouch: true,
+            isLandscape: false,
+            safeAreaInset: {
+                // smallest iPhone's bottom inset height on vertical position (iPhone 13 mini)
+                bottom: '34px',
+            },
         },
     },
     [MOBILE_DEVICE_ANDROID]: {
@@ -134,7 +154,7 @@ export const openStoryPage = ({
 }: {
     id: string;
     device?: Device;
-    viewport?: Viewport;
+    viewport?: TestViewport;
     skin?: 'Movistar' | 'Vivo' | 'Vivo-new' | 'O2' | 'Telefonica' | 'Blau';
     args?: StoryArgs;
     isDarkMode?: boolean;
