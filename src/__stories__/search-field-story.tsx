@@ -56,8 +56,10 @@ export const Controlled: StoryComponent<SearchFieldControlledArgs> = ({
                     <div data-testid="search-field-wrapper">
                         <SearchField
                             value={rawValue}
-                            onChange={(e) => setRawValue(e.target.value)}
-                            onChangeValue={(value) => setValue(value)}
+                            onChangeValue={(value, rawValue) => {
+                                setValue(value);
+                                setRawValue(rawValue);
+                            }}
                             name="search"
                             autoComplete="off"
                             data-testid="search-field"
@@ -67,15 +69,13 @@ export const Controlled: StoryComponent<SearchFieldControlledArgs> = ({
                     </div>
                     <Stack space={8}>
                         <Text1 regular>
-                            onChange:{' '}
+                            value: {typeof value === 'undefined' ? '' : `(${typeof value}) ${inspect(value)}`}
+                        </Text1>
+                        <Text1 regular>
+                            rawValue:{' '}
                             {typeof rawValue === 'undefined'
                                 ? ''
                                 : `(${typeof rawValue}) ${inspect(rawValue)}`}
-                        </Text1>
-
-                        <Text1 regular>
-                            onChangeValue:{' '}
-                            {typeof value === 'undefined' ? '' : `(${typeof value}) ${inspect(value)}`}
                         </Text1>
                     </Stack>
                 </Stack>
@@ -110,8 +110,10 @@ export const Uncontrolled: StoryComponent<SearchFieldUncontrolledArgs> = ({
                     <div data-testid="search-field-wrapper">
                         <SearchField
                             defaultValue={defaultValue}
-                            onChange={(e) => setRawValue(e.target.value)}
-                            onChangeValue={(value) => setValue(value)}
+                            onChangeValue={(value, rawValue) => {
+                                setValue(value);
+                                setRawValue(rawValue);
+                            }}
                             name="search"
                             autoComplete="off"
                             data-testid="search-field"
@@ -120,15 +122,13 @@ export const Uncontrolled: StoryComponent<SearchFieldUncontrolledArgs> = ({
                     </div>
                     <Stack space={8}>
                         <Text1 regular>
-                            onChange:{' '}
+                            value: {typeof value === 'undefined' ? '' : `(${typeof value}) ${inspect(value)}`}
+                        </Text1>
+                        <Text1 regular>
+                            rawValue:{' '}
                             {typeof rawValue === 'undefined'
                                 ? ''
                                 : `(${typeof rawValue}) ${inspect(rawValue)}`}
-                        </Text1>
-
-                        <Text1 regular>
-                            onChangeValue:{' '}
-                            {typeof value === 'undefined' ? '' : `(${typeof value}) ${inspect(value)}`}
                         </Text1>
                     </Stack>
                 </Stack>

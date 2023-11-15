@@ -64,8 +64,10 @@ export const Controlled: StoryComponent<MonthFieldControlledArgs> = ({
                     <div data-testid="month-field-wrapper">
                         <MonthField
                             value={rawValue}
-                            onChange={(e) => setRawValue(e.target.value)}
-                            onChangeValue={(value) => setValue(value)}
+                            onChangeValue={(value, rawValue) => {
+                                setValue(value);
+                                setRawValue(rawValue);
+                            }}
                             name="month"
                             autoComplete="off"
                             data-testid="month-field"
@@ -79,15 +81,13 @@ export const Controlled: StoryComponent<MonthFieldControlledArgs> = ({
                     </div>
                     <Stack space={8}>
                         <Text1 regular>
-                            onChange:{' '}
+                            value: {typeof value === 'undefined' ? '' : `(${typeof value}) ${inspect(value)}`}
+                        </Text1>
+                        <Text1 regular>
+                            rawValue:{' '}
                             {typeof rawValue === 'undefined'
                                 ? ''
                                 : `(${typeof rawValue}) ${inspect(rawValue)}`}
-                        </Text1>
-
-                        <Text1 regular>
-                            onChangeValue:{' '}
-                            {typeof value === 'undefined' ? '' : `(${typeof value}) ${inspect(value)}`}
                         </Text1>
                     </Stack>
                 </Stack>
@@ -132,8 +132,10 @@ export const Uncontrolled: StoryComponent<MonthFieldUncontrolledArgs> = ({
                     <div data-testid="month-field-wrapper">
                         <MonthField
                             defaultValue={defaultValue}
-                            onChange={(e) => setRawValue(e.target.value)}
-                            onChangeValue={(value) => setValue(value)}
+                            onChangeValue={(value, rawValue) => {
+                                setValue(value);
+                                setRawValue(rawValue);
+                            }}
                             name="month"
                             autoComplete="off"
                             data-testid="month-field"
@@ -147,15 +149,13 @@ export const Uncontrolled: StoryComponent<MonthFieldUncontrolledArgs> = ({
                     </div>
                     <Stack space={8}>
                         <Text1 regular>
-                            onChange:{' '}
+                            value: {typeof value === 'undefined' ? '' : `(${typeof value}) ${inspect(value)}`}
+                        </Text1>
+                        <Text1 regular>
+                            rawValue:{' '}
                             {typeof rawValue === 'undefined'
                                 ? ''
                                 : `(${typeof rawValue}) ${inspect(rawValue)}`}
-                        </Text1>
-
-                        <Text1 regular>
-                            onChangeValue:{' '}
-                            {typeof value === 'undefined' ? '' : `(${typeof value}) ${inspect(value)}`}
                         </Text1>
                     </Stack>
                 </Stack>

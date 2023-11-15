@@ -48,8 +48,10 @@ export const Controlled: StoryComponent<CreditCardNumberFieldControlledArgs> = (
                     <div data-testid="credit-card-number-field-wrapper">
                         <CreditCardNumberField
                             value={rawValue}
-                            onChange={(e) => setRawValue(e.target.value)}
-                            onChangeValue={(value) => setValue(value)}
+                            onChangeValue={(value, rawValue) => {
+                                setValue(value);
+                                setRawValue(rawValue);
+                            }}
                             name="creditCardNumber"
                             autoComplete="off"
                             data-testid="credit-card-number-field"
@@ -58,15 +60,13 @@ export const Controlled: StoryComponent<CreditCardNumberFieldControlledArgs> = (
                     </div>
                     <Stack space={8}>
                         <Text1 regular>
-                            onChange:{' '}
+                            value: {typeof value === 'undefined' ? '' : `(${typeof value}) ${inspect(value)}`}
+                        </Text1>
+                        <Text1 regular>
+                            rawValue:{' '}
                             {typeof rawValue === 'undefined'
                                 ? ''
                                 : `(${typeof rawValue}) ${inspect(rawValue)}`}
-                        </Text1>
-
-                        <Text1 regular>
-                            onChangeValue:{' '}
-                            {typeof value === 'undefined' ? '' : `(${typeof value}) ${inspect(value)}`}
                         </Text1>
                     </Stack>
                 </Stack>
@@ -100,8 +100,10 @@ export const Uncontrolled: StoryComponent<CreditCardNumberFieldUncontrolledArgs>
                     <div data-testid="credit-card-number-field-wrapper">
                         <CreditCardNumberField
                             defaultValue={defaultValue}
-                            onChange={(e) => setRawValue(e.target.value)}
-                            onChangeValue={(value) => setValue(value)}
+                            onChangeValue={(value, rawValue) => {
+                                setValue(value);
+                                setRawValue(rawValue);
+                            }}
                             name="creditCardNumber"
                             autoComplete="off"
                             data-testid="credit-card-number-field"
@@ -110,15 +112,13 @@ export const Uncontrolled: StoryComponent<CreditCardNumberFieldUncontrolledArgs>
                     </div>
                     <Stack space={8}>
                         <Text1 regular>
-                            onChange:{' '}
+                            value: {typeof value === 'undefined' ? '' : `(${typeof value}) ${inspect(value)}`}
+                        </Text1>
+                        <Text1 regular>
+                            rawValue:{' '}
                             {typeof rawValue === 'undefined'
                                 ? ''
                                 : `(${typeof rawValue}) ${inspect(rawValue)}`}
-                        </Text1>
-
-                        <Text1 regular>
-                            onChangeValue:{' '}
-                            {typeof value === 'undefined' ? '' : `(${typeof value}) ${inspect(value)}`}
                         </Text1>
                     </Stack>
                 </Stack>

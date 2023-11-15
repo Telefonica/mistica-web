@@ -44,8 +44,10 @@ export const Controlled: StoryComponent<IbanFieldControlledArgs> = ({inverse, in
                     <div data-testid="iban-field-wrapper">
                         <IbanField
                             value={rawValue}
-                            onChange={(e) => setRawValue(e.target.value)}
-                            onChangeValue={(value) => setValue(value)}
+                            onChangeValue={(value, rawValue) => {
+                                setValue(value);
+                                setRawValue(rawValue);
+                            }}
                             name="iban"
                             autoComplete="off"
                             data-testid="iban-field"
@@ -54,15 +56,13 @@ export const Controlled: StoryComponent<IbanFieldControlledArgs> = ({inverse, in
                     </div>
                     <Stack space={8}>
                         <Text1 regular>
-                            onChange:{' '}
+                            value: {typeof value === 'undefined' ? '' : `(${typeof value}) ${inspect(value)}`}
+                        </Text1>
+                        <Text1 regular>
+                            rawValue:{' '}
                             {typeof rawValue === 'undefined'
                                 ? ''
                                 : `(${typeof rawValue}) ${inspect(rawValue)}`}
-                        </Text1>
-
-                        <Text1 regular>
-                            onChangeValue:{' '}
-                            {typeof value === 'undefined' ? '' : `(${typeof value}) ${inspect(value)}`}
                         </Text1>
                     </Stack>
                 </Stack>
@@ -92,8 +92,10 @@ export const Uncontrolled: StoryComponent<IbanFieldUncontrolledArgs> = ({inverse
                     <div data-testid="iban-field-wrapper">
                         <IbanField
                             defaultValue={defaultValue}
-                            onChange={(e) => setRawValue(e.target.value)}
-                            onChangeValue={(value) => setValue(value)}
+                            onChangeValue={(value, rawValue) => {
+                                setValue(value);
+                                setRawValue(rawValue);
+                            }}
                             name="iban"
                             autoComplete="off"
                             data-testid="iban-field"
@@ -102,15 +104,13 @@ export const Uncontrolled: StoryComponent<IbanFieldUncontrolledArgs> = ({inverse
                     </div>
                     <Stack space={8}>
                         <Text1 regular>
-                            onChange:{' '}
+                            value: {typeof value === 'undefined' ? '' : `(${typeof value}) ${inspect(value)}`}
+                        </Text1>
+                        <Text1 regular>
+                            rawValue:{' '}
                             {typeof rawValue === 'undefined'
                                 ? ''
                                 : `(${typeof rawValue}) ${inspect(rawValue)}`}
-                        </Text1>
-
-                        <Text1 regular>
-                            onChangeValue:{' '}
-                            {typeof value === 'undefined' ? '' : `(${typeof value}) ${inspect(value)}`}
                         </Text1>
                     </Stack>
                 </Stack>

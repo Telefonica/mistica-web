@@ -46,8 +46,10 @@ export const Controlled: StoryComponent<CreditCardExpirationFieldControlledArgs>
                     <div data-testid="credit-card-expiration-field-wrapper">
                         <CreditCardExpirationField
                             value={rawValue}
-                            onChange={(e) => setRawValue(e.target.value)}
-                            onChangeValue={(value) => setValue(value)}
+                            onChangeValue={(value) => {
+                                setValue(value);
+                                setRawValue(value.raw);
+                            }}
                             name="creditCardExpiration"
                             autoComplete="off"
                             data-testid="credit-card-expiration-field"
@@ -56,15 +58,13 @@ export const Controlled: StoryComponent<CreditCardExpirationFieldControlledArgs>
                     </div>
                     <Stack space={8}>
                         <Text1 regular>
-                            onChange:{' '}
+                            value: {typeof value === 'undefined' ? '' : `(${typeof value}) ${inspect(value)}`}
+                        </Text1>
+                        <Text1 regular>
+                            rawValue:{' '}
                             {typeof rawValue === 'undefined'
                                 ? ''
                                 : `(${typeof rawValue}) ${inspect(rawValue)}`}
-                        </Text1>
-
-                        <Text1 regular>
-                            onChangeValue:{' '}
-                            {typeof value === 'undefined' ? '' : `(${typeof value}) ${inspect(value)}`}
                         </Text1>
                     </Stack>
                 </Stack>
@@ -98,8 +98,10 @@ export const Uncontrolled: StoryComponent<CreditCardExpirationFieldUncontrolledA
                     <div data-testid="credit-card-expiration-field-wrapper">
                         <CreditCardExpirationField
                             defaultValue={defaultValue}
-                            onChange={(e) => setRawValue(e.target.value)}
-                            onChangeValue={(value) => setValue(value)}
+                            onChangeValue={(value) => {
+                                setValue(value);
+                                setRawValue(value.raw);
+                            }}
                             name="creditCardExpiration"
                             autoComplete="off"
                             data-testid="credit-card-expiration-field"
@@ -108,15 +110,13 @@ export const Uncontrolled: StoryComponent<CreditCardExpirationFieldUncontrolledA
                     </div>
                     <Stack space={8}>
                         <Text1 regular>
-                            onChange:{' '}
+                            value: {typeof value === 'undefined' ? '' : `(${typeof value}) ${inspect(value)}`}
+                        </Text1>
+                        <Text1 regular>
+                            rawValue:{' '}
                             {typeof rawValue === 'undefined'
                                 ? ''
                                 : `(${typeof rawValue}) ${inspect(rawValue)}`}
-                        </Text1>
-
-                        <Text1 regular>
-                            onChangeValue:{' '}
-                            {typeof value === 'undefined' ? '' : `(${typeof value}) ${inspect(value)}`}
                         </Text1>
                     </Stack>
                 </Stack>

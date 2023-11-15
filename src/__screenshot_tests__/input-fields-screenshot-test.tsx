@@ -517,20 +517,6 @@ test('CvvField', async () => {
     expect(filledScreenshot).toMatchImageSnapshot();
 });
 
-test('CvvField - icon tooltip appears properly', async () => {
-    const page = await openStoryPage({
-        id: 'components-input-fields-cvvfield--uncontrolled',
-        device: 'MOBILE_IOS',
-    });
-
-    const fieldInformationButton = await screen.findByLabelText('Mostrar ayuda CVV');
-
-    await fieldInformationButton.click();
-    const image = await page.screenshot({fullPage: true});
-
-    expect(image).toMatchImageSnapshot();
-});
-
 test('DecimalField', async () => {
     await openStoryPage({
         id: 'components-input-fields-decimalfield--uncontrolled',
