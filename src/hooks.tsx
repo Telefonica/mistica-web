@@ -239,7 +239,10 @@ const getBoundingClientRect = (element: Element): BoundingRect => {
     return {top, right, bottom, left, width, height, x, y};
 };
 
-export const useBoundingRect = (ref: React.RefObject<Element>): BoundingRect | undefined => {
+export const useBoundingRect = (
+    ref: React.RefObject<Element>,
+    computeOnEveryFrame = true
+): BoundingRect | undefined => {
     const [rect, setRect] = React.useState<BoundingRect>();
     const isVisible = useIsInViewport(ref, false);
 
@@ -253,7 +256,9 @@ export const useBoundingRect = (ref: React.RefObject<Element>): BoundingRect | u
                     setRect(current);
                 }
 
-                id = requestAnimationFrame(check);
+                if (computeOnEveryFrame) {
+                    id = requestAnimationFrame(check);
+                }
             } else {
                 setRect(undefined);
             }
@@ -264,7 +269,7 @@ export const useBoundingRect = (ref: React.RefObject<Element>): BoundingRect | u
         return () => {
             cancelAnimationFrame(id);
         };
-    }, [ref, rect, isVisible]);
+    }, [ref, rect, isVisible, computeOnEveryFrame]);
 
     return rect;
 };

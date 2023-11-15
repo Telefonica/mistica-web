@@ -191,7 +191,7 @@ const Tooltip: React.FC<Props> = ({
     const isTooltipOpen = tooltipId === openTooltipId;
     const isInverse = useIsInverseVariant();
 
-    const targetRect = useBoundingRect(targetRef);
+    const targetRect = useBoundingRect(targetRef, isTooltipOpen);
     const windowSize = useWindowSize();
 
     const resetTooltipInteractions = React.useCallback(() => {
