@@ -72,6 +72,7 @@ const DEVICES: DeviceCollection = {
             hasTouch: true,
             isLandscape: false,
             safeAreaInset: {
+                // smallest iPhone's bottom inset height on vertical position (iPhone 13 mini)
                 bottom: '34px',
             },
         },
