@@ -1,6 +1,18 @@
 import {openStoryPage, screen} from '../test-utils';
 import {within} from '@telefonica/acceptance-testing';
 
+test('TextField - appears properly on desktop', async () => {
+    await openStoryPage({
+        id: 'components-input-fields-textfield--uncontrolled',
+        device: 'DESKTOP',
+    });
+
+    const field = await screen.findByTestId('text-field');
+    const image = await field.screenshot();
+
+    expect(image).toMatchImageSnapshot();
+});
+
 test('TextField - label', async () => {
     await openStoryPage({
         id: 'components-input-fields-textfield--uncontrolled',
@@ -68,6 +80,19 @@ test('TextField - long label', async () => {
     await field.type('Some text');
 
     expect(await fieldWrapper.screenshot()).toMatchImageSnapshot();
+
+    expect(image).toMatchImageSnapshot();
+});
+
+test('TextField - long value', async () => {
+    await openStoryPage({
+        id: 'components-input-fields-textfield--uncontrolled',
+        device: 'MOBILE_IOS',
+        args: {defaultValue: 'This TextField has a very long text and should cover the entire field'},
+    });
+
+    const fieldWrapper = await screen.findByTestId('text-field-wrapper');
+    const image = await fieldWrapper.screenshot();
 
     expect(image).toMatchImageSnapshot();
 });
@@ -157,9 +182,16 @@ test('TextField - read only', async () => {
     });
 
     const fieldWrapper = await screen.findByTestId('text-field-wrapper');
+    const field = await screen.findByTestId('text-field');
+
     const image = await fieldWrapper.screenshot();
 
     expect(image).toMatchImageSnapshot();
+
+    field.click();
+    const focused = await fieldWrapper.screenshot();
+
+    expect(focused).toMatchImageSnapshot();
 });
 
 test('TextField - inverse and helper text', async () => {
@@ -483,6 +515,20 @@ test('CvvField', async () => {
     const filledScreenshot = await fieldWrapper.screenshot();
 
     expect(filledScreenshot).toMatchImageSnapshot();
+});
+
+test('CvvField - icon tooltip appears properly', async () => {
+    const page = await openStoryPage({
+        id: 'components-input-fields-cvvfield--uncontrolled',
+        device: 'MOBILE_IOS',
+    });
+
+    const fieldInformationButton = await screen.findByLabelText('Mostrar ayuda CVV');
+
+    await fieldInformationButton.click();
+    const image = await page.screenshot({fullPage: true});
+
+    expect(image).toMatchImageSnapshot();
 });
 
 test('DecimalField', async () => {
