@@ -1,3 +1,16 @@
+# [14.31.0](https://github.com/Telefonica/mistica-web/compare/v14.30.0...v14.31.0) (2023-11-16)
+
+
+### Bug Fixes
+
+* **FixedFooterLayout:** consider bottom inset area for calculations ([#943](https://github.com/Telefonica/mistica-web/issues/943)) ([23c7544](https://github.com/Telefonica/mistica-web/commit/23c75444a8e2234b6685d2d51b10f68565df6819))
+
+
+### Features
+
+* **createNestableContext:** allow custom valuesReducer ([#941](https://github.com/Telefonica/mistica-web/issues/941)) ([ec5b2a1](https://github.com/Telefonica/mistica-web/commit/ec5b2a104ad8c84b96a1d5862f576b7886df96c9))
+* **skin:** update design tokens ([#938](https://github.com/Telefonica/mistica-web/issues/938)) ([605c517](https://github.com/Telefonica/mistica-web/commit/605c51712e11a341d4320af44ede06c7055ab125))
+
 # [14.30.0](https://github.com/Telefonica/mistica-web/compare/v14.29.0...v14.30.0) (2023-11-13)
 
 
