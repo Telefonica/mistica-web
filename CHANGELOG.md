@@ -1,3 +1,15 @@
+# [14.32.0](https://github.com/Telefonica/mistica-web/compare/v14.31.1...v14.32.0) (2023-11-16)
+
+
+### Bug Fixes
+
+* **ScreenReaderOnly:** Fix ScreenReaderOnly positioning to avoid scrolling issues ([#942](https://github.com/Telefonica/mistica-web/issues/942)) ([f6537e9](https://github.com/Telefonica/mistica-web/commit/f6537e91014a7be1c23ff81d374810c164da0b0e))
+
+
+### Features
+
+* **AdvancedDataCard:** support for href/to ([#859](https://github.com/Telefonica/mistica-web/issues/859)) ([ba5eafb](https://github.com/Telefonica/mistica-web/commit/ba5eafba576ae726544ba3ccf88101ecc4c916c2))
+
 ## [14.31.1](https://github.com/Telefonica/mistica-web/compare/v14.31.0...v14.31.1) (2023-11-16)
 
 
