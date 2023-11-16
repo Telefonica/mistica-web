@@ -2524,7 +2524,7 @@ const advancedDataCardSnippets = [
           }
           footerText="footer text"
           onClose={() => window.alert("close")}
-          onPress={() => window.alert("click")}
+          href="https://google.com"
         />
         `,
         group: 'AdvancedDataCard',
