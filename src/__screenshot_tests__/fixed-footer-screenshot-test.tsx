@@ -53,7 +53,7 @@ test('Fixed footer with static position when height is smaller than the footer i
 
 test('Fixed footer with safe inset at the bottom', async () => {
     const page = await openStoryPage({
-        id: 'layout-fixed-footer-layout--more-complex-footer',
+        id: 'layout-fixedfooterlayout--more-complex-footer',
         device: 'MOBILE_IOS_INSET',
     });
 
