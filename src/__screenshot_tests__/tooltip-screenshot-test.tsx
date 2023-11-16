@@ -26,12 +26,24 @@ test.each(getCases())(
             args: {position, targetHorizontalPosition, targetVerticalPosition, extra: true},
         });
 
-        await page.click(await screen.findByRole('button'));
+        await page.click(await screen.findByTestId('target'));
 
         const image = await page.screenshot();
         expect(image).toMatchImageSnapshot();
     }
 );
+
+test('Tooltip - appears properly on mobible', async () => {
+    const page = await openStoryPage({
+        id: 'components-tooltip--default',
+        device: 'MOBILE_IOS',
+    });
+
+    await page.click(await screen.findByTestId('target'));
+
+    const image = await page.screenshot();
+    expect(image).toMatchImageSnapshot();
+});
 
 test('Tooltip - inverse', async () => {
     const page = await openStoryPage({
@@ -40,7 +52,7 @@ test('Tooltip - inverse', async () => {
         args: {inverse: true},
     });
 
-    await page.click(await screen.findByRole('button'));
+    await page.click(await screen.findByTestId('target'));
 
     const image = await page.screenshot();
     expect(image).toMatchImageSnapshot();
@@ -56,8 +68,42 @@ test('Tooltip - max width is 496px', async () => {
         },
     });
 
-    await page.click(await screen.findByRole('button'));
+    await page.click(await screen.findByTestId('target'));
 
     const image = await page.screenshot();
     expect(image).toMatchImageSnapshot();
+});
+
+test('Tooltip - appears properly when its container is fixed and has overflow hidden', async () => {
+    const page = await openStoryPage({
+        id: 'private-tooltip--inside-fixed-container',
+        device: 'DESKTOP',
+    });
+
+    await page.click(await screen.findByTestId('target'));
+
+    const image = await page.screenshot();
+    expect(image).toMatchImageSnapshot();
+});
+
+test('Tooltip - active tooltip is closed if another one is opened', async () => {
+    const page = await openStoryPage({
+        id: 'private-tooltip--multiple-tooltips',
+        device: 'DESKTOP',
+    });
+
+    await page.click(await screen.findByTestId('target-0'));
+
+    const firstTooltip = await page.screenshot();
+    expect(firstTooltip).toMatchImageSnapshot();
+
+    await page.click(await screen.findByTestId('target-1'));
+
+    const secondTooltip = await page.screenshot();
+    expect(secondTooltip).toMatchImageSnapshot();
+
+    await page.click(await screen.findByTestId('target-2'));
+
+    const thirdTooltip = await page.screenshot();
+    expect(thirdTooltip).toMatchImageSnapshot();
 });
