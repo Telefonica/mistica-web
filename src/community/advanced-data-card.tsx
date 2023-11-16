@@ -34,7 +34,6 @@ import type {
 } from './blocks';
 
 type CardContentProps = {
-    onPress?: () => void;
     headline?: string | RendersNullableElement<typeof Tag>;
     pretitle?: string;
     pretitleAs?: string;
@@ -46,13 +45,12 @@ type CardContentProps = {
     subtitleLinesMax?: number;
     description?: string;
     descriptionLinesMax?: number;
-    href?: string;
-    to?: undefined;
     ariaLabel?: string;
-};
+} & ExclusifyUnion<
+    {href: string | undefined} | {to: string | undefined} | {onPress: PressHandler | undefined}
+>;
 
 const CardContent: React.FC<CardContentProps> = ({
-    onPress,
     headline,
     pretitle,
     pretitleAs = 'p',
@@ -64,38 +62,23 @@ const CardContent: React.FC<CardContentProps> = ({
     subtitleLinesMax,
     description,
     descriptionLinesMax,
-    href,
-    to,
     ariaLabel,
+    ...touchableProps
 }) => {
     const {textPresets} = useTheme();
 
     return (
         <Stack space={4}>
             {headline}
-            {href ? (
-                <Touchable
-                    tabIndex={0}
-                    maybe
-                    className={classNames(styles.touchableArea)}
-                    href={href}
-                    to={to}
-                    aria-label={ariaLabel}
-                >
-                    <div />
-                </Touchable>
-            ) : (
-                <Touchable
-                    tabIndex={0}
-                    maybe
-                    className={classNames(styles.touchableArea)}
-                    onPress={onPress}
-                    to={to}
-                    aria-label={ariaLabel}
-                >
-                    <div />
-                </Touchable>
-            )}
+            <Touchable
+                tabIndex={0}
+                maybe
+                className={classNames(styles.touchableArea)}
+                {...touchableProps}
+                aria-label={ariaLabel}
+            >
+                <></>
+            </Touchable>
             {pretitle && (
                 <Text2
                     color={vars.colors.textPrimary}
@@ -227,9 +210,6 @@ type AllowedExtra =
 type TextAs = 'h1' | 'h2' | 'h3' | 'h4';
 
 type AdvancedDataCardProps = {
-    onPress?: () => void;
-    href?: string | undefined;
-    to?: undefined;
     stackingGroup?: RendersNullableElement<typeof StackingGroup>;
     headline?: RendersNullableElement<typeof Tag>;
     pretitle?: string;
@@ -256,13 +236,10 @@ type AdvancedDataCardProps = {
 } & ExclusifyUnion<
     {href: string | undefined} | {to: string | undefined} | {onPress: PressHandler | undefined}
 >;
+
 export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCardProps>(
     (
         {
-            href,
-            to,
-            onPress,
-
             stackingGroup,
             headline,
             pretitle,
@@ -289,10 +266,11 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
             actions,
             'aria-label': ariaLabel,
             onClose,
+            ...touchableProps
         },
         ref
     ) => {
-        const isTouchable = !!href || !!onPress || !!to;
+        const isTouchable = !!touchableProps.href || !!touchableProps.onPress || !!touchableProps.to;
 
         const footerProps = {button, footerImage, footerText, footerTextLinesMax, buttonLink};
 
@@ -342,10 +320,7 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
                                             subtitleLinesMax={subtitleLinesMax}
                                             description={description}
                                             descriptionLinesMax={descriptionLinesMax}
-                                            href={href}
-                                            to={to}
-                                            onPress={onPress}
-                                            ariaLabel={ariaLabel}
+                                            {...touchableProps}
                                         />
                                     </Stack>
                                     {/** Hack to avoid content from rendering on top of the top action buttons */}
