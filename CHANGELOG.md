@@ -1,3 +1,10 @@
+## [14.31.1](https://github.com/Telefonica/mistica-web/compare/v14.31.0...v14.31.1) (2023-11-16)
+
+
+### Bug Fixes
+
+* **Carousel:** avoid immediate style reflow on component mount ([#945](https://github.com/Telefonica/mistica-web/issues/945)) ([c46206e](https://github.com/Telefonica/mistica-web/commit/c46206eff42c6e76cbbe5b0ed6859967de636281))
+
 # [14.31.0](https://github.com/Telefonica/mistica-web/compare/v14.30.0...v14.31.0) (2023-11-16)
 
 
