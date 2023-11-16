@@ -578,19 +578,15 @@ type RowListProps = {
     children: React.ReactNode;
     ariaLabelledby?: string;
     role?: string;
+    /**
+     * @deprecated This field is deprecated and it has no effect.
+     */
     noLastDivider?: boolean;
     dataAttributes?: DataAttributes;
 };
 
-export const RowList: React.FC<RowListProps> = ({
-    children,
-    ariaLabelledby,
-    role,
-    dataAttributes,
-    noLastDivider,
-}) => {
+export const RowList: React.FC<RowListProps> = ({children, ariaLabelledby, role, dataAttributes}) => {
     const lastIndex = React.Children.count(children) - 1;
-    const showLastDivider = !noLastDivider;
     return (
         <div
             role={role}
@@ -602,7 +598,7 @@ export const RowList: React.FC<RowListProps> = ({
                 .map((child, index) => (
                     <React.Fragment key={index}>
                         {child}
-                        {(index < lastIndex || showLastDivider) && (
+                        {index < lastIndex && (
                             <Box paddingX={16}>
                                 <Divider />
                             </Box>

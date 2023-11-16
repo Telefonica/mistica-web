@@ -86,7 +86,7 @@ export const MoreComplexFooter: StoryComponent = () => {
                         FixedFooterLayout instead of ButtonFixedFooterLayout
                     </Text2>
                     {textLines.map((line, idx) => (
-                        <Text2 regular key={idx}>
+                        <Text2 regular key={idx} dataAttributes={{testid: `line-${idx}`}}>
                             {line}
                         </Text2>
                     ))}

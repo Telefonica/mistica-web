@@ -14,5 +14,8 @@ export const screenReaderOnly = style([
         height: 1,
         clip: 'rect(0, 0, 0, 0)',
         userSelect: 'none',
+        // move the element out of the screen to avoid scrolling issues. See https://github.com/Telefonica/mistica-web/pull/942
+        left: -10000,
+        top: -10000,
     },
 ]);

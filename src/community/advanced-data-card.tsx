@@ -15,6 +15,8 @@ import {useTheme} from '../hooks';
 import {getPrefixedDataAttributes} from '../utils/dom';
 import Inline from '../inline';
 
+import type {PressHandler} from '../touchable';
+import type {ExclusifyUnion} from '../utils/utility-types';
 import type {CardAction} from '../card';
 import type StackingGroup from '../stacking-group';
 import type Image from '../image';
@@ -43,7 +45,10 @@ type CardContentProps = {
     subtitleLinesMax?: number;
     description?: string;
     descriptionLinesMax?: number;
-};
+    ariaLabel?: string;
+} & ExclusifyUnion<
+    {href: string | undefined} | {to: string | undefined} | {onPress: PressHandler | undefined}
+>;
 
 const CardContent: React.FC<CardContentProps> = ({
     headline,
@@ -57,46 +62,50 @@ const CardContent: React.FC<CardContentProps> = ({
     subtitleLinesMax,
     description,
     descriptionLinesMax,
+    ariaLabel,
+    ...touchableProps
 }) => {
     const {textPresets} = useTheme();
 
     return (
         <Stack space={4}>
             {headline}
-            <Stack space={4}>
-                {pretitle && (
-                    <Text2
-                        color={vars.colors.textPrimary}
-                        truncate={pretitleLinesMax}
-                        as={pretitleAs}
-                        regular
-                        hyphens="auto"
-                    >
-                        {pretitle}
-                    </Text2>
-                )}
-                <Text
-                    mobileSize={18}
-                    mobileLineHeight="24px"
-                    desktopSize={20}
-                    desktopLineHeight="28px"
-                    truncate={titleLinesMax}
-                    weight={textPresets.cardTitle.weight}
-                    as={titleAs}
-                    hyphens="auto"
-                >
-                    {title}
-                </Text>
+            <Touchable
+                tabIndex={0}
+                maybe
+                className={classNames(styles.touchableArea)}
+                {...touchableProps}
+                aria-label={ariaLabel}
+            >
+                <></>
+            </Touchable>
+            {pretitle && (
                 <Text2
                     color={vars.colors.textPrimary}
-                    truncate={subtitleLinesMax}
-                    as="p"
+                    truncate={pretitleLinesMax}
+                    as={pretitleAs}
                     regular
                     hyphens="auto"
                 >
-                    {subtitle}
+                    {pretitle}
                 </Text2>
-            </Stack>
+            )}
+
+            <Text
+                mobileSize={18}
+                mobileLineHeight="24px"
+                desktopSize={20}
+                desktopLineHeight="28px"
+                truncate={titleLinesMax}
+                weight={textPresets.cardTitle.weight}
+                as={titleAs}
+                hyphens="auto"
+            >
+                {title}
+            </Text>
+            <Text2 color={vars.colors.textPrimary} truncate={subtitleLinesMax} as="p" regular hyphens="auto">
+                {subtitle}
+            </Text2>
             {description && (
                 <Text2
                     truncate={descriptionLinesMax}
@@ -200,8 +209,7 @@ type AllowedExtra =
 
 type TextAs = 'h1' | 'h2' | 'h3' | 'h4';
 
-interface AdvancedDataCardProps {
-    onPress?: () => void;
+type AdvancedDataCardProps = {
     stackingGroup?: RendersNullableElement<typeof StackingGroup>;
     headline?: RendersNullableElement<typeof Tag>;
     pretitle?: string;
@@ -222,16 +230,16 @@ interface AdvancedDataCardProps {
     footerTextLinesMax?: number;
     buttonLink?: RendersNullableElement<typeof ButtonLink>;
     dataAttributes?: DataAttributes;
-    actions?: Array<CardAction>;
+    actions?: Array<CardAction | React.ReactElement>;
     'aria-label'?: string;
     onClose?: () => void;
-}
+} & ExclusifyUnion<
+    {href: string | undefined} | {to: string | undefined} | {onPress: PressHandler | undefined}
+>;
 
 export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCardProps>(
     (
         {
-            onPress,
-
             stackingGroup,
             headline,
             pretitle,
@@ -258,10 +266,11 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
             actions,
             'aria-label': ariaLabel,
             onClose,
+            ...touchableProps
         },
         ref
     ) => {
-        const isTouchable = !!onPress;
+        const isTouchable = !!touchableProps.href || !!touchableProps.onPress || !!touchableProps.to;
 
         const footerProps = {button, footerImage, footerText, footerTextLinesMax, buttonLink};
 
@@ -283,66 +292,61 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
                 })}
                 {...getPrefixedDataAttributes(dataAttributes, 'AdvancedDataCard')}
                 ref={ref}
+                aria-label={ariaLabel}
             >
                 <Boxed className={styles.dataCard}>
                     <div className={styles.touchableContainer}>
-                        <Touchable
-                            onPress={onPress}
-                            tabIndex={0}
-                            maybe
-                            className={styles.touchable}
-                            aria-label={ariaLabel}
-                        >
-                            {isTouchable && <div className={styles.touchableCardOverlay} />}
+                        {isTouchable && <div className={styles.touchableCardOverlay} />}
 
-                            <div
-                                className={classNames(
-                                    styles.cardContentStyle,
-                                    !hasFooter && !hasExtras ? styles.minHeight : ''
-                                )}
-                            >
-                                <Box paddingTop={8}>
-                                    <Inline space={0}>
-                                        <Stack space={8}>
-                                            {stackingGroup}
-                                            <CardContent
-                                                headline={headline}
-                                                pretitle={pretitle}
-                                                pretitleAs={pretitleAs}
-                                                pretitleLinesMax={pretitleLinesMax}
-                                                title={title}
-                                                titleAs={titleAs}
-                                                titleLinesMax={titleLinesMax}
-                                                subtitle={subtitle}
-                                                subtitleLinesMax={subtitleLinesMax}
-                                                description={description}
-                                                descriptionLinesMax={descriptionLinesMax}
-                                            />
-                                        </Stack>
-                                        {/** Hack to avoid content from rendering on top of the top action buttons */}
-                                        {!stackingGroup && <div style={topActionsStylesWithoutIcon} />}
-                                    </Inline>
-                                </Box>
-                            </div>
-                            <div style={{flexGrow: 1}} />
-                            {hasExtras && (
-                                <Box paddingTop={16} paddingBottom={24} width="100%">
-                                    {extra.map((item, index) => {
-                                        return (
-                                            <div key={index}>
-                                                <div className={styles.paddingX}>{item}</div>
-
-                                                {index + 1 !== extra.length && (
-                                                    <Box paddingY={extraDividerPadding}>
-                                                        <Divider />
-                                                    </Box>
-                                                )}
-                                            </div>
-                                        );
-                                    })}
-                                </Box>
+                        <div
+                            className={classNames(
+                                styles.cardContentStyle,
+                                !hasFooter && !hasExtras ? styles.minHeight : ''
                             )}
-                        </Touchable>
+                        >
+                            <Box paddingTop={8}>
+                                <Inline space={0}>
+                                    <Stack space={8}>
+                                        {stackingGroup}
+                                        <CardContent
+                                            headline={headline}
+                                            pretitle={pretitle}
+                                            pretitleAs={pretitleAs}
+                                            pretitleLinesMax={pretitleLinesMax}
+                                            title={title}
+                                            titleAs={titleAs}
+                                            titleLinesMax={titleLinesMax}
+                                            subtitle={subtitle}
+                                            subtitleLinesMax={subtitleLinesMax}
+                                            description={description}
+                                            descriptionLinesMax={descriptionLinesMax}
+                                            ariaLabel={ariaLabel}
+                                            {...touchableProps}
+                                        />
+                                    </Stack>
+                                    {/** Hack to avoid content from rendering on top of the top action buttons */}
+                                    {!stackingGroup && <div style={topActionsStylesWithoutIcon} />}
+                                </Inline>
+                            </Box>
+                        </div>
+                        <div style={{flexGrow: 1}} />
+                        {hasExtras && (
+                            <Box paddingTop={16} paddingBottom={24} width="100%" className={styles.zindex}>
+                                {extra.map((item, index) => {
+                                    return (
+                                        <div key={index}>
+                                            <div className={styles.paddingX}>{item}</div>
+
+                                            {index + 1 !== extra.length && (
+                                                <Box paddingY={extraDividerPadding}>
+                                                    <Divider />
+                                                </Box>
+                                            )}
+                                        </div>
+                                    );
+                                })}
+                            </Box>
+                        )}
                         {/**
                          * Given that the actions are inside the card content, there is a 1px padding that affects their position in the card.
                          * By default, all the other cards use padding of 8px for the actions, so we use 7px in here to compensate for

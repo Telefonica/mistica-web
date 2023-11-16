@@ -144,6 +144,8 @@ export const getO2ClassicSkin: GetKnownSkin = () => {
             // CONTROLS
             control: palette.grey3,
             controlActivated: palette.o2Gem,
+            controlInverse: palette.white,
+            controlActivatedInverse: palette.white,
             controlError: palette.pepper,
             loadingBar: palette.o2Gem,
             loadingBarBackground: palette.o2GemLight30,
@@ -259,6 +261,8 @@ export const getO2ClassicSkin: GetKnownSkin = () => {
             textLinkSnackbar: palette.o2SkyBlueLight,
             control: palette.darkModeGrey6,
             controlActivated: palette.o2SkyBlue,
+            controlInverse: palette.darkModeGrey6,
+            controlActivatedInverse: palette.o2SkyBlueLight,
             loadingBar: palette.o2SkyBlue,
             loadingBarBackground: palette.darkModeGrey6,
             toggleAndroidInactive: palette.grey4,
