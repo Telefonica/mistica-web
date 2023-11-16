@@ -320,6 +320,7 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
                                             subtitleLinesMax={subtitleLinesMax}
                                             description={description}
                                             descriptionLinesMax={descriptionLinesMax}
+                                            ariaLabel={ariaLabel}
                                             {...touchableProps}
                                         />
                                     </Stack>
