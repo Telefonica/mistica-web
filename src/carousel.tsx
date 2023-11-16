@@ -1,7 +1,7 @@
 import * as React from 'react';
 import IconChevronLeftRegular from './generated/mistica-icons/icon-chevron-left-regular';
 import IconChevronRightRegular from './generated/mistica-icons/icon-chevron-right-regular';
-import {useIsInViewport, useIsomorphicLayoutEffect, useScreenSize, useTheme} from './hooks';
+import {useIsInViewport, useScreenSize, useTheme} from './hooks';
 import Inline from './inline';
 import Stack from './stack';
 import {BaseTouchable} from './touchable';
@@ -226,7 +226,7 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
     const showNextArrow = scrollRight !== 0;
     const showPrevArrow = scrollLeft !== 0;
 
-    useIsomorphicLayoutEffect(() => {
+    React.useEffect(() => {
         if (carouselRef.current) {
             const carouselEl = carouselRef.current;
 
