@@ -2,7 +2,7 @@ import {screen, openStoryPage} from '../test-utils';
 
 test('Dialog over fixed footer', async () => {
     const page = await openStoryPage({
-        id: 'layout-fixed-footer-layout--dialog-over-fixed-footer',
+        id: 'layout-fixedfooterlayout--dialog-over-fixed-footer',
         device: 'MOBILE_IOS',
     });
 
@@ -12,9 +12,22 @@ test('Dialog over fixed footer', async () => {
     expect(image).toMatchImageSnapshot();
 });
 
+test.each(['MOBILE_IOS', 'DESKTOP', 'LARGE_DESKTOP'] as const)(
+    'ButtonFixedFooterLayout on %s',
+    async (device) => {
+        const page = await openStoryPage({
+            id: 'layout-fixedfooterlayout--footer-with-buttons-only',
+            device,
+        });
+
+        const image = await page.screenshot();
+        expect(image).toMatchImageSnapshot();
+    }
+);
+
 test('Fixed footer with static position when height is smaller than the footer itself', async () => {
     const page = await openStoryPage({
-        id: 'layout-fixed-footer-layout--more-complex-footer',
+        id: 'layout-fixedfooterlayout--more-complex-footer',
         device: 'MOBILE_IOS_SMALL',
     });
 
