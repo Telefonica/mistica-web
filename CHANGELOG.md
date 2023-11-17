@@ -1,3 +1,10 @@
+## [14.32.1](https://github.com/Telefonica/mistica-web/compare/v14.32.0...v14.32.1) (2023-11-17)
+
+
+### Bug Fixes
+
+* **AdvancedDataCard:** onPress/href/to should be optional ([#947](https://github.com/Telefonica/mistica-web/issues/947)) ([af0f3e6](https://github.com/Telefonica/mistica-web/commit/af0f3e6efd510353319d7ad6a75b8d81f9ec8a61))
+
 # [14.32.0](https://github.com/Telefonica/mistica-web/compare/v14.31.1...v14.32.0) (2023-11-16)
 
 
