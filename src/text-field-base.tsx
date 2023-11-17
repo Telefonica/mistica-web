@@ -146,7 +146,6 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
         const {isTabletOrSmaller} = useScreenSize();
         const [characterCount, setCharacterCount] = React.useState(defaultValue?.length ?? 0);
         const hasLabel = !!label || !rest.required;
-        const theme = useTheme();
 
         // this shrinkLabel override is a workaround because I was unable to find a way to hide date
         // and date-time native placeholders when the input is not required
@@ -226,10 +225,7 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
         });
 
         /* Workaround to avoid huge bullets on ios devices (-apple-system font related) */
-        const fontFamily =
-            rest.type === 'password' && !isRunningAcceptanceTest(theme.platformOverrides)
-                ? 'Lucida Grande, Arial, sans-serif'
-                : 'inherit';
+        const fontFamily = rest.type === 'password' ? 'Lucida Grande, Arial, sans-serif' : 'inherit';
 
         return (
             <FieldContainer
