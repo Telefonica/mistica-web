@@ -58,18 +58,14 @@ test('Tabs selected line appears properly', async () => {
         device: 'MOBILE_IOS',
     });
 
-    await page.evaluate(() => {
-        const secondTab = document.querySelector<HTMLElement>('[data-tabindex="1"]');
-        secondTab?.click();
-    });
+    const secondTab = await page.evaluate(() => document.querySelector<HTMLElement>('[data-tabindex="1"]'));
+    secondTab?.click();
 
     const secondTabActive = await (await screen.findByRole('tablist')).screenshot();
     expect(secondTabActive).toMatchImageSnapshot();
 
-    await page.evaluate(() => {
-        const thirdTab = document.querySelector<HTMLElement>('[data-tabindex="2"]');
-        thirdTab?.click();
-    });
+    const thirdTab = await page.evaluate(() => document.querySelector<HTMLElement>('[data-tabindex="2"]'));
+    thirdTab?.click();
 
     const thirdTabActive = await (await screen.findByRole('tablist')).screenshot();
     expect(thirdTabActive).toMatchImageSnapshot();
