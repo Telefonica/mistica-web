@@ -117,6 +117,16 @@ test.each(STORY_TYPES)('CreditCardExpirationField (%s)', async (storyType) => {
 
     await clearAndType(page, field, '12///34/56');
     expect(await getValue(field)).toBe('12/34');
+
+    await clearAndType(page, field, '222');
+    expect(await getValue(field)).toBe('02/22');
+
+    await page.keyboard.press('Backspace');
+    await page.keyboard.press('Backspace');
+    expect(await getValue(field)).toBe('02');
+
+    await field.type('22');
+    expect(await getValue(field)).toBe('02/22');
 });
 
 test.each(STORY_TYPES)('PasswordField (%s)', async (storyType) => {

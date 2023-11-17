@@ -13,40 +13,42 @@ type ExpirationDateValue = {
 
 const MonthYearDateInput: React.FC<any> = ({inputRef, defaultValue, value, ...rest}) => {
     const {texts} = useTheme();
-    const prevValue = React.useRef(value || '');
 
     /**
      * 1) characters other than [0-9] and '/' are removed
      * 2) automatically insert "/" as you type
-     * 3) the user must be able to remove text (eg: deleting the slash must not automatically insert a new one)
+     * 3) the user must be able to remove text
      */
     const format = (s: string) => {
-        // remove invalid characters
-        let value = s.replace(/[^\d/]/g, '').replace(/\/+/g, '/');
+        /**
+         * format after adding characters one by one in order to prevent unwanted results when
+         * writing multiple characters at the same time (for example, by using copy/paste)
+         */
+        let value = '';
+        [...s].forEach((c) => {
+            value = (value + c)
+                .replace(
+                    /[^0-9]/g,
+                    '' // allow only numbers
+                )
+                .replace(
+                    /^([2-9])$/g,
+                    '0$1' // 3 -> 03
+                )
+                .replace(
+                    /^(1{1})([3-9]{1})$/g,
+                    '0$1/$2' // 13 -> 01/3
+                )
+                .replace(
+                    /^0{1,}/g,
+                    '0' // 00 -> 0
+                )
+                .replace(
+                    /^([0-1]{1}[0-9]{1})([0-9]{1,2}).*/g,
+                    '$1/$2' // 113 > 11/3
+                );
+        });
 
-        // remove extra slashes: "01/12/34" => "01/12"
-        const [month, year] = value.split('/');
-        if (year) {
-            value = `${month}/${year}`;
-        }
-
-        const isDeleting = String(prevValue.current).length >= value.length;
-
-        if (isDeleting) {
-            // do not format when deleting
-        } else if (value === '/') {
-            value = ''; // missing month, invalid
-        } else if (value.length === 1 && parseInt(value) >= 2) {
-            value = `0${value}/`; // month is > 1, prepend with "0"
-        } else if (value.length === 2) {
-            if (value[1] === '/') {
-                value = `0${value}`; // prepend "0" to "1/"
-            } else if (parseInt(month) > 12 || parseInt(month) < 1) {
-                value = value[0]; // if month is invalid remove last character
-            } else {
-                value = `${value}/`; // append "/" to two-digit size months
-            }
-        }
         return value;
     };
 
@@ -59,7 +61,6 @@ const MonthYearDateInput: React.FC<any> = ({inputRef, defaultValue, value, ...re
             maxLength="5" // MM/YY
             onInput={(e) => {
                 const nextValue = format(e.currentTarget.value);
-                prevValue.current = nextValue;
                 e.currentTarget.value = nextValue;
             }}
             value={value === undefined ? undefined : format(value)}

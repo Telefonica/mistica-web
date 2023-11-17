@@ -75,7 +75,7 @@ export const Controlled: StoryComponent<CreditCardExpirationFieldControlledArgs>
 
 Controlled.storyName = 'controlled';
 Controlled.args = {
-    initialValue: '13/21',
+    initialValue: '12/21',
     ...defaultBaseArgs,
 };
 
@@ -127,6 +127,6 @@ export const Uncontrolled: StoryComponent<CreditCardExpirationFieldUncontrolledA
 
 Uncontrolled.storyName = 'uncontrolled';
 Uncontrolled.args = {
-    defaultValue: '13/21',
+    defaultValue: '12/21',
     ...defaultBaseArgs,
 };
