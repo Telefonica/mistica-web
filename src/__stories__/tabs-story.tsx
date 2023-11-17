@@ -20,12 +20,12 @@ export default {
 
 type Args = {
     tabCount: number;
-    label: string;
+    text: string;
     theme: Variant;
     icon: boolean;
 };
 
-export const Default: StoryComponent<Args> = ({tabCount, label, theme, icon}) => {
+export const Default: StoryComponent<Args> = ({tabCount, text, theme, icon}) => {
     const [selectedIndex, setSelectedIndex] = React.useState(0);
     return (
         <ResponsiveLayout fullWidth variant={theme}>
@@ -34,7 +34,7 @@ export const Default: StoryComponent<Args> = ({tabCount, label, theme, icon}) =>
                     selectedIndex={selectedIndex}
                     onChange={setSelectedIndex}
                     tabs={Array.from({length: tabCount}).map((_, index) => ({
-                        text: `${label} ${index + 1}`,
+                        text: `${text} ${index + 1}`,
                         icon: icon ? <IconCloseRegular size={pxToRem(24)} color="currentColor" /> : undefined,
                     }))}
                 />
@@ -46,7 +46,7 @@ export const Default: StoryComponent<Args> = ({tabCount, label, theme, icon}) =>
 Default.storyName = 'Tabs';
 Default.args = {
     tabCount: 3,
-    label: 'Tab',
+    text: 'Tab',
     theme: 'default',
     icon: false,
 };
