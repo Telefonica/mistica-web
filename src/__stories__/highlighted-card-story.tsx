@@ -1,15 +1,24 @@
 import * as React from 'react';
-import {HighlightedCard, Box, ButtonPrimary, ButtonSecondary, ButtonLink} from '..';
+import {
+    HighlightedCard,
+    ButtonPrimary,
+    ButtonSecondary,
+    ButtonLink,
+    ResponsiveLayout,
+    Stack,
+    Text2,
+    Carousel,
+} from '..';
 import personPortraitImg from './images/person-portrait.jpg';
 
 export default {
-    title: 'Components/Cards/Highlighted card',
+    title: 'Components/Cards/HighlightedCard',
 };
 
 type Args = {
     title: string;
     description: string;
-    action: 'ButtonPrimary' | 'ButtonSecondary' | 'ButtonLink' | 'touchable' | 'none';
+    actions: 'ButtonPrimary' | 'ButtonSecondary' | 'ButtonLink' | 'on press' | 'none';
     image: 'fit' | 'fill' | 'none';
     inverse: boolean;
     closable: boolean;
@@ -18,7 +27,7 @@ type Args = {
 export const Default: StoryComponent<Args> = ({
     title,
     description,
-    action = 'ButtonPrimary',
+    actions = 'ButtonPrimary',
     image = 'fit',
     inverse,
     closable,
@@ -56,27 +65,27 @@ export const Default: StoryComponent<Args> = ({
             imageUrl={image !== 'none' ? personPortraitImg : undefined}
             imageFit={image !== 'none' ? image : undefined}
             dataAttributes={{testid: 'highlighted-card'}}
-            button={getButton(action) as any}
-            onPress={action === 'touchable' ? () => {} : undefined}
+            button={getButton(actions) as any}
+            onPress={actions === 'on press' ? () => {} : undefined}
             isInverse={inverse}
             onClose={closable ? () => {} : undefined}
         />
     );
 };
 
-Default.storyName = 'Highlighted card';
+Default.storyName = 'HighlightedCard';
 Default.args = {
     title: 'Resolver problema técnico',
     description: 'Usa nuestra herramienta para resolver tus problemas técnicos',
-    action: 'ButtonPrimary',
+    actions: 'ButtonPrimary',
     image: 'fit',
     inverse: false,
     closable: false,
 };
 
 Default.argTypes = {
-    action: {
-        options: ['ButtonPrimary', 'ButtonSecondary', 'ButtonLink', 'touchable', 'none'],
+    actions: {
+        options: ['ButtonPrimary', 'ButtonSecondary', 'ButtonLink', 'on press', 'none'],
         control: {type: 'select'},
     },
     image: {
@@ -85,105 +94,48 @@ Default.argTypes = {
     },
 };
 
-export const CustomCardSize: StoryComponent = () => {
+export const Group: StoryComponent = () => {
     return (
-        <div
-            style={{display: 'flex', background: '#eee', overflowX: 'auto', justifyContent: 'flex-start'}}
-            data-testid="highlighted-card"
-        >
-            <HighlightedCard
-                width={250}
-                title="Title 1"
-                description="Some description here"
-                imageUrl={personPortraitImg}
-                imageFit="fit"
-                onClose={() => {}}
-            />
-
-            <Box paddingRight={8} />
-
-            <HighlightedCard
-                width={250}
-                title="Title 2"
-                description="Some description here"
-                imageUrl={personPortraitImg}
-                imageFit="fit"
-                button={
-                    <ButtonPrimary small href="https://google.com">
-                        Action
-                    </ButtonPrimary>
-                }
-            />
-
-            <Box paddingRight={8} />
-
-            <HighlightedCard
-                width={250}
-                title="Title 3"
-                description="Some description here. Some description here."
-                imageUrl={personPortraitImg}
-                imageFit="fit"
-                button={
-                    <ButtonPrimary small href="https://google.com">
-                        Action
-                    </ButtonPrimary>
-                }
-            />
-
-            <Box paddingRight={8} />
-
-            <HighlightedCard
-                width={250}
-                onClose={() => {}}
-                onPress={() => {}}
-                title="Title 4"
-                description="Some description here. Some description here. Some description here. "
-                imageUrl={personPortraitImg}
-                imageFit="fit"
-            />
-        </div>
+        <ResponsiveLayout>
+            <Stack space={16}>
+                <Text2 regular>
+                    We can group multiple cards and they adjust to the same height. The card actions are
+                    always fixed on bottom.
+                </Text2>
+                <Carousel
+                    itemsPerPage={3}
+                    items={[
+                        <HighlightedCard
+                            title="Title 1"
+                            description="Some description here"
+                            imageUrl={personPortraitImg}
+                            imageFit="fill"
+                            onClose={() => {}}
+                        />,
+                        <HighlightedCard
+                            title="Title 2"
+                            description="Some description here"
+                            imageUrl={personPortraitImg}
+                            imageFit="fill"
+                            button={
+                                <ButtonPrimary small href="https://google.com">
+                                    Action
+                                </ButtonPrimary>
+                            }
+                        />,
+                        <HighlightedCard
+                            onClose={() => {}}
+                            onPress={() => {}}
+                            title="Title 4"
+                            description="Some description here. Some description here. Some description here. "
+                            imageUrl={personPortraitImg}
+                            imageFit="fill"
+                        />,
+                    ]}
+                />
+            </Stack>
+        </ResponsiveLayout>
     );
 };
 
-CustomCardSize.storyName = ' Custom card size';
-
-const CardWrapper = ({children}: {children: React.ReactNode}) => (
-    <div style={{display: 'flex', width: '18%', marginRight: 8}}>{children}</div>
-);
-
-export const CustomCardSizeInsideWrapper: StoryComponent = () => {
-    return (
-        <div style={{display: 'flex', background: '#eee'}} data-testid="highlighted-card">
-            <CardWrapper>
-                <HighlightedCard title="Title1" description="Simple" />
-            </CardWrapper>
-
-            <CardWrapper>
-                <HighlightedCard title="Title2" description="Dismisseable" onClose={() => {}} />
-            </CardWrapper>
-
-            <CardWrapper>
-                <HighlightedCard title="Title3" description="Touchable card" onPress={() => {}} />
-            </CardWrapper>
-
-            <CardWrapper>
-                <HighlightedCard
-                    title="Title4"
-                    description="Touchable and dismisseable"
-                    onPress={() => {}}
-                    onClose={() => {}}
-                />
-            </CardWrapper>
-
-            <CardWrapper>
-                <HighlightedCard
-                    title="Title5"
-                    description="Super long description. Super long description. Super long description. Super long description."
-                    onClose={() => {}}
-                />
-            </CardWrapper>
-        </div>
-    );
-};
-
-CustomCardSizeInsideWrapper.storyName = ' Custom card size inside wrapper';
+Group.storyName = 'HighlightedCard group';
