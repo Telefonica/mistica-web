@@ -5,6 +5,7 @@
  */
 
 import * as React from 'react';
+import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
 
@@ -13,15 +14,35 @@ import type {IconProps} from '../../utils/types';
 const IconSubtractRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
-
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path
-                fill={fillColor}
-                d="M3.001 12.047a.879.879 0 0 1 .828-.924h16.34a.876.876 0 0 1 .003 1.752H3.829A.876.876 0 0 1 3 12.047Z"
-            />
-        </svg>
-    );
+    const {skinName} = useTheme();
+    if (skinName.match(/^blau/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M21.321 11.321H2.679a.679.679 0 1 0 0 1.357h18.642a.679.679 0 1 0 0-1.357Z"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M21.285 10.783a.722.722 0 0 1 .715.716.84.84 0 0 1-.219.551c-.127.128-.3.161-.493.161-11.82.004-6.036-.002-18.572.006A.722.722 0 0 1 2 11.5a.722.722 0 0 1 .716-.715c11.312-.008 6.967-.007 18.569-.003Z"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M3.001 12.047a.879.879 0 0 1 .828-.924h16.34a.876.876 0 0 1 .003 1.752H3.829A.876.876 0 0 1 3 12.047Z"
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconSubtractRegular;

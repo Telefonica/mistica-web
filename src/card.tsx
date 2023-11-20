@@ -40,12 +40,16 @@ import type {
 
 export type CardAction = {
     label: string;
-    onPress: () => void;
     Icon: React.FC<IconProps>;
     disabled?: boolean;
-};
+    trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
+} & ExclusifyUnion<
+    | {href: string; newTab?: boolean}
+    | {to: string; fullPageOnWebView?: boolean; replace?: boolean}
+    | {onPress: () => void}
+>;
 
-const useTopActions = (actions?: Array<CardAction>, onClose?: () => void) => {
+const useTopActions = (actions?: Array<CardAction | React.ReactElement>, onClose?: () => void) => {
     const {texts} = useTheme();
     const finalActions = actions ? [...actions] : [];
 
@@ -60,8 +64,10 @@ const useTopActions = (actions?: Array<CardAction>, onClose?: () => void) => {
     return finalActions;
 };
 
+const CardActionTypeContext = React.createContext<'default' | 'inverse' | 'media'>('default');
+
 type CardActionsGroupProps = {
-    actions?: Array<CardAction>;
+    actions?: Array<CardAction | React.ReactElement>;
     onClose?: () => void;
     padding?: number;
     type?: 'default' | 'inverse' | 'media';
@@ -69,14 +75,8 @@ type CardActionsGroupProps = {
 
 export const TOP_ACTION_BUTTON_SIZE = 48;
 
-export const CardActionsGroup = ({
-    actions,
-    padding = 8,
-    onClose,
-    type = 'default',
-}: CardActionsGroupProps): JSX.Element => {
-    const finalActions = useTopActions(actions, onClose);
-    const hasActions = finalActions.length > 0;
+export const CardActionIconButton = ({Icon, label, ...restProps}: CardAction): JSX.Element => {
+    const type = React.useContext(CardActionTypeContext);
 
     const iconColor = {
         default: vars.colors.neutralHigh,
@@ -89,34 +89,52 @@ export const CardActionsGroup = ({
         inverse: styles.cardActionInverse,
         media: styles.cardActionMedia,
     };
+    return (
+        <IconButton
+            {...restProps}
+            aria-label={label}
+            size={TOP_ACTION_BUTTON_SIZE}
+            className={styles.cardActionIconButton}
+            style={{display: 'flex'}}
+        >
+            <div className={iconBackgroundStyle[type]}>
+                <Icon color={iconColor[type]} size={20} />
+            </div>
+        </IconButton>
+    );
+};
+
+export const CardActionsGroup = ({
+    actions,
+    padding = 8,
+    onClose,
+    type = 'default',
+}: CardActionsGroupProps): JSX.Element => {
+    const finalActions = useTopActions(actions, onClose);
+    const hasActions = finalActions.length > 0;
 
     return hasActions ? (
-        <div
-            style={{
-                position: 'absolute',
-                right: padding,
-                top: padding,
-                zIndex: 3, // needed because images has zIndex 1 and touchable overlay has zIndex 2
-            }}
-        >
-            <div className={sprinkles({display: 'flex'})}>
-                {finalActions.map(({onPress, label, Icon, disabled = false}, index) => (
-                    <IconButton
-                        disabled={disabled}
-                        size={TOP_ACTION_BUTTON_SIZE}
-                        key={index}
-                        onPress={onPress}
-                        aria-label={label}
-                        className={styles.cardActionIconButton}
-                        style={{display: 'flex'}}
-                    >
-                        <div className={iconBackgroundStyle[type]}>
-                            <Icon color={iconColor[type]} size={20} />
-                        </div>
-                    </IconButton>
-                ))}
+        <CardActionTypeContext.Provider value={type}>
+            <div
+                style={{
+                    position: 'absolute',
+                    right: padding,
+                    top: padding,
+                    zIndex: 3, // needed because images has zIndex 1 and touchable overlay has zIndex 2
+                }}
+            >
+                <div className={sprinkles({display: 'flex'})}>
+                    {finalActions.map((action, index) => {
+                        if ('label' in action) {
+                            // action is a CardAction object
+                            return <CardActionIconButton key={index} {...action} />;
+                        }
+                        // action is a React.ReactElement
+                        return action;
+                    })}
+                </div>
             </div>
-        </div>
+        </CardActionTypeContext.Provider>
     ) : (
         <></>
     );
@@ -211,11 +229,13 @@ const transitions: Record<VideoState, Partial<Record<VideoAction, VideoState>>> 
     playing: {
         pause: 'paused',
         reset: 'loading',
+        fail: 'error',
     },
 
     paused: {
         play: 'playing',
         reset: 'loading',
+        fail: 'error',
     },
 
     error: {
@@ -437,7 +457,7 @@ interface MediaCardBaseProps {
     description?: string;
     descriptionLinesMax?: number;
     extra?: React.ReactNode;
-    actions?: Array<CardAction>;
+    actions?: Array<CardAction | React.ReactElement>;
     children?: void;
     dataAttributes?: DataAttributes;
     'aria-label'?: string;
@@ -713,7 +733,7 @@ interface DataCardBaseProps {
     description?: string;
     descriptionLinesMax?: number;
     extra?: React.ReactNode;
-    actions?: Array<CardAction>;
+    actions?: Array<CardAction | React.ReactElement>;
     aspectRatio?: AspectRatio | number;
     children?: void;
     /** "data-" prefix is automatically added. For example, use "testid" instead of "data-testid" */
@@ -904,7 +924,7 @@ interface CommonDisplayCardProps {
      * Typically a mistica-icons component element
      */
     icon?: React.ReactElement;
-    actions?: Array<CardAction>;
+    actions?: Array<CardAction | React.ReactElement>;
     onClose?: () => void;
     dataAttributes?: DataAttributes;
     headline?: React.ReactComponentElement<typeof Tag>;
@@ -1180,7 +1200,7 @@ interface PosterCardBaseProps {
     width?: number | string;
     height?: number | string;
     icon?: React.ReactElement;
-    actions?: Array<CardAction>;
+    actions?: Array<CardAction | React.ReactElement>;
     onClose?: () => void;
     dataAttributes?: DataAttributes;
     headline?: string | RendersNullableElement<typeof Tag>;

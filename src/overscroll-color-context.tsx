@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {useThemeVariant} from './theme-variant-context';
 import {useTheme, useScreenSize} from './hooks';
-import createNestableContext from './nestable-context';
+import {createNestableContext} from './nestable-context';
 import {isInsideNovumNativeApp, getPlatform} from './utils/platform';
 import {vars} from './skins/skin-contract.css';
 

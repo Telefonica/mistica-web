@@ -112,7 +112,7 @@ export const vars = {
 
 export const DEFAULT_DESKTOP_GAP = 16;
 const DEFAULT_MOBILE_GAP = 8;
-const DEFAULT_MOBILE_PAGE_OFFSET = '16px';
+const DEFAULT_MOBILE_PAGE_OFFSET = '24px';
 const DEFAULT_TABLET_PAGE_OFFSET = '36px';
 
 export const carousel = style([

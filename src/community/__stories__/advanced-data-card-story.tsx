@@ -63,10 +63,8 @@ export const Default: StoryComponent<Args> = ({
         </ButtonLink>
     ) : undefined;
 
-    const onPress = actions.includes('onPress')
-        ? () => {
-              window.alert('press!');
-          }
+    const href = actions.includes('href')
+        ? 'https://mistica-web.vercel.app/?path=/story/welcome--welcome'
         : undefined;
 
     return (
@@ -94,7 +92,7 @@ export const Default: StoryComponent<Args> = ({
             footerImage={footerImage ? <Image height={40} src={imgExample} /> : undefined}
             footerText={footerText}
             onClose={onClose ? () => window.alert('closed!') : undefined}
-            onPress={onPress}
+            href={href}
             extra={Array.from({length: extra}, (_, i) => (
                 <Placeholder key={i} height={56} />
             ))}
@@ -128,10 +126,10 @@ Default.argTypes = {
             'button',
             'link',
             'button and link',
-            'onPress',
-            'button and onPress',
-            'link and onPress',
-            'button link and onPress',
+            'href',
+            'button and href',
+            'link and href',
+            'button link and href',
         ],
         control: {type: 'select'},
     },

@@ -1,3 +1,64 @@
+## [14.32.1](https://github.com/Telefonica/mistica-web/compare/v14.32.0...v14.32.1) (2023-11-17)
+
+
+### Bug Fixes
+
+* **AdvancedDataCard:** onPress/href/to should be optional ([#947](https://github.com/Telefonica/mistica-web/issues/947)) ([af0f3e6](https://github.com/Telefonica/mistica-web/commit/af0f3e6efd510353319d7ad6a75b8d81f9ec8a61))
+
+# [14.32.0](https://github.com/Telefonica/mistica-web/compare/v14.31.1...v14.32.0) (2023-11-16)
+
+
+### Bug Fixes
+
+* **ScreenReaderOnly:** Fix ScreenReaderOnly positioning to avoid scrolling issues ([#942](https://github.com/Telefonica/mistica-web/issues/942)) ([f6537e9](https://github.com/Telefonica/mistica-web/commit/f6537e91014a7be1c23ff81d374810c164da0b0e))
+
+
+### Features
+
+* **AdvancedDataCard:** support for href/to ([#859](https://github.com/Telefonica/mistica-web/issues/859)) ([ba5eafb](https://github.com/Telefonica/mistica-web/commit/ba5eafba576ae726544ba3ccf88101ecc4c916c2))
+
+## [14.31.1](https://github.com/Telefonica/mistica-web/compare/v14.31.0...v14.31.1) (2023-11-16)
+
+
+### Bug Fixes
+
+* **Carousel:** avoid immediate style reflow on component mount ([#945](https://github.com/Telefonica/mistica-web/issues/945)) ([c46206e](https://github.com/Telefonica/mistica-web/commit/c46206eff42c6e76cbbe5b0ed6859967de636281))
+
+# [14.31.0](https://github.com/Telefonica/mistica-web/compare/v14.30.0...v14.31.0) (2023-11-16)
+
+
+### Bug Fixes
+
+* **FixedFooterLayout:** consider bottom inset area for calculations ([#943](https://github.com/Telefonica/mistica-web/issues/943)) ([23c7544](https://github.com/Telefonica/mistica-web/commit/23c75444a8e2234b6685d2d51b10f68565df6819))
+
+
+### Features
+
+* **createNestableContext:** allow custom valuesReducer ([#941](https://github.com/Telefonica/mistica-web/issues/941)) ([ec5b2a1](https://github.com/Telefonica/mistica-web/commit/ec5b2a104ad8c84b96a1d5862f576b7886df96c9))
+* **skin:** update design tokens ([#938](https://github.com/Telefonica/mistica-web/issues/938)) ([605c517](https://github.com/Telefonica/mistica-web/commit/605c51712e11a341d4320af44ede06c7055ab125))
+
+# [14.30.0](https://github.com/Telefonica/mistica-web/compare/v14.29.0...v14.30.0) (2023-11-13)
+
+
+### Features
+
+* **CardActionIconButton:** element to use in card actions ([#936](https://github.com/Telefonica/mistica-web/issues/936)) ([ac1a6c4](https://github.com/Telefonica/mistica-web/commit/ac1a6c4ecfd6eeabb0a98d8cdd332ece480af382))
+
+# [14.29.0](https://github.com/Telefonica/mistica-web/compare/v14.28.1...v14.29.0) (2023-11-13)
+
+
+### Bug Fixes
+
+* **Accordion, RowList:** remove last divider ([#929](https://github.com/Telefonica/mistica-web/issues/929)) ([e9de2b4](https://github.com/Telefonica/mistica-web/commit/e9de2b495a13076b623c18e98bdbce2c2327591c))
+* **Carousel:** change regular mobilePageOffset to 24px ([#935](https://github.com/Telefonica/mistica-web/issues/935)) ([13d8864](https://github.com/Telefonica/mistica-web/commit/13d88642a446529a2ca465bf8b4d16a57b4bdb10))
+
+
+### Features
+
+* **ButtonLayout:** every button has their own size ([#933](https://github.com/Telefonica/mistica-web/issues/933)) ([007d948](https://github.com/Telefonica/mistica-web/commit/007d948f179dde327b586d1455b2d12502f203d3))
+* **Counter:** create component ([#927](https://github.com/Telefonica/mistica-web/issues/927)) ([211f826](https://github.com/Telefonica/mistica-web/commit/211f82612989d9a6ea4d4f0d75fd835b42567a09))
+* **Snackbar:** support persistent snackbars and dismiss button ([#924](https://github.com/Telefonica/mistica-web/issues/924)) ([dd522d5](https://github.com/Telefonica/mistica-web/commit/dd522d5bd577a774f0d152f7042159882ef71d68))
+
 ## [14.28.1](https://github.com/Telefonica/mistica-web/compare/v14.28.0...v14.28.1) (2023-10-27)
 
 
