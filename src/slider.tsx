@@ -1,163 +1,211 @@
 import * as React from 'react';
-import {useScreenSize, useTheme} from './hooks';
 import * as styles from './slider.css';
-import classnames from 'classnames';
-import Tooltip from './tooltip';
+import {vars} from './skins/skin-contract.css';
+import {TAB} from './utils/key-codes';
+import {isClientSide} from './utils/environment';
+import classNames from 'classnames';
+import {cancelEvent} from './utils/dom';
+
+const NOTCH_SIZE = 20;
+
+const useSliderState = ({
+    value,
+    defaultValue,
+    min,
+    max,
+    step,
+    onChangeValue,
+}: {
+    value?: number;
+    defaultValue?: number;
+    min: number;
+    max: number;
+    step: number;
+    onChangeValue?: (value: number) => void;
+}): [number, (value: number) => void] => {
+    const isControlledByParent = value !== undefined;
+
+    const getValueInRange = React.useCallback(
+        (isRelative: boolean, value?: number) => {
+            const getRealValue = (value?: number) => {
+                if (value === undefined) {
+                    return min;
+                }
+                const realValue = isRelative ? min + (max - min) * value : value;
+                return Math.max(min, Math.min(max, realValue));
+            };
+            const currentValue = getRealValue(value);
+
+            const valueRoundedDown = min + Math.floor((currentValue - min) / step) * step;
+            const valueRoundedUp = min + Math.ceil((currentValue - min) / step) * step;
+
+            return valueRoundedUp <= max && valueRoundedUp - currentValue <= currentValue - valueRoundedDown
+                ? valueRoundedUp
+                : valueRoundedDown;
+        },
+        [min, max, step]
+    );
+
+    const [currentValue, setCurrentValue] = React.useState<number>(getValueInRange(false, defaultValue));
+
+    const controlledValue = React.useMemo(() => getValueInRange(false, value), [getValueInRange, value]);
+
+    const updateValue = (newValue: number) => {
+        newValue = getValueInRange(true, newValue);
+        const prevValue = isControlledByParent ? value : currentValue;
+        if (newValue !== prevValue) {
+            onChangeValue?.(newValue);
+        }
+        if (!isControlledByParent) {
+            setCurrentValue(newValue);
+        }
+    };
+
+    return [isControlledByParent ? controlledValue : currentValue, updateValue];
+};
 
 interface SliderProps {
     disabled?: boolean;
-    steps?: number | Array<number>;
-    max?: number;
+    step?: number;
     min?: number;
+    max?: number;
     value?: number;
-    onChange?: (value: number) => void;
-    getStepArrayIndex?: (value: number) => void;
-    'arial-label'?: string;
+    defaultValue?: number;
+    onChangeValue?: (value: number) => void;
+    'aria-label'?: string;
     tooltip?: boolean;
 }
 
 const Slider: React.FC<SliderProps> = ({
     disabled,
-    steps = 1,
-    max = 100,
+    step = 1,
     min = 0,
+    max = 100,
     value,
-    onChange,
-    getStepArrayIndex,
-    'arial-label': arialLabel,
-    tooltip,
+    defaultValue,
+    onChangeValue,
+    'aria-label': ariaLabel,
 }) => {
-    const {isIos} = useTheme();
-    const {isTabletOrSmaller} = useScreenSize();
-    const [valueRanger, setValueRanger] = React.useState(min);
-    const [minSlider, setMinSlider] = React.useState(min);
-    const [maxSlider, setMaxSlider] = React.useState(max);
-    const [step, setStep] = React.useState(1);
-    const sliderRef = React.useRef<HTMLDivElement>(null);
-    const opacity = React.useMemo(() => (disabled ? '0.5' : '1'), [disabled]);
-    const sliderPaddingTop = 0;
-    const sliderTop = '50%';
-    const sliderDisabled = React.useMemo(() => disabled && styles.sliderDisabled, [disabled]);
+    const [currentValue, setCurrentValue] = useSliderState({
+        value,
+        defaultValue,
+        min,
+        max,
+        step,
+        onChangeValue,
+    });
 
-    const setPosition = React.useCallback(
-        (withMultiplyValue = false) => {
-            if (!sliderRef.current) return;
-            const slider = sliderRef.current.getBoundingClientRect();
-            const newValue = Number((Math.abs(valueRanger - minSlider) * 100) / (maxSlider - minSlider));
-            const multiplyValue = 0.2 + (window.innerWidth - slider.right) / 100 + (slider.left - 0) / 100;
-            const newPosition = withMultiplyValue
-                ? slider.left - 10 - newValue * multiplyValue
-                : 10 - newValue * 0.2;
-            return `calc(${newValue}% + (${newPosition}px))`;
-        },
-        [valueRanger, minSlider, maxSlider]
-    );
+    const trackRef = React.useRef<HTMLDivElement>(null);
+    const notchRef = React.useRef<HTMLDivElement>(null);
 
-    const getApproximation = React.useCallback(
-        (value: number) => {
-            let finalValue = value;
-            if (Array.isArray(steps)) {
-                finalValue = steps.reduce((a, b) => {
-                    return Math.abs(b - value) < Math.abs(a - value) ? b : a;
-                });
-            }
-            return finalValue;
-        },
-        [steps]
-    );
+    const [isPointerDown, setIsPointerDown] = React.useState(false);
+    const [isHovered, setIsHovered] = React.useState(false);
 
-    const getOrder = React.useCallback(() => {
-        if (Array.isArray(steps)) {
-            steps.sort((a, b) => {
-                return a - b;
-            });
-        }
-    }, [steps]);
-
-    const handleSlider = (value: number) => {
-        setValueRanger(value);
-    };
+    const isTabKeyDownRef = React.useRef(false);
 
     React.useEffect(() => {
-        onChange?.(valueRanger);
-        getStepArrayIndex?.(valueRanger);
-    }, [onChange, getStepArrayIndex, valueRanger]);
-
-    React.useEffect(() => {
-        if (Array.isArray(steps)) {
-            setMaxSlider(steps.length - 1);
-            let valueIndex = 0;
-
-            if (value !== undefined) {
-                valueIndex = steps.indexOf(getApproximation(value));
+        const handleKeyDown = (e: KeyboardEvent) => {
+            switch (e.keyCode) {
+                case TAB:
+                    isTabKeyDownRef.current = true;
+                    break;
+                default:
+                // do nothing
             }
+        };
 
-            setValueRanger(valueIndex);
-        } else {
-            setMinSlider(min);
-            setMaxSlider(max);
-            let ranger = min;
-            if (value !== undefined) {
-                if (min > value || value > max) {
-                    ranger = max < value ? max : min;
-                }
+        const handleKeyUp = () => (isTabKeyDownRef.current = false);
+
+        document.addEventListener('keydown', handleKeyDown, false);
+        document.addEventListener('keyup', handleKeyUp, false);
+        return () => {
+            document.removeEventListener('keydown', handleKeyDown, false);
+            document.removeEventListener('keyup', handleKeyUp, false);
+        };
+    }, []);
+
+    const isTouchableDevice = isClientSide() ? window.matchMedia('(pointer: coarse)').matches : false;
+
+    const onPointerMove = React.useCallback(
+        (e: PointerEvent) => {
+            cancelEvent(e);
+            const track = trackRef.current;
+            if (track) {
+                const leftBorder = track.getBoundingClientRect().left;
+                const width = track.clientWidth;
+                const pointerPosition = e.pageX;
+                setCurrentValue((pointerPosition - leftBorder) / width);
             }
+        },
+        [setCurrentValue]
+    );
 
-            setValueRanger(ranger);
-            setStep(steps);
+    const capturePointerMove = React.useCallback(
+        (e: React.PointerEvent<HTMLDivElement>) => {
+            const notch = notchRef.current;
+            if (notch) {
+                notch.onpointermove = onPointerMove;
+                notch.setPointerCapture(e.pointerId);
+            }
+        },
+        [onPointerMove]
+    );
+
+    const releasePointerMove = React.useCallback((e: React.PointerEvent<HTMLDivElement>) => {
+        const notch = notchRef.current;
+        if (notch) {
+            notch.onpointermove = null;
+            notch.releasePointerCapture(e.pointerId);
         }
-    }, [steps, max, min, getApproximation, value, step, getOrder]);
+    }, []);
+
+    const progress = React.useMemo(
+        () => (min === max ? 0 : ((currentValue - min) / (max - min)) * 100),
+        [min, max, currentValue]
+    );
 
     return (
-        <section className={styles.container} aria-label={arialLabel}>
-            <div className={styles.targetContainer}>
-                <div
-                    ref={sliderRef}
-                    style={{opacity, paddingTop: sliderPaddingTop}}
-                    className={styles.rangeSlider}
-                >
-                    <input
-                        disabled={disabled}
-                        style={{top: sliderTop}}
-                        className={classnames(
-                            styles.sliderVariant[isIos ? 'ios' : 'default'],
-                            sliderDisabled
-                        )}
-                        aria-label="Slider"
-                        type="range"
-                        min={minSlider}
-                        max={maxSlider}
-                        value={valueRanger}
-                        step={step}
-                        onChange={(e) => handleSlider(+e.target.value)}
-                    />
-                    {tooltip ? (
-                        <Tooltip
-                            description={
-                                Array.isArray(steps) ? steps[valueRanger].toString() : valueRanger.toString()
-                            }
-                            width={isTabletOrSmaller ? 42 : 45}
-                            centerContent
-                            position="top"
-                            target={
-                                <div
-                                    style={{left: setPosition(), top: sliderTop}}
-                                    className={classnames(
-                                        styles.sliderThumbVariant[isIos ? 'ios' : 'default']
-                                    )}
-                                />
-                            }
-                        />
-                    ) : (
-                        <div
-                            style={{left: setPosition(), top: sliderTop}}
-                            className={classnames(styles.sliderThumbVariant[isIos ? 'ios' : 'default'])}
-                        />
-                    )}
-                    <div className={styles.progress} style={{width: setPosition(), top: sliderTop}} />
-                </div>
+        <div
+            className={classNames(styles.container, {[styles.disabled]: disabled})}
+            style={{height: isTouchableDevice ? 48 : 20}}
+            aria-label={ariaLabel}
+        >
+            <div
+                className={styles.track}
+                ref={trackRef}
+                style={{
+                    background: `linear-gradient(to right, ${vars.colors.controlActivated} ${progress}%, ${vars.colors.control} ${progress}%)`,
+                }}
+            />
+            <div
+                className={styles.notchContainer}
+                ref={notchRef}
+                style={{
+                    cursor: isPointerDown ? 'grabbing' : isHovered ? 'grab' : 'auto',
+                    left: `calc(${progress}% - ${NOTCH_SIZE / 2}px)`,
+                }}
+                onPointerEnter={() => {
+                    if (!isTouchableDevice) {
+                        setIsHovered(true);
+                    }
+                }}
+                onPointerLeave={() => {
+                    if (!isTouchableDevice) {
+                        setIsHovered(false);
+                    }
+                }}
+                onPointerDown={(e) => {
+                    setIsPointerDown(true);
+                    capturePointerMove(e);
+                }}
+                onPointerUp={(e) => {
+                    setIsPointerDown(false);
+                    releasePointerMove(e);
+                }}
+            >
+                <div className={styles.notch} />
             </div>
-        </section>
+        </div>
     );
 };
 

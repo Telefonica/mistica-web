@@ -136,6 +136,7 @@ type Props = {
     delay?: boolean;
     dataAttributes?: DataAttributes;
     centerContent?: boolean;
+    open?: boolean;
     /**
      * @deprecated This field is deprecated.
      */
@@ -165,11 +166,12 @@ const Tooltip: React.FC<Props> = ({
     dataAttributes,
     delay = true,
     centerContent,
+    open,
     textCenter,
 }) => {
     const tooltipId = useAriaId();
     const {openTooltipId} = useTooltipState();
-    const {open, close} = useSetTooltipState();
+    const {openTooltip, closeTooltip} = useSetTooltipState();
 
     const [tooltipComputedStyles, setTooltipComputedStyles] = React.useState<{
         left: number;
@@ -187,8 +189,10 @@ const Tooltip: React.FC<Props> = ({
 
     const [isMouseOverTooltip, setIsMouseOverTooltip] = React.useState(false);
     const [isMouseOverTarget, setIsMouseOverTarget] = React.useState(false);
+
+    const hasControlledValue = open !== undefined;
     const [isFocused, setIsFocused] = React.useState(false);
-    const isTooltipOpen = tooltipId === openTooltipId;
+    const isTooltipOpen = hasControlledValue ? open : tooltipId === openTooltipId;
     const isInverse = useIsInverseVariant();
 
     const targetRect = useBoundingRect(targetRef, isTooltipOpen);
@@ -399,12 +403,22 @@ const Tooltip: React.FC<Props> = ({
     }, [isTouchableDevice, resetTooltipInteractions, targetRect]);
 
     React.useEffect(() => {
-        if (isMouseOverTarget || isMouseOverTooltip || isFocused) {
-            open(tooltipId);
-        } else {
-            close(tooltipId);
+        if (!hasControlledValue) {
+            if (isMouseOverTarget || isMouseOverTooltip || isFocused) {
+                openTooltip(tooltipId);
+            } else {
+                closeTooltip(tooltipId);
+            }
         }
-    }, [isMouseOverTarget, isMouseOverTooltip, isFocused, tooltipId, open, close]);
+    }, [
+        isMouseOverTarget,
+        isMouseOverTooltip,
+        isFocused,
+        tooltipId,
+        openTooltip,
+        closeTooltip,
+        hasControlledValue,
+    ]);
 
     const currentPosition = getFinalPosition(
         targetRect,

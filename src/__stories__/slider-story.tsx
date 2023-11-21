@@ -14,10 +14,22 @@ type Args = {
 };
 
 export const Default: StoryComponent<Args> = ({disabled, steps, max, min, tooltip}) => {
+    const [a, set] = React.useState(0);
     return (
         <Box paddingY={48} dataAttributes={{testid: 'slider'}}>
             <Stack space={24}>
-                <Slider disabled={disabled} steps={steps} max={max} min={min} tooltip={tooltip} />
+                <Slider
+                    disabled={disabled}
+                    step={steps}
+                    max={max}
+                    min={min}
+                    tooltip={tooltip}
+                    value={a}
+                    onChangeValue={(value) => {
+                        set(value);
+                        console.log('changed', value);
+                    }}
+                />
             </Stack>
         </Box>
     );
