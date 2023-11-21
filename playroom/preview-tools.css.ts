@@ -54,15 +54,6 @@ export const floattingButton = style([
     }),
     {
         zIndex: 1,
-        transition: 'transform 0.3s ease-in-out, opacity 0.3s ease-in-out',
-
-        '@media': {
-            [mq.supportsHover]: {
-                ':hover': {
-                    transform: 'rotateZ(45deg)',
-                },
-            },
-        },
     },
 ]);
 
@@ -74,3 +65,52 @@ export const floattingButtonBackground = sprinkles({
     width: 40,
     height: 40,
 });
+
+export const floatingButtonIcon = style({
+    transition: 'transform 0.3s ease',
+    '@media': {
+        [mq.supportsHover]: {
+            selectors: {
+                [`${floattingButton}:hover &`]: {
+                    transform: 'rotateZ(45deg)',
+                },
+            },
+        },
+    },
+});
+
+export const controlsTransitionClasses = {
+    enter: style({
+        transform: 'translateY(-100%)',
+    }),
+    enterActive: style({
+        transform: 'translateY(0)',
+        transition: 'transform .3s ease',
+    }),
+    exit: style({
+        transform: 'translateY(0)',
+    }),
+    exitActive: style({
+        transform: 'translateY(-100%)',
+        transition: 'transform .3s ease',
+    }),
+};
+
+export const floatingButtonTopTransitionClasses = controlsTransitionClasses;
+
+export const floatingButtonBottomTransitionClasses = {
+    enter: style({
+        transform: 'translateY(100%)',
+    }),
+    enterActive: style({
+        transform: 'translateY(0)',
+        transition: 'transform .3s ease',
+    }),
+    exit: style({
+        transform: 'translateY(0)',
+    }),
+    exitActive: style({
+        transform: 'translateY(100%)',
+        transition: 'transform .3s ease',
+    }),
+};
