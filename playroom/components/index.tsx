@@ -328,7 +328,17 @@ export const PreviewTools = ({
                     mountOnEnter
                     unmountOnExit
                 >
-                    <Overlay onPress={() => setShowControls(false)}>{controls}</Overlay>
+                    {(state) => (
+                        <Overlay
+                            onPress={() => {
+                                if (state === 'entered') {
+                                    setShowControls(false);
+                                }
+                            }}
+                        >
+                            {controls}
+                        </Overlay>
+                    )}
                 </CSSTransition>
 
                 <CSSTransition
@@ -336,39 +346,49 @@ export const PreviewTools = ({
                     nodeRef={floatingButtonRef}
                     timeout={FLOATING_CONTROLS_ENTER_DURATION}
                     classNames={
-                        position.startsWith('top')
-                            ? styles.floatingButtonTopTransitionClasses
-                            : styles.floatingButtonBottomTransitionClasses
+                        position.startsWith('bottom')
+                            ? styles.floatingButtonBottomTransitionClasses
+                            : styles.floatingButtonTopTransitionClasses
                     }
                     mountOnEnter
                     unmountOnExit
                 >
-                    <div
-                        className={styles.floattingButton}
-                        ref={floatingButtonRef}
-                        style={{
-                            top: position.startsWith('top') ? 0 : undefined,
-                            bottom: position.startsWith('bottom') ? 0 : undefined,
-                            right: position.endsWith('right') ? 0 : undefined,
-                            left: position.endsWith('left') ? 0 : undefined,
-                        }}
-                    >
-                        <IconButton size={56} aria-label="settings" onPress={() => setShowControls(true)}>
-                            <div className={styles.floattingButtonBackground}>
-                                <Circle
-                                    backgroundColor={skinVars.colors.backgroundContainer}
-                                    size={40}
-                                    border
-                                >
-                                    <IconSettingsRegular
-                                        className={styles.floatingButtonIcon}
-                                        size={24}
-                                        color={skinVars.colors.neutralHigh}
-                                    />
-                                </Circle>
-                            </div>
-                        </IconButton>
-                    </div>
+                    {(state) => (
+                        <div
+                            className={styles.floattingButton}
+                            ref={floatingButtonRef}
+                            style={{
+                                top: position.startsWith('top') ? 0 : undefined,
+                                bottom: position.startsWith('bottom') ? 0 : undefined,
+                                right: position.endsWith('right') ? 0 : undefined,
+                                left: position.endsWith('left') ? 0 : undefined,
+                            }}
+                        >
+                            <IconButton
+                                size={56}
+                                aria-label="settings"
+                                onPress={() => {
+                                    if (state === 'entered') {
+                                        setShowControls(true);
+                                    }
+                                }}
+                            >
+                                <div className={styles.floattingButtonBackground}>
+                                    <Circle
+                                        backgroundColor={skinVars.colors.backgroundContainer}
+                                        size={40}
+                                        border
+                                    >
+                                        <IconSettingsRegular
+                                            className={styles.floatingButtonIcon}
+                                            size={24}
+                                            color={skinVars.colors.neutralHigh}
+                                        />
+                                    </Circle>
+                                </div>
+                            </IconButton>
+                        </div>
+                    )}
                 </CSSTransition>
             </>
         );
