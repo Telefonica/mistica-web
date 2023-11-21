@@ -18,12 +18,13 @@ export const useTheme = (): Theme => {
     return theme;
 };
 
+let bodyStyles = '';
+let bodyScrollTop = 0;
+let disableBodyDepth = 0;
+
 export const useDisableBodyScroll = (disable: boolean): void => {
     React.useEffect(() => {
         if (disable) {
-            let bodyStyles = '';
-            let bodyScrollTop = 0;
-            let disableBodyDepth = 0;
             const scrollContainer = document.scrollingElement || document.documentElement;
 
             const disableBodyScroll = () => {
