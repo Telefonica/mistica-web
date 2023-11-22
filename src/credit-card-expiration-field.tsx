@@ -13,6 +13,7 @@ type ExpirationDateValue = {
 
 const MonthYearDateInput: React.FC<any> = ({inputRef, defaultValue, value, ...rest}) => {
     const {texts} = useTheme();
+    const keyDownRef = React.useRef('');
 
     /**
      * 1) characters other than [0-9] and '/' are removed
@@ -20,11 +21,16 @@ const MonthYearDateInput: React.FC<any> = ({inputRef, defaultValue, value, ...re
      * 3) the user must be able to remove text
      */
     const format = (s: string) => {
+        // slash was removed
+        if (s.length === 2 && keyDownRef.current === 'Backspace') {
+            return s[0];
+        }
+
+        let value = '';
         /**
          * format after adding characters one by one in order to prevent unwanted results when
          * writing multiple characters at the same time (for example, by using copy/paste)
          */
-        let value = '';
         [...s].forEach((c) => {
             value = (value + c)
                 .replace(
@@ -49,7 +55,15 @@ const MonthYearDateInput: React.FC<any> = ({inputRef, defaultValue, value, ...re
                 );
         });
 
+        if (value.length === 2) {
+            return value + '/';
+        }
+
         return value;
+    };
+
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        keyDownRef.current = e.key;
     };
 
     return (
@@ -59,6 +73,7 @@ const MonthYearDateInput: React.FC<any> = ({inputRef, defaultValue, value, ...re
             type="text"
             inputMode="decimal"
             maxLength="5" // MM/YY
+            onKeyDown={handleKeyDown}
             onInput={(e) => {
                 const nextValue = format(e.currentTarget.value);
                 e.currentTarget.value = nextValue;
