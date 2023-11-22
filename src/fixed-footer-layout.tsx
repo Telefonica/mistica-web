@@ -20,8 +20,7 @@ import {
     removePassiveEventListener,
 } from './utils/dom';
 import * as styles from './fixed-footer-layout.css';
-import {applyCssVars} from './utils/css';
-import {safeAreaInsetBottom} from './utils/css';
+import {applyCssVars, safeAreaInsetBottom} from './utils/css';
 
 const FOOTER_CANVAS_RATIO = 2;
 const getScrollEventTarget = (el: HTMLElement) => (el === document.documentElement ? window : el);

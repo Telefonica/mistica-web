@@ -1,3 +1,4 @@
+'use client';
 import * as React from 'react';
 import {getPrefixedDataAttributes} from './utils/dom';
 import * as styles from './counter.css';
