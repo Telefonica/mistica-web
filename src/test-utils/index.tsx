@@ -15,6 +15,7 @@ const MOBILE_DEVICE_IOS = 'MOBILE_IOS';
 const MOBILE_DEVICE_ANDROID = 'MOBILE_ANDROID';
 const TABLET_DEVICE = 'TABLET';
 const DESKTOP_DEVICE = 'DESKTOP';
+const LARGE_DESKTOP_DEVICE = 'LARGE_DESKTOP';
 
 export type Device =
     | typeof MOBILE_DEVICE_IOS_SMALL
@@ -22,7 +23,8 @@ export type Device =
     | typeof MOBILE_DEVICE_IOS
     | typeof MOBILE_DEVICE_ANDROID
     | typeof TABLET_DEVICE
-    | typeof DESKTOP_DEVICE;
+    | typeof DESKTOP_DEVICE
+    | typeof LARGE_DESKTOP_DEVICE;
 
 type DeviceCollection = Record<
     Device,
@@ -108,6 +110,17 @@ const DEVICES: DeviceCollection = {
         platform: undefined,
         viewport: {
             width: 1280,
+            height: 800,
+            deviceScaleFactor: 1,
+            isMobile: false,
+            hasTouch: false,
+            isLandscape: false,
+        },
+    },
+    [LARGE_DESKTOP_DEVICE]: {
+        platform: undefined,
+        viewport: {
+            width: 1368,
             height: 800,
             deviceScaleFactor: 1,
             isMobile: false,

@@ -14,7 +14,7 @@ import {
 } from '..';
 
 export default {
-    title: 'Components/Cards/CardActionIconButton',
+    title: 'Components/Cards/Utils/CardActionIconButton',
 };
 
 const MyCustomCardActionComponent = () => {

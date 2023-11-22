@@ -33,7 +33,13 @@ import type {
     ValueBlock,
 } from './blocks';
 
-type CardContentProps = {
+type TouchableProps = ExclusifyUnion<
+    {href: string | undefined} | {to: string | undefined} | {onPress: PressHandler | undefined}
+>;
+type TouchableCard<T> = T & TouchableProps;
+type MaybeTouchableCard<T> = ExclusifyUnion<TouchableCard<T> | T>;
+
+type CardContentProps = MaybeTouchableCard<{
     headline?: string | RendersNullableElement<typeof Tag>;
     pretitle?: string;
     pretitleAs?: string;
@@ -46,9 +52,7 @@ type CardContentProps = {
     description?: string;
     descriptionLinesMax?: number;
     ariaLabel?: string;
-} & ExclusifyUnion<
-    {href: string | undefined} | {to: string | undefined} | {onPress: PressHandler | undefined}
->;
+}>;
 
 const CardContent: React.FC<CardContentProps> = ({
     headline,
@@ -209,7 +213,7 @@ type AllowedExtra =
 
 type TextAs = 'h1' | 'h2' | 'h3' | 'h4';
 
-type AdvancedDataCardProps = {
+type AdvancedDataCardProps = MaybeTouchableCard<{
     stackingGroup?: RendersNullableElement<typeof StackingGroup>;
     headline?: RendersNullableElement<typeof Tag>;
     pretitle?: string;
@@ -233,9 +237,7 @@ type AdvancedDataCardProps = {
     actions?: Array<CardAction | React.ReactElement>;
     'aria-label'?: string;
     onClose?: () => void;
-} & ExclusifyUnion<
-    {href: string | undefined} | {to: string | undefined} | {onPress: PressHandler | undefined}
->;
+}>;
 
 export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCardProps>(
     (
