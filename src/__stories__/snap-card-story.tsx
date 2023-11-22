@@ -7,9 +7,9 @@ import {
     ResponsiveLayout,
     Stack,
     Text2,
-    Inline,
     Box,
     Text4,
+    Carousel,
 } from '..';
 import {Placeholder} from '../placeholder';
 import avatarImg from './images/avatar.jpg';
@@ -17,14 +17,14 @@ import avatarImg from './images/avatar.jpg';
 import type {AspectRatio} from '../card';
 
 export default {
-    title: 'Components/Cards/Snap card',
+    title: 'Components/Cards/SnapCard',
 };
 
 type Args = {
     asset: 'icon' | 'icon in circle' | 'image' | 'none';
     title: string;
     subtitle: string;
-    touchable: boolean;
+    actions: 'on press' | 'none';
     isInverse: boolean;
     withExtra: boolean;
     aspectRatio: AspectRatio;
@@ -36,7 +36,7 @@ export const Default: StoryComponent<Args> = ({
     asset,
     title,
     subtitle,
-    touchable,
+    actions,
     isInverse,
     withExtra,
     aspectRatio,
@@ -73,7 +73,7 @@ export const Default: StoryComponent<Args> = ({
             isInverse={isInverse}
             extra={withExtra ? <Placeholder /> : undefined}
             onPress={
-                touchable
+                actions === 'on press'
                     ? () => {
                           window.alert('SnapCard clicked');
                       }
@@ -84,12 +84,12 @@ export const Default: StoryComponent<Args> = ({
     );
 };
 
-Default.storyName = 'Snap card';
+Default.storyName = 'SnapCard';
 Default.args = {
     asset: 'icon in circle',
     title: 'Some title',
     subtitle: 'Some subtitle',
-    touchable: true,
+    actions: 'none',
     isInverse: false,
     withExtra: false,
     aspectRatio: 'auto',
@@ -111,6 +111,10 @@ Default.argTypes = {
             },
         },
     },
+    actions: {
+        options: ['on press', 'none'],
+        control: {type: 'select'},
+    },
 };
 
 export const Group: StoryComponent = () => {
@@ -118,43 +122,46 @@ export const Group: StoryComponent = () => {
         <Box paddingY={24}>
             <ResponsiveLayout>
                 <Stack space={16}>
-                    <Text2 regular>We can group multiple cards and they adjust to the same height:</Text2>
-                    <Inline space={8} fullWidth>
-                        <SnapCard
-                            title="Title 1"
-                            subtitle="Subtitle"
-                            icon={
-                                <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
-                                    <IconMobileDeviceRegular color={skinVars.colors.brand} />
-                                </Circle>
-                            }
-                        />
-                        <SnapCard
-                            title="Title 2"
-                            icon={
-                                <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
-                                    <IconMobileDeviceRegular color={skinVars.colors.brand} />
-                                </Circle>
-                            }
-                        />
-                        <SnapCard title="Title 3" />
-                        <SnapCard
-                            title="Data left"
-                            extra={
-                                <Stack space={4}>
-                                    <Text4 regular>10 GB</Text4>
-                                    <Text2 regular>out of 50</Text2>
-                                </Stack>
-                            }
-                        />
-                    </Inline>
+                    <Text2 regular>We can group multiple cards and they adjust to the same height.</Text2>
+                    <Carousel
+                        itemsPerPage={4}
+                        items={[
+                            <SnapCard
+                                title="Title 1"
+                                subtitle="Subtitle"
+                                icon={
+                                    <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
+                                        <IconMobileDeviceRegular color={skinVars.colors.brand} />
+                                    </Circle>
+                                }
+                            />,
+                            <SnapCard
+                                title="Title 2"
+                                icon={
+                                    <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
+                                        <IconMobileDeviceRegular color={skinVars.colors.brand} />
+                                    </Circle>
+                                }
+                            />,
+                            <SnapCard title="Title 3" />,
+                            <SnapCard
+                                title="Data left"
+                                extra={
+                                    <Stack space={4}>
+                                        <Text4 regular>10 GB</Text4>
+                                        <Text2 regular>out of 50</Text2>
+                                    </Stack>
+                                }
+                            />,
+                        ]}
+                    />
                 </Stack>
             </ResponsiveLayout>
         </Box>
     );
 };
 
-Group.storyName = 'Snap card group';
+Group.storyName = 'SnapCard group';
 Group.parameters = {
     fullScreen: true,
 };

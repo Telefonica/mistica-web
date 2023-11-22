@@ -1,11 +1,7 @@
-import {style, createVar, globalStyle, styleVariants} from '@vanilla-extract/css';
+import {style, globalStyle, styleVariants} from '@vanilla-extract/css';
 import {sprinkles} from './sprinkles.css';
 import * as mq from './media-queries.css';
 import {PADDING_Y_LINK} from './button.css';
-
-const buttonWidth = createVar();
-
-export const vars = {buttonWidth};
 
 const buttonLayoutSpacing = 16;
 
@@ -51,36 +47,23 @@ export const baseContainer = style([
 
 export const container = style({});
 export const fullWidthContainer = style({});
-export const noButtonWidth = style({});
 
 globalStyle(`${container} > *:not(${link})`, {
-    minWidth: buttonWidth, // needed to override button.css value
-    width: `calc(50% - ${buttonLayoutSpacing}px)`,
     margin: buttonLayoutSpacing / 2,
-
     '@media': {
-        [mq.desktopOrBigger]: {
-            width: buttonWidth,
+        [mq.tabletOrSmaller]: {
+            minWidth: `calc(50% - ${buttonLayoutSpacing}px)`,
         },
     },
 });
 
 globalStyle(`${fullWidthContainer} > *:not(${link})`, {
-    minWidth: buttonWidth, // needed to override button.css value
-    width: `calc(100% - ${buttonLayoutSpacing}px)`,
     margin: buttonLayoutSpacing / 2,
-
     '@media': {
-        [mq.desktopOrBigger]: {
-            width: buttonWidth,
+        [mq.tabletOrSmaller]: {
+            width: `calc(100% - ${buttonLayoutSpacing}px)`,
         },
     },
-});
-
-globalStyle(`${noButtonWidth} > *:not(${link})`, {
-    minWidth: 'auto', // needed to override button.css value
-    width: 'auto',
-    margin: buttonLayoutSpacing / 2,
 });
 
 export const alignVariant = styleVariants({
@@ -99,7 +82,7 @@ export const alignVariant = styleVariants({
     ],
 });
 
-export const alignMoreThanOneChildred = style({
+export const alignMoreThanOneChildren = style({
     '@media': {
         [mq.tabletOrSmaller]: {
             justifyContent: 'center',

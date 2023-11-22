@@ -5,6 +5,7 @@
  */
 
 import * as React from 'react';
+import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
 
@@ -13,15 +14,26 @@ import type {IconProps} from '../../utils/types';
 const IconSubtractLight = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
-
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path
-                fill={fillColor}
-                d="M3 12.001c0-.333.269-.6.6-.6h16.803a.6.6 0 0 1-.002 1.199H3.599A.6.6 0 0 1 3 12.002Z"
-            />
-        </svg>
-    );
+    const {skinName} = useTheme();
+    if (skinName.match(/^o2/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M19.79 11.15a.35.35 0 1 1 0 .7H2.35a.35.35 0 1 1 0-.7h17.44Zm1.639.92a.573.573 0 0 0 .571-.574.573.573 0 0 0-.572-.574.573.573 0 0 0-.571.574c0 .317.256.574.572.574Z"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M3 12.001c0-.333.269-.6.6-.6h16.803a.6.6 0 0 1-.002 1.199H3.599A.6.6 0 0 1 3 12.002Z"
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconSubtractLight;

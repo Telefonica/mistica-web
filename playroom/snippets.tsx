@@ -1070,6 +1070,14 @@ const titlesSnippets: Array<Snippet> = [
         name: 'Title2 (with link)',
         code: '<Title2 right={<ButtonLink onPress={() => {}} withChevron bleedRight bleedY>Link</ButtonLink>}>Some title</Title2>',
     },
+    {
+        name: 'Title3',
+        code: '<Title3>Some title</Title3>',
+    },
+    {
+        name: 'Title3 (with link)',
+        code: '<Title3 right={<ButtonLink onPress={() => {}} withChevron bleedRight bleedY>Link</ButtonLink>}>Some title</Title3>',
+    },
 ].map((snippet) => ({...snippet, group: 'Titles'}));
 
 const tagSnippets: Array<Snippet> = ['promo', 'active', 'inactive', 'success', 'warning', 'error'].map(
@@ -2516,7 +2524,7 @@ const advancedDataCardSnippets = [
           }
           footerText="footer text"
           onClose={() => window.alert("close")}
-          onPress={() => window.alert("click")}
+          href="https://google.com"
         />
         `,
         group: 'AdvancedDataCard',
@@ -2630,6 +2638,17 @@ export default [
     {group: 'Badge', name: 'Badge non numeric', code: '<Badge />'},
     {group: 'Badge', name: 'Icon with badge', code: '<Badge value="5"><IconSettingsRegular /></Badge>'},
     {group: 'Text', name: 'Text', code: '<Text>some text</Text>'},
+    {
+        group: 'Counter',
+        name: 'Counter',
+        code: `
+        <Counter
+          min={0}
+          max={5}
+          onRemove={() => window.alert("removed")}
+          defaultValue={2}
+        />`,
+    },
     ...headerSnippets,
     ...accordionSnippets,
     ...listSnippets,
