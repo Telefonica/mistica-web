@@ -126,7 +126,7 @@ const Slider: React.FC<SliderProps> = ({
     const [isThumbHovered, setIsThumbHovered] = React.useState(false);
     const [isFocused, setIsFocused] = React.useState(false);
     const {isIos} = useTheme();
-    const id = useAriaId();
+    const label = useAriaId(ariaLabel);
 
     const isTabKeyDownRef = React.useRef(false);
 
@@ -315,14 +315,6 @@ const Slider: React.FC<SliderProps> = ({
                     setIsFocused(false);
                 }}
                 tabIndex={disabled ? -1 : 0}
-                role="slider"
-                id={id}
-                aria-label={ariaLabel}
-                aria-valuemin={min}
-                aria-valuemax={max}
-                aria-valuenow={currentValue}
-                aria-disabled={disabled}
-                aria-hidden
             >
                 {tooltip ? (
                     <Tooltip
@@ -342,7 +334,7 @@ const Slider: React.FC<SliderProps> = ({
                     max={max}
                     step={step}
                     value={currentValue}
-                    aria-labelledby={id}
+                    aria-label={label}
                     className={styles.input}
                     disabled={disabled}
                     style={{
