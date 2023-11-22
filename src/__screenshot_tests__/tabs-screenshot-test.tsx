@@ -1,5 +1,7 @@
 import {openStoryPage, screen, setRootFontSize} from '../test-utils';
 
+const THEME_VARIANTS = ['default', 'inverse', 'alternative'] as const;
+
 test.each`
     device          | withIcon
     ${'MOBILE_IOS'} | ${true}
@@ -71,4 +73,24 @@ test('Tabs selected line appears properly', async () => {
 
     const thirdTabActive = await (await screen.findByRole('tablist')).screenshot();
     expect(thirdTabActive).toMatchImageSnapshot();
+});
+
+test.each(THEME_VARIANTS)('Tabs in %s theme', async (theme) => {
+    await openStoryPage({
+        id: 'components-tabs--default',
+        device: 'MOBILE_IOS',
+        args: {theme},
+    });
+    const image = await (await screen.findByRole('tablist')).screenshot();
+    expect(image).toMatchImageSnapshot();
+});
+
+test('Tabs in dark mode', async () => {
+    await openStoryPage({
+        id: 'components-tabs--default',
+        device: 'MOBILE_IOS',
+        isDarkMode: true,
+    });
+    const image = await (await screen.findByRole('tablist')).screenshot();
+    expect(image).toMatchImageSnapshot();
 });
