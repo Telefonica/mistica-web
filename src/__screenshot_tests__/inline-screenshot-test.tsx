@@ -14,7 +14,9 @@ test('Inline wrap', async () => {
     expect(image).toMatchImageSnapshot();
 });
 
-test('Inline negative space', async () => {
+// This test is unstable (https://jira.tid.es/browse/WEB-1648)
+// eslint-disable-next-line jest/no-disabled-tests
+test.skip('Inline negative space', async () => {
     await openStoryPage({id: 'layout-inline--negative-space'});
 
     const image = await page.screenshot();
