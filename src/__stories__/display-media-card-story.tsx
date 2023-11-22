@@ -12,9 +12,8 @@ import {
     ResponsiveLayout,
     Stack,
     Text2,
-    Inline,
-    Title1,
     Box,
+    Carousel,
 } from '..';
 import usingVrImg from './images/using-vr.jpg';
 import avatarImg from './images/avatar.jpg';
@@ -24,7 +23,7 @@ import beachImg from './images/beach.jpg';
 import type {TagType} from '..';
 
 export default {
-    title: 'Components/Cards/Display media card',
+    title: 'Components/Cards/DisplayMediaCard',
 };
 
 const BACKGROUND_IMAGE_SRC = usingVrImg;
@@ -44,6 +43,8 @@ type DisplayMediaCardArgs = {
     actions: 'button' | 'link' | 'button and link' | 'button and secondary button' | 'onPress';
     width: string;
     aspectRatio: '1:1' | '16:9' | '7:10' | '9:10' | 'auto';
+    isEmptySource: boolean;
+    inverse: boolean;
 };
 
 export const Default: StoryComponent<DisplayMediaCardArgs> = ({
@@ -59,6 +60,8 @@ export const Default: StoryComponent<DisplayMediaCardArgs> = ({
     withTopAction,
     width,
     aspectRatio,
+    isEmptySource,
+    inverse,
 }) => {
     let icon;
     if (asset === 'circle with icon') {
@@ -107,84 +110,35 @@ export const Default: StoryComponent<DisplayMediaCardArgs> = ({
                             },
                         ]
                       : undefined,
-                  backgroundImage: BACKGROUND_IMAGE_SRC,
+                  backgroundImage: isEmptySource ? '' : BACKGROUND_IMAGE_SRC,
               }
             : {
-                  backgroundVideo: BACKGROUND_VIDEO_SRC,
-                  poster: BACKGROUND_VIDEO_POSTER_SRC,
-              };
-
-    const wrongBackgroundProps =
-        background === 'image'
-            ? {
-                  onClose: closable ? () => {} : undefined,
-                  actions: withTopAction
-                      ? [
-                            {
-                                Icon: IconLightningRegular,
-                                onPress: () => {},
-                                label: 'Lightning',
-                            },
-                        ]
-                      : undefined,
-                  backgroundImage: 'test',
-              }
-            : {
-                  backgroundVideo: 'test',
-                  poster: 'test',
+                  backgroundVideo: isEmptySource ? '' : BACKGROUND_VIDEO_SRC,
+                  poster: isEmptySource ? '' : BACKGROUND_VIDEO_POSTER_SRC,
               };
 
     return (
-        <Stack space={32} dataAttributes={{testid: 'display-media-card'}}>
-            <DisplayMediaCard
-                {...backgroundProps}
-                icon={icon}
-                headline={headline ? <Tag type={headlineType}>{headline}</Tag> : undefined}
-                pretitle={pretitle}
-                title={title}
-                description={description}
-                {...interactiveActions}
-                aria-label="Display media card label"
-                width={width}
-                aspectRatio={aspectRatio}
-            />
-
-            <Title1>Wrong source for media</Title1>
-            <DisplayMediaCard
-                {...wrongBackgroundProps}
-                icon={icon}
-                headline={headline ? <Tag type={headlineType}>{headline}</Tag> : undefined}
-                pretitle={pretitle}
-                title={title}
-                description={description}
-                {...interactiveActions}
-                aria-label="Display media card fallback label"
-                width={width}
-                aspectRatio={aspectRatio}
-            />
-
-            <Title1>Wrong source for media with inverse</Title1>
-            <ResponsiveLayout isInverse>
-                <Box paddingY={8}>
-                    <DisplayMediaCard
-                        {...wrongBackgroundProps}
-                        icon={icon}
-                        headline={headline ? <Tag type={headlineType}>{headline}</Tag> : undefined}
-                        pretitle={pretitle}
-                        title={title}
-                        description={description}
-                        {...interactiveActions}
-                        aria-label="Display data card fallback inverse label"
-                        width={width}
-                        aspectRatio={aspectRatio}
-                    />
-                </Box>
-            </ResponsiveLayout>
-        </Stack>
+        <ResponsiveLayout isInverse={inverse} fullWidth>
+            <Box padding={16}>
+                <DisplayMediaCard
+                    {...backgroundProps}
+                    icon={icon}
+                    headline={headline ? <Tag type={headlineType}>{headline}</Tag> : undefined}
+                    pretitle={pretitle}
+                    title={title}
+                    description={description}
+                    {...interactiveActions}
+                    aria-label="Display media card label"
+                    width={width}
+                    aspectRatio={aspectRatio}
+                    dataAttributes={{testid: 'display-media-card'}}
+                />
+            </Box>
+        </ResponsiveLayout>
     );
 };
 
-Default.storyName = 'Display Media card';
+Default.storyName = 'DisplayMediaCard';
 Default.args = {
     asset: 'none',
     headlineType: 'promo',
@@ -198,6 +152,8 @@ Default.args = {
     withTopAction: false,
     width: 'auto',
     aspectRatio: 'auto',
+    isEmptySource: false,
+    inverse: false,
 };
 Default.argTypes = {
     asset: {
@@ -221,6 +177,7 @@ Default.argTypes = {
         control: {type: 'select'},
     },
 };
+Default.parameters = {fullScreen: true};
 
 export const Group: StoryComponent = () => {
     return (
@@ -228,32 +185,34 @@ export const Group: StoryComponent = () => {
             <Stack space={16}>
                 <Text2 regular>
                     We can group multiple cards and they adjust to the same height. The card content is
-                    aligned to the bottom
+                    aligned to the bottom.
                 </Text2>
-                <style>{`.group > * {width: 300px}`}</style>
-                <Inline space={16} className="group">
-                    <DisplayMediaCard
-                        headline={<Tag type="promo">Headline</Tag>}
-                        pretitle="Pretitle"
-                        title="Title"
-                        description="Description"
-                        backgroundImage={BACKGROUND_IMAGE_SRC}
-                        button={
-                            <ButtonPrimary small href="https://google.com">
-                                Action
-                            </ButtonPrimary>
-                        }
-                    />
-                    <DisplayMediaCard title="Title" backgroundImage={BACKGROUND_IMAGE_SRC} />
-                    <DisplayMediaCard
-                        title="Title"
-                        backgroundImage={BACKGROUND_IMAGE_SRC}
-                        onClose={() => {}}
-                    />
-                </Inline>
+                <Carousel
+                    itemsPerPage={3}
+                    items={[
+                        <DisplayMediaCard
+                            headline={<Tag type="promo">Headline</Tag>}
+                            pretitle="Pretitle"
+                            title="Title"
+                            description="Description"
+                            backgroundImage={BACKGROUND_IMAGE_SRC}
+                            button={
+                                <ButtonPrimary small href="https://google.com">
+                                    Action
+                                </ButtonPrimary>
+                            }
+                        />,
+                        <DisplayMediaCard title="Title" backgroundImage={BACKGROUND_IMAGE_SRC} />,
+                        <DisplayMediaCard
+                            title="Title"
+                            backgroundImage={BACKGROUND_IMAGE_SRC}
+                            onClose={() => {}}
+                        />,
+                    ]}
+                />
             </Stack>
         </ResponsiveLayout>
     );
 };
 
-Group.storyName = 'Display media card group';
+Group.storyName = 'DisplayMediaCard group';

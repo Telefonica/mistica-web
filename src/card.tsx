@@ -229,11 +229,13 @@ const transitions: Record<VideoState, Partial<Record<VideoAction, VideoState>>> 
     playing: {
         pause: 'paused',
         reset: 'loading',
+        fail: 'error',
     },
 
     paused: {
         play: 'playing',
         reset: 'loading',
+        fail: 'error',
     },
 
     error: {

@@ -71,9 +71,6 @@ export const responsiveLayout = style({
     paddingRight: 'env(safe-area-inset-right)',
 
     margin: `0 ${sideMargin}`,
-});
-
-export const expandedResponsiveLayout = style({
     '@media': {
         [mq.largeDesktop]: {
             margin: `0 calc((100vw - ${LARGE_DESKTOP_MAX_WIDTH}px) / 2)`,

@@ -15,7 +15,7 @@ import {
 import {useCheckbox} from './helpers';
 
 export default {
-    title: 'Layout/Fixed footer layout',
+    title: 'Layout/FixedFooterLayout',
     component: FixedFooterLayout,
 };
 
@@ -56,7 +56,7 @@ export const FooterWithButtonsOnly: StoryComponent = () => {
     );
 };
 
-FooterWithButtonsOnly.storyName = 'Button fixed footer layout';
+FooterWithButtonsOnly.storyName = 'ButtonFixedFooterLayout';
 FooterWithButtonsOnly.parameters = {fullScreen: true};
 
 export const MoreComplexFooter: StoryComponent = () => {
