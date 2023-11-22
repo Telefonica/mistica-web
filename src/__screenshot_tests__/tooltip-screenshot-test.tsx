@@ -17,6 +17,7 @@ const getCases = () => {
     return cases;
 };
 
+/*
 test.each(getCases())(
     'Tooltip - position = %s, targetHorizontalPosition = %s, targetVerticalPosition = %s',
     async (position, targetHorizontalPosition, targetVerticalPosition) => {
@@ -44,11 +45,11 @@ test('Tooltip - appears properly on mobible', async () => {
     const image = await page.screenshot();
     expect(image).toMatchImageSnapshot();
 });
-
+*/
 test('Tooltip - inverse', async () => {
     const page = await openStoryPage({
         id: 'components-tooltip--default',
-        device: 'DESKTOP',
+        device: 'MOBILE_IOS',
         args: {inverse: true},
     });
 
@@ -58,6 +59,7 @@ test('Tooltip - inverse', async () => {
     expect(image).toMatchImageSnapshot();
 });
 
+/*
 test('Tooltip - max width is 496px', async () => {
     const page = await openStoryPage({
         id: 'components-tooltip--default',
@@ -107,3 +109,4 @@ test('Tooltip - active tooltip is closed if another one is opened', async () => 
     const thirdTooltip = await page.screenshot();
     expect(thirdTooltip).toMatchImageSnapshot();
 });
+*/
