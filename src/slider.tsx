@@ -1,12 +1,22 @@
 import * as React from 'react';
 import * as styles from './slider.css';
 import {vars} from './skins/skin-contract.css';
-import {TAB} from './utils/key-codes';
+import {DOWN, END, HOME, LEFT, RIGHT, TAB, UP} from './utils/key-codes';
 import {isClientSide} from './utils/environment';
 import classNames from 'classnames';
-import {cancelEvent} from './utils/dom';
+import {cancelEvent, getPrefixedDataAttributes} from './utils/dom';
+import ScreenReaderOnly from './screen-reader-only';
+import {useAriaId, useTheme} from './hooks';
+import Tooltip from './tooltip';
 
-const NOTCH_SIZE = 20;
+import type {DataAttributes} from './utils/types';
+
+const DESKTOP_TOUCHABLE_AREA = 20;
+const MOBILE_TOUCHABLE_AREA = 48;
+const IOS_TOUCHABLE_AREA = 28;
+
+const DEFAULT_THUMB_SIZE = 20;
+const IOS_THUMB_SIZE = 28;
 
 const useSliderState = ({
     value,
@@ -26,16 +36,20 @@ const useSliderState = ({
     const isControlledByParent = value !== undefined;
 
     const getValueInRange = React.useCallback(
-        (isRelative: boolean, value?: number) => {
+        (isPercentage: boolean, value?: number) => {
             const getRealValue = (value?: number) => {
                 if (value === undefined) {
                     return min;
                 }
-                const realValue = isRelative ? min + (max - min) * value : value;
+                const realValue = isPercentage ? min + (max - min) * value : value;
                 return Math.max(min, Math.min(max, realValue));
             };
-            const currentValue = getRealValue(value);
 
+            if (min >= max) {
+                return min;
+            }
+
+            const currentValue = getRealValue(value);
             const valueRoundedDown = min + Math.floor((currentValue - min) / step) * step;
             const valueRoundedUp = min + Math.ceil((currentValue - min) / step) * step;
 
@@ -48,20 +62,23 @@ const useSliderState = ({
 
     const [currentValue, setCurrentValue] = React.useState<number>(getValueInRange(false, defaultValue));
 
-    const controlledValue = React.useMemo(() => getValueInRange(false, value), [getValueInRange, value]);
+    /**
+     * We use a ref to avoid race conditions caused by re-renders
+     */
+    const prevValueRef = React.useRef(isControlledByParent ? value : currentValue);
 
     const updateValue = (newValue: number) => {
         newValue = getValueInRange(true, newValue);
-        const prevValue = isControlledByParent ? value : currentValue;
-        if (newValue !== prevValue) {
-            onChangeValue?.(newValue);
-        }
         if (!isControlledByParent) {
             setCurrentValue(newValue);
         }
+        if (newValue !== prevValueRef.current) {
+            onChangeValue?.(newValue);
+        }
+        prevValueRef.current = newValue;
     };
 
-    return [isControlledByParent ? controlledValue : currentValue, updateValue];
+    return [isControlledByParent ? value : currentValue, updateValue];
 };
 
 interface SliderProps {
@@ -74,7 +91,12 @@ interface SliderProps {
     onChangeValue?: (value: number) => void;
     'aria-label'?: string;
     tooltip?: boolean;
+    dataAttributes?: DataAttributes;
 }
+
+const getSliderValueAsPercentage = (value: number, min: number, max: number) => {
+    return min >= max ? 0 : (value - min) / (max - min);
+};
 
 const Slider: React.FC<SliderProps> = ({
     disabled,
@@ -85,6 +107,8 @@ const Slider: React.FC<SliderProps> = ({
     defaultValue,
     onChangeValue,
     'aria-label': ariaLabel,
+    dataAttributes,
+    tooltip,
 }) => {
     const [currentValue, setCurrentValue] = useSliderState({
         value,
@@ -96,21 +120,48 @@ const Slider: React.FC<SliderProps> = ({
     });
 
     const trackRef = React.useRef<HTMLDivElement>(null);
-    const notchRef = React.useRef<HTMLDivElement>(null);
+    const thumbRef = React.useRef<HTMLDivElement>(null);
 
     const [isPointerDown, setIsPointerDown] = React.useState(false);
-    const [isHovered, setIsHovered] = React.useState(false);
+    const [isThumbHovered, setIsThumbHovered] = React.useState(false);
+    const [isFocused, setIsFocused] = React.useState(false);
+    const {isIos} = useTheme();
+    const id = useAriaId();
 
     const isTabKeyDownRef = React.useRef(false);
 
     React.useEffect(() => {
+        setCurrentValue(getSliderValueAsPercentage(currentValue, min, max));
+    }, [min, max, step, currentValue, setCurrentValue]);
+
+    React.useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
-            switch (e.keyCode) {
-                case TAB:
-                    isTabKeyDownRef.current = true;
-                    break;
-                default:
-                // do nothing
+            if (!isFocused && e.keyCode === TAB) {
+                isTabKeyDownRef.current = true;
+            } else if (isFocused) {
+                switch (e.keyCode) {
+                    case RIGHT:
+                    case UP:
+                        cancelEvent(e);
+                        setCurrentValue(getSliderValueAsPercentage(currentValue + step, min, max));
+                        break;
+                    case LEFT:
+                    case DOWN:
+                        cancelEvent(e);
+                        setCurrentValue(getSliderValueAsPercentage(currentValue - step, min, max));
+                        break;
+                    case HOME:
+                        cancelEvent(e);
+                        setCurrentValue(getSliderValueAsPercentage(min, min, max));
+                        break;
+                    case END:
+                        cancelEvent(e);
+                        setCurrentValue(getSliderValueAsPercentage(max, min, max));
+                        break;
+
+                    default:
+                    // do nothing
+                }
             }
         };
 
@@ -122,53 +173,110 @@ const Slider: React.FC<SliderProps> = ({
             document.removeEventListener('keydown', handleKeyDown, false);
             document.removeEventListener('keyup', handleKeyUp, false);
         };
-    }, []);
+    }, [isFocused, currentValue, step, min, max, setCurrentValue]);
 
     const isTouchableDevice = isClientSide() ? window.matchMedia('(pointer: coarse)').matches : false;
 
-    const onPointerMove = React.useCallback(
-        (e: PointerEvent) => {
-            cancelEvent(e);
+    const updateCurrentValue = React.useCallback(
+        (pointerPosition: number) => {
             const track = trackRef.current;
             if (track) {
                 const leftBorder = track.getBoundingClientRect().left;
                 const width = track.clientWidth;
-                const pointerPosition = e.pageX;
                 setCurrentValue((pointerPosition - leftBorder) / width);
             }
         },
         [setCurrentValue]
     );
 
+    const onPointerMove = React.useCallback(
+        (e: PointerEvent) => {
+            cancelEvent(e);
+            updateCurrentValue(e.clientX);
+        },
+        [updateCurrentValue]
+    );
+
     const capturePointerMove = React.useCallback(
         (e: React.PointerEvent<HTMLDivElement>) => {
-            const notch = notchRef.current;
-            if (notch) {
-                notch.onpointermove = onPointerMove;
-                notch.setPointerCapture(e.pointerId);
+            const thumb = thumbRef.current;
+            if (thumb) {
+                thumb.onpointermove = onPointerMove;
+                thumb.setPointerCapture(e.pointerId);
             }
         },
         [onPointerMove]
     );
 
     const releasePointerMove = React.useCallback((e: React.PointerEvent<HTMLDivElement>) => {
-        const notch = notchRef.current;
-        if (notch) {
-            notch.onpointermove = null;
-            notch.releasePointerCapture(e.pointerId);
+        const thumb = thumbRef.current;
+        if (thumb) {
+            thumb.onpointermove = null;
+            thumb.releasePointerCapture(e.pointerId);
+
+            const box = thumb.getBoundingClientRect();
+            if (
+                e.clientX < box.left ||
+                e.clientX > box.right ||
+                e.clientY < box.top ||
+                e.clientY > box.bottom
+            ) {
+                setIsThumbHovered(false);
+            }
         }
     }, []);
 
-    const progress = React.useMemo(
-        () => (min === max ? 0 : ((currentValue - min) / (max - min)) * 100),
-        [min, max, currentValue]
+    const progress = getSliderValueAsPercentage(currentValue, min, max) * 100;
+    const thumbSize = isIos ? IOS_THUMB_SIZE : DEFAULT_THUMB_SIZE;
+    const touchableArea = isTouchableDevice
+        ? MOBILE_TOUCHABLE_AREA
+        : isIos
+        ? IOS_TOUCHABLE_AREA
+        : DESKTOP_TOUCHABLE_AREA;
+
+    const thumb = (
+        <div
+            className={classNames(isIos ? styles.iosThumb : styles.defaultThumb, {
+                [styles.thumbHover]: !isIos && isThumbHovered && !isPointerDown,
+                [styles.thumbActive]: !isIos && isPointerDown,
+            })}
+        />
     );
 
     return (
         <div
             className={classNames(styles.container, {[styles.disabled]: disabled})}
-            style={{height: isTouchableDevice ? 48 : 20}}
-            aria-label={ariaLabel}
+            style={{height: touchableArea}}
+            {...getPrefixedDataAttributes(dataAttributes, 'Slider')}
+            onPointerDown={(e) => {
+                if (!isTouchableDevice) {
+                    updateCurrentValue(e.clientX);
+                    setIsPointerDown(true);
+                    capturePointerMove(e);
+                }
+            }}
+            onPointerUp={(e) => {
+                if (!isTouchableDevice) {
+                    setIsPointerDown(false);
+                    releasePointerMove(e);
+                }
+            }}
+            onTouchStart={(e) => {
+                if (isTouchableDevice) {
+                    updateCurrentValue(e.nativeEvent.touches[0].clientX);
+                    setIsPointerDown(true);
+                }
+            }}
+            onTouchEnd={() => {
+                if (isTouchableDevice) {
+                    setIsPointerDown(false);
+                }
+            }}
+            onTouchMove={(e) => {
+                if (isTouchableDevice) {
+                    updateCurrentValue(e.nativeEvent.touches[0].clientX);
+                }
+            }}
         >
             <div
                 className={styles.track}
@@ -178,33 +286,71 @@ const Slider: React.FC<SliderProps> = ({
                 }}
             />
             <div
-                className={styles.notchContainer}
-                ref={notchRef}
+                className={styles.thumbContainer}
+                ref={thumbRef}
                 style={{
-                    cursor: isPointerDown ? 'grabbing' : isHovered ? 'grab' : 'auto',
-                    left: `calc(${progress}% - ${NOTCH_SIZE / 2}px)`,
+                    cursor: isPointerDown ? 'grabbing' : isThumbHovered ? 'grab' : 'auto',
+                    left: `calc(${progress / 100} * (100% - ${thumbSize}px) - ${
+                        (touchableArea - thumbSize) / 2
+                    }px)`,
+                    width: touchableArea,
+                    height: touchableArea,
                 }}
                 onPointerEnter={() => {
                     if (!isTouchableDevice) {
-                        setIsHovered(true);
+                        setIsThumbHovered(true);
                     }
                 }}
                 onPointerLeave={() => {
                     if (!isTouchableDevice) {
-                        setIsHovered(false);
+                        setIsThumbHovered(false);
                     }
                 }}
-                onPointerDown={(e) => {
-                    setIsPointerDown(true);
-                    capturePointerMove(e);
+                onFocus={() => {
+                    if (isTabKeyDownRef.current) {
+                        setIsFocused(true);
+                    }
                 }}
-                onPointerUp={(e) => {
-                    setIsPointerDown(false);
-                    releasePointerMove(e);
+                onBlur={() => {
+                    setIsFocused(false);
                 }}
+                tabIndex={disabled ? -1 : 0}
+                role="slider"
+                id={id}
+                aria-label={ariaLabel}
+                aria-valuemin={min}
+                aria-valuemax={max}
+                aria-valuenow={currentValue}
+                aria-disabled={disabled}
+                aria-hidden
             >
-                <div className={styles.notch} />
+                {tooltip ? (
+                    <Tooltip
+                        target={thumb}
+                        open={isThumbHovered || isPointerDown || isFocused}
+                        description={String(currentValue)}
+                        centerContent
+                    />
+                ) : (
+                    thumb
+                )}
             </div>
+            <ScreenReaderOnly>
+                <input
+                    type="range"
+                    min={min}
+                    max={max}
+                    step={step}
+                    value={currentValue}
+                    aria-labelledby={id}
+                    className={styles.input}
+                    disabled={disabled}
+                    style={{
+                        height: touchableArea,
+                    }}
+                    onChange={(e) => setCurrentValue(getSliderValueAsPercentage(+e.target.value, min, max))}
+                />
+            </ScreenReaderOnly>
         </div>
     );
 };

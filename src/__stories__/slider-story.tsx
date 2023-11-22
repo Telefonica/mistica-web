@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Box, Stack, Slider} from '..';
+import {Box, Slider} from '..';
 
 export default {
     title: 'Components/Slider',
@@ -13,31 +13,51 @@ type Args = {
     tooltip: boolean;
 };
 
-export const Default: StoryComponent<Args> = ({disabled, steps, max, min, tooltip}) => {
-    const [a, set] = React.useState(0);
+export const Controlled: StoryComponent<Args> = ({disabled, steps, max, min, tooltip}) => {
+    const [value, setValue] = React.useState(min);
     return (
-        <Box paddingY={48} dataAttributes={{testid: 'slider'}}>
-            <Stack space={24}>
-                <Slider
-                    disabled={disabled}
-                    step={steps}
-                    max={max}
-                    min={min}
-                    tooltip={tooltip}
-                    value={a}
-                    onChangeValue={(value) => {
-                        set(value);
-                        console.log('changed', value);
-                    }}
-                />
-            </Stack>
+        <Box paddingY={48} paddingX={20}>
+            <Slider
+                dataAttributes={{testid: 'slider'}}
+                disabled={disabled}
+                step={steps}
+                max={max}
+                min={min}
+                tooltip={tooltip}
+                value={value}
+                onChangeValue={(value) => setValue(value)}
+            />
         </Box>
     );
 };
 
-Default.storyName = 'Slider';
+Controlled.storyName = 'controlled';
+Controlled.args = {
+    disabled: false,
+    steps: 1,
+    max: 100,
+    min: 0,
+    tooltip: false,
+};
 
-Default.args = {
+export const Uncontrolled: StoryComponent<Args> = ({disabled, steps, max, min, tooltip}) => {
+    return (
+        <Box paddingY={48} paddingX={20}>
+            <Slider
+                dataAttributes={{testid: 'slider'}}
+                disabled={disabled}
+                step={steps}
+                max={max}
+                min={min}
+                tooltip={tooltip}
+                defaultValue={min}
+            />
+        </Box>
+    );
+};
+
+Uncontrolled.storyName = 'uncontrolled';
+Uncontrolled.args = {
     disabled: false,
     steps: 1,
     max: 100,

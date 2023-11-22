@@ -2,7 +2,7 @@ import {openStoryPage, screen} from '../test-utils';
 
 test('Slider', async () => {
     await openStoryPage({
-        id: 'components-slider--default',
+        id: 'components-slider--uncontrolled',
         device: 'MOBILE_ANDROID',
     });
 
