@@ -110,6 +110,8 @@ const Slider: React.FC<SliderProps> = ({
     dataAttributes,
     tooltip,
 }) => {
+    step = step <= 0 ? 1 : step;
+
     const [currentValue, setCurrentValue] = useSliderState({
         value,
         defaultValue,
@@ -133,6 +135,11 @@ const Slider: React.FC<SliderProps> = ({
     React.useEffect(() => {
         setCurrentValue(getSliderValueAsPercentage(currentValue, min, max));
     }, [min, max, step, currentValue, setCurrentValue]);
+
+    const isPointerOverElement = (element: HTMLElement | null, x: number, y: number) => {
+        const box = element?.getBoundingClientRect();
+        return box && box.left <= x && x <= box.right && box.top <= y && box.bottom;
+    };
 
     React.useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
@@ -214,13 +221,7 @@ const Slider: React.FC<SliderProps> = ({
             thumb.onpointermove = null;
             thumb.releasePointerCapture(e.pointerId);
 
-            const box = thumb.getBoundingClientRect();
-            if (
-                e.clientX < box.left ||
-                e.clientX > box.right ||
-                e.clientY < box.top ||
-                e.clientY > box.bottom
-            ) {
+            if (!isPointerOverElement(thumb, e.clientX, e.clientY)) {
                 setIsThumbHovered(false);
             }
         }
@@ -250,7 +251,11 @@ const Slider: React.FC<SliderProps> = ({
             {...getPrefixedDataAttributes(dataAttributes, 'Slider')}
             onPointerDown={(e) => {
                 if (!isTouchableDevice) {
-                    updateCurrentValue(e.clientX);
+                    const x = e.clientX;
+                    const y = e.clientY;
+                    if (!isPointerOverElement(thumbRef.current, x, y)) {
+                        updateCurrentValue(x);
+                    }
                     setIsPointerDown(true);
                     capturePointerMove(e);
                 }
@@ -263,7 +268,11 @@ const Slider: React.FC<SliderProps> = ({
             }}
             onTouchStart={(e) => {
                 if (isTouchableDevice) {
-                    updateCurrentValue(e.nativeEvent.touches[0].clientX);
+                    const x = e.nativeEvent.touches[0].clientX;
+                    const y = e.nativeEvent.touches[0].clientY;
+                    if (!isPointerOverElement(thumbRef.current, x, y)) {
+                        updateCurrentValue(x);
+                    }
                     setIsPointerDown(true);
                 }
             }}
