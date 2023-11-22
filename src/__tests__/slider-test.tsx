@@ -15,10 +15,29 @@ test('renders slider', () => {
     expect(slider).toBeInTheDocument();
 });
 
-test('change slider value', () => {
+test('uncontrolled slider', () => {
     render(
         <ThemeContextProvider theme={makeTheme()}>
             <Slider />
+        </ThemeContextProvider>
+    );
+
+    const slider = screen.getByRole('slider');
+    fireEvent.change(slider, {target: {value: 90}});
+
+    fireEvent.focus(slider);
+    expect(slider).toHaveValue('90');
+});
+
+test('controlled slider', () => {
+    const SliderWrapper = () => {
+        const [value, setValue] = React.useState(0);
+
+        return <Slider value={value} onChangeValue={(value) => setValue(value)} />;
+    };
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <SliderWrapper />
         </ThemeContextProvider>
     );
 
