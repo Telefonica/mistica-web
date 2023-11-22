@@ -25,6 +25,7 @@ import {sprinkles} from './sprinkles.css';
 import {getPrefixedDataAttributes} from './utils/dom';
 import Stack from './stack';
 import Box from './box';
+import {isRunningAcceptanceTest} from './utils/platform';
 
 import type {Props as TouchableProps} from './touchable';
 import type {DataAttributes} from './utils/types';
@@ -232,7 +233,7 @@ export const MainNavigationBar: React.FC<MainNavigationBarProps> = ({
                                     setMenuTransitionState('closed');
                                 }}
                                 in={isMenuOpen}
-                                timeout={BURGER_MENU_ANIMATION_DURATION_MS}
+                                timeout={isRunningAcceptanceTest() ? 0 : BURGER_MENU_ANIMATION_DURATION_MS}
                                 unmountOnExit
                             >
                                 {(burgerMenuState) => (

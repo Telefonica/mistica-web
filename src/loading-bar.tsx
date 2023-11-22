@@ -4,6 +4,7 @@ import {CSSTransition} from 'react-transition-group';
 import {Portal} from './portal';
 import * as styles from './loading-bar.css';
 import {getPrefixedDataAttributes} from './utils/dom';
+import {isRunningAcceptanceTest} from './utils/platform';
 
 import type {DataAttributes} from './utils/types';
 
@@ -13,7 +14,7 @@ const LoadingBar: React.FC<Props> = ({visible, dataAttributes}) => {
     return (
         <CSSTransition
             in={visible}
-            timeout={styles.TRANSITION_DURATION_MS}
+            timeout={isRunningAcceptanceTest() ? 0 : styles.TRANSITION_DURATION_MS}
             classNames={{
                 enter: styles.enter,
                 enterActive: styles.enterActive,

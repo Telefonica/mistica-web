@@ -53,6 +53,8 @@ const colors: Colors = {
     // CONTROLS
     control: '',
     controlActivated: '',
+    controlInverse: '',
+    controlActivatedInverse: '',
     controlError: '',
     loadingBar: '',
     loadingBarBackground: '',

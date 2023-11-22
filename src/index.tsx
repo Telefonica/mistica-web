@@ -11,13 +11,14 @@ export {default as FadeIn} from './fade-in';
 export {AccordionItem, BoxedAccordionItem, Accordion, BoxedAccordion} from './accordion';
 export {ButtonPrimary, ButtonSecondary, ButtonDanger, ButtonLink} from './button';
 export {default as ButtonLayout} from './button-layout';
+export {default as Counter} from './counter';
 export {default as FixedFooterLayout} from './fixed-footer-layout';
 export {default as ButtonFixedFooterLayout} from './button-fixed-footer-layout';
 export {default as Snackbar} from './snackbar';
 export {Portal} from './portal';
 export {default as LoadingBar} from './loading-bar';
 export {default as FixedToTop, TopDistanceContext} from './fixed-to-top';
-export {default as createNestableContext} from './nestable-context';
+export {createNestableContext} from './nestable-context';
 export type {NestableContext} from './nestable-context';
 export {default as OverscrollColor, OverscrollColorProvider} from './overscroll-color-context';
 export {
@@ -69,6 +70,7 @@ export {
     NakedCard,
     SmallNakedCard,
     CardActionSpinner,
+    CardActionIconButton,
 } from './card';
 export {default as Hero} from './hero';
 export {default as Divider} from './divider';

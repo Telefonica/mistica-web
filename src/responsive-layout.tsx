@@ -46,14 +46,7 @@ export const InternalResponsiveLayout: React.FC<Props & {shouldExpandWhenNested?
                 style={backgroundColor ? {background: backgroundColor} : undefined}
                 {...getPrefixedDataAttributes(dataAttributes)}
             >
-                <div
-                    className={classnames(
-                        fullWidth ? styles.fullWidth : styles.responsiveLayout,
-                        shouldExpandWhenNested && !fullWidth && styles.expandedResponsiveLayout
-                    )}
-                >
-                    {children}
-                </div>
+                <div className={fullWidth ? styles.fullWidth : styles.responsiveLayout}>{children}</div>
             </div>
         </ThemeVariant>
     );

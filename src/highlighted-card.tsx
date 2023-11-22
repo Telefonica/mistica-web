@@ -77,6 +77,7 @@ const Content = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
             className={styles.container}
             dataAttributes={{'component-name': 'HighlightedCard', ...props.dataAttributes}}
             width={props.width ? `${props.width}px` : '100%'}
+            minHeight="100%"
         >
             <div
                 // don't create another region when the Content is inside a Dismissable wrapper

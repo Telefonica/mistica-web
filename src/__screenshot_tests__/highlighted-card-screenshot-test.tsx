@@ -6,7 +6,7 @@ const TESTABLE_DEVICES: Array<Device> = ['MOBILE_IOS', 'DESKTOP'];
 
 test.each(TESTABLE_DEVICES)('HighlightedCard in %s', async (device) => {
     await openStoryPage({
-        id: 'components-cards-highlighted-card--default',
+        id: 'components-cards-highlightedcard--default',
         device,
     });
 
@@ -17,7 +17,7 @@ test.each(TESTABLE_DEVICES)('HighlightedCard in %s', async (device) => {
 
 test.each(TESTABLE_DEVICES)('HighlightedCard with large fontSize in %s', async (device) => {
     await openStoryPage({
-        id: 'components-cards-highlighted-card--default',
+        id: 'components-cards-highlightedcard--default',
         device,
     });
 
@@ -28,24 +28,12 @@ test.each(TESTABLE_DEVICES)('HighlightedCard with large fontSize in %s', async (
     expect(image).toMatchImageSnapshot();
 });
 
-test('Custom card size', async () => {
-    await openStoryPage({
-        id: 'components-cards-highlighted-card--custom-card-size',
-        device: 'DESKTOP',
+test('HighlightedCard group', async () => {
+    const page = await openStoryPage({
+        id: 'components-cards-highlightedcard--group',
     });
 
-    const highlightedCard = await screen.findByTestId('highlighted-card');
-    const image = await highlightedCard.screenshot();
-    expect(image).toMatchImageSnapshot();
-});
+    const image = await page.screenshot({fullPage: true});
 
-test('Custom card size inside wrapper', async () => {
-    await openStoryPage({
-        id: 'components-cards-highlighted-card--custom-card-size-inside-wrapper',
-        device: 'DESKTOP',
-    });
-
-    const highlightedCard = await screen.findByTestId('highlighted-card');
-    const image = await highlightedCard.screenshot();
     expect(image).toMatchImageSnapshot();
 });

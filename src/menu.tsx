@@ -17,6 +17,7 @@ import Checkbox from './checkbox';
 import {CSSTransition} from 'react-transition-group';
 import {combineRefs} from './utils/common';
 import {applyCssVars} from './utils/css';
+import {isRunningAcceptanceTest} from './utils/platform';
 
 import type {ExclusifyUnion} from './utils/utility-types';
 import type {DataAttributes, IconProps} from './utils/types';
@@ -397,7 +398,7 @@ export const Menu: React.FC<MenuProps> = ({
                 <CSSTransition
                     in={isMenuOpen}
                     nodeRef={menuRef}
-                    timeout={MENU_TRANSITION_DURATION_IN_MS}
+                    timeout={isRunningAcceptanceTest() ? 0 : MENU_TRANSITION_DURATION_IN_MS}
                     classNames={styles.menuTransitionClasses}
                     mountOnEnter
                     unmountOnExit

@@ -38,9 +38,18 @@ export const actions = style([
     },
 ]);
 
+export const touchableArea = style({
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    height: '100%',
+    width: '100%',
+});
+
 export const touchableContainer = style({
     display: 'flex',
     position: 'relative',
+    flexDirection: 'column',
     width: '100%',
     height: '100%',
 });
@@ -90,7 +99,6 @@ export const cardContentStyle = style([
     sprinkles({
         paddingTop: 8,
         paddingBottom: 24,
-        position: 'relative',
     }),
     {
         '@media': {
@@ -101,6 +109,8 @@ export const cardContentStyle = style([
         },
     },
 ]);
+
+export const zindex = style({zIndex: -1});
 
 export const minHeight = style({minHeight: 216});
 

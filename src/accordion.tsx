@@ -14,6 +14,7 @@ import {Boxed} from './boxed';
 import {useIsInverseVariant} from './theme-variant-context';
 import {useAriaId} from './hooks';
 import {CSSTransition} from 'react-transition-group';
+import {isRunningAcceptanceTest} from './utils/platform';
 
 import type {ExclusifyUnion} from './utils/utility-types';
 import type {DataAttributes, TrackingEvent} from './utils/types';
@@ -174,7 +175,7 @@ const AccordionItemContent = React.forwardRef<TouchableElement, AccordionItemCon
                 </BaseTouchable>
                 <CSSTransition
                     in={isOpen}
-                    timeout={ACCORDION_TRANSITION_DURATION_IN_MS}
+                    timeout={isRunningAcceptanceTest() ? 0 : ACCORDION_TRANSITION_DURATION_IN_MS}
                     nodeRef={panelContainerRef}
                     classNames={styles.panelTransitionClasses}
                     mountOnEnter
@@ -205,6 +206,9 @@ export const AccordionItem = React.forwardRef<TouchableElement, AccordionItemCon
 
 type AccordionBaseProps = {
     children: React.ReactNode;
+    /**
+     * @deprecated This field is deprecated and it has no effect.
+     */
     noLastDivider?: boolean;
     dataAttributes?: DataAttributes;
     onChange?: (index: number, value: boolean) => void;
@@ -227,7 +231,6 @@ type AccordionProps = AccordionBaseProps & ExclusifyUnion<SingleOpenProps | Mult
 export const Accordion: React.FC<AccordionProps> = ({
     children,
     dataAttributes,
-    noLastDivider,
     index,
     defaultIndex,
     onChange,
@@ -240,7 +243,6 @@ export const Accordion: React.FC<AccordionProps> = ({
         singleOpen,
     });
     const lastIndex = React.Children.count(children) - 1;
-    const showLastDivider = !noLastDivider;
 
     return (
         <AccordionContext.Provider value={{index: indexList, toogle}}>
@@ -250,7 +252,7 @@ export const Accordion: React.FC<AccordionProps> = ({
                     .map((child, index) => (
                         <React.Fragment key={index}>
                             {child}
-                            {(index < lastIndex || showLastDivider) && (
+                            {index < lastIndex && (
                                 <Box paddingX={16}>
                                     <Divider />
                                 </Box>
