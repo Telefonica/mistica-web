@@ -4,7 +4,7 @@ import {vars} from './skins/skin-contract.css';
 import {DOWN, END, HOME, LEFT, RIGHT, TAB, UP} from './utils/key-codes';
 import {isClientSide} from './utils/environment';
 import classNames from 'classnames';
-import {cancelEvent, getPrefixedDataAttributes} from './utils/dom';
+import {cancelEvent} from './utils/dom';
 import ScreenReaderOnly from './screen-reader-only';
 import {useAriaId, useTheme} from './hooks';
 import Tooltip from './tooltip';
