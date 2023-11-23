@@ -297,6 +297,7 @@ const Slider: React.FC<SliderProps> = ({
     const thumbPosition = `calc(${progress} * (100% - ${thumbSize}px) - ${
         (touchableArea - thumbSize) / 2
     }px)`;
+    const trackProgressPosition = `calc(${thumbPosition} + ${touchableArea / 2}px)`;
 
     const thumb = (
         <div
@@ -363,7 +364,7 @@ const Slider: React.FC<SliderProps> = ({
                     className={styles.track}
                     ref={trackRef}
                     style={{
-                        background: `linear-gradient(to right, ${vars.colors.controlActivated} ${thumbPosition}, ${vars.colors.control} ${thumbPosition}`,
+                        background: `linear-gradient(to right, ${vars.colors.controlActivated} ${trackProgressPosition}, ${vars.colors.control} ${trackProgressPosition}`,
                     }}
                 />
                 <div
