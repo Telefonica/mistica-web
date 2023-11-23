@@ -179,7 +179,7 @@ const Tooltip: React.FC<Props> = ({
         padding: string;
     } | null>(null);
 
-    const [arrowComputedStyles, setArrowComputedStyles] = React.useState<React.CSSProperties>({});
+    const [arrowComputedStyles, setArrowComputedStyles] = React.useState<React.CSSProperties | null>(null);
 
     const targetRef = React.useRef<Element | null>(null);
     const tooltipRef = React.useRef<HTMLDivElement | null>(null);
@@ -225,7 +225,7 @@ const Tooltip: React.FC<Props> = ({
 
         if (!finalPosition || !targetRect) {
             setTooltipComputedStyles(null);
-            setArrowComputedStyles({});
+            setArrowComputedStyles(null);
             resetTooltipInteractions();
             return;
         }
@@ -558,7 +558,10 @@ const Tooltip: React.FC<Props> = ({
                                                 {extra || children}
                                             </ThemeVariant>
                                         </div>
-                                        <div className={styles.arrowContainer} style={arrowComputedStyles}>
+                                        <div
+                                            className={styles.arrowContainer}
+                                            style={arrowComputedStyles || {}}
+                                        >
                                             <div
                                                 className={classNames(styles.arrow)}
                                                 style={getBorderStyle(isInverse)}

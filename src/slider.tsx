@@ -8,6 +8,7 @@ import {cancelEvent, getPrefixedDataAttributes} from './utils/dom';
 import ScreenReaderOnly from './screen-reader-only';
 import {useAriaId, useTheme} from './hooks';
 import Tooltip from './tooltip';
+import Box from './box';
 
 import type {DataAttributes} from './utils/types';
 
@@ -138,7 +139,7 @@ const Slider: React.FC<SliderProps> = ({
 
     const isPointerOverElement = (element: HTMLElement | null, x: number, y: number) => {
         const box = element?.getBoundingClientRect();
-        return box && box.left <= x && x <= box.right && box.top <= y && box.bottom;
+        return box !== undefined && box.left <= x && x <= box.right && box.top <= y && y <= box.bottom;
     };
 
     React.useEffect(() => {
@@ -245,114 +246,123 @@ const Slider: React.FC<SliderProps> = ({
     );
 
     return (
-        <div
-            className={classNames(styles.container, {[styles.disabled]: disabled})}
-            style={{height: touchableArea}}
-            {...getPrefixedDataAttributes(dataAttributes, 'Slider')}
-            onPointerDown={(e) => {
-                if (!isTouchableDevice) {
-                    const x = e.clientX;
-                    const y = e.clientY;
-                    if (!isPointerOverElement(thumbRef.current, x, y)) {
-                        updateCurrentValue(x);
-                    }
-                    setIsPointerDown(true);
-                    capturePointerMove(e);
-                }
-            }}
-            onPointerUp={(e) => {
-                if (!isTouchableDevice) {
-                    setIsPointerDown(false);
-                    releasePointerMove(e);
-                }
-            }}
-            onTouchStart={(e) => {
-                if (isTouchableDevice) {
-                    const x = e.nativeEvent.touches[0].clientX;
-                    const y = e.nativeEvent.touches[0].clientY;
-                    if (!isPointerOverElement(thumbRef.current, x, y)) {
-                        updateCurrentValue(x);
-                    }
-                    setIsPointerDown(true);
-                }
-            }}
-            onTouchEnd={() => {
-                if (isTouchableDevice) {
-                    setIsPointerDown(false);
-                }
-            }}
-            onTouchMove={(e) => {
-                if (isTouchableDevice) {
-                    updateCurrentValue(e.nativeEvent.touches[0].clientX);
-                }
-            }}
-        >
+        <Box padding={8} dataAttributes={{'component-name': 'Slider', ...dataAttributes}}>
             <div
-                className={styles.track}
-                ref={trackRef}
-                style={{
-                    background: `linear-gradient(to right, ${vars.colors.controlActivated} ${progress}%, ${vars.colors.control} ${progress}%)`,
-                }}
-            />
-            <div
-                className={styles.thumbContainer}
-                ref={thumbRef}
-                style={{
-                    cursor: isPointerDown ? 'grabbing' : isThumbHovered ? 'grab' : 'auto',
-                    left: `calc(${progress / 100} * (100% - ${thumbSize}px) - ${
-                        (touchableArea - thumbSize) / 2
-                    }px)`,
-                    width: touchableArea,
-                    height: touchableArea,
-                }}
-                onPointerEnter={() => {
+                className={classNames(styles.container, {[styles.disabled]: disabled})}
+                style={{height: touchableArea}}
+                onPointerDown={(e) => {
+                    cancelEvent(e);
                     if (!isTouchableDevice) {
-                        setIsThumbHovered(true);
+                        const x = e.clientX;
+                        const y = e.clientY;
+                        if (!isPointerOverElement(thumbRef.current, x, y)) {
+                            updateCurrentValue(x);
+                        }
+                        setIsPointerDown(true);
+                        capturePointerMove(e);
                     }
                 }}
-                onPointerLeave={() => {
+                onPointerUp={(e) => {
+                    cancelEvent(e);
                     if (!isTouchableDevice) {
-                        setIsThumbHovered(false);
+                        setIsPointerDown(false);
+                        releasePointerMove(e);
                     }
                 }}
-                onFocus={() => {
-                    if (isTabKeyDownRef.current) {
-                        setIsFocused(true);
+                onTouchStart={(e) => {
+                    cancelEvent(e);
+                    if (isTouchableDevice) {
+                        const x = e.nativeEvent.touches[0].clientX;
+                        const y = e.nativeEvent.touches[0].clientY;
+                        if (!isPointerOverElement(thumbRef.current, x, y)) {
+                            updateCurrentValue(x);
+                        }
+                        setIsPointerDown(true);
                     }
                 }}
-                onBlur={() => {
-                    setIsFocused(false);
+                onTouchEnd={(e) => {
+                    cancelEvent(e);
+                    if (isTouchableDevice) {
+                        setIsPointerDown(false);
+                    }
                 }}
-                tabIndex={disabled ? -1 : 0}
+                onTouchMove={(e) => {
+                    cancelEvent(e);
+                    if (isTouchableDevice) {
+                        updateCurrentValue(e.nativeEvent.touches[0].clientX);
+                    }
+                }}
             >
-                {tooltip ? (
-                    <Tooltip
-                        target={thumb}
-                        open={isThumbHovered || isPointerDown || isFocused}
-                        description={String(currentValue)}
-                        centerContent
-                    />
-                ) : (
-                    thumb
-                )}
-            </div>
-            <ScreenReaderOnly>
-                <input
-                    type="range"
-                    min={min}
-                    max={max}
-                    step={step}
-                    value={currentValue}
-                    aria-label={label}
-                    className={styles.input}
-                    disabled={disabled}
+                <div
+                    className={styles.track}
+                    ref={trackRef}
                     style={{
+                        background: `linear-gradient(to right, ${vars.colors.controlActivated} ${progress}%, ${vars.colors.control} ${progress}%)`,
+                    }}
+                />
+                <div
+                    className={styles.thumbContainer}
+                    ref={thumbRef}
+                    style={{
+                        cursor: isPointerDown ? 'grabbing' : isThumbHovered ? 'grab' : 'auto',
+                        left: `calc(${progress / 100} * (100% - ${thumbSize}px) - ${
+                            (touchableArea - thumbSize) / 2
+                        }px)`,
+                        width: touchableArea,
                         height: touchableArea,
                     }}
-                    onChange={(e) => setCurrentValue(getSliderValueAsPercentage(+e.target.value, min, max))}
-                />
-            </ScreenReaderOnly>
-        </div>
+                    onPointerEnter={() => {
+                        if (!isTouchableDevice) {
+                            setIsThumbHovered(true);
+                        }
+                    }}
+                    onPointerLeave={() => {
+                        if (!isTouchableDevice) {
+                            setIsThumbHovered(false);
+                        }
+                    }}
+                    onFocus={() => {
+                        if (isTabKeyDownRef.current) {
+                            setIsFocused(true);
+                        }
+                    }}
+                    onBlur={() => {
+                        setIsFocused(false);
+                    }}
+                    tabIndex={disabled ? -1 : 0}
+                >
+                    {tooltip ? (
+                        <Tooltip
+                            target={thumb}
+                            open={isThumbHovered || isPointerDown || isFocused}
+                            description={String(currentValue)}
+                            centerContent
+                            delay={false}
+                        />
+                    ) : (
+                        thumb
+                    )}
+                </div>
+                <ScreenReaderOnly>
+                    <input
+                        type="range"
+                        min={min}
+                        max={max}
+                        step={step}
+                        value={currentValue}
+                        aria-label={label}
+                        className={styles.input}
+                        disabled={disabled}
+                        style={{
+                            height: touchableArea,
+                        }}
+                        onChange={(e) =>
+                            setCurrentValue(getSliderValueAsPercentage(+e.target.value, min, max))
+                        }
+                    />
+                </ScreenReaderOnly>
+            </div>
+        </Box>
     );
 };
 
