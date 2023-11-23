@@ -16,6 +16,7 @@ export const container = style({
     display: 'flex',
     alignItems: 'center',
     cursor: 'pointer',
+    touchAction: 'none',
 });
 
 export const disabled = style({
