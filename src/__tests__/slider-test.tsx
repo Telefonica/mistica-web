@@ -59,3 +59,21 @@ test('disabled slider', () => {
 
     expect(slider).toBeDisabled();
 });
+
+test('slider with values array', () => {
+    const fn = jest.fn();
+
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Slider values={[12, 3, 4]} value={3} onChangeValue={fn} />
+        </ThemeContextProvider>
+    );
+
+    const slider = screen.getByRole('slider');
+
+    fireEvent.change(slider, {target: {value: 1}});
+    expect(fn).not.toHaveBeenCalled();
+
+    fireEvent.change(slider, {target: {value: 0}});
+    expect(fn).toHaveBeenCalledWith(12);
+});

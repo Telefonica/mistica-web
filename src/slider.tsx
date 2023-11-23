@@ -112,6 +112,14 @@ interface BaseSliderProps {
     'aria-label'?: string;
     tooltip?: boolean;
     dataAttributes?: DataAttributes;
+    /**
+     * @deprecated This field is deprecated, please use step or values instead.
+     */
+    steps?: number | Array<number>;
+    /**
+     * @deprecated This field is deprecated.
+     */
+    getStepArrayIndex?: (value: number) => void;
 }
 
 interface SliderWithValuesProps {
@@ -225,17 +233,23 @@ const Slider: React.FC<SliderProps> = ({
     }, [isFocused, currentValue, step, min, max, setCurrentValue]);
 
     const isTouchableDevice = isClientSide() ? window.matchMedia('(pointer: coarse)').matches : false;
+    const thumbSize = isIos ? IOS_THUMB_SIZE : DEFAULT_THUMB_SIZE;
+    const touchableArea = isTouchableDevice
+        ? MOBILE_TOUCHABLE_AREA
+        : isIos
+        ? IOS_TOUCHABLE_AREA
+        : DESKTOP_TOUCHABLE_AREA;
 
     const updateCurrentValue = React.useCallback(
         (pointerPosition: number) => {
             const track = trackRef.current;
             if (track) {
-                const leftBorder = track.getBoundingClientRect().left;
-                const width = track.clientWidth;
-                setCurrentValue((pointerPosition - leftBorder) / width);
+                const leftBorder = track.getBoundingClientRect().left + thumbSize / 2;
+                const rightBorder = track.getBoundingClientRect().right - thumbSize / 2;
+                setCurrentValue((pointerPosition - leftBorder) / (rightBorder - leftBorder));
             }
         },
-        [setCurrentValue]
+        [setCurrentValue, thumbSize]
     );
 
     const onPointerMove = React.useCallback(
@@ -279,13 +293,10 @@ const Slider: React.FC<SliderProps> = ({
         }
     }, []);
 
-    const progress = getSliderValueAsPercentage(currentValue, min, max) * 100;
-    const thumbSize = isIos ? IOS_THUMB_SIZE : DEFAULT_THUMB_SIZE;
-    const touchableArea = isTouchableDevice
-        ? MOBILE_TOUCHABLE_AREA
-        : isIos
-        ? IOS_TOUCHABLE_AREA
-        : DESKTOP_TOUCHABLE_AREA;
+    const progress = getSliderValueAsPercentage(currentValue, min, max);
+    const thumbPosition = `calc(${progress} * (100% - ${thumbSize}px) - ${
+        (touchableArea - thumbSize) / 2
+    }px)`;
 
     const thumb = (
         <div
@@ -352,7 +363,7 @@ const Slider: React.FC<SliderProps> = ({
                     className={styles.track}
                     ref={trackRef}
                     style={{
-                        background: `linear-gradient(to right, ${vars.colors.controlActivated} ${progress}%, ${vars.colors.control} ${progress}%)`,
+                        background: `linear-gradient(to right, ${vars.colors.controlActivated} ${thumbPosition}, ${vars.colors.control} ${thumbPosition}`,
                     }}
                 />
                 <div
@@ -360,9 +371,7 @@ const Slider: React.FC<SliderProps> = ({
                     ref={thumbRef}
                     style={{
                         cursor: isPointerDown ? 'grabbing' : isThumbHovered ? 'grab' : 'auto',
-                        left: `calc(${progress / 100} * (100% - ${thumbSize}px) - ${
-                            (touchableArea - thumbSize) / 2
-                        }px)`,
+                        left: thumbPosition,
                         width: touchableArea,
                         height: touchableArea,
                     }}
@@ -390,7 +399,7 @@ const Slider: React.FC<SliderProps> = ({
                         <Tooltip
                             target={thumb}
                             open={isThumbHovered || isPointerDown || isFocused}
-                            description={String(currentValue)}
+                            description={String(values ? values[currentValue] : currentValue)}
                             centerContent
                             delay={false}
                         />

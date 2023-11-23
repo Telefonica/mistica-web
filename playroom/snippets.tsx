@@ -1088,6 +1088,19 @@ const tagSnippets: Array<Snippet> = ['promo', 'active', 'inactive', 'success', '
     })
 );
 
+const sliderSnippets: Array<Snippet> = [
+    {
+        group: 'Slider',
+        name: 'Slider',
+        code: '<Slider min={1} max={10} tooltip />',
+    },
+    {
+        group: 'Slider',
+        name: 'Slider with values',
+        code: '<Slider values={[3, 10, 7, 1, 2, 4, 6, 8, 9, 5]} tooltip />',
+    },
+];
+
 const layoutSnippets: Array<Snippet> = [
     {
         name: 'Box',
@@ -2655,6 +2668,7 @@ export default [
     ...listSnippetsAvatar,
     ...listRowSnippets,
     ...tabsSnippets,
+    ...sliderSnippets,
     ...cardSnippets,
     ...exampleScreens,
     {
@@ -2750,11 +2764,6 @@ export default [
             />
           </Inline>
         </RadioGroup>`,
-    },
-    {
-        group: 'Slider',
-        name: 'Slider',
-        code: '<Slider min={0} max={100}   />',
     },
     ...tagSnippets,
     {
