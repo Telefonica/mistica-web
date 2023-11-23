@@ -10,6 +10,7 @@ import {useAriaId, useTheme} from './hooks';
 import Tooltip from './tooltip';
 import Box from './box';
 
+import type {ExclusifyUnion} from './utils/utility-types';
 import type {DataAttributes} from './utils/types';
 
 const DESKTOP_TOUCHABLE_AREA = 20;
@@ -25,6 +26,7 @@ const useSliderState = ({
     min,
     max,
     step,
+    values,
     onChangeValue,
 }: {
     value?: number;
@@ -32,9 +34,25 @@ const useSliderState = ({
     min: number;
     max: number;
     step: number;
+    values?: Array<number>;
     onChangeValue?: (value: number) => void;
 }): [number, (value: number) => void] => {
-    const isControlledByParent = value !== undefined;
+    const getClosestArrayValue = React.useCallback(
+        (value: number) => {
+            if (!values) {
+                return value;
+            }
+
+            let closestIndex = 0;
+            values.forEach((currentValue, index) => {
+                if (Math.abs(currentValue - value) <= Math.abs(values[closestIndex] - value)) {
+                    closestIndex = index;
+                }
+            });
+            return closestIndex;
+        },
+        [values]
+    );
 
     const getValueInRange = React.useCallback(
         (isPercentage: boolean, value?: number) => {
@@ -63,10 +81,14 @@ const useSliderState = ({
 
     const [currentValue, setCurrentValue] = React.useState<number>(getValueInRange(false, defaultValue));
 
+    const isControlledByParent = value !== undefined;
+    const controlledValue =
+        values && value !== undefined ? getClosestArrayValue(value) : getValueInRange(false, value);
+
     /**
      * We use a ref to avoid race conditions caused by re-renders
      */
-    const prevValueRef = React.useRef(isControlledByParent ? value : currentValue);
+    const prevValueRef = React.useRef(isControlledByParent ? controlledValue : currentValue);
 
     const updateValue = (newValue: number) => {
         newValue = getValueInRange(true, newValue);
@@ -74,19 +96,16 @@ const useSliderState = ({
             setCurrentValue(newValue);
         }
         if (newValue !== prevValueRef.current) {
-            onChangeValue?.(newValue);
+            onChangeValue?.(values ? values[newValue] : newValue);
         }
         prevValueRef.current = newValue;
     };
 
-    return [isControlledByParent ? value : currentValue, updateValue];
+    return [isControlledByParent ? controlledValue : currentValue, updateValue];
 };
 
-interface SliderProps {
+interface BaseSliderProps {
     disabled?: boolean;
-    step?: number;
-    min?: number;
-    max?: number;
     value?: number;
     defaultValue?: number;
     onChangeValue?: (value: number) => void;
@@ -95,12 +114,25 @@ interface SliderProps {
     dataAttributes?: DataAttributes;
 }
 
+interface SliderWithValuesProps {
+    values: Array<number>;
+}
+
+interface SliderWithStepProps {
+    step?: number;
+    min?: number;
+    max?: number;
+}
+
+type SliderProps = BaseSliderProps & ExclusifyUnion<SliderWithStepProps | SliderWithValuesProps>;
+
 const getSliderValueAsPercentage = (value: number, min: number, max: number) => {
     return min >= max ? 0 : (value - min) / (max - min);
 };
 
 const Slider: React.FC<SliderProps> = ({
     disabled,
+    values,
     step = 1,
     min = 0,
     max = 100,
@@ -111,6 +143,14 @@ const Slider: React.FC<SliderProps> = ({
     dataAttributes,
     tooltip,
 }) => {
+    if (values) {
+        if (values.length === 0) {
+            values = undefined;
+        } else {
+            max = values.length - 1;
+        }
+    }
+
     step = step <= 0 ? 1 : step;
 
     const [currentValue, setCurrentValue] = useSliderState({
@@ -119,6 +159,7 @@ const Slider: React.FC<SliderProps> = ({
         min,
         max,
         step,
+        values,
         onChangeValue,
     });
 
@@ -210,6 +251,16 @@ const Slider: React.FC<SliderProps> = ({
             const thumb = thumbRef.current;
             if (thumb) {
                 thumb.onpointermove = onPointerMove;
+                /**
+                 * There is a known firefox bug caused by using setPointerCapture().
+                 * If you press the slider, drag the pointer on top of a button and then release it,
+                 * the button will be clicked. The issue doesn't happen in Chrome or Safari, and it
+                 * can be reproduced by using basic HTML (https://codepen.io/Marcos-Kolodny/pen/oNmdMxM).
+                 *
+                 * This was reported to firefox a long time ago and many users mention different scenarios
+                 * where it happens, but it seems they are not working on it
+                 * (https://bugzilla.mozilla.org/show_bug.cgi?id=1648893).
+                 */
                 thumb.setPointerCapture(e.pointerId);
             }
         },
@@ -246,7 +297,11 @@ const Slider: React.FC<SliderProps> = ({
     );
 
     return (
-        <Box padding={8} dataAttributes={{'component-name': 'Slider', ...dataAttributes}}>
+        <Box
+            padding={8}
+            className={styles.sliderContainer}
+            dataAttributes={{'component-name': 'Slider', ...dataAttributes}}
+        >
             <div
                 className={classNames(styles.container, {[styles.disabled]: disabled})}
                 style={{height: touchableArea}}
@@ -353,6 +408,7 @@ const Slider: React.FC<SliderProps> = ({
                         aria-label={label}
                         className={styles.input}
                         disabled={disabled}
+                        aria-valuetext={String(values ? values[currentValue] : currentValue)}
                         style={{
                             height: touchableArea,
                         }}

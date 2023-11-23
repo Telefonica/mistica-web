@@ -6,6 +6,10 @@ import {applyAlpha} from './utils/color';
 const DEFAULT_THUMB_SIZE = 20;
 const IOS_THUMB_SIZE = 28;
 
+export const sliderContainer = style({
+    overflow: 'hidden',
+});
+
 export const container = style({
     width: '100%',
     position: 'relative',
