@@ -294,11 +294,7 @@ const Slider = React.forwardRef<HTMLInputElement, SliderProps>(
         );
 
         return (
-            <Box
-                padding={8}
-                className={styles.sliderContainer}
-                dataAttributes={{'component-name': 'Slider', ...dataAttributes}}
-            >
+            <Box paddingY={8} dataAttributes={{'component-name': 'Slider', ...dataAttributes}}>
                 <div
                     className={classNames(styles.container, {[styles.disabled]: disabled})}
                     style={{height: touchableArea}}
@@ -408,6 +404,7 @@ const Slider = React.forwardRef<HTMLInputElement, SliderProps>(
                             className={styles.input}
                             aria-valuetext={String(values ? values[finalValue] : finalValue)}
                             style={{
+                                width: '100%',
                                 height: touchableArea,
                             }}
                             name={name}
