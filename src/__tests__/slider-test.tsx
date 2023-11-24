@@ -29,6 +29,21 @@ test('uncontrolled slider', () => {
     expect(slider).toHaveValue('90');
 });
 
+test('uncontrolled slider with defaultValue', () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Slider name="slider" defaultValue={3} />
+        </ThemeContextProvider>
+    );
+
+    const slider = screen.getByRole('slider');
+    expect(slider).toHaveValue('3');
+
+    fireEvent.change(slider, {target: {value: 90}});
+
+    expect(slider).toHaveValue('90');
+});
+
 test('controlled slider', () => {
     const SliderWrapper = () => {
         const [value, setValue] = React.useState(0);

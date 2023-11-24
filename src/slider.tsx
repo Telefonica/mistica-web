@@ -81,8 +81,7 @@ const getValueInRange = (isPercentage: boolean, min: number, max: number, step: 
         : valueRoundedDown;
 };
 
-/*
-const getClosestArrayValue = (value: number, values: Array<number>) => {
+const getClosestValidValue = (value: number, values?: Array<number>) => {
     if (!values) {
         return value;
     }
@@ -95,7 +94,6 @@ const getClosestArrayValue = (value: number, values: Array<number>) => {
     });
     return closestIndex;
 };
-*/
 
 const Slider = React.forwardRef<HTMLInputElement, SliderProps>(
     (
@@ -134,20 +132,33 @@ const Slider = React.forwardRef<HTMLInputElement, SliderProps>(
             name,
         } = useControlProps({
             name: props.name,
-            value: getValueInRange(false, min, max, step, props.value),
-            defaultValue: getValueInRange(false, min, max, step, props.defaultValue),
+            value:
+                props.value !== undefined
+                    ? getValueInRange(false, min, max, step, getClosestValidValue(props.value, values))
+                    : undefined,
+            defaultValue:
+                props.defaultValue !== undefined
+                    ? getValueInRange(false, min, max, step, getClosestValidValue(props.defaultValue, values))
+                    : undefined,
             onChange: props.onChangeValue,
             disabled: props.disabled,
         });
 
         const [currentValue, setCurrentValue] = React.useState(
-            getValueInRange(false, min, max, step, defaultValue)
+            value ?? getValueInRange(false, min, max, step, getClosestValidValue(defaultValue ?? min, values))
         );
+
+        const finalValue = value ?? currentValue;
+
+        const prevValueRef = React.useRef(finalValue);
 
         const handleChange = (value: number, isPercentage: boolean) => {
             const realValue = getValueInRange(isPercentage, min, max, step, value);
+            if (prevValueRef.current !== realValue) {
+                onChangeValue(values ? values[realValue] : realValue);
+            }
             setCurrentValue(realValue);
-            onChangeValue(realValue);
+            prevValueRef.current = realValue;
         };
 
         const trackRef = React.useRef<HTMLDivElement>(null);
@@ -172,6 +183,12 @@ const Slider = React.forwardRef<HTMLInputElement, SliderProps>(
                     case TAB:
                         isTabKeyDownRef.current = true;
                         break;
+                    case ESC:
+                        if (isFocused) {
+                            setIsFocused(false);
+                            thumbRef.current?.blur();
+                        }
+                        break;
                     default:
                     // do nothing
                 }
@@ -185,19 +202,19 @@ const Slider = React.forwardRef<HTMLInputElement, SliderProps>(
                 document.removeEventListener('keydown', handleKeyDown, false);
                 document.removeEventListener('keyup', handleKeyUp, false);
             };
-        }, []);
+        }, [isFocused]);
 
         const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
             switch (e.keyCode) {
                 case RIGHT:
                 case UP:
                     cancelEvent(e);
-                    handleChange(currentValue + step, false);
+                    handleChange(finalValue + step, false);
                     break;
                 case LEFT:
                 case DOWN:
                     cancelEvent(e);
-                    handleChange(currentValue - step, false);
+                    handleChange(finalValue - step, false);
                     break;
                 case HOME:
                     cancelEvent(e);
@@ -206,10 +223,6 @@ const Slider = React.forwardRef<HTMLInputElement, SliderProps>(
                 case END:
                     cancelEvent(e);
                     handleChange(max, false);
-                    break;
-                case ESC:
-                    cancelEvent(e);
-                    thumbRef.current?.blur();
                     break;
 
                 default:
@@ -265,7 +278,7 @@ const Slider = React.forwardRef<HTMLInputElement, SliderProps>(
             }
         };
 
-        const progress = getSliderValueAsPercentage(currentValue, min, max);
+        const progress = getSliderValueAsPercentage(finalValue, min, max);
         const thumbPosition = `calc(${progress} * (100% - ${thumbSize}px) - ${
             (touchableArea - thumbSize) / 2
         }px)`;
@@ -371,8 +384,8 @@ const Slider = React.forwardRef<HTMLInputElement, SliderProps>(
                         {tooltip ? (
                             <Tooltip
                                 target={thumb}
-                                open={isPointerDown || isFocused ? true : undefined}
-                                description={String(values ? values[currentValue] : currentValue)}
+                                open={isPointerDown || isFocused || isThumbHovered ? true : undefined}
+                                description={String(values ? values[finalValue] : finalValue)}
                                 centerContent
                                 delay={false}
                             />
@@ -391,12 +404,12 @@ const Slider = React.forwardRef<HTMLInputElement, SliderProps>(
                             aria-labelledby={ariaLabelledBy}
                             id={id}
                             className={styles.input}
-                            aria-valuetext={String(values ? values[currentValue] : currentValue)}
+                            aria-valuetext={String(values ? values[finalValue] : finalValue)}
                             style={{
                                 height: touchableArea,
                             }}
                             name={name}
-                            value={value}
+                            value={values ? values[finalValue] : finalValue}
                             disabled={disabled}
                             onChange={(e) => handleChange(+e.target.value, false)}
                             onFocus={() => {
