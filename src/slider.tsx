@@ -312,6 +312,8 @@ const Slider = React.forwardRef<HTMLInputElement, SliderProps>(
                             }
                             setIsPointerDown(true);
                             capturePointerMove(e);
+                        } else {
+                            cancelEvent(e);
                         }
                     }}
                     onPointerUp={(e) => {
