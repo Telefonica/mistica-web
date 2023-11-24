@@ -1,14 +1,16 @@
 import * as React from 'react';
 import * as styles from './slider.css';
 import {vars} from './skins/skin-contract.css';
-import {DOWN, END, HOME, LEFT, RIGHT, TAB, UP} from './utils/key-codes';
+import {DOWN, END, ESC, HOME, LEFT, RIGHT, TAB, UP} from './utils/key-codes';
 import {isClientSide} from './utils/environment';
 import classNames from 'classnames';
 import {cancelEvent} from './utils/dom';
 import ScreenReaderOnly from './screen-reader-only';
-import {useAriaId, useTheme} from './hooks';
+import {useTheme} from './hooks';
 import Tooltip from './tooltip';
 import Box from './box';
+import {useControlProps} from './form-context';
+import {combineRefs} from './utils/common';
 
 import type {ExclusifyUnion} from './utils/utility-types';
 import type {DataAttributes} from './utils/types';
@@ -109,9 +111,12 @@ interface BaseSliderProps {
     value?: number;
     defaultValue?: number;
     onChangeValue?: (value: number) => void;
-    'aria-label'?: string;
     tooltip?: boolean;
     dataAttributes?: DataAttributes;
+    name: string;
+    'aria-label'?: string;
+    'aria-labelledby'?: string;
+    id?: string;
     /**
      * @deprecated This field is deprecated, please use step or values instead.
      */
@@ -138,298 +143,322 @@ const getSliderValueAsPercentage = (value: number, min: number, max: number) => 
     return min >= max ? 0 : (value - min) / (max - min);
 };
 
-const Slider: React.FC<SliderProps> = ({
-    disabled,
-    values,
-    step = 1,
-    min = 0,
-    max = 100,
-    value,
-    defaultValue,
-    onChangeValue,
-    'aria-label': ariaLabel,
-    dataAttributes,
-    tooltip,
-}) => {
-    if (values) {
-        if (values.length === 0) {
-            values = undefined;
-        } else {
-            max = values.length - 1;
+const Slider = React.forwardRef<HTMLInputElement, SliderProps>(
+    (
+        {
+            disabled,
+            values,
+            step = 1,
+            min = 0,
+            max = 100,
+            value,
+            defaultValue,
+            onChangeValue,
+            'aria-label': ariaLabel,
+            'aria-labelledby': ariaLabelledBy,
+            name,
+            id,
+            dataAttributes,
+            tooltip,
+        },
+        ref
+    ) => {
+        if (values) {
+            if (values.length === 0) {
+                values = undefined;
+            } else {
+                max = values.length - 1;
+            }
         }
-    }
 
-    step = step <= 0 ? 1 : step;
+        step = step <= 0 ? 1 : step;
 
-    const [currentValue, setCurrentValue] = useSliderState({
-        value,
-        defaultValue,
-        min,
-        max,
-        step,
-        values,
-        onChangeValue,
-    });
+        const [currentValue, setCurrentValue] = useSliderState({
+            value,
+            defaultValue,
+            min,
+            max,
+            step,
+            values,
+            onChangeValue,
+        });
 
-    const trackRef = React.useRef<HTMLDivElement>(null);
-    const thumbRef = React.useRef<HTMLDivElement>(null);
+        const trackRef = React.useRef<HTMLDivElement>(null);
+        const thumbRef = React.useRef<HTMLDivElement>(null);
+        const sliderRef = React.useRef<HTMLDivElement>(null);
 
-    const [isPointerDown, setIsPointerDown] = React.useState(false);
-    const [isThumbHovered, setIsThumbHovered] = React.useState(false);
-    const [isFocused, setIsFocused] = React.useState(false);
-    const {isIos} = useTheme();
-    const label = useAriaId(ariaLabel);
+        const [isPointerDown, setIsPointerDown] = React.useState(false);
+        const [isThumbHovered, setIsThumbHovered] = React.useState(false);
+        const [isFocused, setIsFocused] = React.useState(false);
+        const {isIos} = useTheme();
+        const isTabKeyDownRef = React.useRef(false);
 
-    const isTabKeyDownRef = React.useRef(false);
+        const fieldProps = useControlProps({
+            name,
+            value: currentValue,
+            defaultValue: undefined,
+            disabled,
+            onChange: (value) => setCurrentValue(getSliderValueAsPercentage(value, min, max)),
+        });
 
-    React.useEffect(() => {
-        setCurrentValue(getSliderValueAsPercentage(currentValue, min, max));
-    }, [min, max, step, currentValue, setCurrentValue]);
+        React.useEffect(() => {
+            setCurrentValue(getSliderValueAsPercentage(currentValue, min, max));
+        }, [min, max, step, currentValue, setCurrentValue]);
 
-    const isPointerOverElement = (element: HTMLElement | null, x: number, y: number) => {
-        const box = element?.getBoundingClientRect();
-        return box !== undefined && box.left <= x && x <= box.right && box.top <= y && y <= box.bottom;
-    };
+        const isPointerOverElement = (element: HTMLElement | null, x: number, y: number) => {
+            const box = element?.getBoundingClientRect();
+            return box !== undefined && box.left <= x && x <= box.right && box.top <= y && y <= box.bottom;
+        };
 
-    React.useEffect(() => {
-        const handleKeyDown = (e: KeyboardEvent) => {
-            if (!isFocused && e.keyCode === TAB) {
-                isTabKeyDownRef.current = true;
-            } else if (isFocused) {
-                switch (e.keyCode) {
-                    case RIGHT:
-                    case UP:
-                        cancelEvent(e);
-                        setCurrentValue(getSliderValueAsPercentage(currentValue + step, min, max));
-                        break;
-                    case LEFT:
-                    case DOWN:
-                        cancelEvent(e);
-                        setCurrentValue(getSliderValueAsPercentage(currentValue - step, min, max));
-                        break;
-                    case HOME:
-                        cancelEvent(e);
-                        setCurrentValue(getSliderValueAsPercentage(min, min, max));
-                        break;
-                    case END:
-                        cancelEvent(e);
-                        setCurrentValue(getSliderValueAsPercentage(max, min, max));
-                        break;
+        React.useEffect(() => {
+            const handleKeyDown = (e: KeyboardEvent) => {
+                if (!isFocused && e.keyCode === TAB) {
+                    isTabKeyDownRef.current = true;
+                } else if (isFocused) {
+                    switch (e.keyCode) {
+                        case RIGHT:
+                        case UP:
+                            cancelEvent(e);
+                            setCurrentValue(getSliderValueAsPercentage(currentValue + step, min, max));
+                            break;
+                        case LEFT:
+                        case DOWN:
+                            cancelEvent(e);
+                            setCurrentValue(getSliderValueAsPercentage(currentValue - step, min, max));
+                            break;
+                        case HOME:
+                            cancelEvent(e);
+                            setCurrentValue(getSliderValueAsPercentage(min, min, max));
+                            break;
+                        case END:
+                            cancelEvent(e);
+                            setCurrentValue(getSliderValueAsPercentage(max, min, max));
+                            break;
+                        case ESC:
+                            cancelEvent(e);
+                            thumbRef.current?.blur();
+                            break;
 
-                    default:
-                    // do nothing
+                        default:
+                        // do nothing
+                    }
                 }
-            }
-        };
+            };
 
-        const handleKeyUp = () => (isTabKeyDownRef.current = false);
+            const handleKeyUp = () => (isTabKeyDownRef.current = false);
 
-        document.addEventListener('keydown', handleKeyDown, false);
-        document.addEventListener('keyup', handleKeyUp, false);
-        return () => {
-            document.removeEventListener('keydown', handleKeyDown, false);
-            document.removeEventListener('keyup', handleKeyUp, false);
-        };
-    }, [isFocused, currentValue, step, min, max, setCurrentValue]);
+            document.addEventListener('keydown', handleKeyDown, false);
+            document.addEventListener('keyup', handleKeyUp, false);
+            return () => {
+                document.removeEventListener('keydown', handleKeyDown, false);
+                document.removeEventListener('keyup', handleKeyUp, false);
+            };
+        }, [isFocused, currentValue, step, min, max, setCurrentValue]);
 
-    const isTouchableDevice = isClientSide() ? window.matchMedia('(pointer: coarse)').matches : false;
-    const thumbSize = isIos ? IOS_THUMB_SIZE : DEFAULT_THUMB_SIZE;
-    const touchableArea = isTouchableDevice
-        ? MOBILE_TOUCHABLE_AREA
-        : isIos
-        ? IOS_TOUCHABLE_AREA
-        : DESKTOP_TOUCHABLE_AREA;
+        const isTouchableDevice = isClientSide() ? window.matchMedia('(pointer: coarse)').matches : false;
+        const thumbSize = isIos ? IOS_THUMB_SIZE : DEFAULT_THUMB_SIZE;
+        const touchableArea = isTouchableDevice
+            ? MOBILE_TOUCHABLE_AREA
+            : isIos
+            ? IOS_TOUCHABLE_AREA
+            : DESKTOP_TOUCHABLE_AREA;
 
-    const updateCurrentValue = React.useCallback(
-        (pointerPosition: number) => {
-            const track = trackRef.current;
-            if (track) {
-                const leftBorder = track.getBoundingClientRect().left + thumbSize / 2;
-                const rightBorder = track.getBoundingClientRect().right - thumbSize / 2;
-                setCurrentValue((pointerPosition - leftBorder) / (rightBorder - leftBorder));
-            }
-        },
-        [setCurrentValue, thumbSize]
-    );
+        const updateCurrentValue = React.useCallback(
+            (pointerPosition: number) => {
+                const track = trackRef.current;
+                if (track) {
+                    const leftBorder = track.getBoundingClientRect().left + thumbSize / 2;
+                    const rightBorder = track.getBoundingClientRect().right - thumbSize / 2;
+                    setCurrentValue((pointerPosition - leftBorder) / (rightBorder - leftBorder));
+                }
+            },
+            [setCurrentValue, thumbSize]
+        );
 
-    const onPointerMove = React.useCallback(
-        (e: PointerEvent) => {
-            cancelEvent(e);
-            updateCurrentValue(e.clientX);
-        },
-        [updateCurrentValue]
-    );
+        const onPointerMove = React.useCallback(
+            (e: PointerEvent) => {
+                cancelEvent(e);
+                updateCurrentValue(e.clientX);
+            },
+            [updateCurrentValue]
+        );
 
-    const capturePointerMove = React.useCallback(
-        (e: React.PointerEvent<HTMLDivElement>) => {
+        const capturePointerMove = React.useCallback(
+            (e: React.PointerEvent<HTMLDivElement>) => {
+                const thumb = thumbRef.current;
+                if (thumb) {
+                    thumb.onpointermove = onPointerMove;
+                    /**
+                     * There is a known firefox bug caused by using setPointerCapture().
+                     * If you press the slider, drag the pointer on top of a button and then release it,
+                     * the button will be clicked. The issue doesn't happen in Chrome or Safari, and it
+                     * can be reproduced by using basic HTML (https://codepen.io/Marcos-Kolodny/pen/oNmdMxM).
+                     *
+                     * This was reported to firefox a long time ago and many users mention different scenarios
+                     * where it happens, but it seems they are not working on it
+                     * (https://bugzilla.mozilla.org/show_bug.cgi?id=1648893).
+                     */
+                    thumb.setPointerCapture(e.pointerId);
+                }
+            },
+            [onPointerMove]
+        );
+
+        const releasePointerMove = React.useCallback((e: React.PointerEvent<HTMLDivElement>) => {
             const thumb = thumbRef.current;
             if (thumb) {
-                thumb.onpointermove = onPointerMove;
-                /**
-                 * There is a known firefox bug caused by using setPointerCapture().
-                 * If you press the slider, drag the pointer on top of a button and then release it,
-                 * the button will be clicked. The issue doesn't happen in Chrome or Safari, and it
-                 * can be reproduced by using basic HTML (https://codepen.io/Marcos-Kolodny/pen/oNmdMxM).
-                 *
-                 * This was reported to firefox a long time ago and many users mention different scenarios
-                 * where it happens, but it seems they are not working on it
-                 * (https://bugzilla.mozilla.org/show_bug.cgi?id=1648893).
-                 */
-                thumb.setPointerCapture(e.pointerId);
+                thumb.onpointermove = null;
+                thumb.releasePointerCapture(e.pointerId);
             }
-        },
-        [onPointerMove]
-    );
+        }, []);
 
-    const releasePointerMove = React.useCallback((e: React.PointerEvent<HTMLDivElement>) => {
-        const thumb = thumbRef.current;
-        if (thumb) {
-            thumb.onpointermove = null;
-            thumb.releasePointerCapture(e.pointerId);
+        const progress = getSliderValueAsPercentage(currentValue, min, max);
+        const thumbPosition = `calc(${progress} * (100% - ${thumbSize}px) - ${
+            (touchableArea - thumbSize) / 2
+        }px)`;
+        const trackProgressPosition = `calc(${thumbPosition} + ${touchableArea / 2}px)`;
 
-            if (!isPointerOverElement(thumb, e.clientX, e.clientY)) {
-                setIsThumbHovered(false);
-            }
-        }
-    }, []);
-
-    const progress = getSliderValueAsPercentage(currentValue, min, max);
-    const thumbPosition = `calc(${progress} * (100% - ${thumbSize}px) - ${
-        (touchableArea - thumbSize) / 2
-    }px)`;
-    const trackProgressPosition = `calc(${thumbPosition} + ${touchableArea / 2}px)`;
-
-    const thumb = (
-        <div
-            className={classNames(isIos ? styles.iosThumb : styles.defaultThumb, {
-                [styles.thumbHover]: !isIos && isThumbHovered && !isPointerDown,
-                [styles.thumbActive]: !isIos && isPointerDown,
-            })}
-        />
-    );
-
-    return (
-        <Box
-            padding={8}
-            className={styles.sliderContainer}
-            dataAttributes={{'component-name': 'Slider', ...dataAttributes}}
-        >
+        const thumb = (
             <div
-                className={classNames(styles.container, {[styles.disabled]: disabled})}
-                style={{height: touchableArea}}
-                onPointerDown={(e) => {
-                    cancelEvent(e);
-                    if (!isTouchableDevice) {
-                        const x = e.clientX;
-                        const y = e.clientY;
-                        if (!isPointerOverElement(thumbRef.current, x, y)) {
-                            updateCurrentValue(x);
-                        }
-                        setIsPointerDown(true);
-                        capturePointerMove(e);
-                    }
-                }}
-                onPointerUp={(e) => {
-                    cancelEvent(e);
-                    if (!isTouchableDevice) {
-                        setIsPointerDown(false);
-                        releasePointerMove(e);
-                    }
-                }}
-                onTouchStart={(e) => {
-                    cancelEvent(e);
-                    if (isTouchableDevice) {
-                        const x = e.nativeEvent.touches[0].clientX;
-                        const y = e.nativeEvent.touches[0].clientY;
-                        if (!isPointerOverElement(thumbRef.current, x, y)) {
-                            updateCurrentValue(x);
-                        }
-                        setIsPointerDown(true);
-                    }
-                }}
-                onTouchEnd={(e) => {
-                    cancelEvent(e);
-                    if (isTouchableDevice) {
-                        setIsPointerDown(false);
-                    }
-                }}
-                onTouchMove={(e) => {
-                    cancelEvent(e);
-                    if (isTouchableDevice) {
-                        updateCurrentValue(e.nativeEvent.touches[0].clientX);
-                    }
-                }}
+                className={classNames(isIos ? styles.iosThumb : styles.defaultThumb, {
+                    [styles.thumbHover]: !isIos && isThumbHovered && !isPointerDown,
+                    [styles.thumbActive]: !isIos && isPointerDown,
+                })}
+            />
+        );
+
+        return (
+            <Box
+                padding={8}
+                className={styles.sliderContainer}
+                dataAttributes={{'component-name': 'Slider', ...dataAttributes}}
             >
                 <div
-                    className={styles.track}
-                    ref={trackRef}
-                    style={{
-                        background: `linear-gradient(to right, ${vars.colors.controlActivated} ${trackProgressPosition}, ${vars.colors.control} ${trackProgressPosition}`,
+                    className={classNames(styles.container, {[styles.disabled]: disabled})}
+                    style={{height: touchableArea}}
+                    ref={sliderRef}
+                    onPointerDown={(e) => {
+                        const x = e.clientX;
+                        const y = e.clientY;
+                        if (!isTouchableDevice && isPointerOverElement(sliderRef.current, x, y)) {
+                            if (!isPointerOverElement(thumbRef.current, x, y)) {
+                                updateCurrentValue(x);
+                            }
+                            setIsPointerDown(true);
+                            capturePointerMove(e);
+                        }
                     }}
-                />
-                <div
-                    className={styles.thumbContainer}
-                    ref={thumbRef}
-                    style={{
-                        cursor: isPointerDown ? 'grabbing' : isThumbHovered ? 'grab' : 'auto',
-                        left: thumbPosition,
-                        width: touchableArea,
-                        height: touchableArea,
-                    }}
-                    onPointerEnter={() => {
+                    onPointerUp={(e) => {
                         if (!isTouchableDevice) {
-                            setIsThumbHovered(true);
+                            setIsPointerDown(false);
+                            releasePointerMove(e);
                         }
                     }}
-                    onPointerLeave={() => {
-                        if (!isTouchableDevice) {
-                            setIsThumbHovered(false);
+                    onTouchStart={(e) => {
+                        cancelEvent(e);
+                        if (isTouchableDevice) {
+                            const x = e.nativeEvent.touches[0].clientX;
+                            const y = e.nativeEvent.touches[0].clientY;
+                            if (!isPointerOverElement(thumbRef.current, x, y)) {
+                                updateCurrentValue(x);
+                            }
+                            setIsPointerDown(true);
                         }
                     }}
-                    onFocus={() => {
-                        if (isTabKeyDownRef.current) {
-                            setIsFocused(true);
+                    onTouchEnd={(e) => {
+                        cancelEvent(e);
+                        if (isTouchableDevice) {
+                            setIsPointerDown(false);
                         }
                     }}
-                    onBlur={() => {
-                        setIsFocused(false);
+                    onTouchMove={(e) => {
+                        cancelEvent(e);
+                        if (isTouchableDevice) {
+                            updateCurrentValue(e.nativeEvent.touches[0].clientX);
+                        }
                     }}
-                    tabIndex={disabled ? -1 : 0}
                 >
-                    {tooltip ? (
-                        <Tooltip
-                            target={thumb}
-                            open={isThumbHovered || isPointerDown || isFocused}
-                            description={String(values ? values[currentValue] : currentValue)}
-                            centerContent
-                            delay={false}
-                        />
-                    ) : (
-                        thumb
-                    )}
-                </div>
-                <ScreenReaderOnly>
-                    <input
-                        type="range"
-                        min={min}
-                        max={max}
-                        step={step}
-                        value={currentValue}
-                        aria-label={label}
-                        className={styles.input}
-                        disabled={disabled}
-                        aria-valuetext={String(values ? values[currentValue] : currentValue)}
+                    <div
+                        className={styles.track}
+                        ref={trackRef}
                         style={{
+                            background: `linear-gradient(to right, ${vars.colors.controlActivated} ${trackProgressPosition}, ${vars.colors.control} ${trackProgressPosition}`,
+                        }}
+                    />
+                    <div
+                        className={styles.thumbContainer}
+                        ref={thumbRef}
+                        style={{
+                            cursor: isPointerDown ? 'grabbing' : isThumbHovered ? 'grab' : 'auto',
+                            left: thumbPosition,
+                            width: touchableArea,
                             height: touchableArea,
                         }}
-                        onChange={(e) =>
-                            setCurrentValue(getSliderValueAsPercentage(+e.target.value, min, max))
-                        }
-                    />
-                </ScreenReaderOnly>
-            </div>
-        </Box>
-    );
-};
+                        onPointerEnter={() => {
+                            if (!isTouchableDevice) {
+                                setIsThumbHovered(true);
+                            }
+                        }}
+                        onPointerLeave={() => {
+                            if (!isTouchableDevice) {
+                                setIsThumbHovered(false);
+                            }
+                        }}
+                        onFocus={() => {
+                            if (isTabKeyDownRef.current) {
+                                setIsFocused(true);
+                            }
+                        }}
+                        onBlur={() => {
+                            setIsFocused(false);
+                        }}
+                        tabIndex={disabled ? -1 : 0}
+                    >
+                        {tooltip ? (
+                            <Tooltip
+                                target={thumb}
+                                open={isPointerDown || isFocused ? true : undefined}
+                                description={String(values ? values[currentValue] : currentValue)}
+                                centerContent
+                                delay={false}
+                            />
+                        ) : (
+                            thumb
+                        )}
+                    </div>
+                    <ScreenReaderOnly>
+                        <input
+                            type="range"
+                            min={min}
+                            max={max}
+                            ref={combineRefs(ref, fieldProps.focusableRef)}
+                            step={step}
+                            aria-label={ariaLabel}
+                            aria-labelledby={ariaLabelledBy}
+                            id={id}
+                            className={styles.input}
+                            aria-valuetext={String(values ? values[currentValue] : currentValue)}
+                            style={{
+                                height: touchableArea,
+                            }}
+                            name={fieldProps.name}
+                            value={fieldProps.value}
+                            disabled={fieldProps.disabled}
+                            onChange={(e) => {
+                                fieldProps.onChange(+e.target.value);
+                            }}
+                            onFocus={() => {
+                                setIsFocused(true);
+                            }}
+                            onBlur={() => {
+                                setIsFocused(false);
+                            }}
+                        />
+                    </ScreenReaderOnly>
+                </div>
+            </Box>
+        );
+    }
+);
 
 export default Slider;

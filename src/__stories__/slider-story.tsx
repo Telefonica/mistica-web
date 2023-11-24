@@ -18,6 +18,8 @@ export const Controlled: StoryComponent<Args> = ({disabled, steps, max, min, too
     return (
         <Box paddingY={48} paddingX={20}>
             <Slider
+                name="slider"
+                aria-label="slider"
                 dataAttributes={{testid: 'slider'}}
                 disabled={disabled}
                 step={steps}
@@ -44,6 +46,8 @@ export const Uncontrolled: StoryComponent<Args> = ({disabled, steps, max, min, t
     return (
         <Box paddingY={48} paddingX={20}>
             <Slider
+                name="slider"
+                aria-label="slider"
                 dataAttributes={{testid: 'slider'}}
                 disabled={disabled}
                 step={steps}
