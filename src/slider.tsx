@@ -22,90 +22,6 @@ const IOS_TOUCHABLE_AREA = 28;
 const DEFAULT_THUMB_SIZE = 20;
 const IOS_THUMB_SIZE = 28;
 
-const useSliderState = ({
-    value,
-    defaultValue,
-    min,
-    max,
-    step,
-    values,
-    onChangeValue,
-}: {
-    value?: number;
-    defaultValue?: number;
-    min: number;
-    max: number;
-    step: number;
-    values?: Array<number>;
-    onChangeValue?: (value: number) => void;
-}): [number, (value: number) => void] => {
-    const getClosestArrayValue = React.useCallback(
-        (value: number) => {
-            if (!values) {
-                return value;
-            }
-
-            let closestIndex = 0;
-            values.forEach((currentValue, index) => {
-                if (Math.abs(currentValue - value) <= Math.abs(values[closestIndex] - value)) {
-                    closestIndex = index;
-                }
-            });
-            return closestIndex;
-        },
-        [values]
-    );
-
-    const getValueInRange = React.useCallback(
-        (isPercentage: boolean, value?: number) => {
-            const getRealValue = (value?: number) => {
-                if (value === undefined) {
-                    return min;
-                }
-                const realValue = isPercentage ? min + (max - min) * value : value;
-                return Math.max(min, Math.min(max, realValue));
-            };
-
-            if (min >= max) {
-                return min;
-            }
-
-            const currentValue = getRealValue(value);
-            const valueRoundedDown = min + Math.floor((currentValue - min) / step) * step;
-            const valueRoundedUp = min + Math.ceil((currentValue - min) / step) * step;
-
-            return valueRoundedUp <= max && valueRoundedUp - currentValue <= currentValue - valueRoundedDown
-                ? valueRoundedUp
-                : valueRoundedDown;
-        },
-        [min, max, step]
-    );
-
-    const [currentValue, setCurrentValue] = React.useState<number>(getValueInRange(false, defaultValue));
-
-    const isControlledByParent = value !== undefined;
-    const controlledValue =
-        values && value !== undefined ? getClosestArrayValue(value) : getValueInRange(false, value);
-
-    /**
-     * We use a ref to avoid race conditions caused by re-renders
-     */
-    const prevValueRef = React.useRef(isControlledByParent ? controlledValue : currentValue);
-
-    const updateValue = (newValue: number) => {
-        newValue = getValueInRange(true, newValue);
-        if (!isControlledByParent) {
-            setCurrentValue(newValue);
-        }
-        if (newValue !== prevValueRef.current) {
-            onChangeValue?.(values ? values[newValue] : newValue);
-        }
-        prevValueRef.current = newValue;
-    };
-
-    return [isControlledByParent ? controlledValue : currentValue, updateValue];
-};
-
 interface BaseSliderProps {
     disabled?: boolean;
     value?: number;
@@ -143,23 +59,57 @@ const getSliderValueAsPercentage = (value: number, min: number, max: number) => 
     return min >= max ? 0 : (value - min) / (max - min);
 };
 
+const getValueInRange = (isPercentage: boolean, min: number, max: number, step: number, value?: number) => {
+    const getRealValue = (value?: number) => {
+        if (value === undefined) {
+            return min;
+        }
+        const realValue = isPercentage ? min + (max - min) * value : value;
+        return Math.max(min, Math.min(max, realValue));
+    };
+
+    if (min >= max) {
+        return min;
+    }
+
+    const currentValue = getRealValue(value);
+    const valueRoundedDown = min + Math.floor((currentValue - min) / step) * step;
+    const valueRoundedUp = min + Math.ceil((currentValue - min) / step) * step;
+
+    return valueRoundedUp <= max && valueRoundedUp - currentValue <= currentValue - valueRoundedDown
+        ? valueRoundedUp
+        : valueRoundedDown;
+};
+
+const getClosestValidValue = (value: number, values?: Array<number>) => {
+    if (!values) {
+        return value;
+    }
+
+    let closestIndex = 0;
+    values.forEach((currentValue, index) => {
+        if (values && Math.abs(currentValue - value) <= Math.abs(values[closestIndex] - value)) {
+            closestIndex = index;
+        }
+    });
+    return closestIndex;
+};
+
 const Slider = React.forwardRef<HTMLInputElement, SliderProps>(
     (
         {
-            disabled,
             values,
             step = 1,
+            steps,
+            getStepArrayIndex,
             min = 0,
             max = 100,
-            value,
-            defaultValue,
-            onChangeValue,
             'aria-label': ariaLabel,
             'aria-labelledby': ariaLabelledBy,
-            name,
             id,
             dataAttributes,
             tooltip,
+            ...props
         },
         ref
     ) => {
@@ -173,15 +123,43 @@ const Slider = React.forwardRef<HTMLInputElement, SliderProps>(
 
         step = step <= 0 ? 1 : step;
 
-        const [currentValue, setCurrentValue] = useSliderState({
-            value,
+        const {
             defaultValue,
-            min,
-            max,
-            step,
-            values,
-            onChangeValue,
+            value,
+            onChange: onChangeValue,
+            focusableRef,
+            disabled,
+            name,
+        } = useControlProps({
+            name: props.name,
+            value:
+                props.value !== undefined
+                    ? getValueInRange(false, min, max, step, getClosestValidValue(props.value, values))
+                    : undefined,
+            defaultValue:
+                props.defaultValue !== undefined
+                    ? getValueInRange(false, min, max, step, getClosestValidValue(props.defaultValue, values))
+                    : undefined,
+            onChange: props.onChangeValue,
+            disabled: props.disabled,
         });
+
+        const [currentValue, setCurrentValue] = React.useState(
+            value ?? getValueInRange(false, min, max, step, getClosestValidValue(defaultValue ?? min, values))
+        );
+
+        const finalValue = value ?? currentValue;
+
+        const prevValueRef = React.useRef(finalValue);
+
+        const handleChange = (value: number, isPercentage: boolean) => {
+            const realValue = getValueInRange(isPercentage, min, max, step, value);
+            if (prevValueRef.current !== realValue) {
+                onChangeValue(values ? values[realValue] : realValue);
+            }
+            setCurrentValue(realValue);
+            prevValueRef.current = realValue;
+        };
 
         const trackRef = React.useRef<HTMLDivElement>(null);
         const thumbRef = React.useRef<HTMLDivElement>(null);
@@ -191,57 +169,28 @@ const Slider = React.forwardRef<HTMLInputElement, SliderProps>(
         const [isThumbHovered, setIsThumbHovered] = React.useState(false);
         const [isFocused, setIsFocused] = React.useState(false);
         const {isIos} = useTheme();
-        const isTabKeyDownRef = React.useRef(false);
-
-        const fieldProps = useControlProps({
-            name,
-            value: currentValue,
-            defaultValue: undefined,
-            disabled,
-            onChange: (value) => setCurrentValue(getSliderValueAsPercentage(value, min, max)),
-        });
-
-        React.useEffect(() => {
-            setCurrentValue(getSliderValueAsPercentage(currentValue, min, max));
-        }, [min, max, step, currentValue, setCurrentValue]);
 
         const isPointerOverElement = (element: HTMLElement | null, x: number, y: number) => {
             const box = element?.getBoundingClientRect();
             return box !== undefined && box.left <= x && x <= box.right && box.top <= y && y <= box.bottom;
         };
 
+        const isTabKeyDownRef = React.useRef(false);
+
         React.useEffect(() => {
             const handleKeyDown = (e: KeyboardEvent) => {
-                if (!isFocused && e.keyCode === TAB) {
-                    isTabKeyDownRef.current = true;
-                } else if (isFocused) {
-                    switch (e.keyCode) {
-                        case RIGHT:
-                        case UP:
-                            cancelEvent(e);
-                            setCurrentValue(getSliderValueAsPercentage(currentValue + step, min, max));
-                            break;
-                        case LEFT:
-                        case DOWN:
-                            cancelEvent(e);
-                            setCurrentValue(getSliderValueAsPercentage(currentValue - step, min, max));
-                            break;
-                        case HOME:
-                            cancelEvent(e);
-                            setCurrentValue(getSliderValueAsPercentage(min, min, max));
-                            break;
-                        case END:
-                            cancelEvent(e);
-                            setCurrentValue(getSliderValueAsPercentage(max, min, max));
-                            break;
-                        case ESC:
-                            cancelEvent(e);
+                switch (e.keyCode) {
+                    case TAB:
+                        isTabKeyDownRef.current = true;
+                        break;
+                    case ESC:
+                        if (isFocused) {
+                            setIsFocused(false);
                             thumbRef.current?.blur();
-                            break;
-
-                        default:
-                        // do nothing
-                    }
+                        }
+                        break;
+                    default:
+                    // do nothing
                 }
             };
 
@@ -253,7 +202,33 @@ const Slider = React.forwardRef<HTMLInputElement, SliderProps>(
                 document.removeEventListener('keydown', handleKeyDown, false);
                 document.removeEventListener('keyup', handleKeyUp, false);
             };
-        }, [isFocused, currentValue, step, min, max, setCurrentValue]);
+        }, [isFocused]);
+
+        const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+            switch (e.keyCode) {
+                case RIGHT:
+                case UP:
+                    cancelEvent(e);
+                    handleChange(finalValue + step, false);
+                    break;
+                case LEFT:
+                case DOWN:
+                    cancelEvent(e);
+                    handleChange(finalValue - step, false);
+                    break;
+                case HOME:
+                    cancelEvent(e);
+                    handleChange(min, false);
+                    break;
+                case END:
+                    cancelEvent(e);
+                    handleChange(max, false);
+                    break;
+
+                default:
+                // do nothing
+            }
+        };
 
         const isTouchableDevice = isClientSide() ? window.matchMedia('(pointer: coarse)').matches : false;
         const thumbSize = isIos ? IOS_THUMB_SIZE : DEFAULT_THUMB_SIZE;
@@ -263,56 +238,47 @@ const Slider = React.forwardRef<HTMLInputElement, SliderProps>(
             ? IOS_TOUCHABLE_AREA
             : DESKTOP_TOUCHABLE_AREA;
 
-        const updateCurrentValue = React.useCallback(
-            (pointerPosition: number) => {
-                const track = trackRef.current;
-                if (track) {
-                    const leftBorder = track.getBoundingClientRect().left + thumbSize / 2;
-                    const rightBorder = track.getBoundingClientRect().right - thumbSize / 2;
-                    setCurrentValue((pointerPosition - leftBorder) / (rightBorder - leftBorder));
-                }
-            },
-            [setCurrentValue, thumbSize]
-        );
+        const updateCurrentValue = (pointerPosition: number) => {
+            const track = trackRef.current;
+            if (track) {
+                const leftBorder = track.getBoundingClientRect().left + thumbSize / 2;
+                const rightBorder = track.getBoundingClientRect().right - thumbSize / 2;
+                handleChange((pointerPosition - leftBorder) / (rightBorder - leftBorder), true);
+            }
+        };
 
-        const onPointerMove = React.useCallback(
-            (e: PointerEvent) => {
-                cancelEvent(e);
-                updateCurrentValue(e.clientX);
-            },
-            [updateCurrentValue]
-        );
+        const onPointerMove = (e: PointerEvent) => {
+            cancelEvent(e);
+            updateCurrentValue(e.clientX);
+        };
 
-        const capturePointerMove = React.useCallback(
-            (e: React.PointerEvent<HTMLDivElement>) => {
-                const thumb = thumbRef.current;
-                if (thumb) {
-                    thumb.onpointermove = onPointerMove;
-                    /**
-                     * There is a known firefox bug caused by using setPointerCapture().
-                     * If you press the slider, drag the pointer on top of a button and then release it,
-                     * the button will be clicked. The issue doesn't happen in Chrome or Safari, and it
-                     * can be reproduced by using basic HTML (https://codepen.io/Marcos-Kolodny/pen/oNmdMxM).
-                     *
-                     * This was reported to firefox a long time ago and many users mention different scenarios
-                     * where it happens, but it seems they are not working on it
-                     * (https://bugzilla.mozilla.org/show_bug.cgi?id=1648893).
-                     */
-                    thumb.setPointerCapture(e.pointerId);
-                }
-            },
-            [onPointerMove]
-        );
+        const capturePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+            const thumb = thumbRef.current;
+            if (thumb) {
+                thumb.onpointermove = onPointerMove;
+                /**
+                 * There is a known firefox bug caused by using setPointerCapture().
+                 * If you press the slider, drag the pointer on top of a button and then release it,
+                 * the button will be clicked. The issue doesn't happen in Chrome or Safari, and it
+                 * can be reproduced by using basic HTML (https://codepen.io/Marcos-Kolodny/pen/oNmdMxM).
+                 *
+                 * This was reported to firefox a long time ago and many users mention different scenarios
+                 * where it happens, but it seems they are not working on it
+                 * (https://bugzilla.mozilla.org/show_bug.cgi?id=1648893).
+                 */
+                thumb.setPointerCapture(e.pointerId);
+            }
+        };
 
-        const releasePointerMove = React.useCallback((e: React.PointerEvent<HTMLDivElement>) => {
+        const releasePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
             const thumb = thumbRef.current;
             if (thumb) {
                 thumb.onpointermove = null;
                 thumb.releasePointerCapture(e.pointerId);
             }
-        }, []);
+        };
 
-        const progress = getSliderValueAsPercentage(currentValue, min, max);
+        const progress = getSliderValueAsPercentage(finalValue, min, max);
         const thumbPosition = `calc(${progress} * (100% - ${thumbSize}px) - ${
             (touchableArea - thumbSize) / 2
         }px)`;
@@ -412,13 +378,14 @@ const Slider = React.forwardRef<HTMLInputElement, SliderProps>(
                         onBlur={() => {
                             setIsFocused(false);
                         }}
+                        onKeyDown={!disabled ? handleKeyDown : undefined}
                         tabIndex={disabled ? -1 : 0}
                     >
                         {tooltip ? (
                             <Tooltip
                                 target={thumb}
-                                open={isPointerDown || isFocused ? true : undefined}
-                                description={String(values ? values[currentValue] : currentValue)}
+                                open={isPointerDown || isFocused || isThumbHovered ? true : undefined}
+                                description={String(values ? values[finalValue] : finalValue)}
                                 centerContent
                                 delay={false}
                             />
@@ -431,22 +398,20 @@ const Slider = React.forwardRef<HTMLInputElement, SliderProps>(
                             type="range"
                             min={min}
                             max={max}
-                            ref={combineRefs(ref, fieldProps.focusableRef)}
+                            ref={combineRefs(ref, focusableRef)}
                             step={step}
                             aria-label={ariaLabel}
                             aria-labelledby={ariaLabelledBy}
                             id={id}
                             className={styles.input}
-                            aria-valuetext={String(values ? values[currentValue] : currentValue)}
+                            aria-valuetext={String(values ? values[finalValue] : finalValue)}
                             style={{
                                 height: touchableArea,
                             }}
-                            name={fieldProps.name}
-                            value={fieldProps.value}
-                            disabled={fieldProps.disabled}
-                            onChange={(e) => {
-                                fieldProps.onChange(+e.target.value);
-                            }}
+                            name={name}
+                            value={values ? values[finalValue] : finalValue}
+                            disabled={disabled}
+                            onChange={(e) => handleChange(+e.target.value, false)}
                             onFocus={() => {
                                 setIsFocused(true);
                             }}

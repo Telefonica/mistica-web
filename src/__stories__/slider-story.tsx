@@ -7,22 +7,23 @@ export default {
 
 type Args = {
     disabled: boolean;
-    steps: number;
+    step: number;
     max: number;
     min: number;
     tooltip: boolean;
 };
 
-export const Controlled: StoryComponent<Args> = ({disabled, steps, max, min, tooltip}) => {
+export const Controlled: StoryComponent<Args> = ({disabled, step, max, min, tooltip}) => {
     const [value, setValue] = React.useState(min);
     return (
         <Box paddingY={48} paddingX={20}>
             <Slider
                 name="slider"
                 aria-label="slider"
+                key={`${min} ${max} ${step}`}
                 dataAttributes={{testid: 'slider'}}
                 disabled={disabled}
-                step={steps}
+                step={step}
                 max={max}
                 min={min}
                 tooltip={tooltip}
@@ -36,21 +37,22 @@ export const Controlled: StoryComponent<Args> = ({disabled, steps, max, min, too
 Controlled.storyName = 'controlled';
 Controlled.args = {
     disabled: false,
-    steps: 1,
+    step: 1,
     max: 100,
     min: 0,
     tooltip: false,
 };
 
-export const Uncontrolled: StoryComponent<Args> = ({disabled, steps, max, min, tooltip}) => {
+export const Uncontrolled: StoryComponent<Args> = ({disabled, step, max, min, tooltip}) => {
     return (
         <Box paddingY={48} paddingX={20}>
             <Slider
                 name="slider"
+                key={`${min} ${max} ${step}`}
                 aria-label="slider"
                 dataAttributes={{testid: 'slider'}}
                 disabled={disabled}
-                step={steps}
+                step={step}
                 max={max}
                 min={min}
                 tooltip={tooltip}
@@ -63,7 +65,7 @@ export const Uncontrolled: StoryComponent<Args> = ({disabled, steps, max, min, t
 Uncontrolled.storyName = 'uncontrolled';
 Uncontrolled.args = {
     disabled: false,
-    steps: 1,
+    step: 1,
     max: 100,
     min: 0,
     tooltip: false,
