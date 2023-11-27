@@ -87,14 +87,22 @@ export const input = style([
     sprinkles({
         position: 'absolute',
         top: 0,
-        left: 0,
     }),
     {
+        zIndex: 1,
+        margin: 0,
         appearance: 'none',
         WebkitAppearance: 'none',
+        pointerEvents: 'none',
+        background: 'transparent',
         '::-webkit-slider-thumb': {
             appearance: 'none',
             WebkitAppearance: 'none',
+            pointerEvents: 'none',
+        },
+        '::-moz-range-thumb': {
+            border: 'none',
+            background: 'transparent',
             pointerEvents: 'none',
         },
     },

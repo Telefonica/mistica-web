@@ -1,11 +1,10 @@
 import * as React from 'react';
 import * as styles from './slider.css';
 import {vars} from './skins/skin-contract.css';
-import {DOWN, END, ESC, HOME, LEFT, RIGHT, TAB, UP} from './utils/key-codes';
-import {isClientSide} from './utils/environment';
+import {ESC} from './utils/key-codes';
+import {isTouchableDevice} from './utils/environment';
 import classNames from 'classnames';
 import {cancelEvent} from './utils/dom';
-import ScreenReaderOnly from './screen-reader-only';
 import {useTheme} from './hooks';
 import Tooltip from './tooltip';
 import Box from './box';
@@ -81,9 +80,12 @@ const getValueInRange = (isPercentage: boolean, min: number, max: number, step: 
         : valueRoundedDown;
 };
 
-const getClosestValidValue = (value: number, values?: Array<number>) => {
+const getClosestValidValue = (min: number, value?: number, values?: Array<number>) => {
     if (!values) {
         return value;
+    }
+    if (value === undefined) {
+        return min;
     }
 
     let closestIndex = 0;
@@ -121,6 +123,7 @@ const Slider = React.forwardRef<HTMLInputElement, SliderProps>(
             }
         }
 
+        step = step | 0;
         step = step <= 0 ? 1 : step;
 
         const {
@@ -134,18 +137,24 @@ const Slider = React.forwardRef<HTMLInputElement, SliderProps>(
             name: props.name,
             value:
                 props.value !== undefined
-                    ? getValueInRange(false, min, max, step, getClosestValidValue(props.value, values))
+                    ? getValueInRange(false, min, max, step, getClosestValidValue(min, props.value, values))
                     : undefined,
             defaultValue:
                 props.defaultValue !== undefined
-                    ? getValueInRange(false, min, max, step, getClosestValidValue(props.defaultValue, values))
+                    ? getValueInRange(
+                          false,
+                          min,
+                          max,
+                          step,
+                          getClosestValidValue(min, props.defaultValue, values)
+                      )
                     : undefined,
             onChange: props.onChangeValue,
             disabled: props.disabled,
         });
 
         const [currentValue, setCurrentValue] = React.useState(
-            value ?? getValueInRange(false, min, max, step, getClosestValidValue(defaultValue ?? min, values))
+            value ?? getValueInRange(false, min, max, step, getClosestValidValue(min, defaultValue, values))
         );
 
         const finalValue = value ?? currentValue;
@@ -164,6 +173,7 @@ const Slider = React.forwardRef<HTMLInputElement, SliderProps>(
         const trackRef = React.useRef<HTMLDivElement>(null);
         const thumbRef = React.useRef<HTMLDivElement>(null);
         const sliderRef = React.useRef<HTMLDivElement>(null);
+        const inputRef = React.useRef<HTMLInputElement>(null);
 
         const [isPointerDown, setIsPointerDown] = React.useState(false);
         const [isThumbHovered, setIsThumbHovered] = React.useState(false);
@@ -172,25 +182,21 @@ const Slider = React.forwardRef<HTMLInputElement, SliderProps>(
 
         const isPointerOverElement = (element: HTMLElement | null, x: number, y: number) => {
             const box = element?.getBoundingClientRect();
-            return box !== undefined && box.left <= x && x <= box.right && box.top <= y && y <= box.bottom;
+            return !!box && box.left <= x && x <= box.right && box.top <= y && y <= box.bottom;
         };
 
         const isTabKeyDownRef = React.useRef(false);
 
         React.useEffect(() => {
             const handleKeyDown = (e: KeyboardEvent) => {
-                switch (e.keyCode) {
-                    case TAB:
-                        isTabKeyDownRef.current = true;
-                        break;
-                    case ESC:
-                        if (isFocused) {
-                            setIsFocused(false);
-                            thumbRef.current?.blur();
-                        }
-                        break;
-                    default:
-                    // do nothing
+                if (isFocused) {
+                    switch (e.keyCode) {
+                        case ESC:
+                            inputRef.current?.blur();
+                            break;
+                        default:
+                        // do nothing
+                    }
                 }
             };
 
@@ -204,35 +210,10 @@ const Slider = React.forwardRef<HTMLInputElement, SliderProps>(
             };
         }, [isFocused]);
 
-        const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
-            switch (e.keyCode) {
-                case RIGHT:
-                case UP:
-                    cancelEvent(e);
-                    handleChange(finalValue + step, false);
-                    break;
-                case LEFT:
-                case DOWN:
-                    cancelEvent(e);
-                    handleChange(finalValue - step, false);
-                    break;
-                case HOME:
-                    cancelEvent(e);
-                    handleChange(min, false);
-                    break;
-                case END:
-                    cancelEvent(e);
-                    handleChange(max, false);
-                    break;
+        const isTouchable = isTouchableDevice();
 
-                default:
-                // do nothing
-            }
-        };
-
-        const isTouchableDevice = isClientSide() ? window.matchMedia('(pointer: coarse)').matches : false;
         const thumbSize = isIos ? IOS_THUMB_SIZE : DEFAULT_THUMB_SIZE;
-        const touchableArea = isTouchableDevice
+        const touchableArea = isTouchable
             ? MOBILE_TOUCHABLE_AREA
             : isIos
             ? IOS_TOUCHABLE_AREA
@@ -302,7 +283,7 @@ const Slider = React.forwardRef<HTMLInputElement, SliderProps>(
                     onPointerDown={(e) => {
                         const x = e.clientX;
                         const y = e.clientY;
-                        if (!isTouchableDevice && isPointerOverElement(sliderRef.current, x, y)) {
+                        if (!isTouchable && isPointerOverElement(sliderRef.current, x, y)) {
                             if (!isPointerOverElement(thumbRef.current, x, y)) {
                                 updateCurrentValue(x);
                             }
@@ -313,14 +294,14 @@ const Slider = React.forwardRef<HTMLInputElement, SliderProps>(
                         }
                     }}
                     onPointerUp={(e) => {
-                        if (!isTouchableDevice) {
+                        if (!isTouchable) {
                             setIsPointerDown(false);
                             releasePointerMove(e);
                         }
                     }}
                     onTouchStart={(e) => {
                         cancelEvent(e);
-                        if (isTouchableDevice) {
+                        if (isTouchable) {
                             const x = e.nativeEvent.touches[0].clientX;
                             const y = e.nativeEvent.touches[0].clientY;
                             if (!isPointerOverElement(thumbRef.current, x, y)) {
@@ -331,13 +312,13 @@ const Slider = React.forwardRef<HTMLInputElement, SliderProps>(
                     }}
                     onTouchEnd={(e) => {
                         cancelEvent(e);
-                        if (isTouchableDevice) {
+                        if (isTouchable) {
                             setIsPointerDown(false);
                         }
                     }}
                     onTouchMove={(e) => {
                         cancelEvent(e);
-                        if (isTouchableDevice) {
+                        if (isTouchable) {
                             updateCurrentValue(e.nativeEvent.touches[0].clientX);
                         }
                     }}
@@ -359,25 +340,15 @@ const Slider = React.forwardRef<HTMLInputElement, SliderProps>(
                             height: touchableArea,
                         }}
                         onPointerEnter={() => {
-                            if (!isTouchableDevice) {
+                            if (!isTouchable) {
                                 setIsThumbHovered(true);
                             }
                         }}
                         onPointerLeave={() => {
-                            if (!isTouchableDevice) {
+                            if (!isTouchable) {
                                 setIsThumbHovered(false);
                             }
                         }}
-                        onFocus={() => {
-                            if (isTabKeyDownRef.current) {
-                                setIsFocused(true);
-                            }
-                        }}
-                        onBlur={() => {
-                            setIsFocused(false);
-                        }}
-                        onKeyDown={!disabled ? handleKeyDown : undefined}
-                        tabIndex={disabled ? -1 : 0}
                     >
                         {tooltip ? (
                             <Tooltip
@@ -391,34 +362,33 @@ const Slider = React.forwardRef<HTMLInputElement, SliderProps>(
                             thumb
                         )}
                     </div>
-                    <ScreenReaderOnly>
-                        <input
-                            type="range"
-                            min={min}
-                            max={max}
-                            ref={combineRefs(ref, focusableRef)}
-                            step={step}
-                            aria-label={ariaLabel}
-                            aria-labelledby={ariaLabelledBy}
-                            id={id}
-                            className={styles.input}
-                            aria-valuetext={String(values ? values[finalValue] : finalValue)}
-                            style={{
-                                width: '100%',
-                                height: touchableArea,
-                            }}
-                            name={name}
-                            value={values ? values[finalValue] : finalValue}
-                            disabled={disabled}
-                            onChange={(e) => handleChange(+e.target.value, false)}
-                            onFocus={() => {
-                                setIsFocused(true);
-                            }}
-                            onBlur={() => {
-                                setIsFocused(false);
-                            }}
-                        />
-                    </ScreenReaderOnly>
+                    <input
+                        type="range"
+                        min={min}
+                        max={max}
+                        ref={combineRefs(ref, inputRef, focusableRef)}
+                        step={step}
+                        aria-label={ariaLabel}
+                        aria-labelledby={ariaLabelledBy}
+                        id={id}
+                        className={styles.input}
+                        aria-valuetext={String(values ? values[finalValue] : finalValue)}
+                        style={{
+                            left: thumbPosition,
+                            width: touchableArea,
+                            height: touchableArea,
+                        }}
+                        name={name}
+                        value={finalValue}
+                        disabled={disabled}
+                        onChange={(e) => handleChange(+e.target.value, false)}
+                        onFocus={() => {
+                            setIsFocused(true);
+                        }}
+                        onBlur={() => {
+                            setIsFocused(false);
+                        }}
+                    />
                 </div>
             </Box>
         );

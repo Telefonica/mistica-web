@@ -7,7 +7,7 @@ import Stack from './stack';
 import {Text2} from './text';
 import {getCssVarValue, getPrefixedDataAttributes} from './utils/dom';
 import {ESC, TAB} from './utils/key-codes';
-import {isClientSide} from './utils/environment';
+import {isTouchableDevice} from './utils/environment';
 import {isEqual} from './utils/helpers';
 import classNames from 'classnames';
 import {vars} from './skins/skin-contract.css';
@@ -182,7 +182,7 @@ const Tooltip: React.FC<Props> = ({
     const targetRef = React.useRef<Element | null>(null);
     const tooltipRef = React.useRef<HTMLDivElement | null>(null);
     const [tooltip, setTooltip] = React.useState<HTMLElement | null>(null);
-    const isTouchableDevice = isClientSide() ? window.matchMedia('(pointer: coarse)').matches : false;
+    const isTouchable = isTouchableDevice();
     const tooltipEnterDelay = delay ? TOOLTIP_ENTER_TRANSITION_DELAY_IN_MS : 0;
 
     const [isMouseOverTooltip, setIsMouseOverTooltip] = React.useState(false);
@@ -356,7 +356,7 @@ const Tooltip: React.FC<Props> = ({
         tooltipComputedStyles,
         arrowComputedStyles,
         isInverse,
-        isTouchableDevice,
+        isTouchable,
         tooltipId,
         resetTooltipInteractions,
     ]);
@@ -381,7 +381,7 @@ const Tooltip: React.FC<Props> = ({
 
         const handleOnClick = (e: MouseEvent) => {
             if (
-                isTouchableDevice &&
+                isTouchable &&
                 targetRect &&
                 (e.clientX < targetRect.left ||
                     e.clientX > targetRect.right ||
@@ -400,7 +400,7 @@ const Tooltip: React.FC<Props> = ({
             document.removeEventListener('keyup', handleKeyUp, false);
             document.removeEventListener('click', handleOnClick, false);
         };
-    }, [isTouchableDevice, resetTooltipInteractions, targetRect]);
+    }, [isTouchable, resetTooltipInteractions, targetRect]);
 
     React.useEffect(() => {
         if (!hasControlledValue) {
@@ -444,17 +444,17 @@ const Tooltip: React.FC<Props> = ({
                     }
                 }}
                 onMouseOver={() => {
-                    if (!isTouchableDevice) {
+                    if (!isTouchable) {
                         setIsMouseOverTarget(true);
                     }
                 }}
                 onMouseLeave={() => {
-                    if (!isTouchableDevice) {
+                    if (!isTouchable) {
                         setIsMouseOverTarget(false);
                     }
                 }}
                 onClick={() => {
-                    if (isTouchableDevice) {
+                    if (isTouchable) {
                         setIsMouseOverTarget(true);
                     }
                 }}
@@ -464,7 +464,7 @@ const Tooltip: React.FC<Props> = ({
                     }
                 }}
                 onBlur={() => {
-                    if (!isTouchableDevice) {
+                    if (!isTouchable) {
                         setIsFocused(false);
                     }
                 }}
@@ -522,12 +522,12 @@ const Tooltip: React.FC<Props> = ({
                                     }}
                                     ref={combineRefs(setTooltip, tooltipRef)}
                                     onMouseEnter={() => {
-                                        if (!isTouchableDevice && transitionStatus === 'entered') {
+                                        if (!isTouchable && transitionStatus === 'entered') {
                                             setIsMouseOverTooltip(true);
                                         }
                                     }}
                                     onMouseLeave={() => {
-                                        if (!isTouchableDevice) {
+                                        if (!isTouchable) {
                                             setIsMouseOverTooltip(false);
                                         }
                                     }}
