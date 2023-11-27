@@ -173,11 +173,9 @@ const Tooltip: React.FC<Props> = ({
     const {openTooltipId} = useTooltipState();
     const {openTooltip, closeTooltip} = useSetTooltipState();
 
-    const [tooltipComputedStyles, setTooltipComputedStyles] = React.useState<{
-        left: number;
-        top: number;
-        padding: string;
-    } | null>(null);
+    const [tooltipComputedStyles, setTooltipComputedStyles] = React.useState<React.CSSProperties | null>(
+        null
+    );
 
     const [arrowComputedStyles, setArrowComputedStyles] = React.useState<React.CSSProperties | null>(null);
 
@@ -230,12 +228,7 @@ const Tooltip: React.FC<Props> = ({
             return;
         }
 
-        let tooltipStyles: {
-            left: number;
-            top: number;
-            padding: string;
-        };
-
+        let tooltipStyles: React.CSSProperties;
         let arrowStyles: React.CSSProperties;
 
         const {left, right, top, bottom} = targetRect;
@@ -334,11 +327,18 @@ const Tooltip: React.FC<Props> = ({
                 break;
         }
 
+        /**
+         * Using numbers for top/left positions of arrow element was causing the arrow to
+         * be misaligned by +/- 1 pixel in some cases. Using percentages works better when
+         * dealing with decimals for some reason.
+         */
         if (typeof arrowStyles.top === 'number') {
-            arrowStyles.top -= tooltipStyles.top;
+            arrowStyles.top -= tooltipStyles.top as number;
+            arrowStyles.top = `${(arrowStyles.top / tooltipHeight) * 100}%`;
         }
         if (typeof arrowStyles.left === 'number') {
-            arrowStyles.left -= tooltipStyles.left;
+            arrowStyles.left -= tooltipStyles.left as number;
+            arrowStyles.left = `${(arrowStyles.left / tooltipWidth) * 100}%`;
         }
 
         if (!isEqual(tooltipStyles, tooltipComputedStyles)) {
@@ -560,7 +560,7 @@ const Tooltip: React.FC<Props> = ({
                                         </div>
                                         <div
                                             className={styles.arrowContainer}
-                                            style={arrowComputedStyles || {}}
+                                            style={{...arrowComputedStyles}}
                                         >
                                             <div
                                                 className={classNames(styles.arrow)}
