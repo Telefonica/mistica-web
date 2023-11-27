@@ -184,11 +184,7 @@ const Slider = React.forwardRef<HTMLInputElement, SliderProps>(
         const isTouchable = isTouchableDevice();
 
         const thumbSize = isIos ? IOS_THUMB_SIZE : DEFAULT_THUMB_SIZE;
-        const touchableArea = isTouchable
-            ? MOBILE_TOUCHABLE_AREA
-            : isIos
-            ? IOS_THUMB_SIZE
-            : DEFAULT_THUMB_SIZE;
+        const touchableArea = isTouchable ? MOBILE_TOUCHABLE_AREA : thumbSize;
 
         const updateCurrentValue = (pointerPosition: number) => {
             const track = trackRef.current;
