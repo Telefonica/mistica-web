@@ -87,6 +87,19 @@ that case we recommend to extract it to an external `const` variable outside of 
 object reference will be the same in every re-render. If for some reason the `theme` must be dynamic in your
 app, consider to memoize it (for example, with `React.useMemo` hook).
 
+### Mistica in Next.js app router
+
+If you are using Next.js app router, we highly recommend enabling the follwing experimental config:
+
+```js
+experimental: {
+  optimizePackageImports: ['@telefonica/mistica'];
+}
+```
+
+This will improve the tree shaking of the library, reduce the bundle size and the build time. For more info
+read this Next blog post: https://vercel.com/blog/how-we-optimized-package-imports-in-next-js
+
 ## Components
 
 Explore the components in [Mistica storybook](https://mistica-web.vercel.app)
