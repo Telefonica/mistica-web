@@ -1,7 +1,6 @@
 import * as React from 'react';
 import * as styles from './slider.css';
 import {vars} from './skins/skin-contract.css';
-import {ESC} from './utils/key-codes';
 import {isTouchableDevice} from './utils/environment';
 import classNames from 'classnames';
 import {cancelEvent} from './utils/dom';
@@ -14,10 +13,7 @@ import {combineRefs} from './utils/common';
 import type {ExclusifyUnion} from './utils/utility-types';
 import type {DataAttributes} from './utils/types';
 
-const DESKTOP_TOUCHABLE_AREA = 20;
 const MOBILE_TOUCHABLE_AREA = 48;
-const IOS_TOUCHABLE_AREA = 28;
-
 const DEFAULT_THUMB_SIZE = 20;
 const IOS_THUMB_SIZE = 28;
 
@@ -185,39 +181,14 @@ const Slider = React.forwardRef<HTMLInputElement, SliderProps>(
             return !!box && box.left <= x && x <= box.right && box.top <= y && y <= box.bottom;
         };
 
-        const isTabKeyDownRef = React.useRef(false);
-
-        React.useEffect(() => {
-            const handleKeyDown = (e: KeyboardEvent) => {
-                if (isFocused) {
-                    switch (e.keyCode) {
-                        case ESC:
-                            inputRef.current?.blur();
-                            break;
-                        default:
-                        // do nothing
-                    }
-                }
-            };
-
-            const handleKeyUp = () => (isTabKeyDownRef.current = false);
-
-            document.addEventListener('keydown', handleKeyDown, false);
-            document.addEventListener('keyup', handleKeyUp, false);
-            return () => {
-                document.removeEventListener('keydown', handleKeyDown, false);
-                document.removeEventListener('keyup', handleKeyUp, false);
-            };
-        }, [isFocused]);
-
         const isTouchable = isTouchableDevice();
 
         const thumbSize = isIos ? IOS_THUMB_SIZE : DEFAULT_THUMB_SIZE;
         const touchableArea = isTouchable
             ? MOBILE_TOUCHABLE_AREA
             : isIos
-            ? IOS_TOUCHABLE_AREA
-            : DESKTOP_TOUCHABLE_AREA;
+            ? IOS_THUMB_SIZE
+            : DEFAULT_THUMB_SIZE;
 
         const updateCurrentValue = (pointerPosition: number) => {
             const track = trackRef.current;
@@ -283,14 +254,13 @@ const Slider = React.forwardRef<HTMLInputElement, SliderProps>(
                     onPointerDown={(e) => {
                         const x = e.clientX;
                         const y = e.clientY;
+                        cancelEvent(e);
                         if (!isTouchable && isPointerOverElement(sliderRef.current, x, y)) {
                             if (!isPointerOverElement(thumbRef.current, x, y)) {
                                 updateCurrentValue(x);
                             }
                             setIsPointerDown(true);
                             capturePointerMove(e);
-                        } else {
-                            cancelEvent(e);
                         }
                     }}
                     onPointerUp={(e) => {

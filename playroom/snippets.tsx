@@ -1092,12 +1092,18 @@ const sliderSnippets: Array<Snippet> = [
     {
         group: 'Slider',
         name: 'Slider',
-        code: '<Slider name="slider" min={1} max={10} tooltip />',
+        code: `
+        <ResponsiveLayout>
+          <Slider name="slider" min={1} max={10} tooltip />
+        </ResponsiveLayout>`,
     },
     {
         group: 'Slider',
         name: 'Slider with values',
-        code: '<Slider name="slider" values={[3, 10, 7, 1, 2, 4, 6, 8, 9, 5]} tooltip />',
+        code: `
+        <ResponsiveLayout>
+          <Slider name="slider" values={[3, 10, 7, 1, 2, 4, 6, 8, 9, 5]} tooltip />
+        </ResponsiveLayout>`,
     },
 ];
 

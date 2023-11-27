@@ -20,6 +20,7 @@ export const Controlled: StoryComponent<Args> = ({disabled, step, max, min, tool
             <Slider
                 name="slider"
                 aria-label="slider"
+                // reset the Slider when min/max/step changes
                 key={`${min} ${max} ${step}`}
                 dataAttributes={{testid: 'slider'}}
                 disabled={disabled}
