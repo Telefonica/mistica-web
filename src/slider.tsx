@@ -250,13 +250,14 @@ const Slider = React.forwardRef<HTMLInputElement, SliderProps>(
                     onPointerDown={(e) => {
                         const x = e.clientX;
                         const y = e.clientY;
-                        cancelEvent(e);
                         if (!isTouchable && isPointerOverElement(sliderRef.current, x, y)) {
                             if (!isPointerOverElement(thumbRef.current, x, y)) {
                                 updateCurrentValue(x);
                             }
                             setIsPointerDown(true);
                             capturePointerMove(e);
+                        } else {
+                            cancelEvent(e);
                         }
                     }}
                     onPointerUp={(e) => {
