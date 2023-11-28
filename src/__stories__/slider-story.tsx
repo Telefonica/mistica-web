@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Box, Slider} from '..';
+import {Box, ResponsiveLayout, Slider} from '..';
 
 export default {
     title: 'Components/Slider',
@@ -16,22 +16,24 @@ type Args = {
 export const Controlled: StoryComponent<Args> = ({disabled, step, max, min, tooltip}) => {
     const [value, setValue] = React.useState(min);
     return (
-        <Box paddingY={48} paddingX={20}>
-            <Slider
-                name="slider"
-                aria-label="slider"
-                // reset the Slider when min/max/step changes
-                key={`${min} ${max} ${step}`}
-                dataAttributes={{testid: 'slider'}}
-                disabled={disabled}
-                step={step}
-                max={max}
-                min={min}
-                tooltip={tooltip}
-                value={value}
-                onChangeValue={(value) => setValue(value)}
-            />
-        </Box>
+        <ResponsiveLayout>
+            <Box paddingY={48}>
+                <Slider
+                    name="slider"
+                    aria-label="slider"
+                    // reset the Slider when min/max/step changes
+                    key={`${min} ${max} ${step}`}
+                    dataAttributes={{testid: 'slider'}}
+                    disabled={disabled}
+                    step={step}
+                    max={max}
+                    min={min}
+                    tooltip={tooltip}
+                    value={value}
+                    onChangeValue={(value) => setValue(value)}
+                />
+            </Box>
+        </ResponsiveLayout>
     );
 };
 
@@ -46,20 +48,23 @@ Controlled.args = {
 
 export const Uncontrolled: StoryComponent<Args> = ({disabled, step, max, min, tooltip}) => {
     return (
-        <Box paddingY={48} paddingX={20}>
-            <Slider
-                name="slider"
-                key={`${min} ${max} ${step}`}
-                aria-label="slider"
-                dataAttributes={{testid: 'slider'}}
-                disabled={disabled}
-                step={step}
-                max={max}
-                min={min}
-                tooltip={tooltip}
-                defaultValue={min}
-            />
-        </Box>
+        <ResponsiveLayout>
+            <Box padding={48}>
+                <Slider
+                    name="slider"
+                    // reset the Slider when min/max/step changes
+                    key={`${min} ${max} ${step}`}
+                    aria-label="slider"
+                    dataAttributes={{testid: 'slider'}}
+                    disabled={disabled}
+                    step={step}
+                    max={max}
+                    min={min}
+                    tooltip={tooltip}
+                    defaultValue={min}
+                />
+            </Box>
+        </ResponsiveLayout>
     );
 };
 
