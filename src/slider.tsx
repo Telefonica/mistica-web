@@ -157,14 +157,25 @@ const Slider = React.forwardRef<HTMLInputElement, SliderProps>(
 
         const prevValueRef = React.useRef(finalValue);
 
-        const handleChange = (value: number, isPercentage: boolean) => {
-            const realValue = getValueInRange(isPercentage, min, max, step, value);
-            if (prevValueRef.current !== realValue) {
-                onChangeValue(values ? values[realValue] : realValue);
-            }
-            setCurrentValue(realValue);
-            prevValueRef.current = realValue;
-        };
+        const handleChange = React.useCallback(
+            (value: number, isPercentage: boolean) => {
+                const realValue = getValueInRange(isPercentage, min, max, step, value);
+                if (prevValueRef.current !== realValue) {
+                    onChangeValue(values ? values[realValue] : realValue);
+                    setCurrentValue(realValue);
+                    prevValueRef.current = realValue;
+                }
+            },
+            [min, max, step, values, onChangeValue]
+        );
+
+        /**
+         * HandleChange will trigger this useEffect whenever min/max/step props change.
+         * This allows the slider to be reactive to changes in these props.
+         */
+        React.useEffect(() => {
+            handleChange(prevValueRef.current, false);
+        }, [handleChange]);
 
         const trackRef = React.useRef<HTMLDivElement>(null);
         const thumbRef = React.useRef<HTMLDivElement>(null);

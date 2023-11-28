@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {fireEvent, render, screen, waitFor} from '@testing-library/react';
-import {ButtonPrimary, Form, Slider, ThemeContextProvider} from '..';
+import {ButtonPrimary, Form, IntegerField, Slider, ThemeContextProvider} from '..';
 import {makeTheme} from './test-utils';
 import userEvent from '@testing-library/user-event';
 
@@ -128,4 +128,89 @@ test('slider is accessible', () => {
     expect(screen.getByLabelText('slider1')).toBeInTheDocument();
     expect(screen.getByLabelText('slider2')).toBeInTheDocument();
     expect(screen.getByLabelText('slider3')).toBeInTheDocument();
+});
+
+test('slider is reactive to changes in min, max and step props', async () => {
+    const handleSubmitSpy = jest.fn();
+
+    const SliderWrapper = () => {
+        const [min, setMin] = React.useState(0);
+        const [max, setMax] = React.useState(10);
+        const [step, setStep] = React.useState(1);
+
+        return (
+            <>
+                <Slider name="slider" min={min} max={max} step={step} onChangeValue={handleSubmitSpy} />
+                <IntegerField
+                    label="min"
+                    name="min"
+                    defaultValue={String(min)}
+                    onChangeValue={(value) => {
+                        if (value !== '') {
+                            setMin(+value);
+                        }
+                    }}
+                />
+                <IntegerField
+                    label="max"
+                    name="max"
+                    defaultValue={String(max)}
+                    onChangeValue={(value) => {
+                        if (value !== '') {
+                            setMax(+value);
+                        }
+                    }}
+                />
+                <IntegerField
+                    label="step"
+                    name="step"
+                    defaultValue={String(step)}
+                    onChangeValue={(value) => {
+                        if (value !== '') {
+                            setStep(+value);
+                        }
+                    }}
+                />
+            </>
+        );
+    };
+
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <SliderWrapper />
+        </ThemeContextProvider>
+    );
+
+    const clearAndType = async (element: Element, value: string) => {
+        await userEvent.clear(element);
+        await userEvent.type(element, value);
+    };
+
+    const slider = screen.getByRole('slider');
+    const minField = await screen.findByLabelText('min');
+    const maxField = await screen.findByLabelText('max');
+    const stepField = await screen.findByLabelText('step');
+
+    expect(slider).toHaveValue('0');
+
+    await clearAndType(minField, '3');
+    expect(slider).toHaveValue('3');
+    expect(handleSubmitSpy).toHaveBeenCalledWith(3);
+
+    fireEvent.change(slider, {target: {value: 6}});
+    expect(slider).toHaveValue('6');
+    expect(handleSubmitSpy).toHaveBeenCalledWith(6);
+
+    await clearAndType(stepField, '2');
+    expect(slider).toHaveValue('7');
+    expect(handleSubmitSpy).toHaveBeenCalledWith(7);
+
+    await clearAndType(maxField, '6');
+    expect(slider).toHaveValue('5');
+    expect(handleSubmitSpy).toHaveBeenCalledWith(5);
+
+    await clearAndType(stepField, '1');
+    expect(slider).toHaveValue('5');
+    // onChangeValue should not have been called here
+    expect(handleSubmitSpy).toHaveBeenCalledTimes(4);
 });
