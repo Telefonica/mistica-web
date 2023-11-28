@@ -36,5 +36,14 @@ export default defineConfig({
             formats: ['es'],
         },
         outDir: 'dist-es',
+        // https://github.com/vitejs/vite/issues/15012#issuecomment-1815854072
+        rollupOptions: {
+            onLog(level, log, handler) {
+                if (log.cause && log.cause.message === `Can't resolve original location of error.`) {
+                    return;
+                }
+                handler(level, log);
+            },
+        },
     },
 });

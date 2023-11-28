@@ -8,4 +8,8 @@ const DesktopContainerTypeContext = React.createContext<DesktopContainerType | n
 export const useDesktopContainerType = (): DesktopContainerType | null =>
     React.useContext(DesktopContainerTypeContext);
 
-export default DesktopContainerTypeContext.Provider;
+export default ({children, value}: {children: React.ReactNode; value: DesktopContainerType}): JSX.Element => {
+    return (
+        <DesktopContainerTypeContext.Provider value={value}>{children}</DesktopContainerTypeContext.Provider>
+    );
+};
