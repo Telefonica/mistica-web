@@ -1,3 +1,4 @@
+'use client';
 import * as React from 'react';
 import {useTheme} from '../hooks';
 import {O2_SKIN, O2_CLASSIC_SKIN} from '../skins/constants';

@@ -1,3 +1,5 @@
+// this is a false positive, because there isn't any component in this module
+/* eslint-disable mistica-local-rules/use-client */
 import * as React from 'react';
 import ThemeContext from './theme-context';
 import ScreenSizeContext from './screen-size-context';

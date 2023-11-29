@@ -1,3 +1,4 @@
+'use client';
 import * as React from 'react';
 import classnames from 'classnames';
 import {getPrefixedDataAttributes} from './utils/dom';
@@ -27,6 +28,7 @@ export const InternalResponsiveLayout: React.FC<Props & {shouldExpandWhenNested?
     dataAttributes,
     shouldExpandWhenNested = false,
 }) => {
+    // @TODO https://jira.tid.es/browse/WEB-1611
     const outsideVariant: Variant = useThemeVariant();
     const internalVariant: Variant | undefined = variant || (isInverse && 'inverse') || undefined;
 

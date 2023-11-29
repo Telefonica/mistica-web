@@ -1,3 +1,4 @@
+'use client';
 import * as React from 'react';
 import {useAriaId, useTheme} from './hooks';
 import {FormContext} from './form-context';

@@ -11,6 +11,10 @@ export const outerBorder = style({
     borderBottom: `1px solid ${vars.colors.divider}`,
 });
 
+export const outerBorderInverse = style({
+    borderBottom: `1px solid ${vars.colors.dividerInverse}`,
+});
+
 export const outer = style([
     sprinkles({
         minHeight: TAB_HEIGHT,
@@ -63,11 +67,6 @@ const baseTab = style([
         borderLeft: 'initial',
         maxWidth: TAB_MAX_WIDTH,
         '@media': {
-            [mq.supportsHover]: {
-                ':hover': {
-                    color: vars.colors.textPrimary,
-                },
-            },
             [mq.desktopOrBigger]: {
                 padding: `16px 32px`,
             },
@@ -89,8 +88,29 @@ export const tabVariants = styleVariants({
     ],
 });
 
-const tabSelectedBase = sprinkles({
-    color: vars.colors.textPrimary,
+export const tabHover = styleVariants({
+    default: [
+        style({
+            '@media': {
+                [mq.supportsHover]: {
+                    ':hover': {
+                        color: vars.colors.textPrimary,
+                    },
+                },
+            },
+        }),
+    ],
+    inverse: [
+        style({
+            '@media': {
+                [mq.supportsHover]: {
+                    ':hover': {
+                        color: vars.colors.textPrimaryInverse,
+                    },
+                },
+            },
+        }),
+    ],
 });
 
 export const tabSelectionVariants = styleVariants({
@@ -99,16 +119,33 @@ export const tabSelectionVariants = styleVariants({
             color: vars.colors.textSecondary,
         }),
     ],
+    noSelectedInverse: [
+        sprinkles({
+            color: vars.colors.textSecondaryInverse,
+        }),
+    ],
     selected: [
-        tabSelectedBase,
         style({
             borderBottom: `2px solid ${vars.colors.controlActivated}`,
+            color: vars.colors.textPrimary,
+        }),
+    ],
+    selectedInverse: [
+        style({
+            borderBottom: `2px solid ${vars.colors.controlActivatedInverse}`,
+            color: vars.colors.textPrimaryInverse,
         }),
     ],
     selectedAnimating: [
-        tabSelectedBase,
         style({
             borderBottom: '2px solid transparent',
+            color: vars.colors.textPrimary,
+        }),
+    ],
+    selectedAnimatingInverse: [
+        style({
+            borderBottom: '2px solid transparent',
+            color: vars.colors.textPrimaryInverse,
         }),
     ],
 });
@@ -123,5 +160,4 @@ export const animatedLine = sprinkles({
     left: 0,
     bottom: 0,
     height: 2,
-    background: vars.colors.controlActivated,
 });

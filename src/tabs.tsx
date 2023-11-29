@@ -1,3 +1,4 @@
+'use client';
 import * as React from 'react';
 import classnames from 'classnames';
 import {BaseTouchable} from './touchable';
@@ -8,6 +9,8 @@ import {isRunningAcceptanceTest} from './utils/platform';
 import {getPrefixedDataAttributes} from './utils/dom';
 import * as styles from './tabs.css';
 import Inline from './inline';
+import {useIsInverseVariant} from './theme-variant-context';
+import {vars} from './skins/skin-contract.css';
 
 import type {DataAttributes, TrackingEvent} from './utils/types';
 
@@ -44,6 +47,7 @@ const Tabs: React.FC<TabsProps> = ({selectedIndex, onChange, tabs, dataAttribute
     const animatedLineRef = React.useRef<HTMLDivElement>(null);
     const scrollableContainerRef = React.useRef<HTMLDivElement>(null);
     const [isAnimating, setIsAnimating] = React.useState(false);
+    const isInverse = useIsInverseVariant();
 
     const animateLine = (fromIndex: number, toIndex: number) => {
         const tabFrom = document.querySelector<HTMLElement>(`[id='${id}'] [data-tabindex="${fromIndex}"]`);
@@ -76,7 +80,7 @@ const Tabs: React.FC<TabsProps> = ({selectedIndex, onChange, tabs, dataAttribute
             id={id}
             role="tablist"
             ref={ref}
-            className={styles.outerBorder}
+            className={isInverse ? styles.outerBorderInverse : styles.outerBorder}
             {...getPrefixedDataAttributes(dataAttributes, 'Tabs')}
         >
             <ResponsiveLayout fullWidth>
@@ -93,9 +97,16 @@ const Tabs: React.FC<TabsProps> = ({selectedIndex, onChange, tabs, dataAttribute
                                             styles.tabVariants[getTabVariant(tabs.length)],
                                             isSelected
                                                 ? isAnimating
-                                                    ? styles.tabSelectionVariants.selectedAnimating
+                                                    ? isInverse
+                                                        ? styles.tabSelectionVariants.selectedAnimatingInverse
+                                                        : styles.tabSelectionVariants.selectedAnimating
+                                                    : isInverse
+                                                    ? styles.tabSelectionVariants.selectedInverse
                                                     : styles.tabSelectionVariants.selected
-                                                : styles.tabSelectionVariants.noSelected
+                                                : isInverse
+                                                ? styles.tabSelectionVariants.noSelectedInverse
+                                                : styles.tabSelectionVariants.noSelected,
+                                            isInverse ? styles.tabHover.inverse : styles.tabHover.default
                                         )}
                                         onPress={() => {
                                             if (!isAnimating && selectedIndex !== index) {
@@ -130,7 +141,15 @@ const Tabs: React.FC<TabsProps> = ({selectedIndex, onChange, tabs, dataAttribute
                             })}
                         </div>
                     </div>
-                    <div ref={animatedLineRef} className={styles.animatedLine} />
+                    <div
+                        ref={animatedLineRef}
+                        className={styles.animatedLine}
+                        style={{
+                            background: isInverse
+                                ? vars.colors.controlActivatedInverse
+                                : vars.colors.controlActivated,
+                        }}
+                    />
                 </div>
             </ResponsiveLayout>
         </div>

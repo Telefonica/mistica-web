@@ -1,3 +1,4 @@
+'use client';
 import * as React from 'react';
 
 export const TopDistanceContext: React.Context<number> = React.createContext(0);

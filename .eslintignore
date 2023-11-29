@@ -6,3 +6,4 @@ storybook-static/
 public/
 !.storybook/
 examples/
+community.js

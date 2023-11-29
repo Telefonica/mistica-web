@@ -1,3 +1,4 @@
+'use client';
 import * as React from 'react';
 import * as styles from './slider.css';
 import {vars} from './skins/skin-contract.css';

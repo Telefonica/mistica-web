@@ -1,3 +1,4 @@
+'use client';
 import * as React from 'react';
 import {useAriaId, useBoundingRect, useWindowSize} from './hooks';
 import {Portal} from './portal';

@@ -1,3 +1,4 @@
+'use client';
 import * as React from 'react';
 import {BaseTouchable} from './touchable';
 import classNames from 'classnames';

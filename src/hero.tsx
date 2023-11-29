@@ -1,3 +1,4 @@
+'use client';
 import * as React from 'react';
 import classnames from 'classnames';
 import {useScreenSize} from './hooks';
@@ -9,11 +10,11 @@ import Stack from './stack';
 import ButtonGroup from './button-group';
 import {vars} from './skins/skin-contract.css';
 import * as styles from './hero.css';
-import {assignInlineVars} from '@vanilla-extract/dynamic';
 import {useIsInsideSlideshowContext} from './carousel';
 import {getPrefixedDataAttributes} from './utils/dom';
 import {sprinkles} from './sprinkles.css';
 import {ThemeVariant} from './theme-variant-context';
+import {applyCssVars} from './utils/css';
 
 import type Image from './image';
 import type Video from './video';
@@ -139,7 +140,7 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
                         style={{
                             backgroundColor: BACKGROUND_COLOR[background],
                             ...(height === '100vh' ? {maxHeight: '-webkit-fill-available'} : {}), // Hack to avoid issues in Safari with 100vh
-                            ...assignInlineVars({
+                            ...applyCssVars({
                                 [styles.vars.height]: height ?? '100%',
                             }),
                         }}
@@ -182,7 +183,7 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
                     style={{
                         backgroundColor: BACKGROUND_COLOR[background],
                         ...(height === '100vh' ? {maxHeight: '-webkit-fill-available'} : {}), // Hack to avoid issues in Safari with 100vh
-                        ...assignInlineVars({
+                        ...applyCssVars({
                             [styles.vars.height]: height ?? '100%',
                         }),
                     }}

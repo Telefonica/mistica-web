@@ -1,6 +1,6 @@
 {
     "name": "@telefonica/mistica",
-    "version": "14.32.1",
+    "version": "14.33.0",
     "license": "MIT",
     "repository": {
         "type": "git",
@@ -80,8 +80,8 @@
         "@storybook/react": "6.5.15",
         "@storybook/theming": "6.5.15",
         "@swc/cli": "^0.1.62",
-        "@swc/core": "^1.3.61",
-        "@swc/jest": "^0.2.26",
+        "@swc/core": "^1.3.95",
+        "@swc/jest": "^0.2.29",
         "@telefonica/acceptance-testing": "2.21.1",
         "@telefonica/eslint-config": "^1.7.0",
         "@telefonica/prettier-config": "^1.1.0",
@@ -102,7 +102,7 @@
         "@vanilla-extract/jest-transform": "^1.1.0",
         "@vanilla-extract/vite-plugin": "^3.8.2",
         "@vanilla-extract/webpack-plugin": "^2.2.0",
-        "@vitejs/plugin-react": "^4.0.0",
+        "@vitejs/plugin-react": "^4.2.0",
         "autoprefixer": "^10.4.12",
         "axe-html-reporter": "^2.2.3",
         "cpx": "^1.5.0",
@@ -111,6 +111,7 @@
         "dpdm": "^3.8.0",
         "es6-promise-pool": "^2.5.0",
         "eslint": "^8.11.0",
+        "eslint-plugin-mistica-local-rules": "workspace:*",
         "file-loader": "^6.2.0",
         "glob": "^7.2.0",
         "gzip-size": "^6.0.0",
@@ -135,12 +136,13 @@
         "react-router": "^6.6.2",
         "react-router-dom": "^6.6.2",
         "rimraf": "3.0.2",
+        "rollup-plugin-preserve-directives": "^0.2.0",
         "semantic-release": "^19.0.2",
         "serve-handler": "^6.1.5",
         "swc-loader": "^0.2.3",
         "typescript": "^4.6.3",
-        "vite": "^4.3.9",
-        "vite-plugin-no-bundle": "^2.0.2"
+        "vite": "^4.5.0",
+        "vite-plugin-no-bundle": "^2.0.3"
     },
     "dependencies": {
         "@juggle/resize-observer": "^3.3.1",
@@ -201,6 +203,9 @@
         "@testing-library/dom": "^8.19.1"
     },
     "packageManager": "yarn@3.6.1",
+    "workspaces": [
+        "packages/eslint-plugin-mistica-local-rules"
+    ],
     "engines": {
         "node": "^18.0.0"
     }

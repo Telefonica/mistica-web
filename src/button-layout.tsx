@@ -1,3 +1,4 @@
+'use client';
 import * as React from 'react';
 import {ButtonPrimary, ButtonSecondary, ButtonDanger} from './button';
 import classnames from 'classnames';
