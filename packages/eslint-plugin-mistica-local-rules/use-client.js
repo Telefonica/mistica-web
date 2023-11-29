@@ -15,7 +15,7 @@ module.exports = {
         type: 'suggestion',
         messages: {
             addUseClientHooks:
-                '{{hook}} only works in Client Components. Add the "use client" directive at the top of the file to use it.',
+                '{{hook}} only works in client components. Add the "use client" directive at the top of the file to use it.',
             addUseClientSuggestion: "Add the 'use client' directive at the top of the file",
         },
         docs: {
