@@ -1,7 +1,7 @@
 import * as React from 'react';
-import {render, fireEvent, screen} from '@testing-library/react';
+import {render, fireEvent, screen, waitFor} from '@testing-library/react';
 import Tooltip from '../tooltip';
-import {ThemeContextProvider} from '..';
+import {ButtonPrimary, ThemeContextProvider} from '..';
 import {makeTheme} from './test-utils';
 import userEvent from '@testing-library/user-event';
 
@@ -69,4 +69,34 @@ test('click anchor does not close tooltip', async () => {
 
     expect(linkSpy).toHaveBeenCalled();
     expect(screen.getByText('Content')).toBeInTheDocument();
+});
+
+test('tooltip with controlled value', async () => {
+    const TooltipWrapper = () => {
+        const [open, setOpen] = React.useState(false);
+        return (
+            <ThemeContextProvider theme={makeTheme()}>
+                <Tooltip
+                    open={open}
+                    target={<span className="target">Press me!</span>}
+                    extra={<div className="content">Content</div>}
+                    delay={false}
+                />
+                <ButtonPrimary onPress={() => setOpen(!open)}>Button</ButtonPrimary>
+            </ThemeContextProvider>
+        );
+    };
+
+    render(<TooltipWrapper />);
+
+    expect(screen.queryByText('Content')).not.toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole('button'));
+    expect(screen.getByText('Content')).toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole('button'));
+
+    await waitFor(() => {
+        expect(screen.queryByText('Content')).not.toBeInTheDocument();
+    });
 });

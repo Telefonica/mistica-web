@@ -5,12 +5,15 @@ type TooltipState = {
 };
 
 type TooltipSetter = {
-    open: (tooltipId: string) => void;
-    close: (tooltipId: string) => void;
+    openTooltip: (tooltipId: string) => void;
+    closeTooltip: (tooltipId: string) => void;
 };
 
 const TooltipStateContext = React.createContext<TooltipState>({openTooltipId: null});
-const TooltipStateSetterContext = React.createContext<TooltipSetter>({open: () => {}, close: () => {}});
+const TooltipStateSetterContext = React.createContext<TooltipSetter>({
+    openTooltip: () => {},
+    closeTooltip: () => {},
+});
 
 const TooltipContextProvider = ({children}: {children: React.ReactNode}): JSX.Element => {
     /**
@@ -26,12 +29,12 @@ const TooltipContextProvider = ({children}: {children: React.ReactNode}): JSX.El
     const [openTooltipId, setOpenTooltipId] = React.useState<string | null>(null);
     const openRef = React.useRef<string | null>(null);
 
-    const open = React.useCallback((tooltipId: string) => {
+    const openTooltip = React.useCallback((tooltipId: string) => {
         openRef.current = tooltipId;
         setOpenTooltipId(tooltipId);
     }, []);
 
-    const close = React.useCallback((tooltipId: string) => {
+    const closeTooltip = React.useCallback((tooltipId: string) => {
         if (openRef.current === tooltipId) {
             openRef.current = null;
             setOpenTooltipId(null);
@@ -40,7 +43,7 @@ const TooltipContextProvider = ({children}: {children: React.ReactNode}): JSX.El
 
     return (
         <TooltipStateContext.Provider value={{openTooltipId}}>
-            <TooltipStateSetterContext.Provider value={{open, close}}>
+            <TooltipStateSetterContext.Provider value={{openTooltip, closeTooltip}}>
                 {children}
             </TooltipStateSetterContext.Provider>
         </TooltipStateContext.Provider>

@@ -33,7 +33,7 @@ test.each(getCases())(
     }
 );
 
-test('Tooltip - appears properly on mobible', async () => {
+test('Tooltip - appears properly on mobile', async () => {
     const page = await openStoryPage({
         id: 'components-tooltip--default',
         device: 'MOBILE_IOS',
@@ -48,7 +48,7 @@ test('Tooltip - appears properly on mobible', async () => {
 test('Tooltip - inverse', async () => {
     const page = await openStoryPage({
         id: 'components-tooltip--default',
-        device: 'DESKTOP',
+        device: 'MOBILE_IOS',
         args: {inverse: true},
     });
 

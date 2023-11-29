@@ -7,7 +7,7 @@ import Stack from './stack';
 import {Text2} from './text';
 import {getCssVarValue, getPrefixedDataAttributes} from './utils/dom';
 import {ESC, TAB} from './utils/key-codes';
-import {isClientSide} from './utils/environment';
+import {isTouchableDevice} from './utils/environment';
 import {isEqual} from './utils/helpers';
 import classNames from 'classnames';
 import {vars} from './skins/skin-contract.css';
@@ -136,6 +136,7 @@ type Props = {
     delay?: boolean;
     dataAttributes?: DataAttributes;
     centerContent?: boolean;
+    open?: boolean;
     /**
      * @deprecated This field is deprecated.
      */
@@ -165,30 +166,29 @@ const Tooltip: React.FC<Props> = ({
     dataAttributes,
     delay = true,
     centerContent,
+    open,
     textCenter,
 }) => {
     const tooltipId = useAriaId();
     const {openTooltipId} = useTooltipState();
-    const {open, close} = useSetTooltipState();
+    const {openTooltip, closeTooltip} = useSetTooltipState();
 
-    const [tooltipComputedStyles, setTooltipComputedStyles] = React.useState<{
-        left: number;
-        top: number;
-        padding: string;
-    } | null>(null);
+    const [tooltipComputedStyles, setTooltipComputedStyles] = React.useState<React.CSSProperties>();
 
-    const [arrowComputedStyles, setArrowComputedStyles] = React.useState<React.CSSProperties>({});
+    const [arrowComputedStyles, setArrowComputedStyles] = React.useState<React.CSSProperties>();
 
     const targetRef = React.useRef<Element | null>(null);
     const tooltipRef = React.useRef<HTMLDivElement | null>(null);
     const [tooltip, setTooltip] = React.useState<HTMLElement | null>(null);
-    const isTouchableDevice = isClientSide() ? window.matchMedia('(pointer: coarse)').matches : false;
+    const isTouchable = isTouchableDevice();
     const tooltipEnterDelay = delay ? TOOLTIP_ENTER_TRANSITION_DELAY_IN_MS : 0;
 
     const [isMouseOverTooltip, setIsMouseOverTooltip] = React.useState(false);
     const [isMouseOverTarget, setIsMouseOverTarget] = React.useState(false);
+
+    const hasControlledValue = open !== undefined;
     const [isFocused, setIsFocused] = React.useState(false);
-    const isTooltipOpen = tooltipId === openTooltipId;
+    const isTooltipOpen = hasControlledValue ? open : tooltipId === openTooltipId;
     const isInverse = useIsInverseVariant();
 
     const targetRect = useBoundingRect(targetRef, isTooltipOpen);
@@ -220,18 +220,13 @@ const Tooltip: React.FC<Props> = ({
         );
 
         if (!finalPosition || !targetRect) {
-            setTooltipComputedStyles(null);
-            setArrowComputedStyles({});
+            setTooltipComputedStyles(undefined);
+            setArrowComputedStyles(undefined);
             resetTooltipInteractions();
             return;
         }
 
-        let tooltipStyles: {
-            left: number;
-            top: number;
-            padding: string;
-        };
-
+        let tooltipStyles: React.CSSProperties;
         let arrowStyles: React.CSSProperties;
 
         const {left, right, top, bottom} = targetRect;
@@ -330,11 +325,18 @@ const Tooltip: React.FC<Props> = ({
                 break;
         }
 
+        /**
+         * Using numbers for top/left positions of arrow element was causing the arrow to
+         * be misaligned by +/- 1 pixel in some cases. Using percentages works better when
+         * dealing with decimals for some reason.
+         */
         if (typeof arrowStyles.top === 'number') {
-            arrowStyles.top -= tooltipStyles.top;
+            arrowStyles.top -= tooltipStyles.top as number;
+            arrowStyles.top = `${(arrowStyles.top / tooltipHeight) * 100}%`;
         }
         if (typeof arrowStyles.left === 'number') {
-            arrowStyles.left -= tooltipStyles.left;
+            arrowStyles.left -= tooltipStyles.left as number;
+            arrowStyles.left = `${(arrowStyles.left / tooltipWidth) * 100}%`;
         }
 
         if (!isEqual(tooltipStyles, tooltipComputedStyles)) {
@@ -352,7 +354,7 @@ const Tooltip: React.FC<Props> = ({
         tooltipComputedStyles,
         arrowComputedStyles,
         isInverse,
-        isTouchableDevice,
+        isTouchable,
         tooltipId,
         resetTooltipInteractions,
     ]);
@@ -377,7 +379,7 @@ const Tooltip: React.FC<Props> = ({
 
         const handleOnClick = (e: MouseEvent) => {
             if (
-                isTouchableDevice &&
+                isTouchable &&
                 targetRect &&
                 (e.clientX < targetRect.left ||
                     e.clientX > targetRect.right ||
@@ -396,15 +398,25 @@ const Tooltip: React.FC<Props> = ({
             document.removeEventListener('keyup', handleKeyUp, false);
             document.removeEventListener('click', handleOnClick, false);
         };
-    }, [isTouchableDevice, resetTooltipInteractions, targetRect]);
+    }, [isTouchable, resetTooltipInteractions, targetRect]);
 
     React.useEffect(() => {
-        if (isMouseOverTarget || isMouseOverTooltip || isFocused) {
-            open(tooltipId);
-        } else {
-            close(tooltipId);
+        if (!hasControlledValue) {
+            if (isMouseOverTarget || isMouseOverTooltip || isFocused) {
+                openTooltip(tooltipId);
+            } else {
+                closeTooltip(tooltipId);
+            }
         }
-    }, [isMouseOverTarget, isMouseOverTooltip, isFocused, tooltipId, open, close]);
+    }, [
+        isMouseOverTarget,
+        isMouseOverTooltip,
+        isFocused,
+        tooltipId,
+        openTooltip,
+        closeTooltip,
+        hasControlledValue,
+    ]);
 
     const currentPosition = getFinalPosition(
         targetRect,
@@ -430,17 +442,17 @@ const Tooltip: React.FC<Props> = ({
                     }
                 }}
                 onMouseOver={() => {
-                    if (!isTouchableDevice) {
+                    if (!isTouchable) {
                         setIsMouseOverTarget(true);
                     }
                 }}
                 onMouseLeave={() => {
-                    if (!isTouchableDevice) {
+                    if (!isTouchable) {
                         setIsMouseOverTarget(false);
                     }
                 }}
                 onClick={() => {
-                    if (isTouchableDevice) {
+                    if (isTouchable) {
                         setIsMouseOverTarget(true);
                     }
                 }}
@@ -450,7 +462,7 @@ const Tooltip: React.FC<Props> = ({
                     }
                 }}
                 onBlur={() => {
-                    if (!isTouchableDevice) {
+                    if (!isTouchable) {
                         setIsFocused(false);
                     }
                 }}
@@ -508,12 +520,12 @@ const Tooltip: React.FC<Props> = ({
                                     }}
                                     ref={combineRefs(setTooltip, tooltipRef)}
                                     onMouseEnter={() => {
-                                        if (!isTouchableDevice && transitionStatus === 'entered') {
+                                        if (!isTouchable && transitionStatus === 'entered') {
                                             setIsMouseOverTooltip(true);
                                         }
                                     }}
                                     onMouseLeave={() => {
-                                        if (!isTouchableDevice) {
+                                        if (!isTouchable) {
                                             setIsMouseOverTooltip(false);
                                         }
                                     }}
