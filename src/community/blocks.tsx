@@ -16,7 +16,7 @@ import type {ExclusifyUnion} from '../utils/utility-types';
 
 interface BlockContentProps {
     title?: string;
-    description?: Array<string> | string;
+    description?: ReadonlyArray<string> | string;
 }
 
 const BlockContent = ({title, description}: BlockContentProps) => {
@@ -99,7 +99,7 @@ export const SimpleBlock: React.FC<SimpleBlockProps> = ({image, description, 'ar
 
 interface InformationBlockProps {
     title?: string;
-    description?: Array<string> | string;
+    description?: ReadonlyArray<string> | string;
     value?: string;
     secondaryValue?: string;
     valueColor?: string;
@@ -143,7 +143,7 @@ interface HighlightedValueBlockProps {
     secondaryValue?: string;
 
     title?: string;
-    description?: Array<string> | string;
+    description?: ReadonlyArray<string> | string;
 
     valueColor?: string;
     'aria-label'?: string;
@@ -192,7 +192,7 @@ export const HighlightedValueBlock: React.FC<HighlightedValueBlockProps> = ({
 interface ValueBlockProps {
     title?: string;
     value?: string;
-    description?: Array<string> | string;
+    description?: ReadonlyArray<string> | string;
     valueColor?: string;
     'aria-label'?: string;
 }
