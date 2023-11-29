@@ -1,9 +1,9 @@
 import * as React from 'react';
 import classnames from 'classnames';
-import {assignInlineVars} from '@vanilla-extract/dynamic';
 import {sprinkles} from './sprinkles.css';
 import {getPrefixedDataAttributes} from './utils/dom';
 import * as styles from './inline.css';
+import {applyCssVars} from './utils/css';
 
 import type {DataAttributes} from './utils/types';
 
@@ -60,9 +60,7 @@ const Inline: React.FC<Props> = ({
                 wrap ? styles.wrap : isFullWith ? styles.fullWidth : styles.noFullWidth,
                 typeof space !== 'number' && styles.justifyVariants[space]
             )}
-            style={
-                typeof space === 'number' ? assignInlineVars({[styles.vars.space]: `${space}px`}) : undefined
-            }
+            style={typeof space === 'number' ? applyCssVars({[styles.vars.space]: `${space}px`}) : undefined}
             role={role}
             aria-labelledby={ariaLabelledBy}
             {...getPrefixedDataAttributes(dataAttributes)}

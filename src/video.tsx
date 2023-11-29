@@ -1,3 +1,4 @@
+'use client';
 import * as React from 'react';
 import {ImageContent, ImageError, useMediaBorderRadius} from './image';
 import {AspectRatioContainer} from './utils/aspect-ratio-support';

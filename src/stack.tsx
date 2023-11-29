@@ -1,8 +1,8 @@
 import * as React from 'react';
 import classnames from 'classnames';
-import {assignInlineVars} from '@vanilla-extract/dynamic';
 import {getPrefixedDataAttributes} from './utils/dom';
 import * as styles from './stack.css';
+import {applyCssVars} from './utils/css';
 
 import type {ByBreakpoint, DataAttributes} from './utils/types';
 
@@ -55,7 +55,7 @@ const Stack: React.FC<Props> = ({
     return (
         <div
             className={classnames(className, isFlexStack ? styles.flexStack : styles.marginStack)}
-            style={assignInlineVars(calcInlineVars(space))}
+            style={applyCssVars(calcInlineVars(space))}
             role={role}
             aria-labelledby={ariaLabelledby}
             {...getPrefixedDataAttributes(dataAttributes)}

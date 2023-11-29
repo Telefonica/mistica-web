@@ -1,5 +1,5 @@
+'use client';
 import * as React from 'react';
-import {assignInlineVars} from '@vanilla-extract/dynamic';
 import classnames from 'classnames';
 import {useIsInverseVariant} from './theme-variant-context';
 import {ButtonPrimary} from './button';
@@ -12,6 +12,7 @@ import {vars} from './skins/skin-contract.css';
 import {AspectRatioContainer} from './utils/aspect-ratio-support';
 import {getPrefixedDataAttributes} from './utils/dom';
 import {sprinkles} from './sprinkles.css';
+import {applyCssVars} from './utils/css';
 
 import type {ButtonSecondary, ButtonLink} from './button';
 import type {ButtonGroupProps} from './button-group';
@@ -78,7 +79,7 @@ const EmptyState: React.FC<Props> = ({
                 styles.container,
                 isInverse ? styles.inverseBorder : sprinkles({border: 'regular'})
             )}
-            style={assignInlineVars({
+            style={applyCssVars({
                 [styles.vars.backgroundColor]:
                     isInverse && !isDarkMode ? vars.colors.backgroundBrand : vars.colors.backgroundContainer,
             })}

@@ -1,3 +1,4 @@
+'use client';
 import * as React from 'react';
 import {useThemeVariant} from './theme-variant-context';
 import {useTheme, useScreenSize} from './hooks';

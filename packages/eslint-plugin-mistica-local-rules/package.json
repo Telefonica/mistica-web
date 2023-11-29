@@ -1,0 +1,6 @@
+{
+    "name": "eslint-plugin-mistica-local-rules",
+    "version": "1.0.0",
+    "main": "index.js",
+    "private": true
+}

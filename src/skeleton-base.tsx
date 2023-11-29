@@ -1,3 +1,4 @@
+'use client';
 import {useIsInverseVariant} from './theme-variant-context';
 import * as React from 'react';
 import classnames from 'classnames';

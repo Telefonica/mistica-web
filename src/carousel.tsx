@@ -1,3 +1,4 @@
+'use client';
 import * as React from 'react';
 import IconChevronLeftRegular from './generated/mistica-icons/icon-chevron-left-regular';
 import IconChevronRightRegular from './generated/mistica-icons/icon-chevron-right-regular';
@@ -12,10 +13,10 @@ import {getPrefixedDataAttributes, listenResize} from './utils/dom';
 import {isAndroid, isIos, isRunningAcceptanceTest} from './utils/platform';
 import {useDocumentVisibility} from './utils/document-visibility';
 import * as styles from './carousel.css';
-import {assignInlineVars} from '@vanilla-extract/dynamic';
 import {sprinkles} from './sprinkles.css';
 import {useDesktopContainerType} from './desktop-container-type-context';
 import {VIVO_NEW_SKIN} from './skins/constants';
+import {applyCssVars} from './utils/css';
 
 import type {DesktopContainerType} from './desktop-container-type-context';
 import type {DataAttributes} from './utils/types';
@@ -397,7 +398,7 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
                         [styles.carouselWithScroll]: pagesCount > 1,
                     })}
                     style={{
-                        ...assignInlineVars({
+                        ...applyCssVars({
                             [styles.vars.itemsPerPageDesktop]: String(itemsPerPageConfig.desktop),
                             [styles.vars.itemsPerPageTablet]: String(itemsPerPageConfig.tablet),
                             [styles.vars.itemsPerPageMobile]: String(itemsPerPageConfig.mobile),

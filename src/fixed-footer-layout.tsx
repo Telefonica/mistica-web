@@ -1,3 +1,4 @@
+'use client';
 import * as React from 'react';
 import classnames from 'classnames';
 import {debounce} from './utils/helpers';
@@ -19,8 +20,7 @@ import {
     removePassiveEventListener,
 } from './utils/dom';
 import * as styles from './fixed-footer-layout.css';
-import {assignInlineVars} from '@vanilla-extract/dynamic';
-import {safeAreaInsetBottom} from './utils/css';
+import {applyCssVars, safeAreaInsetBottom} from './utils/css';
 
 const FOOTER_CANVAS_RATIO = 2;
 const getScrollEventTarget = (el: HTMLElement) => (el === document.documentElement ? window : el);
@@ -112,7 +112,7 @@ const FixedFooterLayout: React.FC<Props> = ({
             <div
                 ref={containerRef}
                 className={styles.container}
-                style={assignInlineVars({
+                style={applyCssVars({
                     ...(containerBgColor && {
                         [styles.vars.backgroundColor]: containerBgColor,
                     }),
