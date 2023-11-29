@@ -89,7 +89,7 @@ app, consider to memoize it (for example, with `React.useMemo` hook).
 
 ### Mistica in Next.js app router
 
-If you are using Next.js app router, we highly recommend enabling the follwing experimental config:
+If you are using Next.js app router, we highly recommend enabling the following experimental config:
 
 ```js
 experimental: {
