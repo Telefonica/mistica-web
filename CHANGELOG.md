@@ -1,3 +1,10 @@
+# [14.34.0](https://github.com/Telefonica/mistica-web/compare/v14.33.0...v14.34.0) (2023-11-29)
+
+
+### Features
+
+* **Next.js:** improved RSC support ([#954](https://github.com/Telefonica/mistica-web/issues/954)) ([2ff9956](https://github.com/Telefonica/mistica-web/commit/2ff99566d66b1301f7fa8ff5a8862ca400bb9a9e))
+
 # [14.33.0](https://github.com/Telefonica/mistica-web/compare/v14.32.1...v14.33.0) (2023-11-29)
 
 
