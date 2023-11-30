@@ -1,6 +1,3 @@
-import {PACKAGE_VERSION} from './package-version';
-import {isClientSide} from './utils/environment';
-
 export {vars as skinVars} from './skins/skin-contract.css';
 export * as mq from './media-queries.css';
 export {default as ThemeContext} from './theme-context';
@@ -212,17 +209,6 @@ export {palette as tuPalette} from './skins/tu';
 export type {Locale} from './utils/locale';
 export type {TrackingEvent, IconProps} from './utils/types';
 export type {RegionCode} from './utils/region-code';
-
-// Check there is only one version of mistica installed in the page.
-if (process.env.NODE_ENV !== 'production' && isClientSide()) {
-    // @ts-expect-error __mistica_version__ does not exist in window
-    if (window['__mistica_version__'] && window['__mistica_version__'] !== PACKAGE_VERSION) {
-        throw new Error(`There is more than one version of @telefonica/mistica running on the same page`);
-    } else {
-        // @ts-expect-error __mistica_version__ does not exist in window
-        window['__mistica_version__'] = PACKAGE_VERSION;
-    }
-}
 
 /*
  * Temporary solution to export Community components until Mistica gets migrated to ESModules

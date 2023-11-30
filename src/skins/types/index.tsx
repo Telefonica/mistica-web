@@ -65,6 +65,7 @@ export type BorderRadiiConfig = {
     sheet: string;
     bar: string;
     avatar: string;
+    mediaSmall: string;
 };
 
 export type Skin = {

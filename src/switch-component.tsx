@@ -3,6 +3,8 @@ This file is named "switch-component.tsx" instead of "switch.tsx" to workaround
 this storybook bug:
 https://github.com/storybookjs/storybook/issues/11980
 */
+
+'use client';
 import * as React from 'react';
 import {debounce} from './utils/helpers';
 import {SPACE} from './utils/key-codes';

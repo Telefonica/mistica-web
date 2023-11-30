@@ -1,3 +1,4 @@
+'use client';
 import * as React from 'react';
 import Tag from './tag';
 import Stack from './stack';
@@ -20,10 +21,10 @@ import Spinner from './spinner';
 import Video from './video';
 import {ThemeVariant, useIsInverseVariant} from './theme-variant-context';
 import classNames from 'classnames';
-import {assignInlineVars} from '@vanilla-extract/dynamic';
 import Inline from './inline';
 import {getPrefixedDataAttributes} from './utils/dom';
 import {isRunningAcceptanceTest} from './utils/platform';
+import {applyCssVars} from './utils/css';
 
 import type {Variant} from './theme-variant-context';
 import type {PressHandler} from './touchable';
@@ -193,7 +194,7 @@ const CardContainer = React.forwardRef<HTMLDivElement, CardContainerProps>(
                     width,
                     height,
                     ...(cssAspectRatio
-                        ? assignInlineVars({[styles.vars.aspectRatio]: String(cssAspectRatio)})
+                        ? applyCssVars({[styles.vars.aspectRatio]: String(cssAspectRatio)})
                         : {}),
                 }}
             >

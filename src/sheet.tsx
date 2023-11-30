@@ -1,3 +1,4 @@
+'use client';
 import classnames from 'classnames';
 import * as React from 'react';
 import * as styles from './sheet.css';

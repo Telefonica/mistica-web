@@ -1,3 +1,4 @@
+'use client';
 import * as React from 'react';
 import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
 import {useTheme} from './hooks';

@@ -1,3 +1,4 @@
+'use client';
 import * as React from 'react';
 import FixedFooterLayout from './fixed-footer-layout';
 import ButtonLayout from './button-layout';

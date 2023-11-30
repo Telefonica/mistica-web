@@ -1,7 +1,7 @@
-import {assignInlineVars} from '@vanilla-extract/dynamic';
 import classNames from 'classnames';
 import * as React from 'react';
 import * as styles from './grid.css';
+import {applyCssVars} from './utils/css';
 import {getPrefixedDataAttributes} from './utils/dom';
 
 import type {DataAttributes} from './utils/types';
@@ -124,7 +124,7 @@ export const Grid = React.forwardRef<HTMLDivElement, GridProps>(
                 style: {
                     height,
                     minHeight,
-                    ...assignInlineVars({
+                    ...applyCssVars({
                         [styles.vars.columnGap]: columnGap ? `${columnGap}px` : '',
                         [styles.vars.rowGap]: rowGap ? `${rowGap}px` : '',
                         ...getAutoRepeatVars(rows, columns),

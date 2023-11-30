@@ -1,3 +1,4 @@
+'use client';
 import * as React from 'react';
 import {useTheme, useScreenSize, useWindowHeight, useIsomorphicLayoutEffect} from './hooks';
 import {ThemeVariant, useIsInverseVariant} from './theme-variant-context';

@@ -1,3 +1,4 @@
+'use client';
 import * as React from 'react';
 import {isAndroid, isChrome} from './utils/platform';
 import {useDisableBodyScroll, useTheme} from './hooks';

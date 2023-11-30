@@ -1,3 +1,25 @@
+# [14.34.0](https://github.com/Telefonica/mistica-web/compare/v14.33.0...v14.34.0) (2023-11-29)
+
+
+### Features
+
+* **Next.js:** improved RSC support ([#954](https://github.com/Telefonica/mistica-web/issues/954)) ([2ff9956](https://github.com/Telefonica/mistica-web/commit/2ff99566d66b1301f7fa8ff5a8862ca400bb9a9e))
+
+# [14.33.0](https://github.com/Telefonica/mistica-web/compare/v14.32.1...v14.33.0) (2023-11-29)
+
+
+### Bug Fixes
+
+* **Blocks:** Set array props as read only ([#956](https://github.com/Telefonica/mistica-web/issues/956)) ([e7b4ad7](https://github.com/Telefonica/mistica-web/commit/e7b4ad7a91fe3502302a399e12418ff82dec4d86))
+* **ButtonFixedFooterLayout:** footer alignment in large desktop viewport ([#946](https://github.com/Telefonica/mistica-web/issues/946)) ([633d7ab](https://github.com/Telefonica/mistica-web/commit/633d7ab0a1421258e25b0eaa8bdb16d71f3a0fe8))
+* **CreditCardExpirationField:** fix wrong formatting when editing field's value ([#948](https://github.com/Telefonica/mistica-web/issues/948)) ([db99dad](https://github.com/Telefonica/mistica-web/commit/db99daddbe657441487ba2de5b39ff5be6ace184))
+* **useDisableBodyScroll:** fix nested usage ([#949](https://github.com/Telefonica/mistica-web/issues/949)) ([c54c9e0](https://github.com/Telefonica/mistica-web/commit/c54c9e0c458a7dfbf36b79e99fb22aa18f8196b3))
+
+
+### Features
+
+* **Tabs:** add inverse/alternative variant, update story and add tests ([#950](https://github.com/Telefonica/mistica-web/issues/950)) ([2ade9f7](https://github.com/Telefonica/mistica-web/commit/2ade9f7ca97d47c86dd43209efa77872fa49f5ed))
+
 ## [14.32.1](https://github.com/Telefonica/mistica-web/compare/v14.32.0...v14.32.1) (2023-11-17)
 
 

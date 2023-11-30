@@ -1,3 +1,4 @@
+'use client';
 import * as React from 'react';
 import {useTheme} from './hooks';
 import {vars} from './skins/skin-contract.css';

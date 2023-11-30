@@ -1,8 +1,8 @@
+'use client';
 import * as React from 'react';
 import classnames from 'classnames';
-import {assignInlineVars} from '@vanilla-extract/dynamic';
 import {useIsInverseVariant} from './theme-variant-context';
-import {pxToRem} from './utils/css';
+import {pxToRem, applyCssVars} from './utils/css';
 import {getPrefixedDataAttributes} from './utils/dom';
 import {useTheme} from './hooks';
 import {vars} from './skins/skin-contract.css';
@@ -107,14 +107,14 @@ export const Text: React.FC<TextProps> = ({
         [styles.truncateToMoreThanOneLine]: truncate && truncate > 1,
     });
 
-    const sizeVars = assignInlineVars({
+    const sizeVars = applyCssVars({
         [styles.vars.mobileSize]: mobileSize ? pxToRem(mobileSize) : 'inherit',
         [styles.vars.mobileLineHeight]: mobileLineHeight ? pxToRem(mobileLineHeight) : 'inherit',
         [styles.vars.desktopSize]: desktopSize ? pxToRem(desktopSize) : 'inherit',
         [styles.vars.desktopLineHeight]: desktopLineHeight ? pxToRem(desktopLineHeight) : 'inherit',
     });
     const textVars = truncate
-        ? assignInlineVars({
+        ? applyCssVars({
               [styles.vars.lineClamp]: String(lineClampValue),
           })
         : {};

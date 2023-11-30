@@ -1,3 +1,4 @@
+'use client';
 import * as React from 'react';
 import {getAnimateDrawLineProps, getAnimateFadeInProps} from '../utils/animation';
 import {useTheme} from '../hooks';

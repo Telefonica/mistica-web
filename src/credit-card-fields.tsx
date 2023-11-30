@@ -1,3 +1,4 @@
+'use client';
 import * as React from 'react';
 import {useForm} from './form-context';
 import {useTheme} from './hooks';
