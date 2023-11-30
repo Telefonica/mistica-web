@@ -7,6 +7,7 @@ import {
     O2_CLASSIC_SKIN,
     MOVISTAR_SKIN,
     VIVO_NEW_SKIN,
+    TU_SKIN,
 } from './constants';
 import {getBlauSkin} from './blau';
 import {getTelefonicaSkin} from './telefonica';
@@ -15,6 +16,7 @@ import {getVivoNewSkin} from './vivo-new';
 import {getO2Skin} from './o2';
 import {getO2ClassicSkin} from './o2-classic';
 import {getMovistarSkin} from './movistar';
+import {getTuSkin} from './tu';
 
 import type {SkinVariant, KnownSkin, KnownSkinName} from './types';
 
@@ -34,6 +36,8 @@ export const getSkinByName = (name: KnownSkinName, variant?: SkinVariant): Known
             return getO2ClassicSkin(variant);
         case MOVISTAR_SKIN:
             return getMovistarSkin(variant);
+        case TU_SKIN:
+            return getTuSkin(variant);
         default: {
             const n: never = name;
             throw Error('Unknown skin name: ' + n);

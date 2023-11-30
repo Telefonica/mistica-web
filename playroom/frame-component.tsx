@@ -13,6 +13,7 @@ import {
     VIVO_NEW_SKIN,
     TELEFONICA_SKIN,
     O2_SKIN,
+    TU_SKIN,
 } from '../src';
 
 import type {ThemeConfig} from '../src';
@@ -43,6 +44,7 @@ const App = ({children, skinName}: {children: React.ReactNode; skinName: string}
         ${skinName === VIVO_NEW_SKIN ? 'body {font-family: "Vivo Type"}' : ''}
         ${skinName === TELEFONICA_SKIN ? 'body {font-family: "Telefonica Sans"}' : ''}
         ${skinName === O2_SKIN ? 'body {font-family: "On Air"}' : ''}
+        ${skinName === O2_SKIN || skinName === TU_SKIN ? 'body {font-family: "On Air"}' : ''}
 
         ${isModalOpen ? 'body {overflow-y: hidden}' : ''}
 

@@ -189,6 +189,7 @@ export {
     MOVISTAR_SKIN,
     TELEFONICA_SKIN,
     BLAU_SKIN,
+    TU_SKIN,
 } from './skins/constants';
 export {getSkinByName} from './skins/utils';
 export {getVivoSkin} from './skins/vivo';
@@ -199,12 +200,14 @@ export {getO2Skin} from './skins/o2';
 export {getO2ClassicSkin} from './skins/o2-classic';
 export {getTelefonicaSkin} from './skins/telefonica';
 export {getBlauSkin} from './skins/blau';
+export {getTuSkin} from './skins/tu';
 export {palette as vivoPalette} from './skins/vivo';
 export {palette as movistarPalette} from './skins/movistar';
 export {palette as o2Palette} from './skins/o2';
 export {palette as o2ClassicPalette} from './skins/o2-classic';
 export {palette as telefonicaPalette} from './skins/telefonica';
 export {palette as blauPalette} from './skins/blau';
+export {palette as tuPalette} from './skins/tu';
 
 export type {Locale} from './utils/locale';
 export type {TrackingEvent, IconProps} from './utils/types';
