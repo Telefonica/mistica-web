@@ -270,11 +270,12 @@ export const getTuSkin: GetKnownSkin = () => {
             button: '999px',
             checkbox: '2px',
             container: '16px',
-            indicator: '999px',
+            indicator: '8px',
             input: '12px',
             legacyDisplay: '16px',
             popup: '8px',
             sheet: '16px',
+            mediaSmall: '8px',
         },
         textPresets: {
             cardTitle: {weight: 'regular'},
