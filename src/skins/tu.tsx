@@ -59,7 +59,7 @@ export const getTuSkin: GetKnownSkin = () => {
             backgroundContainerAlternative: palette.grey1,
             backgroundBrand: palette.primary,
             backgroundBrandSecondary: palette.secondary,
-            backgroundOverlay: applyAlpha(palette.grey6, 0.8),
+            backgroundOverlay: applyAlpha(palette.secondary, 0.8),
             backgroundSkeleton: palette.grey2,
             backgroundSkeletonInverse: palette.primary70,
             navigationBarBackground: palette.primary,
