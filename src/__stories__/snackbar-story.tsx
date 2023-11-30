@@ -23,7 +23,7 @@ export const Default: StoryComponent<Args> = ({buttonText, message, duration, ty
                 openSnackbar({message, type, buttonText, duration: snackbarDuration, withDismiss});
             }}
         >
-            Show snackbar
+            Open Snackbar
         </ButtonPrimary>
     );
 };

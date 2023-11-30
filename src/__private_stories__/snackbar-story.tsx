@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {BoxedRow, BoxedRowList, ButtonPrimary, Stack, useSnackbar} from '..';
+import {BoxedRow, BoxedRowList, ButtonPrimary, Stack, Title1, useSnackbar} from '..';
 
 export default {
     title: 'Private/Snackbar',
@@ -16,7 +16,7 @@ export const Default: StoryComponent = () => {
                     id++;
                     openSnackbar({
                         message: `Snackbar #${id}`,
-                        type: 'INFORMATIVE',
+                        type: id % 2 === 0 ? 'INFORMATIVE' : 'CRITICAL',
                         withDismiss: true,
                         buttonText: 'Accept',
                         onClose: ({action}) => {
@@ -25,9 +25,10 @@ export const Default: StoryComponent = () => {
                     });
                 }}
             >
-                Open a new snackbar
+                Open Snackbar
             </ButtonPrimary>
 
+            <Title1>Snackbar queue in context: {snackbars.length}</Title1>
             <BoxedRowList>
                 {snackbars.map((snackbar) => (
                     <BoxedRow
