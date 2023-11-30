@@ -5,6 +5,7 @@ import {waitFor, fireEvent, render, screen} from '@testing-library/react';
 import ThemeContextProvider from '../theme-context-provider';
 import {makeTheme} from './test-utils';
 import {type ThemeConfig} from '../theme';
+import {SPACE} from '../utils/key-codes';
 
 const trackingEvent = {
     category: 'test',
@@ -324,7 +325,7 @@ test('<a> component has click-like behaviour on "space" key press', async () => 
 
     const anchor = screen.getByText(/Test/);
 
-    fireEvent.keyDown(anchor, {key: 'Space', keyCode: 32});
+    fireEvent.keyDown(anchor, {key: SPACE});
 
     await waitFor(() => {
         expect(redirectSpy).toHaveBeenCalledTimes(1);
@@ -347,7 +348,7 @@ test('<Link> component has click-like behaviour on "space" key press', async () 
 
     const anchor = screen.getByRole('link', {name: 'Test'});
 
-    fireEvent.keyDown(anchor, {key: 'Space', keyCode: 32});
+    fireEvent.keyDown(anchor, {key: SPACE});
 
     await waitFor(() => {
         expect(screen.getByText('test click')).toBeInTheDocument();

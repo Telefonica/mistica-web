@@ -274,7 +274,7 @@ const ModalDialog = (props: ModalDialogProps) => {
 
     const handleKeyDown = React.useCallback(
         (event: KeyboardEvent) => {
-            if (event.keyCode === ESC) {
+            if (event.key === ESC) {
                 handleClose();
                 event.stopPropagation();
                 event.preventDefault();

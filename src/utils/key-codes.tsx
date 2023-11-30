@@ -1,8 +1,8 @@
-export const LEFT = 37;
-export const UP = 38;
-export const RIGHT = 39;
-export const DOWN = 40;
-export const ENTER = 13;
-export const ESC = 27;
-export const SPACE = 32;
-export const TAB = 9;
+export const LEFT = 'ArrowLeft';
+export const UP = 'ArrowUp';
+export const RIGHT = 'ArrowRight';
+export const DOWN = 'ArrowDown';
+export const ENTER = 'Enter';
+export const ESC = 'Escape';
+export const SPACE = ' ';
+export const TAB = 'Tab';

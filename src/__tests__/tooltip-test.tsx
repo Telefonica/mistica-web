@@ -3,6 +3,7 @@ import {render, fireEvent, screen, waitForElementToBeRemoved} from '@testing-lib
 import Tooltip from '../tooltip';
 import {ThemeContextProvider} from '..';
 import {makeTheme} from './test-utils';
+import {TAB} from '../utils/key-codes';
 
 type Props = Omit<React.ComponentProps<typeof Tooltip>, 'children' | 'targetLabel' | 'target'>;
 
@@ -44,7 +45,7 @@ test('tooltip is accessible', async () => {
     expect(screen.getByLabelText('help text')).toBeInTheDocument();
     fireEvent.focus(screen.getByLabelText('help text'));
     expect(screen.getByText('Content')).toBeInTheDocument();
-    fireEvent.keyDown(screen.getByLabelText('help text'), {key: 'tab', keyCode: 9});
+    fireEvent.keyDown(screen.getByLabelText('help text'), {key: TAB});
 
     await waitForElementToBeRemoved(screen.queryByText('Content'));
 });

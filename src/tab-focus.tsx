@@ -35,10 +35,7 @@ const TabFocus: React.FC<Props> = ({children, disabled}) => {
         isMounted = true;
 
         const handleKeyboardEvent = (e: KeyboardEvent) => {
-            // `e.key` requires chrome 51+
-            // `e.keyCode` is deprecated
-            // https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key
-            if (e.key === 'Tab' || e.keyCode === TAB) {
+            if (e.key === TAB) {
                 document.body.classList.add(TAB_NAVIGATION_CLASS);
             } else {
                 document.body.classList.remove(TAB_NAVIGATION_CLASS);

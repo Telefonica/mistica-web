@@ -6,12 +6,12 @@ import {useAriaId, useScreenSize, useTheme} from './hooks';
 import {Portal} from './portal';
 import Overlay from './overlay';
 import {Text2} from './text';
-import * as key from './utils/key-codes';
 import Stack from './stack';
 import * as styles from './tooltip.css';
 import {getPrefixedDataAttributes} from './utils/dom';
 import {isClientSide, isServerSide} from './utils/environment';
 import {applyCssVars} from './utils/css';
+import {TAB} from './utils/key-codes';
 
 import type {DataAttributes} from './utils/types';
 
@@ -222,7 +222,7 @@ const Tooltip: React.FC<Props> = ({
     };
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
-        if (event.keyCode === key.TAB) {
+        if (event.key === TAB) {
             handleClickOutside();
         }
     };

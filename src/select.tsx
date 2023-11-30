@@ -219,8 +219,8 @@ const Select: React.FC<SelectProps> = ({
 
     React.useEffect(() => {
         const updateTentativeValueState = (e: KeyboardEvent) => {
-            const keyToOperand: Record<number, 1 | -1 | undefined> = {[UP]: -1, [DOWN]: 1};
-            const operand = keyToOperand[e.keyCode];
+            const keyToOperand: Record<string, 1 | -1 | undefined> = {[UP]: -1, [DOWN]: 1};
+            const operand = keyToOperand[e.key];
             if (operand) {
                 cancelEvent(e);
                 const newTentativeValueState =
@@ -232,21 +232,26 @@ const Select: React.FC<SelectProps> = ({
         };
         const handleKeyDown = (e: KeyboardEvent) => {
             if (optionsShown) {
-                if (e.keyCode === TAB) {
-                    cancelEvent(e);
-                }
-                if (e.keyCode === ESC) {
-                    toggleOptions(false);
-                }
-                if (e.keyCode === ENTER || e.keyCode === SPACE) {
-                    cancelEvent(e);
-                    if (
-                        options.findIndex(({value}) => value === tentativeValueState) !== -1 &&
-                        tentativeValueState !== valueState
-                    ) {
-                        setValue(tentativeValueState);
-                    }
-                    toggleOptions(false);
+                switch (e.key) {
+                    case TAB:
+                        cancelEvent(e);
+                        break;
+                    case ESC:
+                        toggleOptions(false);
+                        break;
+                    case ENTER:
+                    case SPACE:
+                        cancelEvent(e);
+                        if (
+                            options.findIndex(({value}) => value === tentativeValueState) !== -1 &&
+                            tentativeValueState !== valueState
+                        ) {
+                            setValue(tentativeValueState);
+                        }
+                        toggleOptions(false);
+                        break;
+                    default:
+                    // do nothing
                 }
             }
             // so we don't change the tentativeValueState while menu is closing
@@ -283,7 +288,7 @@ const Select: React.FC<SelectProps> = ({
             setIsFocused(true);
         },
         onKeyDown: (e: React.KeyboardEvent) => {
-            if (!optionsShown && (e.keyCode === SPACE || e.keyCode === ENTER)) {
+            if (!optionsShown && (e.key === SPACE || e.key === ENTER)) {
                 cancelEvent(e);
                 toggleOptions(true);
             }

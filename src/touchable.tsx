@@ -202,7 +202,7 @@ const RawTouchable = React.forwardRef<TouchableElement, Props>((props, ref) => {
     };
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLElement>) => {
-        if (event.keyCode === ENTER || event.keyCode === SPACE) {
+        if (event.key === ENTER || event.key === SPACE) {
             event.preventDefault();
             event.currentTarget.click();
         }

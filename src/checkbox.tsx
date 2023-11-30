@@ -110,7 +110,7 @@ const Checkbox = React.forwardRef<HTMLDivElement, RenderProps | ChildrenProps>((
     };
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
-        if (event.keyCode === SPACE) {
+        if (event.key === SPACE) {
             event.preventDefault();
             event.stopPropagation();
             handleChange();

@@ -333,7 +333,7 @@ export const Menu: React.FC<MenuProps> = ({
     React.useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
             if (isMenuOpen) {
-                switch (e.keyCode) {
+                switch (e.key) {
                     case RIGHT:
                     case DOWN:
                         cancelEvent(e);
@@ -362,7 +362,7 @@ export const Menu: React.FC<MenuProps> = ({
                     // do nothing
                 }
             } else {
-                switch (e.keyCode) {
+                switch (e.key) {
                     case ENTER:
                     case SPACE:
                         setIsOpenedwithKeyboard(true);

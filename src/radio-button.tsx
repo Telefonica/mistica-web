@@ -68,7 +68,7 @@ const RadioButton: React.FC<PropsRender | PropsChildren> = ({
     const {isIos} = useTheme();
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
-        switch (event.keyCode) {
+        switch (event.key) {
             case SPACE:
                 select(value);
                 event.preventDefault();
