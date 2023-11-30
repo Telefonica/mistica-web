@@ -1,3 +1,4 @@
+'use client';
 import * as React from 'react';
 import {useRifm} from 'rifm';
 import {formatAsYouType, formatToE164, parse, getRegionCodeForCountryCode} from '@telefonica/libphonenumber';

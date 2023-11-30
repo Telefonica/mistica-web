@@ -273,6 +273,7 @@ export const getTelefonicaSkin: GetKnownSkin = () => {
             legacyDisplay: '0px',
             popup: '0px',
             sheet: '0px',
+            mediaSmall: '0px',
         },
         textPresets: {
             cardTitle: {weight: 'regular'},

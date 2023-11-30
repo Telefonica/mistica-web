@@ -1,9 +1,9 @@
 import * as React from 'react';
-import createContext from '../nestable-context';
+import {createNestableContext} from '../nestable-context';
 import {render, fireEvent, screen} from '@testing-library/react';
 
 test('happy case', () => {
-    const {Provider, Getter, Setter} = createContext<string>('nothing');
+    const {Provider, Getter, Setter} = createNestableContext<string>('nothing');
 
     render(
         <Provider>
@@ -16,7 +16,7 @@ test('happy case', () => {
 });
 
 test('When unmount, the default value is restored', async () => {
-    const {Provider, Getter, Setter} = createContext<string>('nothing');
+    const {Provider, Getter, Setter} = createNestableContext<string>('nothing');
 
     const A = () => {
         const [isVisible, setIsVisible] = React.useState(true);
@@ -42,7 +42,7 @@ test('When unmount, the default value is restored', async () => {
 });
 
 test('When unmount, the previous value is restored', async () => {
-    const {Provider, Getter, Setter} = createContext<string>('nothing');
+    const {Provider, Getter, Setter} = createNestableContext<string>('nothing');
 
     const A = () => {
         const [isVisible, setIsVisible] = React.useState(true);
@@ -70,7 +70,7 @@ test('When unmount, the previous value is restored', async () => {
 });
 
 test('when nesting, the innermost component wins', () => {
-    const {Provider, Getter, Setter} = createContext<string>('nothing');
+    const {Provider, Getter, Setter} = createNestableContext<string>('nothing');
 
     const C = () => <Setter value="c" />;
 
@@ -121,7 +121,7 @@ const Transition = ({a, b}: {a: React.ReactNode; b: React.ReactNode}) => {
 };
 
 test('works as expected with transitions', async () => {
-    const {Provider, Getter, Setter} = createContext<string>('nothing');
+    const {Provider, Getter, Setter} = createNestableContext<string>('nothing');
 
     render(
         <Provider>
@@ -131,4 +131,75 @@ test('works as expected with transitions', async () => {
     );
 
     expect(await screen.findByText('The value is: b')).toBeInTheDocument();
+});
+
+test('when value is an object, nested values are merged', () => {
+    type Value = {foo?: string; bar?: string};
+
+    const {Provider, Getter, Setter} = createNestableContext<Value>({});
+
+    const C = () => <Setter value={{bar: 'c'}} />;
+
+    const B = () => (
+        <>
+            <Setter value={{bar: 'b'}} />
+            <C />
+        </>
+    );
+
+    const A = () => (
+        <>
+            <Setter value={{foo: 'a'}} />
+            <B />
+        </>
+    );
+
+    render(
+        <Provider>
+            <Getter>{({foo, bar}) => `foo is ${foo} and bar is ${bar}`}</Getter>
+            <A />
+        </Provider>
+    );
+
+    expect(screen.getByText('foo is a and bar is c')).toBeInTheDocument();
+});
+
+test('can use a custom valuesReducer', () => {
+    type Value = {foo?: string; bar?: string; reset?: boolean};
+
+    const valuesReducer = (values: Array<Value>): Value => {
+        return values.reduce((acc, value) => {
+            if (value.reset) {
+                return value;
+            }
+            return {...acc, ...value};
+        }, {});
+    };
+
+    const {Provider, Getter, Setter} = createNestableContext<Value>({}, valuesReducer);
+
+    const C = () => <Setter value={{bar: 'c'}} />;
+
+    const B = () => (
+        <>
+            <Setter value={{bar: 'b', reset: true}} />
+            <C />
+        </>
+    );
+
+    const A = () => (
+        <>
+            <Setter value={{foo: 'a'}} />
+            <B />
+        </>
+    );
+
+    render(
+        <Provider>
+            <Getter>{({foo, bar}) => `foo is ${foo} and bar is ${bar}`}</Getter>
+            <A />
+        </Provider>
+    );
+
+    expect(screen.getByText('foo is undefined and bar is c')).toBeInTheDocument();
 });

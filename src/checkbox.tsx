@@ -1,3 +1,4 @@
+'use client';
 import * as React from 'react';
 import {SPACE} from './utils/key-codes';
 import {useControlProps} from './form-context';

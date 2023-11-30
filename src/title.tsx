@@ -1,3 +1,4 @@
+'use client';
 import * as React from 'react';
 import Text, {Text1, Text2, Text6} from './text';
 import Inline from './inline';

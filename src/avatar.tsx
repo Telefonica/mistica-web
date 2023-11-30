@@ -1,4 +1,6 @@
 // https://www.figma.com/file/U4ipIXOk64bdM5tSvaqPKS/%5BREADY%5D--Avatar?node-id=2%3A61
+
+'use client';
 import * as React from 'react';
 import Badge from './badge';
 import IconUserAccountRegular from './generated/mistica-icons/icon-user-account-regular';

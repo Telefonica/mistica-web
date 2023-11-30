@@ -1,3 +1,4 @@
+'use client';
 import * as React from 'react';
 import ScreenSizeContext from './screen-size-context';
 import {useIsomorphicLayoutEffect} from './hooks';

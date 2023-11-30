@@ -4,6 +4,8 @@
  *   - Behavior: https://www.figma.com/file/Be8QB9onmHunKCCAkIBAVr/Lists-Component-Specs?node-id=0%3A608
  *   - Assets: https://www.figma.com/file/Be8QB9onmHunKCCAkIBAVr/Lists-Component-Specs?node-id=0%3A1
  */
+
+'use client';
 import * as React from 'react';
 import classNames from 'classnames';
 import {BaseTouchable} from './touchable';

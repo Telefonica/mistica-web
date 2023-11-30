@@ -1,3 +1,4 @@
+'use client';
 import * as React from 'react';
 import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
 import {useTheme} from './hooks';
@@ -31,7 +32,7 @@ const MaybeDismissable = ({
         <section
             className={styles.dismissableContainer}
             aria-label={ariaLabel}
-            style={{width: width || '100%'}}
+            style={{width: width || '100%', minHeight: '100%'}}
         >
             <DismissableContext.Provider value>{children}</DismissableContext.Provider>
             <IconButton

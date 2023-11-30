@@ -1070,6 +1070,14 @@ const titlesSnippets: Array<Snippet> = [
         name: 'Title2 (with link)',
         code: '<Title2 right={<ButtonLink onPress={() => {}} withChevron bleedRight bleedY>Link</ButtonLink>}>Some title</Title2>',
     },
+    {
+        name: 'Title3',
+        code: '<Title3>Some title</Title3>',
+    },
+    {
+        name: 'Title3 (with link)',
+        code: '<Title3 right={<ButtonLink onPress={() => {}} withChevron bleedRight bleedY>Link</ButtonLink>}>Some title</Title3>',
+    },
 ].map((snippet) => ({...snippet, group: 'Titles'}));
 
 const tagSnippets: Array<Snippet> = ['promo', 'active', 'inactive', 'success', 'warning', 'error'].map(
@@ -1079,6 +1087,25 @@ const tagSnippets: Array<Snippet> = ['promo', 'active', 'inactive', 'success', '
         code: `<Tag type="${type}" Icon={IconStarFilled}>${capitalize(type)}</Tag>`,
     })
 );
+
+const sliderSnippets: Array<Snippet> = [
+    {
+        group: 'Slider',
+        name: 'Slider',
+        code: `
+        <ResponsiveLayout>
+          <Slider name="slider" min={1} max={10} tooltip />
+        </ResponsiveLayout>`,
+    },
+    {
+        group: 'Slider',
+        name: 'Slider with values',
+        code: `
+        <ResponsiveLayout>
+          <Slider name="slider" values={[3, 10, 7, 1, 2, 4, 6, 8, 9, 5]} tooltip />
+        </ResponsiveLayout>`,
+    },
+];
 
 const layoutSnippets: Array<Snippet> = [
     {
@@ -2516,7 +2543,7 @@ const advancedDataCardSnippets = [
           }
           footerText="footer text"
           onClose={() => window.alert("close")}
-          onPress={() => window.alert("click")}
+          href="https://google.com"
         />
         `,
         group: 'AdvancedDataCard',
@@ -2647,6 +2674,7 @@ export default [
     ...listSnippetsAvatar,
     ...listRowSnippets,
     ...tabsSnippets,
+    ...sliderSnippets,
     ...cardSnippets,
     ...exampleScreens,
     {
@@ -2742,11 +2770,6 @@ export default [
             />
           </Inline>
         </RadioGroup>`,
-    },
-    {
-        group: 'Slider',
-        name: 'Slider',
-        code: '<Slider min={0} max={100}   />',
     },
     ...tagSnippets,
     {

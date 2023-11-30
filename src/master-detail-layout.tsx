@@ -1,3 +1,4 @@
+'use client';
 import * as React from 'react';
 import GridLayout from './grid-layout';
 import {useScreenSize} from './hooks';

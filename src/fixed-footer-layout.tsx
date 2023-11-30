@@ -1,3 +1,4 @@
+'use client';
 import * as React from 'react';
 import classnames from 'classnames';
 import {debounce} from './utils/helpers';
@@ -19,7 +20,7 @@ import {
     removePassiveEventListener,
 } from './utils/dom';
 import * as styles from './fixed-footer-layout.css';
-import {assignInlineVars} from '@vanilla-extract/dynamic';
+import {applyCssVars, safeAreaInsetBottom} from './utils/css';
 
 const FOOTER_CANVAS_RATIO = 2;
 const getScrollEventTarget = (el: HTMLElement) => (el === document.documentElement ? window : el);
@@ -54,17 +55,16 @@ const FixedFooterLayout: React.FC<Props> = ({
     const containerRef = React.useRef<HTMLDivElement>(null);
     const {isTabletOrSmaller} = useScreenSize();
     const {platformOverrides} = useTheme();
-    const {height: realFooterHeight, ref} = useElementDimensions();
+    const {height: domFooterHeight, ref} = useElementDimensions();
     const isWithinIFrame = useIsWithinIFrame();
     const windowHeight = useWindowHeight();
     const screenHeight = useScreenHeight();
     const hasContentEnoughVSpace =
-        windowHeight - realFooterHeight >
-        (isWithinIFrame ? windowHeight : screenHeight) / FOOTER_CANVAS_RATIO;
+        windowHeight - domFooterHeight > (isWithinIFrame ? windowHeight : screenHeight) / FOOTER_CANVAS_RATIO;
 
     useIsomorphicLayoutEffect(() => {
-        onChangeFooterHeight?.(realFooterHeight);
-    }, [onChangeFooterHeight, realFooterHeight]);
+        onChangeFooterHeight?.(domFooterHeight);
+    }, [onChangeFooterHeight, domFooterHeight]);
 
     React.useEffect(() => {
         const scrollable = getScrollableParentElement(containerRef.current);
@@ -112,11 +112,13 @@ const FixedFooterLayout: React.FC<Props> = ({
             <div
                 ref={containerRef}
                 className={styles.container}
-                style={assignInlineVars({
+                style={applyCssVars({
                     ...(containerBgColor && {
                         [styles.vars.backgroundColor]: containerBgColor,
                     }),
-                    [styles.vars.footerHeight]: isFixedFooter ? `${realFooterHeight}px` : '0px',
+                    [styles.vars.footerHeight]: isFixedFooter
+                        ? `calc(${safeAreaInsetBottom} + ${domFooterHeight}px)`
+                        : '0px',
                 })}
             >
                 {children}
@@ -148,7 +150,7 @@ const FixedFooterLayout: React.FC<Props> = ({
                         data-component-name="FixedFooter"
                         style={{
                             height: footerHeight,
-                            marginBottom: 'env(safe-area-inset-bottom)',
+                            marginBottom: safeAreaInsetBottom,
                         }}
                     >
                         {footer}

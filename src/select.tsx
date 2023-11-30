@@ -1,3 +1,4 @@
+'use client';
 import * as React from 'react';
 import classnames from 'classnames';
 import {useForm} from './form-context';
@@ -11,8 +12,8 @@ import {isAndroid, isIos} from './utils/platform';
 import {cancelEvent} from './utils/dom';
 import {Text3} from './text';
 import * as styles from './select.css';
-import {assignInlineVars} from '@vanilla-extract/dynamic';
 import {Portal} from './portal';
+import {applyCssVars} from './utils/css';
 
 export type SelectProps = {
     disabled?: boolean;
@@ -406,7 +407,7 @@ const Select: React.FC<SelectProps> = ({
                 >
                     <Portal>
                         <ul
-                            style={assignInlineVars({
+                            style={applyCssVars({
                                 [styles.vars.top]: optionsComputedProps.top
                                     ? `${optionsComputedProps.top}px`
                                     : '',
