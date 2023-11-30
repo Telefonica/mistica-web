@@ -150,6 +150,7 @@ const borderRadii: BorderRadiiConfig = {
     sheet: '',
     bar: '',
     avatar: '',
+    mediaSmall: '',
 };
 
 export const vars = createThemeContract({
