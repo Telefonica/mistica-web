@@ -64,7 +64,7 @@ const VivoNewLogo = () => (
     </svg>
 );
 
-type PlayroomSkinName = Exclude<KnownSkinName, 'O2-classic'>;
+type PlayroomSkinName = Exclude<KnownSkinName, 'O2-classic' | 'Tu'>;
 
 const themesMap: {
     [skinName in PlayroomSkinName]: {themeConfig: ThemeConfig; text: string; icon: React.ReactNode};

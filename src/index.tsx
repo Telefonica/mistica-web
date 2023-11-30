@@ -99,6 +99,7 @@ export {
     O2Logo,
     TelefonicaLogo,
     BlauLogo,
+    TuLogo,
 } from './logo';
 export {default as Image} from './image';
 export {default as Chip} from './chip';
