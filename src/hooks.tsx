@@ -6,6 +6,7 @@ import ScreenSizeContext from './screen-size-context';
 import AriaIdGetterContext from './aria-id-getter-context';
 import {listenResize} from './utils/dom';
 import {isClientSide} from './utils/environment';
+import {isEqual} from './utils/helpers';
 
 import type {Theme} from './theme';
 import type {ScreenSizeContextType} from './screen-size-context';
@@ -193,7 +194,7 @@ type IntersectionObserverOptions = {
 };
 
 export const useIsInViewport = (
-    ref: React.RefObject<HTMLElement>,
+    ref: React.RefObject<Element>,
     defaultValue: boolean,
     options?: IntersectionObserverOptions
 ): boolean => {
@@ -223,4 +224,55 @@ export const useIsInViewport = (
     }, [ref, options?.root, options?.rootMargin, options?.threshold]);
 
     return isInViewport;
+};
+
+export type BoundingRect = {
+    top: number;
+    right: number;
+    bottom: number;
+    left: number;
+    width: number;
+    height: number;
+    x: number;
+    y: number;
+};
+
+const getBoundingClientRect = (element: Element): BoundingRect => {
+    const {top, right, bottom, left, width, height, x, y} = element.getBoundingClientRect();
+    return {top, right, bottom, left, width, height, x, y};
+};
+
+export const useBoundingRect = (
+    ref: React.RefObject<Element>,
+    computeOnEveryFrame = true
+): BoundingRect | undefined => {
+    const [rect, setRect] = React.useState<BoundingRect>();
+    const isVisible = useIsInViewport(ref, false);
+
+    React.useEffect(() => {
+        let id: number;
+
+        const check = () => {
+            if (ref.current && isVisible) {
+                const current = getBoundingClientRect(ref.current);
+                if (!isEqual(rect, current)) {
+                    setRect(current);
+                }
+
+                if (computeOnEveryFrame) {
+                    id = requestAnimationFrame(check);
+                }
+            } else {
+                setRect(undefined);
+            }
+        };
+
+        id = requestAnimationFrame(check);
+
+        return () => {
+            cancelAnimationFrame(id);
+        };
+    }, [ref, rect, isVisible, computeOnEveryFrame]);
+
+    return rect;
 };
