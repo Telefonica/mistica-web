@@ -279,6 +279,7 @@ export const getMovistarSkin: GetKnownSkin = () => {
             legacyDisplay: '16px',
             popup: '8px',
             sheet: '8px',
+            mediaSmall: '8px',
         },
         textPresets: {
             cardTitle: {weight: 'bold'},

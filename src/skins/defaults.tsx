@@ -28,4 +28,5 @@ export const defaultBorderRadiiConfig: BorderRadiiConfig = {
     sheet: '8px',
     bar: '999px',
     avatar: '50%',
+    mediaSmall: '8px',
 };
