@@ -245,7 +245,7 @@ const BlauLogoImage = ({size, type}: LogoImageProps) => {
     );
 };
 
-const TuLogoImage = ({size, type}: LogoImageProps) => {
+const TuLogoImage = ({size}: LogoImageProps) => {
     const {isDarkMode} = useTheme();
     const isInverse = useIsInverseVariant();
     const {colors} = getTuSkin();
