@@ -11,9 +11,11 @@ import IconButton from './icon-button';
 import classNames from 'classnames';
 import ButtonGroup from './button-group';
 import * as styles from './callout.css';
+import * as mediaStyles from './image.css';
 import {sprinkles} from './sprinkles.css';
 import {vars} from './skins/skin-contract.css';
 import {getPrefixedDataAttributes} from './utils/dom';
+import {applyCssVars} from './utils/css';
 
 import type {ButtonLink, ButtonPrimary, ButtonSecondary} from './button';
 import type {DataAttributes, RendersNullableElement} from './utils/types';
@@ -60,7 +62,15 @@ const Callout: React.FC<Props> = ({
             {...getPrefixedDataAttributes(dataAttributes, 'Callout')}
         >
             <ThemeVariant isInverse={false}>
-                {icon && <Box paddingRight={16}>{icon}</Box>}
+                {icon && (
+                    <div
+                        style={applyCssVars({
+                            [mediaStyles.vars.mediaBorderRadius]: vars.borderRadii.mediaSmall,
+                        })}
+                    >
+                        <Box paddingRight={16}>{icon}</Box>
+                    </div>
+                )}
                 <div className={styles.content}>
                     <Stack space={16}>
                         <Inline fullWidth alignItems="flex-start" space="between">
