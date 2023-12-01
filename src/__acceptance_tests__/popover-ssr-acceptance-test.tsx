@@ -1,5 +1,6 @@
 import {openSSRPage} from '../test-utils';
 
 test('ssr popover', async () => {
-    await openSSRPage({name: 'popover'});
+    // don't check hydration missmatch because popovers are only rendered client side inside a portal
+    await openSSRPage({name: 'popover', checkHidrationVisualMissmatch: false});
 });

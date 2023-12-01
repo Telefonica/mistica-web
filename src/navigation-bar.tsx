@@ -55,15 +55,7 @@ type HeaderProps = {
     isBottomRow?: boolean;
 };
 
-const Header = ({
-    children,
-    topFixed,
-    withBorder,
-    isMenuOpen,
-    isInverse,
-    dataAttributes,
-    isBottomRow = false,
-}: HeaderProps) => {
+const Header = ({children, topFixed, withBorder, isMenuOpen, isInverse, dataAttributes}: HeaderProps) => {
     const {isDarkMode} = useTheme();
 
     const getBorderClass = () => {
@@ -76,10 +68,7 @@ const Header = ({
 
     return (
         <header
-            className={classnames(getBorderClass(), {
-                [styles.topFixed]: topFixed && !isBottomRow,
-                [styles.topFixedBottomRow]: topFixed && isBottomRow,
-            })}
+            className={classnames(getBorderClass(), {[styles.topFixed]: topFixed})}
             style={{
                 borderBottomWidth: withBorder ? 1 : 0,
                 background: isInverse ? vars.colors.navigationBarBackground : vars.colors.background,
@@ -94,29 +83,18 @@ const Header = ({
 type NavigationBarContentContainerProps = {
     right?: React.ReactNode;
     children?: React.ReactNode;
+    desktopOnly?: boolean;
 };
 
-const NAVIGATION_BAR_RIGHT_CONTENT_PADDING = 136;
-const NAVIGATION_BAR_RIGHT_CONTENT_PADDING_MOBILE = 24;
-
-const NavigationBarContentContainer: React.FC<NavigationBarContentContainerProps> = ({right, children}) => {
-    const {isTabletOrSmaller} = useScreenSize();
-
+const NavigationBarContentContainer: React.FC<NavigationBarContentContainerProps> = ({
+    right,
+    children,
+    desktopOnly,
+}) => {
     return (
-        <div className={styles.navigationBarContent}>
+        <div className={classnames(styles.navigationBarContent, {[styles.desktopOnly]: desktopOnly})}>
             {children}
-            {right && (
-                <div
-                    className={styles.navigationBarContentRight}
-                    style={{
-                        marginLeft: isTabletOrSmaller
-                            ? NAVIGATION_BAR_RIGHT_CONTENT_PADDING_MOBILE
-                            : NAVIGATION_BAR_RIGHT_CONTENT_PADDING,
-                    }}
-                >
-                    {right}
-                </div>
-            )}
+            {right && <div className={styles.navigationBarContentRight}>{right}</div>}
         </div>
     );
 };
@@ -162,128 +140,11 @@ export const MainNavigationBar: React.FC<MainNavigationBarProps> = ({
     const {isTabletOrSmaller} = useScreenSize();
     const setModalState = useSetModalState();
 
-    logo = logo ?? <Logo size={isTabletOrSmaller ? 40 : 48} />;
+    logo = logo ?? <Logo size={{mobile: 40, desktop: 48}} />;
 
-    if (isTabletOrSmaller) {
-        const openMenu = () => {
-            setIsMenuOpen(true);
-            setModalState({isModalOpen: true});
-        };
-
-        const closeMenu = () => {
-            setIsMenuOpen(false);
-            setModalState({isModalOpen: false});
-        };
-
-        const disableFocusTrap = menuTransitionState !== 'open';
-
-        const showBurger = sections.length > 1;
-
+    const renderDesktopSections = () => {
         return (
-            <>
-                <FocusTrap disabled={disableFocusTrap} group="burger-menu-lock">
-                    <ThemeVariant isInverse={isInverse}>
-                        <Header
-                            topFixed={topFixed}
-                            withBorder={withBorder}
-                            isMenuOpen={isMenuOpen}
-                            isInverse={isInverse}
-                            dataAttributes={{'component-name': 'MainNavigationBar'}}
-                        >
-                            <ResponsiveLayout>
-                                <NavigationBarContentContainer right={right}>
-                                    <Inline space={24} alignItems="center">
-                                        {showBurger && (
-                                            <IconButton
-                                                aria-live="polite"
-                                                aria-label={
-                                                    isMenuOpen
-                                                        ? texts.closeNavigationMenu
-                                                        : texts.openNavigationMenu
-                                                }
-                                                aria-expanded={isMenuOpen}
-                                                aria-controls={menuId}
-                                                onPress={isMenuOpen ? closeMenu : openMenu}
-                                            >
-                                                <BurgerMenuIcon isOpen={isMenuOpen} />
-                                            </IconButton>
-                                        )}
-                                        <div className={styles.logoContainer}>{logo}</div>
-                                    </Inline>
-                                </NavigationBarContentContainer>
-                            </ResponsiveLayout>
-                        </Header>
-                    </ThemeVariant>
-                    {topFixed && <div className={styles.spacer} />}
-                </FocusTrap>
-                {showBurger && (
-                    <Portal>
-                        <FocusTrap disabled={disableFocusTrap} group="burger-menu-lock">
-                            <Transition
-                                onEntering={() => {
-                                    setMenuTransitionState('opening');
-                                }}
-                                onEntered={() => {
-                                    setMenuTransitionState('open');
-                                }}
-                                onExiting={() => {
-                                    setMenuTransitionState('closing');
-                                }}
-                                onExited={() => {
-                                    setMenuTransitionState('closed');
-                                }}
-                                in={isMenuOpen}
-                                timeout={isRunningAcceptanceTest() ? 0 : BURGER_MENU_ANIMATION_DURATION_MS}
-                                unmountOnExit
-                            >
-                                {(burgerMenuState) => (
-                                    <>
-                                        {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
-                                        <nav
-                                            className={classnames(
-                                                styles.burgerMenu,
-                                                styles.burgerMenuTransition[burgerMenuState]
-                                            )}
-                                            style={{
-                                                boxShadow:
-                                                    menuTransitionState !== 'closed'
-                                                        ? `6px 0 4px -4px rgba(0, 0, 0, ${shadowAlpha})`
-                                                        : 'none',
-                                            }}
-                                            id={menuId}
-                                            onClick={() => {
-                                                // Capture bubbling click events to close the burger menu when any row is pressed
-                                                closeMenu();
-                                            }}
-                                        >
-                                            <ResponsiveLayout>
-                                                <Stack space={16}>
-                                                    <NegativeBox>
-                                                        <RowList>
-                                                            {sections.map((section, index) => (
-                                                                <Row key={index} {...section} />
-                                                            ))}
-                                                        </RowList>
-                                                    </NegativeBox>
-                                                    {burgerMenuExtra && (
-                                                        <Box paddingBottom={16}>{burgerMenuExtra}</Box>
-                                                    )}
-                                                </Stack>
-                                            </ResponsiveLayout>
-                                        </nav>
-                                    </>
-                                )}
-                            </Transition>
-                        </FocusTrap>
-                    </Portal>
-                )}
-            </>
-        );
-    }
-
-    const renderSections = () => {
-        return (
-            <nav>
+            <nav className={styles.desktopOnly}>
                 <Inline space={32}>
                     {sections.map(({title, ...touchableProps}, idx) => (
                         <BaseTouchable
@@ -310,42 +171,132 @@ export const MainNavigationBar: React.FC<MainNavigationBarProps> = ({
 
     const hasBottomSections = large && sections.length > 0;
 
-    return (
+    const openMenu = () => {
+        setIsMenuOpen(true);
+        setModalState({isModalOpen: true});
+    };
+
+    const closeMenu = () => {
+        setIsMenuOpen(false);
+        setModalState({isModalOpen: false});
+    };
+
+    const disableFocusTrap = menuTransitionState !== 'open';
+
+    const showBurger = sections.length > 1;
+
+    const mainNavBar = (
         <ThemeVariant isInverse={isInverse}>
             <Header
                 topFixed={topFixed}
-                withBorder={withBorder && !hasBottomSections}
+                withBorder={withBorder}
                 isMenuOpen={isMenuOpen}
                 isInverse={isInverse}
                 dataAttributes={{'component-name': 'MainNavigationBar'}}
             >
                 <ResponsiveLayout>
                     <NavigationBarContentContainer right={right}>
-                        <Inline space={48} alignItems="center">
+                        <div className={styles.mainNavbarContent}>
+                            {showBurger && (
+                                <IconButton
+                                    className={styles.burgerMenuButton}
+                                    aria-live="polite"
+                                    aria-label={
+                                        isMenuOpen ? texts.closeNavigationMenu : texts.openNavigationMenu
+                                    }
+                                    aria-expanded={isMenuOpen}
+                                    aria-controls={menuId}
+                                    onPress={isMenuOpen ? closeMenu : openMenu}
+                                >
+                                    <BurgerMenuIcon isOpen={isMenuOpen} />
+                                </IconButton>
+                            )}
                             <div className={styles.logoContainer}>{logo}</div>
-                            {!hasBottomSections && renderSections()}
-                        </Inline>
+                            {!hasBottomSections && renderDesktopSections()}
+                        </div>
                     </NavigationBarContentContainer>
+                    {hasBottomSections && (
+                        <NavigationBarContentContainer desktopOnly>
+                            {renderDesktopSections()}
+                        </NavigationBarContentContainer>
+                    )}
                 </ResponsiveLayout>
             </Header>
-
-            {hasBottomSections && (
-                <Header
-                    topFixed={topFixed}
-                    withBorder={withBorder}
-                    isBottomRow
-                    isMenuOpen={isMenuOpen}
-                    isInverse={isInverse}
-                    dataAttributes={{'component-name': 'MainNavigationBar'}}
-                >
-                    <ResponsiveLayout>
-                        <NavigationBarContentContainer>{renderSections()}</NavigationBarContentContainer>
-                    </ResponsiveLayout>
-                </Header>
-            )}
-
             {topFixed && <div className={hasBottomSections ? styles.spacerLarge : styles.spacer} />}
         </ThemeVariant>
+    );
+
+    if (!isTabletOrSmaller) {
+        return mainNavBar;
+    }
+
+    return (
+        <>
+            <FocusTrap disabled={disableFocusTrap} group="burger-menu-lock">
+                {mainNavBar}
+            </FocusTrap>
+            {showBurger && (
+                <Portal>
+                    <FocusTrap disabled={disableFocusTrap} group="burger-menu-lock">
+                        <Transition
+                            onEntering={() => {
+                                setMenuTransitionState('opening');
+                            }}
+                            onEntered={() => {
+                                setMenuTransitionState('open');
+                            }}
+                            onExiting={() => {
+                                setMenuTransitionState('closing');
+                            }}
+                            onExited={() => {
+                                setMenuTransitionState('closed');
+                            }}
+                            in={isMenuOpen}
+                            timeout={isRunningAcceptanceTest() ? 0 : BURGER_MENU_ANIMATION_DURATION_MS}
+                            unmountOnExit
+                        >
+                            {(burgerMenuState) => (
+                                <>
+                                    {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
+                                    <nav
+                                        className={classnames(
+                                            styles.burgerMenu,
+                                            styles.burgerMenuTransition[burgerMenuState]
+                                        )}
+                                        style={{
+                                            boxShadow:
+                                                menuTransitionState !== 'closed'
+                                                    ? `6px 0 4px -4px rgba(0, 0, 0, ${shadowAlpha})`
+                                                    : 'none',
+                                        }}
+                                        id={menuId}
+                                        onClick={() => {
+                                            // Capture bubbling click events to close the burger menu when any row is pressed
+                                            closeMenu();
+                                        }}
+                                    >
+                                        <ResponsiveLayout>
+                                            <Stack space={16}>
+                                                <NegativeBox>
+                                                    <RowList>
+                                                        {sections.map((section, index) => (
+                                                            <Row key={index} {...section} />
+                                                        ))}
+                                                    </RowList>
+                                                </NegativeBox>
+                                                {burgerMenuExtra && (
+                                                    <Box paddingBottom={16}>{burgerMenuExtra}</Box>
+                                                )}
+                                            </Stack>
+                                        </ResponsiveLayout>
+                                    </nav>
+                                </>
+                            )}
+                        </Transition>
+                    </FocusTrap>
+                </Portal>
+            )}
+        </>
     );
 };
 
@@ -442,9 +393,7 @@ export const FunnelNavigationBar: React.FC<FunnelNavigationBarProps> = ({
     topFixed = true,
     withBorder = true,
 }) => {
-    const {isTabletOrSmaller} = useScreenSize();
-
-    logo = logo ?? <Logo size={isTabletOrSmaller ? 40 : 48} />;
+    logo = logo ?? <Logo size={{mobile: 40, desktop: 48}} />;
 
     return (
         <ThemeVariant isInverse={isInverse}>

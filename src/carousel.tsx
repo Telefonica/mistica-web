@@ -47,7 +47,7 @@ export const PageBullets: React.FC<PageBulletsProps> = ({currentIndex, numPages,
 
     return (
         <Inline
-            space={isDesktopOrBigger ? 16 : 8}
+            space={{mobile: 8, desktop: 16}}
             alignItems="center"
             dataAttributes={{'component-name': 'PageBullets'}}
         >

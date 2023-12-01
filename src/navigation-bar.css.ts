@@ -76,33 +76,17 @@ export const topFixed = style([
     },
 ]);
 
-export const topFixedBottomRow = style([
-    sprinkles({
-        position: 'fixed',
-        top: NAVBAR_HEIGHT_DESKTOP,
-        left: 0,
-        right: 0,
-    }),
-    {
-        zIndex: NAVBAR_ZINDEX,
-    },
-]);
-
 const navbarBase = style([
     sprinkles({
         display: 'flex',
         alignItems: 'center',
         width: '100%',
-        height: NAVBAR_HEIGHT_DESKTOP,
-        paddingY: 16,
     }),
     {
         borderBottomStyle: 'solid',
 
         '@media': {
             [mq.tabletOrSmaller]: {
-                height: NAVBAR_HEIGHT_MOBILE,
-                padding: '8px 0',
                 transition: 'border-color 300ms',
             },
         },
@@ -173,6 +157,20 @@ export const navigationBarContent = style({
     alignItems: 'center',
     width: '100%',
     display: 'flex',
+    height: NAVBAR_HEIGHT_DESKTOP,
+    '@media': {
+        [mq.tabletOrSmaller]: {
+            height: NAVBAR_HEIGHT_MOBILE,
+        },
+    },
+});
+
+export const desktopOnly = style({
+    '@media': {
+        [mq.tabletOrSmaller]: {
+            display: 'none',
+        },
+    },
 });
 
 export const navigationBarContentRight = style({
@@ -180,6 +178,12 @@ export const navigationBarContentRight = style({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'flex-end',
+    paddingLeft: 136,
+    '@media': {
+        [mq.tabletOrSmaller]: {
+            paddingLeft: 24,
+        },
+    },
 });
 
 const spacerMobile = style({
@@ -220,9 +224,33 @@ export const burgerMenuTransition = styleVariants({
     unmounted: {},
 });
 
-export const logoContainer = sprinkles({
+export const mainNavbarContent = style({
     display: 'flex',
-    justifyContent: 'center',
+    alignItems: 'center',
+});
+
+export const logoContainer = style([
+    sprinkles({
+        display: 'flex',
+        justifyContent: 'center',
+    }),
+    {
+        marginRight: 48,
+        '@media': {
+            [mq.tabletOrSmaller]: {
+                marginRight: 0,
+            },
+        },
+    },
+]);
+
+export const burgerMenuButton = style({
+    marginRight: 24,
+    '@media': {
+        [mq.desktopOrBigger]: {
+            display: 'none',
+        },
+    },
 });
 
 export const burgerMenu = style([

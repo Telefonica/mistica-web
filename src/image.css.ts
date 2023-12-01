@@ -1,7 +1,12 @@
 import {style} from '@vanilla-extract/css';
 import {sprinkles} from './sprinkles.css';
+import {vars} from './skins/skin-contract.css';
 
 export const FADE_IN_DURATION_MS = 300;
+
+export const imageWithBorder = style({
+    border: `1px solid ${vars.colors.borderLow}`,
+});
 
 export const image = style([
     sprinkles({

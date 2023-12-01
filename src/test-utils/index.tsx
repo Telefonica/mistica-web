@@ -1,5 +1,9 @@
+import path from 'path';
+import fs from 'fs';
+import os from 'os';
 import {openPage, serverHostName, screen, getGlobalPage, PageApi} from '@telefonica/acceptance-testing';
 import {MOVISTAR_SKIN} from '../skins/constants';
+import {kebabCase} from 'lodash';
 
 import type {TestViewport} from '@telefonica/acceptance-testing';
 
@@ -179,24 +183,64 @@ export const openStoryPage = ({
         isDarkMode,
     });
 
+const hydrateSSRPage = async (page: PageApi): Promise<void> => {
+    await page.evaluate(() => {
+        // @ts-expect-error this executes in the browser, see ssr.tsx
+        window.hydrate();
+    });
+};
+
+const checkHydrationMissmatch = async (page: PageApi): Promise<void> => {
+    const {testPath, currentTestName} = expect.getState();
+    const tmpdir = os.tmpdir();
+    const snapshotId = kebabCase(`${path.basename(testPath)}-${currentTestName}`);
+    const baselineImagePath = path.join(tmpdir, `${snapshotId}-snap.png`);
+    await page.screenshot({path: baselineImagePath});
+
+    await hydrateSSRPage(page);
+    const hydrateImage = await page.screenshot();
+
+    try {
+        expect(hydrateImage).toMatchImageSnapshot({
+            // use the saved ssr snapshot as the baseline
+            customSnapshotsDir: tmpdir,
+            customSnapshotIdentifier: snapshotId,
+            customDiffDir: path.join(
+                __dirname,
+                '..',
+                '__acceptance_tests__',
+                '__image_snapshots__',
+                '__diff_output__'
+            ),
+        });
+    } catch (error: any) {
+        Error.captureStackTrace(error, checkHydrationMissmatch);
+        throw error;
+    } finally {
+        fs.unlinkSync(baselineImagePath);
+    }
+};
+
 /**
  * Renders a page with a React component in the server and opens it in the browser, where it's hydrated client side.
  * `name` is the name (without extension) of a file in the __ssr_pages__ folder. This file exports the component to be rendered.
  */
-export const openSSRPage = ({
+export const openSSRPage = async ({
     name,
     device = TABLET_DEVICE,
     skin = MOVISTAR_SKIN,
+    checkHidrationVisualMissmatch = true,
 }: {
     name: string;
     device?: Device;
     skin?: string;
+    checkHidrationVisualMissmatch?: boolean;
 }): Promise<PageApi> => {
-    const page = getGlobalPage();
+    const globalPage = getGlobalPage();
     const port = (global as any)['__SSR_SERVER__'].address().port;
 
     // Capture browser console.error and console.warn calls that React could trigger when calling hydrate()
-    page.on('console', async (msg) => {
+    globalPage.on('console', async (msg) => {
         const type = msg.type();
         const args = [...(await Promise.all(msg.args().map((h: any) => h.jsonValue())))];
         if (args.length === 0) {
@@ -210,11 +254,19 @@ export const openSSRPage = ({
         }
     });
 
-    return openPage({
+    const page = await openPage({
         url: `http://${serverHostName}:${port}/${name}?skin=${skin}`,
         userAgent: DEVICES[device].userAgent,
         viewport: DEVICES[device].viewport,
     });
+
+    if (checkHidrationVisualMissmatch) {
+        await checkHydrationMissmatch(page);
+    } else {
+        await hydrateSSRPage(page);
+    }
+
+    return page;
 };
 
 export const setRootFontSize = (px: number): Promise<void> =>
