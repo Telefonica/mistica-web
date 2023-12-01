@@ -14,6 +14,7 @@ import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
 import IconButton from './icon-button';
 
 import type {DataAttributes} from './utils/types';
+import {render} from '@testing-library/react';
 
 type SnackbarType = 'INFORMATIVE' | 'CRITICAL';
 type CloseAction = 'DISMISS' | 'TIMEOUT' | 'BUTTON' | 'CONSECUTIVE';
@@ -243,59 +244,48 @@ type SnackbarEntry = Props & {
 const SnackbarContext = React.createContext<{
     snackbars: Array<SnackbarEntry>;
     setSnackbars: React.Dispatch<React.SetStateAction<Array<SnackbarEntry>>>;
-    closeSnackbar: (id: string) => void;
 }>({
     snackbars: [],
     setSnackbars: () => {},
-    closeSnackbar: () => {},
 });
 
 export const SnackbarRoot = ({children}: {children: React.ReactNode}): JSX.Element => {
     const [snackbars, setSnackbars] = React.useState<Array<SnackbarEntry>>([]);
     const snackbarRef = React.useRef<ImperativeHandle & HTMLDivElement>(null);
     const isClosingRef = React.useRef(false);
+    const renderNative = isWebViewBridgeAvailable();
 
     React.useEffect(() => {
         // multiple snackbars, close the current one
         if (snackbars.length > 1 && !isClosingRef.current) {
             isClosingRef.current = true;
-            snackbarRef.current?.close({action: 'CONSECUTIVE'});
+            if (renderNative) {
+                // the native side will automatically close the current snackbar when opening a new one
+                setSnackbars((snackbars) => {
+                    return snackbars.slice(1);
+                });
+            } else {
+                snackbarRef.current?.close({action: 'CONSECUTIVE'});
+            }
         }
-    }, [snackbars]);
+    }, [snackbars, renderNative]);
 
     const handleClose: SnackbarCloseHandler = ({action}) => {
+        if (renderNative && action === 'CONSECUTIVE') {
+            // do nothing, the item was already removed from the array
+        } else {
+            setSnackbars((snackbars) => snackbars.slice(1));
+        }
         isClosingRef.current = false;
-        setSnackbars((snackbars) => snackbars.slice(1));
         snackbars[0].onClose?.({action});
     };
-
-    const closeSnackbar = React.useCallback(
-        (id: string) => {
-            const index = snackbars.findIndex((snackbar) => snackbar.id === id);
-            if (index === 0) {
-                // currently visible snackbar, close it via the ref
-                if (!isClosingRef.current) {
-                    isClosingRef.current = true;
-                    snackbarRef.current?.close({action: 'DISMISS'});
-                }
-            } else {
-                // enqueued snackbar, remove it from the list and call the onClose callback
-                snackbars[index].onClose?.({action: 'DISMISS'});
-                setSnackbars((snackbars) => {
-                    return snackbars.filter((snackbar) => snackbar.id !== id);
-                });
-            }
-        },
-        [snackbars]
-    );
 
     const value = React.useMemo(() => {
         return {
             snackbars,
             setSnackbars,
-            closeSnackbar,
         };
-    }, [snackbars, closeSnackbar]);
+    }, [snackbars]);
 
     const currentSnackbar = snackbars[0];
 
@@ -304,8 +294,9 @@ export const SnackbarRoot = ({children}: {children: React.ReactNode}): JSX.Eleme
             {children}
             {!!currentSnackbar && (
                 <Snackbar
-                    ref={snackbarRef}
+                    // remount when the snackbar changes. In native, this will make a new bridge call
                     key={currentSnackbar.id}
+                    ref={snackbarRef}
                     message={currentSnackbar.message}
                     buttonText={currentSnackbar.buttonText}
                     duration={currentSnackbar.duration}
@@ -319,32 +310,21 @@ export const SnackbarRoot = ({children}: {children: React.ReactNode}): JSX.Eleme
 };
 
 export const useSnackbar = (): {
-    /**
-     * Returns the snackbar identifier.
-     * Use this identifier to programatically close it
-     */
-    openSnackbar: (params: Props) => string;
-    /**
-     * Closes the snackbar with the given identifier.
-     * The close action will be 'DISMISS'
-     */
-    closeSnackbar: (id: string) => void;
+    openSnackbar: (params: Props) => void;
     snackbars: ReadonlyArray<Readonly<SnackbarEntry>>;
 } => {
-    const {snackbars, setSnackbars, closeSnackbar} = React.useContext(SnackbarContext);
+    const {snackbars, setSnackbars} = React.useContext(SnackbarContext);
 
     const openSnackbar = React.useCallback(
         (params: Props) => {
-            const id = Date.now() + '-' + Math.random();
-            setSnackbars((snackbars) => [...snackbars, {...params, id}]);
-            return id;
+            const uniqueIdentifier = Date.now() + '-' + Math.random();
+            setSnackbars((snackbars) => [...snackbars, {...params, id: uniqueIdentifier}]);
         },
         [setSnackbars]
     );
 
     return {
         openSnackbar,
-        closeSnackbar,
         snackbars,
     };
 };
