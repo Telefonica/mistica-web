@@ -60,8 +60,8 @@ const Header = ({children, topFixed, withBorder, isMenuOpen, isInverse, dataAttr
 
     const getBorderClass = () => {
         const inverse = isInverse && !isDarkMode;
-        if (isMenuOpen || inverse || !withBorder) return styles.navbarBorderColorVariants.noBorder;
-        if (isMenuOpen && !inverse) return styles.navbarBorderColorVariants.menuOpen;
+        if (inverse || !withBorder) return styles.navbarBorderColorVariants.noBorder;
+        if (isMenuOpen) return styles.navbarBorderColorVariants.menuOpen;
 
         return styles.navbarBorderColorVariants.default;
     };
@@ -70,7 +70,6 @@ const Header = ({children, topFixed, withBorder, isMenuOpen, isInverse, dataAttr
         <header
             className={classnames(getBorderClass(), {[styles.topFixed]: topFixed})}
             style={{
-                borderBottomWidth: withBorder ? 1 : 0,
                 background: isInverse ? vars.colors.navigationBarBackground : vars.colors.background,
             }}
             {...getPrefixedDataAttributes(dataAttributes)}

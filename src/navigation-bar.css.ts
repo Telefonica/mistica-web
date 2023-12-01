@@ -76,6 +76,8 @@ export const topFixed = style([
     },
 ]);
 
+const borderWidth = 1;
+
 const navbarBase = style([
     sprinkles({
         display: 'flex',
@@ -83,6 +85,7 @@ const navbarBase = style([
         width: '100%',
     }),
     {
+        borderWidth,
         borderBottomStyle: 'solid',
 
         '@media': {
@@ -160,7 +163,12 @@ export const navigationBarContent = style({
     height: NAVBAR_HEIGHT_DESKTOP,
     '@media': {
         [mq.tabletOrSmaller]: {
-            height: NAVBAR_HEIGHT_MOBILE,
+            height: NAVBAR_HEIGHT_MOBILE - borderWidth,
+        },
+        [mq.desktopOrBigger]: {
+            ':last-child': {
+                height: NAVBAR_HEIGHT_DESKTOP - borderWidth,
+            },
         },
     },
 });
