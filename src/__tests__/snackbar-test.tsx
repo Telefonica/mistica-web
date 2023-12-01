@@ -1,10 +1,11 @@
 import * as React from 'react';
-import Snackbar from '../snackbar';
-import {render, screen, waitFor} from '@testing-library/react';
+import Snackbar, {useSnackbar} from '../snackbar';
+import {act, render, screen, waitFor} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import ThemeContextProvider from '../theme-context-provider';
 import {makeTheme} from './test-utils';
 import * as bridge from '@tef-novum/webview-bridge';
+import {TRANSITION_TIME_IN_MS} from '../snackbar.css';
 
 test('Snackbar', async () => {
     const onCloseSpy = jest.fn();
@@ -207,4 +208,70 @@ test('nativeMessage should be called once, even if the component re-renders', as
     await waitFor(() => {
         expect(onCloseMock).toHaveBeenCalledTimes(1);
     });
+});
+
+test('useSnackbar: happy case', async () => {
+    const ComponentWithSnackbar = () => {
+        const {openSnackbar} = useSnackbar();
+        return (
+            <button
+                onClick={() => {
+                    openSnackbar({message: 'any-message'});
+                }}
+            >
+                Open Snackbar
+            </button>
+        );
+    };
+
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <ComponentWithSnackbar />
+        </ThemeContextProvider>
+    );
+
+    await userEvent.click(screen.getByRole('button', {name: 'Open Snackbar'}));
+
+    expect(await screen.findByText('any-message')).toBeInTheDocument();
+});
+
+test('useSnackbar: openSnackbar closes already opened one', async () => {
+    const handleOnClose = jest.fn();
+
+    const ComponentWithSnackbar = () => {
+        const {openSnackbar} = useSnackbar();
+        return (
+            <button
+                onClick={() => {
+                    openSnackbar({
+                        message: 'any-message',
+                        buttonText: 'action',
+                        onClose: handleOnClose,
+                    });
+                }}
+            >
+                Open Snackbar
+            </button>
+        );
+    };
+
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <ComponentWithSnackbar />
+        </ThemeContextProvider>
+    );
+
+    const openSnackbarButton = screen.getByRole('button', {name: 'Open Snackbar'});
+
+    await userEvent.click(openSnackbarButton);
+    await userEvent.click(openSnackbarButton);
+    await userEvent.click(openSnackbarButton);
+
+    await userEvent.click(await screen.findByRole('button', {name: 'action'}));
+
+    expect(handleOnClose.mock.calls).toEqual([
+        [{action: 'CONSECUTIVE'}],
+        [{action: 'CONSECUTIVE'}],
+        [{action: 'BUTTON'}],
+    ]);
 });

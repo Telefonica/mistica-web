@@ -54,9 +54,12 @@ const SnackbarComponent = React.forwardRef<ImperativeHandle, Props>(
         const close = React.useCallback<SnackbarCloseHandler>(
             (result) => {
                 setIsOpen(false);
-                setTimeout(() => {
-                    onClose?.(result);
-                }, styles.TRANSITION_TIME_IN_MS);
+                setTimeout(
+                    () => {
+                        onClose?.(result);
+                    },
+                    process.env.NODE_ENV === 'test' ? 0 : styles.TRANSITION_TIME_IN_MS
+                );
             },
             [onClose]
         );
