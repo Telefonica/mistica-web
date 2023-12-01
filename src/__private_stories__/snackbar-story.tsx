@@ -62,6 +62,7 @@ export const Default: StoryComponent = () => {
                             <BoxedRowList>
                                 {snackbars.map((snackbar) => (
                                     <BoxedRow
+                                        key={snackbar.id}
                                         title={snackbar.message}
                                         description={JSON.stringify(snackbar, null, 2)}
                                     />

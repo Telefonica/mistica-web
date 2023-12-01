@@ -10,6 +10,7 @@ import ThemeContext from './theme-context';
 import {useIsomorphicLayoutEffect} from './hooks';
 import TabFocus from './tab-focus';
 import ModalContextProvider from './modal-context-provider';
+import TooltipContextProvider from './tooltip-context-provider';
 import {DocumentVisibilityProvider} from './utils/document-visibility';
 import {AspectRatioSupportProvider} from './utils/aspect-ratio-support';
 import {TrackingConfig} from './utils/analytics';
@@ -160,33 +161,35 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children, as}) => {
     return (
         <TabFocus disabled={!theme.enableTabFocus}>
             <ModalContextProvider>
-                <ThemeContext.Provider value={contextTheme}>
-                    <TrackingConfig eventFormat={contextTheme.analytics.eventFormat}>
-                        <AspectRatioSupportProvider>
-                            <DocumentVisibilityProvider>
-                                <AriaIdGetterContext.Provider value={getAriaId}>
-                                    <ScreenSizeContextProvider>
-                                        <SnackbarRoot>
+                <TooltipContextProvider>
+                    <ThemeContext.Provider value={contextTheme}>
+                        <TrackingConfig eventFormat={contextTheme.analytics.eventFormat}>
+                            <AspectRatioSupportProvider>
+                                <DocumentVisibilityProvider>
+                                    <AriaIdGetterContext.Provider value={getAriaId}>
+                                        <ScreenSizeContextProvider>
                                             <DialogRoot>
-                                                {as ? (
-                                                    React.createElement(as, {style: themeVars}, children)
-                                                ) : (
-                                                    <>
-                                                        {(process.env.NODE_ENV !== 'test' ||
-                                                            process.env.SSR_TEST) && (
-                                                            <style>{`:root {${themeVars}}`}</style>
-                                                        )}
-                                                        {children}
-                                                    </>
-                                                )}
+                                                <SnackbarRoot>
+                                                    {as ? (
+                                                        React.createElement(as, {style: themeVars}, children)
+                                                    ) : (
+                                                        <>
+                                                            {(process.env.NODE_ENV !== 'test' ||
+                                                                process.env.SSR_TEST) && (
+                                                                <style>{`:root {${themeVars}}`}</style>
+                                                            )}
+                                                            {children}
+                                                        </>
+                                                    )}
+                                                </SnackbarRoot>
                                             </DialogRoot>
-                                        </SnackbarRoot>
-                                    </ScreenSizeContextProvider>
-                                </AriaIdGetterContext.Provider>
-                            </DocumentVisibilityProvider>
-                        </AspectRatioSupportProvider>
-                    </TrackingConfig>
-                </ThemeContext.Provider>
+                                        </ScreenSizeContextProvider>
+                                    </AriaIdGetterContext.Provider>
+                                </DocumentVisibilityProvider>
+                            </AspectRatioSupportProvider>
+                        </TrackingConfig>
+                    </ThemeContext.Provider>
+                </TooltipContextProvider>
             </ModalContextProvider>
         </TabFocus>
     );

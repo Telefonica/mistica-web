@@ -15,8 +15,10 @@ import IconButton from './icon-button';
 
 import type {DataAttributes} from './utils/types';
 
+const CLOSE_ACTIONS = ['DISMISS', 'TIMEOUT', 'CONSECUTIVE', 'BUTTON'] as const;
+
 type SnackbarType = 'INFORMATIVE' | 'CRITICAL';
-type CloseAction = 'DISMISS' | 'TIMEOUT' | 'BUTTON' | 'CONSECUTIVE';
+type CloseAction = (typeof CLOSE_ACTIONS)[number];
 type SnackbarCloseHandler = (result: {action: CloseAction}) => unknown;
 
 const DEFAULT_DURATION_WITHOUT_BUTTON = 5000;
@@ -197,20 +199,12 @@ const Snackbar = React.forwardRef<ImperativeHandle & HTMLDivElement, Props>(
                     buttonText,
                     type,
                     ...{withDismiss},
-                }).then((result: unknown) => {
-                    // there are terser ways to do this checks, but this one satisfies TS
-                    if (
-                        !result ||
-                        typeof result !== 'object' ||
-                        !('action' in result) ||
-                        typeof result.action !== 'string' ||
-                        (result.action !== 'DISMISS' &&
-                            result.action !== 'TIMEOUT' &&
-                            result.action !== 'BUTTON')
-                    ) {
-                        onCloseRef.current({action: 'DISMISS'});
-                    } else {
+                }).then((unknownResult: unknown) => {
+                    const result = unknownResult as {action?: CloseAction} | undefined;
+                    if (result?.action && CLOSE_ACTIONS.includes(result.action)) {
                         onCloseRef.current({action: result.action});
+                    } else {
+                        onCloseRef.current({action: 'DISMISS'});
                     }
                 });
             }
@@ -260,9 +254,7 @@ export const SnackbarRoot = ({children}: {children: React.ReactNode}): JSX.Eleme
             isClosingRef.current = true;
             if (renderNative) {
                 // the native side will automatically close the current snackbar when opening a new one
-                setSnackbars((snackbars) => {
-                    return snackbars.slice(1);
-                });
+                setSnackbars((snackbars) => snackbars.slice(1));
             } else {
                 snackbarRef.current?.close({action: 'CONSECUTIVE'});
             }
@@ -270,12 +262,13 @@ export const SnackbarRoot = ({children}: {children: React.ReactNode}): JSX.Eleme
     }, [snackbars, renderNative]);
 
     const handleClose: SnackbarCloseHandler = ({action}) => {
+        isClosingRef.current = false;
         if (renderNative && action === 'CONSECUTIVE') {
-            // do nothing, the item was already removed from the array
+            // rebuild the array to force a re-render to process the next item in queue
+            setSnackbars((snackbars) => snackbars.slice(0));
         } else {
             setSnackbars((snackbars) => snackbars.slice(1));
         }
-        isClosingRef.current = false;
         snackbars[0].onClose?.({action});
     };
 
