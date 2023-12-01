@@ -190,8 +190,6 @@ const Snackbar = React.forwardRef<ImperativeHandle & HTMLDivElement, Props>(
 
         React.useEffect(() => {
             if (renderNative) {
-                // these are the duration values understood by native app, other values will be ignored
-
                 nativeMessage({
                     message,
                     // @ts-expect-error duration can be 'PERSISTENT' in new webview-bridge lib versions, and old apps will ignore it
@@ -260,14 +258,12 @@ export const SnackbarRoot = ({children}: {children: React.ReactNode}): JSX.Eleme
     React.useEffect(() => {
         // multiple snackbars, close the current one
         if (snackbars.length > 1 && !isClosingRef.current) {
-            console.log('>>> close signal');
             isClosingRef.current = true;
             snackbarRef.current?.close({action: 'CONSECUTIVE'});
         }
     }, [snackbars]);
 
     const handleClose: SnackbarCloseHandler = ({action}) => {
-        console.log('>>> closed');
         isClosingRef.current = false;
         setSnackbars((snackbars) => snackbars.slice(1));
         snackbars[0].onClose?.({action});
@@ -323,9 +319,17 @@ export const SnackbarRoot = ({children}: {children: React.ReactNode}): JSX.Eleme
 };
 
 export const useSnackbar = (): {
+    /**
+     * Returns the snackbar identifier.
+     * Use this identifier to programatically close it
+     */
     openSnackbar: (params: Props) => string;
+    /**
+     * Closes the snackbar with the given identifier.
+     * The close action will be 'DISMISS'
+     */
     closeSnackbar: (id: string) => void;
-    snackbars: Array<SnackbarEntry>;
+    snackbars: ReadonlyArray<Readonly<SnackbarEntry>>;
 } => {
     const {snackbars, setSnackbars, closeSnackbar} = React.useContext(SnackbarContext);
 
