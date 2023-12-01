@@ -1,11 +1,10 @@
 import * as React from 'react';
 import Snackbar, {useSnackbar} from '../snackbar';
-import {act, render, screen, waitFor} from '@testing-library/react';
+import {render, screen, waitFor} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import ThemeContextProvider from '../theme-context-provider';
 import {makeTheme} from './test-utils';
 import * as bridge from '@tef-novum/webview-bridge';
-import {TRANSITION_TIME_IN_MS} from '../snackbar.css';
 
 test('Snackbar', async () => {
     const onCloseSpy = jest.fn();
