@@ -1,6 +1,6 @@
 import {createVar, style} from '@vanilla-extract/css';
 import {sprinkles} from './sprinkles.css';
-import {skinVars} from '.';
+import {vars as skinVars} from './skins/skin-contract.css';
 
 export const FADE_IN_DURATION_MS = 300;
 
