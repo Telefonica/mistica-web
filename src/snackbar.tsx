@@ -14,7 +14,6 @@ import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
 import IconButton from './icon-button';
 
 import type {DataAttributes} from './utils/types';
-import {render} from '@testing-library/react';
 
 type SnackbarType = 'INFORMATIVE' | 'CRITICAL';
 type CloseAction = 'DISMISS' | 'TIMEOUT' | 'BUTTON' | 'CONSECUTIVE';
