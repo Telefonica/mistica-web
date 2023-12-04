@@ -171,8 +171,6 @@ export const ImageContent = React.forwardRef<HTMLImageElement, ImageProps>(
             onLoad?.();
         }, [onLoad]);
 
-        console.log(borderRadius);
-
         const img = (
             // https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/issues/309
             // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions

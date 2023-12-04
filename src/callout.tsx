@@ -58,19 +58,14 @@ const Callout: React.FC<Props> = ({
                     }[variant],
                 })
             )}
+            style={applyCssVars({
+                [mediaStyles.vars.mediaBorderRadius]: vars.borderRadii.mediaSmall,
+            })}
             aria-label={ariaLabel ?? title}
             {...getPrefixedDataAttributes(dataAttributes, 'Callout')}
         >
             <ThemeVariant isInverse={false}>
-                {icon && (
-                    <div
-                        style={applyCssVars({
-                            [mediaStyles.vars.mediaBorderRadius]: vars.borderRadii.mediaSmall,
-                        })}
-                    >
-                        <Box paddingRight={16}>{icon}</Box>
-                    </div>
-                )}
+                {icon && <Box paddingRight={16}>{icon}</Box>}
                 <div className={styles.content}>
                     <Stack space={16}>
                         <Inline fullWidth alignItems="flex-start" space="between">
