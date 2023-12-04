@@ -110,7 +110,16 @@ export type Colors = {
 };
 
 const generateSkinFiles = () => {
-    const KNOWN_SKINS = ['blau', 'movistar', 'movistar-legacy', 'o2', 'telefonica', 'vivo', 'vivo-new'];
+    const KNOWN_SKINS = [
+        'blau',
+        'movistar',
+        'movistar-legacy',
+        'o2',
+        'telefonica',
+        'vivo',
+        'vivo-new',
+        'o2-new',
+    ];
 
     let anyGeneratedSkin;
 
