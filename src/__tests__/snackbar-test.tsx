@@ -1,5 +1,6 @@
 import * as React from 'react';
-import Snackbar, {useSnackbar} from '../snackbar';
+import Snackbar from '../snackbar';
+import {useSnackbar} from '../snackbar-context';
 import {render, screen, waitFor} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import ThemeContextProvider from '../theme-context-provider';
