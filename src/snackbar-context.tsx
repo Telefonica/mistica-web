@@ -2,10 +2,7 @@
 import * as React from 'react';
 import {isWebViewBridgeAvailable} from '@tef-novum/webview-bridge';
 
-// import type {ImperativeHandle, Props as SnackbarProps, SnackbarCloseHandler} from './snackbar';
-type ImperativeHandle = any;
-type SnackbarProps = any;
-type SnackbarCloseHandler = any;
+import type {ImperativeHandle, Props as SnackbarProps, SnackbarCloseHandler} from './snackbar';
 
 type SnackbarEntry = SnackbarProps & {
     id: string;
@@ -40,7 +37,7 @@ export const SnackbarRoot = ({children}: {children: React.ReactNode}): JSX.Eleme
         }
     }, [snackbars, renderNative]);
 
-    const handleClose: SnackbarCloseHandler = ({action}: any) => {
+    const handleClose: SnackbarCloseHandler = ({action}) => {
         isClosingRef.current = false;
         if (renderNative && action === 'CONSECUTIVE') {
             // rebuild the array to force a re-render to process the next item in queue
