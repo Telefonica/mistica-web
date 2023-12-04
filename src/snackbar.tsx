@@ -67,9 +67,7 @@ const SnackbarComponent = React.forwardRef<ImperativeHandle, Props>(
         React.useImperativeHandle(ref, () => {
             return {
                 ...elementRef,
-                close: ({action}) => {
-                    close({action});
-                },
+                close,
             };
         });
 
