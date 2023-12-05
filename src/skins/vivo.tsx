@@ -24,6 +24,7 @@ export const palette = {
     orangeLight40: '#FFB84C',
     pink: '#EB3D7D',
     pepper: '#CC1F59',
+    pepper10: '#FFEBED',
     pepperDark: '#B71D63',
     pepperDark80: '#8F2052',
     pepperLight10: '#FCE4EF',
