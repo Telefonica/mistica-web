@@ -69,7 +69,7 @@ export const getO2NewSkin: GetKnownSkin = () => {
             backgroundSkeletonInverse: palette.o2BluePrimary70,
             backgroundFeedbackBottom: palette.o2BluePrimary,
             appBarBackground: palette.white,
-            navigationBarBackground: palette.o2BluePrimary,
+            navigationBarBackground: palette.o2GradientFirst,
             skeletonWave: palette.grey2,
             borderLow: palette.grey1,
             border: palette.grey2,
