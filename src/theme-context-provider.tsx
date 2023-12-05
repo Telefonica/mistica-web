@@ -19,7 +19,7 @@ import {fromHexToRgb} from './utils/color';
 import {defaultBorderRadiiConfig, defaultTextPresetsConfig} from './skins/defaults';
 import {isClientSide} from './utils/environment';
 import {PACKAGE_VERSION} from './package-version';
-import {SnackbarRoot} from './snackbar';
+import {SnackbarRoot} from './snackbar-context';
 
 import type {Colors} from './skins/types';
 import type {Theme, ThemeConfig} from './theme';
