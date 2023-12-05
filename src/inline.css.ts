@@ -5,6 +5,7 @@ const space = createVar();
 export const vars = {space};
 
 export const inline = style({
+    pointerEvents: 'none',
     flexDirection: 'row',
     gridAutoFlow: 'column',
     marginTop: `calc(${space} * -1)`,
