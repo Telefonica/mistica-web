@@ -151,20 +151,18 @@ export const LinkButton: StoryComponent<Omit<Args, 'small'> & {withChevron: stri
     );
 };
 
-export const LinkButtonDanger: StoryComponent<Omit<Args, 'small'> & {withChevron: string}> = ({
+export const LinkButtonDanger: StoryComponent<Omit<Args, 'small'>> = ({
     inverse,
     text,
     icon,
     action,
     newTab,
-    withChevron,
     ...props
 }) => {
     return (
         <ButtonBackgroundContainer inverse={inverse}>
             <ButtonLinkDanger
                 {...props}
-                withChevron={withChevron === 'default' ? undefined : withChevron === 'true'}
                 {...getButtonActionProps(action, newTab)}
                 StartIcon={icon === 'left' ? IconPhotoCameraRegular : undefined}
                 EndIcon={icon === 'right' ? IconPhotoCameraRegular : undefined}
@@ -208,7 +206,6 @@ LinkButton.args = {
 };
 LinkButtonDanger.args = {
     ...(({small, ...o}) => o)(defaultArgs),
-    withChevron: 'default',
 };
 
 primaryButton.argTypes = defaultArgTypes;
@@ -221,10 +218,4 @@ LinkButton.argTypes = {
         control: {type: 'select'},
     },
 };
-LinkButtonDanger.argTypes = {
-    ...defaultArgTypes,
-    withChevron: {
-        options: ['default', 'true', 'false'],
-        control: {type: 'select'},
-    },
-};
+LinkButtonDanger.argTypes = defaultArgTypes;
