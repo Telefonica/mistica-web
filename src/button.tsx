@@ -489,7 +489,7 @@ export const BaseButtonLink = React.forwardRef<TouchableElement, ButtonLinkProps
         const [isOnPressPromiseResolving, setIsOnPressPromiseResolving] = React.useState(false);
 
         const showSpinner = props.showSpinner || isOnPressPromiseResolving;
-        const showChevron = type !== 'danger' && (props.withChevron ?? (!!props.href || !!props.to));
+        const showChevron = props.withChevron ?? (!!props.href || !!props.to);
 
         // This state is needed to not render the spinner when hidden (because it causes high CPU usage
         // specially in iPhone). But we want the spinner to be visible during the show/hide animation.
