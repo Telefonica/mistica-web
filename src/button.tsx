@@ -347,7 +347,7 @@ const Button = React.forwardRef<TouchableElement, ButtonProps & {type: ButtonTyp
     const commonProps = {
         ref,
         className: classnames(
-            isInverse ? styles.inverseVariants[props.type] : styles.variants[props.type],
+            isInverse ? styles.inverseButtonVariants[props.type] : styles.buttonVariants[props.type],
             props.className,
             {
                 [styles.small]: props.small,
@@ -431,6 +431,8 @@ const Button = React.forwardRef<TouchableElement, ButtonProps & {type: ButtonTyp
     return null;
 });
 
+type ButtonLinkType = 'default' | 'danger';
+
 interface ButtonLinkCommonProps {
     children: React.ReactNode;
     disabled?: boolean;
@@ -475,134 +477,163 @@ interface ButtonLinkToProps extends ButtonLinkCommonProps {
 
 export type ButtonLinkProps = ButtonLinkOnPressProps | ButtonLinkHrefProps | ButtonLinkToProps;
 
-export const ButtonLink = React.forwardRef<TouchableElement, ButtonLinkProps>((props, ref) => {
-    const {formStatus} = useForm();
-    const isInverse = useIsInverseVariant();
-    const {analytics, textPresets} = useTheme();
+export const BaseButtonLink = React.forwardRef<TouchableElement, ButtonLinkProps & {type: ButtonLinkType}>(
+    ({type, ...props}, ref) => {
+        const {formStatus} = useForm();
+        const isInverse = useIsInverseVariant();
+        const {textPresets} = useTheme();
+        const {eventFormat} = useTrackingConfig();
 
-    const {loadingText} = props;
-    const isFormSending = formStatus === 'sending';
-    const [isOnPressPromiseResolving, setIsOnPressPromiseResolving] = React.useState(false);
+        const {loadingText} = props;
+        const isFormSending = formStatus === 'sending';
+        const [isOnPressPromiseResolving, setIsOnPressPromiseResolving] = React.useState(false);
 
-    const showSpinner = props.showSpinner || isOnPressPromiseResolving;
-    const showChevron = props.withChevron ?? (!!props.href || !!props.to);
+        const showSpinner = props.showSpinner || isOnPressPromiseResolving;
+        const showChevron = type !== 'danger' && (props.withChevron ?? (!!props.href || !!props.to));
 
-    // This state is needed to not render the spinner when hidden (because it causes high CPU usage
-    // specially in iPhone). But we want the spinner to be visible during the show/hide animation.
-    // * When showSpinner prop is true, state is changed immediately.
-    // * When the transition ends this state is updated again if needed
-    const [shouldRenderSpinner, setShouldRenderSpinner] = React.useState(!!showSpinner);
+        // This state is needed to not render the spinner when hidden (because it causes high CPU usage
+        // specially in iPhone). But we want the spinner to be visible during the show/hide animation.
+        // * When showSpinner prop is true, state is changed immediately.
+        // * When the transition ends this state is updated again if needed
+        const [shouldRenderSpinner, setShouldRenderSpinner] = React.useState(!!showSpinner);
 
-    React.useEffect(() => {
-        if (showSpinner && !shouldRenderSpinner) {
-            setShouldRenderSpinner(true);
+        React.useEffect(() => {
+            if (showSpinner && !shouldRenderSpinner) {
+                setShouldRenderSpinner(true);
+            }
+        }, [showSpinner, shouldRenderSpinner, formStatus]);
+
+        const createDefaultTrackingEvent = (): TrackingEvent => {
+            if (eventFormat === 'google-analytics-4') {
+                return {
+                    name: eventNames.userInteraction,
+                    component_type: type === 'danger' ? 'danger_link' : 'link',
+                    component_copy: getTextFromChildren(props.children),
+                };
+            } else {
+                return {
+                    category: eventCategories.userInteraction,
+                    action: eventActions.linkTapped,
+                    label: getTextFromChildren(props.children),
+                };
+            }
+        };
+
+        const renderText = (element: React.ReactNode) => (
+            <Text2 weight={textPresets.button.weight} truncate={1} color="inherit">
+                {element}
+            </Text2>
+        );
+
+        const commonProps = {
+            className: classnames(isInverse ? styles.inverseLinkVariants[type] : styles.linkVariants[type], {
+                [styles.isLoading]: showSpinner,
+            }),
+            /**
+             * Setting bleed classes with style to override the margin:0 set by the Touchable component.
+             * If we set it using className, it may not work depending on the order in which the styles are applied.
+             */
+            style: {
+                ...(props.bleedLeft || props.aligned ? {marginLeft: -styles.PADDING_X_LINK} : undefined),
+                ...(props.bleedRight ? {marginRight: -styles.PADDING_X_LINK} : undefined),
+                ...(props.bleedY
+                    ? {marginTop: -styles.PADDING_Y_LINK, marginBottom: -styles.PADDING_Y_LINK}
+                    : undefined),
+            },
+            trackingEvent:
+                props.trackingEvent ?? (props.trackEvent ? createDefaultTrackingEvent() : undefined),
+            dataAttributes: props.dataAttributes,
+            'aria-label': props['aria-label'],
+            'aria-controls': props['aria-controls'],
+            'aria-expanded': props['aria-expanded'],
+            'aria-haspopup': props['aria-haspopup'],
+            children: renderButtonContent({
+                showSpinner,
+                shouldRenderSpinner,
+                setShouldRenderSpinner,
+                children: props.children,
+                loadingText,
+                small: true,
+                renderText,
+                textContentStyle: styles.textContentLink,
+                StartIcon: props.StartIcon,
+                EndIcon: props.EndIcon,
+                withChevron: showChevron,
+            }),
+            disabled: props.disabled || showSpinner || isFormSending,
+        };
+
+        if (process.env.NODE_ENV !== 'production') {
+            if (props.to === '' || props.href === '') {
+                throw Error('to or href props are empty strings');
+            }
         }
-    }, [showSpinner, shouldRenderSpinner, formStatus]);
 
-    const createDefaultTrackingEvent = (): TrackingEvent => {
-        if (analytics.eventFormat === 'google-analytics-4') {
-            return {
-                name: eventNames.userInteraction,
-                component_type: 'link',
-                component_copy: getTextFromChildren(props.children),
-            };
-        } else {
-            return {
-                category: eventCategories.userInteraction,
-                action: eventActions.linkTapped,
-                label: getTextFromChildren(props.children),
-            };
+        if (props.onPress) {
+            return (
+                <BaseTouchable
+                    ref={ref}
+                    {...commonProps}
+                    onPress={(e) => {
+                        const result = props.onPress(e);
+                        if (result) {
+                            setIsOnPressPromiseResolving(true);
+                            result.finally(() => setIsOnPressPromiseResolving(false));
+                        }
+                    }}
+                />
+            );
         }
-    };
 
-    const renderText = (element: React.ReactNode) => (
-        <Text2 weight={textPresets.button.weight} truncate={1} color="inherit">
-            {element}
-        </Text2>
-    );
-
-    const commonProps = {
-        className: classnames(styles.link, {
-            [styles.inverseLink]: isInverse,
-            [styles.isLoading]: showSpinner,
-        }),
-        /**
-         * Setting bleed classes with style to override the margin:0 set by the Touchable component.
-         * If we set it using className, it may not work depending on the order in which the styles are applied.
-         */
-        style: {
-            ...(props.bleedLeft || props.aligned ? {marginLeft: -styles.PADDING_X_LINK} : undefined),
-            ...(props.bleedRight ? {marginRight: -styles.PADDING_X_LINK} : undefined),
-            ...(props.bleedY
-                ? {marginTop: -styles.PADDING_Y_LINK, marginBottom: -styles.PADDING_Y_LINK}
-                : undefined),
-        },
-        trackingEvent: props.trackingEvent ?? (props.trackEvent ? createDefaultTrackingEvent() : undefined),
-        dataAttributes: {'component-name': 'ButtonLink', ...props.dataAttributes},
-        'aria-label': props['aria-label'],
-        'aria-controls': props['aria-controls'],
-        'aria-expanded': props['aria-expanded'],
-        'aria-haspopup': props['aria-haspopup'],
-        children: renderButtonContent({
-            showSpinner,
-            shouldRenderSpinner,
-            setShouldRenderSpinner,
-            children: props.children,
-            loadingText,
-            small: true,
-            renderText,
-            textContentStyle: styles.textContentLink,
-            StartIcon: props.StartIcon,
-            EndIcon: props.EndIcon,
-            withChevron: showChevron,
-        }),
-        disabled: props.disabled || showSpinner || isFormSending,
-    };
-
-    if (process.env.NODE_ENV !== 'production') {
-        if (props.to === '' || props.href === '') {
-            throw Error('to or href props are empty strings');
+        if (props.to || props.to === '') {
+            return (
+                <BaseTouchable
+                    ref={ref}
+                    {...commonProps}
+                    to={props.to}
+                    fullPageOnWebView={props.fullPageOnWebView}
+                />
+            );
         }
+
+        if (props.href || props.href === '') {
+            return <BaseTouchable ref={ref} {...commonProps} href={props.href} newTab={props.newTab} />;
+        }
+
+        if (process.env.NODE_ENV !== 'production') {
+            // this cannot happen
+            throw Error('Bad button props');
+        }
+
+        return null;
     }
+);
 
-    if (props.onPress) {
+export const ButtonLink = React.forwardRef<TouchableElement, ButtonLinkProps>(
+    ({dataAttributes, ...props}, ref) => {
         return (
-            <BaseTouchable
+            <BaseButtonLink
+                dataAttributes={{'component-name': 'ButtonLink', ...dataAttributes}}
+                {...props}
                 ref={ref}
-                {...commonProps}
-                onPress={(e) => {
-                    const result = props.onPress(e);
-                    if (result) {
-                        setIsOnPressPromiseResolving(true);
-                        result.finally(() => setIsOnPressPromiseResolving(false));
-                    }
-                }}
+                type="default"
             />
         );
     }
+);
 
-    if (props.to || props.to === '') {
+export const ButtonLinkDanger = React.forwardRef<TouchableElement, ButtonLinkProps>(
+    ({dataAttributes, ...props}, ref) => {
         return (
-            <BaseTouchable
+            <BaseButtonLink
+                dataAttributes={{'component-name': 'ButtonLinkDanger', ...dataAttributes}}
+                {...props}
                 ref={ref}
-                {...commonProps}
-                to={props.to}
-                fullPageOnWebView={props.fullPageOnWebView}
+                type="danger"
             />
         );
     }
-
-    if (props.href || props.href === '') {
-        return <BaseTouchable ref={ref} {...commonProps} href={props.href} newTab={props.newTab} />;
-    }
-
-    if (process.env.NODE_ENV !== 'production') {
-        // this cannot happen
-        throw Error('Bad button props');
-    }
-
-    return null;
-});
+);
 
 export const ButtonPrimary = React.forwardRef<TouchableElement, ButtonProps>(
     ({dataAttributes, ...props}, ref) => {
