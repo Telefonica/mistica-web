@@ -48,37 +48,38 @@ const SnackbarComponent = React.forwardRef<ImperativeHandle, Props>(
         const longButtonWidth = isDesktopOrBigger ? 160 : 128;
         const hasLongButton = buttonWidth > longButtonWidth;
         const elementRef = React.useRef<HTMLDivElement>(null);
-
         const shouldShowDismissButton = (duration === Infinity && !buttonText) || withDismiss;
 
-        const close = React.useCallback<SnackbarCloseHandler>(
-            (result) => {
-                setIsOpen(false);
-                setTimeout(
-                    () => {
-                        onClose?.(result);
-                    },
-                    process.env.NODE_ENV === 'test' ? 0 : styles.TRANSITION_TIME_IN_MS
-                );
-            },
-            [onClose]
-        );
+        const onCloseRef = React.useRef(onClose);
+        React.useEffect(() => {
+            onCloseRef.current = onClose;
+        }, [onClose]);
 
-        React.useImperativeHandle(ref, () => {
-            return {
-                ...elementRef,
-                close,
-            };
-        });
+        const close = React.useCallback<SnackbarCloseHandler>((result) => {
+            setIsOpen(false);
+            setTimeout(
+                () => {
+                    onCloseRef.current?.(result);
+                },
+                process.env.NODE_ENV === 'test' ? 0 : styles.TRANSITION_TIME_IN_MS
+            );
+        }, []);
+
+        React.useImperativeHandle(
+            ref,
+            () => {
+                return {...elementRef, close};
+            },
+            [close]
+        );
 
         React.useEffect(() => {
             const openTimeout = setTimeout(() => {
                 setIsOpen(true);
             }, 50);
 
-            const closeTimeout = setTimeout(() => {
-                close({action: 'TIMEOUT'});
-            }, duration);
+            const closeTimeout =
+                duration !== Infinity ? setTimeout(() => close({action: 'TIMEOUT'}), duration) : undefined;
 
             return () => {
                 clearTimeout(openTimeout);
