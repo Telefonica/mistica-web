@@ -3,7 +3,7 @@ import {openStoryPage, screen, setRootFontSize} from '../test-utils';
 import type {Device} from '../test-utils';
 
 const DEVICES: Array<Device> = ['MOBILE_IOS', 'MOBILE_ANDROID'];
-const BUTTONS = ['Primary button', 'Secondary button', 'Danger button', 'Link button'];
+const BUTTONS = ['Primary button', 'Secondary button', 'Danger button', 'Link button', 'Link button danger'];
 
 const getCases = () => {
     const cases = [];
@@ -17,7 +17,7 @@ const getCases = () => {
 
 test.each(BUTTONS)('Buttons - %s - normal', async (button) => {
     await openStoryPage({
-        id: `components-buttons--${button.toLowerCase().replace(' ', '-')}`,
+        id: `components-buttons--${button.toLowerCase().replaceAll(' ', '-')}`,
         device: 'MOBILE_IOS',
     });
 
@@ -29,7 +29,7 @@ test.each(BUTTONS)('Buttons - %s - normal', async (button) => {
 
 test.each(BUTTONS)('Buttons - %s - inverse', async (button) => {
     await openStoryPage({
-        id: `components-buttons--${button.toLowerCase().replace(' ', '-')}`,
+        id: `components-buttons--${button.toLowerCase().replaceAll(' ', '-')}`,
         device: 'MOBILE_IOS',
         args: {inverse: true},
     });
@@ -42,7 +42,7 @@ test.each(BUTTONS)('Buttons - %s - inverse', async (button) => {
 
 test.each(BUTTONS)('Buttons - %s - disabled', async (button) => {
     await openStoryPage({
-        id: `components-buttons--${button.toLowerCase().replace(' ', '-')}`,
+        id: `components-buttons--${button.toLowerCase().replaceAll(' ', '-')}`,
         device: 'MOBILE_IOS',
         args: {disabled: true},
     });
@@ -55,7 +55,7 @@ test.each(BUTTONS)('Buttons - %s - disabled', async (button) => {
 
 test.each(BUTTONS)('Buttons - %s - small', async (button) => {
     await openStoryPage({
-        id: `components-buttons--${button.toLowerCase().replace(' ', '-')}`,
+        id: `components-buttons--${button.toLowerCase().replaceAll(' ', '-')}`,
         device: 'MOBILE_IOS',
         args: {small: true},
     });
@@ -68,7 +68,7 @@ test.each(BUTTONS)('Buttons - %s - small', async (button) => {
 
 test.each(getCases())('Buttons - %s - spinner (%s)', async (button, device) => {
     await openStoryPage({
-        id: `components-buttons--${button.toLowerCase().replace(' ', '-')}`,
+        id: `components-buttons--${button.toLowerCase().replaceAll(' ', '-')}`,
         device: device as Device,
         args: {showSpinner: true, loadingText: 'Loading text'},
     });
