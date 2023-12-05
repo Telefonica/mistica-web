@@ -7,7 +7,7 @@ https://github.com/storybookjs/storybook/issues/11980
 'use client';
 import * as React from 'react';
 import {debounce} from './utils/helpers';
-import {SPACE} from './utils/key-codes';
+import {SPACE} from './utils/keys';
 import {useControlProps} from './form-context';
 import {Text3} from './text';
 import Inline from './inline';

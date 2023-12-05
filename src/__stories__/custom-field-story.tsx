@@ -15,7 +15,7 @@ import {
     useFieldProps,
     ButtonPrimary,
 } from '..';
-import {DOWN, ENTER, SPACE, UP} from '../utils/key-codes';
+import {DOWN, ENTER, SPACE, UP} from '../utils/keys';
 import {cancelEvent} from '../utils/dom';
 import {combineRefs} from '../utils/common';
 

@@ -5,7 +5,7 @@ import {waitFor, fireEvent, render, screen} from '@testing-library/react';
 import ThemeContextProvider from '../theme-context-provider';
 import {makeTheme} from './test-utils';
 import {type ThemeConfig} from '../theme';
-import {SPACE} from '../utils/key-codes';
+import {SPACE} from '../utils/keys';
 
 const trackingEvent = {
     category: 'test',

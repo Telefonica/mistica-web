@@ -1,7 +1,7 @@
 'use client';
 import * as React from 'react';
 import classnames from 'classnames';
-import {ESC, LEFT, RIGHT, UP, DOWN, ENTER, SPACE, TAB} from './utils/key-codes';
+import {ESC, LEFT, RIGHT, UP, DOWN, ENTER, SPACE, TAB} from './utils/keys';
 import {cancelEvent, getPrefixedDataAttributes} from './utils/dom';
 import Overlay from './overlay';
 import * as styles from './menu.css';

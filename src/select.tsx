@@ -3,7 +3,7 @@ import * as React from 'react';
 import classnames from 'classnames';
 import {useForm} from './form-context';
 import {useAriaId, useTheme, useScreenSize} from './hooks';
-import {DOWN, ENTER, ESC, SPACE, TAB, UP} from './utils/key-codes';
+import {DOWN, ENTER, ESC, SPACE, TAB, UP} from './utils/keys';
 import {FieldContainer, HelperText, Label} from './text-field-components';
 import ChevronDownRegular from './generated/mistica-icons/icon-chevron-down-regular';
 import {TextFieldBaseAutosuggest} from './text-field-base';

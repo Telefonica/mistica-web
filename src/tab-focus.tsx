@@ -1,6 +1,6 @@
 'use client';
 import * as React from 'react';
-import {TAB} from './utils/key-codes';
+import {TAB} from './utils/keys';
 
 const TAB_NAVIGATION_CLASS = 'mistica-tab-navigation';
 

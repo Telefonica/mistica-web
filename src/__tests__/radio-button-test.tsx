@@ -4,7 +4,7 @@ import {render, screen, within, fireEvent, waitFor} from '@testing-library/react
 import {ButtonPrimary, Form, ThemeContextProvider, Title1} from '..';
 import userEvent from '@testing-library/user-event';
 import {makeTheme} from './test-utils';
-import {DOWN, SPACE, UP} from '../utils/key-codes';
+import {DOWN, SPACE, UP} from '../utils/keys';
 
 test('RadioGroup (uncontrolled)', async () => {
     render(
