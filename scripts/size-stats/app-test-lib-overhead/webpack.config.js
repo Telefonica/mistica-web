@@ -10,7 +10,6 @@ const config = {
 
     optimization: {
         splitChunks: {chunks: 'async'},
-        runtimeChunk: {name: 'runtime'},
     },
 
     plugins: [process.env.BUNDLE_ANALYZER ? new BundleAnalyzerPlugin() : null].filter(Boolean),
