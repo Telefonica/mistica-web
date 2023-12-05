@@ -373,6 +373,9 @@ export {default as IconBalanceRegular} from './generated/mistica-icons/icon-bala
 export {default as IconBandAidFilled} from './generated/mistica-icons/icon-band-aid-filled';
 export {default as IconBandAidLight} from './generated/mistica-icons/icon-band-aid-light';
 export {default as IconBandAidRegular} from './generated/mistica-icons/icon-band-aid-regular';
+export {default as IconBarChartFilled} from './generated/mistica-icons/icon-bar-chart-filled';
+export {default as IconBarChartLight} from './generated/mistica-icons/icon-bar-chart-light';
+export {default as IconBarChartRegular} from './generated/mistica-icons/icon-bar-chart-regular';
 export {default as IconBarcodeFilled} from './generated/mistica-icons/icon-barcode-filled';
 export {default as IconBarcodeLight} from './generated/mistica-icons/icon-barcode-light';
 export {default as IconBarcodeRegular} from './generated/mistica-icons/icon-barcode-regular';
