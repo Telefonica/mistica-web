@@ -38,9 +38,9 @@ export const palette = {
     grey5: '#727579',
     grey6: '#000000',
     white: '#FFFFFF',
-    darkModeBlack: '#000000',
-    darkModeGrey: '#191919',
-    darkModeGrey6: '#313235',
+    darkModeBlack: '#121212',
+    darkModeGrey: '#1F1F1F',
+    darkModeGrey6: '#2E2E2E',
 };
 
 export const getTuSkin: GetKnownSkin = () => {
