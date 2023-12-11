@@ -7,7 +7,7 @@ import * as styles from './tooltip.css';
 import Stack from './stack';
 import {Text2} from './text';
 import {getCssVarValue, getPrefixedDataAttributes} from './utils/dom';
-import {ESC, TAB} from './utils/key-codes';
+import {ESC, TAB} from './utils/keys';
 import {isTouchableDevice} from './utils/environment';
 import {isEqual} from './utils/helpers';
 import classNames from 'classnames';
@@ -366,7 +366,7 @@ const Tooltip: React.FC<Props> = ({
 
     React.useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
-            switch (e.keyCode) {
+            switch (e.key) {
                 case ESC:
                     resetTooltipInteractions();
                     break;
