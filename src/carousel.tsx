@@ -8,11 +8,11 @@ import Stack from './stack';
 import {BaseTouchable} from './touchable';
 import classNames from 'classnames';
 import {useIsInverseVariant, ThemeVariant} from './theme-variant-context';
-import {MediaBorderRadiusProvider} from './image';
 import {getPrefixedDataAttributes, listenResize} from './utils/dom';
 import {isAndroid, isIos, isRunningAcceptanceTest} from './utils/platform';
 import {useDocumentVisibility} from './utils/document-visibility';
 import * as styles from './carousel.css';
+import * as mediaStyles from './image.css';
 import {sprinkles} from './sprinkles.css';
 import {useDesktopContainerType} from './desktop-container-type-context';
 import {VIVO_NEW_SKIN} from './skins/constants';
@@ -632,7 +632,7 @@ export const Slideshow: React.FC<SlideshowProps> = ({
                         <IconChevronLeftRegular />
                     </BaseTouchable>
                 </ThemeVariant>
-                <MediaBorderRadiusProvider value={false}>
+                <div style={applyCssVars({[mediaStyles.vars.mediaBorderRadius]: '0px'})}>
                     <div className={styles.slideshow} ref={carouselRef}>
                         {items.map((item, index) => (
                             <div
@@ -646,7 +646,7 @@ export const Slideshow: React.FC<SlideshowProps> = ({
                             </div>
                         ))}
                     </div>
-                </MediaBorderRadiusProvider>
+                </div>
                 <ThemeVariant isInverse={false}>
                     <BaseTouchable
                         className={styles.slideshowNextArrowButton}
