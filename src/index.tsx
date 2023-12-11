@@ -60,6 +60,7 @@ export {default as HorizontalScroll} from './horizontal-scroll';
 export {default as HighlightedCard} from './highlighted-card';
 export {default as Stepper} from './stepper';
 export {ProgressBar, ProgressBarStepped} from './progress-bar';
+export {VerticalMosaic, HorizontalMosaic} from './mosaic';
 export {
     MediaCard,
     DataCard,

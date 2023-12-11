@@ -1223,6 +1223,30 @@ const layoutSnippets: Array<Snippet> = [
         />
         </Box>`,
     },
+    {
+        group: 'Mosaic',
+        name: 'HorizontalMosaic',
+        code: `
+        <ResponsiveLayout>
+          <HorizontalMosaic
+            items={Array.from({ length: 6 }, (_, index) => (
+              <SnapCard key={index} title={\`Card \${index + 1}\`} />
+            ))}
+          />
+        </ResponsiveLayout>`,
+    },
+    {
+        group: 'Mosaic',
+        name: 'VerticalMosaic',
+        code: `
+        <ResponsiveLayout>
+          <VerticalMosaic
+            items={Array.from({ length: 6 }, (_, index) => (
+              <SnapCard key={index} title={\`Card \${index + 1}\`} />
+            ))}
+          />
+        </ResponsiveLayout>`,
+    },
 ].map((snippet) => ({...snippet, group: 'Layouts'}));
 
 const emptyStatesGroup: Array<Snippet> = [
