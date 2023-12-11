@@ -11,7 +11,7 @@ import ThemeContext from './theme-context';
 import {useTheme} from './hooks';
 import ButtonLayout from './button-layout';
 import {Text5, Text4, Text3} from './text';
-import {ESC} from './utils/key-codes';
+import {ESC} from './utils/keys';
 import Box from './box';
 import {isRunningAcceptanceTest} from './utils/platform';
 import {useSetModalStateEffect} from './modal-context-provider';
@@ -274,7 +274,7 @@ const ModalDialog = (props: ModalDialogProps) => {
 
     const handleKeyDown = React.useCallback(
         (event: KeyboardEvent) => {
-            if (event.keyCode === ESC) {
+            if (event.key === ESC) {
                 handleClose();
                 event.stopPropagation();
                 event.preventDefault();
