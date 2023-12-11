@@ -1,7 +1,7 @@
 'use client';
 import * as React from 'react';
 import classnames from 'classnames';
-import {SkeletonRectangle} from './skeletons';
+import {SkeletonAnimation} from './skeletons';
 import {AspectRatioContainer} from './utils/aspect-ratio-support';
 import {getPrefixedDataAttributes} from './utils/dom';
 import {useIsInverseVariant} from './theme-variant-context';
@@ -12,27 +12,10 @@ import * as styles from './image.css';
 import {vars} from './skins/skin-contract.css';
 import {combineRefs} from './utils/common';
 import SkeletonBase from './skeleton-base';
+import {fallbackVar} from '@vanilla-extract/css';
 
 import type {ExclusifyUnion} from './utils/utility-types';
 import type {DataAttributes} from './utils/types';
-
-/**
- * This context is used internally to disable/enable the border radius. This is useful for example
- * when using the Image component inside a Card or Hero inside a Slideshow
- */
-const MediaBorderRadiusContext = React.createContext(true);
-
-export const useMediaBorderRadius = (): boolean => React.useContext(MediaBorderRadiusContext);
-
-export const MediaBorderRadiusProvider = ({
-    children,
-    value,
-}: {
-    children: React.ReactNode;
-    value: boolean;
-}): JSX.Element => (
-    <MediaBorderRadiusContext.Provider value={value}>{children}</MediaBorderRadiusContext.Provider>
-);
 
 type VivoLogoProps = {
     style?: React.CSSProperties;
@@ -51,14 +34,13 @@ const VivoLogo = ({style}: VivoLogoProps) => {
 };
 
 type ImageErrorProps = {
-    noBorderRadius?: boolean;
-    circular?: boolean;
     withIcon?: boolean;
+    borderRadius?: string | number;
     border?: boolean;
 };
 
 export const ImageError = React.forwardRef<HTMLDivElement, ImageErrorProps>(
-    ({noBorderRadius, circular, withIcon = true, border}, ref) => {
+    ({borderRadius, withIcon = true, border}, ref) => {
         const isInverse = useIsInverseVariant();
         const {skinName} = useTheme();
         return (
@@ -74,7 +56,7 @@ export const ImageError = React.forwardRef<HTMLDivElement, ImageErrorProps>(
                         : vars.colors.backgroundSkeleton,
                     boxSizing: 'border-box',
                     border: border ? `1px solid ${vars.colors.borderLow}` : 'none',
-                    borderRadius: circular ? '50%' : noBorderRadius ? undefined : vars.borderRadii.container,
+                    borderRadius,
                 }}
                 ref={ref}
             >
@@ -164,9 +146,12 @@ export const ImageContent = React.forwardRef<HTMLImageElement, ImageProps>(
         ref
     ) => {
         const imageRef = React.useRef<HTMLImageElement>();
-        const borderRadiusContext = useMediaBorderRadius();
         const border = props.border ? `1px solid ${vars.colors.borderLow}` : 'none';
-        const noBorderSetting = noBorderRadius ?? !borderRadiusContext;
+        const borderRadius = props.circular
+            ? '50%'
+            : noBorderRadius
+            ? '0px'
+            : fallbackVar(styles.vars.mediaBorderRadius, vars.borderRadii.container);
         const [isError, setIsError] = React.useState(!src);
         const [isLoading, setIsLoading] = React.useState(true);
         const [hideLoadingFallback, setHideLoadingFallback] = React.useState(false);
@@ -194,6 +179,7 @@ export const ImageContent = React.forwardRef<HTMLImageElement, ImageProps>(
                     ...(isLoading && withLoadingFallback ? {opacity: 0} : {opacity: 1}),
                     boxSizing: 'border-box',
                     border,
+                    borderRadius,
                 }}
                 ref={combineRefs(imageRef, ref)}
                 src={src}
@@ -201,11 +187,6 @@ export const ImageContent = React.forwardRef<HTMLImageElement, ImageProps>(
                     styles.image,
                     sprinkles({
                         position: ratio !== 0 ? 'absolute' : 'static',
-                        borderRadius: props.circular
-                            ? '50%'
-                            : noBorderSetting
-                            ? undefined
-                            : vars.borderRadii.container,
                     })
                 )}
                 alt={alt}
@@ -231,15 +212,9 @@ export const ImageContent = React.forwardRef<HTMLImageElement, ImageProps>(
             <>
                 {withLoadingFallback && !hideLoadingFallback && (
                     <div style={{position: 'absolute', width: '100%', height: '100%'}}>
-                        {props.circular ? (
-                            <SkeletonBase width="100%" height="100%" radius="50%" />
-                        ) : (
-                            <SkeletonRectangle
-                                width={props.width}
-                                height={props.height}
-                                noBorderRadius={noBorderSetting}
-                            />
-                        )}
+                        <SkeletonAnimation height={props.height ?? '100%'} width={props.width ?? '100%'}>
+                            <SkeletonBase height="100%" width="100%" radius={borderRadius} />
+                        </SkeletonAnimation>
                     </div>
                 )}
                 {isError && withErrorFallback && (
@@ -251,11 +226,7 @@ export const ImageContent = React.forwardRef<HTMLImageElement, ImageProps>(
                             zIndex: 1,
                         }}
                     >
-                        <ImageError
-                            circular={props.circular}
-                            noBorderRadius={noBorderSetting}
-                            border={props.border}
-                        />
+                        <ImageError borderRadius={borderRadius} border={props.border} />
                     </div>
                 )}
                 {!isError && img}

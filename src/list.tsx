@@ -23,7 +23,9 @@ import {Boxed} from './boxed';
 import Divider from './divider';
 import {getPrefixedDataAttributes} from './utils/dom';
 import * as styles from './list.css';
+import * as mediaStyles from './image.css';
 import {vars} from './skins/skin-contract.css';
+import {applyCssVars} from './utils/css';
 
 import type {TouchableElement} from './touchable';
 import type {DataAttributes, TrackingEvent} from './utils/types';
@@ -109,7 +111,14 @@ export const Content: React.FC<ContentProps> = ({
                     paddingRight={16}
                     className={classNames({[styles.center]: centerY, [styles.disabled]: disabled})}
                 >
-                    <div className={styles.asset}>{asset}</div>
+                    <div
+                        className={styles.asset}
+                        style={applyCssVars({
+                            [mediaStyles.vars.mediaBorderRadius]: vars.borderRadii.mediaSmall,
+                        })}
+                    >
+                        {asset}
+                    </div>
                 </Box>
             )}
             <div
