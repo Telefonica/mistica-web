@@ -15,7 +15,13 @@ type SkeletonAnimationProps = {
     height?: number | string;
 };
 
-const SkeletonAnimation = ({children, ariaLabel, dataAttributes, width, height}: SkeletonAnimationProps) => {
+export const SkeletonAnimation = ({
+    children,
+    ariaLabel,
+    dataAttributes,
+    width,
+    height,
+}: SkeletonAnimationProps): JSX.Element => {
     return (
         <div
             className={styles.animation}
