@@ -1,3 +1,18 @@
+# [14.35.0](https://github.com/Telefonica/mistica-web/compare/v14.34.0...v14.35.0) (2023-12-11)
+
+
+### Bug Fixes
+
+* **Overlay:** stop event propagation on click ([#973](https://github.com/Telefonica/mistica-web/issues/973)) ([bf94030](https://github.com/Telefonica/mistica-web/commit/bf94030bd1a9d79a9102f43d2d19ced905240b62))
+* **Tooltip:** make component reactive to changes in tooltip content ([#963](https://github.com/Telefonica/mistica-web/issues/963)) ([f49e9c8](https://github.com/Telefonica/mistica-web/commit/f49e9c85542bfa10ba61df41eaadfd4adc73902a))
+
+
+### Features
+
+* **Image, Video:** use smallMedia token for border radius in some components ([#962](https://github.com/Telefonica/mistica-web/issues/962)) ([958f659](https://github.com/Telefonica/mistica-web/commit/958f659a26c39930621c2cea393bf5e67c6071de))
+* **skin:** update design tokens ([#958](https://github.com/Telefonica/mistica-web/issues/958)) ([eff9c36](https://github.com/Telefonica/mistica-web/commit/eff9c36579bbc631b14677d488a1d5d84593199e))
+* **Tooltip, Slider:** rewrite components from scratch ([#922](https://github.com/Telefonica/mistica-web/issues/922)) ([77b25e5](https://github.com/Telefonica/mistica-web/commit/77b25e539e38a7e50ee64f21a13e38f971413819))
+
 # [14.34.0](https://github.com/Telefonica/mistica-web/compare/v14.33.0...v14.34.0) (2023-11-29)
 
 
