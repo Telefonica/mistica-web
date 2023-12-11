@@ -1,16 +1,16 @@
 import {openSSRPage} from '../test-utils';
 
 test('ssr success feedback screen', async () => {
-    // TODO: fix hydration missmatches and enable the check
-    await openSSRPage({name: 'feedback-screen-success', checkHidrationVisualMissmatch: false});
+    // TODO: fix hydration mismatches and enable the check
+    await openSSRPage({name: 'feedback-screen-success', checkHidrationVisualMismatch: false});
 });
 
 test('ssr error feedback screen', async () => {
-    // TODO: fix hydration missmatches and enable the check
-    await openSSRPage({name: 'feedback-screen-error', checkHidrationVisualMissmatch: false});
+    // TODO WEB-1673: fix hydration mismatches and enable the check
+    await openSSRPage({name: 'feedback-screen-error', checkHidrationVisualMismatch: false});
 });
 
 test('ssr info feedback screen', async () => {
-    // TODO: fix hydration missmatches and enable the check
-    await openSSRPage({name: 'feedback-screen-info', checkHidrationVisualMissmatch: false});
+    // TODO WEB-1673: fix hydration mismatches and enable the check
+    await openSSRPage({name: 'feedback-screen-info', checkHidrationVisualMismatch: false});
 });

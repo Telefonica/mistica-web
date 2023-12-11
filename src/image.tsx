@@ -205,7 +205,7 @@ export const ImageContent = React.forwardRef<HTMLImageElement, ImageProps>(
                 {/* https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/issues/309 */}
                 {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
                 <img
-                    // There is small hydration missmatch that we dont care about. (I think this is caused by te inline SSR script below)
+                    // There is small hydration mismatch that we dont care about. (I think this is caused by te inline SSR script below)
                     // Warning: Prop `style` did not match. Server: "opacity: 1;" Client: "opacity:1"
                     suppressHydrationWarning
                     id={imageId}

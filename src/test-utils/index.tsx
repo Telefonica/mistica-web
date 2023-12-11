@@ -190,7 +190,7 @@ const hydrateSSRPage = async (page: PageApi): Promise<void> => {
     });
 };
 
-const checkHydrationMissmatch = async (page: PageApi): Promise<void> => {
+const checkHydrationMismatch = async (page: PageApi): Promise<void> => {
     const {testPath, currentTestName} = expect.getState();
     const tmpdir = os.tmpdir();
     const snapshotId = kebabCase(`${path.basename(testPath)}-${currentTestName}`);
@@ -214,7 +214,7 @@ const checkHydrationMissmatch = async (page: PageApi): Promise<void> => {
             ),
         });
     } catch (error: any) {
-        Error.captureStackTrace(error, checkHydrationMissmatch);
+        Error.captureStackTrace(error, checkHydrationMismatch);
         throw error;
     } finally {
         fs.unlinkSync(baselineImagePath);
@@ -229,12 +229,12 @@ export const openSSRPage = async ({
     name,
     device = TABLET_DEVICE,
     skin = MOVISTAR_SKIN,
-    checkHidrationVisualMissmatch = true,
+    checkHidrationVisualMismatch = true,
 }: {
     name: string;
     device?: Device;
     skin?: string;
-    checkHidrationVisualMissmatch?: boolean;
+    checkHidrationVisualMismatch?: boolean;
 }): Promise<PageApi> => {
     const globalPage = getGlobalPage();
     const port = (global as any)['__SSR_SERVER__'].address().port;
@@ -260,8 +260,8 @@ export const openSSRPage = async ({
         viewport: DEVICES[device].viewport,
     });
 
-    if (checkHidrationVisualMissmatch) {
-        await checkHydrationMissmatch(page);
+    if (checkHidrationVisualMismatch) {
+        await checkHydrationMismatch(page);
     } else {
         await hydrateSSRPage(page);
     }
