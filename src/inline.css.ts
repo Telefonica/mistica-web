@@ -5,7 +5,7 @@ const space = createVar();
 export const vars = {space};
 
 export const inline = style({
-    pointerEvents: 'none', // to avoid the negative margins to affect clickable areas
+    pointerEvents: 'none', // to prevent negative margins from affecting clickable areas
     flexDirection: 'row',
     gridAutoFlow: 'column',
     marginTop: `calc(${space} * -1)`,
