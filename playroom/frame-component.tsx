@@ -42,9 +42,8 @@ const App = ({children, skinName}: {children: React.ReactNode; skinName: string}
         body {background: ${skinVars.colors.background}}
 
         ${skinName === VIVO_NEW_SKIN ? 'body {font-family: "Vivo Type"}' : ''}
-        ${skinName === TELEFONICA_SKIN ? 'body {font-family: "Telefonica Sans"}' : ''}
+        ${skinName === TELEFONICA_SKIN || skinName === TU_SKIN ? 'body {font-family: "Telefonica Sans"}' : ''}
         ${skinName === O2_SKIN ? 'body {font-family: "On Air"}' : ''}
-        ${skinName === O2_SKIN || skinName === TU_SKIN ? 'body {font-family: "On Air"}' : ''}
 
         ${isModalOpen ? 'body {overflow-y: hidden}' : ''}
 
