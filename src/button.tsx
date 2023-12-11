@@ -484,6 +484,7 @@ export const BaseButtonLink = React.forwardRef<
     const isInverse = useIsInverseVariant();
     const {textPresets} = useTheme();
     const {eventFormat} = useTrackingConfig();
+    const {isDarkMode} = useTheme();
 
     const {loadingText} = props;
     const isFormSending = formStatus === 'sending';
@@ -526,10 +527,15 @@ export const BaseButtonLink = React.forwardRef<
         </Text2>
     );
 
+    const finalType = type === 'danger' && isDarkMode && isInverse ? 'dangerDark' : type;
+
     const commonProps = {
-        className: classnames(isInverse ? styles.inverseLinkVariants[type] : styles.linkVariants[type], {
-            [styles.isLoading]: showSpinner,
-        }),
+        className: classnames(
+            isInverse ? styles.inverseLinkVariants[finalType] : styles.linkVariants[finalType],
+            {
+                [styles.isLoading]: showSpinner,
+            }
+        ),
         /**
          * Setting bleed classes with style to override the margin:0 set by the Touchable component.
          * If we set it using className, it may not work depending on the order in which the styles are applied.

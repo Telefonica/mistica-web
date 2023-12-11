@@ -445,6 +445,34 @@ const dangerLinkInverse: ComplexStyleRule = [
     },
 ];
 
+const dangerLinkInverseDark: ComplexStyleRule = [
+    link,
+    sprinkles({
+        color: vars.colors.textLinkDanger,
+        background: 'transparent',
+    }),
+    {
+        selectors: {
+            '&:not([disabled]):active': {
+                backgroundColor: vars.colors.buttonLinkDangerBackgroundInverseSelected,
+            },
+        },
+
+        '@media': {
+            [mq.supportsHover]: {
+                selectors: {
+                    '&:hover:not([disabled])': {
+                        backgroundColor: vars.colors.buttonLinkDangerBackgroundInverseSelected,
+                    },
+                    '&:not([disabled]):active': {
+                        backgroundColor: vars.colors.buttonLinkDangerBackgroundInverseSelected,
+                    },
+                },
+            },
+        },
+    },
+];
+
 export const buttonVariants = styleVariants({
     primary: lightPrimary,
     secondary: lightSecondary,
@@ -460,9 +488,11 @@ export const inverseButtonVariants = styleVariants({
 export const linkVariants = styleVariants({
     default: defaultLink,
     danger: dangerLink,
+    dangerDark: dangerLink,
 });
 
 export const inverseLinkVariants = styleVariants({
     default: defaultLinkInverse,
     danger: dangerLinkInverse,
+    dangerDark: dangerLinkInverseDark,
 });
