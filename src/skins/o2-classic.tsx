@@ -241,7 +241,7 @@ export const getO2ClassicSkin: GetKnownSkin = () => {
             borderHigh: palette.grey5,
             borderSelected: palette.o2SkyBlue,
             buttonLinkDangerBackgroundSelected: applyAlpha(palette.white, 0.08),
-            buttonLinkDangerBackgroundInverse: applyAlpha(palette.white, 0.08),
+            buttonLinkDangerBackgroundInverse: applyAlpha(palette.white, 0.01),
             buttonLinkDangerBackgroundInverseSelected: applyAlpha(palette.white, 0.08),
             buttonLinkBackgroundSelected: applyAlpha(palette.white, 0.05),
             buttonLinkBackgroundInverseSelected: applyAlpha(palette.white, 0.05),

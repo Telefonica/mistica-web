@@ -186,7 +186,7 @@ export const getTelefonicaSkin: GetKnownSkin = () => {
             buttonDangerBackgroundSelected: palette.coral80,
             buttonDangerBackgroundHover: palette.coral80,
             buttonLinkDangerBackgroundSelected: applyAlpha(palette.white, 0.08),
-            buttonLinkDangerBackgroundInverse: applyAlpha(palette.white, 0.08),
+            buttonLinkDangerBackgroundInverse: applyAlpha(palette.white, 0.01),
             buttonLinkDangerBackgroundInverseSelected: applyAlpha(palette.white, 0.08),
             buttonLinkBackgroundSelected: applyAlpha(palette.white, 0.08),
             buttonLinkBackgroundInverseSelected: applyAlpha(palette.white, 0.08),

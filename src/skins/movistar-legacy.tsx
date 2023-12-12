@@ -194,7 +194,7 @@ export const getMovistarLegacySkin: GetKnownSkin = (variant) => {
             buttonDangerBackgroundSelected: palette.pepper55,
             buttonDangerBackgroundHover: palette.pepper55,
             buttonLinkDangerBackgroundSelected: applyAlpha(palette.white, 0.08),
-            buttonLinkDangerBackgroundInverse: applyAlpha(palette.white, 0.08),
+            buttonLinkDangerBackgroundInverse: applyAlpha(palette.white, 0.01),
             buttonLinkDangerBackgroundInverseSelected: applyAlpha(palette.white, 0.08),
             buttonLinkBackgroundSelected: applyAlpha(palette.white, 0.08),
             buttonLinkBackgroundInverseSelected: applyAlpha(palette.white, 0.08),

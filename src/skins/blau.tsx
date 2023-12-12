@@ -188,7 +188,7 @@ export const getBlauSkin: GetKnownSkin = () => {
             buttonDangerBackgroundSelected: palette.blauRed70,
             buttonDangerBackgroundHover: palette.blauRed70,
             buttonLinkDangerBackgroundSelected: applyAlpha(palette.blauPurple, 0.3),
-            buttonLinkDangerBackgroundInverse: applyAlpha(palette.blauPurple, 0.3),
+            buttonLinkDangerBackgroundInverse: applyAlpha(palette.white, 0.01),
             buttonLinkDangerBackgroundInverseSelected: applyAlpha(palette.blauPurple, 0.3),
             buttonLinkBackgroundSelected: applyAlpha(palette.blauPurple, 0.3),
             buttonLinkBackgroundInverseSelected: applyAlpha(palette.blauPurple, 0.3),
