@@ -109,3 +109,82 @@ export const Default: StoryComponent = () => {
 };
 
 Default.storyName = 'Radio Button';
+
+type Args = {
+    disabled: boolean;
+};
+
+export const Controlled: StoryComponent<Args> = ({disabled}) => {
+    const [value, setValue] = React.useState('first');
+    return (
+        <RadioGroup name="radio-group" disabled={disabled} onChange={setValue} value={value}>
+            <Stack space={16}>
+                <RadioButton value="first">
+                    <Text3 regular>First option</Text3>
+                </RadioButton>
+                <RadioButton value="second">
+                    <Text3 regular>Second option</Text3>
+                </RadioButton>
+            </Stack>
+        </RadioGroup>
+    );
+};
+
+Controlled.storyName = 'controlled';
+Controlled.args = {
+    disabled: false,
+};
+
+export const Uncontrolled: StoryComponent<Args> = ({disabled}) => {
+    const [value, setValue] = React.useState('first');
+    return (
+        <RadioGroup name="radio-group" disabled={disabled} onChange={setValue} defaultValue={value}>
+            <Stack space={16}>
+                <RadioButton value="first">
+                    <Text3 regular>First option</Text3>
+                </RadioButton>
+                <RadioButton value="second">
+                    <Text3 regular>Second option</Text3>
+                </RadioButton>
+            </Stack>
+        </RadioGroup>
+    );
+};
+
+Uncontrolled.storyName = 'uncontrolled';
+Uncontrolled.args = {
+    disabled: false,
+};
+
+export const CustomRender: StoryComponent<Args> = ({disabled}) => {
+    const [value, setValue] = React.useState('first');
+    return (
+        <RadioGroup name="radio-group" disabled={disabled} onChange={setValue} defaultValue={value}>
+            <Stack space={16}>
+                <RadioButton
+                    value="first"
+                    render={() => (
+                        <Inline space={16}>
+                            <Text3 regular>First option</Text3>
+                            {value === 'first' && <IconHandLeftRegular size={20} />}
+                        </Inline>
+                    )}
+                />
+                <RadioButton
+                    value="second"
+                    render={() => (
+                        <Inline space={16}>
+                            <Text3 regular>Second option</Text3>
+                            {value === 'second' && <IconHandLeftRegular size={20} />}
+                        </Inline>
+                    )}
+                />
+            </Stack>
+        </RadioGroup>
+    );
+};
+
+CustomRender.storyName = 'custom render';
+CustomRender.args = {
+    disabled: false,
+};
