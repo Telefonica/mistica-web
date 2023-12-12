@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Checkbox, Text3, Inline} from '..';
+import {Checkbox, Text3, Inline, IconCheckRegular, IconCloseRegular} from '..';
 
 export default {
     title: 'Components/Checkbox',
@@ -41,17 +41,16 @@ export const CustomRender: StoryComponent<Args> = ({disabled}) => {
         <Checkbox
             name="checkbox"
             disabled={disabled}
-            render={({controlElement, labelId}) => (
-                <Inline space={16}>
-                    {/* Text3 wrapper added to have the same line-height and center checkbox with text and -2px to perfect pixel center icon */}
-                    <Text3 regular as="div">
-                        <div style={{position: 'relative', top: -2}}>{controlElement}</div>
-                    </Text3>
-                    {/* set the text id to match the checkbox name, so this text can be linked as label for accessibility */}
-                    <Text3 regular id={labelId}>
-                        checkbox content
-                    </Text3>
-                </Inline>
+            render={({labelId, checked, disabled}) => (
+                <div style={{opacity: disabled ? 0.5 : undefined}}>
+                    <Inline alignItems="center" space={16}>
+                        {checked ? <IconCheckRegular size={18} /> : <IconCloseRegular size={18} />}
+                        {/* set the text id to match the checkbox name, so this text can be linked as label for accessibility */}
+                        <Text3 regular id={labelId}>
+                            checkbox content
+                        </Text3>
+                    </Inline>
+                </div>
             )}
         />
     );

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Switch, Inline, Text3} from '..';
+import {Switch, Inline, Text3, IconCheckRegular, IconCloseRegular} from '..';
 
 export default {
     title: 'Components/Switch',
@@ -42,14 +42,16 @@ export const CustomRender: StoryComponent<Args> = ({disabled}) => {
         <Switch
             name="switch"
             disabled={disabled}
-            render={({controlElement, labelId}) => (
-                <Inline alignItems="center" space={16}>
-                    {controlElement}
-                    {/* set the text id to match the switch name, so this text can be linked as label for accessibility */}
-                    <Text3 regular id={labelId}>
-                        switch content
-                    </Text3>
-                </Inline>
+            render={({labelId, checked, disabled}) => (
+                <div style={{opacity: disabled ? 0.5 : undefined}}>
+                    <Inline alignItems="center" space={16}>
+                        {checked ? <IconCheckRegular size={18} /> : <IconCloseRegular size={18} />}
+                        {/* set the text id to match the checkbox name, so this text can be linked as label for accessibility */}
+                        <Text3 regular id={labelId}>
+                            switch content
+                        </Text3>
+                    </Inline>
+                </div>
             )}
         />
     );

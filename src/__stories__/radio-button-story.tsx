@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Stack, RadioGroup, RadioButton, Inline, Text3} from '..';
+import {Stack, RadioGroup, RadioButton, Inline, Text3, IconHandRightRegular} from '..';
 
 export default {
     title: 'Components/Radio Button',
@@ -58,32 +58,35 @@ export const CustomRender: StoryComponent<Args> = ({disabled}) => {
             <Stack space={16}>
                 <RadioButton
                     value="first"
-                    render={({controlElement, labelId}) => (
-                        <Inline space={16}>
-                            {/* Text3 wrapper added to have the same line-height and center radio button with text and -2px to perfect pixel center icon */}
-                            <Text3 regular as="div">
-                                <div style={{position: 'relative', top: -2}}>{controlElement}</div>
-                            </Text3>
-                            {/* set the text id to match the radio button name, so this text can be linked as label for accessibility */}
-                            <Text3 regular id={labelId}>
-                                First option
-                            </Text3>
-                        </Inline>
+                    render={({labelId, disabled}) => (
+                        <div style={{opacity: disabled ? 0.5 : undefined}}>
+                            <Inline space={16}>
+                                <div style={{visibility: value === 'first' ? 'visible' : 'hidden'}}>
+                                    <IconHandRightRegular size={20} />
+                                </div>
+
+                                {/* set the text id to match the radio button name, so this text can be linked as label for accessibility */}
+                                <Text3 regular id={labelId}>
+                                    First option
+                                </Text3>
+                            </Inline>
+                        </div>
                     )}
                 />
                 <RadioButton
                     value="second"
-                    render={({controlElement, labelId}) => (
-                        <Inline space={16}>
-                            {/* Text3 wrapper added to have the same line-height and center radio button with text and -2px to perfect pixel center icon */}
-                            <Text3 regular as="div">
-                                <div style={{position: 'relative', top: -2}}>{controlElement}</div>
-                            </Text3>
-                            {/* set the text id to match the radio button name, so this text can be linked as label for accessibility */}
-                            <Text3 regular id={labelId}>
-                                Second option
-                            </Text3>
-                        </Inline>
+                    render={({labelId, disabled}) => (
+                        <div style={{opacity: disabled ? 0.5 : undefined}}>
+                            <Inline alignItems="center" space={16}>
+                                <div style={{visibility: value === 'second' ? 'visible' : 'hidden'}}>
+                                    <IconHandRightRegular size={20} />
+                                </div>
+                                {/* set the text id to match the radio button name, so this text can be linked as label for accessibility */}
+                                <Text3 regular id={labelId}>
+                                    Second option
+                                </Text3>
+                            </Inline>
+                        </div>
                     )}
                 />
             </Stack>
