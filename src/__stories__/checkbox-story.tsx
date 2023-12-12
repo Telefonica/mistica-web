@@ -1,92 +1,63 @@
 import * as React from 'react';
-import {Checkbox, Stack, Text3, Inline, Title1} from '..';
+import {Checkbox, Text3, Inline} from '..';
 
 export default {
     title: 'Components/Checkbox',
 };
 
-export const Default: StoryComponent = () => {
+type Args = {
+    disabled: boolean;
+};
+
+export const Controlled: StoryComponent<Args> = ({disabled}) => {
     const [checked, onChange] = React.useState(false);
     return (
-        <Stack space={32}>
-            <>
-                <Title1>Uncontrolled (render prop)</Title1>
-                <Checkbox
-                    name="uncontrolled-render"
-                    defaultChecked={false}
-                    render={({controlElement, labelId}) => (
-                        <Inline alignItems="center" space={16}>
-                            {controlElement}
-                            {/* set the text id to match the checkbox name, so this text can be linked as label for accessibility */}
-                            <Text3 regular id={labelId}>
-                                You accept to sell your soul
-                            </Text3>
-                        </Inline>
-                    )}
-                />
-            </>
-            <>
-                <Title1>Uncontrolled (children)</Title1>
-                <Checkbox name="uncontrolled-children" defaultChecked={false}>
-                    You accept to sell your soul
-                </Checkbox>
-            </>
-            <>
-                <Title1>Controlled (render prop)</Title1>
-                <Checkbox
-                    name="controlled-render"
-                    checked={checked}
-                    onChange={onChange}
-                    render={({controlElement, labelId}) => (
-                        <Inline alignItems="center" space={16}>
-                            {controlElement}
-                            {/* set the text id to match the checkbox name, so this text can be linked as label for accessibility */}
-                            <Text3 regular id={labelId}>
-                                You accept to sell your soul: {checked ? 'sure!' : 'nahh'}
-                            </Text3>
-                        </Inline>
-                    )}
-                />
-            </>
-            <>
-                <Title1>Controlled (children)</Title1>
-                <Checkbox name="controlled-children" checked={checked} onChange={onChange}>
-                    You accept to sell your soul: {checked ? 'sure!' : 'nahh'}
-                </Checkbox>
-            </>
-            <>
-                <Title1>Without box</Title1>
-                <Checkbox
-                    name="no-box"
-                    checked={checked}
-                    onChange={onChange}
-                    render={({labelId}) => (
-                        <Inline alignItems="center" space={16}>
-                            {/* set the text id to match the checkbox name, so this text can be linked as label for accessibility */}
-                            <Text3 regular id={labelId}>
-                                You accept to sell your soul: {checked ? 'sure!' : 'nahh'}
-                            </Text3>
-                        </Inline>
-                    )}
-                />
-            </>
-            <>
-                <Title1>Disabled</Title1>
-                <Checkbox name="disabled-children" checked={checked} onChange={onChange} disabled>
-                    You accept to sell your soul
-                </Checkbox>
-            </>
-            <>
-                <Title1>Multiline</Title1>
-                <Checkbox name="multiline" checked={checked} onChange={onChange}>
-                    <Text3 regular>
-                        Checkbox with a very large very large very large very large very large very large very
-                        large very large very large text that falls
-                    </Text3>
-                </Checkbox>
-            </>
-        </Stack>
+        <Checkbox name="checkbox" checked={checked} onChange={onChange} disabled={disabled}>
+            checkbox content
+        </Checkbox>
     );
 };
 
-Default.storyName = 'Checkbox';
+Controlled.storyName = 'controlled';
+Controlled.args = {
+    disabled: false,
+};
+
+export const Uncontrolled: StoryComponent<Args> = ({disabled}) => {
+    return (
+        <Checkbox name="checkbox" defaultChecked={false} disabled={disabled}>
+            checkbox content
+        </Checkbox>
+    );
+};
+
+Uncontrolled.storyName = 'uncontrolled';
+Uncontrolled.args = {
+    disabled: false,
+};
+
+export const CustomRender: StoryComponent<Args> = ({disabled}) => {
+    return (
+        <Checkbox
+            name="checkbox"
+            disabled={disabled}
+            render={({controlElement, labelId}) => (
+                <Inline space={16}>
+                    {/* Text3 wrapper added to have the same line-height and center checkbox with text and -2px to perfect pixel center icon */}
+                    <Text3 regular as="div">
+                        <div style={{position: 'relative', top: -2}}>{controlElement}</div>
+                    </Text3>
+                    {/* set the text id to match the checkbox name, so this text can be linked as label for accessibility */}
+                    <Text3 regular id={labelId}>
+                        checkbox content
+                    </Text3>
+                </Inline>
+            )}
+        />
+    );
+};
+
+CustomRender.storyName = 'custom render';
+CustomRender.args = {
+    disabled: false,
+};
