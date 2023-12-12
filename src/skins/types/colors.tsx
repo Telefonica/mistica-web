@@ -27,6 +27,9 @@ export type Colors = {
     buttonDangerBackground: string;
     buttonDangerBackgroundSelected: string;
     buttonDangerBackgroundHover: string;
+    buttonLinkDangerBackgroundSelected: string;
+    buttonLinkDangerBackgroundInverse: string;
+    buttonLinkDangerBackgroundInverseSelected: string;
     buttonLinkBackgroundSelected: string;
     buttonLinkBackgroundInverseSelected: string;
     buttonPrimaryBackground: string;
