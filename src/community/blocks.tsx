@@ -1,12 +1,14 @@
 import * as React from 'react';
 import Stack from '../stack';
 import * as styles from './blocks.css';
+import * as mediaStyles from '../image.css';
 import {Text2, Text3, Text5, Text8} from '../text';
 import {vars} from '../skins/skin-contract.css';
 import Inline from '../inline';
 import Box from '../box';
 import {ProgressBar} from '../progress-bar';
 import classNames from 'classnames';
+import {applyCssVars} from '../utils/css';
 
 import type StackingGroup from '../stacking-group';
 import type Image from '../image';
@@ -88,7 +90,13 @@ export const SimpleBlock: React.FC<SimpleBlockProps> = ({image, description, 'ar
     return (
         <div aria-label={ariaLabel}>
             <Inline space={16} alignItems="center">
-                {image}
+                <div
+                    style={applyCssVars({
+                        [mediaStyles.vars.mediaBorderRadius]: vars.borderRadii.mediaSmall,
+                    })}
+                >
+                    {image}
+                </div>
                 <Text2 regular color={vars.colors.textSecondary}>
                     {description}
                 </Text2>

@@ -61,6 +61,7 @@ const Overlay: React.FC<Props> = ({
                 }
             }}
             onClick={(e) => {
+                e.stopPropagation();
                 // In Android we need to call onPress here in onClick to ensure click event doesn't hit element below overlay.
                 if (
                     (e.target as any).dataset.overlay &&

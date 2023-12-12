@@ -1,11 +1,13 @@
 'use client';
 import * as React from 'react';
-import {ImageContent, ImageError, useMediaBorderRadius} from './image';
+import {ImageContent, ImageError} from './image';
 import {AspectRatioContainer} from './utils/aspect-ratio-support';
 import {isRunningAcceptanceTest} from './utils/platform';
 import * as styles from './video.css';
-import {vars} from './skins/skin-contract.css';
+import * as mediaStyles from './image.css';
 import {getPrefixedDataAttributes} from './utils/dom';
+import {fallbackVar} from '@vanilla-extract/css';
+import {vars} from './skins/skin-contract.css';
 
 import type {DataAttributes} from './utils/types';
 
@@ -132,7 +134,7 @@ const Video = React.forwardRef<VideoElement, VideoProps>(
         const loadedSource = React.useRef<VideoSource>();
         const posterRef = React.useRef<HTMLDivElement>(null);
 
-        const borderRadiusContext = useMediaBorderRadius();
+        const borderRadius = fallbackVar(mediaStyles.vars.mediaBorderRadius, vars.borderRadii.container);
         const ratio = typeof aspectRatio === 'number' ? aspectRatio : RATIO[aspectRatio];
 
         const handleError = React.useCallback(() => {
@@ -214,7 +216,7 @@ const Video = React.forwardRef<VideoElement, VideoProps>(
                 poster={TRANSPARENT_PIXEL}
                 style={{
                     // For some reason adding this style with classnames doesn't add the border radius in safari
-                    borderRadius: !borderRadiusContext ? 0 : vars.borderRadii.container,
+                    borderRadius,
                     visibility: showPoster ? 'hidden' : 'visible',
                     position: showPoster || ratio !== 0 ? 'absolute' : 'static',
                     width: '100%',
@@ -240,18 +242,10 @@ const Video = React.forwardRef<VideoElement, VideoProps>(
                 />
             ) : withErrorFallback ? (
                 <div style={{position: 'absolute', width: '100%', height: '100%'}}>
-                    <ImageError noBorderRadius={!borderRadiusContext} withIcon={hasError} />
+                    <ImageError borderRadius={borderRadius} withIcon={hasError} />
                 </div>
             ) : undefined;
-        }, [
-            aspectRatio,
-            props.height,
-            props.width,
-            borderRadiusContext,
-            hasError,
-            poster,
-            withErrorFallback,
-        ]);
+        }, [aspectRatio, props.height, props.width, borderRadius, hasError, poster, withErrorFallback]);
 
         return (
             <AspectRatioContainer
