@@ -8,6 +8,7 @@ import {
     IconTrashCanRegular,
     ResponsiveLayout,
     Stack,
+    Text3,
     Title1,
     useSnackbar,
 } from '..';
@@ -19,18 +20,14 @@ export default {
 export const Default: StoryComponent = () => {
     const {openSnackbar, snackbars} = useSnackbar();
     const idRef = React.useRef(0);
-    const outputRef = React.useRef<HTMLDivElement>(null);
+    const [logLines, setLogLines] = React.useState<Array<string>>([]);
 
     const log = (message: string) => {
-        if (outputRef.current) {
-            outputRef.current.innerHTML += `${message}<br />`;
-        }
+        setLogLines((lines) => [...lines, message]);
     };
 
     const clearLog = () => {
-        if (outputRef.current) {
-            outputRef.current.innerHTML = '';
-        }
+        setLogLines([]);
     };
 
     return (
@@ -81,7 +78,13 @@ export const Default: StoryComponent = () => {
                             >
                                 Actions
                             </Title1>
-                            <div ref={outputRef} style={{lineHeight: 1.6}} />
+                            <div>
+                                {logLines.map((line, index) => (
+                                    <Text3 regular as="p" key={index}>
+                                        {line}
+                                    </Text3>
+                                ))}
+                            </div>
                         </Stack>
                     }
                 />
