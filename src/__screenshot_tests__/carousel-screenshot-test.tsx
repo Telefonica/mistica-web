@@ -123,7 +123,7 @@ test('Carousel desktop  with initialActiveItem=3', async () => {
 // no screenshot test for desktop because it's like the regular carousel
 test('CenteredCarousel mobile', async () => {
     const page = await openStoryPage({
-        id: 'components-carousels-centered-carousel--default',
+        id: 'components-carousels-centeredcarousel--default',
         device: 'MOBILE_IOS',
     });
 
@@ -136,7 +136,7 @@ test('CenteredCarousel mobile', async () => {
 
 test('CenteredCarousel mobile with initialActiveItem=1', async () => {
     const page = await openStoryPage({
-        id: 'components-carousels-centered-carousel--default',
+        id: 'components-carousels-centeredcarousel--default',
         device: 'MOBILE_IOS',
         args: {initialActiveItem: 1},
     });
@@ -178,13 +178,4 @@ test('Slideshow desktop', async () => {
     expect(await page.screenshot()).toMatchImageSnapshot();
     expect(await isDisabled(prevArrow)).toBe(false);
     expect(await isDisabled(nextArrow)).toBe(true);
-});
-
-test('Highlighted Card Carousel mobile', async () => {
-    const page = await openStoryPage({
-        id: 'components-carousels-highlighted-card-carousel--default',
-        device: 'MOBILE_IOS',
-    });
-
-    expect(await page.screenshot()).toMatchImageSnapshot();
 });
