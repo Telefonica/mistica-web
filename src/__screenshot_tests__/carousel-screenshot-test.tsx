@@ -179,3 +179,12 @@ test('Slideshow desktop', async () => {
     expect(await isDisabled(prevArrow)).toBe(false);
     expect(await isDisabled(nextArrow)).toBe(true);
 });
+
+test('Carousel on different container types', async () => {
+    const page = await openStoryPage({
+        id: 'private-carousel-on-different-container-types--default',
+        device: 'DESKTOP',
+    });
+
+    expect(await page.screenshot({fullPage: true})).toMatchImageSnapshot();
+});
