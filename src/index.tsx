@@ -15,6 +15,7 @@ export {default as Counter} from './counter';
 export {default as FixedFooterLayout} from './fixed-footer-layout';
 export {default as ButtonFixedFooterLayout} from './button-fixed-footer-layout';
 export {default as Snackbar} from './snackbar';
+export {useSnackbar} from './snackbar-context';
 export {Portal} from './portal';
 export {default as LoadingBar} from './loading-bar';
 export {default as FixedToTop, TopDistanceContext} from './fixed-to-top';
