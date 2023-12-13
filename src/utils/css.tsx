@@ -29,5 +29,5 @@ export const fallbackStyles = (...values: Array<string>): string => {
     if (!first?.startsWith('var(') || !rest.length) {
         return first ?? '';
     }
-    return first.replace(/\)$/, '') + `, ${rest.length > 1 ? fallbackStyles(...rest) : rest[0]})`;
+    return first.replace(/\)$/, '') + `, ` + (rest.length > 1 ? fallbackStyles(...rest) : rest[0]) + ')';
 };
