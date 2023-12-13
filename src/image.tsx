@@ -12,7 +12,6 @@ import * as styles from './image.css';
 import {vars} from './skins/skin-contract.css';
 import {combineRefs} from './utils/common';
 import SkeletonBase from './skeleton-base';
-import {fallbackVar} from '@vanilla-extract/css';
 
 import type {ExclusifyUnion} from './utils/utility-types';
 import type {DataAttributes} from './utils/types';
@@ -147,11 +146,7 @@ export const ImageContent = React.forwardRef<HTMLImageElement, ImageProps>(
     ) => {
         const imageRef = React.useRef<HTMLImageElement>();
         const border = props.border ? `1px solid ${vars.colors.borderLow}` : 'none';
-        const borderRadius = props.circular
-            ? '50%'
-            : noBorderRadius
-            ? '0px'
-            : fallbackVar(styles.vars.mediaBorderRadius, vars.borderRadii.container);
+        const borderRadius = props.circular ? '50%' : noBorderRadius ? '0px' : styles.borderRadius;
         const [isError, setIsError] = React.useState(!src);
         const [isLoading, setIsLoading] = React.useState(true);
         const [hideLoadingFallback, setHideLoadingFallback] = React.useState(false);
