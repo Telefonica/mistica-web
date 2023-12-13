@@ -23,3 +23,13 @@ export const safeAreaInsetBottom = isRunningAcceptanceTest()
 export const safeAreaInsetRight = isRunningAcceptanceTest()
     ? `max(env(safe-area-inset-right), var(--acceptance-test-override-safe-area-inset--right, 0px))`
     : `env(safe-area-inset-right)`;
+
+export const fallbackStyles = (...values: Array<string>): string => {
+    const [first, ...rest] = values.filter(Boolean);
+    if (!first?.startsWith('var(') || !rest.length) {
+        return first ?? '';
+    }
+    return `var(${first.replace(/^var\(/, '').replace(/\)$/, '')}, ${
+        rest.length > 1 ? fallbackStyles(...rest) : rest[0]
+    })`;
+};
