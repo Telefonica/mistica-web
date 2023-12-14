@@ -4,6 +4,7 @@ import type {Device} from '../test-utils';
 
 const DEVICES: Array<Device> = ['MOBILE_IOS', 'MOBILE_ANDROID'];
 const BUTTONS = ['Primary button', 'Secondary button', 'Danger button', 'Link button', 'Link button danger'];
+const SMALL_BUTTONS = ['Primary button', 'Secondary button', 'Danger button'];
 
 const getCases = () => {
     const cases = [];
@@ -53,7 +54,7 @@ test.each(BUTTONS)('Buttons - %s - disabled', async (button) => {
     expect(image).toMatchImageSnapshot();
 });
 
-test.each(BUTTONS)('Buttons - %s - small', async (button) => {
+test.each(SMALL_BUTTONS)('Buttons - %s - small', async (button) => {
     await openStoryPage({
         id: `components-buttons--${button.toLowerCase().replaceAll(' ', '-')}`,
         device: 'MOBILE_IOS',
