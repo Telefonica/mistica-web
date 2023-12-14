@@ -1,4 +1,4 @@
-import {openStoryPage, setRootFontSize} from '../test-utils';
+import {openStoryPage, screen, setRootFontSize} from '../test-utils';
 
 const DEVICES = ['MOBILE_IOS', 'MOBILE_ANDROID'] as const;
 
@@ -8,7 +8,8 @@ test.each(DEVICES)('RadioButton (%s)', async (device) => {
         device,
     });
 
-    const image = await page.screenshot();
+    const element = await screen.findByRole('radiogroup');
+    const image = await element.screenshot();
     expect(image).toMatchImageSnapshot();
 });
 
@@ -18,7 +19,8 @@ test('RadioButton - uncontrolled', async () => {
         device: 'MOBILE_IOS',
     });
 
-    const image = await page.screenshot();
+    const element = await screen.findByRole('radiogroup');
+    const image = await element.screenshot();
     expect(image).toMatchImageSnapshot();
 });
 
@@ -28,7 +30,8 @@ test('RadioButton - custom render', async () => {
         device: 'MOBILE_IOS',
     });
 
-    const image = await page.screenshot();
+    const element = await screen.findByRole('radiogroup');
+    const image = await element.screenshot();
     expect(image).toMatchImageSnapshot();
 });
 
@@ -39,7 +42,8 @@ test('RadioButton - disabled', async () => {
         args: {disabled: true},
     });
 
-    const image = await page.screenshot();
+    const element = await screen.findByRole('radiogroup');
+    const image = await element.screenshot();
     expect(image).toMatchImageSnapshot();
 });
 
@@ -51,6 +55,7 @@ test('RadioButton - control element aligned correctly with long content', async 
 
     await setRootFontSize(72);
 
-    const image = await page.screenshot();
+    const element = await screen.findByRole('radiogroup');
+    const image = await element.screenshot();
     expect(image).toMatchImageSnapshot();
 });

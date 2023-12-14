@@ -121,7 +121,7 @@ const Switch: React.FC<PropsRender | PropsChildren> = (props) => {
     return (
         // When the switch is disabled, it shouldn't be focusable
         // eslint-disable-next-line jsx-a11y/interactive-supports-focus
-        <span
+        <div
             role="switch"
             aria-checked={value ?? checkedState}
             onClick={(e) => {
@@ -157,7 +157,7 @@ const Switch: React.FC<PropsRender | PropsChildren> = (props) => {
                     )}
                 </Inline>
             )}
-        </span>
+        </div>
     );
 };
 

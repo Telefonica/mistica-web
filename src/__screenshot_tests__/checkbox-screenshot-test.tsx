@@ -8,13 +8,14 @@ test.each(DEVICES)('Checkbox (%s)', async (device) => {
         device,
     });
 
-    const image = await page.screenshot();
+    const checkbox = await screen.findByRole('checkbox');
+
+    const image = await checkbox.screenshot();
     expect(image).toMatchImageSnapshot();
 
-    const checkbox = await screen.findByRole('checkbox');
     await checkbox.click();
 
-    const imageChecked = await page.screenshot();
+    const imageChecked = await checkbox.screenshot();
     expect(imageChecked).toMatchImageSnapshot();
 });
 
@@ -24,13 +25,14 @@ test('Checkbox - uncontrolled', async () => {
         device: 'MOBILE_IOS',
     });
 
-    const image = await page.screenshot();
+    const checkbox = await screen.findByRole('checkbox');
+
+    const image = await checkbox.screenshot();
     expect(image).toMatchImageSnapshot();
 
-    const checkbox = await screen.findByRole('checkbox');
     await checkbox.click();
 
-    const imageChecked = await page.screenshot();
+    const imageChecked = await checkbox.screenshot();
     expect(imageChecked).toMatchImageSnapshot();
 });
 
@@ -40,13 +42,14 @@ test('Checkbox - custom render', async () => {
         device: 'MOBILE_IOS',
     });
 
-    const image = await page.screenshot();
+    const checkbox = await screen.findByRole('checkbox');
+
+    const image = await checkbox.screenshot();
     expect(image).toMatchImageSnapshot();
 
-    const checkbox = await screen.findByRole('checkbox');
     await checkbox.click();
 
-    const imageChecked = await page.screenshot();
+    const imageChecked = await checkbox.screenshot();
     expect(imageChecked).toMatchImageSnapshot();
 });
 
@@ -57,7 +60,8 @@ test('Checkbox - disabled', async () => {
         args: {disabled: true},
     });
 
-    const image = await page.screenshot();
+    const checkbox = await screen.findByRole('checkbox');
+    const image = await checkbox.screenshot();
     expect(image).toMatchImageSnapshot();
 });
 
@@ -69,6 +73,7 @@ test('Checkbox - control element aligned correctly with long content', async () 
 
     await setRootFontSize(72);
 
-    const image = await page.screenshot();
+    const checkbox = await screen.findByRole('checkbox');
+    const image = await checkbox.screenshot();
     expect(image).toMatchImageSnapshot();
 });

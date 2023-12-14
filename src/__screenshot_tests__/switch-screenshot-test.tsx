@@ -8,13 +8,14 @@ test.each(DEVICES)('Switch (%s)', async (device) => {
         device,
     });
 
-    const image = await page.screenshot();
+    const element = await screen.findByRole('switch');
+
+    const image = await element.screenshot();
     expect(image).toMatchImageSnapshot();
 
-    const element = await screen.findByRole('switch');
     await element.click();
 
-    const imageChecked = await page.screenshot();
+    const imageChecked = await element.screenshot();
     expect(imageChecked).toMatchImageSnapshot();
 });
 
@@ -24,13 +25,14 @@ test('Switch - uncontrolled', async () => {
         device: 'MOBILE_IOS',
     });
 
-    const image = await page.screenshot();
+    const element = await screen.findByRole('switch');
+
+    const image = await element.screenshot();
     expect(image).toMatchImageSnapshot();
 
-    const element = await screen.findByRole('switch');
     await element.click();
 
-    const imageChecked = await page.screenshot();
+    const imageChecked = await element.screenshot();
     expect(imageChecked).toMatchImageSnapshot();
 });
 
@@ -40,13 +42,14 @@ test('Switch - custom render', async () => {
         device: 'MOBILE_IOS',
     });
 
-    const image = await page.screenshot();
+    const element = await screen.findByRole('switch');
+
+    const image = await element.screenshot();
     expect(image).toMatchImageSnapshot();
 
-    const element = await screen.findByRole('switch');
     await element.click();
 
-    const imageChecked = await page.screenshot();
+    const imageChecked = await element.screenshot();
     expect(imageChecked).toMatchImageSnapshot();
 });
 
@@ -57,7 +60,8 @@ test('Switch - disabled', async () => {
         args: {disabled: true},
     });
 
-    const image = await page.screenshot();
+    const element = await screen.findByRole('switch');
+    const image = await element.screenshot();
     expect(image).toMatchImageSnapshot();
 });
 
@@ -69,6 +73,7 @@ test('Switch - control element aligned correctly with long content', async () =>
 
     await setRootFontSize(72);
 
-    const image = await page.screenshot();
+    const element = await screen.findByRole('switch');
+    const image = await element.screenshot();
     expect(image).toMatchImageSnapshot();
 });
