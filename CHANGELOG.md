@@ -1,3 +1,23 @@
+## [14.36.1](https://github.com/Telefonica/mistica-web/compare/v14.36.0...v14.36.1) (2023-12-14)
+
+
+### Bug Fixes
+
+* **Image,Video:** remove `fallbackVar` from components code ([#978](https://github.com/Telefonica/mistica-web/issues/978)) ([1b1a151](https://github.com/Telefonica/mistica-web/commit/1b1a151c89b86a86af7ef18438d9514d41f595b3))
+
+# [14.36.0](https://github.com/Telefonica/mistica-web/compare/v14.35.0...v14.36.0) (2023-12-13)
+
+
+### Bug Fixes
+
+* **Checkbox:** wrong clickable area ([#971](https://github.com/Telefonica/mistica-web/issues/971)) ([2dba970](https://github.com/Telefonica/mistica-web/commit/2dba970440047f011826ab8f3a856aae5a2e2a59))
+
+
+### Features
+
+* **Icons:** New icons ([#964](https://github.com/Telefonica/mistica-web/issues/964)) ([d273df2](https://github.com/Telefonica/mistica-web/commit/d273df29b3293e35303e9ce37631c444fb4f36b2))
+* **Snackbar:** imperative `snackbar` function to show snackbars ([#960](https://github.com/Telefonica/mistica-web/issues/960)) ([53483bf](https://github.com/Telefonica/mistica-web/commit/53483bfe1cfae9b90c2dd5fbbbb7b0361d60057f))
+
 # [14.35.0](https://github.com/Telefonica/mistica-web/compare/v14.34.0...v14.35.0) (2023-12-11)
 
 

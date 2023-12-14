@@ -35,6 +35,7 @@ export const flexInline = style({
 });
 
 export const inline = style({
+    pointerEvents: 'none', // to prevent negative margins from affecting clickable areas
     flexDirection: 'row',
     gridAutoFlow: 'column',
 });
@@ -64,6 +65,7 @@ export const noFullWidth = style([
 globalStyle(`${marginInline} > div`, {
     marginLeft: space,
     marginTop: space,
+    pointerEvents: 'auto', // restore pointer events for children
 });
 
 globalStyle(`${inline} > div:empty`, {
