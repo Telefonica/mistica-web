@@ -29,7 +29,7 @@ const renderItem = (index: number) => (
     />
 );
 
-export const VerticalMosaicStory = ({items}: Props): JSX.Element => {
+export const VerticalMosaicStory: StoryComponent<Props> = ({items}) => {
     return (
         <ResponsiveLayout>
             <VerticalMosaic
@@ -48,11 +48,15 @@ VerticalMosaicStory.argTypes = {
     },
 };
 
-export const HorizontalMosaicStory = ({items}: Props): JSX.Element => {
+type HorizontalMosaicProps = Props & {withBullets: boolean; free: boolean};
+
+export const HorizontalMosaicStory: StoryComponent<HorizontalMosaicProps> = ({items, withBullets, free}) => {
     return (
         <ResponsiveLayout>
             <HorizontalMosaic
                 items={Array.from({length: items}, (_, index) => renderItem(index + 1))}
+                withBullets={withBullets}
+                free={free}
                 dataAttributes={{testid: 'horizontal-mosaic'}}
             />
         </ResponsiveLayout>
@@ -60,7 +64,7 @@ export const HorizontalMosaicStory = ({items}: Props): JSX.Element => {
 };
 
 HorizontalMosaicStory.storyName = 'HorizontalMosaic';
-HorizontalMosaicStory.args = {items: 3};
+HorizontalMosaicStory.args = {items: 3, withBullets: false, free: false};
 HorizontalMosaicStory.argTypes = {
     items: {
         control: {type: 'range', min: 1, max: 20, step: 1},

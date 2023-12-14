@@ -41,10 +41,16 @@ const HorizontalMosaicPage: React.FC<HorizontalMosaicPageProps> = ({items, isEve
 type HorizontalMosaicProps = {
     items: ReadonlyArray<React.ReactElement>;
     withBullets?: boolean;
+    free?: boolean;
     dataAttributes?: DataAttributes;
 };
 
-export const HorizontalMosaic: React.FC<HorizontalMosaicProps> = ({items, withBullets, dataAttributes}) => {
+export const HorizontalMosaic: React.FC<HorizontalMosaicProps> = ({
+    items,
+    withBullets,
+    free,
+    dataAttributes,
+}) => {
     const itemsCount = items.length;
 
     const pagesCount = itemsCount < 5 ? Math.min(itemsCount, 1) : Math.floor((itemsCount + 1) / 3);
@@ -64,6 +70,7 @@ export const HorizontalMosaic: React.FC<HorizontalMosaicProps> = ({items, withBu
                 </Grid>
             ))}
             withBullets={withBullets}
+            free={free}
         />
     );
 };
