@@ -1,3 +1,10 @@
+## [14.36.1](https://github.com/Telefonica/mistica-web/compare/v14.36.0...v14.36.1) (2023-12-14)
+
+
+### Bug Fixes
+
+* **Image,Video:** remove `fallbackVar` from components code ([#978](https://github.com/Telefonica/mistica-web/issues/978)) ([1b1a151](https://github.com/Telefonica/mistica-web/commit/1b1a151c89b86a86af7ef18438d9514d41f595b3))
+
 # [14.36.0](https://github.com/Telefonica/mistica-web/compare/v14.35.0...v14.36.0) (2023-12-13)
 
 
