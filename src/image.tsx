@@ -82,7 +82,7 @@ export const ImageError = React.forwardRef<HTMLDivElement, ImageErrorProps>(
     }
 );
 
-export type AspectRatio = '1:1' | '16:9' | '7:10' | '4:3';
+export type AspectRatio = '1:1' | '16:9' | '7:10' | '4:3' | undefined;
 
 export const RATIO = {
     '1:1': 1,
@@ -156,7 +156,14 @@ export const ImageContent = React.forwardRef<HTMLImageElement, ImageProps>(
         const [isLoading, setIsLoading] = React.useState(true);
         const [hideLoadingFallback, setHideLoadingFallback] = React.useState(false);
 
-        const ratio = props.circular ? 1 : typeof aspectRatio === 'number' ? aspectRatio : RATIO[aspectRatio];
+        const ratio =
+            props.width && props.height
+                ? undefined
+                : props.circular
+                ? 1
+                : typeof aspectRatio === 'number'
+                ? aspectRatio
+                : RATIO[aspectRatio];
 
         const withLoadingFallback = loadingFallback && !!(ratio !== 0 || (props.width && props.height));
         const withErrorFallback = errorFallback && !!(ratio !== 0 || (props.width && props.height));
@@ -236,11 +243,14 @@ export const ImageContent = React.forwardRef<HTMLImageElement, ImageProps>(
 );
 
 const Image = React.forwardRef<HTMLImageElement, ImageProps>((props, ref) => {
-    const ratio = props.circular
-        ? 1
-        : typeof props.aspectRatio === 'number'
-        ? props.aspectRatio
-        : RATIO[props.aspectRatio ?? DEFAULT_ASPECT_RATIO];
+    const ratio =
+        props.width && props.height
+            ? undefined
+            : props.circular
+            ? 1
+            : typeof props.aspectRatio === 'number'
+            ? props.aspectRatio
+            : RATIO[props.aspectRatio ?? DEFAULT_ASPECT_RATIO];
 
     return (
         <AspectRatioContainer
