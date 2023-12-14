@@ -1230,7 +1230,12 @@ const layoutSnippets: Array<Snippet> = [
         <ResponsiveLayout>
           <HorizontalMosaic
             items={Array.from({ length: 6 }, (_, index) => (
-              <SnapCard key={index} title={\`Card \${index + 1}\`} />
+              <Image
+                src="https://picsum.photos/1200/1200"
+                width="100%"
+                height="100%"
+                key={index}
+              />
             ))}
           />
         </ResponsiveLayout>`,
@@ -1239,13 +1244,16 @@ const layoutSnippets: Array<Snippet> = [
         group: 'Mosaic',
         name: 'VerticalMosaic',
         code: `
-        <ResponsiveLayout>
-          <VerticalMosaic
-            items={Array.from({ length: 6 }, (_, index) => (
-              <SnapCard key={index} title={\`Card \${index + 1}\`} />
-            ))}
-          />
-        </ResponsiveLayout>`,
+        <VerticalMosaic
+          items={Array.from({ length: 6 }, (_, index) => (
+            <Image
+              src="https://picsum.photos/1200/1200"
+              width="100%"
+              height="100%"
+              key={index}
+            />
+          ))}
+        />`,
     },
 ].map((snippet) => ({...snippet, group: 'Layouts'}));
 

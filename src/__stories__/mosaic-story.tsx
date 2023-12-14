@@ -1,5 +1,14 @@
 import * as React from 'react';
-import {HorizontalMosaic, ResponsiveLayout, VerticalMosaic, PosterCard, Box} from '..';
+import {
+    HorizontalMosaic,
+    ResponsiveLayout,
+    VerticalMosaic,
+    PosterCard,
+    Box,
+    Stack,
+    Callout,
+    IconInformationRegular,
+} from '..';
 import usingVrImg from './images/using-vr.jpg';
 
 export default {
@@ -42,12 +51,18 @@ export const HorizontalMosaicStory: StoryComponent<HorizontalMosaicProps> = ({it
     return (
         <ResponsiveLayout>
             <Box paddingY={24}>
-                <HorizontalMosaic
-                    items={Array.from({length: items}, (_, index) => renderItem(index + 1))}
-                    withBullets={withBullets}
-                    free={free}
-                    dataAttributes={{testid: 'horizontal-mosaic'}}
-                />
+                <Stack space={16}>
+                    <Callout
+                        description="Arrow controls disappear in touch devices"
+                        icon={<IconInformationRegular />}
+                    />
+                    <HorizontalMosaic
+                        items={Array.from({length: items}, (_, index) => renderItem(index + 1))}
+                        withBullets={withBullets}
+                        free={free}
+                        dataAttributes={{testid: 'horizontal-mosaic'}}
+                    />
+                </Stack>
             </Box>
         </ResponsiveLayout>
     );
