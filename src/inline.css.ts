@@ -5,6 +5,7 @@ const space = createVar();
 export const vars = {space};
 
 export const inline = style({
+    pointerEvents: 'none', // to prevent negative margins from affecting clickable areas
     flexDirection: 'row',
     gridAutoFlow: 'column',
     marginTop: `calc(${space} * -1)`,
@@ -36,6 +37,7 @@ export const noFullWidth = style([
 globalStyle(`${inline} > div`, {
     marginLeft: space,
     marginTop: space,
+    pointerEvents: 'auto', // restore pointer events for children
 });
 
 globalStyle(`${inline} > div:empty`, {

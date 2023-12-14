@@ -30,7 +30,7 @@ const IconAddMoreLight = ({color, size = 24, ...rest}: IconProps): JSX.Element =
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
-                    d="M20.403 11.402h-7.802V3.599a.6.6 0 0 0-1.2 0v7.803H3.6a.599.599 0 1 0 0 1.199h7.803v7.8a.6.6 0 0 0 1.199 0v-7.8h7.8a.6.6 0 0 0 .002-1.2Z"
+                    d="M20.403 11.402h-7.802V3.599a.6.6 0 0 0-1.2 0v7.803H3.6a.599.599 0 1 0 0 1.199h7.803v7.8a.6.6 0 0 0 1.199 0v-7.8h7.8a.6.6 0 0 0 .002-1.2"
                 />
             </svg>
         );

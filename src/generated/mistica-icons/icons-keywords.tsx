@@ -71,6 +71,7 @@ const iconKeywords: {[key: string]: Array<string>} = {
         'anexar extra',
         'Zusatz hinzufügen',
     ],
+    'add-more': ['include', 'additional', 'append', 'more', 'incluir', 'adicional', 'anexar', 'mehr'],
     'add-more-circle': [
         'include additional circle',
         'add extra round',
@@ -79,7 +80,6 @@ const iconKeywords: {[key: string]: Array<string>} = {
         'adicionar volta extra',
         'weiteren Kreis hinzufügen',
     ],
-    'add-more': ['include', 'additional', 'append', 'more', 'incluir', 'adicional', 'anexar', 'mehr'],
     'add-more-location': [
         'area',
         'place',
@@ -142,17 +142,6 @@ const iconKeywords: {[key: string]: Array<string>} = {
         'Weckuhr',
         'Warntimer',
     ],
-    'alarm-light-cross': [
-        'alert lamp cross',
-        'warning light plus',
-        'signal illumination cross',
-        'luz de alarma cruz',
-        'luz de advertencia plus',
-        'iluminación de señal cruz',
-        'Alarmleuchte Kreuz',
-        'Warnlicht plus',
-        'Signalbeleuchtung Kreuz',
-    ],
     'alarm-light': [
         'alert lamp',
         'warning light',
@@ -163,6 +152,17 @@ const iconKeywords: {[key: string]: Array<string>} = {
         'Alarmleuchte',
         'Warnlicht',
         'Signalbeleuchtung',
+    ],
+    'alarm-light-cross': [
+        'alert lamp cross',
+        'warning light plus',
+        'signal illumination cross',
+        'luz de alarma cruz',
+        'luz de advertencia plus',
+        'iluminación de señal cruz',
+        'Alarmleuchte Kreuz',
+        'Warnlicht plus',
+        'Signalbeleuchtung Kreuz',
     ],
     alert: [
         'warning',
@@ -226,6 +226,7 @@ const iconKeywords: {[key: string]: Array<string>} = {
     ],
     'app-icon': ['application', 'program', 'software', 'aplicación', 'aplicativo', 'Anwendung'],
     appointment: ['meeting', 'schedule', 'arrangement', 'cita', 'agendamento', 'Termin'],
+    apps: ['applications', 'programs', 'software', 'aplicaciones', 'aplicações', 'Anwendungen'],
     'apps-business': [
         'business applications',
         'corporate software',
@@ -234,7 +235,6 @@ const iconKeywords: {[key: string]: Array<string>} = {
         'aplicações corporativas',
         'Unternehmensanwendungen',
     ],
-    apps: ['applications', 'programs', 'software', 'aplicaciones', 'aplicações', 'Anwendungen'],
     'arrow-down': [
         'downward arrow',
         'descend arrow',
@@ -283,14 +283,6 @@ const iconKeywords: {[key: string]: Array<string>} = {
         'seta para a esquerda',
         'Pfeil nach links',
     ],
-    'arrow-line-down-left': [
-        'line down-left arrow',
-        'straight descend arrow',
-        'linear lower-left arrow',
-        'flecha lineal hacia abajo a la izquierda',
-        'seta linear descendente',
-        'linearer Pfeil nach unten links',
-    ],
     'arrow-line-down': [
         'line down arrow',
         'straight descend arrow',
@@ -298,6 +290,14 @@ const iconKeywords: {[key: string]: Array<string>} = {
         'flecha lineal hacia abajo',
         'seta linear descendente',
         'linearer Pfeil nach unten',
+    ],
+    'arrow-line-down-left': [
+        'line down-left arrow',
+        'straight descend arrow',
+        'linear lower-left arrow',
+        'flecha lineal hacia abajo a la izquierda',
+        'seta linear descendente',
+        'linearer Pfeil nach unten links',
     ],
     'arrow-line-left': [
         'line left arrow',
@@ -339,13 +339,13 @@ const iconKeywords: {[key: string]: Array<string>} = {
         'seta para a direita',
         'Pfeil nach rechts',
     ],
-    'arrows-left-and-right': [
-        'left-right arrows',
-        'bilateral arrows',
-        'double direction arrows',
-        'flechas izquierda-derecha',
-        'setas bilaterais',
-        'doppelte Richtungspfeile',
+    'arrow-up': [
+        'up arrow',
+        'go up',
+        'direction up',
+        'flecha hacia arriba',
+        'seta para cima',
+        'Pfeil nach oben',
     ],
     'arrow-up-down': [
         'up-down arrow',
@@ -354,14 +354,6 @@ const iconKeywords: {[key: string]: Array<string>} = {
         'flecha hacia arriba y hacia abajo',
         'seta vertical',
         'Zweirichtungspfeil',
-    ],
-    'arrow-up': [
-        'up arrow',
-        'go up',
-        'direction up',
-        'flecha hacia arriba',
-        'seta para cima',
-        'Pfeil nach oben',
     ],
     'arrow-up-left': [
         'up-left arrow',
@@ -378,6 +370,14 @@ const iconKeywords: {[key: string]: Array<string>} = {
         'flecha hacia arriba a la derecha',
         'seta diagonal ascendente',
         'Pfeil nach oben rechts',
+    ],
+    'arrows-left-and-right': [
+        'left-right arrows',
+        'bilateral arrows',
+        'double direction arrows',
+        'flechas izquierda-derecha',
+        'setas bilaterais',
+        'doppelte Richtungspfeile',
     ],
     audio: ['sound', 'audio signal', 'soundwave', 'sonido', 'sinal de áudio', 'Ton'],
     aura: ['assistant', 'virtual', 'helper', 'aura', 'aura virtual', 'Helfer'],
@@ -407,7 +407,9 @@ const iconKeywords: {[key: string]: Array<string>} = {
         'tira de primeros auxilios',
         'Wundverband',
     ],
+    'bar-chart': ['gráfico de barras', 'Balkendiagramm'],
     barcode: ['product code', 'scannable code', 'código de producto', 'código de barras', 'Strichcode'],
+    battery: ['cell', 'power source', 'energy unit', 'batería', 'bateria', 'Batterie'],
     'battery-charging': [
         'charging battery',
         'powering up',
@@ -417,7 +419,6 @@ const iconKeywords: {[key: string]: Array<string>} = {
         'wird aufgeladen',
     ],
     'battery-full': ['maximum charge', '100% power', 'carga máxima', '100% de energía', 'volle Ladung'],
-    battery: ['cell', 'power source', 'energy unit', 'batería', 'bateria', 'Batterie'],
     'battery-low': [
         'low battery',
         'insufficient charge',
@@ -442,6 +443,7 @@ const iconKeywords: {[key: string]: Array<string>} = {
         'guarda-sol',
         'Strandsonnenschutz',
     ],
+    bell: ['alarm', 'chime', 'ring', 'timbre', 'sino', 'Glocke'],
     'bell-add-more': [
         'additional bell',
         'extra ringing',
@@ -450,7 +452,6 @@ const iconKeywords: {[key: string]: Array<string>} = {
         'toque extra',
         'zusätzliches Läuten',
     ],
-    bell: ['alarm', 'chime', 'ring', 'timbre', 'sino', 'Glocke'],
     'bell-off': [
         'silent bell',
         'muted alarm',
@@ -506,6 +507,7 @@ const iconKeywords: {[key: string]: Array<string>} = {
         'Kistenposition',
     ],
     brain: ['mind', 'intellect', 'cognition', 'cerebro', 'cérebro', 'Gehirn'],
+    briefcase: ['portfolio', 'case', 'attache', 'maletín', 'portfólio', 'Aktentasche'],
     'briefcase-business': [
         'business case',
         'corporate portfolio',
@@ -514,7 +516,6 @@ const iconKeywords: {[key: string]: Array<string>} = {
         'portfólio corporativo',
         'professionelle Aktentasche',
     ],
-    briefcase: ['portfolio', 'case', 'attache', 'maletín', 'portfólio', 'Aktentasche'],
     broadband: [
         'high-speed internet',
         'broadband connection',
@@ -558,6 +559,7 @@ const iconKeywords: {[key: string]: Array<string>} = {
         'Pläne kaufen',
     ],
     cafe: ['coffee shop', 'java joint', 'espresso bar', 'cafetería', 'cafeteria', 'Kaffeehaus'],
+    calendar: ['schedule', 'datebook', 'planner', 'calendario', 'calendário', 'Kalender'],
     'calendar-euro': [
         'euro calendar',
         'european schedule',
@@ -566,7 +568,6 @@ const iconKeywords: {[key: string]: Array<string>} = {
         'calendário europeu',
         'Eurokalender',
     ],
-    calendar: ['schedule', 'datebook', 'planner', 'calendario', 'calendário', 'Kalender'],
     'calendar-pound': [
         'pound calendar',
         'british schedule',
@@ -575,7 +576,6 @@ const iconKeywords: {[key: string]: Array<string>} = {
         'calendário britânico',
         'Pfundkalendar',
     ],
-    callback: ['return call', 'recall', 'ring back', 'devolución de llamada', 'retornar chamada', 'Rückruf'],
     'call-details': [
         'phone call information',
         'call data',
@@ -592,25 +592,9 @@ const iconKeywords: {[key: string]: Array<string>} = {
         'ligar para fixo',
         'Festnetz anrufen',
     ],
+    callback: ['return call', 'recall', 'ring back', 'devolución de llamada', 'retornar chamada', 'Rückruf'],
     cancel: ['abort', 'annul', 'revoke', 'cancelar', 'cancelar', 'stornieren'],
     cancellation: ['termination', 'voiding', 'abolition', 'cancelación', 'cancelamento', 'Stornierung'],
-    care: ['concern', 'attention', 'solicitude', 'cuidado', 'atenção', 'Sorge'],
-    'care-health': [
-        'healthcare',
-        'medical care',
-        'wellness',
-        'atención médica',
-        'cuidados de saúde',
-        'Gesundheitspflege',
-    ],
-    'care-shield': [
-        'protective care',
-        'guardianship',
-        'safety shield',
-        'cuidado protector',
-        'proteção',
-        'Schutzschild',
-    ],
     car: ['automobile', 'vehicle', 'auto', 'coche', 'veículo', 'Auto'],
     'car-moving': [
         'moving vehicle',
@@ -628,6 +612,23 @@ const iconKeywords: {[key: string]: Array<string>} = {
         'carro com relógio',
         'Auto mit Uhr',
     ],
+    care: ['concern', 'attention', 'solicitude', 'cuidado', 'atenção', 'Sorge'],
+    'care-health': [
+        'healthcare',
+        'medical care',
+        'wellness',
+        'atención médica',
+        'cuidados de saúde',
+        'Gesundheitspflege',
+    ],
+    'care-shield': [
+        'protective care',
+        'guardianship',
+        'safety shield',
+        'cuidado protector',
+        'proteção',
+        'Schutzschild',
+    ],
     casino: [
         'gambling house',
         'gaming establishment',
@@ -636,6 +637,7 @@ const iconKeywords: {[key: string]: Array<string>} = {
         'casa de jogos',
         'Spielhaus',
     ],
+    cat: ['feline', 'kitty', 'kitten', 'gato', 'gatinho', 'Katze'],
     certificate: ['credential', 'diploma', 'license', 'certificado', 'certificado', 'Zertifikat'],
     'change-plan': [
         'modify plan',
@@ -662,8 +664,8 @@ const iconKeywords: {[key: string]: Array<string>} = {
         'Diagrammgerät',
     ],
     chat: ['conversation', 'talk', 'discussion', 'chat', 'bate-papo', 'Gespräch'],
-    checked: ['marked', 'verified', 'inspected', 'verificado', 'verificado', 'überprüft'],
     check: ['inspect', 'examine', 'verify', 'verificar', 'verificar', 'überprüfen'],
+    checked: ['marked', 'verified', 'inspected', 'verificado', 'verificado', 'überprüft'],
     chemistry: ['chemical science', 'chemical study', 'chemical research', 'química', 'química', 'Chemie'],
     'chevron-down': [
         'downward arrowhead',
@@ -739,18 +741,11 @@ const iconKeywords: {[key: string]: Array<string>} = {
         'clique para ligar',
         'Klicken zum Anrufen',
     ],
-    clipboard: ['copy board', 'notepad', 'clipboard storage', 'portapapeles', 'prancheta', 'Zwischenablage'],
     clip: ['fastener', 'clasp', 'attachment', 'clip', 'prender', 'Klammer'],
+    clipboard: ['copy board', 'notepad', 'clipboard storage', 'portapapeles', 'prancheta', 'Zwischenablage'],
     cloakroom: ['coatroom', 'checkroom', 'storage room', 'guardarropa', 'vestiário', 'Garderobe'],
     close: ['shut', 'seal', 'lock', 'cerrar', 'fechar', 'schließen'],
-    'cloud-distribution-alternative': [
-        'alternative cloud distribution',
-        'alternate cloud delivery',
-        'backup cloud dissemination',
-        'distribución alternativa en la nube',
-        'entrega alternativa en la nube',
-        'Backup-Cloud-Verbreitung',
-    ],
+    cloud: ['cloud computing', 'virtual storage', 'online storage', 'nube', 'nuvem', 'Wolke'],
     'cloud-distribution': [
         'cloud delivery',
         'cloud dissemination',
@@ -759,7 +754,14 @@ const iconKeywords: {[key: string]: Array<string>} = {
         'disseminação na nuvem',
         'Cloud-Verteilung',
     ],
-    cloud: ['cloud computing', 'virtual storage', 'online storage', 'nube', 'nuvem', 'Wolke'],
+    'cloud-distribution-alternative': [
+        'alternative cloud distribution',
+        'alternate cloud delivery',
+        'backup cloud dissemination',
+        'distribución alternativa en la nube',
+        'entrega alternativa en la nube',
+        'Backup-Cloud-Verbreitung',
+    ],
     'cloud-friends': [
         'cloud companions',
         'virtual pals',
@@ -796,6 +798,7 @@ const iconKeywords: {[key: string]: Array<string>} = {
     ],
     coins: ['money', 'currency', 'change', 'monedas', 'moedas', 'Münzen'],
     comment: ['remark', 'opinion', 'observation', 'comentario', 'comentário', 'Kommentar'],
+    computer: ['pc', 'desktop', 'personal computer', 'computadora', 'computador', 'Computer'],
     'computer-academic': [
         'educational computer',
         'learning pc',
@@ -804,7 +807,6 @@ const iconKeywords: {[key: string]: Array<string>} = {
         'computador de aprendizagem',
         'Bildungsinformatik',
     ],
-    computer: ['pc', 'desktop', 'personal computer', 'computadora', 'computador', 'Computer'],
     'computer-user': [
         'pc user',
         'computer operator',
@@ -813,6 +815,7 @@ const iconKeywords: {[key: string]: Array<string>} = {
         'utilizador de computador',
         'Computerbenutzer',
     ],
+    conference: ['meeting', 'convention', 'gathering', 'conferencia', 'conferência', 'Konferenz'],
     'conference-call': [
         'conference call',
         'teleconference',
@@ -821,7 +824,6 @@ const iconKeywords: {[key: string]: Array<string>} = {
         'teleconferência',
         'Konferenzanruf',
     ],
-    conference: ['meeting', 'convention', 'gathering', 'conferencia', 'conferência', 'Konferenz'],
     'configure-device': [
         'set up device',
         'device configuration',
@@ -863,6 +865,14 @@ const iconKeywords: {[key: string]: Array<string>} = {
         'lista de contatos',
         'Kontaktbuch',
     ],
+    'contact-us': [
+        'get in touch',
+        'reach out',
+        'contact',
+        'contáctenos',
+        'entre em contato',
+        'Kontaktiere uns',
+    ],
     'contactless-payments-euro': [
         'euro contactless payments',
         'european no-contact transactions',
@@ -878,14 +888,6 @@ const iconKeywords: {[key: string]: Array<string>} = {
         'pagos sin contacto en libras',
         'pagamentos sem contato britânicos',
         'Pfund kontaktlose Zahlungen',
-    ],
-    'contact-us': [
-        'get in touch',
-        'reach out',
-        'contact',
-        'contáctenos',
-        'entre em contato',
-        'Kontaktiere uns',
     ],
     controls: ['settings', 'commands', 'adjustments', 'controles', 'controlos', 'Steuerungen'],
     cooking: ['cuisine', 'food preparation', 'culinary', 'cocina', 'cozinha', 'Kochen'],
@@ -947,14 +949,7 @@ const iconKeywords: {[key: string]: Array<string>} = {
         'alvo de dardos',
         'Dartbrett',
     ],
-    'data-100-gb': [
-        '100 gigabytes of data',
-        'large data plan',
-        'huge data allocation',
-        '100 gigabytes de datos',
-        'plano de datos grande',
-        '100 Gigabyte Daten',
-    ],
+    data: ['information', 'facts', 'data points', 'datos', 'informações', 'Daten'],
     'data-10-gb': [
         '10 gigabytes of data',
         'data plan',
@@ -971,6 +966,14 @@ const iconKeywords: {[key: string]: Array<string>} = {
         'plano de dados',
         '30 Gigabyte Daten',
     ],
+    'data-100-gb': [
+        '100 gigabytes of data',
+        'large data plan',
+        'huge data allocation',
+        '100 gigabytes de datos',
+        'plano de datos grande',
+        '100 Gigabyte Daten',
+    ],
     'data-alert': [
         'data warning',
         'usage alert',
@@ -978,22 +981,6 @@ const iconKeywords: {[key: string]: Array<string>} = {
         'advertencia de datos',
         'alerta de uso',
         'Datenbenachrichtigung',
-    ],
-    'database-connected': [
-        'connected database',
-        'linked data repository',
-        'database link',
-        'base de datos conectada',
-        'repositório de dados vinculado',
-        'verbundene Datenbank',
-    ],
-    database: [
-        'data repository',
-        'information storage',
-        'data warehouse',
-        'base de datos',
-        'armazenamento de informações',
-        'Datenbank',
     ],
     'data-bonus': [
         'extra data',
@@ -1035,7 +1022,6 @@ const iconKeywords: {[key: string]: Array<string>} = {
         'compartilhamento de dados',
         'Datenverteilung',
     ],
-    data: ['information', 'facts', 'data points', 'datos', 'informações', 'Daten'],
     'data-network': [
         'information network',
         'data connection',
@@ -1084,6 +1070,22 @@ const iconKeywords: {[key: string]: Array<string>} = {
         'malware de dados',
         'Daten-Virus',
     ],
+    database: [
+        'data repository',
+        'information storage',
+        'data warehouse',
+        'base de datos',
+        'armazenamento de informações',
+        'Datenbank',
+    ],
+    'database-connected': [
+        'connected database',
+        'linked data repository',
+        'database link',
+        'base de datos conectada',
+        'repositório de dados vinculado',
+        'verbundene Datenbank',
+    ],
     'delivery-van-moving': [
         'moving delivery van',
         'mobile delivery vehicle',
@@ -1110,6 +1112,7 @@ const iconKeywords: {[key: string]: Array<string>} = {
         'coleção eletrônica',
         'digitale Bibliothek',
     ],
+    disable: ['deactivate', 'turn off', 'shut down', 'desactivar', 'desativar', 'deaktivieren'],
     disabled: [
         'handicapped',
         'impaired',
@@ -1118,7 +1121,6 @@ const iconKeywords: {[key: string]: Array<string>} = {
         'deficiente',
         'behindert',
     ],
-    disable: ['deactivate', 'turn off', 'shut down', 'desactivar', 'desativar', 'deaktivieren'],
     disconnect: ['unplug', 'detach', 'sever connection', 'desconectar', 'desconectar', 'trennen'],
     disturb: ['interrupt', 'bother', 'disrupt', 'interrumpir', 'incomodar', 'stören'],
     'document-other': [
@@ -1130,14 +1132,7 @@ const iconKeywords: {[key: string]: Array<string>} = {
         'anderes Dokument',
     ],
     documents: ['files', 'records', 'paperwork', 'documentos', 'arquivos', 'Dokumente'],
-    'dollar-symbol-circle': [
-        'circular dollar symbol',
-        'dollar sign circle',
-        'round currency symbol',
-        'símbolo circular de dólar',
-        'símbolo de dólar circular',
-        'rundes Währungssymbol',
-    ],
+    dog: ['canine', 'puppy', 'pooch', 'perro', 'cachorro', 'Hund'],
     'dollar-symbol': [
         'dollar sign',
         'money symbol',
@@ -1146,6 +1141,15 @@ const iconKeywords: {[key: string]: Array<string>} = {
         'símbolo de dinheiro',
         'Währungssymbol',
     ],
+    'dollar-symbol-circle': [
+        'circular dollar symbol',
+        'dollar sign circle',
+        'round currency symbol',
+        'símbolo circular de dólar',
+        'símbolo de dólar circular',
+        'rundes Währungssymbol',
+    ],
+    download: ['retrieve', 'get', 'acquire', 'descargar', 'baixar', 'herunterladen'],
     'download-app': [
         'get app',
         'install application',
@@ -1162,7 +1166,6 @@ const iconKeywords: {[key: string]: Array<string>} = {
         'recuperação de dados',
         'Cloud-Download',
     ],
-    download: ['retrieve', 'get', 'acquire', 'descargar', 'baixar', 'herunterladen'],
     drink: ['beverage', 'liquid', 'refreshment', 'bebida', 'bebida', 'Getränk'],
     dumbbell: ['weights', 'barbell', 'exercise equipment', 'pesas', 'halteres', 'Hanteln'],
     eco: [
@@ -1248,14 +1251,6 @@ const iconKeywords: {[key: string]: Array<string>} = {
         'SIM eletrônico',
         'integrierte SIM',
     ],
-    'euro-symbol-circle': [
-        'circular euro symbol',
-        'euro sign circle',
-        'round european currency symbol',
-        'símbolo circular de euro',
-        'símbolo de euro circular',
-        'rundes europäisches Währungssymbol',
-    ],
     'euro-symbol': [
         'euro sign',
         'european currency symbol',
@@ -1263,6 +1258,14 @@ const iconKeywords: {[key: string]: Array<string>} = {
         'símbolo de euro',
         'símbolo de moeda europeia',
         'Euro-Symbol',
+    ],
+    'euro-symbol-circle': [
+        'circular euro symbol',
+        'euro sign circle',
+        'round european currency symbol',
+        'símbolo circular de euro',
+        'símbolo de euro circular',
+        'rundes europäisches Währungssymbol',
     ],
     exchange: ['swap', 'trade', 'convert', 'intercambiar', 'negociar', 'umtauschen'],
     'exit-door': ['way out', 'exit portal', 'doorway', 'salida', 'saída', 'Ausgang'],
@@ -1439,14 +1442,6 @@ const iconKeywords: {[key: string]: Array<string>} = {
         'documento de Photoshop',
         'Adobe Photoshop-Datei',
     ],
-    'files-digital': [
-        'digital files',
-        'electronic documents',
-        'online records',
-        'archivos digitales',
-        'documentos electrónicos',
-        'digitale Dateien',
-    ],
     'file-sketch': [
         'sketch file',
         'drawing document',
@@ -1462,6 +1457,14 @@ const iconKeywords: {[key: string]: Array<string>} = {
         'archivo zip',
         'documento comprimido',
         'komprimierte Daten',
+    ],
+    'files-digital': [
+        'digital files',
+        'electronic documents',
+        'online records',
+        'archivos digitales',
+        'documentos electrónicos',
+        'digitale Dateien',
     ],
     'find-store': [
         'locate store',
@@ -1507,6 +1510,7 @@ const iconKeywords: {[key: string]: Array<string>} = {
     flag: ['banner', 'standard', 'ensign', 'bandera', 'bandeira', 'Flagge'],
     floorplan: ['blueprint', 'layout', 'building diagram', 'plano de planta', 'layout', 'Grundriss'],
     flower: ['blossom', 'bloom', 'botanical', 'flor', 'flor', 'Blume'],
+    folder: ['directory', 'file folder', 'document folder', 'carpeta', 'pasta', 'Ordner'],
     'folder-encrypted': [
         'encrypted folder',
         'secure directory',
@@ -1515,7 +1519,6 @@ const iconKeywords: {[key: string]: Array<string>} = {
         'diretório seguro',
         'verschlüsselter Ordner',
     ],
-    folder: ['directory', 'file folder', 'document folder', 'carpeta', 'pasta', 'Ordner'],
     'football-ball': [
         'soccer ball',
         'soccer football',
@@ -1602,6 +1605,7 @@ const iconKeywords: {[key: string]: Array<string>} = {
         'Bluetooth-Kopfhörer',
     ],
     headphones: ['earphones', 'headset', 'audio cans', 'auriculares', 'fones de ouvido', 'Kopfhörer'],
+    heart: ['love', 'affection', 'emotion', 'corazón', 'coração', 'Herz'],
     'heart-bubble': [
         'love bubble',
         'romantic symbol',
@@ -1610,17 +1614,8 @@ const iconKeywords: {[key: string]: Array<string>} = {
         'bolha romântica',
         'Herzblase',
     ],
-    heart: ['love', 'affection', 'emotion', 'corazón', 'coração', 'Herz'],
     hockey: ['ice hockey', 'hockey sport', 'puck game', 'hockey sobre hielo', 'hóquei no gelo', 'Eishockey'],
     home: ['house', 'residence', 'dwelling', 'hogar', 'casa', 'Zuhause'],
-    homespot: [
-        'home wi-fi spot',
-        'residential wi-fi',
-        'household hotspot',
-        'punto de Wi-Fi en casa',
-        'Wi-Fi residencial',
-        'Haushaltshotspot',
-    ],
     'home-wifi': [
         'house wi-fi',
         'residential wireless',
@@ -1628,6 +1623,14 @@ const iconKeywords: {[key: string]: Array<string>} = {
         'Wi-Fi en casa',
         'Wi-Fi residencial',
         'Wohnungswlan',
+    ],
+    homespot: [
+        'home wi-fi spot',
+        'residential wi-fi',
+        'household hotspot',
+        'punto de Wi-Fi en casa',
+        'Wi-Fi residencial',
+        'Haushaltshotspot',
     ],
     hospital: [
         'medical center',
@@ -1666,6 +1669,7 @@ const iconKeywords: {[key: string]: Array<string>} = {
         'informação do usuário',
         'Benutzerinformation',
     ],
+    internet: ['web', 'online', 'net', 'Internet', 'online', 'Internet'],
     'internet-device': [
         'web device',
         'online equipment',
@@ -1674,7 +1678,6 @@ const iconKeywords: {[key: string]: Array<string>} = {
         'dispositivo online',
         'Internetgerät',
     ],
-    internet: ['web', 'online', 'net', 'Internet', 'online', 'Internet'],
     'internet-pendrive': [
         'internet usb drive',
         'online flash drive',
@@ -1748,10 +1751,11 @@ const iconKeywords: {[key: string]: Array<string>} = {
         'menu de três pontos',
         'Kebab-Menü',
     ],
-    keyboard: ['keypad', 'typing board', 'input device', 'teclado', 'teclado', 'Tastatur'],
     key: ['code', 'access', 'secret', 'clave', 'chave', 'Schlüssel'],
+    keyboard: ['keypad', 'typing board', 'input device', 'teclado', 'teclado', 'Tastatur'],
     landline: ['fixed line', 'home phone', 'wired phone', 'línea fija', 'telefone fixo', 'Festnetztelefon'],
     language: ['tongue', 'linguistics', 'dialect', 'idioma', 'linguística', 'Sprache'],
+    laptop: ['notebook', 'portable computer', 'laptop pc', 'computadora portátil', 'notebook', 'Laptop'],
     'laptop-charging': [
         'charging laptop',
         'powering notebook',
@@ -1768,7 +1772,6 @@ const iconKeywords: {[key: string]: Array<string>} = {
         'verificar o notebook',
         'Laptop überprüfen',
     ],
-    laptop: ['notebook', 'portable computer', 'laptop pc', 'computadora portátil', 'notebook', 'Laptop'],
     'laptop-goto': [
         'go to laptop',
         'access notebook',
@@ -1807,6 +1810,7 @@ const iconKeywords: {[key: string]: Array<string>} = {
     lightning: ['thunderbolt', 'electrical discharge', 'lightning bolt', 'relámpago', 'raio', 'Blitz'],
     like: ['favor', 'approval', 'thumbs-up', 'gustar', 'gostar', 'gefällt mir'],
     link: ['connection', 'hyperlink', 'url', 'enlace', 'ligação', 'Verknüpfung'],
+    list: ['listing', 'catalog', 'roster', 'lista', 'lista', 'Liste'],
     'list-document': [
         'document list',
         'listing',
@@ -1815,7 +1819,7 @@ const iconKeywords: {[key: string]: Array<string>} = {
         'lista de documentos',
         'Dokumentenliste',
     ],
-    list: ['listing', 'catalog', 'roster', 'lista', 'lista', 'Liste'],
+    loan: ['borrow', 'lend', 'advance', 'préstamo', 'empréstimo', 'Darlehen'],
     location: ['place', 'position', 'site', 'ubicación', 'localização', 'Ort'],
     'location-map': [
         'map location',
@@ -1882,6 +1886,7 @@ const iconKeywords: {[key: string]: Array<string>} = {
         'perdido e encontrado',
         'verlorene Gegenstände',
     ],
+    lotus: ['water lily', 'lotus flower', 'loto', 'flor de lótus', 'Lotusblume'],
     loudspeaker: [
         'speaker',
         'audio amplifier',
@@ -2123,6 +2128,14 @@ const iconKeywords: {[key: string]: Array<string>} = {
         'desconectado',
         'Keine Verbindung',
     ],
+    'not-photo-camera': [
+        'no photography',
+        'no pictures',
+        'no photos',
+        'no tomar fotos',
+        'sem fotos',
+        'Keine Fotos',
+    ],
     notes: ['musical notes', 'sheet music', 'melodic symbols', 'notas musicales', 'partitura', 'Musiknoten'],
     'numeric-keypad': [
         'number keypad',
@@ -2132,6 +2145,7 @@ const iconKeywords: {[key: string]: Array<string>} = {
         'teclado numérico',
         'numerisches Tastenfeld',
     ],
+    offer: ['promotion', 'discount', 'special offer', 'oferta', 'desconto', 'Angebot'],
     'offer-euro': [
         'euro offer',
         'european deal',
@@ -2140,7 +2154,6 @@ const iconKeywords: {[key: string]: Array<string>} = {
         'oferta europeia',
         'Euro-Angebot',
     ],
-    offer: ['promotion', 'discount', 'special offer', 'oferta', 'desconto', 'Angebot'],
     'offer-percent': [
         'percentage offer',
         'discount percentage',
@@ -2175,6 +2188,7 @@ const iconKeywords: {[key: string]: Array<string>} = {
         'recarga online',
         'Online-Aufladung',
     ],
+    open: ['unseal', 'unlock', 'reveal', 'abrir', 'abrir', 'öffnen'],
     'open-email': [
         'access email',
         'read e-message',
@@ -2191,7 +2205,6 @@ const iconKeywords: {[key: string]: Array<string>} = {
         'abrir o documento',
         'Datei öffnen',
     ],
-    open: ['unseal', 'unlock', 'reveal', 'abrir', 'abrir', 'öffnen'],
     'optical-fiber': [
         'fiber optics',
         'light-conducting fiber',
@@ -2225,6 +2238,7 @@ const iconKeywords: {[key: string]: Array<string>} = {
         'estacionamento',
         'Parken',
     ],
+    pause: ['break', 'intermission', 'halt', 'pausa', 'pausa', 'Pause'],
     'pause-circle': [
         'circle pause',
         'circular break',
@@ -2233,7 +2247,6 @@ const iconKeywords: {[key: string]: Array<string>} = {
         'pausa circular',
         'Kreispause',
     ],
-    pause: ['break', 'intermission', 'halt', 'pausa', 'pausa', 'Pause'],
     'pay-as-you-go-euro': [
         'euro pay-as-you-go',
         'prepaid eur',
@@ -2266,8 +2279,8 @@ const iconKeywords: {[key: string]: Array<string>} = {
         'pagamento de fatura em GBP',
         'Pfund-Rechnungszahlung',
     ],
-    pendrive: ['usb drive', 'flash drive', 'thumb drive', 'unidad USB', 'pen drive', 'USB-Stick'],
     pen: ['writing instrument', 'writing tool', 'ink pen', 'pluma', 'caneta', 'Stift'],
+    pendrive: ['usb drive', 'flash drive', 'thumb drive', 'unidad USB', 'pen drive', 'USB-Stick'],
     'people-network': [
         'social network',
         'human connection',
@@ -2277,6 +2290,7 @@ const iconKeywords: {[key: string]: Array<string>} = {
         'Gemeinschaft',
     ],
     percent: ['percentage', 'rate', 'proportion', 'porcentaje', 'percentagem', 'Prozent'],
+    person: ['individual', 'human', 'being', 'persona', 'pessoa', 'Person'],
     'personal-computer': [
         'pc',
         'desktop computer',
@@ -2285,7 +2299,6 @@ const iconKeywords: {[key: string]: Array<string>} = {
         'computador pessoal',
         'Personal Computer',
     ],
-    person: ['individual', 'human', 'being', 'persona', 'pessoa', 'Person'],
     pharmacy: ['drugstore', 'chemist', 'apotecary', 'farmacia', 'farmácia', 'Apotheke'],
     'photo-camera': [
         'camera',
@@ -2300,6 +2313,7 @@ const iconKeywords: {[key: string]: Array<string>} = {
     pin: ['needle', 'point', 'prick', 'alfiler', 'pino', 'Nadel'],
     plane: ['aircraft', 'airplane', 'aeroplane', 'avión', 'avião', 'Flugzeug'],
     plant: ['flora', 'vegetation', 'botanical', 'planta', 'planta', 'Pflanze'],
+    play: ['start', 'begin', 'commence', 'reproducir', 'jogar', 'spielen'],
     'play-circle': [
         'circular play',
         'round playback',
@@ -2308,7 +2322,6 @@ const iconKeywords: {[key: string]: Array<string>} = {
         'reprodução circular',
         'Kreis abspielen',
     ],
-    play: ['start', 'begin', 'commence', 'reproducir', 'jogar', 'spielen'],
     plug: ['socket', 'outlet', 'connector', 'enchufe', 'tomada', 'Stecker'],
     podium: ['platform', 'stand', 'lectern', 'podio', 'pódio', 'Podium'],
     poison: ['toxic substance', 'venom', 'deadly chemical', 'veneno', 'veneno', 'Gift'],
@@ -2365,9 +2378,18 @@ const iconKeywords: {[key: string]: Array<string>} = {
         'Ladevorgang',
     ],
     puzzle: ['enigma', 'conundrum', 'brain teaser', 'rompecabezas', 'quebra-cabeça', 'Rätsel'],
+    'qr-code': ['quick response code', 'matrix barcode', 'código QR', 'código de barras', 'QR-Code'],
     question: ['query', 'inquiry', 'interrogation', 'pregunta', 'pergunta', 'Frage'],
     queue: ['line', 'waiting line', 'lineup', 'cola', 'fila de espera', 'Warteschlange'],
     rating: ['evaluation', 'ranking', 'score', 'calificación', 'classificação', 'Bewertung'],
+    'reading-qr': [
+        'scanning qr code',
+        'reading matrix barcode',
+        'reading quick response code',
+        'escaneando código QR',
+        'lendo código de barras',
+        'QR-Code lesen',
+    ],
     recording: [
         'audio recording',
         'capture',
@@ -2387,6 +2409,7 @@ const iconKeywords: {[key: string]: Array<string>} = {
         'atualização de celular',
         'Mobilgerät erneuern',
     ],
+    repeat: ['replay', 'redo', 'loop', 'repetir', 'repetir', 'wiederholen'],
     repeater: [
         'signal booster',
         'amplifier',
@@ -2395,7 +2418,6 @@ const iconKeywords: {[key: string]: Array<string>} = {
         'amplificador',
         'Signalverstärker',
     ],
-    repeat: ['replay', 'redo', 'loop', 'repetir', 'repetir', 'wiederholen'],
     report: ['document', 'summary', 'statement', 'informe', 'relatório', 'Bericht'],
     restaurant: ['dining establishment', 'eatery', 'café', 'restaurante', 'restaurante', 'Restaurant'],
     rewind: ['backward', 'reverse', 'go back', 'rebobinar', 'rebobinar', 'zurückspulen'],
@@ -2428,6 +2450,7 @@ const iconKeywords: {[key: string]: Array<string>} = {
         'cinto de segurança',
         'Sicherheitsgurt',
     ],
+    search: ['hunt', 'seek', 'look for', 'buscar', 'procurar', 'suchen'],
     'search-cloud': [
         'cloud search',
         'online search',
@@ -2452,7 +2475,6 @@ const iconKeywords: {[key: string]: Array<string>} = {
         'busca de documentos',
         'Dateisuche',
     ],
-    search: ['hunt', 'seek', 'look for', 'buscar', 'procurar', 'suchen'],
     'search-money': [
         'money search',
         'financial search',
@@ -2461,6 +2483,7 @@ const iconKeywords: {[key: string]: Array<string>} = {
         'busca financeira',
         'Geldsuche',
     ],
+    send: ['transmit', 'dispatch', 'transfer', 'enviar', 'enviar', 'senden'],
     'send-euro': [
         'euro send',
         'european transmission',
@@ -2469,7 +2492,6 @@ const iconKeywords: {[key: string]: Array<string>} = {
         'enviar europeu',
         'Euro senden',
     ],
-    send: ['transmit', 'dispatch', 'transfer', 'enviar', 'enviar', 'senden'],
     'send-pound': [
         'pound send',
         'gbp transmission',
@@ -2478,6 +2500,7 @@ const iconKeywords: {[key: string]: Array<string>} = {
         'enviar GBP',
         'Pfund senden',
     ],
+    settings: ['configuration', 'preferences', 'options', 'configuración', 'configurações', 'Einstellungen'],
     'settings-cloud': [
         'cloud settings',
         'online configuration',
@@ -2486,7 +2509,6 @@ const iconKeywords: {[key: string]: Array<string>} = {
         'configuração online',
         'Einstellungen in der Cloud',
     ],
-    settings: ['configuration', 'preferences', 'options', 'configuración', 'configurações', 'Einstellungen'],
     'settings-web': [
         'web settings',
         'internet configuration',
@@ -2494,6 +2516,15 @@ const iconKeywords: {[key: string]: Array<string>} = {
         'configuración web',
         'configuração da internet',
         'Web-Einstellungen',
+    ],
+    share: ['collaborate', 'participate', 'contribute', 'compartir', 'partilhar', 'teilen'],
+    'share-devices': [
+        'device sharing',
+        'shared gadgets',
+        'sharing equipment',
+        'compartir dispositivos',
+        'compartilhamento de dispositivos',
+        'Geräte teilen',
     ],
     'shared-data': [
         'shared information',
@@ -2503,14 +2534,6 @@ const iconKeywords: {[key: string]: Array<string>} = {
         'dados colaborativos',
         'gemeinsame Daten',
     ],
-    'share-devices': [
-        'device sharing',
-        'shared gadgets',
-        'sharing equipment',
-        'compartir dispositivos',
-        'compartilhamento de dispositivos',
-        'Geräte teilen',
-    ],
     'shared-mobile-data': [
         'mobile data sharing',
         'cellular data collaboration',
@@ -2519,7 +2542,7 @@ const iconKeywords: {[key: string]: Array<string>} = {
         'compartilhamento de dados móveis',
         'gemeinsame Handydaten',
     ],
-    share: ['collaborate', 'participate', 'contribute', 'compartir', 'partilhar', 'teilen'],
+    shield: ['guard', 'defender', 'protector', 'escudo', 'escudo', 'Schild'],
     'shield-antivirus': [
         'antivirus shield',
         'security shield',
@@ -2544,7 +2567,6 @@ const iconKeywords: {[key: string]: Array<string>} = {
         'escudo de segurança cruz',
         'Kreuzschild',
     ],
-    shield: ['guard', 'defender', 'protector', 'escudo', 'escudo', 'Schild'],
     shop: ['store', 'retailer', 'market', 'tienda', 'loja', 'Geschäft'],
     'shopping-bag': [
         'purchase bag',
@@ -2642,6 +2664,7 @@ const iconKeywords: {[key: string]: Array<string>} = {
     storm: ['tempest', 'cyclone', 'turbulence', 'tormenta', 'tempestade', 'Sturm'],
     subscription: ['membership', 'enrollment', 'membership fee', 'suscripción', 'assinatura', 'Abonnement'],
     subtitles: ['captions', 'text overlays', 'subtitle text', 'subtítulos', 'legendas', 'Untertitel'],
+    subtract: ['minus', 'deduct', 'take away', 'restar', 'subtrair', 'abziehen'],
     'subtract-circle': [
         'circular subtract',
         'round minus',
@@ -2650,7 +2673,6 @@ const iconKeywords: {[key: string]: Array<string>} = {
         'subtrair círculo',
         'Kreis abziehen',
     ],
-    subtract: ['minus', 'deduct', 'take away', 'restar', 'subtrair', 'abziehen'],
     sun: ['solar', 'star', 'daylight', 'sol', 'sol', 'Sonne'],
     supermarket: [
         'grocery store',
@@ -2679,6 +2701,7 @@ const iconKeywords: {[key: string]: Array<string>} = {
     syringe: ['needle', 'injection', 'medical syringe', 'jeringa', 'seringa', 'Spritze'],
     tablet: ['pad', 'mobile device', 'tablet pc', 'tableta', 'tablet', 'Tablet-PC'],
     tachometer: ['speedometer', 'gauge', 'speed indicator', 'tacómetro', 'tacômetro', 'Tachometer'],
+    tag: ['label', 'marker', 'identification', 'etiqueta', 'etiqueta', 'Etikett'],
     'tag-discount-euro': [
         'euro discount tag',
         'european sale label',
@@ -2703,7 +2726,6 @@ const iconKeywords: {[key: string]: Array<string>} = {
         'etiqueta europeia',
         'eur Etikett',
     ],
-    tag: ['label', 'marker', 'identification', 'etiqueta', 'etiqueta', 'Etikett'],
     'tag-pound': [
         'pound tag',
         'gbp label',
@@ -2832,6 +2854,7 @@ const iconKeywords: {[key: string]: Array<string>} = {
     ],
     'trash-can': ['waste bin', 'garbage receptacle', 'dustbin', 'cubo de basura', 'lixeira', 'Mülltonne'],
     'travel-bag': ['luggage', 'suitcase', 'baggage', 'equipaje', 'bagagem', 'Reisetasche'],
+    tree: ['plant', 'foliage', 'woodland', 'árbol', 'árvore', 'Baum'],
     'tree-2': [
         'second tree',
         'additional tree',
@@ -2840,7 +2863,6 @@ const iconKeywords: {[key: string]: Array<string>} = {
         'árvore adicional',
         'zweiter Baum',
     ],
-    tree: ['plant', 'foliage', 'woodland', 'árbol', 'árvore', 'Baum'],
     'trend-down': [
         'decline trend',
         'decreasing pattern',
@@ -2902,6 +2924,7 @@ const iconKeywords: {[key: string]: Array<string>} = {
         'suporte ao cliente',
         'Benutzerunterstützung',
     ],
+    video: ['visual', 'clip', 'footage', 'video', 'vídeo', 'Video'],
     'video-camera': [
         'camcorder',
         'video recorder',
@@ -2926,15 +2949,6 @@ const iconKeywords: {[key: string]: Array<string>} = {
         'vídeo desativado',
         'Video deaktiviert',
     ],
-    video: ['visual', 'clip', 'footage', 'video', 'vídeo', 'Video'],
-    videogames: [
-        'video games',
-        'electronic games',
-        'gaming',
-        'videojuegos',
-        'jogos eletrônicos',
-        'Videospiele',
-    ],
     'video-surveillance-security': [
         'security video surveillance',
         'cctv security',
@@ -2942,6 +2956,14 @@ const iconKeywords: {[key: string]: Array<string>} = {
         'vigilancia de seguridad con video',
         'segurança CCTV',
         'Videoüberwachungssicherheit',
+    ],
+    videogames: [
+        'video games',
+        'electronic games',
+        'gaming',
+        'videojuegos',
+        'jogos eletrônicos',
+        'Videospiele',
     ],
     'view-360': [
         '360-degree view',
@@ -3013,6 +3035,7 @@ const iconKeywords: {[key: string]: Array<string>} = {
     ],
     web: ['internet', 'world wide web', 'online', 'web', 'web', 'Web'],
     wifi: ['wireless internet', 'wi-fi', 'wireless network', 'wifi', 'wi-fi', 'WLAN'],
+    winner: ['champion', 'victor', 'conqueror', 'ganador', 'vencedor', 'Gewinner'],
     'winner-check': [
         'victor verification',
         'checking winner',
@@ -3037,7 +3060,6 @@ const iconKeywords: {[key: string]: Array<string>} = {
         'vencedor de qualidade de fibra',
         'Gewinner der Glasfaserqualität',
     ],
-    winner: ['champion', 'victor', 'conqueror', 'ganador', 'vencedor', 'Gewinner'],
     'winner-pound': [
         'pound winner',
         'british champion',
