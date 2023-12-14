@@ -30,7 +30,6 @@ test('HorizontalMosaic - appears properly on mobile', async () => {
     await openStoryPage({
         id: 'components-mosaic--horizontal-mosaic-story',
         device: 'MOBILE_IOS',
-        args: {items: 7},
     });
 
     const story = await screen.findByTestId('horizontal-mosaic');
@@ -42,7 +41,6 @@ test('VerticalMosaic - appears properly on mobile', async () => {
     await openStoryPage({
         id: 'components-mosaic--vertical-mosaic-story',
         device: 'MOBILE_IOS',
-        args: {items: 7},
     });
 
     const story = await screen.findByTestId('vertical-mosaic');
