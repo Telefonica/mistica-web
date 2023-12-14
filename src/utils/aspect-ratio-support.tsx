@@ -47,9 +47,13 @@ type AspectRatioContainerProps = {
 export const AspectRatioContainer = (props: AspectRatioContainerProps): JSX.Element => {
     const supportsAspectRatio = useSupportsAspectRatio();
     // if width or height are numeric, we can calculate the other with the ratio without css.
-    // if aspect ratio is 0, we use the original image proportions
+    // if width and height were provided, we ignore the aspectRatio.
+    // if aspect ratio is 0, we use the original image proportions.
     const withCssAspectRatio =
-        typeof props.width !== 'number' && typeof props.height !== 'number' && props.aspectRatio !== 0;
+        typeof props.width !== 'number' &&
+        typeof props.height !== 'number' &&
+        (props.width === undefined || props.height === undefined) &&
+        props.aspectRatio !== 0;
 
     const aspectRatio = withCssAspectRatio ? props.aspectRatio : undefined;
 
