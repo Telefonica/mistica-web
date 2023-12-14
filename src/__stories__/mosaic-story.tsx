@@ -1,16 +1,10 @@
 import * as React from 'react';
-import {
-    Circle,
-    HorizontalMosaic,
-    IconMobileDeviceRegular,
-    ResponsiveLayout,
-    SnapCard,
-    VerticalMosaic,
-    skinVars,
-} from '..';
+import {HorizontalMosaic, ResponsiveLayout, VerticalMosaic, PosterCard, Box} from '..';
+import usingVrImg from './images/using-vr.jpg';
 
 export default {
     title: 'Components/Mosaic',
+    parameters: {fullScreen: true},
 };
 
 type Props = {
@@ -18,24 +12,18 @@ type Props = {
 };
 
 const renderItem = (index: number) => (
-    <SnapCard
-        key={index}
-        title={`Card ${index}`}
-        icon={
-            <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
-                <IconMobileDeviceRegular color={skinVars.colors.brand} />
-            </Circle>
-        }
-    />
+    <PosterCard backgroundImage={usingVrImg} width="100%" height="100%" key={index} title={`Card ${index}`} />
 );
 
 export const VerticalMosaicStory: StoryComponent<Props> = ({items}) => {
     return (
         <ResponsiveLayout>
-            <VerticalMosaic
-                items={Array.from({length: items}, (_, index) => renderItem(index + 1))}
-                dataAttributes={{testid: 'vertical-mosaic'}}
-            />
+            <Box paddingY={24}>
+                <VerticalMosaic
+                    items={Array.from({length: items}, (_, index) => renderItem(index + 1))}
+                    dataAttributes={{testid: 'vertical-mosaic'}}
+                />
+            </Box>
         </ResponsiveLayout>
     );
 };
@@ -53,12 +41,14 @@ type HorizontalMosaicProps = Props & {withBullets: boolean; free: boolean};
 export const HorizontalMosaicStory: StoryComponent<HorizontalMosaicProps> = ({items, withBullets, free}) => {
     return (
         <ResponsiveLayout>
-            <HorizontalMosaic
-                items={Array.from({length: items}, (_, index) => renderItem(index + 1))}
-                withBullets={withBullets}
-                free={free}
-                dataAttributes={{testid: 'horizontal-mosaic'}}
-            />
+            <Box paddingY={24}>
+                <HorizontalMosaic
+                    items={Array.from({length: items}, (_, index) => renderItem(index + 1))}
+                    withBullets={withBullets}
+                    free={free}
+                    dataAttributes={{testid: 'horizontal-mosaic'}}
+                />
+            </Box>
         </ResponsiveLayout>
     );
 };
