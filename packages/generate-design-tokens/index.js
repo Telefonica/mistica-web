@@ -115,7 +115,7 @@ const generateSkinFiles = () => {
         'movistar',
         'movistar-legacy',
         'o2',
-        'o2-new',
+        'Movistar-AR',
         'telefonica',
         'vivo',
         'vivo-new',

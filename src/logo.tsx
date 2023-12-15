@@ -6,7 +6,7 @@ import Touchable from './touchable';
 import {getMovistarSkin} from './skins/movistar';
 import {getVivoSkin} from './skins/vivo';
 import {getO2Skin} from './skins/o2';
-import {getO2NewSkin} from './skins/o2-new';
+import {getMovistarArSkin} from './skins/movistar-ar';
 import {getBlauSkin} from './skins/blau';
 import {getTelefonicaSkin} from './skins/telefonica';
 import {getPrefixedDataAttributes} from './utils/dom';
@@ -137,7 +137,7 @@ const O2NewLogoImage = ({size, type}: LogoImageProps) => {
     const {isDarkMode} = useTheme();
     const isInverse = useIsInverseVariant();
     // todo WEB-761 what about classic?
-    const {colors} = getO2NewSkin();
+    const {colors} = getMovistarArSkin();
     const color = isInverse && !isDarkMode ? colors.inverse : colors.brand;
 
     if (type === 'vertical') {
@@ -285,6 +285,7 @@ type LogoBaseProps = {
 const LogoBase: React.FC<LogoBaseProps> = ({size = 48, skinName, type = 'isotype'}) => {
     switch (skinName) {
         case 'Movistar':
+        case 'Movistar-AR':
             return <MovistarLogoImage size={size} type={type} />;
         case 'Vivo':
         case 'Vivo-new':
@@ -292,8 +293,6 @@ const LogoBase: React.FC<LogoBaseProps> = ({size = 48, skinName, type = 'isotype
         case 'O2':
         case 'O2-classic':
             return <O2LogoImage size={size} type={type} />;
-        case 'O2-new':
-            return <O2NewLogoImage size={size} type={type} />;
         case 'Telefonica':
             return <TelefonicaLogoImage size={size} type={type} />;
         case 'Blau':

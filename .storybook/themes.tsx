@@ -1,7 +1,7 @@
 import {
     getMovistarSkin,
     getO2Skin,
-    getO2NewSkin,
+    getMovistarArSkin,
     getVivoSkin,
     getVivoNewSkin,
     getTelefonicaSkin,
@@ -13,14 +13,14 @@ export const Movistar = {
     skin: getMovistarSkin(),
 } as const;
 
+export const Movistar_AR = {
+    i18n: {locale: 'es-ES', phoneNumberFormattingRegionCode: 'AR'},
+    skin: getMovistarArSkin(),
+} as const;
+
 export const O2 = {
     i18n: {locale: 'en-GB', phoneNumberFormattingRegionCode: 'GB'},
     skin: getO2Skin(),
-} as const;
-
-export const O2_New = {
-    i18n: {locale: 'en-GB', phoneNumberFormattingRegionCode: 'GB'},
-    skin: getO2NewSkin(),
 } as const;
 
 export const Vivo = {
@@ -43,4 +43,4 @@ export const Blau = {
     skin: getBlauSkin(),
 } as const;
 
-export const AVAILABLE_THEMES = [Movistar, O2, O2_New, Vivo, Vivo_New, Telefonica, Blau];
+export const AVAILABLE_THEMES = [Movistar, O2, Movistar_AR, Vivo, Vivo_New, Telefonica, Blau];
