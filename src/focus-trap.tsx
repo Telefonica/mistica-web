@@ -9,7 +9,7 @@ type Props = {
 };
 
 const FocusTrap: React.FC<Props> = ({children, disabled, className, group}) => (
-    <ReactFocusLock noFocusGuards disabled={disabled} className={className} group={group}>
+    <ReactFocusLock autoFocus={false} noFocusGuards disabled={disabled} className={className} group={group}>
         {children}
     </ReactFocusLock>
 );
