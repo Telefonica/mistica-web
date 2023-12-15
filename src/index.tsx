@@ -183,8 +183,8 @@ export {
     VIVO_NEW_SKIN,
     O2_CLASSIC_SKIN,
     O2_SKIN,
-    MOVISTAR_AR_SKIN,
     MOVISTAR_SKIN,
+    MOVISTAR_AR_SKIN,
     TELEFONICA_SKIN,
     BLAU_SKIN,
 } from './skins/constants';
@@ -193,9 +193,9 @@ export {getVivoSkin} from './skins/vivo';
 export {getVivoNewSkin} from './skins/vivo-new';
 export {getMovistarSkin} from './skins/movistar';
 export {getMovistarLegacySkin} from './skins/movistar-legacy';
+export {getMovistarArSkin} from './skins/movistar-ar';
 export {getO2Skin} from './skins/o2';
 export {getO2ClassicSkin} from './skins/o2-classic';
-export {getMovistarArSkin} from './skins/movistar-ar';
 export {getTelefonicaSkin} from './skins/telefonica';
 export {getBlauSkin} from './skins/blau';
 export {palette as vivoPalette} from './skins/vivo';

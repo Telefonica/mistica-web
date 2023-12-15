@@ -3,7 +3,7 @@
 // This module replaces the required parts from ./src/skins
 
 /**
- * @param {'Movistar' | 'Vivo' | 'Vivo-new' | 'O2' | 'Movistar-AR' | 'Telefonica' | 'Blau'} skin
+ * @param {'Movistar' | 'Movistar-AR' | 'Vivo' | 'Vivo-new' | 'O2' | 'Telefonica' | 'Blau'} skin
  */
 export const getColors = (skin) => {
     switch (skin) {

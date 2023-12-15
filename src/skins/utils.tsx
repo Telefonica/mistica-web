@@ -14,8 +14,8 @@ import {getTelefonicaSkin} from './telefonica';
 import {getVivoSkin} from './vivo';
 import {getVivoNewSkin} from './vivo-new';
 import {getO2Skin} from './o2';
-import {getMovistarArSkin} from './movistar-ar';
 import {getO2ClassicSkin} from './o2-classic';
+import {getMovistarArSkin} from './movistar-ar';
 import {getMovistarSkin} from './movistar';
 
 import type {SkinVariant, KnownSkin, KnownSkinName} from './types';

@@ -1,7 +1,7 @@
 import {
     getMovistarSkin,
-    getO2Skin,
     getMovistarArSkin,
+    getO2Skin,
     getVivoSkin,
     getVivoNewSkin,
     getTelefonicaSkin,
