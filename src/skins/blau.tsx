@@ -278,7 +278,7 @@ export const getBlauSkin: GetKnownSkin = () => {
             mediaSmall: '8px',
         },
         textPresets: {
-            cardTitle: {weight: 'medium'},
+            cardTitle: {weight: 'bold'},
             button: {weight: 'medium'},
             tabsLabel: {
                 weight: 'medium',
