@@ -93,19 +93,19 @@ test('Carousel desktop', async () => {
     const nextArrow = await screen.findByRole('button', {name: /siguiente/i});
 
     // https://jira.tid.es/browse/WEB-680
-    expect(await page.screenshot()).toMatchImageSnapshot({failureThreshold: 0.001});
+    expect(await page.screenshot()).toMatchImageSnapshot({failureThreshold: 0.00004});
     expect(await isDisabled(prevArrow)).toBe(true);
     expect(await isDisabled(nextArrow)).toBe(false);
 
     await page.click(nextArrow);
 
-    expect(await page.screenshot()).toMatchImageSnapshot({failureThreshold: 0.001});
+    expect(await page.screenshot()).toMatchImageSnapshot({failureThreshold: 0.00004});
     expect(await isDisabled(prevArrow)).toBe(false);
     expect(await isDisabled(nextArrow)).toBe(false);
 
     await page.click(nextArrow);
 
-    expect(await page.screenshot()).toMatchImageSnapshot({failureThreshold: 0.001});
+    expect(await page.screenshot()).toMatchImageSnapshot({failureThreshold: 0.00004});
     expect(await isDisabled(prevArrow)).toBe(false);
     expect(await isDisabled(nextArrow)).toBe(true);
 });
