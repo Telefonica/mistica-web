@@ -8,14 +8,15 @@ test.each(DEVICES)('Checkbox (%s)', async (device) => {
         device,
     });
 
+    const wrapper = await screen.findByTestId('checkbox-wrapper');
     const checkbox = await screen.findByRole('checkbox');
 
-    const image = await checkbox.screenshot();
+    const image = await wrapper.screenshot();
     expect(image).toMatchImageSnapshot();
 
     await checkbox.click();
 
-    const imageChecked = await checkbox.screenshot();
+    const imageChecked = await wrapper.screenshot();
     expect(imageChecked).toMatchImageSnapshot();
 });
 
@@ -25,14 +26,15 @@ test('Checkbox - uncontrolled', async () => {
         device: 'MOBILE_IOS',
     });
 
+    const wrapper = await screen.findByTestId('checkbox-wrapper');
     const checkbox = await screen.findByRole('checkbox');
 
-    const image = await checkbox.screenshot();
+    const image = await wrapper.screenshot();
     expect(image).toMatchImageSnapshot();
 
     await checkbox.click();
 
-    const imageChecked = await checkbox.screenshot();
+    const imageChecked = await wrapper.screenshot();
     expect(imageChecked).toMatchImageSnapshot();
 });
 
@@ -42,14 +44,15 @@ test('Checkbox - custom render', async () => {
         device: 'MOBILE_IOS',
     });
 
+    const wrapper = await screen.findByTestId('checkbox-wrapper');
     const checkbox = await screen.findByRole('checkbox');
 
-    const image = await checkbox.screenshot();
+    const image = await wrapper.screenshot();
     expect(image).toMatchImageSnapshot();
 
     await checkbox.click();
 
-    const imageChecked = await checkbox.screenshot();
+    const imageChecked = await wrapper.screenshot();
     expect(imageChecked).toMatchImageSnapshot();
 });
 
@@ -60,8 +63,8 @@ test('Checkbox - disabled', async () => {
         args: {disabled: true},
     });
 
-    const checkbox = await screen.findByRole('checkbox');
-    const image = await checkbox.screenshot();
+    const wrapper = await screen.findByTestId('checkbox-wrapper');
+    const image = await wrapper.screenshot();
     expect(image).toMatchImageSnapshot();
 });
 
@@ -73,7 +76,7 @@ test('Checkbox - control element aligned correctly with long content', async () 
 
     await setRootFontSize(72);
 
-    const checkbox = await screen.findByRole('checkbox');
-    const image = await checkbox.screenshot();
+    const wrapper = await screen.findByTestId('checkbox-wrapper');
+    const image = await wrapper.screenshot();
     expect(image).toMatchImageSnapshot();
 });

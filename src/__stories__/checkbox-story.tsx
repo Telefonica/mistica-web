@@ -12,9 +12,11 @@ type Args = {
 export const Controlled: StoryComponent<Args> = ({disabled}) => {
     const [checked, onChange] = React.useState(false);
     return (
-        <Checkbox name="checkbox" checked={checked} onChange={onChange} disabled={disabled}>
-            checkbox content
-        </Checkbox>
+        <div data-testid="checkbox-wrapper" style={{maxWidth: 'fit-content'}}>
+            <Checkbox name="checkbox" checked={checked} onChange={onChange} disabled={disabled}>
+                checkbox content
+            </Checkbox>
+        </div>
     );
 };
 
@@ -25,9 +27,11 @@ Controlled.args = {
 
 export const Uncontrolled: StoryComponent<Args> = ({disabled}) => {
     return (
-        <Checkbox name="checkbox" defaultChecked={false} disabled={disabled}>
-            checkbox content
-        </Checkbox>
+        <div data-testid="checkbox-wrapper" style={{maxWidth: 'fit-content'}}>
+            <Checkbox name="checkbox" defaultChecked={false} disabled={disabled}>
+                checkbox content
+            </Checkbox>
+        </div>
     );
 };
 
@@ -38,21 +42,23 @@ Uncontrolled.args = {
 
 export const CustomRender: StoryComponent<Args> = ({disabled}) => {
     return (
-        <Checkbox
-            name="checkbox"
-            disabled={disabled}
-            render={({labelId, checked, disabled}) => (
-                <div style={{opacity: disabled ? 0.5 : undefined}}>
-                    <Inline alignItems="center" space={16}>
-                        {checked ? <IconCheckRegular size={18} /> : <IconCloseRegular size={18} />}
-                        {/* set the text id to match the checkbox name, so this text can be linked as label for accessibility */}
-                        <Text3 regular id={labelId}>
-                            checkbox content
-                        </Text3>
-                    </Inline>
-                </div>
-            )}
-        />
+        <div data-testid="checkbox-wrapper" style={{maxWidth: 'fit-content'}}>
+            <Checkbox
+                name="checkbox"
+                disabled={disabled}
+                render={({labelId, checked, disabled}) => (
+                    <div style={{opacity: disabled ? 0.5 : undefined}}>
+                        <Inline alignItems="center" space={16}>
+                            {checked ? <IconCheckRegular size={18} /> : <IconCloseRegular size={18} />}
+                            {/* set the text id to match the checkbox name, so this text can be linked as label for accessibility */}
+                            <Text3 regular id={labelId}>
+                                checkbox content
+                            </Text3>
+                        </Inline>
+                    </div>
+                )}
+            />
+        </div>
     );
 };
 

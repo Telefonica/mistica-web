@@ -8,14 +8,15 @@ test.each(DEVICES)('Switch (%s)', async (device) => {
         device,
     });
 
+    const wrapper = await screen.findByTestId('switch-wrapper');
     const element = await screen.findByRole('switch');
 
-    const image = await element.screenshot();
+    const image = await wrapper.screenshot();
     expect(image).toMatchImageSnapshot();
 
     await element.click();
 
-    const imageChecked = await element.screenshot();
+    const imageChecked = await wrapper.screenshot();
     expect(imageChecked).toMatchImageSnapshot();
 });
 
@@ -25,14 +26,15 @@ test('Switch - uncontrolled', async () => {
         device: 'MOBILE_IOS',
     });
 
+    const wrapper = await screen.findByTestId('switch-wrapper');
     const element = await screen.findByRole('switch');
 
-    const image = await element.screenshot();
+    const image = await wrapper.screenshot();
     expect(image).toMatchImageSnapshot();
 
     await element.click();
 
-    const imageChecked = await element.screenshot();
+    const imageChecked = await wrapper.screenshot();
     expect(imageChecked).toMatchImageSnapshot();
 });
 
@@ -42,14 +44,15 @@ test('Switch - custom render', async () => {
         device: 'MOBILE_IOS',
     });
 
+    const wrapper = await screen.findByTestId('switch-wrapper');
     const element = await screen.findByRole('switch');
 
-    const image = await element.screenshot();
+    const image = await wrapper.screenshot();
     expect(image).toMatchImageSnapshot();
 
     await element.click();
 
-    const imageChecked = await element.screenshot();
+    const imageChecked = await wrapper.screenshot();
     expect(imageChecked).toMatchImageSnapshot();
 });
 
@@ -60,8 +63,8 @@ test('Switch - disabled', async () => {
         args: {disabled: true},
     });
 
-    const element = await screen.findByRole('switch');
-    const image = await element.screenshot();
+    const wrapper = await screen.findByTestId('switch-wrapper');
+    const image = await wrapper.screenshot();
     expect(image).toMatchImageSnapshot();
 });
 
@@ -73,7 +76,7 @@ test('Switch - control element aligned correctly with long content', async () =>
 
     await setRootFontSize(72);
 
-    const element = await screen.findByRole('switch');
-    const image = await element.screenshot();
+    const wrapper = await screen.findByTestId('switch-wrapper');
+    const image = await wrapper.screenshot();
     expect(image).toMatchImageSnapshot();
 });

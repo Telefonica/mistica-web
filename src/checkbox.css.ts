@@ -4,7 +4,7 @@ import {sprinkles} from './sprinkles.css';
 
 const checkboxContainerBase = style([
     sprinkles({
-        display: 'inline-block',
+        display: 'inline',
     }),
     {
         WebkitTapHighlightColor: 'transparent',
