@@ -476,7 +476,7 @@ interface ButtonLinkToProps extends ButtonLinkCommonProps {
 
 export type ButtonLinkProps = ButtonLinkOnPressProps | ButtonLinkHrefProps | ButtonLinkToProps;
 
-export const BaseButtonLink = React.forwardRef<
+const BaseButtonLink = React.forwardRef<
     TouchableElement,
     ButtonLinkProps & {type: ButtonLinkType; withChevron?: boolean}
 >(({type, ...props}, ref) => {
