@@ -96,7 +96,7 @@ export const hasScroll = (el: HTMLElement): boolean => el.scrollHeight > el.clie
 type ResizeListener = (entries: Array<ResizeObserverEntry>, observer: ResizeObserver) => void;
 export const listenResize = (element: Element, handler: ResizeListener): (() => void) => {
     const getResizeObserverPromise = (): Promise<typeof window.ResizeObserver | null> => {
-        if (typeof window === 'undefined') {
+        if (isServerSide()) {
             return Promise.resolve(null);
         }
         return window.ResizeObserver
@@ -120,4 +120,33 @@ export const listenResize = (element: Element, handler: ResizeListener): (() => 
             resizeObserver.disconnect();
         }
     };
+};
+
+const parseVarCall = (cssVar: string) => {
+    const [varName, fallback] = cssVar
+        .replace(/^var\(/, '')
+        .replace(/\)$/, '')
+        .split(/\s*,\s*(.*)/);
+    return {varName, fallback};
+};
+
+const isCssVar = (cssVar: string) => cssVar.startsWith('var(') || cssVar.startsWith('--');
+
+export const getCssVarValue = (cssVar: string, element?: Element): string => {
+    if (!isCssVar(cssVar)) {
+        throw new Error(`Invalid css var: ${cssVar}`);
+    }
+
+    if (cssVar.startsWith('var(')) {
+        const {varName, fallback} = parseVarCall(cssVar);
+        const value = getCssVarValue(varName, element);
+        if (!value && fallback) {
+            if (!isCssVar(fallback)) {
+                return fallback;
+            }
+            return getCssVarValue(fallback, element);
+        }
+        return value;
+    }
+    return getComputedStyle(element ?? document.documentElement).getPropertyValue(cssVar);
 };

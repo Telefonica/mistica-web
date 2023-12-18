@@ -11,7 +11,6 @@
     "dependencies": {
         "@svgr/core": "^5.4.0",
         "@svgr/plugin-jsx": "^5.4.0",
-        "@svgr/plugin-svgo": "^5.5.0",
         "colors": "^1.4.0",
         "glob": "^7.2.0",
         "lodash": "^4.17.20",

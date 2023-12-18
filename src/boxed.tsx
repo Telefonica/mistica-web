@@ -1,9 +1,9 @@
+'use client';
 import * as React from 'react';
 import classnames from 'classnames';
 import {ThemeVariant, useIsInverseVariant} from './theme-variant-context';
 import {getPrefixedDataAttributes} from './utils/dom';
 import {vars} from './skins/skin-contract.css';
-import {useTheme} from './hooks';
 import * as styles from './boxed.css';
 import {sprinkles} from './sprinkles.css';
 
@@ -17,6 +17,7 @@ type Props = {
     /** "data-" prefix is automatically added. For example, use "testid" instead of "data-testid" */
     dataAttributes?: DataAttributes;
     'aria-label'?: string;
+    'aria-labelledby'?: string;
     width?: number | string;
     height?: number | string;
     minHeight?: number | string;
@@ -28,15 +29,10 @@ type InternalProps = {
 };
 
 const getBorderStyle = (isInverseOutside: boolean, isInverseInside: boolean) => {
-    if (isInverseOutside && !isInverseInside) {
-        return styles.inverseBorder;
-    }
-
-    if (isInverseInside) {
+    if (isInverseOutside || isInverseInside) {
         return sprinkles({border: 'none'});
     }
-
-    return sprinkles({border: 'regular'});
+    return styles.boxBorder;
 };
 
 export const InternalBoxed = React.forwardRef<HTMLDivElement, Props & InternalProps>(
@@ -48,6 +44,7 @@ export const InternalBoxed = React.forwardRef<HTMLDivElement, Props & InternalPr
             role,
             dataAttributes,
             'aria-label': ariaLabel,
+            'aria-labelledby': ariaLabelledby,
             width,
             height,
             minHeight,
@@ -56,7 +53,6 @@ export const InternalBoxed = React.forwardRef<HTMLDivElement, Props & InternalPr
         },
         ref
     ) => {
-        const {isDarkMode} = useTheme();
         const isInverseOutside = useIsInverseVariant();
 
         return (
@@ -69,17 +65,17 @@ export const InternalBoxed = React.forwardRef<HTMLDivElement, Props & InternalPr
                     sprinkles({
                         borderRadius,
                         overflow: 'hidden',
-                        background: !background
-                            ? isInverseInside && !isDarkMode
+                        background:
+                            background ?? isInverseInside
                                 ? isInverseOutside
-                                    ? vars.colors.brandHigh
+                                    ? vars.colors.backgroundContainerBrandOverInverse
                                     : vars.colors.backgroundContainerBrand
-                                : vars.colors.backgroundContainer
-                            : undefined,
+                                : vars.colors.backgroundContainer,
                     })
                 )}
                 role={role}
                 aria-label={ariaLabel}
+                aria-labelledby={ariaLabelledby}
                 {...getPrefixedDataAttributes(dataAttributes)}
             >
                 <ThemeVariant isInverse={isInverseInside}>{children}</ThemeVariant>

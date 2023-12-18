@@ -2,10 +2,24 @@ import {style, styleVariants} from '@vanilla-extract/css';
 import {vars} from './skins/skin-contract.css';
 import {sprinkles} from './sprinkles.css';
 
-export const checkboxContainer = style([
+const checkboxContainerBase = style([
     sprinkles({
         display: 'inline',
     }),
+    {
+        WebkitTapHighlightColor: 'transparent',
+    },
+]);
+
+export const checkboxContainer = style([
+    checkboxContainerBase,
+    {
+        cursor: 'pointer',
+    },
+]);
+
+export const checkboxContainerDisabled = style([
+    checkboxContainerBase,
     {
         cursor: 'default',
     },
@@ -53,4 +67,5 @@ export const checkChecked = style({
 
 export const disabled = style({
     opacity: 0.5,
+    cursor: 'default',
 });

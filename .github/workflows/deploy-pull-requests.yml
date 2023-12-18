@@ -1,10 +1,13 @@
 name: deploy-pull-requests
 on: [pull_request]
+concurrency:
+    group: deploy-pull-requests-${{ github.ref }}
+    cancel-in-progress: true
 jobs:
     deploy:
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v2
+            - uses: actions/checkout@v3
 
             # we need to run a different buildCommand for PR previews (see package.json scripts)
             - run: sed -i 's/yarn vercel-build/yarn vercel-preview-build/' vercel.json

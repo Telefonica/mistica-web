@@ -4,21 +4,22 @@ import {
     DataCard,
     ButtonPrimary,
     ButtonLink,
-    Inline,
     Text2,
     ResponsiveLayout,
     IconMobileDeviceRegular,
     skinVars,
     Circle,
     Tag,
+    Carousel,
 } from '..';
 import {Placeholder} from '../placeholder';
 import avatarImg from './images/avatar.jpg';
 
+import type {AspectRatio} from '../card';
 import type {TagType} from '..';
 
 export default {
-    title: 'Components/Cards/Data card',
+    title: 'Components/Cards/DataCard',
 };
 
 type DataCardArgs = {
@@ -30,10 +31,13 @@ type DataCardArgs = {
     subtitle: string;
     description: string;
     withExtra: boolean;
-    actions: 'button' | 'link' | 'button and link';
+    actions: 'button' | 'link' | 'button and link' | 'on press';
     closable: boolean;
     withTopAction: boolean;
+    aspectRatio: AspectRatio;
 };
+
+const fixedAspectRatioValues = ['1 1', '16 9', '7 10', '9 10'];
 
 export const Default: StoryComponent<DataCardArgs> = ({
     asset = 'icon',
@@ -47,6 +51,7 @@ export const Default: StoryComponent<DataCardArgs> = ({
     actions = 'button',
     closable,
     withTopAction,
+    aspectRatio,
 }) => {
     let icon;
     if (asset === 'icon') {
@@ -67,6 +72,19 @@ export const Default: StoryComponent<DataCardArgs> = ({
 
     const buttonLink = actions.includes('link') ? <ButtonLink href="#">Link</ButtonLink> : undefined;
 
+    const onPress = actions.includes('press') ? () => null : undefined;
+
+    const interactiveActions = onPress
+        ? {onPress}
+        : {
+              button,
+              buttonLink,
+          };
+
+    const aspectRatioValue = fixedAspectRatioValues.includes(aspectRatio)
+        ? aspectRatio.replace(' ', ':')
+        : aspectRatio;
+
     return (
         <DataCard
             onClose={closable ? () => {} : undefined}
@@ -77,8 +95,8 @@ export const Default: StoryComponent<DataCardArgs> = ({
             subtitle={subtitle}
             description={description}
             extra={withExtra ? <Placeholder /> : undefined}
-            button={button}
-            buttonLink={buttonLink}
+            {...interactiveActions}
+            aspectRatio={aspectRatioValue as AspectRatio}
             dataAttributes={{testid: 'data-card'}}
             aria-label="Data card label"
             actions={
@@ -98,7 +116,7 @@ export const Default: StoryComponent<DataCardArgs> = ({
     );
 };
 
-Default.storyName = 'Data card';
+Default.storyName = 'DataCard';
 Default.args = {
     asset: 'icon',
     headlineType: 'promo',
@@ -111,6 +129,7 @@ Default.args = {
     actions: 'button',
     closable: false,
     withTopAction: false,
+    aspectRatio: 'auto',
 };
 Default.argTypes = {
     asset: {
@@ -122,8 +141,20 @@ Default.argTypes = {
         control: {type: 'select'},
     },
     actions: {
-        options: ['button', 'link', 'button and link', 'none'],
+        options: ['button', 'link', 'button and link', 'on press', 'none'],
         control: {type: 'select'},
+    },
+    aspectRatio: {
+        options: ['auto', ...fixedAspectRatioValues],
+        control: {
+            type: 'select',
+            labels: {
+                '1 1': '1:1',
+                '16 9': '16:9',
+                '7 10': '7:10',
+                '9 10': '9:10',
+            },
+        },
     },
 };
 
@@ -133,37 +164,38 @@ export const Group: StoryComponent = () => {
             <Stack space={16}>
                 <Text2 regular>
                     We can group multiple cards and they adjust to the same height. The card actions are
-                    always fixed on bottom:
+                    always fixed on bottom.
                 </Text2>
-                <style>{`.group > * {width: 300px}`}</style>
-                <Inline space={16} className="group">
-                    <DataCard
-                        headline={<Tag type="promo">Headline</Tag>}
-                        pretitle="Pretitle"
-                        title="Title"
-                        subtitle="Subtitle"
-                        description="Description"
-                        icon={
-                            <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
-                                <IconMobileDeviceRegular color={skinVars.colors.brand} />
-                            </Circle>
-                        }
-                        buttonLink={<ButtonLink href="https://google.com">Link</ButtonLink>}
-                    />
-                    <DataCard
-                        title="Title"
-                        description="Description"
-                        icon={
-                            <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
-                                <IconMobileDeviceRegular color={skinVars.colors.brand} />
-                            </Circle>
-                        }
-                        buttonLink={<ButtonLink href="https://google.com">Link</ButtonLink>}
-                    />
-                </Inline>
+                <Carousel
+                    items={[
+                        <DataCard
+                            headline={<Tag type="promo">Headline</Tag>}
+                            pretitle="Pretitle"
+                            title="Title"
+                            subtitle="Subtitle"
+                            description="Description"
+                            icon={
+                                <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
+                                    <IconMobileDeviceRegular color={skinVars.colors.brand} />
+                                </Circle>
+                            }
+                            buttonLink={<ButtonLink href="https://google.com">Link</ButtonLink>}
+                        />,
+                        <DataCard
+                            title="Title"
+                            description="Description"
+                            icon={
+                                <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
+                                    <IconMobileDeviceRegular color={skinVars.colors.brand} />
+                                </Circle>
+                            }
+                            buttonLink={<ButtonLink href="https://google.com">Link</ButtonLink>}
+                        />,
+                    ]}
+                />
             </Stack>
         </ResponsiveLayout>
     );
 };
 
-Group.storyName = 'Data card group';
+Group.storyName = 'DataCard group';

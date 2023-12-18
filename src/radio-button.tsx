@@ -1,5 +1,6 @@
+'use client';
 import * as React from 'react';
-import {SPACE, LEFT, UP, DOWN, RIGHT} from './utils/key-codes';
+import {SPACE, LEFT, UP, DOWN, RIGHT} from './utils/keys';
 import {useControlProps} from './form-context';
 import {combineRefs} from './utils/common';
 import {Text3} from './text';
@@ -67,7 +68,7 @@ const RadioButton: React.FC<PropsRender | PropsChildren> = ({
     const {isIos} = useTheme();
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
-        switch (event.keyCode) {
+        switch (event.key) {
             case SPACE:
                 select(value);
                 event.preventDefault();
@@ -117,9 +118,14 @@ const RadioButton: React.FC<PropsRender | PropsChildren> = ({
             aria-checked={checked}
             aria-disabled={disabled}
             aria-labelledby={labelId}
-            onClick={disabled ? undefined : () => select(value)}
+            onClick={(e) => {
+                e.stopPropagation();
+                if (!disabled) {
+                    select(value);
+                }
+            }}
             onKeyDown={disabled ? undefined : handleKeyDown}
-            className={styles.radioButton}
+            className={disabled ? styles.radioButtonContainerDisabled : styles.radioButton}
             {...getPrefixedDataAttributes(dataAttributes, 'RadioButton')}
         >
             {rest.render ? (

@@ -1,19 +1,14 @@
 import {openStoryPage, screen} from '../test-utils';
 
-import type {ElementHandle} from 'puppeteer';
+const CONTENT_OPTIONS = ['color', 'image', 'icon', 'none'];
 
-test('Circle', async () => {
+test.each(CONTENT_OPTIONS)('Circle - %s', async (content) => {
     await openStoryPage({
         id: 'components-primitives-circle--default',
+        args: {content, border: content === 'none', size: 100},
     });
 
-    const circle = (await (await screen.findByTestId('circle')).$('div')) as ElementHandle;
-    const circleWithIcon = (await (await screen.findByTestId('circle-with-icon')).$('div')) as ElementHandle;
-    const circleWithImage = (await (
-        await screen.findByTestId('circle-with-image')
-    ).$('div')) as ElementHandle;
+    const story = await screen.findByTestId('circle');
 
-    expect(await circle.screenshot()).toMatchImageSnapshot();
-    expect(await circleWithIcon.screenshot()).toMatchImageSnapshot();
-    expect(await circleWithImage.screenshot()).toMatchImageSnapshot();
+    expect(await story.screenshot()).toMatchImageSnapshot();
 });

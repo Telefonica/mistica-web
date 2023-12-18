@@ -1,3 +1,4 @@
+'use client';
 import * as React from 'react';
 import classnames from 'classnames';
 import {useIsInverseVariant} from './theme-variant-context';
@@ -81,7 +82,7 @@ export const HelperText: React.FC<HelperTextProps> = ({leftText, rightText, erro
     const rightColor = isInverse ? vars.colors.textPrimaryInverse : vars.colors.textSecondary;
 
     return (
-        <div className={styles.helperContainer}>
+        <>
             {leftText && (
                 <div className={classnames(styles.helperText, styles.leftText)}>
                     <Text1 color={leftColor} regular as="p">
@@ -96,7 +97,7 @@ export const HelperText: React.FC<HelperTextProps> = ({leftText, rightText, erro
                     </Text1>
                 </div>
             )}
-        </div>
+        </>
     );
 };
 
@@ -140,7 +141,7 @@ export const FieldContainer: React.FC<FieldContainerProps> = ({
             >
                 {children}
             </div>
-            {helperText}
+            {helperText && <div className={styles.helperContainer}>{helperText}</div>}
         </div>
     );
 };

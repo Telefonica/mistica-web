@@ -1,5 +1,6 @@
+'use client';
 import * as React from 'react';
-import {SPACE} from './utils/key-codes';
+import {SPACE} from './utils/keys';
 import {useControlProps} from './form-context';
 import Inline from './inline';
 import {Text3} from './text';
@@ -8,6 +9,7 @@ import classnames from 'classnames';
 import {getPrefixedDataAttributes} from './utils/dom';
 import * as styles from './checkbox.css';
 import {vars} from './skins/skin-contract.css';
+import {combineRefs} from './utils/common';
 
 import type {DataAttributes} from './utils/types';
 
@@ -64,6 +66,7 @@ type RenderProps = {
     disabled?: boolean;
     'aria-labelledby'?: string;
     'aria-label'?: string;
+    role?: 'checkbox' | 'menuitemcheckbox';
     dataAttributes?: DataAttributes;
 };
 
@@ -78,10 +81,11 @@ type ChildrenProps = {
     disabled?: boolean;
     'aria-label'?: string;
     'aria-labelledby'?: string;
+    role?: 'checkbox' | 'menuitemcheckbox';
     dataAttributes?: DataAttributes;
 };
 
-const Checkbox: React.FC<RenderProps | ChildrenProps> = (props) => {
+const Checkbox = React.forwardRef<HTMLDivElement, RenderProps | ChildrenProps>((props, ref) => {
     const labelId = useAriaId(props['aria-labelledby']);
     const ariaLabel = props['aria-label'];
     const hasExternalLabel = ariaLabel || props['aria-labelledby'];
@@ -106,7 +110,7 @@ const Checkbox: React.FC<RenderProps | ChildrenProps> = (props) => {
     };
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
-        if (event.keyCode === SPACE) {
+        if (event.key === SPACE) {
             event.preventDefault();
             event.stopPropagation();
             handleChange();
@@ -117,16 +121,21 @@ const Checkbox: React.FC<RenderProps | ChildrenProps> = (props) => {
 
     return (
         // When the checkbox is disabled, it shouldn't be focusable
-        // eslint-disable-next-line jsx-a11y/interactive-supports-focus
+        // eslint-disable-next-line jsx-a11y/no-static-element-interactions
         <div
             id={props.id}
-            role="checkbox"
+            role={props.role || 'checkbox'}
             aria-checked={value ?? checkedState}
             onKeyDown={disabled ? undefined : handleKeyDown}
-            onClick={disabled ? undefined : handleChange}
+            onClick={(e) => {
+                e.stopPropagation();
+                if (!disabled) {
+                    handleChange();
+                }
+            }}
             tabIndex={disabled ? undefined : 0}
-            ref={focusableRef}
-            className={styles.checkboxContainer}
+            ref={combineRefs(ref, focusableRef)}
+            className={disabled ? styles.checkboxContainerDisabled : styles.checkboxContainer}
             aria-label={ariaLabel}
             aria-labelledby={ariaLabel ? undefined : labelId}
             aria-disabled={disabled}
@@ -159,6 +168,6 @@ const Checkbox: React.FC<RenderProps | ChildrenProps> = (props) => {
             )}
         </div>
     );
-};
+});
 
 export default Checkbox;

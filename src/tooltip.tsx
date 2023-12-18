@@ -1,96 +1,129 @@
+'use client';
 import * as React from 'react';
-import classnames from 'classnames';
-import {CSSTransition} from 'react-transition-group';
-import {useAriaId, useScreenSize, useTheme} from './hooks';
+import {useAriaId, useBoundingRect, useWindowSize} from './hooks';
 import {Portal} from './portal';
-import Overlay from './overlay';
-import {Text2} from './text';
-import * as key from './utils/key-codes';
-import Stack from './stack';
+import {Transition} from 'react-transition-group';
 import * as styles from './tooltip.css';
-import {assignInlineVars} from '@vanilla-extract/dynamic';
-import {getPrefixedDataAttributes} from './utils/dom';
+import Stack from './stack';
+import {Text2} from './text';
+import {getCssVarValue, getPrefixedDataAttributes} from './utils/dom';
+import {ESC, TAB} from './utils/keys';
+import {isTouchableDevice} from './utils/environment';
+import {isEqual} from './utils/helpers';
+import classNames from 'classnames';
+import {vars} from './skins/skin-contract.css';
+import {ThemeVariant, useIsInverseVariant} from './theme-variant-context';
+import {combineRefs} from './utils/common';
+import {useSetTooltipState, useTooltipState} from './tooltip-context-provider';
+import {isRunningAcceptanceTest} from './utils/platform';
 
+import type {BoundingRect} from './hooks';
 import type {DataAttributes} from './utils/types';
 
-const defaultPositionDesktop = 'bottom';
-const defaultPositionMobile = 'top';
-const arrowSize = 12;
-const distanceToTarget = 4 + arrowSize;
-const marginLeftRightMobile = 16;
-const defaultWidthDesktop = 340;
-const transitionDurationMs = 500;
-const animationMovement = 12;
-const defaultShowTooltipDelayMs = 500;
+const getBorderStyle = (isInverse: boolean): React.CSSProperties => {
+    return {border: `1px solid ${isInverse ? vars.colors.backgroundContainer : vars.colors.border}`};
+};
 
-const noOp = () => {};
+const TOOLTIP_MAX_WIDTH = 496;
+const TOOLTIP_ENTER_TRANSITION_DURATION_IN_MS = 300;
+const TOOLTIP_ENTER_TRANSITION_DELAY_IN_MS = 500;
+const TOOLTIP_EXIT_TRANSITION_DURATION_IN_MS = 100;
+const ARROW_SIZE = 20;
+const TOOLTIP_OFFSET_FROM_TARGET = 6;
+const TOOLTIP_PADDING_FROM_TARGET = TOOLTIP_OFFSET_FROM_TARGET + ARROW_SIZE / 2 + 1;
 
 type Position = 'top' | 'bottom' | 'left' | 'right';
 
-const getWidthDesktop = (customWidth?: number) => (customWidth ? customWidth : defaultWidthDesktop);
-
-const getEnterTransform = (position: Position) => {
-    if (position === 'bottom') {
-        return `translateY(${animationMovement}px)`;
+const getTooltipEnterTransform = (position?: Position) => {
+    switch (position) {
+        case 'left':
+            return `translateX(-${TOOLTIP_OFFSET_FROM_TARGET}px)`;
+        case 'right':
+            return `translateX(${TOOLTIP_OFFSET_FROM_TARGET}px)`;
+        case 'top':
+            return `translateY(-${TOOLTIP_OFFSET_FROM_TARGET}px)`;
+        case 'bottom':
+            return `translateY(${TOOLTIP_OFFSET_FROM_TARGET}px)`;
+        default:
+            return '';
     }
-    if (position === 'top') {
-        return `translateY(calc(-100% - ${animationMovement}px))`;
-    }
-    if (position === 'right') {
-        return `translateX(${animationMovement}px) translateY(-50%)`;
-    }
-    if (position === 'left') {
-        return `translateX(-${animationMovement}px) translateY(-50%)`;
-    }
-    return `translateY(-${animationMovement}px)`;
 };
 
-const getEnterDoneTransform = (position: Position) => {
-    if (position === 'top') return 'translateY(-100%)';
-    if (position === 'bottom') return 'translateY(0)';
-    return 'translateY(-50%)';
+const getElementDimensionsWithoutPadding = (element: HTMLElement) => {
+    const horizontalPadding =
+        parseFloat(getComputedStyle(element, null).paddingLeft) +
+        parseFloat(getComputedStyle(element, null).paddingRight);
+
+    const verticalPadding =
+        parseFloat(getComputedStyle(element, null).paddingTop) +
+        parseFloat(getComputedStyle(element, null).paddingBottom);
+
+    const width = element.offsetWidth - horizontalPadding;
+    const height = element.offsetHeight - verticalPadding;
+    return {width, height};
 };
 
-const getExitTransform = (position: Position) => {
-    if (position === 'bottom') {
-        return 'translateY(0)';
+const getFinalPosition = (
+    targetRect: BoundingRect | undefined,
+    tooltip: HTMLElement | undefined | null,
+    position: Position,
+    windowHeight: number,
+    windowWidth: number
+): Position | undefined => {
+    if (!targetRect || !tooltip) {
+        return undefined;
     }
-    if (position === 'top') {
-        return 'translateY(-100%)';
-    }
-    if (position === 'right') {
-        return 'translateX(0px) translateY(-50%)';
-    }
-    if (position === 'left') {
-        return 'translateX(0px) translateY(-50%)';
-    }
-    return 'translateY(0px)';
-};
+    const {top, bottom, left, right} = targetRect;
 
-const getEnterActiveAnimationName = (position: Position) => {
-    if (position === 'top') return styles.fadeInTopKeyframes;
-    if (position === 'bottom') return styles.fadeInBottomKeyframes;
-    return styles.fadeInXKeyframes;
-};
+    const availableSpaceOnBottom = windowHeight - bottom;
+    const availableSpaceOnRight = windowWidth - right;
+    const availableSpaceOnTop = top;
+    const availableSpaceOnLeft = left;
 
-const getShadowAlpha = (isDarkMode: boolean) => {
-    return isDarkMode ? '1' : '0.2';
-};
+    const {width, height} = getElementDimensionsWithoutPadding(tooltip);
 
-const getArrowBoxShadow = (position: Position) => {
-    if (position === 'top') {
-        return `2px 2px 4px 0 rgba(0, 0, 0, ${styles.vars.shadowAlpha})`;
+    const tooltipWidth = width + TOOLTIP_PADDING_FROM_TARGET;
+    const tooltipHeight = height + TOOLTIP_PADDING_FROM_TARGET;
+
+    const fitsHorizontal = tooltipWidth <= Math.max(availableSpaceOnLeft, availableSpaceOnRight);
+    const fitsVertical = tooltipHeight <= Math.max(availableSpaceOnBottom, availableSpaceOnTop);
+
+    if (!fitsVertical && !fitsHorizontal) {
+        return undefined;
     }
-    if (position === 'right') {
-        return `0 0 4px 0 rgba(0, 0, 0, ${styles.vars.shadowAlpha})`;
+
+    switch (position) {
+        case 'left':
+            if (fitsHorizontal) {
+                return tooltipWidth <= availableSpaceOnLeft ? 'left' : 'right';
+            } else {
+                return availableSpaceOnBottom > availableSpaceOnTop ? 'bottom' : 'top';
+            }
+
+        case 'right':
+            if (fitsHorizontal) {
+                return tooltipWidth <= availableSpaceOnRight ? 'right' : 'left';
+            } else {
+                return availableSpaceOnBottom > availableSpaceOnTop ? 'bottom' : 'top';
+            }
+
+        case 'top':
+            if (fitsVertical) {
+                return tooltipHeight <= availableSpaceOnTop ? 'top' : 'bottom';
+            } else {
+                return availableSpaceOnLeft > availableSpaceOnRight ? 'left' : 'right';
+            }
+
+        case 'bottom':
+            if (fitsVertical) {
+                return tooltipHeight <= availableSpaceOnBottom ? 'bottom' : 'top';
+            } else {
+                return availableSpaceOnLeft > availableSpaceOnRight ? 'left' : 'right';
+            }
+
+        default:
+            return undefined;
     }
-    if (position === 'left') {
-        return `0 0 4px 0 rgba(0, 0, 0, ${styles.vars.shadowAlpha})`;
-    }
-    if (position === 'bottom') {
-        return `-1px -1px 4px 0 rgba(0, 0, 0, ${styles.vars.shadowAlpha})`;
-    }
-    return '';
 };
 
 type Props = {
@@ -101,9 +134,26 @@ type Props = {
     title?: string;
     position?: Position;
     width?: number;
-    targetLabel: string;
     delay?: boolean;
     dataAttributes?: DataAttributes;
+    centerContent?: boolean;
+    open?: boolean;
+    /**
+     * @deprecated This field is deprecated.
+     */
+    targetLabel?: string;
+    /**
+     * @deprecated This field is deprecated.
+     */
+    targetStyle?: React.CSSProperties;
+    /**
+     * @deprecated This field is deprecated.
+     */
+    unstable_offsetX?: number | string;
+    /**
+     * @deprecated This field is deprecated, use centerContent instead.
+     */
+    textCenter?: boolean;
 };
 
 const Tooltip: React.FC<Props> = ({
@@ -112,259 +162,415 @@ const Tooltip: React.FC<Props> = ({
     description,
     target,
     title,
-    targetLabel,
-    delay = true,
+    width,
+    position = 'top',
     dataAttributes,
-    ...rest
+    delay = true,
+    centerContent,
+    open,
+    textCenter,
 }) => {
-    const {isDarkMode} = useTheme();
-    const [isVisible, setIsVisible] = React.useState(false);
-    const {isTabletOrSmaller} = useScreenSize();
-    const ariaId = useAriaId();
-    const isPointerOver = React.useRef(false);
-    const closeTooltipTimeoutId = React.useRef<NodeJS.Timeout | null>(null);
-    const showTooltipTimeoutId = React.useRef<NodeJS.Timeout | null>(null);
-    const targetRef = React.useRef<HTMLDivElement>(null);
-    const targetBoundingClientRect = React.useRef({
-        top: 0,
-        right: 0,
-        left: 0,
-        bottom: 0,
-        width: 0,
-        height: 0,
-    });
+    const tooltipId = useAriaId();
+    const {openTooltipId} = useTooltipState();
+    const {openTooltip, closeTooltip} = useSetTooltipState();
 
-    const getPosition = (position: Position = defaultPositionDesktop) =>
-        isTabletOrSmaller && (position === 'left' || position === 'right') ? defaultPositionMobile : position;
+    const [tooltipComputedStyles, setTooltipComputedStyles] = React.useState<React.CSSProperties>();
 
-    const position = getPosition(rest.position);
+    const [arrowComputedStyles, setArrowComputedStyles] = React.useState<React.CSSProperties>();
 
-    const isTouchableDevice =
-        typeof window !== 'undefined' ? window.matchMedia('(pointer: coarse)').matches : false;
+    const targetRef = React.useRef<Element | null>(null);
+    const tooltipRef = React.useRef<HTMLDivElement | null>(null);
+    const [tooltip, setTooltip] = React.useState<HTMLElement | null>(null);
+    const isTouchable = isTouchableDevice();
+    const tooltipEnterDelay = delay ? TOOLTIP_ENTER_TRANSITION_DELAY_IN_MS : 0;
 
-    const closeTooltip = () => {
-        if (isVisible) {
-            setIsVisible(false);
-        }
-    };
+    const [isMouseOverTooltip, setIsMouseOverTooltip] = React.useState(false);
+    const [isMouseOverTarget, setIsMouseOverTarget] = React.useState(false);
+
+    const hasControlledValue = open !== undefined;
+    const [isFocused, setIsFocused] = React.useState(false);
+    const isTooltipOpen = hasControlledValue ? open : tooltipId === openTooltipId;
+    const isInverse = useIsInverseVariant();
+
+    const targetRect = useBoundingRect(targetRef, isTooltipOpen);
+    const tooltipRect = useBoundingRect(tooltipRef, isTooltipOpen, true);
+    const windowSize = useWindowSize();
+
+    const resetTooltipInteractions = React.useCallback(() => {
+        setIsFocused(false);
+        setIsMouseOverTooltip(false);
+        setIsMouseOverTarget(false);
+    }, []);
 
     React.useEffect(() => {
-        window.addEventListener('resize', closeTooltip);
+        if (!isTooltipOpen) {
+            resetTooltipInteractions();
+        }
+    }, [isTooltipOpen, resetTooltipInteractions]);
+
+    React.useEffect(() => {
+        if (!tooltip || !isTooltipOpen) {
+            return;
+        }
+
+        const finalPosition = getFinalPosition(
+            targetRect,
+            tooltip,
+            position,
+            windowSize.height,
+            windowSize.width
+        );
+
+        if (!finalPosition || !targetRect) {
+            setTooltipComputedStyles(undefined);
+            setArrowComputedStyles(undefined);
+            resetTooltipInteractions();
+            return;
+        }
+
+        let tooltipStyles: React.CSSProperties;
+        let arrowStyles: React.CSSProperties;
+
+        const {left, right, top, bottom} = targetRect;
+        const {width: tooltipWidth, height: tooltipHeight} = getElementDimensionsWithoutPadding(tooltip);
+
+        const maxLeftOffset = windowSize.width - tooltipWidth;
+        const maxTopOffset = windowSize.height - tooltipHeight;
+
+        const arrowOffsetFromViewport = parseInt(getCssVarValue(vars.borderRadii.container)) || 8;
+
+        switch (finalPosition) {
+            case 'top':
+                tooltipStyles = {
+                    left: Math.max(0, Math.min(maxLeftOffset, (left + right - tooltipWidth) / 2)),
+                    top: top - tooltipHeight - ARROW_SIZE / 2,
+                    padding: `0px 0px ${TOOLTIP_PADDING_FROM_TARGET}px 0px`,
+                };
+
+                arrowStyles = {
+                    left: Math.max(
+                        arrowOffsetFromViewport,
+                        Math.min(
+                            windowSize.width - arrowOffsetFromViewport - ARROW_SIZE,
+                            (left + right - ARROW_SIZE) / 2
+                        )
+                    ),
+                    top: '100%',
+                };
+
+                break;
+
+            case 'bottom':
+                tooltipStyles = {
+                    left: Math.max(0, Math.min(maxLeftOffset, (left + right - tooltipWidth) / 2)),
+                    top: bottom - TOOLTIP_OFFSET_FROM_TARGET,
+                    padding: `${TOOLTIP_PADDING_FROM_TARGET}px 0px 0px 0px`,
+                };
+
+                arrowStyles = {
+                    left: Math.max(
+                        arrowOffsetFromViewport,
+                        Math.min(
+                            windowSize.width - arrowOffsetFromViewport - ARROW_SIZE,
+                            (left + right - ARROW_SIZE) / 2
+                        )
+                    ),
+                    bottom: '100%',
+                    transform: 'rotate(180deg)',
+                };
+
+                break;
+
+            case 'left':
+                tooltipStyles = {
+                    left: left - tooltipWidth - ARROW_SIZE / 2,
+                    top: Math.max(0, Math.min(maxTopOffset, (top + bottom - tooltipHeight) / 2)),
+                    padding: `0px ${TOOLTIP_PADDING_FROM_TARGET}px 0px 0px`,
+                };
+
+                arrowStyles = {
+                    top: Math.max(
+                        arrowOffsetFromViewport,
+                        Math.min(
+                            windowSize.height - arrowOffsetFromViewport - ARROW_SIZE,
+                            (top + bottom - ARROW_SIZE) / 2
+                        )
+                    ),
+                    left: '100%',
+                    transform: 'rotate(-90deg)',
+                    transformOrigin: 'bottom',
+                };
+
+                break;
+
+            case 'right':
+            default:
+                tooltipStyles = {
+                    left: right - TOOLTIP_OFFSET_FROM_TARGET,
+                    top: Math.max(0, Math.min(maxTopOffset, (top + bottom - tooltipHeight) / 2)),
+                    padding: `0px 0px 0px ${TOOLTIP_PADDING_FROM_TARGET}px`,
+                };
+
+                arrowStyles = {
+                    top: Math.max(
+                        arrowOffsetFromViewport,
+                        Math.min(
+                            windowSize.height - arrowOffsetFromViewport - ARROW_SIZE,
+                            (top + bottom - ARROW_SIZE) / 2
+                        )
+                    ),
+                    right: '100%',
+                    transform: 'rotate(90deg)',
+                    transformOrigin: 'bottom',
+                };
+
+                break;
+        }
+
+        /**
+         * Using numbers for top/left positions of arrow element was causing the arrow to
+         * be misaligned by +/- 1 pixel in some cases. Using percentages works better when
+         * dealing with decimals for some reason.
+         */
+        if (typeof arrowStyles.top === 'number') {
+            arrowStyles.top -= tooltipStyles.top as number;
+            arrowStyles.top = `${(arrowStyles.top / tooltipHeight) * 100}%`;
+        }
+        if (typeof arrowStyles.left === 'number') {
+            arrowStyles.left -= tooltipStyles.left as number;
+            arrowStyles.left = `${(arrowStyles.left / tooltipWidth) * 100}%`;
+        }
+
+        if (!isEqual(tooltipStyles, tooltipComputedStyles)) {
+            setTooltipComputedStyles(tooltipStyles);
+        }
+        if (!isEqual(arrowStyles, arrowComputedStyles)) {
+            setArrowComputedStyles(arrowStyles);
+        }
+    }, [
+        tooltip,
+        targetRect,
+        tooltipRect,
+        isTooltipOpen,
+        position,
+        windowSize,
+        tooltipComputedStyles,
+        arrowComputedStyles,
+        isInverse,
+        isTouchable,
+        tooltipId,
+        resetTooltipInteractions,
+    ]);
+
+    const isTabKeyDownRef = React.useRef(false);
+
+    React.useEffect(() => {
+        const handleKeyDown = (e: KeyboardEvent) => {
+            switch (e.key) {
+                case ESC:
+                    resetTooltipInteractions();
+                    break;
+                case TAB:
+                    isTabKeyDownRef.current = true;
+                    break;
+                default:
+                // do nothing
+            }
+        };
+
+        const handleKeyUp = () => (isTabKeyDownRef.current = false);
+
+        const handleOnClick = (e: MouseEvent) => {
+            if (
+                isTouchable &&
+                targetRect &&
+                (e.clientX < targetRect.left ||
+                    e.clientX > targetRect.right ||
+                    e.clientY < targetRect.top ||
+                    e.clientY > targetRect.bottom)
+            ) {
+                resetTooltipInteractions();
+            }
+        };
+
+        document.addEventListener('keydown', handleKeyDown, false);
+        document.addEventListener('keyup', handleKeyUp, false);
+        document.addEventListener('click', handleOnClick, false);
         return () => {
-            window.removeEventListener('resize', closeTooltip);
+            document.removeEventListener('keydown', handleKeyDown, false);
+            document.removeEventListener('keyup', handleKeyUp, false);
+            document.removeEventListener('click', handleOnClick, false);
         };
-    });
+    }, [isTouchable, resetTooltipInteractions, targetRect]);
 
-    const handleClickOutside = () => {
-        setIsVisible(false);
-    };
-
-    const toggleVisibility = () => {
-        if (!targetRef.current) return;
-
-        targetBoundingClientRect.current = targetRef.current.getBoundingClientRect();
-        setIsVisible(!isVisible);
-    };
-
-    const handleFocus = () => {
-        if (!isVisible) {
-            toggleVisibility();
+    React.useEffect(() => {
+        if (!hasControlledValue) {
+            if (isMouseOverTarget || isMouseOverTooltip || isFocused) {
+                openTooltip(tooltipId);
+            } else {
+                closeTooltip(tooltipId);
+            }
         }
-    };
+    }, [
+        isMouseOverTarget,
+        isMouseOverTooltip,
+        isFocused,
+        tooltipId,
+        openTooltip,
+        closeTooltip,
+        hasControlledValue,
+    ]);
 
-    const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
-        if (event.keyCode === key.TAB) {
-            handleClickOutside();
-        }
-    };
-
-    const getContainerPosition = (position: Position, width: number) => {
-        if (typeof window === 'undefined') {
-            return {};
-        }
-
-        const containerPos = {
-            right: {
-                left: targetBoundingClientRect.current.right + distanceToTarget,
-                top:
-                    window.pageYOffset +
-                    targetBoundingClientRect.current.top +
-                    targetBoundingClientRect.current.height / 2,
-            },
-            left: {
-                left: targetBoundingClientRect.current.left - width - distanceToTarget,
-                top:
-                    window.pageYOffset +
-                    targetBoundingClientRect.current.top +
-                    targetBoundingClientRect.current.height / 2,
-            },
-            top: {
-                top: window.pageYOffset + targetBoundingClientRect.current.top - distanceToTarget,
-                left: isTabletOrSmaller
-                    ? marginLeftRightMobile
-                    : window.pageXOffset +
-                      targetBoundingClientRect.current.left +
-                      targetBoundingClientRect.current.width / 2 -
-                      width / 2,
-            },
-            bottom: {
-                top: window.pageYOffset + targetBoundingClientRect.current.bottom + distanceToTarget,
-                left: isTabletOrSmaller
-                    ? marginLeftRightMobile
-                    : window.pageXOffset +
-                      targetBoundingClientRect.current.left +
-                      targetBoundingClientRect.current.width / 2 -
-                      width / 2,
-            },
-        };
-        return containerPos[position];
-    };
-
-    const getCustomStylesForMobile = () =>
-        isTabletOrSmaller
-            ? {
-                  left:
-                      targetBoundingClientRect.current.left +
-                      targetBoundingClientRect.current.width / 2 -
-                      marginLeftRightMobile,
-              }
-            : {};
-
-    const getWidth = () =>
-        isTabletOrSmaller ? window.innerWidth - marginLeftRightMobile * 2 : getWidthDesktop(rest.width);
-
-    const width = getWidth();
-
-    const arrowClassNameByPosition = {
-        top: styles.arrowTop,
-        bottom: styles.arrowBottom,
-        left: styles.arrowLeft,
-        right: styles.arrowRight,
-    };
-
-    const vars = assignInlineVars({
-        [styles.vars.enterTransform]: getEnterTransform(position),
-        [styles.vars.exitTransform]: getExitTransform(position),
-        [styles.vars.enterActiveAnimationName]: getEnterActiveAnimationName(position),
-        [styles.vars.enterDoneTransform]: getEnterDoneTransform(position),
-        [styles.vars.shadowAlpha]: getShadowAlpha(isDarkMode),
-        [styles.vars.arrowBoxShadow]: getArrowBoxShadow(position),
-    });
+    const currentPosition = getFinalPosition(
+        targetRect,
+        tooltip,
+        position,
+        windowSize.height,
+        windowSize.width
+    );
 
     return (
         <>
+            {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
             <div
-                ref={targetRef}
-                className={styles.wrapper}
-                onPointerOver={() => {
-                    if (closeTooltipTimeoutId.current) {
-                        clearTimeout(closeTooltipTimeoutId.current);
-                        closeTooltipTimeoutId.current = null;
-                    }
-
-                    if (isPointerOver.current) return;
-
-                    isPointerOver.current = true;
-
-                    if (delay) {
-                        showTooltipTimeoutId.current = setTimeout(() => {
-                            showTooltipTimeoutId.current = null;
-                            toggleVisibility();
-                        }, defaultShowTooltipDelayMs);
-                    } else {
-                        toggleVisibility();
+                ref={(element) => {
+                    /**
+                     * Hack to set the target ref to the target element that was actually passed as prop.
+                     * If the target is absolutely positioned and we attach targetRef to the container div instead,
+                     * its size will be 0 (and we need the target dimensions to compute the tooltip's position).
+                     */
+                    const targetElement = element?.firstElementChild;
+                    if (targetElement && targetElement !== targetRef.current) {
+                        targetRef.current = targetElement;
                     }
                 }}
-                onPointerLeave={
-                    isTouchableDevice
-                        ? noOp
-                        : () => {
-                              if (showTooltipTimeoutId.current) {
-                                  clearTimeout(showTooltipTimeoutId.current);
-                                  showTooltipTimeoutId.current = null;
-                                  isPointerOver.current = false;
-                                  return;
-                              }
-
-                              closeTooltipTimeoutId.current = setTimeout(() => {
-                                  if (!isPointerOver.current) return;
-                                  closeTooltipTimeoutId.current = null;
-                                  isPointerOver.current = false;
-                                  toggleVisibility();
-                              }, 100);
-                          }
-                }
-                onFocus={handleFocus}
-                onKeyDown={handleKeyDown}
-                touch-action="auto" // Prop needed for Pointer Events Polyfill to work properly
-                role="button"
-                tabIndex={0}
-                aria-describedby={ariaId}
-                aria-expanded={isVisible}
-                aria-label={targetLabel}
+                onMouseOver={() => {
+                    if (!isTouchable) {
+                        setIsMouseOverTarget(true);
+                    }
+                }}
+                onMouseLeave={() => {
+                    if (!isTouchable) {
+                        setIsMouseOverTarget(false);
+                    }
+                }}
+                onClick={() => {
+                    if (isTouchable) {
+                        setIsMouseOverTarget(true);
+                    }
+                }}
+                onFocus={() => {
+                    if (isTabKeyDownRef.current) {
+                        setIsFocused(true);
+                    }
+                }}
+                onBlur={() => {
+                    if (!isTouchable) {
+                        setIsFocused(false);
+                    }
+                }}
+                aria-describedby={tooltipId}
             >
                 {target}
             </div>
 
             <Portal>
-                {isVisible && isTouchableDevice && <Overlay onPress={handleClickOutside} />}
-                <CSSTransition
-                    in={isVisible}
-                    timeout={transitionDurationMs}
-                    classNames={{
-                        enter: styles.enter,
-                        enterActive: styles.enterActive,
-                        enterDone: styles.enterDone,
-                        exit: styles.exit,
-                        exitActive: styles.exitActive,
-                    }}
+                <Transition
+                    in={isTooltipOpen}
+                    nodeRef={tooltipRef}
+                    timeout={
+                        isRunningAcceptanceTest()
+                            ? 0
+                            : {
+                                  enter: TOOLTIP_ENTER_TRANSITION_DURATION_IN_MS + tooltipEnterDelay,
+                                  exit: TOOLTIP_EXIT_TRANSITION_DURATION_IN_MS,
+                              }
+                    }
+                    mountOnEnter
                     unmountOnExit
                 >
-                    <div
-                        {...getPrefixedDataAttributes(dataAttributes, 'Tooltip')}
-                        role="tooltip"
-                        id={ariaId}
-                        className={styles.container}
-                        style={{
-                            width,
-                            ...getContainerPosition(position, width),
-                            ...vars,
-                        }}
-                        onPointerOver={() => {
-                            if (closeTooltipTimeoutId.current) {
-                                clearTimeout(closeTooltipTimeoutId.current);
-                                closeTooltipTimeoutId.current = null;
-                            }
-                        }}
-                        onPointerLeave={
-                            isTouchableDevice
-                                ? noOp
-                                : () => {
-                                      closeTooltipTimeoutId.current = setTimeout(() => {
-                                          if (!isPointerOver.current) return;
-
-                                          closeTooltipTimeoutId.current = null;
-                                          isPointerOver.current = false;
-                                          toggleVisibility();
-                                      }, 100);
-                                  }
-                        }
-                    >
-                        <div
-                            className={classnames(styles.arrowWrapper, arrowClassNameByPosition[position])}
-                            style={getCustomStylesForMobile()}
-                        >
-                            <div className={styles.arrow} />
-                        </div>
-                        {(title || description) && (
-                            <Stack space={4}>
-                                {title && <Text2 medium>{title}</Text2>}
-                                {description && <Text2 regular>{description}</Text2>}
-                            </Stack>
-                        )}
-                        {extra || children}
-                    </div>
-                </CSSTransition>
+                    {(transitionStatus) => {
+                        return (
+                            <div
+                                style={{
+                                    /**
+                                     * Hack to prevent text from wrapping automatically when touching the viewport's edges,
+                                     * even if the content's width didn't reach the max width.
+                                     * https://stackoverflow.com/questions/66106629/how-to-disable-text-wrapping-when-viewport-border-is-reached
+                                     */
+                                    width: `calc(100vw + ${TOOLTIP_MAX_WIDTH}px)`,
+                                    top: 0,
+                                    left: 0,
+                                    position: 'fixed',
+                                    visibility: tooltipComputedStyles ? 'visible' : 'hidden',
+                                }}
+                                {...getPrefixedDataAttributes(dataAttributes, 'Tooltip')}
+                                role="tooltip"
+                                aria-label={tooltipId}
+                                tabIndex={-1}
+                            >
+                                <div
+                                    className={classNames(styles.container)}
+                                    style={{
+                                        pointerEvents: transitionStatus === 'entered' ? 'auto' : 'none',
+                                        transform: getTooltipEnterTransform(currentPosition),
+                                        ...tooltipComputedStyles,
+                                        ...styles.tooltipTransitionClasses[transitionStatus],
+                                        transition:
+                                            transitionStatus === 'entering'
+                                                ? `opacity .1s linear ${tooltipEnterDelay}ms,transform .3s cubic-bezier(0.215,0.61,0.335,1) ${tooltipEnterDelay}ms`
+                                                : `opacity .1s linear`,
+                                    }}
+                                    ref={combineRefs(setTooltip, tooltipRef)}
+                                    onMouseEnter={() => {
+                                        if (!isTouchable && transitionStatus === 'entered') {
+                                            setIsMouseOverTooltip(true);
+                                        }
+                                    }}
+                                    onMouseLeave={() => {
+                                        if (!isTouchable) {
+                                            setIsMouseOverTooltip(false);
+                                        }
+                                    }}
+                                >
+                                    <div
+                                        className={styles.tooltip}
+                                        style={{
+                                            width,
+                                            ...getBorderStyle(isInverse),
+                                        }}
+                                    >
+                                        <div
+                                            className={classNames(
+                                                styles.content,
+                                                centerContent || textCenter ? styles.tooltipCenter : undefined
+                                            )}
+                                            style={{
+                                                maxWidth: Math.min(TOOLTIP_MAX_WIDTH, windowSize.width),
+                                            }}
+                                        >
+                                            <ThemeVariant isInverse={false}>
+                                                {(title || description) && (
+                                                    <Stack space={4}>
+                                                        {title && <Text2 medium>{title}</Text2>}
+                                                        {description && <Text2 regular>{description}</Text2>}
+                                                    </Stack>
+                                                )}
+                                                {extra || children}
+                                            </ThemeVariant>
+                                        </div>
+                                        <div className={styles.arrowContainer} style={arrowComputedStyles}>
+                                            <div
+                                                className={classNames(styles.arrow)}
+                                                style={getBorderStyle(isInverse)}
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        );
+                    }}
+                </Transition>
             </Portal>
         </>
     );

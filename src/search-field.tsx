@@ -1,7 +1,8 @@
+'use client';
 import * as React from 'react';
 import {useFieldProps} from './form-context';
 import {TextFieldBaseAutosuggest} from './text-field-base';
-import IconSearch from './icons/icon-search';
+import IconSearchRegular from './generated/mistica-icons/icon-search-regular';
 import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
 import IconButton from './icon-button';
 import {useTheme} from './hooks';
@@ -77,7 +78,7 @@ const SearchField = React.forwardRef<any, SearchFieldProps>(
         return (
             <TextFieldBaseAutosuggest
                 ref={combineRefs(inputRef, ref)}
-                startIcon={<IconSearch />}
+                startIcon={<IconSearchRegular />}
                 endIcon={
                     controlledValue ? (
                         <IconButton

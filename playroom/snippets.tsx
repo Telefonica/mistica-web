@@ -8,49 +8,206 @@ const menuSnippet = {
     name: 'Menu',
     code: `
     <Menu
-      width={400}
       renderTarget={({ ref, onPress, isMenuOpen }) => (
-        <Touchable ref={ref} onPress={onPress} style={{ width: 100 }}>
-          <Inline space={16}>
-            <IconKebabMenuLight />
-            <Text3 regular>{isMenuOpen ? "Close" : "Open"}</Text3>
-          </Inline>
-        </Touchable>
+        <Box padding={16}>
+          <Touchable
+            ref={ref}
+            onPress={onPress}
+            style={{ maxWidth: "fit-content" }}
+          >
+            <Inline space={16}>
+              <IconKebabMenuLight />
+              <Text3 regular>{isMenuOpen ? "Close" : "Open"}</Text3>
+            </Inline>
+          </Touchable>
+        </Box>
       )}
-      renderMenu={({ ref, className, close }) => (
+      renderMenu={({ ref, className }) => (
         <div ref={ref} className={className}>
-          {[
-            {
-              text: "Option 1",
-              value: "option1",
-            },
-            {
-              text: "Option 2",
-              value: "option2",
-            },
-          ].map((option) => (
-            <Box paddingX={16} paddingY={8} key={option.value}>
-              <Checkbox
-                name={option.text}
-                onChange={() => {
-                  if (option.value === "option3") {
-                    setTimeout(() => {
-                      close();
-                    }, 400);
-                  }
-                  setState("setValues", option.value);
-                }}
-                checked={getState("setValues", []).includes(option.value)}
-              >
-                {option.text}
-              </Checkbox>
-            </Box>
-          ))}
+          <MenuSection>
+            <MenuItem label="option 1" onPress={() => {}} />
+            <MenuItem
+              label="option 2"
+              onPress={() => setState("option 2", !getState("option 2", false))}
+              controlType="checkbox"
+              checked={getState("option 2", false)}
+            />
+            <MenuItem label="option 3" disabled onPress={() => {}} />
+          </MenuSection>
+
+          <MenuSection>
+            <MenuItem
+              label="option 4"
+              destructive
+              Icon={IconLightningRegular}
+              onPress={() => {}}
+            />
+          </MenuSection>
+
+          <MenuSection>
+            <MenuItem
+              label="option 5"
+              disabled
+              Icon={IconLightningRegular}
+              onPress={() => {}}
+            />
+            <MenuItem
+              label="An option with a really long text to verify overflow"
+              onPress={() => {}}
+            />
+          </MenuSection>
         </div>
       )}
     />`,
     group: 'Menu',
 };
+
+const accordionSnippets: Array<Snippet> = [
+    {
+        group: 'Accordion',
+        name: 'Accordion',
+        code: `
+        <Accordion>
+          <AccordionItem
+            asset={<IconInvoicePlanFileRegular />}
+            title="What is Movistar Money"
+            content={
+              <Text3 color={colors.textSecondary}>
+                It's a loan available to anyone, whether or not you're a Movistar
+                customer. It offers from €2,000 to €15,000 with a simple and fast
+                application process, and you receive the money in less than 48 hours.
+              </Text3>
+            }
+          />
+          <AccordionItem
+            asset={<IconLocationMapRegular />}
+            title="To whom is it aimed?"
+            content={
+              <Text3 color={colors.textSecondary}>
+                The Movistar Money loan service is aimed at anyone, whether you are a{" "}
+                <TextLink href>Movistar</TextLink> customer or not.
+              </Text3>
+            }
+          />
+          <AccordionItem
+            asset={<IconLockEyeClosedRegular />}
+            title="Who offers Movistar Money?"
+            content={
+              <Text3 color={colors.textSecondary}>
+                <p>
+                  At Telefónica, we have our own financial institution, Telefonica
+                  Consumer Finance, and agreements with other institutions to assist
+                  you in obtaining your loan.
+                </p>
+                <br />
+                <Image src="https://picsum.photos/1200/1200" aspectRatio="16:9" />
+                <br />
+                <p>
+                  Depending on the characteristics of the information you provide us,
+                  your application will be sent to one of the institutions{" "}
+                  <TextLink href>with which Movistar has agreements</TextLink>.
+                </p>
+              </Text3>
+            }
+          />
+          <AccordionItem
+            asset={<IconIdCardRegular />}
+            title="How can I hire it?"
+            content={
+              <Text3 color={colors.textSecondary}>
+                It's a very agile process that you can access through the
+                money.movistar.es website. You can find more detailed information
+                about the process on our "How It Works" page.
+              </Text3>
+            }
+          />
+          <AccordionItem
+            asset={<IconLifeguardFloatRegular />}
+            title="What should I do if I don't receive the SMS with the contracting code?"
+            content={
+              <Text3 color={colors.textSecondary}>
+                It may take a few minutes until you receive the SMS with the code. If
+                you still haven't received the code, you can request a new one by
+                clicking on "resend SMS."
+              </Text3>
+            }
+          />
+        </Accordion>
+        `,
+    },
+    {
+        group: 'Accordion',
+        name: 'BoxedAccordion',
+        code: `
+      <BoxedAccordion>
+        <BoxedAccordionItem
+          asset={<IconInvoicePlanFileRegular />}
+          title="What is Movistar Money"
+          content={
+            <Text3 color={colors.textSecondary}>
+              It's a loan available to anyone, whether or not you're a Movistar
+              customer. It offers from €2,000 to €15,000 with a simple and fast
+              application process, and you receive the money in less than 48 hours.
+            </Text3>
+          }
+        />
+        <BoxedAccordionItem
+          asset={<IconLocationMapRegular />}
+          title="To whom is it aimed?"
+          content={
+            <Text3 color={colors.textSecondary}>
+              The Movistar Money loan service is aimed at anyone, whether you are a{" "}
+              <TextLink href>Movistar</TextLink> customer or not.
+            </Text3>
+          }
+        />
+        <BoxedAccordionItem
+          asset={<IconLockEyeClosedRegular />}
+          title="Who offers Movistar Money?"
+          content={
+            <Text3 color={colors.textSecondary}>
+              <p>
+                At Telefónica, we have our own financial institution, Telefonica
+                Consumer Finance, and agreements with other institutions to assist
+                you in obtaining your loan.
+              </p>
+              <br />
+              <Image src="https://picsum.photos/1200/1200" aspectRatio="16:9" />
+              <br />
+              <p>
+                Depending on the characteristics of the information you provide us,
+                your application will be sent to one of the institutions{" "}
+                <TextLink href>with which Movistar has agreements</TextLink>.
+              </p>
+            </Text3>
+          }
+        />
+        <BoxedAccordionItem
+          asset={<IconIdCardRegular />}
+          title="How can I hire it?"
+          content={
+            <Text3 color={colors.textSecondary}>
+              It's a very agile process that you can access through the
+              money.movistar.es website. You can find more detailed information
+              about the process on our "How It Works" page.
+            </Text3>
+          }
+        />
+        <BoxedAccordionItem
+          asset={<IconLifeguardFloatRegular />}
+          title="What should I do if I don't receive the SMS with the contracting code?"
+          content={
+            <Text3 color={colors.textSecondary}>
+              It may take a few minutes until you receive the SMS with the code. If
+              you still haven't received the code, you can request a new one by
+              clicking on "resend SMS."
+            </Text3>
+          }
+        />
+      </BoxedAccordion>
+      `,
+    },
+];
 
 const buttonSnippets: Array<Snippet> = [
     {name: 'ButtonPrimary', code: '<ButtonPrimary onPress={() => {}}>Action</ButtonPrimary>'},
@@ -117,6 +274,8 @@ const formSnippets: Array<Snippet> = [
             '  </Stack>\n' +
             '</RadioGroup>',
     ],
+    ['PinField', '<PinField name="otp" aria-label="OTP" />'],
+    ['PinField (hideCode)', '<PinField hideCode name="pin" aria-label="PIN" />'],
     [
         'Form',
         `<Form
@@ -472,7 +631,7 @@ const headerSnippets: Array<Snippet> = [
     },
     {
         group: 'Headers',
-        name: 'Basic header layout (white)',
+        name: 'Basic header layout (no inverse)',
         code: `
         <HeaderLayout
             isInverse={false}
@@ -507,7 +666,7 @@ const headerSnippets: Array<Snippet> = [
     },
     {
         group: 'Headers',
-        name: 'Header layout (with breadcrumbs)(white)',
+        name: 'Header layout (with breadcrumbs)(no inverse)',
         code: `
         <HeaderLayout
             isInverse={false}
@@ -541,7 +700,7 @@ const headerSnippets: Array<Snippet> = [
     },
     {
         group: 'Headers',
-        name: 'Main section header layout (white)',
+        name: 'Main section header layout (no inverse)',
         code: `
         <MainSectionHeaderLayout
             isInverse={false}>
@@ -566,7 +725,7 @@ const tabsSnippets: Array<Snippet> = [
             tabs={[
                 {text: 'Tab 1'},
                 {text: 'Tab 2'},
-                {text: 'Tab 2'},
+                {text: 'Tab 3'},
             ]}
         />`,
     },
@@ -615,6 +774,7 @@ const cardSnippets: Array<Snippet> = [
             title="Title"
             subtitle="Subtitle"
             description="Description"
+            icon={<Avatar size={40} src="https://source.unsplash.com/600x600/?face" />}
             extra={<Placeholder />}
             button={
                 <ButtonPrimary small onPress={() => {}}>
@@ -635,6 +795,7 @@ const cardSnippets: Array<Snippet> = [
             title="Title"
             subtitle="Subtitle"
             description="Description"
+            icon={<Avatar size={40} src="https://source.unsplash.com/600x600/?face" />}
             extra={<Placeholder />}
             button={
                 <ButtonPrimary small onPress={() => {}}>
@@ -677,6 +838,7 @@ const cardSnippets: Array<Snippet> = [
                 <IconAcademicRegular color={colors.brand} />
               </Circle>
             }
+            onPress={() => {alert({ title: "pressed" });}}
             title="Title"
             subtitle="Subtitle"
         />`,
@@ -712,7 +874,7 @@ const cardSnippets: Array<Snippet> = [
     },
     {
         group: 'Cards',
-        name: 'DisplayMediaCard',
+        name: 'DisplayMediaCard with image',
         code: `
         <DisplayMediaCard
           headline={<Tag type="promo">Headline</Tag>}
@@ -737,15 +899,34 @@ const cardSnippets: Array<Snippet> = [
     },
     {
         group: 'Cards',
-        name: 'PosterCard',
+        name: 'DisplayMediaCard with video',
+        code: `
+        <DisplayMediaCard
+          headline={<Tag type="promo">Headline</Tag>}
+          pretitle="Pretitle"
+          title="Title"
+          description="Description"
+          backgroundVideo="https://fr-cert1-es.mytelco.io/2O4-xBJqiMlAfLkseq8RkXs_mv2ACV7Hnt20HqXxNl-mK7KLI3M2dAw"
+          poster="https://source.unsplash.com/900x900/?landscape"
+          button={
+            <ButtonPrimary small href="https://google.com">
+              Action
+            </ButtonPrimary>
+          }
+        />`,
+    },
+    {
+        group: 'Cards',
+        name: 'PosterCard with image',
         code: `
         <PosterCard
           headline={<Tag type="promo">Headline</Tag>}
           pretitle="Pretitle"
           title="Title"
           description="Description"
-          backgroundImage="https://api.lorem.space/image/watch?w=700&h=700"
+          backgroundImage="https://source.unsplash.com/900x900/?landscape"
           onClose={() => {}}
+          onPress={() => {alert({ title: "pressed" });}}
           actions={[
             {
               Icon: IconLightningRegular,
@@ -753,6 +934,121 @@ const cardSnippets: Array<Snippet> = [
               label: "Lightning",
             },
           ]}
+        />`,
+    },
+    {
+        group: 'Cards',
+        name: 'PosterCard with video',
+        code: `
+        <PosterCard
+          headline={<Tag type="promo">Headline</Tag>}
+          pretitle="Pretitle"
+          title="Title"
+          description="Description"
+          backgroundVideo="https://fr-cert1-es.mytelco.io/2O4-xBJqiMlAfLkseq8RkXs_mv2ACV7Hnt20HqXxNl-mK7KLI3M2dAw"
+          poster="https://source.unsplash.com/900x900/?landscape"
+          onPress={() => {alert({ title: "pressed" });}}
+          button={
+            <ButtonPrimary small href="https://google.com">
+              Action
+            </ButtonPrimary>
+          }
+        />`,
+    },
+    {
+        group: 'Cards',
+        name: 'PosterCard inverse',
+        code: `
+        <PosterCard
+          headline={<Tag type="promo">Headline</Tag>}
+          pretitle="Pretitle"
+          title="Title"
+          description="Description"
+          isInverse
+          onClose={() => {}}
+          onPress={() => {alert({ title: "pressed" });}}
+          actions={[
+            {
+              Icon: IconLightningRegular,
+              onPress: () => {},
+              label: "Lightning",
+            },
+          ]}
+        />`,
+    },
+    {
+        group: 'Cards',
+        name: 'PosterCard with backgroundColor',
+        code: `
+        <PosterCard
+          headline={<Tag type="promo">Headline</Tag>}
+          pretitle="Pretitle"
+          title="Title"
+          description="Description"
+          backgroundColor={colors.promo}
+          isInverse
+          onClose={() => {}}
+          onPress={() => {alert({ title: "pressed" });}}
+          actions={[
+            {
+              Icon: IconLightningRegular,
+              onPress: () => {},
+              label: "Lightning",
+            },
+          ]}
+        />`,
+    },
+
+    {
+        group: 'Cards',
+        name: 'NakedCard with Image',
+        code: `
+        <NakedCard
+            media={<Image src="https://picsum.photos/1200/1200" aspectRatio="16:9"/>}
+            headline={<Tag type="promo">Headline</Tag>}
+            pretitle="Pretitle"
+            title="Title"
+            subtitle="Subtitle"
+            description="Description"
+            extra={<Placeholder />}
+            button={
+                <ButtonPrimary small onPress={() => {}}>
+                    Action
+                </ButtonPrimary>
+            }
+            buttonLink={<ButtonLink onPress={() => {}}>Link</ButtonLink>}
+        />`,
+    },
+    {
+        group: 'Cards',
+        name: 'NakedCard with Video',
+        code: `
+        <NakedCard
+            media={<Video src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4" aspectRatio="16:9" />}
+            headline={<Tag color={colors.promo}>headline</Tag>}
+            pretitle="Pretitle"
+            title="Title"
+            subtitle="Subtitle"
+            description="Description"
+            extra={<Placeholder />}
+            button={
+                <ButtonPrimary small onPress={() => {}}>
+                    Action
+                </ButtonPrimary>
+            }
+            buttonLink={<ButtonLink onPress={() => {}}>Link</ButtonLink>}
+        />`,
+    },
+
+    {
+        group: 'Cards',
+        name: 'SmallNakedCard',
+        code: `
+        <SmallNakedCard
+            media={<Image src="https://picsum.photos/1200/1200" aspectRatio="16:9"/>}
+            title="Title"
+            subtitle="Subtitle"
+            description="Description"
         />`,
     },
 ];
@@ -764,7 +1060,7 @@ const titlesSnippets: Array<Snippet> = [
     },
     {
         name: 'Title1 (with link)',
-        code: '<Title1 right={<TextLink onPress={() => {}}>Link</TextLink>}>Some title</Title1>',
+        code: '<Title1 right={<ButtonLink onPress={() => {}} withChevron bleedRight bleedY>Link</ButtonLink>}>Some title</Title1>',
     },
     {
         name: 'Title2',
@@ -772,7 +1068,15 @@ const titlesSnippets: Array<Snippet> = [
     },
     {
         name: 'Title2 (with link)',
-        code: '<Title2 right={<TextLink onPress={() => {}}>Link</TextLink>}>Some title</Title2>',
+        code: '<Title2 right={<ButtonLink onPress={() => {}} withChevron bleedRight bleedY>Link</ButtonLink>}>Some title</Title2>',
+    },
+    {
+        name: 'Title3',
+        code: '<Title3>Some title</Title3>',
+    },
+    {
+        name: 'Title3 (with link)',
+        code: '<Title3 right={<ButtonLink onPress={() => {}} withChevron bleedRight bleedY>Link</ButtonLink>}>Some title</Title3>',
     },
 ].map((snippet) => ({...snippet, group: 'Titles'}));
 
@@ -783,6 +1087,25 @@ const tagSnippets: Array<Snippet> = ['promo', 'active', 'inactive', 'success', '
         code: `<Tag type="${type}" Icon={IconStarFilled}>${capitalize(type)}</Tag>`,
     })
 );
+
+const sliderSnippets: Array<Snippet> = [
+    {
+        group: 'Slider',
+        name: 'Slider',
+        code: `
+        <ResponsiveLayout>
+          <Slider name="slider" min={1} max={10} tooltip />
+        </ResponsiveLayout>`,
+    },
+    {
+        group: 'Slider',
+        name: 'Slider with values',
+        code: `
+        <ResponsiveLayout>
+          <Slider name="slider" values={[3, 10, 7, 1, 2, 4, 6, 8, 9, 5]} tooltip />
+        </ResponsiveLayout>`,
+    },
+];
 
 const layoutSnippets: Array<Snippet> = [
     {
@@ -1117,7 +1440,7 @@ const exampleScreens: Array<Snippet> = [
                     label="Password"
                     helperText="Helper text"
                   />
-                  <ButtonLink aligned onPress>
+                  <ButtonLink bleedLeft onPress>
                     I’m having problems with my password
                   </ButtonLink>
                 </Stack>
@@ -1130,7 +1453,7 @@ const exampleScreens: Array<Snippet> = [
                   </Text3>
                   <TextField name="phone" label="Phone number" prefix="+34" />
 
-                  <ButtonLink aligned onPress>
+                  <ButtonLink bleedLeft onPress>
                     I’m having access problems
                   </ButtonLink>
                 </Stack>
@@ -1455,6 +1778,337 @@ const alertSnippets = [
 </ButtonPrimary>
     `,
     },
+    {
+        group: 'Modals',
+        name: 'showSheet (info)',
+        code: `
+<ButtonPrimary
+  aria-haspopup="dialog"
+  onPress={() => {
+    showSheet({
+      type: "INFO",
+      props: {
+        title: "Title",
+        subtitle: "Subtitle",
+        description: "Description",
+        items: [
+          { id: "1", title: "Item 1", icon: { type: "bullet" } },
+          { id: "2", title: "Item 2", icon: { type: "bullet" } },
+        ],
+      },
+    });
+  }}
+>
+  Open sheet
+</ButtonPrimary>`,
+    },
+    {
+        group: 'Modals',
+        name: 'showSheet (actions list)',
+        code: `
+<ButtonPrimary
+  aria-haspopup="dialog"
+  onPress={() => {
+    showSheet({
+      type: "ACTIONS_LIST",
+      props: {
+        title: "Title",
+        subtitle: "Subtitle",
+        description: "Description",
+        items: [
+          {
+            id: "1",
+            title: "Action 1",
+            icon: {
+              url: "https://source.unsplash.com/600x600/?face",
+            },
+          },
+          {
+            id: "2",
+            title: "Destructive",
+            style: "destructive",
+          },
+        ],
+      },
+    });
+  }}
+>
+  Open sheet
+</ButtonPrimary>`,
+    },
+    {
+        group: 'Modals',
+        name: 'showSheet (actions)',
+        code: `
+<ButtonPrimary
+  aria-haspopup="dialog"
+  onPress={() => {
+    showSheet({
+      type: "ACTIONS",
+      props: {
+        title: "Title",
+        subtitle: "Subtitle",
+        description: "Description",
+        button: {
+          text: "Button",
+        },
+        link: {
+          text: "Link",
+          withChevron: true,
+        },
+      },
+    });
+  }}
+>
+  Open sheet
+</ButtonPrimary>`,
+    },
+    {
+        group: 'Modals',
+        name: 'showSheet (radio list)',
+        code: `
+<ButtonPrimary
+  aria-haspopup="dialog"
+  onPress={() => {
+    showSheet({
+      type: "RADIO_LIST",
+      props: {
+        title: "Title",
+        subtitle: "Subtitle",
+        description: "Description",
+        selectedId: "1",
+        items: [
+          {
+            id: "1",
+            title: "Item 1",
+            description: "Description",
+            icon: {
+              url: "https://source.unsplash.com/600x600/?face",
+            },
+          },
+          {
+            id: "2",
+            title: "Item 2",
+            description: "Description",
+            icon: {
+              url: "unknownurl",
+            },
+          },
+        ],
+      },
+    });
+  }}
+>
+  Open sheet
+</ButtonPrimary>`,
+    },
+    {
+        group: 'Modals',
+        name: 'Sheet',
+        code: `
+<ButtonPrimary
+  aria-expanded={getState("isSheetOpen", false)}
+  aria-haspopup="dialog"
+  disabled={getState("isSheetOpen")}
+  onPress={() => {
+    setState("isSheetOpen", true);
+  }}
+>
+  Open
+</ButtonPrimary>
+
+{getState("isSheetOpen") && (
+  <Sheet
+    onClose={() => {
+      setState("isSheetOpen", false);
+    }}
+  >
+    <ResponsiveLayout>
+      <Box
+        paddingBottom={{ mobile: 16, desktop: 40 }}
+        paddingTop={{ mobile: 0, desktop: 40 }}
+      >
+        <Placeholder />
+      </Box>
+    </ResponsiveLayout>
+  </Sheet>
+)}`,
+    },
+    {
+        group: 'Modals',
+        name: 'InfoSheet',
+        code: `
+<ButtonPrimary
+  aria-expanded={getState("isSheetOpen",false)}
+  aria-haspopup="dialog"
+  disabled={getState("isSheetOpen")}
+  onPress={() => {
+    setState("isSheetOpen", true);
+  }}
+>
+  Open
+</ButtonPrimary>
+
+{getState("isSheetOpen") && (
+  <InfoSheet
+    onClose={() => {
+      setState("isSheetOpen", false);
+    }}
+    title="Title"
+    subtitle="Subtitle"
+    description="Description"
+    items={[
+      {
+        id: "1",
+        title: "Item 1",
+        description: "Description",
+        icon: { type: "bullet" },
+      },
+      {
+        id: "2",
+        title: "Item 2",
+        description: "Description",
+        icon: { type: "regular", Icon: IconCocktailRegular },
+      },
+      {
+        id: "3",
+        title: "Item 3",
+        description: "Description",
+        icon: { type: "small", Icon: IconCheckRegular },
+      },
+    ]}
+  />
+)}`,
+    },
+    {
+        group: 'Modals',
+        name: 'RadioListSheet',
+        code: `
+<ButtonPrimary
+  aria-expanded={getState("isSheetOpen", false)}
+  aria-haspopup="dialog"
+  disabled={getState("isSheetOpen")}
+  onPress={() => {
+    setState("isSheetOpen", true);
+  }}
+>
+  Open
+</ButtonPrimary>
+
+{getState("isSheetOpen") && (
+  <RadioListSheet
+    onClose={() => {
+      setState("isSheetOpen", false);
+    }}
+    onSelect={(selected) => console.log(selected)}
+    title="Title"
+    subtitle="Subtitle"
+    description="Description"
+    items={[
+      "Apple",
+      "Banana",
+      "Pineapple",
+      "Mango",
+      "Peach",
+      "Pear",
+      "Strawberry",
+      "Watermelon",
+      "Kiwi",
+      "Cherry",
+      "Grape",
+      "Lemon",
+      "Lime",
+    ].map((fruit, idx) => ({
+      id: String(idx),
+      title: fruit,
+      description: "Description",
+      asset: (
+        <Circle backgroundColor={skinVars.colors.brandLow} size={40}>
+          <IconMobileDeviceRegular color={skinVars.colors.brand} />
+        </Circle>
+      ),
+    }))}
+  />
+)}`,
+    },
+    {
+        group: 'Modals',
+        name: 'ActionsListSheet',
+        code: `
+<ButtonPrimary
+  aria-expanded={getState("isSheetOpen", false)}
+  aria-haspopup="dialog"
+  disabled={getState("isSheetOpen")}
+  onPress={() => {
+    setState("isSheetOpen", true);
+  }}
+>
+  Open
+</ButtonPrimary>
+
+{getState("isSheetOpen") && (
+  <ActionsListSheet
+    onClose={() => {
+      setState("isSheetOpen", false);
+    }}
+    onSelect={(selected) => console.log(selected)}
+    title="Title"
+    subtitle="Subtitle"
+    description="Description"
+    items={[
+      {
+        id: "1",
+        title: "Action with icon",
+        icon: {
+          Icon: IconLightningRegular,
+        },
+      },
+      {
+        id: "2",
+        title: "Action without icon",
+      },
+      {
+        id: "3",
+        title: "Destructive action",
+        style: "destructive",
+        icon: {
+          Icon: IconTrashCanRegular,
+        },
+      },
+    ]}
+  />
+)}`,
+    },
+    {
+        group: 'Modals',
+        name: 'ActionsSheet',
+        code: `
+<ButtonPrimary
+  aria-expanded={getState("isSheetOpen", false)}
+  aria-haspopup="dialog"
+  disabled={getState("isSheetOpen")}
+  onPress={() => {
+    setState("isSheetOpen", true);
+  }}
+>
+  Open
+</ButtonPrimary>
+
+{getState("isSheetOpen") && (
+  <ActionsSheet
+    onClose={() => {
+      setState("isSheetOpen", false);
+    }}
+    onPressButton={(selected) => console.log(selected)}
+    title="Title"
+    subtitle="Subtitle"
+    description="Description"
+    button={{ text: "Primary" }}
+    secondaryButton={{ text: "Secondary" }}
+    buttonLink={{ text: "Link", withChevron: true }}
+  />
+)}`,
+    },
 ];
 
 const skeletonSnippets = [
@@ -1727,6 +2381,263 @@ const logoSnippets = [
     },
 ];
 
+const gridSnippets = [
+    {
+        group: 'Grid',
+        name: 'Fixed columns/rows',
+        code: `
+<Grid columns={2} rows={3} gap={8}>
+  <GridItem>
+    <SnapCard
+      icon={
+        <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
+          <IconAcademicRegular color={skinVars.colors.brand} />
+        </Circle>
+      }
+      title="Title 1"
+      subtitle="Subtitle 1"
+    />
+  </GridItem>
+  <GridItem rowSpan={2}>
+    <SnapCard
+      icon={
+        <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
+          <IconAcademicRegular color={skinVars.colors.brand} />
+        </Circle>
+      }
+      title="Title 2"
+      subtitle="Subtitle 2"
+    />
+  </GridItem>
+  <GridItem>
+    <SnapCard
+      icon={
+        <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
+          <IconAcademicRegular color={skinVars.colors.brand} />
+        </Circle>
+      }
+      title="Title 3"
+      subtitle="Subtitle 3"
+    />
+  </GridItem>
+  <GridItem columnSpan={2}>
+    <SnapCard
+      icon={
+        <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
+          <IconAcademicRegular color={skinVars.colors.brand} />
+        </Circle>
+      }
+      title="Title 4"
+      subtitle="Subtitle 4"
+    />
+  </GridItem>
+</Grid>
+`,
+    },
+    {
+        group: 'Grid',
+        name: 'Auto columns',
+        code: `
+<Grid columns={{ minSize: 100 }} gap={8}>
+  {Array.from({ length: 10 }, (_, idx) => (
+    <SnapCard
+      key={idx}
+      icon={
+        <Circle size={40} backgroundColor={colors.brandLow}>
+          <IconAcademicRegular color={colors.brand} />
+        </Circle>
+      }
+      title={\`Title \${idx}\`}
+      subtitle="Subtitle"
+    />
+  ))}
+</Grid>
+`,
+    },
+];
+
+const stackingGroupSnippets = [
+    {
+        name: 'Stacking Group',
+        code: `
+        <StackingGroup maxItems={5} moreItemsStyle={{type: 'circle', size: 64}}>
+          <Avatar size={64} src="https://source.unsplash.com/600x600/?face" />
+          <Avatar size={64} src="https://source.unsplash.com/600x600/?face" />
+          <Avatar size={64} src="https://source.unsplash.com/600x600/?face" />
+          <Avatar size={64} src="https://source.unsplash.com/600x600/?face" />
+          <Avatar size={64} src="https://source.unsplash.com/600x600/?face" />
+          <Avatar size={64} src="https://source.unsplash.com/600x600/?face" />
+        </StackingGroup>
+    `,
+        group: 'StackingGroup',
+    },
+];
+
+const advancedDataCardSnippets = [
+    {
+        name: 'Advanced Data Card',
+        code: `
+        <AdvancedDataCard
+          title="title"
+          titleAs="h2"
+          subtitle="subtitle"
+          pretitle="pretitle"
+          pretitleAs="h4"
+          description="description"
+          extra={[
+            <RowBlock title="RowBlock" description="description" />,
+            <SimpleBlock
+              image={
+                <Image src="https://source.unsplash.com/600x600/?face" height={40} />
+              }
+              description="SimpleBlock"
+            />,
+            <InformationBlock
+              title="InformationBlock"
+              description="description"
+              value="20"
+              secondaryValue="20"
+            />,
+            <HighlightedValueBlock
+              headline={
+                <Tag type="promo" Icon={IconStarFilled}>
+                  Promo
+                </Tag>
+              }
+              mainHeading={{ text: "text", value: "20" }}
+              secondHeading={{ text: "text", value: "20" }}
+              title="HighlightedValueBlock"
+              description="description"
+            />,
+            <ValueBlock title="ValueBlock" description="description" value="20" />,
+            <ProgressBlock
+              title="Progress Block"
+              heading={{
+                value: "20 GB",
+                text: "text",
+              }}
+              progressPercent={20}
+              description="description"
+            />,
+            <StackingGroup maxItems={5} moreItemsStyle={{ type: "circle", size: 64 }}>
+              <Avatar size={64} src="https://source.unsplash.com/600x600/?face" />
+              <Avatar size={64} src="https://source.unsplash.com/600x600/?face" />
+              <Avatar size={64} src="https://source.unsplash.com/600x600/?face" />
+              <Avatar size={64} src="https://source.unsplash.com/600x600/?face" />
+              <Avatar size={64} src="https://source.unsplash.com/600x600/?face" />
+              <Avatar size={64} src="https://source.unsplash.com/600x600/?face" />
+            </StackingGroup>,
+          ]}
+          button={
+            <ButtonPrimary small onPress={() => window.alert("click")}>
+              Action
+            </ButtonPrimary>
+          }
+          buttonLink={
+            <ButtonLink small onPress={() => window.alert("click")}>
+              Action
+            </ButtonLink>
+          }
+          footerImage={
+            <Image src="https://source.unsplash.com/600x600/?face" height={40} />
+          }
+          footerText="footer text"
+          onClose={() => window.alert("close")}
+          href="https://google.com"
+        />
+        `,
+        group: 'AdvancedDataCard',
+    },
+];
+
+const RowBlockSnippets = [
+    {
+        name: 'Row Block',
+        code: `
+          <RowBlock title="title" description="description" />
+      `,
+        group: 'Blocks',
+    },
+];
+
+const SimpleBlockSnippets = [
+    {
+        name: 'Simple Block',
+        code: `
+        <SimpleBlock
+          image={
+            <Image src="https://source.unsplash.com/600x600/?face" height={40} />
+          }
+          description="description"
+        />
+      `,
+        group: 'Blocks',
+    },
+];
+
+const InformationBlockSnippets = [
+    {
+        name: 'Information Block',
+        code: `
+        <InformationBlock
+          title="title"
+          description="description"
+          value="value"
+          secondaryValue="secondaryValue"
+        />
+      `,
+        group: 'Blocks',
+    },
+];
+
+const HighlightedValueBlockSnippets = [
+    {
+        name: 'Highlighted Value Block',
+        code: `
+        <HighlightedValueBlock
+          headline={
+            <Tag type="promo" Icon={IconStarFilled}>
+              Promo
+            </Tag>
+          }
+          mainHeading={{ text: "text", value: "value" }}
+          secondHeading={{ text: "text", value: "value" }}
+          title="title"
+          description="description"
+        />
+      `,
+        group: 'Blocks',
+    },
+];
+
+const ValueBlockSnippets = [
+    {
+        name: 'Value Block',
+        code: `
+        <ValueBlock title="title" description="description" value="value" />
+      `,
+        group: 'Blocks',
+    },
+];
+
+const ProgressBlockSnippets = [
+    {
+        name: 'Progress Block',
+        code: `
+      <ProgressBlock
+        title="title"
+        heading={{
+          value: "20 GB",
+          text: "text",
+        }}
+        progressPercent={20}
+        description="description"
+      />
+      `,
+        group: 'Blocks',
+    },
+];
+
 export default [
     ...buttonSnippets,
     ...formSnippets,
@@ -1746,11 +2657,24 @@ export default [
     {group: 'Badge', name: 'Badge non numeric', code: '<Badge />'},
     {group: 'Badge', name: 'Icon with badge', code: '<Badge value="5"><IconSettingsRegular /></Badge>'},
     {group: 'Text', name: 'Text', code: '<Text>some text</Text>'},
+    {
+        group: 'Counter',
+        name: 'Counter',
+        code: `
+        <Counter
+          min={0}
+          max={5}
+          onRemove={() => window.alert("removed")}
+          defaultValue={2}
+        />`,
+    },
     ...headerSnippets,
+    ...accordionSnippets,
     ...listSnippets,
     ...listSnippetsAvatar,
     ...listRowSnippets,
     ...tabsSnippets,
+    ...sliderSnippets,
     ...cardSnippets,
     ...exampleScreens,
     {
@@ -1762,6 +2686,11 @@ export default [
         group: 'Progress',
         name: 'ProgressBar',
         code: '<ProgressBar progressPercent={35} />',
+    },
+    {
+        group: 'Progress',
+        name: 'ProgressBarStepped',
+        code: '<ProgressBarStepped steps={6} currentStep={3} />',
     },
     {
         group: 'NavigationBreadcrumbs',
@@ -1853,6 +2782,11 @@ export default [
         name: 'Image',
         code: `<Image src="https://picsum.photos/1200/1200" aspectRatio="16:9" />`,
     },
+    {
+        group: 'Media',
+        name: 'Image circular',
+        code: `<Image circular src="https://picsum.photos/1200/1200" />`,
+    },
     ...carouselSnippets,
     ...avatarSnippets,
     ...alertSnippets,
@@ -1861,4 +2795,13 @@ export default [
     ...heroSnippets,
     ...loaderSnippets,
     ...logoSnippets,
+    ...gridSnippets,
+    ...stackingGroupSnippets,
+    ...advancedDataCardSnippets,
+    ...RowBlockSnippets,
+    ...SimpleBlockSnippets,
+    ...InformationBlockSnippets,
+    ...HighlightedValueBlockSnippets,
+    ...ValueBlockSnippets,
+    ...ProgressBlockSnippets,
 ].sort((s1, s2) => s1.group.localeCompare(s2.group)) as Array<Snippet>;

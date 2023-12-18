@@ -4,6 +4,8 @@
  *   - Behavior: https://www.figma.com/file/Be8QB9onmHunKCCAkIBAVr/Lists-Component-Specs?node-id=0%3A608
  *   - Assets: https://www.figma.com/file/Be8QB9onmHunKCCAkIBAVr/Lists-Component-Specs?node-id=0%3A1
  */
+
+'use client';
 import * as React from 'react';
 import classNames from 'classnames';
 import {BaseTouchable} from './touchable';
@@ -21,7 +23,9 @@ import {Boxed} from './boxed';
 import Divider from './divider';
 import {getPrefixedDataAttributes} from './utils/dom';
 import * as styles from './list.css';
+import * as mediaStyles from './image.css';
 import {vars} from './skins/skin-contract.css';
+import {applyCssVars} from './utils/css';
 
 import type {TouchableElement} from './touchable';
 import type {DataAttributes, TrackingEvent} from './utils/types';
@@ -36,6 +40,7 @@ interface CommonProps {
     subtitleLinesMax?: number;
     description?: string | null;
     descriptionLinesMax?: number;
+    detail?: string;
     asset?: React.ReactNode;
     badge?: boolean | number;
     role?: string;
@@ -65,7 +70,7 @@ interface ContentProps extends CommonProps {
     labelId?: string;
 }
 
-const Content: React.FC<ContentProps> = ({
+export const Content: React.FC<ContentProps> = ({
     withChevron,
     headline,
     title,
@@ -74,6 +79,7 @@ const Content: React.FC<ContentProps> = ({
     subtitleLinesMax,
     description,
     descriptionLinesMax,
+    detail,
     asset,
     type = 'basic',
     badge,
@@ -105,7 +111,14 @@ const Content: React.FC<ContentProps> = ({
                     paddingRight={16}
                     className={classNames({[styles.center]: centerY, [styles.disabled]: disabled})}
                 >
-                    <div className={styles.asset}>{asset}</div>
+                    <div
+                        className={styles.asset}
+                        style={applyCssVars({
+                            [mediaStyles.vars.mediaBorderRadius]: vars.borderRadii.mediaSmall,
+                        })}
+                    >
+                        {asset}
+                    </div>
                 </Box>
             )}
             <div
@@ -114,21 +127,37 @@ const Content: React.FC<ContentProps> = ({
             >
                 <Stack space={4}>
                     {headline && (
-                        <Text1 regular color={vars.colors.textPrimary}>
+                        <Text1 regular color={vars.colors.textPrimary} hyphens="auto">
                             {headline}
                         </Text1>
                     )}
                     <Stack space={2}>
-                        <Text3 regular color={vars.colors.textPrimary} truncate={titleLinesMax} id={labelId}>
+                        <Text3
+                            regular
+                            color={vars.colors.textPrimary}
+                            truncate={titleLinesMax}
+                            id={labelId}
+                            hyphens="auto"
+                        >
                             {title}
                         </Text3>
                         {subtitle && (
-                            <Text2 regular color={vars.colors.textSecondary} truncate={subtitleLinesMax}>
+                            <Text2
+                                regular
+                                color={vars.colors.textSecondary}
+                                truncate={subtitleLinesMax}
+                                hyphens="auto"
+                            >
                                 {subtitle}
                             </Text2>
                         )}
                         {description && (
-                            <Text2 regular color={vars.colors.textSecondary} truncate={descriptionLinesMax}>
+                            <Text2
+                                regular
+                                color={vars.colors.textSecondary}
+                                truncate={descriptionLinesMax}
+                                hyphens="auto"
+                            >
                                 {description}
                             </Text2>
                         )}
@@ -136,34 +165,49 @@ const Content: React.FC<ContentProps> = ({
                     </Stack>
                 </Stack>
             </div>
+
             {renderBadge()}
-            {type === 'chevron' && (
-                <Box paddingLeft={16} className={classNames(styles.center, {[styles.disabled]: disabled})}>
-                    <IconChevron
-                        color={isInverse ? vars.colors.inverse : vars.colors.neutralMedium}
-                        direction="right"
-                    />
-                </Box>
-            )}
-            {type === 'control' && <div className={styles.right}>{renderRight(right, centerY)}</div>}
-            {type === 'custom' && (
-                <>
-                    <div className={classNames(styles.right, {[styles.disabled]: disabled})}>
+
+            <div
+                className={classNames({
+                    [styles.right]: !!detail || type !== 'basic',
+                    [styles.rightRestrictedWidth]: !!detail,
+                })}
+            >
+                {detail && (
+                    <div className={classNames(styles.center, styles.detail, {[styles.disabled]: disabled})}>
+                        <Text2 regular color={vars.colors.textSecondary} hyphens="auto">
+                            {detail}
+                        </Text2>
+                    </div>
+                )}
+
+                {type === 'control' && (
+                    <div className={classNames({[styles.detailRight]: !!detail})}>
                         {renderRight(right, centerY)}
                     </div>
-                    {withChevron && (
-                        <Box
-                            paddingLeft={4}
-                            className={classNames(styles.center, {[styles.disabled]: disabled})}
-                        >
-                            <IconChevron
-                                color={isInverse ? vars.colors.inverse : vars.colors.neutralMedium}
-                                direction="right"
-                            />
-                        </Box>
-                    )}
-                </>
-            )}
+                )}
+
+                {type === 'custom' && (
+                    <div
+                        className={classNames({[styles.detailRight]: !!detail, [styles.disabled]: disabled})}
+                    >
+                        {renderRight(right, centerY)}
+                    </div>
+                )}
+
+                {(type === 'chevron' || (type === 'custom' && withChevron)) && (
+                    <Box
+                        paddingLeft={detail || type === 'custom' ? 4 : 0}
+                        className={classNames(styles.center, {[styles.disabled]: disabled})}
+                    >
+                        <IconChevron
+                            color={isInverse ? vars.colors.inverse : vars.colors.neutralMedium}
+                            direction="right"
+                        />
+                    </Box>
+                )}
+            </div>
         </Box>
     );
 };
@@ -180,33 +224,33 @@ interface BasicRowContentProps extends CommonProps {
 }
 
 interface SwitchRowContentProps extends CommonProps {
-    onPress?: () => void;
+    onPress?: (() => void) | undefined;
 
     switch: ControlProps | undefined;
 }
 
 interface CheckboxRowContentProps extends CommonProps {
-    onPress?: () => void;
+    onPress?: (() => void) | undefined;
 
     checkbox: ControlProps | undefined;
 }
 
 interface RadioRowContentProps extends CommonProps {
-    onPress?: () => void;
+    onPress?: (() => void) | undefined;
 
     radioValue: string;
 }
 
 interface HrefRowContentProps extends CommonProps {
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
-    href: string;
+    href: string | undefined;
     newTab?: boolean;
     right?: Right;
 }
 
 interface ToRowContentProps extends CommonProps {
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
-    to: string;
+    to: string | undefined;
     fullPageOnWebView?: boolean;
     replace?: boolean;
     right?: Right;
@@ -214,7 +258,7 @@ interface ToRowContentProps extends CommonProps {
 
 interface OnPressRowContentProps extends CommonProps {
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
-    onPress: () => void;
+    onPress: (() => void) | undefined;
     right?: Right;
 }
 
@@ -257,15 +301,15 @@ const useControlState = ({
 };
 
 const areSwitchRowContentProps = (obj: any): obj is SwitchRowContentProps => {
-    return 'switch' in obj;
+    return obj.switch !== undefined;
 };
 
 const areCheckboxRowContentProps = (obj: any): obj is CheckboxRowContentProps => {
-    return 'checkbox' in obj;
+    return obj.checkbox !== undefined;
 };
 
 const areRadioRowContentProps = (obj: any): obj is RadioRowContentProps => {
-    return 'radioValue' in obj;
+    return obj.radioValue !== undefined;
 };
 
 const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, ref) => {
@@ -280,6 +324,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
         subtitleLinesMax,
         description,
         descriptionLinesMax,
+        detail,
         badge,
         role,
         extra,
@@ -288,6 +333,8 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
 
     const radioContext = useRadioContext();
     const disabled = props.disabled || (props.radioValue !== undefined && radioContext.disabled);
+    const hasHoverDefault = !disabled && !isInverse;
+    const hasHoverInverse = !disabled && isInverse;
 
     const [isChecked, toggle] = useControlState(props.switch || props.checkbox || {});
 
@@ -310,6 +357,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
             titleLinesMax={titleLinesMax}
             subtitleLinesMax={subtitleLinesMax}
             descriptionLinesMax={descriptionLinesMax}
+            detail={detail}
             type={type}
             right={right}
             extra={extra}
@@ -349,7 +397,8 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
             <BaseTouchable
                 ref={ref}
                 className={classNames(styles.rowContent, {
-                    [styles.hoverBackground]: !(disabled || isInverse),
+                    [styles.touchableBackground]: hasHoverDefault,
+                    [styles.touchableBackgroundInverse]: hasHoverInverse,
                     [styles.pointer]: !disabled,
                 })}
                 trackingEvent={props.trackingEvent}
@@ -367,7 +416,8 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
         return (
             <BaseTouchable
                 className={classNames(styles.rowContent, {
-                    [styles.hoverBackground]: !(disabled || isInverse),
+                    [styles.touchableBackground]: hasHoverDefault,
+                    [styles.touchableBackgroundInverse]: hasHoverInverse,
                     [styles.pointer]: !disabled,
                 })}
                 trackingEvent={props.trackingEvent}
@@ -386,7 +436,8 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
         return (
             <BaseTouchable
                 className={classNames(styles.rowContent, {
-                    [styles.hoverBackground]: !(disabled || isInverse),
+                    [styles.touchableBackground]: hasHoverDefault,
+                    [styles.touchableBackgroundInverse]: hasHoverInverse,
                     [styles.pointer]: !disabled,
                 })}
                 trackingEvent={props.trackingEvent}
@@ -407,35 +458,35 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
         return props.onPress ? (
             <div className={styles.dualActionContainer}>
                 <BaseTouchable
+                    dataAttributes={dataAttributes}
                     disabled={disabled}
                     onPress={props.onPress}
                     role={role}
                     className={classNames(styles.dualActionLeft, {
-                        [styles.hoverBackground]: !(disabled || isInverse),
+                        [styles.touchableBackground]: hasHoverDefault,
+                        [styles.touchableBackgroundInverse]: hasHoverInverse,
                     })}
                 >
                     {renderContent({type: 'basic', labelId: titleId})}
                 </BaseTouchable>
                 <div className={styles.dualActionDivider} />
-                <BaseTouchable
+
+                <Control
                     disabled={disabled}
-                    className={styles.dualActionRight}
-                    onPress={toggle}
-                    dataAttributes={dataAttributes}
-                >
-                    <Control
-                        disabled={disabled}
-                        name={name}
-                        checked={isChecked}
-                        aria-labelledby={titleId}
-                        render={({controlElement}) => controlElement}
-                    />
-                </BaseTouchable>
+                    name={name}
+                    checked={isChecked}
+                    aria-labelledby={titleId}
+                    onChange={toggle}
+                    render={({controlElement}) => (
+                        <div className={styles.dualActionRight}>{controlElement}</div>
+                    )}
+                />
             </div>
         ) : (
             <div
                 className={classNames(styles.rowContent, {
-                    [styles.hoverBackground]: !(disabled || isInverse),
+                    [styles.touchableBackground]: hasHoverDefault,
+                    [styles.touchableBackgroundInverse]: hasHoverInverse,
                     [styles.pointer]: !disabled,
                 })}
             >
@@ -475,7 +526,8 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
                     onPress={props.onPress}
                     role={role}
                     className={classNames(styles.dualActionLeft, {
-                        [styles.hoverBackground]: !(disabled || isInverse),
+                        [styles.touchableBackground]: hasHoverDefault,
+                        [styles.touchableBackgroundInverse]: hasHoverInverse,
                     })}
                 >
                     {renderContent({type: 'basic', labelId: titleId})}
@@ -495,7 +547,8 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
         ) : (
             <div
                 className={classNames(styles.rowContent, {
-                    [styles.hoverBackground]: !(disabled || isInverse),
+                    [styles.touchableBackground]: hasHoverDefault,
+                    [styles.touchableBackgroundInverse]: hasHoverInverse,
                     [styles.pointer]: !disabled,
                 })}
                 role={role}
@@ -520,7 +573,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
     }
 
     return (
-        <Box paddingX={16} className={styles.rowContent} role={role}>
+        <Box paddingX={16} className={styles.rowContent} role={role} dataAttributes={dataAttributes}>
             {props.right
                 ? renderContent({type: 'custom', right: props.right})
                 : renderContent({type: 'basic'})}
@@ -536,19 +589,15 @@ type RowListProps = {
     children: React.ReactNode;
     ariaLabelledby?: string;
     role?: string;
+    /**
+     * @deprecated This field is deprecated and it has no effect.
+     */
     noLastDivider?: boolean;
     dataAttributes?: DataAttributes;
 };
 
-export const RowList: React.FC<RowListProps> = ({
-    children,
-    ariaLabelledby,
-    role,
-    dataAttributes,
-    noLastDivider,
-}) => {
+export const RowList: React.FC<RowListProps> = ({children, ariaLabelledby, role, dataAttributes}) => {
     const lastIndex = React.Children.count(children) - 1;
-    const showLastDivider = !noLastDivider;
     return (
         <div
             role={role}
@@ -560,7 +609,7 @@ export const RowList: React.FC<RowListProps> = ({
                 .map((child, index) => (
                     <React.Fragment key={index}>
                         {child}
-                        {(index < lastIndex || showLastDivider) && (
+                        {index < lastIndex && (
                             <Box paddingX={16}>
                                 <Divider />
                             </Box>

@@ -1,6 +1,6 @@
 import {style, styleVariants} from '@vanilla-extract/css';
 import {sprinkles} from './sprinkles.css';
-import {NAVBAR_HEIGHT_DESKTOP, NAVBAR_HEIGHT_MOBILE} from './theme';
+import {NAVBAR_HEIGHT_DESKTOP, NAVBAR_HEIGHT_DESKTOP_LARGE, NAVBAR_HEIGHT_MOBILE} from './theme';
 import * as mq from './media-queries.css';
 import {vars as colorVars} from './skins/skin-contract.css';
 
@@ -26,9 +26,17 @@ const iconBase = style([
         position: 'absolute',
     }),
     {
+        top: 0,
+        left: 0,
+        transition: 'transform 300ms, opacity 100ms',
+    },
+]);
+
+export const iconCloseOpen = style([
+    iconBase,
+    {
         opacity: 1,
         transform: 'rotate(0) scale(1)',
-        transition: 'transform 300ms, opacity 100ms',
     },
 ]);
 
@@ -40,11 +48,19 @@ export const iconCloseHidden = style([
     },
 ]);
 
+export const iconMenuOpen = style([
+    iconBase,
+    {
+        opacity: 1,
+        transform: 'scale(1)',
+    },
+]);
+
 export const iconMenuHidden = style([
     iconBase,
     {
         opacity: 0,
-        transform: 'rotate(0deg) scale(0.7)',
+        transform: 'scale(0.7)',
     },
 ]);
 
@@ -52,6 +68,18 @@ export const topFixed = style([
     sprinkles({
         position: 'fixed',
         top: 0,
+        left: 0,
+        right: 0,
+    }),
+    {
+        zIndex: NAVBAR_ZINDEX,
+    },
+]);
+
+export const topFixedBottomRow = style([
+    sprinkles({
+        position: 'fixed',
+        top: NAVBAR_HEIGHT_DESKTOP,
         left: 0,
         right: 0,
     }),
@@ -83,7 +111,7 @@ const navbarBase = style([
 
 export const navbarBorderColorVariants = styleVariants({
     default: [navbarBase, {borderColor: colorVars.colors.divider}],
-    inverse: [navbarBase, {borderColor: 'transparent'}],
+    noBorder: [navbarBase, {borderColor: 'transparent'}],
     menuOpen: [
         navbarBase,
         {
@@ -141,33 +169,55 @@ export const textWrapperVariants = styleVariants({
     },
 });
 
+export const navigationBarContent = style({
+    alignItems: 'center',
+    width: '100%',
+    display: 'flex',
+});
+
+export const navigationBarContentRight = style({
+    display: 'flex',
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+});
+
+const spacerMobile = style({
+    '@media': {
+        [mq.tabletOrSmaller]: {
+            height: NAVBAR_HEIGHT_MOBILE,
+        },
+    },
+});
+
 export const spacer = style([
     sprinkles({
         height: NAVBAR_HEIGHT_DESKTOP,
     }),
-    {
-        '@media': {
-            [mq.tabletOrSmaller]: {
-                height: NAVBAR_HEIGHT_MOBILE,
-            },
-        },
-    },
+    spacerMobile,
 ]);
 
-export const burgerMenuEnter = style({
-    transform: 'translate(-100vw)',
-});
+export const spacerLarge = style([
+    {
+        height: NAVBAR_HEIGHT_DESKTOP_LARGE,
+    },
+    spacerMobile,
+]);
 
-export const burgerMenuEnterActive = style({
-    transform: 'translate(0)',
-});
-
-export const burgerMenuExit = style({
-    transform: 'translate(0)',
-});
-
-export const burgerMenuExitActive = style({
-    transform: 'translate(-100vw)',
+export const burgerMenuTransition = styleVariants({
+    entering: {
+        transform: 'translate(0vw)',
+    },
+    entered: {
+        transform: 'translate(0vw)',
+    },
+    exiting: {
+        transform: 'translate(-100vw)',
+    },
+    exited: {
+        transform: 'translate(-100vw)',
+    },
+    unmounted: {},
 });
 
 export const logoContainer = sprinkles({

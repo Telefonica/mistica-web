@@ -50,6 +50,7 @@ type Args = {
     title: string;
     subtitle: string;
     description: string;
+    detail: string;
     control: string;
     withBadge: boolean;
     oneLineTitle: boolean;
@@ -65,6 +66,7 @@ const Template: StoryComponent<Args & {boxed?: boolean}> = ({
     title,
     subtitle,
     description,
+    detail,
     control,
     withBadge,
     oneLineTitle,
@@ -163,6 +165,7 @@ const Template: StoryComponent<Args & {boxed?: boolean}> = ({
                 title={title}
                 subtitle={subtitle}
                 description={description}
+                detail={detail}
                 badge={withBadge}
                 titleLinesMax={oneLineTitle ? 1 : 2}
                 subtitleLinesMax={oneLineSubtitle ? 1 : 2}
@@ -177,6 +180,7 @@ const Template: StoryComponent<Args & {boxed?: boolean}> = ({
                 title={title}
                 subtitle={subtitle}
                 description={description}
+                detail={detail}
                 badge={withBadge ? 2 : undefined}
                 titleLinesMax={oneLineTitle ? 1 : 2}
                 subtitleLinesMax={oneLineSubtitle ? 1 : 2}
@@ -195,6 +199,7 @@ const Template: StoryComponent<Args & {boxed?: boolean}> = ({
                 title={title}
                 subtitle={subtitle}
                 description={description}
+                detail={detail}
                 badge={withBadge ? 22 : undefined}
                 titleLinesMax={oneLineTitle ? 1 : 2}
                 subtitleLinesMax={oneLineSubtitle ? 1 : 2}
@@ -209,6 +214,7 @@ const Template: StoryComponent<Args & {boxed?: boolean}> = ({
                 title={title}
                 subtitle={subtitle}
                 description={description}
+                detail={detail}
                 badge={withBadge ? 22 : undefined}
                 titleLinesMax={oneLineTitle ? 1 : 2}
                 subtitleLinesMax={oneLineSubtitle ? 1 : 2}
@@ -223,6 +229,7 @@ const Template: StoryComponent<Args & {boxed?: boolean}> = ({
                 title={title}
                 subtitle={subtitle}
                 description={description}
+                detail={detail}
                 badge={withBadge ? 22 : undefined}
                 titleLinesMax={oneLineTitle ? 1 : 2}
                 subtitleLinesMax={oneLineSubtitle ? 1 : 2}
@@ -237,6 +244,7 @@ const Template: StoryComponent<Args & {boxed?: boolean}> = ({
                 title={title}
                 subtitle={subtitle}
                 description={description}
+                detail={detail}
                 badge={withBadge ? 22 : undefined}
                 titleLinesMax={oneLineTitle ? 1 : 2}
                 subtitleLinesMax={oneLineSubtitle ? 1 : 2}
@@ -251,6 +259,7 @@ const Template: StoryComponent<Args & {boxed?: boolean}> = ({
                 title={title}
                 subtitle={subtitle}
                 description={description}
+                detail={detail}
                 badge={withBadge ? 22 : undefined}
                 titleLinesMax={oneLineTitle ? 1 : 2}
                 subtitleLinesMax={oneLineSubtitle ? 1 : 2}
@@ -265,6 +274,7 @@ const Template: StoryComponent<Args & {boxed?: boolean}> = ({
                 title={title}
                 subtitle={subtitle}
                 description={description}
+                detail={detail}
                 badge={withBadge ? 22 : undefined}
                 titleLinesMax={oneLineTitle ? 1 : 2}
                 subtitleLinesMax={oneLineSubtitle ? 1 : 2}
@@ -279,6 +289,7 @@ const Template: StoryComponent<Args & {boxed?: boolean}> = ({
                 title={title}
                 subtitle={subtitle}
                 description={description}
+                detail={detail}
                 badge={withBadge ? 22 : undefined}
                 titleLinesMax={oneLineTitle ? 1 : 2}
                 subtitleLinesMax={oneLineSubtitle ? 1 : 2}
@@ -304,6 +315,7 @@ const defaultArgs = {
     title: 'Title',
     subtitle: '',
     description: 'Description',
+    detail: '',
     control: 'chevron',
     withBadge: false,
     oneLineTitle: false,
@@ -314,9 +326,9 @@ const defaultArgs = {
 };
 
 export const RowListStory: StoryComponent<Args> = (args) => <Template {...args} />;
-RowListStory.storyName = 'Row list';
+RowListStory.storyName = 'RowList';
 RowListStory.args = defaultArgs;
 
 export const BoxedRowListStory: StoryComponent<Args> = (args) => <Template boxed {...args} />;
-BoxedRowListStory.storyName = 'Boxed row list';
+BoxedRowListStory.storyName = 'BoxedRowList';
 BoxedRowListStory.args = defaultArgs;

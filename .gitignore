@@ -8,7 +8,6 @@ coverage/
 *.js.map
 *.orig
 *.rej
-jsconfig.json
 **/node_modules/
 yarn-debug.log*
 yarn-error.log*
@@ -19,6 +18,8 @@ storybook-static/
 src/generated/mistica-icons/index.tsx.txt
 reports
 css/mistica.css
+community.js
+community.d.ts
 
 .yarn/*
 !.yarn/cache
@@ -27,3 +28,5 @@ css/mistica.css
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+# SonarQube scan
+.scannerwork

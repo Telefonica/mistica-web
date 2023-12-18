@@ -1,8 +1,9 @@
+'use client';
 import * as React from 'react';
 import FixedFooterLayout from './fixed-footer-layout';
 import ButtonLayout from './button-layout';
 import {useScreenSize} from './hooks';
-import ResponsiveLayout from './responsive-layout';
+import {InternalResponsiveLayout} from './responsive-layout';
 import Box from './box';
 
 import type {ButtonLink, NullableButtonElement} from './button';
@@ -40,7 +41,7 @@ const ButtonFixedFooterLayout: React.FC<Props> = ({
             footerBgColor={footerBgColor}
             containerBgColor={containerBgColor}
             footer={
-                <ResponsiveLayout>
+                <InternalResponsiveLayout>
                     <Box paddingY={isTablet ? 32 : isTabletOrSmaller ? 16 : 0}>
                         <ButtonLayout
                             align={isTabletOrSmaller ? 'full-width' : desktopButtonAlign}
@@ -50,7 +51,7 @@ const ButtonFixedFooterLayout: React.FC<Props> = ({
                             {secondaryButton}
                         </ButtonLayout>
                     </Box>
-                </ResponsiveLayout>
+                </InternalResponsiveLayout>
             }
         >
             {children}

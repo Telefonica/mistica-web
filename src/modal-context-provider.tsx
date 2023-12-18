@@ -1,3 +1,4 @@
+'use client';
 import * as React from 'react';
 
 type ModalState = {
@@ -28,6 +29,16 @@ const ModalContextProvider = ({children}: {children: React.ReactNode}): JSX.Elem
 
 export const useSetModalState = (): ((newModalState: Partial<ModalState>) => void) =>
     React.useContext(ModalStateSetterContext);
+
+export const useSetModalStateEffect = (): void => {
+    const setModalState = useSetModalState();
+    React.useEffect(() => {
+        setModalState({isModalOpen: true});
+        return () => {
+            setModalState({isModalOpen: false});
+        };
+    }, [setModalState]);
+};
 
 export const useModalState = (): ModalState => React.useContext(ModalStateContext);
 

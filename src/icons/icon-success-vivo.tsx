@@ -1,3 +1,4 @@
+'use client';
 import * as React from 'react';
 import {useTheme} from '../hooks';
 import {getAnimateSweepInProps} from '../utils/animation';
@@ -5,18 +6,16 @@ import {useIsInverseVariant} from '../theme-variant-context';
 import {vars} from '../skins/skin-contract.css';
 
 type Props = {
-    role?: string;
     size?: number | string;
 };
 
-const IconSuccessVivo: React.FC<Props> = ({role = 'presentation', size = 64}) => {
+const IconSuccessVivo = ({size = 48}: Props): JSX.Element => {
     const isInverse = useIsInverseVariant();
     const {platformOverrides} = useTheme();
 
     return (
-        <svg role={role} width={size} height={size} viewBox="0 0 64 64" style={{marginLeft: -17}}>
+        <svg width={size} height={size} viewBox="0 0 64 64" overflow="visible">
             <g
-                transform="translate(17, 10)"
                 fill={isInverse ? vars.colors.inverse : vars.colors.brand}
                 stroke={isInverse ? vars.colors.inverse : vars.colors.brand}
             >

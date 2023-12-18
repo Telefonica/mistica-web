@@ -2,11 +2,14 @@ name: deploy-master
 on:
     push:
         branches: [master]
+concurrency:
+    group: deploy-master-${{ github.ref }}
+    cancel-in-progress: true
 jobs:
     deploy:
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v2
+            - uses: actions/checkout@v3
 
             - uses: amondnet/vercel-action@master
               with:

@@ -1,3 +1,4 @@
+'use client';
 import * as React from 'react';
 import {O2_SKIN, O2_CLASSIC_SKIN} from '../skins/constants';
 import {
@@ -16,7 +17,7 @@ type Props = {
     skipAnimation?: boolean;
 };
 
-const IconSuccessO2: React.FC<Props> = ({size = 64, color, skipAnimation = false}) => {
+const IconSuccessO2 = ({size = 48, color, skipAnimation = false}: Props): JSX.Element => {
     const isInverse = useIsInverseVariant();
     const {platformOverrides} = useTheme();
 
@@ -58,7 +59,7 @@ const IconSuccessO2: React.FC<Props> = ({size = 64, color, skipAnimation = false
     );
 };
 
-const IconSuccessDefault: React.FC<Props> = ({size = 64, color, skipAnimation = false}) => {
+const IconSuccessDefault = ({size = 48, color, skipAnimation = false}: Props): JSX.Element => {
     const isInverse = useIsInverseVariant();
     const {platformOverrides} = useTheme();
 
@@ -95,7 +96,7 @@ const IconSuccessDefault: React.FC<Props> = ({size = 64, color, skipAnimation = 
     );
 };
 
-const IconSuccess: React.FC<Props> = ({size, color, skipAnimation}) => {
+const IconSuccess = ({size, color, skipAnimation}: Props): JSX.Element => {
     const {skinName} = useTheme();
 
     switch (skinName) {

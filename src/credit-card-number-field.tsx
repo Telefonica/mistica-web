@@ -1,3 +1,4 @@
+'use client';
 import * as React from 'react';
 import {useForm, useFieldProps} from './form-context';
 import {useTheme} from './hooks';
@@ -9,7 +10,7 @@ import {
     isValidCreditCardNumber,
 } from './utils/credit-card';
 import {TextFieldBaseAutosuggest} from './text-field-base';
-import IconCreditcard from './icons/icon-creditcard';
+import IconCreditCardVisaRegular from './generated/mistica-icons/icon-credit-card-visa-regular';
 import IconVisa from './icons/icon-visa';
 import IconMastercard from './icons/icon-mastercard';
 import IconAmex from './icons/icon-amex';
@@ -17,6 +18,7 @@ import {useRifm} from 'rifm';
 import {createChangeEvent} from './utils/dom';
 import {combineRefs} from './utils/common';
 import * as styles from './credit-card-number-field.css';
+import {vars} from './skins/skin-contract.css';
 
 import type {CardOptions} from './utils/credit-card';
 import type {CommonFormFieldProps} from './text-field-base';
@@ -87,7 +89,7 @@ const getAnimationTarget = (value?: string) => {
 
 const initialState = {
     showBackface: false,
-    animationTarget: <IconCreditcard />,
+    animationTarget: <IconCreditCardVisaRegular />,
     isAnimating: false,
 };
 
@@ -135,7 +137,7 @@ const CreditcardAdornment = ({value}: {value?: string}) => {
                 onTransitionEnd={() => isAnimating && dispatch({type: 'TRANSITION_END'})}
             >
                 <div className={styles.flipFront}>
-                    <IconCreditcard />
+                    <IconCreditCardVisaRegular color={vars.colors.neutralMedium} />
                 </div>
                 <div className={styles.flipBack}>{animationTarget}</div>
             </div>

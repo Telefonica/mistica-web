@@ -1,6 +1,7 @@
 export type Locale =
     | 'ca-ES'
     | 'en-US'
+    | 'en-GB'
     | 'de-DE'
     | 'es-AR'
     | 'es-CO'

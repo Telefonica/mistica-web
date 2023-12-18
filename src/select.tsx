@@ -1,8 +1,9 @@
+'use client';
 import * as React from 'react';
 import classnames from 'classnames';
 import {useForm} from './form-context';
-import {useAriaId, useTheme} from './hooks';
-import {DOWN, ENTER, ESC, SPACE, TAB, UP} from './utils/key-codes';
+import {useAriaId, useTheme, useScreenSize} from './hooks';
+import {DOWN, ENTER, ESC, SPACE, TAB, UP} from './utils/keys';
 import {FieldContainer, HelperText, Label} from './text-field-components';
 import ChevronDownRegular from './generated/mistica-icons/icon-chevron-down-regular';
 import {TextFieldBaseAutosuggest} from './text-field-base';
@@ -11,7 +12,8 @@ import {isAndroid, isIos} from './utils/platform';
 import {cancelEvent} from './utils/dom';
 import {Text3} from './text';
 import * as styles from './select.css';
-import {assignInlineVars} from '@vanilla-extract/dynamic';
+import {Portal} from './portal';
+import {applyCssVars} from './utils/css';
 
 export type SelectProps = {
     disabled?: boolean;
@@ -106,12 +108,13 @@ const Select: React.FC<SelectProps> = ({
                 const MAX_OPTIONS = 8;
                 const MARGIN_TOP_SIZE = 12;
                 const PADDING_SIZE = 16;
-                const {
-                    top: availableSpaceTop,
-                    width,
-                    left,
-                    height,
-                } = fieldRef.current.getBoundingClientRect();
+
+                const clientRect = fieldRef.current.getBoundingClientRect();
+                const availableSpaceTop = clientRect.top;
+                const width = clientRect.width;
+                const left = clientRect.left;
+                const height = clientRect.height;
+
                 const top = availableSpaceTop + height;
                 const visibleOptions = Math.min(options.length, MAX_OPTIONS);
                 const spaceTaken = visibleOptions * 48 + PADDING_SIZE;
@@ -216,8 +219,8 @@ const Select: React.FC<SelectProps> = ({
 
     React.useEffect(() => {
         const updateTentativeValueState = (e: KeyboardEvent) => {
-            const keyToOperand: Record<number, 1 | -1 | undefined> = {[UP]: -1, [DOWN]: 1};
-            const operand = keyToOperand[e.keyCode];
+            const keyToOperand: Record<string, 1 | -1 | undefined> = {[UP]: -1, [DOWN]: 1};
+            const operand = keyToOperand[e.key];
             if (operand) {
                 cancelEvent(e);
                 const newTentativeValueState =
@@ -229,21 +232,26 @@ const Select: React.FC<SelectProps> = ({
         };
         const handleKeyDown = (e: KeyboardEvent) => {
             if (optionsShown) {
-                if (e.keyCode === TAB) {
-                    cancelEvent(e);
-                }
-                if (e.keyCode === ESC) {
-                    toggleOptions(false);
-                }
-                if (e.keyCode === ENTER || e.keyCode === SPACE) {
-                    cancelEvent(e);
-                    if (
-                        options.findIndex(({value}) => value === tentativeValueState) !== -1 &&
-                        tentativeValueState !== valueState
-                    ) {
-                        setValue(tentativeValueState);
-                    }
-                    toggleOptions(false);
+                switch (e.key) {
+                    case TAB:
+                        cancelEvent(e);
+                        break;
+                    case ESC:
+                        toggleOptions(false);
+                        break;
+                    case ENTER:
+                    case SPACE:
+                        cancelEvent(e);
+                        if (
+                            options.findIndex(({value}) => value === tentativeValueState) !== -1 &&
+                            tentativeValueState !== valueState
+                        ) {
+                            setValue(tentativeValueState);
+                        }
+                        toggleOptions(false);
+                        break;
+                    default:
+                    // do nothing
                 }
             }
             // so we don't change the tentativeValueState while menu is closing
@@ -280,12 +288,13 @@ const Select: React.FC<SelectProps> = ({
             setIsFocused(true);
         },
         onKeyDown: (e: React.KeyboardEvent) => {
-            if (!optionsShown && (e.keyCode === SPACE || e.keyCode === ENTER)) {
+            if (!optionsShown && (e.key === SPACE || e.key === ENTER)) {
                 cancelEvent(e);
                 toggleOptions(true);
             }
         },
     };
+    const {isDesktopOrBigger} = useScreenSize();
 
     return shouldUseNative || isServerSide ? (
         <FieldContainer
@@ -336,6 +345,7 @@ const Select: React.FC<SelectProps> = ({
                 style={{
                     paddingTop: label ? 24 : 16,
                     paddingBottom: label ? 8 : 16,
+                    paddingRight: 48,
                     // Override default browser opacity when disabled. This opacity also affects the label.
                     // Without this fix, the label is invisible when disabled
                     opacity: 1,
@@ -385,7 +395,9 @@ const Select: React.FC<SelectProps> = ({
 
                 <div
                     className={styles.selectTextVariants[disabled ? 'disabled' : 'default']}
-                    style={{top: label ? 27 : 17}}
+                    style={{
+                        top: isDesktopOrBigger ? (label ? 28 : 18) : label ? 25 : 16,
+                    }}
                 >
                     {getOptionText(value ?? valueState)}
                 </div>
@@ -398,56 +410,58 @@ const Select: React.FC<SelectProps> = ({
                     }}
                     disableScroll
                 >
-                    <ul
-                        style={assignInlineVars({
-                            [styles.vars.top]: optionsComputedProps.top
-                                ? `${optionsComputedProps.top}px`
-                                : '',
-                            [styles.vars.left]: optionsComputedProps.left
-                                ? `${optionsComputedProps.left}px`
-                                : '',
-                            [styles.vars.maxHeight]: optionsComputedProps.maxHeight
-                                ? `${optionsComputedProps.maxHeight}px`
-                                : '',
-                            [styles.vars.minWidth]: optionsComputedProps.minWidth
-                                ? `${optionsComputedProps.minWidth}px`
-                                : '',
-                            [styles.vars.transformOrigin]: optionsComputedProps.transformOrigin ?? '',
-                        })}
-                        onPointerDown={cancelEvent}
-                        className={classnames(
-                            styles.optionsContainer,
-                            animateShowOptions
-                                ? styles.optionsAnimationsVariants.show
-                                : styles.optionsAnimationsVariants.hide
-                        )}
-                        role="listbox"
-                        ref={optionsMenuRef}
-                    >
-                        {options.map(({value: val, text}) => (
-                            <li
-                                role="option"
-                                aria-selected={val === (valueState ?? value)}
-                                key={val}
-                                data-value={val}
-                                className={classnames(styles.menuItem, {
-                                    [styles.menuItemSelected]:
-                                        val === tentativeValueState || val === (valueState ?? value),
-                                })}
-                                onPointerDown={cancelEvent}
-                                onClick={() => setValue(val)}
-                                ref={(liRef) => {
-                                    if (liRef) {
-                                        optionRefs.current.set(val, liRef);
-                                    } else {
-                                        optionRefs.current.delete(val);
-                                    }
-                                }}
-                            >
-                                <Text3 regular>{text}</Text3>
-                            </li>
-                        ))}
-                    </ul>
+                    <Portal>
+                        <ul
+                            style={applyCssVars({
+                                [styles.vars.top]: optionsComputedProps.top
+                                    ? `${optionsComputedProps.top}px`
+                                    : '',
+                                [styles.vars.left]: optionsComputedProps.left
+                                    ? `${optionsComputedProps.left}px`
+                                    : '',
+                                [styles.vars.maxHeight]: optionsComputedProps.maxHeight
+                                    ? `${optionsComputedProps.maxHeight}px`
+                                    : '',
+                                [styles.vars.minWidth]: optionsComputedProps.minWidth
+                                    ? `${optionsComputedProps.minWidth}px`
+                                    : '',
+                                [styles.vars.transformOrigin]: optionsComputedProps.transformOrigin ?? '',
+                            })}
+                            onPointerDown={cancelEvent}
+                            className={classnames(
+                                styles.optionsContainer,
+                                animateShowOptions
+                                    ? styles.optionsAnimationsVariants.show
+                                    : styles.optionsAnimationsVariants.hide
+                            )}
+                            role="listbox"
+                            ref={optionsMenuRef}
+                        >
+                            {options.map(({value: val, text}) => (
+                                <li
+                                    role="option"
+                                    aria-selected={val === (valueState ?? value)}
+                                    key={val}
+                                    data-value={val}
+                                    className={classnames(styles.menuItem, {
+                                        [styles.menuItemSelected]:
+                                            val === tentativeValueState || val === (valueState ?? value),
+                                    })}
+                                    onPointerDown={cancelEvent}
+                                    onClick={() => setValue(val)}
+                                    ref={(liRef) => {
+                                        if (liRef) {
+                                            optionRefs.current.set(val, liRef);
+                                        } else {
+                                            optionRefs.current.delete(val);
+                                        }
+                                    }}
+                                >
+                                    <Text3 regular>{text}</Text3>
+                                </li>
+                            ))}
+                        </ul>
+                    </Portal>
                 </Overlay>
             )}
         </>

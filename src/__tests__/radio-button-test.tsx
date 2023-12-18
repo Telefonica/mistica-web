@@ -4,6 +4,7 @@ import {render, screen, within, fireEvent, waitFor} from '@testing-library/react
 import {ButtonPrimary, Form, ThemeContextProvider, Title1} from '..';
 import userEvent from '@testing-library/user-event';
 import {makeTheme} from './test-utils';
+import {DOWN, SPACE, UP} from '../utils/keys';
 
 test('RadioGroup (uncontrolled)', async () => {
     render(
@@ -164,15 +165,15 @@ test('RadioGroup (disabled)', () => {
     expect(radios[0]).not.toBeChecked();
     expect(radios[1]).toBeChecked();
     expect(setFruit).not.toHaveBeenCalled();
-    fireEvent.keyDown(radios[0], {key: 'Space', keyCode: 32});
+    fireEvent.keyDown(radios[0], {key: SPACE});
     expect(radios[0]).not.toBeChecked();
     expect(radios[1]).toBeChecked();
     expect(setFruit).not.toHaveBeenCalled();
-    fireEvent.keyDown(radios[1], {key: 'ArrowUp', keyCode: 38});
+    fireEvent.keyDown(radios[1], {key: UP});
     expect(radios[0]).not.toBeChecked();
     expect(radios[1]).toBeChecked();
     expect(setFruit).not.toHaveBeenCalled();
-    fireEvent.keyDown(radios[1], {key: 'ArrowDown', keyCode: 40});
+    fireEvent.keyDown(radios[1], {key: DOWN});
     expect(radios[0]).not.toBeChecked();
     expect(radios[1]).toBeChecked();
     expect(setFruit).not.toHaveBeenCalled();
@@ -283,4 +284,21 @@ test('form uncontrolled mode', async () => {
     await waitFor(() =>
         expect(handleSubmitSpy).toHaveBeenCalledWith({'radio-group': 'apple'}, {'radio-group': 'apple'})
     );
+});
+
+test('Radio onClick event is not propagated', async () => {
+    const onPressHandler = jest.fn();
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <button onClick={onPressHandler}>
+                <RadioGroup name="radio-group" aria-labelledby="label">
+                    <RadioButton value="banana" />
+                </RadioGroup>
+            </button>
+        </ThemeContextProvider>
+    );
+
+    await userEvent.click(screen.getByRole('radio'));
+
+    expect(onPressHandler).not.toHaveBeenCalled();
 });

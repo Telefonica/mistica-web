@@ -1,22 +1,86 @@
 import * as React from 'react';
-import {Stack, ButtonPrimary, Inline, Title2, Video, Title1, Text3} from '..';
+import {Stack, ButtonPrimary, Inline, Title2, Video, Text3} from '..';
 import beachVideo from './videos/beach.mp4';
 import beachImg from './images/beach.jpg';
+
+import type {AspectRatio} from '../video';
+import type {VideoElement} from '..';
+
+const typeOptions = ['width and height', 'width and aspect ratio', 'full width'];
 
 export default {
     title: 'Components/Primitives/Video',
     component: Video,
+    argTypes: {
+        type: {
+            options: typeOptions,
+            control: {type: 'select'},
+        },
+        width: {
+            control: {type: 'range', min: 200, max: 800, step: 10},
+            if: {arg: 'type', neq: 'full width'},
+        },
+        height: {
+            control: {type: 'range', min: 200, max: 800, step: 10},
+            if: {arg: 'type', eq: 'width and height'},
+        },
+        aspectRatio: {
+            options: ['1 1', '16 9', '4 3', '0'],
+            control: {
+                type: 'select',
+                labels: {
+                    '1 1': '1:1',
+                    '16 9': '16:9',
+                    '4 3': '4:3',
+                },
+            },
+            if: {arg: 'type', neq: 'width and height'},
+        },
+    },
 };
 
 const VIDEO_SRC = beachVideo;
 const POSTER_SRC = beachImg;
 
-export const Default: StoryComponent = () => {
-    const videoRef = React.useRef<HTMLVideoElement | null>(null);
-    const videoRefWithPoster = React.useRef<HTMLVideoElement | null>(null);
+type Args = {
+    type: 'width and height' | 'width and aspect ratio' | 'full width';
+    width: number;
+    height: number;
+    aspectRatio: string;
+    autoPlay: boolean;
+    withPoster: boolean;
+    isEmptySource: boolean;
+};
+
+export const Default: StoryComponent<Args> = ({
+    type,
+    width,
+    height,
+    aspectRatio,
+    autoPlay,
+    withPoster,
+    isEmptySource,
+}) => {
+    const videoRef = React.useRef<VideoElement>(null);
+
+    const props = {
+        width: type !== 'full width' ? width : undefined,
+        height: type === 'width and height' ? height : undefined,
+        aspectRatio:
+            type !== 'width and height'
+                ? aspectRatio === '0'
+                    ? 0
+                    : (aspectRatio.replace(' ', ':') as AspectRatio)
+                : undefined,
+        poster: withPoster ? POSTER_SRC : undefined,
+        autoPlay,
+        dataAttributes: {testid: 'video'},
+    };
+
+    const video = <Video src={!isEmptySource ? VIDEO_SRC : ''} {...props} ref={videoRef} />;
 
     return (
-        <Stack space={64} dataAttributes={{testid: 'video'}}>
+        <Stack space={32}>
             <Stack space={8}>
                 <Title2>Video component issues/limitations</Title2>
                 <Text3 regular as="p">
@@ -35,24 +99,13 @@ export const Default: StoryComponent = () => {
             </Stack>
 
             <Stack space={16}>
-                <Title2>Auto Play (default)</Title2>
-                <Video width={480} height={480 / 2.4} src={VIDEO_SRC} poster={POSTER_SRC} />
-            </Stack>
-
-            <Stack space={16}>
-                <Title2>Manual Play (without Poster)</Title2>
-                <Video
-                    width={480}
-                    height={480 / 2.4}
-                    ref={videoRef}
-                    autoPlay={false}
-                    src={{src: VIDEO_SRC, type: 'video/mp4'}}
-                />
                 <Inline space={16}>
                     <ButtonPrimary
                         small
                         onPress={() => {
-                            videoRef.current?.play();
+                            if (videoRef.current) {
+                                videoRef.current.play();
+                            }
                         }}
                     >
                         Play
@@ -63,66 +116,22 @@ export const Default: StoryComponent = () => {
                             videoRef.current?.pause();
                         }}
                     >
-                        Pause
-                    </ButtonPrimary>
-                </Inline>
-            </Stack>
-
-            <Stack space={16}>
-                <Title2>Manual Play (with Poster)</Title2>
-                <Video
-                    poster={POSTER_SRC}
-                    width={480}
-                    height={480 / 2.4}
-                    ref={videoRefWithPoster}
-                    autoPlay={false}
-                    src={{src: VIDEO_SRC, type: 'video/mp4'}}
-                />
-                <Inline space={16}>
-                    <ButtonPrimary
-                        small
-                        onPress={() => {
-                            if (videoRefWithPoster.current) {
-                                videoRefWithPoster.current.currentTime = 0; // play from the beginning
-                                videoRefWithPoster.current.play();
-                            }
-                        }}
-                    >
-                        Play
-                    </ButtonPrimary>
-                    <ButtonPrimary
-                        small
-                        onPress={() => {
-                            videoRefWithPoster.current?.pause();
-                            videoRefWithPoster.current?.load(); // to force showing the poster again
-                        }}
-                    >
                         Stop
                     </ButtonPrimary>
                 </Inline>
-            </Stack>
-
-            <Stack space={16}>
-                <Title2>Aspect ratio</Title2>
-                <Title1>16:9</Title1>
-                <Video src={VIDEO_SRC} poster={POSTER_SRC} width={480} aspectRatio="16:9" />
-                <Title1>4:3</Title1>
-                <Video src={VIDEO_SRC} poster={POSTER_SRC} width={480} aspectRatio="4:3" />
-                <Title1>0 (keep original aspect ratio)</Title1>
-                <Video src={VIDEO_SRC} poster={POSTER_SRC} width={480} aspectRatio={0} />
-            </Stack>
-
-            <Stack space={16}>
-                <Title2>Aspect ratio width 100%</Title2>
-                <Title1>16:9</Title1>
-                <Video width="100%" src={VIDEO_SRC} poster={POSTER_SRC} aspectRatio="16:9" />
-                <Title1>4:3</Title1>
-                <Video width="100%" src={VIDEO_SRC} poster={POSTER_SRC} aspectRatio="4:3" />
-                <Title1>0 (keep original aspect ratio)</Title1>
-                <Video width="100%" src={VIDEO_SRC} poster={POSTER_SRC} aspectRatio={0} />
+                {video}
             </Stack>
         </Stack>
     );
 };
 
 Default.storyName = 'Video';
+Default.args = {
+    type: 'width and height',
+    width: 640,
+    height: 420,
+    aspectRatio: '1 1',
+    autoPlay: true,
+    withPoster: true,
+    isEmptySource: false,
+};

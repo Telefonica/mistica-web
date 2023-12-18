@@ -87,6 +87,19 @@ that case we recommend to extract it to an external `const` variable outside of 
 object reference will be the same in every re-render. If for some reason the `theme` must be dynamic in your
 app, consider to memoize it (for example, with `React.useMemo` hook).
 
+### Mistica in Next.js app router
+
+If you are using Next.js app router, we highly recommend enabling the following experimental config:
+
+```js
+experimental: {
+  optimizePackageImports: ['@telefonica/mistica'];
+}
+```
+
+This will improve the tree shaking of the library, reduce the bundle size and the build time. For more info
+read this Next blog post: https://vercel.com/blog/how-we-optimized-package-imports-in-next-js
+
 ## Components
 
 Explore the components in [Mistica storybook](https://mistica-web.vercel.app)
@@ -102,7 +115,6 @@ Start prototyping interfaces with Mistica components in the
 - [Theme config options](https://github.com/Telefonica/mistica-web/blob/master/doc/theme-config.md)
 - [Customize default texts](https://github.com/Telefonica/mistica-web/blob/master/doc/texts.md)
 - [Analytics](https://github.com/Telefonica/mistica-web/blob/master/doc/analytics.md)
-- [Style your components](https://github.com/Telefonica/mistica-web/blob/master/doc/styles.md)
 - [Fonts](https://github.com/Telefonica/mistica-web/blob/master/doc/fonts.md)
 - [Testing notes](https://github.com/Telefonica/mistica-web/blob/master/doc/testing.md)
 
@@ -129,3 +141,11 @@ Start prototyping interfaces with Mistica components in the
 ## Contributing
 
 See [CONTRIBUTING.md](https://github.com/Telefonica/mistica-web/blob/master/CONTRIBUTING.md)
+
+### Mistica Community
+
+About [Mistica Community](https://mistica-web.vercel.app/?path=/story/community-welcome--default)
+
+If you are building a Mistica Community component, place it inside the
+[`src/community` folder](src/community/) and don't forget to export it in the
+[`src/community/index.ts`](src/community/index.tsx) file to make it public.

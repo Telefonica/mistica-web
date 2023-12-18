@@ -1,3 +1,4 @@
+'use client';
 import * as React from 'react';
 import {useTheme} from './hooks';
 import {useIsInverseVariant} from './theme-variant-context';
@@ -7,9 +8,11 @@ import {getVivoSkin} from './skins/vivo';
 import {getO2Skin} from './skins/o2';
 import {getBlauSkin} from './skins/blau';
 import {getTelefonicaSkin} from './skins/telefonica';
+import {getPrefixedDataAttributes} from './utils/dom';
+import * as styles from './logo.css';
 
 import type {SkinName} from './skins/types';
-import type {TrackingEvent} from './utils/types';
+import type {DataAttributes, TrackingEvent} from './utils/types';
 import type {ExclusifyUnion} from './utils/utility-types';
 
 type LogoType = 'isotype' | 'imagotype' | 'vertical';
@@ -253,6 +256,7 @@ const LogoBase: React.FC<LogoBaseProps> = ({size = 48, skinName, type = 'isotype
         case 'Movistar':
             return <MovistarLogoImage size={size} type={type} />;
         case 'Vivo':
+        case 'Vivo-new':
             return <VivoLogoImage size={size} type={type} />;
         case 'O2':
         case 'O2-classic':
@@ -268,6 +272,8 @@ const LogoBase: React.FC<LogoBaseProps> = ({size = 48, skinName, type = 'isotype
 type LogoPropsBase = {
     size?: number;
     type?: LogoType;
+    /** "data-" prefix is automatically added. For example, use "testid" instead of "data-testid" */
+    dataAttributes?: DataAttributes;
 };
 
 type LogoToProps = LogoPropsBase & {
@@ -296,6 +302,8 @@ type LogoProps = ExclusifyUnion<LogoPropsBase | LogoToProps | LogoHrefProps | Lo
 const MaybeTouchableLogo = (
     logoTouchableProps: Omit<LogoProps, 'children'> & {children: JSX.Element}
 ): JSX.Element => {
+    const dataAttributes = getPrefixedDataAttributes(logoTouchableProps.dataAttributes, 'Logo');
+
     if (logoTouchableProps.to) {
         return (
             <Touchable
@@ -304,6 +312,8 @@ const MaybeTouchableLogo = (
                 fullPageOnWebView={logoTouchableProps.fullPageOnWebView}
                 replace={logoTouchableProps.replace}
                 aria-label={logoTouchableProps['aria-label']}
+                className={styles.logoContainer}
+                dataAttributes={dataAttributes}
             >
                 {logoTouchableProps.children}
             </Touchable>
@@ -318,6 +328,8 @@ const MaybeTouchableLogo = (
                 newTab={logoTouchableProps.newTab}
                 replace={logoTouchableProps.replace}
                 aria-label={logoTouchableProps['aria-label']}
+                className={styles.logoContainer}
+                dataAttributes={dataAttributes}
             >
                 {logoTouchableProps.children}
             </Touchable>
@@ -330,13 +342,19 @@ const MaybeTouchableLogo = (
                 trackingEvent={logoTouchableProps.trackingEvent}
                 onPress={logoTouchableProps.onPress}
                 aria-label={logoTouchableProps.href}
+                className={styles.logoContainer}
+                dataAttributes={dataAttributes}
             >
                 {logoTouchableProps.children}
             </Touchable>
         );
     }
 
-    return <> {logoTouchableProps.children}</>;
+    return (
+        <div className={styles.logoContainer} {...dataAttributes}>
+            {logoTouchableProps.children}
+        </div>
+    );
 };
 export const Logo: React.FC<LogoProps> = ({size, type = 'isotype', ...props}) => {
     const {skinName} = useTheme();

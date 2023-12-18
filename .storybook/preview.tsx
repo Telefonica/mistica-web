@@ -1,18 +1,23 @@
 import './css/roboto.css';
+import './css/vivo-font.css';
+import './css/telefonica-font.css';
+import './css/onair-font.css';
 import './css/main.css';
 import * as React from 'react';
 import {
     ThemeContextProvider,
     MOVISTAR_SKIN,
     VIVO_SKIN,
+    VIVO_NEW_SKIN,
     O2_SKIN,
-    O2_CLASSIC_SKIN,
     TELEFONICA_SKIN,
     BLAU_SKIN,
     skinVars,
+    OverscrollColorProvider,
 } from '../src';
 import {AVAILABLE_THEMES, Movistar} from './themes';
 import {addons} from '@storybook/addons';
+import {getPlatform} from '../src/utils/platform';
 
 import type {ColorScheme, ThemeConfig} from '../src';
 
@@ -20,17 +25,21 @@ type Platform = 'android' | 'desktop' | 'ios';
 
 const getSkin = (searchParams: URLSearchParams) => {
     const qsSkin = searchParams.get('skin');
-    return [MOVISTAR_SKIN, O2_SKIN, O2_CLASSIC_SKIN, VIVO_SKIN, TELEFONICA_SKIN, BLAU_SKIN].find(
+    return [MOVISTAR_SKIN, O2_SKIN, VIVO_SKIN, VIVO_NEW_SKIN, TELEFONICA_SKIN, BLAU_SKIN].find(
         (skin) => skin === qsSkin
     );
 };
 
-const getPlatform = (searchParams: URLSearchParams): Platform => {
-    const qsPlatform = searchParams.get('platform');
-    if (qsPlatform === 'ios' || qsPlatform === 'android' || qsPlatform === 'desktop') {
-        return qsPlatform;
+const getPlatformByValue = (value?: string | null): Platform => {
+    if (value === 'ios' || value === 'android' || value === 'desktop') {
+        return value;
     }
-    return 'desktop';
+
+    return getPlatform();
+};
+
+const getPlatformByUrl = (searchParams: URLSearchParams): Platform => {
+    return getPlatformByValue(searchParams.get('platform'));
 };
 
 const getTheme = (selectedSkin: string, platform: Platform, colorScheme: ColorScheme): ThemeConfig => {
@@ -49,27 +58,38 @@ const getTheme = (selectedSkin: string, platform: Platform, colorScheme: ColorSc
 const MisticaThemeProvider = ({Story, context}): React.ReactElement => {
     const searchParams = new URLSearchParams(location.search);
     const [skin, setSkin] = React.useState(getSkin(searchParams));
-    const [platform, setPlatform] = React.useState<Platform>(getPlatform(searchParams));
+    const [platform, setPlatform] = React.useState<Platform>(getPlatformByUrl(searchParams));
     const [colorScheme, setColorScheme] = React.useState<ColorScheme>('auto');
 
     React.useEffect(() => {
         const channel = addons.getChannel();
         channel.on('skin-selected', setSkin);
-        channel.on('platform-selected', setPlatform);
         channel.on('color-scheme-selected', setColorScheme);
         channel.emit('story-mounted');
+        channel.on('platform-selected', (value) => {
+            setPlatform(getPlatformByValue(value));
+        });
 
         return () => {
             channel.off('skin-selected', setSkin);
-            channel.off('platform-selected', setPlatform);
             channel.off('color-scheme-selected', setColorScheme);
+            channel.off('platform-selected', (value) => {
+                setPlatform(getPlatformByValue(value));
+            });
         };
     }, []);
 
     return (
-        <ThemeContextProvider theme={getTheme(skin as string, platform, colorScheme)}>
-            <Story {...context} />
-        </ThemeContextProvider>
+        <React.StrictMode>
+            <ThemeContextProvider theme={getTheme(skin as string, platform, colorScheme)}>
+                <OverscrollColorProvider>
+                    {skin === VIVO_NEW_SKIN && <style>{`body {font-family: "Vivo Type"}`}</style>}
+                    {skin === TELEFONICA_SKIN && <style>{`body {font-family: "Telefonica Sans"}`}</style>}
+                    {skin === O2_SKIN && <style>{`body {font-family: "On Air"}`}</style>}
+                    <Story {...context} />
+                </OverscrollColorProvider>
+            </ThemeContextProvider>
+        </React.StrictMode>
     );
 };
 
@@ -115,16 +135,23 @@ export const parameters = {
     // https://storybook.js.org/docs/react/configure/story-layout
     layout: 'fullscreen',
 
+    // https://storybook.js.org/docs/7.2/react/writing-stories/naming-components-and-hierarchy#sorting-stories
     options: {
-        // https://storybook.js.org/docs/react/writing-stories/naming-components-and-hierarchy#sorting-stories
-        storySort: (a: {id: string; kind: string}[], b: {id: string; kind: string}[]): number => {
-            if (a[1].kind === 'Welcome') {
-                return -1;
-            }
-            if (b[1].kind === 'Welcome') {
-                return 1;
-            }
-            return a[1].kind === b[1].kind ? 0 : a[1].id.localeCompare(b[1].id, undefined, {numeric: true});
+        storySort: {
+            method: 'alphabetical',
+            order: [
+                'Welcome',
+                'Components',
+                'Patterns',
+                'Layout',
+                'Icons',
+                'Utilities',
+                'Hooks',
+                'Mística Lab',
+                'Community',
+            ],
         },
     },
+    // Workaround for: https://github.com/storybookjs/storybook/issues/17098
+    docs: {source: {type: 'code'}},
 };

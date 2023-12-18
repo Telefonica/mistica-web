@@ -1,23 +1,39 @@
+'use client';
 import * as React from 'react';
 import {assignInlineVars} from '@vanilla-extract/dynamic';
 import DialogRoot from './dialog';
 import ScreenSizeContextProvider from './screen-size-context-provider';
 import AriaIdGetterContext from './aria-id-getter-context';
-import {AnchorLink, dimensions, getTexts, NAVBAR_HEIGHT_MOBILE} from './theme';
+import {dimensions, getTexts, getMisticaLinkComponent, NAVBAR_HEIGHT_MOBILE} from './theme';
 import {getPlatform, isInsideNovumNativeApp} from './utils/platform';
 import ThemeContext from './theme-context';
 import {useIsomorphicLayoutEffect} from './hooks';
 import TabFocus from './tab-focus';
 import ModalContextProvider from './modal-context-provider';
+import TooltipContextProvider from './tooltip-context-provider';
 import {DocumentVisibilityProvider} from './utils/document-visibility';
 import {AspectRatioSupportProvider} from './utils/aspect-ratio-support';
 import {TrackingConfig} from './utils/analytics';
 import {vars} from './skins/skin-contract.css';
 import {fromHexToRgb} from './utils/color';
 import {defaultBorderRadiiConfig, defaultTextPresetsConfig} from './skins/defaults';
+import {isClientSide} from './utils/environment';
+import {PACKAGE_VERSION} from './package-version';
+import {SnackbarRoot} from './snackbar-context';
 
 import type {Colors} from './skins/types';
 import type {Theme, ThemeConfig} from './theme';
+
+// Check there is only one version of mistica installed in the page.
+if (process.env.NODE_ENV !== 'production' && isClientSide()) {
+    // @ts-expect-error __mistica_version__ does not exist in window
+    if (window['__mistica_version__'] && window['__mistica_version__'] !== PACKAGE_VERSION) {
+        throw new Error(`There is more than one version of @telefonica/mistica running on the same page`);
+    } else {
+        // @ts-expect-error __mistica_version__ does not exist in window
+        window['__mistica_version__'] = PACKAGE_VERSION;
+    }
+}
 
 const darkModeMedia = '(prefers-color-scheme: dark)';
 export const useIsOsDarkModeEnabled = (): boolean => {
@@ -106,8 +122,18 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children, as}) => {
                 text9: {...defaultTextPresetsConfig.text9, ...theme.skin.textPresets?.text9},
                 text10: {...defaultTextPresetsConfig.text10, ...theme.skin.textPresets?.text10},
                 cardTitle: {...defaultTextPresetsConfig.cardTitle, ...theme.skin.textPresets?.cardTitle},
+                button: {...defaultTextPresetsConfig.button, ...theme.skin.textPresets?.button},
+                link: {...defaultTextPresetsConfig.link, ...theme.skin.textPresets?.link},
+                title1: {...defaultTextPresetsConfig.title1, ...theme.skin.textPresets?.title1},
+                title2: {...defaultTextPresetsConfig.title2, ...theme.skin.textPresets?.title2},
+                navigationBar: {
+                    ...defaultTextPresetsConfig.navigationBar,
+                    ...theme.skin.textPresets?.navigationBar,
+                },
+                indicator: {...defaultTextPresetsConfig.indicator, ...theme.skin.textPresets?.indicator},
+                tabsLabel: {...defaultTextPresetsConfig.tabsLabel, ...theme.skin.textPresets?.tabsLabel},
             },
-            Link: theme.Link ?? AnchorLink,
+            Link: getMisticaLinkComponent(theme.Link),
             isDarkMode: isDarkModeEnabled,
             isIos: getPlatform(platformOverrides) === 'ios',
             useHrefDecorator: theme.useHrefDecorator ?? useDefaultHrefDecorator,
@@ -135,31 +161,35 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children, as}) => {
     return (
         <TabFocus disabled={!theme.enableTabFocus}>
             <ModalContextProvider>
-                <ThemeContext.Provider value={contextTheme}>
-                    <TrackingConfig eventFormat={contextTheme.analytics.eventFormat}>
-                        <AspectRatioSupportProvider>
-                            <DocumentVisibilityProvider>
-                                <AriaIdGetterContext.Provider value={getAriaId}>
-                                    <ScreenSizeContextProvider>
-                                        <DialogRoot>
-                                            {as ? (
-                                                React.createElement(as, {style: themeVars}, children)
-                                            ) : (
-                                                <>
-                                                    {(process.env.NODE_ENV !== 'test' ||
-                                                        process.env.SSR_TEST) && (
-                                                        <style>{`:root {${themeVars}}`}</style>
+                <TooltipContextProvider>
+                    <ThemeContext.Provider value={contextTheme}>
+                        <TrackingConfig eventFormat={contextTheme.analytics.eventFormat}>
+                            <AspectRatioSupportProvider>
+                                <DocumentVisibilityProvider>
+                                    <AriaIdGetterContext.Provider value={getAriaId}>
+                                        <ScreenSizeContextProvider>
+                                            <DialogRoot>
+                                                <SnackbarRoot>
+                                                    {as ? (
+                                                        React.createElement(as, {style: themeVars}, children)
+                                                    ) : (
+                                                        <>
+                                                            {(process.env.NODE_ENV !== 'test' ||
+                                                                process.env.SSR_TEST) && (
+                                                                <style>{`:root {${themeVars}}`}</style>
+                                                            )}
+                                                            {children}
+                                                        </>
                                                     )}
-                                                    {children}
-                                                </>
-                                            )}
-                                        </DialogRoot>
-                                    </ScreenSizeContextProvider>
-                                </AriaIdGetterContext.Provider>
-                            </DocumentVisibilityProvider>
-                        </AspectRatioSupportProvider>
-                    </TrackingConfig>
-                </ThemeContext.Provider>
+                                                </SnackbarRoot>
+                                            </DialogRoot>
+                                        </ScreenSizeContextProvider>
+                                    </AriaIdGetterContext.Provider>
+                                </DocumentVisibilityProvider>
+                            </AspectRatioSupportProvider>
+                        </TrackingConfig>
+                    </ThemeContext.Provider>
+                </TooltipContextProvider>
             </ModalContextProvider>
         </TabFocus>
     );

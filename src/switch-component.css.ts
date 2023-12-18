@@ -66,9 +66,22 @@ export const barVariants = styleVariants({
     checkedIos: [barBase, {background: colorsVars.colors.controlActivated, height: 31}],
 });
 
-export const container = style({
-    cursor: 'default',
+const containerBase = style({
+    WebkitTapHighlightColor: 'transparent',
 });
+
+export const container = style([
+    containerBase,
+    {
+        cursor: 'pointer',
+    },
+]);
+export const containerDisabled = style([
+    containerBase,
+    {
+        cursor: 'default',
+    },
+]);
 
 export const disabled = style({
     cursor: 'default',

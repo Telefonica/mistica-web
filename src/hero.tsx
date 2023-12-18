@@ -1,7 +1,7 @@
+'use client';
 import * as React from 'react';
 import classnames from 'classnames';
 import {useScreenSize} from './hooks';
-import {MediaBorderRadiusProvider} from './image';
 import {Text3, Text8} from './text';
 import GridLayout from './grid-layout';
 import Box from './box';
@@ -9,11 +9,12 @@ import Stack from './stack';
 import ButtonGroup from './button-group';
 import {vars} from './skins/skin-contract.css';
 import * as styles from './hero.css';
-import {assignInlineVars} from '@vanilla-extract/dynamic';
+import * as mediaStyles from './image.css';
 import {useIsInsideSlideshowContext} from './carousel';
 import {getPrefixedDataAttributes} from './utils/dom';
 import {sprinkles} from './sprinkles.css';
 import {ThemeVariant} from './theme-variant-context';
+import {applyCssVars} from './utils/css';
 
 import type Image from './image';
 import type Video from './video';
@@ -132,14 +133,14 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
 
         if (isTabletOrSmaller) {
             return (
-                <MediaBorderRadiusProvider value={false}>
+                <div style={applyCssVars({[mediaStyles.vars.mediaBorderRadius]: '0px'})}>
                     <div
                         {...getPrefixedDataAttributes({'component-name': 'Hero', ...dataAttributes})}
                         ref={ref}
                         style={{
                             backgroundColor: BACKGROUND_COLOR[background],
                             ...(height === '100vh' ? {maxHeight: '-webkit-fill-available'} : {}), // Hack to avoid issues in Safari with 100vh
-                            ...assignInlineVars({
+                            ...applyCssVars({
                                 [styles.vars.height]: height ?? '100%',
                             }),
                         }}
@@ -152,7 +153,7 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
                             </Box>
                         </Layout>
                     </div>
-                </MediaBorderRadiusProvider>
+                </div>
             );
         }
 
@@ -175,14 +176,14 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
             );
 
         return (
-            <MediaBorderRadiusProvider value>
+            <div style={applyCssVars({[mediaStyles.vars.mediaBorderRadius]: vars.borderRadii.container})}>
                 <div
                     {...getPrefixedDataAttributes({'component-name': 'Hero', ...dataAttributes})}
                     ref={ref}
                     style={{
                         backgroundColor: BACKGROUND_COLOR[background],
                         ...(height === '100vh' ? {maxHeight: '-webkit-fill-available'} : {}), // Hack to avoid issues in Safari with 100vh
-                        ...assignInlineVars({
+                        ...applyCssVars({
                             [styles.vars.height]: height ?? '100%',
                         }),
                     }}
@@ -210,7 +211,7 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
                         />
                     </Layout>
                 </div>
-            </MediaBorderRadiusProvider>
+            </div>
         );
     }
 );

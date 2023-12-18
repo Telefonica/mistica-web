@@ -77,6 +77,7 @@ export const fieldContainer = style([
 
 export const disabled = style({
     opacity: 0.5,
+    cursor: 'default',
 });
 
 export const normalWidth = style([

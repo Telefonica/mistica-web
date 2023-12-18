@@ -1,8 +1,12 @@
+// this is a false positive, because there isn't any component in this module
+/* eslint-disable mistica-local-rules/use-client */
 import * as React from 'react';
 import ThemeContext from './theme-context';
 import ScreenSizeContext from './screen-size-context';
 import AriaIdGetterContext from './aria-id-getter-context';
 import {listenResize} from './utils/dom';
+import {isClientSide} from './utils/environment';
+import {isEqual} from './utils/helpers';
 
 import type {Theme} from './theme';
 import type {ScreenSizeContextType} from './screen-size-context';
@@ -17,12 +21,13 @@ export const useTheme = (): Theme => {
     return theme;
 };
 
+let bodyStyles = '';
+let bodyScrollTop = 0;
+let disableBodyDepth = 0;
+
 export const useDisableBodyScroll = (disable: boolean): void => {
     React.useEffect(() => {
         if (disable) {
-            let bodyStyles = '';
-            let bodyScrollTop = 0;
-            let disableBodyDepth = 0;
             const scrollContainer = document.scrollingElement || document.documentElement;
 
             const disableBodyScroll = () => {
@@ -123,17 +128,17 @@ export const useWindowSize = (): {
     screenWidth: number;
 } => {
     const [windowHeight, setWindowHeight] = React.useState<number>(
-        typeof window !== 'undefined' ? window.innerHeight : 1200 // Best guess
+        isClientSide() ? window.innerHeight : 1200 // Best guess
     );
     const [windowWidth, setWindowWidth] = React.useState<number>(
-        typeof window !== 'undefined' ? window.innerWidth : 800 // Best guess
+        isClientSide() ? window.innerWidth : 800 // Best guess
     );
 
     const [screenHeight, setScreenHeight] = React.useState<number>(
-        typeof window !== 'undefined' ? window.screen.availHeight : 1200
+        isClientSide() ? window.screen.availHeight : 1200
     );
     const [screenWidth, setScreenWidth] = React.useState<number>(
-        typeof window !== 'undefined' ? window.screen.availWidth : 800
+        isClientSide() ? window.screen.availWidth : 800
     );
 
     React.useEffect(() => {
@@ -173,20 +178,23 @@ export const useScreenHeight = (): number => {
     return screenHeight;
 };
 
+export const useIsWithinIFrame = (): boolean => {
+    return isClientSide() && window.top !== window.self;
+};
+
 // React currently throws a warning when using useLayoutEffect on the server.
 // To get around it, we can conditionally useEffect on the server (no-op) and
 // useLayoutEffect in the browser
-export const useIsomorphicLayoutEffect =
-    typeof window !== 'undefined' ? React.useLayoutEffect : React.useEffect;
+export const useIsomorphicLayoutEffect = isClientSide() ? React.useLayoutEffect : React.useEffect;
 
 type IntersectionObserverOptions = {
     root?: Element | Document | null;
     rootMargin?: string;
-    threshold?: number | number[];
+    threshold?: number | Array<number>;
 };
 
 export const useIsInViewport = (
-    ref: React.RefObject<HTMLElement>,
+    ref: React.RefObject<Element>,
     defaultValue: boolean,
     options?: IntersectionObserverOptions
 ): boolean => {
@@ -216,4 +224,56 @@ export const useIsInViewport = (
     }, [ref, options?.root, options?.rootMargin, options?.threshold]);
 
     return isInViewport;
+};
+
+export type BoundingRect = {
+    top: number;
+    right: number;
+    bottom: number;
+    left: number;
+    width: number;
+    height: number;
+    x: number;
+    y: number;
+};
+
+const getBoundingClientRect = (element: Element): BoundingRect => {
+    const {top, right, bottom, left, width, height, x, y} = element.getBoundingClientRect();
+    return {top, right, bottom, left, width, height, x, y};
+};
+
+export const useBoundingRect = (
+    ref: React.RefObject<Element>,
+    computeOnEveryFrame = true,
+    trackIfNotVisible = false
+): BoundingRect | undefined => {
+    const [rect, setRect] = React.useState<BoundingRect>();
+    const isVisible = useIsInViewport(ref, false);
+
+    React.useEffect(() => {
+        let id: number;
+
+        const check = () => {
+            if (ref.current && (isVisible || trackIfNotVisible)) {
+                const current = getBoundingClientRect(ref.current);
+                if (!isEqual(rect, current)) {
+                    setRect(current);
+                }
+
+                if (computeOnEveryFrame) {
+                    id = requestAnimationFrame(check);
+                }
+            } else {
+                setRect(undefined);
+            }
+        };
+
+        id = requestAnimationFrame(check);
+
+        return () => {
+            cancelAnimationFrame(id);
+        };
+    }, [ref, rect, isVisible, computeOnEveryFrame, trackIfNotVisible]);
+
+    return rect;
 };

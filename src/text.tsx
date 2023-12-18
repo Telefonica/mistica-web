@@ -1,13 +1,14 @@
+'use client';
 import * as React from 'react';
 import classnames from 'classnames';
-import {assignInlineVars} from '@vanilla-extract/dynamic';
 import {useIsInverseVariant} from './theme-variant-context';
-import {pxToRem} from './utils/css';
+import {pxToRem, applyCssVars} from './utils/css';
 import {getPrefixedDataAttributes} from './utils/dom';
 import {useTheme} from './hooks';
 import {vars} from './skins/skin-contract.css';
 import * as styles from './text.css';
 
+import type {ExclusifyUnion} from './utils/utility-types';
 import type {FontWeight} from './skins/types';
 import type {DataAttributes} from './utils/types';
 
@@ -36,7 +37,7 @@ export interface TextPresetProps {
     truncate?: boolean | number;
     wordBreak?: boolean;
     hyphens?: 'auto' | 'manual' | 'none';
-    textAlign?: 'center';
+    textAlign?: 'center' | 'right';
     id?: string;
     as?: React.ComponentType<any> | string;
     role?: string;
@@ -106,14 +107,14 @@ export const Text: React.FC<TextProps> = ({
         [styles.truncateToMoreThanOneLine]: truncate && truncate > 1,
     });
 
-    const sizeVars = assignInlineVars({
-        [styles.vars.mobileSize]: mobileSize ? pxToRem(mobileSize) : '',
-        [styles.vars.mobileLineHeight]: mobileLineHeight ? pxToRem(mobileLineHeight) : '',
-        [styles.vars.desktopSize]: desktopSize ? pxToRem(desktopSize) : '',
-        [styles.vars.desktopLineHeight]: desktopLineHeight ? pxToRem(desktopLineHeight) : '',
+    const sizeVars = applyCssVars({
+        [styles.vars.mobileSize]: mobileSize ? pxToRem(mobileSize) : 'inherit',
+        [styles.vars.mobileLineHeight]: mobileLineHeight ? pxToRem(mobileLineHeight) : 'inherit',
+        [styles.vars.desktopSize]: desktopSize ? pxToRem(desktopSize) : 'inherit',
+        [styles.vars.desktopLineHeight]: desktopLineHeight ? pxToRem(desktopLineHeight) : 'inherit',
     });
     const textVars = truncate
-        ? assignInlineVars({
+        ? applyCssVars({
               [styles.vars.lineClamp]: String(lineClampValue),
           })
         : {};
@@ -146,24 +147,26 @@ export const Text: React.FC<TextProps> = ({
 
 interface LightProps extends TextPresetProps {
     light: boolean;
-    regular?: undefined;
-    medium?: undefined;
 }
 
 interface MediumProps extends TextPresetProps {
-    light?: undefined;
-    regular?: undefined;
     medium: boolean;
 }
 
 interface RegularProps extends TextPresetProps {
-    light?: undefined;
     regular: boolean;
-    medium?: undefined;
 }
 
-type RegularMediumProps = RegularProps | MediumProps;
-type LightRegularMediumProps = LightProps | RegularProps | MediumProps;
+interface RestrictedWeightTextProps<T> extends TextPresetProps {
+    weight: T;
+}
+
+type RegularMediumProps = ExclusifyUnion<
+    RegularProps | MediumProps | RestrictedWeightTextProps<'regular' | 'medium'>
+>;
+type LightRegularMediumProps = ExclusifyUnion<
+    LightProps | RegularProps | MediumProps | RestrictedWeightTextProps<'light' | 'regular' | 'medium'>
+>;
 
 const getWeight = (props: LightRegularMediumProps) => {
     if (props.light) {
@@ -174,6 +177,9 @@ const getWeight = (props: LightRegularMediumProps) => {
     }
     if (props.medium) {
         return 'medium';
+    }
+    if (props.weight) {
+        return props.weight;
     }
     return undefined;
 };

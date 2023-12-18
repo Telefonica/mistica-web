@@ -1,3 +1,4 @@
+'use client';
 import * as React from 'react';
 import {isAndroid, isChrome} from './utils/platform';
 import {useDisableBodyScroll, useTheme} from './hooks';
@@ -33,7 +34,6 @@ const Overlay: React.FC<Props> = ({
     disableScroll = false,
     dataAttributes,
 }) => {
-    const [showChildren, setChildrenVisibility] = React.useState(true);
     useDisableBodyScroll(disableScroll);
     const {platformOverrides} = useTheme();
 
@@ -52,10 +52,8 @@ const Overlay: React.FC<Props> = ({
             className={className}
             onPointerDown={(e) => {
                 // We use listen to and cancel pointerdown to close overlay if user scrolls on iOS.
-                // In Android with children we hide children and onPress later in onClick to ensure click event doesn't hit element below overlay.
                 if ((e.target as any).dataset.overlay && onPress) {
                     if (children && isAndroid(platformOverrides) && isChrome(platformOverrides)) {
-                        setChildrenVisibility(false);
                         e.stopPropagation();
                     } else {
                         onPress(e);
@@ -63,6 +61,7 @@ const Overlay: React.FC<Props> = ({
                 }
             }}
             onClick={(e) => {
+                e.stopPropagation();
                 // In Android we need to call onPress here in onClick to ensure click event doesn't hit element below overlay.
                 if (
                     (e.target as any).dataset.overlay &&
@@ -71,16 +70,16 @@ const Overlay: React.FC<Props> = ({
                     isAndroid(platformOverrides) &&
                     isChrome(platformOverrides)
                 ) {
-                    setChildrenVisibility(true);
                     onPress(e);
                 }
             }}
+            // eslint-disable-next-line react/no-unknown-property
             touch-action="auto" // Prop needed for Pointer Events Polyfill to work properly
             onContextMenu={handleContextMenu}
             role="button"
             tabIndex={0}
         >
-            {showChildren && children}
+            {children}
         </div>
     );
 };

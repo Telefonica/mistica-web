@@ -5,6 +5,7 @@ import {waitFor, fireEvent, render, screen} from '@testing-library/react';
 import ThemeContextProvider from '../theme-context-provider';
 import {makeTheme} from './test-utils';
 import {type ThemeConfig} from '../theme';
+import {SPACE} from '../utils/keys';
 
 const trackingEvent = {
     category: 'test',
@@ -33,23 +34,15 @@ test('<Link> element is rendered when "to" prop is passed', async () => {
 test('<a> element is rendered when "to" prop is used and no Link component injected via ThemeContextProvider', async () => {
     const to = '/to';
 
-    const {container} = render(
+    render(
         <ThemeContextProvider theme={makeTheme()}>
             <Touchable to={to}>Test</Touchable>
         </ThemeContextProvider>
     );
 
-    expect(container).toMatchInlineSnapshot(`
-        <div>
-          <a
-            class="touchable_touchable__mhti6u3 touchable_base__mhti6u1 touchable__mhti6u0 sprinkles_cursor_pointer__1y2v1nfa3 touchable__mhti6u2 sprinkles_paddingTop_0__1y2v1nf6b sprinkles_paddingBottom_0__1y2v1nf6p sprinkles_paddingLeft_0__1y2v1nf73 sprinkles_paddingRight_0__1y2v1nf7h sprinkles_display_block__1y2v1nf5q sprinkles_border_none__1y2v1nf9m sprinkles_width_100%__1y2v1nf7v sprinkles_color_inherit__1y2v1nf2q sprinkles_background_transparent__1y2v1nf5i sprinkles_overflow_visible__1y2v1nfa5"
-            data-component-name="Touchable"
-            href="/to"
-          >
-            Test
-          </a>
-        </div>
-    `);
+    const anchor = screen.getByRole('link', {name: 'Test'});
+
+    expect(anchor).toHaveAttribute('href', to);
 });
 
 test('<Link> element is rendered when "to" prop is passed with tracking', async () => {
@@ -332,7 +325,7 @@ test('<a> component has click-like behaviour on "space" key press', async () => 
 
     const anchor = screen.getByText(/Test/);
 
-    fireEvent.keyDown(anchor, {key: 'Space', keyCode: 32});
+    fireEvent.keyDown(anchor, {key: SPACE});
 
     await waitFor(() => {
         expect(redirectSpy).toHaveBeenCalledTimes(1);
@@ -355,7 +348,7 @@ test('<Link> component has click-like behaviour on "space" key press', async () 
 
     const anchor = screen.getByRole('link', {name: 'Test'});
 
-    fireEvent.keyDown(anchor, {key: 'Space', keyCode: 32});
+    fireEvent.keyDown(anchor, {key: SPACE});
 
     await waitFor(() => {
         expect(screen.getByText('test click')).toBeInTheDocument();

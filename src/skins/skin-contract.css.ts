@@ -6,7 +6,12 @@ const colors: Colors = {
     appBarBackground: '',
     background: '',
     backgroundContainer: '',
+    backgroundContainerHover: '',
+    backgroundContainerPressed: '',
     backgroundContainerBrand: '',
+    backgroundContainerBrandHover: '',
+    backgroundContainerBrandPressed: '',
+    backgroundContainerBrandOverInverse: '',
     backgroundContainerAlternative: '',
     backgroundBrand: '',
     backgroundBrandSecondary: '',
@@ -48,6 +53,8 @@ const colors: Colors = {
     // CONTROLS
     control: '',
     controlActivated: '',
+    controlInverse: '',
+    controlActivatedInverse: '',
     controlError: '',
     loadingBar: '',
     loadingBarBackground: '',
@@ -126,6 +133,10 @@ const colors: Colors = {
     warningHighInverse: '',
     errorHighInverse: '',
     promoHighInverse: '',
+
+    customTabsBackground: '',
+    coverBackgroundHover: '',
+    coverBackgroundPressed: '',
 };
 
 const borderRadii: BorderRadiiConfig = {
@@ -139,6 +150,7 @@ const borderRadii: BorderRadiiConfig = {
     sheet: '',
     bar: '',
     avatar: '',
+    mediaSmall: '',
 };
 
 export const vars = createThemeContract({

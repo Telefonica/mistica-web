@@ -1,8 +1,10 @@
 import {openStoryPage, screen} from '../test-utils';
 
+const ASPECT_RATIO_VALUES = ['1:1', '7:10', '9:10'];
+
 test('DisplayDataCard', async () => {
     await openStoryPage({
-        id: 'components-cards-display-data-card--default',
+        id: 'components-cards-displaydatacard--default',
     });
 
     const displayDataCard = await screen.findByTestId('display-data-card');
@@ -14,7 +16,7 @@ test('DisplayDataCard', async () => {
 
 test('DisplayDataCard with top actions', async () => {
     await openStoryPage({
-        id: 'components-cards-display-data-card--default',
+        id: 'components-cards-displaydatacard--default',
         args: {withTopAction: true, closable: true},
     });
 
@@ -27,7 +29,7 @@ test('DisplayDataCard with top actions', async () => {
 
 test('DisplayDataCard with top actions without asset', async () => {
     await openStoryPage({
-        id: 'components-cards-display-data-card--default',
+        id: 'components-cards-displaydatacard--default',
         args: {withTopAction: true, closable: true, asset: 'none'},
     });
 
@@ -40,8 +42,22 @@ test('DisplayDataCard with top actions without asset', async () => {
 
 test('DisplayDataCard with top actions inverse', async () => {
     await openStoryPage({
-        id: 'components-cards-display-data-card--default',
+        id: 'components-cards-displaydatacard--default',
         args: {withTopAction: true, closable: true, isInverse: true},
+    });
+
+    const displayDataCard = await screen.findByTestId('display-data-card');
+
+    const image = await displayDataCard.screenshot();
+
+    expect(image).toMatchImageSnapshot();
+});
+
+test.each(ASPECT_RATIO_VALUES)('DisplayDataCard with aspect ratio %s', async (aspectRatio) => {
+    await openStoryPage({
+        id: 'components-cards-displaydatacard--default',
+        device: 'MOBILE_IOS',
+        args: {aspectRatio: aspectRatio.replace(':', ' ')},
     });
 
     const displayDataCard = await screen.findByTestId('display-data-card');
@@ -53,7 +69,7 @@ test('DisplayDataCard with top actions inverse', async () => {
 
 test('DisplayDataCard group', async () => {
     const page = await openStoryPage({
-        id: 'components-cards-display-data-card--group',
+        id: 'components-cards-displaydatacard--group',
     });
 
     const image = await page.screenshot({fullPage: true});

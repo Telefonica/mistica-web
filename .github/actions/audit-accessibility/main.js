@@ -1,7 +1,6 @@
 // @ts-check
 const path = require('path');
 const os = require('os');
-const _ = require('lodash');
 const {execSync} = require('child_process');
 const handler = require('serve-handler');
 const http = require('http');
@@ -48,6 +47,7 @@ const startStorybook = () => {
         const port = 6006;
 
         const storybookServer = http.createServer((request, response) => {
+            // @ts-expect-error - type mismatch in response
             return handler(request, response, {
                 public: 'public',
                 cleanUrls: ['/'],

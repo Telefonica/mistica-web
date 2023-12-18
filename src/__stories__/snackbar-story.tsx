@@ -1,6 +1,5 @@
 import * as React from 'react';
-import {Snackbar} from '..';
-import {StorySection} from './helpers';
+import {ButtonPrimary, Snackbar, useSnackbar} from '..';
 
 export default {
     title: 'Components/Snackbar',
@@ -12,29 +11,36 @@ type Args = {
     message: string;
     duration: string;
     type: React.ComponentProps<typeof Snackbar>['type'];
+    withDismiss: boolean;
 };
 
-export const Default: StoryComponent<Args> = ({buttonText, message, duration, type}) => {
+export const Default: StoryComponent<Args> = ({buttonText, message, duration, type, withDismiss}) => {
     const snackbarDuration = duration !== 'Default' ? +duration : undefined;
+    const {openSnackbar} = useSnackbar();
     return (
-        <StorySection title="Snackbar">
-            <Snackbar buttonText={buttonText} type={type} message={message} duration={snackbarDuration} />
-        </StorySection>
+        <ButtonPrimary
+            onPress={() => {
+                openSnackbar({message, type, buttonText, duration: snackbarDuration, withDismiss});
+            }}
+        >
+            Open Snackbar
+        </ButtonPrimary>
     );
 };
 
 Default.storyName = 'Snackbar';
 
 Default.args = {
-    buttonText: 'Action',
-    message: 'Some message',
     type: 'INFORMATIVE',
+    message: 'Some message',
+    buttonText: 'Action',
+    withDismiss: false,
     duration: 'Default',
 };
 
 Default.argTypes = {
     duration: {
-        options: ['Default', '1000', '2000', '5000', '10000', '15000'],
+        options: ['Default', 'Infinity'],
         control: {type: 'select'},
     },
     type: {

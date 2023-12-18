@@ -7,19 +7,56 @@ export const disabled = style({
     opacity: 0.5,
 });
 
-export const hoverBackground = style({
+export const touchableBackground = style({
+    transition: 'background-color 0.1s ease-in-out',
+    ':active': {
+        background: vars.colors.backgroundContainerPressed,
+    },
     '@media': {
         [mq.supportsHover]: {
             ':hover': {
-                background: vars.colors.backgroundAlternative,
+                background: vars.colors.backgroundContainerHover,
             },
+            ':active': {
+                background: vars.colors.backgroundContainerPressed,
+            },
+        },
+        [mq.touchableOnly]: {
+            transition: 'none',
+        },
+    },
+});
+
+export const touchableBackgroundInverse = style({
+    transition: 'background-color 0.1s ease-in-out',
+    ':active': {
+        background: vars.colors.backgroundContainerBrandPressed,
+    },
+    '@media': {
+        [mq.supportsHover]: {
+            ':hover': {
+                background: vars.colors.backgroundContainerBrandHover,
+            },
+            ':active': {
+                background: vars.colors.backgroundContainerBrandPressed,
+            },
+        },
+        [mq.touchableOnly]: {
+            transition: 'none',
         },
     },
 });
 
 export const pointer = sprinkles({cursor: 'pointer'});
 
-export const rowContent = sprinkles({width: '100%', border: 'none', background: 'transparent', padding: 0});
+export const rowContent = sprinkles({
+    width: '100%',
+    border: 'none',
+    background: 'transparent',
+    padding: 0,
+    display: 'block',
+    height: '100%',
+});
 
 export const content = sprinkles({
     display: 'flex',
@@ -64,7 +101,11 @@ export const control = style([
     },
 ]);
 
-export const right = style({marginLeft: 16});
+export const right = style({display: 'flex', marginLeft: 16});
+export const rightRestrictedWidth = style({maxWidth: '40%'});
+
+export const detailRight = style({paddingLeft: 8});
+export const detail = style({textAlign: 'right'});
 
 export const centeredControl = sprinkles({
     display: 'flex',
@@ -75,13 +116,15 @@ export const centeredControl = sprinkles({
 export const dualActionContainer = sprinkles({
     display: 'flex',
     flexDirection: 'row',
+    height: '100%',
 });
 
-const dualActionBase = sprinkles({display: 'block', padding: 0, border: 'none', background: 'transparent'});
+const dualActionBase = sprinkles({padding: 0, border: 'none', background: 'transparent'});
 
 export const dualActionLeft = style([
     dualActionBase,
     sprinkles({
+        display: 'block',
         flexGrow: 1,
         paddingX: 16,
     }),
@@ -103,6 +146,7 @@ export const dualActionRight = style([
         alignItems: 'center',
         flexGrow: 0,
         width: 'auto',
+        height: '100%',
     }),
     {
         lineHeight: 0,

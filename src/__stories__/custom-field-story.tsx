@@ -15,7 +15,7 @@ import {
     useFieldProps,
     ButtonPrimary,
 } from '..';
-import {DOWN, ENTER, SPACE, UP} from '../utils/key-codes';
+import {DOWN, ENTER, SPACE, UP} from '../utils/keys';
 import {cancelEvent} from '../utils/dom';
 import {combineRefs} from '../utils/common';
 
@@ -105,8 +105,8 @@ const Options = ({
 
     React.useEffect(() => {
         const updateTentativeValueState = (e: KeyboardEvent) => {
-            const keyToOperand: Record<number, 1 | -1 | undefined> = {[UP]: -1, [DOWN]: 1};
-            const operand = keyToOperand[e.keyCode];
+            const keyToOperand: Record<string, 1 | -1 | undefined> = {[UP]: -1, [DOWN]: 1};
+            const operand = keyToOperand[e.key];
             if (operand) {
                 cancelEvent(e);
                 const newTentativeValueState =
@@ -117,7 +117,7 @@ const Options = ({
             }
         };
         const handleKeyDown = (e: KeyboardEvent) => {
-            if (tentativeValueState && (e.keyCode === ENTER || e.keyCode === SPACE)) {
+            if (tentativeValueState && (e.key === ENTER || e.key === SPACE)) {
                 cancelEvent(e);
                 if (
                     options.findIndex(({value}) => value === tentativeValueState) !== -1 &&
@@ -260,6 +260,7 @@ const AutocompleteSelectField = ({name, options}: AutocompleteSelectFieldProps) 
                     onChangeValue={(value) => filterOptions(value, onPress, isMenuOpen)}
                     onBlur={checkIfRightOption}
                     autoComplete="off"
+                    role="combobox"
                 />
             )}
             renderMenu={({ref, className, close}) => (

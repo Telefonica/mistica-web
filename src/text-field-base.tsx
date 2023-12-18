@@ -1,8 +1,9 @@
+'use client';
 import * as React from 'react';
 import {Label, HelperText, FieldContainer} from './text-field-components';
 import {LABEL_LEFT_POSITION, LABEL_SCALE_MOBILE, LABEL_SCALE_DESKTOP} from './text-field-components.css';
 import {Text3} from './text';
-import {isIos, isRunningAcceptanceTest, isFirefox, isSafari} from './utils/platform';
+import {isRunningAcceptanceTest, isFirefox, isSafari} from './utils/platform';
 import {useAriaId, useTheme, useScreenSize, useIsomorphicLayoutEffect} from './hooks';
 import classNames from 'classnames';
 import {combineRefs} from './utils/common';
@@ -43,7 +44,7 @@ export type AutoComplete =
     | 'cc-csc' // The security code; on credit cards, this is the 3-digit verification number on the back of the card
     | 'username'; // Username or account name, when used with a password field the browser offers to save credentials together
 
-export interface CommonFormFieldProps {
+export interface CommonFormFieldProps<T = HTMLInputElement> {
     autoFocus?: boolean;
     disabled?: boolean;
     error?: boolean;
@@ -55,8 +56,8 @@ export interface CommonFormFieldProps {
     maxLength?: number;
     validate?: FieldValidator;
     autoComplete?: AutoComplete;
-    onFocus?: (event: React.FocusEvent) => void;
-    onBlur?: (event: React.FocusEvent) => void;
+    onFocus?: React.FocusEventHandler<T>;
+    onBlur?: React.FocusEventHandler<T>;
     fullWidth?: boolean;
     getSuggestions?: (text: string) => ReadonlyArray<string>;
     placeholder?: string;
@@ -93,8 +94,8 @@ interface TextFieldBaseProps {
     getSuggestions?: (value: string) => ReadonlyArray<string>;
     onClick?: (event: React.MouseEvent) => void;
     onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
-    onBlur?: (event: React.FocusEvent) => void;
-    onFocus?: (event: React.FocusEvent) => void;
+    onBlur?: React.FocusEventHandler;
+    onFocus?: React.FocusEventHandler;
     onKeyDown?: (event: React.KeyboardEvent) => void;
     inputProps?: {[name: string]: string | number | undefined};
     inputComponent?: React.ComponentType<any>;
@@ -107,6 +108,7 @@ interface TextFieldBaseProps {
     readOnly?: boolean;
     min?: string;
     max?: string;
+    role?: string;
 }
 
 export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
@@ -145,7 +147,6 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
         const {isTabletOrSmaller} = useScreenSize();
         const [characterCount, setCharacterCount] = React.useState(defaultValue?.length ?? 0);
         const hasLabel = !!label || !rest.required;
-        const theme = useTheme();
 
         // this shrinkLabel override is a workaround because I was unable to find a way to hide date
         // and date-time native placeholders when the input is not required
@@ -225,12 +226,7 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
         });
 
         /* Workaround to avoid huge bullets on ios devices (-apple-system font related) */
-        const fontFamily =
-            rest.type === 'password' &&
-            isIos(theme.platformOverrides) &&
-            !isRunningAcceptanceTest(theme.platformOverrides)
-                ? 'arial'
-                : 'inherit';
+        const fontFamily = rest.type === 'password' ? 'Lucida Grande, Arial, sans-serif' : 'inherit';
 
         return (
             <FieldContainer
@@ -300,6 +296,12 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
                                 // Workaround for systems where maxlength prop is applied onBlur (https://caniuse.com/#feat=maxlength)
                                 if (maxLength === undefined || event.target.value.length <= maxLength) {
                                     setCharacterCount(event.target.value.length);
+
+                                    // Browser's autofill can change the value without focusing
+                                    if (event.target.value.length > 0 && inputState !== 'focused') {
+                                        setInputState('filled');
+                                    }
+
                                     props.onChange?.(event);
                                 } else {
                                     event.stopPropagation();

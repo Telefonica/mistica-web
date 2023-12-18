@@ -1,7 +1,7 @@
 import {applyAlpha} from '../utils/color';
 import {O2_CLASSIC_SKIN} from './constants';
 
-import type {GetKnownSkin} from './types';
+import type {GetKnownSkin, KnownSkin} from './types';
 
 // https://github.com/Telefonica/mistica-design/blob/production/tokens/classicO2-constants.json
 // https://github.com/Telefonica/mistica-design/blob/production/tokens/classicO2-skin-schema.json
@@ -71,15 +71,23 @@ export const palette = {
     darkModeGrey6: '#313235',
 } as const;
 
+/**
+ * @deprecated use `getO2Skin` instead
+ */
 export const getO2ClassicSkin: GetKnownSkin = () => {
-    return {
+    const skin: KnownSkin = {
         name: O2_CLASSIC_SKIN,
         colors: {
             // BACKGROUNDS
             appBarBackground: palette.white,
             background: palette.white,
             backgroundContainer: palette.white,
+            backgroundContainerHover: palette.white,
+            backgroundContainerPressed: palette.white,
             backgroundContainerBrand: `linear-gradient(to bottom, ${palette.o2Blue}, ${palette.o2GradientSecond} 51%, ${palette.o2GradientThird} 72%, ${palette.o2GradientFourth})`,
+            backgroundContainerBrandHover: `linear-gradient(to bottom, ${palette.o2Blue}, ${palette.o2GradientSecond} 51%, ${palette.o2GradientThird} 72%, ${palette.o2GradientFourth})`,
+            backgroundContainerBrandPressed: `linear-gradient(to bottom, ${palette.o2Blue}, ${palette.o2GradientSecond} 51%, ${palette.o2GradientThird} 72%, ${palette.o2GradientFourth})`,
+            backgroundContainerBrandOverInverse: `linear-gradient(to bottom, ${palette.o2Blue}, ${palette.o2GradientSecond} 51%, ${palette.o2GradientThird} 72%, ${palette.o2GradientFourth})`,
             backgroundContainerAlternative: palette.grey1,
             backgroundBrand: `linear-gradient(to bottom, ${palette.o2Blue}, ${palette.o2GradientSecond} 51%, ${palette.o2GradientThird} 72%, ${palette.o2GradientFourth})`,
             backgroundBrandSecondary: `linear-gradient(to bottom, ${palette.o2Blue}, ${palette.o2GradientSecond} 51%, ${palette.o2GradientThird} 72%, ${palette.o2GradientFourth})`,
@@ -97,6 +105,8 @@ export const getO2ClassicSkin: GetKnownSkin = () => {
             border: palette.grey3,
             borderHigh: palette.grey5,
             borderSelected: palette.o2Gem,
+            coverBackgroundHover: applyAlpha(palette.darkModeBlack, 0.25),
+            coverBackgroundPressed: applyAlpha(palette.darkModeBlack, 0.35),
 
             // BUTTONS
             buttonDangerBackground: palette.pepper,
@@ -134,6 +144,8 @@ export const getO2ClassicSkin: GetKnownSkin = () => {
             // CONTROLS
             control: palette.grey3,
             controlActivated: palette.o2Gem,
+            controlInverse: palette.white,
+            controlActivatedInverse: palette.white,
             controlError: palette.pepper,
             loadingBar: palette.o2Gem,
             loadingBarBackground: palette.o2GemLight30,
@@ -198,12 +210,19 @@ export const getO2ClassicSkin: GetKnownSkin = () => {
             errorHighInverse: palette.pepper70,
             promoHighInverse: palette.pink60,
             neutralMediumInverse: palette.grey5,
+
+            customTabsBackground: palette.o2Blue,
         },
         darkModeColors: {
             appBarBackground: palette.darkModeGrey,
             background: palette.darkModeBlack,
             backgroundContainer: palette.darkModeGrey,
+            backgroundContainerHover: palette.darkModeGrey,
+            backgroundContainerPressed: palette.darkModeGrey,
             backgroundContainerBrand: palette.darkModeGrey,
+            backgroundContainerBrandHover: palette.darkModeGrey,
+            backgroundContainerBrandPressed: palette.darkModeGrey,
+            backgroundContainerBrandOverInverse: palette.darkModeGrey,
             backgroundContainerAlternative: palette.darkModeGrey,
             backgroundBrand: palette.darkModeBlack,
             backgroundBrandSecondary: palette.darkModeBlack,
@@ -242,6 +261,8 @@ export const getO2ClassicSkin: GetKnownSkin = () => {
             textLinkSnackbar: palette.o2SkyBlueLight,
             control: palette.darkModeGrey6,
             controlActivated: palette.o2SkyBlue,
+            controlInverse: palette.darkModeGrey6,
+            controlActivatedInverse: palette.o2SkyBlueLight,
             loadingBar: palette.o2SkyBlue,
             loadingBarBackground: palette.darkModeGrey6,
             toggleAndroidInactive: palette.grey4,
@@ -286,6 +307,9 @@ export const getO2ClassicSkin: GetKnownSkin = () => {
             errorHighInverse: palette.pepper70,
             promoHighInverse: palette.pink60,
             neutralMediumInverse: palette.grey5,
+
+            customTabsBackground: palette.darkModeBlack,
         },
     };
+    return skin;
 };

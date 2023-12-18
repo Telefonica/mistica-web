@@ -5,7 +5,7 @@ import * as mq from './media-queries.css';
 
 import type {ComplexStyleRule} from '@vanilla-extract/css';
 
-const transitionTiming = '0.3s cubic-bezier(0.77, 0, 0.175, 1)';
+const transitionTiming = '0.1s ease-in-out';
 
 export const BUTTON_MIN_WIDTH = 104;
 const BORDER_PX = 1.5;
@@ -19,7 +19,8 @@ export const SMALL_ICON_SIZE = 20;
 export const SPINNER_SIZE = 20;
 export const SMALL_SPINNER_SIZE = 16;
 export const PADDING_Y_LINK = 6;
-const PADDING_X_LINK = 12;
+export const PADDING_X_LINK = 12;
+export const CHEVRON_MARGIN_LEFT_LINK = 2;
 
 const disabledStyle = {opacity: 0.5};
 
@@ -37,13 +38,15 @@ const button = style([
     {
         border: `${BORDER_PX}px solid transparent`,
         minWidth: BUTTON_MIN_WIDTH,
+        transition: `background-color ${transitionTiming}, color ${transitionTiming}, border-color ${transitionTiming}`,
 
         selectors: {
-            '&:hover:not([disabled])': {
-                transition: `background-color ${transitionTiming}, color ${transitionTiming}, border-color ${transitionTiming}`,
-            },
-
             [`&[disabled]:not(${isLoading})`]: disabledStyle,
+        },
+        '@media': {
+            [mq.touchableOnly]: {
+                transition: 'none',
+            },
         },
     },
 ]);
@@ -127,26 +130,19 @@ const lightPrimary: ComplexStyleRule = [
     }),
     {
         selectors: {
-            '&:enabled:active': {
+            '&:not([disabled]):active': {
                 backgroundColor: vars.colors.buttonPrimaryBackgroundSelected,
             },
+        },
 
-            // Next media queries were added in each button style, because a pair of bugs in mobile devices (related to: https://jira.tid.es/browse/APPS-1882):
-            // - When tapping on a button that takes you to next screen and then go back to the previous one, button still have the focus styles
-            // - Same behavior if you do long press on the button
-
-            // What these media queries do, is:
-            // - Make sure that in FF hover still has it's proper styles
-            // - Media query with "coarse" (mobile), avoids that in devices that have coarse implemented, focus style doesn't get stuck
-
-            // Must be always declared for Firefox
-            '&:hover:not([disabled])': {
-                backgroundColor: vars.colors.buttonPrimaryBackgroundHover,
-
-                '@media': {
-                    [mq.touchableOnly]: {
-                        // Revert hover background in touch devices
-                        backgroundColor: vars.colors.buttonPrimaryBackground,
+        '@media': {
+            [mq.supportsHover]: {
+                selectors: {
+                    '&:hover:not([disabled])': {
+                        backgroundColor: vars.colors.buttonPrimaryBackgroundHover,
+                    },
+                    '&:not([disabled]):active': {
+                        backgroundColor: vars.colors.buttonPrimaryBackgroundSelected,
                     },
                 },
             },
@@ -162,19 +158,22 @@ const lightPrimaryInverse: ComplexStyleRule = [
     }),
     {
         selectors: {
-            '&:enabled:active': {
+            '&:not([disabled]):active': {
                 backgroundColor: vars.colors.buttonPrimaryBackgroundInverseSelected,
                 color: vars.colors.textButtonPrimaryInverseSelected,
             },
+        },
 
-            '&:hover:not([disabled])': {
-                color: vars.colors.textButtonPrimaryInverseSelected,
-                backgroundColor: vars.colors.buttonPrimaryBackgroundInverseSelected,
-
-                '@media': {
-                    [mq.touchableOnly]: {
-                        color: vars.colors.textButtonPrimaryInverse,
-                        backgroundColor: vars.colors.buttonPrimaryBackgroundInverse,
+        '@media': {
+            [mq.supportsHover]: {
+                selectors: {
+                    '&:hover:not([disabled])': {
+                        color: vars.colors.textButtonPrimaryInverseSelected,
+                        backgroundColor: vars.colors.buttonPrimaryBackgroundInverseSelected,
+                    },
+                    '&:not([disabled]):active': {
+                        backgroundColor: vars.colors.buttonPrimaryBackgroundInverseSelected,
+                        color: vars.colors.textButtonPrimaryInverseSelected,
                     },
                 },
             },
@@ -192,22 +191,25 @@ const lightSecondary: ComplexStyleRule = [
         borderColor: vars.colors.buttonSecondaryBorder,
 
         selectors: {
-            '&:enabled:active': {
+            '&:not([disabled]):active': {
                 color: vars.colors.textButtonSecondarySelected,
                 borderColor: vars.colors.buttonSecondaryBorderSelected,
                 backgroundColor: vars.colors.buttonSecondaryBackgroundSelected,
             },
+        },
 
-            '&:hover:not([disabled])': {
-                color: vars.colors.textButtonSecondarySelected,
-                borderColor: vars.colors.buttonSecondaryBorderSelected,
-                backgroundColor: vars.colors.buttonSecondaryBackgroundHover,
-
-                '@media': {
-                    [mq.touchableOnly]: {
-                        color: vars.colors.textButtonSecondary,
-                        backgroundColor: 'transparent',
-                        borderColor: vars.colors.buttonSecondaryBorder,
+        '@media': {
+            [mq.supportsHover]: {
+                selectors: {
+                    '&:hover:not([disabled])': {
+                        color: vars.colors.textButtonSecondarySelected,
+                        borderColor: vars.colors.buttonSecondaryBorderSelected,
+                        backgroundColor: vars.colors.buttonSecondaryBackgroundHover,
+                    },
+                    '&:not([disabled]):active': {
+                        color: vars.colors.textButtonSecondarySelected,
+                        borderColor: vars.colors.buttonSecondaryBorderSelected,
+                        backgroundColor: vars.colors.buttonSecondaryBackgroundSelected,
                     },
                 },
             },
@@ -225,21 +227,25 @@ const lightSecondaryInverse: ComplexStyleRule = [
         borderColor: vars.colors.buttonSecondaryBorderInverse,
 
         selectors: {
-            '&:enabled:active': {
+            '&:not([disabled]):active': {
                 borderColor: vars.colors.buttonSecondaryBorderInverseSelected,
                 color: vars.colors.textButtonSecondaryInverseSelected,
                 backgroundColor: vars.colors.buttonSecondaryBackgroundInverseSelected,
             },
+        },
 
-            '&:hover:not([disabled])': {
-                borderColor: vars.colors.buttonSecondaryBorderInverseSelected,
-                color: vars.colors.textButtonSecondaryInverseSelected,
-                backgroundColor: vars.colors.buttonSecondaryBackgroundInverseHover,
-
-                '@media': {
-                    [mq.touchableOnly]: {
-                        borderColor: vars.colors.buttonSecondaryBorderInverse,
-                        color: vars.colors.textButtonSecondaryInverse,
+        '@media': {
+            [mq.supportsHover]: {
+                selectors: {
+                    '&:hover:not([disabled])': {
+                        borderColor: vars.colors.buttonSecondaryBorderInverseSelected,
+                        color: vars.colors.textButtonSecondaryInverseSelected,
+                        backgroundColor: vars.colors.buttonSecondaryBackgroundInverseHover,
+                    },
+                    '&:not([disabled]):active': {
+                        borderColor: vars.colors.buttonSecondaryBorderInverseSelected,
+                        color: vars.colors.textButtonSecondaryInverseSelected,
+                        backgroundColor: vars.colors.buttonSecondaryBackgroundInverseSelected,
                     },
                 },
             },
@@ -255,16 +261,19 @@ const danger: ComplexStyleRule = [
     }),
     {
         selectors: {
-            '&:enabled:active': {
+            '&:not([disabled]):active': {
                 backgroundColor: vars.colors.buttonDangerBackgroundSelected,
             },
+        },
 
-            '&:hover:not([disabled])': {
-                backgroundColor: vars.colors.buttonDangerBackgroundHover,
-
-                '@media': {
-                    [mq.touchableOnly]: {
-                        backgroundColor: vars.colors.buttonDangerBackground,
+        '@media': {
+            [mq.supportsHover]: {
+                selectors: {
+                    '&:hover:not([disabled])': {
+                        backgroundColor: vars.colors.buttonDangerBackgroundHover,
+                    },
+                    '&:not([disabled]):active': {
+                        backgroundColor: vars.colors.buttonDangerBackgroundSelected,
                     },
                 },
             },
@@ -276,34 +285,41 @@ export const link = style([
     sprinkles({
         display: 'inline-block',
         width: 'auto',
+        position: 'relative',
         borderRadius: vars.borderRadii.button,
         paddingX: PADDING_X_LINK,
         border: 'none',
         color: vars.colors.textLink,
         background: 'transparent',
         overflow: 'hidden',
+        minWidth: 40,
     }),
     {
         paddingTop: PADDING_Y_LINK,
         paddingBottom: PADDING_Y_LINK,
         fontWeight: 500,
-        transition: `background-color ${transitionTiming}, color ${transitionTiming}`,
+        transition: `background-color ${transitionTiming}`,
 
         selectors: {
-            '&:enabled:active': {
+            [`&[disabled]:not(${isLoading})`]: disabledStyle,
+            '&:not([disabled]):active': {
                 backgroundColor: vars.colors.buttonLinkBackgroundSelected,
             },
+        },
 
-            '&[disabled]': disabledStyle,
-
-            '&:hover:not([disabled])': {
-                backgroundColor: vars.colors.buttonLinkBackgroundSelected,
-
-                '@media': {
-                    [mq.touchableOnly]: {
-                        backgroundColor: 'initial',
+        '@media': {
+            [mq.supportsHover]: {
+                selectors: {
+                    '&:hover:not([disabled])': {
+                        backgroundColor: vars.colors.buttonLinkBackgroundSelected,
+                    },
+                    '&:not([disabled]):active': {
+                        backgroundColor: vars.colors.buttonLinkBackgroundSelected,
                     },
                 },
+            },
+            [mq.touchableOnly]: {
+                transition: 'none',
             },
         },
     },
@@ -315,16 +331,19 @@ export const inverseLink = style([
     }),
     {
         selectors: {
-            '&:enabled:active': {
+            '&:not([disabled]):active': {
                 backgroundColor: vars.colors.buttonLinkBackgroundInverseSelected,
             },
+        },
 
-            '&:hover:not([disabled])': {
-                backgroundColor: vars.colors.buttonLinkBackgroundInverseSelected,
-
-                '@media': {
-                    [mq.touchableOnly]: {
-                        backgroundColor: 'initial',
+        '@media': {
+            [mq.supportsHover]: {
+                selectors: {
+                    '&:hover:not([disabled])': {
+                        backgroundColor: vars.colors.buttonLinkBackgroundInverseSelected,
+                    },
+                    '&:not([disabled]):active': {
+                        backgroundColor: vars.colors.buttonLinkBackgroundInverseSelected,
                     },
                 },
             },
@@ -332,17 +351,28 @@ export const inverseLink = style([
     },
 ]);
 
-export const textContentLink = sprinkles({
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-});
+export const textContentLink = style([
+    sprinkles({
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+    }),
+    {
+        opacity: 1,
+        transition: `opacity ${transitionTiming}, transform ${transitionTiming}`,
 
-globalStyle(`${textContent} svg`, {
+        selectors: {
+            [`${isLoading} &`]: {
+                transform: 'translateY(-2rem)',
+                opacity: 0,
+            },
+        },
+    },
+]);
+
+globalStyle(`${textContentLink} svg`, {
     display: 'block',
 });
-
-export const alignedLink = style({marginLeft: -PADDING_X_LINK});
 
 export const variants = styleVariants({
     primary: lightPrimary,

@@ -16,6 +16,14 @@ const containerBase = style([
         minHeight: 32,
         minWidth: 56,
         cursor: 'default',
+        borderColor: vars.colors.control,
+
+        '@media': {
+            [mq.tabletOrSmaller]: {
+                minHeight: 40,
+                minWidth: 72,
+            },
+        },
     },
 ]);
 
@@ -45,6 +53,7 @@ export const chipVariants = styleVariants({
         }),
         {
             borderColor: vars.colors.controlActivated,
+            cursor: 'pointer',
         },
     ],
 });
@@ -57,10 +66,17 @@ const interactive = style({
                 [`&:hover:not(${chipActive})`]: {
                     color: vars.colors.controlActivated,
                     backgroundColor: vars.colors.brandLow,
+                    cursor: 'pointer',
                 },
             },
         },
     },
+});
+
+export const button = sprinkles({
+    border: 'none',
+    background: 'transparent',
+    padding: 0,
 });
 
 export const chipInteractiveVariants = styleVariants({

@@ -1,8 +1,11 @@
-import {assignInlineVars} from '@vanilla-extract/dynamic';
+'use client';
 import classNames from 'classnames';
 import * as React from 'react';
 import {useIsomorphicLayoutEffect} from '../hooks';
 import * as styles from './aspect-ratio-support.css';
+import {applyCssVars} from './css';
+
+import type {DataAttributes} from './types';
 
 const AspectRatioSupport = React.createContext<boolean>(true);
 
@@ -30,7 +33,7 @@ export const AspectRatioSupportProvider: React.FC<Props> = ({children}) => {
 
 export const useSupportsAspectRatio = (): boolean => React.useContext(AspectRatioSupport);
 
-type AspectRatioElementProps = {
+type AspectRatioContainerProps = {
     width?: number | string;
     height?: number | string;
     aspectRatio: number;
@@ -38,9 +41,10 @@ type AspectRatioElementProps = {
     as?: React.ComponentType<any> | string;
     style?: React.CSSProperties;
     className?: string;
+    dataAttributes?: DataAttributes;
 };
 
-export const AspectRatioElement = (props: AspectRatioElementProps): JSX.Element => {
+export const AspectRatioContainer = (props: AspectRatioContainerProps): JSX.Element => {
     const supportsAspectRatio = useSupportsAspectRatio();
     // if width or height are numeric, we can calculate the other with the ratio without css.
     // if aspect ratio is 0, we use the original image proportions
@@ -83,10 +87,11 @@ export const AspectRatioElement = (props: AspectRatioElementProps): JSX.Element 
                           width: !isNaN(Number(width)) ? Number(width) : width,
                           height: !isNaN(Number(height)) ? Number(height) : height,
                       }),
-                ...assignInlineVars({
+                ...applyCssVars({
                     [styles.vars.aspectRatio]: aspectRatio ? String(aspectRatio) : 'unset',
                 }),
             },
+            ...(!needsWrapper && props.dataAttributes),
         },
         props.children
     );
@@ -103,7 +108,7 @@ export const AspectRatioElement = (props: AspectRatioElementProps): JSX.Element 
         })();
 
         return (
-            <div style={{width, height, paddingTop}} className={styles.wrapper}>
+            <div style={{width, height, paddingTop}} className={styles.wrapper} {...props.dataAttributes}>
                 {container}
             </div>
         );

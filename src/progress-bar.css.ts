@@ -27,16 +27,29 @@ const barKeyFramesInverte = keyframes({
     },
 });
 
-export const normal = style([
-    {
-        transition: `max-width ${transition}`,
-        animation: `${barKeyFrames} ${transition}`,
+export const normal = style({
+    transition: `max-width ${transition}`,
+    animation: `${barKeyFrames} ${transition}`,
+    '@media': {
+        ['(prefers-reduced-motion)']: {
+            transition: 'none',
+            animation: 'none',
+        },
     },
-]);
+});
 
-export const inverse = style([
-    {
-        transition: `max-width ${transition}`,
-        animation: `${barKeyFramesInverte} ${transition}`,
+export const inverse = style({
+    transition: `max-width ${transition}`,
+    animation: `${barKeyFramesInverte} ${transition}`,
+    '@media': {
+        ['(prefers-reduced-motion)']: {
+            transition: 'none',
+            animation: 'none',
+        },
     },
-]);
+});
+
+export const progressBarSteppedContainer = style({
+    display: 'inline-block',
+    width: '100%',
+});

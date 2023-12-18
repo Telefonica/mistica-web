@@ -1,3 +1,4 @@
+'use client';
 import * as React from 'react';
 import {useFieldProps} from './form-context';
 import {TextFieldBaseAutosuggest} from './text-field-base';
@@ -20,13 +21,14 @@ const useKeepMaxLength = (
     }, [onChange, value, maxLength, input]);
 };
 
-export interface TextFieldProps extends CommonFormFieldProps {
+export interface TextFieldProps extends CommonFormFieldProps<HTMLInputElement | HTMLTextAreaElement> {
     onChangeValue?: (value: string, rawValue: string) => void;
     onPress?: (event: React.MouseEvent) => void;
     multiline?: boolean;
     prefix?: React.ReactNode;
     endIcon?: React.ReactNode;
     getSuggestions?: (value: string) => ReadonlyArray<string>;
+    role?: string;
 }
 
 const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
@@ -52,7 +54,7 @@ const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
         const inputRef = React.useRef<HTMLInputElement | null>(null);
         const processValue = (v: string) => v;
 
-        const onBlur = (event: React.FocusEvent<Element>) => {
+        const onBlur = (event: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
             if (rest.multiline && inputRef.current) {
                 // scroll to start
                 inputRef.current.scrollTop = 0;
@@ -60,7 +62,7 @@ const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
             onBlurProp?.(event);
         };
 
-        const onFocus = (event: React.FocusEvent<Element>) => {
+        const onFocus = (event: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
             if (rest.multiline) {
                 setTimeout(() => {
                     if (inputRef.current) {

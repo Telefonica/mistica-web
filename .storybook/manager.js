@@ -6,4 +6,7 @@ import {createStorybookTheme} from './storybook-manager-theme';
 addons.setConfig({
     panelPosition: 'right',
     theme: createStorybookTheme('Movistar'),
+    toolbar: {
+        title: {hidden: true},
+    },
 });

@@ -1,10 +1,11 @@
+'use client';
 import * as React from 'react';
 import classnames from 'classnames';
 import ScreenReaderOnly from './screen-reader-only';
 import * as classes from './touchable.css';
 import {useTheme} from './hooks';
 import {isInsideNovumNativeApp} from './utils/platform';
-import {ENTER, SPACE} from './utils/key-codes';
+import {ENTER, SPACE} from './utils/keys';
 import {getPrefixedDataAttributes} from './utils/dom';
 
 import type {DataAttributes, TrackingEvent} from './utils/types';
@@ -34,6 +35,7 @@ interface CommonProps {
     'aria-checked'?: 'true' | 'false' | boolean;
     'aria-controls'?: string;
     'aria-expanded'?: 'true' | 'false' | boolean;
+    'aria-haspopup'?: 'true' | 'false' | 'menu' | 'dialog' | boolean;
     'aria-hidden'?: 'true' | 'false' | boolean;
     'aria-selected'?: 'true' | 'false' | boolean;
     'aria-labelledby'?: string;
@@ -120,8 +122,10 @@ const RawTouchable = React.forwardRef<TouchableElement, Props>((props, ref) => {
         style: props.style,
         role: props.role,
         'aria-checked': props['aria-checked'],
+        'aria-disabled': props.disabled ? true : undefined,
         'aria-controls': props['aria-controls'],
         'aria-expanded': props['aria-expanded'],
+        'aria-haspopup': props['aria-haspopup'],
         'aria-hidden': props['aria-hidden'],
         'aria-selected': props['aria-selected'],
         'aria-live': props['aria-live'],
@@ -198,7 +202,7 @@ const RawTouchable = React.forwardRef<TouchableElement, Props>((props, ref) => {
     };
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLElement>) => {
-        if (event.keyCode === ENTER || event.keyCode === SPACE) {
+        if (event.key === ENTER || event.key === SPACE) {
             event.preventDefault();
             event.currentTarget.click();
         }

@@ -1,3 +1,4 @@
+'use client';
 import * as React from 'react';
 import {useAriaId, useTheme} from './hooks';
 import {FormContext} from './form-context';
@@ -16,7 +17,7 @@ if (
     import('scroll-behavior-polyfill').finally(() => {});
 }
 
-type FormValues = {[name: string]: any};
+export type FormValues = {[name: string]: any};
 
 type FormProps = {
     id?: string;
@@ -47,12 +48,18 @@ const Form: React.FC<FormProps> = ({
     const {texts} = useTheme();
     const id = useAriaId(idProp);
 
-    React.useEffect(
-        () => () => {
+    React.useEffect(() => {
+        /**
+         * When using React with Strict Mode on, the component's effects are executed twice. If we don't set the ref's value to true
+         * the first time the effect is triggered, this value will be set to false forever, preventing handleSubmit()
+         * from resetting the formStatus to filling after the submit action is handled.
+         * https://react.dev/reference/react/StrictMode#strictmode
+         */
+        isMountedRef.current = true;
+        return () => {
             isMountedRef.current = false;
-        },
-        []
-    );
+        };
+    }, []);
 
     const register = React.useCallback(
         (name: string, {input, validator, focusableElement}: FieldRegistration) => {

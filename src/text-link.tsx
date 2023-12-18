@@ -1,4 +1,6 @@
 // Specs: https://www.figma.com/file/koROdh3HpEPG2O8jG52Emh/Buttons-Component-Specs?node-id=0%3A1
+
+'use client';
 import * as React from 'react';
 import {BaseTouchable} from './touchable';
 import classnames from 'classnames';

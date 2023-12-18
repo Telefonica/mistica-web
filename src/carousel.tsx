@@ -1,20 +1,22 @@
+'use client';
 import * as React from 'react';
 import IconChevronLeftRegular from './generated/mistica-icons/icon-chevron-left-regular';
 import IconChevronRightRegular from './generated/mistica-icons/icon-chevron-right-regular';
-import {useIsInViewport, useIsomorphicLayoutEffect, useScreenSize, useTheme} from './hooks';
+import {useIsInViewport, useScreenSize, useTheme} from './hooks';
 import Inline from './inline';
 import Stack from './stack';
 import {BaseTouchable} from './touchable';
 import classNames from 'classnames';
 import {useIsInverseVariant, ThemeVariant} from './theme-variant-context';
-import {MediaBorderRadiusProvider} from './image';
 import {getPrefixedDataAttributes, listenResize} from './utils/dom';
-import {isAndroid} from './utils/platform';
+import {isAndroid, isIos, isRunningAcceptanceTest} from './utils/platform';
 import {useDocumentVisibility} from './utils/document-visibility';
 import * as styles from './carousel.css';
-import {assignInlineVars} from '@vanilla-extract/dynamic';
+import * as mediaStyles from './image.css';
 import {sprinkles} from './sprinkles.css';
 import {useDesktopContainerType} from './desktop-container-type-context';
+import {VIVO_NEW_SKIN} from './skins/constants';
+import {applyCssVars} from './utils/css';
 
 import type {DesktopContainerType} from './desktop-container-type-context';
 import type {DataAttributes} from './utils/types';
@@ -167,6 +169,7 @@ type BaseCarouselProps = {
     itemsPerPage?: ItemsPerPageProp;
     /** scrolls one page by default */
     itemsToScroll?: number;
+    mobilePageOffset?: 'regular' | 'large';
     /** If true, scroll snap doesn't apply and the user has a free scroll */
     free?: boolean;
     gap?: number;
@@ -187,6 +190,7 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
     initialActiveItem,
     itemsPerPage,
     itemsToScroll,
+    mobilePageOffset,
     gap,
     free,
     centered,
@@ -194,7 +198,7 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
     onPageChange,
     dataAttributes,
 }) => {
-    const {texts, platformOverrides} = useTheme();
+    const {texts, platformOverrides, skinName} = useTheme();
 
     const desktopContainerType = useDesktopContainerType();
     const itemsPerPageConfig = normalizeItemsPerPage(desktopContainerType || 'large', itemsPerPage);
@@ -223,7 +227,7 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
     const showNextArrow = scrollRight !== 0;
     const showPrevArrow = scrollLeft !== 0;
 
-    useIsomorphicLayoutEffect(() => {
+    React.useEffect(() => {
         if (carouselRef.current) {
             const carouselEl = carouselRef.current;
 
@@ -372,6 +376,9 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
         );
     }
 
+    const largePageOffset = '64px';
+    const vivoNewMobilePageOffset = '36px';
+
     return (
         <Stack space={24} dataAttributes={{'component-name': 'Carousel', ...dataAttributes}}>
             <div className={styles.carouselContainer}>
@@ -391,13 +398,28 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
                         [styles.carouselWithScroll]: pagesCount > 1,
                     })}
                     style={{
-                        ...assignInlineVars({
+                        ...applyCssVars({
                             [styles.vars.itemsPerPageDesktop]: String(itemsPerPageConfig.desktop),
                             [styles.vars.itemsPerPageTablet]: String(itemsPerPageConfig.tablet),
                             [styles.vars.itemsPerPageMobile]: String(itemsPerPageConfig.mobile),
+                            ...(mobilePageOffset === 'large'
+                                ? {[styles.vars.mobilePageOffset]: largePageOffset}
+                                : skinName === VIVO_NEW_SKIN
+                                ? {[styles.vars.mobilePageOffset]: vivoNewMobilePageOffset}
+                                : {}),
                             ...(gap !== undefined ? {[styles.vars.gap]: String(gap)} : {}),
                         }),
                         scrollSnapType: free ? 'initial' : 'x mandatory',
+
+                        // Hack to fix https://jira.tid.es/browse/NOVUMCC-8988
+                        // there is a webkit rendering bug that causes a half pixel white line to appear at
+                        // the bottom of the scrollable area in retina displays when it has a height with
+                        // decimals. This extra padding avoids that line to partially cover the carousel
+                        // slides border:
+                        paddingBottom:
+                            isIos(platformOverrides) && !isRunningAcceptanceTest(platformOverrides)
+                                ? 0.5
+                                : undefined,
                     }}
                     ref={carouselRef}
                 >
@@ -441,6 +463,7 @@ type CarouselProps = {
     itemsPerPage?: ItemsPerPageProp;
     /** scrolls one page by default */
     itemsToScroll?: number;
+    mobilePageOffset?: 'regular' | 'large';
     /** If true, scroll snap doesn't apply and the user has a free scroll */
     free?: boolean;
     autoplay?: boolean | {time: number; loop?: boolean};
@@ -609,7 +632,7 @@ export const Slideshow: React.FC<SlideshowProps> = ({
                         <IconChevronLeftRegular />
                     </BaseTouchable>
                 </ThemeVariant>
-                <MediaBorderRadiusProvider value={false}>
+                <div style={applyCssVars({[mediaStyles.vars.mediaBorderRadius]: '0px'})}>
                     <div className={styles.slideshow} ref={carouselRef}>
                         {items.map((item, index) => (
                             <div
@@ -623,7 +646,7 @@ export const Slideshow: React.FC<SlideshowProps> = ({
                             </div>
                         ))}
                     </div>
-                </MediaBorderRadiusProvider>
+                </div>
                 <ThemeVariant isInverse={false}>
                     <BaseTouchable
                         className={styles.slideshowNextArrowButton}

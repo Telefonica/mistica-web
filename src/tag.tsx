@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import Box from './box';
 import {Text} from './text';
@@ -8,6 +10,7 @@ import * as classes from './tag.css';
 import {sprinkles} from './sprinkles.css';
 import {vars} from './skins/skin-contract.css';
 import classNames from 'classnames';
+import {useTheme} from './hooks';
 
 import type {DataAttributes, IconProps} from './utils/types';
 
@@ -24,6 +27,7 @@ export type TagProps = {
 const {colors} = vars;
 
 const Tag: React.FC<TagProps> = ({Icon, children, dataAttributes, type = 'promo'}) => {
+    const {textPresets} = useTheme();
     const themeVariant = useThemeVariant();
     const isInverse = themeVariant === 'inverse';
 
@@ -72,7 +76,7 @@ const Tag: React.FC<TagProps> = ({Icon, children, dataAttributes, type = 'promo'
                     color={isInverse ? inverseTextColor : textColor}
                     size={14}
                     lineHeight={20}
-                    weight="medium"
+                    weight={textPresets.indicator.weight}
                     truncate
                 >
                     {children}

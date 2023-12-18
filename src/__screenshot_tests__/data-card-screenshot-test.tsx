@@ -3,10 +3,11 @@ import {openStoryPage, screen, setRootFontSize} from '../test-utils';
 import type {Device} from '../test-utils';
 
 const TESTABLE_DEVICES: Array<Device> = ['MOBILE_IOS', 'DESKTOP'];
+const ASPECT_RATIO_VALUES = ['1:1', '7:10', '9:10'];
 
 test.each(TESTABLE_DEVICES)('DataCard in %s', async (device) => {
     await openStoryPage({
-        id: 'components-cards-data-card--default',
+        id: 'components-cards-datacard--default',
         device,
     });
 
@@ -19,7 +20,7 @@ test.each(TESTABLE_DEVICES)('DataCard in %s', async (device) => {
 
 test.each(TESTABLE_DEVICES)('DataCard with large fontSize in %s', async (device) => {
     await openStoryPage({
-        id: 'components-cards-data-card--default',
+        id: 'components-cards-datacard--default',
         device,
     });
 
@@ -34,7 +35,7 @@ test.each(TESTABLE_DEVICES)('DataCard with large fontSize in %s', async (device)
 
 test('DataCard group', async () => {
     const page = await openStoryPage({
-        id: 'components-cards-data-card--group',
+        id: 'components-cards-datacard--group',
     });
 
     const image = await page.screenshot({fullPage: true});
@@ -44,7 +45,7 @@ test('DataCard group', async () => {
 
 test('DataCard with extra content', async () => {
     const page = await openStoryPage({
-        id: 'components-cards-data-card--default',
+        id: 'components-cards-datacard--default',
         device: 'MOBILE_IOS',
         args: {withExtra: true},
     });
@@ -56,7 +57,7 @@ test('DataCard with extra content', async () => {
 
 test('DataCard closable', async () => {
     const page = await openStoryPage({
-        id: 'components-cards-data-card--default',
+        id: 'components-cards-datacard--default',
         device: 'MOBILE_IOS',
         args: {closable: true},
     });
@@ -68,7 +69,7 @@ test('DataCard closable', async () => {
 
 test('DataCard with top actions', async () => {
     const page = await openStoryPage({
-        id: 'components-cards-data-card--default',
+        id: 'components-cards-datacard--default',
         device: 'MOBILE_IOS',
         args: {withTopAction: true},
     });
@@ -80,7 +81,7 @@ test('DataCard with top actions', async () => {
 
 test('DataCard without icon, with top actions and too long title', async () => {
     const page = await openStoryPage({
-        id: 'components-cards-data-card--default',
+        id: 'components-cards-datacard--default',
         device: 'MOBILE_IOS',
         args: {
             withTopAction: true,
@@ -90,6 +91,20 @@ test('DataCard without icon, with top actions and too long title', async () => {
     });
 
     const image = await page.screenshot({fullPage: true});
+
+    expect(image).toMatchImageSnapshot();
+});
+
+test.each(ASPECT_RATIO_VALUES)('DataCard with aspect ratio %s', async (aspectRatio) => {
+    await openStoryPage({
+        id: 'components-cards-datacard--default',
+        device: 'MOBILE_IOS',
+        args: {aspectRatio: aspectRatio.replace(':', ' ')},
+    });
+
+    const dataCard = await screen.findByTestId('data-card');
+
+    const image = await dataCard.screenshot();
 
     expect(image).toMatchImageSnapshot();
 });

@@ -52,12 +52,26 @@ const addVanillaExtractSupport = (config) => {
     });
 };
 
+const stories = [
+    './welcome-story.js',
+    '../src/__stories__/*-story.tsx',
+    '../src/icons/__stories__/*-story.tsx',
+    '../src/community/__stories__/index-story.tsx',
+    '../src/community/__stories__/*-story.tsx',
+];
+
+const shouldIncludePrivateStories = !process.env.VERCEL_PROD_BUILD;
+
+if (shouldIncludePrivateStories) {
+    stories.push('../src/**/__private_stories__/*-story.tsx');
+}
+
 module.exports = {
     core: {
         builder: 'webpack5',
     },
 
-    stories: ['./welcome-story.js', '../src/**/__stories__/*-story.tsx'],
+    stories,
     addons: [
         {
             name: '@storybook/addon-postcss',

@@ -3,6 +3,9 @@ import {sprinkles} from './sprinkles.css';
 import {vars} from './skins/skin-contract.css';
 import * as mq from './media-queries.css';
 
+export const mobileFontSize = 16;
+export const desktopFontSize = 18;
+
 const commonInputStyles = style([
     sprinkles({
         border: 'none',
@@ -13,8 +16,13 @@ const commonInputStyles = style([
     {
         background: 'none',
         outline: 0,
-        fontSize: 'inherit',
-        lineHeight: 'inherit',
+        lineHeight: '24px',
+        fontSize: mobileFontSize,
+        '@media': {
+            [mq.desktopOrBigger]: {
+                fontSize: desktopFontSize,
+            },
+        },
         caretColor: vars.colors.controlActivated,
         // Seems like 'display: flex' is causing issues on firefox and the input takes over the whole space https://stackoverflow.com/questions/43314921/strange-input-widths-in-firefox-vs-chrome
         textOverflow: 'ellipsis',
@@ -64,16 +72,16 @@ export const textArea = style([
 ]);
 
 export const textAreaWithLabel = style({
-    marginTop: 28,
+    paddingTop: 28,
     '@media': {
         [mq.tabletOrSmaller]: {
-            marginTop: 24,
+            paddingTop: 24,
         },
     },
 });
 
 export const textAreaWithoutLabel = style({
-    marginTop: 16,
+    paddingTop: 16,
 });
 
 export const input = style([
@@ -107,6 +115,7 @@ export const input = style([
                 opacity: 0,
                 color: 'transparent',
                 background: 'transparent',
+                cursor: 'pointer',
             },
 
             // Chrome: hide value if not valid or focused

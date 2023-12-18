@@ -38,6 +38,18 @@ const TEXTS_ES = {
     clearButton: 'Borrar',
     carouselNextButton: 'siguiente',
     carouselPrevButton: 'anterior',
+    playIconButtonLabel: 'Reproducir',
+    pauseIconButtonLabel: 'Pausar',
+    sheetConfirmButton: 'Continuar',
+    progressBarCompletedLabel: 'completo',
+    progressBarStepLabel: 'Paso 1$s de 2$s',
+    pinFieldInputLabel: 'Dígito 1$s de 2$s',
+    counterRemoveLabel: 'Borrar elemento',
+    counterIncreaseLabel: 'Aumentar valor',
+    counterDecreaseLabel: 'Disminuir valor',
+    counterQuantity: 'cantidad',
+    counterMinValue: 'mínimo',
+    counterMaxValue: 'máximo',
 };
 
 const TEXTS_EN: ThemeTexts = {
@@ -71,6 +83,18 @@ const TEXTS_EN: ThemeTexts = {
     clearButton: 'Clear',
     carouselNextButton: 'next',
     carouselPrevButton: 'previous',
+    playIconButtonLabel: 'Play',
+    pauseIconButtonLabel: 'Pause',
+    sheetConfirmButton: 'Continue',
+    progressBarCompletedLabel: 'completed',
+    progressBarStepLabel: 'Step 1$s of 2$s',
+    pinFieldInputLabel: 'Digit 1$s of 2$s',
+    counterRemoveLabel: 'Remove element',
+    counterIncreaseLabel: 'Increase value',
+    counterDecreaseLabel: 'Decrease value',
+    counterQuantity: 'quantity',
+    counterMinValue: 'minimum of',
+    counterMaxValue: 'maximum of',
 };
 
 const TEXTS_DE: ThemeTexts = {
@@ -104,6 +128,18 @@ const TEXTS_DE: ThemeTexts = {
     clearButton: 'Löschen',
     carouselNextButton: 'nächste',
     carouselPrevButton: 'vorherige',
+    playIconButtonLabel: 'Abspielen',
+    pauseIconButtonLabel: 'Pausieren',
+    sheetConfirmButton: 'Fortfahren',
+    progressBarCompletedLabel: 'vollendet',
+    progressBarStepLabel: 'Schritt 1$s von 2$s',
+    pinFieldInputLabel: 'Ziffer 1$s von 2$s',
+    counterRemoveLabel: 'Element entfernen',
+    counterIncreaseLabel: 'Wert steigern',
+    counterDecreaseLabel: 'Wert verringern',
+    counterQuantity: 'menge',
+    counterMinValue: 'minimal',
+    counterMaxValue: 'maximal',
 };
 
 const TEXTS_PT: ThemeTexts = {
@@ -137,6 +173,18 @@ const TEXTS_PT: ThemeTexts = {
     clearButton: 'Apagar',
     carouselNextButton: 'próximo',
     carouselPrevButton: 'anterior',
+    playIconButtonLabel: 'Reproduzir',
+    pauseIconButtonLabel: 'Pausar',
+    sheetConfirmButton: 'Continuar',
+    progressBarCompletedLabel: 'concluído',
+    progressBarStepLabel: 'Etapa 1$s de 2$s',
+    pinFieldInputLabel: 'Dígito 1$s de 2$s',
+    counterRemoveLabel: 'Remover elemento',
+    counterIncreaseLabel: 'aumentar valor',
+    counterDecreaseLabel: 'diminuir valor',
+    counterQuantity: 'quantidade',
+    counterMinValue: 'mínimo',
+    counterMaxValue: 'máximo',
 };
 
 export const getTexts = (locale: Locale): typeof TEXTS_ES => {
@@ -161,6 +209,7 @@ export const getTexts = (locale: Locale): typeof TEXTS_ES => {
 
 export const NAVBAR_HEIGHT_MOBILE = 56;
 export const NAVBAR_HEIGHT_DESKTOP = 80;
+export const NAVBAR_HEIGHT_DESKTOP_LARGE = 2 * NAVBAR_HEIGHT_DESKTOP;
 
 export const dimensions = {
     headerMobileHeight: NAVBAR_HEIGHT_MOBILE,
@@ -196,11 +245,66 @@ type LinkComponent = React.ComponentType<{
     children: React.ReactNode;
 }>;
 
-export const AnchorLink: LinkComponent = ({to, innerRef, ...props}) => (
+const AnchorLink: LinkComponent = ({to, innerRef, ...props}) => (
     <a ref={innerRef} href={typeof to === 'string' ? to : to?.pathname} {...props}>
         {props.children}
     </a>
 );
+
+const getReactRouter5Link = (ReactRouterLink: React.ComponentType<any>): LinkComponent => ReactRouterLink;
+
+const getReactRouter6Link =
+    (ReactRouterLink: React.ComponentType<any>): LinkComponent =>
+    ({innerRef, ...props}) =>
+        <ReactRouterLink ref={innerRef} {...props} />;
+
+const getNext12Link =
+    (NextLink: React.ComponentType<any>): LinkComponent =>
+    ({to, innerRef, children, ...props}) =>
+        (
+            <NextLink href={to}>
+                <a ref={innerRef} {...props}>
+                    {children}
+                </a>
+            </NextLink>
+        );
+
+const getNext13Link =
+    (NextLink: React.ComponentType<any>): LinkComponent =>
+    ({to, innerRef, children, ...props}) =>
+        (
+            <NextLink href={to} ref={innerRef} {...props}>
+                {children}
+            </NextLink>
+        );
+
+export const getMisticaLinkComponent = (Link?: ThemeConfig['Link']): LinkComponent => {
+    if (!Link) {
+        return AnchorLink;
+    }
+    // the $$typeof check is because components like forwardRefs are objects
+    // see https://github.com/facebook/react/blob/main/packages/shared/isValidElementType.js
+    if (typeof Link === 'function' || (Link as any).$$typeof) {
+        return Link as LinkComponent;
+    }
+    switch (Link.type) {
+        case 'ReactRouter5':
+            // webapp, flow-frontend
+            return getReactRouter5Link(Link.Component);
+        case 'ReactRouter6':
+            // nt_core
+            return getReactRouter6Link(Link.Component);
+        case 'Next12':
+            // zeus-web
+            return getNext12Link(Link.Component);
+        case 'Next13':
+            // hello-world-web, global-checkout-webview
+            return getNext13Link(Link.Component);
+        default:
+            const exhaustiveCheck: never = Link.type;
+            throw new Error(`Invalid Link type: ${exhaustiveCheck}`);
+    }
+};
 
 export type ColorScheme = 'dark' | 'light' | 'auto';
 export type EventFormat = 'universal-analytics' | 'google-analytics-4';
@@ -225,7 +329,12 @@ export type ThemeConfig = Readonly<{
         eventFormat?: EventFormat;
     }>;
     dimensions?: Readonly<{headerMobileHeight: number | 'mistica'}>;
-    Link?: LinkComponent;
+    Link?:
+        | LinkComponent
+        | {
+              type: 'ReactRouter5' | 'ReactRouter6' | 'Next12' | 'Next13';
+              Component: React.ComponentType<any>;
+          };
     useHrefDecorator?: () => (href: string) => string;
     useId?: () => string;
     enableTabFocus?: boolean;

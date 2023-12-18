@@ -52,10 +52,37 @@ Here is a description of every attribute:
 - `analytics?`: see [analytics docs](./analytics.md).
 - `Link?`: the `Link` component you want to use by Touchables that use the prop `to`. By default, the lib uses
   an anchor tag (`<a>`). Use this prop to use the Link component from ReactRouter, Next.js or any other
-  library.
+  library. Please read the [LinkComponent](#linkcomponent) section for more info.
 - `useHrefDecorator`: it is a React hook that a function that takes a `href` and returns a new `href`. This is
   useful to automatically add parameters to the `href` being used in Touchable components (for example, to add
   a `utm_source` parameter to the `href`).
+
+## LinkComponent
+
+You can use a custom component or use a built in one. Mistica has built in support for: `Next12`, `Next13`,
+`ReactRouter5` and `ReactRouter6`.
+
+### Next example
+
+```ts
+import Link from 'next/link';
+
+const theme: ThemeConfig = {
+  ...
+  Link: {type: 'Next13', Component: Link}
+}
+```
+
+### React Router example
+
+```ts
+import {Link} from 'react-router-dom';
+
+const theme: ThemeConfig = {
+  ...
+  Link: {type: 'ReactRouter6', Component: Link}
+}
+```
 
 ## Create a custom skin
 

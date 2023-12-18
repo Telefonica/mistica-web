@@ -17,9 +17,12 @@ export const vars = {
     maxHeight,
 };
 
+/** Must be equal or higher than the dialog's z-index */
+const OPTIONS_ZINDEX = 26;
+
 export const optionsContainer = style([
     sprinkles({
-        position: 'absolute',
+        position: 'fixed',
         padding: 0,
         borderRadius: skinVars.borderRadii.input,
         background: skinVars.colors.backgroundContainer,
@@ -38,6 +41,7 @@ export const optionsContainer = style([
         transition: 'opacity .03s linear,transform .12s cubic-bezier(0,0,.2,1) .15s',
         overflowY: 'auto',
         maxHeight: maxHeight ?? '416px',
+        zIndex: OPTIONS_ZINDEX,
     },
 ]);
 
@@ -54,6 +58,7 @@ export const actions = style([
 const selectContainerBase = style([
     sprinkles({
         position: 'relative',
+        cursor: 'pointer',
     }),
     {
         outline: 0,
@@ -92,6 +97,7 @@ export const selectContainerVariants = styleVariants({
 const selectBase = style([
     sprinkles({
         border: 'none',
+        overflow: 'hidden',
         color: skinVars.colors.textPrimary,
         background: 'transparent', // FieldContainer gives the correct background color
         width: '100%',
@@ -134,8 +140,13 @@ const selectTextBase = style([
         pointerEvents: 'none',
         left: 12 + 1, // 12 for select paddingLeft and +1 for border
         right: 48 + 1, // 48 for icon and +1 for border
-        lineHeight: '20px',
+        lineHeight: '24px',
         fontSize: 16,
+        '@media': {
+            [mq.desktopOrBigger]: {
+                fontSize: 18,
+            },
+        },
         textOverflow: 'ellipsis',
         whiteSpace: 'nowrap',
     },

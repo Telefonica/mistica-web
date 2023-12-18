@@ -1,40 +1,52 @@
 import * as React from 'react';
-import {IconCloseRegular, pxToRem, Tabs} from '..';
+import {Box, IconCloseRegular, pxToRem, ResponsiveLayout, Tabs} from '..';
+
+import type {Variant} from '../theme-variant-context';
 
 export default {
     title: 'Components/Tabs',
     component: Tabs,
+    parameters: {fullScreen: true},
+    argTypes: {
+        tabCount: {
+            control: {type: 'range', min: 1, max: 5, step: 1},
+        },
+        theme: {
+            options: ['default', 'inverse', 'alternative'],
+            control: {type: 'select'},
+        },
+    },
 };
 
 type Args = {
-    tabs: string;
+    tabCount: number;
+    text: string;
+    theme: Variant;
+    icon: boolean;
 };
 
-export const Default: StoryComponent<Args> = () => {
+export const Default: StoryComponent<Args> = ({tabCount, text, theme, icon}) => {
     const [selectedIndex, setSelectedIndex] = React.useState(0);
     return (
-        <Tabs
-            selectedIndex={selectedIndex}
-            onChange={setSelectedIndex}
-            tabs={['First Tab', 'Second Tab', 'Third Tab'].map((text) => ({
-                text,
-            }))}
-        />
+        <ResponsiveLayout fullWidth variant={theme}>
+            <Box padding={16}>
+                <Tabs
+                    selectedIndex={selectedIndex}
+                    onChange={setSelectedIndex}
+                    tabs={Array.from({length: tabCount}).map((_, index) => ({
+                        text: `${text} ${index + 1}`,
+                        icon: icon ? <IconCloseRegular size={pxToRem(24)} color="currentColor" /> : undefined,
+                    }))}
+                />
+            </Box>
+        </ResponsiveLayout>
     );
 };
+
 Default.storyName = 'Tabs';
-
-export const WithIcon: StoryComponent<Args> = () => {
-    const [selectedIndex, setSelectedIndex] = React.useState(0);
-    return (
-        <Tabs
-            selectedIndex={selectedIndex}
-            onChange={setSelectedIndex}
-            tabs={['First Tab', 'Second Tab', 'Third Tab'].map((text) => ({
-                text,
-                icon: <IconCloseRegular size={pxToRem(24)} color="currentColor" />,
-            }))}
-        />
-    );
+Default.args = {
+    tabCount: 3,
+    text: 'Tab',
+    theme: 'default',
+    icon: false,
 };
-WithIcon.storyName = 'Tabs with icon';

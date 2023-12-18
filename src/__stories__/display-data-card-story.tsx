@@ -13,15 +13,16 @@ import {
     ResponsiveLayout,
     Stack,
     Text2,
-    Inline,
+    Carousel,
 } from '..';
 import {Placeholder} from '../placeholder';
 import avatarImg from './images/avatar.jpg';
 
+import type {AspectRatio} from '../card';
 import type {TagType} from '..';
 
 export default {
-    title: 'Components/Cards/Display data card',
+    title: 'Components/Cards/DisplayDataCard',
 };
 
 type DisplayDataCardArgs = {
@@ -36,7 +37,10 @@ type DisplayDataCardArgs = {
     withTopAction: boolean;
     actions: 'button' | 'link' | 'button and link' | 'button and secondary button';
     isInverse: boolean;
+    aspectRatio: AspectRatio;
 };
+
+const fixedAspectRatioValues = ['1 1', '16 9', '7 10', '9 10'];
 
 export const Default: StoryComponent<DisplayDataCardArgs> = ({
     asset = 'icon',
@@ -50,6 +54,7 @@ export const Default: StoryComponent<DisplayDataCardArgs> = ({
     closable,
     withTopAction,
     isInverse,
+    aspectRatio,
 }) => {
     let icon;
     if (asset === 'circle + icon') {
@@ -79,6 +84,20 @@ export const Default: StoryComponent<DisplayDataCardArgs> = ({
         </ButtonSecondary>
     ) : undefined;
 
+    const onPress = actions.includes('press') ? () => null : undefined;
+
+    const interactiveActions = onPress
+        ? {onPress}
+        : {
+              button,
+              buttonLink,
+              secondaryButton,
+          };
+
+    const aspectRatioValue = fixedAspectRatioValues.includes(aspectRatio)
+        ? aspectRatio.replace(' ', ':')
+        : aspectRatio;
+
     return (
         <DisplayDataCard
             isInverse={isInverse}
@@ -99,17 +118,16 @@ export const Default: StoryComponent<DisplayDataCardArgs> = ({
             pretitle={pretitle}
             title={title}
             description={description}
+            aspectRatio={aspectRatioValue as AspectRatio}
             extra={withExtra ? <Placeholder /> : undefined}
-            button={button}
-            buttonLink={buttonLink}
-            secondaryButton={secondaryButton}
+            {...interactiveActions}
             dataAttributes={{testid: 'display-data-card'}}
             aria-label="Display data card label"
         />
     );
 };
 
-Default.storyName = 'Display Data card';
+Default.storyName = 'DisplayDataCard';
 Default.args = {
     asset: 'icon',
     headlineType: 'promo',
@@ -122,6 +140,7 @@ Default.args = {
     closable: false,
     withTopAction: false,
     isInverse: false,
+    aspectRatio: 'auto',
 };
 Default.argTypes = {
     asset: {
@@ -133,8 +152,20 @@ Default.argTypes = {
         control: {type: 'select'},
     },
     actions: {
-        options: ['button', 'link', 'button and link', 'button and secondary button'],
+        options: ['button', 'link', 'button and link', 'button and secondary button', 'on press'],
         control: {type: 'select'},
+    },
+    aspectRatio: {
+        options: ['auto', '1 1', '16 9', '7 10', '9 10'],
+        control: {
+            type: 'select',
+            labels: {
+                '1 1': '1:1',
+                '16 9': '16:9',
+                '7 10': '7:10',
+                '9 10': '9:10',
+            },
+        },
     },
 };
 
@@ -144,38 +175,39 @@ export const Group: StoryComponent = () => {
             <Stack space={16}>
                 <Text2 regular>
                     We can group multiple cards and they adjust to the same height. The card content is
-                    aligned to the bottom
+                    aligned to the bottom.
                 </Text2>
-                <style>{`.group > * {width: 300px}`}</style>
-                <Inline space={16} className="group">
-                    <DisplayDataCard
-                        headline={<Tag type="promo">Headline</Tag>}
-                        pretitle="Pretitle"
-                        title="Title"
-                        description="Description"
-                        button={
-                            <ButtonPrimary small href="https://google.com">
-                                Action
-                            </ButtonPrimary>
-                        }
-                    />
-                    <DisplayDataCard
-                        icon={
-                            <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
-                                <IconInvoicePlanFileRegular color={skinVars.colors.brand} />
-                            </Circle>
-                        }
-                        title="Title"
-                        button={
-                            <ButtonPrimary small href="https://google.com">
-                                Action
-                            </ButtonPrimary>
-                        }
-                    />
-                </Inline>
+                <Carousel
+                    items={[
+                        <DisplayDataCard
+                            headline={<Tag type="promo">Headline</Tag>}
+                            pretitle="Pretitle"
+                            title="Title"
+                            description="Description"
+                            button={
+                                <ButtonPrimary small href="https://google.com">
+                                    Action
+                                </ButtonPrimary>
+                            }
+                        />,
+                        <DisplayDataCard
+                            icon={
+                                <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
+                                    <IconInvoicePlanFileRegular color={skinVars.colors.brand} />
+                                </Circle>
+                            }
+                            title="Title"
+                            button={
+                                <ButtonPrimary small href="https://google.com">
+                                    Action
+                                </ButtonPrimary>
+                            }
+                        />,
+                    ]}
+                />
             </Stack>
         </ResponsiveLayout>
     );
 };
 
-Group.storyName = 'Display data card group';
+Group.storyName = 'DisplayDataCard group';

@@ -12,37 +12,46 @@ import {
     ResponsiveLayout,
     Stack,
     Text2,
-    Inline,
+    Box,
+    Carousel,
 } from '..';
 import usingVrImg from './images/using-vr.jpg';
 import avatarImg from './images/avatar.jpg';
+import beachVideo from './videos/beach.mp4';
+import beachImg from './images/beach.jpg';
 
 import type {TagType} from '..';
 
 export default {
-    title: 'Components/Cards/Display media card',
+    title: 'Components/Cards/DisplayMediaCard',
 };
 
-const BACKGROUND_SRC = usingVrImg;
+const BACKGROUND_IMAGE_SRC = usingVrImg;
+const BACKGROUND_VIDEO_SRC = beachVideo;
+const BACKGROUND_VIDEO_POSTER_SRC = beachImg;
 
 type DisplayMediaCardArgs = {
-    asset: 'icon' | 'circle + icon' | 'image' | 'circle + image';
+    asset: 'circle with icon' | 'circle with image' | 'none';
     headlineType: TagType;
+    background: 'image' | 'video';
     headline: string;
     pretitle: string;
     title: string;
     description: string;
     closable: boolean;
     withTopAction: boolean;
-    actions: 'button' | 'link' | 'button and link' | 'button and secondary button';
+    actions: 'button' | 'link' | 'button and link' | 'button and secondary button' | 'onPress';
     width: string;
     aspectRatio: '1:1' | '16:9' | '7:10' | '9:10' | 'auto';
+    isEmptySource: boolean;
+    inverse: boolean;
 };
 
 export const Default: StoryComponent<DisplayMediaCardArgs> = ({
-    asset = 'icon',
+    asset,
     headline,
     headlineType,
+    background,
     pretitle,
     title,
     description,
@@ -51,15 +60,17 @@ export const Default: StoryComponent<DisplayMediaCardArgs> = ({
     withTopAction,
     width,
     aspectRatio,
+    isEmptySource,
+    inverse,
 }) => {
     let icon;
-    if (asset === 'circle + icon') {
+    if (asset === 'circle with icon') {
         icon = (
             <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
                 <IconInvoicePlanFileRegular color={skinVars.colors.brand} />
             </Circle>
         );
-    } else if (asset === 'circle + image') {
+    } else if (asset === 'circle with image') {
         icon = <Circle size={40} backgroundImage={avatarImg} />;
     }
 
@@ -76,41 +87,62 @@ export const Default: StoryComponent<DisplayMediaCardArgs> = ({
         </ButtonSecondary>
     ) : undefined;
 
+    const onPress = actions.includes('press') ? () => null : undefined;
+
+    const interactiveActions = onPress
+        ? {onPress}
+        : {
+              button,
+              buttonLink,
+              secondaryButton,
+          };
+
+    const backgroundProps =
+        background === 'image'
+            ? {
+                  onClose: closable ? () => {} : undefined,
+                  actions: withTopAction
+                      ? [
+                            {
+                                Icon: IconLightningRegular,
+                                onPress: () => {},
+                                label: 'Lightning',
+                            },
+                        ]
+                      : undefined,
+                  backgroundImage: isEmptySource ? '' : BACKGROUND_IMAGE_SRC,
+              }
+            : {
+                  backgroundVideo: isEmptySource ? '' : BACKGROUND_VIDEO_SRC,
+                  poster: isEmptySource ? '' : BACKGROUND_VIDEO_POSTER_SRC,
+              };
+
     return (
-        <DisplayMediaCard
-            onClose={closable ? () => {} : undefined}
-            actions={
-                withTopAction
-                    ? [
-                          {
-                              Icon: IconLightningRegular,
-                              onPress: () => {},
-                              label: 'Lightning',
-                          },
-                      ]
-                    : undefined
-            }
-            backgroundImage={BACKGROUND_SRC}
-            icon={icon}
-            headline={headline ? <Tag type={headlineType}>{headline}</Tag> : undefined}
-            pretitle={pretitle}
-            title={title}
-            description={description}
-            button={button}
-            buttonLink={buttonLink}
-            secondaryButton={secondaryButton}
-            dataAttributes={{testid: 'display-media-card'}}
-            aria-label="Display data card label"
-            width={width}
-            aspectRatio={aspectRatio}
-        />
+        <ResponsiveLayout isInverse={inverse} fullWidth>
+            <Box padding={16}>
+                <DisplayMediaCard
+                    {...backgroundProps}
+                    icon={icon}
+                    headline={headline ? <Tag type={headlineType}>{headline}</Tag> : undefined}
+                    pretitle={pretitle}
+                    title={title}
+                    description={description}
+                    {...interactiveActions}
+                    aria-label="Display media card label"
+                    width={width}
+                    aspectRatio={aspectRatio}
+                    dataAttributes={{testid: 'display-media-card'}}
+                />
+            </Box>
+        </ResponsiveLayout>
     );
 };
 
-Default.storyName = 'Display Media card';
+Default.storyName = 'DisplayMediaCard';
 Default.args = {
-    asset: 'icon',
+    asset: 'none',
     headlineType: 'promo',
+    background: 'image',
     headline: 'Priority',
     pretitle: 'Pretitle',
     title: 'Title',
@@ -120,10 +152,12 @@ Default.args = {
     withTopAction: false,
     width: 'auto',
     aspectRatio: 'auto',
+    isEmptySource: false,
+    inverse: false,
 };
 Default.argTypes = {
     asset: {
-        options: ['circle + icon', 'circle + image', 'none'],
+        options: ['circle with icon', 'circle with image', 'none'],
         control: {type: 'select'},
     },
     headlineType: {
@@ -131,7 +165,11 @@ Default.argTypes = {
         control: {type: 'select'},
     },
     actions: {
-        options: ['button', 'link', 'button and link', 'button and secondary button'],
+        options: ['button', 'link', 'button and link', 'button and secondary button', 'on press'],
+        control: {type: 'select'},
+    },
+    background: {
+        options: ['image', 'video'],
         control: {type: 'select'},
     },
     aspectRatio: {
@@ -139,6 +177,7 @@ Default.argTypes = {
         control: {type: 'select'},
     },
 };
+Default.parameters = {fullScreen: true};
 
 export const Group: StoryComponent = () => {
     return (
@@ -146,28 +185,34 @@ export const Group: StoryComponent = () => {
             <Stack space={16}>
                 <Text2 regular>
                     We can group multiple cards and they adjust to the same height. The card content is
-                    aligned to the bottom
+                    aligned to the bottom.
                 </Text2>
-                <style>{`.group > * {width: 300px}`}</style>
-                <Inline space={16} className="group">
-                    <DisplayMediaCard
-                        headline={<Tag type="promo">Headline</Tag>}
-                        pretitle="Pretitle"
-                        title="Title"
-                        description="Description"
-                        backgroundImage={BACKGROUND_SRC}
-                        button={
-                            <ButtonPrimary small href="https://google.com">
-                                Action
-                            </ButtonPrimary>
-                        }
-                    />
-                    <DisplayMediaCard title="Title" backgroundImage={BACKGROUND_SRC} />
-                    <DisplayMediaCard title="Title" backgroundImage={BACKGROUND_SRC} onClose={() => {}} />
-                </Inline>
+                <Carousel
+                    itemsPerPage={3}
+                    items={[
+                        <DisplayMediaCard
+                            headline={<Tag type="promo">Headline</Tag>}
+                            pretitle="Pretitle"
+                            title="Title"
+                            description="Description"
+                            backgroundImage={BACKGROUND_IMAGE_SRC}
+                            button={
+                                <ButtonPrimary small href="https://google.com">
+                                    Action
+                                </ButtonPrimary>
+                            }
+                        />,
+                        <DisplayMediaCard title="Title" backgroundImage={BACKGROUND_IMAGE_SRC} />,
+                        <DisplayMediaCard
+                            title="Title"
+                            backgroundImage={BACKGROUND_IMAGE_SRC}
+                            onClose={() => {}}
+                        />,
+                    ]}
+                />
             </Stack>
         </ResponsiveLayout>
     );
 };
 
-Group.storyName = 'Display media card group';
+Group.storyName = 'DisplayMediaCard group';

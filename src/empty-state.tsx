@@ -1,5 +1,5 @@
+'use client';
 import * as React from 'react';
-import {assignInlineVars} from '@vanilla-extract/dynamic';
 import classnames from 'classnames';
 import {useIsInverseVariant} from './theme-variant-context';
 import {ButtonPrimary} from './button';
@@ -9,9 +9,10 @@ import {Text3, Text6} from './text';
 import ButtonGroup from './button-group';
 import * as styles from './empty-state.css';
 import {vars} from './skins/skin-contract.css';
-import {AspectRatioElement} from './utils/aspect-ratio-support';
+import {AspectRatioContainer} from './utils/aspect-ratio-support';
 import {getPrefixedDataAttributes} from './utils/dom';
 import {sprinkles} from './sprinkles.css';
+import {applyCssVars} from './utils/css';
 
 import type {ButtonSecondary, ButtonLink} from './button';
 import type {ButtonGroupProps} from './button-group';
@@ -78,7 +79,7 @@ const EmptyState: React.FC<Props> = ({
                 styles.container,
                 isInverse ? styles.inverseBorder : sprinkles({border: 'regular'})
             )}
-            style={assignInlineVars({
+            style={applyCssVars({
                 [styles.vars.backgroundColor]:
                     isInverse && !isDarkMode ? vars.colors.backgroundBrand : vars.colors.backgroundContainer,
             })}
@@ -109,7 +110,7 @@ const EmptyState: React.FC<Props> = ({
             </div>
             <div style={{flex: 1, position: 'relative'}}>
                 {largeImageUrl && (
-                    <AspectRatioElement
+                    <AspectRatioContainer
                         aspectRatio={16 / 9}
                         className={styles.largeImageContainer}
                         height="100%"
@@ -118,7 +119,7 @@ const EmptyState: React.FC<Props> = ({
                             className={styles.largeImage}
                             style={{backgroundImage: `url(${largeImageUrl})`}}
                         />
-                    </AspectRatioElement>
+                    </AspectRatioContainer>
                 )}
             </div>
         </div>

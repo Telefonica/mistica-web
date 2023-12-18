@@ -8,7 +8,7 @@ import {
     ResponsiveLayout,
     TextLink,
     Title1,
-    Text,
+    Text3,
     TextField,
     EmailField,
     ButtonLayout,
@@ -55,20 +55,20 @@ const Home = (): JSX.Element => {
                     <Box>
                         <Title1>Using links</Title1>
                         <Stack space={16}>
-                            <Text>
+                            <Text3>
                                 Inspect the browser network pannel to check that all these links navigate
                                 client side (no full page load)
-                            </Text>
-                            <Text>Next link:</Text>
+                            </Text3>
+                            <Text3>Next link:</Text3>
                             <Link href="/other-page">Go to other page</Link>
-                            <Text>Mistica TextLink:</Text>
+                            <Text3>Mistica TextLink:</Text3>
                             <TextLink to="/other-page">Go to other page</TextLink>
                         </Stack>
                     </Box>
                     <Box>
                         <Title1>Dynamic Links</Title1>
                         <Stack space={16}>
-                            <Text>Write a user name to navigate to their page.</Text>
+                            <Text3>Write a user name to navigate to their page.</Text3>
                             <TextField
                                 name="user-name"
                                 id="user-name"
@@ -86,10 +86,10 @@ const Home = (): JSX.Element => {
                                     Go to user page (Mistica button)
                                 </ButtonPrimary>
                             )}
-                            <Text>
-                                Review <Text weight="bold">_app.js</Text> file for more details about how
-                                dynamic links work in Next using Mistica <Text weight="bold">to</Text> prop.
-                            </Text>
+                            <Text3>
+                                Review <Text3>_app.js</Text3> file for more details about how dynamic links
+                                work in Next using Mistica <Text3 medium>to</Text3> prop.
+                            </Text3>
                         </Stack>
                     </Box>
                 </Stack>

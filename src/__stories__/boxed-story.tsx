@@ -1,42 +1,32 @@
 import * as React from 'react';
-import {Box, Boxed, Stack, Text8, skinVars} from '..';
-import {ThemeVariant} from '../theme-variant-context';
-import {useCheckbox} from './helpers';
+import {Box, Boxed, Text8, ResponsiveLayout} from '..';
 
 export default {
     title: 'Components/Primitives/Boxed',
+    parameters: {fullScreen: true},
 };
 
-export const Default: StoryComponent = () => {
-    const [isInverseOutside, inverseOutsideCheckbox] = useCheckbox('Inverse outside', false);
-    const [isInverseInside, inverseInsideCheckbox] = useCheckbox('Inverse inside', false);
+type Args = {
+    inverseInside: boolean;
+    inverseOutside: boolean;
+};
 
+export const Default: StoryComponent<Args> = ({inverseInside, inverseOutside}) => {
     return (
-        <>
-            <Stack space={16}>
-                {inverseOutsideCheckbox}
-                {inverseInsideCheckbox}
-            </Stack>
-            <ThemeVariant isInverse={isInverseOutside}>
-                <div
-                    data-testid="boxed"
-                    style={{
-                        backgroundColor: isInverseOutside
-                            ? skinVars.colors.backgroundBrand
-                            : skinVars.colors.background,
-                    }}
-                >
+        <ResponsiveLayout dataAttributes={{testid: 'boxed'}} fullWidth isInverse={inverseOutside}>
+            <Box padding={16}>
+                <Boxed isInverse={inverseInside}>
                     <Box padding={16}>
-                        <Boxed isInverse={isInverseInside}>
-                            <Box padding={16}>
-                                <Text8>Text</Text8>
-                            </Box>
-                        </Boxed>
+                        <Text8>Text</Text8>
                     </Box>
-                </div>
-            </ThemeVariant>
-        </>
+                </Boxed>
+            </Box>
+        </ResponsiveLayout>
     );
 };
 
 Default.storyName = 'Boxed';
+Default.args = {
+    inverseInside: false,
+    inverseOutside: false,
+};

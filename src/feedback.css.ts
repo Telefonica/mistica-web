@@ -30,21 +30,42 @@ export const container = style([
 
 export const innerContainer = style({
     textAlign: 'left',
-    padding: '64px 8px 16px',
+    padding: '64px 0px 16px',
     zIndex: 1, // needed to support hack for o2-classic
     position: 'relative', // needed to support hack for o2-classic
 });
 
-export const feedbackDataAppear = style({opacity: 0, transform: 'translate(0, 20px)'});
-
-export const feedbackDataAppearActive = style({
-    transitionProperty: 'opacity, transform',
-    transitionDuration: '0.8s',
-    transitionTimingFunction: 'cubic-bezier(0.215, 0.61, 0.355, 1)',
-    transitionDelay: '0.6s',
-    opacity: 1,
-    transform: 'translate(0, 0)',
+export const iconContainer = sprinkles({
+    width: 48,
+    height: 48,
 });
+
+export const feedbackDataAppear = style({
+    opacity: 0,
+    transform: 'translateY(24px)',
+    '@media': {
+        [mq.desktopOrBigger]: {
+            transform: 'translateY(40px)',
+        },
+    },
+});
+
+const feedbackDataAppearActive = style({
+    transitionProperty: 'opacity, transform',
+    transitionDuration: '1s',
+    transitionTimingFunction: 'cubic-bezier(0.215, 0.61, 0.355, 1)',
+    opacity: 1,
+    transform: 'none',
+    '@media': {
+        [mq.desktopOrBigger]: {
+            transform: 'none',
+        },
+    },
+});
+
+export const feedbackDataAppearActiveFast = style([feedbackDataAppearActive, {transitionDelay: '0.6s'}]);
+export const feedbackDataAppearActiveMedium = style([feedbackDataAppearActive, {transitionDelay: '0.8s'}]);
+export const feedbackDataAppearActiveSlow = style([feedbackDataAppearActive, {transitionDelay: '1s'}]);
 
 export const feedbackData = style({
     maxWidth: 496,

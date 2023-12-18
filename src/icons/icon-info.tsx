@@ -1,3 +1,4 @@
+'use client';
 import * as React from 'react';
 import {useTheme} from '../hooks';
 import {O2_SKIN, O2_CLASSIC_SKIN} from '../skins/constants';
@@ -5,10 +6,9 @@ import {vars} from '../skins/skin-contract.css';
 
 type Props = {
     size?: number | string;
-    color?: string;
 };
 
-const IconInfoO2: React.FC<Props> = ({size = 64, color}) => {
+const IconInfoO2 = ({size = 48}: Props): JSX.Element => {
     return (
         <svg width={size} height={size} viewBox="0 0 64 64">
             <g
@@ -20,28 +20,19 @@ const IconInfoO2: React.FC<Props> = ({size = 64, color}) => {
                 <path
                     fill="none"
                     strokeWidth="2"
-                    stroke={color ? color : undefined}
                     d="M48.24,57.99c-4.71,2.95-10.27,4.65-16.24,4.65C15.08,62.64,1.36,48.92,1.36,32S15.08,1.36,32,1.36 S62.64,15.08,62.64,32c0,6.11-1.79,11.8-4.87,16.58"
                 />
-                <line
-                    fill="none"
-                    strokeWidth="2"
-                    stroke={color ? color : undefined}
-                    x1="32"
-                    y1="47.96"
-                    x2="32"
-                    y2="23.74"
-                />
-                <circle stroke={color ? color : undefined} cx="53.64" cy="53.54" r="1.06" />
+                <line fill="none" strokeWidth="2" x1="32" y1="47.96" x2="32" y2="23.74" />
+                <circle cx="53.64" cy="53.54" r="1.06" />
                 <circle strokeWidth="0" cx="32" cy="16.58" r="1.72" />
             </g>
         </svg>
     );
 };
 
-const IconInfoDefault = (): JSX.Element => {
+const IconInfoDefault = ({size = 48}: Props): JSX.Element => {
     return (
-        <svg width="64" height="64" viewBox="0 0 64 64">
+        <svg width={size} height={size} viewBox="0 0 64 64">
             <g fill={vars.colors.brand}>
                 <path
                     fillRule="nonzero"
@@ -53,9 +44,13 @@ const IconInfoDefault = (): JSX.Element => {
     );
 };
 
-const IconInfo = (): JSX.Element => {
+const IconInfo = (props: Props): JSX.Element => {
     const {skinName} = useTheme();
-    return skinName === O2_CLASSIC_SKIN || skinName === O2_SKIN ? <IconInfoO2 /> : <IconInfoDefault />;
+    return skinName === O2_CLASSIC_SKIN || skinName === O2_SKIN ? (
+        <IconInfoO2 {...props} />
+    ) : (
+        <IconInfoDefault {...props} />
+    );
 };
 
 export default IconInfo;
