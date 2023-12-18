@@ -68,6 +68,7 @@ export const barVariants = styleVariants({
 
 const containerBase = style({
     WebkitTapHighlightColor: 'transparent',
+    display: 'inline-block',
 });
 
 export const container = style([

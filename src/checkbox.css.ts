@@ -3,6 +3,9 @@ import {vars} from './skins/skin-contract.css';
 import {sprinkles} from './sprinkles.css';
 
 const checkboxContainerBase = style([
+    sprinkles({
+        display: 'inline-block',
+    }),
     {
         WebkitTapHighlightColor: 'transparent',
     },
