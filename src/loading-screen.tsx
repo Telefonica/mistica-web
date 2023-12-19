@@ -14,7 +14,6 @@ import {Logo} from './logo';
 import ScreenReaderOnly from './screen-reader-only';
 import {useTheme} from './hooks';
 import {VIVO_NEW_SKIN} from './skins/constants';
-import VivinhoLoadingAnimation from './vivinho-loading-animation';
 
 const BackgroundColor = ({
     isInverse,
@@ -170,16 +169,20 @@ const PulseBrandLogoAnimation = ({
     );
 };
 
+const VivinhoLoadingAnimation = React.lazy(() => import('./vivinho-loading-animation'));
+
 const BrandLoadingAnimation = ({isLoading, onCloseStart, onCloseEnd}: BrandLoadingAnimationProps) => {
     const {skinName} = useTheme();
 
     if (skinName === VIVO_NEW_SKIN) {
         return (
-            <VivinhoLoadingAnimation
-                isLoading={isLoading}
-                onCloseStart={onCloseStart}
-                onCloseEnd={onCloseEnd}
-            />
+            <React.Suspense fallback={null}>
+                <VivinhoLoadingAnimation
+                    isLoading={isLoading}
+                    onCloseStart={onCloseStart}
+                    onCloseEnd={onCloseEnd}
+                />
+            </React.Suspense>
         );
     }
     return (
