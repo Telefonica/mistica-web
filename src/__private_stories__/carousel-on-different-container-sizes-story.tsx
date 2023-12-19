@@ -12,10 +12,10 @@ import {
     GridLayout,
     Placeholder,
 } from '..';
-import tennisUrl from './images/tennis.jpg';
+import tennisUrl from '../__stories__/images/tennis.jpg';
 
 export default {
-    title: 'Components/Carousels/Carousel on different container types',
+    title: 'Private/Carousel on different container types',
 };
 
 type Args = {
