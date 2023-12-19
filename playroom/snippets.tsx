@@ -214,6 +214,7 @@ const buttonSnippets: Array<Snippet> = [
     {name: 'ButtonSecondary', code: '<ButtonSecondary onPress={() => {}}>Action</ButtonSecondary>'},
     {name: 'ButtonDanger', code: '<ButtonDanger onPress={() => {}}>Action</ButtonDanger>'},
     {name: 'ButtonLink', code: '<ButtonLink onPress={() => {}}>Action</ButtonLink>'},
+    {name: 'ButtonLinkDanger', code: '<ButtonLinkDanger onPress={() => {}}>Action</ButtonLinkDanger>'},
     {
         name: 'Button with icon',
         code: '<ButtonPrimary onPress={() => {}}><IconLockClosedRegular color="currentColor" />Action</ButtonPrimary>',
