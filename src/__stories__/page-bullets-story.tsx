@@ -2,7 +2,7 @@ import * as React from 'react';
 import {Box, ResponsiveLayout, PageBullets} from '..';
 
 export default {
-    title: 'Components/Carousels/Page bullets',
+    title: 'Components/Carousels/Utils/PageBullets',
 };
 
 type Args = {
@@ -24,7 +24,7 @@ export const Default: StoryComponent<Args> = ({numPages}) => {
     );
 };
 
-Default.storyName = 'Page bullets';
+Default.storyName = 'PageBullets';
 Default.parameters = {fullScreen: true};
 Default.args = {
     numPages: 5,

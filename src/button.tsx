@@ -347,7 +347,7 @@ const Button = React.forwardRef<TouchableElement, ButtonProps & {type: ButtonTyp
     const commonProps = {
         ref,
         className: classnames(
-            isInverse ? styles.inverseVariants[props.type] : styles.variants[props.type],
+            isInverse ? styles.inverseButtonVariants[props.type] : styles.buttonVariants[props.type],
             props.className,
             {
                 [styles.small]: props.small,
@@ -431,6 +431,8 @@ const Button = React.forwardRef<TouchableElement, ButtonProps & {type: ButtonTyp
     return null;
 });
 
+type ButtonLinkType = 'default' | 'danger';
+
 interface ButtonLinkCommonProps {
     children: React.ReactNode;
     disabled?: boolean;
@@ -446,7 +448,6 @@ interface ButtonLinkCommonProps {
     loadingText?: string;
     StartIcon?: React.FC<IconProps>;
     EndIcon?: React.FC<IconProps>;
-    withChevron?: boolean;
     bleedLeft?: boolean;
     bleedRight?: boolean;
     bleedY?: boolean;
@@ -475,10 +476,15 @@ interface ButtonLinkToProps extends ButtonLinkCommonProps {
 
 export type ButtonLinkProps = ButtonLinkOnPressProps | ButtonLinkHrefProps | ButtonLinkToProps;
 
-export const ButtonLink = React.forwardRef<TouchableElement, ButtonLinkProps>((props, ref) => {
+const BaseButtonLink = React.forwardRef<
+    TouchableElement,
+    ButtonLinkProps & {type: ButtonLinkType; withChevron?: boolean}
+>(({type, ...props}, ref) => {
     const {formStatus} = useForm();
     const isInverse = useIsInverseVariant();
-    const {analytics, textPresets} = useTheme();
+    const {textPresets} = useTheme();
+    const {eventFormat} = useTrackingConfig();
+    const {isDarkMode} = useTheme();
 
     const {loadingText} = props;
     const isFormSending = formStatus === 'sending';
@@ -500,10 +506,10 @@ export const ButtonLink = React.forwardRef<TouchableElement, ButtonLinkProps>((p
     }, [showSpinner, shouldRenderSpinner, formStatus]);
 
     const createDefaultTrackingEvent = (): TrackingEvent => {
-        if (analytics.eventFormat === 'google-analytics-4') {
+        if (eventFormat === 'google-analytics-4') {
             return {
                 name: eventNames.userInteraction,
-                component_type: 'link',
+                component_type: type === 'danger' ? 'danger_link' : 'link',
                 component_copy: getTextFromChildren(props.children),
             };
         } else {
@@ -521,11 +527,15 @@ export const ButtonLink = React.forwardRef<TouchableElement, ButtonLinkProps>((p
         </Text2>
     );
 
+    const finalType = type === 'danger' && isDarkMode && isInverse ? 'dangerDark' : type;
+
     const commonProps = {
-        className: classnames(styles.link, {
-            [styles.inverseLink]: isInverse,
-            [styles.isLoading]: showSpinner,
-        }),
+        className: classnames(
+            isInverse ? styles.inverseLinkVariants[finalType] : styles.linkVariants[finalType],
+            {
+                [styles.isLoading]: showSpinner,
+            }
+        ),
         /**
          * Setting bleed classes with style to override the margin:0 set by the Touchable component.
          * If we set it using className, it may not work depending on the order in which the styles are applied.
@@ -538,7 +548,7 @@ export const ButtonLink = React.forwardRef<TouchableElement, ButtonLinkProps>((p
                 : undefined),
         },
         trackingEvent: props.trackingEvent ?? (props.trackEvent ? createDefaultTrackingEvent() : undefined),
-        dataAttributes: {'component-name': 'ButtonLink', ...props.dataAttributes},
+        dataAttributes: props.dataAttributes,
         'aria-label': props['aria-label'],
         'aria-controls': props['aria-controls'],
         'aria-expanded': props['aria-expanded'],
@@ -603,6 +613,36 @@ export const ButtonLink = React.forwardRef<TouchableElement, ButtonLinkProps>((p
 
     return null;
 });
+
+export const ButtonLink = React.forwardRef<
+    TouchableElement,
+    ButtonLinkProps & {
+        withChevron?: boolean;
+    }
+>(({dataAttributes, ...props}, ref) => {
+    return (
+        <BaseButtonLink
+            dataAttributes={{'component-name': 'ButtonLink', ...dataAttributes}}
+            {...props}
+            ref={ref}
+            type="default"
+        />
+    );
+});
+
+export const ButtonLinkDanger = React.forwardRef<TouchableElement, ButtonLinkProps>(
+    ({dataAttributes, ...props}, ref) => {
+        return (
+            <BaseButtonLink
+                dataAttributes={{'component-name': 'ButtonLinkDanger', ...dataAttributes}}
+                {...props}
+                withChevron={false}
+                ref={ref}
+                type="danger"
+            />
+        );
+    }
+);
 
 export const ButtonPrimary = React.forwardRef<TouchableElement, ButtonProps>(
     ({dataAttributes, ...props}, ref) => {
