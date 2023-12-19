@@ -47,7 +47,6 @@ const startStorybook = () => {
         const port = 6006;
 
         const storybookServer = http.createServer((request, response) => {
-            // @ts-expect-error - type mismatch in response
             return handler(request, response, {
                 public: 'public',
                 cleanUrls: ['/'],
