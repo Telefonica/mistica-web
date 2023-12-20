@@ -172,18 +172,10 @@ type CardContainerProps = {
 
 const CardContainer = React.forwardRef<HTMLDivElement, CardContainerProps>(
     (
-        {
-            children,
-            width = '100%',
-            height = '100%',
-            aspectRatio,
-            dataAttributes,
-            className,
-            'aria-label': ariaLabel,
-        },
+        {children, width, height, aspectRatio, dataAttributes, className, 'aria-label': ariaLabel},
         ref
     ): JSX.Element => {
-        const cssAspectRatio = aspectRatioToNumber(aspectRatio);
+        const cssAspectRatio = width && height ? undefined : aspectRatioToNumber(aspectRatio);
 
         return (
             <section
@@ -192,8 +184,8 @@ const CardContainer = React.forwardRef<HTMLDivElement, CardContainerProps>(
                 aria-label={ariaLabel}
                 className={classNames(className, styles.cardContainer)}
                 style={{
-                    width,
-                    height,
+                    width: width || '100%',
+                    height: height || '100%',
                     ...(cssAspectRatio
                         ? applyCssVars({[styles.vars.aspectRatio]: String(cssAspectRatio)})
                         : {}),

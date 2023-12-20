@@ -1259,6 +1259,38 @@ const layoutSnippets: Array<Snippet> = [
         />
         </Box>`,
     },
+    {
+        group: 'Mosaic',
+        name: 'HorizontalMosaic',
+        code: `
+        <ResponsiveLayout>
+          <HorizontalMosaic
+            items={Array.from({ length: 6 }, (_, index) => (
+              <Image
+                src="https://picsum.photos/1200/1200"
+                width="100%"
+                height="100%"
+                key={index}
+              />
+            ))}
+          />
+        </ResponsiveLayout>`,
+    },
+    {
+        group: 'Mosaic',
+        name: 'VerticalMosaic',
+        code: `
+        <VerticalMosaic
+          items={Array.from({ length: 6 }, (_, index) => (
+            <Image
+              src="https://picsum.photos/1200/1200"
+              width="100%"
+              height="100%"
+              key={index}
+            />
+          ))}
+        />`,
+    },
 ].map((snippet) => ({...snippet, group: 'Layouts'}));
 
 const emptyStatesGroup: Array<Snippet> = [
