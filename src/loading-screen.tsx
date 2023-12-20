@@ -284,7 +284,10 @@ const PulseBrandLogoAnimation = ({isLoading, onCloseStart, onCloseEnd}: BrandLoa
     };
 
     return (
-        <div className={pulse ? styles.pulseLogo : undefined} onAnimationIteration={handleAnimationIteration}>
+        <div
+            className={classnames(styles.logo, {[styles.pulseLogo]: pulse})}
+            onAnimationIteration={handleAnimationIteration}
+        >
             <ScreenReaderOnly>
                 <div>{texts.loading}</div>
             </ScreenReaderOnly>

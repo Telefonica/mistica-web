@@ -93,3 +93,7 @@ export const pulseLogo = style({
     animation: `${pulseAnimation} 1.4s infinite ease-out`,
     transformOrigin: 'center',
 });
+
+export const logo = style({
+    transform: 'scale3d(.95, .95, .95)',
+});
