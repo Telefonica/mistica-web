@@ -1218,7 +1218,7 @@ export const DisplayMediaCard = React.forwardRef<HTMLDivElement, DisplayMediaCar
             {...props}
             ref={ref}
             isInverse
-            dataAttributes={{...dataAttributes, 'component-name': 'DisplayMediaCard'}}
+            dataAttributes={{'component-name': 'DisplayMediaCard', ...dataAttributes}}
         />
     )
 );
@@ -1228,7 +1228,7 @@ export const DisplayDataCard = React.forwardRef<HTMLDivElement, DisplayDataCardP
         <DisplayCard
             {...props}
             ref={ref}
-            dataAttributes={{...dataAttributes, 'component-name': 'DisplayDataCard'}}
+            dataAttributes={{'component-name': 'DisplayDataCard', ...dataAttributes}}
         />
     )
 );
@@ -1348,7 +1348,7 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
             <CardContainer
                 width={width}
                 height={height}
-                dataAttributes={{...dataAttributes, 'component-name': 'PosterCard'}}
+                dataAttributes={{'component-name': 'PosterCard', ...dataAttributes}}
                 ref={ref}
                 aspectRatio={aspectRatio}
                 aria-label={ariaLabel}

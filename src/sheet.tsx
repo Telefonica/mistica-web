@@ -439,7 +439,7 @@ export const RadioListSheet = React.forwardRef<HTMLDivElement, RadioListSheetPro
             <Sheet
                 onClose={onClose}
                 ref={ref}
-                dataAttributes={{...dataAttributes, 'component-name': 'RadioListSheet'}}
+                dataAttributes={{'component-name': 'RadioListSheet', ...dataAttributes}}
             >
                 {({closeModal, modalTitleId}) => (
                     <SheetBody
@@ -534,7 +534,7 @@ export const ActionsListSheet = React.forwardRef<HTMLDivElement, ActionsListShee
             <Sheet
                 onClose={onClose}
                 ref={ref}
-                dataAttributes={{...dataAttributes, 'component-name': 'ActionsListSheet'}}
+                dataAttributes={{'component-name': 'ActionsListSheet', ...dataAttributes}}
             >
                 {({closeModal, modalTitleId}) => (
                     <SheetBody
@@ -630,7 +630,7 @@ export const InfoSheet = React.forwardRef<HTMLDivElement, InfoSheetProps>(
             <Sheet
                 onClose={onClose}
                 ref={ref}
-                dataAttributes={{...dataAttributes, 'component-name': 'InfoSheet'}}
+                dataAttributes={{'component-name': 'InfoSheet', ...dataAttributes}}
             >
                 {({modalTitleId}) => (
                     <SheetBody
@@ -731,7 +731,7 @@ export const ActionsSheet = React.forwardRef<HTMLDivElement, ActionsSheetProps>(
             <Sheet
                 onClose={onClose}
                 ref={ref}
-                dataAttributes={{...dataAttributes, 'component-name': 'ActionsSheet'}}
+                dataAttributes={{'component-name': 'ActionsSheet', ...dataAttributes}}
             >
                 {({modalTitleId, closeModal}) => (
                     <SheetBody
