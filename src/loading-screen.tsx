@@ -14,29 +14,13 @@ import {Logo} from './logo';
 import ScreenReaderOnly from './screen-reader-only';
 import {useTheme} from './hooks';
 import {VIVO_NEW_SKIN} from './skins/constants';
+import {getPrefixedDataAttributes} from './utils/dom';
 
-const BackgroundColor = ({
-    isInverse,
-    isLoading,
-    animateBackground,
-}: {
-    isInverse: boolean;
-    isLoading: boolean;
-    animateBackground: boolean;
-}): null => {
-    React.useLayoutEffect(() => {
-        const classes = classnames(styles.screenBackground[isInverse ? 'inverse' : 'default'], {
-            [styles.screenBackgroundFadeOut]: !isLoading,
-            [styles.screenBackgroundAnimated]: animateBackground,
-        }).split(' ');
+import type {DataAttributes} from './utils/types';
 
-        document.body.classList.add(...classes);
-        return () => {
-            document.body.classList.remove(...classes);
-        };
-    }, [animateBackground, isInverse, isLoading]);
-
-    return null;
+const BackgroundColor = ({isInverse}: {isInverse: boolean}) => {
+    const css = `body {background:${isInverse ? vars.colors.backgroundBrand : vars.colors.background}}`;
+    return <style>{css}</style>;
 };
 
 type Props = {
@@ -48,94 +32,148 @@ type Props = {
     animateBackground?: boolean;
     onClose?: () => void;
     children?: React.ReactNode;
+    dataAttributes?: DataAttributes;
 };
 
-export const LoadingScreen = ({
-    isInverse,
-    title,
-    description,
-    children,
-    isLoading = true,
-    animateText,
-    animateBackground,
-    onClose,
-}: Props): JSX.Element => {
-    const closeCalled = React.useRef(false);
+const BaseLoadingScreen = React.forwardRef<HTMLDivElement, Props>(
+    (
+        {
+            isInverse,
+            title,
+            description,
+            children,
+            isLoading = true,
+            animateText,
+            animateBackground,
+            onClose,
+            dataAttributes,
+        },
+        ref
+    ) => {
+        const [inAnimationEnd, setInAnimationEnd] = React.useState(false);
 
-    const handleTransitionEnd = React.useCallback(() => {
-        if (!isLoading && !closeCalled.current) {
-            closeCalled.current = true;
-            onClose?.();
-        }
-    }, [isLoading, onClose]);
+        // just in case the animationend event is not fired
+        React.useEffect(() => {
+            if (!isLoading) {
+                return;
+            }
+            const timeout = setTimeout(() => {
+                setInAnimationEnd(true);
+            }, styles.inOutAnimationMs);
+            return () => {
+                clearTimeout(timeout);
+            };
+        }, [isLoading]);
 
-    React.useEffect(() => {
-        if (isLoading) {
-            return;
-        }
-        if (!animateText && !animateBackground) {
-            onClose?.();
-            return;
-        }
+        const closeCalled = React.useRef(false);
 
-        // just in case the transitionend event is not fired
-        const timeout = setTimeout(() => {
-            handleTransitionEnd();
-        }, styles.outAnimationMs);
-        return () => {
-            clearTimeout(timeout);
-        };
-    }, [animateBackground, animateText, handleTransitionEnd, isLoading, onClose]);
+        const handleTransitionEnd = React.useCallback(() => {
+            if (!isLoading && !closeCalled.current) {
+                closeCalled.current = true;
+                onClose?.();
+            }
+        }, [isLoading, onClose]);
 
-    return (
-        <ThemeVariant isInverse={isInverse}>
-            {isInverse && <OverscrollColor />}
-            <div
-                className={classnames(
-                    styles.loadingScreen,
-                    styles.screenBackground[isInverse ? 'inverse' : 'default'],
-                    {
-                        [styles.screenBackgroundFadeOut]: !isLoading && animateBackground,
-                        [styles.screenBackgroundAnimated]: animateBackground,
-                    },
-                    sprinkles({
-                        justifyContent: children ? 'space-between' : 'center',
-                    })
-                )}
-            >
-                {children ? (
-                    <div className={styles.loadingScreenChildren}>{children}</div>
-                ) : (
-                    <Spinner delay="0s" size={32} color={isInverse ? vars.colors.inverse : undefined} />
-                )}
+        React.useEffect(() => {
+            if (isLoading) {
+                return;
+            }
+            if (!animateText && !animateBackground) {
+                onClose?.();
+                return;
+            }
+
+            // just in case the transitionend event is not fired
+            const timeout = setTimeout(() => {
+                handleTransitionEnd();
+            }, styles.inOutAnimationMs);
+            return () => {
+                clearTimeout(timeout);
+            };
+        }, [animateBackground, animateText, handleTransitionEnd, isLoading, onClose]);
+
+        const centerContent = !children;
+
+        return (
+            <ThemeVariant isInverse={isInverse}>
+                {isInverse && <OverscrollColor />}
                 <div
-                    className={classnames(styles.loadingScreenText, {
-                        [styles.loadingScreenTextAnimated]: animateText,
-                        [styles.loadingScreenTextAnimatedOut]: animateText && !isLoading,
-                    })}
+                    ref={ref}
+                    {...getPrefixedDataAttributes(dataAttributes)}
+                    className={classnames(
+                        styles.loadingScreen,
+                        styles.screenBackground[isInverse ? 'inverse' : 'default'],
+                        {
+                            [styles.screenBackgroundFadeOut]: !isLoading && animateBackground,
+                            [styles.screenBackgroundAnimated]: animateBackground,
+                        },
+                        sprinkles({
+                            justifyContent: centerContent ? 'center' : 'space-between',
+                        })
+                    )}
+                    onAnimationEnd={() => {
+                        setInAnimationEnd(true);
+                    }}
                     onTransitionEnd={handleTransitionEnd}
                 >
-                    <ResponsiveLayout>
-                        <Stack space={8}>
-                            <Text4 hyphens="auto" textAlign="center" regular as="h1">
-                                {title}
-                            </Text4>
-                            <Text2 hyphens="auto" textAlign="center" regular as="p">
-                                {description}
-                            </Text2>
-                        </Stack>
-                    </ResponsiveLayout>
+                    {children ? (
+                        <div className={styles.loadingScreenChildren}>{children}</div>
+                    ) : (
+                        <Spinner delay="0s" size={32} color={isInverse ? vars.colors.inverse : undefined} />
+                    )}
+                    <div
+                        className={classnames(styles.loadingScreenText, {
+                            [styles.loadingScreenTextAnimated]: animateText,
+                            [styles.loadingScreenTextAnimatedOut]: animateText && !isLoading,
+                        })}
+                        onTransitionEnd={handleTransitionEnd}
+                    >
+                        <ResponsiveLayout>
+                            <Stack space={8}>
+                                <Text4 hyphens="auto" textAlign="center" regular as="h1">
+                                    {title}
+                                </Text4>
+                                <Text2
+                                    hyphens="auto"
+                                    textAlign="center"
+                                    regular
+                                    as="p"
+                                    color={vars.colors.textSecondary}
+                                >
+                                    {description}
+                                </Text2>
+                            </Stack>
+                        </ResponsiveLayout>
+                    </div>
+                    {!centerContent && <div style={{height: 104}} />}
                 </div>
-                <div style={{height: 104}} />
-            </div>
-            <BackgroundColor
-                isInverse={!!isInverse}
-                isLoading={isLoading}
-                animateBackground={!!animateBackground}
-            />
-        </ThemeVariant>
-    );
+                {/* needed for overscroll. TODO: review the case for brands with gradient like O2 */}
+                {isLoading && inAnimationEnd && <BackgroundColor isInverse={!!isInverse} />}
+            </ThemeVariant>
+        );
+    }
+);
+
+type LoadingScreenProps = {
+    title?: string;
+    description?: string;
+    isInverse?: boolean;
+    isLoading?: boolean;
+    onClose?: () => void;
+    children?: React.ReactNode;
+    dataAttributes?: DataAttributes;
 };
+
+export const LoadingScreen = React.forwardRef<HTMLDivElement, LoadingScreenProps>((props, ref) => {
+    return (
+        <BaseLoadingScreen
+            ref={ref}
+            {...props}
+            dataAttributes={{'component-name': 'LoadingScreen', ...props.dataAttributes}}
+            animateBackground
+        />
+    );
+});
 
 type BrandLoadingAnimationProps = {
     isLoading?: boolean;
@@ -143,11 +181,7 @@ type BrandLoadingAnimationProps = {
     onCloseEnd?: () => void;
 };
 
-const PulseBrandLogoAnimation = ({
-    isLoading,
-    onCloseStart,
-    onCloseEnd,
-}: BrandLoadingAnimationProps): JSX.Element => {
+const PulseBrandLogoAnimation = ({isLoading, onCloseStart, onCloseEnd}: BrandLoadingAnimationProps) => {
     const {texts} = useTheme();
     const [pulse, setPulse] = React.useState(true);
 
@@ -195,49 +229,49 @@ type BrandLoadingScreenProps = {
     description?: string;
     isLoading?: boolean;
     onClose?: () => void;
+    dataAttributes?: DataAttributes;
 };
 
-export const BrandLoadingScreen = ({
-    title,
-    description,
-    isLoading = true,
-    onClose,
-}: BrandLoadingScreenProps): JSX.Element => {
-    const {skinName} = useTheme();
-    const [isClosing, setIsClosing] = React.useState(false);
-    const logoClosedRef = React.useRef(false);
-    const textClosedRef = React.useRef(false);
+export const BrandLoadingScreen = React.forwardRef<HTMLDivElement, BrandLoadingScreenProps>(
+    ({title, description, isLoading = true, onClose, dataAttributes}, ref) => {
+        const {skinName} = useTheme();
+        const [isClosing, setIsClosing] = React.useState(false);
+        const logoClosedRef = React.useRef(false);
+        const textClosedRef = React.useRef(false);
 
-    const handleCloseStart = () => {
-        setIsClosing(true);
-    };
+        const handleCloseStart = () => {
+            setIsClosing(true);
+        };
 
-    const handleCloseEnd = () => {
-        if (logoClosedRef.current && textClosedRef.current) {
-            onClose?.();
-        }
-    };
+        const handleCloseEnd = () => {
+            if (logoClosedRef.current && textClosedRef.current) {
+                onClose?.();
+            }
+        };
 
-    return (
-        <LoadingScreen
-            isInverse
-            title={title}
-            description={description}
-            isLoading={isLoading || !isClosing}
-            onClose={() => {
-                textClosedRef.current = true;
-                handleCloseEnd();
-            }}
-            animateText={skinName === VIVO_NEW_SKIN}
-        >
-            <BrandLoadingAnimation
-                isLoading={isLoading}
-                onCloseStart={handleCloseStart}
-                onCloseEnd={() => {
-                    logoClosedRef.current = true;
+        return (
+            <BaseLoadingScreen
+                ref={ref}
+                isInverse
+                title={title}
+                description={description}
+                isLoading={isLoading || !isClosing}
+                onClose={() => {
+                    textClosedRef.current = true;
                     handleCloseEnd();
                 }}
-            />
-        </LoadingScreen>
-    );
-};
+                animateText={skinName === VIVO_NEW_SKIN}
+                dataAttributes={{'component-name': 'BrandLoadingScreen', ...dataAttributes}}
+            >
+                <BrandLoadingAnimation
+                    isLoading={isLoading}
+                    onCloseStart={handleCloseStart}
+                    onCloseEnd={() => {
+                        logoClosedRef.current = true;
+                        handleCloseEnd();
+                    }}
+                />
+            </BaseLoadingScreen>
+        );
+    }
+);

@@ -7,7 +7,7 @@ import Stack from '../stack';
 import {Text2} from '../text';
 
 export default {
-    title: 'Patterns/Loading/LoadingScreen',
+    title: 'Loading/LoadingScreen',
     parameters: {
         fullScreen: true,
     },
@@ -16,8 +16,6 @@ export default {
 type LoadingSreenArgs = {
     title: string;
     description: string;
-    animateText: boolean;
-    animateBackground: boolean;
     isInverse: boolean;
     isLoading: boolean;
 };
@@ -25,8 +23,6 @@ type LoadingSreenArgs = {
 export const LoadingScreenStory: StoryComponent<LoadingSreenArgs> = ({
     title,
     description,
-    animateText,
-    animateBackground,
     isInverse,
     isLoading,
 }) => {
@@ -59,8 +55,6 @@ export const LoadingScreenStory: StoryComponent<LoadingSreenArgs> = ({
             description={description}
             isInverse={isInverse}
             isLoading={isLoading}
-            animateText={animateText}
-            animateBackground={animateBackground}
             onClose={() => {
                 setShowLoadingScreen(false);
             }}
@@ -71,8 +65,6 @@ LoadingScreenStory.storyName = 'LoadingScreen';
 LoadingScreenStory.args = {
     title: 'Title',
     description: 'Description',
-    animateText: false,
-    animateBackground: false,
     isInverse: false,
     isLoading: true,
 };

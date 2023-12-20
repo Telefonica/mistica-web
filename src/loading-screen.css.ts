@@ -1,7 +1,6 @@
-import {createVar, keyframes, style, styleVariants} from '@vanilla-extract/css';
+import {keyframes, style, styleVariants} from '@vanilla-extract/css';
 import {sprinkles} from './sprinkles.css';
 import {vars as skinVars} from './skins/skin-contract.css';
-import {applyAlpha} from './utils/color';
 
 export const loadingScreen = style([
     sprinkles({
@@ -14,15 +13,14 @@ export const loadingScreen = style([
     },
 ]);
 
-export const outAnimationMs = 500;
-const background = createVar();
-const backgroundAnimationTiming = `${outAnimationMs}ms cubic-bezier(.1,0,.7,1)`;
+export const inOutAnimationMs = 500;
+const backgroundAnimationTiming = `${inOutAnimationMs}ms cubic-bezier(.1,0,.7,1)`;
 const backgroundFadeIn = keyframes({
     '0%': {
-        background: applyAlpha(background, 0),
+        opacity: 0,
     },
     '100%': {
-        background: applyAlpha(background, 1),
+        opacity: 1,
     },
 });
 
@@ -32,22 +30,16 @@ export const screenBackgroundAnimated = style({
 
 export const screenBackground = styleVariants({
     default: {
-        vars: {
-            [background]: skinVars.rawColors.background,
-        },
-        background: applyAlpha(background, 1),
+        background: skinVars.colors.background,
     },
     inverse: {
-        vars: {
-            [background]: skinVars.rawColors.backgroundBrand,
-        },
-        background: applyAlpha(background, 1),
+        background: skinVars.colors.backgroundBrand,
     },
 });
 
 export const screenBackgroundFadeOut = style({
-    transition: `all ${backgroundAnimationTiming}`,
-    background: applyAlpha(background, 0),
+    transition: `opacity ${backgroundAnimationTiming}`,
+    opacity: 0,
 });
 
 export const loadingScreenChildren = sprinkles({
@@ -62,7 +54,7 @@ export const loadingScreenText = sprinkles({
     paddingTop: 24,
 });
 
-const textAnimationTiming = `${outAnimationMs}ms cubic-bezier(.1,0,.7,1)`;
+const textAnimationTiming = `${inOutAnimationMs}ms cubic-bezier(.1,0,.7,1)`;
 const textOutStyles = {
     transform: 'translateY(50px)',
     opacity: 0,
