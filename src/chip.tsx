@@ -134,7 +134,9 @@ const Chip: React.FC<ChipProps> = (props: ChipProps) => {
     }
     const isInteractive = active !== undefined || props.href || props.onPress || props.to;
 
-    const renderContent = () => (
+    const chipDataAttributes = getPrefixedDataAttributes(dataAttributes, 'Chip');
+
+    const renderContent = (dataAttributes?: DataAttributes) => (
         <Box
             className={classnames(
                 styles.chipVariants[active ? 'active' : overAlternative ? 'overAlternative' : 'default'],
@@ -144,7 +146,7 @@ const Chip: React.FC<ChipProps> = (props: ChipProps) => {
             )}
             paddingLeft={paddingLeft}
             paddingRight={paddingRight}
-            {...getPrefixedDataAttributes(dataAttributes, 'Chip')}
+            dataAttributes={dataAttributes}
         >
             {body}
         </Box>
@@ -156,6 +158,7 @@ const Chip: React.FC<ChipProps> = (props: ChipProps) => {
                 className={styles.button}
                 trackingEvent={props.trackingEvent}
                 onPress={props.onPress}
+                dataAttributes={chipDataAttributes}
             >
                 {renderContent()}
             </BaseTouchable>
@@ -168,6 +171,7 @@ const Chip: React.FC<ChipProps> = (props: ChipProps) => {
                 trackingEvent={props.trackingEvent}
                 to={props.to}
                 fullPageOnWebView={props.fullPageOnWebView}
+                dataAttributes={chipDataAttributes}
             >
                 {renderContent()}
             </BaseTouchable>
@@ -176,13 +180,18 @@ const Chip: React.FC<ChipProps> = (props: ChipProps) => {
 
     if (props.href) {
         return (
-            <BaseTouchable trackingEvent={props.trackingEvent} href={props.href} newTab={props.newTab}>
+            <BaseTouchable
+                trackingEvent={props.trackingEvent}
+                href={props.href}
+                newTab={props.newTab}
+                dataAttributes={chipDataAttributes}
+            >
                 {renderContent()}
             </BaseTouchable>
         );
     }
 
-    return renderContent();
+    return renderContent(chipDataAttributes);
 };
 
 export default Chip;
