@@ -134,7 +134,7 @@ const Chip: React.FC<ChipProps> = (props: ChipProps) => {
     }
     const isInteractive = active !== undefined || props.href || props.onPress || props.to;
 
-    const chipDataAttributes = getPrefixedDataAttributes(dataAttributes, 'Chip');
+    const chipDataAttributes = {'component-name': 'Chip', ...dataAttributes};
 
     const renderContent = (dataAttributes?: DataAttributes) => (
         <Box
