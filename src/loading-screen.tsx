@@ -92,7 +92,7 @@ const LoadingScreenTexts = ({animateText, isLoading, onClose, texts}: LoadingScr
         showNextText();
     };
 
-    const {title: currentTitle, description: currentDescription} = texts[currentTextsIndex];
+    const {title: currentTitle, description: currentDescription} = texts[currentTextsIndex % texts.length];
 
     return (
         <div
