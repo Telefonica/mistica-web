@@ -109,4 +109,10 @@ module.exports = {
         name: '@storybook/react-webpack5',
         options: {},
     },
+    // building stories is slow without this workaround
+    // https://github.com/storybookjs/storybook/issues/10784#issuecomment-868329216
+    typescript: {
+        check: false,
+        reactDocgen: false,
+    },
 };
