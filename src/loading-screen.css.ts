@@ -79,13 +79,13 @@ export const loadingScreenTextAnimatedOut = style({
 
 const pulseAnimation = keyframes({
     '0%': {
-        transform: 'scale(1)',
+        transform: 'scale3d(.95, .95, .95)',
     },
     '50%': {
-        transform: 'scale(1.05)',
+        transform: 'scale3d(1, 1, 1)',
     },
     '100%': {
-        transform: 'scale(1)',
+        transform: 'scale3d(.95, .95, .95)',
     },
 });
 

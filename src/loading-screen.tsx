@@ -288,7 +288,7 @@ const PulseBrandLogoAnimation = ({isLoading, onCloseStart, onCloseEnd}: BrandLoa
             <ScreenReaderOnly>
                 <div>{texts.loading}</div>
             </ScreenReaderOnly>
-            <Logo size={120} />
+            <Logo size={126} />
         </div>
     );
 };
