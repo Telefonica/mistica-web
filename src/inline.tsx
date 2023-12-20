@@ -77,7 +77,7 @@ const Inline: React.FC<Props> = ({
                             // In iOS the inline component sometimes cuts the last line of the content
                             paddingBottom:
                                 isIos(platformOverrides) && !isRunningAcceptanceTest(platformOverrides)
-                                    ? 0.5
+                                    ? 1
                                     : undefined,
                         }}
                     >
