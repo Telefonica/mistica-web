@@ -344,6 +344,18 @@ const loadingScreenSnippets: Array<Snippet> = [
         />
         `,
     },
+    {
+        group: 'Loading Screens',
+        name: 'BrandLoadingScreen with multiple texts',
+        code: `
+        <BrandLoadingScreen
+          texts={[
+            { title: "Title 1", description: "Description 1" },
+            { title: "Title 2", description: "Description 2" },
+            { title: "Title 3", description: "Description 3" },
+          ]}
+        />`,
+    },
 ];
 
 const listSnippets: Array<Snippet> = [
