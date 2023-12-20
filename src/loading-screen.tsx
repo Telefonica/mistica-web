@@ -16,6 +16,7 @@ import {useTheme} from './hooks';
 import {VIVO_NEW_SKIN} from './skins/constants';
 import {getPrefixedDataAttributes} from './utils/dom';
 
+import type {ExclusifyUnion} from './utils/utility-types';
 import type {DataAttributes} from './utils/types';
 
 const BackgroundColor = ({isInverse}: {isInverse: boolean}) => {
@@ -23,9 +24,117 @@ const BackgroundColor = ({isInverse}: {isInverse: boolean}) => {
     return <style>{css}</style>;
 };
 
+type TextProps = ExclusifyUnion<
+    | {
+          title?: string;
+          description?: string;
+      }
+    | {
+          texts: Array<{
+              title?: string;
+              description?: string;
+              time?: number;
+          }>;
+      }
+>;
+
+type LoadingScreenTextsProps = {
+    animateText?: boolean;
+    isLoading?: boolean;
+    onClose?: () => void;
+    texts: Array<{
+        title?: string;
+        description?: string;
+        time?: number;
+    }>;
+};
+
+const LoadingScreenTexts = ({animateText, isLoading, onClose, texts}: LoadingScreenTextsProps) => {
+    const [currentTextsIndex, setCurrentTextsIndex] = React.useState(0);
+    const [isClosing, setIsClosing] = React.useState(false);
+
+    const showNextText = React.useCallback(() => {
+        setCurrentTextsIndex((currentTextsIndex + 1) % texts.length);
+        setIsClosing(false);
+    }, [currentTextsIndex, texts.length]);
+
+    React.useEffect(() => {
+        if (!isLoading) {
+            return;
+        }
+
+        if (texts.length === 1) {
+            return;
+        }
+
+        const timeout = setTimeout(() => {
+            if (animateText) {
+                setIsClosing(true);
+            } else {
+                showNextText();
+            }
+        }, texts[currentTextsIndex].time ?? 5000);
+
+        return () => {
+            clearTimeout(timeout);
+        };
+    }, [animateText, currentTextsIndex, isClosing, isLoading, showNextText, texts]);
+
+    const handleOutTransitionEnd = () => {
+        if (!isLoading) {
+            onClose?.();
+            return;
+        }
+        if (!isClosing) {
+            return;
+        }
+
+        showNextText();
+    };
+
+    const {title: currentTitle, description: currentDescription} = texts[currentTextsIndex];
+
+    return (
+        <div
+            // changing the key triggers the css animation for next texts
+            key={currentTextsIndex}
+            className={classnames(styles.loadingScreenText, {
+                [styles.loadingScreenTextAnimatedOut]: animateText && (!isLoading || isClosing),
+            })}
+            onTransitionEnd={handleOutTransitionEnd}
+        >
+            <ResponsiveLayout>
+                <Stack space={8}>
+                    {currentTitle && (
+                        <div className={animateText ? styles.loadingScreenTextAnimated : undefined}>
+                            <Text4 hyphens="auto" textAlign="center" regular as="h1">
+                                {currentTitle}
+                            </Text4>
+                        </div>
+                    )}
+                    {currentDescription && (
+                        <div
+                            className={animateText ? styles.loadingScreenTextAnimated : undefined}
+                            style={{animationDelay: '200ms'}}
+                        >
+                            <Text2
+                                hyphens="auto"
+                                textAlign="center"
+                                regular
+                                as="p"
+                                color={vars.colors.textSecondary}
+                            >
+                                {currentDescription}
+                            </Text2>
+                        </div>
+                    )}
+                </Stack>
+            </ResponsiveLayout>
+        </div>
+    );
+};
+
 type Props = {
-    title?: string;
-    description?: string;
     isInverse?: boolean;
     isLoading?: boolean;
     animateText?: boolean;
@@ -33,20 +142,21 @@ type Props = {
     onClose?: () => void;
     children?: React.ReactNode;
     dataAttributes?: DataAttributes;
-};
+} & TextProps;
 
 const BaseLoadingScreen = React.forwardRef<HTMLDivElement, Props>(
     (
         {
             isInverse,
-            title,
-            description,
             children,
             isLoading = true,
             animateText,
             animateBackground,
             onClose,
             dataAttributes,
+            title,
+            description,
+            texts = [{title, description}],
         },
         ref
     ) => {
@@ -121,30 +231,12 @@ const BaseLoadingScreen = React.forwardRef<HTMLDivElement, Props>(
                     ) : (
                         <Spinner delay="0s" size={32} color={isInverse ? vars.colors.inverse : undefined} />
                     )}
-                    <div
-                        className={classnames(styles.loadingScreenText, {
-                            [styles.loadingScreenTextAnimated]: animateText,
-                            [styles.loadingScreenTextAnimatedOut]: animateText && !isLoading,
-                        })}
-                        onTransitionEnd={handleTransitionEnd}
-                    >
-                        <ResponsiveLayout>
-                            <Stack space={8}>
-                                <Text4 hyphens="auto" textAlign="center" regular as="h1">
-                                    {title}
-                                </Text4>
-                                <Text2
-                                    hyphens="auto"
-                                    textAlign="center"
-                                    regular
-                                    as="p"
-                                    color={vars.colors.textSecondary}
-                                >
-                                    {description}
-                                </Text2>
-                            </Stack>
-                        </ResponsiveLayout>
-                    </div>
+                    <LoadingScreenTexts
+                        animateText={animateText}
+                        isLoading={isLoading}
+                        texts={texts}
+                        onClose={handleTransitionEnd}
+                    />
                     {!centerContent && <div style={{height: 104}} />}
                 </div>
                 {/* needed for overscroll. TODO: review the case for brands with gradient like O2 */}
@@ -155,14 +247,12 @@ const BaseLoadingScreen = React.forwardRef<HTMLDivElement, Props>(
 );
 
 type LoadingScreenProps = {
-    title?: string;
-    description?: string;
     isInverse?: boolean;
     isLoading?: boolean;
     onClose?: () => void;
     children?: React.ReactNode;
     dataAttributes?: DataAttributes;
-};
+} & TextProps;
 
 export const LoadingScreen = React.forwardRef<HTMLDivElement, LoadingScreenProps>((props, ref) => {
     return (
@@ -225,16 +315,13 @@ const BrandLoadingAnimation = ({isLoading, onCloseStart, onCloseEnd}: BrandLoadi
 };
 
 type BrandLoadingScreenProps = {
-    title?: string;
-    description?: string;
     isLoading?: boolean;
     onClose?: () => void;
     dataAttributes?: DataAttributes;
-};
+} & TextProps;
 
 export const BrandLoadingScreen = React.forwardRef<HTMLDivElement, BrandLoadingScreenProps>(
-    ({title, description, isLoading = true, onClose, dataAttributes}, ref) => {
-        const {skinName} = useTheme();
+    ({isLoading = true, onClose, dataAttributes, ...textProps}, ref) => {
         const [isClosing, setIsClosing] = React.useState(false);
         const logoClosedRef = React.useRef(false);
         const textClosedRef = React.useRef(false);
@@ -253,14 +340,13 @@ export const BrandLoadingScreen = React.forwardRef<HTMLDivElement, BrandLoadingS
             <BaseLoadingScreen
                 ref={ref}
                 isInverse
-                title={title}
-                description={description}
+                {...textProps}
                 isLoading={isLoading || !isClosing}
                 onClose={() => {
                     textClosedRef.current = true;
                     handleCloseEnd();
                 }}
-                animateText={skinName === VIVO_NEW_SKIN}
+                animateText
                 dataAttributes={{'component-name': 'BrandLoadingScreen', ...dataAttributes}}
             >
                 <BrandLoadingAnimation

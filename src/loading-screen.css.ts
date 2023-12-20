@@ -55,13 +55,12 @@ export const loadingScreenText = sprinkles({
 });
 
 const textAnimationTiming = `${inOutAnimationMs}ms cubic-bezier(.1,0,.7,1)`;
-const textOutStyles = {
-    transform: 'translateY(50px)',
-    opacity: 0,
-};
 
 const textIn = keyframes({
-    '0%': textOutStyles,
+    '0%': {
+        transform: 'translateY(50px)',
+        opacity: 0,
+    },
     '100%': {
         transform: 'translateY(0)',
         opacity: 1,
@@ -70,11 +69,12 @@ const textIn = keyframes({
 
 export const loadingScreenTextAnimated = style({
     animation: `${textIn} ${textAnimationTiming}`,
+    animationFillMode: 'both',
 });
 
 export const loadingScreenTextAnimatedOut = style({
-    transition: `transform ${textAnimationTiming}, opacity ${textAnimationTiming}`,
-    ...textOutStyles,
+    transition: `opacity ${textAnimationTiming}`,
+    opacity: 0,
 });
 
 const pulseAnimation = keyframes({
