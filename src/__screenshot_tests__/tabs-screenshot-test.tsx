@@ -55,7 +55,7 @@ test('Tabs with long text and icon', async () => {
 });
 
 test('Tabs selected line appears properly', async () => {
-    await openStoryPage({
+    const page = await openStoryPage({
         id: 'components-tabs--default',
         device: 'MOBILE_IOS',
     });

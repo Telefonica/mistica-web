@@ -1,7 +1,7 @@
 import {openStoryPage} from '../test-utils';
 
 test('Switch', async () => {
-    await openStoryPage({
+    const page = await openStoryPage({
         id: 'components-switch--default',
     });
 

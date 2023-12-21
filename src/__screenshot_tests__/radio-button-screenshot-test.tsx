@@ -3,7 +3,7 @@ import {openStoryPage} from '../test-utils';
 const DEVICES = ['MOBILE_IOS', 'MOBILE_ANDROID'] as const;
 
 test.each(DEVICES)(`RadioGroup`, async (device) => {
-    await openStoryPage({
+    const page = await openStoryPage({
         id: 'components-radio-button--default',
         device,
     });

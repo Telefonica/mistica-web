@@ -7,7 +7,7 @@ test.each`
     ${true}  | ${false}
     ${true}  | ${true}
 `('MainNavigationBar desktop. inverse={$inverse} isDarkMode={$isDarkMode}', async ({inverse, isDarkMode}) => {
-    await openStoryPage({
+    const page = await openStoryPage({
         id: 'components-navigation-bars-mainnavigationbar--default',
         device: 'DESKTOP',
         args: {inverse},
@@ -56,7 +56,7 @@ test('MainNavigationBar mobile with burger menu extra', async () => {
 });
 
 test('MainNavigationBar large', async () => {
-    await openStoryPage({
+    const page = await openStoryPage({
         id: 'components-navigation-bars-mainnavigationbar--default',
         device: 'DESKTOP',
         args: {large: true},
@@ -80,7 +80,7 @@ test.each`
 `(
     'NavigationBar. inverse={$inverse} isDarkMode={$isDarkMode} device={$device}',
     async ({inverse, isDarkMode, device}) => {
-        await openStoryPage({
+        const page = await openStoryPage({
             id: 'components-navigation-bars-navigationbar--default',
             device,
             args: {inverse},
@@ -106,7 +106,7 @@ test.each`
 `(
     'FunnelNavigationBar. inverse={$inverse} isDarkMode={$isDarkMode} device={$device}',
     async ({inverse, isDarkMode, device}) => {
-        await openStoryPage({
+        const page = await openStoryPage({
             id: 'components-navigation-bars-funnelnavigationbar--default',
             device,
             args: {inverse},
@@ -128,7 +128,7 @@ test.each`
     ${'MainNavigationBar'}   | ${'MOBILE_IOS'}
     ${'FunnelNavigationBar'} | ${'MOBILE_IOS'}
 `('$type without border. device={$device}', async ({type, device}) => {
-    await openStoryPage({
+    const page = await openStoryPage({
         id: `components-navigation-bars-${type.toLowerCase()}--default`,
         device,
         args: {withBorder: false},
