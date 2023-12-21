@@ -60,22 +60,20 @@ test('Tabs selected line appears properly', async () => {
         device: 'MOBILE_IOS',
     });
 
-    // We need to wait until tab elements are added to the DOM
-    // https://stackoverflow.com/a/50676074
-    await page.waitForSelector('[data-tabindex="0"]');
+    const tabs = await screen.findByRole('tablist');
 
     await page.evaluate(() => {
         document.querySelector<HTMLElement>('[data-tabindex="1"]')?.click();
     });
 
-    const secondTabActive = await (await screen.findByRole('tablist')).screenshot();
+    const secondTabActive = await tabs.screenshot();
     expect(secondTabActive).toMatchImageSnapshot();
 
     await page.evaluate(() => {
         document.querySelector<HTMLElement>('[data-tabindex="2"]')?.click();
     });
 
-    const thirdTabActive = await (await screen.findByRole('tablist')).screenshot();
+    const thirdTabActive = await tabs.screenshot();
     expect(thirdTabActive).toMatchImageSnapshot();
 });
 
