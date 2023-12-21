@@ -33,7 +33,7 @@ type TextProps = ExclusifyUnion<
           texts: Array<{
               title?: string;
               description?: string;
-              time?: number;
+              duration?: number;
           }>;
       }
 >;
@@ -45,7 +45,7 @@ type LoadingScreenTextsProps = {
     texts: Array<{
         title?: string;
         description?: string;
-        time?: number;
+        duration?: number;
     }>;
 };
 
@@ -73,7 +73,7 @@ const LoadingScreenTexts = ({animateText, isLoading, onClose, texts}: LoadingScr
             } else {
                 showNextText();
             }
-        }, texts[currentTextsIndex].time ?? 5000);
+        }, texts[currentTextsIndex].duration ?? 5000);
 
         return () => {
             clearTimeout(timeout);

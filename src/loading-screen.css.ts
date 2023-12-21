@@ -68,7 +68,8 @@ export const loadingScreenText = style([
     },
 ]);
 
-const textAnimationTiming = `${inOutAnimationMs}ms cubic-bezier(.1,0,.7,1)`;
+const textInOutAnimationMs = 1000;
+const textAnimationTiming = `${textInOutAnimationMs}ms cubic-bezier(.215,.61,.355,1)`;
 
 const textIn = keyframes({
     '0%': {

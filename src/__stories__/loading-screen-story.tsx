@@ -7,7 +7,7 @@ import Stack from '../stack';
 import {Text2} from '../text';
 
 export default {
-    title: 'Loading/LoadingScreen',
+    title: 'Patterns/Loading',
     parameters: {
         fullScreen: true,
     },
@@ -19,7 +19,7 @@ type LoadingSreenArgs = {
     isInverse: boolean;
     isLoading: boolean;
     multipleTexts: boolean;
-    textTime: number;
+    textDuration: number;
 };
 
 export const LoadingScreenStory: StoryComponent<LoadingSreenArgs> = ({
@@ -28,7 +28,7 @@ export const LoadingScreenStory: StoryComponent<LoadingSreenArgs> = ({
     isInverse,
     isLoading,
     multipleTexts,
-    textTime,
+    textDuration,
 }) => {
     const [showLoadingScreen, setShowLoadingScreen] = React.useState(true);
 
@@ -56,9 +56,9 @@ export const LoadingScreenStory: StoryComponent<LoadingSreenArgs> = ({
     const textProps = multipleTexts
         ? {
               texts: [
-                  {title, description, time: textTime},
-                  {title: title + ' 2', description: description + ' 2', time: textTime},
-                  {title: title + ' 3', description: description + ' 3', time: textTime},
+                  {title, description, duration: textDuration},
+                  {title: title + ' 2', description: description + ' 2', duration: textDuration},
+                  {title: title + ' 3', description: description + ' 3', duration: textDuration},
               ],
           }
         : {title, description};
@@ -81,10 +81,10 @@ LoadingScreenStory.args = {
     isInverse: false,
     isLoading: true,
     multipleTexts: false,
-    textTime: 5000,
+    textDuration: 5000,
 };
 LoadingScreenStory.argTypes = {
-    textTime: {if: {arg: 'multipleTexts'}},
+    textDuration: {if: {arg: 'multipleTexts'}},
 };
 
 type BrandLoadingSreenArgs = {
@@ -92,14 +92,14 @@ type BrandLoadingSreenArgs = {
     description: string;
     isLoading: boolean;
     multipleTexts: boolean;
-    textTime: number;
+    textDuration: number;
 };
 
 export const BrandLoadingScreenStory: StoryComponent<BrandLoadingSreenArgs> = ({
     title,
     description,
     multipleTexts,
-    textTime,
+    textDuration,
     isLoading,
 }) => {
     const [showLoadingScreen, setShowLoadingScreen] = React.useState(true);
@@ -126,9 +126,9 @@ export const BrandLoadingScreenStory: StoryComponent<BrandLoadingSreenArgs> = ({
     const textProps = multipleTexts
         ? {
               texts: [
-                  {title, description, time: textTime},
-                  {title: title + ' 2', description: description + ' 2', time: textTime},
-                  {title: title + ' 3', description: description + ' 3', time: textTime},
+                  {title, description, duration: textDuration},
+                  {title: title + ' 2', description: description + ' 2', duration: textDuration},
+                  {title: title + ' 3', description: description + ' 3', duration: textDuration},
               ],
           }
         : {title, description};
@@ -148,8 +148,8 @@ BrandLoadingScreenStory.args = {
     description: 'Description',
     isLoading: true,
     multipleTexts: false,
-    textTime: 5000,
+    textDuration: 5000,
 };
 BrandLoadingScreenStory.argTypes = {
-    textTime: {if: {arg: 'multipleTexts'}},
+    textDuration: {if: {arg: 'multipleTexts'}},
 };
