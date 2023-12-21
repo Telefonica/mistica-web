@@ -16,7 +16,7 @@ test.each`
 
     const image = await page.screenshot();
 
-    expect(image).toMatchImageSnapshot();
+    expect(image).toMatchImageSnapshot({failureThreshold: 0.00001});
 });
 
 test.each`
@@ -64,7 +64,7 @@ test('MainNavigationBar large', async () => {
 
     const image = await page.screenshot();
 
-    expect(image).toMatchImageSnapshot({failureThreshold: 0.00004});
+    expect(image).toMatchImageSnapshot();
 });
 
 test.each`
