@@ -221,7 +221,7 @@ test('TextField - inverse and error', async () => {
 });
 
 test('TextField - collapses its label when autofill fills out the form', async () => {
-    await openStoryPage({
+    const page = await openStoryPage({
         id: 'components-input-fields-textfield--uncontrolled',
         device: 'MOBILE_IOS',
         args: {defaultValue: ''},
