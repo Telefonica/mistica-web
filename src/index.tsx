@@ -9,7 +9,7 @@ export {default as Spinner} from './spinner';
 export {default as FadeIn} from './fade-in';
 
 export {AccordionItem, BoxedAccordionItem, Accordion, BoxedAccordion} from './accordion';
-export {ButtonPrimary, ButtonSecondary, ButtonDanger, ButtonLink} from './button';
+export {ButtonPrimary, ButtonSecondary, ButtonDanger, ButtonLink, ButtonLinkDanger} from './button';
 export {default as ButtonLayout} from './button-layout';
 export {default as Counter} from './counter';
 export {default as FixedFooterLayout} from './fixed-footer-layout';
@@ -61,6 +61,7 @@ export {default as HorizontalScroll} from './horizontal-scroll';
 export {default as HighlightedCard} from './highlighted-card';
 export {default as Stepper} from './stepper';
 export {ProgressBar, ProgressBarStepped} from './progress-bar';
+export {VerticalMosaic, HorizontalMosaic} from './mosaic';
 export {
     MediaCard,
     DataCard,

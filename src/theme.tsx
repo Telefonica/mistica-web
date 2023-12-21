@@ -269,7 +269,7 @@ const getNext12Link =
             </NextLink>
         );
 
-const getNext13Link =
+const getNext13Or14Link =
     (NextLink: React.ComponentType<any>): LinkComponent =>
     ({to, innerRef, children, ...props}) =>
         (
@@ -298,8 +298,9 @@ export const getMisticaLinkComponent = (Link?: ThemeConfig['Link']): LinkCompone
             // zeus-web
             return getNext12Link(Link.Component);
         case 'Next13':
+        case 'Next14':
             // hello-world-web, global-checkout-webview
-            return getNext13Link(Link.Component);
+            return getNext13Or14Link(Link.Component);
         default:
             const exhaustiveCheck: never = Link.type;
             throw new Error(`Invalid Link type: ${exhaustiveCheck}`);
@@ -332,7 +333,7 @@ export type ThemeConfig = Readonly<{
     Link?:
         | LinkComponent
         | {
-              type: 'ReactRouter5' | 'ReactRouter6' | 'Next12' | 'Next13';
+              type: 'ReactRouter5' | 'ReactRouter6' | 'Next12' | 'Next13' | 'Next14';
               Component: React.ComponentType<any>;
           };
     useHrefDecorator?: () => (href: string) => string;

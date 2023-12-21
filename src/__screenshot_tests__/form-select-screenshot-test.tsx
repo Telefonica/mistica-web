@@ -1,85 +1,167 @@
 import {openStoryPage, screen} from '../test-utils';
 
-import type {Device} from '../test-utils';
+const DEVICES = ['MOBILE_IOS', 'DESKTOP'] as const;
 
-const devices: Array<Device> = ['DESKTOP', 'MOBILE_IOS'];
-
-test.each(devices)('Select elements on the initial state appear properly on %s', async (device) => {
-    const page = await openStoryPage({
-        id: 'components-select--default',
+test.each(DEVICES)('Select - appears properly on %s', async (device) => {
+    await openStoryPage({
+        id: 'components-select--controlled',
         device,
     });
 
-    const image = await page.screenshot({fullPage: true});
+    const fieldWrapper = await screen.findByTestId('select-field-wrapper');
+    const image = await fieldWrapper.screenshot();
+
     expect(image).toMatchImageSnapshot();
 });
 
-test('Select elements on a selected state appear properly on DESKTOP', async () => {
-    const page = await openStoryPage({
-        id: 'components-select--default',
+test('Select - appears properly with selected option on DESKTOP', async () => {
+    await openStoryPage({
+        id: 'components-select--controlled',
         device: 'DESKTOP',
     });
 
-    const select = await screen.findByLabelText('Select a fruit (opcional)');
-    await select.click();
+    const field = await screen.findByLabelText('Select a fruit');
+    await field.click();
     const selectOptions = await screen.findAllByRole('option', {name: 'Apple'});
     // take the last one because the options are displayed in a portal, at the end of the body
     await selectOptions?.at(-1)?.click();
 
-    const image = await page.screenshot({fullPage: true});
+    const fieldWrapper = await screen.findByTestId('select-field-wrapper');
+    const image = await fieldWrapper.screenshot();
+
     expect(image).toMatchImageSnapshot();
 });
 
-test('Select elements on a selected state appear properly on MOBILE_IOS', async () => {
-    const page = await openStoryPage({
-        id: 'components-select--default',
+test('Select - appears properly with selected option on MOBILE_IOS', async () => {
+    await openStoryPage({
+        id: 'components-select--controlled',
         device: 'MOBILE_IOS',
     });
 
-    const select = (await screen.findAllByRole('combobox'))[0];
-    await select.select('apple');
+    const field = await screen.findByRole('combobox');
+    await field.select('apple');
 
-    const image = await page.screenshot({fullPage: true});
+    const fieldWrapper = await screen.findByTestId('select-field-wrapper');
+    const image = await fieldWrapper.screenshot();
+
     expect(image).toMatchImageSnapshot();
 });
 
-test('Select elements on a selected state appear properly on DESKTOP with long texts', async () => {
-    const page = await openStoryPage({
-        id: 'components-select--default',
+test('Select - appears properly with long selected option on DESKTOP', async () => {
+    await openStoryPage({
+        id: 'components-select--controlled',
         device: 'DESKTOP',
     });
 
-    const select = await screen.findByLabelText('Select a fruit (opcional)');
-    await select.click();
+    const field = await screen.findByLabelText('Select a fruit');
+    await field.click();
     const selectOptions = await screen.findAllByRole('option', {
         name: 'A very very long text value for this option',
     });
     // take the last one because the options are displayed in a portal, at the end of the body
     await selectOptions?.at(-1)?.click();
 
-    const image = await page.screenshot({fullPage: true});
+    const fieldWrapper = await screen.findByTestId('select-field-wrapper');
+    const image = await fieldWrapper.screenshot();
+
     expect(image).toMatchImageSnapshot();
 });
 
-test('Select elements on a selected state appear properly on MOBILE_IOS with long texts', async () => {
-    const page = await openStoryPage({
-        id: 'components-select--default',
+test('Select - appears properly with long selected option on MOBILE_IOS', async () => {
+    await openStoryPage({
+        id: 'components-select--controlled',
         device: 'MOBILE_IOS',
     });
 
-    const select = (await screen.findAllByRole('combobox'))[0];
-    await select.select('longValue');
+    const field = await screen.findByRole('combobox');
+    await field.select('longValue');
 
-    const image = await page.screenshot({fullPage: true});
+    const fieldWrapper = await screen.findByTestId('select-field-wrapper');
+    const image = await fieldWrapper.screenshot();
+
     expect(image).toMatchImageSnapshot();
 });
 
-test('Display all options', async () => {
-    const page = await openStoryPage({id: 'components-select--default'});
+test('Select - optional', async () => {
+    await openStoryPage({
+        id: 'components-select--controlled',
+        device: 'MOBILE_IOS',
+        args: {optional: true},
+    });
 
-    const story = await screen.findByTestId('select-story');
+    const fieldWrapper = await screen.findByTestId('select-field-wrapper');
+    const image = await fieldWrapper.screenshot();
 
-    await page.click(await screen.findByLabelText('Select a fruit (opcional)'));
+    expect(image).toMatchImageSnapshot();
+});
 
-    expect(await story.screenshot()).toMatchImageSnapshot();
+test('Select - disabled', async () => {
+    await openStoryPage({
+        id: 'components-select--controlled',
+        device: 'MOBILE_IOS',
+        args: {disabled: true},
+    });
+
+    const fieldWrapper = await screen.findByTestId('select-field-wrapper');
+    const image = await fieldWrapper.screenshot();
+
+    expect(image).toMatchImageSnapshot();
+});
+
+test('Select - helper text', async () => {
+    await openStoryPage({
+        id: 'components-select--controlled',
+        device: 'MOBILE_IOS',
+        args: {helperText: 'Helper text'},
+    });
+
+    const fieldWrapper = await screen.findByTestId('select-field-wrapper');
+    const image = await fieldWrapper.screenshot();
+
+    expect(image).toMatchImageSnapshot();
+});
+
+test('Select - error', async () => {
+    await openStoryPage({
+        id: 'components-select--controlled',
+        device: 'MOBILE_IOS',
+        args: {helperText: 'Helper text', error: true},
+    });
+
+    const field = await screen.findByRole('combobox');
+    await field.select('apple');
+
+    const fieldWrapper = await screen.findByTestId('select-field-wrapper');
+    const image = await fieldWrapper.screenshot();
+
+    expect(image).toMatchImageSnapshot();
+});
+
+test('Select - display all options', async () => {
+    const page = await openStoryPage({
+        id: 'components-select--controlled',
+        device: 'DESKTOP',
+    });
+
+    const field = await screen.findByLabelText('Select a fruit');
+    await field.click();
+
+    const image = await page.screenshot();
+
+    expect(image).toMatchImageSnapshot();
+});
+
+test('Select - display all options with native select', async () => {
+    const page = await openStoryPage({
+        id: 'components-select--controlled',
+        device: 'DESKTOP',
+        args: {native: true},
+    });
+
+    const field = await screen.findByLabelText('Select a fruit');
+    await field.click();
+
+    const image = await page.screenshot();
+
+    expect(image).toMatchImageSnapshot();
 });
