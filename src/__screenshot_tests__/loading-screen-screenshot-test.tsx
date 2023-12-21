@@ -2,7 +2,7 @@ import {openStoryPage} from '../test-utils';
 
 test.each(['MOBILE_IOS', 'DESKTOP'] as const)('LoadingScreen in %s', async (device) => {
     const page = await openStoryPage({
-        id: 'patterns-loading-loading-screen-story',
+        id: 'patterns-loading--loading-screen-story',
         device,
     });
 
@@ -12,7 +12,7 @@ test.each(['MOBILE_IOS', 'DESKTOP'] as const)('LoadingScreen in %s', async (devi
 
 test.each(['MOBILE_IOS', 'DESKTOP'] as const)('LoadingScreen inverse in %s', async (device) => {
     const page = await openStoryPage({
-        id: 'patterns-loading-loading-screen-story',
+        id: 'patterns-loading--loading-screen-story',
         device,
         args: {isInverse: true},
     });
