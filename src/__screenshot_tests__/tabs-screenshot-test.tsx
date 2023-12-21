@@ -60,6 +60,10 @@ test('Tabs selected line appears properly', async () => {
         device: 'MOBILE_IOS',
     });
 
+    // We need to wait until tab elements are added to the DOM
+    // https://stackoverflow.com/a/50676074
+    await page.waitForSelector('[data-tabindex="0"]');
+
     await page.evaluate(() => {
         document.querySelector<HTMLElement>('[data-tabindex="1"]')?.click();
     });
