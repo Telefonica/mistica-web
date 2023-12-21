@@ -1,3 +1,4 @@
+import {VIVO_NEW_SKIN} from '../skins/constants';
 import {openStoryPage, screen} from '../test-utils';
 
 const TARGET_HORIZONTAL_POSITIONS = ['left', 'center', 'right'];
@@ -106,4 +107,17 @@ test('Tooltip - active tooltip is closed if another one is opened', async () => 
 
     const thirdTooltip = await page.screenshot();
     expect(thirdTooltip).toMatchImageSnapshot();
+});
+
+test('Tooltip - arrow appears properly in Vivo_New skin when target is close to viewport edges', async () => {
+    const page = await openStoryPage({
+        id: 'components-tooltip--default',
+        args: {targetHorizontalPosition: 'left', targetVerticalPosition: 'top'},
+        skin: VIVO_NEW_SKIN,
+    });
+
+    await page.click(await screen.findByTestId('target'));
+
+    const image = await page.screenshot();
+    expect(image).toMatchImageSnapshot();
 });
