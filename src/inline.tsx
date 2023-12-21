@@ -1,12 +1,9 @@
-'use client';
 import * as React from 'react';
 import classnames from 'classnames';
 import {sprinkles} from './sprinkles.css';
 import {getPrefixedDataAttributes} from './utils/dom';
 import * as styles from './inline.css';
 import {applyCssVars} from './utils/css';
-import {isIos, isRunningAcceptanceTest} from './utils/platform';
-import {useTheme} from './hooks';
 
 import type {DataAttributes} from './utils/types';
 
@@ -54,7 +51,6 @@ const Inline: React.FC<Props> = ({
     dataAttributes,
 }) => {
     const isFullWith = fullWidth || typeof space === 'string';
-    const {platformOverrides} = useTheme();
 
     return (
         <div
@@ -69,22 +65,7 @@ const Inline: React.FC<Props> = ({
             aria-labelledby={ariaLabelledBy}
             {...getPrefixedDataAttributes(dataAttributes, 'Inline')}
         >
-            {React.Children.map(children, (child) =>
-                !!child || child === 0 ? (
-                    <div
-                        style={{
-                            // Hack to fix https://jira.tid.es/browse/WEB-1683
-                            // In iOS the inline component sometimes cuts the last line of the content
-                            paddingBottom:
-                                isIos(platformOverrides) && !isRunningAcceptanceTest(platformOverrides)
-                                    ? 1
-                                    : undefined,
-                        }}
-                    >
-                        {child}
-                    </div>
-                ) : null
-            )}
+            {React.Children.map(children, (child) => (!!child || child === 0 ? <div>{child}</div> : null))}
         </div>
     );
 };
