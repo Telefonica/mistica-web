@@ -95,19 +95,19 @@ const LoadingScreenTexts = ({animateText, isLoading, onClose, texts}: LoadingScr
     const {title: currentTitle, description: currentDescription} = texts[currentTextsIndex % texts.length];
 
     return (
-        <div
-            // changing the key triggers the css animation for next texts
-            key={currentTextsIndex}
-            className={classnames(styles.loadingScreenText, {
-                [styles.loadingScreenTextAnimatedOut]: animateText && (!isLoading || isClosing),
-            })}
-            onTransitionEnd={handleOutTransitionEnd}
-        >
-            <ResponsiveLayout>
+        <ResponsiveLayout>
+            <div
+                // changing the key triggers the css animation for next texts
+                key={currentTextsIndex}
+                className={classnames(styles.loadingScreenText, {
+                    [styles.loadingScreenTextAnimatedOut]: animateText && (!isLoading || isClosing),
+                })}
+                onTransitionEnd={handleOutTransitionEnd}
+            >
                 <Stack space={8}>
                     {currentTitle && (
                         <div className={animateText ? styles.loadingScreenTextAnimated : undefined}>
-                            <Text4 hyphens="auto" textAlign="center" regular as="h1">
+                            <Text4 textAlign="center" regular as="h1">
                                 {currentTitle}
                             </Text4>
                         </div>
@@ -117,20 +117,14 @@ const LoadingScreenTexts = ({animateText, isLoading, onClose, texts}: LoadingScr
                             className={animateText ? styles.loadingScreenTextAnimated : undefined}
                             style={{animationDelay: '200ms'}}
                         >
-                            <Text2
-                                hyphens="auto"
-                                textAlign="center"
-                                regular
-                                as="p"
-                                color={vars.colors.textSecondary}
-                            >
+                            <Text2 textAlign="center" regular as="p" color={vars.colors.textSecondary}>
                                 {currentDescription}
                             </Text2>
                         </div>
                     )}
                 </Stack>
-            </ResponsiveLayout>
-        </div>
+            </div>
+        </ResponsiveLayout>
     );
 };
 

@@ -1,6 +1,7 @@
 import {keyframes, style, styleVariants} from '@vanilla-extract/css';
 import {sprinkles} from './sprinkles.css';
 import {vars as skinVars} from './skins/skin-contract.css';
+import * as mq from './media-queries.css';
 
 export const loadingScreen = style([
     sprinkles({
@@ -50,9 +51,22 @@ export const loadingScreenChildren = sprinkles({
     justifyContent: 'center',
 });
 
-export const loadingScreenText = sprinkles({
-    paddingTop: 24,
-});
+export const loadingScreenText = style([
+    sprinkles({
+        paddingTop: 24,
+    }),
+    {
+        margin: '0 auto',
+        '@media': {
+            [mq.tablet]: {
+                maxWidth: 496,
+            },
+            [mq.desktopOrBigger]: {
+                maxWidth: 600,
+            },
+        },
+    },
+]);
 
 const textAnimationTiming = `${inOutAnimationMs}ms cubic-bezier(.1,0,.7,1)`;
 
