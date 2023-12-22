@@ -109,6 +109,10 @@ test('Tooltip - active tooltip is closed if another one is opened', async () => 
     expect(thirdTooltip).toMatchImageSnapshot();
 });
 
+/**
+ * when using Vivo_new skin, the tooltip border radius is bigger than in other skins, so it's useful
+ * to check that the tooltip's arrow is displayed properly in this scenario.
+ */
 test('Tooltip - arrow appears properly in Vivo_New skin when target is close to viewport edges', async () => {
     const page = await openStoryPage({
         id: 'components-tooltip--default',
