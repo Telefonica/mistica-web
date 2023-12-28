@@ -65,6 +65,9 @@ export const noFullWidth = style([
 globalStyle(`${marginInline} > div`, {
     marginLeft: space,
     marginTop: space,
+});
+
+globalStyle(`${inline} > div`, {
     pointerEvents: 'auto', // restore pointer events for children
 });
 
