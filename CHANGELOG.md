@@ -1,3 +1,15 @@
+# [14.38.0](https://github.com/Telefonica/mistica-web/compare/v14.37.0...v14.38.0) (2023-12-27)
+
+
+### Bug Fixes
+
+* **Inline:** Workaround for iOS to avoid cutting elements like Chips inside Inline containers ([#986](https://github.com/Telefonica/mistica-web/issues/986)) ([fa88ad7](https://github.com/Telefonica/mistica-web/commit/fa88ad78b7830245dd489d3bcfb79ed550957f35))
+
+
+### Features
+
+* **LoadingScreen,BrandLoadingScreen:** new components ([#982](https://github.com/Telefonica/mistica-web/issues/982)) ([c67b57b](https://github.com/Telefonica/mistica-web/commit/c67b57be7f1aa2694b7be1caae690c156adeb1f0))
+
 # [14.37.0](https://github.com/Telefonica/mistica-web/compare/v14.36.1...v14.37.0) (2023-12-21)
 
 

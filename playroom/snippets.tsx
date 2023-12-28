@@ -323,6 +323,41 @@ const feedbackSnippets: Array<Snippet> = [
         `,
 }));
 
+const loadingScreenSnippets: Array<Snippet> = [
+    {
+        group: 'Loading Screens',
+        name: 'LoadingScreen',
+        code: `
+        <LoadingScreen
+            title="Some title"
+            description="Some description text"
+        />
+        `,
+    },
+    {
+        group: 'Loading Screens',
+        name: 'BrandLoadingScreen',
+        code: `
+        <BrandLoadingScreen
+            title="Some title"
+            description="Some description text"
+        />
+        `,
+    },
+    {
+        group: 'Loading Screens',
+        name: 'BrandLoadingScreen with multiple texts',
+        code: `
+        <BrandLoadingScreen
+          texts={[
+            { title: "Title 1", description: "Description 1" },
+            { title: "Title 2", description: "Description 2" },
+            { title: "Title 3", description: "Description 3" },
+          ]}
+        />`,
+    },
+];
+
 const listSnippets: Array<Snippet> = [
     ['RowList', 'Row'],
     ['BoxedRowList', 'BoxedRow'],
@@ -2837,4 +2872,5 @@ export default [
     ...HighlightedValueBlockSnippets,
     ...ValueBlockSnippets,
     ...ProgressBlockSnippets,
+    ...loadingScreenSnippets,
 ].sort((s1, s2) => s1.group.localeCompare(s2.group)) as Array<Snippet>;
