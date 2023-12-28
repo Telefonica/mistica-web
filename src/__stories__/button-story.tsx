@@ -10,6 +10,7 @@ import {
     Text2,
     IconPhotoCameraRegular,
     ResponsiveLayout,
+    ButtonLinkDanger,
 } from '..';
 
 export default {
@@ -150,6 +151,28 @@ export const LinkButton: StoryComponent<Omit<Args, 'small'> & {withChevron: stri
     );
 };
 
+export const LinkButtonDanger: StoryComponent<Omit<Args, 'small'>> = ({
+    inverse,
+    text,
+    icon,
+    action,
+    newTab,
+    ...props
+}) => {
+    return (
+        <ButtonBackgroundContainer inverse={inverse}>
+            <ButtonLinkDanger
+                {...props}
+                {...getButtonActionProps(action, newTab)}
+                StartIcon={icon === 'left' ? IconPhotoCameraRegular : undefined}
+                EndIcon={icon === 'right' ? IconPhotoCameraRegular : undefined}
+            >
+                {text}
+            </ButtonLinkDanger>
+        </ButtonBackgroundContainer>
+    );
+};
+
 export const SubmitButton: StoryComponent = () => (
     <ButtonBackgroundContainer inverse={false}>
         <Text2 as="p" regular>
@@ -171,6 +194,7 @@ primaryButton.storyName = 'ButtonPrimary';
 SecondaryButton.storyName = 'ButtonSecondary';
 DangerButton.storyName = 'ButtonDanger';
 LinkButton.storyName = 'ButtonLink';
+LinkButtonDanger.storyName = 'ButtonLinkDanger';
 SubmitButton.storyName = 'Submit button';
 
 primaryButton.args = defaultArgs;
@@ -179,6 +203,9 @@ DangerButton.args = defaultArgs;
 LinkButton.args = {
     ...(({small, ...o}) => o)(defaultArgs),
     withChevron: 'default',
+};
+LinkButtonDanger.args = {
+    ...(({small, ...o}) => o)(defaultArgs),
 };
 
 primaryButton.argTypes = defaultArgTypes;
@@ -191,3 +218,4 @@ LinkButton.argTypes = {
         control: {type: 'select'},
     },
 };
+LinkButtonDanger.argTypes = defaultArgTypes;
