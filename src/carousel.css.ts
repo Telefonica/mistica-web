@@ -6,10 +6,13 @@ import {sprinkles} from './sprinkles.css';
 import {vars as responsiveLayoutVars} from './responsive-layout.css';
 import {desktopMediumColumn, desktopSmallColumn} from './grid-layout.css';
 
+const BULLET_DESKTOP_SIZE = 8;
+const BULLET_MOBILE_SIZE = 4;
+
 const bulletBase = style([
     sprinkles({
-        width: 8,
-        height: 8,
+        width: BULLET_DESKTOP_SIZE,
+        height: BULLET_DESKTOP_SIZE,
         borderRadius: '50%',
     }),
     {
@@ -18,8 +21,8 @@ const bulletBase = style([
 
         '@media': {
             [mq.tabletOrSmaller]: {
-                width: 4,
-                height: 4,
+                width: BULLET_MOBILE_SIZE,
+                height: BULLET_MOBILE_SIZE,
             },
         },
     },
@@ -28,11 +31,13 @@ const bulletBase = style([
 const bulletActiveBase = style([
     bulletBase,
     {
-        transform: 'scale(1.25)', // 10px
+        width: BULLET_DESKTOP_SIZE * 1.25,
+        height: BULLET_DESKTOP_SIZE * 1.25,
 
         '@media': {
             [mq.tabletOrSmaller]: {
-                transform: 'scale(1.5)', // 6px
+                width: BULLET_MOBILE_SIZE * 1.5,
+                height: BULLET_MOBILE_SIZE * 1.5,
             },
         },
     },
