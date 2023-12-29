@@ -6,13 +6,10 @@ import {sprinkles} from './sprinkles.css';
 import {vars as responsiveLayoutVars} from './responsive-layout.css';
 import {desktopMediumColumn, desktopSmallColumn} from './grid-layout.css';
 
-const BULLET_DESKTOP_SIZE = 8;
-const BULLET_MOBILE_SIZE = 4;
-
 const bulletBase = style([
     sprinkles({
-        width: BULLET_DESKTOP_SIZE,
-        height: BULLET_DESKTOP_SIZE,
+        width: 8,
+        height: 8,
         borderRadius: '50%',
     }),
     {
@@ -21,8 +18,8 @@ const bulletBase = style([
 
         '@media': {
             [mq.tabletOrSmaller]: {
-                width: BULLET_MOBILE_SIZE,
-                height: BULLET_MOBILE_SIZE,
+                width: 4,
+                height: 4,
             },
         },
     },
@@ -31,13 +28,11 @@ const bulletBase = style([
 const bulletActiveBase = style([
     bulletBase,
     {
-        width: BULLET_DESKTOP_SIZE * 1.25,
-        height: BULLET_DESKTOP_SIZE * 1.25,
+        transform: 'scale(1.25)', // 10px
 
         '@media': {
             [mq.tabletOrSmaller]: {
-                width: BULLET_MOBILE_SIZE * 1.5,
-                height: BULLET_MOBILE_SIZE * 1.5,
+                transform: 'scale(1.5)', // 6px
             },
         },
     },
@@ -296,10 +291,15 @@ export const carouselNextArrowButton = style([
     },
 ]);
 
-export const carouselBullets = sprinkles({
-    display: 'flex',
-    justifyContent: 'center',
-});
+export const carouselBullets = style([
+    {
+        paddingBottom: 2,
+    },
+    sprinkles({
+        display: 'flex',
+        justifyContent: 'center',
+    }),
+]);
 
 export const slideshow = style([
     hideScrollbar,
