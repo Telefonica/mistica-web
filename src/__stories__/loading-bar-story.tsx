@@ -9,10 +9,18 @@ export default {
     },
 };
 
-export const Default: StoryComponent = () => (
+type Args = {
+    visible: boolean;
+};
+
+export const Default: StoryComponent<Args> = ({visible}) => (
     <StorySection title="LoadingBar">
-        <LoadingBarComponent visible />
+        <LoadingBarComponent visible={visible} />
     </StorySection>
 );
+
+Default.args = {
+    visible: true,
+};
 
 Default.storyName = 'Loading bar';

@@ -1,15 +1,43 @@
-import {style, createVar, globalStyle, styleVariants} from '@vanilla-extract/css';
+import {style, createVar, globalStyle, fallbackVar} from '@vanilla-extract/css';
+import * as mq from './media-queries.css';
 
 const space = createVar();
+const spaceMobile = createVar();
+const spaceTablet = createVar();
+const spaceDesktop = createVar();
 
-export const vars = {space};
+export const vars = {space, spaceMobile, spaceTablet, spaceDesktop};
+
+export const marginInline = style({
+    marginTop: `calc(${space} * -1)`,
+    marginLeft: `calc(${space} * -1)`,
+    '@media': {
+        [mq.mobile]: {
+            vars: {
+                [space]: spaceMobile,
+            },
+        },
+        [mq.tablet]: {
+            vars: {
+                [space]: fallbackVar(spaceTablet, spaceMobile),
+            },
+        },
+        [mq.desktopOrBigger]: {
+            vars: {
+                [space]: spaceDesktop,
+            },
+        },
+    },
+});
+
+export const flexInline = style({
+    justifyContent: space,
+});
 
 export const inline = style({
     pointerEvents: 'none', // to prevent negative margins from affecting clickable areas
     flexDirection: 'row',
     gridAutoFlow: 'column',
-    marginTop: `calc(${space} * -1)`,
-    marginLeft: `calc(${space} * -1)`,
 });
 
 export const fullWidth = style([
@@ -34,24 +62,15 @@ export const noFullWidth = style([
     },
 ]);
 
-globalStyle(`${inline} > div`, {
+globalStyle(`${marginInline} > div`, {
     marginLeft: space,
     marginTop: space,
+});
+
+globalStyle(`${inline} > div`, {
     pointerEvents: 'auto', // restore pointer events for children
 });
 
 globalStyle(`${inline} > div:empty`, {
     display: 'none',
-});
-
-export const justifyVariants = styleVariants({
-    between: {
-        justifyContent: 'space-between',
-    },
-    around: {
-        justifyContent: 'space-around',
-    },
-    evenly: {
-        justifyContent: 'space-evenly',
-    },
 });
