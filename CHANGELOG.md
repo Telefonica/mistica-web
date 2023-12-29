@@ -1,3 +1,10 @@
+# [14.39.0](https://github.com/Telefonica/mistica-web/compare/v14.38.0...v14.39.0) (2023-12-29)
+
+
+### Features
+
+* **SSR:** avoid CLS when hydrating some SSRed components ([#961](https://github.com/Telefonica/mistica-web/issues/961)) ([878957a](https://github.com/Telefonica/mistica-web/commit/878957aed11b94ee8dd0840a1f24a494a0d113ed))
+
 # [14.38.0](https://github.com/Telefonica/mistica-web/compare/v14.37.0...v14.38.0) (2023-12-27)
 
 
