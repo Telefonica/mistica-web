@@ -64,7 +64,6 @@ globalStyle(`${inline} > div`, {
     // Hack to fix https://jira.tid.es/browse/WEB-1683
     // In iOS the inline component sometimes cuts the last line of the content
     paddingBottom: 1,
-    flexShrink: 0,
     '@supports': {
         [supportsFlexGap]: {
             padding: 0, // restore
