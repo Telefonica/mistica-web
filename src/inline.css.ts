@@ -60,9 +60,10 @@ export const fullWidth = style([
     inline,
     {
         display: ['flex', 'grid'],
+        // style repeated to override the inline @supports style
         '@supports': {
             [supportsFlexGap]: {
-                display: 'flex',
+                display: ['flex', 'grid'],
             },
         },
     },
