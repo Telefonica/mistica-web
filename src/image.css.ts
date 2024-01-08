@@ -10,6 +10,10 @@ export const vars = {
     mediaBorderRadius,
 };
 
+export const imageWithBorder = style({
+    border: `1px solid ${skinVars.colors.borderLow}`,
+});
+
 export const image = style([
     sprinkles({
         top: 0,

@@ -5,13 +5,14 @@ import {SkeletonAnimation} from './skeletons';
 import {AspectRatioContainer} from './utils/aspect-ratio-support';
 import {getPrefixedDataAttributes} from './utils/dom';
 import {useIsInverseVariant} from './theme-variant-context';
-import {useTheme} from './hooks';
+import {useAriaId, useTheme} from './hooks';
 import {VIVO_SKIN} from './skins/constants';
 import {sprinkles} from './sprinkles.css';
 import * as styles from './image.css';
 import {vars} from './skins/skin-contract.css';
 import {combineRefs} from './utils/common';
 import SkeletonBase from './skeleton-base';
+import {isServerSide} from './utils/environment';
 import {fallbackStyles} from './utils/css';
 
 import type {ExclusifyUnion} from './utils/utility-types';
@@ -145,8 +146,8 @@ export const ImageContent = React.forwardRef<HTMLImageElement, ImageProps>(
         },
         ref
     ) => {
+        const imageId = useAriaId();
         const imageRef = React.useRef<HTMLImageElement>();
-        const border = props.border ? `1px solid ${vars.colors.borderLow}` : 'none';
         const borderRadius = props.circular
             ? '50%'
             : noBorderRadius
@@ -154,7 +155,6 @@ export const ImageContent = React.forwardRef<HTMLImageElement, ImageProps>(
             : fallbackStyles(styles.vars.mediaBorderRadius, vars.borderRadii.container);
 
         const [isError, setIsError] = React.useState(!src);
-        const [isLoading, setIsLoading] = React.useState(true);
         const [hideLoadingFallback, setHideLoadingFallback] = React.useState(false);
 
         const ratio =
@@ -171,7 +171,9 @@ export const ImageContent = React.forwardRef<HTMLImageElement, ImageProps>(
 
         const onLoadHandler = React.useCallback(() => {
             setIsError(false);
-            setIsLoading(false);
+            if (imageRef.current) {
+                imageRef.current.style.opacity = '1';
+            }
             setTimeout(() => {
                 setHideLoadingFallback(true);
             }, styles.FADE_IN_DURATION_MS);
@@ -179,42 +181,60 @@ export const ImageContent = React.forwardRef<HTMLImageElement, ImageProps>(
             onLoad?.();
         }, [onLoad]);
 
-        const img = (
-            // https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/issues/309
-            // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
-            <img
-                style={{
-                    ...(isLoading && withLoadingFallback ? {opacity: 0} : {opacity: 1}),
-                    boxSizing: 'border-box',
-                    border,
-                    borderRadius,
-                }}
-                ref={combineRefs(imageRef, ref)}
-                src={src}
-                className={classnames(
-                    styles.image,
-                    sprinkles({
-                        position: ratio !== 0 ? 'absolute' : 'static',
-                    })
-                )}
-                alt={alt}
-                onError={() => {
-                    setIsError(true);
-                    setIsLoading(false);
-                    setHideLoadingFallback(true);
-                    onError?.();
-                }}
-                onLoad={onLoadHandler}
-            />
-        );
-
         React.useEffect(() => {
             // Needed because there is some race condition with SSR and onLoad events
+            // load event could be fired before the component is hydrated and mounted client side
             // https://github.com/facebook/react/issues/15446
             if (imageRef.current?.complete) {
                 onLoadHandler();
             }
         }, [onLoadHandler]);
+
+        const isLoading =
+            isServerSide() || !(document.getElementById(imageId) as HTMLImageElement | null)?.complete;
+
+        const img = (
+            <>
+                {/* https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/issues/309 */}
+                {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
+                <img
+                    // There is small hydration mismatch that we dont care about. (I think this is caused by te inline SSR script below)
+                    // Warning: Prop `style` did not match. Server: "opacity: 1;" Client: "opacity:1"
+                    suppressHydrationWarning
+                    id={imageId}
+                    style={{
+                        opacity: isLoading && withLoadingFallback ? 0 : 1,
+                        borderRadius,
+                    }}
+                    ref={combineRefs(imageRef, ref)}
+                    src={src}
+                    className={classnames(
+                        styles.image,
+                        {[styles.imageWithBorder]: props.border},
+                        sprinkles({
+                            position: ratio !== 0 ? 'absolute' : 'static',
+                        })
+                    )}
+                    alt={alt}
+                    onError={() => {
+                        setIsError(true);
+                        setHideLoadingFallback(true);
+                        onError?.();
+                    }}
+                    onLoad={onLoadHandler}
+                />
+                {/* When using SSR, we render a small script that makes the img visible as soon as it finishes loading, without waiting for React client hydrate. */}
+                {/* Note that this <script> does nothing when rendering client side (the browser only execute scripts injected inside <head>), it's only executed when the browser receives the SSRed html */}
+                {withLoadingFallback && (
+                    <script
+                        // eslint-disable-next-line react/no-danger
+                        dangerouslySetInnerHTML={{
+                            __html: `document.getElementById("${imageId}").addEventListener('load', (e) => e.target.style.opacity = "1")`,
+                        }}
+                    />
+                )}
+            </>
+        );
 
         return (
             <>

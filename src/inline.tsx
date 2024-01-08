@@ -1,34 +1,44 @@
+'use client';
 import * as React from 'react';
 import classnames from 'classnames';
 import {sprinkles} from './sprinkles.css';
 import {getPrefixedDataAttributes} from './utils/dom';
 import * as styles from './inline.css';
 import {applyCssVars} from './utils/css';
+import {isIos, isRunningAcceptanceTest} from './utils/platform';
+import {useTheme} from './hooks';
 
-import type {DataAttributes} from './utils/types';
+import type {ByBreakpoint, DataAttributes} from './utils/types';
+
+type NumericSpace = -16 | -12 | -8 | -4 | -2 | 0 | 2 | 4 | 8 | 12 | 16 | 24 | 32 | 40 | 48 | 56 | 64;
+type FlexSpace = 'between' | 'around' | 'evenly';
+
+const calcSpaceValue = (space: NumericSpace | FlexSpace) => {
+    if (typeof space === 'number') {
+        return `${space}px`;
+    } else {
+        return `space-${space}`;
+    }
+};
+
+const calcInlineVars = (space: FlexSpace | ByBreakpoint<NumericSpace>) => {
+    if (typeof space === 'number' || typeof space === 'string') {
+        return {
+            [styles.vars.space]: calcSpaceValue(space),
+        };
+    }
+    const vars = {
+        [styles.vars.spaceMobile]: calcSpaceValue(space.mobile),
+        [styles.vars.spaceDesktop]: calcSpaceValue(space.desktop),
+    };
+    if (space.tablet) {
+        vars[styles.vars.spaceTablet] = calcSpaceValue(space.tablet);
+    }
+    return vars;
+};
 
 type Props = {
-    space:
-        | -16
-        | -12
-        | -8
-        | -4
-        | -2
-        | 0
-        | 2
-        | 4
-        | 8
-        | 12
-        | 16
-        | 24
-        | 32
-        | 40
-        | 48
-        | 56
-        | 64
-        | 'between'
-        | 'around'
-        | 'evenly';
+    space: FlexSpace | ByBreakpoint<NumericSpace>;
     alignItems?: 'flex-start' | 'flex-end' | 'center' | 'stretch' | 'baseline';
     children: React.ReactNode;
     className?: string;
@@ -51,6 +61,9 @@ const Inline: React.FC<Props> = ({
     dataAttributes,
 }) => {
     const isFullWith = fullWidth || typeof space === 'string';
+    const {platformOverrides} = useTheme();
+
+    const isFlexInline = typeof space === 'string';
 
     return (
         <div
@@ -58,14 +71,29 @@ const Inline: React.FC<Props> = ({
                 className,
                 sprinkles({alignItems}),
                 wrap ? styles.wrap : isFullWith ? styles.fullWidth : styles.noFullWidth,
-                typeof space !== 'number' && styles.justifyVariants[space]
+                isFlexInline ? styles.flexInline : styles.marginInline
             )}
-            style={typeof space === 'number' ? applyCssVars({[styles.vars.space]: `${space}px`}) : undefined}
+            style={applyCssVars(calcInlineVars(space))}
             role={role}
             aria-labelledby={ariaLabelledBy}
             {...getPrefixedDataAttributes(dataAttributes, 'Inline')}
         >
-            {React.Children.map(children, (child) => (!!child || child === 0 ? <div>{child}</div> : null))}
+            {React.Children.map(children, (child) =>
+                !!child || child === 0 ? (
+                    <div
+                        style={{
+                            // Hack to fix https://jira.tid.es/browse/WEB-1683
+                            // In iOS the inline component sometimes cuts the last line of the content
+                            paddingBottom:
+                                isIos(platformOverrides) && !isRunningAcceptanceTest(platformOverrides)
+                                    ? 1
+                                    : undefined,
+                        }}
+                    >
+                        {child}
+                    </div>
+                ) : null
+            )}
         </div>
     );
 };

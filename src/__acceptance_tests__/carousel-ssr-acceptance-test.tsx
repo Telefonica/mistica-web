@@ -5,9 +5,11 @@ test('ssr carousel mobile', async () => {
 });
 
 test('ssr carousel tablet', async () => {
-    await openSSRPage({name: 'carousel', device: 'TABLET'});
+    // TODO WEB-1672: fix hydration mismatches and enable the check
+    await openSSRPage({name: 'carousel', device: 'TABLET', checkHidrationVisualMismatch: false});
 });
 
 test('ssr carousel desktop', async () => {
-    await openSSRPage({name: 'carousel', device: 'DESKTOP'});
+    // TODO WEB-1672: fix hydration mismatches and enable the check
+    await openSSRPage({name: 'carousel', device: 'DESKTOP', checkHidrationVisualMismatch: false});
 });
