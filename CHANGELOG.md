@@ -1,3 +1,11 @@
+## [14.39.1](https://github.com/Telefonica/mistica-web/compare/v14.39.0...v14.39.1) (2024-01-09)
+
+
+### Bug Fixes
+
+* **Accordion:** make component not responsive to changes in defaultValue ([#989](https://github.com/Telefonica/mistica-web/issues/989)) ([dbd83c0](https://github.com/Telefonica/mistica-web/commit/dbd83c0672304fec26b8c88980412046c8e05cd1))
+* **BrandLoadingScreen:** issue with lottie animation when CSP is enabled ([#994](https://github.com/Telefonica/mistica-web/issues/994)) ([749ae76](https://github.com/Telefonica/mistica-web/commit/749ae76347622ac435e8bbb07c3a9788ebc6f976))
+
 # [14.39.0](https://github.com/Telefonica/mistica-web/compare/v14.38.0...v14.39.0) (2023-12-29)
 
 
