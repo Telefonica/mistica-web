@@ -2,8 +2,10 @@ import {openStoryPage, screen, setRootFontSize} from '../test-utils';
 
 test.each`
     device              | skin
-    ${'MOBILE_IOS'}     | ${'Movistar'}
+    ${'MOBILE_IOS'}     | ${'Vivo-new'}
     ${'MOBILE_ANDROID'} | ${'Vivo-new'}
+    ${'MOBILE_IOS'}     | ${'Movistar'}
+    ${'MOBILE_ANDROID'} | ${'Movistar'}
 `('Checkbox $device $skin', async ({device, skin}) => {
     await openStoryPage({
         id: 'components-checkbox--controlled',
@@ -61,8 +63,10 @@ test('Checkbox - custom render', async () => {
 
 test.each`
     device              | skin
-    ${'MOBILE_IOS'}     | ${'Movistar'}
+    ${'MOBILE_IOS'}     | ${'Vivo-new'}
     ${'MOBILE_ANDROID'} | ${'Vivo-new'}
+    ${'MOBILE_IOS'}     | ${'Movistar'}
+    ${'MOBILE_ANDROID'} | ${'Movistar'}
 `('Checkbox - disabled $device $skin', async ({device, skin}) => {
     await openStoryPage({
         id: 'components-checkbox--uncontrolled',
