@@ -19,46 +19,11 @@ import Stack from './stack';
 import * as styles from './dialog.css';
 import {vars} from './skins/skin-contract.css';
 
-import type {ButtonLink} from './button';
 import type {Theme} from './theme';
-import type {RendersNullableElement} from './utils/types';
-import type {ExclusifyUnion} from './utils/utility-types';
+import type {DialogProps} from './dialog-context';
 
-const animationsSupported = (platformOverrides: Theme['platformOverrides']) =>
+const shouldAnimate = (platformOverrides: Theme['platformOverrides']) =>
     process.env.NODE_ENV !== 'test' && !isRunningAcceptanceTest(platformOverrides);
-
-interface BaseDialogProps {
-    className?: string;
-    title?: string;
-    icon?: React.ReactElement;
-    message: string;
-    acceptText?: string;
-    onAccept?: () => void;
-    destructive?: boolean;
-}
-
-interface AlertProps extends BaseDialogProps {
-    showClose?: boolean;
-}
-
-interface ConfirmProps extends BaseDialogProps {
-    showClose?: boolean;
-    showCancel?: boolean;
-    cancelText?: string;
-    onCancel?: () => void;
-}
-interface ExtendedDialogProps extends BaseDialogProps {
-    subtitle?: string;
-    extra?: React.ReactNode;
-    forceWeb?: boolean;
-    showClose?: boolean;
-    showCancel?: boolean;
-    cancelText?: string;
-    onCancel?: () => void;
-    link?: RendersNullableElement<typeof ButtonLink>;
-}
-
-type DialogProps = ExclusifyUnion<AlertProps | ConfirmProps | ExtendedDialogProps>;
 
 const Dialog: React.FC<DialogProps> = (props) => {
     const {texts} = useTheme();
@@ -287,12 +252,12 @@ const ModalDialog = (props: ModalDialogProps) => {
     }, [handleKeyDown]);
 
     React.useEffect(() => {
-        if (!animationsSupported(platformOverrides)) {
+        if (!shouldAnimate(platformOverrides)) {
             addKeyDownListener();
         }
 
         if (
-            (renderNative || !animationsSupported(platformOverrides)) &&
+            (renderNative || !shouldAnimate(platformOverrides)) &&
             props.isClosing &&
             props.onCloseTransitionEnd
         ) {
@@ -360,7 +325,7 @@ const ModalDialog = (props: ModalDialogProps) => {
     );
 };
 
-let dialogInstance: DialogRoot | null = null;
+// let dialogInstance: DialogRoot | null = null;
 
 // This counts the number of instantiated DialogRoots.
 // We only want to use the first instance, created by the initial ThemeContextProvider.
@@ -483,40 +448,40 @@ export default class DialogRoot extends React.Component<DialogRootProps, DialogR
     }
 }
 
-const showDialog =
-    ({showCancel, showClose, forceWeb}: {showCancel: boolean; showClose: boolean; forceWeb: boolean}) =>
-    (props: DialogProps): void => {
-        if (!dialogInstance) {
-            throw Error(
-                'Tried to show a dialog but the DialogRoot component was not mounted (mount <ThemeContextProvider>)'
-            );
-        }
-        dialogInstance.show({showCancel, showClose, forceWeb, ...props});
-    };
+// const showDialog =
+//     ({showCancel, showClose, forceWeb}: {showCancel: boolean; showClose: boolean; forceWeb: boolean}) =>
+//     (props: DialogProps): void => {
+//         if (!dialogInstance) {
+//             throw Error(
+//                 'Tried to show a dialog but the DialogRoot component was not mounted (mount <ThemeContextProvider>)'
+//             );
+//         }
+//         dialogInstance.show({showCancel, showClose, forceWeb, ...props});
+//     };
 
-/**
- * Shows alert dialog with supplied props
- */
-export const alert: (props: AlertProps) => void = showDialog({
-    showCancel: false,
-    forceWeb: false,
-    showClose: false,
-});
+// /**
+//  * Shows alert dialog with supplied props
+//  */
+// export const alert: (props: AlertProps) => void = showDialog({
+//     showCancel: false,
+//     forceWeb: false,
+//     showClose: false,
+// });
 
-/**
- * Shows confirm dialog with supplied props
- */
-export const confirm: (props: ConfirmProps) => void = showDialog({
-    showCancel: true,
-    forceWeb: false,
-    showClose: false,
-});
+// /**
+//  * Shows confirm dialog with supplied props
+//  */
+// export const confirm: (props: ConfirmProps) => void = showDialog({
+//     showCancel: true,
+//     forceWeb: false,
+//     showClose: false,
+// });
 
-/**
- * Shows dialog with supplied props
- */
-export const dialog: (props: ExtendedDialogProps) => void = showDialog({
-    showCancel: false,
-    forceWeb: true,
-    showClose: true,
-});
+// /**
+//  * Shows dialog with supplied props
+//  */
+// export const dialog: (props: ExtendedDialogProps) => void = showDialog({
+//     showCancel: false,
+//     forceWeb: true,
+//     showClose: true,
+// });
