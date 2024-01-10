@@ -291,10 +291,15 @@ export const carouselNextArrowButton = style([
     },
 ]);
 
-export const carouselBullets = sprinkles({
-    display: 'flex',
-    justifyContent: 'center',
-});
+export const carouselBullets = style([
+    {
+        paddingBottom: 2,
+    },
+    sprinkles({
+        display: 'flex',
+        justifyContent: 'center',
+    }),
+]);
 
 export const slideshow = style([
     hideScrollbar,
