@@ -1,11 +1,14 @@
 import {openStoryPage, screen, setRootFontSize} from '../test-utils';
 
-const DEVICES = ['MOBILE_IOS', 'MOBILE_ANDROID'] as const;
-
-test.each(DEVICES)('Checkbox (%s)', async (device) => {
+test.each`
+    device              | skin
+    ${'MOBILE_IOS'}     | ${'Movistar'}
+    ${'MOBILE_ANDROID'} | ${'Vivo-new'}
+`('Checkbox $device $skin', async ({device, skin}) => {
     await openStoryPage({
         id: 'components-checkbox--controlled',
         device,
+        skin,
     });
 
     const wrapper = await screen.findByTestId('checkbox-wrapper');
@@ -56,7 +59,11 @@ test('Checkbox - custom render', async () => {
     expect(imageChecked).toMatchImageSnapshot();
 });
 
-test('Checkbox - disabled', async () => {
+test.each`
+    device              | skin
+    ${'MOBILE_IOS'}     | ${'Movistar'}
+    ${'MOBILE_ANDROID'} | ${'Vivo-new'}
+`('Checkbox - disabled $device $skin', async () => {
     await openStoryPage({
         id: 'components-checkbox--uncontrolled',
         device: 'MOBILE_IOS',
