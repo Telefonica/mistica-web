@@ -344,11 +344,16 @@ export const carouselNextArrowButton = style([
     },
 ]);
 
-export const carouselBullets = sprinkles({
-    display: 'flex',
-    justifyContent: 'center',
-    paddingTop: 24,
-});
+export const carouselBullets = style([
+    {
+        paddingBottom: 2,
+    },
+    sprinkles({
+        display: 'flex',
+        justifyContent: 'center',
+        paddingTop: 24,
+    }),
+]);
 
 export const noCarouselBulletsDesktop = style({
     '@media': {[mq.desktopOrBigger]: {display: 'none'}},

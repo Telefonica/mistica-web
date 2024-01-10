@@ -20,7 +20,7 @@ test('Select - appears properly with selected option on DESKTOP', async () => {
         device: 'DESKTOP',
     });
 
-    const field = await screen.findByLabelText('Select a fruit');
+    const field = await screen.findByRole('button', {name: 'Select a fruit'});
     await field.click();
     const selectOptions = await screen.findAllByRole('option', {name: 'Apple'});
     // take the last one because the options are displayed in a portal, at the end of the body
@@ -53,7 +53,7 @@ test('Select - appears properly with long selected option on DESKTOP', async () 
         device: 'DESKTOP',
     });
 
-    const field = await screen.findByLabelText('Select a fruit');
+    const field = await screen.findByRole('button', {name: 'Select a fruit'});
     await field.click();
     const selectOptions = await screen.findAllByRole('option', {
         name: 'A very very long text value for this option',
@@ -143,7 +143,7 @@ test('Select - display all options', async () => {
         device: 'DESKTOP',
     });
 
-    const field = await screen.findByLabelText('Select a fruit');
+    const field = await screen.findByRole('button', {name: 'Select a fruit'});
     await field.click();
 
     const image = await page.screenshot();

@@ -89,7 +89,6 @@ export const Default: StoryComponent<Args> = ({
                                 right,
                                 top,
                                 bottom,
-                                margin: 16,
                                 transform: `translate(${translateX}, ${translateY})`,
                             }}
                         >

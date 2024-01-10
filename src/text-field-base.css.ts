@@ -142,6 +142,10 @@ export const input = style([
                 transitionProperty: 'background-color',
                 transitionDelay: '99999s',
             },
+            // iOS date/time fields are centered by default, but we want them left aligned
+            '&::-webkit-date-and-time-value': {
+                textAlign: 'left',
+            },
         },
     },
     commonInputStyles,
