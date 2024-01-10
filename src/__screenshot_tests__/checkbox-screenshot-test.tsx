@@ -63,10 +63,11 @@ test.each`
     device              | skin
     ${'MOBILE_IOS'}     | ${'Movistar'}
     ${'MOBILE_ANDROID'} | ${'Vivo-new'}
-`('Checkbox - disabled $device $skin', async () => {
+`('Checkbox - disabled $device $skin', async ({device, skin}) => {
     await openStoryPage({
         id: 'components-checkbox--uncontrolled',
-        device: 'MOBILE_IOS',
+        device,
+        skin,
         args: {disabled: true},
     });
 
