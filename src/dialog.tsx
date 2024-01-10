@@ -20,10 +20,46 @@ import * as styles from './dialog.css';
 import {vars} from './skins/skin-contract.css';
 
 import type {Theme} from './theme';
-import type {DialogProps} from './dialog-context';
+import type {RendersNullableElement} from './utils/renders-element';
+import type {ExclusifyUnion} from './utils/utility-types';
+import type {ButtonLink} from './button';
 
 const shouldAnimate = (platformOverrides: Theme['platformOverrides']) =>
     process.env.NODE_ENV !== 'test' && !isRunningAcceptanceTest(platformOverrides);
+
+interface BaseDialogProps {
+    className?: string;
+    title?: string;
+    icon?: React.ReactElement;
+    message: string;
+    acceptText?: string;
+    onAccept?: () => void;
+    destructive?: boolean;
+}
+
+export interface AlertProps extends BaseDialogProps {
+    showClose?: boolean;
+}
+
+export interface ConfirmProps extends BaseDialogProps {
+    showClose?: boolean;
+    showCancel?: boolean;
+    cancelText?: string;
+    onCancel?: () => void;
+}
+
+export interface ExtendedDialogProps extends BaseDialogProps {
+    subtitle?: string;
+    extra?: React.ReactNode;
+    forceWeb?: boolean;
+    showClose?: boolean;
+    showCancel?: boolean;
+    cancelText?: string;
+    onCancel?: () => void;
+    link?: RendersNullableElement<typeof ButtonLink>;
+}
+
+export type DialogProps = ExclusifyUnion<AlertProps | ConfirmProps | ExtendedDialogProps>;
 
 const Dialog: React.FC<DialogProps> = (props) => {
     const {texts} = useTheme();
@@ -350,8 +386,7 @@ export default class DialogRoot extends React.Component<DialogRootProps, DialogR
     componentDidMount(): void {
         dialogRootInstances++;
         if (dialogRootInstances === 1) {
-            // eslint-disable-next-line @typescript-eslint/no-this-alias
-            dialogInstance = this;
+            // dialogInstance = this;
             window.addEventListener('popstate', this.handleBack);
         }
     }
@@ -359,7 +394,7 @@ export default class DialogRoot extends React.Component<DialogRootProps, DialogR
     componentWillUnmount(): void {
         dialogRootInstances--;
         if (dialogRootInstances === 0) {
-            dialogInstance = null;
+            // dialogInstance = null;
             window.removeEventListener('popstate', this.handleBack);
         }
     }

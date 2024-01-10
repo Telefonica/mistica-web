@@ -1,42 +1,7 @@
 'use client';
 import * as React from 'react';
 
-import type {RendersNullableElement} from './utils/renders-element';
-import type {ExclusifyUnion} from './utils/utility-types';
-import type {ButtonLink} from './button';
-
-interface BaseDialogProps {
-    className?: string;
-    title?: string;
-    icon?: React.ReactElement;
-    message: string;
-    acceptText?: string;
-    onAccept?: () => void;
-    destructive?: boolean;
-}
-
-interface AlertProps extends BaseDialogProps {
-    showClose?: boolean;
-}
-
-interface ConfirmProps extends BaseDialogProps {
-    showClose?: boolean;
-    showCancel?: boolean;
-    cancelText?: string;
-    onCancel?: () => void;
-}
-interface ExtendedDialogProps extends BaseDialogProps {
-    subtitle?: string;
-    extra?: React.ReactNode;
-    forceWeb?: boolean;
-    showClose?: boolean;
-    showCancel?: boolean;
-    cancelText?: string;
-    onCancel?: () => void;
-    link?: RendersNullableElement<typeof ButtonLink>;
-}
-
-export type DialogProps = ExclusifyUnion<AlertProps | ConfirmProps | ExtendedDialogProps>;
+import type {AlertProps, ConfirmProps, DialogProps, ExtendedDialogProps} from './dialog';
 
 const DialogContext = React.createContext<{
     dialog: DialogProps | null;
