@@ -7,7 +7,6 @@ import FocusTrap from './focus-trap';
 import IcnCloseRegular from './generated/mistica-icons/icon-close-regular';
 import IconButton from './icon-button';
 import {isWebViewBridgeAvailable, nativeConfirm, nativeAlert} from '@tef-novum/webview-bridge';
-import ThemeContext from './theme-context';
 import {useTheme} from './hooks';
 import ButtonLayout from './button-layout';
 import {Text5, Text4, Text3} from './text';
@@ -19,10 +18,10 @@ import Stack from './stack';
 import * as styles from './dialog.css';
 import {vars} from './skins/skin-contract.css';
 
-import type {Theme} from './theme';
-import type {RendersNullableElement} from './utils/renders-element';
-import type {ExclusifyUnion} from './utils/utility-types';
 import type {ButtonLink} from './button';
+import type {Theme} from './theme';
+import type {RendersNullableElement} from './utils/types';
+import type {ExclusifyUnion} from './utils/utility-types';
 
 const shouldAnimate = (platformOverrides: Theme['platformOverrides']) =>
     process.env.NODE_ENV !== 'test' && !isRunningAcceptanceTest(platformOverrides);
@@ -232,19 +231,13 @@ const NativeModalDialog = (props: NativeModalDialogProps) => {
 };
 
 const ModalDialog = (props: ModalDialogProps) => {
-    const {platformOverrides} = useTheme();
-    const context = React.useContext(ThemeContext);
+    const {platformOverrides, texts} = useTheme();
 
     // Closing the dialog before the animation has ended leaves the component in a broken state
     // To avoid race conditions, we don't allow closing the dialog until the animation has ended
     // See onAnimationEnd handler
     const canCloseRef = React.useRef(process.env.NODE_ENV === 'test');
 
-    if (!context) {
-        throw Error(
-            `To use @telefonica/mistica components you must instantiate <ThemeContextProvider> as their parent.`
-        );
-    }
     const renderNative = !props.forceWeb && isWebViewBridgeAvailable();
 
     const {onAccept, isClosing, onCancel, onCloseTransitionEnd, ...dialogProps} = props;
@@ -307,56 +300,56 @@ const ModalDialog = (props: ModalDialogProps) => {
 
     useSetModalStateEffect();
 
-    /* eslint-disable jsx-a11y/no-noninteractive-element-interactions, jsx-a11y/no-static-element-interactions */
-    return renderNative ? (
-        <NativeModalDialog
-            {...props}
-            dialogAcceptButton={context.texts.dialogAcceptButton}
-            dialogCancelButton={context.texts.dialogCancelButton}
-        />
-    ) : (
-        <Portal>
-            <div className={styles.wrapper}>
-                <FocusTrap>
-                    <div
-                        onClick={handleOverlayPress}
-                        className={classnames(styles.modalOpacityLayer, {
-                            [styles.closedOpactityLayer]: isClosing,
-                        })}
-                        role="dialog"
-                        data-component-name="Dialog"
-                    >
-                        <div onClick={(e) => e.stopPropagation()}>
-                            <div
-                                onTransitionEnd={
-                                    isClosing && onCloseTransitionEnd ? onCloseTransitionEnd : undefined
-                                }
-                                onAnimationEnd={() => {
-                                    canCloseRef.current = true;
-                                    addKeyDownListener();
-                                }}
-                                className={classnames(styles.modalContent, {
-                                    [styles.closedModalContent]: isClosing,
-                                })}
-                            >
-                                {props.showClose && (
-                                    <div className={styles.modalCloseButtonContainer}>
-                                        <IconButton
-                                            onPress={handleClose}
-                                            aria-label={
-                                                context.texts.modalClose ?? context.texts.closeButtonLabel
-                                            }
-                                        >
-                                            <IcnCloseRegular color={vars.colors.neutralHigh} />
-                                        </IconButton>
-                                    </div>
-                                )}
-                                <Dialog {...dialogProps} onCancel={handleCancel} onAccept={handleAccept} />
-                            </div>
+    if (renderNative) {
+        return (
+            <NativeModalDialog
+                {...props}
+                dialogAcceptButton={texts.dialogAcceptButton}
+                dialogCancelButton={texts.dialogCancelButton}
+            />
+        );
+    }
+
+    return (
+        <Portal className={styles.wrapper}>
+            <FocusTrap>
+                {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
+                <div
+                    onClick={handleOverlayPress}
+                    className={classnames(styles.modalOpacityLayer, {
+                        [styles.closedOpactityLayer]: isClosing,
+                    })}
+                    data-component-name="Dialog"
+                >
+                    {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
+                    <div role="dialog" onClick={(e) => e.stopPropagation()}>
+                        <div
+                            onTransitionEnd={
+                                isClosing && onCloseTransitionEnd ? onCloseTransitionEnd : undefined
+                            }
+                            onAnimationEnd={() => {
+                                canCloseRef.current = true;
+                                addKeyDownListener();
+                            }}
+                            className={classnames(styles.modalContent, {
+                                [styles.closedModalContent]: isClosing,
+                            })}
+                        >
+                            {props.showClose && (
+                                <div className={styles.modalCloseButtonContainer}>
+                                    <IconButton
+                                        onPress={handleClose}
+                                        aria-label={texts.modalClose || texts.closeButtonLabel}
+                                    >
+                                        <IcnCloseRegular color={vars.colors.neutralHigh} />
+                                    </IconButton>
+                                </div>
+                            )}
+                            <Dialog {...dialogProps} onCancel={handleCancel} onAccept={handleAccept} />
                         </div>
                     </div>
-                </FocusTrap>
-            </div>
+                </div>
+            </FocusTrap>
         </Portal>
     );
 };
