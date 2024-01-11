@@ -101,3 +101,19 @@ test.each(TESTABLE_DEVICES)('ActionsSheet in %s', async (device) => {
 
     expect(image).toMatchImageSnapshot();
 });
+
+test('ActionsSheet with safe inset at the bottom', async () => {
+    const page = await openStoryPage({
+        id: 'components-modals-sheet--actions',
+        device: 'MOBILE_IOS_INSET',
+    });
+
+    const button = await screen.findByRole('button', {name: 'Open'});
+    await button.click();
+
+    await screen.findByRole('dialog');
+
+    const image = await page.screenshot();
+
+    expect(image).toMatchImageSnapshot();
+});
