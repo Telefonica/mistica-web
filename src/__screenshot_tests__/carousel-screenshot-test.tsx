@@ -18,6 +18,20 @@ test('Carousel mobile', async () => {
     expect(await page.screenshot()).toMatchImageSnapshot();
 });
 
+test('Carousel mobile without bullets', async () => {
+    const page = await openStoryPage({
+        id: 'components-carousels-carousel--default',
+        device: 'MOBILE_IOS',
+        args: {withBullets: false},
+    });
+
+    expect(await page.screenshot()).toMatchImageSnapshot();
+
+    await (await screen.findByLabelText('Carousel item 2')).evaluate((el) => el.scrollIntoView());
+
+    expect(await page.screenshot()).toMatchImageSnapshot();
+});
+
 test('Carousel mobile in Vivo new', async () => {
     const page = await openStoryPage({
         id: 'components-carousels-carousel--default',
