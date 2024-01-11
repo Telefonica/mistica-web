@@ -45,6 +45,7 @@ export const palette = {
     darkModeBlack: '#191919',
     darkModeGrey: '#242424',
 };
+
 /**
  * @deprecated Use `getMovistarSkin` instead.
  */
