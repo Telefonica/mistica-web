@@ -4,9 +4,12 @@ import * as React from 'react';
 import type {AlertProps, ConfirmProps, DialogProps, ExtendedDialogProps} from './dialog';
 
 const DialogContext = React.createContext<{
+    mounted: boolean;
     dialog: DialogProps | null;
     setDialog: React.Dispatch<React.SetStateAction<DialogProps | null>>;
-}>({dialog: null, setDialog: () => {}});
+}>({mounted: false, dialog: null, setDialog: () => {}});
+
+const ModalDialog = React.lazy(() => import(/* webpackChunkName: "dialog" */ './dialog'));
 
 export const useDialog = (): {
     alert: (params: AlertProps) => void;
@@ -29,9 +32,9 @@ export const useDialog = (): {
 
     return React.useMemo(
         () => ({
-            alert: (params: AlertProps) => showDialog(params),
-            confirm: (params: ConfirmProps) => showDialog({...params, showCancel: true}),
-            dialog: (params: ExtendedDialogProps) => showDialog({...params, forceWeb: true, showClose: true}),
+            alert: (params: AlertProps) => showDialog({type: 'alert', ...params}),
+            confirm: (params: ConfirmProps) => showDialog({type: 'confirm', ...params}),
+            dialog: (params: ExtendedDialogProps) => showDialog({type: 'dialog', ...params}),
         }),
         [showDialog]
     );
@@ -75,13 +78,30 @@ export const dialog = (params: ExtendedDialogProps): void => dialogFunctions.dia
 type DialogRootProps = {children?: React.ReactNode};
 
 export const DialogRoot = ({children}: DialogRootProps): JSX.Element => {
+    const {mounted} = React.useContext(DialogContext);
     const [dialog, setDialog] = React.useState<DialogProps | null>(null);
-    const value = React.useMemo(() => ({dialog, setDialog}), [dialog, setDialog]);
+    const value = React.useMemo(() => ({mounted: true, dialog, setDialog}), [dialog, setDialog]);
+
+    // do not create a new context whith nested theme context providers
+    if (mounted) {
+        return <>{children}</>;
+    }
 
     return (
         <DialogContext.Provider value={value}>
             <ExposeDialogFunctions />
             {children}
+            {dialog && (
+                <React.Suspense fallback={null}>
+                    <ModalDialog
+                        {...dialog}
+                        onClose={() => {
+                            console.log('>>> closed!!!');
+                            setDialog(null);
+                        }}
+                    />
+                </React.Suspense>
+            )}
         </DialogContext.Provider>
     );
 };
