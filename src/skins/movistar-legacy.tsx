@@ -46,10 +46,7 @@ export const palette = {
     darkModeGrey: '#242424',
 };
 
-/**
- * @deprecated Use `getMovistarSkin` instead.
- */
-export const getMovistarLegacySkin: GetKnownSkin = (variant) => {
+export const getMovistarLegacySkin: GetKnownSkin = () => {
     const skin: KnownSkin = {
         name: MOVISTAR_LEGACY_SKIN,
         colors: {
@@ -115,6 +112,7 @@ export const getMovistarLegacySkin: GetKnownSkin = (variant) => {
             controlInverse: palette.white,
             controlActivatedInverse: palette.white,
             controlError: palette.pepper,
+            barTrack: palette.grey3,
             loadingBar: palette.movistarBlue30,
             loadingBarBackground: palette.movistarBlue55,
             toggleAndroidInactive: palette.grey2,
@@ -227,6 +225,7 @@ export const getMovistarLegacySkin: GetKnownSkin = (variant) => {
             controlInverse: palette.grey6,
             controlActivatedInverse: palette.movistarBlue,
             controlError: palette.pepper,
+            barTrack: palette.grey6,
             loadingBar: palette.movistarBlue,
             loadingBarBackground: palette.darkModeGrey,
             toggleAndroidInactive: palette.grey4,
@@ -310,15 +309,5 @@ export const getMovistarLegacySkin: GetKnownSkin = (variant) => {
             text10: {weight: 'bold'},
         },
     };
-
-    if (variant === 'prominent') {
-        skin.colors.brand = palette.movistarProminentBlue;
-        skin.colors.brandHigh = palette.movistarProminentBlueDark;
-        skin.colors.backgroundBrand = palette.movistarProminentBlue;
-        skin.colors.navigationBarBackground = palette.movistarProminentBlue;
-        skin.colors.backgroundFeedbackBottom = palette.movistarProminentBlue;
-        skin.colors.controlActivated = palette.movistarProminentBlue;
-        skin.colors.dividerInverse = palette.movistarProminentBlueDark;
-    }
     return skin;
 };
