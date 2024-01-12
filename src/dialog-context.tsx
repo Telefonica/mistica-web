@@ -95,7 +95,7 @@ export const DialogRoot = ({children}: DialogRootProps): JSX.Element => {
                 <React.Suspense fallback={null}>
                     <ModalDialog
                         {...dialog}
-                        onClose={() => {
+                        onDestroy={() => {
                             console.log('>>> closed!!!');
                             setDialog(null);
                         }}

@@ -4,6 +4,8 @@ import {vars} from './skins/skin-contract.css';
 import {sprinkles} from './sprinkles.css';
 import {pxToRem} from './utils/css';
 
+export const ANIMATION_DURATION_MS = 200;
+
 const fadeIn = keyframes({
     '0%': {opacity: 0},
     '100%': {opacity: 1},
@@ -49,8 +51,8 @@ export const modalOpacityLayer = style([
         zIndex: Z_INDEX,
         minHeight: 0,
         minWidth: 0,
-        animation: `${fadeIn} .2s ease-in-out`,
-        transition: 'opacity .2s ease-in-out',
+        animation: `${fadeIn} ${ANIMATION_DURATION_MS}ms ease-in-out`,
+        transition: `opacity ${ANIMATION_DURATION_MS}ms ease-in-out`,
     },
 ]);
 
@@ -76,9 +78,9 @@ export const modalContent = style([
         borderRadius: vars.borderRadii.container,
     }),
     {
-        animation: `${fadeScale} .2s ease-in-out`,
+        animation: `${fadeScale} ${ANIMATION_DURATION_MS}ms ease-in-out`,
         willChange: 'transform, opacity',
-        transition: 'opacity .2s ease-in-out, transform .2s ease-in-out',
+        transition: `opacity ${ANIMATION_DURATION_MS}ms ease-in-out, transform ${ANIMATION_DURATION_MS}ms ease-in-out`,
     },
 ]);
 
