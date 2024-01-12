@@ -28,7 +28,6 @@ const shouldAnimate = () => process.env.NODE_ENV !== 'test' && !isRunningAccepta
 interface BaseDialogProps {
     className?: string;
     title?: string;
-    icon?: React.ReactElement;
     message: string;
     acceptText?: string;
     onAccept?: () => void;
@@ -43,6 +42,7 @@ export interface ConfirmProps extends BaseDialogProps {
 }
 
 export interface ExtendedDialogProps extends BaseDialogProps {
+    icon?: React.ReactElement;
     subtitle?: string;
     extra?: React.ReactNode;
     cancelText?: string;
@@ -245,13 +245,19 @@ const ModalDialog = (props: ModalDialogProps): JSX.Element => {
     }, [onAccept, onCancel, onDestroy]);
 
     const startClosing = React.useCallback(() => {
-        if (isInteractiveRef.current) {
+        let timeout: NodeJS.Timeout;
+        if (!isClosingRef.current) {
             console.log('>>> start closing');
             setIsClosing(true);
             isClosingRef.current = true;
             isInteractiveRef.current = false;
-            setTimeout(close, animationDurationRef.current);
+            timeout = setTimeout(close, animationDurationRef.current);
         }
+        return () => {
+            if (timeout) {
+                clearTimeout(timeout);
+            }
+        };
     }, [close]);
 
     const handleAccept = React.useCallback(() => {
