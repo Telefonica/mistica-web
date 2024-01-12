@@ -221,7 +221,6 @@ const ModalDialog = (props: ModalDialogProps): JSX.Element => {
     React.useEffect(() => {
         const timeout = setTimeout(() => {
             if (!isClosingRef.current) {
-                // console.log('>>> set interactive');
                 isInteractiveRef.current = true;
             }
         }, animationDurationRef.current);
@@ -233,7 +232,6 @@ const ModalDialog = (props: ModalDialogProps): JSX.Element => {
     const close = React.useCallback(() => {
         if (!isClosedRef.current) {
             isClosedRef.current = true;
-            // console.log('>>> close');
             if (dialogWasAcceptedRef.current) {
                 onAccept?.();
             } else {
@@ -246,7 +244,6 @@ const ModalDialog = (props: ModalDialogProps): JSX.Element => {
     const startClosing = React.useCallback(() => {
         let timeout: NodeJS.Timeout;
         if (!isClosingRef.current) {
-            // console.log('>>> start closing');
             setIsClosing(true);
             isClosingRef.current = true;
             isInteractiveRef.current = false;
@@ -270,7 +267,6 @@ const ModalDialog = (props: ModalDialogProps): JSX.Element => {
     }, [startClosing]);
 
     const dismiss = React.useCallback(() => {
-        // console.log('>>> dismiss');
         if (shouldAcceptOnDismiss) {
             handleAccept();
         } else {
@@ -279,7 +275,6 @@ const ModalDialog = (props: ModalDialogProps): JSX.Element => {
     }, [handleAccept, handleCancel, shouldAcceptOnDismiss]);
 
     const handleBackNavigation = React.useCallback(() => {
-        // console.log('>>> back navigation');
         hasNavigatedBackRef.current = true;
         dismiss();
     }, [dismiss]);
@@ -293,7 +288,6 @@ const ModalDialog = (props: ModalDialogProps): JSX.Element => {
         return () => {
             window.removeEventListener('popstate', handleBackNavigation);
             if (isClosingRef.current && !hasNavigatedBackRef.current) {
-                // console.log('>>> history back');
                 window.history.back();
             }
         };
@@ -351,7 +345,6 @@ const ModalDialog = (props: ModalDialogProps): JSX.Element => {
                             ref={dialogContentRef}
                             onAnimationEnd={(e) => {
                                 if (e.target === dialogContentRef.current) {
-                                    // console.log('>>> animation end', e);
                                     if (!isClosingRef.current) {
                                         isInteractiveRef.current = true;
                                     }
