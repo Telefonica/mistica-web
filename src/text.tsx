@@ -131,6 +131,7 @@ export const Text: React.FC<TextProps> = ({
                 ...sizeVars,
                 ...textVars,
                 hyphens,
+                webkitHyphens: hyphens,
                 letterSpacing,
                 fontWeight: weight ? mapToWeight[weight] : 'inherit',
                 textTransform: transform || 'inherit',
