@@ -69,10 +69,10 @@ const Dialog: React.FC<DialogProps> = (props) => {
         destructive = false,
     } = props;
     const isDialog = props.type === 'dialog';
+    const showCancelButton = props.type === 'confirm' || (isDialog && !!handleCancel);
 
-    const mainButtonProps = {
+    const acceptButtonProps = {
         onPress: handleAccept || (() => {}),
-        dataAttributes: {testid: 'dialog-accept-button'},
         children: acceptText,
     };
 
@@ -113,15 +113,14 @@ const Dialog: React.FC<DialogProps> = (props) => {
             <div className={styles.dialogActions}>
                 <ButtonLayout link={isDialog ? props.link : undefined}>
                     {destructive ? (
-                        <ButtonDanger tabIndex={1} {...mainButtonProps} /> // eslint-disable-line jsx-a11y/tabindex-no-positive
+                        <ButtonDanger tabIndex={1} {...acceptButtonProps} /> // eslint-disable-line jsx-a11y/tabindex-no-positive
                     ) : (
-                        <ButtonPrimary tabIndex={1} {...mainButtonProps} /> // eslint-disable-line jsx-a11y/tabindex-no-positive
+                        <ButtonPrimary tabIndex={1} {...acceptButtonProps} /> // eslint-disable-line jsx-a11y/tabindex-no-positive
                     )}
-                    {isDialog && !!handleCancel && (
+                    {showCancelButton && (
                         <ButtonSecondary
                             tabIndex={2} // eslint-disable-line jsx-a11y/tabindex-no-positive
-                            onPress={handleCancel}
-                            dataAttributes={{testid: 'dialog-cancel-button'}}
+                            onPress={handleCancel || (() => {})}
                         >
                             {cancelText}
                         </ButtonSecondary>
@@ -222,7 +221,7 @@ const ModalDialog = (props: ModalDialogProps): JSX.Element => {
     React.useEffect(() => {
         const timeout = setTimeout(() => {
             if (!isClosingRef.current) {
-                console.log('>>> set interactive');
+                // console.log('>>> set interactive');
                 isInteractiveRef.current = true;
             }
         }, animationDurationRef.current);
@@ -234,7 +233,7 @@ const ModalDialog = (props: ModalDialogProps): JSX.Element => {
     const close = React.useCallback(() => {
         if (!isClosedRef.current) {
             isClosedRef.current = true;
-            console.log('>>> close');
+            // console.log('>>> close');
             if (dialogWasAcceptedRef.current) {
                 onAccept?.();
             } else {
@@ -247,7 +246,7 @@ const ModalDialog = (props: ModalDialogProps): JSX.Element => {
     const startClosing = React.useCallback(() => {
         let timeout: NodeJS.Timeout;
         if (!isClosingRef.current) {
-            console.log('>>> start closing');
+            // console.log('>>> start closing');
             setIsClosing(true);
             isClosingRef.current = true;
             isInteractiveRef.current = false;
@@ -271,7 +270,7 @@ const ModalDialog = (props: ModalDialogProps): JSX.Element => {
     }, [startClosing]);
 
     const dismiss = React.useCallback(() => {
-        console.log('>>> dismiss');
+        // console.log('>>> dismiss');
         if (shouldAcceptOnDismiss) {
             handleAccept();
         } else {
@@ -280,21 +279,22 @@ const ModalDialog = (props: ModalDialogProps): JSX.Element => {
     }, [handleAccept, handleCancel, shouldAcceptOnDismiss]);
 
     const handleBackNavigation = React.useCallback(() => {
+        // console.log('>>> back navigation');
         hasNavigatedBackRef.current = true;
         dismiss();
     }, [dismiss]);
 
     React.useEffect(() => {
-        if (!shouldRenderNative) {
-            window.history.pushState(null, document.title, window.location.href);
-            window.addEventListener('popstate', handleBackNavigation);
+        if (shouldRenderNative) {
+            return;
         }
+        window.history.pushState(null, document.title, window.location.href);
+        window.addEventListener('popstate', handleBackNavigation);
         return () => {
-            if (!shouldRenderNative) {
-                window.removeEventListener('popstate', handleBackNavigation);
-                if (!hasNavigatedBackRef.current) {
-                    window.history.back();
-                }
+            window.removeEventListener('popstate', handleBackNavigation);
+            if (isClosingRef.current && !hasNavigatedBackRef.current) {
+                // console.log('>>> history back');
+                window.history.back();
             }
         };
     }, [handleBackNavigation, shouldRenderNative]);
@@ -311,13 +311,12 @@ const ModalDialog = (props: ModalDialogProps): JSX.Element => {
     );
 
     React.useEffect(() => {
-        if (!shouldRenderNative) {
-            document.addEventListener('keydown', handleKeyDown);
+        if (shouldRenderNative) {
+            return;
         }
+        document.addEventListener('keydown', handleKeyDown);
         return () => {
-            if (!shouldRenderNative) {
-                document.removeEventListener('keydown', handleKeyDown);
-            }
+            document.removeEventListener('keydown', handleKeyDown);
         };
     }, [handleKeyDown, shouldRenderNative]);
 
@@ -344,6 +343,7 @@ const ModalDialog = (props: ModalDialogProps): JSX.Element => {
                     className={classnames(styles.modalOpacityLayer, {
                         [styles.closedOpactityLayer]: isClosing,
                     })}
+                    data-testid="dialog-overlay"
                 >
                     {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
                     <div role="dialog" onClick={(e) => e.stopPropagation()} data-component-name="Dialog">
@@ -351,7 +351,7 @@ const ModalDialog = (props: ModalDialogProps): JSX.Element => {
                             ref={dialogContentRef}
                             onAnimationEnd={(e) => {
                                 if (e.target === dialogContentRef.current) {
-                                    console.log('>>> animation end', e);
+                                    // console.log('>>> animation end', e);
                                     if (!isClosingRef.current) {
                                         isInteractiveRef.current = true;
                                     }

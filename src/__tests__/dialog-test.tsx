@@ -1,7 +1,6 @@
 import * as React from 'react';
 import {render, waitFor, screen, act, waitForElementToBeRemoved} from '@testing-library/react';
-import {alert, confirm, dialog} from '../dialog';
-import ThemeContextProvider from '../theme-context-provider';
+import {alert, confirm, dialog, ThemeContextProvider} from '..';
 import {makeTheme} from './test-utils';
 import * as webviewBridge from '@tef-novum/webview-bridge';
 import userEvent from '@testing-library/user-event';
@@ -20,7 +19,8 @@ test('throws when we try to stack dialogs', async () => {
         alert(alertProps);
     });
     expect(await screen.findByText(alertProps.message)).toBeInTheDocument();
-    expect(() => confirm(confirmProps)).toThrow('not currently supported');
+
+    expect(() => alert(alertProps)).toThrow('Tried to show a dialog on top of another dialog');
 });
 
 test('throws when we dont instantiate theme', async () => {
@@ -38,6 +38,18 @@ test('renders alert dialog correctly when alert function called', async () => {
 
     expect(await screen.findByText(alertProps.message)).toBeInTheDocument();
     expect(await screen.findByRole('button', {name: 'Aceptar'})).toBeInTheDocument();
+});
+
+test('works with nested theme context providers', async () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <ThemeContextProvider theme={makeTheme()} />
+        </ThemeContextProvider>
+    );
+    act(() => {
+        alert(alertProps);
+    });
+    expect(await screen.findByText(alertProps.message)).toBeInTheDocument();
 });
 
 test('closes alert dialog when clicking on button', async () => {
@@ -73,12 +85,12 @@ test('Closes a dialog on click outside', async () => {
 
     const onCancelSpy = jest.fn();
     act(() => {
-        dialog({...confirmProps, onCancel: onCancelSpy, showCancel: true});
+        dialog({...confirmProps, onCancel: onCancelSpy});
     });
 
     expect(await screen.findByRole('button', {name: 'Cancelar'})).toBeInTheDocument();
 
-    await userEvent.click(screen.getByRole('dialog')); // This is the opacity layer that appears over the underlying page.
+    await userEvent.click(screen.getByTestId('dialog-overlay'));
 
     await waitForElementToBeRemoved(() => screen.queryByRole('dialog'));
     expect(onCancelSpy).toHaveBeenCalled();

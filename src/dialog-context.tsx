@@ -16,18 +16,16 @@ export const useDialog = (): {
     confirm: (params: ConfirmProps) => void;
     dialog: (params: ExtendedDialogProps) => void;
 } => {
-    const {setDialog} = React.useContext(DialogContext);
+    const {dialog: currentDialog, setDialog} = React.useContext(DialogContext);
 
     const showDialog = React.useCallback(
         (params: DialogProps) => {
-            setDialog((dialog) => {
-                if (params && dialog) {
-                    throw Error('Tried to show a dialog on top of another dialog');
-                }
-                return params;
-            });
+            if (params && currentDialog) {
+                throw Error('Tried to show a dialog on top of another dialog');
+            }
+            setDialog(params);
         },
-        [setDialog]
+        [setDialog, currentDialog]
     );
 
     return React.useMemo(
@@ -46,34 +44,42 @@ const throwMissingDialogRootError = () => {
     );
 };
 
-let dialogFunctions: ReturnType<typeof useDialog> = {
+const missingDialogFunctions: ReturnType<typeof useDialog> = {
     alert: throwMissingDialogRootError,
     confirm: throwMissingDialogRootError,
     dialog: throwMissingDialogRootError,
 };
 
+let currentDialogFunctions = missingDialogFunctions;
+
 /**
  * @deprecated Created for backwards compatibility
  */
 const ExposeDialogFunctions = (): JSX.Element => {
-    dialogFunctions = useDialog();
+    const dialogFunctions = useDialog();
+    React.useEffect(() => {
+        currentDialogFunctions = dialogFunctions;
+        return () => {
+            currentDialogFunctions = missingDialogFunctions;
+        };
+    }, [dialogFunctions]);
     return <></>;
 };
 
 /**
  * @deprecated Use useDialog to get this function
  */
-export const alert = (params: AlertProps): void => dialogFunctions.alert(params);
+export const alert = (params: AlertProps): void => currentDialogFunctions.alert(params);
 
 /**
  * @deprecated Use useDialog to get this function
  */
-export const confirm = (params: ConfirmProps): void => dialogFunctions.confirm(params);
+export const confirm = (params: ConfirmProps): void => currentDialogFunctions.confirm(params);
 
 /**
  * @deprecated Use useDialog to get this function
  */
-export const dialog = (params: ExtendedDialogProps): void => dialogFunctions.dialog(params);
+export const dialog = (params: ExtendedDialogProps): void => currentDialogFunctions.dialog(params);
 
 type DialogRootProps = {children?: React.ReactNode};
 
@@ -96,7 +102,6 @@ export const DialogRoot = ({children}: DialogRootProps): JSX.Element => {
                     <ModalDialog
                         {...dialog}
                         onDestroy={() => {
-                            console.log('>>> closed!!!');
                             setDialog(null);
                         }}
                     />
