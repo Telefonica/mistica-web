@@ -81,8 +81,6 @@ export const Dialog: StoryComponent = () => {
                                 />
                             </Stack>
                         ),
-                        forceWeb: true,
-                        showCancel: true,
                         link: <ButtonLink href="https://google.com">Link</ButtonLink>,
                         icon: <IconInformationUserLight color={skinVars.colors.brand} />,
                     })
