@@ -275,8 +275,10 @@ const ModalDialog = (props: ModalDialogProps): JSX.Element => {
     }, [handleAccept, handleCancel, shouldAcceptOnDismiss]);
 
     const handleBackNavigation = React.useCallback(() => {
-        historyWasPushedRef.current = false;
-        dismiss();
+        if (historyWasPushedRef.current) {
+            historyWasPushedRef.current = false;
+            dismiss();
+        }
     }, [dismiss]);
 
     React.useEffect(() => {
