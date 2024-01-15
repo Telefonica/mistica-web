@@ -28,6 +28,7 @@ export {
     InfoFeedbackScreen,
     SuccessFeedbackScreen,
     SuccessFeedback,
+    ErrorFeedback,
 } from './feedback';
 export {LoadingScreen, BrandLoadingScreen} from './loading-screen';
 export {default as IconButton} from './icon-button';
