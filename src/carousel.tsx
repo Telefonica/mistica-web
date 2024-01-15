@@ -463,15 +463,17 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
                     </BaseTouchable>
                 </ThemeVariant>
             </div>
-            <div
-                className={classNames(styles.carouselBullets, {
-                    [styles.noCarouselBulletsDesktop]: pagesCountDesktop <= 1,
-                    [styles.noCarouselBulletsTablet]: pagesCountTablet <= 1,
-                    [styles.noCarouselBulletsMobile]: pagesCountMobile <= 1,
-                })}
-            >
-                {bullets}
-            </div>
+            {bullets && (
+                <div
+                    className={classNames(styles.carouselBullets, {
+                        [styles.noCarouselBulletsDesktop]: pagesCountDesktop <= 1,
+                        [styles.noCarouselBulletsTablet]: pagesCountTablet <= 1,
+                        [styles.noCarouselBulletsMobile]: pagesCountMobile <= 1,
+                    })}
+                >
+                    {bullets}
+                </div>
+            )}
         </div>
     );
 };
