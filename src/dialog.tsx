@@ -207,9 +207,9 @@ const ModalDialog = (props: ModalDialogProps): JSX.Element => {
     /** this flag is used to avoid calling close() multiple times when the transitions ends (the CSS could define transitions for multiple styles) */
     const isClosedRef = React.useRef<boolean>(false);
     /** this flag is used to disable user interactions while the component is animating */
-    const isInteractiveRef = React.useRef<boolean>(false);
+    const [isReady, setIsReady] = React.useState<boolean>(false);
     const dialogWasAcceptedRef = React.useRef<boolean>(false);
-    const hasNavigatedBackRef = React.useRef<boolean>(false);
+    const historyWasPushedRef = React.useRef<boolean>(false);
     const animationDurationRef = React.useRef<number>(shouldAnimate() ? styles.ANIMATION_DURATION_MS : 0);
 
     const shouldRenderNative = props.type !== 'dialog' && isWebViewBridgeAvailable();
@@ -221,7 +221,7 @@ const ModalDialog = (props: ModalDialogProps): JSX.Element => {
     React.useEffect(() => {
         const timeout = setTimeout(() => {
             if (!isClosingRef.current) {
-                isInteractiveRef.current = true;
+                setIsReady(true);
             }
         }, animationDurationRef.current);
         return () => {
@@ -243,10 +243,10 @@ const ModalDialog = (props: ModalDialogProps): JSX.Element => {
 
     const startClosing = React.useCallback(() => {
         let timeout: NodeJS.Timeout;
-        if (!isClosingRef.current) {
-            setIsClosing(true);
+        if (!isClosingRef.current && isReady) {
             isClosingRef.current = true;
-            isInteractiveRef.current = false;
+            setIsReady(false);
+            setIsClosing(true);
             timeout = setTimeout(close, animationDurationRef.current);
         }
         return () => {
@@ -254,7 +254,7 @@ const ModalDialog = (props: ModalDialogProps): JSX.Element => {
                 clearTimeout(timeout);
             }
         };
-    }, [close]);
+    }, [close, isReady]);
 
     const handleAccept = React.useCallback(() => {
         dialogWasAcceptedRef.current = true;
@@ -275,7 +275,7 @@ const ModalDialog = (props: ModalDialogProps): JSX.Element => {
     }, [handleAccept, handleCancel, shouldAcceptOnDismiss]);
 
     const handleBackNavigation = React.useCallback(() => {
-        hasNavigatedBackRef.current = true;
+        historyWasPushedRef.current = false;
         dismiss();
     }, [dismiss]);
 
@@ -283,11 +283,15 @@ const ModalDialog = (props: ModalDialogProps): JSX.Element => {
         if (shouldRenderNative) {
             return;
         }
-        window.history.pushState(null, document.title, window.location.href);
+        if (!historyWasPushedRef.current && !isClosingRef.current) {
+            historyWasPushedRef.current = true;
+            window.history.pushState(null, document.title, window.location.href);
+        }
         window.addEventListener('popstate', handleBackNavigation);
         return () => {
             window.removeEventListener('popstate', handleBackNavigation);
-            if (isClosingRef.current && !hasNavigatedBackRef.current) {
+            if (isClosingRef.current && historyWasPushedRef.current) {
+                historyWasPushedRef.current = false;
                 window.history.back();
             }
         };
@@ -338,6 +342,7 @@ const ModalDialog = (props: ModalDialogProps): JSX.Element => {
                         [styles.closedOpactityLayer]: isClosing,
                     })}
                     data-testid="dialog-overlay"
+                    aria-hidden={isClosing || !isReady}
                 >
                     {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
                     <div role="dialog" onClick={(e) => e.stopPropagation()} data-component-name="Dialog">
@@ -346,7 +351,7 @@ const ModalDialog = (props: ModalDialogProps): JSX.Element => {
                             onAnimationEnd={(e) => {
                                 if (e.target === dialogContentRef.current) {
                                     if (!isClosingRef.current) {
-                                        isInteractiveRef.current = true;
+                                        setIsReady(true);
                                     }
                                 }
                             }}

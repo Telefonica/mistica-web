@@ -27,6 +27,7 @@ export const Alert: StoryComponent = () => {
                         title: 'Profile updated',
                         message: 'Your changes have been successfully saved',
                         acceptText: 'Ok',
+                        onAccept: () => console.log('Accepted'),
                     })
                 }
             >
@@ -47,6 +48,8 @@ export const Confirm: StoryComponent<{destructive: boolean}> = ({destructive}) =
                             'Are you sure you want to delete "rainy_day.jpg"? You cant undo this action.',
                         title: 'Delete media?',
                         destructive,
+                        onAccept: () => console.log('Accepted'),
+                        onCancel: () => console.log('Canceled'),
                     })
                 }
             >
@@ -83,6 +86,8 @@ export const Dialog: StoryComponent = () => {
                         ),
                         link: <ButtonLink href="https://google.com">Link</ButtonLink>,
                         icon: <IconInformationUserLight color={skinVars.colors.brand} />,
+                        onAccept: () => console.log('Accepted'),
+                        onCancel: () => console.log('Canceled'),
                     })
                 }
             >

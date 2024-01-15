@@ -8,6 +8,11 @@ import userEvent from '@testing-library/user-event';
 const alertProps = {message: 'Message'};
 const confirmProps = {message: 'Confirm', onAccept: () => {}};
 
+beforeEach(() => {
+    // The history object is not cleared between tests. This way we put the history position at the end
+    window.history.pushState({}, '', '/');
+});
+
 test('does not render anything initially', () => {
     const {asFragment} = render(<ThemeContextProvider theme={makeTheme()} />);
     expect(asFragment()).toMatchInlineSnapshot(`<DocumentFragment />`);
@@ -72,6 +77,7 @@ test('renders confirm dialog correctly when confirm function called', async () =
         confirm(confirmProps);
     });
 
+    expect(await screen.findByRole('dialog')).toBeInTheDocument();
     expect(screen.getByText(confirmProps.message)).toBeInTheDocument();
     expect(screen.getByRole('button', {name: 'Cancelar'})).toBeInTheDocument();
     expect(screen.getByRole('button', {name: 'Aceptar'})).toBeInTheDocument();
@@ -88,11 +94,12 @@ test('Closes a dialog on click outside', async () => {
         dialog({...confirmProps, onCancel: onCancelSpy});
     });
 
+    expect(await screen.findByRole('dialog')).toBeInTheDocument();
     expect(await screen.findByRole('button', {name: 'Cancelar'})).toBeInTheDocument();
 
     await userEvent.click(screen.getByTestId('dialog-overlay'));
 
-    await waitForElementToBeRemoved(() => screen.queryByRole('dialog'));
+    await waitForElementToBeRemoved(() => screen.queryByRole('dialog', {hidden: true}));
     expect(onCancelSpy).toHaveBeenCalled();
 });
 
@@ -112,13 +119,18 @@ test('closes confirm dialog when clicking on any button', async () => {
 
     await userEvent.click(cancelButton);
 
-    await waitForElementToBeRemoved(() => screen.queryByRole('dialog'));
+    await waitForElementToBeRemoved(() => screen.queryByRole('dialog', {hidden: true}));
     expect(onCancelSpy).toHaveBeenCalled();
 
     const onAcceptSpy = jest.fn();
     act(() => {
-        confirm({...confirmProps, onAccept: onAcceptSpy});
+        confirm({...confirmProps, onAccept: onAcceptSpy, onCancel: undefined});
     });
+
+    // the cancel button should be visible even if the onCancel callback is not defined
+    const cancelButton2 = await screen.findByRole('button', {name: 'Cancelar'});
+    expect(cancelButton2).toBeInTheDocument();
+
     const acceptButton = await screen.findByRole('button', {name: 'Aceptar'});
     expect(acceptButton).toBeInTheDocument();
     await userEvent.click(acceptButton);
@@ -141,7 +153,7 @@ test('closing a previous accepted dialog does not trigger onAccept callback', as
     const acceptButton = await screen.findByRole('button', {name: 'Aceptar'});
     await userEvent.click(acceptButton);
 
-    await waitForElementToBeRemoved(() => screen.queryByRole('dialog'));
+    await waitForElementToBeRemoved(() => screen.queryByRole('dialog', {hidden: true}));
     expect(onAcceptSpy).toHaveBeenCalled();
 
     onAcceptSpy.mockClear();
@@ -153,7 +165,7 @@ test('closing a previous accepted dialog does not trigger onAccept callback', as
     const cancelButton = await screen.findByRole('button', {name: 'Cancelar'});
     await userEvent.click(cancelButton);
 
-    await waitForElementToBeRemoved(() => screen.queryByRole('dialog'));
+    await waitForElementToBeRemoved(() => screen.queryByRole('dialog', {hidden: true}));
     expect(onAcceptSpy).not.toHaveBeenCalled();
 }, 10000);
 
@@ -192,4 +204,51 @@ test('when webview bridge is available nativeConfirm is shown', async () => {
             cancelText: 'Cancelar',
         });
     });
+});
+
+test('history restored after closing a dialog using back', async () => {
+    const pushStateSpy = jest.spyOn(window.history, 'pushState');
+    const backSpy = jest.spyOn(window.history, 'back');
+    const initialHistoryLength = window.history.length;
+
+    render(<ThemeContextProvider theme={makeTheme()} />);
+
+    act(() => {
+        alert(alertProps);
+    });
+
+    expect(await screen.findByRole('dialog')).toBeInTheDocument();
+    expect(window.history.length).toBe(initialHistoryLength + 1);
+
+    act(() => {
+        window.history.back();
+    });
+
+    await waitForElementToBeRemoved(() => screen.queryByRole('dialog', {hidden: true}));
+
+    expect(pushStateSpy).toHaveBeenCalledTimes(1);
+    expect(backSpy).toHaveBeenCalledTimes(1);
+});
+
+test('history restored after closing a dialog using a button', async () => {
+    const pushStateSpy = jest.spyOn(window.history, 'pushState');
+    const backSpy = jest.spyOn(window.history, 'back');
+    const initialHistoryLength = window.history.length;
+
+    render(<ThemeContextProvider theme={makeTheme()} />);
+
+    act(() => {
+        alert(alertProps);
+    });
+
+    expect(await screen.findByRole('dialog')).toBeInTheDocument();
+    expect(window.history.length).toBe(initialHistoryLength + 1);
+
+    const acceptButton = await screen.findByRole('button', {name: 'Aceptar'});
+    await userEvent.click(acceptButton);
+
+    await waitForElementToBeRemoved(() => screen.queryByRole('dialog', {hidden: true}));
+
+    expect(pushStateSpy).toHaveBeenCalledTimes(1);
+    expect(backSpy).toHaveBeenCalledTimes(1);
 });
