@@ -254,7 +254,6 @@ export const logoContainer = style([
 ]);
 
 export const burgerMenuButton = style({
-    marginRight: 24,
     '@media': {
         [mq.desktopOrBigger]: {
             display: 'none',
