@@ -247,6 +247,7 @@ export const logoContainer = style([
         '@media': {
             [mq.tabletOrSmaller]: {
                 marginRight: 0,
+                marginLeft: 24,
             },
         },
     },
