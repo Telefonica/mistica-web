@@ -114,6 +114,7 @@ test('closes confirm dialog when clicking on any button', async () => {
         confirm({...confirmProps, onCancel: onCancelSpy});
     });
 
+    expect(await screen.findByRole('dialog')).toBeInTheDocument();
     const cancelButton = await screen.findByRole('button', {name: 'Cancelar'});
     expect(cancelButton).toBeInTheDocument();
 
