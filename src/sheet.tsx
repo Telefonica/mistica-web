@@ -24,6 +24,7 @@ import IconButton from './icon-button';
 import ButtonLayout from './button-layout';
 import Image from './image';
 import {InternalResponsiveLayout} from './responsive-layout';
+import {safeAreaInsetBottom} from './utils/css';
 
 import type {ExclusifyUnion} from './utils/utility-types';
 import type {DataAttributes, IconProps, RendersNullableElement, TrackingEvent} from './utils/types';
@@ -273,6 +274,9 @@ const Sheet = React.forwardRef<HTMLDivElement, SheetProps>(({onClose, children, 
                                 aria-labelledby={modalTitleId}
                                 onScroll={onScroll}
                                 className={styles.children}
+                                style={{
+                                    paddingBottom: safeAreaInsetBottom,
+                                }}
                             >
                                 {typeof children === 'function'
                                     ? children({closeModal, modalTitleId})
