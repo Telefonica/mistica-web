@@ -29,7 +29,7 @@ export const checkboxVariants = styleVariants({
     disabled: [checkboxBase, {cursor: 'default', opacity: 0.5, padding: 4}],
     disabledIos: [checkboxBase, {cursor: 'default', opacity: 0.5, padding: 0}],
 });
-
+// Hardcoded color because the native switch in iOS doesn't allow modification of this color
 const switchCheckboxContainerBase = style([
     sprinkles({position: 'relative'}),
     {
