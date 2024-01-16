@@ -141,6 +141,8 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
         ref
     ) => {
         const id = useAriaId(idProp);
+        const helperTextid = useAriaId();
+
         const [inputState, setInputState] = React.useState<InputState>(
             defaultValue?.length || value?.length ? 'filled' : 'default'
         );
@@ -235,6 +237,7 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
                     <HelperText
                         error={error}
                         leftText={helperText}
+                        id={helperTextid}
                         rightText={multiline && maxLength ? `${characterCount}/${maxLength}` : undefined}
                     />
                 }
@@ -311,6 +314,7 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
                             defaultValue,
                             value,
                             ...(error && {'aria-invalid': true}),
+                            ...(helperText && {'aria-describedby': helperTextid}),
                         })}
                     </Text3>
                 </div>

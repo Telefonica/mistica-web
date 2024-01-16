@@ -2,6 +2,14 @@ import {style} from '@vanilla-extract/css';
 import {vars} from './skins/skin-contract.css';
 import {sprinkles} from './sprinkles.css';
 import * as mq from './media-queries.css';
+import {
+    fieldVerticalPadding,
+    inputLineHeight,
+    labelFontSize,
+    labelLineHeight,
+    shrinkedLabelLineHeight,
+} from './text-field-base.css';
+import {pxToRem} from '../dist';
 
 export const LABEL_LEFT_POSITION = 12;
 export const DEFAULT_WIDTH = 328;
@@ -13,22 +21,21 @@ export const LABEL_SCALE_MOBILE = 0.75; // Text1/Text3 = 12/16 (mobile)
 export const labelContainer = style([
     sprinkles({
         position: 'absolute',
-        top: 0,
-        height: 24,
         display: 'flex',
         flexDirection: 'row',
+        top: fieldVerticalPadding,
         left: LABEL_LEFT_POSITION,
     }),
     {
         pointerEvents: 'none',
         transformOrigin: '0 0',
-        transform: 'translateY(18px) scale(1)',
-        fontSize: 18, // cannot use Text3/Text1 preset comps because we want to apply a scale transition (zoom-out)
-        lineHeight: '24px',
+        fontSize: labelFontSize.desktop, // cannot use Text3/Text1 preset comps because we want to apply a scale transition (zoom-out)
+        transform: `translateY(calc((${shrinkedLabelLineHeight.desktop} + ${inputLineHeight} - ${labelLineHeight}) / 2)) scale(1)`,
+        lineHeight: labelLineHeight,
         '@media': {
             [mq.tabletOrSmaller]: {
-                fontSize: 16,
-                transform: 'translateY(16px) scale(1)',
+                fontSize: labelFontSize.mobile,
+                transform: `translateY(calc((${shrinkedLabelLineHeight.mobile} + ${inputLineHeight} - ${labelLineHeight}) / 2)) scale(1)`,
             },
         },
         width: `calc(100% - ${LABEL_LEFT_POSITION * 2}px)`,
@@ -51,15 +58,13 @@ export const labelText = style([
 ]);
 
 export const shrinked = style({
-    height: 20 / LABEL_SCALE_DESKTOP, // Text1 line-height is the expected final line-height.
-    transform: `translateY(8px) scale(${LABEL_SCALE_DESKTOP})`,
-    lineHeight: `${20 / LABEL_SCALE_DESKTOP}px`,
+    transform: `translateY(0) scale(${LABEL_SCALE_DESKTOP})`,
+    lineHeight: `calc(${shrinkedLabelLineHeight.desktop} / ${LABEL_SCALE_DESKTOP})`,
     width: `calc(100% - ${LABEL_LEFT_POSITION * 2}px) / ${LABEL_SCALE_DESKTOP}`,
     '@media': {
         [mq.tabletOrSmaller]: {
-            transform: `translateY(8px) scale(${LABEL_SCALE_MOBILE})`,
-            height: 16 / LABEL_SCALE_MOBILE,
-            lineHeight: `${16 / LABEL_SCALE_MOBILE}px`,
+            transform: `translateY(0) scale(${LABEL_SCALE_MOBILE})`,
+            lineHeight: `calc(${shrinkedLabelLineHeight.mobile} / ${LABEL_SCALE_MOBILE})`,
             width: `calc(100% - ${LABEL_LEFT_POSITION * 2}px) / ${LABEL_SCALE_MOBILE}`,
         },
     },
@@ -106,18 +111,18 @@ export const field = sprinkles({
 });
 
 export const fieldSingle = style([
-    sprinkles({height: 56}),
     {
+        height: `calc(${inputLineHeight} + ${shrinkedLabelLineHeight.desktop} + 2 * ${fieldVerticalPadding}px)`,
         '@media': {
-            [mq.desktopOrBigger]: {
-                height: 60,
+            [mq.tabletOrSmaller]: {
+                height: `calc(${inputLineHeight} + ${shrinkedLabelLineHeight.mobile} + 2 * ${fieldVerticalPadding}px)`,
             },
         },
     },
 ]);
 
 export const fieldMulti = style({
-    height: 152,
+    height: pxToRem(152),
 });
 
 export const helperContainer = sprinkles({

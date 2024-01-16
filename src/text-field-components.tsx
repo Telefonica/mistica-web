@@ -69,10 +69,11 @@ type HelperTextProps = {
     leftText?: string;
     rightText?: string;
     error?: boolean;
+    id?: string;
     children?: void;
 };
 
-export const HelperText: React.FC<HelperTextProps> = ({leftText, rightText, error}) => {
+export const HelperText: React.FC<HelperTextProps> = ({leftText, rightText, error, id}) => {
     const isInverse = useIsInverseVariant();
     const leftColor = isInverse
         ? vars.colors.textPrimaryInverse
@@ -85,7 +86,7 @@ export const HelperText: React.FC<HelperTextProps> = ({leftText, rightText, erro
         <>
             {leftText && (
                 <div className={classnames(styles.helperText, styles.leftText)}>
-                    <Text1 color={leftColor} regular as="p">
+                    <Text1 color={leftColor} regular as="p" id={id}>
                         {leftText}
                     </Text1>
                 </div>

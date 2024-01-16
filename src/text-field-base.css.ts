@@ -2,9 +2,25 @@ import {globalStyle, style} from '@vanilla-extract/css';
 import {sprinkles} from './sprinkles.css';
 import {vars} from './skins/skin-contract.css';
 import * as mq from './media-queries.css';
+import {pxToRem} from './utils/css';
 
-export const mobileFontSize = 16;
-export const desktopFontSize = 18;
+export const fieldVerticalPadding = 8;
+
+export const mobileFontSize = pxToRem(16);
+export const desktopFontSize = pxToRem(18);
+
+export const labelLineHeight = pxToRem(24);
+export const inputLineHeight = pxToRem(24);
+
+export const shrinkedLabelLineHeight = {
+    desktop: pxToRem(20),
+    mobile: pxToRem(16),
+};
+
+export const labelFontSize = {
+    mobile: pxToRem(16),
+    desktop: pxToRem(18),
+};
 
 const commonInputStyles = style([
     sprinkles({
@@ -16,11 +32,11 @@ const commonInputStyles = style([
     {
         background: 'none',
         outline: 0,
-        lineHeight: '24px',
-        fontSize: mobileFontSize,
+        lineHeight: inputLineHeight,
+        fontSize: desktopFontSize,
         '@media': {
-            [mq.desktopOrBigger]: {
-                fontSize: desktopFontSize,
+            [mq.tabletOrSmaller]: {
+                fontSize: mobileFontSize,
             },
         },
         caretColor: vars.colors.controlActivated,
@@ -66,23 +82,23 @@ export const textArea = style([
     }),
     {
         resize: 'none',
-        paddingBottom: '8px',
+        paddingBottom: fieldVerticalPadding,
     },
     commonInputStyles,
 ]);
 
 export const textAreaWithLabel = style({
     // using margin instead of padding to avoid the multiline text being visible through the label
-    marginTop: 28,
+    marginTop: `calc(${shrinkedLabelLineHeight.desktop} + ${fieldVerticalPadding}px)`,
     '@media': {
         [mq.tabletOrSmaller]: {
-            marginTop: 24,
+            marginTop: `calc(${shrinkedLabelLineHeight.mobile} + ${fieldVerticalPadding}px)`,
         },
     },
 });
 
 export const textAreaWithoutLabel = style({
-    paddingTop: 16,
+    paddingTop: 2 * fieldVerticalPadding,
 });
 
 export const input = style([
@@ -168,18 +184,25 @@ export const inputFirefoxStyles = style({
 });
 
 export const inputWithLabel = style({
-    paddingTop: 28,
+    paddingTop: `calc(${shrinkedLabelLineHeight.desktop} + ${fieldVerticalPadding}px)`,
     '@media': {
         [mq.tabletOrSmaller]: {
-            paddingTop: 24,
+            paddingTop: `calc(${shrinkedLabelLineHeight.mobile} + ${fieldVerticalPadding}px)`,
         },
     },
-    paddingBottom: 8,
+    paddingBottom: fieldVerticalPadding,
 });
 
-export const inputWithoutLabel = sprinkles({
-    paddingTop: 16,
-    paddingBottom: 16,
+export const inputWithoutLabel = style({
+    paddingTop: `calc(${shrinkedLabelLineHeight.desktop} / 2)`,
+    paddingBottom: `calc(${shrinkedLabelLineHeight.desktop} / 2)`,
+
+    '@media': {
+        [mq.tabletOrSmaller]: {
+            paddingTop: `calc(${shrinkedLabelLineHeight.mobile} / 2)`,
+            paddingBottom: `calc(${shrinkedLabelLineHeight.mobile} / 2)`,
+        },
+    },
 });
 
 export const endIcon = style([
