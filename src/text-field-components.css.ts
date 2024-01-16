@@ -9,7 +9,7 @@ import {
     labelLineHeight,
     shrinkedLabelLineHeight,
 } from './text-field-base.css';
-import {pxToRem} from '../dist';
+import {pxToRem} from './utils/css';
 
 export const LABEL_LEFT_POSITION = 12;
 export const DEFAULT_WIDTH = 328;
