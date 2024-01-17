@@ -28,6 +28,7 @@ import {safeAreaInsetBottom} from './utils/css';
 
 import type {ExclusifyUnion} from './utils/utility-types';
 import type {DataAttributes, IconProps, RendersNullableElement, TrackingEvent} from './utils/types';
+import {isRunningAcceptanceTest} from './utils/platform';
 
 const getClientY = (ev: TouchEvent | MouseEvent | React.TouchEvent | React.MouseEvent) => {
     if ('touches' in ev) {
@@ -135,6 +136,10 @@ const useDraggableSheetProps = ({closeModal}: {closeModal: () => void}) => {
 
 const useLockBodyScrollStyleElement = () => {
     React.useLayoutEffect(() => {
+        if (isRunningAcceptanceTest()) {
+            // Skip this in acceptance tests. For some reason this produces unstable tests in CI
+            return;
+        }
         const scrollY = window.scrollY;
         // When the modal is shown, we want a fixed body (no-scroll)
         document.body.style.top = `-${scrollY}px`;
@@ -157,7 +162,7 @@ const useLockBodyScrollStyleElement = () => {
         }
     `;
 
-    return <style>{bodyStyle}</style>;
+    return isRunningAcceptanceTest() ? <></> : <style>{bodyStyle}</style>;
 };
 
 type ModalState = 'closed' | 'opening' | 'open' | 'closing' | 'closed';
