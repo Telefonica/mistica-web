@@ -45,8 +45,8 @@ export const getColors = (skin) => {
             };
         case 'Tu':
             return {
-                primary: '#4343FF',
-                textPrimary: '#000000',
+                primary: '#2B3447',
+                textPrimary: '#2B3447',
                 textPrimaryInverse: '#FFFFFF',
                 textSecondary: '#727579',
             };
