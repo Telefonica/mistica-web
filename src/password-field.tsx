@@ -7,6 +7,7 @@ import {BaseIconButton} from './icon-button';
 import IconEyeOffRegular from './generated/mistica-icons/icon-eye-off-regular';
 import IconEyeRegular from './generated/mistica-icons/icon-eye-regular';
 import * as styles from './password-field.css';
+import {pxToRem} from './utils/css';
 
 import type {CommonFormFieldProps} from './text-field-base';
 
@@ -27,10 +28,10 @@ const PasswordAdornment: React.FC<{
                 setVisibility(!isVisible);
                 focus();
             }}
-            size={40}
+            size={pxToRem(40)}
             className={styles.shadow}
         >
-            {isVisible ? <IconEyeOffRegular /> : <IconEyeRegular />}
+            {isVisible ? <IconEyeOffRegular size={pxToRem(24)} /> : <IconEyeRegular size={pxToRem(24)} />}
         </BaseIconButton>
     );
 };

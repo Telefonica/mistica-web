@@ -3,7 +3,7 @@ import {sprinkles} from './sprinkles.css';
 import {keyframes, style} from '@vanilla-extract/css';
 import {desktopFontSize, mobileFontSize} from './text-field-base.css';
 import * as mq from './media-queries.css';
-import {pxToRem} from '../dist';
+import {pxToRem} from './utils/css';
 
 const fieldPadding = 16;
 const inputLineHeight = pxToRem(16);
