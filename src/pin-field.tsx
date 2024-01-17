@@ -187,14 +187,9 @@ const PinInput = ({
                                 inputRef(el);
                             }
                         }}
-                        className={classNames(
-                            textFieldStyles.input,
-                            textFieldStyles.inputWithoutLabel,
-                            styles.input,
-                            {
-                                [styles.passwordInput]: hideCode,
-                            }
-                        )}
+                        className={classNames(textFieldStyles.input, styles.input, {
+                            [styles.passwordInput]: hideCode,
+                        })}
                         disabled={disabled}
                         readOnly={readOnly}
                         autoComplete={readSms ? 'one-time-code' : undefined}

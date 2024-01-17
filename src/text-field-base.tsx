@@ -252,7 +252,7 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
                     <div
                         className={classNames(
                             styles.prefix,
-                            hasLabel ? styles.prefixWithLabel : styles.prefixWithoutLabel
+                            hasLabel ? styles.inputWithLabel : styles.inputWithoutLabel
                         )}
                         style={{
                             opacity: inputState === 'default' ? 0 : 1,

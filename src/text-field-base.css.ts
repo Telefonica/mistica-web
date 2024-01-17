@@ -90,15 +90,22 @@ export const textArea = style([
 export const textAreaWithLabel = style({
     // using margin instead of padding to avoid the multiline text being visible through the label
     marginTop: `calc(${shrinkedLabelLineHeight.desktop} + ${fieldVerticalPadding}px)`,
+    marginBottom: 0,
+    height: `calc(${pxToRem(152)} - ${shrinkedLabelLineHeight.desktop} - ${fieldVerticalPadding}px - 2px)`,
     '@media': {
         [mq.tabletOrSmaller]: {
             marginTop: `calc(${shrinkedLabelLineHeight.mobile} + ${fieldVerticalPadding}px)`,
+            height: `calc(${pxToRem(152)} - ${
+                shrinkedLabelLineHeight.mobile
+            } - ${fieldVerticalPadding}px - 2px)`,
         },
     },
 });
 
 export const textAreaWithoutLabel = style({
+    height: `calc(${pxToRem(152)} - 2px)`,
     paddingTop: 2 * fieldVerticalPadding,
+    margin: 0,
 });
 
 export const input = style([
@@ -185,9 +192,11 @@ export const inputFirefoxStyles = style({
 
 export const inputWithLabel = style({
     paddingTop: `calc(${shrinkedLabelLineHeight.desktop} + ${fieldVerticalPadding}px)`,
+    height: `calc(${inputLineHeight} + ${shrinkedLabelLineHeight.desktop} + 2 * ${fieldVerticalPadding}px - 2px)`,
     '@media': {
         [mq.tabletOrSmaller]: {
             paddingTop: `calc(${shrinkedLabelLineHeight.mobile} + ${fieldVerticalPadding}px)`,
+            height: `calc(${inputLineHeight} + ${shrinkedLabelLineHeight.mobile} + 2 * ${fieldVerticalPadding}px - 2px)`,
         },
     },
     paddingBottom: fieldVerticalPadding,
@@ -196,11 +205,12 @@ export const inputWithLabel = style({
 export const inputWithoutLabel = style({
     paddingTop: `calc(${shrinkedLabelLineHeight.desktop} / 2)`,
     paddingBottom: `calc(${shrinkedLabelLineHeight.desktop} / 2)`,
-
+    height: `calc(${inputLineHeight} + ${shrinkedLabelLineHeight.desktop} + 2 * ${fieldVerticalPadding}px - 2px)`,
     '@media': {
         [mq.tabletOrSmaller]: {
             paddingTop: `calc(${shrinkedLabelLineHeight.mobile} / 2)`,
             paddingBottom: `calc(${shrinkedLabelLineHeight.mobile} / 2)`,
+            height: `calc(${inputLineHeight} + ${shrinkedLabelLineHeight.mobile} + 2 * ${fieldVerticalPadding}px - 2px)`,
         },
     },
 });
@@ -237,26 +247,14 @@ export const prefix = style([
     }),
     {
         transition: 'opacity 150ms cubic-bezier(0.0, 0, 0.2, 1) 0ms',
-    },
-]);
-
-export const prefixWithLabel = style([
-    sprinkles({
-        paddingBottom: 8,
-    }),
-    {
-        paddingTop: 28,
+        height: `calc(${inputLineHeight} + ${shrinkedLabelLineHeight.desktop} + 2 * ${fieldVerticalPadding}px - 2px)`,
         '@media': {
             [mq.tabletOrSmaller]: {
-                paddingTop: 24,
+                height: `calc(${inputLineHeight} + ${shrinkedLabelLineHeight.mobile} + 2 * ${fieldVerticalPadding}px  - 2px)`,
             },
         },
     },
 ]);
-
-export const prefixWithoutLabel = sprinkles({
-    paddingY: 16,
-});
 
 export const menuItem = style([
     sprinkles({

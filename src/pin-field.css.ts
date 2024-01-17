@@ -3,26 +3,32 @@ import {sprinkles} from './sprinkles.css';
 import {keyframes, style} from '@vanilla-extract/css';
 import {desktopFontSize, mobileFontSize} from './text-field-base.css';
 import * as mq from './media-queries.css';
+import {pxToRem} from '../dist';
 
-import type {Sprinkles} from './sprinkles.css';
+const fieldPadding = 16;
+const inputLineHeight = pxToRem(16);
 
 export const disabled = style({
     opacity: 0.5,
     cursor: 'default',
 });
 
-const fieldCommonStyles: Sprinkles = {
-    overflow: 'hidden',
-    border: 'regular',
-    display: 'flex',
-    borderRadius: vars.borderRadii.input,
-    position: 'relative',
-    width: 48,
-    height: 48,
-    background: vars.colors.backgroundContainer,
-};
+const fieldCommonStyles = style([
+    sprinkles({
+        overflow: 'hidden',
+        border: 'regular',
+        display: 'flex',
+        borderRadius: vars.borderRadii.input,
+        position: 'relative',
+        background: vars.colors.backgroundContainer,
+    }),
+    {
+        width: `calc(${inputLineHeight} + 2 * ${fieldPadding}px)`,
+        height: `calc(${inputLineHeight} + 2 * ${fieldPadding}px)`,
+    },
+]);
 
-export const field = sprinkles(fieldCommonStyles);
+export const field = fieldCommonStyles;
 
 export const focusedField = style([
     field,
@@ -31,13 +37,17 @@ export const focusedField = style([
     },
 ]);
 
-export const readOnlyField = sprinkles({
-    ...fieldCommonStyles,
-    background: vars.colors.neutralLow,
-});
+export const readOnlyField = style([
+    fieldCommonStyles,
+    {
+        background: vars.colors.neutralLow,
+    },
+]);
 
 export const input = style({
     textAlign: 'center',
+    paddingTop: fieldPadding,
+    paddingBottom: fieldPadding,
 });
 
 export const passwordInput = sprinkles({
@@ -74,7 +84,7 @@ export const passwordDot = style({
     left: 0,
     right: 0,
     margin: 'auto', // center the div
-    width: 16,
-    height: 16,
+    width: inputLineHeight,
+    height: inputLineHeight,
     textAlign: 'center',
 });

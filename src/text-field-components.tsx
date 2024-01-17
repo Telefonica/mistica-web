@@ -130,11 +130,9 @@ export const FieldContainer: React.FC<FieldContainerProps> = ({
                 [styles.disabled]: disabled,
             })}
             onClick={(e) => {
-                // workaround for the multiline case, where the textarea has a margin. We want to focus
-                // the input when the user clicks anywhere in the container (like in the label)
-                if (multiline) {
-                    e.currentTarget.querySelector('textarea')?.focus();
-                }
+                // if the field is multine, the textarea has a margin. Also, if the prefix is non empty, it "shifts" the input
+                // to the right. We want to focus the input when the user clicks anywhere in the container (like in the label)
+                e.currentTarget.querySelector(multiline ? 'textarea' : 'input')?.focus();
             }}
         >
             <div
