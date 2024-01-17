@@ -44,7 +44,9 @@ export const useDisableBodyScroll = (disable: boolean): void => {
                     // if the scrollbar is visible, we don't want to hide it because content will be resized
                     const overflowY = hasScrollbar ? 'scroll' : 'hidden';
 
-                    document.body.style.cssText = `overflow:hidden;overflow-y:${overflowY};position:fixed;top:${-bodyScrollTop}px;left:0px;right:0px;bottom:0px`;
+                    document.body.style.cssText =
+                        bodyStyles +
+                        `;overflow:hidden;overflow-y:${overflowY};position:fixed;top:${-bodyScrollTop}px;left:0px;right:0px;bottom:0px`;
                 }
             };
             const enableBodyScroll = () => {

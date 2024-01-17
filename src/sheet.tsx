@@ -3,7 +3,7 @@ import classnames from 'classnames';
 import * as React from 'react';
 import * as styles from './sheet.css';
 import FocusTrap from './focus-trap';
-import {useAriaId, useIsInViewport, useScreenSize, useTheme} from './hooks';
+import {useAriaId, useDisableBodyScroll, useIsInViewport, useScreenSize, useTheme} from './hooks';
 import {useSetModalStateEffect} from './modal-context-provider';
 import {Portal} from './portal';
 import {Text2, Text3, Text5} from './text';
@@ -25,10 +25,10 @@ import ButtonLayout from './button-layout';
 import Image from './image';
 import {InternalResponsiveLayout} from './responsive-layout';
 import {safeAreaInsetBottom} from './utils/css';
+import {isRunningAcceptanceTest} from './utils/platform';
 
 import type {ExclusifyUnion} from './utils/utility-types';
 import type {DataAttributes, IconProps, RendersNullableElement, TrackingEvent} from './utils/types';
-import {isRunningAcceptanceTest} from './utils/platform';
 
 const getClientY = (ev: TouchEvent | MouseEvent | React.TouchEvent | React.MouseEvent) => {
     if ('touches' in ev) {
@@ -134,37 +134,6 @@ const useDraggableSheetProps = ({closeModal}: {closeModal: () => void}) => {
     };
 };
 
-const useLockBodyScrollStyleElement = () => {
-    React.useLayoutEffect(() => {
-        if (isRunningAcceptanceTest()) {
-            // Skip this in acceptance tests. For some reason this produces unstable tests in CI
-            return;
-        }
-        const scrollY = window.scrollY;
-        // When the modal is shown, we want a fixed body (no-scroll)
-        document.body.style.top = `-${scrollY}px`;
-        return () => {
-            if (process.env.NODE_ENV !== 'test') {
-                window.scrollTo(0, scrollY);
-            }
-        };
-    }, []);
-
-    // disable pull down to refresh when the modal is open
-    // disable body scroll when the modal is open
-    const bodyStyle = `
-        body {
-            position: fixed;
-            left: 0;
-            right: 0;
-            overscroll-behavior-y: contain;
-            overflow: hidden;
-        }
-    `;
-
-    return isRunningAcceptanceTest() ? <></> : <style>{bodyStyle}</style>;
-};
-
 type ModalState = 'closed' | 'opening' | 'open' | 'closing' | 'closed';
 type ModalAction = 'close' | 'open' | 'transitionEnd';
 
@@ -240,7 +209,7 @@ const Sheet = React.forwardRef<HTMLDivElement, SheetProps>(({onClose, children, 
     const {onScroll, overlayStyle, ...dragableSheetProps} = useDraggableSheetProps({closeModal});
 
     useSetModalStateEffect();
-    const bodyStyle = useLockBodyScrollStyleElement();
+    useDisableBodyScroll(modalState !== 'closed');
 
     if (modalState === 'closed') {
         return null;
@@ -249,7 +218,6 @@ const Sheet = React.forwardRef<HTMLDivElement, SheetProps>(({onClose, children, 
     return (
         <Portal>
             <FocusTrap>
-                {bodyStyle}
                 {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
                 <div
                     className={classnames(styles.overlay, {
