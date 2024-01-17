@@ -1,5 +1,5 @@
 import {style} from '@vanilla-extract/css';
-import {pxToRem} from '../dist';
+import {pxToRem} from './utils/css';
 import * as mq from './media-queries.css';
 import {vars} from './skins/skin-contract.css';
 import {sprinkles} from './sprinkles.css';
