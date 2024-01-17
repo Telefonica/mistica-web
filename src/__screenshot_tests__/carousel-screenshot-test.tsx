@@ -18,6 +18,20 @@ test('Carousel mobile', async () => {
     expect(await page.screenshot()).toMatchImageSnapshot();
 });
 
+test('Carousel mobile without bullets', async () => {
+    const page = await openStoryPage({
+        id: 'components-carousels-carousel--default',
+        device: 'MOBILE_IOS',
+        args: {withBullets: false},
+    });
+
+    expect(await page.screenshot()).toMatchImageSnapshot();
+
+    await (await screen.findByLabelText('Carousel item 2')).evaluate((el) => el.scrollIntoView());
+
+    expect(await page.screenshot()).toMatchImageSnapshot();
+});
+
 test('Carousel mobile in Vivo new', async () => {
     const page = await openStoryPage({
         id: 'components-carousels-carousel--default',
@@ -93,19 +107,19 @@ test('Carousel desktop', async () => {
     const nextArrow = await screen.findByRole('button', {name: /siguiente/i});
 
     // https://jira.tid.es/browse/WEB-680
-    expect(await page.screenshot()).toMatchImageSnapshot({failureThreshold: 0.001});
+    expect(await page.screenshot()).toMatchImageSnapshot({failureThreshold: 0.00004});
     expect(await isDisabled(prevArrow)).toBe(true);
     expect(await isDisabled(nextArrow)).toBe(false);
 
     await page.click(nextArrow);
 
-    expect(await page.screenshot()).toMatchImageSnapshot({failureThreshold: 0.001});
+    expect(await page.screenshot()).toMatchImageSnapshot({failureThreshold: 0.00004});
     expect(await isDisabled(prevArrow)).toBe(false);
     expect(await isDisabled(nextArrow)).toBe(false);
 
     await page.click(nextArrow);
 
-    expect(await page.screenshot()).toMatchImageSnapshot({failureThreshold: 0.001});
+    expect(await page.screenshot()).toMatchImageSnapshot({failureThreshold: 0.00004});
     expect(await isDisabled(prevArrow)).toBe(false);
     expect(await isDisabled(nextArrow)).toBe(true);
 });
@@ -123,7 +137,7 @@ test('Carousel desktop  with initialActiveItem=3', async () => {
 // no screenshot test for desktop because it's like the regular carousel
 test('CenteredCarousel mobile', async () => {
     const page = await openStoryPage({
-        id: 'components-carousels-centered-carousel--default',
+        id: 'components-carousels-centeredcarousel--default',
         device: 'MOBILE_IOS',
     });
 
@@ -136,7 +150,7 @@ test('CenteredCarousel mobile', async () => {
 
 test('CenteredCarousel mobile with initialActiveItem=1', async () => {
     const page = await openStoryPage({
-        id: 'components-carousels-centered-carousel--default',
+        id: 'components-carousels-centeredcarousel--default',
         device: 'MOBILE_IOS',
         args: {initialActiveItem: 1},
     });
@@ -180,11 +194,11 @@ test('Slideshow desktop', async () => {
     expect(await isDisabled(nextArrow)).toBe(true);
 });
 
-test('Highlighted Card Carousel mobile', async () => {
+test('Carousel on different container types', async () => {
     const page = await openStoryPage({
-        id: 'components-carousels-highlighted-card-carousel--default',
-        device: 'MOBILE_IOS',
+        id: 'private-carousel-on-different-container-types--default',
+        device: 'DESKTOP',
     });
 
-    expect(await page.screenshot()).toMatchImageSnapshot();
+    expect(await page.screenshot({fullPage: true})).toMatchImageSnapshot();
 });

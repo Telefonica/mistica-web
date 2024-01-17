@@ -64,8 +64,6 @@ const useAccordionState = ({
 
     const [index, setIndex] = React.useState<Array<number>>(getValueAsList(defaultValue));
 
-    React.useEffect(() => setIndex(getValueAsList(defaultValue)), [defaultValue]);
-
     React.useEffect(() => {
         if (index.length > 1 && singleOpen) {
             index.splice(1);

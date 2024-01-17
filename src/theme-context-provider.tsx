@@ -19,6 +19,7 @@ import {fromHexToRgb} from './utils/color';
 import {defaultBorderRadiiConfig, defaultTextPresetsConfig} from './skins/defaults';
 import {isClientSide} from './utils/environment';
 import {PACKAGE_VERSION} from './package-version';
+import {SnackbarRoot} from './snackbar-context';
 
 import type {Colors} from './skins/types';
 import type {Theme, ThemeConfig} from './theme';
@@ -168,17 +169,19 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children, as}) => {
                                     <AriaIdGetterContext.Provider value={getAriaId}>
                                         <ScreenSizeContextProvider>
                                             <DialogRoot>
-                                                {as ? (
-                                                    React.createElement(as, {style: themeVars}, children)
-                                                ) : (
-                                                    <>
-                                                        {(process.env.NODE_ENV !== 'test' ||
-                                                            process.env.SSR_TEST) && (
-                                                            <style>{`:root {${themeVars}}`}</style>
-                                                        )}
-                                                        {children}
-                                                    </>
-                                                )}
+                                                <SnackbarRoot>
+                                                    {as ? (
+                                                        React.createElement(as, {style: themeVars}, children)
+                                                    ) : (
+                                                        <>
+                                                            {(process.env.NODE_ENV !== 'test' ||
+                                                                process.env.SSR_TEST) && (
+                                                                <style>{`:root {${themeVars}}`}</style>
+                                                            )}
+                                                            {children}
+                                                        </>
+                                                    )}
+                                                </SnackbarRoot>
                                             </DialogRoot>
                                         </ScreenSizeContextProvider>
                                     </AriaIdGetterContext.Provider>

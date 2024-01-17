@@ -24,6 +24,7 @@ import IconButton from './icon-button';
 import ButtonLayout from './button-layout';
 import Image from './image';
 import {InternalResponsiveLayout} from './responsive-layout';
+import {safeAreaInsetBottom} from './utils/css';
 
 import type {ExclusifyUnion} from './utils/utility-types';
 import type {DataAttributes, IconProps, RendersNullableElement, TrackingEvent} from './utils/types';
@@ -273,6 +274,9 @@ const Sheet = React.forwardRef<HTMLDivElement, SheetProps>(({onClose, children, 
                                 aria-labelledby={modalTitleId}
                                 onScroll={onScroll}
                                 className={styles.children}
+                                style={{
+                                    paddingBottom: safeAreaInsetBottom,
+                                }}
                             >
                                 {typeof children === 'function'
                                     ? children({closeModal, modalTitleId})
@@ -439,7 +443,7 @@ export const RadioListSheet = React.forwardRef<HTMLDivElement, RadioListSheetPro
             <Sheet
                 onClose={onClose}
                 ref={ref}
-                dataAttributes={{...dataAttributes, 'component-name': 'RadioListSheet'}}
+                dataAttributes={{'component-name': 'RadioListSheet', ...dataAttributes}}
             >
                 {({closeModal, modalTitleId}) => (
                     <SheetBody
@@ -534,7 +538,7 @@ export const ActionsListSheet = React.forwardRef<HTMLDivElement, ActionsListShee
             <Sheet
                 onClose={onClose}
                 ref={ref}
-                dataAttributes={{...dataAttributes, 'component-name': 'ActionsListSheet'}}
+                dataAttributes={{'component-name': 'ActionsListSheet', ...dataAttributes}}
             >
                 {({closeModal, modalTitleId}) => (
                     <SheetBody
@@ -630,7 +634,7 @@ export const InfoSheet = React.forwardRef<HTMLDivElement, InfoSheetProps>(
             <Sheet
                 onClose={onClose}
                 ref={ref}
-                dataAttributes={{...dataAttributes, 'component-name': 'InfoSheet'}}
+                dataAttributes={{'component-name': 'InfoSheet', ...dataAttributes}}
             >
                 {({modalTitleId}) => (
                     <SheetBody
@@ -731,7 +735,7 @@ export const ActionsSheet = React.forwardRef<HTMLDivElement, ActionsSheetProps>(
             <Sheet
                 onClose={onClose}
                 ref={ref}
-                dataAttributes={{...dataAttributes, 'component-name': 'ActionsSheet'}}
+                dataAttributes={{'component-name': 'ActionsSheet', ...dataAttributes}}
             >
                 {({modalTitleId, closeModal}) => (
                     <SheetBody

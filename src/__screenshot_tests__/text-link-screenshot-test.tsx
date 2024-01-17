@@ -1,7 +1,7 @@
 import {openStoryPage, screen} from '../test-utils';
 
-test('TextLink in light mode screenshot', async () => {
-    await openStoryPage({id: 'components-text-link--default'});
+test('TextLink - light mode', async () => {
+    await openStoryPage({id: 'components-textlink--default'});
 
     const textLink = await screen.findByTestId('text-link');
 
@@ -10,9 +10,9 @@ test('TextLink in light mode screenshot', async () => {
     expect(image).toMatchImageSnapshot();
 });
 
-test('TextLink inverse in light mode screenshot', async () => {
+test('TextLink - inverse', async () => {
     await openStoryPage({
-        id: 'components-text-link--default',
+        id: 'components-textlink--default',
         args: {inverse: true},
     });
 
@@ -23,11 +23,45 @@ test('TextLink inverse in light mode screenshot', async () => {
     expect(image).toMatchImageSnapshot();
 });
 
-test('TextLink in dark mode screenshot', async () => {
+test('TextLink - dark mode', async () => {
     await openStoryPage({
-        id: 'components-text-link--default',
+        id: 'components-textlink--default',
         isDarkMode: true,
     });
+
+    const textLink = await screen.findByTestId('text-link');
+
+    const image = await textLink.screenshot();
+
+    expect(image).toMatchImageSnapshot();
+});
+
+test('TextLink - disabled', async () => {
+    await openStoryPage({id: 'components-textlink--default', args: {disabled: true}});
+
+    const textLink = await screen.findByTestId('text-link');
+
+    const image = await textLink.screenshot();
+
+    expect(image).toMatchImageSnapshot();
+});
+
+test('TextLink - wraps if necessary', async () => {
+    await openStoryPage({
+        id: 'components-textlink--default',
+        args: {text: 'a long text for the description to force text wrap'},
+        device: 'MOBILE_IOS',
+    });
+
+    const textLink = await screen.findByTestId('text-link');
+
+    const image = await textLink.screenshot();
+
+    expect(image).toMatchImageSnapshot();
+});
+
+test('TextLink - inherits text style', async () => {
+    await openStoryPage({id: 'components-textlink--default', args: {textStyle: 'Text5'}});
 
     const textLink = await screen.findByTestId('text-link');
 

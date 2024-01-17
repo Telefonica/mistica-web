@@ -17,6 +17,7 @@ export const container = style([
     }),
     {
         touchAction: 'none',
+        userSelect: 'none',
     },
 ]);
 

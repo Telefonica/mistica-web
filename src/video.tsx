@@ -6,8 +6,8 @@ import {isRunningAcceptanceTest} from './utils/platform';
 import * as styles from './video.css';
 import * as mediaStyles from './image.css';
 import {getPrefixedDataAttributes} from './utils/dom';
-import {fallbackVar} from '@vanilla-extract/css';
 import {vars} from './skins/skin-contract.css';
+import {fallbackStyles} from './utils/css';
 
 import type {DataAttributes} from './utils/types';
 
@@ -134,8 +134,13 @@ const Video = React.forwardRef<VideoElement, VideoProps>(
         const loadedSource = React.useRef<VideoSource>();
         const posterRef = React.useRef<HTMLDivElement>(null);
 
-        const borderRadius = fallbackVar(mediaStyles.vars.mediaBorderRadius, vars.borderRadii.container);
-        const ratio = typeof aspectRatio === 'number' ? aspectRatio : RATIO[aspectRatio];
+        const borderRadius = fallbackStyles(mediaStyles.vars.mediaBorderRadius, vars.borderRadii.container);
+        const ratio =
+            props.width && props.height
+                ? undefined
+                : typeof aspectRatio === 'number'
+                ? aspectRatio
+                : RATIO[aspectRatio];
 
         const handleError = React.useCallback(() => {
             if (videoStatus === 'loading') {

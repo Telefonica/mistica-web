@@ -30,9 +30,6 @@ process.on('unhandledRejection', (error) => {
 
 const getStories = () => {
     console.log('Extracting stories information');
-    // creates "stories.json" file with stories information
-    execSync('yarn sb extract ./public', {stdio: 'inherit'});
-    // @ts-ignore
     return Object.keys(require('../../../public/stories.json').stories);
 };
 
@@ -47,7 +44,6 @@ const startStorybook = () => {
         const port = 6006;
 
         const storybookServer = http.createServer((request, response) => {
-            // @ts-expect-error - type mismatch in response
             return handler(request, response, {
                 public: 'public',
                 cleanUrls: ['/'],

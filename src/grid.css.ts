@@ -1,21 +1,14 @@
 import {createVar, fallbackVar, style, styleVariants} from '@vanilla-extract/css';
 
-const rowGap = createVar();
-const columnGap = createVar();
 const rowMinSize = createVar();
 const rowMaxSize = createVar();
 const columnMinSize = createVar();
 const columnMaxSize = createVar();
 
-export const vars = {rowGap, columnGap, rowMinSize, rowMaxSize, columnMinSize, columnMaxSize};
+export const vars = {rowMinSize, rowMaxSize, columnMinSize, columnMaxSize};
 
 export const grid = style({
     display: 'grid',
-    columnGap,
-    rowGap,
-    // Chrome 57-65 support:
-    gridColumnGap: columnGap,
-    gridRowGap: rowGap,
 });
 
 const cells = {
