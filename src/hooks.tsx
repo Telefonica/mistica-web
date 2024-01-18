@@ -46,17 +46,17 @@ export const useDisableBodyScroll = (disable: boolean): void => {
 
                     document.body.style.cssText =
                         bodyStyles +
-                        `;` +
+                        (bodyStyles.endsWith(';') ? '' : ';') +
                         [
-                            'overflow: hidden',
-                            `overflow-y: ${overflowY}`,
-                            'position: fixed',
-                            `top: ${-bodyScrollTop}px`,
-                            'left: 0px',
-                            'right: 0px',
-                            'bottom: 0px',
-                            'overscroll-behavior-y: contain', // disable overscroll
-                        ].join(';');
+                            'overflow: hidden;',
+                            `overflow-y: ${overflowY};`,
+                            'position: fixed;',
+                            `top: ${-bodyScrollTop}px;`,
+                            'left: 0px;',
+                            'right: 0px;',
+                            'bottom: 0px;',
+                            'overscroll-behavior-y: contain;', // disable overscroll
+                        ].join('');
                 }
             };
             const enableBodyScroll = () => {
