@@ -49,6 +49,7 @@ const PasswordField: React.FC<PasswordFieldProps> = ({
     value,
     autoComplete = 'current-password',
     defaultValue,
+    dataAttributes,
     ...rest
 }) => {
     const [isVisible, setIsVisible] = React.useState(false);
@@ -107,6 +108,7 @@ const PasswordField: React.FC<PasswordFieldProps> = ({
             }}
             autoComplete={autoComplete}
             endIcon={<PasswordAdornment focus={focus} isVisible={isVisible} setVisibility={setIsVisible} />}
+            dataAttributes={{'component-name': 'PasswordField', ...dataAttributes}}
         />
     );
 };

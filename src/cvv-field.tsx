@@ -63,6 +63,7 @@ const CvvField: React.FC<CvvFieldProps> = ({
     value,
     autoComplete = 'cc-csc',
     defaultValue,
+    dataAttributes,
     ...rest
 }) => {
     const {texts} = useTheme();
@@ -139,6 +140,7 @@ const CvvField: React.FC<CvvFieldProps> = ({
             }
             autoComplete={autoComplete}
             inputComponent={IntegerInput}
+            dataAttributes={{'component-name': 'CvvField', ...dataAttributes}}
         />
     );
 };

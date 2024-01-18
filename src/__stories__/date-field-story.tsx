@@ -61,24 +61,22 @@ export const Controlled: StoryComponent<DateFieldControlledArgs> = ({
                     </Text1>
                 </Box>
                 <Stack space={16}>
-                    <div data-testid="date-field-wrapper">
-                        <DateField
-                            value={rawValue}
-                            onChangeValue={(value, rawValue) => {
-                                setValue(value);
-                                setRawValue(rawValue);
-                            }}
-                            name="date"
-                            autoComplete="off"
-                            data-testid="date-field"
-                            min={min ? minDate : undefined}
-                            max={max ? maxDate : undefined}
-                            helperText={`min: ${min ? getLocalDateString(minDate) : '-'} / max: ${
-                                max ? getLocalDateString(maxDate) : '-'
-                            }`}
-                            {...rest}
-                        />
-                    </div>
+                    <DateField
+                        value={rawValue}
+                        onChangeValue={(value, rawValue) => {
+                            setValue(value);
+                            setRawValue(rawValue);
+                        }}
+                        name="date"
+                        autoComplete="off"
+                        dataAttributes={{testid: 'date-field'}}
+                        min={min ? minDate : undefined}
+                        max={max ? maxDate : undefined}
+                        helperText={`min: ${min ? getLocalDateString(minDate) : '-'} / max: ${
+                            max ? getLocalDateString(maxDate) : '-'
+                        }`}
+                        {...rest}
+                    />
                     <Stack space={8}>
                         <Text1 regular>
                             value: {typeof value === 'undefined' ? '' : `(${typeof value}) ${inspect(value)}`}
@@ -129,24 +127,22 @@ export const Uncontrolled: StoryComponent<DateFieldUncontrolledArgs> = ({
                     </Text1>
                 </Box>
                 <Stack space={16}>
-                    <div data-testid="date-field-wrapper">
-                        <DateField
-                            defaultValue={defaultValue}
-                            onChangeValue={(value, rawValue) => {
-                                setValue(value);
-                                setRawValue(rawValue);
-                            }}
-                            name="date"
-                            autoComplete="off"
-                            data-testid="date-field"
-                            min={min ? minDate : undefined}
-                            max={max ? maxDate : undefined}
-                            helperText={`min: ${min ? getLocalDateString(minDate) : '-'} / max: ${
-                                max ? getLocalDateString(maxDate) : '-'
-                            }`}
-                            {...rest}
-                        />
-                    </div>
+                    <DateField
+                        defaultValue={defaultValue}
+                        onChangeValue={(value, rawValue) => {
+                            setValue(value);
+                            setRawValue(rawValue);
+                        }}
+                        name="date"
+                        autoComplete="off"
+                        dataAttributes={{testid: 'date-field'}}
+                        min={min ? minDate : undefined}
+                        max={max ? maxDate : undefined}
+                        helperText={`min: ${min ? getLocalDateString(minDate) : '-'} / max: ${
+                            max ? getLocalDateString(maxDate) : '-'
+                        }`}
+                        {...rest}
+                    />
                     <Stack space={8}>
                         <Text1 regular>
                             value: {typeof value === 'undefined' ? '' : `(${typeof value}) ${inspect(value)}`}

@@ -5,7 +5,6 @@ import {desktopFontSize, mobileFontSize} from './text-field-base.css';
 import * as mq from './media-queries.css';
 import {pxToRem} from './utils/css';
 
-const fieldPadding = 16;
 const inputLineHeight = pxToRem(16);
 
 export const disabled = style({
@@ -23,8 +22,7 @@ const fieldCommonStyles = style([
         background: vars.colors.backgroundContainer,
     }),
     {
-        width: `calc(${inputLineHeight} + 2 * ${fieldPadding}px)`,
-        height: `calc(${inputLineHeight} + 2 * ${fieldPadding}px)`,
+        width: `calc(${inputLineHeight} * 3)`,
     },
 ]);
 
@@ -46,8 +44,6 @@ export const readOnlyField = style([
 
 export const input = style({
     textAlign: 'center',
-    paddingTop: fieldPadding,
-    paddingBottom: fieldPadding,
 });
 
 export const passwordInput = sprinkles({

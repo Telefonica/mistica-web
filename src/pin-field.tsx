@@ -8,9 +8,12 @@ import {useAriaId, useTheme} from './hooks';
 import ScreenReaderOnly from './screen-reader-only';
 import {IntegerInput} from './integer-field';
 import {useFieldProps} from './form-context';
-import {createChangeEvent} from './utils/dom';
+import {createChangeEvent, getPrefixedDataAttributes} from './utils/dom';
 import {HelperText} from './text-field-components';
 import {flushSync} from 'react-dom';
+import {pxToRem} from './utils/css';
+
+import type {DataAttributes} from './utils/types';
 
 // Protection for when there is more than one OtpField in the page.
 // This should't be a supported use case, but we need it in storybook/playroom, and for some reason
@@ -190,6 +193,17 @@ const PinInput = ({
                         className={classNames(textFieldStyles.input, styles.input, {
                             [styles.passwordInput]: hideCode,
                         })}
+                        /**
+                         * We need to override IntegerField styles because PinField has a different
+                         * style than other inputs (less margin, fontSize and height).
+                         */
+                        style={{
+                            marginTop: `calc(${pxToRem(16)} - 1px)`,
+                            marginBottom: `calc(${pxToRem(16)} - 1px)`,
+                            lineHeight: pxToRem(16),
+                            fontSize: pxToRem(16),
+                            height: pxToRem(16),
+                        }}
                         disabled={disabled}
                         readOnly={readOnly}
                         autoComplete={readSms ? 'one-time-code' : undefined}
@@ -263,6 +277,7 @@ type OtpFieldProps = {
     onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
     'aria-label'?: string;
     'aria-labelledby'?: string;
+    dataAttributes?: DataAttributes;
 };
 
 const PinField = ({
@@ -280,6 +295,7 @@ const PinField = ({
     onChange,
     'aria-label': ariaLabel,
     'aria-labelledby': ariaLabelledBy,
+    dataAttributes,
 }: OtpFieldProps): React.ReactElement => {
     const fieldProps = useFieldProps({
         name,
@@ -301,6 +317,7 @@ const PinField = ({
             role="group"
             aria-labelledby={ariaLabelledBy ?? otpLabelId}
             className={disabled ? styles.disabled : undefined}
+            {...getPrefixedDataAttributes(dataAttributes, 'PinField')}
         >
             {ariaLabel && !ariaLabelledBy && (
                 <ScreenReaderOnly>

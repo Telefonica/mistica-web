@@ -61,24 +61,22 @@ export const Controlled: StoryComponent<MonthFieldControlledArgs> = ({
                     </Text1>
                 </Box>
                 <Stack space={16}>
-                    <div data-testid="month-field-wrapper">
-                        <MonthField
-                            value={rawValue}
-                            onChangeValue={(value, rawValue) => {
-                                setValue(value);
-                                setRawValue(rawValue);
-                            }}
-                            name="month"
-                            autoComplete="off"
-                            data-testid="month-field"
-                            min={min ? minDate : undefined}
-                            max={max ? maxDate : undefined}
-                            helperText={`min: ${min ? getLocalYearMonthString(minDate) : '-'} / max: ${
-                                max ? getLocalYearMonthString(maxDate) : '-'
-                            }`}
-                            {...rest}
-                        />
-                    </div>
+                    <MonthField
+                        value={rawValue}
+                        onChangeValue={(value, rawValue) => {
+                            setValue(value);
+                            setRawValue(rawValue);
+                        }}
+                        name="month"
+                        autoComplete="off"
+                        dataAttributes={{testid: 'month-field'}}
+                        min={min ? minDate : undefined}
+                        max={max ? maxDate : undefined}
+                        helperText={`min: ${min ? getLocalYearMonthString(minDate) : '-'} / max: ${
+                            max ? getLocalYearMonthString(maxDate) : '-'
+                        }`}
+                        {...rest}
+                    />
                     <Stack space={8}>
                         <Text1 regular>
                             value: {typeof value === 'undefined' ? '' : `(${typeof value}) ${inspect(value)}`}
@@ -129,24 +127,22 @@ export const Uncontrolled: StoryComponent<MonthFieldUncontrolledArgs> = ({
                     </Text1>
                 </Box>
                 <Stack space={16}>
-                    <div data-testid="month-field-wrapper">
-                        <MonthField
-                            defaultValue={defaultValue}
-                            onChangeValue={(value, rawValue) => {
-                                setValue(value);
-                                setRawValue(rawValue);
-                            }}
-                            name="month"
-                            autoComplete="off"
-                            data-testid="month-field"
-                            min={min ? minDate : undefined}
-                            max={max ? maxDate : undefined}
-                            helperText={`min: ${min ? getLocalYearMonthString(minDate) : '-'} / max: ${
-                                max ? getLocalYearMonthString(maxDate) : '-'
-                            }`}
-                            {...rest}
-                        />
-                    </div>
+                    <MonthField
+                        defaultValue={defaultValue}
+                        onChangeValue={(value, rawValue) => {
+                            setValue(value);
+                            setRawValue(rawValue);
+                        }}
+                        name="month"
+                        autoComplete="off"
+                        dataAttributes={{testid: 'month-field'}}
+                        min={min ? minDate : undefined}
+                        max={max ? maxDate : undefined}
+                        helperText={`min: ${min ? getLocalYearMonthString(minDate) : '-'} / max: ${
+                            max ? getLocalYearMonthString(maxDate) : '-'
+                        }`}
+                        {...rest}
+                    />
                     <Stack space={8}>
                         <Text1 regular>
                             value: {typeof value === 'undefined' ? '' : `(${typeof value}) ${inspect(value)}`}

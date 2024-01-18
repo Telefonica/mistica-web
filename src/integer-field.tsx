@@ -57,6 +57,7 @@ const IntegerField: React.FC<IntegerFieldProps> = ({
     onBlur,
     value,
     defaultValue,
+    dataAttributes,
     ...rest
 }) => {
     const {texts} = useTheme();
@@ -85,7 +86,14 @@ const IntegerField: React.FC<IntegerFieldProps> = ({
         onChangeValue,
     });
 
-    return <TextFieldBaseAutosuggest {...rest} {...fieldProps} inputComponent={IntegerInput} />;
+    return (
+        <TextFieldBaseAutosuggest
+            {...rest}
+            {...fieldProps}
+            inputComponent={IntegerInput}
+            dataAttributes={{'component-name': 'IntegerField', ...dataAttributes}}
+        />
+    );
 };
 
 export default IntegerField;

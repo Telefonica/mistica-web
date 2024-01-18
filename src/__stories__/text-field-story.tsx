@@ -64,22 +64,20 @@ export const Controlled: StoryComponent<TextFieldControlledArgs> = ({
         <ResponsiveLayout isInverse={inverse} fullWidth>
             <Box padding={16}>
                 <Stack space={16}>
-                    <div data-testid="text-field-wrapper">
-                        <TextField
-                            value={rawValue}
-                            onChangeValue={(value, rawValue) => {
-                                setValue(value);
-                                setRawValue(rawValue);
-                            }}
-                            name="text"
-                            autoComplete="off"
-                            data-testid="text-field"
-                            maxLength={maxLength ? 200 : undefined}
-                            endIcon={icon ? <IconMusicRegular /> : undefined}
-                            getSuggestions={suggestions ? getCountrySuggestions : undefined}
-                            {...rest}
-                        />
-                    </div>
+                    <TextField
+                        value={rawValue}
+                        onChangeValue={(value, rawValue) => {
+                            setValue(value);
+                            setRawValue(rawValue);
+                        }}
+                        name="text"
+                        autoComplete="off"
+                        dataAttributes={{testid: 'text-field'}}
+                        maxLength={maxLength ? 200 : undefined}
+                        endIcon={icon ? <IconMusicRegular /> : undefined}
+                        getSuggestions={suggestions ? getCountrySuggestions : undefined}
+                        {...rest}
+                    />
                     <Stack space={8}>
                         <Text1 regular>
                             value: {typeof value === 'undefined' ? '' : `(${typeof value}) ${inspect(value)}`}
@@ -122,21 +120,19 @@ export const Uncontrolled: StoryComponent<TextFieldUncontrolledArgs> = ({
         <ResponsiveLayout isInverse={inverse} fullWidth>
             <Box padding={16}>
                 <Stack space={16}>
-                    <div data-testid="text-field-wrapper">
-                        <TextField
-                            defaultValue={defaultValue}
-                            onChangeValue={(value, rawValue) => {
-                                setValue(value);
-                                setRawValue(rawValue);
-                            }}
-                            name="text"
-                            autoComplete="off"
-                            data-testid="text-field"
-                            maxLength={maxLength ? 200 : undefined}
-                            endIcon={icon ? <IconMusicRegular /> : undefined}
-                            {...rest}
-                        />
-                    </div>
+                    <TextField
+                        defaultValue={defaultValue}
+                        onChangeValue={(value, rawValue) => {
+                            setValue(value);
+                            setRawValue(rawValue);
+                        }}
+                        name="text"
+                        autoComplete="off"
+                        dataAttributes={{testid: 'text-field'}}
+                        maxLength={maxLength ? 200 : undefined}
+                        endIcon={icon ? <IconMusicRegular /> : undefined}
+                        {...rest}
+                    />
                     <Stack space={8}>
                         <Text1 regular>
                             value: {typeof value === 'undefined' ? '' : `(${typeof value}) ${inspect(value)}`}

@@ -34,6 +34,7 @@ const DateField: React.FC<DateFieldProps> = ({
     defaultValue,
     min,
     max,
+    dataAttributes,
     ...rest
 }) => {
     const processValue = (value: string) => value;
@@ -91,6 +92,7 @@ const DateField: React.FC<DateFieldProps> = ({
                     <IconCalendarRegular />
                 </div>
             }
+            dataAttributes={{'component-name': 'MonthField', ...dataAttributes}}
         />
     );
 
@@ -106,6 +108,7 @@ const DateField: React.FC<DateFieldProps> = ({
                 optional={optional}
                 isValidDate={(currentDate) => isInRange(getLocalYearMonthString(currentDate.toDate()))}
                 mode="year-month"
+                dataAttributes={{'component-name': 'MonthField', ...dataAttributes}}
             />
         </React.Suspense>
     );

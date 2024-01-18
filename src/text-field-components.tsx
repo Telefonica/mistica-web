@@ -7,6 +7,9 @@ import {Text1} from './text';
 import * as styles from './text-field-components.css';
 import {sprinkles} from './sprinkles.css';
 import {vars} from './skins/skin-contract.css';
+import {getPrefixedDataAttributes} from './utils/dom';
+
+import type {DataAttributes} from './utils/types';
 
 export type InputState = 'focused' | 'filled' | 'default';
 
@@ -111,6 +114,7 @@ type FieldContainerProps = {
     fieldRef?: React.RefObject<HTMLDivElement>;
     fullWidth?: boolean;
     readOnly?: boolean;
+    dataAttributes?: DataAttributes;
 };
 
 export const FieldContainer: React.FC<FieldContainerProps> = ({
@@ -122,6 +126,7 @@ export const FieldContainer: React.FC<FieldContainerProps> = ({
     fieldRef,
     fullWidth,
     readOnly,
+    dataAttributes,
 }) => {
     return (
         // eslint-disable-next-line jsx-a11y/no-static-element-interactions
@@ -134,6 +139,7 @@ export const FieldContainer: React.FC<FieldContainerProps> = ({
                 // to the right. We want to focus the input when the user clicks anywhere in the container (like in the label)
                 e.currentTarget.querySelector(multiline ? 'textarea' : 'input')?.focus();
             }}
+            {...getPrefixedDataAttributes(dataAttributes)}
         >
             <div
                 className={classnames(

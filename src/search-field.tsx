@@ -30,6 +30,7 @@ const SearchField = React.forwardRef<any, SearchFieldProps>(
             onBlur,
             value,
             defaultValue,
+            dataAttributes,
             ...rest
         },
         ref
@@ -94,6 +95,7 @@ const SearchField = React.forwardRef<any, SearchFieldProps>(
                 {...rest}
                 {...fieldProps}
                 type="search"
+                dataAttributes={{'component-name': 'SearchField', ...dataAttributes}}
             />
         );
     }

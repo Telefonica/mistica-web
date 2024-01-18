@@ -11,6 +11,7 @@ import * as styles from './text-field-base.css';
 import {sprinkles} from './sprinkles.css';
 import {vars} from './skins/skin-contract.css';
 
+import type {DataAttributes} from './utils/types';
 import type {InputState} from './text-field-components';
 import type {FieldValidator} from './form-context';
 
@@ -66,6 +67,7 @@ export interface CommonFormFieldProps<T = HTMLInputElement> {
     onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
     children?: void;
     readOnly?: boolean;
+    dataAttributes?: DataAttributes;
 }
 
 interface TextFieldBaseProps {
@@ -109,6 +111,7 @@ interface TextFieldBaseProps {
     min?: string;
     max?: string;
     role?: string;
+    dataAttributes?: DataAttributes;
 }
 
 export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
@@ -136,6 +139,7 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
             id: idProp,
             autoComplete: autoCompleteProp,
             fullWidth,
+            dataAttributes,
             ...rest
         },
         ref
@@ -231,6 +235,7 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
                 fullWidth={fullWidth}
                 fieldRef={fieldRef}
                 readOnly={rest.readOnly}
+                dataAttributes={dataAttributes}
             >
                 {startIcon && <div className={styles.startIcon}>{startIcon}</div>}
 

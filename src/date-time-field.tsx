@@ -40,6 +40,7 @@ const FormDateField: React.FC<DateFieldProps> = ({
      * set it so that it only accepts datetime values with years having up to 4 digits.
      */
     max = new Date('9999-12-31T23:59'),
+    dataAttributes,
     ...rest
 }) => {
     const hasNativePicker = React.useMemo(() => {
@@ -104,6 +105,7 @@ const FormDateField: React.FC<DateFieldProps> = ({
                     <IconCalendarRegular />
                 </div>
             }
+            dataAttributes={{'component-name': 'DateTimeField', ...dataAttributes}}
         />
     );
 
@@ -119,6 +121,7 @@ const FormDateField: React.FC<DateFieldProps> = ({
                 optional={optional}
                 withTime
                 isValidDate={(currentDate) => isInRange(getLocalDateTimeString(currentDate.toDate()))}
+                dataAttributes={{'component-name': 'DateTimeField', ...dataAttributes}}
             />
         </React.Suspense>
     );

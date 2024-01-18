@@ -164,6 +164,7 @@ const CreditCardNumberField: React.FC<CreditCardNumberFieldProps> = ({
     value,
     autoComplete = 'cc-number',
     defaultValue,
+    dataAttributes,
     ...rest
 }) => {
     const {texts} = useTheme();
@@ -229,6 +230,7 @@ const CreditCardNumberField: React.FC<CreditCardNumberFieldProps> = ({
             inputComponent={CreditCardInput}
             autoComplete={autoComplete}
             endIcon={<CreditcardAdornment value={value ?? rawValues[name] ?? ''} />}
+            dataAttributes={{'component-name': 'CreditCardNumberField', ...dataAttributes}}
         />
     );
 };
