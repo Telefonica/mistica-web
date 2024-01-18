@@ -131,7 +131,7 @@ export const getTuSkin: GetKnownSkin = () => {
             textPrimary: palette.grey6,
             textPrimaryInverse: palette.white,
             textSecondary: palette.grey5,
-            textSecondaryInverse: palette.secondary10,
+            textSecondaryInverse: palette.grey3,
             error: palette.red,
             success: palette.green,
             warning: palette.orange,
