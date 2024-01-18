@@ -3,8 +3,8 @@ import * as React from 'react';
 import {Label, HelperText, FieldContainer} from './text-field-components';
 import {LABEL_LEFT_POSITION, LABEL_SCALE_MOBILE, LABEL_SCALE_DESKTOP} from './text-field-components.css';
 import {Text3} from './text';
-import {isRunningAcceptanceTest, isFirefox, isSafari} from './utils/platform';
-import {useAriaId, useTheme, useScreenSize, useIsomorphicLayoutEffect} from './hooks';
+import {isRunningAcceptanceTest, isFirefox} from './utils/platform';
+import {useAriaId, useTheme, useScreenSize} from './hooks';
 import classNames from 'classnames';
 import {combineRefs} from './utils/common';
 import * as styles from './text-field-base.css';
@@ -157,20 +157,6 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
             ((rest.type === 'date' || rest.type === 'datetime-local' || rest.type === 'month') &&
                 !rest.required);
 
-        const [prefixAlignSelf, setPrefixAlignSelf] = React.useState('baseline');
-        useIsomorphicLayoutEffect(() => {
-            /**
-             * Safari check to workaround https://jira.tid.es/browse/WEB-648
-             * For some reason it is super hard to align the prefix text with the input text
-             * and get the same result in chrome and safari
-             *
-             * Using an effect to set the style to avoid problems with SSR
-             */
-            if (isSafari()) {
-                setPrefixAlignSelf('initial');
-            }
-        }, []);
-
         React.useEffect(() => {
             if (inputState !== 'focused' && value?.length) {
                 setCharacterCount(value.length);
@@ -252,11 +238,10 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
                     <div
                         className={classNames(
                             styles.prefix,
-                            hasLabel ? styles.inputWithLabel : styles.inputWithoutLabel
+                            hasLabel ? styles.valueWithLabel : styles.valueWithoutLabel
                         )}
                         style={{
                             opacity: inputState === 'default' ? 0 : 1,
-                            alignSelf: prefixAlignSelf,
                         }}
                     >
                         <Text3 color={vars.colors.textSecondary} regular wordBreak={false}>
@@ -264,7 +249,7 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
                         </Text3>
                     </div>
                 )}
-                <div className={styles.fullWidth} style={{alignSelf: prefix ? 'baseline' : 'initial'}}>
+                <div className={styles.fullWidth}>
                     <Text3 as="div" regular>
                         {React.createElement(inputComponent || defaultInputElement, {
                             ...inputRefProps,
@@ -274,12 +259,12 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
                             className: multiline
                                 ? classNames(
                                       styles.textArea,
-                                      hasLabel ? styles.textAreaWithLabel : styles.textAreaWithoutLabel,
+                                      hasLabel ? styles.valueWithLabel : styles.valueWithoutLabel,
                                       commonStyles
                                   )
                                 : classNames(
                                       styles.input,
-                                      hasLabel ? styles.inputWithLabel : styles.inputWithoutLabel,
+                                      hasLabel ? styles.valueWithLabel : styles.valueWithoutLabel,
                                       commonStyles,
                                       {[styles.inputFirefoxStyles]: isFirefox()}
                                   ),

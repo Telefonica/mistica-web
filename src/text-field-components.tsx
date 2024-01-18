@@ -138,7 +138,6 @@ export const FieldContainer: React.FC<FieldContainerProps> = ({
             <div
                 className={classnames(
                     styles.field,
-                    multiline ? styles.fieldMulti : styles.fieldSingle,
                     sprinkles({
                         background: readOnly ? vars.colors.neutralLow : vars.colors.backgroundContainer,
                     }),

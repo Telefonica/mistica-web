@@ -82,38 +82,25 @@ export const textArea = style([
     }),
     {
         resize: 'none',
-        paddingBottom: fieldVerticalPadding,
+        height: `calc(${pxToRem(152)} - 2 * ${fieldVerticalPadding}px - ${shrinkedLabelLineHeight.desktop} )`,
+        '@media': {
+            [mq.tabletOrSmaller]: {
+                height: `calc(${pxToRem(152)} - 2 * ${fieldVerticalPadding}px - ${
+                    shrinkedLabelLineHeight.mobile
+                } )`,
+            },
+        },
     },
     commonInputStyles,
 ]);
 
-export const textAreaWithLabel = style({
-    // using margin instead of padding to avoid the multiline text being visible through the label
-    marginTop: `calc(${shrinkedLabelLineHeight.desktop} + ${fieldVerticalPadding}px)`,
-    marginBottom: 0,
-    height: `calc(${pxToRem(152)} - ${shrinkedLabelLineHeight.desktop} - ${fieldVerticalPadding}px - 2px)`,
-    '@media': {
-        [mq.tabletOrSmaller]: {
-            marginTop: `calc(${shrinkedLabelLineHeight.mobile} + ${fieldVerticalPadding}px)`,
-            height: `calc(${pxToRem(152)} - ${
-                shrinkedLabelLineHeight.mobile
-            } - ${fieldVerticalPadding}px - 2px)`,
-        },
-    },
-});
-
-export const textAreaWithoutLabel = style({
-    height: `calc(${pxToRem(152)} - 2px)`,
-    paddingTop: 2 * fieldVerticalPadding,
-    margin: 0,
-});
-
 export const input = style([
     sprinkles({
         position: 'relative',
-        height: '100%',
+        paddingY: 0,
     }),
     {
+        height: inputLineHeight,
         WebkitAppearance: 'none',
         appearance: 'none',
 
@@ -190,27 +177,24 @@ export const inputFirefoxStyles = style({
     },
 });
 
-export const inputWithLabel = style({
-    paddingTop: `calc(${shrinkedLabelLineHeight.desktop} + ${fieldVerticalPadding}px)`,
-    height: `calc(${inputLineHeight} + ${shrinkedLabelLineHeight.desktop} + 2 * ${fieldVerticalPadding}px - 2px)`,
+export const valueWithLabel = style({
+    marginTop: `calc(${shrinkedLabelLineHeight.desktop} + ${fieldVerticalPadding}px - 1px)`,
+    marginBottom: fieldVerticalPadding - 1,
     '@media': {
         [mq.tabletOrSmaller]: {
-            paddingTop: `calc(${shrinkedLabelLineHeight.mobile} + ${fieldVerticalPadding}px)`,
-            height: `calc(${inputLineHeight} + ${shrinkedLabelLineHeight.mobile} + 2 * ${fieldVerticalPadding}px - 2px)`,
+            marginTop: `calc(${shrinkedLabelLineHeight.mobile} + ${fieldVerticalPadding}px - 1px)`,
+            marginBottom: fieldVerticalPadding - 1,
         },
     },
-    paddingBottom: fieldVerticalPadding,
 });
 
-export const inputWithoutLabel = style({
-    paddingTop: `calc(${shrinkedLabelLineHeight.desktop} / 2)`,
-    paddingBottom: `calc(${shrinkedLabelLineHeight.desktop} / 2)`,
-    height: `calc(${inputLineHeight} + ${shrinkedLabelLineHeight.desktop} + 2 * ${fieldVerticalPadding}px - 2px)`,
+export const valueWithoutLabel = style({
+    marginTop: `calc(${shrinkedLabelLineHeight.desktop} / 2 + ${fieldVerticalPadding}px - 1px)`,
+    marginBottom: `calc(${shrinkedLabelLineHeight.desktop} / 2 + ${fieldVerticalPadding}px - 1px)`,
     '@media': {
         [mq.tabletOrSmaller]: {
-            paddingTop: `calc(${shrinkedLabelLineHeight.mobile} / 2)`,
-            paddingBottom: `calc(${shrinkedLabelLineHeight.mobile} / 2)`,
-            height: `calc(${inputLineHeight} + ${shrinkedLabelLineHeight.mobile} + 2 * ${fieldVerticalPadding}px - 2px)`,
+            marginTop: `calc(${shrinkedLabelLineHeight.mobile} / 2 + ${fieldVerticalPadding}px - 1px)`,
+            marginBottom: `calc(${shrinkedLabelLineHeight.mobile} / 2 + ${fieldVerticalPadding}px - 1px)`,
         },
     },
 });
@@ -247,12 +231,7 @@ export const prefix = style([
     }),
     {
         transition: 'opacity 150ms cubic-bezier(0.0, 0, 0.2, 1) 0ms',
-        height: `calc(${inputLineHeight} + ${shrinkedLabelLineHeight.desktop} + 2 * ${fieldVerticalPadding}px - 2px)`,
-        '@media': {
-            [mq.tabletOrSmaller]: {
-                height: `calc(${inputLineHeight} + ${shrinkedLabelLineHeight.mobile} + 2 * ${fieldVerticalPadding}px  - 2px)`,
-            },
-        },
+        height: inputLineHeight,
     },
 ]);
 

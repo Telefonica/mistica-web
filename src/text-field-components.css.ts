@@ -9,7 +9,6 @@ import {
     labelLineHeight,
     shrinkedLabelLineHeight,
 } from './text-field-base.css';
-import {pxToRem} from './utils/css';
 
 export const LABEL_LEFT_POSITION = 12;
 export const DEFAULT_WIDTH = 328;
@@ -108,21 +107,6 @@ export const field = sprinkles({
     display: 'flex',
     borderRadius: vars.borderRadii.input,
     position: 'relative',
-});
-
-export const fieldSingle = style([
-    {
-        height: `calc(${inputLineHeight} + ${shrinkedLabelLineHeight.desktop} + 2 * ${fieldVerticalPadding}px)`,
-        '@media': {
-            [mq.tabletOrSmaller]: {
-                height: `calc(${inputLineHeight} + ${shrinkedLabelLineHeight.mobile} + 2 * ${fieldVerticalPadding}px)`,
-            },
-        },
-    },
-]);
-
-export const fieldMulti = style({
-    height: pxToRem(152),
 });
 
 export const helperContainer = sprinkles({
