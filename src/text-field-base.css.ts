@@ -24,6 +24,26 @@ export const labelFontSize = {
 
 export const iconSize = pxToRem(24);
 
+const topSpaceWithLabel = {
+    desktop: `calc(${shrinkedLabelLineHeight.desktop} + ${fieldVerticalPadding}px - 1px)`,
+    mobile: `calc(${shrinkedLabelLineHeight.mobile} + ${fieldVerticalPadding}px - 1px)`,
+};
+
+const topSpaceWithoutLabel = {
+    desktop: `calc(${shrinkedLabelLineHeight.desktop} / 2 + ${fieldVerticalPadding}px - 1px)`,
+    mobile: `calc(${shrinkedLabelLineHeight.mobile} / 2 + ${fieldVerticalPadding}px - 1px)`,
+};
+
+const bottomSpaceWithLabel = {
+    desktop: `${fieldVerticalPadding - 1}px`,
+    mobile: `${fieldVerticalPadding - 1}px`,
+};
+
+const bottomSpaceWithoutLabel = {
+    desktop: `calc(${shrinkedLabelLineHeight.desktop} / 2 + ${fieldVerticalPadding}px - 1px)`,
+    mobile: `calc(${shrinkedLabelLineHeight.mobile} / 2 + ${fieldVerticalPadding}px - 1px)`,
+};
+
 const commonInputStyles = style([
     sprinkles({
         border: 'none',
@@ -79,19 +99,10 @@ globalStyle(`${fullWidth} > div`, {
 });
 
 export const textArea = style([
-    sprinkles({
-        padding: 0,
-    }),
     {
         resize: 'none',
-        height: `calc(${pxToRem(152)} - 2 * ${fieldVerticalPadding}px - ${shrinkedLabelLineHeight.desktop} )`,
-        '@media': {
-            [mq.tabletOrSmaller]: {
-                height: `calc(${pxToRem(152)} - 2 * ${fieldVerticalPadding}px - ${
-                    shrinkedLabelLineHeight.mobile
-                } )`,
-            },
-        },
+        paddingTop: 0,
+        marginBottom: 0,
     },
     commonInputStyles,
 ]);
@@ -99,10 +110,8 @@ export const textArea = style([
 export const input = style([
     sprinkles({
         position: 'relative',
-        paddingY: 0,
     }),
     {
-        height: inputLineHeight,
         WebkitAppearance: 'none',
         appearance: 'none',
 
@@ -179,24 +188,54 @@ export const inputFirefoxStyles = style({
     },
 });
 
-export const valueWithLabel = style({
-    marginTop: `calc(${shrinkedLabelLineHeight.desktop} + ${fieldVerticalPadding}px - 1px)`,
-    marginBottom: fieldVerticalPadding - 1,
+export const inputWithLabel = style({
+    paddingTop: topSpaceWithLabel.desktop,
+    paddingBottom: bottomSpaceWithLabel.desktop,
+    height: `calc(${inputLineHeight} + ${topSpaceWithLabel.desktop} + ${bottomSpaceWithLabel.desktop})`,
     '@media': {
         [mq.tabletOrSmaller]: {
-            marginTop: `calc(${shrinkedLabelLineHeight.mobile} + ${fieldVerticalPadding}px - 1px)`,
-            marginBottom: fieldVerticalPadding - 1,
+            paddingTop: topSpaceWithLabel.mobile,
+            paddingBottom: bottomSpaceWithLabel.mobile,
+            height: `calc(${inputLineHeight} + ${topSpaceWithLabel.mobile} + ${bottomSpaceWithLabel.mobile})`,
         },
     },
 });
 
-export const valueWithoutLabel = style({
-    marginTop: `calc(${shrinkedLabelLineHeight.desktop} / 2 + ${fieldVerticalPadding}px - 1px)`,
-    marginBottom: `calc(${shrinkedLabelLineHeight.desktop} / 2 + ${fieldVerticalPadding}px - 1px)`,
+export const inputWithoutLabel = style({
+    paddingTop: topSpaceWithoutLabel.desktop,
+    paddingBottom: bottomSpaceWithoutLabel.desktop,
+    height: `calc(${inputLineHeight} + ${topSpaceWithoutLabel.desktop} + ${bottomSpaceWithoutLabel.desktop})`,
     '@media': {
         [mq.tabletOrSmaller]: {
-            marginTop: `calc(${shrinkedLabelLineHeight.mobile} / 2 + ${fieldVerticalPadding}px - 1px)`,
-            marginBottom: `calc(${shrinkedLabelLineHeight.mobile} / 2 + ${fieldVerticalPadding}px - 1px)`,
+            paddingTop: topSpaceWithoutLabel.mobile,
+            paddingBottom: bottomSpaceWithoutLabel.mobile,
+            height: `calc(${inputLineHeight} + ${topSpaceWithoutLabel.mobile} + ${bottomSpaceWithoutLabel.mobile})`,
+        },
+    },
+});
+
+export const textAreaWithLabel = style({
+    marginTop: topSpaceWithLabel.desktop,
+    paddingBottom: bottomSpaceWithLabel.desktop,
+    height: `calc(${pxToRem(152)} - ${topSpaceWithLabel.desktop} - 2px)`,
+    '@media': {
+        [mq.tabletOrSmaller]: {
+            marginTop: topSpaceWithLabel.mobile,
+            paddingBottom: bottomSpaceWithLabel.mobile,
+            height: `calc(${pxToRem(152)} - ${topSpaceWithLabel.mobile} - 2px)`,
+        },
+    },
+});
+
+export const textAreaWithoutLabel = style({
+    marginTop: 0,
+    paddingTop: topSpaceWithoutLabel.desktop,
+    paddingBottom: bottomSpaceWithoutLabel.desktop,
+    height: `calc(${pxToRem(152)} - 2px)`,
+    '@media': {
+        [mq.tabletOrSmaller]: {
+            paddingTop: topSpaceWithoutLabel.mobile,
+            paddingBottom: bottomSpaceWithoutLabel.mobile,
         },
     },
 });
@@ -233,7 +272,6 @@ export const prefix = style([
     }),
     {
         transition: 'opacity 150ms cubic-bezier(0.0, 0, 0.2, 1) 0ms',
-        height: inputLineHeight,
     },
 ]);
 

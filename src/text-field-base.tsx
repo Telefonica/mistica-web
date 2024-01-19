@@ -241,7 +241,7 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
                     <div
                         className={classNames(
                             styles.prefix,
-                            hasLabel ? styles.valueWithLabel : styles.valueWithoutLabel
+                            hasLabel ? styles.inputWithLabel : styles.inputWithoutLabel
                         )}
                         style={{
                             opacity: inputState === 'default' ? 0 : 1,
@@ -267,11 +267,11 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
                             className: multiline
                                 ? classNames(
                                       styles.textArea,
-                                      hasLabel ? styles.valueWithLabel : styles.valueWithoutLabel
+                                      hasLabel ? styles.textAreaWithLabel : styles.textAreaWithoutLabel
                                   )
                                 : classNames(
                                       styles.input,
-                                      hasLabel ? styles.valueWithLabel : styles.valueWithoutLabel,
+                                      hasLabel ? styles.inputWithLabel : styles.inputWithoutLabel,
                                       {[styles.inputFirefoxStyles]: isFirefox()}
                                   ),
                             onFocus: (event: React.FocusEvent<HTMLInputElement>) => {

@@ -323,7 +323,7 @@ const Select: React.FC<SelectProps> = ({
             <select
                 className={classnames(
                     styles.selectVariants[disabled ? 'disabled' : 'default'],
-                    label ? textStyles.valueWithLabel : textStyles.valueWithoutLabel
+                    label ? textStyles.inputWithLabel : textStyles.inputWithoutLabel
                 )}
                 id={inputId}
                 aria-invalid={!!error}
@@ -397,7 +397,7 @@ const Select: React.FC<SelectProps> = ({
                 <div
                     className={classnames(
                         styles.selectTextVariants[disabled ? 'disabled' : 'default'],
-                        label ? textStyles.valueWithLabel : textStyles.valueWithoutLabel
+                        label ? textStyles.inputWithLabel : textStyles.inputWithoutLabel
                     )}
                 >
                     {getOptionText(value ?? valueState)}
