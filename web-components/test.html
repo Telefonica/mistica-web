@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" class="notranslate" translate="no">
+<head>
+    <title>Test</title>
+    <script type="module" src="./dist/button.js"></script>
+    <script type="module" src="./dist/text.js"></script>
+</html>
+<body>
+    <h2>m-text</h2>
+
+    <section>
+        <m-text preset="1" regular>Preset 1:</m-text>
+        <m-text preset="1" light>light</m-text>
+        <m-text preset="1" regular>regular</m-text>
+        <m-text preset="1" medium>medium</m-text>
+        <m-text preset="1" bold>bold</m-text>
+    </section>
+
+    <section>
+        <m-text preset="2" regular>Preset 2:</m-text>
+        <m-text preset="2" light>light</m-text>
+        <m-text preset="2" regular>regular</m-text>
+        <m-text preset="2" medium>medium</m-text>
+        <m-text preset="2" bold>bold</m-text>
+    </section>
+
+    <section>
+        <m-text preset="3" regular>Preset 3:</m-text>
+        <m-text preset="3" light>light</m-text>
+        <m-text preset="3" regular>regular</m-text>
+        <m-text preset="3" medium>medium</m-text>
+        <m-text preset="3" bold>bold</m-text>
+    </section>
+
+    <section>
+        <m-text preset="4" regular>Preset 4:</m-text>
+        <m-text preset="4" light>light</m-text>
+        <m-text preset="4" regular>regular</m-text>
+        <m-text preset="4" medium>medium</m-text>
+        <m-text preset="4" bold>bold</m-text>
+    </section>
+
+
+    <h2>m-button</h2>
+
+    <m-button variant="primary">Primary</m-button>
+    <m-button variant="secondary">Secondary</m-button>
+    <m-button variant="danger">Danger</m-button>
+
+    <h3>Disabled</h3>
+
+    <m-button variant="primary" disabled>Primary</m-button>
+    <m-button variant="secondary" disabled>Secondary</m-button>
+    <m-button variant="danger" disabled>Danger</m-button>
+
+    <h3>Small</h3>
+
+    <m-button variant="primary" small>Primary</m-button>
+    <m-button variant="secondary" small>Secondary</m-button>
+    <m-button variant="danger" small>Danger</m-button>
+
+    <h3>With icon</h3>
+    <m-button variant="primary">
+        Primary
+        <span slot="icon" style="font-size: 24px">★</span>
+    </m-button>
+
+    <m-button variant="primary" small>
+        Primary
+        <span slot="icon" style="font-size: 20px">★</span>
+    </m-button>
+</body>

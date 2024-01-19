@@ -1,0 +1,36 @@
+.button {
+    box-sizing: border-box;
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    border-radius: 4px;
+    appearance: none;
+    border: 1.5px solid transparent;
+    padding: 0px 16px;
+    cursor: pointer;
+    min-height: 48px;
+}
+.primary {
+    background: #019df4;
+    border-color: #019df4;
+    color: #ffffff;
+}
+.secondary {
+    background: #ffffff;
+    border-color: #019df4;
+    color: #019df4;
+}
+.danger {
+    background: #ff374a;
+    border-color: #ff374a;
+    color: #ffffff;
+}
+.small {
+    padding: 0px 12px;
+    min-height: 32px;
+}
+.disabled {
+    opacity: 0.5;
+    cursor: default;
+}

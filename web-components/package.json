@@ -1,0 +1,8 @@
+{
+    "name": "web-components",
+    "packageManager": "yarn@3.6.1",
+    "devDependencies": {
+        "typescript": "^5.3.3"
+    },
+    "type": "module"
+}
