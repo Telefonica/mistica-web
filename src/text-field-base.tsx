@@ -8,7 +8,6 @@ import {useAriaId, useTheme, useScreenSize} from './hooks';
 import classNames from 'classnames';
 import {combineRefs} from './utils/common';
 import * as styles from './text-field-base.css';
-import {sprinkles} from './sprinkles.css';
 import {vars} from './skins/skin-contract.css';
 
 import type {DataAttributes} from './utils/types';
@@ -200,22 +199,21 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
             ...inputProps,
         };
 
+        const iconPadding = 12;
+        const startIconWidth = `calc(${styles.iconSize} + 2 * ${iconPadding}px)`;
+        const endIconWidth = `calc(${styles.iconSize} + ${iconPadding}px)`;
+
         const isShrinked = shrinkLabel || inputState === 'focused' || inputState === 'filled';
         const scale = isShrinked ? (isTabletOrSmaller ? LABEL_SCALE_MOBILE : LABEL_SCALE_DESKTOP) : 1;
         const labelStyle = {
-            left: startIcon ? 48 : LABEL_LEFT_POSITION,
+            left: startIcon ? startIconWidth : LABEL_LEFT_POSITION,
             // shrinking means applying a scale transformation, so width will be proportionally reduced.
             // Let's keep the original width.
-            width: `calc(((100% - ${
-                LABEL_LEFT_POSITION + (startIcon ? 48 : LABEL_LEFT_POSITION)
-            }px)) / ${scale})`,
-            paddingRight: endIcon && !isShrinked ? 36 : 0,
+            width: `calc(((100% - ${LABEL_LEFT_POSITION}px - ${
+                startIcon ? startIconWidth : `${LABEL_LEFT_POSITION}px`
+            }) / ${scale})`,
+            paddingRight: endIcon && !isShrinked ? endIconWidth : 0,
         };
-
-        const commonStyles = sprinkles({
-            paddingRight: endIcon ? 0 : 16,
-            paddingLeft: prefix ? 0 : startIcon ? 48 : 12,
-        });
 
         /* Workaround to avoid huge bullets on ios devices (-apple-system font related) */
         const fontFamily = rest.type === 'password' ? 'Lucida Grande, Arial, sans-serif' : 'inherit';
@@ -260,17 +258,20 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
                             ...inputRefProps,
                             ...props,
                             id,
-                            style: {...props.style, fontFamily},
+                            style: {
+                                paddingRight: endIcon ? 0 : 16,
+                                paddingLeft: prefix ? 0 : startIcon ? startIconWidth : 12,
+                                ...props.style,
+                                fontFamily,
+                            },
                             className: multiline
                                 ? classNames(
                                       styles.textArea,
-                                      hasLabel ? styles.valueWithLabel : styles.valueWithoutLabel,
-                                      commonStyles
+                                      hasLabel ? styles.valueWithLabel : styles.valueWithoutLabel
                                   )
                                 : classNames(
                                       styles.input,
                                       hasLabel ? styles.valueWithLabel : styles.valueWithoutLabel,
-                                      commonStyles,
                                       {[styles.inputFirefoxStyles]: isFirefox()}
                                   ),
                             onFocus: (event: React.FocusEvent<HTMLInputElement>) => {

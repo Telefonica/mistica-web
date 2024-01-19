@@ -22,6 +22,8 @@ export const labelFontSize = {
     desktop: pxToRem(18),
 };
 
+export const iconSize = pxToRem(24);
+
 const commonInputStyles = style([
     sprinkles({
         border: 'none',
@@ -237,12 +239,12 @@ export const prefix = style([
 
 export const menuItem = style([
     sprinkles({
-        height: 48,
         display: 'flex',
         alignItems: 'center',
         cursor: 'pointer',
     }),
     {
+        height: pxToRem(48),
         padding: '6px 16px',
         transition: 'background-color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
         selectors: {

@@ -8,6 +8,7 @@ import IconButton from './icon-button';
 import {useTheme} from './hooks';
 import {createChangeEvent} from './utils/dom';
 import {combineRefs} from './utils/common';
+import {pxToRem} from './utils/css';
 
 import type {CommonFormFieldProps} from './text-field-base';
 
@@ -79,16 +80,21 @@ const SearchField = React.forwardRef<any, SearchFieldProps>(
         return (
             <TextFieldBaseAutosuggest
                 ref={combineRefs(inputRef, ref)}
-                startIcon={<IconSearchRegular />}
+                startIcon={<IconSearchRegular size={pxToRem(24)} />}
                 endIcon={
                     controlledValue ? (
                         <IconButton
-                            size={48}
-                            style={{display: 'flex', padding: 12, margin: -12}}
+                            size={pxToRem(40)}
+                            style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                marginRight: -8,
+                            }}
                             aria-label={theme.texts.formSearchClear}
                             onPress={clearInput}
                         >
-                            <IconCloseRegular />
+                            <IconCloseRegular size={pxToRem(24)} />
                         </IconButton>
                     ) : undefined
                 }

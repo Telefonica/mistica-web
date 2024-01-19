@@ -15,6 +15,7 @@ import Box from './box';
 import Divider from './divider';
 import Text2 from './text';
 import {vars} from './skins/skin-contract.css';
+import {pxToRem} from './utils/css';
 
 import type {CommonFormFieldProps} from './text-field-base';
 import type {CardOptions} from './utils/credit-card';
@@ -96,6 +97,9 @@ const CvvField: React.FC<CvvFieldProps> = ({
         onChangeValue,
     });
 
+    const buttonSize = pxToRem(40);
+    const iconSize = pxToRem(16);
+
     return (
         <TextFieldBaseAutosuggest
             {...rest}
@@ -119,20 +123,20 @@ const CvvField: React.FC<CvvFieldProps> = ({
                     position="top"
                     children={<TooltipContent acceptedCards={acceptedCards} />}
                     target={
-                        <div style={{width: 16, height: 16}}>
+                        <div style={{width: iconSize, height: iconSize}}>
                             <IconButton
-                                size={40}
+                                size={buttonSize}
                                 style={{
                                     display: 'flex',
                                     alignItems: 'center',
                                     justifyContent: 'center',
                                     position: 'relative',
-                                    left: -12, // (40 - 16) / 2
-                                    top: -12,
+                                    left: `calc(-1 * (${buttonSize} - ${iconSize}) / 2)`,
+                                    top: `calc(-1 * (${buttonSize} - ${iconSize}) / 2)`,
                                 }}
                                 aria-label={texts.formCreditCardCvvTooltipVisaMcButton}
                             >
-                                <IconInformationRegular size={16} color={vars.colors.neutralMedium} />
+                                <IconInformationRegular size={iconSize} color={vars.colors.neutralMedium} />
                             </IconButton>
                         </div>
                     }
