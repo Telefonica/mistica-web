@@ -54,6 +54,7 @@ const commonInputStyles = style([
     {
         background: 'none',
         outline: 0,
+        lineHeight: inputLineHeight,
         fontSize: desktopFontSize,
         '@media': {
             [mq.tabletOrSmaller]: {
@@ -102,7 +103,6 @@ export const textArea = style([
         resize: 'none',
         paddingTop: 0,
         marginBottom: 0,
-        lineHeight: inputLineHeight,
     },
     commonInputStyles,
 ]);
@@ -114,7 +114,6 @@ export const input = style([
     {
         WebkitAppearance: 'none',
         appearance: 'none',
-        lineHeight: 10000,
 
         selectors: {
             '&::-webkit-search-cancel-button': {
@@ -192,12 +191,10 @@ export const inputFirefoxStyles = style({
 export const inputWithLabel = style({
     paddingTop: topSpaceWithLabel.desktop,
     paddingBottom: bottomSpaceWithLabel.desktop,
-    height: `calc(${inputLineHeight} + ${topSpaceWithLabel.desktop} + ${bottomSpaceWithLabel.desktop})`,
     '@media': {
         [mq.tabletOrSmaller]: {
             paddingTop: topSpaceWithLabel.mobile,
             paddingBottom: bottomSpaceWithLabel.mobile,
-            height: `calc(${inputLineHeight} + ${topSpaceWithLabel.mobile} + ${bottomSpaceWithLabel.mobile})`,
         },
     },
 });
@@ -205,12 +202,10 @@ export const inputWithLabel = style({
 export const inputWithoutLabel = style({
     paddingTop: topSpaceWithoutLabel.desktop,
     paddingBottom: bottomSpaceWithoutLabel.desktop,
-    height: `calc(${inputLineHeight} + ${topSpaceWithoutLabel.desktop} + ${bottomSpaceWithoutLabel.desktop})`,
     '@media': {
         [mq.tabletOrSmaller]: {
             paddingTop: topSpaceWithoutLabel.mobile,
             paddingBottom: bottomSpaceWithoutLabel.mobile,
-            height: `calc(${inputLineHeight} + ${topSpaceWithoutLabel.mobile} + ${bottomSpaceWithoutLabel.mobile})`,
         },
     },
 });
