@@ -54,7 +54,6 @@ const commonInputStyles = style([
     {
         background: 'none',
         outline: 0,
-        lineHeight: inputLineHeight,
         fontSize: desktopFontSize,
         '@media': {
             [mq.tabletOrSmaller]: {
@@ -103,6 +102,7 @@ export const textArea = style([
         resize: 'none',
         paddingTop: 0,
         marginBottom: 0,
+        lineHeight: inputLineHeight,
     },
     commonInputStyles,
 ]);
@@ -114,6 +114,7 @@ export const input = style([
     {
         WebkitAppearance: 'none',
         appearance: 'none',
+        lineHeight: 10000,
 
         selectors: {
             '&::-webkit-search-cancel-button': {
