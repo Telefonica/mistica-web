@@ -106,7 +106,6 @@ export const HelperText: React.FC<HelperTextProps> = ({leftText, rightText, erro
 };
 
 type FieldContainerProps = {
-    multiline?: boolean;
     disabled?: boolean;
     children: React.ReactNode;
     helperText?: React.ReactNode;
@@ -115,10 +114,10 @@ type FieldContainerProps = {
     fullWidth?: boolean;
     readOnly?: boolean;
     dataAttributes?: DataAttributes;
+    elementType: 'input' | 'textarea' | 'select';
 };
 
 export const FieldContainer: React.FC<FieldContainerProps> = ({
-    multiline,
     disabled,
     children,
     helperText,
@@ -127,6 +126,7 @@ export const FieldContainer: React.FC<FieldContainerProps> = ({
     fullWidth,
     readOnly,
     dataAttributes,
+    elementType,
 }) => {
     return (
         // eslint-disable-next-line jsx-a11y/no-static-element-interactions
@@ -135,9 +135,8 @@ export const FieldContainer: React.FC<FieldContainerProps> = ({
                 [styles.disabled]: disabled,
             })}
             onClick={(e) => {
-                // if the field is multine, the textarea has a margin. Also, if the prefix is non empty, it "shifts" the input
-                // to the right. We want to focus the input when the user clicks anywhere in the container (like in the label)
-                e.currentTarget.querySelector(multiline ? 'textarea' : 'input')?.focus();
+                // We want to focus the input when the user clicks anywhere in the container (like in the label)
+                e.currentTarget.querySelector(elementType)?.focus();
             }}
             {...getPrefixedDataAttributes(dataAttributes)}
         >

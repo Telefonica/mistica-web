@@ -231,7 +231,7 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
                         rightText={multiline && maxLength ? `${characterCount}/${maxLength}` : undefined}
                     />
                 }
-                multiline={multiline}
+                elementType={multiline ? 'textarea' : 'input'}
                 fullWidth={fullWidth}
                 fieldRef={fieldRef}
                 readOnly={rest.readOnly}
