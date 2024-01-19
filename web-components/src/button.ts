@@ -3,19 +3,19 @@ import './text.js';
 
 type Variant = 'primary' | 'secondary' | 'danger';
 
+const VARIANTS = new Set<Variant>(['primary', 'secondary', 'danger']);
+
+const getVariant = (variant: string | null): Variant => {
+    if (VARIANTS.has(variant as Variant)) {
+        return variant as Variant;
+    }
+    return 'primary';
+};
+
 class MisticaButton extends HTMLElement {
     constructor() {
         super();
         this.attachShadow({mode: 'open'});
-    }
-
-    static VARIANTS = new Set<Variant>(['primary', 'secondary', 'danger']);
-
-    static getVariant(variant: string | null): Variant {
-        if (MisticaButton.VARIANTS.has(variant as Variant)) {
-            return variant as Variant;
-        }
-        return 'primary';
     }
 
     connectedCallback() {
@@ -24,13 +24,12 @@ class MisticaButton extends HTMLElement {
         }
 
         const disabled = this.getAttribute('disabled') === null ? '' : 'disabled';
-        const variant = MisticaButton.getVariant(this.getAttribute('variant'));
+        const variant = getVariant(this.getAttribute('variant'));
         const small = this.getAttribute('small') === null ? '' : 'small';
 
         this.shadowRoot.innerHTML = `
-        <style>
-            @import url('./styles/button.css');
-        </style>
+        <link rel="stylesheet" href="./styles/button.css">
+
         <button class="button ${variant} ${small} ${disabled}" ${disabled}>
             <slot name="icon"></slot>
             <m-text preset="${small ? 2 : 3}" medium>
