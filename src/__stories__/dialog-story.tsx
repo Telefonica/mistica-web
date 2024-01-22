@@ -2,9 +2,7 @@ import * as React from 'react';
 import {
     ButtonPrimary,
     ButtonLayout,
-    confirm,
-    alert,
-    dialog,
+    useDialog,
     IconInformationUserLight,
     ButtonLink,
     Stack,
@@ -18,6 +16,7 @@ export default {
 };
 
 export const Alert: StoryComponent = () => {
+    const {alert} = useDialog();
     return (
         <ButtonLayout>
             <ButtonPrimary
@@ -38,6 +37,7 @@ export const Alert: StoryComponent = () => {
 };
 
 export const Confirm: StoryComponent<{destructive: boolean}> = ({destructive}) => {
+    const {confirm} = useDialog();
     return (
         <ButtonLayout>
             <ButtonPrimary
@@ -60,6 +60,7 @@ export const Confirm: StoryComponent<{destructive: boolean}> = ({destructive}) =
 };
 
 export const Dialog: StoryComponent = () => {
+    const {dialog} = useDialog();
     return (
         <ButtonLayout>
             <ButtonPrimary
