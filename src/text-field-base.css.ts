@@ -62,7 +62,11 @@ const commonInputStyles = style([
             },
         },
         caretColor: vars.colors.controlActivated,
-        // Seems like 'display: flex' is causing issues on firefox and the input takes over the whole space https://stackoverflow.com/questions/43314921/strange-input-widths-in-firefox-vs-chrome
+
+        /**
+         * Seems like 'display: flex' is causing issues on firefox and the input takes over the whole space
+         * https://stackoverflow.com/questions/43314921/strange-input-widths-in-firefox-vs-chrome
+         */
         textOverflow: 'ellipsis',
         selectors: {
             '&::placeholder': {
@@ -73,7 +77,9 @@ const commonInputStyles = style([
                 opacity: 0.5,
             },
         },
-        boxShadow: 'none', // reset FF red shadow styles for required inputs
+
+        // reset FF red shadow styles for required inputs
+        boxShadow: 'none',
     },
 ]);
 
@@ -124,8 +130,11 @@ export const input = style([
                 WebkitAppearance: 'none',
                 appearance: 'none',
             },
-            // Chrome: make the native icon invisible and stretch it over the whole field so you can click
-            // anywhere in the input field to trigger the native datepicker
+
+            /**
+             * Chrome: make the native icon invisible and stretch it over the whole field so you can click
+             * anywhere in the input field to trigger the native datepicker
+             */
             '&::-webkit-calendar-picker-indicator': {
                 position: 'absolute',
                 top: 0,
@@ -140,9 +149,11 @@ export const input = style([
                 cursor: 'pointer',
             },
 
-            // Chrome: hide value if not valid or focused
-            // `opacity: 0` is needed when min/max is set and some parts of the date are disabled
-            // be sure to check that case when updating these styles
+            /**
+             * Chrome: hide value if not valid or focused
+             * `opacity: 0` is needed when min/max is set and some parts of the date are disabled
+             * be sure to check that case when updating these styles
+             */
             '&[type="month"]:not(:valid):not(:focus)::-webkit-datetime-edit': {
                 color: 'transparent',
                 opacity: 0,
@@ -156,13 +167,29 @@ export const input = style([
                 opacity: 0,
             },
 
-            // Override Chrome input autocomplete styles:
+            /**
+             * Chrome: datetime fields are 2px taller than other input fields. This is because the browser adds
+             * 1px of top/bottom padding inside the input
+             */
+            //
+            '&[type="month"]::-webkit-datetime-edit-fields-wrapper': {
+                padding: 0,
+            },
+            '&[type="date"]::-webkit-datetime-edit-fields-wrapper': {
+                padding: 0,
+            },
+            '&[type="datetime-local"]::-webkit-datetime-edit-fields-wrapper': {
+                padding: 0,
+            },
+
+            // Override Chrome input autocomplete styles
             '&:-webkit-autofill': {
                 WebkitTextFillColor: vars.colors.textPrimary,
                 // The background can not be overriden, but we can delay the background color transition to avoid the change
                 transitionProperty: 'background-color',
                 transitionDelay: '99999s',
             },
+
             // iOS date/time fields are centered by default, but we want them left aligned
             '&::-webkit-date-and-time-value': {
                 textAlign: 'left',
@@ -172,8 +199,10 @@ export const input = style([
     commonInputStyles,
 ]);
 
-// Firefox: hide value if not valid or focused
-// Only apply when Firefox, otherwise it breaks styles in safari mobile
+/**
+ * Firefox: hide value if not valid or focused
+ * Only apply when Firefox, otherwise it breaks styles in safari mobile
+ */
 export const inputFirefoxStyles = style({
     selectors: {
         '&[type="month"]:not(:valid):not(:focus)': {
@@ -257,7 +286,8 @@ export const startIcon = style([
         position: 'absolute',
     }),
     {
-        pointerEvents: 'none', // passthrough click events to the input
+        // passthrough click events to the input
+        pointerEvents: 'none',
     },
 ]);
 
@@ -301,7 +331,9 @@ export const suggestionsContainer = style([
         boxShadow:
             '0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12)',
         background: 'white',
-        zIndex: 2, // one more than TextField label
+
+        // one more than TextField label
+        zIndex: 2,
     },
 ]);
 
