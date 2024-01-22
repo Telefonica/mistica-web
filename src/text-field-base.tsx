@@ -1,7 +1,7 @@
 'use client';
 import * as React from 'react';
 import {Label, HelperText, FieldContainer} from './text-field-components';
-import {LABEL_LEFT_POSITION, LABEL_SCALE_MOBILE, LABEL_SCALE_DESKTOP} from './text-field-components.css';
+import {LABEL_SCALE_MOBILE, LABEL_SCALE_DESKTOP, fieldHorizontalPadding} from './text-field-components.css';
 import {Text3} from './text';
 import {isRunningAcceptanceTest, isFirefox} from './utils/platform';
 import {useAriaId, useTheme, useScreenSize} from './hooks';
@@ -199,24 +199,23 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
             ...inputProps,
         };
 
-        const iconPadding = 12;
-        const startIconWidth = `calc(${styles.iconSize} + 2 * ${iconPadding}px)`;
-        const endIconWidth = `calc(${styles.iconSize} + ${iconPadding}px)`;
+        const startIconWidth = `calc(${styles.iconSize} + ${fieldHorizontalPadding}px)`;
+        const endIconWidth = `calc(${styles.iconButtonSize} + ${fieldHorizontalPadding}px)`;
 
         const isShrinked = shrinkLabel || inputState === 'focused' || inputState === 'filled';
         const scale = isShrinked ? (isTabletOrSmaller ? LABEL_SCALE_MOBILE : LABEL_SCALE_DESKTOP) : 1;
         const labelStyle = {
-            left: startIcon ? startIconWidth : LABEL_LEFT_POSITION,
+            left: `calc(${fieldHorizontalPadding}px + ${startIcon ? startIconWidth : '0px'})`,
             // shrinking means applying a scale transformation, so width will be proportionally reduced.
             // Let's keep the original width.
-            width: `calc(((100% - ${LABEL_LEFT_POSITION}px - ${
-                startIcon ? startIconWidth : `${LABEL_LEFT_POSITION}px`
+            width: `calc((100% - ${fieldHorizontalPadding}px - ${startIcon ? startIconWidth : '0px'} - ${
+                endIcon ? endIconWidth : `${fieldHorizontalPadding}px`
             }) / ${scale})`,
-            paddingRight: endIcon && !isShrinked ? endIconWidth : 0,
         };
 
         /* Workaround to avoid huge bullets on ios devices (-apple-system font related) */
-        const fontFamily = rest.type === 'password' ? 'Lucida Grande, Arial, sans-serif' : 'inherit';
+        const fontFamily =
+            rest.type === 'password' && characterCount > 0 ? 'Lucida Grande, Arial, sans-serif' : 'inherit';
 
         return (
             <FieldContainer
@@ -260,7 +259,11 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
                             id,
                             style: {
                                 paddingRight: endIcon ? 0 : 16,
-                                paddingLeft: prefix ? 0 : startIcon ? startIconWidth : 12,
+                                paddingLeft: prefix
+                                    ? 0
+                                    : startIcon
+                                    ? `calc(${startIconWidth} + ${fieldHorizontalPadding}px)`
+                                    : fieldHorizontalPadding,
                                 ...props.style,
                                 fontFamily,
                             },

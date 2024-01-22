@@ -23,6 +23,7 @@ export const labelFontSize = {
 };
 
 export const iconSize = pxToRem(24);
+export const iconButtonSize = pxToRem(40);
 
 const topSpaceWithLabel = {
     desktop: `calc(${shrinkedLabelLineHeight.desktop} + ${fieldVerticalPadding}px - 1px)`,
