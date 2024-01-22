@@ -8,9 +8,10 @@ import {
     labelFontSize,
     labelLineHeight,
     shrinkedLabelLineHeight,
+    fieldLeftPadding,
+    fieldRightPadding,
 } from './text-field-base.css';
 
-export const fieldHorizontalPadding = 12;
 export const DEFAULT_WIDTH = 328;
 
 // to scale to the correct text-preset when the transition applies
@@ -23,7 +24,7 @@ export const labelContainer = style([
         display: 'flex',
         flexDirection: 'row',
         top: fieldVerticalPadding,
-        left: fieldHorizontalPadding,
+        left: fieldLeftPadding,
     }),
     {
         pointerEvents: 'none',
@@ -37,7 +38,7 @@ export const labelContainer = style([
                 transform: `translateY(calc((${shrinkedLabelLineHeight.mobile} + ${inputLineHeight} - ${labelLineHeight}) / 2)) scale(1)`,
             },
         },
-        width: `calc(100% - ${fieldHorizontalPadding * 2}px)`,
+        width: `calc(100% - ${fieldLeftPadding}px - ${fieldRightPadding}px)`,
     },
 ]);
 
@@ -59,12 +60,12 @@ export const labelText = style([
 export const shrinked = style({
     transform: `translateY(0) scale(${LABEL_SCALE_DESKTOP})`,
     lineHeight: `calc(${shrinkedLabelLineHeight.desktop} / ${LABEL_SCALE_DESKTOP})`,
-    width: `calc(100% - ${fieldHorizontalPadding * 2}px) / ${LABEL_SCALE_DESKTOP}`,
+    width: `calc(100% - ${fieldLeftPadding}px - ${fieldRightPadding}px) / ${LABEL_SCALE_DESKTOP}`,
     '@media': {
         [mq.tabletOrSmaller]: {
             transform: `translateY(0) scale(${LABEL_SCALE_MOBILE})`,
             lineHeight: `calc(${shrinkedLabelLineHeight.mobile} / ${LABEL_SCALE_MOBILE})`,
-            width: `calc(100% - ${fieldHorizontalPadding * 2}px) / ${LABEL_SCALE_MOBILE}`,
+            width: `calc(100% - ${fieldLeftPadding}px - ${fieldRightPadding}px) / ${LABEL_SCALE_MOBILE}`,
         },
     },
 });

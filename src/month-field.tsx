@@ -7,6 +7,8 @@ import {isServerSide} from './utils/environment';
 import IconCalendarRegular from './generated/mistica-icons/icon-calendar-regular';
 import {getLocalYearMonthString} from './utils/time';
 import {useTheme} from './hooks';
+import * as dateStyles from './date-field.css';
+import {iconSize} from './text-field-base.css';
 
 import type {CommonFormFieldProps} from './text-field-base';
 
@@ -88,8 +90,8 @@ const DateField: React.FC<DateFieldProps> = ({
             max={max ? getLocalYearMonthString(max) : undefined}
             type="month"
             endIconOverlay={
-                <div style={{position: 'absolute', top: 16, right: 16, pointerEvents: 'none'}}>
-                    <IconCalendarRegular />
+                <div className={dateStyles.iconContainer}>
+                    <IconCalendarRegular size={iconSize} />
                 </div>
             }
             dataAttributes={{'component-name': 'MonthField', ...dataAttributes}}

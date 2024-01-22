@@ -22,6 +22,7 @@ import 'moment/locale/es';
 import 'moment/locale/de';
 import 'moment/locale/pt-br';
 import 'moment/locale/en-gb';
+import {iconSize, iconButtonSize} from './text-field-base.css';
 
 import type {CommonFormFieldProps} from './text-field-base';
 import type Moment from 'moment';
@@ -111,12 +112,18 @@ const DateTimePicker: React.FC<DateTimePickerProps> = ({withTime, mode, isValidD
             return (
                 <IconButton
                     aria-label={texts.clearButton}
-                    size={32}
+                    size={iconButtonSize}
+                    style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        marginRight: -8,
+                    }}
                     onPress={() => {
                         setValue('');
                     }}
                 >
-                    <IconCloseRegular />
+                    <IconCloseRegular size={iconSize} />
                 </IconButton>
             );
         }
@@ -124,10 +131,16 @@ const DateTimePicker: React.FC<DateTimePickerProps> = ({withTime, mode, isValidD
             <IconButton
                 disabled={rest.disabled}
                 aria-label=""
-                size={32}
+                size={iconButtonSize}
+                style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    marginRight: -8,
+                }}
                 onPress={() => setShowPicker(!showPicker)}
             >
-                <IconCalendarRegular />
+                <IconCalendarRegular size={iconSize} />
             </IconButton>
         );
     };

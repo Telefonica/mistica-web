@@ -8,6 +8,8 @@ import IconCalendarRegular from './generated/mistica-icons/icon-calendar-regular
 import {getLocalDateString} from './utils/time';
 import {useTheme} from './hooks';
 import {isFirefox} from './utils/platform';
+import * as styles from './date-field.css';
+import {iconSize} from './text-field-base.css';
 
 import type {CommonFormFieldProps} from './text-field-base';
 
@@ -95,8 +97,8 @@ const DateField: React.FC<DateFieldProps> = ({
             max={max ? getLocalDateString(max) : undefined}
             type="date"
             endIconOverlay={
-                <div style={{position: 'absolute', top: 16, right: 16, pointerEvents: 'none'}}>
-                    <IconCalendarRegular />
+                <div className={styles.iconContainer}>
+                    <IconCalendarRegular size={iconSize} />
                 </div>
             }
             dataAttributes={{'component-name': 'DateField', ...dataAttributes}}

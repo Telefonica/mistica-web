@@ -5,6 +5,9 @@ import * as mq from './media-queries.css';
 import {pxToRem} from './utils/css';
 
 export const fieldVerticalPadding = 8;
+export const fieldLeftPadding = 12;
+export const fieldRightPadding = 16;
+export const iconGap = 12;
 
 export const mobileFontSize = pxToRem(16);
 export const desktopFontSize = pxToRem(18);
@@ -268,8 +271,8 @@ export const textAreaWithoutLabel = style({
 
 export const endIcon = style([
     sprinkles({
-        paddingLeft: 8,
-        paddingRight: 16,
+        paddingLeft: iconGap,
+        paddingRight: fieldRightPadding,
         display: 'flex',
         alignItems: 'center',
     }),
@@ -280,7 +283,8 @@ export const endIcon = style([
 
 export const startIcon = style([
     sprinkles({
-        paddingX: 12,
+        paddingLeft: fieldLeftPadding,
+        paddingRight: iconGap,
         display: 'flex',
         alignItems: 'center',
         height: '100%',
@@ -294,7 +298,7 @@ export const startIcon = style([
 
 export const prefix = style([
     sprinkles({
-        paddingLeft: 12,
+        paddingLeft: fieldLeftPadding,
         paddingRight: 16,
     }),
     {

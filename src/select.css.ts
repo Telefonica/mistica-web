@@ -2,7 +2,14 @@ import {style, styleVariants, createVar} from '@vanilla-extract/css';
 import {sprinkles} from './sprinkles.css';
 import * as mq from './media-queries.css';
 import {vars as skinVars} from './skins/skin-contract.css';
-import {desktopFontSize, inputLineHeight, mobileFontSize} from './text-field-base.css';
+import {
+    desktopFontSize,
+    fieldLeftPadding,
+    fieldRightPadding,
+    iconGap,
+    inputLineHeight,
+    mobileFontSize,
+} from './text-field-base.css';
 import {pxToRem} from './utils/css';
 
 const top = createVar();
@@ -23,7 +30,6 @@ export const vars = {
 const OPTIONS_ZINDEX = 26;
 
 export const chevronSize = pxToRem(20);
-export const fieldHorizontalPadding = 12;
 
 export const optionsContainer = style([
     sprinkles({
@@ -110,8 +116,8 @@ const selectBase = style([
     }),
     {
         fontFamily: 'inherit',
-        paddingRight: `calc(${chevronSize} + 16px + ${fieldHorizontalPadding}px)`,
-        paddingLeft: fieldHorizontalPadding,
+        paddingRight: `calc(${chevronSize} + ${iconGap}px + ${fieldRightPadding}px)`,
+        paddingLeft: fieldLeftPadding,
         outline: 0,
         textOverflow: 'ellipsis',
         appearance: 'none',
@@ -151,8 +157,8 @@ const selectTextBase = style([
     {
         pointerEvents: 'none',
         top: 1, // for border
-        left: fieldHorizontalPadding + 1, // +1 for border
-        right: `calc(${chevronSize} + 16px + ${fieldHorizontalPadding}px + 1px)`, // icon width and +1 for border
+        left: fieldLeftPadding + 1, // +1 for border
+        right: `calc(${chevronSize} + ${iconGap}px + ${fieldRightPadding}px + 1px)`, // icon width and +1 for border
         lineHeight: inputLineHeight,
         fontSize: desktopFontSize,
         '@media': {
@@ -173,7 +179,7 @@ export const selectTextVariants = styleVariants({
 export const arrowDown = style([
     sprinkles({
         position: 'absolute',
-        right: 16,
+        right: fieldRightPadding,
     }),
     {
         top: `calc(50% - ${chevronSize} / 2)`,

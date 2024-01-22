@@ -1,7 +1,7 @@
 'use client';
 import * as React from 'react';
 import {Label, HelperText, FieldContainer} from './text-field-components';
-import {LABEL_SCALE_MOBILE, LABEL_SCALE_DESKTOP, fieldHorizontalPadding} from './text-field-components.css';
+import {LABEL_SCALE_MOBILE, LABEL_SCALE_DESKTOP} from './text-field-components.css';
 import {Text3} from './text';
 import {isRunningAcceptanceTest, isFirefox} from './utils/platform';
 import {useAriaId, useTheme, useScreenSize} from './hooks';
@@ -199,17 +199,17 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
             ...inputProps,
         };
 
-        const startIconWidth = `calc(${styles.iconSize} + ${fieldHorizontalPadding}px)`;
-        const endIconWidth = `calc(${styles.iconButtonSize} + ${fieldHorizontalPadding}px)`;
+        const startIconWidth = `calc(${styles.iconSize} + ${styles.iconGap}px)`;
+        const endIconWidth = `calc(${styles.iconButtonSize} + ${styles.iconGap}px)`;
 
         const isShrinked = shrinkLabel || inputState === 'focused' || inputState === 'filled';
         const scale = isShrinked ? (isTabletOrSmaller ? LABEL_SCALE_MOBILE : LABEL_SCALE_DESKTOP) : 1;
         const labelStyle = {
-            left: `calc(${fieldHorizontalPadding}px + ${startIcon ? startIconWidth : '0px'})`,
+            left: `calc(${styles.fieldLeftPadding}px + ${startIcon ? startIconWidth : '0px'})`,
             // shrinking means applying a scale transformation, so width will be proportionally reduced.
             // Let's keep the original width.
-            width: `calc((100% - ${fieldHorizontalPadding}px - ${startIcon ? startIconWidth : '0px'} - ${
-                endIcon ? endIconWidth : `${fieldHorizontalPadding}px`
+            width: `calc((100% - ${styles.fieldLeftPadding}px - ${startIcon ? startIconWidth : '0px'} - ${
+                endIcon || endIconOverlay ? endIconWidth : `${styles.fieldRightPadding}px`
             }) / ${scale})`,
         };
 
@@ -258,12 +258,16 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
                             ...props,
                             id,
                             style: {
-                                paddingRight: endIcon ? 0 : 16,
+                                paddingRight: endIcon
+                                    ? 0
+                                    : endIconOverlay
+                                    ? `calc(${styles.fieldRightPadding}px + ${endIconWidth})`
+                                    : styles.fieldRightPadding,
                                 paddingLeft: prefix
                                     ? 0
                                     : startIcon
-                                    ? `calc(${startIconWidth} + ${fieldHorizontalPadding}px)`
-                                    : fieldHorizontalPadding,
+                                    ? `calc(${startIconWidth} + ${styles.fieldLeftPadding}px)`
+                                    : styles.fieldLeftPadding,
                                 ...props.style,
                                 fontFamily,
                             },
