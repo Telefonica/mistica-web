@@ -1,3 +1,11 @@
+# [14.41.0](https://github.com/Telefonica/mistica-web/compare/v14.40.0...v14.41.0) (2024-01-23)
+
+
+### Features
+
+* **skin:** update vivo-new colors improving a11y ([#995](https://github.com/Telefonica/mistica-web/issues/995)) ([c38d01e](https://github.com/Telefonica/mistica-web/commit/c38d01e3631016ef5527c09116a767667daf17bb))
+* **useDisableBodyScroll:** Keep original body styles when disabling scroll. Use this hook in Sheet ([#1003](https://github.com/Telefonica/mistica-web/issues/1003)) ([3ed3faf](https://github.com/Telefonica/mistica-web/commit/3ed3faf94585cf49c7a84376d1bfb44e776b0412))
+
 # [14.40.0](https://github.com/Telefonica/mistica-web/compare/v14.39.1...v14.40.0) (2024-01-22)
 
 
