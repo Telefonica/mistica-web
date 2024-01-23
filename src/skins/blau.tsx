@@ -68,7 +68,7 @@ export const getBlauSkin: GetKnownSkin = () => {
             backgroundFeedbackBottom: palette.blauBluePrimary,
             skeletonWave: palette.grey2,
             borderLow: palette.grey1,
-            border: palette.grey2,
+            border: palette.grey1,
             borderHigh: palette.grey5,
             borderSelected: palette.blauBlueSecondary700,
             coverBackgroundHover: applyAlpha(palette.darkModeBlack, 0.25),
