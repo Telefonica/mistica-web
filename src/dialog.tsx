@@ -32,6 +32,8 @@ interface BaseDialogProps {
     acceptText?: string;
     onAccept?: () => void;
     destructive?: boolean;
+    /** @deprecated this does nothing */
+    forceWeb?: boolean;
 }
 
 export type AlertProps = BaseDialogProps;
