@@ -296,7 +296,7 @@ export const getBlauSkin: GetKnownSkin = () => {
             },
             link: {weight: 'medium'},
             title1: {weight: 'medium'},
-            title2: {weight: 'light', size: {mobile: 20, desktop: 28}, lineHeight: {mobile: 24, desktop: 32}},
+            title2: {weight: 'bold', size: {mobile: 20, desktop: 28}, lineHeight: {mobile: 24, desktop: 32}},
             indicator: {weight: 'medium'},
             navigationBar: {weight: 'medium'},
             text5: {weight: 'bold'},
