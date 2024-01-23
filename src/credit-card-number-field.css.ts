@@ -5,12 +5,31 @@ export const flip = style({
     perspective: 1000,
 });
 
-export const flipFront = sprinkles({position: 'absolute'});
+const baseIconContainer = style([
+    sprinkles({
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: '100%',
+    }),
+    {
+        backfaceVisibility: 'hidden',
+    },
+]);
 
-export const flipBack = style({
-    transform: 'rotateY(180deg)',
-    backfaceVisibility: 'hidden',
-});
+export const flipFront = style([
+    baseIconContainer,
+    sprinkles({
+        position: 'absolute',
+    }),
+]);
+
+export const flipBack = style([
+    baseIconContainer,
+    {
+        transform: 'rotateY(180deg)',
+    },
+]);
 
 const flipInner = style([
     sprinkles({
