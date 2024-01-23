@@ -11,7 +11,6 @@ import {useFieldProps} from './form-context';
 import {createChangeEvent, getPrefixedDataAttributes} from './utils/dom';
 import {HelperText} from './text-field-components';
 import {flushSync} from 'react-dom';
-import {pxToRem} from './utils/css';
 
 import type {DataAttributes} from './utils/types';
 
@@ -198,11 +197,11 @@ const PinInput = ({
                          * style than other inputs (less margin, fontSize and height).
                          */
                         style={{
-                            marginTop: `calc(${pxToRem(16)} - 1px)`,
-                            marginBottom: `calc(${pxToRem(16)} - 1px)`,
-                            lineHeight: pxToRem(16),
-                            fontSize: pxToRem(16),
-                            height: pxToRem(16),
+                            marginTop: `calc(${styles.pinInputLineHeight} - 1px)`,
+                            marginBottom: `calc(${styles.pinInputLineHeight} - 1px)`,
+                            lineHeight: styles.pinInputLineHeight,
+                            fontSize: styles.pinInputLineHeight,
+                            height: styles.pinInputLineHeight,
                         }}
                         disabled={disabled}
                         readOnly={readOnly}

@@ -1,6 +1,6 @@
 import {style} from '@vanilla-extract/css';
-import {pxToRem} from './utils/css';
 import * as mq from './media-queries.css';
+import * as textFieldStyles from './text-field-base.css';
 import {vars} from './skins/skin-contract.css';
 import {sprinkles} from './sprinkles.css';
 
@@ -11,8 +11,8 @@ export const shadow = style([
         background: 'transparent',
     }),
     {
-        height: pxToRem(40),
-        width: pxToRem(40),
+        height: textFieldStyles.iconButtonSize,
+        width: textFieldStyles.iconButtonSize,
         backgroundSize: '200%',
         margin: -8,
         display: 'flex',

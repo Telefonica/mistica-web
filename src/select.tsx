@@ -296,6 +296,8 @@ const Select: React.FC<SelectProps> = ({
         },
     };
 
+    const iconSize = pxToRem(20);
+
     return shouldUseNative || isServerSide ? (
         <FieldContainer
             disabled={disabled}
@@ -363,7 +365,7 @@ const Select: React.FC<SelectProps> = ({
                 ))}
             </select>
             <div className={styles.arrowDown} aria-hidden>
-                <ChevronDownRegular size={pxToRem(20)} />
+                <ChevronDownRegular size={iconSize} />
             </div>
         </FieldContainer>
     ) : (
@@ -378,7 +380,7 @@ const Select: React.FC<SelectProps> = ({
                 <TextFieldBaseAutosuggest
                     style={{visibility: 'hidden'}}
                     fullWidth={fullWidth}
-                    endIcon={<ChevronDownRegular size={pxToRem(20)} />}
+                    endIcon={<ChevronDownRegular size={iconSize} />}
                     focus={isFocused}
                     label={label}
                     value={value}

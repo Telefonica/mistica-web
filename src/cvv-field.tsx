@@ -16,6 +16,7 @@ import Divider from './divider';
 import Text2 from './text';
 import {vars} from './skins/skin-contract.css';
 import {pxToRem} from './utils/css';
+import {iconButtonSize} from './text-field-base.css';
 
 import type {CommonFormFieldProps} from './text-field-base';
 import type {CardOptions} from './utils/credit-card';
@@ -97,7 +98,6 @@ const CvvField: React.FC<CvvFieldProps> = ({
         onChangeValue,
     });
 
-    const buttonSize = pxToRem(40);
     const iconSize = pxToRem(16);
 
     return (
@@ -125,14 +125,14 @@ const CvvField: React.FC<CvvFieldProps> = ({
                     target={
                         <div style={{width: iconSize, height: iconSize}}>
                             <IconButton
-                                size={buttonSize}
+                                size={iconButtonSize}
                                 style={{
                                     display: 'flex',
                                     alignItems: 'center',
                                     justifyContent: 'center',
                                     position: 'relative',
-                                    left: `calc(-1 * (${buttonSize} - ${iconSize}) / 2)`,
-                                    top: `calc(-1 * (${buttonSize} - ${iconSize}) / 2)`,
+                                    left: `calc(-1 * (${iconButtonSize} - ${iconSize}) / 2)`,
+                                    top: `calc(-1 * (${iconButtonSize} - ${iconSize}) / 2)`,
                                 }}
                                 aria-label={texts.formCreditCardCvvTooltipVisaMcButton}
                             >

@@ -109,10 +109,11 @@ globalStyle(`${fullWidth} > div`, {
 });
 
 export const textArea = style([
+    sprinkles({
+        paddingY: 0,
+    }),
     {
         resize: 'none',
-        paddingTop: 0,
-        marginBottom: 0,
     },
     commonInputStyles,
 ]);
@@ -244,6 +245,7 @@ export const inputWithoutLabel = style({
 });
 
 export const textAreaWithLabel = style({
+    // using margin instead of padding to avoid the multiline text being visible through the label
     marginTop: topSpaceWithLabel.desktop,
     paddingBottom: bottomSpaceWithLabel.desktop,
     height: `calc(${pxToRem(152)} - ${topSpaceWithLabel.desktop} - 2px)`,

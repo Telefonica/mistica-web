@@ -5,7 +5,7 @@ import {desktopFontSize, mobileFontSize} from './text-field-base.css';
 import * as mq from './media-queries.css';
 import {pxToRem} from './utils/css';
 
-const inputLineHeight = pxToRem(16);
+export const pinInputLineHeight = pxToRem(16);
 
 export const fieldContainer = style({
     width: 'fit-content',
@@ -26,7 +26,7 @@ const fieldCommonStyles = style([
         background: vars.colors.backgroundContainer,
     }),
     {
-        width: `calc(${inputLineHeight} * 3)`,
+        width: `calc(${pinInputLineHeight} * 3)`,
     },
 ]);
 
@@ -84,7 +84,7 @@ export const passwordDot = style({
     left: 0,
     right: 0,
     margin: 'auto', // center the div
-    width: inputLineHeight,
-    height: inputLineHeight,
+    width: pinInputLineHeight,
+    height: pinInputLineHeight,
     textAlign: 'center',
 });
