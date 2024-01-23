@@ -11,21 +11,30 @@ const DialogContext = React.createContext<{
 
 const ModalDialog = React.lazy(() => import(/* webpackChunkName: "dialog" */ './dialog'));
 
+const throwMissingDialogRootError = () => {
+    throw Error(
+        'Tried to show a dialog but the DialogRoot component was not mounted (missing ThemeContextProvider?)'
+    );
+};
+
 export const useDialog = (): {
     alert: (params: AlertProps) => void;
     confirm: (params: ConfirmProps) => void;
     dialog: (params: ExtendedDialogProps) => void;
 } => {
-    const {dialog: currentDialog, setDialog} = React.useContext(DialogContext);
+    const {dialog: currentDialog, setDialog, mounted} = React.useContext(DialogContext);
 
     const showDialog = React.useCallback(
         (params: DialogProps) => {
+            if (!mounted) {
+                throwMissingDialogRootError();
+            }
             if (params && currentDialog) {
                 throw Error('Tried to show a dialog on top of another dialog');
             }
             setDialog(params);
         },
-        [setDialog, currentDialog]
+        [setDialog, currentDialog, mounted]
     );
 
     return React.useMemo(
@@ -35,12 +44,6 @@ export const useDialog = (): {
             dialog: (params: ExtendedDialogProps) => showDialog({type: 'dialog', ...params}),
         }),
         [showDialog]
-    );
-};
-
-const throwMissingDialogRootError = () => {
-    throw Error(
-        'Tried to show a dialog but the DialogRoot component was not mounted (missing ThemeContextProvider?)'
     );
 };
 
