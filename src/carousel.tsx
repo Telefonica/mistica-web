@@ -4,7 +4,6 @@ import IconChevronLeftRegular from './generated/mistica-icons/icon-chevron-left-
 import IconChevronRightRegular from './generated/mistica-icons/icon-chevron-right-regular';
 import {useIsInViewport, useScreenSize, useTheme} from './hooks';
 import Inline from './inline';
-import Stack from './stack';
 import {BaseTouchable} from './touchable';
 import classNames from 'classnames';
 import {useIsInverseVariant, ThemeVariant} from './theme-variant-context';
@@ -13,13 +12,12 @@ import {isAndroid, isIos, isRunningAcceptanceTest} from './utils/platform';
 import {useDocumentVisibility} from './utils/document-visibility';
 import * as styles from './carousel.css';
 import * as mediaStyles from './image.css';
-import {sprinkles} from './sprinkles.css';
 import {useDesktopContainerType} from './desktop-container-type-context';
 import {VIVO_NEW_SKIN} from './skins/constants';
 import {applyCssVars} from './utils/css';
 
 import type {DesktopContainerType} from './desktop-container-type-context';
-import type {DataAttributes} from './utils/types';
+import type {ByBreakpoint, DataAttributes} from './utils/types';
 
 const useShouldAutoplay = (autoplay: boolean, ref: React.RefObject<HTMLElement>): boolean => {
     const isDocumentVisible = useDocumentVisibility();
@@ -29,7 +27,7 @@ const useShouldAutoplay = (autoplay: boolean, ref: React.RefObject<HTMLElement>)
 
 type PageBulletsProps = {
     currentIndex: number;
-    numPages: number;
+    numPages: number | ByBreakpoint<number>;
     onPress?: (index: number) => void;
 };
 
@@ -45,20 +43,25 @@ export const PageBullets: React.FC<PageBulletsProps> = ({currentIndex, numPages,
         }
     };
 
+    const maxNumPages =
+        typeof numPages === 'number'
+            ? numPages
+            : Math.max(numPages.mobile, numPages.tablet ?? numPages.mobile, numPages.desktop);
+
     return (
-        <Inline
-            space={isDesktopOrBigger ? 16 : 8}
-            alignItems="center"
-            dataAttributes={{'component-name': 'PageBullets'}}
-        >
-            {Array.from({length: numPages}, (_, i: number) => (
+        <Inline space={0} alignItems="center" dataAttributes={{'component-name': 'PageBullets'}}>
+            {Array.from({length: maxNumPages}, (_, i: number) => (
                 <BaseTouchable
-                    className={sprinkles({
-                        display: 'block',
-                        padding: 0,
-                        border: 'none',
-                        background: 'transparent',
-                    })}
+                    className={classNames(
+                        typeof numPages === 'number'
+                            ? styles.bulletButton
+                            : {
+                                  [styles.bulletButtonMobile]: i < numPages.mobile,
+                                  [styles.bulletButtonTablet]: i < (numPages.tablet ?? numPages.mobile),
+                                  [styles.bulletButtonDesktop]: i < numPages.desktop,
+                              }
+                    )}
+                    style={i === 0 ? {paddingLeft: 0} : {}}
                     key={i}
                     maybe
                     onPress={isDesktopOrBigger && onPress ? () => onPress(i) : undefined}
@@ -212,6 +215,9 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
 
     const carouselRef = React.useRef<HTMLDivElement>(null);
 
+    const pagesCountMobile = Math.ceil(items.length / Math.max(Math.floor(itemsPerPageConfig.mobile), 1));
+    const pagesCountTablet = Math.ceil(items.length / Math.max(Math.floor(itemsPerPageConfig.tablet), 1));
+    const pagesCountDesktop = Math.ceil(items.length / Math.max(Math.floor(itemsPerPageConfig.desktop), 1));
     const pagesCount = Math.ceil(items.length / itemsPerPageFloor);
     const [{scrollLeft, scrollRight}, setScroll] = React.useState({scrollLeft: 0, scrollRight: 0});
     const [itemScrollPositions, setItemScrollPositions] = React.useState<Array<number>>([]);
@@ -371,8 +377,16 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
     if (renderBullets) {
         bullets = renderBullets({numPages: pagesCount, currentIndex: currentPageIndex, onPress: goToPage});
     } else if (withBullets) {
-        bullets = pagesCount > 1 && (
-            <PageBullets numPages={pagesCount} currentIndex={currentPageIndex} onPress={goToPage} />
+        bullets = (
+            <PageBullets
+                numPages={{
+                    mobile: pagesCountMobile,
+                    tablet: pagesCountTablet,
+                    desktop: pagesCountDesktop,
+                }}
+                currentIndex={currentPageIndex}
+                onPress={goToPage}
+            />
         );
     }
 
@@ -380,7 +394,7 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
     const vivoNewMobilePageOffset = '36px';
 
     return (
-        <Stack space={24} dataAttributes={{'component-name': 'Carousel', ...dataAttributes}}>
+        <div {...getPrefixedDataAttributes({'component-name': 'Carousel', ...dataAttributes})}>
             <div className={styles.carouselContainer}>
                 <ThemeVariant isInverse={false}>
                     <BaseTouchable
@@ -395,7 +409,8 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
                 <div
                     className={classNames(styles.carousel, {
                         [styles.centeredCarousel]: centered,
-                        [styles.carouselWithScroll]: pagesCount > 1,
+                        [styles.carouselWithScrollMobile]: pagesCountMobile > 1,
+                        [styles.carouselWithScrollTablet]: pagesCountTablet > 1,
                     })}
                     style={{
                         ...applyCssVars({
@@ -448,8 +463,18 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
                     </BaseTouchable>
                 </ThemeVariant>
             </div>
-            {bullets && <div className={styles.carouselBullets}>{bullets}</div>}
-        </Stack>
+            {bullets && (
+                <div
+                    className={classNames(styles.carouselBullets, {
+                        [styles.noCarouselBulletsDesktop]: pagesCountDesktop <= 1,
+                        [styles.noCarouselBulletsTablet]: pagesCountTablet <= 1,
+                        [styles.noCarouselBulletsMobile]: pagesCountMobile <= 1,
+                    })}
+                >
+                    {bullets}
+                </div>
+            )}
+        </div>
     );
 };
 

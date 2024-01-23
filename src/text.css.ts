@@ -1,6 +1,8 @@
 import {style, createVar} from '@vanilla-extract/css';
 import * as mq from './media-queries.css';
 
+import type {ComplexStyleRule} from '@vanilla-extract/css';
+
 const mobileSize = createVar();
 const desktopSize = createVar();
 const mobileLineHeight = createVar();
@@ -17,15 +19,8 @@ export const vars = {
 
 export const withWordBreak = style({
     overflowWrap: 'anywhere',
-    '@supports': {
-        'not (overflow-wrap: anywhere)': {
-            // "overflow-wrap: anywhere" is not supported in Safari
-            // "word-break: break-word" has the same effect as "word-break: normal" and "overflow-wrap: anywhere",
-            // regardless of the actual value of the overflow-wrap property.
-            wordBreak: 'break-word',
-        },
-    },
-});
+    wordBreak: ['keep-all', 'auto-phrase'],
+} as ComplexStyleRule);
 
 export const withoutWordBreak = style({
     overflowWrap: 'inherit',

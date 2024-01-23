@@ -237,7 +237,7 @@ const Tooltip: React.FC<Props> = ({
         const maxLeftOffset = windowSize.width - tooltipWidth;
         const maxTopOffset = windowSize.height - tooltipHeight;
 
-        const arrowOffsetFromViewport = parseInt(getCssVarValue(vars.borderRadii.container)) || 8;
+        const arrowOffsetFromViewport = parseInt(getCssVarValue(vars.borderRadii.popup)) ?? 8;
 
         switch (finalPosition) {
             case 'top':
@@ -486,6 +486,10 @@ const Tooltip: React.FC<Props> = ({
                                   exit: TOOLTIP_EXIT_TRANSITION_DURATION_IN_MS,
                               }
                     }
+                    onExited={() => {
+                        setTooltipComputedStyles(undefined);
+                        setArrowComputedStyles(undefined);
+                    }}
                     mountOnEnter
                     unmountOnExit
                 >

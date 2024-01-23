@@ -1,7 +1,7 @@
 'use client';
 import * as React from 'react';
 import classnames from 'classnames';
-import {useScreenSize, useTheme} from './hooks';
+import {useTheme} from './hooks';
 import Badge from './badge';
 import Box from './box';
 import {Text2} from './text';
@@ -63,11 +63,10 @@ const Chip: React.FC<ChipProps> = (props: ChipProps) => {
     const {texts, isDarkMode, textPresets} = useTheme();
 
     const overAlternative = useThemeVariant() === 'alternative';
-    const {isTabletOrSmaller} = useScreenSize();
 
-    const paddingLeft = Icon ? (isTabletOrSmaller ? 16 : 8) : isTabletOrSmaller ? 20 : 12;
-    const paddingRight = isTabletOrSmaller ? 20 : 12;
-    const paddingIcon = isTabletOrSmaller ? 16 : 8;
+    const paddingLeft = Icon ? ({mobile: 16, desktop: 8} as const) : ({mobile: 20, desktop: 12} as const);
+    const paddingRight = {mobile: 20, desktop: 12} as const;
+    const paddingIcon = {mobile: 16, desktop: 8} as const;
 
     const renderBadge = () => {
         if (!badge) {
@@ -134,7 +133,9 @@ const Chip: React.FC<ChipProps> = (props: ChipProps) => {
     }
     const isInteractive = active !== undefined || props.href || props.onPress || props.to;
 
-    const renderContent = () => (
+    const chipDataAttributes = {'component-name': 'Chip', ...dataAttributes};
+
+    const renderContent = (dataAttributes?: DataAttributes) => (
         <Box
             className={classnames(
                 styles.chipVariants[active ? 'active' : overAlternative ? 'overAlternative' : 'default'],
@@ -144,7 +145,7 @@ const Chip: React.FC<ChipProps> = (props: ChipProps) => {
             )}
             paddingLeft={paddingLeft}
             paddingRight={paddingRight}
-            {...getPrefixedDataAttributes(dataAttributes, 'Chip')}
+            dataAttributes={dataAttributes}
         >
             {body}
         </Box>
@@ -156,6 +157,7 @@ const Chip: React.FC<ChipProps> = (props: ChipProps) => {
                 className={styles.button}
                 trackingEvent={props.trackingEvent}
                 onPress={props.onPress}
+                dataAttributes={chipDataAttributes}
             >
                 {renderContent()}
             </BaseTouchable>
@@ -168,6 +170,7 @@ const Chip: React.FC<ChipProps> = (props: ChipProps) => {
                 trackingEvent={props.trackingEvent}
                 to={props.to}
                 fullPageOnWebView={props.fullPageOnWebView}
+                dataAttributes={chipDataAttributes}
             >
                 {renderContent()}
             </BaseTouchable>
@@ -176,13 +179,18 @@ const Chip: React.FC<ChipProps> = (props: ChipProps) => {
 
     if (props.href) {
         return (
-            <BaseTouchable trackingEvent={props.trackingEvent} href={props.href} newTab={props.newTab}>
+            <BaseTouchable
+                trackingEvent={props.trackingEvent}
+                href={props.href}
+                newTab={props.newTab}
+                dataAttributes={chipDataAttributes}
+            >
                 {renderContent()}
             </BaseTouchable>
         );
     }
 
-    return renderContent();
+    return renderContent(chipDataAttributes);
 };
 
 export default Chip;

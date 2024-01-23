@@ -1,4 +1,5 @@
 'use client';
+// https://www.figma.com/file/8TXIyWTJ8plJ06i1qwv97k/%F0%9F%94%B8-Modals-Specs?type=design&node-id=0-21&mode=design&t=kUetunERuhUMfYm2-0
 import * as React from 'react';
 import classnames from 'classnames';
 import {ButtonPrimary, ButtonSecondary, ButtonDanger} from './button';
@@ -7,7 +8,6 @@ import FocusTrap from './focus-trap';
 import IcnCloseRegular from './generated/mistica-icons/icon-close-regular';
 import IconButton from './icon-button';
 import {isWebViewBridgeAvailable, nativeConfirm, nativeAlert} from '@tef-novum/webview-bridge';
-import ThemeContext from './theme-context';
 import {useTheme} from './hooks';
 import ButtonLayout from './button-layout';
 import {Text5, Text4, Text3} from './text';
@@ -20,45 +20,39 @@ import * as styles from './dialog.css';
 import {vars} from './skins/skin-contract.css';
 
 import type {ButtonLink} from './button';
-import type {Theme} from './theme';
 import type {RendersNullableElement} from './utils/types';
 import type {ExclusifyUnion} from './utils/utility-types';
 
-const animationsSupported = (platformOverrides: Theme['platformOverrides']) =>
-    process.env.NODE_ENV !== 'test' && !isRunningAcceptanceTest(platformOverrides);
+const shouldAnimate = () => process.env.NODE_ENV !== 'test' && !isRunningAcceptanceTest();
 
 interface BaseDialogProps {
     className?: string;
     title?: string;
-    icon?: React.ReactElement;
     message: string;
     acceptText?: string;
     onAccept?: () => void;
     destructive?: boolean;
 }
 
-interface AlertProps extends BaseDialogProps {
-    showClose?: boolean;
-}
+export type AlertProps = BaseDialogProps;
 
-interface ConfirmProps extends BaseDialogProps {
-    showClose?: boolean;
-    showCancel?: boolean;
+export interface ConfirmProps extends BaseDialogProps {
     cancelText?: string;
     onCancel?: () => void;
 }
-interface ExtendedDialogProps extends BaseDialogProps {
+
+export interface ExtendedDialogProps extends BaseDialogProps {
+    icon?: React.ReactElement;
     subtitle?: string;
     extra?: React.ReactNode;
-    forceWeb?: boolean;
-    showClose?: boolean;
-    showCancel?: boolean;
     cancelText?: string;
     onCancel?: () => void;
     link?: RendersNullableElement<typeof ButtonLink>;
 }
 
-type DialogProps = ExclusifyUnion<AlertProps | ConfirmProps | ExtendedDialogProps>;
+export type DialogProps = ExclusifyUnion<AlertProps | ConfirmProps | ExtendedDialogProps> & {
+    type: 'dialog' | 'alert' | 'confirm';
+};
 
 const Dialog: React.FC<DialogProps> = (props) => {
     const {texts} = useTheme();
@@ -72,14 +66,13 @@ const Dialog: React.FC<DialogProps> = (props) => {
         acceptText = texts.dialogAcceptButton,
         onCancel: handleCancel,
         onAccept: handleAccept,
-        showCancel = false,
         destructive = false,
     } = props;
-    const isDialog = !!props.forceWeb;
+    const isDialog = props.type === 'dialog';
+    const showCancelButton = props.type === 'confirm' || (isDialog && !!handleCancel);
 
-    const mainButtonProps = {
-        onPress: handleAccept ? handleAccept : () => {},
-        dataAttributes: {testid: 'dialog-accept-button'},
+    const acceptButtonProps = {
+        onPress: handleAccept || (() => {}),
         children: acceptText,
     };
 
@@ -87,16 +80,12 @@ const Dialog: React.FC<DialogProps> = (props) => {
         <div className={classnames(styles.variants[isDialog ? 'dialog' : 'default'], className)}>
             {icon && (
                 <Box paddingBottom={24}>
-                    <div className={styles.iconContainer}>
-                        {React.cloneElement(icon, {
-                            size: '100%',
-                        })}
-                    </div>
+                    <div className={styles.iconContainer}>{React.cloneElement(icon, {size: '100%'})}</div>
                 </Box>
             )}
             {title && (
                 <Box paddingBottom={16}>
-                    {props.forceWeb ? (
+                    {isDialog ? (
                         <Text5 as="h2">{title}</Text5>
                     ) : (
                         <Text4 regular as="h2">
@@ -122,17 +111,16 @@ const Dialog: React.FC<DialogProps> = (props) => {
             </div>
 
             <div className={styles.dialogActions}>
-                <ButtonLayout link={props.forceWeb ? props.link : undefined}>
+                <ButtonLayout link={isDialog ? props.link : undefined}>
                     {destructive ? (
-                        <ButtonDanger tabIndex={1} {...mainButtonProps} /> // eslint-disable-line jsx-a11y/tabindex-no-positive
+                        <ButtonDanger tabIndex={1} {...acceptButtonProps} /> // eslint-disable-line jsx-a11y/tabindex-no-positive
                     ) : (
-                        <ButtonPrimary tabIndex={1} {...mainButtonProps} /> // eslint-disable-line jsx-a11y/tabindex-no-positive
+                        <ButtonPrimary tabIndex={1} {...acceptButtonProps} /> // eslint-disable-line jsx-a11y/tabindex-no-positive
                     )}
-                    {showCancel && !!handleCancel && (
+                    {showCancelButton && (
                         <ButtonSecondary
                             tabIndex={2} // eslint-disable-line jsx-a11y/tabindex-no-positive
-                            onPress={handleCancel}
-                            dataAttributes={{testid: 'dialog-cancel-button'}}
+                            onPress={handleCancel || (() => {})}
                         >
                             {cancelText}
                         </ButtonSecondary>
@@ -144,379 +132,259 @@ const Dialog: React.FC<DialogProps> = (props) => {
 };
 
 const showNativeDialog = ({
-    showCancel,
+    type,
     message,
     title,
     acceptText,
     cancelText,
     onAccept,
     onCancel,
+    onDestroy,
 }: {
-    showCancel?: boolean;
+    type: string;
     message: string;
     title?: string;
     acceptText: string;
     cancelText: string;
     onAccept?: () => void;
     onCancel?: () => void;
+    onDestroy: () => void;
 }) =>
-    showCancel
-        ? nativeConfirm({message, title, cancelText, acceptText}).then((accepted) =>
-              accepted ? onAccept?.() : onCancel?.()
-          )
-        : nativeAlert({message, title, buttonText: acceptText}).then(onAccept);
+    type === 'confirm'
+        ? nativeConfirm({message, title, cancelText, acceptText}).then((accepted) => {
+              if (accepted) {
+                  onAccept?.();
+              } else {
+                  onCancel?.();
+              }
+              onDestroy();
+          })
+        : nativeAlert({message, title, buttonText: acceptText}).then(() => {
+              onAccept?.();
+              onDestroy();
+          });
 
 type ModalDialogProps = DialogProps & {
-    onCancel: () => void;
-    onAccept: () => void;
-    showCancel?: boolean;
-    isClosing: boolean;
-    onCloseTransitionEnd?: () => void;
+    onDestroy: () => void;
 };
 
-const useNativeDialog = ({
-    renderNative,
+const NativeModalDialog = ({
+    type,
     onAccept,
     onCancel,
+    onDestroy,
     acceptText,
     cancelText,
-    showCancel,
     message,
     title,
-}: {
-    renderNative: boolean;
-    showCancel?: boolean;
-    message: string;
-    title?: string;
-    acceptText: string;
-    cancelText: string;
-    onAccept: () => void;
-    onCancel: () => void;
-}) => {
-    const onAcceptRef = React.useRef(onAccept).current;
-    const onCancelRef = React.useRef(onCancel).current;
-    React.useEffect(() => {
-        if (renderNative) {
-            showNativeDialog({
-                acceptText,
-                cancelText,
-                showCancel,
-                message,
-                title,
-                onAccept: onAcceptRef,
-                onCancel: onCancelRef,
-            });
-        }
-    }, [onAcceptRef, onCancelRef, acceptText, cancelText, showCancel, message, title, renderNative]);
-};
-
-type NativeModalDialogProps = ModalDialogProps & {
-    dialogAcceptButton: string;
-    dialogCancelButton: string;
-};
-
-const NativeModalDialog = (props: NativeModalDialogProps) => {
-    useNativeDialog({
-        renderNative: true,
-        acceptText: props.acceptText || props.dialogAcceptButton,
-        cancelText: props.cancelText || props.dialogCancelButton,
-        showCancel: props.showCancel,
-        message: props.message,
-        title: props.title,
-        onAccept: props.onAccept,
-        onCancel: props.onCancel,
+}: ModalDialogProps): JSX.Element => {
+    const {texts} = useTheme();
+    const paramsRef = React.useRef({
+        type,
+        onAccept,
+        onCancel,
+        onDestroy,
+        acceptText: acceptText || texts.dialogAcceptButton,
+        cancelText: cancelText || texts.dialogCancelButton,
+        message,
+        title,
     });
 
-    return null;
+    React.useEffect(() => {
+        showNativeDialog(paramsRef.current);
+    }, []);
+
+    return <></>;
 };
 
-const ModalDialog = (props: ModalDialogProps) => {
-    const {platformOverrides} = useTheme();
-    const context = React.useContext(ThemeContext);
+const ModalDialog = (props: ModalDialogProps): JSX.Element => {
+    useSetModalStateEffect();
+    const dialogContentRef = React.useRef<HTMLDivElement>(null);
+    const {texts} = useTheme();
+    const [isClosing, setIsClosing] = React.useState<boolean>(false);
+    /** this ref has the same value as the isClosing state but we want it to be immediately accessible to avoid possible race conditions */
+    const isClosingRef = React.useRef<boolean>(false);
+    /** this flag is used to avoid calling close() multiple times when the transitions ends (the CSS could define transitions for multiple styles) */
+    const isClosedRef = React.useRef<boolean>(false);
+    /** this flag is used to disable user interactions while the component is animating */
+    const [isReady, setIsReady] = React.useState<boolean>(false);
+    const dialogWasAcceptedRef = React.useRef<boolean>(false);
+    const historyWasPushedRef = React.useRef<boolean>(false);
+    const animationDurationRef = React.useRef<number>(shouldAnimate() ? styles.ANIMATION_DURATION_MS : 0);
 
-    // Closing the dialog before the animation has ended leaves the component in a broken state
-    // To avoid race conditions, we don't allow closing the dialog until the animation has ended
-    // See onAnimationEnd handler
-    const canCloseRef = React.useRef(process.env.NODE_ENV === 'test');
+    const shouldRenderNative = props.type !== 'dialog' && isWebViewBridgeAvailable();
+    const shouldDismissOnPressOverlay = props.type === 'dialog';
+    const shouldAcceptOnDismiss = props.type === 'alert';
 
-    if (!context) {
-        throw Error(
-            `To use @telefonica/mistica components you must instantiate <ThemeContextProvider> as their parent.`
-        );
-    }
-    const renderNative = !props.forceWeb && isWebViewBridgeAvailable();
+    const {onAccept, onCancel, onDestroy, ...dialogProps} = props;
 
-    const {onAccept, isClosing, onCancel, onCloseTransitionEnd, ...dialogProps} = props;
+    React.useEffect(() => {
+        const timeout = setTimeout(() => {
+            if (!isClosingRef.current) {
+                setIsReady(true);
+            }
+        }, animationDurationRef.current);
+        return () => {
+            clearTimeout(timeout);
+        };
+    }, []);
+
+    const close = React.useCallback(() => {
+        if (!isClosedRef.current) {
+            isClosedRef.current = true;
+            if (dialogWasAcceptedRef.current) {
+                onAccept?.();
+            } else {
+                onCancel?.();
+            }
+            onDestroy();
+        }
+    }, [onAccept, onCancel, onDestroy]);
+
+    const startClosing = React.useCallback(() => {
+        let timeout: NodeJS.Timeout;
+        if (!isClosingRef.current && isReady) {
+            isClosingRef.current = true;
+            setIsReady(false);
+            setIsClosing(true);
+            timeout = setTimeout(close, animationDurationRef.current);
+        }
+        return () => {
+            if (timeout) {
+                clearTimeout(timeout);
+            }
+        };
+    }, [close, isReady]);
 
     const handleAccept = React.useCallback(() => {
-        if (!isClosing && canCloseRef.current) {
-            onAccept();
-        }
-    }, [isClosing, onAccept]);
+        dialogWasAcceptedRef.current = true;
+        startClosing();
+    }, [startClosing]);
 
     const handleCancel = React.useCallback(() => {
-        if (!isClosing && canCloseRef.current) {
-            onCancel();
+        dialogWasAcceptedRef.current = false;
+        startClosing();
+    }, [startClosing]);
+
+    const dismiss = React.useCallback(() => {
+        if (shouldAcceptOnDismiss) {
+            handleAccept();
+        } else {
+            handleCancel();
         }
-    }, [isClosing, onCancel]);
+    }, [handleAccept, handleCancel, shouldAcceptOnDismiss]);
 
-    const handleClose = props.showCancel ? handleCancel : handleAccept;
+    const handleBackNavigation = React.useCallback(() => {
+        if (historyWasPushedRef.current) {
+            historyWasPushedRef.current = false;
+            dismiss();
+        }
+    }, [dismiss]);
 
-    const handleOverlayPress = React.useCallback(
-        (event: React.SyntheticEvent<any> | Event) => {
-            if (props.showClose) {
-                handleClose();
-                event.stopPropagation();
+    React.useEffect(() => {
+        if (shouldRenderNative) {
+            return;
+        }
+        if (!historyWasPushedRef.current && !isClosingRef.current) {
+            historyWasPushedRef.current = true;
+            window.history.pushState(null, document.title, window.location.href);
+        }
+        window.addEventListener('popstate', handleBackNavigation);
+        return () => {
+            window.removeEventListener('popstate', handleBackNavigation);
+            if (isClosingRef.current && historyWasPushedRef.current) {
+                historyWasPushedRef.current = false;
+                window.history.back();
             }
-        },
-        [handleClose, props.showClose]
-    );
+        };
+    }, [handleBackNavigation, shouldRenderNative]);
 
     const handleKeyDown = React.useCallback(
         (event: KeyboardEvent) => {
             if (event.key === ESC) {
-                handleClose();
                 event.stopPropagation();
                 event.preventDefault();
+                dismiss();
             }
         },
-        [handleClose]
+        [dismiss]
     );
-    const addKeyDownListener = React.useCallback(() => {
-        document.addEventListener('keydown', handleKeyDown);
-    }, [handleKeyDown]);
 
     React.useEffect(() => {
-        if (!animationsSupported(platformOverrides)) {
-            addKeyDownListener();
+        if (shouldRenderNative) {
+            return;
         }
-
-        if (
-            (renderNative || !animationsSupported(platformOverrides)) &&
-            props.isClosing &&
-            props.onCloseTransitionEnd
-        ) {
-            props.onCloseTransitionEnd();
-        }
-
+        document.addEventListener('keydown', handleKeyDown);
         return () => {
             document.removeEventListener('keydown', handleKeyDown);
         };
-    }, [addKeyDownListener, handleKeyDown, props, renderNative, platformOverrides]);
+    }, [handleKeyDown, shouldRenderNative]);
 
-    useSetModalStateEffect();
+    const handleOverlayPress = React.useCallback(
+        (event: React.MouseEvent) => {
+            event.stopPropagation();
+            if (shouldDismissOnPressOverlay) {
+                handleCancel();
+            }
+        },
+        [shouldDismissOnPressOverlay, handleCancel]
+    );
 
-    /* eslint-disable jsx-a11y/no-noninteractive-element-interactions, jsx-a11y/no-static-element-interactions */
-    return renderNative ? (
-        <NativeModalDialog
-            {...props}
-            dialogAcceptButton={context.texts.dialogAcceptButton}
-            dialogCancelButton={context.texts.dialogCancelButton}
-        />
-    ) : (
-        <Portal>
-            <div className={styles.wrapper}>
-                <FocusTrap>
-                    <div
-                        onClick={handleOverlayPress}
-                        className={classnames(styles.modalOpacityLayer, {
-                            [styles.closedOpactityLayer]: isClosing,
-                        })}
-                        role="dialog"
-                        data-component-name="Dialog"
-                    >
-                        <div onClick={(e) => e.stopPropagation()}>
-                            <div
-                                onTransitionEnd={
-                                    isClosing && onCloseTransitionEnd ? onCloseTransitionEnd : undefined
+    if (shouldRenderNative) {
+        return <NativeModalDialog {...props} />;
+    }
+
+    return (
+        <Portal className={styles.wrapper}>
+            <FocusTrap>
+                {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
+                <div
+                    onClick={handleOverlayPress}
+                    className={classnames(styles.modalOpacityLayer, {
+                        [styles.closedOpactityLayer]: isClosing,
+                    })}
+                    data-testid="dialog-overlay"
+                    aria-hidden={isClosing || !isReady}
+                >
+                    {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
+                    <div role="dialog" onClick={(e) => e.stopPropagation()} data-component-name="Dialog">
+                        <div
+                            ref={dialogContentRef}
+                            onAnimationEnd={(e) => {
+                                if (e.target === dialogContentRef.current) {
+                                    if (!isClosingRef.current) {
+                                        setIsReady(true);
+                                    }
                                 }
-                                onAnimationEnd={() => {
-                                    canCloseRef.current = true;
-                                    addKeyDownListener();
-                                }}
-                                className={classnames(styles.modalContent, {
-                                    [styles.closedModalContent]: isClosing,
-                                })}
-                            >
-                                {props.showClose && (
-                                    <div className={styles.modalCloseButtonContainer}>
-                                        <IconButton
-                                            onPress={handleClose}
-                                            aria-label={
-                                                context.texts.modalClose ?? context.texts.closeButtonLabel
-                                            }
-                                        >
-                                            <IcnCloseRegular color={vars.colors.neutralHigh} />
-                                        </IconButton>
-                                    </div>
-                                )}
-                                <Dialog {...dialogProps} onCancel={handleCancel} onAccept={handleAccept} />
-                            </div>
+                            }}
+                            onTransitionEnd={(e) => {
+                                if (e.target === dialogContentRef.current) {
+                                    if (isClosingRef.current) {
+                                        close();
+                                    }
+                                }
+                            }}
+                            className={classnames(styles.modalContent, {
+                                [styles.closedModalContent]: isClosing,
+                            })}
+                        >
+                            {shouldDismissOnPressOverlay && (
+                                <div className={styles.modalCloseButtonContainer}>
+                                    <IconButton
+                                        onPress={dismiss}
+                                        aria-label={texts.modalClose || texts.closeButtonLabel}
+                                    >
+                                        <IcnCloseRegular color={vars.colors.neutralHigh} />
+                                    </IconButton>
+                                </div>
+                            )}
+                            <Dialog {...dialogProps} onCancel={handleCancel} onAccept={handleAccept} />
                         </div>
                     </div>
-                </FocusTrap>
-            </div>
+                </div>
+            </FocusTrap>
         </Portal>
     );
 };
 
-let dialogInstance: DialogRoot | null = null;
-
-// This counts the number of instantiated DialogRoots.
-// We only want to use the first instance, created by the initial ThemeContextProvider.
-// Our app could have multiple React trees for example, webapp rendering global-checkout
-let dialogRootInstances = 0;
-
-type DialogRootProps = {children?: React.ReactNode};
-
-type DialogRootState = {
-    dialogProps: DialogProps | null;
-    isClosing: boolean;
-    instanceNumber: number;
-};
-
-export default class DialogRoot extends React.Component<DialogRootProps, DialogRootState> {
-    state: DialogRootState = {
-        dialogProps: null,
-        isClosing: false,
-        instanceNumber: dialogRootInstances + 1,
-    };
-
-    componentDidMount(): void {
-        dialogRootInstances++;
-        if (dialogRootInstances === 1) {
-            // eslint-disable-next-line @typescript-eslint/no-this-alias
-            dialogInstance = this;
-            window.addEventListener('popstate', this.handleBack);
-        }
-    }
-
-    componentWillUnmount(): void {
-        dialogRootInstances--;
-        if (dialogRootInstances === 0) {
-            dialogInstance = null;
-            window.removeEventListener('popstate', this.handleBack);
-        }
-    }
-
-    show(props: DialogProps): void {
-        if (this.state.dialogProps) {
-            throw Error(
-                'Tried to show a dialog on top of another dialog. This functionality is not currently supported.'
-            );
-        }
-        // We add an additional entry to history with the same page, so the first time back is pressed we only close the Dialog
-        window.history.pushState(null, document.title, window.location.href);
-        this.setState({
-            dialogProps: props,
-            isClosing: false,
-        });
-    }
-
-    callback: null | (() => void) = null;
-
-    handleCloseFinished: () => void = () => {
-        this.setState({
-            dialogProps: null,
-            isClosing: false,
-        });
-    };
-
-    handleBack: () => void = () => {
-        /* Here we call the actual action handler, when we are sure the history back needed to close
-        the dialog is already performed, so we don't accidentally remove a handler navigation's event from the history */
-        if (this.state.dialogProps) {
-            this.callback?.();
-            this.callback = null;
-            this.setState({
-                isClosing: true,
-            });
-        }
-    };
-
-    close(): void {
-        // Here we have to remove the additional entry added to history when we created the Dialog
-        window.history.back();
-    }
-
-    createCancelHandler(onCancel?: () => void) {
-        return (): void => {
-            if (onCancel) {
-                this.callback = () => onCancel();
-            }
-            this.close();
-        };
-    }
-
-    createAcceptHandler(onAccept?: () => void) {
-        return (): void => {
-            if (onAccept) {
-                this.callback = () => onAccept();
-            }
-            this.close();
-        };
-    }
-
-    render(): React.ReactNode {
-        const {isClosing, dialogProps} = this.state;
-
-        let dialog = null;
-        if (dialogProps && this.state.instanceNumber === 1) {
-            const {onCancel, onAccept, ...rest} = dialogProps;
-            dialog = (
-                <ModalDialog
-                    onCancel={this.createCancelHandler(onCancel)}
-                    onAccept={this.createAcceptHandler(onAccept)}
-                    isClosing={isClosing}
-                    onCloseTransitionEnd={isClosing ? this.handleCloseFinished : undefined}
-                    {...rest}
-                />
-            );
-        }
-
-        return (
-            <>
-                {this.props.children}
-                {dialog}
-            </>
-        );
-    }
-}
-
-const showDialog =
-    ({showCancel, showClose, forceWeb}: {showCancel: boolean; showClose: boolean; forceWeb: boolean}) =>
-    (props: DialogProps): void => {
-        if (!dialogInstance) {
-            throw Error(
-                'Tried to show a dialog but the DialogRoot component was not mounted (mount <ThemeContextProvider>)'
-            );
-        }
-        dialogInstance.show({showCancel, showClose, forceWeb, ...props});
-    };
-
-/**
- * Shows alert dialog with supplied props
- */
-export const alert: (props: AlertProps) => void = showDialog({
-    showCancel: false,
-    forceWeb: false,
-    showClose: false,
-});
-
-/**
- * Shows confirm dialog with supplied props
- */
-export const confirm: (props: ConfirmProps) => void = showDialog({
-    showCancel: true,
-    forceWeb: false,
-    showClose: false,
-});
-
-/**
- * Shows dialog with supplied props
- */
-export const dialog: (props: ExtendedDialogProps) => void = showDialog({
-    showCancel: false,
-    forceWeb: true,
-    showClose: true,
-});
+export default ModalDialog;

@@ -12,11 +12,51 @@ test('Tags', async () => {
     expect(image).toMatchImageSnapshot();
 });
 
+test('Tags without icon', async () => {
+    await openStoryPage({
+        id: 'components-tag--default',
+        device: 'DESKTOP',
+        args: {icon: false},
+    });
+
+    const tag = await screen.findByTestId('tags');
+
+    const image = await tag.screenshot();
+    expect(image).toMatchImageSnapshot();
+});
+
+test('Tags inverse', async () => {
+    await openStoryPage({
+        id: 'components-tag--default',
+        device: 'DESKTOP',
+        args: {inverse: true},
+    });
+
+    const tag = await screen.findByTestId('tags');
+
+    const image = await tag.screenshot();
+    expect(image).toMatchImageSnapshot();
+});
+
 test('Tags dark mode', async () => {
     await openStoryPage({
         id: 'components-tag--default',
         device: 'DESKTOP',
         isDarkMode: true,
+    });
+
+    const tag = await screen.findByTestId('tags');
+
+    const image = await tag.screenshot();
+    expect(image).toMatchImageSnapshot();
+});
+
+test('Tags inverse and dark mode', async () => {
+    await openStoryPage({
+        id: 'components-tag--default',
+        device: 'DESKTOP',
+        isDarkMode: true,
+        args: {inverse: true},
     });
 
     const tag = await screen.findByTestId('tags');
@@ -41,8 +81,8 @@ test('Tags short label', async () => {
 test('Tags long label', async () => {
     await openStoryPage({
         id: 'components-tag--default',
-        device: 'DESKTOP',
-        args: {label: 'Super long label is long'},
+        device: 'MOBILE_IOS',
+        args: {label: 'This is a super long label that should overflow and show ellipsis'},
     });
 
     const tag = await screen.findByTestId('tags');

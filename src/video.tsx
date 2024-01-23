@@ -135,7 +135,12 @@ const Video = React.forwardRef<VideoElement, VideoProps>(
         const posterRef = React.useRef<HTMLDivElement>(null);
 
         const borderRadius = fallbackStyles(mediaStyles.vars.mediaBorderRadius, vars.borderRadii.container);
-        const ratio = typeof aspectRatio === 'number' ? aspectRatio : RATIO[aspectRatio];
+        const ratio =
+            props.width && props.height
+                ? undefined
+                : typeof aspectRatio === 'number'
+                ? aspectRatio
+                : RATIO[aspectRatio];
 
         const handleError = React.useCallback(() => {
             if (videoStatus === 'loading') {
