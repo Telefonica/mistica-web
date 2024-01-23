@@ -1,4 +1,4 @@
-import {openStoryPage, screen} from '../test-utils';
+import {openStoryPage, screen, setRootFontSize} from '../test-utils';
 import {within} from '@telefonica/acceptance-testing';
 
 test('TextField - appears properly on desktop', async () => {
@@ -626,4 +626,129 @@ test('PasswordField', async () => {
     const visibleScreenshot = await fieldWrapper.screenshot();
 
     expect(visibleScreenshot).toMatchImageSnapshot();
+});
+
+test("PasswordField - long label doesn't collide with icon", async () => {
+    await openStoryPage({
+        id: 'components-input-fields-passwordfield--uncontrolled',
+        device: 'MOBILE_IOS',
+        args: {label: 'This TextField has a very long label and should display ellipsis'},
+    });
+
+    const fieldWrapper = await screen.findByTestId('password-field');
+
+    const image = await fieldWrapper.screenshot();
+
+    expect(image).toMatchImageSnapshot();
+});
+
+test('TextField - increased font size', async () => {
+    await openStoryPage({
+        id: 'components-input-fields-textfield--controlled',
+        device: 'MOBILE_IOS',
+        args: {prefix: 'Prefix'},
+    });
+
+    await setRootFontSize(32);
+
+    const fieldWrapper = await screen.findByTestId('text-field');
+    const image = await fieldWrapper.screenshot();
+
+    expect(image).toMatchImageSnapshot();
+});
+
+test('PasswordField - increased font size', async () => {
+    await openStoryPage({
+        id: 'components-input-fields-passwordfield--controlled',
+        device: 'MOBILE_IOS',
+    });
+
+    await setRootFontSize(32);
+
+    const fieldWrapper = await screen.findByTestId('password-field');
+    const image = await fieldWrapper.screenshot();
+
+    expect(image).toMatchImageSnapshot();
+});
+
+test('SearchField - increased font size', async () => {
+    await openStoryPage({
+        id: 'components-input-fields-searchfield--controlled',
+        device: 'MOBILE_IOS',
+        args: {initialValue: 'Some text'},
+    });
+
+    await setRootFontSize(32);
+
+    const fieldWrapper = await screen.findByTestId('search-field');
+    const field = await screen.findByLabelText('Label');
+
+    const image = await fieldWrapper.screenshot();
+
+    expect(image).toMatchImageSnapshot();
+
+    await field.type('a long text to cause overflow');
+    await field.evaluate((el) => (el as HTMLInputElement).blur());
+
+    const withLongValue = await fieldWrapper.screenshot();
+
+    expect(withLongValue).toMatchImageSnapshot();
+});
+
+test('DateField - increased font size', async () => {
+    await openStoryPage({
+        id: 'components-input-fields-datefield--controlled',
+        device: 'MOBILE_IOS',
+    });
+
+    await setRootFontSize(32);
+
+    const fieldWrapper = await screen.findByTestId('date-field');
+    const image = await fieldWrapper.screenshot();
+
+    expect(image).toMatchImageSnapshot();
+});
+
+test('CreditCardNumberField - increased font size', async () => {
+    await openStoryPage({
+        id: 'components-input-fields-creditcardnumberfield--controlled',
+        device: 'MOBILE_IOS',
+    });
+
+    await setRootFontSize(32);
+
+    const fieldWrapper = await screen.findByTestId('credit-card-number-field');
+    const image = await fieldWrapper.screenshot();
+
+    expect(image).toMatchImageSnapshot();
+});
+
+test('CvvField - increased font size', async () => {
+    await openStoryPage({
+        id: 'components-input-fields-cvvfield--controlled',
+        device: 'MOBILE_IOS',
+    });
+
+    await setRootFontSize(32);
+
+    const fieldWrapper = await screen.findByTestId('cvv-field');
+    const image = await fieldWrapper.screenshot();
+
+    expect(image).toMatchImageSnapshot();
+});
+
+test('PinField- increased font size', async () => {
+    await openStoryPage({
+        id: 'components-input-fields-pinfield--uncontrolled',
+        device: 'MOBILE_IOS',
+    });
+
+    await setRootFontSize(32);
+
+    const fieldGroup = await screen.findByTestId('pin-field');
+
+    const firstDigitField = await within(fieldGroup).findByLabelText('Dígito 1 de 6');
+    await firstDigitField.type('1');
+
+    expect(await fieldGroup.screenshot()).toMatchImageSnapshot();
 });

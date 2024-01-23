@@ -7,6 +7,10 @@ import {pxToRem} from './utils/css';
 
 const inputLineHeight = pxToRem(16);
 
+export const fieldContainer = style({
+    width: 'fit-content',
+});
+
 export const disabled = style({
     opacity: 0.5,
     cursor: 'default',

@@ -316,7 +316,7 @@ const PinField = ({
         <div
             role="group"
             aria-labelledby={ariaLabelledBy ?? otpLabelId}
-            className={disabled ? styles.disabled : undefined}
+            className={classNames(styles.fieldContainer, {[styles.disabled]: disabled})}
             {...getPrefixedDataAttributes(dataAttributes, 'PinField')}
         >
             {ariaLabel && !ariaLabelledBy && (
