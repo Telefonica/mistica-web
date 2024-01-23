@@ -59,7 +59,7 @@ export const getBlauSkin: GetKnownSkin = () => {
             backgroundContainerBrandHover: applyAlpha(palette.darkModeBlack, 0.2),
             backgroundContainerBrandPressed: applyAlpha(palette.darkModeBlack, 0.4),
             backgroundContainerBrandOverInverse: palette.blauBlueSecondary,
-            backgroundContainerAlternative: palette.blauBluePrimary100,
+            backgroundContainerAlternative: palette.blauBluePrimary50,
             backgroundOverlay: applyAlpha(palette.blauBlueSecondary, 0.75),
             backgroundSkeleton: palette.grey2,
             backgroundSkeletonInverse: palette.blauBlueSecondary,
