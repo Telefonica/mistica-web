@@ -11,7 +11,6 @@ export const vars = {footerHeight, backgroundColor};
 export const footer = style([
     sprinkles({
         width: '100%',
-        background: skinVars.colors.background,
     }),
     {
         transition: 'box-shadow 0.2s linear',

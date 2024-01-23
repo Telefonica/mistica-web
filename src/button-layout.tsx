@@ -49,7 +49,10 @@ const ButtonLayout: React.FC<ButtonLayoutProps> = ({
         >
             {link ? (
                 <div
-                    className={classnames(styles.link, {[styles.linkAlignment]: align === 'left'})}
+                    className={classnames(
+                        sortedButtons.length > 1 ? styles.linkWithTwoButtons : styles.link,
+                        {[styles.linkAlignment]: align === 'left' && sortedButtons.length > 1}
+                    )}
                     data-link="true"
                 >
                     {link}
