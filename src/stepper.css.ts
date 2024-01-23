@@ -183,7 +183,7 @@ export const bar = style([
     }),
     {
         margin: '0 8px',
-        background: skinVars.colors.control,
+        background: skinVars.colors.barTrack,
         ':last-child': {
             display: 'none',
         },

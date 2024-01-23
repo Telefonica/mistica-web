@@ -150,6 +150,7 @@ export const getO2ClassicSkin: GetKnownSkin = () => {
             controlInverse: palette.white,
             controlActivatedInverse: palette.white,
             controlError: palette.pepper,
+            barTrack: palette.grey3,
             loadingBar: palette.o2Gem,
             loadingBarBackground: palette.o2GemLight30,
 
