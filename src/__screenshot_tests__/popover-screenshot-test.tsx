@@ -5,7 +5,7 @@ test.each`
     ${{position: 'top'}}
     ${{position: 'bottom'}}
 `(`Popover in mobile $givenStoryPageArgs.position`, async ({givenStoryPageArgs}) => {
-    await openStoryPage({
+    const page = await openStoryPage({
         id: 'components-popover--default',
         device: 'MOBILE_IOS',
         args: givenStoryPageArgs,
@@ -23,7 +23,7 @@ test.each`
     ${{position: 'left'}}
     ${{position: 'right'}}
 `(`Popover in desktop $givenStoryPageArgs.position`, async ({givenStoryPageArgs}) => {
-    await openStoryPage({
+    const page = await openStoryPage({
         id: 'components-popover--default',
         device: 'DESKTOP',
         args: givenStoryPageArgs,

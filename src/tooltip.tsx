@@ -7,7 +7,7 @@ import * as styles from './tooltip.css';
 import Stack from './stack';
 import {Text2} from './text';
 import {getCssVarValue, getPrefixedDataAttributes} from './utils/dom';
-import {ESC, TAB} from './utils/key-codes';
+import {ESC, TAB} from './utils/keys';
 import {isTouchableDevice} from './utils/environment';
 import {isEqual} from './utils/helpers';
 import classNames from 'classnames';
@@ -193,6 +193,7 @@ const Tooltip: React.FC<Props> = ({
     const isInverse = useIsInverseVariant();
 
     const targetRect = useBoundingRect(targetRef, isTooltipOpen);
+    const tooltipRect = useBoundingRect(tooltipRef, isTooltipOpen, true);
     const windowSize = useWindowSize();
 
     const resetTooltipInteractions = React.useCallback(() => {
@@ -236,7 +237,7 @@ const Tooltip: React.FC<Props> = ({
         const maxLeftOffset = windowSize.width - tooltipWidth;
         const maxTopOffset = windowSize.height - tooltipHeight;
 
-        const arrowOffsetFromViewport = parseInt(getCssVarValue(vars.borderRadii.container)) || 8;
+        const arrowOffsetFromViewport = parseInt(getCssVarValue(vars.borderRadii.popup)) ?? 8;
 
         switch (finalPosition) {
             case 'top':
@@ -349,6 +350,7 @@ const Tooltip: React.FC<Props> = ({
     }, [
         tooltip,
         targetRect,
+        tooltipRect,
         isTooltipOpen,
         position,
         windowSize,
@@ -364,7 +366,7 @@ const Tooltip: React.FC<Props> = ({
 
     React.useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
-            switch (e.keyCode) {
+            switch (e.key) {
                 case ESC:
                     resetTooltipInteractions();
                     break;
@@ -484,6 +486,10 @@ const Tooltip: React.FC<Props> = ({
                                   exit: TOOLTIP_EXIT_TRANSITION_DURATION_IN_MS,
                               }
                     }
+                    onExited={() => {
+                        setTooltipComputedStyles(undefined);
+                        setArrowComputedStyles(undefined);
+                    }}
                     mountOnEnter
                     unmountOnExit
                 >

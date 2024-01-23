@@ -221,7 +221,7 @@ test('TextField - inverse and error', async () => {
 });
 
 test('TextField - collapses its label when autofill fills out the form', async () => {
-    await openStoryPage({
+    const page = await openStoryPage({
         id: 'components-input-fields-textfield--uncontrolled',
         device: 'MOBILE_IOS',
         args: {defaultValue: ''},
@@ -302,7 +302,9 @@ test('TextField - multiline', async () => {
     const emptyScreenshot = await fieldWrapper.screenshot();
     expect(emptyScreenshot).toMatchImageSnapshot();
 
-    const lines = ['1111111111', '2222222222', '3333333333', '4444444444'].join('\n');
+    const lines = ['1111111111', '2222222222', '3333333333', '4444444444', '5555555555', '6666666666'].join(
+        '\n'
+    );
 
     await field.type(lines);
 

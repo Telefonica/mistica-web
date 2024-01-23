@@ -1,6 +1,6 @@
 'use client';
 import * as React from 'react';
-import {SPACE} from './utils/key-codes';
+import {SPACE} from './utils/keys';
 import {useControlProps} from './form-context';
 import Inline from './inline';
 import {Text3} from './text';
@@ -110,7 +110,7 @@ const Checkbox = React.forwardRef<HTMLDivElement, RenderProps | ChildrenProps>((
     };
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
-        if (event.keyCode === SPACE) {
+        if (event.key === SPACE) {
             event.preventDefault();
             event.stopPropagation();
             handleChange();

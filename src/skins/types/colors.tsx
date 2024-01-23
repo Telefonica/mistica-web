@@ -27,6 +27,9 @@ export type Colors = {
     buttonDangerBackground: string;
     buttonDangerBackgroundSelected: string;
     buttonDangerBackgroundHover: string;
+    buttonLinkDangerBackgroundSelected: string;
+    buttonLinkDangerBackgroundInverse: string;
+    buttonLinkDangerBackgroundInverseSelected: string;
     buttonLinkBackgroundSelected: string;
     buttonLinkBackgroundInverseSelected: string;
     buttonPrimaryBackground: string;
@@ -58,6 +61,7 @@ export type Colors = {
     controlInverse: string;
     controlActivatedInverse: string;
     controlError: string;
+    barTrack: string;
     loadingBar: string;
     loadingBarBackground: string;
     toggleAndroidInactive: string;

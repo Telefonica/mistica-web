@@ -60,7 +60,7 @@ Here is a description of every attribute:
 ## LinkComponent
 
 You can use a custom component or use a built in one. Mistica has built in support for: `Next12`, `Next13`,
-`ReactRouter5` and `ReactRouter6`.
+`Next14`, `ReactRouter5` and `ReactRouter6`.
 
 ### Next example
 
@@ -69,7 +69,7 @@ import Link from 'next/link';
 
 const theme: ThemeConfig = {
   ...
-  Link: {type: 'Next13', Component: Link}
+  Link: {type: 'Next14', Component: Link}
 }
 ```
 

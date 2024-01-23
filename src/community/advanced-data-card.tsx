@@ -6,6 +6,7 @@ import {Boxed} from '../boxed';
 import {sprinkles} from '../sprinkles.css';
 import Stack from '../stack';
 import * as styles from './advanced-data-card.css';
+import * as mediaStyles from '../image.css';
 import Divider from '../divider';
 import {Text2, Text} from '../text';
 import {vars} from '../skins/skin-contract.css';
@@ -16,6 +17,7 @@ import {CardActionsGroup, TOP_ACTION_BUTTON_SIZE} from '../card';
 import {useTheme} from '../hooks';
 import {getPrefixedDataAttributes} from '../utils/dom';
 import Inline from '../inline';
+import {applyCssVars} from '../utils/css';
 
 import type {PressHandler} from '../touchable';
 import type {ExclusifyUnion} from '../utils/utility-types';
@@ -177,7 +179,13 @@ const CardFooter: React.FC<CardFooterProps> = ({
                 >
                     {hasFooterImage && (
                         <Box paddingRight={16} className={sprinkles({alignItems: 'center', display: 'flex'})}>
-                            {footerImage}
+                            <div
+                                style={applyCssVars({
+                                    [mediaStyles.vars.mediaBorderRadius]: vars.borderRadii.mediaSmall,
+                                })}
+                            >
+                                {footerImage}
+                            </div>
                         </Box>
                     )}
 

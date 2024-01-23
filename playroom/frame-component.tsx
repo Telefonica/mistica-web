@@ -45,8 +45,6 @@ const App = ({children, skinName}: {children: React.ReactNode; skinName: string}
         ${skinName === TELEFONICA_SKIN ? 'body {font-family: "Telefonica Sans"}' : ''}
         ${skinName === O2_SKIN || skinName === O2_NEW_SKIN ? 'body {font-family: "On Air"}' : ''}
 
-        ${isModalOpen ? 'body {overflow-y: hidden}' : ''}
-
         *[class^='_1fu0koy1'] {
             display: none;
         }

@@ -1,7 +1,18 @@
-import {style} from '@vanilla-extract/css';
+import {createVar, style} from '@vanilla-extract/css';
 import {sprinkles} from './sprinkles.css';
+import {vars as skinVars} from './skins/skin-contract.css';
 
 export const FADE_IN_DURATION_MS = 300;
+
+const mediaBorderRadius = createVar();
+
+export const vars = {
+    mediaBorderRadius,
+};
+
+export const imageWithBorder = style({
+    border: `1px solid ${skinVars.colors.borderLow}`,
+});
 
 export const image = style([
     sprinkles({
@@ -13,6 +24,7 @@ export const image = style([
         objectFit: 'cover',
         maxWidth: '100%',
         maxHeight: '100%',
+        borderRadius: skinVars.borderRadii.container,
     }),
     {
         zIndex: 1,
