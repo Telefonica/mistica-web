@@ -61,6 +61,7 @@ export type Colors = {
     controlInverse: string;
     controlActivatedInverse: string;
     controlError: string;
+    barTrack: string;
     loadingBar: string;
     loadingBarBackground: string;
     toggleAndroidInactive: string;

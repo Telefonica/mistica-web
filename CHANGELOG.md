@@ -1,3 +1,32 @@
+# [14.41.0](https://github.com/Telefonica/mistica-web/compare/v14.40.0...v14.41.0) (2024-01-23)
+
+
+### Features
+
+* **skin:** update vivo-new colors improving a11y ([#995](https://github.com/Telefonica/mistica-web/issues/995)) ([c38d01e](https://github.com/Telefonica/mistica-web/commit/c38d01e3631016ef5527c09116a767667daf17bb))
+* **useDisableBodyScroll:** Keep original body styles when disabling scroll. Use this hook in Sheet ([#1003](https://github.com/Telefonica/mistica-web/issues/1003)) ([3ed3faf](https://github.com/Telefonica/mistica-web/commit/3ed3faf94585cf49c7a84376d1bfb44e776b0412))
+
+# [14.40.0](https://github.com/Telefonica/mistica-web/compare/v14.39.1...v14.40.0) (2024-01-22)
+
+
+### Bug Fixes
+
+* **AdvancedDataCard:** button margin ([#988](https://github.com/Telefonica/mistica-web/issues/988)) ([59e7b9c](https://github.com/Telefonica/mistica-web/commit/59e7b9c352ba5b9bf50f405980643d0831b2beba))
+* **Carousel:** avoid vertical scroll caused by bullets ([#990](https://github.com/Telefonica/mistica-web/issues/990)) ([be0406b](https://github.com/Telefonica/mistica-web/commit/be0406b02de7e9861d07fb8de0053a5f629ac846))
+* **Carousel:** remove bottom padding when withBullets=false ([#999](https://github.com/Telefonica/mistica-web/issues/999)) ([fb5b9c5](https://github.com/Telefonica/mistica-web/commit/fb5b9c5c3980d0c5a638681206df4a39b47d77a8))
+* **Carousel:** SSR Layout shift issues ([#991](https://github.com/Telefonica/mistica-web/issues/991)) ([aba1f65](https://github.com/Telefonica/mistica-web/commit/aba1f657734a170ff9fd68aee48f41dfaceb9eec))
+* **InputFields:** Align text to the left in date/time input fields. In iOS they are centered by default. ([#993](https://github.com/Telefonica/mistica-web/issues/993)) ([6fb4ad4](https://github.com/Telefonica/mistica-web/commit/6fb4ad48c341b120b6d5f29512657a26ea596638))
+* **Playroom:** replace deprecated file-loader with asset modules in webpack config ([#996](https://github.com/Telefonica/mistica-web/issues/996)) ([d03c33a](https://github.com/Telefonica/mistica-web/commit/d03c33a67422cb9603a11ad521a15dc2706b537f))
+* **Tooltip:** align arrow correctly when tooltip is close to viewport's edge ([#985](https://github.com/Telefonica/mistica-web/issues/985)) ([506d512](https://github.com/Telefonica/mistica-web/commit/506d5122d87eb0ecd2a48ec50175a238754d1099))
+
+
+### Features
+
+* **Inline:** use flex/grid gap if available ([#987](https://github.com/Telefonica/mistica-web/issues/987)) ([f7254c7](https://github.com/Telefonica/mistica-web/commit/f7254c7739080b978c7bb1ed1db33149bbdd2db5))
+* **Sheet:** add safe inset area to content ([#1000](https://github.com/Telefonica/mistica-web/issues/1000)) ([0b71040](https://github.com/Telefonica/mistica-web/commit/0b710406b93443a985090c8278194ca9ff2b731e))
+* **Storybook:** upgrade to version 7.6.6 ([#983](https://github.com/Telefonica/mistica-web/issues/983)) ([fd752c1](https://github.com/Telefonica/mistica-web/commit/fd752c19b5709ca680fc57a98f3b7c3add814fc0))
+* **Text:** prioritize wrapping before breaking if word fits in container ([#1001](https://github.com/Telefonica/mistica-web/issues/1001)) ([5625373](https://github.com/Telefonica/mistica-web/commit/5625373a811ce441f17f28ea5faff22861ea2593))
+
 ## [14.39.1](https://github.com/Telefonica/mistica-web/compare/v14.39.0...v14.39.1) (2024-01-09)
 
 

@@ -1,7 +1,7 @@
 'use client';
 import * as React from 'react';
 import {assignInlineVars} from '@vanilla-extract/dynamic';
-import DialogRoot from './dialog';
+import {DialogRoot} from './dialog-context';
 import ScreenSizeContextProvider from './screen-size-context-provider';
 import AriaIdGetterContext from './aria-id-getter-context';
 import {dimensions, getTexts, getMisticaLinkComponent, NAVBAR_HEIGHT_MOBILE} from './theme';
