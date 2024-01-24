@@ -7,7 +7,7 @@ import {pxToRem} from './utils/css';
 export const fieldVerticalPadding = 8;
 export const fieldLeftPadding = 12;
 export const fieldRightPadding = 16;
-export const iconGap = 12;
+export const fieldElementsGap = 12;
 
 export const mobileFontSize = pxToRem(16);
 export const desktopFontSize = pxToRem(18);
@@ -269,9 +269,9 @@ export const textAreaWithoutLabel = style({
     },
 });
 
-export const endIcon = style([
+export const endIconContainer = style([
     sprinkles({
-        paddingLeft: iconGap,
+        paddingLeft: fieldElementsGap,
         paddingRight: fieldRightPadding,
         display: 'flex',
         alignItems: 'center',
@@ -284,7 +284,7 @@ export const endIcon = style([
 export const startIcon = style([
     sprinkles({
         paddingLeft: fieldLeftPadding,
-        paddingRight: iconGap,
+        paddingRight: fieldElementsGap,
         display: 'flex',
         alignItems: 'center',
         height: '100%',
@@ -299,7 +299,7 @@ export const startIcon = style([
 export const prefix = style([
     sprinkles({
         paddingLeft: fieldLeftPadding,
-        paddingRight: 16,
+        paddingRight: fieldElementsGap,
     }),
     {
         transition: 'opacity 150ms cubic-bezier(0.0, 0, 0.2, 1) 0ms',
@@ -346,4 +346,42 @@ globalStyle(`${suggestionsContainer} > ul`, {
     listStyleType: 'none',
     padding: 0,
     margin: 0,
+});
+
+export const endIcon = style([
+    sprinkles({
+        background: 'transparent',
+        padding: 0,
+    }),
+    {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+]);
+
+export const endIconWithShadow = style([
+    endIcon,
+    sprinkles({
+        borderRadius: '50%',
+    }),
+    {
+        height: iconButtonSize,
+        width: iconButtonSize,
+        backgroundSize: '200%',
+        transition: 'background-color 0.1s ease-in-out',
+
+        '@media': {
+            [mq.supportsHover]: {
+                ':hover': {
+                    background: vars.colors.backgroundAlternative,
+                },
+            },
+        },
+    },
+]);
+
+export const fieldEndIconContainer = style({
+    // remove extra button space on the right so that icon is not too far from field's container
+    marginRight: -8,
 });

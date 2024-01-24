@@ -7,12 +7,11 @@
 
 'use client';
 import * as React from 'react';
-import {TextFieldBaseAutosuggest} from './text-field-base';
+import {FieldEndIcon, TextFieldBaseAutosuggest} from './text-field-base';
 import IconCalendarRegular from './generated/mistica-icons/icon-calendar-regular';
 import Datetime from 'react-datetime';
 import Overlay from './overlay';
 import {DEFAULT_WIDTH} from './text-field-components.css';
-import IconButton from './icon-button';
 import {cancelEvent, createChangeEvent} from './utils/dom';
 import {useElementDimensions, useTheme} from './hooks';
 import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
@@ -22,7 +21,7 @@ import 'moment/locale/es';
 import 'moment/locale/de';
 import 'moment/locale/pt-br';
 import 'moment/locale/en-gb';
-import {iconSize, iconButtonSize} from './text-field-base.css';
+import {endIcon} from './text-field-base.css';
 
 import type {CommonFormFieldProps} from './text-field-base';
 import type Moment from 'moment';
@@ -110,38 +109,26 @@ const DateTimePicker: React.FC<DateTimePickerProps> = ({withTime, mode, isValidD
     const renderEndIcon = () => {
         if (getValue() && optional) {
             return (
-                <IconButton
-                    aria-label={texts.clearButton}
-                    size={iconButtonSize}
-                    style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        marginRight: -8,
-                    }}
-                    onPress={() => {
-                        setValue('');
-                    }}
-                >
-                    <IconCloseRegular size={iconSize} />
-                </IconButton>
+                <>
+                    <FieldEndIcon
+                        Icon={IconCloseRegular}
+                        aria-label={texts.clearButton}
+                        className={endIcon}
+                        onPress={() => {
+                            setValue('');
+                        }}
+                    />
+                </>
             );
         }
         return (
-            <IconButton
-                disabled={rest.disabled}
+            <FieldEndIcon
+                Icon={IconCalendarRegular}
                 aria-label=""
-                size={iconButtonSize}
-                style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    marginRight: -8,
-                }}
+                disabled={rest.disabled}
+                className={endIcon}
                 onPress={() => setShowPicker(!showPicker)}
-            >
-                <IconCalendarRegular size={iconSize} />
-            </IconButton>
+            />
         );
     };
 
@@ -149,7 +136,7 @@ const DateTimePicker: React.FC<DateTimePickerProps> = ({withTime, mode, isValidD
         <>
             <TextFieldBaseAutosuggest
                 {...rest}
-                style={{cursor: 'default'}}
+                style={{cursor: 'pointer'}}
                 required={!optional}
                 type="text"
                 autoComplete="off"

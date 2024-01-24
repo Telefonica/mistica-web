@@ -1,14 +1,13 @@
 'use client';
 import * as React from 'react';
 import {useFieldProps} from './form-context';
-import {TextFieldBaseAutosuggest} from './text-field-base';
+import {FieldEndIcon, TextFieldBaseAutosuggest} from './text-field-base';
 import IconSearchRegular from './generated/mistica-icons/icon-search-regular';
 import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
-import IconButton from './icon-button';
 import {useTheme} from './hooks';
 import {createChangeEvent} from './utils/dom';
 import {combineRefs} from './utils/common';
-import {iconButtonSize, iconSize} from './text-field-base.css';
+import {endIconWithShadow, iconSize} from './text-field-base.css';
 
 import type {CommonFormFieldProps} from './text-field-base';
 
@@ -83,19 +82,12 @@ const SearchField = React.forwardRef<any, SearchFieldProps>(
                 startIcon={<IconSearchRegular size={iconSize} />}
                 endIcon={
                     controlledValue ? (
-                        <IconButton
-                            size={iconButtonSize}
-                            style={{
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                marginRight: -8,
-                            }}
+                        <FieldEndIcon
+                            Icon={IconCloseRegular}
+                            className={endIconWithShadow}
                             aria-label={theme.texts.formSearchClear}
                             onPress={clearInput}
-                        >
-                            <IconCloseRegular size={iconSize} />
-                        </IconButton>
+                        />
                     ) : undefined
                 }
                 {...rest}

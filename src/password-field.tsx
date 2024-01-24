@@ -1,13 +1,11 @@
 'use client';
 import * as React from 'react';
 import {useFieldProps} from './form-context';
-import {TextFieldBaseAutosuggest} from './text-field-base';
+import {FieldEndIcon, TextFieldBaseAutosuggest} from './text-field-base';
 import {useTheme} from './hooks';
-import {BaseIconButton} from './icon-button';
 import IconEyeOffRegular from './generated/mistica-icons/icon-eye-off-regular';
 import IconEyeRegular from './generated/mistica-icons/icon-eye-regular';
-import * as styles from './password-field.css';
-import {iconButtonSize, iconSize} from './text-field-base.css';
+import {endIconWithShadow} from './text-field-base.css';
 
 import type {CommonFormFieldProps} from './text-field-base';
 
@@ -22,17 +20,15 @@ const PasswordAdornment: React.FC<{
 }> = ({isVisible, setVisibility, focus}) => {
     const {texts} = useTheme();
     return (
-        <BaseIconButton
+        <FieldEndIcon
+            Icon={isVisible ? IconEyeOffRegular : IconEyeRegular}
             aria-label={texts.togglePasswordVisibilityLabel}
+            className={endIconWithShadow}
             onPress={() => {
                 setVisibility(!isVisible);
                 focus();
             }}
-            size={iconButtonSize}
-            className={styles.shadow}
-        >
-            {isVisible ? <IconEyeOffRegular size={iconSize} /> : <IconEyeRegular size={iconSize} />}
-        </BaseIconButton>
+        />
     );
 };
 

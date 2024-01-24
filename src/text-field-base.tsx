@@ -9,10 +9,46 @@ import classNames from 'classnames';
 import {combineRefs} from './utils/common';
 import * as styles from './text-field-base.css';
 import {vars} from './skins/skin-contract.css';
+import {BaseIconButton} from './icon-button';
 
-import type {DataAttributes} from './utils/types';
+import type {DataAttributes, IconProps} from './utils/types';
 import type {InputState} from './text-field-components';
 import type {FieldValidator} from './form-context';
+
+interface FieldEndIconProps {
+    Icon: React.FC<IconProps>;
+    className?: string;
+    onPress: (event: React.MouseEvent<HTMLElement>) => void;
+    disabled?: boolean;
+    'aria-label'?: string;
+}
+
+export const FieldEndIcon: React.FC<FieldEndIconProps> = ({
+    Icon,
+    className,
+    onPress,
+    disabled,
+    'aria-label': ariaLabel,
+}) => {
+    return (
+        /**
+         * If we try to add fieldEndIconContainer styles to the BaseIconButton instead,
+         * there may be collisions because that component sets margin internally. We
+         * create a wrapper around it so that the margin's value won't be overrided.
+         */
+        <div className={styles.fieldEndIconContainer}>
+            <BaseIconButton
+                disabled={disabled}
+                aria-label={ariaLabel}
+                onPress={onPress}
+                size={styles.iconButtonSize}
+                className={className}
+            >
+                <Icon size={styles.iconSize} />
+            </BaseIconButton>
+        </div>
+    );
+};
 
 /**
  * Incomplete list, add more if needed
@@ -199,8 +235,8 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
             ...inputProps,
         };
 
-        const startIconWidth = `calc(${styles.iconSize} + ${styles.iconGap}px)`;
-        const endIconWidth = `calc(${styles.iconButtonSize} + ${styles.iconGap}px)`;
+        const startIconWidth = `calc(${styles.iconSize} + ${styles.fieldElementsGap}px)`;
+        const endIconWidth = `calc(${styles.iconButtonSize} + ${styles.fieldElementsGap}px)`;
 
         const isShrinked = shrinkLabel || inputState === 'focused' || inputState === 'filled';
         const scale = isShrinked ? (isTabletOrSmaller ? LABEL_SCALE_MOBILE : LABEL_SCALE_DESKTOP) : 1;
@@ -328,7 +364,7 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
                         {label}
                     </Label>
                 )}
-                {endIcon && <div className={styles.endIcon}>{endIcon}</div>}
+                {endIcon && <div className={styles.endIconContainer}>{endIcon}</div>}
                 {endIconOverlay}
             </FieldContainer>
         );

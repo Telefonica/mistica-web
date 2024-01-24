@@ -4,9 +4,9 @@ import * as mq from './media-queries.css';
 import {vars as skinVars} from './skins/skin-contract.css';
 import {
     desktopFontSize,
+    fieldElementsGap,
     fieldLeftPadding,
     fieldRightPadding,
-    iconGap,
     inputLineHeight,
     mobileFontSize,
 } from './text-field-base.css';
@@ -116,7 +116,7 @@ const selectBase = style([
     }),
     {
         fontFamily: 'inherit',
-        paddingRight: `calc(${chevronSize} + ${iconGap}px + ${fieldRightPadding}px)`,
+        paddingRight: `calc(${chevronSize} + ${fieldElementsGap}px + ${fieldRightPadding}px)`,
         paddingLeft: fieldLeftPadding,
         outline: 0,
         textOverflow: 'ellipsis',
@@ -158,7 +158,7 @@ const selectTextBase = style([
         pointerEvents: 'none',
         top: 1, // for border
         left: fieldLeftPadding + 1, // +1 for border
-        right: `calc(${chevronSize} + ${iconGap}px + ${fieldRightPadding}px + 1px)`, // icon width and +1 for border
+        right: `calc(${chevronSize} + ${fieldElementsGap}px + ${fieldRightPadding}px + 1px)`, // icon width and +1 for border
         lineHeight: inputLineHeight,
         fontSize: desktopFontSize,
         '@media': {
