@@ -198,15 +198,18 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
          * placeholder (dd/mm/yyyy) in browsers like Chrome
          */
         const isDateInput = rest.type === 'date' || rest.type === 'datetime-local' || rest.type === 'month';
-        const hasInvalidDateValueFormat = isDateInput && inputElementRef.current?.value === '';
+        const hasEmptyDateValue = isDateInput && inputElementRef.current?.value === '';
 
         React.useEffect(() => {
-            // If the date format is invalid, we treat this as if no value was introduced
-            if (inputState === 'filled' && hasInvalidDateValueFormat) {
+            /**
+             * If the date format is invalid, value will be empty in the element. We treat it like the
+             * case of an empty input.
+             */
+            if (inputState === 'filled' && hasEmptyDateValue) {
                 setInputState('default');
             }
 
-            if (!hasInvalidDateValueFormat) {
+            if (!hasEmptyDateValue) {
                 if (inputState !== 'focused' && value?.length) {
                     setCharacterCount(value.length);
                     setInputState('filled');
@@ -222,7 +225,7 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
                     setInputState('filled');
                 }
             }
-        }, [inputState, value, focus, hasInvalidDateValueFormat]);
+        }, [inputState, value, focus, hasEmptyDateValue]);
 
         React.useEffect(() => {
             if (rest.autoFocus) {
@@ -329,7 +332,7 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
                                           hasLabel ? styles.inputWithLabel : styles.inputWithoutLabel,
                                           {
                                               [styles.inputFirefoxStyles]: isFirefox(),
-                                              [styles.hiddenDateValue]: hasInvalidDateValueFormat,
+                                              [styles.hiddenDateValue]: hasEmptyDateValue,
                                           }
                                       ),
                                 onFocus: (event: React.FocusEvent<HTMLInputElement>) => {
