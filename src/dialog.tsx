@@ -34,6 +34,8 @@ interface BaseDialogProps {
     destructive?: boolean;
     /** @deprecated this does nothing */
     forceWeb?: boolean;
+    /** @deprecated this does nothing */
+    showCancel?: boolean;
 }
 
 export type AlertProps = BaseDialogProps;
