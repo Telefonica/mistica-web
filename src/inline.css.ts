@@ -45,7 +45,6 @@ export const inline = style({
         [supportsFlexGap]: {
             margin: 0, // restore
             pointerEvents: 'auto', // restore
-            display: 'inline-flex',
             flexDirection: 'row',
             gap: space,
         },
@@ -56,12 +55,10 @@ export const fullWidth = style({
     display: 'flex',
 });
 
-export const wrap = style([
-    inline,
-    {
-        flexWrap: 'wrap',
-    },
-]);
+export const wrap = style({
+    display: 'inline-flex',
+    flexWrap: 'wrap',
+});
 
 export const noFullWidth = style({
     display: 'inline-grid',
