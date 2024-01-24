@@ -1,4 +1,4 @@
-import {openStoryPage} from '../test-utils';
+import {openStoryPage, screen} from '../test-utils';
 
 test.each`
     space        | align
@@ -15,12 +15,13 @@ test.each`
     ${'24px'}    | ${'baseline'}
     ${'32px'}    | ${'stretch'}
 `('Inline $space $align', async ({space, align}) => {
-    const page = await openStoryPage({
+    await openStoryPage({
         id: 'layout-inline--default',
         args: {space, align},
     });
 
-    const image = await page.screenshot();
+    const story = await screen.findByTestId('story');
+    const image = await story.screenshot();
     expect(image).toMatchImageSnapshot();
 });
 
