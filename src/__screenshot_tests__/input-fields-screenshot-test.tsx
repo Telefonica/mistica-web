@@ -376,6 +376,34 @@ test('DateField', async () => {
     expect(filledScreenshot).toMatchImageSnapshot();
 });
 
+test('DateField - disabled', async () => {
+    await openStoryPage({
+        id: 'components-input-fields-datefield--uncontrolled',
+        device: 'MOBILE_IOS',
+        args: {disabled: true},
+    });
+
+    const fieldWrapper = await screen.findByTestId('date-field');
+
+    const image = await fieldWrapper.screenshot();
+
+    expect(image).toMatchImageSnapshot();
+});
+
+test('DateField - readOnly', async () => {
+    await openStoryPage({
+        id: 'components-input-fields-datefield--uncontrolled',
+        device: 'MOBILE_IOS',
+        args: {readOnly: true},
+    });
+
+    const fieldWrapper = await screen.findByTestId('date-field');
+
+    const image = await fieldWrapper.screenshot();
+
+    expect(image).toMatchImageSnapshot();
+});
+
 test('DateTimeField', async () => {
     await openStoryPage({
         id: 'components-input-fields-datetimefield--uncontrolled',
