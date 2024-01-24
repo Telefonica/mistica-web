@@ -209,6 +209,19 @@ test('TextField - inverse and helper text', async () => {
     expect(image).toMatchImageSnapshot();
 });
 
+test('TextField - inverse and prefix', async () => {
+    await openStoryPage({
+        id: 'components-input-fields-textfield--uncontrolled',
+        device: 'MOBILE_IOS',
+        args: {inverse: true, prefix: 'Prefix'},
+    });
+
+    const fieldWrapper = await screen.findByTestId('text-field');
+    const image = await fieldWrapper.screenshot();
+
+    expect(image).toMatchImageSnapshot();
+});
+
 test('TextField - inverse and error', async () => {
     await openStoryPage({
         id: 'components-input-fields-textfield--uncontrolled',

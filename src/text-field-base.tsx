@@ -10,6 +10,7 @@ import {combineRefs} from './utils/common';
 import * as styles from './text-field-base.css';
 import {vars} from './skins/skin-contract.css';
 import {BaseIconButton} from './icon-button';
+import {ThemeVariant} from './theme-variant-context';
 
 import type {DataAttributes, IconProps} from './utils/types';
 import type {InputState} from './text-field-components';
@@ -270,102 +271,104 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
                 readOnly={rest.readOnly}
                 dataAttributes={dataAttributes}
             >
-                {startIcon && <div className={styles.startIcon}>{startIcon}</div>}
+                <ThemeVariant isInverse={false}>
+                    {startIcon && <div className={styles.startIcon}>{startIcon}</div>}
 
-                {prefix && (
-                    <div
-                        className={classNames(
-                            styles.prefix,
-                            hasLabel ? styles.inputWithLabel : styles.inputWithoutLabel
-                        )}
-                        style={{
-                            opacity: inputState === 'default' ? 0 : 1,
-                        }}
-                    >
-                        <Text3 color={vars.colors.textSecondary} regular wordBreak={false}>
-                            {prefix}
+                    {prefix && (
+                        <div
+                            className={classNames(
+                                styles.prefix,
+                                hasLabel ? styles.inputWithLabel : styles.inputWithoutLabel
+                            )}
+                            style={{
+                                opacity: inputState === 'default' ? 0 : 1,
+                            }}
+                        >
+                            <Text3 color={vars.colors.textSecondary} regular wordBreak={false}>
+                                {prefix}
+                            </Text3>
+                        </div>
+                    )}
+                    <div className={styles.fullWidth}>
+                        <Text3 as="div" regular>
+                            {React.createElement(inputComponent || defaultInputElement, {
+                                ...inputRefProps,
+                                ...props,
+                                id,
+                                style: {
+                                    paddingRight: endIcon
+                                        ? 0
+                                        : endIconOverlay
+                                        ? `calc(${styles.fieldRightPadding}px + ${endIconWidth})`
+                                        : styles.fieldRightPadding,
+                                    paddingLeft: prefix
+                                        ? 0
+                                        : startIcon
+                                        ? `calc(${startIconWidth} + ${styles.fieldLeftPadding}px)`
+                                        : styles.fieldLeftPadding,
+                                    ...props.style,
+                                    fontFamily,
+                                },
+                                className: multiline
+                                    ? classNames(
+                                          styles.textArea,
+                                          hasLabel ? styles.textAreaWithLabel : styles.textAreaWithoutLabel
+                                      )
+                                    : classNames(
+                                          styles.input,
+                                          hasLabel ? styles.inputWithLabel : styles.inputWithoutLabel,
+                                          {[styles.inputFirefoxStyles]: isFirefox()}
+                                      ),
+                                onFocus: (event: React.FocusEvent<HTMLInputElement>) => {
+                                    setInputState('focused');
+                                    onFocus?.(event);
+                                },
+                                onBlur: (event: React.FocusEvent<HTMLInputElement>) => {
+                                    if (event.target.value.length > 0) {
+                                        setInputState('filled');
+                                    } else {
+                                        setInputState('default');
+                                    }
+                                    onBlur?.(event);
+                                },
+                                onChange: (event: React.ChangeEvent<HTMLInputElement>) => {
+                                    // Workaround for systems where maxlength prop is applied onBlur (https://caniuse.com/#feat=maxlength)
+                                    if (maxLength === undefined || event.target.value.length <= maxLength) {
+                                        setCharacterCount(event.target.value.length);
+
+                                        // Browser's autofill can change the value without focusing
+                                        if (event.target.value.length > 0 && inputState !== 'focused') {
+                                            setInputState('filled');
+                                        }
+
+                                        props.onChange?.(event);
+                                    } else {
+                                        event.stopPropagation();
+                                        event.preventDefault();
+                                    }
+                                },
+                                defaultValue,
+                                value,
+                                ...(error && {'aria-invalid': true}),
+                                ...(helperText && {'aria-describedby': helperTextid}),
+                            })}
                         </Text3>
                     </div>
-                )}
-                <div className={styles.fullWidth}>
-                    <Text3 as="div" regular>
-                        {React.createElement(inputComponent || defaultInputElement, {
-                            ...inputRefProps,
-                            ...props,
-                            id,
-                            style: {
-                                paddingRight: endIcon
-                                    ? 0
-                                    : endIconOverlay
-                                    ? `calc(${styles.fieldRightPadding}px + ${endIconWidth})`
-                                    : styles.fieldRightPadding,
-                                paddingLeft: prefix
-                                    ? 0
-                                    : startIcon
-                                    ? `calc(${startIconWidth} + ${styles.fieldLeftPadding}px)`
-                                    : styles.fieldLeftPadding,
-                                ...props.style,
-                                fontFamily,
-                            },
-                            className: multiline
-                                ? classNames(
-                                      styles.textArea,
-                                      hasLabel ? styles.textAreaWithLabel : styles.textAreaWithoutLabel
-                                  )
-                                : classNames(
-                                      styles.input,
-                                      hasLabel ? styles.inputWithLabel : styles.inputWithoutLabel,
-                                      {[styles.inputFirefoxStyles]: isFirefox()}
-                                  ),
-                            onFocus: (event: React.FocusEvent<HTMLInputElement>) => {
-                                setInputState('focused');
-                                onFocus?.(event);
-                            },
-                            onBlur: (event: React.FocusEvent<HTMLInputElement>) => {
-                                if (event.target.value.length > 0) {
-                                    setInputState('filled');
-                                } else {
-                                    setInputState('default');
-                                }
-                                onBlur?.(event);
-                            },
-                            onChange: (event: React.ChangeEvent<HTMLInputElement>) => {
-                                // Workaround for systems where maxlength prop is applied onBlur (https://caniuse.com/#feat=maxlength)
-                                if (maxLength === undefined || event.target.value.length <= maxLength) {
-                                    setCharacterCount(event.target.value.length);
-
-                                    // Browser's autofill can change the value without focusing
-                                    if (event.target.value.length > 0 && inputState !== 'focused') {
-                                        setInputState('filled');
-                                    }
-
-                                    props.onChange?.(event);
-                                } else {
-                                    event.stopPropagation();
-                                    event.preventDefault();
-                                }
-                            },
-                            defaultValue,
-                            value,
-                            ...(error && {'aria-invalid': true}),
-                            ...(helperText && {'aria-describedby': helperTextid}),
-                        })}
-                    </Text3>
-                </div>
-                {label && (
-                    <Label
-                        style={labelStyle}
-                        error={error}
-                        forId={id}
-                        inputState={inputState}
-                        shrinkLabel={shrinkLabel}
-                        optional={!rest.required}
-                    >
-                        {label}
-                    </Label>
-                )}
-                {endIcon && <div className={styles.endIconContainer}>{endIcon}</div>}
-                {endIconOverlay}
+                    {label && (
+                        <Label
+                            style={labelStyle}
+                            error={error}
+                            forId={id}
+                            inputState={inputState}
+                            shrinkLabel={shrinkLabel}
+                            optional={!rest.required}
+                        >
+                            {label}
+                        </Label>
+                    )}
+                    {endIcon && <div className={styles.endIconContainer}>{endIcon}</div>}
+                    {endIconOverlay}
+                </ThemeVariant>
             </FieldContainer>
         );
     }
