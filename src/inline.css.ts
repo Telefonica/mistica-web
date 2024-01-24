@@ -30,10 +30,6 @@ export const marginInline = style({
     },
 });
 
-export const flexInline = style({
-    justifyContent: space,
-});
-
 /**
  * https://caniuse.com/flexbox-gap
  * chrome 84; safari 14.1
@@ -56,7 +52,7 @@ export const inline = style({
 });
 
 export const fullWidth = style({
-    display: ['flex'],
+    display: 'flex',
 });
 
 export const wrap = style({
@@ -65,7 +61,12 @@ export const wrap = style({
 });
 
 export const noFullWidth = style({
-    display: ['inline-grid'],
+    display: 'inline-grid',
+});
+
+export const stringSpace = style({
+    display: 'grid',
+    justifyContent: space,
 });
 
 globalStyle(`${marginInline} > div`, {

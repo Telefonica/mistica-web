@@ -1,7 +1,24 @@
 import {openStoryPage} from '../test-utils';
 
-test('Inline ', async () => {
-    const page = await openStoryPage({id: 'layout-inline--default'});
+test.each`
+    space        | align
+    ${'around'}  | ${'center'}
+    ${'evenly'}  | ${'center'}
+    ${'between'} | ${'center'}
+    ${'between'} | ${'flex-start'}
+    ${'between'} | ${'flex-end'}
+    ${'between'} | ${'baseline'}
+    ${'between'} | ${'stretch'}
+    ${'0px'}     | ${'center'}
+    ${'8px'}     | ${'flex-start'}
+    ${'16px'}    | ${'flex-end'}
+    ${'24px'}    | ${'baseline'}
+    ${'32px'}    | ${'stretch'}
+`('Inline $space $align', async ({space, align}) => {
+    const page = await openStoryPage({
+        id: 'layout-inline--default',
+        args: {space, align},
+    });
 
     const image = await page.screenshot();
     expect(image).toMatchImageSnapshot();

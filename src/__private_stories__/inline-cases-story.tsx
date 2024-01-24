@@ -6,7 +6,7 @@ export default {
 };
 
 export const Default: StoryComponent = () => {
-    const longText = 'Super long text. '.repeat(10);
+    const longText = 'Super long text. '.repeat(20);
     const shortText = 'Not so long text';
 
     return (
@@ -14,10 +14,30 @@ export const Default: StoryComponent = () => {
             <style>{`.border {border: 2px dashed pink}`}</style>
             <Stack space={32}>
                 <Stack space={16}>
-                    <Title1>Short button shouldn't have ellipsis</Title1>
+                    <Title1>In this case (space: 16px), the short button shouldn't have ellipsis</Title1>
                     <Inline space={16}>
                         <ButtonPrimary fake>{longText}</ButtonPrimary>
                         <ButtonPrimary fake>{shortText}</ButtonPrimary>
+                    </Inline>
+                </Stack>
+
+                <Stack space={16}>
+                    <Title1>In this case (space between), the short button shouldn't have ellipsis</Title1>
+                    <Inline space="between">
+                        <ButtonPrimary fake>{longText}</ButtonPrimary>
+                        <ButtonPrimary fake style={{marginLeft: 16}}>
+                            {shortText}
+                        </ButtonPrimary>
+                    </Inline>
+                </Stack>
+
+                <Stack space={16}>
+                    <Title1>space-between should be full width</Title1>
+                    <Inline space="between">
+                        <ButtonPrimary fake>{shortText}</ButtonPrimary>
+                        <ButtonPrimary fake style={{marginLeft: 16}}>
+                            {shortText}
+                        </ButtonPrimary>
                     </Inline>
                 </Stack>
 
@@ -47,10 +67,6 @@ export const Default: StoryComponent = () => {
                         <ButtonPrimary fake>{shortText}</ButtonPrimary>
                         <ButtonPrimary fake>{shortText}</ButtonPrimary>
                     </Inline>
-                </Stack>
-
-                <Stack space={16}>
-                    <Title1>Fullwidth with short items</Title1>
                 </Stack>
             </Stack>
         </div>
