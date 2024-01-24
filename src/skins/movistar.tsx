@@ -281,14 +281,14 @@ export const getMovistarSkin: GetKnownSkin = () => {
         borderRadii: {
             avatar: '50%',
             bar: '999px',
-            button: '4px',
+            button: '999px',
             checkbox: '2px',
-            container: '8px',
+            container: '16px',
             indicator: '999px',
-            input: '8px',
+            input: '12px',
             legacyDisplay: '16px',
             popup: '8px',
-            sheet: '8px',
+            sheet: '16px',
             mediaSmall: '8px',
         },
         textPresets: {
