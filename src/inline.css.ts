@@ -52,7 +52,12 @@ export const inline = style({
 });
 
 export const fullWidth = style({
-    display: 'flex',
+    /**
+     * @deprecated - this should be "flex"
+     * Once changed, the usages that depend on this behavior should be migrated to use <Grid>
+     * See "inline-cases" private story
+     */
+    display: 'grid',
 });
 
 export const wrap = style({

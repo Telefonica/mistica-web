@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {ButtonPrimary, Stack, Title1, Inline} from '..';
+import {ButtonPrimary, Stack, Title1, Inline, Text3, Grid} from '..';
 
 export default {
     title: 'Private/Inline cases',
@@ -61,12 +61,32 @@ export const Default: StoryComponent = () => {
                 </Stack>
 
                 <Stack space={16}>
-                    <Title1>Fullwidth with short items</Title1>
-
+                    <Title1>Fullwidth behavior</Title1>
+                    <Text3 regular>
+                        ⚠️ This behavior is deprecated and will change in a future mistica major version
+                    </Text3>
                     <Inline space={16} fullWidth className="border">
                         <ButtonPrimary fake>{shortText}</ButtonPrimary>
                         <ButtonPrimary fake>{shortText}</ButtonPrimary>
                     </Inline>
+                    <Text3 regular>You can get a similar result using the Grid component</Text3>
+                    <div className="border">
+                        <Grid rows={1} columns={2} gap={16}>
+                            <div>
+                                <ButtonPrimary fake>{shortText}</ButtonPrimary>
+                            </div>
+                            <div>
+                                <ButtonPrimary fake>{shortText}</ButtonPrimary>
+                            </div>
+                        </Grid>
+                    </div>
+                    <Text3 regular>Removing the div wrapper, the grid item will grow</Text3>
+                    <div className="border">
+                        <Grid rows={1} columns={2} gap={16}>
+                            <ButtonPrimary fake>{shortText}</ButtonPrimary>
+                            <ButtonPrimary fake>{shortText}</ButtonPrimary>
+                        </Grid>
+                    </div>
                 </Stack>
             </Stack>
         </div>
