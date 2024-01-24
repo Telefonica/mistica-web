@@ -2,7 +2,7 @@ import {openStoryPage, screen} from '../test-utils';
 
 test('Inline cases', async () => {
     await openStoryPage({
-        id: 'story/private-inline-cases--default',
+        id: 'private-inline-cases--default',
     });
 
     const story = await screen.findByTestId('story');
