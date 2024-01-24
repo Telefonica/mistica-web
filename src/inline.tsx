@@ -60,9 +60,7 @@ const Inline: React.FC<Props> = ({
     wrap,
     dataAttributes,
 }) => {
-    const isFullWith = fullWidth;
     const {platformOverrides} = useTheme();
-
     const isStringSpace = typeof space === 'string';
 
     return (
@@ -71,7 +69,7 @@ const Inline: React.FC<Props> = ({
                 className,
                 styles.inline,
                 sprinkles({alignItems}),
-                wrap ? styles.wrap : isFullWith ? styles.fullWidth : styles.noFullWidth,
+                wrap ? styles.wrap : fullWidth ? styles.fullWidth : styles.noFullWidth,
                 isStringSpace ? styles.stringSpace : styles.marginInline
             )}
             style={applyCssVars(calcInlineVars(space))}
