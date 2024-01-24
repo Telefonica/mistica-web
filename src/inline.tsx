@@ -70,6 +70,7 @@ const Inline: React.FC<Props> = ({
             className={classnames(
                 className,
                 sprinkles({alignItems}),
+                styles.inline,
                 wrap ? styles.wrap : isFullWith ? styles.fullWidth : styles.noFullWidth,
                 isFlexInline ? styles.flexInline : styles.marginInline
             )}

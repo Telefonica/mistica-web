@@ -49,44 +49,24 @@ export const inline = style({
         [supportsFlexGap]: {
             margin: 0, // restore
             pointerEvents: 'auto', // restore
-            display: 'inline-flex',
             flexDirection: 'row',
             gap: space,
         },
     },
 });
 
-export const fullWidth = style([
-    inline,
-    {
-        display: ['flex', 'grid'],
-        // style repeated to override the inline @supports style
-        '@supports': {
-            [supportsFlexGap]: {
-                display: ['flex', 'grid'],
-            },
-        },
-    },
-]);
+export const fullWidth = style({
+    display: ['flex'],
+});
 
-export const wrap = style([
-    inline,
-    {
-        flexWrap: 'wrap',
-    },
-]);
+export const wrap = style({
+    display: 'inline-flex',
+    flexWrap: 'wrap',
+});
 
-export const noFullWidth = style([
-    inline,
-    {
-        display: ['inline-flex', 'inline-grid'],
-        '@supports': {
-            [supportsFlexGap]: {
-                display: 'inline-flex',
-            },
-        },
-    },
-]);
+export const noFullWidth = style({
+    display: ['inline-grid'],
+});
 
 globalStyle(`${marginInline} > div`, {
     marginLeft: space,
