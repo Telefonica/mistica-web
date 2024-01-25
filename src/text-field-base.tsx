@@ -4,7 +4,7 @@ import {Label, HelperText, FieldContainer} from './text-field-components';
 import {LABEL_SCALE_MOBILE, LABEL_SCALE_DESKTOP} from './text-field-components.css';
 import {Text3} from './text';
 import {isRunningAcceptanceTest, isFirefox} from './utils/platform';
-import {useAriaId, useTheme, useScreenSize} from './hooks';
+import {useAriaId, useTheme, useScreenSize, useIsomorphicLayoutEffect} from './hooks';
 import classNames from 'classnames';
 import {combineRefs} from './utils/common';
 import * as styles from './text-field-base.css';
@@ -15,6 +15,17 @@ import {ThemeVariant} from './theme-variant-context';
 import type {DataAttributes, IconProps} from './utils/types';
 import type {InputState} from './text-field-components';
 import type {FieldValidator} from './form-context';
+
+const isValidInputValue = (value?: string, inputType?: React.HTMLInputTypeAttribute) => {
+    if (!inputType) {
+        return true;
+    }
+
+    const input = document.createElement('input');
+    input.type = inputType;
+    input.value = value || '';
+    return input.value !== '';
+};
 
 interface FieldEndIconProps {
     Icon: React.FC<IconProps>;
@@ -167,7 +178,7 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
             startIcon,
             endIcon,
             endIconOverlay,
-            shrinkLabel: shrinkLabelProp,
+            shrinkLabel,
             multiline = false,
             focus,
             fieldRef,
@@ -190,29 +201,36 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
         const [characterCount, setCharacterCount] = React.useState(defaultValue?.length ?? 0);
         const hasLabel = !!label || !rest.required;
 
-        // this shrinkLabel override is a workaround because I was unable to find a way to hide date
-        // and date-time native placeholders when the input is not required
-        const shrinkLabel =
-            shrinkLabelProp ||
-            ((rest.type === 'date' || rest.type === 'datetime-local' || rest.type === 'month') &&
-                !rest.required);
+        const isDateInput = rest.type === 'date' || rest.type === 'datetime-local' || rest.type === 'month';
 
-        React.useEffect(() => {
-            if (inputState !== 'focused' && value?.length) {
-                setCharacterCount(value.length);
+        useIsomorphicLayoutEffect(() => {
+            /**
+             * If the date format is invalid, value will be empty in the DOM element. We treat it like the
+             * case of an empty input. We have to do this because in some browsers, like Chrome, when the
+             * date value is empty it displays a placeholder (mm/dd/yyyy) that can't be removed, so we set
+             * it's opacity to 0 to avoid showing it.
+             */
+            const finalValue = isDateInput && !isValidInputValue(value, rest.type) ? '' : value;
+
+            if (focus === undefined && isDateInput && !finalValue?.length && inputState === 'filled') {
+                setInputState('default');
+            }
+
+            if (inputState !== 'focused' && finalValue?.length) {
+                setCharacterCount(finalValue.length);
                 setInputState('filled');
             }
             if (focus) {
                 setInputState('focused');
             }
-            if (focus === false && !value?.length) {
+            if (focus === false && !finalValue?.length) {
                 // when textfield is used in selects it doesn't get or lose focus
                 setInputState('default');
             }
-            if (focus === false && value?.length) {
+            if (focus === false && finalValue?.length) {
                 setInputState('filled');
             }
-        }, [inputState, value, focus]);
+        }, [inputState, value, focus, isDateInput, rest.type]);
 
         React.useEffect(() => {
             if (rest.autoFocus) {
@@ -317,7 +335,14 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
                                     : classNames(
                                           styles.input,
                                           hasLabel ? styles.inputWithLabel : styles.inputWithoutLabel,
-                                          {[styles.inputFirefoxStyles]: isFirefox()}
+                                          {
+                                              [styles.inputFirefoxStyles]: isFirefox(),
+                                              // Hide webkit placeholder when label is not shrinked and value is empty
+                                              [styles.hiddenDatePlaceholder]:
+                                                  isDateInput && inputState === 'default',
+                                              // Force height of input when value is empty to avoid field from having height 0 in iOS
+                                              [styles.emptyDateValue]: isDateInput && inputState !== 'filled',
+                                          }
                                       ),
                                 onFocus: (event: React.FocusEvent<HTMLInputElement>) => {
                                     setInputState('focused');
@@ -332,6 +357,10 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
                                     onBlur?.(event);
                                 },
                                 onChange: (event: React.ChangeEvent<HTMLInputElement>) => {
+                                    if (isDateInput && !isValidInputValue(value, rest.type)) {
+                                        setInputState('default');
+                                    }
+
                                     // Workaround for systems where maxlength prop is applied onBlur (https://caniuse.com/#feat=maxlength)
                                     if (maxLength === undefined || event.target.value.length <= maxLength) {
                                         setCharacterCount(event.target.value.length);
