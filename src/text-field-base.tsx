@@ -167,7 +167,7 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
             startIcon,
             endIcon,
             endIconOverlay,
-            shrinkLabel,
+            shrinkLabel: shrinkLabelProp,
             multiline = false,
             focus,
             fieldRef,
@@ -190,42 +190,29 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
         const [characterCount, setCharacterCount] = React.useState(defaultValue?.length ?? 0);
         const hasLabel = !!label || !rest.required;
 
-        const inputElementRef = React.useRef<HTMLInputElement | HTMLSelectElement>(null);
-
-        /**
-         * When date/datefield/month fields introduced value has invalid format, the browser will actually set
-         * the element's value to an empty string. We use this to check if we should hide the native
-         * placeholder (dd/mm/yyyy) in browsers like Chrome
-         */
-        const isDateInput = rest.type === 'date' || rest.type === 'datetime-local' || rest.type === 'month';
-        const hasEmptyDateValue = isDateInput && inputElementRef.current?.value === '';
+        // this shrinkLabel override is a workaround because I was unable to find a way to hide date
+        // and date-time native placeholders when the input is not required
+        const shrinkLabel =
+            shrinkLabelProp ||
+            ((rest.type === 'date' || rest.type === 'datetime-local' || rest.type === 'month') &&
+                !rest.required);
 
         React.useEffect(() => {
-            /**
-             * If the date format is invalid, value will be empty in the element. We treat it like the
-             * case of an empty input.
-             */
-            if (inputState === 'filled' && hasEmptyDateValue) {
+            if (inputState !== 'focused' && value?.length) {
+                setCharacterCount(value.length);
+                setInputState('filled');
+            }
+            if (focus) {
+                setInputState('focused');
+            }
+            if (focus === false && !value?.length) {
+                // when textfield is used in selects it doesn't get or lose focus
                 setInputState('default');
             }
-
-            if (!hasEmptyDateValue) {
-                if (inputState !== 'focused' && value?.length) {
-                    setCharacterCount(value.length);
-                    setInputState('filled');
-                }
-                if (focus) {
-                    setInputState('focused');
-                }
-                if (focus === false && !value?.length) {
-                    // when textfield is used in selects it doesn't get or lose focus
-                    setInputState('default');
-                }
-                if (focus === false && value?.length) {
-                    setInputState('filled');
-                }
+            if (focus === false && value?.length) {
+                setInputState('filled');
             }
-        }, [inputState, value, focus, hasEmptyDateValue]);
+        }, [inputState, value, focus]);
 
         React.useEffect(() => {
             if (rest.autoFocus) {
@@ -239,7 +226,7 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
         const inputRefProps = inputComponent
             ? {inputRef}
             : {
-                  ref: combineRefs(ref, inputRef, inputElementRef),
+                  ref: combineRefs(ref, inputRef),
               };
 
         const props = {
@@ -330,10 +317,7 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
                                     : classNames(
                                           styles.input,
                                           hasLabel ? styles.inputWithLabel : styles.inputWithoutLabel,
-                                          {
-                                              [styles.inputFirefoxStyles]: isFirefox(),
-                                              [styles.hiddenDateValue]: hasEmptyDateValue,
-                                          }
+                                          {[styles.inputFirefoxStyles]: isFirefox()}
                                       ),
                                 onFocus: (event: React.FocusEvent<HTMLInputElement>) => {
                                     setInputState('focused');

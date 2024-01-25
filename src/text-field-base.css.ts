@@ -121,29 +121,6 @@ export const textArea = style([
     commonInputStyles,
 ]);
 
-export const hiddenDateValue = style({
-    selectors: {
-        /**
-         * Chrome: hide value if not valid.
-         * `opacity: 0` is needed when min/max is set and some parts of the date are disabled.
-         * be sure to check that case when updating these styles.
-         */
-        '&[type="date"]::-webkit-datetime-edit': {
-            color: 'transparent',
-            opacity: 0,
-        },
-        '&[type="month"]::-webkit-datetime-edit': {
-            color: 'transparent',
-            opacity: 0,
-        },
-
-        '&[type="datetime-local"]::-webkit-datetime-edit': {
-            color: 'transparent',
-            opacity: 0,
-        },
-    },
-});
-
 export const input = style([
     sprinkles({
         position: 'relative',
@@ -179,6 +156,24 @@ export const input = style([
                 color: 'transparent',
                 background: 'transparent',
                 cursor: 'pointer',
+            },
+
+            /**
+             * Chrome: hide value if not valid or focused
+             * `opacity: 0` is needed when min/max is set and some parts of the date are disabled
+             * be sure to check that case when updating these styles
+             */
+            '&[type="month"]:not(:valid):not(:focus)::-webkit-datetime-edit': {
+                color: 'transparent',
+                opacity: 0,
+            },
+            '&[type="date"]:not(:valid):not(:focus)::-webkit-datetime-edit': {
+                color: 'transparent',
+                opacity: 0,
+            },
+            '&[type="datetime-local"]:not(:valid):not(:focus)::-webkit-datetime-edit': {
+                color: 'transparent',
+                opacity: 0,
             },
 
             /**
