@@ -179,9 +179,9 @@ export const selectTextVariants = styleVariants({
 export const arrowDown = style([
     sprinkles({
         position: 'absolute',
-        right: fieldRightPadding,
     }),
     {
+        right: fieldRightPadding,
         top: `calc(50% - ${chevronSize} / 2)`,
         pointerEvents: 'none',
     },

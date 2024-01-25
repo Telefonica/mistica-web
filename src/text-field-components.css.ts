@@ -23,10 +23,10 @@ export const labelContainer = style([
         position: 'absolute',
         display: 'flex',
         flexDirection: 'row',
-        top: fieldVerticalPadding,
-        left: fieldLeftPadding,
     }),
     {
+        left: fieldLeftPadding,
+        top: fieldVerticalPadding,
         pointerEvents: 'none',
         transformOrigin: '0 0',
         fontSize: labelFontSize.desktop, // cannot use Text3/Text1 preset comps because we want to apply a scale transition (zoom-out)

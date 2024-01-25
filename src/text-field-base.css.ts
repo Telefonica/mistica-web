@@ -4,10 +4,16 @@ import {vars} from './skins/skin-contract.css';
 import * as mq from './media-queries.css';
 import {pxToRem} from './utils/css';
 
-export const fieldVerticalPadding = 8;
-export const fieldLeftPadding = 12;
-export const fieldRightPadding = 16;
+const borderSize = 1;
+
+// We need to substract border size from padding because the container has boxSizing: border-box
+export const fieldVerticalPadding = 8 - borderSize;
+export const fieldLeftPadding = 12 - borderSize;
+export const fieldRightPadding = 16 - borderSize;
+
 export const fieldElementsGap = 12;
+export const iconSize = pxToRem(24);
+export const iconButtonSize = pxToRem(40);
 
 export const mobileFontSize = pxToRem(16);
 export const desktopFontSize = pxToRem(18);
@@ -16,8 +22,8 @@ export const labelLineHeight = pxToRem(24);
 export const inputLineHeight = pxToRem(24);
 
 export const shrinkedLabelLineHeight = {
-    desktop: pxToRem(20),
     mobile: pxToRem(16),
+    desktop: pxToRem(20),
 };
 
 export const labelFontSize = {
@@ -25,27 +31,24 @@ export const labelFontSize = {
     desktop: pxToRem(18),
 };
 
-export const iconSize = pxToRem(24);
-export const iconButtonSize = pxToRem(40);
-
 const topSpaceWithLabel = {
-    desktop: `calc(${shrinkedLabelLineHeight.desktop} + ${fieldVerticalPadding}px - 1px)`,
-    mobile: `calc(${shrinkedLabelLineHeight.mobile} + ${fieldVerticalPadding}px - 1px)`,
+    desktop: `calc(${shrinkedLabelLineHeight.desktop} + ${fieldVerticalPadding}px)`,
+    mobile: `calc(${shrinkedLabelLineHeight.mobile} + ${fieldVerticalPadding}px)`,
 };
 
 const topSpaceWithoutLabel = {
-    desktop: `calc(${shrinkedLabelLineHeight.desktop} / 2 + ${fieldVerticalPadding}px - 1px)`,
-    mobile: `calc(${shrinkedLabelLineHeight.mobile} / 2 + ${fieldVerticalPadding}px - 1px)`,
+    desktop: `calc(${shrinkedLabelLineHeight.desktop} / 2 + ${fieldVerticalPadding}px)`,
+    mobile: `calc(${shrinkedLabelLineHeight.mobile} / 2 + ${fieldVerticalPadding}px)`,
 };
 
 const bottomSpaceWithLabel = {
-    desktop: `${fieldVerticalPadding - 1}px`,
-    mobile: `${fieldVerticalPadding - 1}px`,
+    desktop: fieldVerticalPadding,
+    mobile: fieldVerticalPadding,
 };
 
 const bottomSpaceWithoutLabel = {
-    desktop: `calc(${shrinkedLabelLineHeight.desktop} / 2 + ${fieldVerticalPadding}px - 1px)`,
-    mobile: `calc(${shrinkedLabelLineHeight.mobile} / 2 + ${fieldVerticalPadding}px - 1px)`,
+    desktop: `calc(${shrinkedLabelLineHeight.desktop} / 2 + ${fieldVerticalPadding}px)`,
+    mobile: `calc(${shrinkedLabelLineHeight.mobile} / 2 + ${fieldVerticalPadding}px)`,
 };
 
 const commonInputStyles = style([
@@ -171,6 +174,8 @@ export const input = style([
                 width: '100%',
                 height: '100%',
                 opacity: 0,
+                padding: 0,
+                margin: 0,
                 color: 'transparent',
                 background: 'transparent',
                 cursor: 'pointer',
@@ -278,18 +283,17 @@ export const textAreaWithoutLabel = style({
 export const endIconContainer = style([
     sprinkles({
         paddingLeft: fieldElementsGap,
-        paddingRight: fieldRightPadding,
         display: 'flex',
         alignItems: 'center',
     }),
     {
+        paddingRight: fieldRightPadding,
         alignSelf: 'center',
     },
 ]);
 
 export const startIcon = style([
     sprinkles({
-        paddingLeft: fieldLeftPadding,
         paddingRight: fieldElementsGap,
         display: 'flex',
         alignItems: 'center',
@@ -297,6 +301,7 @@ export const startIcon = style([
         position: 'absolute',
     }),
     {
+        paddingLeft: fieldLeftPadding,
         // passthrough click events to the input
         pointerEvents: 'none',
     },
@@ -304,10 +309,10 @@ export const startIcon = style([
 
 export const prefix = style([
     sprinkles({
-        paddingLeft: fieldLeftPadding,
         paddingRight: fieldElementsGap,
     }),
     {
+        paddingLeft: fieldLeftPadding,
         transition: 'opacity 150ms cubic-bezier(0.0, 0, 0.2, 1) 0ms',
     },
 ]);
