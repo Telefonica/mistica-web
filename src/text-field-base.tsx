@@ -202,6 +202,7 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
         const hasLabel = !!label || !rest.required;
 
         const isDateInput = rest.type === 'date' || rest.type === 'datetime-local' || rest.type === 'month';
+        const valueRef = React.useRef<string | undefined>(undefined);
 
         useIsomorphicLayoutEffect(() => {
             /**
@@ -212,9 +213,17 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
              */
             const finalValue = isDateInput && !isValidInputValue(value, rest.type) ? '' : value;
 
-            if (focus === undefined && isDateInput && !finalValue?.length && inputState === 'filled') {
+            // if value prop has changed, we need to set the input state to default if the new value is not valid
+            if (
+                valueRef.current !== value &&
+                isDateInput &&
+                !finalValue?.length &&
+                inputState === 'filled' &&
+                focus === undefined
+            ) {
                 setInputState('default');
             }
+            valueRef.current = value;
 
             if (inputState !== 'focused' && finalValue?.length) {
                 setCharacterCount(finalValue.length);
@@ -357,17 +366,15 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
                                     onBlur?.(event);
                                 },
                                 onChange: (event: React.ChangeEvent<HTMLInputElement>) => {
-                                    if (isDateInput && !isValidInputValue(value, rest.type)) {
-                                        setInputState('default');
-                                    }
-
                                     // Workaround for systems where maxlength prop is applied onBlur (https://caniuse.com/#feat=maxlength)
                                     if (maxLength === undefined || event.target.value.length <= maxLength) {
                                         setCharacterCount(event.target.value.length);
 
                                         // Browser's autofill can change the value without focusing
                                         if (event.target.value.length > 0 && inputState !== 'focused') {
-                                            setInputState('filled');
+                                            setInputState(
+                                                event.target.value.length > 0 ? 'filled' : 'default'
+                                            );
                                         }
 
                                         props.onChange?.(event);
