@@ -202,6 +202,9 @@ export const input = style([
             // iOS date/time fields are centered by default, but we want them left aligned
             '&::-webkit-date-and-time-value': {
                 textAlign: 'left',
+
+                // In Android, Chrome adds margin to the date's value, causing the input to be taller than expected
+                margin: 0,
             },
         },
     },
