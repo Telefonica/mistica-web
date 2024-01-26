@@ -31,17 +31,30 @@
         Primary
         <span slot="icon" style="font-size: 24px;">★</span>
     </m-button>
-
     <m-button variant="primary" small>
         Primary
         <span slot="icon" style="font-size: 20px;">★</span>
     </m-button>
 
-    <h2>m-spinner</h2>
-    <h3>Default</h3>
-    <m-spinner></m-spinner>
-    <h3>Custom size and color</h3>
-    <m-spinner color="red" size="32px"></m-spinner>
+
+    <h3><label for="button-loading-checkbox">Loading </label><input id="button-loading-checkbox" type="checkbox" checked></h3>
+    <m-button data-loading="true" variant="primary" loading>
+        Primary
+        <span slot="icon" style="font-size: 24px;">★</span>
+        <span slot="loading">Loading...</span>
+    </m-button>
+    <m-button data-loading="true" variant="primary" small loading>
+        Primary
+        <span slot="icon" style="font-size: 20px;">★</span>
+        <span slot="loading">Loading...</span>
+    </m-button>
+    <script>
+        document.querySelector('#button-loading-checkbox').addEventListener('change', (e) => {
+            document.querySelectorAll('m-button[data-loading="true"]').forEach((button) => {
+                e.target.checked ? button.setAttribute('loading', '') : button.removeAttribute('loading');
+            });
+        });
+    </script>
 
     <h2>m-placeholder</h2>
     <h3>Default</h3>
@@ -75,6 +88,11 @@
     <m-text preset="4" medium>medium</m-text>
     <m-text preset="4" bold>bold</m-text>
 
+    <h2>m-spinner</h2>
+    <h3>Default</h3>
+    <m-spinner></m-spinner>
+    <h3>Custom size and color</h3>
+    <m-spinner color="red" size="32px"></m-spinner>
 
     <script>
         document.querySelectorAll('m-button').forEach((button) => {

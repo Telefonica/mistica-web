@@ -15,18 +15,38 @@ class MisticaPlaceholder extends HTMLElement {
         const width = this.getAttribute('width') || '100%';
 
         this.shadowRoot.innerHTML = html`
-            <link rel="stylesheet" href="./styles/placeholder.css" />
             <style>
+                .placeholder {
+                    display: none;
+                }
                 .size {
                     height: ${height};
                     width: ${width};
                 }
             </style>
 
+            <link rel="stylesheet" href="./styles/placeholder.css" />
+
             <div class="placeholder size">
-                <svg class="svg" viewBox="0 0 100% 100%">
-                    <line x1="0" y1="0" x2="100%" y2="100%" stroke="#AAA" stroke-width="2px" />
-                    <line x1="0" y1="100%" x2="100%" y2="0" stroke="#AAA" stroke-width="2px" />
+                <svg class="svg" viewBox="0 0 1 1" preserveAspectRatio="none">
+                    <line
+                        x1="0"
+                        y1="0"
+                        x2="1"
+                        y2="1"
+                        stroke="#AAA"
+                        stroke-width="2px"
+                        vector-effect="non-scaling-stroke"
+                    />
+                    <line
+                        x1="0"
+                        y1="1"
+                        x2="1"
+                        y2="0"
+                        stroke="#AAA"
+                        stroke-width="2px"
+                        vector-effect="non-scaling-stroke"
+                    />
                 </svg>
             </div>
         `;

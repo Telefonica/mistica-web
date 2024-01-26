@@ -1,36 +1,68 @@
 .button {
+    --translate-y: 14px;
+    --translate-y-loading: -19px;
+    --caption-height: 16px;
+    --caption-gap: 18px;
     box-sizing: border-box;
     display: inline-flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 8px;
     border-radius: 4px;
     appearance: none;
     border: 1.5px solid transparent;
     padding: 0px 16px;
     cursor: pointer;
-    min-height: 48px;
+    height: 48px;
+    overflow: hidden;
 }
+
+.small {
+    --caption-height: 16px;
+    --caption-gap: 8px;
+    --translate-y: 7px;
+    --translate-y-loading: -17px;
+    padding: 0px 12px;
+    height: 32px;
+}
+
 .primary {
     background: #019df4;
     border-color: #019df4;
     color: #ffffff;
 }
+
 .secondary {
     background: #ffffff;
     border-color: #019df4;
     color: #019df4;
 }
+
 .danger {
     background: #ff374a;
     border-color: #ff374a;
     color: #ffffff;
 }
-.small {
-    padding: 0px 12px;
-    min-height: 32px;
-}
+
 .disabled {
     opacity: 0.5;
     cursor: default;
+}
+
+.content {
+    transform: translateY(var(--translate-y));
+    display: flex;
+    flex-direction: column;
+    gap: var(--caption-gap);
+    align-items: center;
+    transition: transform 0.3s ease-in-out;
+}
+
+.loading {
+    transform: translateY(var(--translate-y-loading));
+}
+
+.caption {
+    height: var(--caption-height);
+    column-gap: 8px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }

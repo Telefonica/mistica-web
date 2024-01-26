@@ -47,6 +47,8 @@ const escapeHtml = (string: string): string => {
     return lastIndex !== index ? html + str.slice(lastIndex, index) : html;
 };
 
+const isHtml = Symbol();
+
 /** Copied from React source: https://github.com/facebook/react/blob/6c64428d904f8339cddaa0f4850cba89acabe0bb/packages/react-dom-bindings/src/server/escapeTextForBrowser.js# */
 const escapeTextForBrowser = (text: string | number | boolean): string => {
     if (typeof text === 'boolean' || typeof text === 'number') {
@@ -54,6 +56,9 @@ const escapeTextForBrowser = (text: string | number | boolean): string => {
         // special characters, especially given that this function is used often
         // for numeric dom ids.
         return '' + (text as any);
+    }
+    if (typeof text === 'object' && text !== null && text[isHtml] === true) {
+        return '' + text;
     }
     return escapeHtml(text);
 };
@@ -67,7 +72,11 @@ export const html = (strings: TemplateStringsArray, ...values: Array<any>): stri
         }
     });
 
-    return str;
+    return {
+        [isHtml]: true,
+        toString: () => str,
+        valueOf: () => str,
+    } as any;
 };
 
 let currentId = 0;
