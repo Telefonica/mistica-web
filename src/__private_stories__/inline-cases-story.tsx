@@ -63,7 +63,7 @@ export const Default: StoryComponent = () => {
                 <Stack space={16}>
                     <Title1>Fullwidth behavior</Title1>
                     <Text3 regular>
-                        WARNING: This behavior is deprecated and will change in a future mistica major version
+                        [!] This behavior is deprecated and will change in a future mistica major version
                     </Text3>
                     <Inline space={16} fullWidth className="border">
                         <ButtonPrimary fake>{shortText}</ButtonPrimary>
