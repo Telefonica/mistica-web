@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {ButtonPrimary, Stack, Title1, Inline, Text3, Grid} from '..';
+import {ButtonPrimary, Stack, Title1, Inline, Text3, Grid, IconWarningRegular} from '..';
 
 export default {
     title: 'Private/Inline cases',
@@ -62,9 +62,14 @@ export const Default: StoryComponent = () => {
 
                 <Stack space={16}>
                     <Title1>Fullwidth behavior</Title1>
-                    <Text3 regular>
-                        [!] This behavior is deprecated and will change in a future mistica major version
-                    </Text3>
+
+                    <Inline space={8} alignItems="center">
+                        <IconWarningRegular />
+                        <Text3 regular>
+                            This behavior is deprecated and will change in a future mistica major version
+                        </Text3>
+                    </Inline>
+
                     <Inline space={16} fullWidth className="border">
                         <ButtonPrimary fake>{shortText}</ButtonPrimary>
                         <ButtonPrimary fake>{shortText}</ButtonPrimary>
