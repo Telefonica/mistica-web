@@ -78,8 +78,8 @@ const Dialog: React.FC<DialogProps> = (props) => {
     const acceptButtonProps = {
         onPress: handleAccept || (() => {}),
         children: acceptText,
-        // @deprecated - testId should be removed but many webapp tests depend on this
-        dataAttributes: {testId: 'dialog-accept-button'},
+        // @deprecated - testid should be removed but many webapp tests depend on this
+        dataAttributes: {testid: 'dialog-accept-button'},
     };
 
     return (
@@ -130,8 +130,8 @@ const Dialog: React.FC<DialogProps> = (props) => {
                         <ButtonSecondary
                             tabIndex={2} // eslint-disable-line jsx-a11y/tabindex-no-positive
                             onPress={handleCancel || (() => {})}
-                            // @deprecated - testId should be removed but many webapp tests depend on this
-                            dataAttributes={{testId: 'dialog-cancel-button'}}
+                            // @deprecated - testid should be removed but many webapp tests depend on this
+                            dataAttributes={{testid: 'dialog-cancel-button'}}
                         >
                             {cancelText}
                         </ButtonSecondary>
