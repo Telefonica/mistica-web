@@ -3,43 +3,41 @@
 <head>
     <title>Test</title>
     <script type="module" src="./dist/button.js"></script>
+    <script type="module" src="./dist/placeholder.js"></script>
     <script type="module" src="./dist/text.js"></script>
 </html>
 <body>
+    <h2>m-placeholder</h2>
+    <h3>Default</h3>
+    <m-placeholder></m-placeholder>
+    <h3>Custom size</h3>
+    <m-placeholder height="50px" width="100px"></m-placeholder>
+
     <h2>m-text</h2>
 
-    <section>
-        <m-text preset="1" regular>Preset 1:</m-text>
-        <m-text preset="1" light>light</m-text>
-        <m-text preset="1" regular>regular</m-text>
-        <m-text preset="1" medium>medium</m-text>
-        <m-text preset="1" bold>bold</m-text>
-    </section>
+    <h3>Preset 1</h3>
+    <m-text preset="1" light>light</m-text>
+    <m-text preset="1" regular>regular</m-text>
+    <m-text preset="1" medium>medium</m-text>
+    <m-text preset="1" bold>bold</m-text>
 
-    <section>
-        <m-text preset="2" regular>Preset 2:</m-text>
-        <m-text preset="2" light>light</m-text>
-        <m-text preset="2" regular>regular</m-text>
-        <m-text preset="2" medium>medium</m-text>
-        <m-text preset="2" bold>bold</m-text>
-    </section>
+    <h3>Preset 2</h3>
+    <m-text preset="2" light>light</m-text>
+    <m-text preset="2" regular>regular</m-text>
+    <m-text preset="2" medium>medium</m-text>
+    <m-text preset="2" bold>bold</m-text>
 
-    <section>
-        <m-text preset="3" regular>Preset 3:</m-text>
-        <m-text preset="3" light>light</m-text>
-        <m-text preset="3" regular>regular</m-text>
-        <m-text preset="3" medium>medium</m-text>
-        <m-text preset="3" bold>bold</m-text>
-    </section>
+    <h3>Preset 3</h3>
+    <m-text preset="3" light>light</m-text>
+    <m-text preset="3" regular>regular</m-text>
+    <m-text preset="3" medium>medium</m-text>
+    <m-text preset="3" bold>bold</m-text>
 
-    <section>
-        <m-text preset="4" regular>Preset 4:</m-text>
-        <m-text preset="4" light>light</m-text>
-        <m-text preset="4" regular>regular</m-text>
-        <m-text preset="4" medium>medium</m-text>
-        <m-text preset="4" bold>bold</m-text>
-    </section>
-
+    <h3>Preset 4</h3>
+    <m-text preset="4" light>light</m-text>
+    <m-text preset="4" regular>regular</m-text>
+    <m-text preset="4" medium>medium</m-text>
+    <m-text preset="4" bold>bold</m-text>
 
     <h2>m-button</h2>
 
@@ -69,4 +67,12 @@
         Primary
         <span slot="icon" style="font-size: 20px;">★</span>
     </m-button>
+
+    <script>
+        document.querySelectorAll('m-button').forEach((button) => {
+            button.addEventListener('click', (e) => {
+                alert('clicked: ' + e.target.textContent);
+            });
+        });
+    </script>
 </body>
