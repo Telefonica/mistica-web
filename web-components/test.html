@@ -5,8 +5,44 @@
     <script type="module" src="./dist/button.js"></script>
     <script type="module" src="./dist/placeholder.js"></script>
     <script type="module" src="./dist/text.js"></script>
+    <script type="module" src="./dist/spinner.js"></script>
 </html>
 <body>
+    <h2>m-button</h2>
+
+    <m-button variant="primary">Primary</m-button>
+    <m-button variant="secondary">Secondary</m-button>
+    <m-button variant="danger">Danger</m-button>
+
+    <h3>Disabled</h3>
+
+    <m-button variant="primary" disabled>Primary</m-button>
+    <m-button variant="secondary" disabled>Secondary</m-button>
+    <m-button variant="danger" disabled>Danger</m-button>
+
+    <h3>Small</h3>
+
+    <m-button variant="primary" small>Primary</m-button>
+    <m-button variant="secondary" small>Secondary</m-button>
+    <m-button variant="danger" small>Danger</m-button>
+
+    <h3>With icon</h3>
+    <m-button variant="primary">
+        Primary
+        <span slot="icon" style="font-size: 24px;">★</span>
+    </m-button>
+
+    <m-button variant="primary" small>
+        Primary
+        <span slot="icon" style="font-size: 20px;">★</span>
+    </m-button>
+
+    <h2>m-spinner</h2>
+    <h3>Default</h3>
+    <m-spinner></m-spinner>
+    <h3>Custom size and color</h3>
+    <m-spinner color="red" size="32px"></m-spinner>
+
     <h2>m-placeholder</h2>
     <h3>Default</h3>
     <m-placeholder></m-placeholder>
@@ -39,34 +75,6 @@
     <m-text preset="4" medium>medium</m-text>
     <m-text preset="4" bold>bold</m-text>
 
-    <h2>m-button</h2>
-
-    <m-button variant="primary">Primary</m-button>
-    <m-button variant="secondary">Secondary</m-button>
-    <m-button variant="danger">Danger</m-button>
-
-    <h3>Disabled</h3>
-
-    <m-button variant="primary" disabled>Primary</m-button>
-    <m-button variant="secondary" disabled>Secondary</m-button>
-    <m-button variant="danger" disabled>Danger</m-button>
-
-    <h3>Small</h3>
-
-    <m-button variant="primary" small>Primary</m-button>
-    <m-button variant="secondary" small>Secondary</m-button>
-    <m-button variant="danger" small>Danger</m-button>
-
-    <h3>With icon</h3>
-    <m-button variant="primary">
-        Primary
-        <span slot="icon" style="font-size: 24px;">★</span>
-    </m-button>
-
-    <m-button variant="primary" small>
-        Primary
-        <span slot="icon" style="font-size: 20px;">★</span>
-    </m-button>
 
     <script>
         document.querySelectorAll('m-button').forEach((button) => {

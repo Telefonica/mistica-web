@@ -1,6 +1,6 @@
 // specs: https://www.figma.com/file/koROdh3HpEPG2O8jG52Emh/%F0%9F%94%B8-Buttons-Component-Specs?type=design&node-id=0-1&mode=design&t=jszeUxdVPr1Nfvuj-0
 import './text.js';
-import {html} from './utils.js';
+import {html} from './dom.js';
 
 type Variant = 'primary' | 'secondary' | 'danger';
 

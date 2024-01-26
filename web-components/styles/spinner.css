@@ -1,0 +1,45 @@
+svg.ios {
+    flex-shrink: 0;
+    display: block;
+}
+
+@keyframes iosKeyframes {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+svg.ios > g > path {
+    animation: iosKeyframes 1s infinite linear;
+}
+
+svg.ios > g > path:nth-of-type(2) {
+    animation-delay: -880ms;
+}
+
+svg.ios > g > path:nth-of-type(3) {
+    animation-delay: -750ms;
+}
+
+svg.ios > g > path:nth-of-type(4) {
+    animation-delay: -625ms;
+}
+
+svg.ios > g > path:nth-of-type(5) {
+    animation-delay: -500ms;
+}
+
+svg.ios > g > path:nth-of-type(6) {
+    animation-delay: -375ms;
+}
+
+svg.ios > g > path:nth-of-type(7) {
+    animation-delay: -250ms;
+}
+
+svg.ios > g > path:nth-of-type(8) {
+    animation-delay: -125ms;
+}

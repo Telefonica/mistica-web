@@ -1,4 +1,4 @@
-import {html} from './utils.js';
+import {html} from './dom.js';
 
 class MisticaPlaceholder extends HTMLElement {
     constructor() {

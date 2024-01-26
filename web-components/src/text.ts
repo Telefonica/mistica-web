@@ -1,6 +1,5 @@
 // specs: https://www.figma.com/file/aNHyvXe1mqjaelE8XWVQD5/%F0%9F%94%B9-Text-presets-definition?type=design&node-id=1105-1142&mode=design&t=i1YNouYkaOthL36s-0
-
-import {html} from './utils.js';
+import {html} from './dom.js';
 
 const PRESETS = new Set(['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']);
 

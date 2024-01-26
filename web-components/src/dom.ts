@@ -69,3 +69,10 @@ export const html = (strings: TemplateStringsArray, ...values: Array<any>): stri
 
     return str;
 };
+
+let currentId = 0;
+
+export const getId = (): string => {
+    ++currentId;
+    return `mistica-id-${currentId}`;
+};
