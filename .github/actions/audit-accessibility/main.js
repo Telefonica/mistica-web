@@ -53,7 +53,8 @@ const startStorybook = () => {
         storybookServer.listen(port, () => {
             console.log(`Serving static storybook at: http://localhost:${port}`);
             resolve({
-                getStoryUrl: (id) => `http://localhost:${port}/iframe.html?viewMode=story&id=${id}`,
+                getStoryUrl: (id) =>
+                    `http://localhost:${port}/iframe.html?viewMode=story&id=${id}&skin=O2-new`,
                 closeStorybook: () => {
                     console.log('Stopping static storybook server');
                     storybookServer.close();
