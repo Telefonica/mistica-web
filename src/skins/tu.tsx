@@ -111,6 +111,7 @@ export const getTuSkin: GetKnownSkin = () => {
             controlInverse: palette.white,
             controlActivatedInverse: palette.white,
             controlError: palette.red,
+            barTrack: palette.grey2,
             loadingBar: palette.secondary30,
             loadingBarBackground: palette.secondary70,
             toggleAndroidInactive: palette.grey2,
