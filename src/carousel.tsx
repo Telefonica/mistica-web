@@ -110,12 +110,9 @@ export const CarouselContextProvider = ({children}: {children: React.ReactNode})
             goNext: () => {
                 goNextRef.current();
             },
-            bulletsProps: {
-                currentIndex: bulletsProps.currentIndex,
-                numPages: bulletsProps.numPages,
-            },
+            bulletsProps,
         }),
-        [bulletsProps.currentIndex, bulletsProps.numPages]
+        [bulletsProps]
     );
 
     return (
