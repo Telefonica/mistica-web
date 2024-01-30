@@ -5,7 +5,7 @@ import ScreenReaderOnly from './screen-reader-only';
 import * as classes from './touchable.css';
 import {useTheme} from './hooks';
 import {isInsideNovumNativeApp} from './utils/platform';
-import {ENTER, SPACE} from './utils/key-codes';
+import {ENTER, SPACE} from './utils/keys';
 import {getPrefixedDataAttributes} from './utils/dom';
 
 import type {DataAttributes, TrackingEvent} from './utils/types';
@@ -202,7 +202,7 @@ const RawTouchable = React.forwardRef<TouchableElement, Props>((props, ref) => {
     };
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLElement>) => {
-        if (event.keyCode === ENTER || event.keyCode === SPACE) {
+        if (event.key === ENTER || event.key === SPACE) {
             event.preventDefault();
             event.currentTarget.click();
         }

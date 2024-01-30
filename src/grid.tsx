@@ -3,8 +3,9 @@ import * as React from 'react';
 import * as styles from './grid.css';
 import {applyCssVars} from './utils/css';
 import {getPrefixedDataAttributes} from './utils/dom';
+import {sprinkles} from './sprinkles.css';
 
-import type {DataAttributes} from './utils/types';
+import type {ByBreakpoint, DataAttributes} from './utils/types';
 
 type RowsColumns = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
 type Gap = 0 | 2 | 4 | 8 | 12 | 16 | 24 | 32 | 40 | 48 | 56 | 64 | 72 | 80;
@@ -57,7 +58,7 @@ type AutoFillConfig = {
 type GridProps = {
     rows?: RowsColumns | AutoFillConfig;
     columns?: RowsColumns | AutoFillConfig;
-    gap?: Gap | [Gap, Gap];
+    gap?: ByBreakpoint<Gap> | [ByBreakpoint<Gap>, ByBreakpoint<Gap>];
     flow?: 'column' | 'row' | 'column dense' | 'row dense';
     justifyItems?: 'start' | 'end' | 'center' | 'stretch';
     alignItems?: 'start' | 'end' | 'center' | 'stretch' | 'baseline';
@@ -99,12 +100,30 @@ export const Grid = React.forwardRef<HTMLDivElement, GridProps>(
     ) => {
         const [columnGap, rowGap] = Array.isArray(gap) ? gap : [gap, gap];
 
+        const gapSprinkles = {columnGap, rowGap, gridColumnGap: columnGap, gridRowGap: rowGap};
+        let gapStyles: React.CSSProperties = {};
+        let gapClasses = '';
+        try {
+            gapClasses = sprinkles(gapSprinkles);
+        } catch (e) {
+            // if this fails, it's because the consumer passed in a value that is not a valid gap size
+            // fallback to inline styles in that case.
+            gapStyles = {
+                columnGap: typeof columnGap === 'object' ? columnGap.mobile : columnGap,
+                rowGap: typeof rowGap === 'object' ? rowGap.mobile : rowGap,
+                // Chrome 57-65 support
+                gridColumnGap: typeof columnGap === 'object' ? columnGap.mobile : columnGap,
+                gridRowGap: typeof rowGap === 'object' ? rowGap.mobile : rowGap,
+            };
+        }
+
         return React.createElement(
             as,
             {
                 ref,
                 className: classNames(
                     styles.grid,
+                    gapClasses,
                     columns
                         ? typeof columns === 'number'
                             ? styles.gridTemplateColumns[columns]
@@ -124,9 +143,8 @@ export const Grid = React.forwardRef<HTMLDivElement, GridProps>(
                 style: {
                     height,
                     minHeight,
+                    ...(!gapClasses ? gapStyles : {}),
                     ...applyCssVars({
-                        [styles.vars.columnGap]: columnGap ? `${columnGap}px` : '',
-                        [styles.vars.rowGap]: rowGap ? `${rowGap}px` : '',
                         ...getAutoRepeatVars(rows, columns),
                     }),
                 },

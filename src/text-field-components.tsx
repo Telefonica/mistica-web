@@ -123,10 +123,18 @@ export const FieldContainer: React.FC<FieldContainerProps> = ({
     readOnly,
 }) => {
     return (
+        // eslint-disable-next-line jsx-a11y/no-static-element-interactions
         <div
             className={classnames(styles.fieldContainer, fullWidth ? styles.fullWidth : styles.normalWidth, {
                 [styles.disabled]: disabled,
             })}
+            onClick={(e) => {
+                // workaround for the multiline case, where the textarea has a margin. We want to focus
+                // the input when the user clicks anywhere in the container (like in the label)
+                if (multiline) {
+                    e.currentTarget.querySelector('textarea')?.focus();
+                }
+            }}
         >
             <div
                 className={classnames(

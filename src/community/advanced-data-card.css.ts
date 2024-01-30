@@ -252,6 +252,6 @@ export const adjustButtonLink = style({
     marginRight: -12,
 });
 
-export const marginRightButton = sprinkles({
-    right: 16,
+export const marginRightButton = style({
+    marginRight: 16,
 });

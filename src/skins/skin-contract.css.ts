@@ -34,6 +34,9 @@ const colors: Colors = {
     buttonDangerBackground: '',
     buttonDangerBackgroundSelected: '',
     buttonDangerBackgroundHover: '',
+    buttonLinkDangerBackgroundSelected: '',
+    buttonLinkDangerBackgroundInverse: '',
+    buttonLinkDangerBackgroundInverseSelected: '',
     buttonLinkBackgroundSelected: '',
     buttonLinkBackgroundInverseSelected: '',
     buttonPrimaryBackground: '',
@@ -56,6 +59,7 @@ const colors: Colors = {
     controlInverse: '',
     controlActivatedInverse: '',
     controlError: '',
+    barTrack: '',
     loadingBar: '',
     loadingBarBackground: '',
 

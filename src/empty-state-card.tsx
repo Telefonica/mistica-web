@@ -2,7 +2,7 @@
 import * as React from 'react';
 import Box from './box';
 import {Boxed} from './boxed';
-import {useScreenSize, useTheme} from './hooks';
+import {useTheme} from './hooks';
 import Stack from './stack';
 import {Text2, Text} from './text';
 import ButtonGroup from './button-group';
@@ -47,7 +47,6 @@ const EmptyStateCard: React.FC<Props> = ({
     'aria-label': ariaLabel,
     dataAttributes,
 }) => {
-    const {isTabletOrSmaller} = useScreenSize();
     const {textPresets} = useTheme();
 
     let image;
@@ -59,7 +58,7 @@ const EmptyStateCard: React.FC<Props> = ({
     }
     return (
         <Boxed dataAttributes={dataAttributes}>
-            <Box paddingY={isTabletOrSmaller ? 24 : 40} paddingX={isTabletOrSmaller ? 16 : 40}>
+            <Box paddingY={{mobile: 24, desktop: 40}} paddingX={{mobile: 16, desktop: 40}}>
                 <section className={styles.container} aria-label={ariaLabel}>
                     <Stack space={16}>
                         {image ?? (icon && <div className={styles.iconContainer}>{icon}</div>)}

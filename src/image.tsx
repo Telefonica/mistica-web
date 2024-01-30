@@ -1,38 +1,22 @@
 'use client';
 import * as React from 'react';
 import classnames from 'classnames';
-import {SkeletonRectangle} from './skeletons';
+import {SkeletonAnimation} from './skeletons';
 import {AspectRatioContainer} from './utils/aspect-ratio-support';
 import {getPrefixedDataAttributes} from './utils/dom';
 import {useIsInverseVariant} from './theme-variant-context';
-import {useTheme} from './hooks';
+import {useAriaId, useTheme} from './hooks';
 import {VIVO_SKIN} from './skins/constants';
 import {sprinkles} from './sprinkles.css';
 import * as styles from './image.css';
 import {vars} from './skins/skin-contract.css';
 import {combineRefs} from './utils/common';
 import SkeletonBase from './skeleton-base';
+import {isServerSide} from './utils/environment';
+import {fallbackStyles} from './utils/css';
 
 import type {ExclusifyUnion} from './utils/utility-types';
 import type {DataAttributes} from './utils/types';
-
-/**
- * This context is used internally to disable/enable the border radius. This is useful for example
- * when using the Image component inside a Card or Hero inside a Slideshow
- */
-const MediaBorderRadiusContext = React.createContext(true);
-
-export const useMediaBorderRadius = (): boolean => React.useContext(MediaBorderRadiusContext);
-
-export const MediaBorderRadiusProvider = ({
-    children,
-    value,
-}: {
-    children: React.ReactNode;
-    value: boolean;
-}): JSX.Element => (
-    <MediaBorderRadiusContext.Provider value={value}>{children}</MediaBorderRadiusContext.Provider>
-);
 
 type VivoLogoProps = {
     style?: React.CSSProperties;
@@ -51,14 +35,13 @@ const VivoLogo = ({style}: VivoLogoProps) => {
 };
 
 type ImageErrorProps = {
-    noBorderRadius?: boolean;
-    circular?: boolean;
     withIcon?: boolean;
+    borderRadius?: string | number;
     border?: boolean;
 };
 
 export const ImageError = React.forwardRef<HTMLDivElement, ImageErrorProps>(
-    ({noBorderRadius, circular, withIcon = true, border}, ref) => {
+    ({borderRadius, withIcon = true, border}, ref) => {
         const isInverse = useIsInverseVariant();
         const {skinName} = useTheme();
         return (
@@ -74,7 +57,7 @@ export const ImageError = React.forwardRef<HTMLDivElement, ImageErrorProps>(
                         : vars.colors.backgroundSkeleton,
                     boxSizing: 'border-box',
                     border: border ? `1px solid ${vars.colors.borderLow}` : 'none',
-                    borderRadius: circular ? '50%' : noBorderRadius ? undefined : vars.borderRadii.container,
+                    borderRadius,
                 }}
                 ref={ref}
             >
@@ -100,7 +83,7 @@ export const ImageError = React.forwardRef<HTMLDivElement, ImageErrorProps>(
     }
 );
 
-export type AspectRatio = '1:1' | '16:9' | '7:10' | '4:3';
+export type AspectRatio = '1:1' | '16:9' | '7:10' | '4:3' | undefined;
 
 export const RATIO = {
     '1:1': 1,
@@ -163,22 +146,34 @@ export const ImageContent = React.forwardRef<HTMLImageElement, ImageProps>(
         },
         ref
     ) => {
+        const imageId = useAriaId();
         const imageRef = React.useRef<HTMLImageElement>();
-        const borderRadiusContext = useMediaBorderRadius();
-        const border = props.border ? `1px solid ${vars.colors.borderLow}` : 'none';
-        const noBorderSetting = noBorderRadius ?? !borderRadiusContext;
+        const borderRadius = props.circular
+            ? '50%'
+            : noBorderRadius
+            ? '0px'
+            : fallbackStyles(styles.vars.mediaBorderRadius, vars.borderRadii.container);
+
         const [isError, setIsError] = React.useState(!src);
-        const [isLoading, setIsLoading] = React.useState(true);
         const [hideLoadingFallback, setHideLoadingFallback] = React.useState(false);
 
-        const ratio = props.circular ? 1 : typeof aspectRatio === 'number' ? aspectRatio : RATIO[aspectRatio];
+        const ratio =
+            props.width && props.height
+                ? undefined
+                : props.circular
+                ? 1
+                : typeof aspectRatio === 'number'
+                ? aspectRatio
+                : RATIO[aspectRatio];
 
         const withLoadingFallback = loadingFallback && !!(ratio !== 0 || (props.width && props.height));
         const withErrorFallback = errorFallback && !!(ratio !== 0 || (props.width && props.height));
 
         const onLoadHandler = React.useCallback(() => {
             setIsError(false);
-            setIsLoading(false);
+            if (imageRef.current) {
+                imageRef.current.style.opacity = '1';
+            }
             setTimeout(() => {
                 setHideLoadingFallback(true);
             }, styles.FADE_IN_DURATION_MS);
@@ -186,60 +181,68 @@ export const ImageContent = React.forwardRef<HTMLImageElement, ImageProps>(
             onLoad?.();
         }, [onLoad]);
 
-        const img = (
-            // https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/issues/309
-            // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
-            <img
-                style={{
-                    ...(isLoading && withLoadingFallback ? {opacity: 0} : {opacity: 1}),
-                    boxSizing: 'border-box',
-                    border,
-                }}
-                ref={combineRefs(imageRef, ref)}
-                src={src}
-                className={classnames(
-                    styles.image,
-                    sprinkles({
-                        position: ratio !== 0 ? 'absolute' : 'static',
-                        borderRadius: props.circular
-                            ? '50%'
-                            : noBorderSetting
-                            ? undefined
-                            : vars.borderRadii.container,
-                    })
-                )}
-                alt={alt}
-                onError={() => {
-                    setIsError(true);
-                    setIsLoading(false);
-                    setHideLoadingFallback(true);
-                    onError?.();
-                }}
-                onLoad={onLoadHandler}
-            />
-        );
-
         React.useEffect(() => {
             // Needed because there is some race condition with SSR and onLoad events
+            // load event could be fired before the component is hydrated and mounted client side
             // https://github.com/facebook/react/issues/15446
             if (imageRef.current?.complete) {
                 onLoadHandler();
             }
         }, [onLoadHandler]);
 
+        const isLoading =
+            isServerSide() || !(document.getElementById(imageId) as HTMLImageElement | null)?.complete;
+
+        const img = (
+            <>
+                {/* https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/issues/309 */}
+                {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
+                <img
+                    // There is small hydration mismatch that we dont care about. (I think this is caused by te inline SSR script below)
+                    // Warning: Prop `style` did not match. Server: "opacity: 1;" Client: "opacity:1"
+                    suppressHydrationWarning
+                    id={imageId}
+                    style={{
+                        opacity: isLoading && withLoadingFallback ? 0 : 1,
+                        borderRadius,
+                    }}
+                    ref={combineRefs(imageRef, ref)}
+                    src={src}
+                    className={classnames(
+                        styles.image,
+                        {[styles.imageWithBorder]: props.border},
+                        sprinkles({
+                            position: ratio !== 0 ? 'absolute' : 'static',
+                        })
+                    )}
+                    alt={alt}
+                    onError={() => {
+                        setIsError(true);
+                        setHideLoadingFallback(true);
+                        onError?.();
+                    }}
+                    onLoad={onLoadHandler}
+                />
+                {/* When using SSR, we render a small script that makes the img visible as soon as it finishes loading, without waiting for React client hydrate. */}
+                {/* Note that this <script> does nothing when rendering client side (the browser only execute scripts injected inside <head>), it's only executed when the browser receives the SSRed html */}
+                {withLoadingFallback && (
+                    <script
+                        // eslint-disable-next-line react/no-danger
+                        dangerouslySetInnerHTML={{
+                            __html: `document.getElementById("${imageId}").addEventListener('load', (e) => e.target.style.opacity = "1")`,
+                        }}
+                    />
+                )}
+            </>
+        );
+
         return (
             <>
                 {withLoadingFallback && !hideLoadingFallback && (
                     <div style={{position: 'absolute', width: '100%', height: '100%'}}>
-                        {props.circular ? (
-                            <SkeletonBase width="100%" height="100%" radius="50%" />
-                        ) : (
-                            <SkeletonRectangle
-                                width={props.width}
-                                height={props.height}
-                                noBorderRadius={noBorderSetting}
-                            />
-                        )}
+                        <SkeletonAnimation height={props.height ?? '100%'} width={props.width ?? '100%'}>
+                            <SkeletonBase height="100%" width="100%" radius={borderRadius} />
+                        </SkeletonAnimation>
                     </div>
                 )}
                 {isError && withErrorFallback && (
@@ -251,11 +254,7 @@ export const ImageContent = React.forwardRef<HTMLImageElement, ImageProps>(
                             zIndex: 1,
                         }}
                     >
-                        <ImageError
-                            circular={props.circular}
-                            noBorderRadius={noBorderSetting}
-                            border={props.border}
-                        />
+                        <ImageError borderRadius={borderRadius} border={props.border} />
                     </div>
                 )}
                 {!isError && img}
@@ -265,11 +264,14 @@ export const ImageContent = React.forwardRef<HTMLImageElement, ImageProps>(
 );
 
 const Image = React.forwardRef<HTMLImageElement, ImageProps>((props, ref) => {
-    const ratio = props.circular
-        ? 1
-        : typeof props.aspectRatio === 'number'
-        ? props.aspectRatio
-        : RATIO[props.aspectRatio ?? DEFAULT_ASPECT_RATIO];
+    const ratio =
+        props.width && props.height
+            ? undefined
+            : props.circular
+            ? 1
+            : typeof props.aspectRatio === 'number'
+            ? props.aspectRatio
+            : RATIO[props.aspectRatio ?? DEFAULT_ASPECT_RATIO];
 
     return (
         <AspectRatioContainer

@@ -44,7 +44,19 @@ export const useDisableBodyScroll = (disable: boolean): void => {
                     // if the scrollbar is visible, we don't want to hide it because content will be resized
                     const overflowY = hasScrollbar ? 'scroll' : 'hidden';
 
-                    document.body.style.cssText = `overflow:hidden;overflow-y:${overflowY};position:fixed;top:${-bodyScrollTop}px;left:0px;right:0px;bottom:0px`;
+                    document.body.style.cssText =
+                        bodyStyles +
+                        (bodyStyles.endsWith(';') ? '' : ';') +
+                        [
+                            'overflow: hidden;',
+                            `overflow-y: ${overflowY};`,
+                            'position: fixed;',
+                            `top: ${-bodyScrollTop}px;`,
+                            'left: 0px;',
+                            'right: 0px;',
+                            'bottom: 0px;',
+                            'overscroll-behavior-y: contain;', // disable overscroll
+                        ].join('');
                 }
             };
             const enableBodyScroll = () => {
@@ -244,7 +256,8 @@ const getBoundingClientRect = (element: Element): BoundingRect => {
 
 export const useBoundingRect = (
     ref: React.RefObject<Element>,
-    computeOnEveryFrame = true
+    computeOnEveryFrame = true,
+    trackIfNotVisible = false
 ): BoundingRect | undefined => {
     const [rect, setRect] = React.useState<BoundingRect>();
     const isVisible = useIsInViewport(ref, false);
@@ -253,7 +266,7 @@ export const useBoundingRect = (
         let id: number;
 
         const check = () => {
-            if (ref.current && isVisible) {
+            if (ref.current && (isVisible || trackIfNotVisible)) {
                 const current = getBoundingClientRect(ref.current);
                 if (!isEqual(rect, current)) {
                     setRect(current);
@@ -272,7 +285,7 @@ export const useBoundingRect = (
         return () => {
             cancelAnimationFrame(id);
         };
-    }, [ref, rect, isVisible, computeOnEveryFrame]);
+    }, [ref, rect, isVisible, computeOnEveryFrame, trackIfNotVisible]);
 
     return rect;
 };

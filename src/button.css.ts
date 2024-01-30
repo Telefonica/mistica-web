@@ -281,7 +281,7 @@ const danger: ComplexStyleRule = [
     },
 ];
 
-export const link = style([
+const link = style([
     sprinkles({
         display: 'inline-block',
         width: 'auto',
@@ -289,8 +289,6 @@ export const link = style([
         borderRadius: vars.borderRadii.button,
         paddingX: PADDING_X_LINK,
         border: 'none',
-        color: vars.colors.textLink,
-        background: 'transparent',
         overflow: 'hidden',
         minWidth: 40,
     }),
@@ -302,50 +300,11 @@ export const link = style([
 
         selectors: {
             [`&[disabled]:not(${isLoading})`]: disabledStyle,
-            '&:not([disabled]):active': {
-                backgroundColor: vars.colors.buttonLinkBackgroundSelected,
-            },
         },
 
         '@media': {
-            [mq.supportsHover]: {
-                selectors: {
-                    '&:hover:not([disabled])': {
-                        backgroundColor: vars.colors.buttonLinkBackgroundSelected,
-                    },
-                    '&:not([disabled]):active': {
-                        backgroundColor: vars.colors.buttonLinkBackgroundSelected,
-                    },
-                },
-            },
             [mq.touchableOnly]: {
                 transition: 'none',
-            },
-        },
-    },
-]);
-
-export const inverseLink = style([
-    sprinkles({
-        color: vars.colors.textLinkInverse,
-    }),
-    {
-        selectors: {
-            '&:not([disabled]):active': {
-                backgroundColor: vars.colors.buttonLinkBackgroundInverseSelected,
-            },
-        },
-
-        '@media': {
-            [mq.supportsHover]: {
-                selectors: {
-                    '&:hover:not([disabled])': {
-                        backgroundColor: vars.colors.buttonLinkBackgroundInverseSelected,
-                    },
-                    '&:not([disabled]):active': {
-                        backgroundColor: vars.colors.buttonLinkBackgroundInverseSelected,
-                    },
-                },
             },
         },
     },
@@ -374,14 +333,166 @@ globalStyle(`${textContentLink} svg`, {
     display: 'block',
 });
 
-export const variants = styleVariants({
+export const defaultLink: ComplexStyleRule = [
+    link,
+    sprinkles({
+        color: vars.colors.textLink,
+        background: 'transparent',
+    }),
+    {
+        selectors: {
+            '&:not([disabled]):active': {
+                backgroundColor: vars.colors.buttonLinkBackgroundSelected,
+            },
+        },
+
+        '@media': {
+            [mq.supportsHover]: {
+                selectors: {
+                    '&:hover:not([disabled])': {
+                        backgroundColor: vars.colors.buttonLinkBackgroundSelected,
+                    },
+                    '&:not([disabled]):active': {
+                        backgroundColor: vars.colors.buttonLinkBackgroundSelected,
+                    },
+                },
+            },
+        },
+    },
+];
+
+export const defaultLinkInverse: ComplexStyleRule = [
+    link,
+    sprinkles({
+        color: vars.colors.textLinkInverse,
+        background: 'transparent',
+    }),
+    {
+        selectors: {
+            '&:not([disabled]):active': {
+                backgroundColor: vars.colors.buttonLinkBackgroundInverseSelected,
+            },
+        },
+
+        '@media': {
+            [mq.supportsHover]: {
+                selectors: {
+                    '&:hover:not([disabled])': {
+                        backgroundColor: vars.colors.buttonLinkBackgroundInverseSelected,
+                    },
+                    '&:not([disabled]):active': {
+                        backgroundColor: vars.colors.buttonLinkBackgroundInverseSelected,
+                    },
+                },
+            },
+        },
+    },
+];
+
+const dangerLink: ComplexStyleRule = [
+    link,
+    sprinkles({
+        color: vars.colors.textLinkDanger,
+        background: 'transparent',
+    }),
+    {
+        selectors: {
+            '&:not([disabled]):active': {
+                backgroundColor: vars.colors.buttonLinkDangerBackgroundSelected,
+            },
+        },
+
+        '@media': {
+            [mq.supportsHover]: {
+                selectors: {
+                    '&:hover:not([disabled])': {
+                        backgroundColor: vars.colors.buttonLinkDangerBackgroundSelected,
+                    },
+                    '&:not([disabled]):active': {
+                        backgroundColor: vars.colors.buttonLinkDangerBackgroundSelected,
+                    },
+                },
+            },
+        },
+    },
+];
+
+const dangerLinkInverse: ComplexStyleRule = [
+    link,
+    sprinkles({
+        color: vars.colors.textLinkDanger,
+        background: vars.colors.buttonLinkDangerBackgroundInverse,
+    }),
+    {
+        selectors: {
+            '&:not([disabled]):active': {
+                backgroundColor: vars.colors.buttonLinkDangerBackgroundInverseSelected,
+            },
+        },
+
+        '@media': {
+            [mq.supportsHover]: {
+                selectors: {
+                    '&:hover:not([disabled])': {
+                        backgroundColor: vars.colors.buttonLinkDangerBackgroundInverseSelected,
+                    },
+                    '&:not([disabled]):active': {
+                        backgroundColor: vars.colors.buttonLinkDangerBackgroundInverseSelected,
+                    },
+                },
+            },
+        },
+    },
+];
+
+const dangerLinkInverseDark: ComplexStyleRule = [
+    link,
+    sprinkles({
+        color: vars.colors.textLinkDanger,
+        background: 'transparent',
+    }),
+    {
+        selectors: {
+            '&:not([disabled]):active': {
+                backgroundColor: vars.colors.buttonLinkDangerBackgroundInverseSelected,
+            },
+        },
+
+        '@media': {
+            [mq.supportsHover]: {
+                selectors: {
+                    '&:hover:not([disabled])': {
+                        backgroundColor: vars.colors.buttonLinkDangerBackgroundInverseSelected,
+                    },
+                    '&:not([disabled]):active': {
+                        backgroundColor: vars.colors.buttonLinkDangerBackgroundInverseSelected,
+                    },
+                },
+            },
+        },
+    },
+];
+
+export const buttonVariants = styleVariants({
     primary: lightPrimary,
     secondary: lightSecondary,
     danger,
 });
 
-export const inverseVariants = styleVariants({
+export const inverseButtonVariants = styleVariants({
     primary: lightPrimaryInverse,
     secondary: lightSecondaryInverse,
     danger,
+});
+
+export const linkVariants = styleVariants({
+    default: defaultLink,
+    danger: dangerLink,
+    dangerDark: dangerLink,
+});
+
+export const inverseLinkVariants = styleVariants({
+    default: defaultLinkInverse,
+    danger: dangerLinkInverse,
+    dangerDark: dangerLinkInverseDark,
 });

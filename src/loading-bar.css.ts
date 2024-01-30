@@ -4,27 +4,12 @@ import {vars} from './skins/skin-contract.css';
 
 export const TRANSITION_DURATION_MS = 400;
 
-const progressIndicator = keyframes({
-    '0%': {
-        transform: 'translateX(0%)',
+const enterAnimation = keyframes({
+    from: {
+        transform: 'translateY(-4px)',
     },
-    '100%': {
-        transform: 'translateX(150%)',
-    },
-});
-
-const innerProgressIndicator = keyframes({
-    '0%': {
-        transform: 'scaleX(0.1)',
-    },
-    '20%': {
-        transform: 'scaleX(0.35)',
-    },
-    '50%': {
-        transform: 'scaleX(0.7)',
-    },
-    '100%': {
-        transform: 'scaleX(0.8)',
+    to: {
+        transform: 'translateY(0)',
     },
 });
 
@@ -37,8 +22,14 @@ export const portal = style([
     }),
     {
         zIndex: 9999,
+        animation: `${enterAnimation} ${TRANSITION_DURATION_MS}ms ease-out`,
+        transition: `transform ${TRANSITION_DURATION_MS}ms ease-out`,
     },
 ]);
+
+export const hidden = style({
+    transform: 'translateY(-4px)',
+});
 
 export const progressContainer = sprinkles({
     width: '100%',
@@ -46,6 +37,15 @@ export const progressContainer = sprinkles({
     position: 'relative',
     background: vars.colors.loadingBarBackground,
     height: 4,
+});
+
+const progressIndicator = keyframes({
+    '0%': {
+        transform: 'translateX(0%)',
+    },
+    '100%': {
+        transform: 'translateX(150%)',
+    },
 });
 
 export const progress = style([
@@ -62,6 +62,21 @@ export const progress = style([
     },
 ]);
 
+const innerProgressIndicator = keyframes({
+    '0%': {
+        transform: 'scaleX(0.1)',
+    },
+    '20%': {
+        transform: 'scaleX(0.35)',
+    },
+    '50%': {
+        transform: 'scaleX(0.7)',
+    },
+    '100%': {
+        transform: 'scaleX(0.8)',
+    },
+});
+
 export const innerProgress = style([
     sprinkles({
         height: '100%',
@@ -72,21 +87,3 @@ export const innerProgress = style([
         animationDelay: String(TRANSITION_DURATION_MS),
     },
 ]);
-
-export const enter = style({
-    transition: `${TRANSITION_DURATION_MS}ms ease-out`,
-    transform: 'translateY(-4px)',
-});
-
-export const enterActive = style({
-    transform: 'translateY(0)',
-});
-
-export const exit = style({
-    transform: 'translateY(0)',
-    transition: `${TRANSITION_DURATION_MS}ms ease-out`,
-});
-
-export const exitActive = style({
-    transform: 'translateY(-4px)',
-});

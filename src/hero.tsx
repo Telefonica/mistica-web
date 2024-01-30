@@ -2,7 +2,6 @@
 import * as React from 'react';
 import classnames from 'classnames';
 import {useScreenSize} from './hooks';
-import {MediaBorderRadiusProvider} from './image';
 import {Text3, Text8} from './text';
 import GridLayout from './grid-layout';
 import Box from './box';
@@ -10,6 +9,7 @@ import Stack from './stack';
 import ButtonGroup from './button-group';
 import {vars} from './skins/skin-contract.css';
 import * as styles from './hero.css';
+import * as mediaStyles from './image.css';
 import {useIsInsideSlideshowContext} from './carousel';
 import {getPrefixedDataAttributes} from './utils/dom';
 import {sprinkles} from './sprinkles.css';
@@ -133,7 +133,7 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
 
         if (isTabletOrSmaller) {
             return (
-                <MediaBorderRadiusProvider value={false}>
+                <div style={applyCssVars({[mediaStyles.vars.mediaBorderRadius]: '0px'})}>
                     <div
                         {...getPrefixedDataAttributes({'component-name': 'Hero', ...dataAttributes})}
                         ref={ref}
@@ -153,7 +153,7 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
                             </Box>
                         </Layout>
                     </div>
-                </MediaBorderRadiusProvider>
+                </div>
             );
         }
 
@@ -176,7 +176,7 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
             );
 
         return (
-            <MediaBorderRadiusProvider value>
+            <div style={applyCssVars({[mediaStyles.vars.mediaBorderRadius]: vars.borderRadii.container})}>
                 <div
                     {...getPrefixedDataAttributes({'component-name': 'Hero', ...dataAttributes})}
                     ref={ref}
@@ -211,7 +211,7 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
                         />
                     </Layout>
                 </div>
-            </MediaBorderRadiusProvider>
+            </div>
         );
     }
 );

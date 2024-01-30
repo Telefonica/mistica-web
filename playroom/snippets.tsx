@@ -214,6 +214,7 @@ const buttonSnippets: Array<Snippet> = [
     {name: 'ButtonSecondary', code: '<ButtonSecondary onPress={() => {}}>Action</ButtonSecondary>'},
     {name: 'ButtonDanger', code: '<ButtonDanger onPress={() => {}}>Action</ButtonDanger>'},
     {name: 'ButtonLink', code: '<ButtonLink onPress={() => {}}>Action</ButtonLink>'},
+    {name: 'ButtonLinkDanger', code: '<ButtonLinkDanger onPress={() => {}}>Action</ButtonLinkDanger>'},
     {
         name: 'Button with icon',
         code: '<ButtonPrimary onPress={() => {}}><IconLockClosedRegular color="currentColor" />Action</ButtonPrimary>',
@@ -321,6 +322,41 @@ const feedbackSnippets: Array<Snippet> = [
         />
         `,
 }));
+
+const loadingScreenSnippets: Array<Snippet> = [
+    {
+        group: 'Loading Screens',
+        name: 'LoadingScreen',
+        code: `
+        <LoadingScreen
+            title="Some title"
+            description="Some description text"
+        />
+        `,
+    },
+    {
+        group: 'Loading Screens',
+        name: 'BrandLoadingScreen',
+        code: `
+        <BrandLoadingScreen
+            title="Some title"
+            description="Some description text"
+        />
+        `,
+    },
+    {
+        group: 'Loading Screens',
+        name: 'BrandLoadingScreen with multiple texts',
+        code: `
+        <BrandLoadingScreen
+          texts={[
+            { title: "Title 1", description: "Description 1" },
+            { title: "Title 2", description: "Description 2" },
+            { title: "Title 3", description: "Description 3" },
+          ]}
+        />`,
+    },
+];
 
 const listSnippets: Array<Snippet> = [
     ['RowList', 'Row'],
@@ -1222,6 +1258,38 @@ const layoutSnippets: Array<Snippet> = [
             }
         />
         </Box>`,
+    },
+    {
+        group: 'Mosaic',
+        name: 'HorizontalMosaic',
+        code: `
+        <ResponsiveLayout>
+          <HorizontalMosaic
+            items={Array.from({ length: 6 }, (_, index) => (
+              <Image
+                src="https://picsum.photos/1200/1200"
+                width="100%"
+                height="100%"
+                key={index}
+              />
+            ))}
+          />
+        </ResponsiveLayout>`,
+    },
+    {
+        group: 'Mosaic',
+        name: 'VerticalMosaic',
+        code: `
+        <VerticalMosaic
+          items={Array.from({ length: 6 }, (_, index) => (
+            <Image
+              src="https://picsum.photos/1200/1200"
+              width="100%"
+              height="100%"
+              key={index}
+            />
+          ))}
+        />`,
     },
 ].map((snippet) => ({...snippet, group: 'Layouts'}));
 
@@ -2804,4 +2872,5 @@ export default [
     ...HighlightedValueBlockSnippets,
     ...ValueBlockSnippets,
     ...ProgressBlockSnippets,
+    ...loadingScreenSnippets,
 ].sort((s1, s2) => s1.group.localeCompare(s2.group)) as Array<Snippet>;

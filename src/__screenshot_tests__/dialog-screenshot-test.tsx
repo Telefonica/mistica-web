@@ -19,9 +19,11 @@ test.each`
         args: {destructive: action.includes('destructive')},
     });
 
-    await (await screen.findByRole('button')).click();
+    await (await screen.findByRole('button', {name: 'Open'})).click();
 
     const image = await page.screenshot({fullPage: true});
+
+    await screen.findByRole('dialog');
     expect(image).toMatchImageSnapshot();
 });
 
@@ -31,7 +33,8 @@ test('Select options are correctly positioned inside a dialog', async () => {
         device: 'DESKTOP',
     });
 
-    await (await screen.findByRole('button')).click();
+    await (await screen.findByRole('button', {name: 'Open'})).click();
+    await screen.findByRole('dialog');
     await (await screen.findByLabelText('Select')).click();
 
     const image = await page.screenshot({fullPage: true});

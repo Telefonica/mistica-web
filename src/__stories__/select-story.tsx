@@ -1,105 +1,83 @@
 import * as React from 'react';
 import {fruitEntries} from './helpers';
-import {Select, Stack, Title1} from '..';
+import {Select} from '..';
 
 export default {
     title: 'Components/Select',
     component: Select,
 };
 
-export const Default: StoryComponent = () => {
+type Args = {
+    label: string;
+    helperText: string;
+    disabled: boolean;
+    error: boolean;
+    native: boolean;
+    optional: boolean;
+};
+
+const defaultArgs = {
+    label: 'Select a fruit',
+    helperText: '',
+    disabled: false,
+    error: false,
+    native: false,
+    optional: false,
+};
+
+export const Controlled: StoryComponent<Args> = ({label, helperText, disabled, error, native, optional}) => {
+    const fruitOptions = fruitEntries.map(([text, value]) => ({text, value}));
+    fruitOptions.push({value: 'longValue', text: 'A very very long text value for this option'});
+
     const [value, setValue] = React.useState('');
 
+    return (
+        <div data-testid="select-field-wrapper" style={{width: 'fit-content'}}>
+            <Select
+                name="select-field"
+                native={native}
+                error={error}
+                disabled={disabled}
+                optional={optional}
+                value={value}
+                onChangeValue={setValue}
+                label={label}
+                helperText={helperText}
+                options={fruitOptions}
+            />
+        </div>
+    );
+};
+
+Controlled.storyName = 'controlled';
+Controlled.args = defaultArgs;
+
+export const Uncontrolled: StoryComponent<Args> = ({
+    label,
+    helperText,
+    disabled,
+    error,
+    native,
+    optional,
+}) => {
     const fruitOptions = fruitEntries.map(([text, value]) => ({text, value}));
     fruitOptions.push({value: 'longValue', text: 'A very very long text value for this option'});
 
     return (
-        <>
-            <Stack space={16} dataAttributes={{testid: 'select-story'}}>
-                <Title1>Select</Title1>
-                <Select
-                    name="normal"
-                    value={value}
-                    onChangeValue={setValue}
-                    helperText="Normal select"
-                    options={fruitOptions}
-                    label="Select a fruit"
-                    optional
-                />
-
-                <Select
-                    name="with-error"
-                    error
-                    value={value}
-                    onChangeValue={setValue}
-                    helperText="With Error"
-                    label="Select a fruit"
-                    options={fruitOptions}
-                />
-
-                <Select
-                    name="uncontrolled"
-                    onChangeValue={setValue}
-                    helperText="Uncontrolled"
-                    label="Select a fruit"
-                    options={fruitOptions}
-                />
-
-                <Select
-                    name="disabled"
-                    disabled
-                    value={value}
-                    onChangeValue={setValue}
-                    helperText="Disabled"
-                    label="Select a fruit"
-                    options={fruitOptions}
-                />
-
-                <Title1>Native variant</Title1>
-
-                <Select
-                    name="native"
-                    native
-                    value={value}
-                    onChangeValue={setValue}
-                    label="Select a fruit"
-                    helperText="Native select"
-                    options={fruitOptions}
-                />
-
-                <Select
-                    name="native-with-error"
-                    native
-                    error
-                    value={value}
-                    onChangeValue={setValue}
-                    label="Select a fruit"
-                    helperText="Native with error"
-                    options={fruitOptions}
-                />
-
-                <Select
-                    name="native-uncontrolled"
-                    native
-                    label="Select a fruit"
-                    onChangeValue={setValue}
-                    helperText="Native select uncontrolled"
-                    options={fruitOptions}
-                />
-
-                <Select
-                    name="native-disabled"
-                    native
-                    disabled
-                    value={value}
-                    onChangeValue={setValue}
-                    label="Select a fruit"
-                    helperText="Native select disabled"
-                    options={fruitOptions}
-                />
-            </Stack>
-        </>
+        <div data-testid="select-field-wrapper" style={{width: 'fit-content'}}>
+            <Select
+                name="select-field"
+                native={native}
+                error={error}
+                disabled={disabled}
+                optional={optional}
+                label={label}
+                helperText={helperText}
+                options={fruitOptions}
+            />
+        </div>
     );
 };
 
-Default.storyName = 'Select';
+Uncontrolled.storyName = 'uncontrolled';
+Uncontrolled.args = defaultArgs;

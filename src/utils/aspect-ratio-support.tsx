@@ -36,7 +36,7 @@ export const useSupportsAspectRatio = (): boolean => React.useContext(AspectRati
 type AspectRatioContainerProps = {
     width?: number | string;
     height?: number | string;
-    aspectRatio: number;
+    aspectRatio?: number;
     children: React.ReactNode;
     as?: React.ComponentType<any> | string;
     style?: React.CSSProperties;
@@ -60,9 +60,9 @@ export const AspectRatioContainer = (props: AspectRatioContainerProps): JSX.Elem
         width = props.width;
         height = props.height;
     } else if (typeof props.width === 'number') {
-        height = props.aspectRatio !== 0 ? props.width / props.aspectRatio : undefined;
+        height = props.aspectRatio !== 0 ? props.width / (props.aspectRatio ?? 1) : undefined;
     } else if (typeof props.height === 'number') {
-        width = props.aspectRatio !== 0 ? props.height * props.aspectRatio : undefined;
+        width = props.aspectRatio !== 0 ? props.height * (props.aspectRatio ?? 1) : undefined;
     } else {
         width = props.width || '100%';
     }

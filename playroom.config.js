@@ -104,7 +104,7 @@ const config = {
                 },
                 {
                     test: /\.woff2$/,
-                    use: ['file-loader'],
+                    type: 'asset/resource',
                 },
                 {
                     test: /\.vanilla\.css$/i,

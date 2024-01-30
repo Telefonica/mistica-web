@@ -306,7 +306,7 @@ const Slider = React.forwardRef<HTMLInputElement, SliderProps>(
                         className={styles.track}
                         ref={trackRef}
                         style={{
-                            background: `linear-gradient(to right, ${vars.colors.controlActivated} ${trackProgressPosition}, ${vars.colors.control} ${trackProgressPosition}`,
+                            background: `linear-gradient(to right, ${vars.colors.controlActivated} ${trackProgressPosition}, ${vars.colors.barTrack} ${trackProgressPosition}`,
                         }}
                     />
                     <div

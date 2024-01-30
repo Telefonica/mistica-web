@@ -2,9 +2,7 @@ import * as React from 'react';
 import {
     ButtonPrimary,
     ButtonLayout,
-    confirm,
-    alert,
-    dialog,
+    useDialog,
     IconInformationUserLight,
     ButtonLink,
     Stack,
@@ -18,6 +16,7 @@ export default {
 };
 
 export const Alert: StoryComponent = () => {
+    const {alert} = useDialog();
     return (
         <ButtonLayout>
             <ButtonPrimary
@@ -27,6 +26,7 @@ export const Alert: StoryComponent = () => {
                         title: 'Profile updated',
                         message: 'Your changes have been successfully saved',
                         acceptText: 'Ok',
+                        onAccept: () => console.log('Accepted'),
                     })
                 }
             >
@@ -37,6 +37,7 @@ export const Alert: StoryComponent = () => {
 };
 
 export const Confirm: StoryComponent<{destructive: boolean}> = ({destructive}) => {
+    const {confirm} = useDialog();
     return (
         <ButtonLayout>
             <ButtonPrimary
@@ -47,6 +48,8 @@ export const Confirm: StoryComponent<{destructive: boolean}> = ({destructive}) =
                             'Are you sure you want to delete "rainy_day.jpg"? You cant undo this action.',
                         title: 'Delete media?',
                         destructive,
+                        onAccept: () => console.log('Accepted'),
+                        onCancel: () => console.log('Canceled'),
                     })
                 }
             >
@@ -57,6 +60,7 @@ export const Confirm: StoryComponent<{destructive: boolean}> = ({destructive}) =
 };
 
 export const Dialog: StoryComponent = () => {
+    const {dialog} = useDialog();
     return (
         <ButtonLayout>
             <ButtonPrimary
@@ -81,10 +85,10 @@ export const Dialog: StoryComponent = () => {
                                 />
                             </Stack>
                         ),
-                        forceWeb: true,
-                        showCancel: true,
                         link: <ButtonLink href="https://google.com">Link</ButtonLink>,
                         icon: <IconInformationUserLight color={skinVars.colors.brand} />,
+                        onAccept: () => console.log('Accepted'),
+                        onCancel: () => console.log('Canceled'),
                     })
                 }
             >

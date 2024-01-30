@@ -12,7 +12,7 @@ const TEST_CASES = [
 ] as const;
 
 test.each(TEST_CASES)('ResponsiveLayout', async (testCase) => {
-    await openStoryPage({
+    const page = await openStoryPage({
         ...testCase,
     });
 

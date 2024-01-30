@@ -1,7 +1,7 @@
 'use client';
 import * as React from 'react';
 import classnames from 'classnames';
-import {ESC, LEFT, RIGHT, UP, DOWN, ENTER, SPACE, TAB} from './utils/key-codes';
+import {ESC, LEFT, RIGHT, UP, DOWN, ENTER, SPACE, TAB} from './utils/keys';
 import {cancelEvent, getPrefixedDataAttributes} from './utils/dom';
 import Overlay from './overlay';
 import * as styles from './menu.css';
@@ -333,7 +333,7 @@ export const Menu: React.FC<MenuProps> = ({
     React.useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
             if (isMenuOpen) {
-                switch (e.keyCode) {
+                switch (e.key) {
                     case RIGHT:
                     case DOWN:
                         cancelEvent(e);
@@ -362,7 +362,7 @@ export const Menu: React.FC<MenuProps> = ({
                     // do nothing
                 }
             } else {
-                switch (e.keyCode) {
+                switch (e.key) {
                     case ENTER:
                     case SPACE:
                         setIsOpenedwithKeyboard(true);

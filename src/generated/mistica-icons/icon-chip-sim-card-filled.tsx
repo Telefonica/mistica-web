@@ -34,11 +34,11 @@ const IconChipSimCardFilled = ({color, size = 24, ...rest}: IconProps): JSX.Elem
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
-                    d="M8 13v-2h2v2H8ZM11 13v-2h2v2h-2ZM14 11v2h2v-2h-2ZM8 16v-2h8v2H8ZM8 19v-2h2v2H8ZM13 19h-2v-2h2v2ZM16 19h-2v-2h2v2Z"
+                    d="M8 13v-2h2v2zM11 13v-2h2v2zM14 11v2h2v-2zM8 16v-2h8v2zM8 19v-2h2v2zM13 19h-2v-2h2zM16 19h-2v-2h2z"
                 />
                 <path
                     fill={fillColor}
-                    d="M19 20V4a2 2 0 0 0-2-2h-6.793a.5.5 0 0 0-.353.146L5.146 6.854A.5.5 0 0 0 5 7.207V20a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2ZM7.5 10h9a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5Z"
+                    d="M19 20V4a2 2 0 0 0-2-2h-6.793a.5.5 0 0 0-.353.146L5.146 6.854A.5.5 0 0 0 5 7.207V20a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2M7.5 10h9a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5"
                 />
             </svg>
         );

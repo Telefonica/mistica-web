@@ -5,6 +5,14 @@ import {makeTheme} from './test-utils';
 import ThemeContextProvider from '../theme-context-provider';
 import userEvent from '@testing-library/user-event';
 
+const INITIAL_BODY_STYLES = 'background: red;';
+
+// "overscroll-behavior-y: contain" is not included because it's not supported by jsdom
+const DISABLED_BODY_STYLES =
+    INITIAL_BODY_STYLES +
+    ' ' +
+    'overflow: hidden; overflow-y: scroll; position: fixed; top: 0px; left: 0px; right: 0px; bottom: 0px;';
+
 const DisableScroll = () => {
     useDisableBodyScroll(true);
     return <span>scroll is disabled</span>;
@@ -12,6 +20,9 @@ const DisableScroll = () => {
 
 const ToggleComponent = ({children, toggleText}: any) => {
     const [show, setShow] = React.useState(false);
+    React.useLayoutEffect(() => {
+        document.body.style.cssText = INITIAL_BODY_STYLES;
+    }, []);
     return (
         <>
             <button onClick={() => setShow((v) => !v)}>{toggleText}</button>
@@ -19,9 +30,6 @@ const ToggleComponent = ({children, toggleText}: any) => {
         </>
     );
 };
-
-const DISABLED_BODY_STYLES =
-    'overflow: hidden; overflow-y: scroll; position: fixed; top: 0px; left: 0px; right: 0px; bottom: 0px;';
 
 test('useDisableScroll: happy case', async () => {
     render(
@@ -45,7 +53,7 @@ test('useDisableScroll: happy case', async () => {
     userEvent.click(toggleButton);
     await waitForElementToBeRemoved(() => screen.queryByText('scroll is disabled'));
 
-    expect(body?.getAttribute('style')).toBe('');
+    expect(body?.getAttribute('style')).toBe(INITIAL_BODY_STYLES);
 });
 
 test('useDisableScroll: nested instances - closing all at once', async () => {
@@ -79,7 +87,7 @@ test('useDisableScroll: nested instances - closing all at once', async () => {
     await waitFor(async () => {
         expect(screen.queryAllByText('scroll is disabled')).toHaveLength(0);
     });
-    expect(body?.getAttribute('style')).toBe('');
+    expect(body?.getAttribute('style')).toBe(INITIAL_BODY_STYLES);
 });
 
 test('useDisableScroll: nested instances - closing ony by one', async () => {
@@ -118,5 +126,5 @@ test('useDisableScroll: nested instances - closing ony by one', async () => {
     await waitFor(async () => {
         expect(screen.queryAllByText('scroll is disabled')).toHaveLength(0);
     });
-    expect(body?.getAttribute('style')).toBe('');
+    expect(body?.getAttribute('style')).toBe(INITIAL_BODY_STYLES);
 });

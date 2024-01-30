@@ -6,10 +6,11 @@ import Box from './box';
 import {Text2, Text, Text6, Text3} from './text';
 import {Boxed, InternalBoxed} from './boxed';
 import ButtonGroup from './button-group';
-import Image, {MediaBorderRadiusProvider} from './image';
+import Image from './image';
 import {BaseTouchable} from './touchable';
 import {vars} from './skins/skin-contract.css';
 import * as styles from './card.css';
+import * as mediaStyles from './image.css';
 import {useTheme} from './hooks';
 import {sprinkles} from './sprinkles.css';
 import IconButton from './icon-button';
@@ -171,18 +172,10 @@ type CardContainerProps = {
 
 const CardContainer = React.forwardRef<HTMLDivElement, CardContainerProps>(
     (
-        {
-            children,
-            width = '100%',
-            height = '100%',
-            aspectRatio,
-            dataAttributes,
-            className,
-            'aria-label': ariaLabel,
-        },
+        {children, width, height, aspectRatio, dataAttributes, className, 'aria-label': ariaLabel},
         ref
     ): JSX.Element => {
-        const cssAspectRatio = aspectRatioToNumber(aspectRatio);
+        const cssAspectRatio = width && height ? undefined : aspectRatioToNumber(aspectRatio);
 
         return (
             <section
@@ -191,8 +184,8 @@ const CardContainer = React.forwardRef<HTMLDivElement, CardContainerProps>(
                 aria-label={ariaLabel}
                 className={classNames(className, styles.cardContainer)}
                 style={{
-                    width,
-                    height,
+                    width: width || '100%',
+                    height: height || '100%',
                     ...(cssAspectRatio
                         ? applyCssVars({[styles.vars.aspectRatio]: String(cssAspectRatio)})
                         : {}),
@@ -517,7 +510,9 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
                     >
                         {isTouchable && <div className={styles.touchableMediaCardOverlay} />}
                         <div className={styles.mediaCard}>
-                            <MediaBorderRadiusProvider value={false}>{media}</MediaBorderRadiusProvider>
+                            <div style={applyCssVars({[mediaStyles.vars.mediaBorderRadius]: '0px'})}>
+                                {media}
+                            </div>
                             <div className={styles.mediaCardContent}>
                                 <CardContent
                                     headline={headline}
@@ -540,7 +535,13 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
                                     paddingLeft={{mobile: 16, desktop: 24}}
                                     paddingTop={{mobile: 16, desktop: 24}}
                                 >
-                                    {icon}
+                                    <div
+                                        style={applyCssVars({
+                                            [mediaStyles.vars.mediaBorderRadius]: vars.borderRadii.mediaSmall,
+                                        })}
+                                    >
+                                        {icon}
+                                    </div>
                                 </Box>
                             )}
                         </div>
@@ -621,7 +622,13 @@ export const NakedCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
                                 paddingLeft={{mobile: 16, desktop: 24}}
                                 paddingTop={{mobile: 16, desktop: 24}}
                             >
-                                {icon}
+                                <div
+                                    style={applyCssVars({
+                                        [mediaStyles.vars.mediaBorderRadius]: vars.borderRadii.mediaSmall,
+                                    })}
+                                >
+                                    {icon}
+                                </div>
                             </Box>
                         )}
                     </div>
@@ -806,7 +813,16 @@ export const DataCard = React.forwardRef<HTMLDivElement, DataCardProps>(
                         <div className={styles.dataCard}>
                             <Inline space={0}>
                                 <Stack space={16}>
-                                    {hasIcon ? icon : null}
+                                    {icon && (
+                                        <div
+                                            style={applyCssVars({
+                                                [mediaStyles.vars.mediaBorderRadius]:
+                                                    vars.borderRadii.mediaSmall,
+                                            })}
+                                        >
+                                            {icon}
+                                        </div>
+                                    )}
                                     <CardContent
                                         headline={headline}
                                         pretitle={pretitle}
@@ -891,7 +907,15 @@ export const SnapCard = React.forwardRef<HTMLDivElement, SnapCardProps>(
                         {isTouchable && <div className={overlayStyle} />}
                         <section className={styles.snapCard}>
                             <div>
-                                {icon && <Box paddingBottom={16}>{icon}</Box>}
+                                {icon && (
+                                    <div
+                                        style={applyCssVars({
+                                            [mediaStyles.vars.mediaBorderRadius]: vars.borderRadii.mediaSmall,
+                                        })}
+                                    >
+                                        <Box paddingBottom={16}>{icon}</Box>
+                                    </div>
+                                )}
                                 <Stack space={4}>
                                     {title && (
                                         <Text2 truncate={titleLinesMax} as="h3" regular hyphens="auto">
@@ -1082,9 +1106,15 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
                                 }}
                             >
                                 {icon ? (
-                                    <Box paddingBottom={withGradient ? 0 : 40} paddingX={24}>
-                                        {icon}
-                                    </Box>
+                                    <div
+                                        style={applyCssVars({
+                                            [mediaStyles.vars.mediaBorderRadius]: vars.borderRadii.mediaSmall,
+                                        })}
+                                    >
+                                        <Box paddingBottom={withGradient ? 0 : 40} paddingX={24}>
+                                            {icon}
+                                        </Box>
+                                    </div>
                                 ) : (
                                     <Box
                                         paddingBottom={
@@ -1180,7 +1210,7 @@ export const DisplayMediaCard = React.forwardRef<HTMLDivElement, DisplayMediaCar
             {...props}
             ref={ref}
             isInverse
-            dataAttributes={{...dataAttributes, 'component-name': 'DisplayMediaCard'}}
+            dataAttributes={{'component-name': 'DisplayMediaCard', ...dataAttributes}}
         />
     )
 );
@@ -1190,7 +1220,7 @@ export const DisplayDataCard = React.forwardRef<HTMLDivElement, DisplayDataCardP
         <DisplayCard
             {...props}
             ref={ref}
-            dataAttributes={{...dataAttributes, 'component-name': 'DisplayDataCard'}}
+            dataAttributes={{'component-name': 'DisplayDataCard', ...dataAttributes}}
         />
     )
 );
@@ -1310,7 +1340,7 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
             <CardContainer
                 width={width}
                 height={height}
-                dataAttributes={{...dataAttributes, 'component-name': 'PosterCard'}}
+                dataAttributes={{'component-name': 'PosterCard', ...dataAttributes}}
                 ref={ref}
                 aspectRatio={aspectRatio}
                 aria-label={ariaLabel}
@@ -1355,12 +1385,18 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                                 }
                             >
                                 {icon ? (
-                                    <Box
-                                        paddingBottom={withGradient ? 0 : 40}
-                                        paddingX={{mobile: 16, desktop: 24}}
+                                    <div
+                                        style={applyCssVars({
+                                            [mediaStyles.vars.mediaBorderRadius]: vars.borderRadii.mediaSmall,
+                                        })}
                                     >
-                                        {icon}
-                                    </Box>
+                                        <Box
+                                            paddingBottom={withGradient ? 0 : 40}
+                                            paddingX={{mobile: 16, desktop: 24}}
+                                        >
+                                            {icon}
+                                        </Box>
+                                    </div>
                                 ) : (
                                     <Box
                                         paddingBottom={

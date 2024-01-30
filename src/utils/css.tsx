@@ -15,11 +15,19 @@ export const safeAreaInsetLeft = isRunningAcceptanceTest()
     ? `max(env(safe-area-inset-left), var(--acceptance-test-override-safe-area-inset-left, 0px))`
     : `env(safe-area-inset-left)`;
 export const safeAreaInsetTop = isRunningAcceptanceTest()
-    ? `max(env(safe-area-inset-top), var(--acceptance-test-override-safe-area-inset--top, 0px))`
+    ? `max(env(safe-area-inset-top), var(--acceptance-test-override-safe-area-inset-top, 0px))`
     : `env(safe-area-inset-top)`;
 export const safeAreaInsetBottom = isRunningAcceptanceTest()
-    ? `max(env(safe-area-inset-bottom), var(--acceptance-test-override-safe-area-inset--bottom, 0px))`
+    ? `max(env(safe-area-inset-bottom), var(--acceptance-test-override-safe-area-inset-bottom, 0px))`
     : `env(safe-area-inset-bottom)`;
 export const safeAreaInsetRight = isRunningAcceptanceTest()
-    ? `max(env(safe-area-inset-right), var(--acceptance-test-override-safe-area-inset--right, 0px))`
+    ? `max(env(safe-area-inset-right), var(--acceptance-test-override-safe-area-inset-right, 0px))`
     : `env(safe-area-inset-right)`;
+
+export const fallbackStyles = (...values: Array<string>): string => {
+    const [first, ...rest] = values.filter(Boolean);
+    if (!first?.startsWith('var(') || !rest.length) {
+        return first ?? '';
+    }
+    return first.replace(/\)$/, '') + `, ` + (rest.length > 1 ? fallbackStyles(...rest) : rest[0]) + ')';
+};

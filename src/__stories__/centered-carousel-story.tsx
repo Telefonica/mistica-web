@@ -16,7 +16,7 @@ import {
 } from '..';
 
 export default {
-    title: 'Components/Carousels/Centered carousel',
+    title: 'Components/Carousels/CenteredCarousel',
 };
 
 const centerStyle = {display: 'flex', alignItems: 'center', justifyContent: 'center'};
@@ -82,7 +82,7 @@ export const Default: StoryComponent<Args> = ({numItems, initialActiveItem}) => 
     );
 };
 
-Default.storyName = 'Centered carousel';
+Default.storyName = 'CenteredCarousel';
 Default.parameters = {fullScreen: true};
 Default.args = {
     numItems: 6,

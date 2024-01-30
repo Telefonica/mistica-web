@@ -55,23 +55,25 @@ test('Tabs with long text and icon', async () => {
 });
 
 test('Tabs selected line appears properly', async () => {
-    await openStoryPage({
+    const page = await openStoryPage({
         id: 'components-tabs--default',
         device: 'MOBILE_IOS',
     });
+
+    const tabs = await screen.findByRole('tablist');
 
     await page.evaluate(() => {
         document.querySelector<HTMLElement>('[data-tabindex="1"]')?.click();
     });
 
-    const secondTabActive = await (await screen.findByRole('tablist')).screenshot();
+    const secondTabActive = await tabs.screenshot();
     expect(secondTabActive).toMatchImageSnapshot();
 
     await page.evaluate(() => {
         document.querySelector<HTMLElement>('[data-tabindex="2"]')?.click();
     });
 
-    const thirdTabActive = await (await screen.findByRole('tablist')).screenshot();
+    const thirdTabActive = await tabs.screenshot();
     expect(thirdTabActive).toMatchImageSnapshot();
 });
 

@@ -1,6 +1,5 @@
 import * as React from 'react';
-import {Snackbar} from '..';
-import {StorySection} from './helpers';
+import {ButtonPrimary, Snackbar, useSnackbar} from '..';
 
 export default {
     title: 'Components/Snackbar',
@@ -17,16 +16,15 @@ type Args = {
 
 export const Default: StoryComponent<Args> = ({buttonText, message, duration, type, withDismiss}) => {
     const snackbarDuration = duration !== 'Default' ? +duration : undefined;
+    const {openSnackbar} = useSnackbar();
     return (
-        <StorySection title="Snackbar">
-            <Snackbar
-                buttonText={buttonText}
-                type={type}
-                message={message}
-                duration={snackbarDuration}
-                withDismiss={withDismiss}
-            />
-        </StorySection>
+        <ButtonPrimary
+            onPress={() => {
+                openSnackbar({message, type, buttonText, duration: snackbarDuration, withDismiss});
+            }}
+        >
+            Open Snackbar
+        </ButtonPrimary>
     );
 };
 

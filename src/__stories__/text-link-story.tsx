@@ -1,103 +1,88 @@
 import * as React from 'react';
-import {TextLink, Stack, Text3, Title1, Divider, skinVars, Text1, Text5, alert} from '..';
-import {ThemeVariant} from '../theme-variant-context';
+import {TextLink, Text3, Text1, Text5, ResponsiveLayout, Box} from '..';
 
 export default {
-    title: 'Components/Text link',
+    title: 'Components/TextLink',
     component: TextLink,
     parameters: {
         fullScreen: true,
     },
+    argTypes: {
+        action: {
+            options: ['href', 'onPress'],
+            control: {type: 'select'},
+        },
+        newTab: {
+            if: {arg: 'action', eq: 'href'},
+        },
+        textStyle: {
+            options: ['Text1', 'Text3', 'Text5'],
+            control: {type: 'select'},
+        },
+    },
 };
 
-type textLinkArgs = {
+interface TextStyleWrapperProps {
+    textStyle: 'Text1' | 'Text3' | 'Text5';
+    children: React.ReactNode;
+}
+
+const TextStyleWrapper: React.FC<TextStyleWrapperProps> = ({children, textStyle}) => {
+    if (textStyle === 'Text1') {
+        return <Text1 regular>{children}</Text1>;
+    }
+    if (textStyle === 'Text3') {
+        return <Text3 regular>{children}</Text3>;
+    }
+    return <Text5>{children}</Text5>;
+};
+
+const getTextLinkActionProps = (action: 'href' | 'onPress', newTab: boolean) => {
+    return action === 'onPress'
+        ? {
+              onPress: () => {
+                  window.alert('pressed!');
+              },
+          }
+        : {
+              href: 'https://www.google.com',
+              newTab,
+          };
+};
+
+type Args = {
     text: string;
     inverse: boolean;
+    disabled: boolean;
+    action: 'href' | 'onPress';
+    textStyle: 'Text1' | 'Text3' | 'Text5';
+    newTab: boolean;
 };
 
-const Section = ({title, children}: {title: string; children: React.ReactNode}): JSX.Element => {
+export const Default: StoryComponent<Args> = ({text, inverse, disabled, action, newTab, textStyle}) => {
     return (
-        <Stack space={16}>
-            <Title1>{title}</Title1>
-            {children}
-            <Divider />
-        </Stack>
-    );
-};
-
-export const Default: StoryComponent<textLinkArgs> = ({text, inverse}) => {
-    const [count, setCount] = React.useState(0);
-
-    return (
-        <div
-            data-testid="text-link"
-            style={{
-                padding: 16,
-                background: inverse ? skinVars.colors.backgroundBrand : skinVars.colors.background,
-            }}
-        >
-            <ThemeVariant isInverse={inverse}>
-                <Stack space={32}>
-                    <Section title="TextLink">
-                        <TextLink href="https://example.org">{text}</TextLink>
-                    </Section>
-
-                    <Section title="TextLink opened in new tab">
-                        <Text3 regular as="p">
-                            Use TextLink with 'newTab' prop for all links that takes the user out off webapp.
-                            The main reason is because it's prepared, in terms of accessibility, to inform
-                            users that uses a screen reader, that we are going to open a new tab if they click
-                            the link.
-                        </Text3>
-                        <TextLink href="https://example.org" newTab>
-                            {text}
-                        </TextLink>
-                    </Section>
-
-                    <Section title="TextLink in a paragraph">
-                        <div style={{maxWidth: 300}}>
-                            <Text3 regular>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit.{' '}
-                                <TextLink onPress={() => alert({message: 'Pressed!'})}>
-                                    Nulla ultricies ante ac sapien faucibus
-                                </TextLink>
-                                , et rhoncus tellus sagittis. Aliquam et orci gravida, tempus ex ut...
-                            </Text3>
-                        </div>
-                    </Section>
-
-                    <Section title="TextLink with onPress">
-                        <TextLink onPress={() => setCount(count + 1)}>{text}</TextLink>
-                        <Text3 regular>Clicked {count} times</Text3>
-                    </Section>
-
-                    <Section title="TextLink disabled">
-                        <TextLink disabled href="https://example.org">
-                            {text}
-                        </TextLink>
-                    </Section>
-
-                    <Section title="TextLink inherits text style">
-                        <Text1 regular>
-                            Text1 regular <TextLink href="https://example.org">{text}</TextLink> with href
-                        </Text1>
-                        <Text3 regular>
-                            Text3 regular <TextLink href="https://example.org">{text}</TextLink> with href
-                        </Text3>
-                        <Text5>
-                            Text5 <TextLink onPress={() => alert({message: 'Pressed!'})}>{text}</TextLink>{' '}
-                            with onPress
-                        </Text5>
-                    </Section>
-                </Stack>
-            </ThemeVariant>
-        </div>
+        <ResponsiveLayout fullWidth isInverse={inverse}>
+            <Box padding={16} dataAttributes={{testid: 'text-link'}}>
+                <TextStyleWrapper textStyle={textStyle}>
+                    Text link can be located in the middle of a paragraph:{' '}
+                    <TextLink disabled={disabled} {...getTextLinkActionProps(action, newTab)}>
+                        {text || 'Text link'}
+                    </TextLink>
+                    . It inherits text style, and it should wrap if necessary. You can also select and copy
+                    its content.
+                </TextStyleWrapper>
+            </Box>
+        </ResponsiveLayout>
     );
 };
 
 Default.args = {
     text: 'Text link',
+    action: 'href',
+    textStyle: 'Text3',
     inverse: false,
+    disabled: false,
+    newTab: false,
 };
 
-Default.storyName = 'Text link';
+Default.storyName = 'TextLink';

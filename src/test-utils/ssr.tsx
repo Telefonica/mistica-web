@@ -31,17 +31,19 @@ const createWebpackEntries = (): {[entryName: string]: string} => {
 
             const skin = new URL(location).searchParams.get('skin');
 
-            hydrateRoot(
-                document.getElementById('root'),
-                <ThemeContextProvider
-                    theme={{
-                        skin: getSkinByName(skin || 'Movistar'),
-                        i18n: {locale: 'es-ES', phoneNumberFormattingRegionCode: 'ES'}
-                    }}
-                >
-                    <Component />
-                </ThemeContextProvider>
-            );`
+            window.hydrate = () => {
+                hydrateRoot(
+                    document.getElementById('root'),
+                    <ThemeContextProvider
+                        theme={{
+                            skin: getSkinByName(skin || 'Movistar'),
+                            i18n: {locale: 'es-ES', phoneNumberFormattingRegionCode: 'ES'}
+                        }}
+                    >
+                        <Component />
+                    </ThemeContextProvider>
+                );
+            };`
         );
 
         entries[moduleName] = clientSideEntryFile;

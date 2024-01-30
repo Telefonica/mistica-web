@@ -38,6 +38,40 @@ const bulletActiveBase = style([
     },
 ]);
 
+export const bulletButton = style([
+    sprinkles({
+        display: 'block',
+        padding: 0,
+        border: 'none',
+        background: 'transparent',
+        paddingLeft: 16,
+    }),
+    {
+        '@media': {
+            [mq.tabletOrSmaller]: {
+                paddingLeft: 8,
+            },
+        },
+    },
+]);
+
+const bulletButtonByBreakpoint = style([bulletButton, {display: 'none'}]);
+
+export const bulletButtonMobile = style([
+    bulletButtonByBreakpoint,
+    {'@media': {[mq.mobile]: {display: 'block'}}},
+]);
+
+export const bulletButtonTablet = style([
+    bulletButtonByBreakpoint,
+    {'@media': {[mq.tablet]: {display: 'block'}}},
+]);
+
+export const bulletButtonDesktop = style([
+    bulletButtonByBreakpoint,
+    {'@media': {[mq.desktopOrBigger]: {display: 'block'}}},
+]);
+
 export const bullet = style([bulletBase, sprinkles({background: skinVars.colors.control})]);
 export const bulletInverse = style([bulletBase, {background: applyAlpha(skinVars.rawColors.inverse, 0.5)}]);
 export const bulletActive = style([
@@ -146,10 +180,16 @@ export const carousel = style([
 
 const responsiveLayoutSideMargin = fallbackVar(responsiveLayoutVars.sideMargin, '0px');
 
-export const carouselWithScroll = style({
-    margin: 0,
+export const carouselWithScrollMobile = style({
     '@media': {
-        [mq.tabletOrSmaller]: {
+        [mq.mobile]: {
+            margin: `0 calc(${responsiveLayoutSideMargin} * -1)`,
+        },
+    },
+});
+export const carouselWithScrollTablet = style({
+    '@media': {
+        [mq.tablet]: {
             margin: `0 calc(${responsiveLayoutSideMargin} * -1)`,
         },
     },
@@ -177,45 +217,58 @@ export const centeredCarousel = style({
 export const carouselItem = style({
     scrollSnapAlign: 'start',
     flexShrink: 0,
-    width: `calc(1 / ${itemsPerPageDesktop} * 100% + ${gap} / ${itemsPerPageDesktop} * 1px)`,
+    width: `calc(1 / ${itemsPerPage} * 100% + ${gap} / ${itemsPerPage} * 1px)`,
     scrollMargin: `calc(-1px * ${gap})`,
     ':first-child': {
-        width: `calc(1 / ${itemsPerPageDesktop} * 100% - (${gap} * (${itemsPerPageDesktop} - 1)) / ${itemsPerPageDesktop} * 1px)`,
+        width: `calc(1 / ${itemsPerPage} * 100% - ${gap} * (${itemsPerPage} - 1) / ${itemsPerPage} * 1px)`,
         scrollMargin: 0,
     },
     '@media': {
+        [mq.desktopOrBigger]: {
+            vars: {
+                [itemsPerPage]: itemsPerPageDesktop,
+            },
+        },
         [mq.mobile]: {
             vars: {
                 [itemsPerPage]: itemsPerPageMobile,
+            },
+            selectors: {
+                [`${carouselWithScrollMobile}:not(${centeredCarousel}) &`]: {
+                    width: `calc(1 / ${itemsPerPage} * 100% - (2 * ${mobilePageOffset} + ${gap} * 1px) / ${itemsPerPage})`,
+                },
+                [`${carouselWithScrollMobile}:not(${centeredCarousel}) &:first-child`]: {
+                    paddingLeft: responsiveLayoutSideMargin,
+                    width: `calc(1 / ${itemsPerPage} * 100% - (2 * ${mobilePageOffset} + ${gap} * 1px) / ${itemsPerPage} - ${gap} * 1px + ${responsiveLayoutSideMargin})`,
+                },
+                [`${carouselWithScrollMobile}:not(${centeredCarousel}) &:last-child`]: {
+                    paddingRight: responsiveLayoutSideMargin,
+                    width: `calc(1 / ${itemsPerPage} * 100% - (2 * ${mobilePageOffset} + ${gap} * 1px) / ${itemsPerPage} + ${responsiveLayoutSideMargin})`,
+                },
             },
         },
         [mq.tablet]: {
             vars: {
                 [itemsPerPage]: itemsPerPageTablet,
             },
-        },
-        [mq.tabletOrSmaller]: {
-            width: `calc(1 / ${itemsPerPage} * 100% + ${gap} / ${itemsPerPage} * 1px)`,
-
-            ':first-child': {
-                width: `calc(1 / ${itemsPerPage} * 100% - ${gap} * (${itemsPerPage} - 1) / ${itemsPerPage} * 1px)`,
-            },
-
-            scrollSnapAlign: 'start',
-            scrollMargin: mobilePageOffset,
-
             selectors: {
-                [`${carouselWithScroll}:not(${centeredCarousel}) &`]: {
+                [`${carouselWithScrollTablet}:not(${centeredCarousel}) &`]: {
                     width: `calc(1 / ${itemsPerPage} * 100% - (2 * ${mobilePageOffset} + ${gap} * 1px) / ${itemsPerPage})`,
                 },
-                [`${carouselWithScroll}:not(${centeredCarousel}) &:first-child`]: {
+                [`${carouselWithScrollTablet}:not(${centeredCarousel}) &:first-child`]: {
                     paddingLeft: responsiveLayoutSideMargin,
                     width: `calc(1 / ${itemsPerPage} * 100% - (2 * ${mobilePageOffset} + ${gap} * 1px) / ${itemsPerPage} - ${gap} * 1px + ${responsiveLayoutSideMargin})`,
                 },
-                [`${carouselWithScroll}:not(${centeredCarousel}) &:last-child`]: {
+                [`${carouselWithScrollTablet}:not(${centeredCarousel}) &:last-child`]: {
                     paddingRight: responsiveLayoutSideMargin,
                     width: `calc(1 / ${itemsPerPage} * 100% - (2 * ${mobilePageOffset} + ${gap} * 1px) / ${itemsPerPage} + ${responsiveLayoutSideMargin})`,
                 },
+            },
+        },
+        [mq.tabletOrSmaller]: {
+            scrollMargin: mobilePageOffset,
+
+            selectors: {
                 [`${centeredCarousel} &`]: {
                     width: '50%',
                     scrollSnapAlign: 'center',
@@ -291,9 +344,27 @@ export const carouselNextArrowButton = style([
     },
 ]);
 
-export const carouselBullets = sprinkles({
-    display: 'flex',
-    justifyContent: 'center',
+export const carouselBullets = style([
+    {
+        paddingBottom: 2,
+    },
+    sprinkles({
+        display: 'flex',
+        justifyContent: 'center',
+        paddingTop: 24,
+    }),
+]);
+
+export const noCarouselBulletsDesktop = style({
+    '@media': {[mq.desktopOrBigger]: {display: 'none'}},
+});
+
+export const noCarouselBulletsTablet = style({
+    '@media': {[mq.tablet]: {display: 'none'}},
+});
+
+export const noCarouselBulletsMobile = style({
+    '@media': {[mq.mobile]: {display: 'none'}},
 });
 
 export const slideshow = style([

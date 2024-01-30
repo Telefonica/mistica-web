@@ -72,10 +72,11 @@ export const textArea = style([
 ]);
 
 export const textAreaWithLabel = style({
-    paddingTop: 28,
+    // using margin instead of padding to avoid the multiline text being visible through the label
+    marginTop: 28,
     '@media': {
         [mq.tabletOrSmaller]: {
-            paddingTop: 24,
+            marginTop: 24,
         },
     },
 });
@@ -140,6 +141,10 @@ export const input = style([
                 // The background can not be overriden, but we can delay the background color transition to avoid the change
                 transitionProperty: 'background-color',
                 transitionDelay: '99999s',
+            },
+            // iOS date/time fields are centered by default, but we want them left aligned
+            '&::-webkit-date-and-time-value': {
+                textAlign: 'left',
             },
         },
     },
