@@ -1,5 +1,20 @@
 import * as React from 'react';
-import {Slideshow, Stack, Box, ResponsiveLayout, Callout, IconInformationRegular, Image, Text4} from '..';
+import {
+    Slideshow,
+    Stack,
+    Box,
+    ResponsiveLayout,
+    Callout,
+    IconInformationRegular,
+    Image,
+    Text4,
+    CarouselContextConsummer,
+    CarouselContextProvider,
+    FixedFooterLayout,
+    Inline,
+    ButtonLink,
+    PageBullets,
+} from '..';
 import mechanicStairsImg from './images/mechanic-stairs.jpg';
 import surfaceInSofaImg from './images/surface-in-sofa.jpg';
 
@@ -44,4 +59,49 @@ Default.args = {
     autoplay: false,
     loop: false,
     withBullets: true,
+};
+
+type WithCarouselContextArgs = {numItems: number};
+
+export const WithCarouselContext: StoryComponent<WithCarouselContextArgs> = ({numItems}) => {
+    return (
+        <CarouselContextProvider>
+            <FixedFooterLayout
+                footer={
+                    <ResponsiveLayout>
+                        <Box paddingY={16}>
+                            <CarouselContextConsummer>
+                                {({goNext, goPrev, bulletsProps}) => (
+                                    <Inline space="between" alignItems="center">
+                                        <ButtonLink onPress={goPrev}>Prev</ButtonLink>
+                                        <PageBullets {...bulletsProps} />
+                                        <ButtonLink onPress={goNext}>Next</ButtonLink>
+                                    </Inline>
+                                )}
+                            </CarouselContextConsummer>
+                        </Box>
+                    </ResponsiveLayout>
+                }
+            >
+                <Box paddingY={24}>
+                    <ResponsiveLayout>
+                        <Slideshow
+                            items={Array.from({length: numItems}, (_, idx) => (
+                                <Image
+                                    src={idx % 2 === 0 ? mechanicStairsImg : surfaceInSofaImg}
+                                    aspectRatio="16:9"
+                                />
+                            ))}
+                        />
+                    </ResponsiveLayout>
+                </Box>
+            </FixedFooterLayout>
+        </CarouselContextProvider>
+    );
+};
+
+WithCarouselContext.storyName = 'Slideshow with CarouselContext';
+WithCarouselContext.parameters = {fullScreen: true};
+WithCarouselContext.args = {
+    numItems: 6,
 };
