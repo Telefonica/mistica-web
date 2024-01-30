@@ -32,10 +32,10 @@ export const palette = {
     o2Red40: '#FF8B8B',
     o2Red60: '#CC4848',
     grey20: '#F3F3F5',
-    grey30: '#D9D9DD',
-    grey45: '#8C8C9A',
+    grey30: '#D9D9DD', // nuevo para skeletons y otros
     grey40: '#B4B4BE',
-    grey60: '#73737D',
+    grey45: '#8C8C9A', // nuevo para controles
+    grey60: '#6E6E77', // tocado para pasar AA sobre grey20
     grey80: '#3C3C46',
     black: '#00001E',
     white: '#FFFFFF',
