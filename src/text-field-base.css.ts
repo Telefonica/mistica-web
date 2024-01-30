@@ -138,11 +138,11 @@ export const hiddenDatePlaceholder = style({
 export const emptyDateValue = style({
     /**
      * In iOS, the value's height collapses to 0 when the input's value is empty.
-     * We prevent this by forcing the height in this case.
+     * We prevent this by forcing the minHeight in this case.
      */
     selectors: {
         '&::-webkit-date-and-time-value': {
-            height: inputLineHeight,
+            minHeight: inputLineHeight,
         },
     },
 });
