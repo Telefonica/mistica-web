@@ -109,16 +109,12 @@ const DateTimePicker: React.FC<DateTimePickerProps> = ({withTime, mode, isValidD
     const renderEndIcon = () => {
         if (getValue() && optional) {
             return (
-                <>
-                    <FieldEndIcon
-                        Icon={IconCloseRegular}
-                        aria-label={texts.clearButton}
-                        className={endIcon}
-                        onPress={() => {
-                            setValue('');
-                        }}
-                    />
-                </>
+                <FieldEndIcon
+                    Icon={IconCloseRegular}
+                    aria-label={texts.clearButton}
+                    className={endIcon}
+                    onPress={() => setValue('')}
+                />
             );
         }
         return (
