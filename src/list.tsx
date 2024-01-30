@@ -144,7 +144,7 @@ export const Content: React.FC<ContentProps> = ({
                         {subtitle && (
                             <Text2
                                 regular
-                                color={vars.colors.textSecondary}
+                                color={vars.colors.textPrimary}
                                 truncate={subtitleLinesMax}
                                 hyphens="auto"
                             >

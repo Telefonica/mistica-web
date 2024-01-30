@@ -926,7 +926,7 @@ export const SnapCard = React.forwardRef<HTMLDivElement, SnapCardProps>(
                                         <Text2
                                             truncate={subtitleLinesMax}
                                             regular
-                                            color={vars.colors.textSecondary}
+                                            color={vars.colors.textPrimary}
                                             as="p"
                                             hyphens="auto"
                                         >
