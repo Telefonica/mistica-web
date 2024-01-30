@@ -12,7 +12,6 @@ const ONE_MONTH_IN_MS = 31 * 24 * 60 * 60 * 1000;
 
 interface MonthFieldBaseArgs {
     label: string;
-    placeholder: string;
     error: boolean;
     inverse: boolean;
     optional: boolean;
@@ -24,7 +23,6 @@ interface MonthFieldBaseArgs {
 
 const defaultBaseArgs: MonthFieldBaseArgs = {
     label: 'Label',
-    placeholder: '',
     error: false,
     inverse: false,
     optional: false,

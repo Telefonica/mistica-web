@@ -12,7 +12,6 @@ const ONE_DAY_IN_MS = 24 * 60 * 60 * 1000;
 
 interface DateFieldBaseArgs {
     label: string;
-    placeholder: string;
     error: boolean;
     inverse: boolean;
     optional: boolean;
@@ -24,7 +23,6 @@ interface DateFieldBaseArgs {
 
 const defaultBaseArgs: DateFieldBaseArgs = {
     label: 'Label',
-    placeholder: '',
     error: false,
     inverse: false,
     optional: false,
