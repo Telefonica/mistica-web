@@ -55,7 +55,7 @@ export const progress = style([
         width: '100%',
     }),
     {
-        left: '-55%',
+        left: '-50%',
         animation: `${progressIndicator} 1.2s ease-out infinite`,
         animationDelay: String(TRANSITION_DURATION_MS),
         backgroundColor: vars.colors.loadingBar,
@@ -73,7 +73,7 @@ const innerProgressIndicator = keyframes({
         transform: 'scaleX(0.7)',
     },
     '100%': {
-        transform: 'scaleX(0.8)',
+        transform: 'scaleX(1)',
     },
 });
 
