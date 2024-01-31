@@ -16,9 +16,7 @@ const LoadingBar: React.FC<Props> = ({visible, dataAttributes}) => {
                 className={styles.progressContainer}
                 {...getPrefixedDataAttributes(dataAttributes, 'LoadingBar')}
             >
-                <div className={styles.progress}>
-                    <div className={styles.innerProgress} />
-                </div>
+                <div className={styles.progress} />
             </div>
         </Portal>
     );
