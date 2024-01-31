@@ -2,7 +2,8 @@ import {style, keyframes} from '@vanilla-extract/css';
 import {sprinkles} from './sprinkles.css';
 import {vars} from './skins/skin-contract.css';
 
-export const TRANSITION_DURATION_MS = 400;
+const TRANSITION_DURATION_MS = 400;
+const ANIMATION_DURATION_MS = 1800;
 
 const enterAnimation = keyframes({
     from: {
@@ -61,7 +62,7 @@ export const progress = style([
     }),
     {
         left: '-100%',
-        animation: `${progressIndicator} 1.2s infinite`,
+        animation: `${progressIndicator} ${ANIMATION_DURATION_MS}ms infinite`,
         animationDelay: `${TRANSITION_DURATION_MS}ms`,
         background: vars.colors.loadingBarBackground,
     },
