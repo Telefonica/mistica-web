@@ -1,0 +1,31 @@
+/* Regular */
+@font-face {
+    font-family: 'Code Pro';
+    font-style: normal;
+    font-weight: 400;
+    src: url('./fonts/Code_Pro_LC.woff2') format('woff2');
+}
+
+/* Light */
+@font-face {
+    font-family: 'Code Pro';
+    font-style: normal;
+    font-weight: 300;
+    src: url('./fonts/Code_Pro_Light_LC.woff2') format('woff2');
+}
+
+/* Medium */
+@font-face {
+    font-family: 'Code Pro';
+    font-style: normal;
+    font-weight: 500;
+    src: url('./fonts/Code_Pro_LC.woff2') format('woff2');
+}
+
+/* Bold */
+@font-face {
+    font-family: 'Code Pro';
+    font-style: normal;
+    font-weight: 700;
+    src: url('./fonts/Code_Pro_Bold_LC.woff2') format('woff2');
+}

@@ -2,6 +2,7 @@ import './css/roboto.css';
 import './css/vivo-font.css';
 import './css/telefonica-font.css';
 import './css/onair-font.css';
+import './css/code-pro-font.css';
 import './css/main.css';
 import * as React from 'react';
 import {
@@ -86,6 +87,7 @@ const MisticaThemeProvider = ({Story, context}): React.ReactElement => {
                     {skin === VIVO_NEW_SKIN && <style>{`body {font-family: "Vivo Type"}`}</style>}
                     {skin === TELEFONICA_SKIN && <style>{`body {font-family: "Telefonica Sans"}`}</style>}
                     {skin === O2_SKIN && <style>{`body {font-family: "On Air"}`}</style>}
+                    {skin === BLAU_SKIN && <style>{`body {font-family: "Code Pro"}`}</style>}
                     <Story {...context} />
                 </OverscrollColorProvider>
             </ThemeContextProvider>

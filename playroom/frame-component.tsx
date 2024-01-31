@@ -2,6 +2,7 @@ import '../css/roboto.css';
 import '../.storybook/css/vivo-font.css';
 import '../.storybook/css/telefonica-font.css';
 import '../.storybook/css/onair-font.css';
+import '../.storybook/css/code-pro-font.css';
 import '../css/reset.css';
 import * as React from 'react';
 import {
@@ -13,6 +14,7 @@ import {
     VIVO_NEW_SKIN,
     TELEFONICA_SKIN,
     O2_SKIN,
+    BLAU_SKIN,
 } from '../src';
 
 import type {ThemeConfig} from '../src';
@@ -43,6 +45,7 @@ const App = ({children, skinName}: {children: React.ReactNode; skinName: string}
         ${skinName === VIVO_NEW_SKIN ? 'body {font-family: "Vivo Type"}' : ''}
         ${skinName === TELEFONICA_SKIN ? 'body {font-family: "Telefonica Sans"}' : ''}
         ${skinName === O2_SKIN ? 'body {font-family: "On Air"}' : ''}
+        ${skinName === BLAU_SKIN ? 'body {font-family: "Code Pro"}' : ''}
 
         *[class^='_1fu0koy1'] {
             display: none;
