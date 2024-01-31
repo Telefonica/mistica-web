@@ -45,11 +45,11 @@ const progressIndicator = keyframes({
     },
     '50%': {
         transform: 'translateX(100%)',
-        animationTimingFunction: 'ease-out',
+        animationTimingFunction: 'ease-in-out',
     },
     '100%': {
         transform: 'translateX(200%)',
-        animationTimingFunction: 'ease-out',
+        animationTimingFunction: 'ease-in-out',
     },
 });
 
