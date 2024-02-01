@@ -243,10 +243,14 @@ export const Default: StoryComponent<Args> = ({inverse}) => {
                     <ProgressBar progressPercent={50} />
 
                     {/** Slider */}
-                    <Slider name="slider" min={0} max={100} defaultValue={50} />
+                    <Slider name="slider" aria-label="label" min={0} max={100} defaultValue={50} />
 
                     {/** Stepper */}
-                    <Stepper currentIndex={2} steps={['First', 'Second', 'Third', 'Fourth', 'Fifth']} />
+                    <Stepper
+                        currentIndex={2}
+                        aria-label="label"
+                        steps={['First', 'Second', 'Third', 'Fourth', 'Fifth']}
+                    />
 
                     {/** TextLink */}
                     <TextLink onPress={() => {}}>This is a text link</TextLink>
