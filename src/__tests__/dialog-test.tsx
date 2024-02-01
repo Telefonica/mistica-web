@@ -72,15 +72,17 @@ test('throws when we try to stack dialogs', async () => {
 
     expect(await screen.findByText(alertProps.message)).toBeInTheDocument();
 
-    expect(() => savedAlert(alertProps)).toThrow('Tried to show a dialog on top of another dialog');
+    expect(() => {
+        act(() => savedAlert(alertProps));
+    }).toThrow('Tried to show a dialog on top of another dialog');
 });
 
 test("throws when we don't instantiate theme", async () => {
     render(<TestComponent />);
 
-    expect(() => savedAlert(alertProps)).toThrow(
-        'Tried to show a dialog but the DialogRoot component was not mounted'
-    );
+    expect(() => {
+        act(() => savedAlert(alertProps));
+    }).toThrow('Tried to show a dialog but the DialogRoot component was not mounted');
 });
 
 test('renders alert dialog correctly when alert function called', async () => {
