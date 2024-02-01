@@ -77,23 +77,28 @@ const defaultGoPrev = () => {
     throw new Error('You must wrap your component with a CarouselContextProvider to use CarouselContext');
 };
 const defaultGoNext = defaultGoPrev;
+const defaultGoToPage = defaultGoPrev;
 const defaultBulletProps = {currentIndex: 0, numPages: 0};
 
+type GoToPage = (pageIndex: number, animate?: boolean) => void;
 type CarouselControls = {
     goPrev: () => void;
     goNext: () => void;
+    goToPage: GoToPage;
     bulletsProps: PageBulletsProps;
 };
 
 const CarouselContext = React.createContext<CarouselControls>({
     goPrev: defaultGoPrev,
     goNext: defaultGoNext,
+    goToPage: defaultGoToPage,
     bulletsProps: defaultBulletProps,
 });
 
 const CarouselControlsSetterContext = React.createContext<{
     setGoPrev: (goPrev: () => void) => void;
     setGoNext: (goNext: () => void) => void;
+    setGoToPage: (goToPage: GoToPage) => void;
     setBulletsProps: (bulletsProps: PageBulletsProps) => void;
 } | null>(null);
 
@@ -101,6 +106,7 @@ export const CarouselContextProvider = ({children}: {children: React.ReactNode})
     const [bulletsProps, setBulletsProps] = React.useState<PageBulletsProps>(defaultBulletProps);
     const goPrevRef = React.useRef<() => void>(defaultGoPrev);
     const goNextRef = React.useRef<() => void>(defaultGoNext);
+    const goToPageRef = React.useRef<GoToPage>(defaultGoToPage);
 
     const controls = React.useMemo<CarouselControls>(
         () => ({
@@ -109,6 +115,9 @@ export const CarouselContextProvider = ({children}: {children: React.ReactNode})
             },
             goNext: () => {
                 goNextRef.current();
+            },
+            goToPage: (pageIndex, animate = true) => {
+                goToPageRef.current(pageIndex, animate);
             },
             bulletsProps,
         }),
@@ -124,6 +133,9 @@ export const CarouselContextProvider = ({children}: {children: React.ReactNode})
                     },
                     setGoNext: (goNext) => {
                         goNextRef.current = goNext;
+                    },
+                    setGoToPage: (goToPage) => {
+                        goToPageRef.current = goToPage;
                     },
                     setBulletsProps,
                 }}
@@ -454,9 +466,10 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
         if (controlsSetter) {
             controlsSetter.setGoPrev(goPrev);
             controlsSetter.setGoNext(goNext);
+            controlsSetter.setGoToPage(goToPage);
             controlsSetter.setBulletsProps(bulletsProps);
         }
-    }, [controlsSetter, goNext, goPrev, bulletsProps]);
+    }, [controlsSetter, goNext, goPrev, bulletsProps, goToPage]);
 
     let bullets: React.ReactNode = null;
 
@@ -619,6 +632,7 @@ type SlideshowProps = {
     items: ReadonlyArray<React.ReactNode>;
     withBullets?: boolean;
     autoplay?: boolean | {time: number; loop?: boolean};
+    initialPageIndex?: number;
     onPageChange?: (newPageIndex: number) => void;
     dataAttributes?: DataAttributes;
     inverseBullets?: boolean;
@@ -642,6 +656,7 @@ export const Slideshow: React.FC<SlideshowProps> = ({
     items,
     withBullets,
     autoplay,
+    initialPageIndex = 0,
     onPageChange,
     dataAttributes,
     inverseBullets = true,
@@ -666,6 +681,19 @@ export const Slideshow: React.FC<SlideshowProps> = ({
             carouselEl.scrollBy({left: carouselEl.clientWidth, behavior: 'smooth'});
         }
     }, []);
+
+    const goToPage = React.useCallback(
+        (pageIndex: number, animate = true) => {
+            const carouselEl = carouselRef.current;
+            if (carouselEl) {
+                carouselEl.scrollTo({
+                    left: carouselEl.clientWidth * pageIndex,
+                    behavior: animate ? 'smooth' : 'auto',
+                });
+            }
+        },
+        [carouselRef]
+    );
 
     const showNextArrow = scrollRight !== 0;
     const showPrevArrow = scrollLeft !== 0;
@@ -712,11 +740,27 @@ export const Slideshow: React.FC<SlideshowProps> = ({
         }
     }, [autoplay, goNext, scrollRight, shouldAutoplay]);
 
+    const pageInitialized = React.useRef(false);
+    const lastPageIndex = React.useRef(0);
+
     React.useEffect(() => {
         if (onPageChange) {
-            onPageChange(currentIndex);
+            if (!pageInitialized.current) {
+                pageInitialized.current = initialPageIndex === currentIndex;
+            } else if (lastPageIndex.current !== currentIndex) {
+                onPageChange(currentIndex);
+            }
         }
-    }, [currentIndex, onPageChange]);
+
+        lastPageIndex.current = currentIndex;
+    }, [currentIndex, initialPageIndex, onPageChange]);
+
+    React.useEffect(() => {
+        const carouselEl = carouselRef.current;
+        if (initialPageIndex !== undefined && carouselEl && !pageInitialized.current) {
+            carouselEl.scrollTo({left: carouselEl.clientWidth * initialPageIndex});
+        }
+    }, [initialPageIndex]);
 
     const bulletsProps = React.useMemo<PageBulletsProps>(
         () => ({
@@ -730,9 +774,10 @@ export const Slideshow: React.FC<SlideshowProps> = ({
         if (controlsSetter) {
             controlsSetter.setGoPrev(goPrev);
             controlsSetter.setGoNext(goNext);
+            controlsSetter.setGoToPage(goToPage);
             controlsSetter.setBulletsProps(bulletsProps);
         }
-    }, [controlsSetter, goNext, goPrev, bulletsProps]);
+    }, [controlsSetter, goNext, goPrev, bulletsProps, goToPage]);
 
     return (
         <IsInsideSlideshowProvider>
