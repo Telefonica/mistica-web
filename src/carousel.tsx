@@ -73,11 +73,12 @@ export const PageBullets: React.FC<PageBulletsProps> = ({currentIndex, numPages,
     );
 };
 
-const defaultGoPrev = () => {
+const throwMissingProviderError = () => {
     throw new Error('You must wrap your component with a CarouselContextProvider to use CarouselContext');
 };
-const defaultGoNext = defaultGoPrev;
-const defaultGoToPage = defaultGoPrev;
+const defaultGoPrev = throwMissingProviderError;
+const defaultGoNext = throwMissingProviderError;
+const defaultGoToPage = throwMissingProviderError;
 const defaultBulletProps = {currentIndex: 0, numPages: 0};
 
 type GoToPage = (pageIndex: number, animate?: boolean) => void;
