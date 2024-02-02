@@ -47,6 +47,7 @@ const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
             onBlur: onBlurProp,
             onFocus: onFocusProp,
             onPress,
+            dataAttributes,
             ...rest
         },
         ref
@@ -103,6 +104,7 @@ const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
                 inputRef={combineRefs(inputRef, fieldProps.inputRef, ref)}
                 onFocus={onFocus}
                 type="text"
+                dataAttributes={{'component-name': 'TextField', ...dataAttributes}}
             />
         );
     }

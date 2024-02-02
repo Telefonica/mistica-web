@@ -41,19 +41,17 @@ export const Controlled: StoryComponent<DecimalFieldControlledArgs> = ({inverse,
         <ResponsiveLayout isInverse={inverse} fullWidth>
             <Box padding={16}>
                 <Stack space={16}>
-                    <div data-testid="decimal-field-wrapper">
-                        <DecimalField
-                            value={rawValue}
-                            onChangeValue={(value, rawValue) => {
-                                setValue(value);
-                                setRawValue(rawValue);
-                            }}
-                            name="decimal"
-                            autoComplete="off"
-                            data-testid="decimal-field"
-                            {...rest}
-                        />
-                    </div>
+                    <DecimalField
+                        value={rawValue}
+                        onChangeValue={(value, rawValue) => {
+                            setValue(value);
+                            setRawValue(rawValue);
+                        }}
+                        name="decimal"
+                        autoComplete="off"
+                        dataAttributes={{testid: 'decimal-field'}}
+                        {...rest}
+                    />
                     <Stack space={8}>
                         <Text1 regular>
                             value: {typeof value === 'undefined' ? '' : `(${typeof value}) ${inspect(value)}`}
@@ -93,19 +91,17 @@ export const Uncontrolled: StoryComponent<DecimalFieldUncontrolledArgs> = ({
         <ResponsiveLayout isInverse={inverse} fullWidth>
             <Box padding={16}>
                 <Stack space={16}>
-                    <div data-testid="decimal-field-wrapper">
-                        <DecimalField
-                            defaultValue={defaultValue}
-                            onChangeValue={(value, rawValue) => {
-                                setValue(value);
-                                setRawValue(rawValue);
-                            }}
-                            name="decimal"
-                            autoComplete="off"
-                            data-testid="decimal-field"
-                            {...rest}
-                        />
-                    </div>
+                    <DecimalField
+                        defaultValue={defaultValue}
+                        onChangeValue={(value, rawValue) => {
+                            setValue(value);
+                            setRawValue(rawValue);
+                        }}
+                        name="decimal"
+                        autoComplete="off"
+                        dataAttributes={{testid: 'decimal-field'}}
+                        {...rest}
+                    />
                     <Stack space={8}>
                         <Text1 regular>
                             value: {typeof value === 'undefined' ? '' : `(${typeof value}) ${inspect(value)}`}

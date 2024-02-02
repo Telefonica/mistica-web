@@ -41,19 +41,17 @@ export const Controlled: StoryComponent<IbanFieldControlledArgs> = ({inverse, in
         <ResponsiveLayout isInverse={inverse} fullWidth>
             <Box padding={16}>
                 <Stack space={16}>
-                    <div data-testid="iban-field-wrapper">
-                        <IbanField
-                            value={rawValue}
-                            onChangeValue={(value, rawValue) => {
-                                setValue(value);
-                                setRawValue(rawValue);
-                            }}
-                            name="iban"
-                            autoComplete="off"
-                            data-testid="iban-field"
-                            {...rest}
-                        />
-                    </div>
+                    <IbanField
+                        value={rawValue}
+                        onChangeValue={(value, rawValue) => {
+                            setValue(value);
+                            setRawValue(rawValue);
+                        }}
+                        name="iban"
+                        autoComplete="off"
+                        dataAttributes={{testid: 'iban-field'}}
+                        {...rest}
+                    />
                     <Stack space={8}>
                         <Text1 regular>
                             value: {typeof value === 'undefined' ? '' : `(${typeof value}) ${inspect(value)}`}
@@ -89,19 +87,17 @@ export const Uncontrolled: StoryComponent<IbanFieldUncontrolledArgs> = ({inverse
         <ResponsiveLayout isInverse={inverse} fullWidth>
             <Box padding={16}>
                 <Stack space={16}>
-                    <div data-testid="iban-field-wrapper">
-                        <IbanField
-                            defaultValue={defaultValue}
-                            onChangeValue={(value, rawValue) => {
-                                setValue(value);
-                                setRawValue(rawValue);
-                            }}
-                            name="iban"
-                            autoComplete="off"
-                            data-testid="iban-field"
-                            {...rest}
-                        />
-                    </div>
+                    <IbanField
+                        defaultValue={defaultValue}
+                        onChangeValue={(value, rawValue) => {
+                            setValue(value);
+                            setRawValue(rawValue);
+                        }}
+                        name="iban"
+                        autoComplete="off"
+                        dataAttributes={{testid: 'iban-field'}}
+                        {...rest}
+                    />
                     <Stack space={8}>
                         <Text1 regular>
                             value: {typeof value === 'undefined' ? '' : `(${typeof value}) ${inspect(value)}`}
