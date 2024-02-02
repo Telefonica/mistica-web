@@ -45,19 +45,17 @@ export const Controlled: StoryComponent<CreditCardNumberFieldControlledArgs> = (
         <ResponsiveLayout isInverse={inverse} fullWidth>
             <Box padding={16}>
                 <Stack space={16}>
-                    <div data-testid="credit-card-number-field-wrapper">
-                        <CreditCardNumberField
-                            value={rawValue}
-                            onChangeValue={(value, rawValue) => {
-                                setValue(value);
-                                setRawValue(rawValue);
-                            }}
-                            name="creditCardNumber"
-                            autoComplete="off"
-                            data-testid="credit-card-number-field"
-                            {...rest}
-                        />
-                    </div>
+                    <CreditCardNumberField
+                        value={rawValue}
+                        onChangeValue={(value, rawValue) => {
+                            setValue(value);
+                            setRawValue(rawValue);
+                        }}
+                        name="creditCardNumber"
+                        autoComplete="off"
+                        dataAttributes={{testid: 'credit-card-number-field'}}
+                        {...rest}
+                    />
                     <Stack space={8}>
                         <Text1 regular>
                             value: {typeof value === 'undefined' ? '' : `(${typeof value}) ${inspect(value)}`}
@@ -97,19 +95,17 @@ export const Uncontrolled: StoryComponent<CreditCardNumberFieldUncontrolledArgs>
         <ResponsiveLayout isInverse={inverse} fullWidth>
             <Box padding={16}>
                 <Stack space={16}>
-                    <div data-testid="credit-card-number-field-wrapper">
-                        <CreditCardNumberField
-                            defaultValue={defaultValue}
-                            onChangeValue={(value, rawValue) => {
-                                setValue(value);
-                                setRawValue(rawValue);
-                            }}
-                            name="creditCardNumber"
-                            autoComplete="off"
-                            data-testid="credit-card-number-field"
-                            {...rest}
-                        />
-                    </div>
+                    <CreditCardNumberField
+                        defaultValue={defaultValue}
+                        onChangeValue={(value, rawValue) => {
+                            setValue(value);
+                            setRawValue(rawValue);
+                        }}
+                        name="creditCardNumber"
+                        autoComplete="off"
+                        dataAttributes={{testid: 'credit-card-number-field'}}
+                        {...rest}
+                    />
                     <Stack space={8}>
                         <Text1 regular>
                             value: {typeof value === 'undefined' ? '' : `(${typeof value}) ${inspect(value)}`}

@@ -104,6 +104,7 @@ const CreditCardExpirationField: React.FC<CreditCardExpirationFieldProps> = ({
     value,
     autoComplete = 'cc-exp',
     defaultValue,
+    dataAttributes,
     ...rest
 }) => {
     const {texts} = useTheme();
@@ -172,6 +173,7 @@ const CreditCardExpirationField: React.FC<CreditCardExpirationFieldProps> = ({
             }}
             autoComplete={autoComplete}
             inputComponent={MonthYearDateInput}
+            dataAttributes={{'component-name': 'CreditCardExpirationField', ...dataAttributes}}
         />
     );
 };
