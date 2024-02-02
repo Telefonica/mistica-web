@@ -34,6 +34,8 @@ interface BaseDialogProps {
     destructive?: boolean;
     /** @deprecated this does nothing */
     forceWeb?: boolean;
+    /** @deprecated this does nothing */
+    showCancel?: boolean;
 }
 
 export type AlertProps = BaseDialogProps;
@@ -76,6 +78,8 @@ const Dialog: React.FC<DialogProps> = (props) => {
     const acceptButtonProps = {
         onPress: handleAccept || (() => {}),
         children: acceptText,
+        // @deprecated - testid should be removed but many webapp tests depend on this
+        dataAttributes: {testid: 'dialog-accept-button'},
     };
 
     return (
@@ -115,7 +119,10 @@ const Dialog: React.FC<DialogProps> = (props) => {
             <div className={styles.dialogActions}>
                 <ButtonLayout link={isDialog ? props.link : undefined}>
                     {destructive ? (
-                        <ButtonDanger tabIndex={1} {...acceptButtonProps} /> // eslint-disable-line jsx-a11y/tabindex-no-positive
+                        <ButtonDanger
+                            tabIndex={1} // eslint-disable-line jsx-a11y/tabindex-no-positive
+                            {...acceptButtonProps}
+                        />
                     ) : (
                         <ButtonPrimary tabIndex={1} {...acceptButtonProps} /> // eslint-disable-line jsx-a11y/tabindex-no-positive
                     )}
@@ -123,6 +130,8 @@ const Dialog: React.FC<DialogProps> = (props) => {
                         <ButtonSecondary
                             tabIndex={2} // eslint-disable-line jsx-a11y/tabindex-no-positive
                             onPress={handleCancel || (() => {})}
+                            // @deprecated - testid should be removed but many webapp tests depend on this
+                            dataAttributes={{testid: 'dialog-cancel-button'}}
                         >
                             {cancelText}
                         </ButtonSecondary>

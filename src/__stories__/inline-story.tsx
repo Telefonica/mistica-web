@@ -2,7 +2,6 @@ import {capitalize} from 'lodash';
 import * as React from 'react';
 import {Inline, Text2, skinVars, Tag, Avatar} from '..';
 import {Placeholder} from '../placeholder';
-import {StorySection, useSelect} from './helpers';
 import avatarImg from './images/avatar.jpg';
 
 export default {
@@ -55,44 +54,53 @@ const spaceOptions = [
     '64px',
 ];
 
-const alignOptions = ['flex-start', 'flex-end', 'center', 'baseline', 'stretch'];
+const alignOptions = ['flex-start', 'flex-end', 'center', 'baseline', 'stretch'] as const;
 
-export const Default: StoryComponent = () => {
-    const [space, spaceSelectField] = useSelect('Space', '32px', spaceOptions);
-    const [align, alignSelectField] = useSelect('Align items', 'center', alignOptions);
+type DefaultArgs = {
+    space: (typeof spaceOptions)[number];
+    align: (typeof alignOptions)[number];
+};
 
+export const Default: StoryComponent<DefaultArgs> = ({space, align}) => {
     return (
-        <>
-            <Inline space={16}>
-                {spaceSelectField}
-                {alignSelectField}
+        <div data-testid="story">
+            <Placeholder />
+            <Inline space={(space.endsWith('px') ? parseInt(space) : space) as never} alignItems={align}>
+                <ComponentThatReturnsNullComponent />
+                <Row padding={6} align={align}>
+                    One
+                </Row>
+                {null}
+                {false}
+                <Row padding={16} align={align}>
+                    Two
+                </Row>
+                <Row />
+                <Row />
+                <Row padding={32} align={align}>
+                    Three
+                </Row>
+                <ComponentThatReturnsNullComponent />
             </Inline>
-            <StorySection title="Inline example">
-                <Placeholder />
-                <Inline
-                    space={(space.endsWith('px') ? parseInt(space) : space) as never}
-                    alignItems={align as never}
-                >
-                    <ComponentThatReturnsNullComponent />
-                    <Row padding={6} align={align}>
-                        One
-                    </Row>
-                    {null}
-                    {false}
-                    <Row padding={16} align={align}>
-                        Two
-                    </Row>
-                    <Row />
-                    <Row />
-                    <Row padding={32} align={align}>
-                        Three
-                    </Row>
-                    <ComponentThatReturnsNullComponent />
-                </Inline>
-                <Placeholder />
-            </StorySection>
-        </>
+            <Placeholder />
+        </div>
     );
+};
+
+Default.argTypes = {
+    space: {
+        options: spaceOptions,
+        control: {type: 'select'},
+    },
+    align: {
+        options: alignOptions,
+        control: {type: 'select'},
+    },
+};
+
+Default.args = {
+    space: '16px',
+    align: 'center',
 };
 
 Default.storyName = 'Inline';
