@@ -52,7 +52,7 @@ const TestComponent = () => {
 
 beforeEach(() => {
     // The history object is not cleared between tests. This way we put the history position at the end
-    window.history.pushState({}, '', '/');
+    act(() => window.history.pushState({}, '', '/'));
 });
 
 test('does not render anything initially', () => {
