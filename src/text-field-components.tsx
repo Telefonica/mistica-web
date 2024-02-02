@@ -7,6 +7,9 @@ import {Text1} from './text';
 import * as styles from './text-field-components.css';
 import {sprinkles} from './sprinkles.css';
 import {vars} from './skins/skin-contract.css';
+import {getPrefixedDataAttributes} from './utils/dom';
+
+import type {DataAttributes} from './utils/types';
 
 export type InputState = 'focused' | 'filled' | 'default';
 
@@ -69,10 +72,11 @@ type HelperTextProps = {
     leftText?: string;
     rightText?: string;
     error?: boolean;
+    id?: string;
     children?: void;
 };
 
-export const HelperText: React.FC<HelperTextProps> = ({leftText, rightText, error}) => {
+export const HelperText: React.FC<HelperTextProps> = ({leftText, rightText, error, id}) => {
     const isInverse = useIsInverseVariant();
     const leftColor = isInverse
         ? vars.colors.textPrimaryInverse
@@ -85,7 +89,7 @@ export const HelperText: React.FC<HelperTextProps> = ({leftText, rightText, erro
         <>
             {leftText && (
                 <div className={classnames(styles.helperText, styles.leftText)}>
-                    <Text1 color={leftColor} regular as="p">
+                    <Text1 color={leftColor} regular as="p" id={id}>
                         {leftText}
                     </Text1>
                 </div>
@@ -110,6 +114,7 @@ type FieldContainerProps = {
     fieldRef?: React.RefObject<HTMLDivElement>;
     fullWidth?: boolean;
     readOnly?: boolean;
+    dataAttributes?: DataAttributes;
 };
 
 export const FieldContainer: React.FC<FieldContainerProps> = ({
@@ -121,6 +126,7 @@ export const FieldContainer: React.FC<FieldContainerProps> = ({
     fieldRef,
     fullWidth,
     readOnly,
+    dataAttributes,
 }) => {
     return (
         // eslint-disable-next-line jsx-a11y/no-static-element-interactions
@@ -129,17 +135,14 @@ export const FieldContainer: React.FC<FieldContainerProps> = ({
                 [styles.disabled]: disabled,
             })}
             onClick={(e) => {
-                // workaround for the multiline case, where the textarea has a margin. We want to focus
-                // the input when the user clicks anywhere in the container (like in the label)
-                if (multiline) {
-                    e.currentTarget.querySelector('textarea')?.focus();
-                }
+                // We want to focus the input when the user clicks anywhere in the container (like in the label or the prefix)
+                e.currentTarget.querySelector(multiline ? 'textarea' : 'input')?.focus();
             }}
+            {...getPrefixedDataAttributes(dataAttributes)}
         >
             <div
                 className={classnames(
                     styles.field,
-                    multiline ? styles.fieldMulti : styles.fieldSingle,
                     sprinkles({
                         background: readOnly ? vars.colors.neutralLow : vars.colors.backgroundContainer,
                     }),

@@ -122,6 +122,7 @@ const DecimalField: React.FC<DecimalFieldProps> = ({
     value,
     defaultValue,
     maxDecimals = Infinity,
+    dataAttributes,
     ...rest
 }) => {
     const {texts} = useTheme();
@@ -156,6 +157,7 @@ const DecimalField: React.FC<DecimalFieldProps> = ({
             {...fieldProps}
             inputComponent={DecimalInput}
             inputProps={{maxDecimals}}
+            dataAttributes={{'component-name': 'DecimalField', ...dataAttributes}}
         />
     );
 };

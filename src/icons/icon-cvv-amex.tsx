@@ -3,7 +3,7 @@ import {vars} from '../skins/skin-contract.css';
 
 type Props = {
     role?: string;
-    size?: number;
+    size?: number | string;
     color?: string;
 };
 

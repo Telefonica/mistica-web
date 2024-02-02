@@ -41,19 +41,17 @@ export const Controlled: StoryComponent<IntegerFieldControlledArgs> = ({inverse,
         <ResponsiveLayout isInverse={inverse} fullWidth>
             <Box padding={16}>
                 <Stack space={16}>
-                    <div data-testid="integer-field-wrapper">
-                        <IntegerField
-                            value={rawValue}
-                            onChangeValue={(value, rawValue) => {
-                                setValue(value);
-                                setRawValue(rawValue);
-                            }}
-                            name="integer"
-                            autoComplete="off"
-                            data-testid="integer-field"
-                            {...rest}
-                        />
-                    </div>
+                    <IntegerField
+                        value={rawValue}
+                        onChangeValue={(value, rawValue) => {
+                            setValue(value);
+                            setRawValue(rawValue);
+                        }}
+                        name="integer"
+                        autoComplete="off"
+                        dataAttributes={{testid: 'integer-field'}}
+                        {...rest}
+                    />
                     <Stack space={8}>
                         <Text1 regular>
                             value: {typeof value === 'undefined' ? '' : `(${typeof value}) ${inspect(value)}`}
@@ -93,19 +91,17 @@ export const Uncontrolled: StoryComponent<IntegerFieldUncontrolledArgs> = ({
         <ResponsiveLayout isInverse={inverse} fullWidth>
             <Box padding={16}>
                 <Stack space={16}>
-                    <div data-testid="integer-field-wrapper">
-                        <IntegerField
-                            defaultValue={defaultValue}
-                            onChangeValue={(value, rawValue) => {
-                                setValue(value);
-                                setRawValue(rawValue);
-                            }}
-                            name="integer"
-                            autoComplete="off"
-                            data-testid="integer-field"
-                            {...rest}
-                        />
-                    </div>
+                    <IntegerField
+                        defaultValue={defaultValue}
+                        onChangeValue={(value, rawValue) => {
+                            setValue(value);
+                            setRawValue(rawValue);
+                        }}
+                        name="integer"
+                        autoComplete="off"
+                        dataAttributes={{testid: 'integer-field'}}
+                        {...rest}
+                    />
                     <Stack space={8}>
                         <Text1 regular>
                             value: {typeof value === 'undefined' ? '' : `(${typeof value}) ${inspect(value)}`}
