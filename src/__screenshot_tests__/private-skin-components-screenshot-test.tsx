@@ -14,7 +14,17 @@ test.each(SKINS)('Components in %s', async (skin) => {
 test.each(SKINS)('Components in %s (inverse)', async (skin) => {
     const page = await openStoryPage({
         id: 'private-components-in-different-skins--default',
-        args: {inverse: true},
+        args: {variant: 'inverse'},
+        skin,
+    });
+
+    expect(await page.screenshot({fullPage: true})).toMatchImageSnapshot();
+});
+
+test.each(SKINS)('Components in %s (alternative)', async (skin) => {
+    const page = await openStoryPage({
+        id: 'private-components-in-different-skins--default',
+        args: {variant: 'alternative'},
         skin,
     });
 
@@ -34,7 +44,7 @@ test.each(SKINS)('Components in %s (dark mode)', async (skin) => {
 test.each(SKINS)('Components in %s (inverse and dark mode)', async (skin) => {
     const page = await openStoryPage({
         id: 'private-components-in-different-skins--default',
-        args: {inverse: true},
+        args: {variant: 'inverse'},
         isDarkMode: true,
         skin,
     });

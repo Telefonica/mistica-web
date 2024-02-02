@@ -47,18 +47,24 @@ import usingVrImg from '../__stories__/images/using-vr.jpg';
 
 export default {
     title: 'Private/Components in different skins',
+    argTypes: {
+        variant: {
+            options: ['default', 'inverse', 'alternative'],
+            control: {type: 'select'},
+        },
+    },
     parameters: {
         fullScreen: true,
     },
 };
 
 type Args = {
-    inverse: boolean;
+    variant: 'default' | 'inverse' | 'alternative';
 };
 
-export const Default: StoryComponent<Args> = ({inverse}) => {
+export const Default: StoryComponent<Args> = ({variant}) => {
     return (
-        <ResponsiveLayout fullWidth isInverse={inverse}>
+        <ResponsiveLayout fullWidth variant={variant}>
             <Box padding={16}>
                 <Stack space={32}>
                     <Text2 regular>
@@ -297,5 +303,5 @@ export const Default: StoryComponent<Args> = ({inverse}) => {
 
 Default.storyName = 'Components in different skins';
 Default.args = {
-    inverse: false,
+    variant: 'default',
 };
