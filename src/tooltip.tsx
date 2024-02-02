@@ -1,12 +1,12 @@
 'use client';
 import * as React from 'react';
-import {useAriaId, useBoundingRect, useWindowSize} from './hooks';
+import {useAriaId, useBoundingRect, useTheme, useWindowSize} from './hooks';
 import {Portal} from './portal';
 import {Transition} from 'react-transition-group';
 import * as styles from './tooltip.css';
 import Stack from './stack';
 import {Text2} from './text';
-import {getCssVarValue, getPrefixedDataAttributes} from './utils/dom';
+import {getCssVarValue} from './utils/dom';
 import {ESC, TAB} from './utils/keys';
 import {isTouchableDevice} from './utils/environment';
 import {isEqual} from './utils/helpers';
@@ -16,9 +16,12 @@ import {ThemeVariant, useIsInverseVariant} from './theme-variant-context';
 import {combineRefs} from './utils/common';
 import {useSetTooltipState, useTooltipState} from './tooltip-context-provider';
 import {isRunningAcceptanceTest} from './utils/platform';
+import IconButton from './icon-button';
+import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
+import Inline from './inline';
 
 import type {BoundingRect} from './hooks';
-import type {DataAttributes} from './utils/types';
+import type {DataAttributes, TrackingEvent} from './utils/types';
 
 const getBorderStyle = (isInverse: boolean): React.CSSProperties => {
     return {border: `1px solid ${isInverse ? vars.colors.backgroundContainer : vars.colors.border}`};
@@ -156,9 +159,26 @@ type Props = {
     textCenter?: boolean;
 };
 
-const Tooltip: React.FC<Props> = ({
-    children,
-    extra,
+type BaseTooltipProps = {
+    content?: React.ReactNode;
+    asset?: React.ReactNode;
+    description?: string;
+    target: React.ReactNode;
+    title?: string;
+    position?: Position;
+    width?: number;
+    delay?: boolean;
+    dataAttributes?: DataAttributes;
+    centerContent?: boolean;
+    open?: boolean;
+    hasPointerInteractionOnly?: boolean;
+    onClose?: () => void;
+    trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
+};
+
+export const BaseTooltip: React.FC<BaseTooltipProps> = ({
+    content,
+    asset,
     description,
     target,
     title,
@@ -168,8 +188,11 @@ const Tooltip: React.FC<Props> = ({
     delay = true,
     centerContent,
     open,
-    textCenter,
+    onClose,
+    hasPointerInteractionOnly = false,
+    trackingEvent,
 }) => {
+    const {texts} = useTheme();
     const tooltipId = useAriaId();
     const {openTooltipId} = useTooltipState();
     const {openTooltip, closeTooltip} = useSetTooltipState();
@@ -368,7 +391,9 @@ const Tooltip: React.FC<Props> = ({
         const handleKeyDown = (e: KeyboardEvent) => {
             switch (e.key) {
                 case ESC:
-                    resetTooltipInteractions();
+                    if (!hasPointerInteractionOnly) {
+                        resetTooltipInteractions();
+                    }
                     break;
                 case TAB:
                     isTabKeyDownRef.current = true;
@@ -380,8 +405,10 @@ const Tooltip: React.FC<Props> = ({
 
         const handleKeyUp = () => (isTabKeyDownRef.current = false);
 
+        // click outside the target when tooltip is closed
         const handleOnClick = (e: MouseEvent) => {
             if (
+                !hasPointerInteractionOnly &&
                 isTouchable &&
                 targetRect &&
                 (e.clientX < targetRect.left ||
@@ -401,7 +428,7 @@ const Tooltip: React.FC<Props> = ({
             document.removeEventListener('keyup', handleKeyUp, false);
             document.removeEventListener('click', handleOnClick, false);
         };
-    }, [isTouchable, resetTooltipInteractions, targetRect]);
+    }, [isTouchable, resetTooltipInteractions, targetRect, hasPointerInteractionOnly]);
 
     React.useEffect(() => {
         if (!hasControlledValue) {
@@ -429,6 +456,10 @@ const Tooltip: React.FC<Props> = ({
         windowSize.width
     );
 
+    // by default, center content only if tooltip has minimum possible width
+    const hasCenteredContent =
+        centerContent !== undefined ? centerContent : tooltipRect?.width === styles.CONTENT_MIN_WIDTH;
+
     return (
         <>
             {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
@@ -445,27 +476,28 @@ const Tooltip: React.FC<Props> = ({
                     }
                 }}
                 onMouseOver={() => {
-                    if (!isTouchable) {
+                    if (!isTouchable && !hasPointerInteractionOnly) {
                         setIsMouseOverTarget(true);
                     }
                 }}
                 onMouseLeave={() => {
-                    if (!isTouchable) {
+                    if (!isTouchable && !hasPointerInteractionOnly) {
                         setIsMouseOverTarget(false);
                     }
                 }}
                 onClick={() => {
-                    if (isTouchable) {
-                        setIsMouseOverTarget(true);
+                    if (isTouchable || hasPointerInteractionOnly) {
+                        // if hasPointerInteractionOnly is true, pressing on the target should switch the state of the tooltip
+                        setIsMouseOverTarget(hasPointerInteractionOnly ? !isMouseOverTarget : true);
                     }
                 }}
                 onFocus={() => {
-                    if (isTabKeyDownRef.current) {
+                    if (isTabKeyDownRef.current && !hasPointerInteractionOnly) {
                         setIsFocused(true);
                     }
                 }}
                 onBlur={() => {
-                    if (!isTouchable) {
+                    if (!isTouchable && !hasPointerInteractionOnly) {
                         setIsFocused(false);
                     }
                 }}
@@ -508,7 +540,7 @@ const Tooltip: React.FC<Props> = ({
                                     position: 'fixed',
                                     visibility: tooltipComputedStyles ? 'visible' : 'hidden',
                                 }}
-                                {...getPrefixedDataAttributes(dataAttributes, 'Tooltip')}
+                                {...dataAttributes}
                                 role="tooltip"
                                 aria-label={tooltipId}
                                 tabIndex={-1}
@@ -527,12 +559,16 @@ const Tooltip: React.FC<Props> = ({
                                     }}
                                     ref={combineRefs(setTooltip, tooltipRef)}
                                     onMouseEnter={() => {
-                                        if (!isTouchable && transitionStatus === 'entered') {
+                                        if (
+                                            !isTouchable &&
+                                            transitionStatus === 'entered' &&
+                                            !hasPointerInteractionOnly
+                                        ) {
                                             setIsMouseOverTooltip(true);
                                         }
                                     }}
                                     onMouseLeave={() => {
-                                        if (!isTouchable) {
+                                        if (!isTouchable && !hasPointerInteractionOnly) {
                                             setIsMouseOverTooltip(false);
                                         }
                                     }}
@@ -545,22 +581,40 @@ const Tooltip: React.FC<Props> = ({
                                         }}
                                     >
                                         <div
-                                            className={classNames(
-                                                styles.content,
-                                                centerContent || textCenter ? styles.tooltipCenter : undefined
-                                            )}
+                                            className={classNames(styles.content, {
+                                                [styles.tooltipCenter]: hasCenteredContent,
+                                            })}
                                             style={{
                                                 maxWidth: Math.min(TOOLTIP_MAX_WIDTH, windowSize.width),
                                             }}
                                         >
                                             <ThemeVariant isInverse={false}>
-                                                {(title || description) && (
-                                                    <Stack space={4}>
-                                                        {title && <Text2 medium>{title}</Text2>}
-                                                        {description && <Text2 regular>{description}</Text2>}
-                                                    </Stack>
+                                                <Inline space={16}>
+                                                    {asset}
+                                                    {(title || description || content) && (
+                                                        <Stack space={4}>
+                                                            {title && <Text2 medium>{title}</Text2>}
+                                                            {description && (
+                                                                <Text2 regular>{description}</Text2>
+                                                            )}
+                                                            {content}
+                                                        </Stack>
+                                                    )}
+                                                </Inline>
+
+                                                {onClose && (
+                                                    <IconButton
+                                                        className={styles.closeButtonIcon}
+                                                        onPress={() => {
+                                                            setIsMouseOverTarget(false);
+                                                            onClose();
+                                                        }}
+                                                        trackingEvent={trackingEvent}
+                                                        aria-label={texts.modalClose}
+                                                    >
+                                                        <IconCloseRegular color={vars.colors.neutralHigh} />
+                                                    </IconButton>
                                                 )}
-                                                {extra || children}
                                             </ThemeVariant>
                                         </div>
                                         <div className={styles.arrowContainer} style={arrowComputedStyles}>
@@ -577,6 +631,17 @@ const Tooltip: React.FC<Props> = ({
                 </Transition>
             </Portal>
         </>
+    );
+};
+
+const Tooltip: React.FC<Props> = ({centerContent, textCenter, extra, children, dataAttributes, ...props}) => {
+    return (
+        <BaseTooltip
+            content={extra ?? children}
+            centerContent={centerContent ?? textCenter}
+            dataAttributes={{'component-name': 'Tooltip', ...dataAttributes}}
+            {...props}
+        />
     );
 };
 
