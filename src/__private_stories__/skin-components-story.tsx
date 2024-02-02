@@ -33,8 +33,14 @@ import {
     Stepper,
     Switch,
     Tag,
-    IconCloseRegular,
     TextLink,
+    RowList,
+    Row,
+    Image,
+    SkeletonText,
+    Title1,
+    Title2,
+    Title3,
 } from '..';
 import avatarImg from '../__stories__/images/avatar.jpg';
 import usingVrImg from '../__stories__/images/using-vr.jpg';
@@ -60,9 +66,24 @@ export const Default: StoryComponent<Args> = ({inverse}) => {
                         different skins
                     </Text2>
 
+                    <RowList>
+                        <Row
+                            title="Title 1"
+                            subtitle="Subtitle"
+                            description="Description"
+                            href="https://www.google.com/"
+                        />
+                        <Row
+                            title="Title 2"
+                            subtitle="Subtitle"
+                            description="Description"
+                            href="https://www.google.com/"
+                        />
+                    </RowList>
                     {/** BoxedAccordion */}
-                    <BoxedAccordion>
+                    <BoxedAccordion index={1}>
                         <BoxedAccordionItem
+                            asset={<Image src={usingVrImg} width={64} height={64} />}
                             title="Title 1"
                             content={
                                 <Text2 regular color={skinVars.colors.textSecondary}>
@@ -118,7 +139,6 @@ export const Default: StoryComponent<Args> = ({inverse}) => {
                         title="Title"
                         subtitle="Subtitle"
                         pretitle="Pretitle"
-                        headline="Headline"
                         description="Description"
                         onClose={() => {}}
                         actions={[{label: 'action', Icon: IconLightningRegular, onPress: () => {}}]}
@@ -145,11 +165,6 @@ export const Default: StoryComponent<Args> = ({inverse}) => {
                     {/** DisplayMediaCard */}
                     <DisplayMediaCard
                         backgroundImage={usingVrImg}
-                        headline={
-                            <Tag type="error" Icon={IconCloseRegular}>
-                                Headline
-                            </Tag>
-                        }
                         title="Title"
                         pretitle="Pretitle"
                         description="Description"
@@ -254,6 +269,26 @@ export const Default: StoryComponent<Args> = ({inverse}) => {
 
                     {/** TextLink */}
                     <TextLink onPress={() => {}}>This is a text link</TextLink>
+
+                    {/** Skeleton */}
+                    <SkeletonText />
+
+                    {/** Titles */}
+                    <Inline space={16} alignItems="baseline">
+                        <Title1>Title 1</Title1>
+                        <Title2>Title 2</Title2>
+                        <Title3>Title 3</Title3>
+                    </Inline>
+
+                    {/** Tag */}
+                    <Inline space={16}>
+                        <Tag type="promo">Promo</Tag>
+                        <Tag type="active">Active</Tag>
+                        <Tag type="inactive">Inactive</Tag>
+                        <Tag type="success">Success</Tag>
+                        <Tag type="warning">Warning</Tag>
+                        <Tag type="error">Error</Tag>
+                    </Inline>
                 </Stack>
             </Box>
         </ResponsiveLayout>
