@@ -12,6 +12,7 @@ import type {RendersNullableElement} from './utils/types';
 type Props = {
     isFooterVisible?: boolean;
     button?: NullableButtonElement;
+    /** @deprecated */
     desktopButtonAlign?: 'left' | 'center';
     secondaryButton?: NullableButtonElement;
     link?: RendersNullableElement<typeof ButtonLink>;
@@ -27,12 +28,12 @@ const ButtonFixedFooterLayout: React.FC<Props> = ({
     secondaryButton,
     link,
     children,
-    desktopButtonAlign = 'left',
+    desktopButtonAlign,
     footerBgColor,
     containerBgColor,
     onChangeFooterHeight,
 }) => {
-    const {isTabletOrSmaller, isTablet} = useScreenSize();
+    const {isDesktopOrBigger} = useScreenSize();
     const hasButton = !!button || !!secondaryButton;
     return (
         <FixedFooterLayout
@@ -41,10 +42,18 @@ const ButtonFixedFooterLayout: React.FC<Props> = ({
             footerBgColor={footerBgColor}
             containerBgColor={containerBgColor}
             footer={
-                <InternalResponsiveLayout>
-                    <Box paddingY={isTablet ? 32 : isTabletOrSmaller ? 16 : 0}>
+                <InternalResponsiveLayout shouldExpandWhenNested="desktop">
+                    <Box
+                        paddingY={{
+                            mobile: 16,
+                            tablet: 32,
+                            desktop: 0,
+                        }}
+                    >
                         <ButtonLayout
-                            align={isTabletOrSmaller ? 'full-width' : desktopButtonAlign}
+                            align={
+                                isDesktopOrBigger && desktopButtonAlign ? desktopButtonAlign : 'full-width'
+                            }
                             link={link}
                         >
                             {button}
