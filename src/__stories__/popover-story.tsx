@@ -123,7 +123,7 @@ Default.args = {
     description: 'A description',
     extra: false,
     inverse: false,
-    asset: 'none',
+    asset: 'icon',
 };
 
 Default.argTypes = {

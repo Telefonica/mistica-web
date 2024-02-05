@@ -47,16 +47,19 @@ export const tooltip = style([
     },
 ]);
 
-export const content = style([
+export const contentContainer = style([
     sprinkles({
         position: 'relative',
         overflow: 'hidden',
     }),
     {
         minWidth: CONTENT_MIN_WIDTH - 2 * BORDER_SIZE, // border is not included in this container
-        padding: CONTENT_PADDING - BORDER_SIZE,
     },
 ]);
+
+export const content = style({
+    padding: CONTENT_PADDING - BORDER_SIZE,
+});
 
 export const tooltipCenter = sprinkles({
     display: 'flex',

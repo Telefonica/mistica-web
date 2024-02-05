@@ -1,6 +1,12 @@
 'use client';
 import * as React from 'react';
 import {BaseTooltip} from './tooltip';
+import Inline from './inline';
+import Stack from './stack';
+import {Text2, Text3} from './text';
+import Box from './box';
+import * as styles from './popover.css';
+import {vars as skinVars} from './skins/skin-contract.css';
 
 import type {TrackingEvent, DataAttributes} from './utils/types';
 
@@ -33,11 +39,36 @@ const Popover: React.FC<Props> = ({
     onClose = () => {},
     dataAttributes,
     trackingEvent,
+    title,
+    description,
+    asset,
     ...props
 }) => {
     return (
         <BaseTooltip
-            content={extra ?? children}
+            content={
+                <Box className={styles.content}>
+                    <Stack space={4}>
+                        {(title || description || asset) && (
+                            <Box paddingRight={16}>
+                                <Inline space={16}>
+                                    {asset}
+                                    <Stack space={4}>
+                                        {title && <Text3 regular>{title}</Text3>}
+                                        {description && (
+                                            <Text2 regular color={skinVars.colors.textSecondary}>
+                                                {description}
+                                            </Text2>
+                                        )}
+                                    </Stack>
+                                </Inline>
+                            </Box>
+                        )}
+
+                        {extra ?? children}
+                    </Stack>
+                </Box>
+            }
             centerContent={false}
             open={open ?? isVisible}
             hasPointerInteractionOnly

@@ -18,7 +18,7 @@ import {useSetTooltipState, useTooltipState} from './tooltip-context-provider';
 import {isRunningAcceptanceTest} from './utils/platform';
 import IconButton from './icon-button';
 import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
-import Inline from './inline';
+import Box from './box';
 
 import type {BoundingRect} from './hooks';
 import type {DataAttributes, TrackingEvent} from './utils/types';
@@ -161,10 +161,7 @@ type Props = {
 
 type BaseTooltipProps = {
     content?: React.ReactNode;
-    asset?: React.ReactNode;
-    description?: string;
     target: React.ReactNode;
-    title?: string;
     position?: Position;
     width?: number;
     delay?: boolean;
@@ -178,10 +175,7 @@ type BaseTooltipProps = {
 
 export const BaseTooltip: React.FC<BaseTooltipProps> = ({
     content,
-    asset,
-    description,
     target,
-    title,
     width,
     position = 'top',
     dataAttributes,
@@ -578,29 +572,16 @@ export const BaseTooltip: React.FC<BaseTooltipProps> = ({
                                         style={{
                                             width,
                                             ...getBorderStyle(isInverse),
+                                            maxWidth: Math.min(TOOLTIP_MAX_WIDTH, windowSize.width),
                                         }}
                                     >
                                         <div
-                                            className={classNames(styles.content, {
+                                            className={classNames(styles.contentContainer, {
                                                 [styles.tooltipCenter]: hasCenteredContent,
                                             })}
-                                            style={{
-                                                maxWidth: Math.min(TOOLTIP_MAX_WIDTH, windowSize.width),
-                                            }}
                                         >
                                             <ThemeVariant isInverse={false}>
-                                                <Inline space={16}>
-                                                    {asset}
-                                                    {(title || description || content) && (
-                                                        <Stack space={4}>
-                                                            {title && <Text2 medium>{title}</Text2>}
-                                                            {description && (
-                                                                <Text2 regular>{description}</Text2>
-                                                            )}
-                                                            {content}
-                                                        </Stack>
-                                                    )}
-                                                </Inline>
+                                                {content}
 
                                                 {onClose && (
                                                     <IconButton
@@ -634,10 +615,29 @@ export const BaseTooltip: React.FC<BaseTooltipProps> = ({
     );
 };
 
-const Tooltip: React.FC<Props> = ({centerContent, textCenter, extra, children, dataAttributes, ...props}) => {
+const Tooltip: React.FC<Props> = ({
+    centerContent,
+    textCenter,
+    extra,
+    children,
+    dataAttributes,
+    title,
+    description,
+    ...props
+}) => {
     return (
         <BaseTooltip
-            content={extra ?? children}
+            content={
+                <Box className={styles.content}>
+                    {(title || description || extra || children) && (
+                        <Stack space={4}>
+                            {title && <Text2 medium>{title}</Text2>}
+                            {description && <Text2 regular>{description}</Text2>}
+                            {extra ?? children}
+                        </Stack>
+                    )}
+                </Box>
+            }
             centerContent={centerContent ?? textCenter}
             dataAttributes={{'component-name': 'Tooltip', ...dataAttributes}}
             {...props}
