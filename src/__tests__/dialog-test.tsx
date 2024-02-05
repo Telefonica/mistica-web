@@ -50,8 +50,6 @@ const TestComponent = () => {
     );
 };
 
-jest.setTimeout(20000);
-
 beforeEach(() => {
     // The history object is not cleared between tests. This way we put the history position at the end
     act(() => window.history.pushState({}, '', '/'));
