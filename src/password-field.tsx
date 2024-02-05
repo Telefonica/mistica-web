@@ -1,12 +1,11 @@
 'use client';
 import * as React from 'react';
 import {useFieldProps} from './form-context';
-import {TextFieldBaseAutosuggest} from './text-field-base';
+import {FieldEndIcon, TextFieldBaseAutosuggest} from './text-field-base';
 import {useTheme} from './hooks';
-import {BaseIconButton} from './icon-button';
 import IconEyeOffRegular from './generated/mistica-icons/icon-eye-off-regular';
 import IconEyeRegular from './generated/mistica-icons/icon-eye-regular';
-import * as styles from './password-field.css';
+import {endIconWithShadow} from './text-field-base.css';
 
 import type {CommonFormFieldProps} from './text-field-base';
 
@@ -21,17 +20,15 @@ const PasswordAdornment: React.FC<{
 }> = ({isVisible, setVisibility, focus}) => {
     const {texts} = useTheme();
     return (
-        <BaseIconButton
+        <FieldEndIcon
+            Icon={isVisible ? IconEyeOffRegular : IconEyeRegular}
             aria-label={texts.togglePasswordVisibilityLabel}
+            className={endIconWithShadow}
             onPress={() => {
                 setVisibility(!isVisible);
                 focus();
             }}
-            size={40}
-            className={styles.shadow}
-        >
-            {isVisible ? <IconEyeOffRegular /> : <IconEyeRegular />}
-        </BaseIconButton>
+        />
     );
 };
 
@@ -48,6 +45,7 @@ const PasswordField: React.FC<PasswordFieldProps> = ({
     value,
     autoComplete = 'current-password',
     defaultValue,
+    dataAttributes,
     ...rest
 }) => {
     const [isVisible, setIsVisible] = React.useState(false);
@@ -106,6 +104,7 @@ const PasswordField: React.FC<PasswordFieldProps> = ({
             }}
             autoComplete={autoComplete}
             endIcon={<PasswordAdornment focus={focus} isVisible={isVisible} setVisibility={setIsVisible} />}
+            dataAttributes={{'component-name': 'PasswordField', ...dataAttributes}}
         />
     );
 };
