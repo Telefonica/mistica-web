@@ -37,21 +37,35 @@ export const responsiveLayoutContainer = style([
     },
 ]);
 
-export const expandedResponsiveLayoutContainer = style([
-    {
-        selectors: {
-            '& &': {
-                width: 'auto',
-                margin: `0 calc(-1 * ${sideMargin})`,
-                '@media': {
-                    [mq.largeDesktop]: {
-                        margin: `0 calc(-1 * (100vw - ${LARGE_DESKTOP_MAX_WIDTH}px) / 2)`,
-                    },
+export const expandedResponsiveLayoutContainerMobile = style({
+    selectors: {
+        '& &': {
+            '@media': {
+                [mq.tabletOrSmaller]: {
+                    width: 'auto',
+                    margin: `0 calc(-1 * ${sideMargin})`,
                 },
             },
         },
     },
-]);
+});
+
+export const expandedResponsiveLayoutContainerDesktop = style({
+    selectors: {
+        '& &': {
+            '@media': {
+                [mq.desktop]: {
+                    width: 'auto',
+                    margin: `0 calc(-1 * ${sideMargin})`,
+                },
+                [mq.largeDesktop]: {
+                    width: 'auto',
+                    margin: `0 calc(-1 * (100vw - ${LARGE_DESKTOP_MAX_WIDTH}px) / 2)`,
+                },
+            },
+        },
+    },
+});
 
 export const fullwidthContainer = style([
     {

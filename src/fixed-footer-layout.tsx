@@ -19,6 +19,7 @@ import {
     hasScroll,
     removePassiveEventListener,
 } from './utils/dom';
+import {vars} from './skins/skin-contract.css';
 import * as styles from './fixed-footer-layout.css';
 import {applyCssVars, safeAreaInsetBottom} from './utils/css';
 
@@ -46,7 +47,7 @@ const FixedFooterLayout: React.FC<Props> = ({
     isFooterVisible = true,
     footer,
     footerHeight = 'auto',
-    footerBgColor,
+    footerBgColor = vars.colors.background,
     containerBgColor,
     children,
     onChangeFooterHeight,
