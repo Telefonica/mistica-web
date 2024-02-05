@@ -202,3 +202,44 @@ test('Carousel on different container types', async () => {
 
     expect(await page.screenshot({fullPage: true})).toMatchImageSnapshot();
 });
+
+test('Carousel with external controls', async () => {
+    const page = await openStoryPage({
+        id: 'components-carousels-carousel--with-carousel-context',
+        device: 'MOBILE_IOS',
+    });
+
+    const prevLink = await screen.findByRole('button', {name: /Prev/i});
+    const nextLink = await screen.findByRole('button', {name: /Next/i});
+
+    // https://jira.tid.es/browse/WEB-680
+    expect(await page.screenshot()).toMatchImageSnapshot({failureThreshold: 0.00004});
+
+    await page.click(nextLink);
+
+    expect(await page.screenshot()).toMatchImageSnapshot({failureThreshold: 0.00004});
+
+    await page.click(prevLink);
+
+    expect(await page.screenshot()).toMatchImageSnapshot({failureThreshold: 0.00004});
+});
+
+test('Slideshow with external controls', async () => {
+    const page = await openStoryPage({
+        id: 'components-carousels-slideshow--with-carousel-context',
+        device: 'MOBILE_IOS',
+    });
+
+    const prevLink = await screen.findByRole('button', {name: /Prev/i});
+    const nextLink = await screen.findByRole('button', {name: /Next/i});
+
+    expect(await page.screenshot()).toMatchImageSnapshot();
+
+    await page.click(nextLink);
+
+    expect(await page.screenshot()).toMatchImageSnapshot();
+
+    await page.click(prevLink);
+
+    expect(await page.screenshot()).toMatchImageSnapshot();
+});
