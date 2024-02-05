@@ -1,3 +1,21 @@
+# [14.42.0](https://github.com/Telefonica/mistica-web/compare/v14.41.0...v14.42.0) (2024-02-05)
+
+
+### Bug Fixes
+
+* **Button, ButtonLink:** make icons grow with fontsize and align Link chevron to baseline ([#1011](https://github.com/Telefonica/mistica-web/issues/1011)) ([1ded678](https://github.com/Telefonica/mistica-web/commit/1ded678a3721f992484d5c20531c8b62ee8d0148))
+* **Dialog:** add  deprecated prop to keep backwards compatibility ([#1005](https://github.com/Telefonica/mistica-web/issues/1005)) ([49851f7](https://github.com/Telefonica/mistica-web/commit/49851f7d3a58efd46f0ca99a26580a6fe76790c9))
+* **Feedback:** CLS after hydrate SSRed feedbacks ([#1004](https://github.com/Telefonica/mistica-web/issues/1004)) ([56a366a](https://github.com/Telefonica/mistica-web/commit/56a366a86d114c4376894ef5b28a1b60d8a9d714))
+* **Inline:** improve fullWidth case ([#1007](https://github.com/Telefonica/mistica-web/issues/1007)) ([2fc75f2](https://github.com/Telefonica/mistica-web/commit/2fc75f2d75b0979bed2bca8e903028a3c4aa86eb))
+* **LoadingBar:** update broken animation ([#1010](https://github.com/Telefonica/mistica-web/issues/1010)) ([31764fd](https://github.com/Telefonica/mistica-web/commit/31764fdb3f976f3b8d2cd6e5bfee428f1fdf15d6))
+
+
+### Features
+
+* **Dialogs:** Improve implementation. Create `useDialog` hook. Deprecate `alert`, `confirm` and `dialog` functions ([#997](https://github.com/Telefonica/mistica-web/issues/997)) ([44afa30](https://github.com/Telefonica/mistica-web/commit/44afa3040fc1e1aab60c8eb4fc7e2c53f1e10db6))
+* **Input fields:** multiple bugs fixed and improved accesibility ([#1002](https://github.com/Telefonica/mistica-web/issues/1002)) ([479b0c5](https://github.com/Telefonica/mistica-web/commit/479b0c51a14c48c537829a12cb37bd708815c13c))
+* **Slideshow,Carousel:** allow controlling the carousel from external component ([#1009](https://github.com/Telefonica/mistica-web/issues/1009)) ([58a4bd3](https://github.com/Telefonica/mistica-web/commit/58a4bd3881aed40587c7c25ed03c24d65e5d2b1c))
+
 # [14.41.0](https://github.com/Telefonica/mistica-web/compare/v14.40.0...v14.41.0) (2024-01-23)
 
 
