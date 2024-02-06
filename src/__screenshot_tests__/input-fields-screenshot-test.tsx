@@ -1,4 +1,4 @@
-import {openStoryPage, screen} from '../test-utils';
+import {openStoryPage, screen, setRootFontSize} from '../test-utils';
 import {within} from '@telefonica/acceptance-testing';
 
 test('TextField - appears properly on desktop', async () => {
@@ -20,7 +20,7 @@ test('TextField - label', async () => {
         args: {defaultValue: ''},
     });
 
-    const fieldWrapper = await screen.findByTestId('text-field-wrapper');
+    const fieldWrapper = await screen.findByTestId('text-field');
     const image = await fieldWrapper.screenshot();
 
     expect(image).toMatchImageSnapshot();
@@ -33,7 +33,7 @@ test('TextField - optional', async () => {
         args: {defaultValue: '', optional: true},
     });
 
-    const fieldWrapper = await screen.findByTestId('text-field-wrapper');
+    const fieldWrapper = await screen.findByTestId('text-field');
     const image = await fieldWrapper.screenshot();
 
     expect(image).toMatchImageSnapshot();
@@ -46,7 +46,7 @@ test('TextField - multiline and optional', async () => {
         args: {defaultValue: '', optional: true, multiline: true},
     });
 
-    const fieldWrapper = await screen.findByTestId('text-field-wrapper');
+    const fieldWrapper = await screen.findByTestId('text-field');
     const image = await fieldWrapper.screenshot();
 
     expect(image).toMatchImageSnapshot();
@@ -59,7 +59,7 @@ test('TextField - multiline and maxLength', async () => {
         args: {defaultValue: '', maxLength: true, multiline: true},
     });
 
-    const fieldWrapper = await screen.findByTestId('text-field-wrapper');
+    const fieldWrapper = await screen.findByTestId('text-field');
     const image = await fieldWrapper.screenshot();
 
     expect(image).toMatchImageSnapshot();
@@ -72,11 +72,13 @@ test('TextField - long label', async () => {
         args: {defaultValue: '', label: 'This TextField has a very long label and should display ellipsis'},
     });
 
-    const fieldWrapper = await screen.findByTestId('text-field-wrapper');
+    const fieldWrapper = await screen.findByTestId('text-field');
 
     const image = await fieldWrapper.screenshot();
 
-    const field = await screen.findByTestId('text-field');
+    const field = await screen.findByLabelText(
+        'This TextField has a very long label and should display ellipsis'
+    );
     await field.type('Some text');
 
     expect(await fieldWrapper.screenshot()).toMatchImageSnapshot();
@@ -91,7 +93,7 @@ test('TextField - long value', async () => {
         args: {defaultValue: 'This TextField has a very long text and should cover the entire field'},
     });
 
-    const fieldWrapper = await screen.findByTestId('text-field-wrapper');
+    const fieldWrapper = await screen.findByTestId('text-field');
     const image = await fieldWrapper.screenshot();
 
     expect(image).toMatchImageSnapshot();
@@ -103,7 +105,7 @@ test('TextField - label and default value', async () => {
         device: 'MOBILE_IOS',
     });
 
-    const fieldWrapper = await screen.findByTestId('text-field-wrapper');
+    const fieldWrapper = await screen.findByTestId('text-field');
     const image = await fieldWrapper.screenshot();
 
     expect(image).toMatchImageSnapshot();
@@ -116,7 +118,7 @@ test('TextField - helper text', async () => {
         args: {helperText: 'Helper text'},
     });
 
-    const fieldWrapper = await screen.findByTestId('text-field-wrapper');
+    const fieldWrapper = await screen.findByTestId('text-field');
     const image = await fieldWrapper.screenshot();
 
     expect(image).toMatchImageSnapshot();
@@ -129,7 +131,7 @@ test('TextField - error', async () => {
         args: {error: true, helperText: 'I am a descriptive error'},
     });
 
-    const fieldWrapper = await screen.findByTestId('text-field-wrapper');
+    const fieldWrapper = await screen.findByTestId('text-field');
     const image = await fieldWrapper.screenshot();
 
     expect(image).toMatchImageSnapshot();
@@ -142,7 +144,7 @@ test('TextField - prefix', async () => {
         args: {prefix: 'Prefix'},
     });
 
-    const fieldWrapper = await screen.findByTestId('text-field-wrapper');
+    const fieldWrapper = await screen.findByTestId('text-field');
     const image = await fieldWrapper.screenshot();
 
     expect(image).toMatchImageSnapshot();
@@ -155,7 +157,7 @@ test('TextField - end icon', async () => {
         args: {icon: true},
     });
 
-    const fieldWrapper = await screen.findByTestId('text-field-wrapper');
+    const fieldWrapper = await screen.findByTestId('text-field');
     const image = await fieldWrapper.screenshot();
 
     expect(image).toMatchImageSnapshot();
@@ -168,7 +170,7 @@ test('TextField - disabled', async () => {
         args: {icon: true, disabled: true},
     });
 
-    const fieldWrapper = await screen.findByTestId('text-field-wrapper');
+    const fieldWrapper = await screen.findByTestId('text-field');
     const image = await fieldWrapper.screenshot();
 
     expect(image).toMatchImageSnapshot();
@@ -181,7 +183,7 @@ test('TextField - read only', async () => {
         args: {icon: true, readOnly: true},
     });
 
-    const fieldWrapper = await screen.findByTestId('text-field-wrapper');
+    const fieldWrapper = await screen.findByTestId('text-field');
     const field = await screen.findByTestId('text-field');
 
     const image = await fieldWrapper.screenshot();
@@ -201,7 +203,20 @@ test('TextField - inverse and helper text', async () => {
         args: {inverse: true, helperText: 'Helper text'},
     });
 
-    const fieldWrapper = await screen.findByTestId('text-field-wrapper');
+    const fieldWrapper = await screen.findByTestId('text-field');
+    const image = await fieldWrapper.screenshot();
+
+    expect(image).toMatchImageSnapshot();
+});
+
+test('TextField - inverse and prefix', async () => {
+    await openStoryPage({
+        id: 'components-input-fields-textfield--uncontrolled',
+        device: 'MOBILE_IOS',
+        args: {inverse: true, prefix: 'Prefix'},
+    });
+
+    const fieldWrapper = await screen.findByTestId('text-field');
     const image = await fieldWrapper.screenshot();
 
     expect(image).toMatchImageSnapshot();
@@ -214,7 +229,7 @@ test('TextField - inverse and error', async () => {
         args: {inverse: true, error: true, helperText: 'I am a descriptive error'},
     });
 
-    const fieldWrapper = await screen.findByTestId('text-field-wrapper');
+    const fieldWrapper = await screen.findByTestId('text-field');
     const image = await fieldWrapper.screenshot();
 
     expect(image).toMatchImageSnapshot();
@@ -227,14 +242,14 @@ test('TextField - collapses its label when autofill fills out the form', async (
         args: {defaultValue: ''},
     });
 
-    const fieldWrapper = await screen.findByTestId('text-field-wrapper');
+    const fieldWrapper = await screen.findByTestId('text-field');
     const image = await fieldWrapper.screenshot();
 
     expect(image).toMatchImageSnapshot();
 
     // it simulates a data autofill
     await page.evaluate(() => {
-        const input = document.querySelector('input[data-testid="text-field"]');
+        const input = document.querySelector('input[name="text"]');
         Object.getOwnPropertyDescriptor(Object.getPrototypeOf(input), 'value')?.set?.call(input, 'ciao');
         input?.dispatchEvent(new Event('input', {bubbles: true}));
     });
@@ -250,8 +265,8 @@ test('TextField - appears properly (focus)', async () => {
         args: {defaultValue: ''},
     });
 
-    const fieldWrapper = await screen.findByTestId('text-field-wrapper');
-    await page.click(await screen.findByTestId('text-field'));
+    const fieldWrapper = await screen.findByTestId('text-field');
+    await page.click(await screen.findByLabelText('Label'));
     const image = await fieldWrapper.screenshot();
 
     expect(image).toMatchImageSnapshot();
@@ -264,8 +279,8 @@ test('TextField - appears properly (typing)', async () => {
         args: {defaultValue: ''},
     });
 
-    const fieldWrapper = await screen.findByTestId('text-field-wrapper');
-    const field = await screen.findByTestId('text-field');
+    const fieldWrapper = await screen.findByTestId('text-field');
+    const field = await screen.findByLabelText('Label');
     await field.type('hello moto');
     const image = await fieldWrapper.screenshot();
 
@@ -279,8 +294,8 @@ test('TextField - appears properly (typing and blur)', async () => {
         args: {defaultValue: ''},
     });
 
-    const fieldWrapper = await screen.findByTestId('text-field-wrapper');
-    const field = await screen.findByTestId('text-field');
+    const fieldWrapper = await screen.findByTestId('text-field');
+    const field = await screen.findByLabelText('Label');
     await field.type('hello moto');
 
     await field.evaluate((el) => (el as HTMLInputElement).blur());
@@ -296,8 +311,8 @@ test('TextField - multiline', async () => {
         args: {defaultValue: '', multiline: true},
     });
 
-    const field = await screen.findByTestId('text-field');
-    const fieldWrapper = await screen.findByTestId('text-field-wrapper');
+    const fieldWrapper = await screen.findByTestId('text-field');
+    const field = await screen.findByLabelText('Label');
 
     const emptyScreenshot = await fieldWrapper.screenshot();
     expect(emptyScreenshot).toMatchImageSnapshot();
@@ -326,8 +341,8 @@ test('SearchField', async () => {
         device: 'MOBILE_IOS',
     });
 
-    const fieldWrapper = await screen.findByTestId('search-field-wrapper');
-    const field = await screen.findByTestId('search-field');
+    const fieldWrapper = await screen.findByTestId('search-field');
+    const field = await screen.findByLabelText('Label');
 
     const emptyScreenshot = await fieldWrapper.screenshot();
 
@@ -346,8 +361,8 @@ test('DateField', async () => {
         args: {defaultValue: ''},
     });
 
-    const fieldWrapper = await screen.findByTestId('date-field-wrapper');
-    const field = await screen.findByTestId('date-field');
+    const fieldWrapper = await screen.findByTestId('date-field');
+    const field = await screen.findByLabelText('Label');
 
     const emptyScreenshot = await fieldWrapper.screenshot();
 
@@ -361,6 +376,34 @@ test('DateField', async () => {
     expect(filledScreenshot).toMatchImageSnapshot();
 });
 
+test('DateField - disabled', async () => {
+    await openStoryPage({
+        id: 'components-input-fields-datefield--uncontrolled',
+        device: 'MOBILE_IOS',
+        args: {disabled: true},
+    });
+
+    const fieldWrapper = await screen.findByTestId('date-field');
+
+    const image = await fieldWrapper.screenshot();
+
+    expect(image).toMatchImageSnapshot();
+});
+
+test('DateField - readOnly', async () => {
+    await openStoryPage({
+        id: 'components-input-fields-datefield--uncontrolled',
+        device: 'MOBILE_IOS',
+        args: {readOnly: true},
+    });
+
+    const fieldWrapper = await screen.findByTestId('date-field');
+
+    const image = await fieldWrapper.screenshot();
+
+    expect(image).toMatchImageSnapshot();
+});
+
 test('DateTimeField', async () => {
     await openStoryPage({
         id: 'components-input-fields-datetimefield--uncontrolled',
@@ -368,8 +411,8 @@ test('DateTimeField', async () => {
         args: {defaultValue: ''},
     });
 
-    const fieldWrapper = await screen.findByTestId('datetime-field-wrapper');
-    const field = await screen.findByTestId('datetime-field');
+    const fieldWrapper = await screen.findByTestId('datetime-field');
+    const field = await screen.findByLabelText('Label');
 
     const emptyScreenshot = await fieldWrapper.screenshot();
 
@@ -390,8 +433,8 @@ test('MonthField', async () => {
         args: {defaultValue: ''},
     });
 
-    const fieldWrapper = await screen.findByTestId('month-field-wrapper');
-    const field = await screen.findByTestId('month-field');
+    const fieldWrapper = await screen.findByTestId('month-field');
+    const field = await screen.findByLabelText('Label');
 
     const emptyScreenshot = await fieldWrapper.screenshot();
 
@@ -413,7 +456,7 @@ test('PinField', async () => {
         device: 'MOBILE_IOS',
     });
 
-    const fieldGroup = await screen.findByTestId('pin-field-wrapper');
+    const fieldGroup = await screen.findByTestId('pin-field');
     expect(await fieldGroup.screenshot()).toMatchImageSnapshot();
 
     const firstDigitField = await within(fieldGroup).findByLabelText('Dígito 1 de 6');
@@ -431,7 +474,7 @@ test('PinField - hideCode', async () => {
         args: {hideCode: true},
     });
 
-    const fieldGroup = await screen.findByTestId('pin-field-wrapper');
+    const fieldGroup = await screen.findByTestId('pin-field');
 
     const firstDigitField = await within(fieldGroup).findByLabelText('Dígito 1 de 6');
     await firstDigitField.type('1');
@@ -451,12 +494,13 @@ test.each`
         args: {defaultValue: number},
     });
 
-    const field = await screen.findByTestId('phone-number-field');
+    const fieldWrapper = await screen.findByTestId('phone-number-field');
+    const field = await screen.findByLabelText('Label');
 
     await field.click({clickCount: 3});
     await field.type(number);
 
-    expect(await field.screenshot()).toMatchImageSnapshot();
+    expect(await fieldWrapper.screenshot()).toMatchImageSnapshot();
 });
 
 test('CreditCardExpirationField', async () => {
@@ -466,8 +510,8 @@ test('CreditCardExpirationField', async () => {
         args: {defaultValue: ''},
     });
 
-    const fieldWrapper = await screen.findByTestId('credit-card-expiration-field-wrapper');
-    const field = await screen.findByTestId('credit-card-expiration-field');
+    const fieldWrapper = await screen.findByTestId('credit-card-expiration-field');
+    const field = await screen.findByLabelText('Label');
 
     const emptyScreenshot = await fieldWrapper.screenshot();
 
@@ -486,8 +530,8 @@ test('CreditCardNumberField', async () => {
         args: {defaultValue: ''},
     });
 
-    const fieldWrapper = await screen.findByTestId('credit-card-number-field-wrapper');
-    const field = await screen.findByTestId('credit-card-number-field');
+    const fieldWrapper = await screen.findByTestId('credit-card-number-field');
+    const field = await screen.findByLabelText('Label');
 
     const emptyScreenshot = await fieldWrapper.screenshot();
 
@@ -506,8 +550,8 @@ test('CvvField', async () => {
         args: {defaultValue: ''},
     });
 
-    const fieldWrapper = await screen.findByTestId('cvv-field-wrapper');
-    const field = await screen.findByTestId('cvv-field');
+    const fieldWrapper = await screen.findByTestId('cvv-field');
+    const field = await screen.findByLabelText('Label');
 
     const emptyScreenshot = await fieldWrapper.screenshot();
 
@@ -526,8 +570,8 @@ test('DecimalField', async () => {
         args: {defaultValue: ''},
     });
 
-    const fieldWrapper = await screen.findByTestId('decimal-field-wrapper');
-    const field = await screen.findByTestId('decimal-field');
+    const fieldWrapper = await screen.findByTestId('decimal-field');
+    const field = await screen.findByLabelText('Label');
 
     const emptyScreenshot = await fieldWrapper.screenshot();
 
@@ -546,8 +590,8 @@ test('EmailField', async () => {
         args: {defaultValue: ''},
     });
 
-    const fieldWrapper = await screen.findByTestId('email-field-wrapper');
-    const field = await screen.findByTestId('email-field');
+    const fieldWrapper = await screen.findByTestId('email-field');
+    const field = await screen.findByLabelText('Label');
 
     const emptyScreenshot = await fieldWrapper.screenshot();
 
@@ -566,8 +610,8 @@ test('IbanField', async () => {
         args: {defaultValue: ''},
     });
 
-    const fieldWrapper = await screen.findByTestId('iban-field-wrapper');
-    const field = await screen.findByTestId('iban-field');
+    const fieldWrapper = await screen.findByTestId('iban-field');
+    const field = await screen.findByLabelText('Label');
 
     const emptyScreenshot = await fieldWrapper.screenshot();
 
@@ -586,8 +630,8 @@ test('IntegerField', async () => {
         args: {defaultValue: ''},
     });
 
-    const fieldWrapper = await screen.findByTestId('integer-field-wrapper');
-    const field = await screen.findByTestId('integer-field');
+    const fieldWrapper = await screen.findByTestId('integer-field');
+    const field = await screen.findByLabelText('Label');
 
     const emptyScreenshot = await fieldWrapper.screenshot();
 
@@ -606,8 +650,8 @@ test('PasswordField', async () => {
         args: {defaultValue: ''},
     });
 
-    const fieldWrapper = await screen.findByTestId('password-field-wrapper');
-    const field = await screen.findByTestId('password-field');
+    const fieldWrapper = await screen.findByTestId('password-field');
+    const field = await screen.findByLabelText('Label');
 
     const emptyScreenshot = await fieldWrapper.screenshot();
 
@@ -623,4 +667,129 @@ test('PasswordField', async () => {
     const visibleScreenshot = await fieldWrapper.screenshot();
 
     expect(visibleScreenshot).toMatchImageSnapshot();
+});
+
+test("PasswordField - long label doesn't collide with icon", async () => {
+    await openStoryPage({
+        id: 'components-input-fields-passwordfield--uncontrolled',
+        device: 'MOBILE_IOS',
+        args: {label: 'This TextField has a very long label and should display ellipsis'},
+    });
+
+    const fieldWrapper = await screen.findByTestId('password-field');
+
+    const image = await fieldWrapper.screenshot();
+
+    expect(image).toMatchImageSnapshot();
+});
+
+test('TextField - increased font size', async () => {
+    await openStoryPage({
+        id: 'components-input-fields-textfield--controlled',
+        device: 'MOBILE_IOS',
+        args: {prefix: 'Prefix'},
+    });
+
+    await setRootFontSize(32);
+
+    const fieldWrapper = await screen.findByTestId('text-field');
+    const image = await fieldWrapper.screenshot();
+
+    expect(image).toMatchImageSnapshot();
+});
+
+test('PasswordField - increased font size', async () => {
+    await openStoryPage({
+        id: 'components-input-fields-passwordfield--controlled',
+        device: 'MOBILE_IOS',
+    });
+
+    await setRootFontSize(32);
+
+    const fieldWrapper = await screen.findByTestId('password-field');
+    const image = await fieldWrapper.screenshot();
+
+    expect(image).toMatchImageSnapshot();
+});
+
+test('SearchField - increased font size', async () => {
+    await openStoryPage({
+        id: 'components-input-fields-searchfield--controlled',
+        device: 'MOBILE_IOS',
+        args: {initialValue: 'Some text'},
+    });
+
+    await setRootFontSize(32);
+
+    const fieldWrapper = await screen.findByTestId('search-field');
+    const field = await screen.findByLabelText('Label');
+
+    const image = await fieldWrapper.screenshot();
+
+    expect(image).toMatchImageSnapshot();
+
+    await field.type('a long text to cause overflow');
+    await field.evaluate((el) => (el as HTMLInputElement).blur());
+
+    const withLongValue = await fieldWrapper.screenshot();
+
+    expect(withLongValue).toMatchImageSnapshot();
+});
+
+test('DateField - increased font size', async () => {
+    await openStoryPage({
+        id: 'components-input-fields-datefield--controlled',
+        device: 'MOBILE_IOS',
+    });
+
+    await setRootFontSize(32);
+
+    const fieldWrapper = await screen.findByTestId('date-field');
+    const image = await fieldWrapper.screenshot();
+
+    expect(image).toMatchImageSnapshot();
+});
+
+test('CreditCardNumberField - increased font size', async () => {
+    await openStoryPage({
+        id: 'components-input-fields-creditcardnumberfield--controlled',
+        device: 'MOBILE_IOS',
+    });
+
+    await setRootFontSize(32);
+
+    const fieldWrapper = await screen.findByTestId('credit-card-number-field');
+    const image = await fieldWrapper.screenshot();
+
+    expect(image).toMatchImageSnapshot();
+});
+
+test('CvvField - increased font size', async () => {
+    await openStoryPage({
+        id: 'components-input-fields-cvvfield--controlled',
+        device: 'MOBILE_IOS',
+    });
+
+    await setRootFontSize(32);
+
+    const fieldWrapper = await screen.findByTestId('cvv-field');
+    const image = await fieldWrapper.screenshot();
+
+    expect(image).toMatchImageSnapshot();
+});
+
+test('PinField- increased font size', async () => {
+    await openStoryPage({
+        id: 'components-input-fields-pinfield--uncontrolled',
+        device: 'MOBILE_IOS',
+    });
+
+    await setRootFontSize(32);
+
+    const fieldGroup = await screen.findByTestId('pin-field');
+
+    const firstDigitField = await within(fieldGroup).findByLabelText('Dígito 1 de 6');
+    await firstDigitField.type('1');
+
+    expect(await fieldGroup.screenshot()).toMatchImageSnapshot();
 });

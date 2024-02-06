@@ -44,18 +44,17 @@ export const Controlled: StoryComponent<PinFieldControlledArgs> = ({inverse, ini
         <ResponsiveLayout isInverse={inverse} fullWidth>
             <Box padding={16}>
                 <Stack space={16}>
-                    <div data-testid="pin-field-wrapper">
-                        <PinField
-                            value={rawValue}
-                            onChangeValue={(value, rawValue) => {
-                                setValue(value);
-                                setRawValue(rawValue);
-                            }}
-                            name="pin"
-                            aria-label={rest.hideCode ? 'PIN' : 'OTP'}
-                            {...rest}
-                        />
-                    </div>
+                    <PinField
+                        value={rawValue}
+                        onChangeValue={(value, rawValue) => {
+                            setValue(value);
+                            setRawValue(rawValue);
+                        }}
+                        name="pin"
+                        aria-label={rest.hideCode ? 'PIN' : 'OTP'}
+                        dataAttributes={{testid: 'pin-field'}}
+                        {...rest}
+                    />
                     <Stack space={8}>
                         <Text1 regular>
                             value: {typeof value === 'undefined' ? '' : `(${typeof value}) ${inspect(value)}`}
@@ -91,19 +90,17 @@ export const Uncontrolled: StoryComponent<PinFieldUncontrolledArgs> = ({inverse,
         <ResponsiveLayout isInverse={inverse} fullWidth>
             <Box padding={16}>
                 <Stack space={16}>
-                    <div data-testid="pin-field-wrapper">
-                        <PinField
-                            defaultValue={defaultValue}
-                            onChangeValue={(value, rawValue) => {
-                                setValue(value);
-                                setRawValue(rawValue);
-                            }}
-                            name="pin"
-                            aria-label={rest.hideCode ? 'PIN' : 'OTP'}
-                            data-testid="pin-field"
-                            {...rest}
-                        />
-                    </div>
+                    <PinField
+                        defaultValue={defaultValue}
+                        onChangeValue={(value, rawValue) => {
+                            setValue(value);
+                            setRawValue(rawValue);
+                        }}
+                        name="pin"
+                        aria-label={rest.hideCode ? 'PIN' : 'OTP'}
+                        dataAttributes={{testid: 'pin-field'}}
+                        {...rest}
+                    />
                     <Stack space={8}>
                         <Text1 regular>
                             value: {typeof value === 'undefined' ? '' : `(${typeof value}) ${inspect(value)}`}

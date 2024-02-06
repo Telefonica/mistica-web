@@ -2,7 +2,7 @@ import * as React from 'react';
 
 type Props = {
     role?: string;
-    size?: number;
+    size?: number | string;
 };
 
 const IconVisa: React.FC<Props> = ({role = 'presentation', size = 24}) => (

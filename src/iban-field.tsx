@@ -171,6 +171,7 @@ const IbanField: React.FC<IbanFieldProps> = ({
     onBlur,
     value,
     defaultValue,
+    dataAttributes,
     ...rest
 }) => {
     const {texts} = useTheme();
@@ -202,7 +203,14 @@ const IbanField: React.FC<IbanFieldProps> = ({
         onChangeValue,
     });
 
-    return <TextFieldBaseAutosuggest {...rest} {...fieldProps} inputComponent={IbanInput} />;
+    return (
+        <TextFieldBaseAutosuggest
+            {...rest}
+            {...fieldProps}
+            inputComponent={IbanInput}
+            dataAttributes={{'component-name': 'IbanField', ...dataAttributes}}
+        />
+    );
 };
 
 export default IbanField;

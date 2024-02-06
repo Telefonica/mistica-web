@@ -53,20 +53,18 @@ export const Controlled: StoryComponent<SearchFieldControlledArgs> = ({
         <ResponsiveLayout isInverse={inverse} fullWidth>
             <Box padding={16}>
                 <Stack space={16}>
-                    <div data-testid="search-field-wrapper">
-                        <SearchField
-                            value={rawValue}
-                            onChangeValue={(value, rawValue) => {
-                                setValue(value);
-                                setRawValue(rawValue);
-                            }}
-                            name="search"
-                            autoComplete="off"
-                            data-testid="search-field"
-                            getSuggestions={suggestions ? getCountrySuggestions : undefined}
-                            {...rest}
-                        />
-                    </div>
+                    <SearchField
+                        value={rawValue}
+                        onChangeValue={(value, rawValue) => {
+                            setValue(value);
+                            setRawValue(rawValue);
+                        }}
+                        name="search"
+                        autoComplete="off"
+                        dataAttributes={{testid: 'search-field'}}
+                        getSuggestions={suggestions ? getCountrySuggestions : undefined}
+                        {...rest}
+                    />
                     <Stack space={8}>
                         <Text1 regular>
                             value: {typeof value === 'undefined' ? '' : `(${typeof value}) ${inspect(value)}`}
@@ -107,19 +105,17 @@ export const Uncontrolled: StoryComponent<SearchFieldUncontrolledArgs> = ({
         <ResponsiveLayout isInverse={inverse} fullWidth>
             <Box padding={16}>
                 <Stack space={16}>
-                    <div data-testid="search-field-wrapper">
-                        <SearchField
-                            defaultValue={defaultValue}
-                            onChangeValue={(value, rawValue) => {
-                                setValue(value);
-                                setRawValue(rawValue);
-                            }}
-                            name="search"
-                            autoComplete="off"
-                            data-testid="search-field"
-                            {...rest}
-                        />
-                    </div>
+                    <SearchField
+                        defaultValue={defaultValue}
+                        onChangeValue={(value, rawValue) => {
+                            setValue(value);
+                            setRawValue(rawValue);
+                        }}
+                        name="search"
+                        autoComplete="off"
+                        dataAttributes={{testid: 'search-field'}}
+                        {...rest}
+                    />
                     <Stack space={8}>
                         <Text1 regular>
                             value: {typeof value === 'undefined' ? '' : `(${typeof value}) ${inspect(value)}`}
