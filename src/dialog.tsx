@@ -314,7 +314,7 @@ const ModalDialog = (props: ModalDialogProps): JSX.Element => {
         return () => {
             window.removeEventListener('popstate', handleBackNavigationRef.current);
         };
-    }, [dismiss, shouldRenderNative, handleBackNavigation]);
+    }, [handleBackNavigation, shouldRenderNative]);
 
     const handleKeyDown = React.useCallback(
         (event: KeyboardEvent) => {
