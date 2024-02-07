@@ -57,7 +57,7 @@ export const fullWidth = style({
      * Once changed, the usages that depend on this behavior should be migrated to use <Grid>
      * See "inline-cases" private story
      */
-    display: 'grid',
+    display: ['flex', 'grid'],
 });
 
 export const wrap = style({
@@ -66,11 +66,11 @@ export const wrap = style({
 });
 
 export const noFullWidth = style({
-    display: 'inline-grid',
+    display: ['inline-flex', 'inline-grid'],
 });
 
 export const stringSpace = style({
-    display: 'grid',
+    display: ['flex', 'grid'],
     justifyContent: space,
 });
 
