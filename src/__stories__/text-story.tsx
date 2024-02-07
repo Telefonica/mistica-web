@@ -58,38 +58,37 @@ const Wrapper = ({children}: any) => (
         {children}
     </div>
 );
-export const TextWrapping: StoryComponent = () => {
+
+type TextWrappingArgs = {
+    text: string;
+};
+
+export const TextWrapping: StoryComponent<TextWrappingArgs> = ({text}) => {
     return (
         <Stack space={16} dataAttributes={{testid: 'text'}}>
             <Wrapper>
-                <Title1>Default (with workBreak)</Title1>
-                <Text2 regular>
-                    Strawberry Friendship Everything Pneumonoultramicroscopicsilicovolcanoconiosis Appreciate
-                    Motivation
-                </Text2>
+                <Title1>Default (with wordBreak)</Title1>
+                <Text2 regular>{text}</Text2>
             </Wrapper>
 
             <Wrapper>
                 <Title1>Without wordBreak</Title1>
                 <Text2 regular wordBreak={false}>
-                    Strawberry Friendship Everything Pneumonoultramicroscopicsilicovolcanoconiosis Appreciate
-                    Motivation
+                    {text}
                 </Text2>
             </Wrapper>
 
             <Wrapper>
                 <Title1>truncate=1</Title1>
                 <Text2 regular truncate>
-                    Strawberry Friendship Everything Pneumonoultramicroscopicsilicovolcanoconiosis Appreciate
-                    Motivation
+                    {text}
                 </Text2>
             </Wrapper>
 
             <Wrapper>
                 <Title1>truncate=3</Title1>
                 <Text2 regular truncate={3}>
-                    Strawberry Friendship Everything Pneumonoultramicroscopicsilicovolcanoconiosis Appreciate
-                    Motivation
+                    {text}
                 </Text2>
             </Wrapper>
         </Stack>
@@ -97,3 +96,6 @@ export const TextWrapping: StoryComponent = () => {
 };
 
 TextWrapping.storyName = 'Text wrapping';
+TextWrapping.args = {
+    text: 'Strawberry Friendship Everything Pneumonoultramicroscopicsilicovolcanoconiosis Appreciate Motivation',
+};
