@@ -73,7 +73,7 @@ export const Text: React.FC<TextProps> = ({
     truncate,
     transform,
     wordBreak = true,
-    hyphens,
+    hyphens = 'auto',
     as = 'span',
     children,
     size,
