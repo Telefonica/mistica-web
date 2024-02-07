@@ -52,7 +52,7 @@ const TestComponent = () => {
 
 beforeEach(() => {
     // The history object is not cleared between tests. This way we put the history position at the end
-    act(() => window.history.pushState({}, '', '/'));
+    window.history.pushState({}, '', '/');
 });
 
 test('does not render anything initially', () => {
@@ -165,7 +165,9 @@ test('Closes a dialog on click outside', async () => {
 
     await userEvent.click(screen.getByTestId('dialog-overlay'));
 
-    await waitForElementToBeRemoved(() => screen.queryByRole('dialog', {hidden: true}));
+    await waitFor(() => {
+        expect(screen.queryByRole('dialog', {hidden: true})).not.toBeInTheDocument();
+    });
     expect(onCancelSpy).toHaveBeenCalled();
 });
 
@@ -188,7 +190,9 @@ test('closes confirm dialog when clicking on any button', async () => {
 
     await userEvent.click(cancelButton);
 
-    await waitForElementToBeRemoved(() => screen.queryByRole('dialog', {hidden: true}));
+    await waitFor(() => {
+        expect(screen.queryByRole('dialog', {hidden: true})).not.toBeInTheDocument();
+    });
     expect(onCancelSpy).toHaveBeenCalled();
 
     const confirmWithoutOnCancelButton = await screen.findByRole('button', {
@@ -221,7 +225,10 @@ test('closing a previous accepted dialog does not trigger onAccept callback', as
     const acceptButton = await screen.findByRole('button', {name: 'Yay!'});
     await userEvent.click(acceptButton);
 
-    await waitForElementToBeRemoved(() => screen.queryByRole('dialog', {hidden: true}));
+    await waitFor(() => {
+        expect(screen.queryByRole('dialog', {hidden: true})).not.toBeInTheDocument();
+    });
+
     expect(onAcceptSpy).toHaveBeenCalled();
 
     onAcceptSpy.mockClear();
@@ -231,7 +238,10 @@ test('closing a previous accepted dialog does not trigger onAccept callback', as
     const cancelButton = await screen.findByRole('button', {name: 'Nope!'});
     await userEvent.click(cancelButton);
 
-    await waitForElementToBeRemoved(() => screen.queryByRole('dialog', {hidden: true}));
+    await waitFor(() => {
+        expect(screen.queryByRole('dialog', {hidden: true})).not.toBeInTheDocument();
+    });
+
     expect(onAcceptSpy).not.toHaveBeenCalled();
 }, 10000);
 
@@ -301,7 +311,9 @@ test('history restored after closing a dialog using back', async () => {
         window.history.back();
     });
 
-    await waitForElementToBeRemoved(() => screen.queryByRole('dialog', {hidden: true}));
+    await waitFor(() => {
+        expect(screen.queryByRole('dialog', {hidden: true})).not.toBeInTheDocument();
+    });
 
     expect(pushStateSpy).toHaveBeenCalledTimes(1);
     expect(backSpy).toHaveBeenCalledTimes(1);
@@ -327,7 +339,9 @@ test('history restored after closing a dialog using a button', async () => {
     const acceptButton = await screen.findByRole('button', {name: 'Yay!'});
     await userEvent.click(acceptButton);
 
-    await waitForElementToBeRemoved(() => screen.queryByRole('dialog', {hidden: true}));
+    await waitFor(() => {
+        expect(screen.queryByRole('dialog', {hidden: true})).not.toBeInTheDocument();
+    });
 
     expect(pushStateSpy).toHaveBeenCalledTimes(1);
     expect(backSpy).toHaveBeenCalledTimes(1);
