@@ -55,9 +55,6 @@ export const truncate = style({
     boxOrient: 'vertical',
 });
 
-export const truncateToOneLine = style([
-    truncate,
-    {
-        wordBreak: 'break-all',
-    },
-]);
+export const truncateToOneLine = style({
+    wordBreak: 'break-all',
+});
