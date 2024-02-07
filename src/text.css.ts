@@ -59,24 +59,7 @@ export const truncateToOneLine = style([
     truncate,
     {
         wordBreak: 'break-all',
-        '@supports': {
-            '(overflow-wrap: anywhere)': {
-                overflowWrap: 'anywhere',
-                wordBreak: 'break-all',
-            },
-        },
     },
 ]);
 
-export const truncateToMoreThanOneLine = style([
-    truncate,
-    {
-        wordBreak: 'break-word',
-        '@supports': {
-            '(overflow-wrap: anywhere)': {
-                overflowWrap: 'anywhere',
-                wordBreak: 'normal',
-            },
-        },
-    },
-]);
+export const truncateToMoreThanOneLine = truncate;
