@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {render, waitFor, screen, act, waitForElementToBeRemoved} from '@testing-library/react';
+import {render, waitFor, screen, act} from '@testing-library/react';
 import {ThemeContextProvider, useDialog} from '..';
 import {makeTheme} from './test-utils';
 import * as webviewBridge from '@tef-novum/webview-bridge';
