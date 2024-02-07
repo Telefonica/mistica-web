@@ -629,13 +629,13 @@ const Tooltip: React.FC<Props> = ({
         <BaseTooltip
             content={
                 <Box className={styles.content}>
-                    {(title || description || extra || children) && (
+                    {(title || description) && (
                         <Stack space={4}>
                             {title && <Text2 medium>{title}</Text2>}
                             {description && <Text2 regular>{description}</Text2>}
-                            {extra ?? children}
                         </Stack>
                     )}
+                    {extra ?? children}
                 </Box>
             }
             centerContent={centerContent ?? textCenter}

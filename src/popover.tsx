@@ -48,25 +48,23 @@ const Popover: React.FC<Props> = ({
         <BaseTooltip
             content={
                 <Box className={styles.content}>
-                    <Stack space={4}>
-                        {(title || description || asset) && (
-                            <Box paddingRight={16}>
-                                <Inline space={16}>
-                                    {asset}
-                                    <Stack space={4}>
-                                        {title && <Text3 regular>{title}</Text3>}
-                                        {description && (
-                                            <Text2 regular color={skinVars.colors.textSecondary}>
-                                                {description}
-                                            </Text2>
-                                        )}
-                                    </Stack>
-                                </Inline>
-                            </Box>
-                        )}
+                    {(title || description || asset) && (
+                        <Box paddingRight={16}>
+                            <Inline space={16}>
+                                {asset}
+                                <Stack space={4}>
+                                    {title && <Text3 regular>{title}</Text3>}
+                                    {description && (
+                                        <Text2 regular color={skinVars.colors.textSecondary}>
+                                            {description}
+                                        </Text2>
+                                    )}
+                                </Stack>
+                            </Inline>
+                        </Box>
+                    )}
 
-                        {extra ?? children}
-                    </Stack>
+                    {extra ?? children}
                 </Box>
             }
             centerContent={false}
