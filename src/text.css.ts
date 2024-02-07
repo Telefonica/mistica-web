@@ -61,5 +61,3 @@ export const truncateToOneLine = style([
         wordBreak: 'break-all',
     },
 ]);
-
-export const truncateToMoreThanOneLine = truncate;

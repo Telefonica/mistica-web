@@ -104,7 +104,7 @@ export const Text: React.FC<TextProps> = ({
     }
     const className = classnames(styles.text, wordBreak ? styles.withWordBreak : styles.withoutWordBreak, {
         [styles.truncateToOneLine]: truncate === 1 || truncate === true,
-        [styles.truncateToMoreThanOneLine]: truncate && truncate > 1,
+        [styles.truncate]: truncate && truncate > 1,
     });
 
     const sizeVars = applyCssVars({
