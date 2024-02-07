@@ -128,6 +128,9 @@ const config = {
                     JSON.stringify(getMediaQueriesConfig())
                 ),
             }),
+            new webpack.DefinePlugin({
+                favicon: './img/favicon.svg',
+            }),
         ],
     }),
 };
