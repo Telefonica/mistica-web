@@ -2,7 +2,8 @@ import {style, keyframes} from '@vanilla-extract/css';
 import {sprinkles} from './sprinkles.css';
 import {vars} from './skins/skin-contract.css';
 
-export const TRANSITION_DURATION_MS = 400;
+const TRANSITION_DURATION_MS = 400;
+const ANIMATION_DURATION_MS = 1800;
 
 const enterAnimation = keyframes({
     from: {
@@ -35,7 +36,7 @@ export const progressContainer = sprinkles({
     width: '100%',
     overflow: 'hidden',
     position: 'relative',
-    background: vars.colors.loadingBarBackground,
+    background: vars.colors.loadingBar,
     height: 4,
 });
 
@@ -43,47 +44,26 @@ const progressIndicator = keyframes({
     '0%': {
         transform: 'translateX(0%)',
     },
+    '50%': {
+        transform: 'translateX(100%)',
+        animationTimingFunction: 'ease-in-out',
+    },
     '100%': {
-        transform: 'translateX(150%)',
+        transform: 'translateX(200%)',
+        animationTimingFunction: 'ease-in-out',
     },
 });
 
 export const progress = style([
     sprinkles({
         position: 'absolute',
-        height: '100%',
         width: '100%',
-    }),
-    {
-        left: '-55%',
-        animation: `${progressIndicator} 1.2s ease-out infinite`,
-        animationDelay: String(TRANSITION_DURATION_MS),
-        backgroundColor: vars.colors.loadingBar,
-    },
-]);
-
-const innerProgressIndicator = keyframes({
-    '0%': {
-        transform: 'scaleX(0.1)',
-    },
-    '20%': {
-        transform: 'scaleX(0.35)',
-    },
-    '50%': {
-        transform: 'scaleX(0.7)',
-    },
-    '100%': {
-        transform: 'scaleX(0.8)',
-    },
-});
-
-export const innerProgress = style([
-    sprinkles({
         height: '100%',
     }),
     {
-        transform: 'scaleX(0.1)',
-        animation: `${innerProgressIndicator} 1.2s ease-out infinite`,
-        animationDelay: String(TRANSITION_DURATION_MS),
+        left: '-100%',
+        animation: `${progressIndicator} ${ANIMATION_DURATION_MS}ms infinite`,
+        animationDelay: `${TRANSITION_DURATION_MS}ms`,
+        background: vars.colors.loadingBarBackground,
     },
 ]);

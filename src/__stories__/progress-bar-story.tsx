@@ -3,7 +3,7 @@ import {ProgressBar, ProgressBarStepped} from '..';
 import {vars} from '../skins/skin-contract.css';
 
 export default {
-    title: 'Components/Progress bar',
+    title: 'Components/Progress bars',
     argTypes: {
         color: {
             options: ['default', 'error'],

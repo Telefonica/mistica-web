@@ -2,6 +2,15 @@ import {style, styleVariants, createVar} from '@vanilla-extract/css';
 import {sprinkles} from './sprinkles.css';
 import * as mq from './media-queries.css';
 import {vars as skinVars} from './skins/skin-contract.css';
+import {
+    desktopFontSize,
+    fieldElementsGap,
+    fieldLeftPadding,
+    fieldRightPadding,
+    inputLineHeight,
+    mobileFontSize,
+} from './text-field-base.css';
+import {pxToRem} from './utils/css';
 
 const top = createVar();
 const left = createVar();
@@ -19,6 +28,8 @@ export const vars = {
 
 /** Must be equal or higher than the dialog's z-index */
 const OPTIONS_ZINDEX = 26;
+
+export const chevronSize = pxToRem(20);
 
 export const optionsContainer = style([
     sprinkles({
@@ -101,16 +112,23 @@ const selectBase = style([
         color: skinVars.colors.textPrimary,
         background: 'transparent', // FieldContainer gives the correct background color
         width: '100%',
-        height: '100%',
+        paddingY: 0,
     }),
     {
         fontFamily: 'inherit',
-        paddingRight: 0,
-        paddingLeft: 12,
+        paddingRight: `calc(${chevronSize} + ${fieldElementsGap}px + ${fieldRightPadding}px)`,
+        paddingLeft: fieldLeftPadding,
         outline: 0,
-        fontSize: 16,
         textOverflow: 'ellipsis',
         appearance: 'none',
+
+        lineHeight: inputLineHeight,
+        fontSize: desktopFontSize,
+        '@media': {
+            [mq.tabletOrSmaller]: {
+                fontSize: mobileFontSize,
+            },
+        },
     },
 ]);
 
@@ -138,13 +156,14 @@ const selectTextBase = style([
     }),
     {
         pointerEvents: 'none',
-        left: 12 + 1, // 12 for select paddingLeft and +1 for border
-        right: 48 + 1, // 48 for icon and +1 for border
-        lineHeight: '24px',
-        fontSize: 16,
+        top: 1, // for border
+        left: fieldLeftPadding + 1, // +1 for border
+        right: `calc(${chevronSize} + ${fieldElementsGap}px + ${fieldRightPadding}px + 1px)`, // icon width and +1 for border
+        lineHeight: inputLineHeight,
+        fontSize: desktopFontSize,
         '@media': {
-            [mq.desktopOrBigger]: {
-                fontSize: 18,
+            [mq.tabletOrSmaller]: {
+                fontSize: mobileFontSize,
             },
         },
         textOverflow: 'ellipsis',
@@ -160,10 +179,10 @@ export const selectTextVariants = styleVariants({
 export const arrowDown = style([
     sprinkles({
         position: 'absolute',
-        right: 16,
     }),
     {
-        top: 'calc(50% - 10px)',
+        right: fieldRightPadding,
+        top: `calc(50% - ${chevronSize} / 2)`,
         pointerEvents: 'none',
     },
 ]);
@@ -174,11 +193,11 @@ export const menuItem = style([
         display: 'flex',
         alignItems: 'center',
         cursor: 'pointer',
-        height: 48,
         paddingY: 8,
         paddingX: 16,
     }),
     {
+        height: pxToRem(48),
         transition: 'background-color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
 
         '@media': {

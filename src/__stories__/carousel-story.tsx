@@ -11,6 +11,11 @@ import {
     Title1,
     Text2,
     Image,
+    CarouselContextProvider,
+    FixedFooterLayout,
+    CarouselContextConsummer,
+    Inline,
+    PageBullets,
 } from '..';
 import tennisUrl from './images/tennis.jpg';
 
@@ -118,4 +123,57 @@ Default.argTypes = {
         options: mobilePageOffsetOptions,
         control: {type: 'select'},
     },
+};
+
+type WithCarouselContextArgs = {numItems: number};
+
+export const WithCarouselContext: StoryComponent<WithCarouselContextArgs> = ({numItems}) => {
+    return (
+        <CarouselContextProvider>
+            <FixedFooterLayout
+                footer={
+                    <ResponsiveLayout>
+                        <Box paddingY={16}>
+                            <CarouselContextConsummer>
+                                {({goNext, goPrev, goToPage, bulletsProps}) => (
+                                    <Inline space="between" alignItems="center">
+                                        <ButtonLink bleedLeft onPress={goPrev}>
+                                            Prev
+                                        </ButtonLink>
+                                        <PageBullets {...bulletsProps} onPress={goToPage} />
+                                        <ButtonLink bleedRight onPress={goNext}>
+                                            Next
+                                        </ButtonLink>
+                                    </Inline>
+                                )}
+                            </CarouselContextConsummer>
+                        </Box>
+                    </ResponsiveLayout>
+                }
+            >
+                <Box paddingY={24}>
+                    <ResponsiveLayout>
+                        <Carousel
+                            items={Array.from({length: numItems}, (_, idx) => (
+                                <MediaCard
+                                    aria-label={`Carousel item ${idx}`}
+                                    key={idx}
+                                    title={`Title ${idx}`}
+                                    description="Some description"
+                                    media={<Image src={tennisUrl} aspectRatio="16:9" />}
+                                    buttonLink={<ButtonLink href="https://google.com">Link {idx}</ButtonLink>}
+                                />
+                            ))}
+                        />
+                    </ResponsiveLayout>
+                </Box>
+            </FixedFooterLayout>
+        </CarouselContextProvider>
+    );
+};
+
+WithCarouselContext.storyName = 'Carousel with CarouselContext';
+WithCarouselContext.parameters = {fullScreen: true};
+WithCarouselContext.args = {
+    numItems: 6,
 };

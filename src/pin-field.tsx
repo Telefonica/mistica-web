@@ -8,9 +8,11 @@ import {useAriaId, useTheme} from './hooks';
 import ScreenReaderOnly from './screen-reader-only';
 import {IntegerInput} from './integer-field';
 import {useFieldProps} from './form-context';
-import {createChangeEvent} from './utils/dom';
+import {createChangeEvent, getPrefixedDataAttributes} from './utils/dom';
 import {HelperText} from './text-field-components';
 import {flushSync} from 'react-dom';
+
+import type {DataAttributes} from './utils/types';
 
 // Protection for when there is more than one OtpField in the page.
 // This should't be a supported use case, but we need it in storybook/playroom, and for some reason
@@ -187,14 +189,20 @@ const PinInput = ({
                                 inputRef(el);
                             }
                         }}
-                        className={classNames(
-                            textFieldStyles.input,
-                            textFieldStyles.inputWithoutLabel,
-                            styles.input,
-                            {
-                                [styles.passwordInput]: hideCode,
-                            }
-                        )}
+                        className={classNames(textFieldStyles.input, styles.input, {
+                            [styles.passwordInput]: hideCode,
+                        })}
+                        /**
+                         * We need to override IntegerField styles because PinField has a different
+                         * style than other inputs (less margin, fontSize and height).
+                         */
+                        style={{
+                            marginTop: `calc(${styles.pinInputLineHeight} - 1px)`,
+                            marginBottom: `calc(${styles.pinInputLineHeight} - 1px)`,
+                            lineHeight: styles.pinInputLineHeight,
+                            fontSize: styles.pinInputLineHeight,
+                            height: styles.pinInputLineHeight,
+                        }}
                         disabled={disabled}
                         readOnly={readOnly}
                         autoComplete={readSms ? 'one-time-code' : undefined}
@@ -268,6 +276,7 @@ type OtpFieldProps = {
     onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
     'aria-label'?: string;
     'aria-labelledby'?: string;
+    dataAttributes?: DataAttributes;
 };
 
 const PinField = ({
@@ -285,6 +294,7 @@ const PinField = ({
     onChange,
     'aria-label': ariaLabel,
     'aria-labelledby': ariaLabelledBy,
+    dataAttributes,
 }: OtpFieldProps): React.ReactElement => {
     const fieldProps = useFieldProps({
         name,
@@ -305,7 +315,8 @@ const PinField = ({
         <div
             role="group"
             aria-labelledby={ariaLabelledBy ?? otpLabelId}
-            className={disabled ? styles.disabled : undefined}
+            className={classNames(styles.fieldContainer, {[styles.disabled]: disabled})}
+            {...getPrefixedDataAttributes(dataAttributes, 'PinField')}
         >
             {ariaLabel && !ariaLabelledBy && (
                 <ScreenReaderOnly>

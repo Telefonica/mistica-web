@@ -107,7 +107,15 @@ export {default as Image} from './image';
 export {default as Chip} from './chip';
 export {default as Video} from './video';
 export type {VideoElement} from './video';
-export {Carousel, CenteredCarousel, Slideshow, PageBullets} from './carousel';
+export {
+    Carousel,
+    CenteredCarousel,
+    Slideshow,
+    PageBullets,
+    CarouselContextProvider,
+    useCarouselContext,
+    CarouselContextConsummer,
+} from './carousel';
 export {Grid, GridItem} from './grid';
 export {
     default as Sheet,

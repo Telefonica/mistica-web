@@ -41,19 +41,17 @@ export const Controlled: StoryComponent<EmailFieldControlledArgs> = ({inverse, i
         <ResponsiveLayout isInverse={inverse} fullWidth>
             <Box padding={16}>
                 <Stack space={16}>
-                    <div data-testid="email-field-wrapper">
-                        <EmailField
-                            value={rawValue}
-                            onChangeValue={(value, rawValue) => {
-                                setValue(value);
-                                setRawValue(rawValue);
-                            }}
-                            name="email"
-                            autoComplete="off"
-                            data-testid="email-field"
-                            {...rest}
-                        />
-                    </div>
+                    <EmailField
+                        value={rawValue}
+                        onChangeValue={(value, rawValue) => {
+                            setValue(value);
+                            setRawValue(rawValue);
+                        }}
+                        name="email"
+                        autoComplete="off"
+                        dataAttributes={{testid: 'email-field'}}
+                        {...rest}
+                    />
                     <Stack space={8}>
                         <Text1 regular>
                             value: {typeof value === 'undefined' ? '' : `(${typeof value}) ${inspect(value)}`}
@@ -93,19 +91,17 @@ export const Uncontrolled: StoryComponent<EmailFieldUncontrolledArgs> = ({
         <ResponsiveLayout isInverse={inverse} fullWidth>
             <Box padding={16}>
                 <Stack space={16}>
-                    <div data-testid="email-field-wrapper">
-                        <EmailField
-                            defaultValue={defaultValue}
-                            onChangeValue={(value, rawValue) => {
-                                setValue(value);
-                                setRawValue(rawValue);
-                            }}
-                            name="email"
-                            autoComplete="off"
-                            data-testid="email-field"
-                            {...rest}
-                        />
-                    </div>
+                    <EmailField
+                        defaultValue={defaultValue}
+                        onChangeValue={(value, rawValue) => {
+                            setValue(value);
+                            setRawValue(rawValue);
+                        }}
+                        name="email"
+                        autoComplete="off"
+                        dataAttributes={{testid: 'email-field'}}
+                        {...rest}
+                    />
                     <Stack space={8}>
                         <Text1 regular>
                             value: {typeof value === 'undefined' ? '' : `(${typeof value}) ${inspect(value)}`}

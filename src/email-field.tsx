@@ -27,6 +27,7 @@ const EmailField: React.FC<EmailFieldProps> = ({
     value,
     autoComplete = 'email',
     defaultValue,
+    dataAttributes,
     ...rest
 }) => {
     const {texts} = useTheme();
@@ -65,6 +66,7 @@ const EmailField: React.FC<EmailFieldProps> = ({
             type="email"
             inputMode="email"
             autoComplete={autoComplete}
+            dataAttributes={{'component-name': 'EmailField', ...dataAttributes}}
         />
     );
 };

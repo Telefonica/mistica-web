@@ -2,7 +2,7 @@
 import * as React from 'react';
 import classnames from 'classnames';
 import {useForm} from './form-context';
-import {useAriaId, useTheme, useScreenSize} from './hooks';
+import {useAriaId, useTheme} from './hooks';
 import {DOWN, ENTER, ESC, SPACE, TAB, UP} from './utils/keys';
 import {FieldContainer, HelperText, Label} from './text-field-components';
 import ChevronDownRegular from './generated/mistica-icons/icon-chevron-down-regular';
@@ -12,8 +12,9 @@ import {isAndroid, isIos} from './utils/platform';
 import {cancelEvent} from './utils/dom';
 import {Text3} from './text';
 import * as styles from './select.css';
+import * as textStyles from './text-field-base.css';
 import {Portal} from './portal';
-import {applyCssVars} from './utils/css';
+import {applyCssVars, pxToRem} from './utils/css';
 
 export type SelectProps = {
     disabled?: boolean;
@@ -294,7 +295,8 @@ const Select: React.FC<SelectProps> = ({
             }
         },
     };
-    const {isDesktopOrBigger} = useScreenSize();
+
+    const iconSize = pxToRem(20);
 
     return shouldUseNative || isServerSide ? (
         <FieldContainer
@@ -320,7 +322,10 @@ const Select: React.FC<SelectProps> = ({
                 </Label>
             )}
             <select
-                className={styles.selectVariants[disabled ? 'disabled' : 'default']}
+                className={classnames(
+                    styles.selectVariants[disabled ? 'disabled' : 'default'],
+                    label ? textStyles.inputWithLabel : textStyles.inputWithoutLabel
+                )}
                 id={inputId}
                 aria-invalid={!!error}
                 value={value}
@@ -343,9 +348,6 @@ const Select: React.FC<SelectProps> = ({
                     });
                 }}
                 style={{
-                    paddingTop: label ? 24 : 16,
-                    paddingBottom: label ? 8 : 16,
-                    paddingRight: 48,
                     // Override default browser opacity when disabled. This opacity also affects the label.
                     // Without this fix, the label is invisible when disabled
                     opacity: 1,
@@ -363,7 +365,7 @@ const Select: React.FC<SelectProps> = ({
                 ))}
             </select>
             <div className={styles.arrowDown} aria-hidden>
-                <ChevronDownRegular size={20} />
+                <ChevronDownRegular size={iconSize} />
             </div>
         </FieldContainer>
     ) : (
@@ -378,7 +380,7 @@ const Select: React.FC<SelectProps> = ({
                 <TextFieldBaseAutosuggest
                     style={{visibility: 'hidden'}}
                     fullWidth={fullWidth}
-                    endIcon={<ChevronDownRegular size={20} />}
+                    endIcon={<ChevronDownRegular size={iconSize} />}
                     focus={isFocused}
                     label={label}
                     value={value}
@@ -394,10 +396,10 @@ const Select: React.FC<SelectProps> = ({
                 />
 
                 <div
-                    className={styles.selectTextVariants[disabled ? 'disabled' : 'default']}
-                    style={{
-                        top: isDesktopOrBigger ? (label ? 28 : 18) : label ? 25 : 16,
-                    }}
+                    className={classnames(
+                        styles.selectTextVariants[disabled ? 'disabled' : 'default'],
+                        label ? textStyles.inputWithLabel : textStyles.inputWithoutLabel
+                    )}
                 >
                     {getOptionText(value ?? valueState)}
                 </div>
