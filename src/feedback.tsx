@@ -321,7 +321,8 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
                     }}
                 />
             )}
-            <BackgroundColor />
+            {/* Bug: https://jira.tid.es/browse/CHECKOUT-3340. Solution for all brands but o2-classic (gradient background) is setting body color. */}
+            {skinName !== O2_CLASSIC_SKIN && <BackgroundColor />}
         </ThemeVariant>
     ) : (
         <ResponsiveLayout>
