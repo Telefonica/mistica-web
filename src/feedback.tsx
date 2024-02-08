@@ -4,7 +4,7 @@ import {useTheme, useScreenSize, useWindowHeight, useIsomorphicLayoutEffect} fro
 import {ThemeVariant, useIsInverseVariant} from './theme-variant-context';
 import ButtonFixedFooterLayout from './button-fixed-footer-layout';
 import OverscrollColor from './overscroll-color-context';
-import {O2_CLASSIC_SKIN, O2_NEW_SKIN, VIVO_NEW_SKIN, VIVO_SKIN} from './skins/constants';
+import {O2_CLASSIC_SKIN, VIVO_NEW_SKIN, VIVO_SKIN} from './skins/constants';
 import IconSuccess from './icons/icon-success';
 import IconSuccessVivo from './icons/icon-success-vivo';
 import IconError from './icons/icon-error';
@@ -294,13 +294,7 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
                     footerBgColor={
                         isInverse && !isDarkMode ? vars.colors.backgroundFeedbackBottom : undefined
                     }
-                    containerBgColor={
-                        isInverse && !isDarkMode
-                            ? skinName === O2_NEW_SKIN
-                                ? 'transparent'
-                                : vars.colors.backgroundFeedbackBottom
-                            : undefined
-                    }
+                    containerBgColor="transparent"
                     onChangeFooterHeight={setFooterHeight}
                 >
                     {feedbackContent}
