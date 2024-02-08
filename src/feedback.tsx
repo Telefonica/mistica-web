@@ -35,12 +35,12 @@ const areAnimationsSupported = (platformOverrides: Theme['platformOverrides']) =
 const checkHasButtons = ({primaryButton, secondaryButton}: FeedbackButtonsProps) =>
     !!primaryButton || !!secondaryButton;
 
-const BackgroundColor = ({skinName}: {skinName?: string}): JSX.Element => {
+const BackgroundColor = (): JSX.Element => {
     const isInverse = useIsInverseVariant();
 
-    const css = `body {background:${isInverse ? vars.colors.backgroundBrand : vars.colors.background}; ${
-        skinName === O2_NEW_SKIN ? 'background-attachment: fixed;' : ''
-    }}`;
+    const css = `body {background:${
+        isInverse ? vars.colors.backgroundBrand : vars.colors.background
+    }; background-attachment: fixed;}`;
     return <style>{css}</style>;
 };
 
@@ -321,8 +321,7 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
                     }}
                 />
             )}
-            {/* Bug: https://jira.tid.es/browse/CHECKOUT-3340. Solution for all brands but o2-classic (gradient background) is setting body color. */}
-            {skinName !== O2_CLASSIC_SKIN && <BackgroundColor skinName={skinName} />}
+            <BackgroundColor />
         </ThemeVariant>
     ) : (
         <ResponsiveLayout>
