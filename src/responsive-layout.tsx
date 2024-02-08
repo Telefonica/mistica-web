@@ -18,7 +18,7 @@ type Props = {
     dataAttributes?: DataAttributes;
 };
 
-export const InternalResponsiveLayout: React.FC<Props & {shouldExpandWhenNested?: boolean}> = ({
+export const InternalResponsiveLayout: React.FC<Props & {shouldExpandWhenNested?: boolean | 'desktop'}> = ({
     children,
     isInverse = false,
     variant,
@@ -28,7 +28,7 @@ export const InternalResponsiveLayout: React.FC<Props & {shouldExpandWhenNested?
     dataAttributes,
     shouldExpandWhenNested = false,
 }) => {
-    // @TODO https://jira.tid.es/browse/WEB-1611
+    // @deprecated @TODO https://jira.tid.es/browse/WEB-1611
     const outsideVariant: Variant = useThemeVariant();
     const internalVariant: Variant | undefined = variant || (isInverse && 'inverse') || undefined;
 
@@ -41,7 +41,12 @@ export const InternalResponsiveLayout: React.FC<Props & {shouldExpandWhenNested?
                     internalVariant &&
                         internalVariant !== 'default' &&
                         styles.backgroundVariant[internalVariant],
-                    shouldExpandWhenNested && !fullWidth && styles.expandedResponsiveLayoutContainer
+                    {
+                        [styles.expandedResponsiveLayoutContainerMobile]:
+                            shouldExpandWhenNested === true && !fullWidth,
+                        [styles.expandedResponsiveLayoutContainerDesktop]:
+                            shouldExpandWhenNested && !fullWidth,
+                    }
                 )}
                 style={backgroundColor ? {background: backgroundColor} : undefined}
                 {...getPrefixedDataAttributes(dataAttributes)}

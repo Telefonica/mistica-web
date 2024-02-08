@@ -1,18 +1,66 @@
 'use client';
 import * as React from 'react';
 import {Label, HelperText, FieldContainer} from './text-field-components';
-import {LABEL_LEFT_POSITION, LABEL_SCALE_MOBILE, LABEL_SCALE_DESKTOP} from './text-field-components.css';
+import {LABEL_SCALE_MOBILE, LABEL_SCALE_DESKTOP} from './text-field-components.css';
 import {Text3} from './text';
-import {isRunningAcceptanceTest, isFirefox, isSafari} from './utils/platform';
+import {isRunningAcceptanceTest, isFirefox} from './utils/platform';
 import {useAriaId, useTheme, useScreenSize, useIsomorphicLayoutEffect} from './hooks';
 import classNames from 'classnames';
 import {combineRefs} from './utils/common';
 import * as styles from './text-field-base.css';
-import {sprinkles} from './sprinkles.css';
 import {vars} from './skins/skin-contract.css';
+import {BaseIconButton} from './icon-button';
+import {ThemeVariant} from './theme-variant-context';
 
+import type {DataAttributes, IconProps} from './utils/types';
 import type {InputState} from './text-field-components';
 import type {FieldValidator} from './form-context';
+
+const isValidInputValue = (value?: string, inputType?: React.HTMLInputTypeAttribute) => {
+    if (!inputType) {
+        return true;
+    }
+
+    const input = document.createElement('input');
+    input.type = inputType;
+    input.value = value || '';
+    return input.value !== '';
+};
+
+interface FieldEndIconProps {
+    Icon: React.FC<IconProps>;
+    className?: string;
+    onPress: (event: React.MouseEvent<HTMLElement>) => void;
+    disabled?: boolean;
+    'aria-label'?: string;
+}
+
+export const FieldEndIcon: React.FC<FieldEndIconProps> = ({
+    Icon,
+    className,
+    onPress,
+    disabled,
+    'aria-label': ariaLabel,
+}) => {
+    return (
+        /**
+         * If we try to add fieldEndIconContainer styles to the BaseIconButton instead,
+         * there may be collisions because that component sets margin internally. We
+         * create a wrapper around it so that the margin's value won't be overrided.
+         */
+        <div className={styles.fieldEndIconContainer}>
+            <BaseIconButton
+                disabled={disabled}
+                aria-label={ariaLabel}
+                onPress={onPress}
+                size={styles.iconButtonSize}
+                className={className}
+            >
+                <Icon size={styles.iconSize} />
+            </BaseIconButton>
+        </div>
+    );
+};
 
 /**
  * Incomplete list, add more if needed
@@ -66,6 +114,7 @@ export interface CommonFormFieldProps<T = HTMLInputElement> {
     onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
     children?: void;
     readOnly?: boolean;
+    dataAttributes?: DataAttributes;
 }
 
 interface TextFieldBaseProps {
@@ -109,6 +158,7 @@ interface TextFieldBaseProps {
     min?: string;
     max?: string;
     role?: string;
+    dataAttributes?: DataAttributes;
 }
 
 export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
@@ -128,7 +178,7 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
             startIcon,
             endIcon,
             endIconOverlay,
-            shrinkLabel: shrinkLabelProp,
+            shrinkLabel,
             multiline = false,
             focus,
             fieldRef,
@@ -136,11 +186,14 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
             id: idProp,
             autoComplete: autoCompleteProp,
             fullWidth,
+            dataAttributes,
             ...rest
         },
         ref
     ) => {
         const id = useAriaId(idProp);
+        const helperTextid = useAriaId();
+
         const [inputState, setInputState] = React.useState<InputState>(
             defaultValue?.length || value?.length ? 'filled' : 'default'
         );
@@ -148,43 +201,45 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
         const [characterCount, setCharacterCount] = React.useState(defaultValue?.length ?? 0);
         const hasLabel = !!label || !rest.required;
 
-        // this shrinkLabel override is a workaround because I was unable to find a way to hide date
-        // and date-time native placeholders when the input is not required
-        const shrinkLabel =
-            shrinkLabelProp ||
-            ((rest.type === 'date' || rest.type === 'datetime-local' || rest.type === 'month') &&
-                !rest.required);
+        const isDateInput = rest.type === 'date' || rest.type === 'datetime-local' || rest.type === 'month';
+        const valueRef = React.useRef<string | undefined>(undefined);
 
-        const [prefixAlignSelf, setPrefixAlignSelf] = React.useState('baseline');
         useIsomorphicLayoutEffect(() => {
             /**
-             * Safari check to workaround https://jira.tid.es/browse/WEB-648
-             * For some reason it is super hard to align the prefix text with the input text
-             * and get the same result in chrome and safari
-             *
-             * Using an effect to set the style to avoid problems with SSR
+             * If the date format is invalid, value will be empty in the DOM element. We treat it like the
+             * case of an empty input. We have to do this because in some browsers, like Chrome, when the
+             * date value is empty it displays a placeholder (mm/dd/yyyy) that can't be removed, so we set
+             * it's opacity to 0 to avoid showing it.
              */
-            if (isSafari()) {
-                setPrefixAlignSelf('initial');
-            }
-        }, []);
+            const finalValue = isDateInput && !isValidInputValue(value, rest.type) ? '' : value;
 
-        React.useEffect(() => {
-            if (inputState !== 'focused' && value?.length) {
-                setCharacterCount(value.length);
+            // if value prop has changed, we need to set the input state to default if the new value is not valid
+            if (
+                valueRef.current !== value &&
+                isDateInput &&
+                !finalValue?.length &&
+                inputState === 'filled' &&
+                focus === undefined
+            ) {
+                setInputState('default');
+            }
+            valueRef.current = value;
+
+            if (inputState !== 'focused' && finalValue?.length) {
+                setCharacterCount(finalValue.length);
                 setInputState('filled');
             }
             if (focus) {
                 setInputState('focused');
             }
-            if (focus === false && !value?.length) {
+            if (focus === false && !finalValue?.length) {
                 // when textfield is used in selects it doesn't get or lose focus
                 setInputState('default');
             }
-            if (focus === false && value?.length) {
+            if (focus === false && finalValue?.length) {
                 setInputState('filled');
             }
-        }, [inputState, value, focus]);
+        }, [inputState, value, focus, isDateInput, rest.type]);
 
         React.useEffect(() => {
             if (rest.autoFocus) {
@@ -208,25 +263,23 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
             ...inputProps,
         };
 
+        const startIconWidth = `calc(${styles.iconSize} + ${styles.fieldElementsGap}px)`;
+        const endIconWidth = `calc(${styles.iconButtonSize} + ${styles.fieldElementsGap}px)`;
+
         const isShrinked = shrinkLabel || inputState === 'focused' || inputState === 'filled';
         const scale = isShrinked ? (isTabletOrSmaller ? LABEL_SCALE_MOBILE : LABEL_SCALE_DESKTOP) : 1;
         const labelStyle = {
-            left: startIcon ? 48 : LABEL_LEFT_POSITION,
+            left: `calc(${styles.fieldLeftPadding}px + ${startIcon ? startIconWidth : '0px'})`,
             // shrinking means applying a scale transformation, so width will be proportionally reduced.
             // Let's keep the original width.
-            width: `calc(((100% - ${
-                LABEL_LEFT_POSITION + (startIcon ? 48 : LABEL_LEFT_POSITION)
-            }px)) / ${scale})`,
-            paddingRight: endIcon && !isShrinked ? 36 : 0,
+            width: `calc((100% - ${styles.fieldLeftPadding}px - ${startIcon ? startIconWidth : '0px'} - ${
+                endIcon || endIconOverlay ? endIconWidth : `${styles.fieldRightPadding}px`
+            }) / ${scale})`,
         };
 
-        const commonStyles = sprinkles({
-            paddingRight: endIcon ? 0 : 16,
-            paddingLeft: prefix ? 0 : startIcon ? 48 : 12,
-        });
-
         /* Workaround to avoid huge bullets on ios devices (-apple-system font related) */
-        const fontFamily = rest.type === 'password' ? 'Lucida Grande, Arial, sans-serif' : 'inherit';
+        const fontFamily =
+            rest.type === 'password' && characterCount > 0 ? 'Lucida Grande, Arial, sans-serif' : 'inherit';
 
         return (
             <FieldContainer
@@ -235,6 +288,7 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
                     <HelperText
                         error={error}
                         leftText={helperText}
+                        id={helperTextid}
                         rightText={multiline && maxLength ? `${characterCount}/${maxLength}` : undefined}
                     />
                 }
@@ -242,92 +296,115 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
                 fullWidth={fullWidth}
                 fieldRef={fieldRef}
                 readOnly={rest.readOnly}
+                dataAttributes={dataAttributes}
             >
-                {startIcon && <div className={styles.startIcon}>{startIcon}</div>}
+                <ThemeVariant isInverse={false}>
+                    {startIcon && <div className={styles.startIcon}>{startIcon}</div>}
 
-                {prefix && (
-                    <div
-                        className={classNames(
-                            styles.prefix,
-                            hasLabel ? styles.prefixWithLabel : styles.prefixWithoutLabel
-                        )}
-                        style={{
-                            opacity: inputState === 'default' ? 0 : 1,
-                            alignSelf: prefixAlignSelf,
-                        }}
-                    >
-                        <Text3 color={vars.colors.textSecondary} regular wordBreak={false}>
-                            {prefix}
+                    {prefix && (
+                        <div
+                            className={classNames(
+                                styles.prefix,
+                                hasLabel ? styles.inputWithLabel : styles.inputWithoutLabel
+                            )}
+                            style={{
+                                opacity: inputState === 'default' ? 0 : 1,
+                            }}
+                        >
+                            <Text3 color={vars.colors.textSecondary} regular wordBreak={false}>
+                                {prefix}
+                            </Text3>
+                        </div>
+                    )}
+                    <div className={styles.fullWidth}>
+                        <Text3 as="div" regular>
+                            {React.createElement(inputComponent || defaultInputElement, {
+                                ...inputRefProps,
+                                ...props,
+                                id,
+                                style: {
+                                    paddingRight: endIcon
+                                        ? 0
+                                        : endIconOverlay
+                                        ? `calc(${styles.fieldRightPadding}px + ${endIconWidth})`
+                                        : styles.fieldRightPadding,
+                                    paddingLeft: prefix
+                                        ? 0
+                                        : startIcon
+                                        ? `calc(${startIconWidth} + ${styles.fieldLeftPadding}px)`
+                                        : styles.fieldLeftPadding,
+                                    ...props.style,
+                                    fontFamily,
+                                },
+                                className: multiline
+                                    ? classNames(
+                                          styles.textArea,
+                                          hasLabel ? styles.textAreaWithLabel : styles.textAreaWithoutLabel
+                                      )
+                                    : classNames(
+                                          styles.input,
+                                          hasLabel ? styles.inputWithLabel : styles.inputWithoutLabel,
+                                          {
+                                              [styles.inputFirefoxStyles]: isFirefox(),
+                                              // Hide webkit placeholder when label is not shrinked and value is empty
+                                              [styles.hiddenDatePlaceholder]:
+                                                  isDateInput && inputState === 'default',
+                                              // Force height of input when value is empty to avoid field from having height 0 in iOS
+                                              [styles.emptyDateValue]: isDateInput && inputState !== 'filled',
+                                          }
+                                      ),
+                                onFocus: (event: React.FocusEvent<HTMLInputElement>) => {
+                                    setInputState('focused');
+                                    onFocus?.(event);
+                                },
+                                onBlur: (event: React.FocusEvent<HTMLInputElement>) => {
+                                    if (event.target.value.length > 0) {
+                                        setInputState('filled');
+                                    } else {
+                                        setInputState('default');
+                                    }
+                                    onBlur?.(event);
+                                },
+                                onChange: (event: React.ChangeEvent<HTMLInputElement>) => {
+                                    // Workaround for systems where maxlength prop is applied onBlur (https://caniuse.com/#feat=maxlength)
+                                    if (maxLength === undefined || event.target.value.length <= maxLength) {
+                                        setCharacterCount(event.target.value.length);
+
+                                        // Browser's autofill can change the value without focusing
+                                        if (event.target.value.length > 0 && inputState !== 'focused') {
+                                            setInputState(
+                                                event.target.value.length > 0 ? 'filled' : 'default'
+                                            );
+                                        }
+
+                                        props.onChange?.(event);
+                                    } else {
+                                        event.stopPropagation();
+                                        event.preventDefault();
+                                    }
+                                },
+                                defaultValue,
+                                value,
+                                ...(error && {'aria-invalid': true}),
+                                ...(helperText && {'aria-describedby': helperTextid}),
+                            })}
                         </Text3>
                     </div>
-                )}
-                <div className={styles.fullWidth} style={{alignSelf: prefix ? 'baseline' : 'initial'}}>
-                    <Text3 as="div" regular>
-                        {React.createElement(inputComponent || defaultInputElement, {
-                            ...inputRefProps,
-                            ...props,
-                            id,
-                            style: {...props.style, fontFamily},
-                            className: multiline
-                                ? classNames(
-                                      styles.textArea,
-                                      hasLabel ? styles.textAreaWithLabel : styles.textAreaWithoutLabel,
-                                      commonStyles
-                                  )
-                                : classNames(
-                                      styles.input,
-                                      hasLabel ? styles.inputWithLabel : styles.inputWithoutLabel,
-                                      commonStyles,
-                                      {[styles.inputFirefoxStyles]: isFirefox()}
-                                  ),
-                            onFocus: (event: React.FocusEvent<HTMLInputElement>) => {
-                                setInputState('focused');
-                                onFocus?.(event);
-                            },
-                            onBlur: (event: React.FocusEvent<HTMLInputElement>) => {
-                                if (event.target.value.length > 0) {
-                                    setInputState('filled');
-                                } else {
-                                    setInputState('default');
-                                }
-                                onBlur?.(event);
-                            },
-                            onChange: (event: React.ChangeEvent<HTMLInputElement>) => {
-                                // Workaround for systems where maxlength prop is applied onBlur (https://caniuse.com/#feat=maxlength)
-                                if (maxLength === undefined || event.target.value.length <= maxLength) {
-                                    setCharacterCount(event.target.value.length);
-
-                                    // Browser's autofill can change the value without focusing
-                                    if (event.target.value.length > 0 && inputState !== 'focused') {
-                                        setInputState('filled');
-                                    }
-
-                                    props.onChange?.(event);
-                                } else {
-                                    event.stopPropagation();
-                                    event.preventDefault();
-                                }
-                            },
-                            defaultValue,
-                            value,
-                            ...(error && {'aria-invalid': true}),
-                        })}
-                    </Text3>
-                </div>
-                {label && (
-                    <Label
-                        style={labelStyle}
-                        error={error}
-                        forId={id}
-                        inputState={inputState}
-                        shrinkLabel={shrinkLabel}
-                        optional={!rest.required}
-                    >
-                        {label}
-                    </Label>
-                )}
-                {endIcon && <div className={styles.endIcon}>{endIcon}</div>}
-                {endIconOverlay}
+                    {label && (
+                        <Label
+                            style={labelStyle}
+                            error={error}
+                            forId={id}
+                            inputState={inputState}
+                            shrinkLabel={shrinkLabel}
+                            optional={!rest.required}
+                        >
+                            {label}
+                        </Label>
+                    )}
+                    {endIcon && <div className={styles.endIconContainer}>{endIcon}</div>}
+                    {endIconOverlay}
+                </ThemeVariant>
             </FieldContainer>
         );
     }

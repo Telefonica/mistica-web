@@ -1,13 +1,13 @@
 'use client';
 import * as React from 'react';
 import {useFieldProps} from './form-context';
-import {TextFieldBaseAutosuggest} from './text-field-base';
+import {FieldEndIcon, TextFieldBaseAutosuggest} from './text-field-base';
 import IconSearchRegular from './generated/mistica-icons/icon-search-regular';
 import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
-import IconButton from './icon-button';
 import {useTheme} from './hooks';
 import {createChangeEvent} from './utils/dom';
 import {combineRefs} from './utils/common';
+import {endIconWithShadow, iconSize} from './text-field-base.css';
 
 import type {CommonFormFieldProps} from './text-field-base';
 
@@ -30,6 +30,7 @@ const SearchField = React.forwardRef<any, SearchFieldProps>(
             onBlur,
             value,
             defaultValue,
+            dataAttributes,
             ...rest
         },
         ref
@@ -78,22 +79,21 @@ const SearchField = React.forwardRef<any, SearchFieldProps>(
         return (
             <TextFieldBaseAutosuggest
                 ref={combineRefs(inputRef, ref)}
-                startIcon={<IconSearchRegular />}
+                startIcon={<IconSearchRegular size={iconSize} />}
                 endIcon={
                     controlledValue ? (
-                        <IconButton
-                            size={48}
-                            style={{display: 'flex', padding: 12, margin: -12}}
+                        <FieldEndIcon
+                            Icon={IconCloseRegular}
+                            className={endIconWithShadow}
                             aria-label={theme.texts.formSearchClear}
                             onPress={clearInput}
-                        >
-                            <IconCloseRegular />
-                        </IconButton>
+                        />
                     ) : undefined
                 }
                 {...rest}
                 {...fieldProps}
                 type="search"
+                dataAttributes={{'component-name': 'SearchField', ...dataAttributes}}
             />
         );
     }

@@ -41,19 +41,17 @@ export const Controlled: StoryComponent<PasswordFieldControlledArgs> = ({inverse
         <ResponsiveLayout isInverse={inverse} fullWidth>
             <Box padding={16}>
                 <Stack space={16}>
-                    <div data-testid="password-field-wrapper">
-                        <PasswordField
-                            value={rawValue}
-                            onChangeValue={(value, rawValue) => {
-                                setValue(value);
-                                setRawValue(rawValue);
-                            }}
-                            name="password"
-                            autoComplete="off"
-                            data-testid="password-field"
-                            {...rest}
-                        />
-                    </div>
+                    <PasswordField
+                        value={rawValue}
+                        onChangeValue={(value, rawValue) => {
+                            setValue(value);
+                            setRawValue(rawValue);
+                        }}
+                        name="password"
+                        autoComplete="off"
+                        dataAttributes={{testid: 'password-field'}}
+                        {...rest}
+                    />
                     <Stack space={8}>
                         <Text1 regular>
                             value: {typeof value === 'undefined' ? '' : `(${typeof value}) ${inspect(value)}`}
@@ -93,19 +91,17 @@ export const Uncontrolled: StoryComponent<PasswordFieldUncontrolledArgs> = ({
         <ResponsiveLayout isInverse={inverse} fullWidth>
             <Box padding={16}>
                 <Stack space={16}>
-                    <div data-testid="password-field-wrapper">
-                        <PasswordField
-                            defaultValue={defaultValue}
-                            onChangeValue={(value, rawValue) => {
-                                setValue(value);
-                                setRawValue(rawValue);
-                            }}
-                            name="password"
-                            autoComplete="off"
-                            data-testid="password-field"
-                            {...rest}
-                        />
-                    </div>
+                    <PasswordField
+                        defaultValue={defaultValue}
+                        onChangeValue={(value, rawValue) => {
+                            setValue(value);
+                            setRawValue(rawValue);
+                        }}
+                        name="password"
+                        autoComplete="off"
+                        dataAttributes={{testid: 'password-field'}}
+                        {...rest}
+                    />
                     <Stack space={8}>
                         <Text1 regular>
                             value: {typeof value === 'undefined' ? '' : `(${typeof value}) ${inspect(value)}`}

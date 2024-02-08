@@ -19,6 +19,7 @@ import {createChangeEvent} from './utils/dom';
 import {combineRefs} from './utils/common';
 import * as styles from './credit-card-number-field.css';
 import {vars} from './skins/skin-contract.css';
+import {iconSize} from './text-field-base.css';
 
 import type {CardOptions} from './utils/credit-card';
 import type {CommonFormFieldProps} from './text-field-base';
@@ -76,20 +77,20 @@ const CreditCardInput: React.FC<Props> = ({inputRef, value, defaultValue, onChan
 
 const getAnimationTarget = (value?: string) => {
     if (isVisa(value)) {
-        return <IconVisa />;
+        return <IconVisa size={iconSize} />;
     }
     if (isMasterCard(value)) {
-        return <IconMastercard />;
+        return <IconMastercard size={iconSize} />;
     }
     if (isAmericanExpress(value)) {
-        return <IconAmex />;
+        return <IconAmex size={iconSize} />;
     }
     return null;
 };
 
 const initialState = {
     showBackface: false,
-    animationTarget: <IconCreditCardVisaRegular />,
+    animationTarget: <IconCreditCardVisaRegular size={iconSize} />,
     isAnimating: false,
 };
 
@@ -137,7 +138,7 @@ const CreditcardAdornment = ({value}: {value?: string}) => {
                 onTransitionEnd={() => isAnimating && dispatch({type: 'TRANSITION_END'})}
             >
                 <div className={styles.flipFront}>
-                    <IconCreditCardVisaRegular color={vars.colors.neutralMedium} />
+                    <IconCreditCardVisaRegular size={iconSize} color={vars.colors.neutralMedium} />
                 </div>
                 <div className={styles.flipBack}>{animationTarget}</div>
             </div>
@@ -164,6 +165,7 @@ const CreditCardNumberField: React.FC<CreditCardNumberFieldProps> = ({
     value,
     autoComplete = 'cc-number',
     defaultValue,
+    dataAttributes,
     ...rest
 }) => {
     const {texts} = useTheme();
@@ -229,6 +231,7 @@ const CreditCardNumberField: React.FC<CreditCardNumberFieldProps> = ({
             inputComponent={CreditCardInput}
             autoComplete={autoComplete}
             endIcon={<CreditcardAdornment value={value ?? rawValues[name] ?? ''} />}
+            dataAttributes={{'component-name': 'CreditCardNumberField', ...dataAttributes}}
         />
     );
 };
