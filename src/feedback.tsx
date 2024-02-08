@@ -4,7 +4,7 @@ import {useTheme, useScreenSize, useWindowHeight, useIsomorphicLayoutEffect} fro
 import {ThemeVariant, useIsInverseVariant} from './theme-variant-context';
 import ButtonFixedFooterLayout from './button-fixed-footer-layout';
 import OverscrollColor from './overscroll-color-context';
-import {O2_CLASSIC_SKIN, VIVO_NEW_SKIN, VIVO_SKIN} from './skins/constants';
+import {O2_CLASSIC_SKIN, O2_NEW_SKIN, VIVO_NEW_SKIN, VIVO_SKIN} from './skins/constants';
 import IconSuccess from './icons/icon-success';
 import IconSuccessVivo from './icons/icon-success-vivo';
 import IconError from './icons/icon-error';
@@ -35,10 +35,12 @@ const areAnimationsSupported = (platformOverrides: Theme['platformOverrides']) =
 const checkHasButtons = ({primaryButton, secondaryButton}: FeedbackButtonsProps) =>
     !!primaryButton || !!secondaryButton;
 
-const BackgroundColor = (): JSX.Element => {
+const BackgroundColor = ({skinName}: {skinName?: string}): JSX.Element => {
     const isInverse = useIsInverseVariant();
 
-    const css = `body {background:${isInverse ? vars.colors.backgroundBrand : vars.colors.background}}`;
+    const css = `body {background:${isInverse ? vars.colors.backgroundBrand : vars.colors.background}; ${
+        skinName === O2_NEW_SKIN ? 'background-attachment: fixed;' : ''
+    }}`;
     return <style>{css}</style>;
 };
 
@@ -290,10 +292,18 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
                     secondaryButton={secondaryButton}
                     link={link}
                     footerBgColor={
-                        isInverse && !isDarkMode ? vars.colors.backgroundFeedbackBottom : undefined
+                        isInverse && !isDarkMode
+                            ? skinName === O2_NEW_SKIN
+                                ? 'transparent'
+                                : vars.colors.backgroundFeedbackBottom
+                            : undefined
                     }
                     containerBgColor={
-                        isInverse && !isDarkMode ? vars.colors.backgroundFeedbackBottom : undefined
+                        isInverse && !isDarkMode
+                            ? skinName === O2_NEW_SKIN
+                                ? 'transparent'
+                                : vars.colors.backgroundFeedbackBottom
+                            : undefined
                     }
                     onChangeFooterHeight={setFooterHeight}
                 >
@@ -316,7 +326,7 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
                 />
             )}
             {/* Bug: https://jira.tid.es/browse/CHECKOUT-3340. Solution for all brands but o2-classic (gradient background) is setting body color. */}
-            {skinName !== O2_CLASSIC_SKIN && <BackgroundColor />}
+            {skinName !== O2_CLASSIC_SKIN && <BackgroundColor skinName={skinName} />}
         </ThemeVariant>
     ) : (
         <ResponsiveLayout>
