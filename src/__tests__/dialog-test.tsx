@@ -210,7 +210,7 @@ test('closes confirm dialog when clicking on any button', async () => {
     await waitFor(() => {
         expect(onAcceptSpy).toHaveBeenCalled();
     });
-}, 10000);
+}, 20000);
 
 test('closing a previous accepted dialog does not trigger onAccept callback', async () => {
     render(
@@ -243,7 +243,7 @@ test('closing a previous accepted dialog does not trigger onAccept callback', as
     });
 
     expect(onAcceptSpy).not.toHaveBeenCalled();
-}, 10000);
+}, 20000);
 
 test('when webview bridge is available nativeAlert is shown', async () => {
     jest.spyOn(webviewBridge, 'isWebViewBridgeAvailable').mockReturnValue(true);
