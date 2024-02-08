@@ -24,6 +24,7 @@ import ButtonGroup from './button-group';
 import {vars} from './skins/skin-contract.css';
 import * as styles from './feedback.css';
 import IconSuccessVivoNew from './icons/icon-success-vivo-new';
+import {ThemeVariant} from './theme-variant-context';
 
 import type {Theme} from './theme';
 import type {DataAttributes, IconProps} from './utils/types';
@@ -242,8 +243,12 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
     }
 
     return (
-        <div style={{position: 'relative'}}>
-            {isInverse && <OverscrollColor />}
+        <div style={{position: 'relative'}} className={isInverse ? styles.feedbackScreenInverse : undefined}>
+            {isInverse && (
+                <ThemeVariant isInverse>
+                    <OverscrollColor />
+                </ThemeVariant>
+            )}
             <ResponsiveLayout>
                 <Box paddingTop={{desktop: 64, mobile: 0}}>
                     {renderFeedback({
