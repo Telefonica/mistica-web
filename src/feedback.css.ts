@@ -39,6 +39,9 @@ export const innerContainer = style({
     position: 'relative', // needed to support hack for o2-classic
     display: 'flex',
     flexDirection: 'column',
+});
+
+export const innerContainerWithButtons = style({
     '@media': {
         [mq.desktopOrBigger]: {
             paddingBottom: 40,

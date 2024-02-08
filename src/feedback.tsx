@@ -272,7 +272,14 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
                                 onChangeFooterHeight={setFooterHeight}
                             >
                                 <div className={styles.container}>
-                                    <div className={styles.innerContainer}>{feedbackBody}</div>
+                                    <div
+                                        className={classnames(styles.innerContainer, {
+                                            [styles.innerContainerWithButtons]:
+                                                primaryButton || secondaryButton || link,
+                                        })}
+                                    >
+                                        {feedbackBody}
+                                    </div>
                                 </div>
                             </ButtonFixedFooterLayout>
                         ),
