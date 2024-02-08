@@ -55,7 +55,20 @@ export const getO2NewSkin: GetKnownSkin = () => {
         colors: {
             background: palette.white,
             backgroundAlternative: palette.grey20,
-            backgroundBrand: `linear-gradient(164deg, ${palette.o2GradientFirst} 43.6%, ${palette.o2GradientSecond} 75.12%, ${palette.o2GradientThird} 106.64%)`,
+            backgroundBrand: `linear-gradient(
+                164deg,
+                hsl(240deg 97% 28%) 0%,
+                hsl(236deg 88% 34%) 27%,
+                hsl(233deg 85% 39%) 42%,
+                hsl(229deg 85% 44%) 54%,
+                hsl(226deg 89% 48%) 64%,
+                hsl(221deg 100% 50%) 73%,
+                hsl(213deg 100% 50%) 81%,
+                hsl(207deg 100% 50%) 88%,
+                hsl(202deg 100% 50%) 93%,
+                hsl(197deg 100% 50%) 98%,
+                hsl(196deg 94% 63%) 100%
+              );`,
             backgroundBrandSecondary: palette.o2BluePrimary,
             backgroundContainer: palette.white,
             backgroundContainerHover: applyAlpha(palette.darkModeBlack, 0.03),

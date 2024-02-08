@@ -292,11 +292,7 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
                     secondaryButton={secondaryButton}
                     link={link}
                     footerBgColor={
-                        isInverse && !isDarkMode
-                            ? skinName === O2_NEW_SKIN
-                                ? 'transparent'
-                                : vars.colors.backgroundFeedbackBottom
-                            : undefined
+                        isInverse && !isDarkMode ? vars.colors.backgroundFeedbackBottom : undefined
                     }
                     containerBgColor={
                         isInverse && !isDarkMode
