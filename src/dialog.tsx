@@ -231,18 +231,14 @@ const ModalDialog = (props: ModalDialogProps): JSX.Element => {
     const {onAccept, onCancel, onDestroy, ...dialogProps} = props;
 
     React.useEffect(() => {
-        if (process.env.node_env === 'test') {
-            setIsReady(true);
-        } else {
-            const timeout = setTimeout(() => {
-                if (!isClosingRef.current) {
-                    setIsReady(true);
-                }
-            }, animationDurationRef.current);
-            return () => {
-                clearTimeout(timeout);
-            };
-        }
+        const timeout = setTimeout(() => {
+            if (!isClosingRef.current) {
+                setIsReady(true);
+            }
+        }, animationDurationRef.current);
+        return () => {
+            clearTimeout(timeout);
+        };
     }, []);
 
     const close = React.useCallback(() => {
@@ -268,11 +264,7 @@ const ModalDialog = (props: ModalDialogProps): JSX.Element => {
             isClosingRef.current = true;
             setIsReady(false);
             setIsClosing(true);
-            if (process.env.NODE_ENV === 'test') {
-                close();
-            } else {
-                timeout = setTimeout(close, animationDurationRef.current);
-            }
+            timeout = setTimeout(close, animationDurationRef.current);
         }
         return () => {
             if (timeout) {
