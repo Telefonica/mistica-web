@@ -131,6 +131,7 @@ export const hiddenDatePlaceholder = style({
         '&::-webkit-datetime-edit': {
             color: 'transparent',
             opacity: 0,
+            pointerEvents: 'none',
         },
     },
 });
