@@ -160,7 +160,7 @@ interface BaseNewProps {
     dataAttributes?: DataAttributes;
     disabled?: boolean;
     showSpinner?: boolean;
-    'aria-label': string;
+    'aria-label'?: string;
     small?: boolean;
     type?: 'neutral' | 'brand' | 'danger';
     variant?: 'default' | 'solid' | 'soft';
@@ -241,7 +241,7 @@ const RawIconButton: React.FC<NewProps & {isOverMedia?: boolean}> = ({
             </div>
 
             <div
-                aria-hidden
+                aria-hidden={showSpinner ? undefined : true}
                 className={styles.spinner}
                 onTransitionEnd={() => {
                     if (showSpinner !== shouldRenderSpinner) {
@@ -250,12 +250,7 @@ const RawIconButton: React.FC<NewProps & {isOverMedia?: boolean}> = ({
                 }}
             >
                 {shouldRenderSpinner && (
-                    <Spinner
-                        size={styles.iconSize[buttonSize]}
-                        color={getIconColor()}
-                        rolePresentation
-                        delay="0s"
-                    />
+                    <Spinner size={styles.iconSize[buttonSize]} color={getIconColor()} delay="0s" />
                 )}
             </div>
         </div>
