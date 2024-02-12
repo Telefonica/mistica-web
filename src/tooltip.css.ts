@@ -2,8 +2,11 @@ import {style} from '@vanilla-extract/css';
 import {vars} from './skins/skin-contract.css';
 import {sprinkles} from './sprinkles.css';
 
+export const CONTENT_MIN_WIDTH = 40;
 const ARROW_CONTAINER_SIZE = 20;
+const CONTENT_PADDING = 8;
 const ARROW_SIZE = 12;
+const BORDER_SIZE = 1;
 
 export const tooltipTransitionClasses = {
     entering: {
@@ -44,16 +47,19 @@ export const tooltip = style([
     },
 ]);
 
-export const content = style([
+export const contentContainer = style([
     sprinkles({
         position: 'relative',
-        minWidth: 40,
         overflow: 'hidden',
     }),
     {
-        padding: 7,
+        minWidth: CONTENT_MIN_WIDTH - 2 * BORDER_SIZE, // border is not included in this container
     },
 ]);
+
+export const content = style({
+    padding: CONTENT_PADDING - BORDER_SIZE,
+});
 
 export const tooltipCenter = sprinkles({
     display: 'flex',
@@ -85,5 +91,16 @@ export const arrow = style([
         transform: 'translate(-50%, -50%) rotate(45deg)',
         boxSizing: 'border-box',
         borderRadius: '0 0 2px 0',
+    },
+]);
+
+export const closeButtonIcon = style([
+    sprinkles({
+        position: 'absolute',
+    }),
+    {
+        top: CONTENT_PADDING - BORDER_SIZE,
+        right: CONTENT_PADDING - BORDER_SIZE,
+        zIndex: 1,
     },
 ]);

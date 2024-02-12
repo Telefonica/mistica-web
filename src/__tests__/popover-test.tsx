@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {fireEvent, render, waitFor, screen} from '@testing-library/react';
 import Popover from '../popover';
-import {ThemeContextProvider} from '..';
+import {ButtonPrimary, ThemeContextProvider} from '..';
 import {makeTheme} from './test-utils';
 
 type Props = Omit<React.ComponentProps<typeof Popover>, 'description' | 'target'>;
@@ -12,8 +12,20 @@ const TestPopover: React.FC<Props> = ({children, ...props}) => (
     </ThemeContextProvider>
 );
 
-const TestWrapper = ({onCloseSpy}: {onCloseSpy: () => void}) => {
-    const [isVisible, setIsVisible] = React.useState(true);
+const UncontrolledWrapper = ({onCloseSpy}: {onCloseSpy: () => void}) => {
+    return (
+        <ThemeContextProvider theme={makeTheme()}>
+            <Popover
+                description="Content"
+                onClose={onCloseSpy}
+                target={<ButtonPrimary onPress={() => {}}>Press me!</ButtonPrimary>}
+            />
+        </ThemeContextProvider>
+    );
+};
+
+const ControlledWrapper = ({onCloseSpy}: {onCloseSpy: () => void}) => {
+    const [isVisible, setIsVisible] = React.useState(false);
     const handleClose = () => {
         onCloseSpy();
         setIsVisible(false);
@@ -21,10 +33,10 @@ const TestWrapper = ({onCloseSpy}: {onCloseSpy: () => void}) => {
     return (
         <ThemeContextProvider theme={makeTheme()}>
             <Popover
-                isVisible={isVisible}
+                open={isVisible}
                 description="Content"
                 onClose={handleClose}
-                target={<span>Press me!</span>}
+                target={<ButtonPrimary onPress={() => setIsVisible(!isVisible)}>Press me!</ButtonPrimary>}
             />
         </ThemeContextProvider>
     );
@@ -38,40 +50,93 @@ test('target is painted', () => {
     expect(screen.getByText('Press me!')).toBeInTheDocument();
 });
 
-test('popover is painted by default', () => {
-    render(<TestPopover />);
+test('popover is painted if open property is true', () => {
+    render(<TestPopover open />);
 
     expect(screen.getByText('Content')).toBeInTheDocument();
     expect(screen.getByLabelText('Cerrar')).toBeInTheDocument();
 });
 
-test('popover is not painted if visible property is false', () => {
-    render(<TestPopover isVisible={false} />);
+test('popover is not painted if open property is false', () => {
+    render(<TestPopover open={false} />);
 
-    expect(screen.queryByText('Content')).toBe(null);
+    expect(screen.queryByText('Content')).not.toBeInTheDocument();
 });
 
 test('set title and description', () => {
-    render(<TestPopover title="Title" />);
+    render(<TestPopover title="Title" open />);
 
     expect(screen.getByText('Title')).toBeInTheDocument();
     expect(screen.getByText('Content')).toBeInTheDocument();
 });
 
 test('set title and asset', () => {
-    render(<TestPopover title="Title" asset={<AnyIcon />} />);
+    render(<TestPopover title="Title" asset={<AnyIcon />} open />);
 
     expect(screen.getByText('Title')).toBeInTheDocument();
     expect(screen.getByTestId('icon')).toBeInTheDocument();
 });
 
-test('popover is not painted after click the close icon', async () => {
+test('popover - controlled', async () => {
     const onCloseSpy = jest.fn();
-    render(<TestWrapper onCloseSpy={onCloseSpy} />);
+    render(<ControlledWrapper onCloseSpy={onCloseSpy} />);
+
+    const target = screen.getByText('Press me!');
+
+    // Initially closed
+    expect(screen.queryByText('Content')).not.toBeInTheDocument();
+
+    // Opened after click on target
+    fireEvent.click(target);
     expect(screen.getByText('Content')).toBeInTheDocument();
+
+    // Closed after second click on target
+    fireEvent.click(target);
+    await waitFor(() => {
+        expect(onCloseSpy).not.toHaveBeenCalled();
+        expect(screen.queryByText('Content')).not.toBeInTheDocument();
+    });
+
+    // Opened after third click on target
+    fireEvent.click(target);
+    expect(screen.getByText('Content')).toBeInTheDocument();
+
+    // Closed after click on close button
     fireEvent.click(screen.getByLabelText('Cerrar'));
+    await waitFor(() => {
+        expect(onCloseSpy).toHaveBeenCalled();
+        expect(screen.queryByText('Content')).not.toBeInTheDocument();
+    });
+});
 
-    await waitFor(() => expect(onCloseSpy).toHaveBeenCalled());
+test('popover - uncontrolled', async () => {
+    const onCloseSpy = jest.fn();
+    render(<UncontrolledWrapper onCloseSpy={onCloseSpy} />);
 
-    expect(screen.queryByText('Content')).toBe(null);
+    const target = screen.getByText('Press me!');
+
+    // Initially closed
+    expect(screen.queryByText('Content')).not.toBeInTheDocument();
+
+    // Opened after click on target
+    fireEvent.click(target);
+    expect(screen.getByText('Content')).toBeInTheDocument();
+
+    // Closed after second click on target
+    fireEvent.click(target);
+    await waitFor(() => {
+        expect(onCloseSpy).not.toHaveBeenCalled();
+        expect(screen.queryByText('Content')).not.toBeInTheDocument();
+    });
+
+    // Opened after third click on target
+    fireEvent.click(target);
+    expect(screen.getByText('Content')).toBeInTheDocument();
+
+    // Closed after click on close button
+    fireEvent.click(screen.getByLabelText('Cerrar'));
+    await waitFor(() => {
+        expect(onCloseSpy).toHaveBeenCalled();
+        expect(screen.queryByText('Content')).not.toBeInTheDocument();
+    });
 });
