@@ -1,35 +1,41 @@
-import {openStoryPage} from '../test-utils';
+import {openStoryPage, screen} from '../test-utils';
 
-test.each`
-    givenStoryPageArgs
-    ${{position: 'top'}}
-    ${{position: 'bottom'}}
-`(`Popover in mobile $givenStoryPageArgs.position`, async ({givenStoryPageArgs}) => {
-    const page = await openStoryPage({
-        id: 'components-popover--default',
-        device: 'MOBILE_IOS',
-        args: givenStoryPageArgs,
-    });
+const POPOVER_POSITIONS = ['top', 'bottom', 'left', 'right'];
 
-    const image = await page.screenshot();
-
-    expect(image).toMatchImageSnapshot();
-});
-
-test.each`
-    givenStoryPageArgs
-    ${{position: 'top'}}
-    ${{position: 'bottom'}}
-    ${{position: 'left'}}
-    ${{position: 'right'}}
-`(`Popover in desktop $givenStoryPageArgs.position`, async ({givenStoryPageArgs}) => {
+test.each(POPOVER_POSITIONS)('Popover - position = %s', async (position) => {
     const page = await openStoryPage({
         id: 'components-popover--default',
         device: 'DESKTOP',
-        args: givenStoryPageArgs,
+        args: {position, extra: true},
     });
 
-    const image = await page.screenshot();
+    await page.click(await screen.findByTestId('target'));
 
+    const image = await page.screenshot();
+    expect(image).toMatchImageSnapshot();
+});
+
+test('Popover - appears properly on mobile', async () => {
+    const page = await openStoryPage({
+        id: 'components-popover--default',
+        device: 'MOBILE_IOS',
+    });
+
+    await page.click(await screen.findByTestId('target'));
+
+    const image = await page.screenshot();
+    expect(image).toMatchImageSnapshot();
+});
+
+test('Popover - inverse', async () => {
+    const page = await openStoryPage({
+        id: 'components-popover--default',
+        device: 'MOBILE_IOS',
+        args: {inverse: true},
+    });
+
+    await page.click(await screen.findByTestId('target'));
+
+    const image = await page.screenshot();
     expect(image).toMatchImageSnapshot();
 });
