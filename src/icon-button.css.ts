@@ -24,9 +24,9 @@ export const bleedArea = {
     small: `calc(-1 * (${touchableArea.small} - ${iconSize.small}) / 2)`,
 };
 
-const baseButtonContainer = style({
+const baseButtonContainer = sprinkles({
     padding: 0,
-    border: 0,
+    border: 'none',
     background: 'transparent',
     display: 'flex',
     alignItems: 'center',
@@ -50,7 +50,7 @@ export const buttonContainer = styleVariants({
     ],
 });
 
-const baseIconContainer = style({
+const baseIconContainer = sprinkles({
     borderRadius: '50%',
     display: 'flex',
     alignItems: 'center',
@@ -81,32 +81,40 @@ export const disabled = style({
 
 export const isLoading = style({});
 
-export const icon = style({
-    opacity: 1,
-    display: 'inline-flex',
-    transition: `opacity ${transitionTiming}, transform ${transitionTiming}`,
+export const icon = style([
+    sprinkles({
+        display: 'inline-flex',
+    }),
+    {
+        opacity: 1,
+        transition: `opacity ${transitionTiming}, transform ${transitionTiming}`,
 
-    selectors: {
-        [`${isLoading} &`]: {
-            transform: 'translateY(-2rem)',
-            opacity: 0,
+        selectors: {
+            [`${isLoading} &`]: {
+                transform: 'translateY(-2rem)',
+                opacity: 0,
+            },
         },
     },
-});
+]);
 
-export const spinner = style({
-    position: 'absolute',
-    opacity: 0,
-    transform: 'translateY(2rem)',
-    transition: `opacity ${transitionTiming}, transform ${transitionTiming}`,
+export const spinner = style([
+    sprinkles({
+        position: 'absolute',
+    }),
+    {
+        opacity: 0,
+        transform: 'translateY(2rem)',
+        transition: `opacity ${transitionTiming}, transform ${transitionTiming}`,
 
-    selectors: {
-        [`${isLoading} &`]: {
-            transform: 'translateY(0)',
-            opacity: 1,
+        selectors: {
+            [`${isLoading} &`]: {
+                transform: 'translateY(0)',
+                opacity: 1,
+            },
         },
     },
-});
+]);
 
 export const oldIconButtonBase = style([
     sprinkles({
