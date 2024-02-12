@@ -1,7 +1,9 @@
+'use client';
 import * as React from 'react';
 import {BaseTouchable} from './touchable';
 import * as styles from './icon-button.css';
 import classNames from 'classnames';
+import Spinner from './spinner';
 
 import type {ExclusifyUnion} from './utils/utility-types';
 import type {DataAttributes, IconProps, TrackingEvent} from './utils/types';
@@ -18,7 +20,7 @@ interface ToProps {
 }
 
 interface OnPressProps {
-    onPress: (event: React.MouseEvent<HTMLElement>) => void;
+    onPress: (event: React.MouseEvent<HTMLElement>) => void | undefined | Promise<void>;
 }
 
 interface MaybeProps {
@@ -157,12 +159,11 @@ interface BaseNewProps {
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
     dataAttributes?: DataAttributes;
     disabled?: boolean;
-    loading?: boolean;
+    showSpinner?: boolean;
     'aria-label': string;
     small?: boolean;
     type?: 'neutral' | 'brand' | 'danger';
     variant?: 'default' | 'solid' | 'soft';
-    isOverMedia?: boolean;
     bleedLeft?: boolean;
     bleedRight?: boolean;
     bleedY?: boolean;
@@ -170,7 +171,7 @@ interface BaseNewProps {
 
 type NewProps = BaseNewProps & ExclusifyUnion<HrefProps | ToProps | OnPressProps | MaybeProps>;
 
-const RawNewIconButton: React.FC<NewProps> = ({
+const RawIconButton: React.FC<NewProps & {isOverMedia?: boolean}> = ({
     disabled,
     trackingEvent,
     dataAttributes,
@@ -178,7 +179,6 @@ const RawNewIconButton: React.FC<NewProps> = ({
     variant,
     isOverMedia,
     'aria-label': ariaLabel,
-    loading,
     small,
     Icon,
     bleedLeft,
@@ -186,10 +186,26 @@ const RawNewIconButton: React.FC<NewProps> = ({
     bleedY,
     ...props
 }) => {
+    const [isOnPressPromiseResolving, setIsOnPressPromiseResolving] = React.useState(false);
+
+    const showSpinner = props.showSpinner || isOnPressPromiseResolving;
+
+    // This state is needed to not render the spinner when hidden (because it causes high CPU usage
+    // specially in iPhone). But we want the spinner to be visible during the show/hide animation.
+    // * When showSpinner prop is true, state is changed immediately.
+    // * When the transition ends this state is updated again if needed
+    const [shouldRenderSpinner, setShouldRenderSpinner] = React.useState(!!showSpinner);
+
+    React.useEffect(() => {
+        if (showSpinner && !shouldRenderSpinner) {
+            setShouldRenderSpinner(true);
+        }
+    }, [showSpinner, shouldRenderSpinner]);
+
     const buttonSize = small ? 'small' : 'default';
 
     const commonProps = {
-        disabled,
+        disabled: disabled || showSpinner,
         trackingEvent,
         'aria-label': ariaLabel,
         dataAttributes: {'component-name': 'IconButton', ...dataAttributes},
@@ -213,23 +229,42 @@ const RawNewIconButton: React.FC<NewProps> = ({
         return 'white';
     };
 
-    // TODO: loading state
-
-    const icon = (
+    const content = (
         <div
-            className={styles.iconContainer[buttonSize]}
+            className={classNames(styles.iconContainer[buttonSize], {[styles.isLoading]: showSpinner})}
             style={{
                 ...getBackgroundStyles(),
             }}
         >
-            <Icon size={styles.iconSize[buttonSize]} color={getIconColor()} />
+            <div className={styles.icon}>
+                <Icon size={styles.iconSize[buttonSize]} color={getIconColor()} />
+            </div>
+
+            <div
+                aria-hidden
+                className={styles.spinner}
+                onTransitionEnd={() => {
+                    if (showSpinner !== shouldRenderSpinner) {
+                        setShouldRenderSpinner(showSpinner);
+                    }
+                }}
+            >
+                {shouldRenderSpinner && (
+                    <Spinner
+                        size={styles.iconSize[buttonSize]}
+                        color={getIconColor()}
+                        rolePresentation
+                        delay="0s"
+                    />
+                )}
+            </div>
         </div>
     );
 
     if (props.href) {
         return (
             <BaseTouchable {...commonProps} href={props.href} newTab={props.newTab}>
-                {icon}
+                {content}
             </BaseTouchable>
         );
     }
@@ -241,54 +276,67 @@ const RawNewIconButton: React.FC<NewProps> = ({
                 fullPageOnWebView={props.fullPageOnWebView}
                 replace={props.replace}
             >
-                {icon}
+                {content}
             </BaseTouchable>
         );
     }
 
     if (props.onPress) {
         return (
-            <BaseTouchable {...commonProps} onPress={props.onPress}>
-                {icon}
+            <BaseTouchable
+                {...commonProps}
+                onPress={(e) => {
+                    const result = props.onPress(e);
+                    if (result) {
+                        setIsOnPressPromiseResolving(true);
+                        result.finally(() => setIsOnPressPromiseResolving(false));
+                    }
+                }}
+            >
+                {content}
             </BaseTouchable>
         );
     }
 
     return (
         <BaseTouchable {...commonProps} maybe>
-            {icon}
+            {content}
         </BaseTouchable>
     );
 };
 
 type IconButtonProps = ExclusifyUnion<OldProps | NewProps>;
 
-const IconButton = (props: IconButtonProps): JSX.Element => {
+export const InternalIconButton = (props: IconButtonProps & {isOverMedia?: boolean}): JSX.Element => {
     if (props.Icon) {
-        return <RawNewIconButton {...props} />;
+        return <RawIconButton {...props} />;
     }
 
     const {icon, backgroundColor = 'transparent', iconSize, size = ICON_SIZE_1} = props;
     return (
         <RawOldIconButton
             {...props}
-            className={classNames(styles.base, props.className)}
+            className={classNames(styles.oldIconButtonBase, props.className)}
             style={{...getButtonStyle(icon, size, backgroundColor, iconSize, props.disabled), ...props.style}}
         />
     );
 };
 
+const IconButton = (props: IconButtonProps): JSX.Element => {
+    return <InternalIconButton {...props} />;
+};
+
 // Used internally by Mistica's components to avoid styles collisions
 export const BaseIconButton = (props: IconButtonProps): JSX.Element => {
     if (props.Icon) {
-        return <RawNewIconButton {...props} />;
+        return <RawIconButton {...props} />;
     }
 
     const {size = ICON_SIZE_1, disabled} = props;
     return (
         <RawOldIconButton
             {...props}
-            className={classNames(styles.base, props.className)}
+            className={classNames(styles.oldIconButtonBase, props.className)}
             style={{
                 height: size,
                 width: size,

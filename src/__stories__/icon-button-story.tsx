@@ -23,7 +23,7 @@ type Args = {
     variant: 'default' | 'soft' | 'solid';
     small: boolean;
     disabled: boolean;
-    isOverMedia: boolean;
+    showSpinner: boolean;
     bleedLeft: boolean;
     bleedRight: boolean;
     bleedY: boolean;
@@ -34,7 +34,7 @@ export const Default: StoryComponent<Args> = ({
     variant,
     small,
     disabled,
-    isOverMedia,
+    showSpinner,
     bleedLeft,
     bleedRight,
     bleedY,
@@ -44,7 +44,7 @@ export const Default: StoryComponent<Args> = ({
         Icon={IconCloseRegular}
         type={type}
         variant={variant}
-        isOverMedia={isOverMedia}
+        showSpinner={showSpinner}
         small={small}
         disabled={disabled}
         bleedLeft={bleedLeft}
@@ -60,7 +60,7 @@ Default.args = {
     variant: 'default',
     small: false,
     disabled: false,
-    isOverMedia: false,
+    showSpinner: false,
     bleedLeft: false,
     bleedRight: false,
     bleedY: false,

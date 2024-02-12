@@ -1,6 +1,7 @@
 import {style, styleVariants} from '@vanilla-extract/css';
 import {sprinkles} from './sprinkles.css';
 
+const transitionTiming = '0.1s ease-in-out';
 const minTouchableArea = '48px';
 
 const iconContainerSize = {
@@ -54,6 +55,7 @@ const baseIconContainer = style({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    overflow: 'hidden',
 });
 
 export const iconContainer = styleVariants({
@@ -77,7 +79,36 @@ export const disabled = style({
     opacity: 0.5,
 });
 
-export const base = style([
+export const isLoading = style({});
+
+export const icon = style({
+    opacity: 1,
+    display: 'inline-flex',
+    transition: `opacity ${transitionTiming}, transform ${transitionTiming}`,
+
+    selectors: {
+        [`${isLoading} &`]: {
+            transform: 'translateY(-2rem)',
+            opacity: 0,
+        },
+    },
+});
+
+export const spinner = style({
+    position: 'absolute',
+    opacity: 0,
+    transform: 'translateY(2rem)',
+    transition: `opacity ${transitionTiming}, transform ${transitionTiming}`,
+
+    selectors: {
+        [`${isLoading} &`]: {
+            transform: 'translateY(0)',
+            opacity: 1,
+        },
+    },
+});
+
+export const oldIconButtonBase = style([
     sprinkles({
         display: 'inline-block',
     }),
