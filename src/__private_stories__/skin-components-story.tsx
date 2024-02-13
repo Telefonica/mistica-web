@@ -43,6 +43,7 @@ import {
     Title3,
     IconButton,
 } from '..';
+import {InternalIconButton} from '../icon-button';
 import avatarImg from '../__stories__/images/avatar.jpg';
 import usingVrImg from '../__stories__/images/using-vr.jpg';
 
@@ -310,6 +311,16 @@ export const Default: StoryComponent<Args> = ({variant}) => {
                         <IconButton Icon={IconLightningRegular} type="danger" variant="default" />
                         <IconButton Icon={IconLightningRegular} type="danger" variant="soft" />
                         <IconButton Icon={IconLightningRegular} type="danger" variant="solid" />
+
+                        <div style={{background: 'black'}}>
+                            <InternalIconButton Icon={IconLightningRegular} type="neutral" isOverMedia />
+                        </div>
+                        <div style={{background: 'black'}}>
+                            <InternalIconButton Icon={IconLightningRegular} type="brand" isOverMedia />
+                        </div>
+                        <div style={{background: 'black'}}>
+                            <InternalIconButton Icon={IconLightningRegular} type="danger" isOverMedia />
+                        </div>
                     </Inline>
                 </Stack>
             </Box>
