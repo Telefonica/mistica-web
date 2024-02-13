@@ -299,13 +299,13 @@ const touchableArea = {
 };
 
 const pointerBleedArea = {
-    default: `calc(-1 * (${pointerArea.default} - ${iconSize.default}) / 2)`,
-    small: `calc(-1 * (${pointerArea.small} - ${iconSize.small}) / 2)`,
+    default: `calc((${pointerArea.default} - ${iconSize.default}) / 2)`,
+    small: `calc((${pointerArea.small} - ${iconSize.small}) / 2)`,
 };
 
 const touchableBleedArea = {
-    default: `calc(-1 * (${touchableArea.default} - ${iconSize.default}) / 2)`,
-    small: `calc(-1 * (${touchableArea.small} - ${iconSize.small}) / 2)`,
+    default: `calc((${touchableArea.default} - ${iconSize.default}) / 2)`,
+    small: `calc((${touchableArea.small} - ${iconSize.small}) / 2)`,
 };
 
 const baseButtonContainer = sprinkles({
