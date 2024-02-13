@@ -330,6 +330,7 @@ const baseIconContainer = style([
     }),
     {
         backgroundColor: background,
+        transition: `background-color ${transitionTiming}`,
     },
 ]);
 

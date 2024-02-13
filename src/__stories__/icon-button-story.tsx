@@ -23,7 +23,7 @@ export default {
     parameters: {fullScreen: true},
 };
 
-const handleOnPress = () => window.alert('pressed!');
+const handleOnPress = () => console.log('pressed!');
 
 type Args = {
     type: 'neutral' | 'brand' | 'danger';
