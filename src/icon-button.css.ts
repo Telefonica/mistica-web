@@ -4,6 +4,9 @@ import * as mq from './media-queries.css';
 import {vars as skinVars} from './skins/skin-contract.css';
 import {applyAlpha} from './utils/color';
 
+const colorTransitionTiming = '0.1s ease-in-out';
+const contentTransitionTiming = '0.3s cubic-bezier(0.77, 0, 0.175, 1)';
+
 const background = createVar();
 const backgroundHover = createVar();
 const backgroundActive = createVar();
@@ -270,7 +273,6 @@ export const disabled = style({
 export const isLoading = style({});
 export const overlayContainer = style({});
 
-const transitionTiming = '0.1s ease-in-out';
 const minButtonArea = {
     pointer: '24px',
     touchable: '48px',
@@ -416,7 +418,7 @@ const baseIconContainer = style([
     }),
     {
         backgroundColor: background,
-        transition: `background-color ${transitionTiming}`,
+        transition: `background-color ${colorTransitionTiming}`,
     },
 ]);
 
@@ -443,7 +445,7 @@ export const overlay = style({
     width: '100%',
     height: '100%',
     backgroundColor: 'transparent',
-    transition: `background-color ${transitionTiming}`,
+    transition: `background-color ${colorTransitionTiming}`,
 
     selectors: {
         [`${overlayContainer}:active &`]: {
@@ -473,7 +475,7 @@ export const icon = style([
     {
         zIndex: 1,
         opacity: 1,
-        transition: `opacity ${transitionTiming}, transform ${transitionTiming}, color ${transitionTiming}`,
+        transition: `opacity ${contentTransitionTiming}, transform ${contentTransitionTiming}, color ${colorTransitionTiming}`,
         color: iconColor,
 
         selectors: {
@@ -493,7 +495,7 @@ export const spinner = style([
         zIndex: 1,
         opacity: 0,
         transform: 'translateY(2rem)',
-        transition: `opacity ${transitionTiming}, transform ${transitionTiming}, color ${transitionTiming}`,
+        transition: `opacity ${contentTransitionTiming}, transform ${contentTransitionTiming}, color ${colorTransitionTiming}`,
         color: iconColor,
 
         selectors: {

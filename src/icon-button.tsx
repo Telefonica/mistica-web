@@ -220,7 +220,7 @@ export const RawIconButton = React.forwardRef<TouchableElement, NewProps & {isOv
             ref,
             trackingEvent,
             'aria-label': ariaLabel,
-            role: 'button',
+            role: props.onPress || props.to || props.href ? 'button' : undefined,
             dataAttributes: {'component-name': 'IconButton', ...dataAttributes},
             className: classNames(
                 styles.buttonContainer[buttonSize],
