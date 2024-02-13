@@ -198,8 +198,8 @@ export const iconButtonTokens = styleVariants({
     'danger-soft-inverse': {
         vars: {
             [background]: skinVars.colors.buttonLinkDangerBackgroundInverse,
-            [backgroundHover]: skinVars.colors.backgroundContainerBrandHover,
-            [backgroundActive]: skinVars.colors.backgroundContainerBrandPressed,
+            [backgroundHover]: skinVars.colors.backgroundContainerHover,
+            [backgroundActive]: skinVars.colors.backgroundContainerPressed,
             [iconColor]: skinVars.colors.error,
         },
     },
@@ -223,8 +223,8 @@ export const iconButtonTokens = styleVariants({
     'danger-default-inverse': {
         vars: {
             [background]: skinVars.colors.buttonLinkDangerBackgroundInverse,
-            [backgroundHover]: skinVars.colors.backgroundContainerBrandHover,
-            [backgroundActive]: skinVars.colors.backgroundContainerBrandPressed,
+            [backgroundHover]: skinVars.colors.backgroundContainerHover,
+            [backgroundActive]: skinVars.colors.backgroundContainerPressed,
             [iconColor]: skinVars.colors.error,
         },
     },
@@ -271,7 +271,10 @@ export const isLoading = style({});
 export const overlayContainer = style({});
 
 const transitionTiming = '0.1s ease-in-out';
-const minTouchableArea = '48px';
+const minButtonArea = {
+    pointer: '24px',
+    touchable: '48px',
+};
 
 const iconContainerSize = {
     default: '3rem',
@@ -283,12 +286,22 @@ export const iconSize = {
     small: '1.25rem',
 };
 
-const touchableArea = {
-    default: `calc(max(${minTouchableArea}, ${iconContainerSize.default}))`,
-    small: `calc(max(${minTouchableArea}, ${iconContainerSize.small}))`,
+const pointerArea = {
+    default: `calc(max(${minButtonArea.pointer}, ${iconContainerSize.default}))`,
+    small: `calc(max(${minButtonArea.pointer}, ${iconContainerSize.small}))`,
 };
 
-export const bleedArea = {
+const touchableArea = {
+    default: `calc(max(${minButtonArea.touchable}, ${iconContainerSize.default}))`,
+    small: `calc(max(${minButtonArea.touchable}, ${iconContainerSize.small}))`,
+};
+
+const pointerBleedArea = {
+    default: `calc(-1 * (${pointerArea.default} - ${iconSize.default}) / 2)`,
+    small: `calc(-1 * (${pointerArea.small} - ${iconSize.small}) / 2)`,
+};
+
+const touchableBleedArea = {
     default: `calc(-1 * (${touchableArea.default} - ${iconSize.default}) / 2)`,
     small: `calc(-1 * (${touchableArea.small} - ${iconSize.small}) / 2)`,
 };
@@ -306,17 +319,90 @@ export const buttonContainer = styleVariants({
     default: [
         baseButtonContainer,
         {
-            width: touchableArea.default,
-            height: touchableArea.default,
+            width: pointerArea.default,
+            height: pointerArea.default,
+            '@media': {
+                [mq.touchableOnly]: {
+                    width: touchableArea.default,
+                    height: touchableArea.default,
+                },
+            },
         },
     ],
     small: [
         baseButtonContainer,
         {
-            width: touchableArea.small,
-            height: touchableArea.small,
+            width: pointerArea.small,
+            height: pointerArea.small,
+            '@media': {
+                [mq.touchableOnly]: {
+                    width: touchableArea.small,
+                    height: touchableArea.small,
+                },
+            },
         },
     ],
+});
+
+export const bleedLeft = styleVariants({
+    default: {
+        marginLeft: `calc(-1 * ${pointerBleedArea.default})`,
+        '@media': {
+            [mq.touchableOnly]: {
+                marginLeft: `calc(-1 * ${touchableBleedArea.default})`,
+            },
+        },
+    },
+    small: {
+        marginLeft: `calc(-1 * ${pointerBleedArea.small})`,
+        '@media': {
+            [mq.touchableOnly]: {
+                marginLeft: `calc(-1 * ${touchableBleedArea.small})`,
+            },
+        },
+    },
+});
+
+export const bleedRight = styleVariants({
+    default: {
+        marginRight: `calc(-1 * ${pointerBleedArea.default})`,
+        '@media': {
+            [mq.touchableOnly]: {
+                marginLeft: `calc(-1 * ${touchableBleedArea.default})`,
+            },
+        },
+    },
+    small: {
+        marginRight: `calc(-1 * ${pointerBleedArea.small})`,
+        '@media': {
+            [mq.touchableOnly]: {
+                marginLeft: `calc(-1 * ${touchableBleedArea.small})`,
+            },
+        },
+    },
+});
+
+export const bleedY = styleVariants({
+    default: {
+        marginTop: `calc(-1 * ${pointerBleedArea.default})`,
+        marginBottom: `calc(-1 * ${pointerBleedArea.default})`,
+        '@media': {
+            [mq.touchableOnly]: {
+                marginTop: `calc(-1 * ${touchableBleedArea.default})`,
+                marginBottom: `calc(-1 * ${touchableBleedArea.default})`,
+            },
+        },
+    },
+    small: {
+        marginTop: `calc(-1 * ${pointerBleedArea.small})`,
+        marginBottom: `calc(-1 * ${pointerBleedArea.small})`,
+        '@media': {
+            [mq.touchableOnly]: {
+                marginTop: `calc(-1 * ${touchableBleedArea.small})`,
+                marginBottom: `calc(-1 * ${touchableBleedArea.small})`,
+            },
+        },
+    },
 });
 
 const baseIconContainer = style([

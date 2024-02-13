@@ -224,26 +224,19 @@ export const RawIconButton = React.forwardRef<TouchableElement, NewProps & {isOv
             dataAttributes: {'component-name': 'IconButton', ...dataAttributes},
             className: classNames(
                 styles.buttonContainer[buttonSize],
-                {[styles.disabled]: disabled},
-
-                styles.iconButtonTokens[buttonTokensKey]
+                styles.iconButtonTokens[buttonTokensKey],
+                {
+                    [styles.disabled]: disabled,
+                    [styles.overlayContainer]: !disabled && !showSpinner,
+                    [styles.bleedLeft[buttonSize]]: bleedLeft,
+                    [styles.bleedRight[buttonSize]]: bleedRight,
+                    [styles.bleedY[buttonSize]]: bleedY,
+                }
             ),
-            style: {
-                ...(bleedLeft ? {marginLeft: styles.bleedArea[buttonSize]} : undefined),
-                ...(bleedRight ? {marginRight: styles.bleedArea[buttonSize]} : undefined),
-                ...(bleedY
-                    ? {marginTop: styles.bleedArea[buttonSize], marginBottom: styles.bleedArea[buttonSize]}
-                    : undefined),
-            },
         };
 
         const content = (
-            <div
-                className={classNames(styles.iconContainer[buttonSize], {
-                    [styles.isLoading]: showSpinner,
-                    [styles.overlayContainer]: !disabled && !showSpinner,
-                })}
-            >
+            <div className={classNames(styles.iconContainer[buttonSize], {[styles.isLoading]: showSpinner})}>
                 <div className={styles.overlay} />
 
                 <div aria-hidden={showSpinner ? true : undefined} className={styles.icon}>

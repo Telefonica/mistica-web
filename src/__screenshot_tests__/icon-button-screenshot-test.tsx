@@ -3,7 +3,8 @@ import {openStoryPage, screen, setRootFontSize} from '../test-utils';
 import type {Device} from '../test-utils';
 
 const VARIANTS = ['default', 'soft', 'solid'];
-const DEVICES: Array<Device> = ['MOBILE_IOS', 'MOBILE_ANDROID'];
+const MOBILE_DEVICES: Array<Device> = ['MOBILE_IOS', 'MOBILE_ANDROID'];
+const DEVICES: Array<Device> = ['MOBILE_IOS', 'DESKTOP'];
 
 test.each(VARIANTS)('IconButton - %s variant', async (variant) => {
     await openStoryPage({
@@ -18,10 +19,10 @@ test.each(VARIANTS)('IconButton - %s variant', async (variant) => {
     expect(image).toMatchImageSnapshot();
 });
 
-test('IconButton - small', async () => {
+test.each(DEVICES)('IconButton - small in %s', async (device) => {
     await openStoryPage({
         id: 'components-buttons-iconbutton--default',
-        device: 'MOBILE_IOS',
+        device,
         args: {variant: 'solid', small: true},
     });
 
@@ -44,7 +45,7 @@ test('IconButton - disabled', async () => {
     expect(image).toMatchImageSnapshot();
 });
 
-test.each(DEVICES)('IconButton - spinner in %s', async (device) => {
+test.each(MOBILE_DEVICES)('IconButton - spinner in %s', async (device) => {
     await openStoryPage({
         id: 'components-buttons-iconbutton--default',
         device,
