@@ -75,6 +75,19 @@ test('Tooltip - max width is 496px', async () => {
     expect(image).toMatchImageSnapshot();
 });
 
+test('Tooltip - content is centered if width is small', async () => {
+    const page = await openStoryPage({
+        id: 'components-tooltip--default',
+        device: 'MOBILE_IOS',
+        args: {title: '', description: 'A'},
+    });
+
+    await page.click(await screen.findByTestId('target'));
+
+    const image = await page.screenshot();
+    expect(image).toMatchImageSnapshot();
+});
+
 test('Tooltip - appears properly when its container is fixed and has overflow hidden', async () => {
     const page = await openStoryPage({
         id: 'private-tooltip--inside-fixed-container',
