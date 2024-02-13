@@ -38,8 +38,6 @@ interface AccordionItemContentProps {
     subtitle?: string;
     asset?: React.ReactNode;
     content: React.ReactNode;
-    isOpen?: boolean;
-    isInitialOpen?: boolean;
     onToogle?: (value: boolean) => void;
     dataAttributes?: DataAttributes;
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;

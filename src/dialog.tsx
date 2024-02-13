@@ -222,6 +222,7 @@ const ModalDialog = (props: ModalDialogProps): JSX.Element => {
     const dialogWasAcceptedRef = React.useRef<boolean>(false);
     const historyWasPushedRef = React.useRef<boolean>(false);
     const animationDurationRef = React.useRef<number>(shouldAnimate() ? styles.ANIMATION_DURATION_MS : 0);
+    const handleBackNavigationRef = React.useRef(() => {});
 
     const shouldRenderNative = props.type !== 'dialog' && isWebViewBridgeAvailable();
     const shouldDismissOnPressOverlay = props.type === 'dialog';
@@ -253,6 +254,11 @@ const ModalDialog = (props: ModalDialogProps): JSX.Element => {
     }, [onAccept, onCancel, onDestroy]);
 
     const startClosing = React.useCallback(() => {
+        window.removeEventListener('popstate', handleBackNavigationRef.current);
+        if (historyWasPushedRef.current) {
+            historyWasPushedRef.current = false;
+            window.history.back();
+        }
         let timeout: NodeJS.Timeout;
         if (!isClosingRef.current && isReady) {
             isClosingRef.current = true;
@@ -278,6 +284,9 @@ const ModalDialog = (props: ModalDialogProps): JSX.Element => {
     }, [startClosing]);
 
     const dismiss = React.useCallback(() => {
+        if (isClosingRef.current) {
+            return;
+        }
         if (shouldAcceptOnDismiss) {
             handleAccept();
         } else {
@@ -300,13 +309,10 @@ const ModalDialog = (props: ModalDialogProps): JSX.Element => {
             historyWasPushedRef.current = true;
             window.history.pushState(null, document.title, window.location.href);
         }
-        window.addEventListener('popstate', handleBackNavigation);
+        handleBackNavigationRef.current = handleBackNavigation;
+        window.addEventListener('popstate', handleBackNavigationRef.current);
         return () => {
-            window.removeEventListener('popstate', handleBackNavigation);
-            if (isClosingRef.current && historyWasPushedRef.current) {
-                historyWasPushedRef.current = false;
-                window.history.back();
-            }
+            window.removeEventListener('popstate', handleBackNavigationRef.current);
         };
     }, [handleBackNavigation, shouldRenderNative]);
 

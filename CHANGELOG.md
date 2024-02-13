@@ -1,3 +1,12 @@
+## [14.42.1](https://github.com/Telefonica/mistica-web/compare/v14.42.0...v14.42.1) (2024-02-08)
+
+
+### Bug Fixes
+
+* **Dialogs:** Execute back navigation before accept/cancel callbacks ([#1018](https://github.com/Telefonica/mistica-web/issues/1018)) ([a631f9a](https://github.com/Telefonica/mistica-web/commit/a631f9aa511706a903729c8c94965d89a149c773))
+* **FeedbackScreen:** inverse background color and overscroll color ([#1020](https://github.com/Telefonica/mistica-web/issues/1020)) ([bee7dd6](https://github.com/Telefonica/mistica-web/commit/bee7dd62ce8c5ea99e0c717c8e19fdaca651822e))
+* **Text:** word wrapping is not working when truncate's value is greater than one ([#1017](https://github.com/Telefonica/mistica-web/issues/1017)) ([d65b149](https://github.com/Telefonica/mistica-web/commit/d65b149ea14ca47dc8f95fc4110b1d7024df0a6c))
+
 # [14.42.0](https://github.com/Telefonica/mistica-web/compare/v14.41.0...v14.42.0) (2024-02-05)
 
 
