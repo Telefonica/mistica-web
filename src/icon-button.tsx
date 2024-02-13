@@ -6,6 +6,7 @@ import classNames from 'classnames';
 import Spinner from './spinner';
 import {useThemeVariant} from './theme-variant-context';
 
+import type {TouchableElement} from './touchable';
 import type {ExclusifyUnion} from './utils/utility-types';
 import type {DataAttributes, IconProps, TrackingEvent} from './utils/types';
 
@@ -81,8 +82,8 @@ const getButtonStyle = (
     };
 };
 
-/*
- * Examples:
+/**
+ * @deprecated these usages of IconButton will be removed
  *
  * IconButton with image url:
  *
@@ -95,10 +96,11 @@ const getButtonStyle = (
  *     </IconButton />
  *
  */
-const RawOldIconButton: React.FC<OldProps> = (props) => {
+export const RawOldIconButton = React.forwardRef<TouchableElement, OldProps>((props, ref) => {
     const {icon, children} = props;
     const commonProps = {
         className: props.className || '',
+        ref,
         disabled: props.disabled,
         style: props.style,
         trackingEvent: props.trackingEvent,
@@ -152,7 +154,7 @@ const RawOldIconButton: React.FC<OldProps> = (props) => {
             {!icon && React.Children.only(children)}
         </BaseTouchable>
     );
-};
+});
 
 interface BaseNewProps {
     children?: undefined;
@@ -172,158 +174,170 @@ interface BaseNewProps {
 
 type NewProps = BaseNewProps & ExclusifyUnion<HrefProps | ToProps | OnPressProps | MaybeProps>;
 
-const RawIconButton: React.FC<NewProps & {isOverMedia?: boolean}> = ({
-    disabled,
-    trackingEvent,
-    dataAttributes,
-    type = 'neutral',
-    variant = 'default',
-    isOverMedia,
-    'aria-label': ariaLabel,
-    small,
-    Icon,
-    bleedLeft,
-    bleedRight,
-    bleedY,
-    ...props
-}) => {
-    const themeVariant = useThemeVariant();
-    const [isOnPressPromiseResolving, setIsOnPressPromiseResolving] = React.useState(false);
-
-    const showSpinner = props.showSpinner || isOnPressPromiseResolving;
-
-    // This state is needed to not render the spinner when hidden (because it causes high CPU usage
-    // specially in iPhone). But we want the spinner to be visible during the show/hide animation.
-    // * When showSpinner prop is true, state is changed immediately.
-    // * When the transition ends this state is updated again if needed
-    const [shouldRenderSpinner, setShouldRenderSpinner] = React.useState(!!showSpinner);
-
-    React.useEffect(() => {
-        if (showSpinner && !shouldRenderSpinner) {
-            setShouldRenderSpinner(true);
-        }
-    }, [showSpinner, shouldRenderSpinner]);
-
-    const buttonSize = small ? 'small' : 'default';
-    const buttonTokensKey: keyof typeof styles.iconButtonTokens = isOverMedia
-        ? `${type}-media`
-        : `${type}-${variant}-${themeVariant}`;
-
-    const commonProps = {
-        disabled: disabled || showSpinner,
-        trackingEvent,
-        'aria-label': ariaLabel,
-        dataAttributes: {'component-name': 'IconButton', ...dataAttributes},
-        className: classNames(
-            styles.buttonContainer[buttonSize],
-            {[styles.disabled]: disabled},
-
-            styles.iconButtonTokens[buttonTokensKey]
-        ),
-        style: {
-            ...(bleedLeft ? {marginLeft: styles.bleedArea[buttonSize]} : undefined),
-            ...(bleedRight ? {marginRight: styles.bleedArea[buttonSize]} : undefined),
-            ...(bleedY
-                ? {marginTop: styles.bleedArea[buttonSize], marginBottom: styles.bleedArea[buttonSize]}
-                : undefined),
+export const RawIconButton = React.forwardRef<TouchableElement, NewProps & {isOverMedia?: boolean}>(
+    (
+        {
+            disabled,
+            trackingEvent,
+            dataAttributes,
+            type = 'neutral',
+            variant = 'default',
+            isOverMedia,
+            'aria-label': ariaLabel,
+            small,
+            Icon,
+            bleedLeft,
+            bleedRight,
+            bleedY,
+            ...props
         },
-    };
+        ref
+    ) => {
+        const themeVariant = useThemeVariant();
+        const [isOnPressPromiseResolving, setIsOnPressPromiseResolving] = React.useState(false);
 
-    const content = (
-        <div
-            className={classNames(styles.iconContainer[buttonSize], {
-                [styles.isLoading]: showSpinner,
-                [styles.overlayContainer]: !disabled && !showSpinner,
-            })}
-        >
-            <div className={styles.overlay} />
+        const showSpinner = props.showSpinner || isOnPressPromiseResolving;
 
-            <div aria-hidden={showSpinner ? true : undefined} className={styles.icon}>
-                <Icon size={styles.iconSize[buttonSize]} color="currentColor" />
-            </div>
+        // This state is needed to not render the spinner when hidden (because it causes high CPU usage
+        // specially in iPhone). But we want the spinner to be visible during the show/hide animation.
+        // * When showSpinner prop is true, state is changed immediately.
+        // * When the transition ends this state is updated again if needed
+        const [shouldRenderSpinner, setShouldRenderSpinner] = React.useState(!!showSpinner);
 
+        React.useEffect(() => {
+            if (showSpinner && !shouldRenderSpinner) {
+                setShouldRenderSpinner(true);
+            }
+        }, [showSpinner, shouldRenderSpinner]);
+
+        const buttonSize = small ? 'small' : 'default';
+        const buttonTokensKey: keyof typeof styles.iconButtonTokens = isOverMedia
+            ? `${type}-media`
+            : `${type}-${variant}-${themeVariant}`;
+
+        const commonProps = {
+            disabled: disabled || showSpinner,
+            ref,
+            trackingEvent,
+            'aria-label': ariaLabel,
+            role: 'button',
+            dataAttributes: {'component-name': 'IconButton', ...dataAttributes},
+            className: classNames(
+                styles.buttonContainer[buttonSize],
+                {[styles.disabled]: disabled},
+
+                styles.iconButtonTokens[buttonTokensKey]
+            ),
+            style: {
+                ...(bleedLeft ? {marginLeft: styles.bleedArea[buttonSize]} : undefined),
+                ...(bleedRight ? {marginRight: styles.bleedArea[buttonSize]} : undefined),
+                ...(bleedY
+                    ? {marginTop: styles.bleedArea[buttonSize], marginBottom: styles.bleedArea[buttonSize]}
+                    : undefined),
+            },
+        };
+
+        const content = (
             <div
-                aria-hidden={showSpinner ? undefined : true}
-                className={styles.spinner}
-                onTransitionEnd={() => {
-                    if (showSpinner !== shouldRenderSpinner) {
-                        setShouldRenderSpinner(showSpinner);
-                    }
-                }}
+                className={classNames(styles.iconContainer[buttonSize], {
+                    [styles.isLoading]: showSpinner,
+                    [styles.overlayContainer]: !disabled && !showSpinner,
+                })}
             >
-                {shouldRenderSpinner && (
-                    <Spinner size={styles.iconSize[buttonSize]} color="currentColor" delay="0s" />
-                )}
+                <div className={styles.overlay} />
+
+                <div aria-hidden={showSpinner ? true : undefined} className={styles.icon}>
+                    <Icon size={styles.iconSize[buttonSize]} color="currentColor" />
+                </div>
+
+                <div
+                    aria-hidden={showSpinner ? undefined : true}
+                    className={styles.spinner}
+                    onTransitionEnd={() => {
+                        if (showSpinner !== shouldRenderSpinner) {
+                            setShouldRenderSpinner(showSpinner);
+                        }
+                    }}
+                >
+                    {shouldRenderSpinner && (
+                        <Spinner size={styles.iconSize[buttonSize]} color="currentColor" delay="0s" />
+                    )}
+                </div>
             </div>
-        </div>
-    );
+        );
 
-    if (props.href) {
+        if (props.href) {
+            return (
+                <BaseTouchable {...commonProps} href={props.href} newTab={props.newTab}>
+                    {content}
+                </BaseTouchable>
+            );
+        }
+        if (props.to) {
+            return (
+                <BaseTouchable
+                    {...commonProps}
+                    to={props.to}
+                    fullPageOnWebView={props.fullPageOnWebView}
+                    replace={props.replace}
+                >
+                    {content}
+                </BaseTouchable>
+            );
+        }
+
+        if (props.onPress) {
+            return (
+                <BaseTouchable
+                    {...commonProps}
+                    onPress={(e) => {
+                        const result = props.onPress(e);
+                        if (result) {
+                            setIsOnPressPromiseResolving(true);
+                            result.finally(() => setIsOnPressPromiseResolving(false));
+                        }
+                    }}
+                >
+                    {content}
+                </BaseTouchable>
+            );
+        }
+
         return (
-            <BaseTouchable {...commonProps} href={props.href} newTab={props.newTab}>
+            <BaseTouchable {...commonProps} maybe>
                 {content}
             </BaseTouchable>
         );
     }
-    if (props.to) {
-        return (
-            <BaseTouchable
-                {...commonProps}
-                to={props.to}
-                fullPageOnWebView={props.fullPageOnWebView}
-                replace={props.replace}
-            >
-                {content}
-            </BaseTouchable>
-        );
-    }
-
-    if (props.onPress) {
-        return (
-            <BaseTouchable
-                {...commonProps}
-                onPress={(e) => {
-                    const result = props.onPress(e);
-                    if (result) {
-                        setIsOnPressPromiseResolving(true);
-                        result.finally(() => setIsOnPressPromiseResolving(false));
-                    }
-                }}
-            >
-                {content}
-            </BaseTouchable>
-        );
-    }
-
-    return (
-        <BaseTouchable {...commonProps} maybe>
-            {content}
-        </BaseTouchable>
-    );
-};
+);
 
 type IconButtonProps = ExclusifyUnion<OldProps | NewProps>;
 
-export const InternalIconButton = (props: IconButtonProps & {isOverMedia?: boolean}): JSX.Element => {
+export const InternalIconButton = React.forwardRef<
+    TouchableElement,
+    IconButtonProps & {isOverMedia?: boolean}
+>((props, ref) => {
     if (props.Icon) {
-        return <RawIconButton {...props} />;
+        return <RawIconButton ref={ref} {...props} />;
     }
 
     const {icon, backgroundColor = 'transparent', iconSize, size = ICON_SIZE_1} = props;
     return (
         <RawOldIconButton
+            ref={ref}
             {...props}
             className={classNames(styles.oldIconButtonBase, props.className)}
             style={{...getButtonStyle(icon, size, backgroundColor, iconSize, props.disabled), ...props.style}}
         />
     );
-};
+});
 
-const IconButton = (props: IconButtonProps): JSX.Element => {
-    return <InternalIconButton {...props} />;
-};
+export const IconButton = React.forwardRef<TouchableElement, IconButtonProps>((props, ref) => {
+    return <InternalIconButton ref={ref} {...props} />;
+});
 
 // Used internally by Mistica's components to avoid styles collisions
+
 export const BaseIconButton = (props: IconButtonProps): JSX.Element => {
     if (props.Icon) {
         return <RawIconButton {...props} />;
