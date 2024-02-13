@@ -1,5 +1,20 @@
-import {style, styleVariants} from '@vanilla-extract/css';
+import {createVar, style, styleVariants} from '@vanilla-extract/css';
 import {sprinkles} from './sprinkles.css';
+import * as mq from './media-queries.css';
+
+const iconColor = createVar();
+const background = createVar();
+const backgroundHover = createVar();
+const backgroundActive = createVar();
+
+export const vars = {iconColor, background, backgroundHover, backgroundActive};
+
+export const disabled = style({
+    opacity: 0.5,
+});
+
+export const isLoading = style({});
+export const overlayContainer = style({});
 
 const transitionTiming = '0.1s ease-in-out';
 const minTouchableArea = '48px';
@@ -50,13 +65,19 @@ export const buttonContainer = styleVariants({
     ],
 });
 
-const baseIconContainer = sprinkles({
-    borderRadius: '50%',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    overflow: 'hidden',
-});
+const baseIconContainer = style([
+    sprinkles({
+        borderRadius: '50%',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        overflow: 'hidden',
+        position: 'relative',
+    }),
+    {
+        backgroundColor: background,
+    },
+]);
 
 export const iconContainer = styleVariants({
     default: [
@@ -75,19 +96,44 @@ export const iconContainer = styleVariants({
     ],
 });
 
-export const disabled = style({
-    opacity: 0.5,
-});
+export const overlay = style({
+    position: 'absolute',
+    zIndex: 0,
+    width: '100%',
+    height: '100%',
+    backgroundColor: 'transparent',
+    transition: `background-color ${transitionTiming}`,
 
-export const isLoading = style({});
+    selectors: {
+        [`${overlayContainer}:active &`]: {
+            backgroundColor: backgroundActive,
+        },
+    },
+
+    '@media': {
+        [mq.supportsHover]: {
+            selectors: {
+                [`${overlayContainer}:hover &`]: {
+                    backgroundColor: backgroundHover,
+                },
+                [`${overlayContainer}:active &`]: {
+                    backgroundColor: backgroundActive,
+                },
+            },
+        },
+    },
+});
 
 export const icon = style([
     sprinkles({
+        position: 'relative',
         display: 'inline-flex',
     }),
     {
+        zIndex: 1,
         opacity: 1,
-        transition: `opacity ${transitionTiming}, transform ${transitionTiming}`,
+        transition: `opacity ${transitionTiming}, transform ${transitionTiming}, color ${transitionTiming}`,
+        color: iconColor,
 
         selectors: {
             [`${isLoading} &`]: {
@@ -103,9 +149,11 @@ export const spinner = style([
         position: 'absolute',
     }),
     {
+        zIndex: 1,
         opacity: 0,
         transform: 'translateY(2rem)',
-        transition: `opacity ${transitionTiming}, transform ${transitionTiming}`,
+        transition: `opacity ${transitionTiming}, transform ${transitionTiming}, color ${transitionTiming}`,
+        color: iconColor,
 
         selectors: {
             [`${isLoading} &`]: {

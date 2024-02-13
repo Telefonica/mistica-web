@@ -4,6 +4,9 @@ import {BaseTouchable} from './touchable';
 import * as styles from './icon-button.css';
 import classNames from 'classnames';
 import Spinner from './spinner';
+import {useThemeVariant} from './theme-variant-context';
+import {applyCssVars} from './utils/css';
+import {vars} from './skins/skin-contract.css';
 
 import type {ExclusifyUnion} from './utils/utility-types';
 import type {DataAttributes, IconProps, TrackingEvent} from './utils/types';
@@ -153,6 +156,203 @@ const RawOldIconButton: React.FC<OldProps> = (props) => {
     );
 };
 
+const iconButtonTokens = {
+    brand: {
+        solid: {
+            default: {
+                background: vars.colors.buttonPrimaryBackground,
+                backgroundHover: vars.colors.backgroundContainerBrandHover,
+                backgroundActive: vars.colors.backgroundContainerBrandPressed,
+                icon: vars.colors.textButtonPrimary,
+            },
+            inverse: {
+                background: vars.colors.buttonPrimaryBackgroundInverse,
+                backgroundHover: vars.colors.backgroundContainerHover,
+                backgroundActive: vars.colors.backgroundContainerPressed,
+                icon: vars.colors.textButtonPrimaryInverse,
+            },
+            alternative: {
+                background: vars.colors.buttonPrimaryBackground,
+                backgroundHover: vars.colors.backgroundContainerBrandHover,
+                backgroundActive: vars.colors.backgroundContainerBrandPressed,
+                icon: vars.colors.textButtonPrimary,
+            },
+        },
+
+        soft: {
+            default: {
+                background: vars.colors.brandLow,
+                backgroundHover: vars.colors.backgroundContainerHover,
+                backgroundActive: vars.colors.backgroundContainerPressed,
+                icon: vars.colors.textButtonSecondary,
+            },
+            inverse: {
+                background: vars.colors.backgroundContainerBrandOverInverse,
+                backgroundHover: vars.colors.backgroundContainerBrandHover,
+                backgroundActive: vars.colors.backgroundContainerBrandPressed,
+                icon: vars.colors.textButtonSecondaryInverse,
+            },
+            alternative: {
+                background: vars.colors.brandLow,
+                backgroundHover: vars.colors.backgroundContainerHover,
+                backgroundActive: vars.colors.backgroundContainerPressed,
+                icon: vars.colors.textButtonSecondary,
+            },
+        },
+
+        default: {
+            default: {
+                background: 'transparent',
+                backgroundHover: vars.colors.backgroundContainerHover,
+                backgroundActive: vars.colors.backgroundContainerPressed,
+                icon: vars.colors.textButtonSecondary,
+            },
+            inverse: {
+                background: 'transparent',
+                backgroundHover: vars.colors.backgroundContainerBrandHover,
+                backgroundActive: vars.colors.backgroundContainerBrandPressed,
+                icon: vars.colors.textButtonSecondaryInverse,
+            },
+            alternative: {
+                background: 'transparent',
+                backgroundHover: vars.colors.backgroundContainerHover,
+                backgroundActive: vars.colors.backgroundContainerPressed,
+                icon: vars.colors.textButtonSecondary,
+            },
+        },
+    },
+
+    neutral: {
+        solid: {
+            default: {
+                background: vars.colors.neutralHigh,
+                backgroundHover: vars.colors.backgroundContainerBrandHover,
+                backgroundActive: vars.colors.backgroundContainerBrandPressed,
+                icon: vars.colors.neutralLow,
+            },
+            inverse: {
+                background: vars.colors.inverse,
+                backgroundHover: vars.colors.backgroundContainerHover,
+                backgroundActive: vars.colors.backgroundContainerPressed,
+                icon: 'black',
+            },
+            alternative: {
+                background: vars.colors.neutralHigh,
+                backgroundHover: vars.colors.backgroundContainerBrandHover,
+                backgroundActive: vars.colors.backgroundContainerBrandPressed,
+                icon: vars.colors.neutralLow,
+            },
+        },
+
+        soft: {
+            default: {
+                background: vars.colors.neutralLow,
+                backgroundHover: vars.colors.backgroundContainerHover,
+                backgroundActive: vars.colors.backgroundContainerPressed,
+                icon: vars.colors.neutralHigh,
+            },
+            inverse: {
+                background: vars.colors.backgroundContainerBrandOverInverse,
+                backgroundHover: vars.colors.backgroundContainerBrandHover,
+                backgroundActive: vars.colors.backgroundContainerBrandPressed,
+                icon: vars.colors.textButtonSecondaryInverse,
+            },
+            alternative: {
+                background: vars.colors.neutralLowAlternative,
+                backgroundHover: vars.colors.backgroundContainerHover,
+                backgroundActive: vars.colors.backgroundContainerPressed,
+                icon: vars.colors.textButtonSecondary,
+            },
+        },
+
+        default: {
+            default: {
+                background: 'transparent',
+                backgroundHover: vars.colors.backgroundContainerHover,
+                backgroundActive: vars.colors.backgroundContainerPressed,
+                icon: vars.colors.neutralHigh,
+            },
+            inverse: {
+                background: 'transparent',
+                backgroundHover: vars.colors.backgroundContainerBrandHover,
+                backgroundActive: vars.colors.backgroundContainerBrandPressed,
+                icon: vars.colors.inverse,
+            },
+            alternative: {
+                background: 'transparent',
+                backgroundHover: vars.colors.backgroundContainerHover,
+                backgroundActive: vars.colors.backgroundContainerPressed,
+                icon: vars.colors.neutralHigh,
+            },
+        },
+    },
+
+    danger: {
+        solid: {
+            default: {
+                background: vars.colors.buttonDangerBackground,
+                backgroundHover: vars.colors.backgroundContainerBrandHover,
+                backgroundActive: vars.colors.backgroundContainerBrandPressed,
+                icon: vars.colors.inverse,
+            },
+            inverse: {
+                background: vars.colors.buttonDangerBackground,
+                backgroundHover: vars.colors.backgroundContainerBrandHover,
+                backgroundActive: vars.colors.backgroundContainerBrandPressed,
+                icon: vars.colors.inverse,
+            },
+            alternative: {
+                background: vars.colors.buttonDangerBackground,
+                backgroundHover: vars.colors.backgroundContainerBrandHover,
+                backgroundActive: vars.colors.backgroundContainerBrandPressed,
+                icon: vars.colors.inverse,
+            },
+        },
+
+        soft: {
+            default: {
+                background: vars.colors.errorLow,
+                backgroundHover: vars.colors.backgroundContainerHover,
+                backgroundActive: vars.colors.backgroundContainerPressed,
+                icon: vars.colors.error,
+            },
+            inverse: {
+                background: vars.colors.buttonLinkDangerBackgroundInverse,
+                backgroundHover: vars.colors.backgroundContainerBrandHover,
+                backgroundActive: vars.colors.backgroundContainerBrandPressed,
+                icon: vars.colors.error,
+            },
+            alternative: {
+                background: vars.colors.errorLow,
+                backgroundHover: vars.colors.backgroundContainerHover,
+                backgroundActive: vars.colors.backgroundContainerPressed,
+                icon: vars.colors.error,
+            },
+        },
+
+        default: {
+            default: {
+                background: 'transparent',
+                backgroundHover: vars.colors.backgroundContainerHover,
+                backgroundActive: vars.colors.backgroundContainerPressed,
+                icon: vars.colors.error,
+            },
+            inverse: {
+                background: vars.colors.buttonLinkDangerBackgroundInverse,
+                backgroundHover: vars.colors.backgroundContainerBrandHover,
+                backgroundActive: vars.colors.backgroundContainerBrandPressed,
+                icon: vars.colors.error,
+            },
+            alternative: {
+                background: 'transparent',
+                backgroundHover: vars.colors.backgroundContainerHover,
+                backgroundActive: vars.colors.backgroundContainerPressed,
+                icon: vars.colors.error,
+            },
+        },
+    },
+};
+
 interface BaseNewProps {
     children?: undefined;
     Icon: React.FC<IconProps>;
@@ -175,8 +375,8 @@ const RawIconButton: React.FC<NewProps & {isOverMedia?: boolean}> = ({
     disabled,
     trackingEvent,
     dataAttributes,
-    type,
-    variant,
+    type = 'neutral',
+    variant = 'default',
     isOverMedia,
     'aria-label': ariaLabel,
     small,
@@ -186,6 +386,7 @@ const RawIconButton: React.FC<NewProps & {isOverMedia?: boolean}> = ({
     bleedY,
     ...props
 }) => {
+    const themeVariant = useThemeVariant();
     const [isOnPressPromiseResolving, setIsOnPressPromiseResolving] = React.useState(false);
 
     const showSpinner = props.showSpinner || isOnPressPromiseResolving;
@@ -203,6 +404,7 @@ const RawIconButton: React.FC<NewProps & {isOverMedia?: boolean}> = ({
     }, [showSpinner, shouldRenderSpinner]);
 
     const buttonSize = small ? 'small' : 'default';
+    const tokens = iconButtonTokens[type][variant][themeVariant];
 
     const commonProps = {
         disabled: disabled || showSpinner,
@@ -216,28 +418,26 @@ const RawIconButton: React.FC<NewProps & {isOverMedia?: boolean}> = ({
             ...(bleedY
                 ? {marginTop: styles.bleedArea[buttonSize], marginBottom: styles.bleedArea[buttonSize]}
                 : undefined),
+            ...applyCssVars({
+                [styles.vars.iconColor]: tokens.icon,
+                [styles.vars.background]: tokens.background,
+                [styles.vars.backgroundHover]: tokens.backgroundHover,
+                [styles.vars.backgroundActive]: tokens.backgroundActive,
+            }),
         },
-    };
-
-    const getBackgroundStyles = (): React.CSSProperties => {
-        // TODO: get background color using theme variant and type/variant/isOverMedia props
-        return {background: 'black'};
-    };
-
-    const getIconColor = (): string => {
-        // TODO: get icon color using theme variant and type/variant/isOverMedia props
-        return 'white';
     };
 
     const content = (
         <div
-            className={classNames(styles.iconContainer[buttonSize], {[styles.isLoading]: showSpinner})}
-            style={{
-                ...getBackgroundStyles(),
-            }}
+            className={classNames(styles.iconContainer[buttonSize], {
+                [styles.isLoading]: showSpinner,
+                [styles.overlayContainer]: !disabled && !showSpinner,
+            })}
         >
-            <div className={styles.icon}>
-                <Icon size={styles.iconSize[buttonSize]} color={getIconColor()} />
+            <div className={styles.overlay} />
+
+            <div aria-hidden={showSpinner ? true : undefined} className={styles.icon}>
+                <Icon size={styles.iconSize[buttonSize]} color="currentColor" />
             </div>
 
             <div
@@ -250,7 +450,7 @@ const RawIconButton: React.FC<NewProps & {isOverMedia?: boolean}> = ({
                 }}
             >
                 {shouldRenderSpinner && (
-                    <Spinner size={styles.iconSize[buttonSize]} color={getIconColor()} delay="0s" />
+                    <Spinner size={styles.iconSize[buttonSize]} color="currentColor" delay="0s" />
                 )}
             </div>
         </div>
