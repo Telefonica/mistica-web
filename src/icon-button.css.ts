@@ -1,13 +1,267 @@
 import {createVar, style, styleVariants} from '@vanilla-extract/css';
 import {sprinkles} from './sprinkles.css';
 import * as mq from './media-queries.css';
+import {vars as skinVars} from './skins/skin-contract.css';
+import {applyAlpha} from './utils/color';
 
-const iconColor = createVar();
 const background = createVar();
 const backgroundHover = createVar();
 const backgroundActive = createVar();
+const iconColor = createVar();
 
 export const vars = {iconColor, background, backgroundHover, backgroundActive};
+
+export const iconButtonTokens = styleVariants({
+    'brand-solid-default': {
+        vars: {
+            [background]: skinVars.colors.buttonPrimaryBackground,
+            [backgroundHover]: skinVars.colors.backgroundContainerBrandHover,
+            [backgroundActive]: skinVars.colors.backgroundContainerBrandPressed,
+            [iconColor]: skinVars.colors.textButtonPrimary,
+        },
+    },
+    'brand-solid-inverse': {
+        vars: {
+            [background]: skinVars.colors.buttonPrimaryBackgroundInverse,
+            [backgroundHover]: skinVars.colors.backgroundContainerHover,
+            [backgroundActive]: skinVars.colors.backgroundContainerPressed,
+            [iconColor]: skinVars.colors.textButtonPrimaryInverse,
+        },
+    },
+    'brand-solid-alternative': {
+        vars: {
+            [background]: skinVars.colors.buttonPrimaryBackground,
+            [backgroundHover]: skinVars.colors.backgroundContainerBrandHover,
+            [backgroundActive]: skinVars.colors.backgroundContainerBrandPressed,
+            [iconColor]: skinVars.colors.textButtonPrimary,
+        },
+    },
+
+    'brand-soft-default': {
+        vars: {
+            [background]: skinVars.colors.brandLow,
+            [backgroundHover]: skinVars.colors.backgroundContainerHover,
+            [backgroundActive]: skinVars.colors.backgroundContainerPressed,
+            [iconColor]: skinVars.colors.textButtonSecondary,
+        },
+    },
+    'brand-soft-inverse': {
+        vars: {
+            [background]: skinVars.colors.backgroundContainerBrandOverInverse,
+            [backgroundHover]: skinVars.colors.backgroundContainerBrandHover,
+            [backgroundActive]: skinVars.colors.backgroundContainerBrandPressed,
+            [iconColor]: skinVars.colors.textButtonSecondaryInverse,
+        },
+    },
+    'brand-soft-alternative': {
+        vars: {
+            [background]: skinVars.colors.brandLow,
+            [backgroundHover]: skinVars.colors.backgroundContainerHover,
+            [backgroundActive]: skinVars.colors.backgroundContainerPressed,
+            [iconColor]: skinVars.colors.textButtonSecondary,
+        },
+    },
+
+    'brand-default-default': {
+        vars: {
+            [background]: 'transparent',
+            [backgroundHover]: skinVars.colors.backgroundContainerHover,
+            [backgroundActive]: skinVars.colors.backgroundContainerPressed,
+            [iconColor]: skinVars.colors.textButtonSecondary,
+        },
+    },
+    'brand-default-inverse': {
+        vars: {
+            [background]: 'transparent',
+            [backgroundHover]: skinVars.colors.backgroundContainerBrandHover,
+            [backgroundActive]: skinVars.colors.backgroundContainerBrandPressed,
+            [iconColor]: skinVars.colors.textButtonSecondaryInverse,
+        },
+    },
+    'brand-default-alternative': {
+        vars: {
+            [background]: 'transparent',
+            [backgroundHover]: skinVars.colors.backgroundContainerHover,
+            [backgroundActive]: skinVars.colors.backgroundContainerPressed,
+            [iconColor]: skinVars.colors.textButtonSecondary,
+        },
+    },
+
+    'neutral-solid-default': {
+        vars: {
+            [background]: skinVars.colors.neutralHigh,
+            [backgroundHover]: skinVars.colors.backgroundContainerBrandHover,
+            [backgroundActive]: skinVars.colors.backgroundContainerBrandPressed,
+            [iconColor]: skinVars.colors.neutralLow,
+        },
+    },
+    'neutral-solid-inverse': {
+        vars: {
+            [background]: skinVars.colors.inverse,
+            [backgroundHover]: skinVars.colors.backgroundContainerHover,
+            [backgroundActive]: skinVars.colors.backgroundContainerPressed,
+            [iconColor]: 'black',
+        },
+    },
+    'neutral-solid-alternative': {
+        vars: {
+            [background]: skinVars.colors.neutralHigh,
+            [backgroundHover]: skinVars.colors.backgroundContainerBrandHover,
+            [backgroundActive]: skinVars.colors.backgroundContainerBrandPressed,
+            [iconColor]: skinVars.colors.neutralLow,
+        },
+    },
+
+    'neutral-soft-default': {
+        vars: {
+            [background]: skinVars.colors.neutralLow,
+            [backgroundHover]: skinVars.colors.backgroundContainerHover,
+            [backgroundActive]: skinVars.colors.backgroundContainerPressed,
+            [iconColor]: skinVars.colors.neutralHigh,
+        },
+    },
+    'neutral-soft-inverse': {
+        vars: {
+            [background]: skinVars.colors.backgroundContainerBrandOverInverse,
+            [backgroundHover]: skinVars.colors.backgroundContainerBrandHover,
+            [backgroundActive]: skinVars.colors.backgroundContainerBrandPressed,
+            [iconColor]: skinVars.colors.textButtonSecondaryInverse,
+        },
+    },
+    'neutral-soft-alternative': {
+        vars: {
+            [background]: skinVars.colors.neutralLowAlternative,
+            [backgroundHover]: skinVars.colors.backgroundContainerHover,
+            [backgroundActive]: skinVars.colors.backgroundContainerPressed,
+            [iconColor]: skinVars.colors.textButtonSecondary,
+        },
+    },
+
+    'neutral-default-default': {
+        vars: {
+            [background]: 'transparent',
+            [backgroundHover]: skinVars.colors.backgroundContainerHover,
+            [backgroundActive]: skinVars.colors.backgroundContainerPressed,
+            [iconColor]: skinVars.colors.neutralHigh,
+        },
+    },
+    'neutral-default-inverse': {
+        vars: {
+            [background]: 'transparent',
+            [backgroundHover]: skinVars.colors.backgroundContainerBrandHover,
+            [backgroundActive]: skinVars.colors.backgroundContainerBrandPressed,
+            [iconColor]: skinVars.colors.inverse,
+        },
+    },
+    'neutral-default-alternative': {
+        vars: {
+            [background]: 'transparent',
+            [backgroundHover]: skinVars.colors.backgroundContainerHover,
+            [backgroundActive]: skinVars.colors.backgroundContainerPressed,
+            [iconColor]: skinVars.colors.neutralHigh,
+        },
+    },
+
+    'danger-solid-default': {
+        vars: {
+            [background]: skinVars.colors.buttonDangerBackground,
+            [backgroundHover]: skinVars.colors.backgroundContainerBrandHover,
+            [backgroundActive]: skinVars.colors.backgroundContainerBrandPressed,
+            [iconColor]: skinVars.colors.inverse,
+        },
+    },
+    'danger-solid-inverse': {
+        vars: {
+            [background]: skinVars.colors.buttonDangerBackground,
+            [backgroundHover]: skinVars.colors.backgroundContainerBrandHover,
+            [backgroundActive]: skinVars.colors.backgroundContainerBrandPressed,
+            [iconColor]: skinVars.colors.inverse,
+        },
+    },
+    'danger-solid-alternative': {
+        vars: {
+            [background]: skinVars.colors.buttonDangerBackground,
+            [backgroundHover]: skinVars.colors.backgroundContainerBrandHover,
+            [backgroundActive]: skinVars.colors.backgroundContainerBrandPressed,
+            [iconColor]: skinVars.colors.inverse,
+        },
+    },
+
+    'danger-soft-default': {
+        vars: {
+            [background]: skinVars.colors.errorLow,
+            [backgroundHover]: skinVars.colors.backgroundContainerHover,
+            [backgroundActive]: skinVars.colors.backgroundContainerPressed,
+            [iconColor]: skinVars.colors.error,
+        },
+    },
+    'danger-soft-inverse': {
+        vars: {
+            [background]: skinVars.colors.buttonLinkDangerBackgroundInverse,
+            [backgroundHover]: skinVars.colors.backgroundContainerBrandHover,
+            [backgroundActive]: skinVars.colors.backgroundContainerBrandPressed,
+            [iconColor]: skinVars.colors.error,
+        },
+    },
+    'danger-soft-alternative': {
+        vars: {
+            [background]: skinVars.colors.errorLow,
+            [backgroundHover]: skinVars.colors.backgroundContainerHover,
+            [backgroundActive]: skinVars.colors.backgroundContainerPressed,
+            [iconColor]: skinVars.colors.error,
+        },
+    },
+
+    'danger-default-default': {
+        vars: {
+            [background]: 'transparent',
+            [backgroundHover]: skinVars.colors.backgroundContainerHover,
+            [backgroundActive]: skinVars.colors.backgroundContainerPressed,
+            [iconColor]: skinVars.colors.error,
+        },
+    },
+    'danger-default-inverse': {
+        vars: {
+            [background]: skinVars.colors.buttonLinkDangerBackgroundInverse,
+            [backgroundHover]: skinVars.colors.backgroundContainerBrandHover,
+            [backgroundActive]: skinVars.colors.backgroundContainerBrandPressed,
+            [iconColor]: skinVars.colors.error,
+        },
+    },
+    'danger-default-alternative': {
+        vars: {
+            [background]: 'transparent',
+            [backgroundHover]: skinVars.colors.backgroundContainerHover,
+            [backgroundActive]: skinVars.colors.backgroundContainerPressed,
+            [iconColor]: skinVars.colors.error,
+        },
+    },
+
+    'brand-media': {
+        vars: {
+            [background]: applyAlpha(skinVars.rawColors.inverse, 0.7),
+            [backgroundHover]: applyAlpha(skinVars.rawColors.inverse, 0.9),
+            [backgroundActive]: applyAlpha(skinVars.rawColors.inverse, 1.0),
+            [iconColor]: skinVars.colors.brand,
+        },
+    },
+    'neutral-media': {
+        vars: {
+            [background]: applyAlpha(skinVars.rawColors.inverse, 0.7),
+            [backgroundHover]: applyAlpha(skinVars.rawColors.inverse, 0.9),
+            [backgroundActive]: applyAlpha(skinVars.rawColors.inverse, 1.0),
+            [iconColor]: 'black',
+        },
+    },
+    'danger-media': {
+        vars: {
+            [background]: applyAlpha(skinVars.rawColors.inverse, 0.7),
+            [backgroundHover]: applyAlpha(skinVars.rawColors.inverse, 0.9),
+            [backgroundActive]: applyAlpha(skinVars.rawColors.inverse, 1.0),
+            [iconColor]: skinVars.colors.error,
+        },
+    },
+});
 
 export const disabled = style({
     opacity: 0.5,

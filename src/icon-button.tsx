@@ -5,8 +5,6 @@ import * as styles from './icon-button.css';
 import classNames from 'classnames';
 import Spinner from './spinner';
 import {useThemeVariant} from './theme-variant-context';
-import {applyCssVars} from './utils/css';
-import {vars} from './skins/skin-contract.css';
 
 import type {ExclusifyUnion} from './utils/utility-types';
 import type {DataAttributes, IconProps, TrackingEvent} from './utils/types';
@@ -156,203 +154,6 @@ const RawOldIconButton: React.FC<OldProps> = (props) => {
     );
 };
 
-const iconButtonTokens = {
-    brand: {
-        solid: {
-            default: {
-                background: vars.colors.buttonPrimaryBackground,
-                backgroundHover: vars.colors.backgroundContainerBrandHover,
-                backgroundActive: vars.colors.backgroundContainerBrandPressed,
-                icon: vars.colors.textButtonPrimary,
-            },
-            inverse: {
-                background: vars.colors.buttonPrimaryBackgroundInverse,
-                backgroundHover: vars.colors.backgroundContainerHover,
-                backgroundActive: vars.colors.backgroundContainerPressed,
-                icon: vars.colors.textButtonPrimaryInverse,
-            },
-            alternative: {
-                background: vars.colors.buttonPrimaryBackground,
-                backgroundHover: vars.colors.backgroundContainerBrandHover,
-                backgroundActive: vars.colors.backgroundContainerBrandPressed,
-                icon: vars.colors.textButtonPrimary,
-            },
-        },
-
-        soft: {
-            default: {
-                background: vars.colors.brandLow,
-                backgroundHover: vars.colors.backgroundContainerHover,
-                backgroundActive: vars.colors.backgroundContainerPressed,
-                icon: vars.colors.textButtonSecondary,
-            },
-            inverse: {
-                background: vars.colors.backgroundContainerBrandOverInverse,
-                backgroundHover: vars.colors.backgroundContainerBrandHover,
-                backgroundActive: vars.colors.backgroundContainerBrandPressed,
-                icon: vars.colors.textButtonSecondaryInverse,
-            },
-            alternative: {
-                background: vars.colors.brandLow,
-                backgroundHover: vars.colors.backgroundContainerHover,
-                backgroundActive: vars.colors.backgroundContainerPressed,
-                icon: vars.colors.textButtonSecondary,
-            },
-        },
-
-        default: {
-            default: {
-                background: 'transparent',
-                backgroundHover: vars.colors.backgroundContainerHover,
-                backgroundActive: vars.colors.backgroundContainerPressed,
-                icon: vars.colors.textButtonSecondary,
-            },
-            inverse: {
-                background: 'transparent',
-                backgroundHover: vars.colors.backgroundContainerBrandHover,
-                backgroundActive: vars.colors.backgroundContainerBrandPressed,
-                icon: vars.colors.textButtonSecondaryInverse,
-            },
-            alternative: {
-                background: 'transparent',
-                backgroundHover: vars.colors.backgroundContainerHover,
-                backgroundActive: vars.colors.backgroundContainerPressed,
-                icon: vars.colors.textButtonSecondary,
-            },
-        },
-    },
-
-    neutral: {
-        solid: {
-            default: {
-                background: vars.colors.neutralHigh,
-                backgroundHover: vars.colors.backgroundContainerBrandHover,
-                backgroundActive: vars.colors.backgroundContainerBrandPressed,
-                icon: vars.colors.neutralLow,
-            },
-            inverse: {
-                background: vars.colors.inverse,
-                backgroundHover: vars.colors.backgroundContainerHover,
-                backgroundActive: vars.colors.backgroundContainerPressed,
-                icon: 'black',
-            },
-            alternative: {
-                background: vars.colors.neutralHigh,
-                backgroundHover: vars.colors.backgroundContainerBrandHover,
-                backgroundActive: vars.colors.backgroundContainerBrandPressed,
-                icon: vars.colors.neutralLow,
-            },
-        },
-
-        soft: {
-            default: {
-                background: vars.colors.neutralLow,
-                backgroundHover: vars.colors.backgroundContainerHover,
-                backgroundActive: vars.colors.backgroundContainerPressed,
-                icon: vars.colors.neutralHigh,
-            },
-            inverse: {
-                background: vars.colors.backgroundContainerBrandOverInverse,
-                backgroundHover: vars.colors.backgroundContainerBrandHover,
-                backgroundActive: vars.colors.backgroundContainerBrandPressed,
-                icon: vars.colors.textButtonSecondaryInverse,
-            },
-            alternative: {
-                background: vars.colors.neutralLowAlternative,
-                backgroundHover: vars.colors.backgroundContainerHover,
-                backgroundActive: vars.colors.backgroundContainerPressed,
-                icon: vars.colors.textButtonSecondary,
-            },
-        },
-
-        default: {
-            default: {
-                background: 'transparent',
-                backgroundHover: vars.colors.backgroundContainerHover,
-                backgroundActive: vars.colors.backgroundContainerPressed,
-                icon: vars.colors.neutralHigh,
-            },
-            inverse: {
-                background: 'transparent',
-                backgroundHover: vars.colors.backgroundContainerBrandHover,
-                backgroundActive: vars.colors.backgroundContainerBrandPressed,
-                icon: vars.colors.inverse,
-            },
-            alternative: {
-                background: 'transparent',
-                backgroundHover: vars.colors.backgroundContainerHover,
-                backgroundActive: vars.colors.backgroundContainerPressed,
-                icon: vars.colors.neutralHigh,
-            },
-        },
-    },
-
-    danger: {
-        solid: {
-            default: {
-                background: vars.colors.buttonDangerBackground,
-                backgroundHover: vars.colors.backgroundContainerBrandHover,
-                backgroundActive: vars.colors.backgroundContainerBrandPressed,
-                icon: vars.colors.inverse,
-            },
-            inverse: {
-                background: vars.colors.buttonDangerBackground,
-                backgroundHover: vars.colors.backgroundContainerBrandHover,
-                backgroundActive: vars.colors.backgroundContainerBrandPressed,
-                icon: vars.colors.inverse,
-            },
-            alternative: {
-                background: vars.colors.buttonDangerBackground,
-                backgroundHover: vars.colors.backgroundContainerBrandHover,
-                backgroundActive: vars.colors.backgroundContainerBrandPressed,
-                icon: vars.colors.inverse,
-            },
-        },
-
-        soft: {
-            default: {
-                background: vars.colors.errorLow,
-                backgroundHover: vars.colors.backgroundContainerHover,
-                backgroundActive: vars.colors.backgroundContainerPressed,
-                icon: vars.colors.error,
-            },
-            inverse: {
-                background: vars.colors.buttonLinkDangerBackgroundInverse,
-                backgroundHover: vars.colors.backgroundContainerBrandHover,
-                backgroundActive: vars.colors.backgroundContainerBrandPressed,
-                icon: vars.colors.error,
-            },
-            alternative: {
-                background: vars.colors.errorLow,
-                backgroundHover: vars.colors.backgroundContainerHover,
-                backgroundActive: vars.colors.backgroundContainerPressed,
-                icon: vars.colors.error,
-            },
-        },
-
-        default: {
-            default: {
-                background: 'transparent',
-                backgroundHover: vars.colors.backgroundContainerHover,
-                backgroundActive: vars.colors.backgroundContainerPressed,
-                icon: vars.colors.error,
-            },
-            inverse: {
-                background: vars.colors.buttonLinkDangerBackgroundInverse,
-                backgroundHover: vars.colors.backgroundContainerBrandHover,
-                backgroundActive: vars.colors.backgroundContainerBrandPressed,
-                icon: vars.colors.error,
-            },
-            alternative: {
-                background: 'transparent',
-                backgroundHover: vars.colors.backgroundContainerHover,
-                backgroundActive: vars.colors.backgroundContainerPressed,
-                icon: vars.colors.error,
-            },
-        },
-    },
-};
-
 interface BaseNewProps {
     children?: undefined;
     Icon: React.FC<IconProps>;
@@ -404,26 +205,27 @@ const RawIconButton: React.FC<NewProps & {isOverMedia?: boolean}> = ({
     }, [showSpinner, shouldRenderSpinner]);
 
     const buttonSize = small ? 'small' : 'default';
-    const tokens = iconButtonTokens[type][variant][themeVariant];
+    const buttonTokensKey: keyof typeof styles.iconButtonTokens = isOverMedia
+        ? `${type}-media`
+        : `${type}-${variant}-${themeVariant}`;
 
     const commonProps = {
         disabled: disabled || showSpinner,
         trackingEvent,
         'aria-label': ariaLabel,
         dataAttributes: {'component-name': 'IconButton', ...dataAttributes},
-        className: classNames(styles.buttonContainer[buttonSize], {[styles.disabled]: disabled}),
+        className: classNames(
+            styles.buttonContainer[buttonSize],
+            {[styles.disabled]: disabled},
+
+            styles.iconButtonTokens[buttonTokensKey]
+        ),
         style: {
             ...(bleedLeft ? {marginLeft: styles.bleedArea[buttonSize]} : undefined),
             ...(bleedRight ? {marginRight: styles.bleedArea[buttonSize]} : undefined),
             ...(bleedY
                 ? {marginTop: styles.bleedArea[buttonSize], marginBottom: styles.bleedArea[buttonSize]}
                 : undefined),
-            ...applyCssVars({
-                [styles.vars.iconColor]: tokens.icon,
-                [styles.vars.background]: tokens.background,
-                [styles.vars.backgroundHover]: tokens.backgroundHover,
-                [styles.vars.backgroundActive]: tokens.backgroundActive,
-            }),
         },
     };
 
