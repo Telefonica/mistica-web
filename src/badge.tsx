@@ -6,6 +6,7 @@ import {getPrefixedDataAttributes} from './utils/dom';
 import {Text1} from './text';
 import {useTheme} from './hooks';
 import {vars} from './skins/skin-contract.css';
+import {useIsInverseVariant} from './theme-variant-context';
 
 import type {DataAttributes} from './utils/types';
 
@@ -28,6 +29,7 @@ type Props = {
  * </Badge>
  */
 const Badge: React.FC<Props> = ({children, value, right, top, dataAttributes}) => {
+    const isInverse = useIsInverseVariant();
     const {textPresets} = useTheme();
     if (children && value === 0) {
         return <>{children}</>;
@@ -38,9 +40,11 @@ const Badge: React.FC<Props> = ({children, value, right, top, dataAttributes}) =
     }
 
     const isBigNumber = value && value > 9;
+    const hasBorder = isInverse || !!children;
 
     return (
         <div className={classes.container} {...getPrefixedDataAttributes(dataAttributes, 'Badge')}>
+            {children}
             {value ? (
                 <div
                     role="presentation"
@@ -48,6 +52,7 @@ const Badge: React.FC<Props> = ({children, value, right, top, dataAttributes}) =
                     className={classnames(classes.badgeNumber, {
                         [classes.badgeWithChildren]: !!children,
                         [classes.badgeBigNumber]: isBigNumber,
+                        [classes.badgeBorder]: hasBorder,
                     })}
                     style={{right, top}}
                 >
@@ -64,10 +69,10 @@ const Badge: React.FC<Props> = ({children, value, right, top, dataAttributes}) =
                     style={{right, top}}
                     className={classnames(classes.badge, {
                         [classes.badgeWithChildren]: !!children,
+                        [classes.badgeBorder]: hasBorder,
                     })}
                 />
             )}
-            {children}
         </div>
     );
 };
