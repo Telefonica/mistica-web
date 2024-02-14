@@ -35,7 +35,7 @@ export const optionsContainer = style([
     sprinkles({
         position: 'fixed',
         padding: 0,
-        borderRadius: skinVars.borderRadii.container,
+        borderRadius: skinVars.borderRadii.input,
         background: skinVars.colors.backgroundContainer,
     }),
     {
