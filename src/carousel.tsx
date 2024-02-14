@@ -326,8 +326,8 @@ const BaseCarousel = ({
             const calcItemScrollPositions = () => {
                 const maxScroll = carouselEl.scrollWidth - carouselEl.clientWidth;
 
-                const positions = Array.from(carouselEl.querySelectorAll('[data-item]')).map(
-                    (itemEl, idx) => {
+                setItemScrollPositions(
+                    Array.from(carouselEl.querySelectorAll('[data-item]')).map((itemEl, idx) => {
                         if (idx === items.length - 1) {
                             return maxScroll;
                         }
@@ -336,10 +336,8 @@ const BaseCarousel = ({
                         const scrollPosition =
                             centered && !isDesktopOrBigger ? offsetLeft - itemEl.clientWidth / 2 : offsetLeft;
                         return Math.min(scrollPosition - scrollMargin - carouselEl.offsetLeft, maxScroll);
-                    }
+                    })
                 );
-
-                setItemScrollPositions(positions);
             };
 
             handleCarouselChange();
