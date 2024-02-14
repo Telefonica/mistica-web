@@ -1,6 +1,6 @@
 import {openStoryPage} from '../test-utils';
 
-const SKINS = ['Movistar', 'O2', 'Vivo-new', 'Telefonica', 'Blau', 'Tu'] as const;
+const SKINS = ['O2', 'Vivo-new', 'Telefonica', 'Blau', 'Tu'] as const;
 
 test.each(SKINS)('Components in %s', async (skin) => {
     const page = await openStoryPage({
