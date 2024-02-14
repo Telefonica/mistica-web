@@ -13,7 +13,6 @@ import {
     Chip,
     ButtonPrimary,
     useThemeVariant,
-    Badge,
 } from '..';
 import personPortraitImg from './images/person-portrait.jpg';
 
@@ -118,7 +117,6 @@ export const ComponentsOverDifferentThemeVariants: StoryComponent<Args> = ({them
                     </Inline>
                     <Tag type="inactive">Inactive tag</Tag>
                     <Chip>A chip</Chip>
-                    <Badge value={5} />
                 </Stack>
             </Box>
         </ResponsiveLayout>
