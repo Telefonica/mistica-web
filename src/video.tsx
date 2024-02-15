@@ -6,8 +6,7 @@ import {isRunningAcceptanceTest} from './utils/platform';
 import * as styles from './video.css';
 import * as mediaStyles from './image.css';
 import {getPrefixedDataAttributes} from './utils/dom';
-import {vars} from './skins/skin-contract.css';
-import {fallbackStyles} from './utils/css';
+import classNames from 'classnames';
 
 import type {DataAttributes} from './utils/types';
 
@@ -134,7 +133,6 @@ const Video = React.forwardRef<VideoElement, VideoProps>(
         const loadedSource = React.useRef<VideoSource>();
         const posterRef = React.useRef<HTMLDivElement>(null);
 
-        const borderRadius = fallbackStyles(mediaStyles.vars.mediaBorderRadius, vars.borderRadii.container);
         const ratio =
             props.width && props.height
                 ? undefined
@@ -198,7 +196,7 @@ const Video = React.forwardRef<VideoElement, VideoProps>(
                 disableRemotePlayback
                 muted={muted}
                 loop={loop}
-                className={styles.video}
+                className={classNames(styles.video, mediaStyles.defaultBorderRadius)}
                 preload={preload}
                 onError={handleError}
                 onPause={() => {
@@ -220,8 +218,6 @@ const Video = React.forwardRef<VideoElement, VideoProps>(
                 // This transparent pixel fallback avoids showing the ugly "play" image in android webviews
                 poster={TRANSPARENT_PIXEL}
                 style={{
-                    // For some reason adding this style with classnames doesn't add the border radius in safari
-                    borderRadius,
                     visibility: showPoster ? 'hidden' : 'visible',
                     position: showPoster || ratio !== 0 ? 'absolute' : 'static',
                     width: '100%',
@@ -247,10 +243,10 @@ const Video = React.forwardRef<VideoElement, VideoProps>(
                 />
             ) : withErrorFallback ? (
                 <div style={{position: 'absolute', width: '100%', height: '100%'}}>
-                    <ImageError borderRadius={borderRadius} withIcon={hasError} />
+                    <ImageError className={mediaStyles.defaultBorderRadius} withIcon={hasError} />
                 </div>
             ) : undefined;
-        }, [aspectRatio, props.height, props.width, borderRadius, hasError, poster, withErrorFallback]);
+        }, [aspectRatio, props.height, props.width, hasError, poster, withErrorFallback]);
 
         return (
             <AspectRatioContainer
