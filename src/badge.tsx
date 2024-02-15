@@ -13,8 +13,8 @@ import type {DataAttributes} from './utils/types';
 type Props = {
     children?: React.ReactNode;
     value?: number;
-    right?: number;
-    top?: number;
+    right?: number | string;
+    top?: number | string;
     dataAttributes?: DataAttributes;
 };
 

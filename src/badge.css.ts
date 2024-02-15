@@ -22,7 +22,7 @@ export const badge = style([
 ]);
 
 export const badgeBorder = style({
-    boxShadow: `0px 0px 0px 1.5px ${vars.colors.borderLow}`,
+    boxShadow: `0px 0px 0px ${pxToRem(1.5)} ${vars.colors.borderLow}`,
 });
 
 export const badgeNumber = style([
