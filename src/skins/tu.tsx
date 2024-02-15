@@ -109,7 +109,7 @@ export const getTuSkin: GetKnownSkin = () => {
             textLinkInverse: palette.white,
             textLinkDanger: palette.red,
             textLinkSnackbar: palette.white,
-            control: palette.grey3,
+            control: palette.grey5,
             controlActivated: palette.primary,
             controlInverse: palette.white,
             controlActivatedInverse: palette.white,
