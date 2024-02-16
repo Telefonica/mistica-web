@@ -45,7 +45,7 @@ export const iconButtonTokens = styleVariants({
             [background]: skinVars.colors.brandLow,
             [backgroundHover]: skinVars.colors.backgroundContainerHover,
             [backgroundActive]: skinVars.colors.backgroundContainerPressed,
-            [iconColor]: skinVars.colors.textButtonSecondary,
+            [iconColor]: skinVars.colors.textLink,
         },
     },
     'brand-soft-inverse': {
@@ -53,7 +53,7 @@ export const iconButtonTokens = styleVariants({
             [background]: skinVars.colors.backgroundContainerBrandOverInverse,
             [backgroundHover]: skinVars.colors.backgroundContainerBrandHover,
             [backgroundActive]: skinVars.colors.backgroundContainerBrandPressed,
-            [iconColor]: skinVars.colors.textButtonSecondaryInverse,
+            [iconColor]: skinVars.colors.textLinkInverse,
         },
     },
     'brand-soft-alternative': {
@@ -61,7 +61,7 @@ export const iconButtonTokens = styleVariants({
             [background]: skinVars.colors.brandLow,
             [backgroundHover]: skinVars.colors.backgroundContainerHover,
             [backgroundActive]: skinVars.colors.backgroundContainerPressed,
-            [iconColor]: skinVars.colors.textButtonSecondary,
+            [iconColor]: skinVars.colors.textLink,
         },
     },
 
@@ -70,7 +70,7 @@ export const iconButtonTokens = styleVariants({
             [background]: 'transparent',
             [backgroundHover]: skinVars.colors.backgroundContainerHover,
             [backgroundActive]: skinVars.colors.backgroundContainerPressed,
-            [iconColor]: skinVars.colors.textButtonSecondary,
+            [iconColor]: skinVars.colors.textLink,
         },
     },
     'brand-default-inverse': {
@@ -78,7 +78,7 @@ export const iconButtonTokens = styleVariants({
             [background]: 'transparent',
             [backgroundHover]: skinVars.colors.backgroundContainerBrandHover,
             [backgroundActive]: skinVars.colors.backgroundContainerBrandPressed,
-            [iconColor]: skinVars.colors.textButtonSecondaryInverse,
+            [iconColor]: skinVars.colors.textLinkInverse,
         },
     },
     'brand-default-alternative': {
@@ -86,7 +86,7 @@ export const iconButtonTokens = styleVariants({
             [background]: 'transparent',
             [backgroundHover]: skinVars.colors.backgroundContainerHover,
             [backgroundActive]: skinVars.colors.backgroundContainerPressed,
-            [iconColor]: skinVars.colors.textButtonSecondary,
+            [iconColor]: skinVars.colors.textLink,
         },
     },
 
