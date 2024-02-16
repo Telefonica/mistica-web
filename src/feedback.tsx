@@ -38,7 +38,9 @@ const checkHasButtons = ({primaryButton, secondaryButton}: FeedbackButtonsProps)
 
 const BackgroundColor = ({isInverse}: {isInverse: boolean}): JSX.Element => {
     const css = `@media ${mq.tabletOrSmaller} {
-        body {background:${isInverse ? vars.colors.backgroundBrand : vars.colors.background}}
+        body {background:${
+            isInverse ? vars.colors.backgroundBrand : vars.colors.background
+        }; background-attachment: fixed;}
     }`;
     return <style>{css}</style>;
 };
@@ -264,11 +266,7 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
                                         ? vars.colors.backgroundFeedbackBottom
                                         : undefined
                                 }
-                                containerBgColor={
-                                    isInverse && !isDarkMode
-                                        ? vars.colors.backgroundFeedbackBottom
-                                        : undefined
-                                }
+                                containerBgColor="transparent"
                                 onChangeFooterHeight={setFooterHeight}
                             >
                                 <div className={styles.container}>
