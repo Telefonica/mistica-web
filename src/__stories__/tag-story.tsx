@@ -12,7 +12,7 @@ import {
     Box,
 } from '..';
 
-const badgeOptions = ['0', '2', '14', 'true', 'false'];
+const badgeOptions = ['true', 'false', 'undefined', '0', '1', '5', '10'];
 
 type Args = {
     label: string;
@@ -34,7 +34,8 @@ export default {
 
 export const Default: StoryComponent<Args> = ({label: labelFromArgs, icon, inverse, badge}) => {
     const getLabel = (fallback: string) => labelFromArgs || fallback;
-    const badgeValue = badge !== 'true' && badge !== 'false' ? +badge : badge === 'true';
+    // eslint-disable-next-line no-eval
+    const badgeValue = badgeOptions.includes(badge) ? eval(badge) : undefined;
 
     return (
         <ResponsiveLayout fullWidth isInverse={inverse}>

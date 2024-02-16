@@ -1,6 +1,6 @@
 import {openStoryPage, screen, setRootFontSize} from '../test-utils';
 
-const BADGE_OPTIONS = [2, 14, true];
+const BADGE_OPTIONS = [1, 10, true];
 
 test('Tags', async () => {
     await openStoryPage({
@@ -124,7 +124,7 @@ test('Tags with badge and large fontSize', async () => {
     await openStoryPage({
         id: 'components-tag--default',
         device: 'DESKTOP',
-        args: {badge: 2},
+        args: {badge: 1},
     });
 
     await setRootFontSize(32);
