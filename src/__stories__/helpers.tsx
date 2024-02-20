@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useAriaId, useIsInverseVariant, Select, TextField, Checkbox} from '..';
+import {useAriaId, useIsInverseVariant, Select, TextField, Checkbox, skinVars} from '..';
 import {isRunningAcceptanceTest} from '../utils/platform';
 
 type Props = {
@@ -13,7 +13,7 @@ export const StorySection: React.FC<Props> = ({title, children}) => {
         <div style={{marginBottom: 32}}>
             <h1
                 style={{
-                    color: isInverse ? 'white' : '#888',
+                    color: isInverse ? skinVars.colors.textSecondaryInverse : skinVars.colors.textSecondary,
                     fontWeight: 'normal',
                     fontSize: 20,
                     margin: '16px 0px',

@@ -15,10 +15,11 @@ import {
     O2Logo,
     TelefonicaLogo,
     BlauLogo,
+    TuLogo,
     Inline,
     Circle,
 } from '../../src';
-import {Movistar, Vivo, O2, Telefonica, Blau, Vivo_New} from '../themes';
+import {Movistar, Vivo, O2, Telefonica, Blau, Vivo_New, Tu} from '../themes';
 import {useOverrideTheme} from '../frame-component';
 import IconSun from '../icons/icon-sun';
 import IconMoon from '../icons/icon-moon';
@@ -98,6 +99,11 @@ const themesMap: {
         text: 'Blau',
         themeConfig: Blau,
         icon: <BlauLogo size={24} />,
+    },
+    Tu: {
+        text: 'Tu',
+        themeConfig: Tu,
+        icon: <TuLogo size={24} />,
     },
 };
 
