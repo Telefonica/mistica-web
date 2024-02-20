@@ -1,3 +1,24 @@
+# [14.44.0](https://github.com/Telefonica/mistica-web/compare/v14.43.0...v14.44.0) (2024-02-20)
+
+
+### Features
+
+* **skins:** new Tu skin ([#959](https://github.com/Telefonica/mistica-web/issues/959)) ([11197a8](https://github.com/Telefonica/mistica-web/commit/11197a8fcb3810f9017449056e84b64968f5a7f9))
+
+# [14.43.0](https://github.com/Telefonica/mistica-web/compare/v14.42.1...v14.43.0) (2024-02-20)
+
+
+### Bug Fixes
+
+* **Carousel:** Add workaround for zero width webviews. Remount when webview size changes from 0 to any other value ([#1026](https://github.com/Telefonica/mistica-web/issues/1026)) ([36ab108](https://github.com/Telefonica/mistica-web/commit/36ab108bff9b9f3504cf479cd4d0ff2e188bf4ad))
+* **Select:** options have wrong styling when field is over inverse variant  ([#1024](https://github.com/Telefonica/mistica-web/issues/1024)) ([fc7849f](https://github.com/Telefonica/mistica-web/commit/fc7849f585839a2712024348a77e0a2986be7eb3))
+* **SuccessFeebackScreen:** fix content background ([#1021](https://github.com/Telefonica/mistica-web/issues/1021)) ([dff56b2](https://github.com/Telefonica/mistica-web/commit/dff56b28b9e4c035c5c1e57d8781fdab64180d74))
+
+
+### Features
+
+* **Popover, Tooltip:** refactor components in order to share the same logic between them ([#1014](https://github.com/Telefonica/mistica-web/issues/1014)) ([a343fbd](https://github.com/Telefonica/mistica-web/commit/a343fbdba0383c62552361f27aa5c8b03640d654))
+
 ## [14.42.1](https://github.com/Telefonica/mistica-web/compare/v14.42.0...v14.42.1) (2024-02-08)
 
 
