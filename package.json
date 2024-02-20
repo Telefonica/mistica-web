@@ -1,6 +1,6 @@
 {
     "name": "@telefonica/mistica",
-    "version": "14.42.1",
+    "version": "14.44.0",
     "license": "MIT",
     "repository": {
         "type": "git",
@@ -32,8 +32,8 @@
         "storybook-for-acceptance-tests": "cross-env NODE_ENV=production yarn storybook --ci 2>&1",
         "playroom": "playroom start",
         "gen-ts-defs": "rimraf dist-ts && tsc --project tsconfig.production.json --emitDeclarationOnly && cp -r dist-ts/src/* dist && rimraf dist-ts",
-        "vercel-build": "VERCEL_PROD_BUILD=1 yarn storybook-static && ./node_modules/.bin/playroom build && FORCE_MOBILE=1 ./node_modules/.bin/playroom build && FORCE_DESKTOP=1 ./node_modules/.bin/playroom build && cp img/favicon.ico public/",
-        "vercel-preview-build": "yarn storybook-static && ./node_modules/.bin/playroom build && cp img/favicon.ico public/",
+        "vercel-build": "VERCEL_PROD_BUILD=1 yarn storybook-static && ./node_modules/.bin/playroom build && FORCE_MOBILE=1 ./node_modules/.bin/playroom build && FORCE_DESKTOP=1 ./node_modules/.bin/playroom build && cp img/favicon.ico public/ && cp img/favicon.svg public/",
+        "vercel-preview-build": "yarn storybook-static && ./node_modules/.bin/playroom build && cp img/favicon.ico public/ && cp img/favicon.svg public/",
         "storybook-static": "rimraf public && storybook build -s ./.storybook/css/fonts -o public --quiet",
         "serve-static-storybook": "node ./scripts/serve-static-storybook.js",
         "detect-circular-dependencies": "npx dpdm --circular src/index.tsx",
@@ -123,7 +123,7 @@
         "lodash": "^4.17.21",
         "mini-css-extract-plugin": "^1.6.2",
         "node-fetch": "^2.6.7",
-        "playroom": "^0.31.0",
+        "playroom": "^0.34.2",
         "postcss": "^8.4.18",
         "postcss-loader": "^4.2.0",
         "prettier": "^2.6.1",

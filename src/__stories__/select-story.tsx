@@ -1,10 +1,11 @@
 import * as React from 'react';
 import {fruitEntries} from './helpers';
-import {Select} from '..';
+import {Box, ResponsiveLayout, Select} from '..';
 
 export default {
     title: 'Components/Select',
     component: Select,
+    parameters: {fullScreen: true},
 };
 
 type Args = {
@@ -14,6 +15,7 @@ type Args = {
     error: boolean;
     native: boolean;
     optional: boolean;
+    inverse: boolean;
 };
 
 const defaultArgs = {
@@ -23,29 +25,42 @@ const defaultArgs = {
     error: false,
     native: false,
     optional: false,
+    inverse: false,
 };
 
-export const Controlled: StoryComponent<Args> = ({label, helperText, disabled, error, native, optional}) => {
+export const Controlled: StoryComponent<Args> = ({
+    label,
+    helperText,
+    disabled,
+    error,
+    native,
+    optional,
+    inverse,
+}) => {
     const fruitOptions = fruitEntries.map(([text, value]) => ({text, value}));
     fruitOptions.push({value: 'longValue', text: 'A very very long text value for this option'});
 
     const [value, setValue] = React.useState('');
 
     return (
-        <div data-testid="select-field-wrapper" style={{width: 'fit-content'}}>
-            <Select
-                name="select-field"
-                native={native}
-                error={error}
-                disabled={disabled}
-                optional={optional}
-                value={value}
-                onChangeValue={setValue}
-                label={label}
-                helperText={helperText}
-                options={fruitOptions}
-            />
-        </div>
+        <ResponsiveLayout isInverse={inverse} fullWidth>
+            <Box padding={16}>
+                <div data-testid="select-field-wrapper" style={{width: 'fit-content'}}>
+                    <Select
+                        name="select-field"
+                        native={native}
+                        error={error}
+                        disabled={disabled}
+                        optional={optional}
+                        value={value}
+                        onChangeValue={setValue}
+                        label={label}
+                        helperText={helperText}
+                        options={fruitOptions}
+                    />
+                </div>
+            </Box>
+        </ResponsiveLayout>
     );
 };
 
@@ -59,23 +74,28 @@ export const Uncontrolled: StoryComponent<Args> = ({
     error,
     native,
     optional,
+    inverse,
 }) => {
     const fruitOptions = fruitEntries.map(([text, value]) => ({text, value}));
     fruitOptions.push({value: 'longValue', text: 'A very very long text value for this option'});
 
     return (
-        <div data-testid="select-field-wrapper" style={{width: 'fit-content'}}>
-            <Select
-                name="select-field"
-                native={native}
-                error={error}
-                disabled={disabled}
-                optional={optional}
-                label={label}
-                helperText={helperText}
-                options={fruitOptions}
-            />
-        </div>
+        <ResponsiveLayout isInverse={inverse} fullWidth>
+            <Box padding={16}>
+                <div data-testid="select-field-wrapper" style={{width: 'fit-content'}}>
+                    <Select
+                        name="select-field"
+                        native={native}
+                        error={error}
+                        disabled={disabled}
+                        optional={optional}
+                        label={label}
+                        helperText={helperText}
+                        options={fruitOptions}
+                    />
+                </div>
+            </Box>
+        </ResponsiveLayout>
     );
 };
 
