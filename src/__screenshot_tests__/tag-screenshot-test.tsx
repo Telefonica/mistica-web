@@ -1,5 +1,7 @@
 import {openStoryPage, screen, setRootFontSize} from '../test-utils';
 
+const BADGE_OPTIONS = [1, 10, true];
+
 test('Tags', async () => {
     await openStoryPage({
         id: 'components-tag--default',
@@ -95,6 +97,34 @@ test('Tags with large fontSize', async () => {
     await openStoryPage({
         id: 'components-tag--default',
         device: 'DESKTOP',
+    });
+
+    await setRootFontSize(32);
+
+    const tag = await screen.findByTestId('tags');
+
+    const image = await tag.screenshot();
+    expect(image).toMatchImageSnapshot();
+});
+
+test.each(BADGE_OPTIONS)('Tags with badge={%s}', async (badge) => {
+    await openStoryPage({
+        id: 'components-tag--default',
+        device: 'DESKTOP',
+        args: {badge},
+    });
+
+    const tag = await screen.findByTestId('tags');
+
+    const image = await tag.screenshot();
+    expect(image).toMatchImageSnapshot();
+});
+
+test('Tags with badge and large fontSize', async () => {
+    await openStoryPage({
+        id: 'components-tag--default',
+        device: 'DESKTOP',
+        args: {badge: 1},
     });
 
     await setRootFontSize(32);
