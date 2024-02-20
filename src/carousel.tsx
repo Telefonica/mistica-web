@@ -31,7 +31,7 @@ type PageBulletsProps = {
     onPress?: (index: number) => void;
 };
 
-export const PageBullets: React.FC<PageBulletsProps> = ({currentIndex, numPages, onPress}) => {
+export const PageBullets = ({currentIndex, numPages, onPress}: PageBulletsProps): JSX.Element => {
     const isInverse = useIsInverseVariant();
     const {isDesktopOrBigger} = useScreenSize();
     const getClassName = (index: number) => {
@@ -148,7 +148,7 @@ export const CarouselContextProvider = ({children}: {children: React.ReactNode})
 };
 
 export const useCarouselContext = (): CarouselControls => React.useContext(CarouselContext);
-export const CarouselContextConsummer = CarouselContext.Consumer;
+export const CarouselContextConsumer = CarouselContext.Consumer;
 
 type DesktopItemsPerPage = {small?: number; medium?: number; large?: number} | number;
 type ItemsPerPageProp = {mobile?: number; tablet?: number; desktop?: DesktopItemsPerPage} | number;
@@ -261,7 +261,7 @@ type BaseCarouselProps = {
     children?: void;
 };
 
-const BaseCarousel: React.FC<BaseCarouselProps> = ({
+const BaseCarousel = ({
     items,
     itemStyle,
     itemClassName,
@@ -277,7 +277,7 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
     autoplay,
     onPageChange,
     dataAttributes,
-}) => {
+}: BaseCarouselProps): JSX.Element => {
     const {texts, platformOverrides, skinName} = useTheme();
 
     const desktopContainerType = useDesktopContainerType();
@@ -588,7 +588,38 @@ type CarouselProps = {
     children?: void;
 };
 
-export const Carousel: React.FC<CarouselProps> = (props) => <BaseCarousel {...props} />;
+/**
+ * This is a workaround for a bug that happens when rendering a carousel in a webview inside a hidden tab (eg. Explore).
+ * The webview has a width of 0 when it's hidden, and the carousel doesn't render correctly when it's first shown.
+ * This hook forces the carousel to re-render when the webview is shown, by adding a key to the carousel component.
+ *
+ * This workaround gets executed only once, when the webview with changes from 0 to another value and then it removes the listener.
+ * Related issue: https://jira.tid.es/browse/WEB-1644
+ */
+const useWorkaroundForZeroWidthWebView = () => {
+    const [key, setKey] = React.useState(1);
+    React.useEffect(() => {
+        const handler = () => {
+            if (window.innerWidth !== 0) {
+                setKey((k) => k + 1);
+                window.removeEventListener('resize', handler);
+            }
+        };
+        // Set the listener only when the webview has zero width
+        if (window.innerWidth === 0) {
+            window.addEventListener('resize', handler);
+        }
+        return () => {
+            window.removeEventListener('resize', handler);
+        };
+    }, []);
+    return key;
+};
+
+export const Carousel = (props: CarouselProps): JSX.Element => {
+    const key = useWorkaroundForZeroWidthWebView();
+    return <BaseCarousel {...props} key={key} />;
+};
 
 type CenteredCarouselProps = {
     items: ReadonlyArray<React.ReactNode>;
@@ -603,7 +634,7 @@ type CenteredCarouselProps = {
     children?: void;
 };
 
-export const CenteredCarousel: React.FC<CenteredCarouselProps> = ({
+export const CenteredCarousel = ({
     items,
     itemStyle,
     itemClassName,
@@ -612,22 +643,26 @@ export const CenteredCarousel: React.FC<CenteredCarouselProps> = ({
     initialActiveItem,
     onPageChange,
     dataAttributes,
-}) => (
-    <BaseCarousel
-        items={items}
-        itemStyle={itemStyle}
-        itemClassName={itemClassName}
-        itemsPerPage={{mobile: 1, tablet: 1, desktop: 3}}
-        centered
-        itemsToScroll={1}
-        gap={0}
-        withBullets={withBullets}
-        renderBullets={renderBullets}
-        initialActiveItem={initialActiveItem}
-        onPageChange={onPageChange}
-        dataAttributes={dataAttributes}
-    />
-);
+}: CenteredCarouselProps): JSX.Element => {
+    const key = useWorkaroundForZeroWidthWebView();
+    return (
+        <BaseCarousel
+            key={key}
+            items={items}
+            itemStyle={itemStyle}
+            itemClassName={itemClassName}
+            itemsPerPage={{mobile: 1, tablet: 1, desktop: 3}}
+            centered
+            itemsToScroll={1}
+            gap={0}
+            withBullets={withBullets}
+            renderBullets={renderBullets}
+            initialActiveItem={initialActiveItem}
+            onPageChange={onPageChange}
+            dataAttributes={dataAttributes}
+        />
+    );
+};
 
 type SlideshowProps = {
     items: ReadonlyArray<React.ReactNode>;
@@ -653,7 +688,7 @@ export const IsInsideSlideshowProvider = ({children}: {children: React.ReactNode
     <IsInsideSlideshowContext.Provider value>{children}</IsInsideSlideshowContext.Provider>
 );
 
-export const Slideshow: React.FC<SlideshowProps> = ({
+export const Slideshow = ({
     items,
     withBullets,
     autoplay,
@@ -661,7 +696,7 @@ export const Slideshow: React.FC<SlideshowProps> = ({
     onPageChange,
     dataAttributes,
     inverseBullets = true,
-}) => {
+}: SlideshowProps): JSX.Element => {
     const {texts, platformOverrides} = useTheme();
     const controlsSetter = React.useContext(CarouselControlsSetterContext);
 
