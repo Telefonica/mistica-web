@@ -1,3 +1,10 @@
+# [14.44.0](https://github.com/Telefonica/mistica-web/compare/v14.43.0...v14.44.0) (2024-02-20)
+
+
+### Features
+
+* **skins:** new Tu skin ([#959](https://github.com/Telefonica/mistica-web/issues/959)) ([11197a8](https://github.com/Telefonica/mistica-web/commit/11197a8fcb3810f9017449056e84b64968f5a7f9))
+
 # [14.43.0](https://github.com/Telefonica/mistica-web/compare/v14.42.1...v14.43.0) (2024-02-20)
 
 
