@@ -31,7 +31,7 @@ interface MaybeProps {
     to?: undefined;
 }
 
-interface BaseOldProps {
+interface BaseDeprecatedProps {
     /** @deprecated */
     children?: React.ReactNode;
     /** @deprecated */
@@ -57,7 +57,7 @@ interface BaseOldProps {
     'aria-label'?: string;
 }
 
-type OldProps = BaseOldProps & ExclusifyUnion<HrefProps | ToProps | OnPressProps | MaybeProps>;
+type DeprecatedProps = BaseDeprecatedProps & ExclusifyUnion<HrefProps | ToProps | OnPressProps | MaybeProps>;
 
 const ICON_SIZE_1 = 24;
 
@@ -96,7 +96,7 @@ const getButtonStyle = (
  *     </IconButton />
  *
  */
-export const RawOldIconButton = React.forwardRef<TouchableElement, OldProps>((props, ref) => {
+export const RawDeprecatedIconButton = React.forwardRef<TouchableElement, DeprecatedProps>((props, ref) => {
     const {icon, children} = props;
     const commonProps = {
         className: props.className || '',
@@ -156,7 +156,7 @@ export const RawOldIconButton = React.forwardRef<TouchableElement, OldProps>((pr
     );
 });
 
-interface BaseNewProps {
+interface BaseProps {
     children?: undefined;
     Icon: React.FC<IconProps>;
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
@@ -172,9 +172,9 @@ interface BaseNewProps {
     bleedY?: boolean;
 }
 
-type NewProps = BaseNewProps & ExclusifyUnion<HrefProps | ToProps | OnPressProps | MaybeProps>;
+type Props = BaseProps & ExclusifyUnion<HrefProps | ToProps | OnPressProps | MaybeProps>;
 
-export const RawIconButton = React.forwardRef<TouchableElement, NewProps & {isOverMedia?: boolean}>(
+export const RawIconButton = React.forwardRef<TouchableElement, Props & {isOverMedia?: boolean}>(
     (
         {
             disabled,
@@ -304,22 +304,26 @@ export const RawIconButton = React.forwardRef<TouchableElement, NewProps & {isOv
     }
 );
 
-type IconButtonProps = ExclusifyUnion<OldProps | NewProps>;
+type IconButtonProps = ExclusifyUnion<DeprecatedProps | Props>;
 
 export const InternalIconButton = React.forwardRef<
     TouchableElement,
     IconButtonProps & {isOverMedia?: boolean}
 >((props, ref) => {
+    /**
+     * The new IconButton requires Icon prop, so if it it's used we render the new version.
+     * Otherwise, we render the deprecated one (to avoid breaking changes).
+     */
     if (props.Icon) {
         return <RawIconButton ref={ref} {...props} />;
     }
 
     const {icon, backgroundColor = 'transparent', iconSize, size = ICON_SIZE_1} = props;
     return (
-        <RawOldIconButton
+        <RawDeprecatedIconButton
             ref={ref}
             {...props}
-            className={classNames(styles.oldIconButtonBase, props.className)}
+            className={classNames(styles.deprecatedIconButtonBase, props.className)}
             style={{...getButtonStyle(icon, size, backgroundColor, iconSize, props.disabled), ...props.style}}
         />
     );
@@ -338,9 +342,9 @@ export const BaseIconButton = (props: IconButtonProps): JSX.Element => {
 
     const {size = ICON_SIZE_1, disabled} = props;
     return (
-        <RawOldIconButton
+        <RawDeprecatedIconButton
             {...props}
-            className={classNames(styles.oldIconButtonBase, props.className)}
+            className={classNames(styles.deprecatedIconButtonBase, props.className)}
             style={{
                 height: size,
                 width: size,

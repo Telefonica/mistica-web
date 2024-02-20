@@ -15,7 +15,7 @@ export default {
             options: ['default', 'soft', 'solid'],
             control: {type: 'select'},
         },
-        theme: {
+        themeVariant: {
             options: ['default', 'inverse', 'alternative'],
             control: {type: 'select'},
         },
@@ -28,7 +28,7 @@ const handleOnPress = () => console.log('pressed!');
 type Args = {
     type: 'neutral' | 'brand' | 'danger';
     variant: 'default' | 'soft' | 'solid';
-    theme: 'default' | 'inverse' | 'alternative';
+    themeVariant: 'default' | 'inverse' | 'alternative';
     small: boolean;
     disabled: boolean;
     showSpinner: boolean;
@@ -40,7 +40,7 @@ type Args = {
 export const Default: StoryComponent<Args> = ({
     type,
     variant,
-    theme,
+    themeVariant,
     small,
     disabled,
     showSpinner,
@@ -48,7 +48,7 @@ export const Default: StoryComponent<Args> = ({
     bleedRight,
     bleedY,
 }) => (
-    <ResponsiveLayout variant={theme} fullWidth>
+    <ResponsiveLayout variant={themeVariant} fullWidth>
         <Box padding={16}>
             <IconButton
                 onPress={handleOnPress}
@@ -71,7 +71,7 @@ Default.storyName = 'IconButton';
 Default.args = {
     type: 'neutral',
     variant: 'default',
-    theme: 'default',
+    themeVariant: 'default',
     small: false,
     disabled: false,
     showSpinner: false,

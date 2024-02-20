@@ -12,8 +12,6 @@ const backgroundHover = createVar();
 const backgroundActive = createVar();
 const iconColor = createVar();
 
-export const vars = {iconColor, background, backgroundHover, backgroundActive};
-
 export const iconButtonTokens = styleVariants({
     'brand-solid-default': {
         vars: {
@@ -289,13 +287,13 @@ export const iconSize = {
 };
 
 const pointerArea = {
-    default: `calc(max(${minButtonArea.pointer}, ${iconContainerSize.default}))`,
-    small: `calc(max(${minButtonArea.pointer}, ${iconContainerSize.small}))`,
+    default: `max(${minButtonArea.pointer}, ${iconContainerSize.default})`,
+    small: `max(${minButtonArea.pointer}, ${iconContainerSize.small})`,
 };
 
 const touchableArea = {
-    default: `calc(max(${minButtonArea.touchable}, ${iconContainerSize.default}))`,
-    small: `calc(max(${minButtonArea.touchable}, ${iconContainerSize.small}))`,
+    default: `max(${minButtonArea.touchable}, ${iconContainerSize.default})`,
+    small: `max(${minButtonArea.touchable}, ${iconContainerSize.small})`,
 };
 
 const pointerBleedArea = {
@@ -321,12 +319,13 @@ export const buttonContainer = styleVariants({
     default: [
         baseButtonContainer,
         {
-            width: pointerArea.default,
-            height: pointerArea.default,
+            // if max() is not supported, we use iconContainerSize as fallback
+            width: [iconContainerSize.default, pointerArea.default],
+            height: [iconContainerSize.default, pointerArea.default],
             '@media': {
                 [mq.touchableOnly]: {
-                    width: touchableArea.default,
-                    height: touchableArea.default,
+                    width: [iconContainerSize.default, touchableArea.default],
+                    height: [iconContainerSize.default, touchableArea.default],
                 },
             },
         },
@@ -334,12 +333,12 @@ export const buttonContainer = styleVariants({
     small: [
         baseButtonContainer,
         {
-            width: pointerArea.small,
-            height: pointerArea.small,
+            width: [iconContainerSize.small, pointerArea.small],
+            height: [iconContainerSize.small, pointerArea.small],
             '@media': {
                 [mq.touchableOnly]: {
-                    width: touchableArea.small,
-                    height: touchableArea.small,
+                    width: [iconContainerSize.small, touchableArea.small],
+                    height: [iconContainerSize.small, touchableArea.small],
                 },
             },
         },
@@ -441,7 +440,6 @@ export const iconContainer = styleVariants({
 
 export const overlay = style({
     position: 'absolute',
-    zIndex: 0,
     width: '100%',
     height: '100%',
     backgroundColor: 'transparent',
@@ -473,7 +471,6 @@ export const icon = style([
         display: 'inline-flex',
     }),
     {
-        zIndex: 1,
         opacity: 1,
         transition: `opacity ${contentTransitionTiming}, transform ${contentTransitionTiming}, color ${colorTransitionTiming}`,
         color: iconColor,
@@ -492,7 +489,6 @@ export const spinner = style([
         position: 'absolute',
     }),
     {
-        zIndex: 1,
         opacity: 0,
         transform: 'translateY(2rem)',
         transition: `opacity ${contentTransitionTiming}, transform ${contentTransitionTiming}, color ${colorTransitionTiming}`,
@@ -507,7 +503,7 @@ export const spinner = style([
     },
 ]);
 
-export const oldIconButtonBase = style([
+export const deprecatedIconButtonBase = style([
     sprinkles({
         display: 'inline-block',
     }),
