@@ -10,7 +10,6 @@ export const tag = style([
         justifyContent: 'center',
         minWidth: 56,
         paddingY: 4,
-        paddingRight: 12,
     }),
     {
         verticalAlign: 'middle',
