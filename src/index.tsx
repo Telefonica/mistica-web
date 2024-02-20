@@ -115,7 +115,9 @@ export {
     PageBullets,
     CarouselContextProvider,
     useCarouselContext,
-    CarouselContextConsummer,
+    /** @deprecated Contains a typo. Please use CarouselContextConsumer */
+    CarouselContextConsumer as CarouselContextConsummer,
+    CarouselContextConsumer,
 } from './carousel';
 export {Grid, GridItem} from './grid';
 export {
