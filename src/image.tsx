@@ -13,7 +13,6 @@ import {vars} from './skins/skin-contract.css';
 import {combineRefs} from './utils/common';
 import SkeletonBase from './skeleton-base';
 import {isServerSide} from './utils/environment';
-import {fallbackStyles} from './utils/css';
 
 import type {ExclusifyUnion} from './utils/utility-types';
 import type {DataAttributes} from './utils/types';
@@ -37,11 +36,12 @@ const VivoLogo = ({style}: VivoLogoProps) => {
 type ImageErrorProps = {
     withIcon?: boolean;
     borderRadius?: string | number;
+    className?: string;
     border?: boolean;
 };
 
 export const ImageError = React.forwardRef<HTMLDivElement, ImageErrorProps>(
-    ({borderRadius, withIcon = true, border}, ref) => {
+    ({borderRadius, withIcon = true, border, className}, ref) => {
         const isInverse = useIsInverseVariant();
         const {skinName} = useTheme();
         return (
@@ -60,6 +60,7 @@ export const ImageError = React.forwardRef<HTMLDivElement, ImageErrorProps>(
                     borderRadius,
                 }}
                 ref={ref}
+                className={className}
             >
                 {withIcon ? (
                     skinName === VIVO_SKIN ? (
@@ -148,11 +149,11 @@ export const ImageContent = React.forwardRef<HTMLImageElement, ImageProps>(
     ) => {
         const imageId = useAriaId();
         const imageRef = React.useRef<HTMLImageElement>();
-        const borderRadius = props.circular
-            ? '50%'
+        const borderRadiusStyle = props.circular
+            ? styles.circularBorderRadius
             : noBorderRadius
-            ? '0px'
-            : fallbackStyles(styles.vars.mediaBorderRadius, vars.borderRadii.container);
+            ? styles.noBorderRadius
+            : styles.defaultBorderRadius;
 
         const [isError, setIsError] = React.useState(!src);
         const [hideLoadingFallback, setHideLoadingFallback] = React.useState(false);
@@ -204,11 +205,11 @@ export const ImageContent = React.forwardRef<HTMLImageElement, ImageProps>(
                     id={imageId}
                     style={{
                         opacity: isLoading && withLoadingFallback ? 0 : 1,
-                        borderRadius,
                     }}
                     ref={combineRefs(imageRef, ref)}
                     src={src}
                     className={classnames(
+                        borderRadiusStyle,
                         styles.image,
                         {[styles.imageWithBorder]: props.border},
                         sprinkles({
@@ -241,7 +242,7 @@ export const ImageContent = React.forwardRef<HTMLImageElement, ImageProps>(
                 {withLoadingFallback && !hideLoadingFallback && (
                     <div style={{position: 'absolute', width: '100%', height: '100%'}}>
                         <SkeletonAnimation height={props.height ?? '100%'} width={props.width ?? '100%'}>
-                            <SkeletonBase height="100%" width="100%" radius={borderRadius} />
+                            <SkeletonBase height="100%" width="100%" className={borderRadiusStyle} />
                         </SkeletonAnimation>
                     </div>
                 )}
@@ -254,7 +255,7 @@ export const ImageContent = React.forwardRef<HTMLImageElement, ImageProps>(
                             zIndex: 1,
                         }}
                     >
-                        <ImageError borderRadius={borderRadius} border={props.border} />
+                        <ImageError border={props.border} className={borderRadiusStyle} />
                     </div>
                 )}
                 {!isError && img}
