@@ -2,15 +2,15 @@ import {openStoryPage, screen, setRootFontSize} from '../test-utils';
 
 import type {Device} from '../test-utils';
 
-const VARIANTS = ['default', 'soft', 'solid'];
+const BACKGROUND_TYPES = ['transparent', 'soft', 'solid'];
 const MOBILE_DEVICES: Array<Device> = ['MOBILE_IOS', 'MOBILE_ANDROID'];
 const DEVICES: Array<Device> = ['MOBILE_IOS', 'DESKTOP'];
 
-test.each(VARIANTS)('IconButton - %s variant', async (variant) => {
+test.each(BACKGROUND_TYPES)('IconButton - backgroundType = %s', async (backgroundType) => {
     await openStoryPage({
         id: 'components-buttons-iconbutton--default',
         device: 'MOBILE_IOS',
-        args: {variant},
+        args: {backgroundType},
     });
 
     const story = await screen.findByTestId('icon-button');
@@ -23,7 +23,7 @@ test.each(DEVICES)('IconButton - small in %s', async (device) => {
     await openStoryPage({
         id: 'components-buttons-iconbutton--default',
         device,
-        args: {variant: 'solid', small: true},
+        args: {backgroundType: 'solid', small: true},
     });
 
     const story = await screen.findByTestId('icon-button');
@@ -36,7 +36,7 @@ test('IconButton - disabled', async () => {
     await openStoryPage({
         id: 'components-buttons-iconbutton--default',
         device: 'MOBILE_IOS',
-        args: {variant: 'solid', disabled: true},
+        args: {backgroundType: 'solid', disabled: true},
     });
 
     const story = await screen.findByTestId('icon-button');
@@ -49,7 +49,7 @@ test.each(MOBILE_DEVICES)('IconButton - spinner in %s', async (device) => {
     await openStoryPage({
         id: 'components-buttons-iconbutton--default',
         device,
-        args: {variant: 'solid', showSpinner: true},
+        args: {backgroundType: 'solid', showSpinner: true},
     });
 
     const story = await screen.findByTestId('icon-button');
@@ -62,7 +62,7 @@ test('IconButton - big font size', async () => {
     await openStoryPage({
         id: 'components-buttons-iconbutton--default',
         device: 'MOBILE_IOS',
-        args: {variant: 'solid'},
+        args: {backgroundType: 'solid'},
     });
 
     await setRootFontSize(32);
@@ -76,7 +76,7 @@ test('IconButton - small and big font size', async () => {
     await openStoryPage({
         id: 'components-buttons-iconbutton--default',
         device: 'MOBILE_IOS',
-        args: {variant: 'solid', small: true},
+        args: {backgroundType: 'solid', small: true},
     });
 
     await setRootFontSize(32);

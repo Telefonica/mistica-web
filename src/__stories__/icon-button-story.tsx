@@ -11,8 +11,8 @@ export default {
             options: ['neutral', 'brand', 'danger'],
             control: {type: 'select'},
         },
-        variant: {
-            options: ['default', 'soft', 'solid'],
+        backgroundType: {
+            options: ['transparent', 'soft', 'solid'],
             control: {type: 'select'},
         },
         themeVariant: {
