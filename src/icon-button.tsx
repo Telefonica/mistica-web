@@ -1,9 +1,63 @@
+'use client';
 import * as React from 'react';
-import classnames from 'classnames';
 import {BaseTouchable} from './touchable';
 import * as styles from './icon-button.css';
+import classNames from 'classnames';
+import Spinner from './spinner';
+import {useThemeVariant} from './theme-variant-context';
 
-import type {DataAttributes, TrackingEvent} from './utils/types';
+import type {TouchableElement} from './touchable';
+import type {ExclusifyUnion} from './utils/utility-types';
+import type {DataAttributes, IconProps, TrackingEvent} from './utils/types';
+
+interface HrefProps {
+    href: string;
+    newTab?: boolean;
+}
+
+interface ToProps {
+    to: string;
+    fullPageOnWebView?: boolean;
+    replace?: boolean;
+}
+
+interface OnPressProps {
+    onPress: (event: React.MouseEvent<HTMLElement>) => void | undefined | Promise<void>;
+}
+
+interface MaybeProps {
+    onPress?: undefined;
+    href?: undefined;
+    to?: undefined;
+}
+
+interface BaseDeprecatedProps {
+    /** @deprecated */
+    children?: React.ReactNode;
+    /** @deprecated */
+    className?: string;
+    disabled?: boolean;
+    /** @deprecated */
+    icon?: string;
+    /** @deprecated */
+    iconSize?: number;
+    /** @deprecated */
+    backgroundColor?: string;
+    /** @deprecated */
+    size?: number | string;
+    /** @deprecated */
+    style?: React.CSSProperties;
+    /** @deprecated */
+    'aria-live'?: 'polite' | 'off' | 'assertive';
+
+    trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
+    /** "data-" prefix is automatically added. For example, use "testid" instead of "data-testid" */
+    dataAttributes?: DataAttributes;
+    newTab?: boolean;
+    'aria-label'?: string;
+}
+
+type DeprecatedProps = BaseDeprecatedProps & ExclusifyUnion<HrefProps | ToProps | OnPressProps | MaybeProps>;
 
 const ICON_SIZE_1 = 24;
 
@@ -28,53 +82,8 @@ const getButtonStyle = (
     };
 };
 
-interface CommonProps {
-    children?: React.ReactNode;
-    className?: string;
-    disabled?: boolean;
-    icon?: string;
-    iconSize?: number;
-    backgroundColor?: string;
-    size?: number | string;
-    style?: React.CSSProperties;
-    trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
-    /** "data-" prefix is automatically added. For example, use "testid" instead of "data-testid" */
-    dataAttributes?: DataAttributes;
-    newTab?: boolean;
-    'aria-label'?: string;
-    'aria-live'?: 'polite' | 'off' | 'assertive';
-}
-
-interface HrefProps extends CommonProps {
-    href: string;
-    to?: undefined;
-    onPress?: undefined;
-}
-
-interface ToProps extends CommonProps {
-    to: string;
-    fullPageOnWebView?: boolean;
-    replace?: boolean;
-    href?: undefined;
-    onPress?: undefined;
-}
-
-interface OnPressProps extends CommonProps {
-    onPress: (event: React.MouseEvent<HTMLElement>) => void;
-    href?: undefined;
-    to?: undefined;
-}
-
-interface MaybeProps extends CommonProps {
-    onPress?: undefined;
-    href?: undefined;
-    to?: undefined;
-}
-
-type Props = HrefProps | ToProps | OnPressProps | MaybeProps;
-
-/*
- * Examples:
+/**
+ * @deprecated these usages of IconButton will be removed
  *
  * IconButton with image url:
  *
@@ -87,10 +96,11 @@ type Props = HrefProps | ToProps | OnPressProps | MaybeProps;
  *     </IconButton />
  *
  */
-const RawIconButton: React.FC<Props> = (props) => {
+export const RawDeprecatedIconButton = React.forwardRef<TouchableElement, DeprecatedProps>((props, ref) => {
     const {icon, children} = props;
     const commonProps = {
         className: props.className || '',
+        ref,
         disabled: props.disabled,
         style: props.style,
         trackingEvent: props.trackingEvent,
@@ -144,26 +154,197 @@ const RawIconButton: React.FC<Props> = (props) => {
             {!icon && React.Children.only(children)}
         </BaseTouchable>
     );
-};
+});
 
-const IconButton = (props: Props): JSX.Element => {
+interface BaseProps {
+    children?: undefined;
+    Icon: React.FC<IconProps>;
+    trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
+    dataAttributes?: DataAttributes;
+    disabled?: boolean;
+    showSpinner?: boolean;
+    'aria-label'?: string;
+    small?: boolean;
+    type?: 'neutral' | 'brand' | 'danger';
+    backgroundType?: 'transparent' | 'solid' | 'soft';
+    bleedLeft?: boolean;
+    bleedRight?: boolean;
+    bleedY?: boolean;
+}
+
+type Props = BaseProps & ExclusifyUnion<HrefProps | ToProps | OnPressProps | MaybeProps>;
+
+export const RawIconButton = React.forwardRef<TouchableElement, Props & {isOverMedia?: boolean}>(
+    (
+        {
+            disabled,
+            trackingEvent,
+            dataAttributes,
+            type = 'neutral',
+            backgroundType = 'transparent',
+            isOverMedia,
+            'aria-label': ariaLabel,
+            small,
+            Icon,
+            bleedLeft,
+            bleedRight,
+            bleedY,
+            ...props
+        },
+        ref
+    ) => {
+        const themeVariant = useThemeVariant();
+        const [isOnPressPromiseResolving, setIsOnPressPromiseResolving] = React.useState(false);
+
+        const showSpinner = props.showSpinner || isOnPressPromiseResolving;
+
+        // This state is needed to not render the spinner when hidden (because it causes high CPU usage
+        // specially in iPhone). But we want the spinner to be visible during the show/hide animation.
+        // * When showSpinner prop is true, state is changed immediately.
+        // * When the transition ends this state is updated again if needed
+        const [shouldRenderSpinner, setShouldRenderSpinner] = React.useState(!!showSpinner);
+
+        React.useEffect(() => {
+            if (showSpinner && !shouldRenderSpinner) {
+                setShouldRenderSpinner(true);
+            }
+        }, [showSpinner, shouldRenderSpinner]);
+
+        const buttonSize = small ? 'small' : 'default';
+        const buttonTokensKey: keyof typeof styles.iconButtonTokens = isOverMedia
+            ? `${type}-media`
+            : `${type}-${backgroundType}-${themeVariant}`;
+
+        const commonProps = {
+            disabled: disabled || showSpinner,
+            ref,
+            trackingEvent,
+            'aria-label': ariaLabel,
+            role: props.onPress || props.to || props.href ? 'button' : undefined,
+            dataAttributes: {'component-name': 'IconButton', ...dataAttributes},
+            className: classNames(
+                styles.buttonContainer[buttonSize],
+                styles.iconButtonTokens[buttonTokensKey],
+                {
+                    [styles.disabled]: disabled,
+                    [styles.overlayContainer]: !disabled && !showSpinner,
+                    [styles.bleedLeft[buttonSize]]: bleedLeft,
+                    [styles.bleedRight[buttonSize]]: bleedRight,
+                    [styles.bleedY[buttonSize]]: bleedY,
+                }
+            ),
+        };
+
+        const content = (
+            <div className={classNames(styles.iconContainer[buttonSize], {[styles.isLoading]: showSpinner})}>
+                <div className={styles.overlay} />
+
+                <div aria-hidden={showSpinner ? true : undefined} className={styles.icon}>
+                    <Icon size={styles.iconSize[buttonSize]} color="currentColor" />
+                </div>
+
+                <div
+                    aria-hidden={showSpinner ? undefined : true}
+                    className={styles.spinner}
+                    onTransitionEnd={() => {
+                        if (showSpinner !== shouldRenderSpinner) {
+                            setShouldRenderSpinner(showSpinner);
+                        }
+                    }}
+                >
+                    {shouldRenderSpinner && (
+                        <Spinner size={styles.iconSize[buttonSize]} color="currentColor" delay="0s" />
+                    )}
+                </div>
+            </div>
+        );
+
+        if (props.href) {
+            return (
+                <BaseTouchable {...commonProps} href={props.href} newTab={props.newTab}>
+                    {content}
+                </BaseTouchable>
+            );
+        }
+        if (props.to) {
+            return (
+                <BaseTouchable
+                    {...commonProps}
+                    to={props.to}
+                    fullPageOnWebView={props.fullPageOnWebView}
+                    replace={props.replace}
+                >
+                    {content}
+                </BaseTouchable>
+            );
+        }
+
+        if (props.onPress) {
+            return (
+                <BaseTouchable
+                    {...commonProps}
+                    onPress={(e) => {
+                        const result = props.onPress(e);
+                        if (result) {
+                            setIsOnPressPromiseResolving(true);
+                            result.finally(() => setIsOnPressPromiseResolving(false));
+                        }
+                    }}
+                >
+                    {content}
+                </BaseTouchable>
+            );
+        }
+
+        return (
+            <BaseTouchable {...commonProps} maybe>
+                {content}
+            </BaseTouchable>
+        );
+    }
+);
+
+type IconButtonProps = ExclusifyUnion<DeprecatedProps | Props>;
+
+export const InternalIconButton = React.forwardRef<
+    TouchableElement,
+    IconButtonProps & {isOverMedia?: boolean}
+>((props, ref) => {
+    /**
+     * The new IconButton requires Icon prop, so if it it's used we render the new version.
+     * Otherwise, we render the deprecated one (to avoid breaking changes).
+     */
+    if (props.Icon) {
+        return <RawIconButton ref={ref} {...props} />;
+    }
+
     const {icon, backgroundColor = 'transparent', iconSize, size = ICON_SIZE_1} = props;
     return (
-        <RawIconButton
+        <RawDeprecatedIconButton
+            ref={ref}
             {...props}
-            className={classnames(styles.base, props.className)}
+            className={classNames(styles.deprecatedIconButtonBase, props.className)}
             style={{...getButtonStyle(icon, size, backgroundColor, iconSize, props.disabled), ...props.style}}
         />
     );
-};
+});
+
+export const IconButton = React.forwardRef<TouchableElement, IconButtonProps>((props, ref) => {
+    return <InternalIconButton ref={ref} {...props} />;
+});
 
 // Used internally by Mistica's components to avoid styles collisions
-export const BaseIconButton = (props: Props): JSX.Element => {
+
+export const BaseIconButton = (props: IconButtonProps): JSX.Element => {
+    if (props.Icon) {
+        return <RawIconButton {...props} />;
+    }
+
     const {size = ICON_SIZE_1, disabled} = props;
     return (
-        <RawIconButton
+        <RawDeprecatedIconButton
             {...props}
-            className={classnames(styles.base, props.className)}
+            className={classNames(styles.deprecatedIconButtonBase, props.className)}
             style={{
                 height: size,
                 width: size,

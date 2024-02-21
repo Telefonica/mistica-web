@@ -242,6 +242,16 @@ const buttonSnippets: Array<Snippet> = [
             Some content here
         </ButtonFixedFooterLayout>`,
     },
+    {
+        name: 'IconButton',
+        code: `
+        <IconButton
+          onPress={() => window.alert("pressed!")}
+          Icon={IconLightningRegular}
+          type="brand"
+          backgroundType="soft"
+        />`,
+    },
 ].map((snippet) => ({...snippet, group: 'Buttons'}));
 
 const formSnippets: Array<Snippet> = [
@@ -581,7 +591,7 @@ const popoverSnippets = [
         name: 'Popover informative',
         code: `
         <Popover
-          target="some target, this can be any component"
+          target={<Text3>some target, this can be any component</Text3>}
           title="Informative popover"
           description="You can use this popover to give more information to the user"
         />
@@ -592,8 +602,12 @@ const popoverSnippets = [
         name: 'Popover informative with icon',
         code: `
         <Popover
-          target="some target, this can be any component"
-          asset={<Circle size={40} backgroundColor={colors.brandLow}><IconShopRegular color={colors.brand} /></Circle>}
+          target={<Text3>some target, this can be any component</Text3>}
+          asset={
+            <Circle size={40} backgroundColor={colors.brandLow}>
+              <IconShopRegular color={colors.brand} />
+            </Circle>
+          }
           title="Informative popover"
           description="You can use this popover to give more information to the user"
         />
@@ -605,16 +619,16 @@ const popoverSnippets = [
         code: `
         <Popover
           target={
-            <IconButton onPress={() => setState("isClosed", false)}>
-              <Avatar
-                size={40}
-                initials="AH"
-                src="https://images.unsplash.com/photo-1517849845537-4d257902454a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80"
-              />
-            </IconButton>
+            <IconButton
+              onPress={() => {
+                setState("isOpen", !getState("isOpen"));
+              }}
+              Icon={IconLightningRegular}
+              backgroundType="solid"
+            />
           }
-          isVisible={!getState("isClosed")}
-          onClose={() => setState("isClosed", true)}
+          open={getState("isOpen") ?? false}
+          onClose={() => setState("isOpen", false)}
           asset={
             <Avatar
               size={40}

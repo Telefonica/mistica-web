@@ -5,7 +5,8 @@ import * as mq from './media-queries.css';
 
 import type {ComplexStyleRule} from '@vanilla-extract/css';
 
-const transitionTiming = '0.1s ease-in-out';
+const colorTransitionTiming = '0.1s ease-in-out';
+const contentTransitionTiming = '0.3s cubic-bezier(0.77, 0, 0.175, 1)';
 
 export const BUTTON_MIN_WIDTH = 104;
 const BORDER_PX = 1.5;
@@ -38,7 +39,7 @@ const button = style([
     {
         border: `${BORDER_PX}px solid transparent`,
         minWidth: BUTTON_MIN_WIDTH,
-        transition: `background-color ${transitionTiming}, color ${transitionTiming}, border-color ${transitionTiming}`,
+        transition: `background-color ${colorTransitionTiming}, color ${colorTransitionTiming}, border-color ${colorTransitionTiming}`,
 
         selectors: {
             [`&[disabled]:not(${isLoading})`]: disabledStyle,
@@ -80,7 +81,7 @@ export const loadingContent = style([
         right: X_PADDING_PX,
         opacity: 0,
         transform: 'translateY(2rem)',
-        transition: `opacity ${transitionTiming}, transform ${transitionTiming}`,
+        transition: `opacity ${contentTransitionTiming}, transform ${contentTransitionTiming}`,
 
         selectors: {
             [`${small} &`]: {
@@ -104,7 +105,7 @@ export const textContent = style([
     {
         padding: `${Y_PADDING_PX}px ${X_PADDING_PX}px`, // height 48
         opacity: 1,
-        transition: `opacity ${transitionTiming}, transform ${transitionTiming}`,
+        transition: `opacity ${contentTransitionTiming}, transform ${contentTransitionTiming}`,
 
         selectors: {
             [`${small} &`]: {
@@ -296,7 +297,7 @@ const link = style([
         paddingTop: PADDING_Y_LINK,
         paddingBottom: PADDING_Y_LINK,
         fontWeight: 500,
-        transition: `background-color ${transitionTiming}`,
+        transition: `background-color ${colorTransitionTiming}`,
 
         selectors: {
             [`&[disabled]:not(${isLoading})`]: disabledStyle,
@@ -318,7 +319,7 @@ export const textContentLink = style([
     }),
     {
         opacity: 1,
-        transition: `opacity ${transitionTiming}, transform ${transitionTiming}`,
+        transition: `opacity ${contentTransitionTiming}, transform ${contentTransitionTiming}`,
 
         selectors: {
             [`${isLoading} &`]: {

@@ -3,7 +3,10 @@ import * as mq from './media-queries.css';
 import {vars} from './skins/skin-contract.css';
 import {sprinkles} from './sprinkles.css';
 
-const transitionTiming = '0.2s ease-in-out';
+const colorTransitionTiming = '0.1s ease-in-out';
+const scaleTransitionTiming = '0.2s ease-in-out';
+const contentTransitionTiming = '0.3s cubic-bezier(0.77, 0, 0.175, 1)';
+
 const BUTTON_SIZE = 32;
 const TOUCHABLE_AREA_WIDTH = 40;
 
@@ -73,7 +76,7 @@ export const trashButtonIcon = style([
         pointerEvents: 'none',
         opacity: 0,
         transform: `translateY(100%)`,
-        transition: `opacity ${transitionTiming}, transform ${transitionTiming}`,
+        transition: `opacity ${contentTransitionTiming}, transform ${contentTransitionTiming}`,
         selectors: {
             [`${hasTrashIcon} &`]: {
                 pointerEvents: 'auto',
@@ -89,7 +92,7 @@ export const decreaseButtonIcon = style([
     {
         pointerEvents: 'auto',
         opacity: 1,
-        transition: `opacity ${transitionTiming}, transform ${transitionTiming}`,
+        transition: `opacity ${contentTransitionTiming}, transform ${contentTransitionTiming}`,
         selectors: {
             [`${hasTrashIcon} &`]: {
                 pointerEvents: 'none',
@@ -110,7 +113,7 @@ export const buttonBackground = style([
     }),
     {
         transform: 'scale(0)',
-        transition: `transform ${transitionTiming}, background ${transitionTiming}`,
+        transition: `transform ${scaleTransitionTiming}, background ${colorTransitionTiming}`,
 
         selectors: {
             [`${buttonContainer}:active:not(${isButtonDisabled}) &`]: {
