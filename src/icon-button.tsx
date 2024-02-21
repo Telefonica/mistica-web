@@ -333,7 +333,10 @@ export const InternalIconButton = React.forwardRef<
     );
 });
 
-export const IconButton = React.forwardRef<TouchableElement, IconButtonProps>((props, ref) => {
+export const IconButton = React.forwardRef<
+    TouchableElement,
+    ExclusifyUnion<DeprecatedProps | IconButtonProps>
+>((props, ref) => {
     return <InternalIconButton ref={ref} {...props} />;
 });
 
