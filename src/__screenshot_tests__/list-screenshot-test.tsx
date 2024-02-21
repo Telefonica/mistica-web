@@ -172,7 +172,7 @@ test.each(controlsWithOnPress)('Click control with onPress - %s', async (control
 test.each(controlsWithIconButton)('Rows with %s using big fontSize', async (control) => {
     await openStoryPage({
         id: 'components-lists--boxed-row-list-story',
-        device: 'MOBILE_IOS',
+        device: 'DESKTOP',
         args: {control},
     });
 
