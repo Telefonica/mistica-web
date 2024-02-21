@@ -63,7 +63,7 @@ export const iconButtonTokens = styleVariants({
         },
     },
 
-    'brand-default-default': {
+    'brand-transparent-default': {
         vars: {
             [background]: 'transparent',
             [backgroundHover]: skinVars.colors.backgroundContainerHover,
@@ -71,7 +71,7 @@ export const iconButtonTokens = styleVariants({
             [iconColor]: skinVars.colors.textLink,
         },
     },
-    'brand-default-inverse': {
+    'brand-transparent-inverse': {
         vars: {
             [background]: 'transparent',
             [backgroundHover]: skinVars.colors.backgroundContainerBrandHover,
@@ -79,7 +79,7 @@ export const iconButtonTokens = styleVariants({
             [iconColor]: skinVars.colors.textLinkInverse,
         },
     },
-    'brand-default-alternative': {
+    'brand-transparent-alternative': {
         vars: {
             [background]: 'transparent',
             [backgroundHover]: skinVars.colors.backgroundContainerHover,
@@ -138,7 +138,7 @@ export const iconButtonTokens = styleVariants({
         },
     },
 
-    'neutral-default-default': {
+    'neutral-transparent-default': {
         vars: {
             [background]: 'transparent',
             [backgroundHover]: skinVars.colors.backgroundContainerHover,
@@ -146,7 +146,7 @@ export const iconButtonTokens = styleVariants({
             [iconColor]: skinVars.colors.neutralHigh,
         },
     },
-    'neutral-default-inverse': {
+    'neutral-transparent-inverse': {
         vars: {
             [background]: 'transparent',
             [backgroundHover]: skinVars.colors.backgroundContainerBrandHover,
@@ -154,7 +154,7 @@ export const iconButtonTokens = styleVariants({
             [iconColor]: skinVars.colors.inverse,
         },
     },
-    'neutral-default-alternative': {
+    'neutral-transparent-alternative': {
         vars: {
             [background]: 'transparent',
             [backgroundHover]: skinVars.colors.backgroundContainerHover,
@@ -213,7 +213,7 @@ export const iconButtonTokens = styleVariants({
         },
     },
 
-    'danger-default-default': {
+    'danger-transparent-default': {
         vars: {
             [background]: 'transparent',
             [backgroundHover]: skinVars.colors.backgroundContainerHover,
@@ -221,7 +221,7 @@ export const iconButtonTokens = styleVariants({
             [iconColor]: skinVars.colors.error,
         },
     },
-    'danger-default-inverse': {
+    'danger-transparent-inverse': {
         vars: {
             [background]: skinVars.colors.buttonLinkDangerBackgroundInverse,
             [backgroundHover]: skinVars.colors.backgroundContainerHover,
@@ -229,7 +229,7 @@ export const iconButtonTokens = styleVariants({
             [iconColor]: skinVars.colors.error,
         },
     },
-    'danger-default-alternative': {
+    'danger-transparent-alternative': {
         vars: {
             [background]: 'transparent',
             [backgroundHover]: skinVars.colors.backgroundContainerHover,

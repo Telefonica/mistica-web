@@ -27,7 +27,7 @@ const handleOnPress = () => console.log('pressed!');
 
 type Args = {
     type: 'neutral' | 'brand' | 'danger';
-    variant: 'default' | 'soft' | 'solid';
+    backgroundType: 'transparent' | 'soft' | 'solid';
     themeVariant: 'default' | 'inverse' | 'alternative';
     small: boolean;
     disabled: boolean;
@@ -39,7 +39,7 @@ type Args = {
 
 export const Default: StoryComponent<Args> = ({
     type,
-    variant,
+    backgroundType,
     themeVariant,
     small,
     disabled,
@@ -54,7 +54,7 @@ export const Default: StoryComponent<Args> = ({
                 onPress={handleOnPress}
                 Icon={IconCloseRegular}
                 type={type}
-                variant={variant}
+                backgroundType={backgroundType}
                 showSpinner={showSpinner}
                 small={small}
                 disabled={disabled}
@@ -70,7 +70,7 @@ export const Default: StoryComponent<Args> = ({
 Default.storyName = 'IconButton';
 Default.args = {
     type: 'neutral',
-    variant: 'default',
+    backgroundType: 'transparent',
     themeVariant: 'default',
     small: false,
     disabled: false,

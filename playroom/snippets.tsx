@@ -249,7 +249,7 @@ const buttonSnippets: Array<Snippet> = [
           onPress={() => window.alert("pressed!")}
           Icon={IconLightningRegular}
           type="brand"
-          variant="soft"
+          backgroundType="soft"
         />`,
     },
 ].map((snippet) => ({...snippet, group: 'Buttons'}));
@@ -624,7 +624,7 @@ const popoverSnippets = [
                 setState("isOpen", !getState("isOpen"));
               }}
               Icon={IconLightningRegular}
-              variant="solid"
+              backgroundType="solid"
             />
           }
           open={getState("isOpen") ?? false}

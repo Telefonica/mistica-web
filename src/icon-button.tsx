@@ -166,7 +166,7 @@ interface BaseProps {
     'aria-label'?: string;
     small?: boolean;
     type?: 'neutral' | 'brand' | 'danger';
-    variant?: 'default' | 'solid' | 'soft';
+    backgroundType?: 'transparent' | 'solid' | 'soft';
     bleedLeft?: boolean;
     bleedRight?: boolean;
     bleedY?: boolean;
@@ -181,7 +181,7 @@ export const RawIconButton = React.forwardRef<TouchableElement, Props & {isOverM
             trackingEvent,
             dataAttributes,
             type = 'neutral',
-            variant = 'default',
+            backgroundType = 'transparent',
             isOverMedia,
             'aria-label': ariaLabel,
             small,
@@ -213,7 +213,7 @@ export const RawIconButton = React.forwardRef<TouchableElement, Props & {isOverM
         const buttonSize = small ? 'small' : 'default';
         const buttonTokensKey: keyof typeof styles.iconButtonTokens = isOverMedia
             ? `${type}-media`
-            : `${type}-${variant}-${themeVariant}`;
+            : `${type}-${backgroundType}-${themeVariant}`;
 
         const commonProps = {
             disabled: disabled || showSpinner,

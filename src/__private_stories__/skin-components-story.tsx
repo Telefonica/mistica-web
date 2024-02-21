@@ -300,17 +300,17 @@ export const Default: StoryComponent<Args> = ({variant}) => {
 
                     {/** IconButton */}
                     <Inline space={16} wrap>
-                        <IconButton Icon={IconLightningRegular} type="neutral" variant="default" />
-                        <IconButton Icon={IconLightningRegular} type="neutral" variant="soft" />
-                        <IconButton Icon={IconLightningRegular} type="neutral" variant="solid" />
+                        <IconButton Icon={IconLightningRegular} type="neutral" backgroundType="transparent" />
+                        <IconButton Icon={IconLightningRegular} type="neutral" backgroundType="soft" />
+                        <IconButton Icon={IconLightningRegular} type="neutral" backgroundType="solid" />
 
-                        <IconButton Icon={IconLightningRegular} type="brand" variant="default" />
-                        <IconButton Icon={IconLightningRegular} type="brand" variant="soft" />
-                        <IconButton Icon={IconLightningRegular} type="brand" variant="solid" />
+                        <IconButton Icon={IconLightningRegular} type="brand" backgroundType="transparent" />
+                        <IconButton Icon={IconLightningRegular} type="brand" backgroundType="soft" />
+                        <IconButton Icon={IconLightningRegular} type="brand" backgroundType="solid" />
 
-                        <IconButton Icon={IconLightningRegular} type="danger" variant="default" />
-                        <IconButton Icon={IconLightningRegular} type="danger" variant="soft" />
-                        <IconButton Icon={IconLightningRegular} type="danger" variant="solid" />
+                        <IconButton Icon={IconLightningRegular} type="danger" backgroundType="transparent" />
+                        <IconButton Icon={IconLightningRegular} type="danger" backgroundType="soft" />
+                        <IconButton Icon={IconLightningRegular} type="danger" backgroundType="solid" />
 
                         <div style={{background: 'black'}}>
                             <InternalIconButton Icon={IconLightningRegular} type="neutral" isOverMedia />
