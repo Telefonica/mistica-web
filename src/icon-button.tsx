@@ -156,6 +156,9 @@ export const RawDeprecatedIconButton = React.forwardRef<TouchableElement, Deprec
     );
 });
 
+type IconButtonType = 'neutral' | 'brand' | 'danger';
+type IconButtonBackgroundType = 'transparent' | 'solid' | 'soft';
+
 interface BaseProps {
     children?: undefined;
     Icon: React.FC<IconProps>;
@@ -164,17 +167,18 @@ interface BaseProps {
     disabled?: boolean;
     showSpinner?: boolean;
     'aria-label'?: string;
+    'aria-labelledby'?: string;
     small?: boolean;
-    type?: 'neutral' | 'brand' | 'danger';
-    backgroundType?: 'transparent' | 'solid' | 'soft';
+    type?: IconButtonType;
+    backgroundType?: IconButtonBackgroundType;
     bleedLeft?: boolean;
     bleedRight?: boolean;
     bleedY?: boolean;
 }
 
-type Props = BaseProps & ExclusifyUnion<HrefProps | ToProps | OnPressProps | MaybeProps>;
+export type IconButtonProps = BaseProps & ExclusifyUnion<HrefProps | ToProps | OnPressProps | MaybeProps>;
 
-export const RawIconButton = React.forwardRef<TouchableElement, Props & {isOverMedia?: boolean}>(
+export const RawIconButton = React.forwardRef<TouchableElement, IconButtonProps & {isOverMedia?: boolean}>(
     (
         {
             disabled,
@@ -184,6 +188,7 @@ export const RawIconButton = React.forwardRef<TouchableElement, Props & {isOverM
             backgroundType = 'transparent',
             isOverMedia,
             'aria-label': ariaLabel,
+            'aria-labelledby': ariaLabelledby,
             small,
             Icon,
             bleedLeft,
@@ -220,6 +225,7 @@ export const RawIconButton = React.forwardRef<TouchableElement, Props & {isOverM
             ref,
             trackingEvent,
             'aria-label': ariaLabel,
+            'aria-labelledby': ariaLabelledby,
             role: props.onPress || props.to || props.href ? 'button' : undefined,
             dataAttributes: {'component-name': 'IconButton', ...dataAttributes},
             className: classNames(
@@ -304,11 +310,9 @@ export const RawIconButton = React.forwardRef<TouchableElement, Props & {isOverM
     }
 );
 
-type IconButtonProps = ExclusifyUnion<DeprecatedProps | Props>;
-
 export const InternalIconButton = React.forwardRef<
     TouchableElement,
-    IconButtonProps & {isOverMedia?: boolean}
+    ExclusifyUnion<DeprecatedProps | IconButtonProps> & {isOverMedia?: boolean}
 >((props, ref) => {
     /**
      * The new IconButton requires Icon prop, so if it it's used we render the new version.
@@ -335,7 +339,7 @@ export const IconButton = React.forwardRef<TouchableElement, IconButtonProps>((p
 
 // Used internally by Mistica's components to avoid styles collisions
 
-export const BaseIconButton = (props: IconButtonProps): JSX.Element => {
+export const BaseIconButton = (props: ExclusifyUnion<DeprecatedProps | IconButtonProps>): JSX.Element => {
     if (props.Icon) {
         return <RawIconButton {...props} />;
     }

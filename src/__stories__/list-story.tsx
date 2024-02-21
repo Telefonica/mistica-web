@@ -15,6 +15,7 @@ import {
     Text3,
     Inline,
     Avatar,
+    IconPlayFilled,
 } from '..';
 import usingVrImg from './images/using-vr.jpg';
 import laptopImg from './images/laptop.jpg';
@@ -35,6 +36,8 @@ export default {
                 'checkbox and onPress',
                 'radio',
                 'radio and onPress',
+                'iconButton',
+                'iconButton and onPress',
                 'custom element',
                 'custom element with text',
                 'action with custom element',
@@ -144,6 +147,27 @@ const Template: StoryComponent<Args & {boxed?: boolean}> = ({
             case 'radio and onPress':
                 controlProps = {
                     radioValue: 'radio-value-' + index,
+                    onPress,
+                };
+                break;
+            case 'iconButton':
+                controlProps = {
+                    iconButton: {
+                        Icon: IconPlayFilled,
+                        onPress: () => console.log('Pressed button'),
+                        type: 'brand',
+                        backgroundType: 'solid',
+                    },
+                };
+                break;
+            case 'iconButton and onPress':
+                controlProps = {
+                    iconButton: {
+                        Icon: IconPlayFilled,
+                        onPress: () => console.log('Pressed button'),
+                        type: 'brand',
+                        backgroundType: 'solid',
+                    },
                     onPress,
                 };
                 break;
