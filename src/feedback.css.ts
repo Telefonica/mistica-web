@@ -49,14 +49,6 @@ export const innerContainerWithButtons = style({
     },
 });
 
-export const feedbackScreenInverse = style({
-    '@media': {
-        [mq.tabletOrSmaller]: {
-            background: vars.colors.backgroundBrand,
-        },
-    },
-});
-
 export const iconContainer = sprinkles({
     width: 48,
     height: 48,

@@ -12,7 +12,8 @@ export type KnownSkinName =
     | 'Vivo'
     | 'Vivo-new'
     | 'Telefonica'
-    | 'Blau';
+    | 'Blau'
+    | 'Tu';
 export type SkinName = KnownSkinName | string;
 
 export type GetKnownSkin = (variant?: SkinVariant) => KnownSkin;

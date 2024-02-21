@@ -1,6 +1,7 @@
 import {style} from '@vanilla-extract/css';
 import {sprinkles} from './sprinkles.css';
 import {vars} from './skins/skin-contract.css';
+import {pxToRem} from './utils/css';
 
 export const container = sprinkles({
     position: 'relative',
@@ -9,17 +10,20 @@ export const container = sprinkles({
 
 export const badge = style([
     sprinkles({
-        width: 8,
-        height: 8,
         background: vars.colors.badge,
     }),
     {
-        top: -2,
-        right: -6,
+        width: pxToRem(8),
+        height: pxToRem(8),
+        top: pxToRem(-2),
+        right: pxToRem(-6),
         borderRadius: '50%',
-        boxShadow: `0px 0px 0px 1.5px ${vars.colors.borderLow}`,
     },
 ]);
+
+export const badgeBorder = style({
+    boxShadow: `0px 0px 0px ${pxToRem(1.5)} ${vars.colors.borderLow}`,
+});
 
 export const badgeNumber = style([
     badge,
@@ -29,10 +33,10 @@ export const badgeNumber = style([
         justifyContent: 'center',
     }),
     {
-        top: -8,
-        right: -9,
-        width: 18,
-        height: 18,
+        top: pxToRem(-8),
+        right: pxToRem(-9),
+        width: pxToRem(18),
+        height: pxToRem(18),
     },
 ]);
 
@@ -41,7 +45,7 @@ export const badgeWithChildren = sprinkles({
 });
 
 export const badgeBigNumber = style({
-    width: 24,
-    right: -14,
+    width: pxToRem(24),
+    right: pxToRem(-14),
     borderRadius: vars.borderRadii.indicator,
 });

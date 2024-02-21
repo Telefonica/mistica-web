@@ -119,6 +119,7 @@ const generateSkinFiles = () => {
         'telefonica',
         'vivo',
         'vivo-new',
+        'tu',
     ];
 
     let anyGeneratedSkin;

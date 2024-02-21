@@ -11,6 +11,7 @@ import {sprinkles} from './sprinkles.css';
 import {vars} from './skins/skin-contract.css';
 import classNames from 'classnames';
 import {useTheme} from './hooks';
+import Badge from './badge';
 
 import type {DataAttributes, IconProps} from './utils/types';
 
@@ -22,14 +23,16 @@ export type TagProps = {
     children: string;
     Icon?: React.FC<IconProps>;
     dataAttributes?: DataAttributes;
+    badge?: boolean | number;
 };
 
 const {colors} = vars;
 
-const Tag: React.FC<TagProps> = ({Icon, children, dataAttributes, type = 'promo'}) => {
+const Tag: React.FC<TagProps> = ({Icon, children, dataAttributes, type = 'promo', badge}) => {
     const {textPresets} = useTheme();
     const themeVariant = useThemeVariant();
     const isInverse = themeVariant === 'inverse';
+    const badgeValue = badge === true ? undefined : badge || 0;
 
     if (!children) {
         return null;
@@ -58,6 +61,7 @@ const Tag: React.FC<TagProps> = ({Icon, children, dataAttributes, type = 'promo'
                 classes.tag,
                 sprinkles({
                     paddingLeft: Icon ? 8 : 12,
+                    paddingRight: badgeValue !== 0 ? 8 : 12,
                     background: isInverse ? colors.inverse : backgroundColor,
                 })
             )}
@@ -81,6 +85,11 @@ const Tag: React.FC<TagProps> = ({Icon, children, dataAttributes, type = 'promo'
                 >
                     {children}
                 </Text>
+                {badgeValue !== 0 && (
+                    <Box paddingLeft={4} className={sprinkles({display: 'inline-flex'})}>
+                        <Badge value={badgeValue} />
+                    </Box>
+                )}
             </ThemeVariant>
         </span>
     );

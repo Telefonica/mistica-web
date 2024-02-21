@@ -7,3 +7,4 @@ export const VIVO_SKIN = 'Vivo';
 export const VIVO_NEW_SKIN = 'Vivo-new';
 export const TELEFONICA_SKIN = 'Telefonica';
 export const BLAU_SKIN = 'Blau';
+export const TU_SKIN = 'Tu';

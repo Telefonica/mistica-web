@@ -8,6 +8,7 @@ import {getVivoSkin} from './skins/vivo';
 import {getO2Skin} from './skins/o2';
 import {getO2NewSkin} from './skins/o2-new';
 import {getBlauSkin} from './skins/blau';
+import {getTuSkin} from './skins/tu';
 import {getTelefonicaSkin} from './skins/telefonica';
 import {getPrefixedDataAttributes} from './utils/dom';
 import * as styles from './logo.css';
@@ -368,6 +369,29 @@ const BlauLogoImage = ({size, type}: LogoImageProps) => {
     );
 };
 
+const TuLogoImage = ({size}: LogoImageProps) => {
+    const {isDarkMode} = useTheme();
+    const isInverse = useIsInverseVariant();
+    const {colors} = getTuSkin();
+    const color = isInverse && !isDarkMode ? colors.backgroundBrand : colors.inverse;
+    const circle = isInverse && !isDarkMode ? colors.inverse : colors.backgroundBrand;
+
+    return (
+        <svg
+            className={styles.svg}
+            style={applyCssVars(calcInlineVars(size))}
+            viewBox="0 0 72 72"
+            fill={circle}
+        >
+            <circle cx="36" cy="36" r="32" fill={circle} />
+            <path
+                d="M56.9231 30.5142V41.4859C56.9231 43.3057 56.4469 44.9175 55.5077 46.2953C54.5685 47.6731 53.2331 48.7649 51.5055 49.5591C49.7245 50.3624 47.6367 50.7692 45.3034 50.7692C42.9168 50.7692 40.7849 50.3598 38.9653 49.5565C37.1936 48.7584 35.8129 47.6497 34.8617 46.2654C33.9105 44.8811 33.4369 43.2693 33.4369 41.4872V33.1385C33.4366 32.8712 33.3273 32.615 33.1332 32.4261C32.9391 32.2373 32.676 32.1312 32.4017 32.1312H25.3311C25.0569 32.1312 24.794 32.2373 24.6001 32.4262C24.4062 32.6151 24.2973 32.8714 24.2973 33.1385V41.8655C24.2973 43.099 24.7548 44.1467 25.6313 44.8993C26.4504 45.5895 27.5444 45.9391 28.8878 45.9391C29.1552 45.9401 29.4225 45.9258 29.6882 45.8962C29.7162 45.8926 29.7448 45.8948 29.7719 45.9026C29.799 45.9105 29.8241 45.9238 29.8456 45.9417C29.863 45.9541 29.877 45.9703 29.8866 45.9891C29.8961 46.0079 29.9008 46.0287 29.9003 46.0496L30.0764 49.0886C30.087 49.2807 30.0338 49.471 29.9247 49.6314C29.8157 49.7917 29.6565 49.9136 29.4707 49.9789C29.0361 50.125 28.594 50.2486 28.146 50.3494C27.0248 50.6213 25.8742 50.7618 24.7188 50.7679C22.2214 50.7679 20.3578 50.118 19.0237 48.7753C17.6896 47.4326 17.0253 45.5687 17.0253 43.0743V33.5077C17.0249 33.1425 16.8758 32.7924 16.6106 32.5343C16.3455 32.2762 15.986 32.1312 15.6112 32.1312H15.4657C15.2529 32.131 15.0421 32.09 14.8456 32.0105C14.649 31.9309 14.4704 31.8145 14.32 31.6677C14.1696 31.5209 14.0504 31.3467 13.9691 31.1551C13.8878 30.9634 13.846 30.758 13.8462 30.5506V28.8751C13.8462 28.6152 14.097 28.4605 14.161 28.4267C17.3795 26.7175 19.9583 24.0574 21.5264 20.8293C21.6477 20.581 21.8389 20.3712 22.0776 20.2244C22.3163 20.0777 22.5929 19.9998 22.8751 20C23.2521 20.001 23.6133 20.1473 23.88 20.4069C24.1467 20.6665 24.2972 21.0183 24.2986 21.3856V27.2348C24.2986 28.4878 24.3213 28.5476 25.6487 28.5476H38.5597C39.095 28.5476 39.6085 28.7548 39.987 29.1236C40.3655 29.4924 40.5782 29.9926 40.5782 30.5142V41.3352C40.5782 42.8157 41.0384 44.0141 41.9429 44.8967C42.8474 45.7792 43.9987 46.2277 45.3514 46.2277C46.7042 46.2277 47.8088 45.7701 48.6866 44.8668C49.5644 43.9634 49.9887 42.7871 49.9887 41.3352V30.5142C49.9885 30.256 50.0405 30.0003 50.1418 29.7617C50.2431 29.5231 50.3917 29.3063 50.579 29.1237C50.7663 28.941 50.9887 28.7962 51.2335 28.6973C51.4784 28.5985 51.7408 28.5476 52.0058 28.5476H54.9047C55.44 28.5476 55.9534 28.7548 56.3319 29.1236C56.7105 29.4924 56.9231 29.9926 56.9231 30.5142Z"
+                fill={color}
+            />
+        </svg>
+    );
+};
+
 type LogoBaseProps = {
     skinName: SkinName;
     size?: ByBreakpoint<number>;
@@ -390,6 +414,8 @@ const LogoBase: React.FC<LogoBaseProps> = ({size = 48, skinName, type = 'isotype
             return <TelefonicaLogoImage size={size} type={type} />;
         case 'Blau':
             return <BlauLogoImage size={size} type={type} />;
+        case 'Tu':
+            return <TuLogoImage size={size} type={type} />;
         default:
             return null;
     }
@@ -520,5 +546,10 @@ export const TelefonicaLogo: React.FC<LogoProps> = ({size, type = 'isotype', ...
 export const BlauLogo: React.FC<LogoProps> = ({size, type = 'isotype', ...props}) => (
     <MaybeTouchableLogo {...props}>
         <LogoBase skinName="Blau" type={type} size={size} />
+    </MaybeTouchableLogo>
+);
+export const TuLogo: React.FC<LogoProps> = ({size, type = 'isotype', ...props}) => (
+    <MaybeTouchableLogo {...props}>
+        <LogoBase skinName="Tu" type={type} size={size} />
     </MaybeTouchableLogo>
 );

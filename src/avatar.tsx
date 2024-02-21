@@ -8,6 +8,7 @@ import {useIsInverseVariant} from './theme-variant-context';
 import * as classes from './avatar.css';
 import {vars} from './skins/skin-contract.css';
 import {getPrefixedDataAttributes} from './utils/dom';
+import {pxToRem} from './utils/css';
 
 import type {DataAttributes, IconProps} from './utils/types';
 
@@ -17,13 +18,13 @@ import type {DataAttributes, IconProps} from './utils/types';
  * This is calculated using the `radius * (1 - sin(45deg))` distance minus a
  * constant offset that depends on the badge size
  */
-const getBadgeDistance = (size: number, badge?: boolean | number): number => {
+const getBadgeDistance = (size: number, badge?: boolean | number): number | string => {
     if (!badge) {
         return 0;
     }
     const radius = size / 2;
-    const badgeOffset = badge === true ? 5 : 10; // badge=true renders a small circle
-    return radius * (1 - Math.sin(Math.PI / 4)) - badgeOffset;
+    const badgeOffset = pxToRem(badge === true ? 5 : 10); // badge=true renders a small circle
+    return `calc(${radius * (1 - Math.sin(Math.PI / 4))}px - ${badgeOffset})`;
 };
 
 type AvatarProps = {

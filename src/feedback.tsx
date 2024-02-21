@@ -245,7 +245,7 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
     }
 
     return (
-        <div style={{position: 'relative'}} className={isInverse ? styles.feedbackScreenInverse : undefined}>
+        <div style={{position: 'relative'}}>
             {isInverse && (
                 <ThemeVariant isInverse>
                     <OverscrollColor />
