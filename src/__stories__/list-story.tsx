@@ -15,7 +15,7 @@ import {
     Text3,
     Inline,
     Avatar,
-    IconPlayFilled,
+    IconTrashCanRegular,
 } from '..';
 import usingVrImg from './images/using-vr.jpg';
 import laptopImg from './images/laptop.jpg';
@@ -153,7 +153,8 @@ const Template: StoryComponent<Args & {boxed?: boolean}> = ({
             case 'iconButton':
                 controlProps = {
                     iconButton: {
-                        Icon: IconPlayFilled,
+                        Icon: IconTrashCanRegular,
+                        small: false,
                         onPress: () => console.log('Pressed button'),
                         type: 'brand',
                         backgroundType: 'solid',
@@ -163,7 +164,8 @@ const Template: StoryComponent<Args & {boxed?: boolean}> = ({
             case 'iconButton and onPress':
                 controlProps = {
                     iconButton: {
-                        Icon: IconPlayFilled,
+                        Icon: IconTrashCanRegular,
+                        small: false,
                         onPress: () => console.log('Pressed button'),
                         type: 'brand',
                         backgroundType: 'solid',

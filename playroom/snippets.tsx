@@ -558,6 +558,23 @@ const listRowSnippets: Array<Snippet> = ['Row', 'BoxedRow'].flatMap((rowName) =>
     },
     {
         group: 'List',
+        name: `${rowName} (iconButton)`,
+        code: `
+      <${rowName}
+        asset={<IconShopRegular />}
+        title="Title"
+        description="Description"
+        iconButton={{
+          Icon: IconTrashCanRegular,
+          small: true,
+          backgroundType: "transparent",
+          type: "neutral",
+          onPress: () => console.log("Pressed button"),
+        }}
+      />`,
+    },
+    {
+        group: 'List',
         name: `${rowName} (custom element)`,
         code: `
         <${rowName}
