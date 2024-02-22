@@ -110,7 +110,7 @@ export const getO2Skin: GetKnownSkin = () => {
             textLinkSnackbar: palette.o2BluePrimary30,
             control: palette.grey3,
             controlActivated: palette.o2BluePrimary,
-            controlInverse: palette.white,
+            controlInverse: palette.o2BluePrimary30,
             controlActivatedInverse: palette.white,
             controlError: palette.pepper,
             barTrack: palette.grey3,

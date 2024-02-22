@@ -104,7 +104,7 @@ export const getVivoNewSkin: GetKnownSkin = () => {
             textLinkSnackbar: palette.vivoPurpleLight20,
             control: palette.grey4,
             controlActivated: palette.vivoPurple,
-            controlInverse: palette.white,
+            controlInverse: palette.vivoPurpleLight50,
             controlActivatedInverse: palette.white,
             controlError: palette.pepper,
             barTrack: palette.grey3,

@@ -110,7 +110,7 @@ export const getMovistarSkin: GetKnownSkin = () => {
             textLinkSnackbar: palette.movistarBlue30,
             control: palette.grey3,
             controlActivated: palette.movistarBlue,
-            controlInverse: palette.white,
+            controlInverse: palette.movistarBlue20,
             controlActivatedInverse: palette.white,
             controlError: palette.pepper,
             barTrack: palette.grey3,

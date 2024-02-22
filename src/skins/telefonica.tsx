@@ -104,7 +104,7 @@ export const getTelefonicaSkin: GetKnownSkin = () => {
             textLinkSnackbar: palette.telefonicaBlue30,
             control: palette.grey3,
             controlActivated: palette.telefonicaBlue,
-            controlInverse: palette.white,
+            controlInverse: palette.grey1,
             controlActivatedInverse: palette.white,
             controlError: palette.coral,
             barTrack: palette.grey3,
