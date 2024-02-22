@@ -7,10 +7,6 @@ import ThemeContextProvider from '../theme-context-provider';
 import {makeTheme} from './test-utils';
 import * as bridge from '@tef-novum/webview-bridge';
 
-beforeEach(() => {
-    jest.useRealTimers();
-});
-
 test('Snackbar', async () => {
     const onCloseSpy = jest.fn();
 
