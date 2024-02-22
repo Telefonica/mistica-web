@@ -166,8 +166,6 @@ interface BaseProps {
     dataAttributes?: DataAttributes;
     disabled?: boolean;
     showSpinner?: boolean;
-    'aria-label'?: string;
-    'aria-labelledby'?: string;
     small?: boolean;
     type?: IconButtonType;
     backgroundType?: IconButtonBackgroundType;
@@ -176,7 +174,9 @@ interface BaseProps {
     bleedY?: boolean;
 }
 
-export type IconButtonProps = BaseProps & ExclusifyUnion<HrefProps | ToProps | OnPressProps | MaybeProps>;
+export type IconButtonProps = BaseProps &
+    ExclusifyUnion<HrefProps | ToProps | OnPressProps | MaybeProps> &
+    ExclusifyUnion<{'aria-label': string} | {'aria-labelledby': string}>;
 
 export const RawIconButton = React.forwardRef<TouchableElement, IconButtonProps & {isOverMedia?: boolean}>(
     (
