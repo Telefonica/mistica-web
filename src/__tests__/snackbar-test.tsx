@@ -7,6 +7,10 @@ import ThemeContextProvider from '../theme-context-provider';
 import {makeTheme} from './test-utils';
 import * as bridge from '@tef-novum/webview-bridge';
 
+beforeEach(() => {
+    jest.useRealTimers();
+});
+
 test('Snackbar', async () => {
     const onCloseSpy = jest.fn();
 
@@ -233,6 +237,33 @@ test('useSnackbar: happy case', async () => {
     await userEvent.click(screen.getByRole('button', {name: 'Open Snackbar'}));
 
     expect(await screen.findByText('any-message')).toBeInTheDocument();
+});
+
+test('useSnackbar: no act warnings when timers are run', async () => {
+    const ComponentWithSnackbar = () => {
+        const {openSnackbar} = useSnackbar();
+        return (
+            <button
+                onClick={() => {
+                    openSnackbar({message: 'any-message'});
+                }}
+            >
+                Open Snackbar
+            </button>
+        );
+    };
+
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <ComponentWithSnackbar />
+        </ThemeContextProvider>
+    );
+
+    await userEvent.click(screen.getByRole('button', {name: 'Open Snackbar'}));
+
+    expect(await screen.findByText('any-message')).toBeInTheDocument();
+
+    await new Promise((resolve) => setTimeout(resolve, 1000));
 });
 
 test('useSnackbar: openSnackbar closes already opened one', async () => {

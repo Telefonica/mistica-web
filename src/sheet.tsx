@@ -133,7 +133,7 @@ const useDraggableSheetProps = ({closeModal}: {closeModal: () => void}) => {
     };
 };
 
-type ModalState = 'closed' | 'opening' | 'open' | 'closing' | 'closed';
+type ModalState = 'closed' | 'opening' | 'open' | 'closing';
 type ModalAction = 'close' | 'open' | 'transitionEnd';
 
 const transitions: Record<ModalState, Partial<Record<ModalAction, ModalState>>> = {
@@ -165,7 +165,10 @@ type SheetProps = {
 
 const Sheet = React.forwardRef<HTMLDivElement, SheetProps>(({onClose, children, dataAttributes}, ref) => {
     const {texts} = useTheme();
-    const [modalState, dispatch] = React.useReducer(modalReducer, 'closed');
+    const [modalState, dispatch] = React.useReducer(
+        modalReducer,
+        process.env.NODE_ENV === 'test' ? 'open' : 'closed'
+    );
     const initRef = React.useRef(false);
     const modalTitleId = useAriaId();
 

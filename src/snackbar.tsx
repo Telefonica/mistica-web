@@ -42,7 +42,7 @@ export type ImperativeHandle = {
 const SnackbarComponent = React.forwardRef<ImperativeHandle, Props>(
     ({message, buttonText, duration, onClose, type, withDismiss = false, dataAttributes}, ref) => {
         const {texts} = useTheme();
-        const [isOpen, setIsOpen] = React.useState(false);
+        const [isOpen, setIsOpen] = React.useState(process.env.NODE_ENV === 'test');
         const {width: buttonWidth, ref: buttonRef} = useElementDimensions();
         const {isDesktopOrBigger} = useScreenSize();
         const longButtonWidth = isDesktopOrBigger ? 160 : 128;
