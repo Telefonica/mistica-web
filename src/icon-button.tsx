@@ -385,7 +385,7 @@ interface BaseToggleProps {
 
 export type ToggleIconButtonProps = BaseProps & BaseToggleProps;
 
-export const InternalToogleIconButton = React.forwardRef<
+export const InternalToggleIconButton = React.forwardRef<
     TouchableElement,
     ToggleIconButtonProps & {isOverMedia?: boolean}
 >(({checked, defaultChecked, checkedProps, uncheckedProps, onChange, ...props}, ref) => {
@@ -416,5 +416,5 @@ export const InternalToogleIconButton = React.forwardRef<
 });
 
 export const ToggleIconButton = React.forwardRef<TouchableElement, ToggleIconButtonProps>((props, ref) => {
-    return <InternalToogleIconButton ref={ref} {...props} />;
+    return <InternalToggleIconButton ref={ref} {...props} />;
 });
