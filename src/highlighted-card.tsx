@@ -14,9 +14,9 @@ import type {ButtonLink, NullableButtonElement} from './button';
 import type {DataAttributes, RendersNullableElement, TrackingEvent} from './utils/types';
 
 interface CommonProps {
-    title: string;
+    title?: string;
     titleLinesMax?: number;
-    description: string;
+    description?: string;
     descriptionLinesMax?: number;
     imageUrl?: string;
     imageFit?: 'fit' | 'fill' | 'fill-center';
