@@ -10,7 +10,7 @@ import {useScreenSize, useTheme, useAriaId} from './hooks';
 import IconMenuRegular from './generated/mistica-icons/icon-menu-regular';
 import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
 import IconChevronLeftRegular from './generated/mistica-icons/icon-chevron-left-regular';
-import IconButton from './icon-button';
+import {IconButton} from './icon-button';
 import NegativeBox from './negative-box';
 import {Row, RowList} from './list';
 import {ThemeVariant, useIsInverseVariant} from './theme-variant-context';

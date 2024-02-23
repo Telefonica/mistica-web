@@ -300,26 +300,86 @@ export const Default: StoryComponent<Args> = ({variant}) => {
 
                     {/** IconButton */}
                     <Inline space={16} wrap>
-                        <IconButton Icon={IconLightningRegular} type="neutral" backgroundType="transparent" />
-                        <IconButton Icon={IconLightningRegular} type="neutral" backgroundType="soft" />
-                        <IconButton Icon={IconLightningRegular} type="neutral" backgroundType="solid" />
+                        <IconButton
+                            Icon={IconLightningRegular}
+                            aria-label="icon button 1"
+                            type="neutral"
+                            backgroundType="transparent"
+                        />
+                        <IconButton
+                            Icon={IconLightningRegular}
+                            aria-label="icon button 2"
+                            type="neutral"
+                            backgroundType="soft"
+                        />
+                        <IconButton
+                            Icon={IconLightningRegular}
+                            aria-label="icon button 3"
+                            type="neutral"
+                            backgroundType="solid"
+                        />
 
-                        <IconButton Icon={IconLightningRegular} type="brand" backgroundType="transparent" />
-                        <IconButton Icon={IconLightningRegular} type="brand" backgroundType="soft" />
-                        <IconButton Icon={IconLightningRegular} type="brand" backgroundType="solid" />
+                        <IconButton
+                            Icon={IconLightningRegular}
+                            aria-label="icon button 4"
+                            type="brand"
+                            backgroundType="transparent"
+                        />
+                        <IconButton
+                            Icon={IconLightningRegular}
+                            aria-label="icon button 5"
+                            type="brand"
+                            backgroundType="soft"
+                        />
+                        <IconButton
+                            Icon={IconLightningRegular}
+                            aria-label="icon button 6"
+                            type="brand"
+                            backgroundType="solid"
+                        />
 
-                        <IconButton Icon={IconLightningRegular} type="danger" backgroundType="transparent" />
-                        <IconButton Icon={IconLightningRegular} type="danger" backgroundType="soft" />
-                        <IconButton Icon={IconLightningRegular} type="danger" backgroundType="solid" />
+                        <IconButton
+                            Icon={IconLightningRegular}
+                            aria-label="icon button 7"
+                            type="danger"
+                            backgroundType="transparent"
+                        />
+                        <IconButton
+                            Icon={IconLightningRegular}
+                            aria-label="icon button 8"
+                            type="danger"
+                            backgroundType="soft"
+                        />
+                        <IconButton
+                            Icon={IconLightningRegular}
+                            aria-label="icon button 9"
+                            type="danger"
+                            backgroundType="solid"
+                        />
 
                         <div style={{background: 'black'}}>
-                            <InternalIconButton Icon={IconLightningRegular} type="neutral" isOverMedia />
+                            <InternalIconButton
+                                Icon={IconLightningRegular}
+                                aria-label="icon button 10"
+                                type="neutral"
+                                isOverMedia
+                            />
                         </div>
                         <div style={{background: 'black'}}>
-                            <InternalIconButton Icon={IconLightningRegular} type="brand" isOverMedia />
+                            <InternalIconButton
+                                Icon={IconLightningRegular}
+                                aria-label="icon button 11"
+                                type="brand"
+                                isOverMedia
+                            />
                         </div>
                         <div style={{background: 'black'}}>
-                            <InternalIconButton Icon={IconLightningRegular} type="danger" isOverMedia />
+                            <InternalIconButton
+                                Icon={IconLightningRegular}
+                                aria-label="icon button 12"
+                                type="danger"
+                                isOverMedia
+                            />
                         </div>
                     </Inline>
                 </Stack>
