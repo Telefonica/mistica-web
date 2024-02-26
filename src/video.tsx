@@ -288,6 +288,8 @@ const Video = React.forwardRef<VideoElement, VideoProps>(
 
                         if (containerElement) {
                             containerElement.play = () => {
+                                // old browsers don't return a promise when calling play()
+                                // see https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/play#browser_compatibility
                                 return videoRef.current?.play() || Promise.resolve();
                             };
                             containerElement.pause = () => videoRef.current?.pause();
