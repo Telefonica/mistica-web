@@ -178,6 +178,10 @@ const Video = React.forwardRef<VideoElement, VideoProps>(
 
         const handleLoadFinish = () => {
             onLoad?.();
+            if (videoStatus === 'stopped') {
+                // the video was intentionally stopped
+                return;
+            }
             const video = videoRef.current;
             const shouldAutoPlay = autoPlay && !isRunningAcceptanceTest();
 
