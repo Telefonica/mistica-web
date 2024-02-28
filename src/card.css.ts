@@ -255,6 +255,9 @@ export const nakedCardContent = style([
             [mq.touchableOnly]: {
                 transition: 'none',
             },
+            [mq.desktopOrBigger]: {
+                paddingRight: 8,
+            },
         },
     },
 ]);
