@@ -6,6 +6,7 @@
  */
 
 import * as React from 'react';
+import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
 
@@ -14,15 +15,26 @@ import type {IconProps} from '../../utils/types';
 const IconCloudFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
-
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path
-                fill={fillColor}
-                d="M16.628 18.966H6.208a4.06 4.06 0 0 1-4.053-4.054c0-.904.314-1.77.907-2.504a4.241 4.241 0 0 1 2.045-1.395c.053-1.627.628-3.109 1.633-4.19C7.813 5.666 9.32 5.03 10.978 5.03a6.224 6.224 0 0 1 5.594 3.51h.059a5.22 5.22 0 0 1 5.216 5.216c0 2.876-2.345 5.21-5.219 5.21"
-            />
-        </svg>
-    );
+    const {skinName} = useTheme();
+    if (skinName.match(/^o2/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M17.174 9.342h-.357C16.566 6.902 14.495 5 12.032 5S7.498 6.902 7.247 9.342h-.393C4.176 9.305 2 11.497 2 14.152 2 16.809 4.18 19 6.822 19h10.356C19.82 19 22 16.845 22 14.153c-.005-2.656-2.185-4.811-4.826-4.811"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M16.628 18.966H6.208a4.06 4.06 0 0 1-4.053-4.054c0-.904.314-1.77.907-2.504a4.24 4.24 0 0 1 2.045-1.395c.053-1.627.628-3.109 1.633-4.19C7.813 5.666 9.32 5.03 10.978 5.03a6.22 6.22 0 0 1 5.594 3.51h.059a5.22 5.22 0 0 1 5.216 5.216c0 2.876-2.345 5.21-5.219 5.21"
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconCloudFilled;
