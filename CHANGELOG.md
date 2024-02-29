@@ -1,3 +1,17 @@
+# [14.45.0](https://github.com/Telefonica/mistica-web/compare/v14.44.0...v14.45.0) (2024-02-29)
+
+
+### Bug Fixes
+
+* **SuccessFeedbackScreen:** remove unnecesary background color ([#1029](https://github.com/Telefonica/mistica-web/issues/1029)) ([557b989](https://github.com/Telefonica/mistica-web/commit/557b98965e9a382bcc590619a65117f1761d5944))
+
+
+### Features
+
+* **Badge, Tag:** add badge to Tag and fix Badge's border and fontSize scaling ([#1025](https://github.com/Telefonica/mistica-web/issues/1025)) ([a7b31a7](https://github.com/Telefonica/mistica-web/commit/a7b31a707f31c4d8baf490de84e52f867a60d860))
+* **ButtonIcon:** refactor component ([#1022](https://github.com/Telefonica/mistica-web/issues/1022)) ([c8a82c6](https://github.com/Telefonica/mistica-web/commit/c8a82c6ce7f8a89a9a6ea5d9ed53b3361613d1e5))
+* **HighlightedCard:** Title & Description optional ([#1033](https://github.com/Telefonica/mistica-web/issues/1033)) ([7ebbb48](https://github.com/Telefonica/mistica-web/commit/7ebbb48bc7669f6e29be0e0aa333b50cc216c453))
+
 # [14.44.0](https://github.com/Telefonica/mistica-web/compare/v14.43.0...v14.44.0) (2024-02-20)
 
 
