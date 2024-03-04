@@ -2,7 +2,7 @@
 import * as React from 'react';
 import classnames from 'classnames';
 import {useForm} from './form-context';
-import {useAriaId, useTheme, useScreenSize} from './hooks';
+import {useAriaId, useTheme} from './hooks';
 import {DOWN, ENTER, ESC, SPACE, TAB, UP} from './utils/keys';
 import {FieldContainer, HelperText, Label} from './text-field-components';
 import ChevronDownRegular from './generated/mistica-icons/icon-chevron-down-regular';
@@ -12,8 +12,10 @@ import {isAndroid, isIos} from './utils/platform';
 import {cancelEvent} from './utils/dom';
 import {Text3} from './text';
 import * as styles from './select.css';
+import * as textStyles from './text-field-base.css';
 import {Portal} from './portal';
-import {applyCssVars} from './utils/css';
+import {applyCssVars, pxToRem} from './utils/css';
+import {ThemeVariant} from './theme-variant-context';
 
 export type SelectProps = {
     disabled?: boolean;
@@ -294,177 +296,184 @@ const Select: React.FC<SelectProps> = ({
             }
         },
     };
-    const {isDesktopOrBigger} = useScreenSize();
 
-    return shouldUseNative || isServerSide ? (
-        <FieldContainer
-            disabled={disabled}
-            helperText={<HelperText error={error} leftText={helperText} />}
-            fieldRef={fieldRef}
-            fullWidth={fullWidth}
-        >
-            {label && (
-                <Label
-                    error={error}
-                    forId={inputId}
-                    inputState={
-                        isFocused
-                            ? 'focused'
-                            : value ?? valueState ?? inputRef.current?.value
-                            ? 'filled'
-                            : 'default'
-                    }
-                    optional={optional}
-                >
-                    {label}
-                </Label>
-            )}
-            <select
-                className={styles.selectVariants[disabled ? 'disabled' : 'default']}
-                id={inputId}
-                aria-invalid={!!error}
-                value={value}
-                required={!optional}
-                disabled={disabled}
-                onChange={(e) => {
-                    if (onChangeValue) {
-                        onChangeValue(e.target.value);
-                    }
-                }}
-                onFocus={() => setIsFocused(true)}
-                onBlur={(e) => {
-                    setIsFocused(false);
-                    onBlur?.(e);
-                }}
-                ref={(actualRef) => {
-                    [inputRef, focusableRef].forEach((currentRef) => {
-                        // @ts-expect-error current is typed as read-only
-                        currentRef.current = actualRef;
-                    });
-                }}
-                style={{
-                    paddingTop: label ? 24 : 16,
-                    paddingBottom: label ? 8 : 16,
-                    paddingRight: 48,
-                    // Override default browser opacity when disabled. This opacity also affects the label.
-                    // Without this fix, the label is invisible when disabled
-                    opacity: 1,
-                }}
-            >
-                {options.every(({value}) => !!value) && (
-                    // if no "empty" option exists, insert a dummy empty option
-                    // this is needed to allow a native select with no selected option
-                    <option value="" style={{display: 'none'}} />
-                )}
-                {options.map(({value: val, text}) => (
-                    <option key={val} value={val}>
-                        {text}
-                    </option>
-                ))}
-            </select>
-            <div className={styles.arrowDown} aria-hidden>
-                <ChevronDownRegular size={20} />
-            </div>
-        </FieldContainer>
-    ) : (
-        <>
-            <div
-                className={styles.selectContainerVariants[fullWidth ? 'fullWidth' : 'default']}
-                role="button"
-                aria-haspopup="listbox"
-                ref={focusableRef as React.Ref<HTMLDivElement>}
-                {...(!disabled && containerActiveProps)}
-            >
-                <TextFieldBaseAutosuggest
-                    style={{visibility: 'hidden'}}
-                    fullWidth={fullWidth}
-                    endIcon={<ChevronDownRegular size={20} />}
-                    focus={isFocused}
-                    label={label}
-                    value={value}
-                    shrinkLabel={!!(value || valueState)}
-                    name={name}
-                    helperText={helperText}
-                    required={!optional}
+    const iconSize = pxToRem(20);
+
+    return (
+        <ThemeVariant isInverse={false}>
+            {shouldUseNative || isServerSide ? (
+                <FieldContainer
                     disabled={disabled}
-                    id={inputId}
-                    error={error}
-                    inputRef={inputRef}
+                    helperText={<HelperText error={error} leftText={helperText} />}
                     fieldRef={fieldRef}
-                />
-
-                <div
-                    className={styles.selectTextVariants[disabled ? 'disabled' : 'default']}
-                    style={{
-                        top: isDesktopOrBigger ? (label ? 28 : 18) : label ? 25 : 16,
-                    }}
+                    fullWidth={fullWidth}
                 >
-                    {getOptionText(value ?? valueState)}
-                </div>
-            </div>
-            {optionsShown && (
-                <Overlay
-                    onPress={(e) => {
-                        toggleOptions(false);
-                        cancelEvent(e);
-                    }}
-                    disableScroll
-                >
-                    <Portal>
-                        <ul
-                            style={applyCssVars({
-                                [styles.vars.top]: optionsComputedProps.top
-                                    ? `${optionsComputedProps.top}px`
-                                    : '',
-                                [styles.vars.left]: optionsComputedProps.left
-                                    ? `${optionsComputedProps.left}px`
-                                    : '',
-                                [styles.vars.maxHeight]: optionsComputedProps.maxHeight
-                                    ? `${optionsComputedProps.maxHeight}px`
-                                    : '',
-                                [styles.vars.minWidth]: optionsComputedProps.minWidth
-                                    ? `${optionsComputedProps.minWidth}px`
-                                    : '',
-                                [styles.vars.transformOrigin]: optionsComputedProps.transformOrigin ?? '',
-                            })}
-                            onPointerDown={cancelEvent}
-                            className={classnames(
-                                styles.optionsContainer,
-                                animateShowOptions
-                                    ? styles.optionsAnimationsVariants.show
-                                    : styles.optionsAnimationsVariants.hide
-                            )}
-                            role="listbox"
-                            ref={optionsMenuRef}
+                    {label && (
+                        <Label
+                            error={error}
+                            forId={inputId}
+                            inputState={
+                                isFocused
+                                    ? 'focused'
+                                    : value ?? valueState ?? inputRef.current?.value
+                                    ? 'filled'
+                                    : 'default'
+                            }
+                            optional={optional}
                         >
-                            {options.map(({value: val, text}) => (
-                                <li
-                                    role="option"
-                                    aria-selected={val === (valueState ?? value)}
-                                    key={val}
-                                    data-value={val}
-                                    className={classnames(styles.menuItem, {
-                                        [styles.menuItemSelected]:
-                                            val === tentativeValueState || val === (valueState ?? value),
+                            {label}
+                        </Label>
+                    )}
+                    <select
+                        className={classnames(
+                            styles.selectVariants[disabled ? 'disabled' : 'default'],
+                            label ? textStyles.inputWithLabel : textStyles.inputWithoutLabel
+                        )}
+                        id={inputId}
+                        aria-invalid={!!error}
+                        value={value}
+                        required={!optional}
+                        disabled={disabled}
+                        onChange={(e) => {
+                            if (onChangeValue) {
+                                onChangeValue(e.target.value);
+                            }
+                        }}
+                        onFocus={() => setIsFocused(true)}
+                        onBlur={(e) => {
+                            setIsFocused(false);
+                            onBlur?.(e);
+                        }}
+                        ref={(actualRef) => {
+                            [inputRef, focusableRef].forEach((currentRef) => {
+                                // @ts-expect-error current is typed as read-only
+                                currentRef.current = actualRef;
+                            });
+                        }}
+                        style={{
+                            // Override default browser opacity when disabled. This opacity also affects the label.
+                            // Without this fix, the label is invisible when disabled
+                            opacity: 1,
+                        }}
+                    >
+                        {options.every(({value}) => !!value) && (
+                            // if no "empty" option exists, insert a dummy empty option
+                            // this is needed to allow a native select with no selected option
+                            <option value="" style={{display: 'none'}} />
+                        )}
+                        {options.map(({value: val, text}) => (
+                            <option key={val} value={val}>
+                                {text}
+                            </option>
+                        ))}
+                    </select>
+                    <div className={styles.arrowDown} aria-hidden>
+                        <ChevronDownRegular size={iconSize} />
+                    </div>
+                </FieldContainer>
+            ) : (
+                <>
+                    <div
+                        className={styles.selectContainerVariants[fullWidth ? 'fullWidth' : 'default']}
+                        role="button"
+                        aria-haspopup="listbox"
+                        ref={focusableRef as React.Ref<HTMLDivElement>}
+                        {...(!disabled && containerActiveProps)}
+                    >
+                        <TextFieldBaseAutosuggest
+                            style={{visibility: 'hidden'}}
+                            fullWidth={fullWidth}
+                            endIcon={<ChevronDownRegular size={iconSize} />}
+                            focus={isFocused}
+                            label={label}
+                            value={value}
+                            shrinkLabel={!!(value || valueState)}
+                            name={name}
+                            helperText={helperText}
+                            required={!optional}
+                            disabled={disabled}
+                            id={inputId}
+                            error={error}
+                            inputRef={inputRef}
+                            fieldRef={fieldRef}
+                        />
+
+                        <div
+                            className={classnames(
+                                styles.selectTextVariants[disabled ? 'disabled' : 'default'],
+                                label ? textStyles.inputWithLabel : textStyles.inputWithoutLabel
+                            )}
+                        >
+                            {getOptionText(value ?? valueState)}
+                        </div>
+                    </div>
+                    {optionsShown && (
+                        <Overlay
+                            onPress={(e) => {
+                                toggleOptions(false);
+                                cancelEvent(e);
+                            }}
+                            disableScroll
+                        >
+                            <Portal>
+                                <ul
+                                    style={applyCssVars({
+                                        [styles.vars.top]: optionsComputedProps.top
+                                            ? `${optionsComputedProps.top}px`
+                                            : '',
+                                        [styles.vars.left]: optionsComputedProps.left
+                                            ? `${optionsComputedProps.left}px`
+                                            : '',
+                                        [styles.vars.maxHeight]: optionsComputedProps.maxHeight
+                                            ? `${optionsComputedProps.maxHeight}px`
+                                            : '',
+                                        [styles.vars.minWidth]: optionsComputedProps.minWidth
+                                            ? `${optionsComputedProps.minWidth}px`
+                                            : '',
+                                        [styles.vars.transformOrigin]:
+                                            optionsComputedProps.transformOrigin ?? '',
                                     })}
                                     onPointerDown={cancelEvent}
-                                    onClick={() => setValue(val)}
-                                    ref={(liRef) => {
-                                        if (liRef) {
-                                            optionRefs.current.set(val, liRef);
-                                        } else {
-                                            optionRefs.current.delete(val);
-                                        }
-                                    }}
+                                    className={classnames(
+                                        styles.optionsContainer,
+                                        animateShowOptions
+                                            ? styles.optionsAnimationsVariants.show
+                                            : styles.optionsAnimationsVariants.hide
+                                    )}
+                                    role="listbox"
+                                    ref={optionsMenuRef}
                                 >
-                                    <Text3 regular>{text}</Text3>
-                                </li>
-                            ))}
-                        </ul>
-                    </Portal>
-                </Overlay>
+                                    {options.map(({value: val, text}) => (
+                                        <li
+                                            role="option"
+                                            aria-selected={val === (valueState ?? value)}
+                                            key={val}
+                                            data-value={val}
+                                            className={classnames(styles.menuItem, {
+                                                [styles.menuItemSelected]:
+                                                    val === tentativeValueState ||
+                                                    val === (valueState ?? value),
+                                            })}
+                                            onPointerDown={cancelEvent}
+                                            onClick={() => setValue(val)}
+                                            ref={(liRef) => {
+                                                if (liRef) {
+                                                    optionRefs.current.set(val, liRef);
+                                                } else {
+                                                    optionRefs.current.delete(val);
+                                                }
+                                            }}
+                                        >
+                                            <Text3 regular>{text}</Text3>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </Portal>
+                        </Overlay>
+                    )}
+                </>
             )}
-        </>
+        </ThemeVariant>
     );
 };
 

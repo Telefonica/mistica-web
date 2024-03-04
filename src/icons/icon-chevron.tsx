@@ -2,7 +2,7 @@ import * as React from 'react';
 import {vars} from '../skins/skin-contract.css';
 
 type IcnChevronRightSvgProps = {
-    size: number;
+    size: number | string;
     color: string;
     transform: string;
     transitionDuration?: number;

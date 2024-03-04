@@ -3,7 +3,7 @@ import * as React from 'react';
 import {useTheme} from './hooks';
 import IconCvvVisaMc from './icons/icon-cvv-visa-mc';
 import IconCvvAmex from './icons/icon-cvv-amex';
-import Tooltip from './tooltip';
+import Popover from './popover';
 import IconButton from './icon-button';
 import IconInformationRegular from './generated/mistica-icons/icon-information-regular';
 import {useFieldProps, useForm} from './form-context';
@@ -15,6 +15,8 @@ import Box from './box';
 import Divider from './divider';
 import Text2 from './text';
 import {vars} from './skins/skin-contract.css';
+import {pxToRem} from './utils/css';
+import {iconButtonSize} from './text-field-base.css';
 
 import type {CommonFormFieldProps} from './text-field-base';
 import type {CardOptions} from './utils/credit-card';
@@ -63,10 +65,12 @@ const CvvField: React.FC<CvvFieldProps> = ({
     value,
     autoComplete = 'cc-csc',
     defaultValue,
+    dataAttributes,
     ...rest
 }) => {
     const {texts} = useTheme();
     const {setFormError, jumpToNext} = useForm();
+    const [isCvvHelpOpen, setIsCvvHelpOpen] = React.useState(false);
 
     const validate = (value: string, rawValue: string) => {
         if (!value) {
@@ -95,6 +99,8 @@ const CvvField: React.FC<CvvFieldProps> = ({
         onChangeValue,
     });
 
+    const iconSize = pxToRem(16);
+
     return (
         <TextFieldBaseAutosuggest
             {...rest}
@@ -114,24 +120,31 @@ const CvvField: React.FC<CvvFieldProps> = ({
                 }
             }}
             endIcon={
-                <Tooltip
+                <Popover
                     position="top"
+                    open={isCvvHelpOpen}
                     children={<TooltipContent acceptedCards={acceptedCards} />}
+                    onClose={() => setIsCvvHelpOpen(false)}
                     target={
-                        <div style={{width: 16, height: 16}}>
+                        <div style={{width: iconSize, height: iconSize}}>
                             <IconButton
-                                size={40}
+                                size={iconButtonSize}
                                 style={{
                                     display: 'flex',
                                     alignItems: 'center',
                                     justifyContent: 'center',
                                     position: 'relative',
-                                    left: -12, // (40 - 16) / 2
-                                    top: -12,
+                                    left: `calc(-1 * (${iconButtonSize} - ${iconSize}) / 2)`,
+                                    top: `calc(-1 * (${iconButtonSize} - ${iconSize}) / 2)`,
                                 }}
-                                aria-label={texts.formCreditCardCvvTooltipVisaMcButton}
+                                onPress={() => setIsCvvHelpOpen(!isCvvHelpOpen)}
+                                aria-label={
+                                    isCvvHelpOpen
+                                        ? texts.formCreditCardCvvTooltipVisaMcButtonClose
+                                        : texts.formCreditCardCvvTooltipVisaMcButtonOpen
+                                }
                             >
-                                <IconInformationRegular size={16} color={vars.colors.neutralMedium} />
+                                <IconInformationRegular size={iconSize} color={vars.colors.neutralMedium} />
                             </IconButton>
                         </div>
                     }
@@ -139,6 +152,7 @@ const CvvField: React.FC<CvvFieldProps> = ({
             }
             autoComplete={autoComplete}
             inputComponent={IntegerInput}
+            dataAttributes={{'component-name': 'CvvField', ...dataAttributes}}
         />
     );
 };

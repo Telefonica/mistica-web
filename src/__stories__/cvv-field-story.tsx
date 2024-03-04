@@ -41,19 +41,17 @@ export const Controlled: StoryComponent<CvvFieldControlledArgs> = ({inverse, ini
         <ResponsiveLayout isInverse={inverse} fullWidth>
             <Box padding={16}>
                 <Stack space={16}>
-                    <div data-testid="cvv-field-wrapper">
-                        <CvvField
-                            value={rawValue}
-                            onChangeValue={(value, rawValue) => {
-                                setValue(value);
-                                setRawValue(rawValue);
-                            }}
-                            name="cvv"
-                            autoComplete="off"
-                            data-testid="cvv-field"
-                            {...rest}
-                        />
-                    </div>
+                    <CvvField
+                        value={rawValue}
+                        onChangeValue={(value, rawValue) => {
+                            setValue(value);
+                            setRawValue(rawValue);
+                        }}
+                        name="cvv"
+                        autoComplete="off"
+                        dataAttributes={{testid: 'cvv-field'}}
+                        {...rest}
+                    />
                     <Stack space={8}>
                         <Text1 regular>
                             value: {typeof value === 'undefined' ? '' : `(${typeof value}) ${inspect(value)}`}
@@ -89,19 +87,17 @@ export const Uncontrolled: StoryComponent<CvvFieldUncontrolledArgs> = ({inverse,
         <ResponsiveLayout isInverse={inverse} fullWidth>
             <Box padding={16}>
                 <Stack space={16}>
-                    <div data-testid="cvv-field-wrapper">
-                        <CvvField
-                            defaultValue={defaultValue}
-                            onChangeValue={(value, rawValue) => {
-                                setValue(value);
-                                setRawValue(rawValue);
-                            }}
-                            name="cvv"
-                            autoComplete="off"
-                            data-testid="cvv-field"
-                            {...rest}
-                        />
-                    </div>
+                    <CvvField
+                        defaultValue={defaultValue}
+                        onChangeValue={(value, rawValue) => {
+                            setValue(value);
+                            setRawValue(rawValue);
+                        }}
+                        name="cvv"
+                        autoComplete="off"
+                        dataAttributes={{testid: 'cvv-field'}}
+                        {...rest}
+                    />
                     <Stack space={8}>
                         <Text1 regular>
                             value: {typeof value === 'undefined' ? '' : `(${typeof value}) ${inspect(value)}`}

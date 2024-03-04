@@ -1,4 +1,4 @@
-import {createVar, style} from '@vanilla-extract/css';
+import {createVar, fallbackVar, style} from '@vanilla-extract/css';
 import {sprinkles} from './sprinkles.css';
 import {vars as skinVars} from './skins/skin-contract.css';
 
@@ -32,6 +32,14 @@ export const image = style([
     },
 ]);
 
-export const noBorder = style({
+export const noBorderRadius = style({
     borderRadius: 0,
+});
+
+export const circularBorderRadius = style({
+    borderRadius: '50%',
+});
+
+export const defaultBorderRadius = style({
+    borderRadius: fallbackVar(mediaBorderRadius, skinVars.borderRadii.container),
 });

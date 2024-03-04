@@ -25,6 +25,7 @@ type Props = {
 
 type InternalProps = {
     borderRadius?: typeof vars.borderRadii.container | typeof vars.borderRadii.legacyDisplay;
+    desktopOnly?: boolean;
     background?: string;
 };
 
@@ -50,6 +51,7 @@ export const InternalBoxed = React.forwardRef<HTMLDivElement, Props & InternalPr
             minHeight,
             borderRadius = vars.borderRadii.container,
             background,
+            desktopOnly,
         },
         ref
     ) => {
@@ -71,7 +73,8 @@ export const InternalBoxed = React.forwardRef<HTMLDivElement, Props & InternalPr
                                     ? vars.colors.backgroundContainerBrandOverInverse
                                     : vars.colors.backgroundContainerBrand
                                 : vars.colors.backgroundContainer,
-                    })
+                    }),
+                    {[styles.desktopOnly]: desktopOnly}
                 )}
                 role={role}
                 aria-label={ariaLabel}

@@ -8,6 +8,8 @@ import {getLocalDateTimeString} from './utils/time';
 import IconCalendarRegular from './generated/mistica-icons/icon-calendar-regular';
 import {isFirefox} from './utils/platform';
 import {useTheme} from './hooks';
+import {iconSize} from './text-field-base.css';
+import * as dateStyles from './date-field.css';
 
 import type {CommonFormFieldProps} from './text-field-base';
 
@@ -40,6 +42,7 @@ const FormDateField: React.FC<DateFieldProps> = ({
      * set it so that it only accepts datetime values with years having up to 4 digits.
      */
     max = new Date('9999-12-31T23:59'),
+    dataAttributes,
     ...rest
 }) => {
     const hasNativePicker = React.useMemo(() => {
@@ -100,10 +103,11 @@ const FormDateField: React.FC<DateFieldProps> = ({
             max={max ? getLocalDateTimeString(max) : undefined}
             type="datetime-local"
             endIconOverlay={
-                <div style={{position: 'absolute', top: 16, right: 16, pointerEvents: 'none'}}>
-                    <IconCalendarRegular />
+                <div className={dateStyles.iconContainer}>
+                    <IconCalendarRegular size={iconSize} />
                 </div>
             }
+            dataAttributes={{'component-name': 'DateTimeField', ...dataAttributes}}
         />
     );
 
@@ -119,6 +123,7 @@ const FormDateField: React.FC<DateFieldProps> = ({
                 optional={optional}
                 withTime
                 isValidDate={(currentDate) => isInRange(getLocalDateTimeString(currentDate.toDate()))}
+                dataAttributes={{'component-name': 'DateTimeField', ...dataAttributes}}
             />
         </React.Suspense>
     );

@@ -57,20 +57,18 @@ export const Controlled: StoryComponent<PhoneNumberFieldControlledArgs> = ({
         <ResponsiveLayout isInverse={inverse} fullWidth>
             <Box padding={16}>
                 <Stack space={16}>
-                    <div data-testid="phone-number-field-wrapper">
-                        <PhoneNumberField
-                            value={rawValue}
-                            onChangeValue={(value, rawValue) => {
-                                setValue(value);
-                                setRawValue(rawValue);
-                            }}
-                            name="phoneNumber"
-                            autoComplete="off"
-                            data-testid="phone-number-field"
-                            getSuggestions={suggestions ? getPhoneNumberSuggestions : undefined}
-                            {...rest}
-                        />
-                    </div>
+                    <PhoneNumberField
+                        value={rawValue}
+                        onChangeValue={(value, rawValue) => {
+                            setValue(value);
+                            setRawValue(rawValue);
+                        }}
+                        name="phoneNumber"
+                        autoComplete="off"
+                        dataAttributes={{testid: 'phone-number-field'}}
+                        getSuggestions={suggestions ? getPhoneNumberSuggestions : undefined}
+                        {...rest}
+                    />
                     <Stack space={8}>
                         <Text1 regular>
                             value: {typeof value === 'undefined' ? '' : `(${typeof value}) ${inspect(value)}`}
@@ -111,19 +109,17 @@ export const Uncontrolled: StoryComponent<PhoneNumberFieldUncontrolledArgs> = ({
         <ResponsiveLayout isInverse={inverse} fullWidth>
             <Box padding={16}>
                 <Stack space={16}>
-                    <div data-testid="phone-number-field-wrapper">
-                        <PhoneNumberField
-                            defaultValue={defaultValue}
-                            onChangeValue={(value, rawValue) => {
-                                setValue(value);
-                                setRawValue(rawValue);
-                            }}
-                            name="phoneNumber"
-                            autoComplete="off"
-                            data-testid="phone-number-field"
-                            {...rest}
-                        />
-                    </div>
+                    <PhoneNumberField
+                        defaultValue={defaultValue}
+                        onChangeValue={(value, rawValue) => {
+                            setValue(value);
+                            setRawValue(rawValue);
+                        }}
+                        name="phoneNumber"
+                        autoComplete="off"
+                        dataAttributes={{testid: 'phone-number-field'}}
+                        {...rest}
+                    />
                     <Stack space={8}>
                         <Text1 regular>
                             value: {typeof value === 'undefined' ? '' : `(${typeof value}) ${inspect(value)}`}

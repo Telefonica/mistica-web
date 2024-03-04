@@ -2,16 +2,33 @@ root: true
 extends:
     - '@telefonica/eslint-config'
 plugins:
-    - 'mistica-local-rules'
+    - mistica-local-rules
 overrides:
-    - files: ['*.js']
+    - files:
+          - '*.js'
       parser: espree
       env:
           node: true
           es2020: true
-    - files: ['.storybook/**/*.{js,ts,tsx}', 'src/__stories__/**/*.{js,ts,tsx}', 'playroom/**/*.{js,ts,tsx}', '**/*-test.tsx', '**/*-story.tsx']
+    - files:
+          - '.storybook/**/*.{js,ts,tsx}'
+          - 'src/__stories__/**/*.{js,ts,tsx}'
+          - 'playroom/**/*.{js,ts,tsx}'
+          - '**/*-test.tsx'
+          - '**/*-story.tsx'
       rules:
-          mistica-local-rules/use-client: off
+          mistica-local-rules/use-client: 'off'
+    - files:
+          - '*.tsx'
+      rules:
+          no-restricted-imports:
+              - error
+              - name: '@vanilla-extract/css'
+                message: This package should only be imported in css files
 rules:
-    import/extensions: [error, {js: never, json: always, css: always}]
+    import/extensions:
+        - error
+        - js: never
+          json: always
+          css: always
     mistica-local-rules/use-client: error

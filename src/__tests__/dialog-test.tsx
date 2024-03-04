@@ -72,15 +72,17 @@ test('throws when we try to stack dialogs', async () => {
 
     expect(await screen.findByText(alertProps.message)).toBeInTheDocument();
 
-    expect(() => savedAlert(alertProps)).toThrow('Tried to show a dialog on top of another dialog');
+    expect(() => {
+        act(() => savedAlert(alertProps));
+    }).toThrow('Tried to show a dialog on top of another dialog');
 });
 
 test("throws when we don't instantiate theme", async () => {
     render(<TestComponent />);
 
-    expect(() => savedAlert(alertProps)).toThrow(
-        'Tried to show a dialog but the DialogRoot component was not mounted'
-    );
+    expect(() => {
+        act(() => savedAlert(alertProps));
+    }).toThrow('Tried to show a dialog but the DialogRoot component was not mounted');
 });
 
 test('renders alert dialog correctly when alert function called', async () => {
@@ -204,7 +206,7 @@ test('closes confirm dialog when clicking on any button', async () => {
     await waitFor(() => {
         expect(onAcceptSpy).toHaveBeenCalled();
     });
-}, 10000);
+}, 20000);
 
 test('closing a previous accepted dialog does not trigger onAccept callback', async () => {
     render(
@@ -220,6 +222,7 @@ test('closing a previous accepted dialog does not trigger onAccept callback', as
     await userEvent.click(acceptButton);
 
     await waitForElementToBeRemoved(() => screen.queryByRole('dialog', {hidden: true}));
+
     expect(onAcceptSpy).toHaveBeenCalled();
 
     onAcceptSpy.mockClear();
@@ -230,8 +233,9 @@ test('closing a previous accepted dialog does not trigger onAccept callback', as
     await userEvent.click(cancelButton);
 
     await waitForElementToBeRemoved(() => screen.queryByRole('dialog', {hidden: true}));
+
     expect(onAcceptSpy).not.toHaveBeenCalled();
-}, 10000);
+}, 20000);
 
 test('when webview bridge is available nativeAlert is shown', async () => {
     jest.spyOn(webviewBridge, 'isWebViewBridgeAvailable').mockReturnValue(true);

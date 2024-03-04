@@ -107,7 +107,7 @@ const config = {
                     type: 'asset/resource',
                 },
                 {
-                    test: /\.vanilla\.css$/i,
+                    test: /\.vanilla\.css/i,
                     // Don't process vanilla files from Playroom as they are handled separately.
                     exclude: /node_modules\/playroom/,
                     use: [

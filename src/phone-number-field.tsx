@@ -119,6 +119,7 @@ const PhoneNumberField: React.FC<PhoneNumberFieldProps> = ({
     value,
     defaultValue,
     e164,
+    dataAttributes,
     ...rest
 }) => {
     const {i18n} = useTheme();
@@ -163,6 +164,7 @@ const PhoneNumberField: React.FC<PhoneNumberFieldProps> = ({
             type="phone"
             inputProps={{prefix: rest.prefix}}
             inputComponent={PhoneInput}
+            dataAttributes={{'component-name': 'PhoneNumberField', ...dataAttributes}}
         />
     );
 };

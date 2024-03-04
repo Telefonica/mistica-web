@@ -43,19 +43,17 @@ export const Controlled: StoryComponent<CreditCardExpirationFieldControlledArgs>
         <ResponsiveLayout isInverse={inverse} fullWidth>
             <Box padding={16}>
                 <Stack space={16}>
-                    <div data-testid="credit-card-expiration-field-wrapper">
-                        <CreditCardExpirationField
-                            value={rawValue}
-                            onChangeValue={(value) => {
-                                setValue(value);
-                                setRawValue(value.raw);
-                            }}
-                            name="creditCardExpiration"
-                            autoComplete="off"
-                            data-testid="credit-card-expiration-field"
-                            {...rest}
-                        />
-                    </div>
+                    <CreditCardExpirationField
+                        value={rawValue}
+                        onChangeValue={(value) => {
+                            setValue(value);
+                            setRawValue(value.raw);
+                        }}
+                        name="creditCardExpiration"
+                        autoComplete="off"
+                        dataAttributes={{testid: 'credit-card-expiration-field'}}
+                        {...rest}
+                    />
                     <Stack space={8}>
                         <Text1 regular>
                             value: {typeof value === 'undefined' ? '' : `(${typeof value}) ${inspect(value)}`}
@@ -95,19 +93,17 @@ export const Uncontrolled: StoryComponent<CreditCardExpirationFieldUncontrolledA
         <ResponsiveLayout isInverse={inverse} fullWidth>
             <Box padding={16}>
                 <Stack space={16}>
-                    <div data-testid="credit-card-expiration-field-wrapper">
-                        <CreditCardExpirationField
-                            defaultValue={defaultValue}
-                            onChangeValue={(value) => {
-                                setValue(value);
-                                setRawValue(value.raw);
-                            }}
-                            name="creditCardExpiration"
-                            autoComplete="off"
-                            data-testid="credit-card-expiration-field"
-                            {...rest}
-                        />
-                    </div>
+                    <CreditCardExpirationField
+                        defaultValue={defaultValue}
+                        onChangeValue={(value) => {
+                            setValue(value);
+                            setRawValue(value.raw);
+                        }}
+                        name="creditCardExpiration"
+                        autoComplete="off"
+                        dataAttributes={{testid: 'credit-card-expiration-field'}}
+                        {...rest}
+                    />
                     <Stack space={8}>
                         <Text1 regular>
                             value: {typeof value === 'undefined' ? '' : `(${typeof value}) ${inspect(value)}`}

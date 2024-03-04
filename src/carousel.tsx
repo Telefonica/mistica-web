@@ -31,7 +31,7 @@ type PageBulletsProps = {
     onPress?: (index: number) => void;
 };
 
-export const PageBullets: React.FC<PageBulletsProps> = ({currentIndex, numPages, onPress}) => {
+export const PageBullets = ({currentIndex, numPages, onPress}: PageBulletsProps): JSX.Element => {
     const isInverse = useIsInverseVariant();
     const {isDesktopOrBigger} = useScreenSize();
     const getClassName = (index: number) => {
@@ -72,6 +72,83 @@ export const PageBullets: React.FC<PageBulletsProps> = ({currentIndex, numPages,
         </Inline>
     );
 };
+
+const throwMissingProviderError = () => {
+    throw new Error('You must wrap your component with a CarouselContextProvider to use CarouselContext');
+};
+const defaultGoPrev = throwMissingProviderError;
+const defaultGoNext = throwMissingProviderError;
+const defaultGoToPage = throwMissingProviderError;
+const defaultBulletProps = {currentIndex: 0, numPages: 0};
+
+type GoToPage = (pageIndex: number, animate?: boolean) => void;
+type CarouselControls = {
+    goPrev: () => void;
+    goNext: () => void;
+    goToPage: GoToPage;
+    bulletsProps: PageBulletsProps;
+};
+
+const CarouselContext = React.createContext<CarouselControls>({
+    goPrev: defaultGoPrev,
+    goNext: defaultGoNext,
+    goToPage: defaultGoToPage,
+    bulletsProps: defaultBulletProps,
+});
+
+const CarouselControlsSetterContext = React.createContext<{
+    setGoPrev: (goPrev: () => void) => void;
+    setGoNext: (goNext: () => void) => void;
+    setGoToPage: (goToPage: GoToPage) => void;
+    setBulletsProps: (bulletsProps: PageBulletsProps) => void;
+} | null>(null);
+
+export const CarouselContextProvider = ({children}: {children: React.ReactNode}): JSX.Element => {
+    const [bulletsProps, setBulletsProps] = React.useState<PageBulletsProps>(defaultBulletProps);
+    const goPrevRef = React.useRef<() => void>(defaultGoPrev);
+    const goNextRef = React.useRef<() => void>(defaultGoNext);
+    const goToPageRef = React.useRef<GoToPage>(defaultGoToPage);
+
+    const controls = React.useMemo<CarouselControls>(
+        () => ({
+            goPrev: () => {
+                goPrevRef.current();
+            },
+            goNext: () => {
+                goNextRef.current();
+            },
+            goToPage: (pageIndex, animate = true) => {
+                goToPageRef.current(pageIndex, animate);
+            },
+            bulletsProps,
+        }),
+        [bulletsProps]
+    );
+
+    return (
+        <CarouselContext.Provider value={controls}>
+            <CarouselControlsSetterContext.Provider
+                value={{
+                    setGoPrev: (goPrev) => {
+                        goPrevRef.current = goPrev;
+                    },
+                    setGoNext: (goNext) => {
+                        goNextRef.current = goNext;
+                    },
+                    setGoToPage: (goToPage) => {
+                        goToPageRef.current = goToPage;
+                    },
+                    setBulletsProps,
+                }}
+            >
+                {children}
+            </CarouselControlsSetterContext.Provider>
+        </CarouselContext.Provider>
+    );
+};
+
+export const useCarouselContext = (): CarouselControls => React.useContext(CarouselContext);
+export const CarouselContextConsumer = CarouselContext.Consumer;
 
 type DesktopItemsPerPage = {small?: number; medium?: number; large?: number} | number;
 type ItemsPerPageProp = {mobile?: number; tablet?: number; desktop?: DesktopItemsPerPage} | number;
@@ -184,7 +261,7 @@ type BaseCarouselProps = {
     children?: void;
 };
 
-const BaseCarousel: React.FC<BaseCarouselProps> = ({
+const BaseCarousel = ({
     items,
     itemStyle,
     itemClassName,
@@ -200,7 +277,7 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
     autoplay,
     onPageChange,
     dataAttributes,
-}) => {
+}: BaseCarouselProps): JSX.Element => {
     const {texts, platformOverrides, skinName} = useTheme();
 
     const desktopContainerType = useDesktopContainerType();
@@ -372,22 +449,35 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
         }
     }, [currentPageIndex, items.length, itemsPerPageFloor, initialActiveItem, onPageChange]);
 
+    const controlsSetter = React.useContext(CarouselControlsSetterContext);
+
+    const bulletsProps = React.useMemo(
+        () => ({
+            currentIndex: currentPageIndex,
+            numPages: {
+                mobile: pagesCountMobile,
+                tablet: pagesCountTablet,
+                desktop: pagesCountDesktop,
+            },
+        }),
+        [currentPageIndex, pagesCountDesktop, pagesCountMobile, pagesCountTablet]
+    );
+
+    React.useEffect(() => {
+        if (controlsSetter) {
+            controlsSetter.setGoPrev(goPrev);
+            controlsSetter.setGoNext(goNext);
+            controlsSetter.setGoToPage(goToPage);
+            controlsSetter.setBulletsProps(bulletsProps);
+        }
+    }, [controlsSetter, goNext, goPrev, bulletsProps, goToPage]);
+
     let bullets: React.ReactNode = null;
 
     if (renderBullets) {
         bullets = renderBullets({numPages: pagesCount, currentIndex: currentPageIndex, onPress: goToPage});
     } else if (withBullets) {
-        bullets = (
-            <PageBullets
-                numPages={{
-                    mobile: pagesCountMobile,
-                    tablet: pagesCountTablet,
-                    desktop: pagesCountDesktop,
-                }}
-                currentIndex={currentPageIndex}
-                onPress={goToPage}
-            />
-        );
+        bullets = <PageBullets {...bulletsProps} onPress={goToPage} />;
     }
 
     const largePageOffset = '64px';
@@ -498,7 +588,38 @@ type CarouselProps = {
     children?: void;
 };
 
-export const Carousel: React.FC<CarouselProps> = (props) => <BaseCarousel {...props} />;
+/**
+ * This is a workaround for a bug that happens when rendering a carousel in a webview inside a hidden tab (eg. Explore).
+ * The webview has a width of 0 when it's hidden, and the carousel doesn't render correctly when it's first shown.
+ * This hook forces the carousel to re-render when the webview is shown, by adding a key to the carousel component.
+ *
+ * This workaround gets executed only once, when the webview with changes from 0 to another value and then it removes the listener.
+ * Related issue: https://jira.tid.es/browse/WEB-1644
+ */
+const useWorkaroundForZeroWidthWebView = () => {
+    const [key, setKey] = React.useState(1);
+    React.useEffect(() => {
+        const handler = () => {
+            if (window.innerWidth !== 0) {
+                setKey((k) => k + 1);
+                window.removeEventListener('resize', handler);
+            }
+        };
+        // Set the listener only when the webview has zero width
+        if (window.innerWidth === 0) {
+            window.addEventListener('resize', handler);
+        }
+        return () => {
+            window.removeEventListener('resize', handler);
+        };
+    }, []);
+    return key;
+};
+
+export const Carousel = (props: CarouselProps): JSX.Element => {
+    const key = useWorkaroundForZeroWidthWebView();
+    return <BaseCarousel {...props} key={key} />;
+};
 
 type CenteredCarouselProps = {
     items: ReadonlyArray<React.ReactNode>;
@@ -513,7 +634,7 @@ type CenteredCarouselProps = {
     children?: void;
 };
 
-export const CenteredCarousel: React.FC<CenteredCarouselProps> = ({
+export const CenteredCarousel = ({
     items,
     itemStyle,
     itemClassName,
@@ -522,27 +643,32 @@ export const CenteredCarousel: React.FC<CenteredCarouselProps> = ({
     initialActiveItem,
     onPageChange,
     dataAttributes,
-}) => (
-    <BaseCarousel
-        items={items}
-        itemStyle={itemStyle}
-        itemClassName={itemClassName}
-        itemsPerPage={{mobile: 1, tablet: 1, desktop: 3}}
-        centered
-        itemsToScroll={1}
-        gap={0}
-        withBullets={withBullets}
-        renderBullets={renderBullets}
-        initialActiveItem={initialActiveItem}
-        onPageChange={onPageChange}
-        dataAttributes={dataAttributes}
-    />
-);
+}: CenteredCarouselProps): JSX.Element => {
+    const key = useWorkaroundForZeroWidthWebView();
+    return (
+        <BaseCarousel
+            key={key}
+            items={items}
+            itemStyle={itemStyle}
+            itemClassName={itemClassName}
+            itemsPerPage={{mobile: 1, tablet: 1, desktop: 3}}
+            centered
+            itemsToScroll={1}
+            gap={0}
+            withBullets={withBullets}
+            renderBullets={renderBullets}
+            initialActiveItem={initialActiveItem}
+            onPageChange={onPageChange}
+            dataAttributes={dataAttributes}
+        />
+    );
+};
 
 type SlideshowProps = {
     items: ReadonlyArray<React.ReactNode>;
     withBullets?: boolean;
     autoplay?: boolean | {time: number; loop?: boolean};
+    initialPageIndex?: number;
     onPageChange?: (newPageIndex: number) => void;
     dataAttributes?: DataAttributes;
     inverseBullets?: boolean;
@@ -562,15 +688,17 @@ export const IsInsideSlideshowProvider = ({children}: {children: React.ReactNode
     <IsInsideSlideshowContext.Provider value>{children}</IsInsideSlideshowContext.Provider>
 );
 
-export const Slideshow: React.FC<SlideshowProps> = ({
+export const Slideshow = ({
     items,
     withBullets,
     autoplay,
+    initialPageIndex = 0,
     onPageChange,
     dataAttributes,
     inverseBullets = true,
-}) => {
+}: SlideshowProps): JSX.Element => {
     const {texts, platformOverrides} = useTheme();
+    const controlsSetter = React.useContext(CarouselControlsSetterContext);
 
     const carouselRef = React.useRef<HTMLDivElement>(null);
 
@@ -589,6 +717,19 @@ export const Slideshow: React.FC<SlideshowProps> = ({
             carouselEl.scrollBy({left: carouselEl.clientWidth, behavior: 'smooth'});
         }
     }, []);
+
+    const goToPage = React.useCallback(
+        (pageIndex: number, animate = true) => {
+            const carouselEl = carouselRef.current;
+            if (carouselEl) {
+                carouselEl.scrollTo({
+                    left: carouselEl.clientWidth * pageIndex,
+                    behavior: animate ? 'smooth' : 'auto',
+                });
+            }
+        },
+        [carouselRef]
+    );
 
     const showNextArrow = scrollRight !== 0;
     const showPrevArrow = scrollLeft !== 0;
@@ -635,11 +776,44 @@ export const Slideshow: React.FC<SlideshowProps> = ({
         }
     }, [autoplay, goNext, scrollRight, shouldAutoplay]);
 
+    const pageInitialized = React.useRef(false);
+    const lastPageIndex = React.useRef(0);
+
     React.useEffect(() => {
         if (onPageChange) {
-            onPageChange(currentIndex);
+            if (!pageInitialized.current) {
+                pageInitialized.current = initialPageIndex === currentIndex;
+            } else if (lastPageIndex.current !== currentIndex) {
+                onPageChange(currentIndex);
+            }
         }
-    }, [currentIndex, onPageChange]);
+
+        lastPageIndex.current = currentIndex;
+    }, [currentIndex, initialPageIndex, onPageChange]);
+
+    React.useEffect(() => {
+        const carouselEl = carouselRef.current;
+        if (initialPageIndex !== undefined && carouselEl && !pageInitialized.current) {
+            carouselEl.scrollTo({left: carouselEl.clientWidth * initialPageIndex});
+        }
+    }, [initialPageIndex]);
+
+    const bulletsProps = React.useMemo<PageBulletsProps>(
+        () => ({
+            currentIndex,
+            numPages: items.length,
+        }),
+        [currentIndex, items.length]
+    );
+
+    React.useEffect(() => {
+        if (controlsSetter) {
+            controlsSetter.setGoPrev(goPrev);
+            controlsSetter.setGoNext(goNext);
+            controlsSetter.setGoToPage(goToPage);
+            controlsSetter.setBulletsProps(bulletsProps);
+        }
+    }, [controlsSetter, goNext, goPrev, bulletsProps, goToPage]);
 
     return (
         <IsInsideSlideshowProvider>
@@ -685,7 +859,7 @@ export const Slideshow: React.FC<SlideshowProps> = ({
                 {withBullets && items.length > 1 && (
                     <ThemeVariant isInverse={inverseBullets}>
                         <div className={styles.slideshowBullets}>
-                            <PageBullets numPages={items.length} currentIndex={currentIndex} />
+                            <PageBullets {...bulletsProps} />
                         </div>
                     </ThemeVariant>
                 )}
