@@ -296,10 +296,10 @@ export const RawIconButton = React.forwardRef<TouchableElement, IconButtonProps 
                 <BaseTouchable
                     {...commonProps}
                     onPress={(e) => {
-                        const result = props.onPress(e);
-                        if (result) {
+                        const promise = props.onPress(e);
+                        if (promise) {
                             setIsOnPressPromiseResolving(true);
-                            result.finally(() => setIsOnPressPromiseResolving(false));
+                            promise.finally(() => setIsOnPressPromiseResolving(false));
                         }
                     }}
                 >
@@ -388,17 +388,17 @@ export type ToggleIconButtonProps = BaseProps & BaseToggleProps;
 export const InternalToggleIconButton = React.forwardRef<
     TouchableElement,
     ToggleIconButtonProps & {isOverMedia?: boolean}
->(({checked, defaultChecked, checkedProps, uncheckedProps, onChange, ...props}, ref) => {
+>(({checked, defaultChecked, checkedProps, uncheckedProps, onChange, dataAttributes, ...props}, ref) => {
     const [checkedState, setCheckedState] = React.useState(!!defaultChecked);
 
     const handleChange = () => {
         if (checked === undefined) {
             // if onChange is asynchronous, wait until it finishes and change the state if there was no error
-            const result = onChange?.(!checkedState);
-            if (result) {
-                return result.then(() => setCheckedState(!checkedState));
+            const promise = onChange?.(!checkedState);
+            if (promise) {
+                return promise.then(() => setCheckedState((checkedState) => !checkedState)).catch(() => {});
             } else {
-                setCheckedState(!checkedState);
+                setCheckedState((checkedState) => !checkedState);
             }
         } else {
             return onChange?.(!checked);
@@ -410,6 +410,7 @@ export const InternalToggleIconButton = React.forwardRef<
             ref={ref}
             {...props}
             {...(checked ?? checkedState ? checkedProps : uncheckedProps)}
+            dataAttributes={{'component-name': 'ToggleIconButton', ...dataAttributes}}
             onPress={handleChange}
         />
     );
