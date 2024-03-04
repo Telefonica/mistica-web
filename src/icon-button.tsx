@@ -178,7 +178,10 @@ export type IconButtonProps = BaseProps &
     ExclusifyUnion<HrefProps | ToProps | OnPressProps | MaybeProps> &
     ExclusifyUnion<{'aria-label': string} | {'aria-labelledby': string}>;
 
-export const RawIconButton = React.forwardRef<TouchableElement, IconButtonProps & {isOverMedia?: boolean}>(
+export const RawIconButton = React.forwardRef<
+    TouchableElement,
+    IconButtonProps & {isOverMedia?: boolean; hasOverlay?: boolean}
+>(
     (
         {
             disabled,
@@ -187,6 +190,7 @@ export const RawIconButton = React.forwardRef<TouchableElement, IconButtonProps 
             type = 'neutral',
             backgroundType = 'transparent',
             isOverMedia,
+            hasOverlay = true,
             'aria-label': ariaLabel,
             'aria-labelledby': ariaLabelledby,
             small,
@@ -243,7 +247,7 @@ export const RawIconButton = React.forwardRef<TouchableElement, IconButtonProps 
 
         const content = (
             <div className={classNames(styles.iconContainer[buttonSize], {[styles.isLoading]: showSpinner})}>
-                <div className={styles.overlay} />
+                {hasOverlay && <div className={styles.overlay} />}
 
                 <div aria-hidden={showSpinner ? true : undefined} className={styles.icon}>
                     <Icon size={styles.iconSize[buttonSize]} color="currentColor" />

@@ -9,8 +9,9 @@ import classNames from 'classnames';
 import {combineRefs} from './utils/common';
 import * as styles from './text-field-base.css';
 import {vars} from './skins/skin-contract.css';
-import {BaseIconButton} from './icon-button';
+import {RawIconButton} from './icon-button';
 import {ThemeVariant} from './theme-variant-context';
+import {iconSize} from './icon-button.css';
 
 import type {DataAttributes, IconProps} from './utils/types';
 import type {InputState} from './text-field-components';
@@ -29,7 +30,8 @@ const isValidInputValue = (value?: string, inputType?: React.HTMLInputTypeAttrib
 
 interface FieldEndIconProps {
     Icon: React.FC<IconProps>;
-    className?: string;
+    /** In date fields, we want the icon's background to stay transparent when hovering/pressing it */
+    hasBackgroundColor?: boolean;
     onPress: (event: React.MouseEvent<HTMLElement>) => void;
     disabled?: boolean;
     'aria-label'?: string;
@@ -37,27 +39,20 @@ interface FieldEndIconProps {
 
 export const FieldEndIcon: React.FC<FieldEndIconProps> = ({
     Icon,
-    className,
+    hasBackgroundColor = true,
     onPress,
     disabled,
     'aria-label': ariaLabel,
 }) => {
     return (
-        /**
-         * If we try to add fieldEndIconContainer styles to the BaseIconButton instead,
-         * there may be collisions because that component sets margin internally. We
-         * create a wrapper around it so that the margin's value won't be overrided.
-         */
         <div className={styles.fieldEndIconContainer}>
-            <BaseIconButton
+            <RawIconButton
+                Icon={Icon}
                 disabled={disabled}
-                aria-label={ariaLabel}
+                aria-label={ariaLabel || ''}
                 onPress={onPress}
-                size={styles.iconButtonSize}
-                className={className}
-            >
-                <Icon size={styles.iconSize} />
-            </BaseIconButton>
+                hasOverlay={hasBackgroundColor}
+            />
         </div>
     );
 };
@@ -263,7 +258,7 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
             ...inputProps,
         };
 
-        const startIconWidth = `calc(${styles.iconSize} + ${styles.fieldElementsGap}px)`;
+        const startIconWidth = `calc(${iconSize.default} + ${styles.fieldElementsGap}px)`;
         const endIconWidth = `calc(${styles.iconButtonSize} + ${styles.fieldElementsGap}px)`;
 
         const isShrinked = shrinkLabel || inputState === 'focused' || inputState === 'filled';

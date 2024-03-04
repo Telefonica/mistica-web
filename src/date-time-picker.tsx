@@ -21,7 +21,6 @@ import 'moment/locale/es';
 import 'moment/locale/de';
 import 'moment/locale/pt-br';
 import 'moment/locale/en-gb';
-import {endIcon} from './text-field-base.css';
 
 import type {CommonFormFieldProps} from './text-field-base';
 import type Moment from 'moment';
@@ -112,7 +111,7 @@ const DateTimePicker: React.FC<DateTimePickerProps> = ({withTime, mode, isValidD
                 <FieldEndIcon
                     Icon={IconCloseRegular}
                     aria-label={texts.clearButton}
-                    className={endIcon}
+                    hasBackgroundColor={false}
                     onPress={() => setValue('')}
                 />
             );
@@ -122,7 +121,7 @@ const DateTimePicker: React.FC<DateTimePickerProps> = ({withTime, mode, isValidD
                 Icon={IconCalendarRegular}
                 aria-label=""
                 disabled={rest.disabled}
-                className={endIcon}
+                hasBackgroundColor={false}
                 onPress={() => setShowPicker(!showPicker)}
             />
         );
