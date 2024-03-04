@@ -1,4 +1,5 @@
 import * as React from 'react';
+import IconPlayFilled from '../generated/mistica-icons/icon-play-filled';
 import {RowList, BoxedRowList, BoxedRow, Row} from '../list';
 
 const v = true as boolean;
@@ -60,6 +61,10 @@ const v = true as boolean;
     <Row title="conditional onPress" onPress={v ? () => {} : undefined} />
     <Row title="conditional href" href={v ? '' : undefined} />
     <Row title="conditional to" to={v ? '' : undefined} />
+    <Row
+        title="conditional iconButton"
+        iconButton={v ? {Icon: IconPlayFilled, 'aria-label': 'label'} : undefined}
+    />
 </RowList>;
 
 <BoxedRowList>
