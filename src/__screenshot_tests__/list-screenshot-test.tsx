@@ -1,4 +1,4 @@
-import {openStoryPage, screen} from '../test-utils';
+import {openStoryPage, screen, setRootFontSize} from '../test-utils';
 
 import type {Device} from '../test-utils';
 
@@ -11,11 +11,14 @@ const controls = [
     'switch and onPress',
     'radio',
     'radio and onPress',
+    'iconButton',
+    'iconButton and onPress',
     'custom element',
     'custom element with text',
 ];
 
 const controlsWithOnPress = ['checkbox', 'switch', 'radio'];
+const controlsWithIconButton = ['iconButton', 'iconButton and onPress'];
 
 const getCases = () => {
     const cases = [];
@@ -160,6 +163,20 @@ test.each(controlsWithOnPress)('Click control with onPress - %s', async (control
 
     const elements = await screen.findAllByRole(control);
     await elements[0].click();
+
+    const list = await screen.findByTestId('list');
+    const image = await list.screenshot();
+    expect(image).toMatchImageSnapshot();
+});
+
+test.each(controlsWithIconButton)('Rows with %s using big fontSize', async (control) => {
+    await openStoryPage({
+        id: 'components-lists--boxed-row-list-story',
+        device: 'DESKTOP',
+        args: {control},
+    });
+
+    await setRootFontSize(32);
 
     const list = await screen.findByTestId('list');
     const image = await list.screenshot();
