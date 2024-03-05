@@ -1,7 +1,6 @@
 'use client';
 import * as React from 'react';
 import Stack from './stack';
-import Inline from './inline';
 import Box from './box';
 import {useTheme} from './hooks';
 import {ThemeVariant, useThemeVariant} from './theme-variant-context';
@@ -16,6 +15,7 @@ import {sprinkles} from './sprinkles.css';
 import {vars} from './skins/skin-contract.css';
 import {getPrefixedDataAttributes} from './utils/dom';
 import {applyCssVars} from './utils/css';
+import {iconContainerSize} from './icon-button.css';
 
 import type {ButtonLink, ButtonPrimary, ButtonSecondary} from './button';
 import type {DataAttributes, RendersNullableElement} from './utils/types';
@@ -66,27 +66,21 @@ const Callout: React.FC<Props> = ({
         >
             <ThemeVariant isInverse={false}>
                 {icon && <Box paddingRight={16}>{icon}</Box>}
-                <div className={styles.content}>
+                <div
+                    className={styles.content}
+                    style={{
+                        paddingRight: iconContainerSize.small,
+                    }}
+                >
                     <Stack space={16}>
-                        <Inline fullWidth alignItems="flex-start" space="between">
-                            <Stack space={4}>
-                                <Text3 as="h2" regular>
-                                    {title}
-                                </Text3>
-                                <Text2 as="p" regular color={vars.colors.textSecondary}>
-                                    {description}
-                                </Text2>
-                            </Stack>
-                            {onClose && (
-                                <RawIconButton
-                                    small
-                                    hasInteractiveAreaBleed
-                                    Icon={IconCloseRegular}
-                                    onPress={onClose}
-                                    aria-label={texts.closeButtonLabel}
-                                />
-                            )}
-                        </Inline>
+                        <Stack space={4}>
+                            <Text3 as="h2" regular>
+                                {title}
+                            </Text3>
+                            <Text2 as="p" regular color={vars.colors.textSecondary}>
+                                {description}
+                            </Text2>
+                        </Stack>
                         {(button || secondaryButton || buttonLink) && (
                             <ButtonGroup
                                 primaryButton={button}
@@ -96,6 +90,17 @@ const Callout: React.FC<Props> = ({
                         )}
                     </Stack>
                 </div>
+                {onClose && (
+                    <div className={styles.closeButtonContainer}>
+                        <RawIconButton
+                            small
+                            hasInteractiveAreaBleed
+                            Icon={IconCloseRegular}
+                            onPress={onClose}
+                            aria-label={texts.closeButtonLabel}
+                        />
+                    </div>
+                )}
             </ThemeVariant>
         </section>
     );
