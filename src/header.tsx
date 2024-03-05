@@ -5,7 +5,7 @@ import Stack from './stack';
 import {useIsInverseVariant} from './theme-variant-context';
 import ResponsiveLayout from './responsive-layout';
 import GridLayout from './grid-layout';
-import OverscrollColor from './overscroll-color-context';
+import {useSetOverscrollColor} from './overscroll-color-context';
 import {Text8, Text7, Text6, Text3, Text2} from './text';
 import ButtonGroup from './button-group';
 import {vars} from './skins/skin-contract.css';
@@ -193,10 +193,11 @@ export const HeaderLayout: React.FC<HeaderLayoutProps> = ({
         </div>
     );
 
+    useSetOverscrollColor(isInverse ? {topColor: vars.colors.backgroundBrand} : {});
+
     return (
         <div {...getPrefixedDataAttributes({'component-name': 'HeaderLayout', ...dataAttributes})}>
             <ResponsiveLayout isInverse={isInverse}>
-                <OverscrollColor />
                 <Box
                     paddingTop={
                         noPaddingY
@@ -252,12 +253,12 @@ export const MainSectionHeaderLayout: React.FC<MainSectionHeaderLayoutProps> = (
     children,
     dataAttributes,
 }) => {
+    useSetOverscrollColor(isInverse ? {topColor: vars.colors.backgroundBrand} : {});
     return (
         <ResponsiveLayout
             isInverse={isInverse}
             dataAttributes={{'component-name': 'MainSectionHeaderLayout', ...dataAttributes}}
         >
-            <OverscrollColor />
             <GridLayout
                 template="6+6"
                 left={

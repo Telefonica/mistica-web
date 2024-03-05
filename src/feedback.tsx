@@ -3,7 +3,7 @@ import * as React from 'react';
 import {useTheme, useScreenSize, useWindowHeight, useIsomorphicLayoutEffect} from './hooks';
 import * as mq from './media-queries.css';
 import ButtonFixedFooterLayout from './button-fixed-footer-layout';
-import OverscrollColor from './overscroll-color-context';
+import {useSetOverscrollColor} from './overscroll-color-context';
 import {O2_CLASSIC_SKIN, VIVO_NEW_SKIN, VIVO_SKIN} from './skins/constants';
 import IconSuccess from './icons/icon-success';
 import IconSuccessVivo from './icons/icon-success-vivo';
@@ -24,7 +24,6 @@ import ButtonGroup from './button-group';
 import {vars} from './skins/skin-contract.css';
 import * as styles from './feedback.css';
 import IconSuccessVivoNew from './icons/icon-success-vivo-new';
-import {ThemeVariant} from './theme-variant-context';
 
 import type {Theme} from './theme';
 import type {DataAttributes, IconProps} from './utils/types';
@@ -171,6 +170,14 @@ const renderFeedback = ({
     </InternalBoxed>
 );
 
+const FeedbackScreenOverscrollColor = () => {
+    useSetOverscrollColor({
+        topColor: vars.colors.backgroundBrand, // in brands with gradient, this is wrong :/
+        bottomColor: vars.colors.backgroundFeedbackBottom,
+    });
+    return null;
+};
+
 type FeedbackButtonsProps = ButtonGroupProps;
 
 interface FeedbackProps extends FeedbackButtonsProps {
@@ -246,11 +253,7 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
 
     return (
         <div style={{position: 'relative'}}>
-            {isInverse && (
-                <ThemeVariant isInverse>
-                    <OverscrollColor />
-                </ThemeVariant>
-            )}
+            {isInverse && <FeedbackScreenOverscrollColor />}
             <ResponsiveLayout>
                 <Box paddingTop={{desktop: 64, mobile: 0}}>
                     {renderFeedback({
