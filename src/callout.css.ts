@@ -21,5 +21,5 @@ export const closeButtonContainer = sprinkles({
     position: 'absolute',
     top: 0,
     right: 0,
-    padding: 16,
+    padding: 8,
 });
