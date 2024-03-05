@@ -276,7 +276,7 @@ const minButtonArea = {
     touchable: '48px',
 };
 
-const iconContainerSize = {
+export const iconContainerSize = {
     default: '3rem',
     small: '2rem',
 };
@@ -343,6 +343,26 @@ export const buttonContainer = styleVariants({
             },
         },
     ],
+});
+
+export const interactiveAreaBleed = styleVariants({
+    default: {
+        // we add "!important" to override the margin reset applied by Touchable
+        margin: `calc(-1 * (${pointerArea.default} - ${iconContainerSize.default}) / 2) !important`,
+        '@media': {
+            [mq.touchableOnly]: {
+                margin: `calc(-1 * (${touchableArea.default} - ${iconContainerSize.default}) / 2) !important`,
+            },
+        },
+    },
+    small: {
+        margin: `calc(-1 * (${pointerArea.small} - ${iconContainerSize.small}) / 2) !important`,
+        '@media': {
+            [mq.touchableOnly]: {
+                margin: `calc(-1 * (${touchableArea.small} - ${iconContainerSize.small}) / 2) !important`,
+            },
+        },
+    },
 });
 
 export const bleedLeft = styleVariants({

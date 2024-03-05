@@ -22,9 +22,12 @@ export const Default: StoryComponent<Args> = ({inverse, value}) => {
         <ResponsiveLayout fullWidth isInverse={inverse}>
             <Box padding={16} width="fit-content" dataAttributes={{testid: 'content'}}>
                 <Badge value={value !== 'undefined' ? +value : undefined}>
-                    <IconButton onPress={() => {}} aria-label="Read notifications">
-                        <IconBellFilled />
-                    </IconButton>
+                    <IconButton
+                        onPress={() => {}}
+                        aria-label="Read notifications"
+                        Icon={IconBellFilled}
+                        small
+                    />
                 </Badge>
             </Box>
         </ResponsiveLayout>

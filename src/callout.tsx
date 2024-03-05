@@ -7,7 +7,7 @@ import {useTheme} from './hooks';
 import {ThemeVariant, useThemeVariant} from './theme-variant-context';
 import {Text2, Text3} from './text';
 import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
-import IconButton from './icon-button';
+import {RawIconButton} from './icon-button';
 import classNames from 'classnames';
 import ButtonGroup from './button-group';
 import * as styles from './callout.css';
@@ -78,19 +78,13 @@ const Callout: React.FC<Props> = ({
                                 </Text2>
                             </Stack>
                             {onClose && (
-                                <IconButton
-                                    size={40}
-                                    style={{
-                                        display: 'flex',
-                                        margin: '-8px -12px',
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
-                                    }}
+                                <RawIconButton
+                                    small
+                                    hasInteractiveAreaBleed
+                                    Icon={IconCloseRegular}
                                     onPress={onClose}
                                     aria-label={texts.closeButtonLabel}
-                                >
-                                    <IconCloseRegular size={24} color={vars.colors.neutralHigh} />
-                                </IconButton>
+                                />
                             )}
                         </Inline>
                         {(button || secondaryButton || buttonLink) && (

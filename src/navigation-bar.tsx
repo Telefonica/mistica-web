@@ -4,7 +4,7 @@ import {Transition} from 'react-transition-group';
 import classnames from 'classnames';
 import ResponsiveLayout from './responsive-layout';
 import Inline from './inline';
-import {BaseTouchable} from './touchable';
+import Touchable, {BaseTouchable} from './touchable';
 import {Text2, Text3} from './text';
 import {useScreenSize, useTheme, useAriaId} from './hooks';
 import IconMenuRegular from './generated/mistica-icons/icon-menu-regular';
@@ -197,7 +197,7 @@ export const MainNavigationBar: React.FC<MainNavigationBarProps> = ({
                     <NavigationBarContentContainer right={right}>
                         <div className={styles.mainNavbarContent}>
                             {showBurger && (
-                                <IconButton
+                                <Touchable
                                     className={styles.burgerMenuButton}
                                     aria-live="polite"
                                     aria-label={
@@ -208,7 +208,7 @@ export const MainNavigationBar: React.FC<MainNavigationBarProps> = ({
                                     onPress={isMenuOpen ? closeMenu : openMenu}
                                 >
                                     <BurgerMenuIcon isOpen={isMenuOpen} />
-                                </IconButton>
+                                </Touchable>
                             )}
                             <div className={styles.logoContainer}>{logo}</div>
                             {!hasBottomSections && renderDesktopSections()}
@@ -337,10 +337,10 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
                     <IconButton
                         aria-label={texts.backNavigationBar}
                         onPress={onBack}
-                        className={styles.iconButtonVariants[isInverse ? 'inverse' : 'default']}
-                    >
-                        <IconChevronLeftRegular color="currentColor" />
-                    </IconButton>
+                        Icon={IconChevronLeftRegular}
+                        bleedLeft
+                        bleedRight
+                    />
                 )}
                 <Text3 regular truncate>
                     {title}

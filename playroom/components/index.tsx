@@ -1,7 +1,6 @@
 import * as React from 'react';
 import {
     Select,
-    IconButton,
     IconSettingsRegular,
     Overlay,
     useTheme,
@@ -18,6 +17,7 @@ import {
     TuLogo,
     Inline,
     Circle,
+    Touchable,
 } from '../../src';
 import {Movistar, Vivo, O2, Telefonica, Blau, Vivo_New, Tu} from '../themes';
 import {useOverrideTheme} from '../frame-component';
@@ -174,9 +174,13 @@ const PreviewToolsControls = React.forwardRef<HTMLDivElement, PreviewToolsContro
                             }}
                             render={({checked}) => (checked ? <IconSun size={24} /> : <IconMoon size={24} />)}
                         />
-                        <IconButton aria-label="Edit in Playroom" size={24} onPress={onEditStoryPress}>
+                        <Touchable
+                            aria-label="Edit in Playroom"
+                            style={{width: 24, height: 24}}
+                            onPress={onEditStoryPress}
+                        >
                             <IconCode size={24} color={skinVars.colors.neutralHigh} />
-                        </IconButton>
+                        </Touchable>
                     </Inline>
                 </div>
             );
@@ -215,9 +219,13 @@ const PreviewToolsControls = React.forwardRef<HTMLDivElement, PreviewToolsContro
                             render={({checked}) => (checked ? <IconSun /> : <IconMoon />)}
                         />
 
-                        <IconButton aria-label="Edit in Playroom" size={24} onPress={onEditStoryPress}>
+                        <Touchable
+                            aria-label="Edit in Playroom"
+                            style={{width: 24, height: 24}}
+                            onPress={onEditStoryPress}
+                        >
                             <IconCode size={24} color={skinVars.colors.neutralHigh} />
-                        </IconButton>
+                        </Touchable>
                     </Inline>
                 </div>
             );
@@ -370,8 +378,8 @@ export const PreviewTools = ({
                                 left: position.endsWith('left') ? 0 : undefined,
                             }}
                         >
-                            <IconButton
-                                size={56}
+                            <Touchable
+                                style={{width: 56, height: 56}}
                                 aria-label="settings"
                                 onPress={() => {
                                     if (state === 'entered') {
@@ -392,7 +400,7 @@ export const PreviewTools = ({
                                         />
                                     </Circle>
                                 </div>
-                            </IconButton>
+                            </Touchable>
                         </div>
                     )}
                 </CSSTransition>

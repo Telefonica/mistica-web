@@ -58,19 +58,12 @@ export const modalOpacityLayer = style([
 
 export const closedOpactityLayer = style({opacity: 0});
 
-export const modalCloseButtonContainer = style([
-    sprinkles({
-        position: 'absolute',
-        top: 0,
-        right: 0,
-        padding: 16,
-    }),
-    {
-        '@media': {
-            [mq.desktopOrBigger]: {padding: 24},
-        },
-    },
-]);
+export const modalCloseButtonContainer = sprinkles({
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    padding: 16,
+});
 
 export const modalContent = style([
     sprinkles({

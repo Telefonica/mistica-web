@@ -14,11 +14,7 @@ export const dismissableButton = style([
         position: 'absolute',
         top: 0,
         right: 0,
-        width: 48,
-        height: 48,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
+        padding: 16,
     }),
     {
         zIndex: 2, // needed because images has zIndex 1, otherwise this component won't be shown

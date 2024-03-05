@@ -2,9 +2,9 @@
 import * as React from 'react';
 import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
 import {useTheme} from './hooks';
-import IconButton from './icon-button';
-import {vars} from './skins/skin-contract.css';
+import {RawIconButton} from './icon-button';
 import * as styles from './maybe-dismissable.css';
+import {ThemeVariant} from './theme-variant-context';
 
 const DismissableContext = React.createContext<boolean>(false);
 export const useIsDismissable = (): boolean => React.useContext(DismissableContext);
@@ -14,6 +14,8 @@ type MaybeDismissableProps = {
     onClose?: () => void;
     width?: string | number;
     'aria-label'?: string;
+    isOverMedia?: boolean;
+    isInverse?: boolean;
 };
 
 const MaybeDismissable = ({
@@ -21,6 +23,8 @@ const MaybeDismissable = ({
     width,
     onClose,
     'aria-label': ariaLabel,
+    isOverMedia,
+    isInverse,
 }: MaybeDismissableProps): JSX.Element => {
     const {texts} = useTheme();
 
@@ -35,16 +39,18 @@ const MaybeDismissable = ({
             style={{width: width || '100%', minHeight: '100%'}}
         >
             <DismissableContext.Provider value>{children}</DismissableContext.Provider>
-            <IconButton
-                className={styles.dismissableButton}
-                onPress={onClose}
-                aria-label={texts.closeButtonLabel}
-                style={{display: 'flex', width: 48, height: 48}}
-            >
-                <div className={styles.dismissableCircleContainer}>
-                    <IconCloseRegular color={vars.colors.neutralHigh} />
+            <ThemeVariant isInverse={isInverse}>
+                <div className={styles.dismissableButton}>
+                    <RawIconButton
+                        onPress={onClose}
+                        aria-label={texts.closeButtonLabel}
+                        small
+                        isOverMedia={isOverMedia}
+                        hasInteractiveAreaBleed
+                        Icon={IconCloseRegular}
+                    />
                 </div>
-            </IconButton>
+            </ThemeVariant>
         </section>
     );
 };

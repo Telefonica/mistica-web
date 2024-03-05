@@ -178,7 +178,10 @@ export type IconButtonProps = BaseProps &
     ExclusifyUnion<HrefProps | ToProps | OnPressProps | MaybeProps> &
     ExclusifyUnion<{'aria-label': string} | {'aria-labelledby': string}>;
 
-export const RawIconButton = React.forwardRef<TouchableElement, IconButtonProps & {isOverMedia?: boolean}>(
+export const RawIconButton = React.forwardRef<
+    TouchableElement,
+    IconButtonProps & {isOverMedia?: boolean; hasInteractiveAreaBleed?: boolean}
+>(
     (
         {
             disabled,
@@ -194,6 +197,7 @@ export const RawIconButton = React.forwardRef<TouchableElement, IconButtonProps 
             bleedLeft,
             bleedRight,
             bleedY,
+            hasInteractiveAreaBleed,
             ...props
         },
         ref
@@ -234,9 +238,10 @@ export const RawIconButton = React.forwardRef<TouchableElement, IconButtonProps 
                 {
                     [styles.disabled]: disabled,
                     [styles.overlayContainer]: !disabled && !showSpinner,
-                    [styles.bleedLeft[buttonSize]]: bleedLeft,
-                    [styles.bleedRight[buttonSize]]: bleedRight,
-                    [styles.bleedY[buttonSize]]: bleedY,
+                    [styles.bleedLeft[buttonSize]]: bleedLeft && !hasInteractiveAreaBleed,
+                    [styles.bleedRight[buttonSize]]: bleedRight && !hasInteractiveAreaBleed,
+                    [styles.bleedY[buttonSize]]: bleedY && !hasInteractiveAreaBleed,
+                    [styles.interactiveAreaBleed[buttonSize]]: hasInteractiveAreaBleed,
                 }
             ),
         };
