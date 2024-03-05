@@ -69,7 +69,7 @@ const Callout: React.FC<Props> = ({
                 <div
                     className={styles.content}
                     style={{
-                        paddingRight: iconContainerSize.small,
+                        paddingRight: onClose ? iconContainerSize.small : undefined,
                     }}
                 >
                     <Stack space={16}>
