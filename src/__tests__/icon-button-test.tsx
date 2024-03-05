@@ -90,9 +90,14 @@ test('IconButton ref', () => {
 
         return (
             <ThemeContextProvider theme={makeTheme()}>
-                <IconButton Icon={IconLightningRegular} ref={refOnPress} onPress={() => {}} />
-                <IconButton Icon={IconLightningRegular} ref={refHref} href="/" />
-                <IconButton Icon={IconLightningRegular} ref={refTo} to="/" />
+                <IconButton
+                    Icon={IconLightningRegular}
+                    aria-label="icon-button"
+                    ref={refOnPress}
+                    onPress={() => {}}
+                />
+                <IconButton Icon={IconLightningRegular} aria-label="icon-button" ref={refHref} href="/" />
+                <IconButton Icon={IconLightningRegular} aria-label="icon-button" ref={refTo} to="/" />
             </ThemeContextProvider>
         );
     };

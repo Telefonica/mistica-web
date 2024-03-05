@@ -51,6 +51,7 @@ export const Default: StoryComponent<Args> = ({
     <ResponsiveLayout variant={themeVariant} fullWidth>
         <Box padding={16}>
             <IconButton
+                aria-label="icon button"
                 onPress={handleOnPress}
                 Icon={IconCloseRegular}
                 type={type}

@@ -2,7 +2,7 @@ import * as React from 'react';
 import {RowList, Row} from '../list';
 import {RadioGroup} from '../radio-button';
 import {screen, fireEvent, render, waitFor} from '@testing-library/react';
-import {ButtonPrimary, Form, ThemeContextProvider} from '..';
+import {ButtonPrimary, Form, IconPlayFilled, ThemeContextProvider} from '..';
 import {makeTheme} from './test-utils';
 
 test('Row which navigates', () => {
@@ -188,4 +188,44 @@ test('RowList inside Form', async () => {
             radio: 'banana',
         });
     });
+});
+
+test('Row list with icon buttons', () => {
+    const firstButtonSpy = jest.fn();
+    const secondButtonSpy = jest.fn();
+
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <RowList>
+                <Row
+                    title="Banana"
+                    subtitle="bananabanana"
+                    iconButton={{
+                        Icon: IconPlayFilled,
+                        onPress: firstButtonSpy,
+                        'aria-label': 'first-button',
+                    }}
+                />
+                <Row
+                    title="Apple"
+                    subtitle="appleapple"
+                    iconButton={{
+                        Icon: IconPlayFilled,
+                        onPress: secondButtonSpy,
+                        'aria-label': 'second-button',
+                    }}
+                />
+            </RowList>
+        </ThemeContextProvider>
+    );
+
+    const firstButton = screen.getByRole('button', {name: 'first-button'});
+    const secondButton = screen.getByRole('button', {name: 'second-button'});
+
+    fireEvent.click(firstButton);
+    fireEvent.click(secondButton);
+    fireEvent.click(secondButton);
+
+    expect(firstButtonSpy).toHaveBeenCalledTimes(1);
+    expect(secondButtonSpy).toHaveBeenCalledTimes(2);
 });
