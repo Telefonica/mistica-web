@@ -6,7 +6,7 @@ import {ButtonPrimary, ButtonSecondary, ButtonDanger} from './button';
 import {Portal} from './portal';
 import FocusTrap from './focus-trap';
 import IcnCloseRegular from './generated/mistica-icons/icon-close-regular';
-import IconButton from './icon-button';
+import {IconButton} from './icon-button';
 import {isWebViewBridgeAvailable, nativeConfirm, nativeAlert} from '@tef-novum/webview-bridge';
 import {useTheme} from './hooks';
 import ButtonLayout from './button-layout';
