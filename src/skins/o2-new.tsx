@@ -225,7 +225,7 @@ export const getO2NewSkin: GetKnownSkin = () => {
             textLinkInverse: palette.beyondBlue40,
             textLinkDanger: palette.o2Red,
             textLinkSnackbar: palette.beyondBlue40,
-            control: palette.darkModeGrey6,
+            control: palette.grey60,
             controlActivated: palette.beyondBlue30,
             controlInverse: palette.darkModeGrey6,
             controlActivatedInverse: palette.beyondBlue30,
