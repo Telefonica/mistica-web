@@ -32,19 +32,25 @@ const isValidInputValue = (value?: string, inputType?: React.HTMLInputTypeAttrib
 type FieldEndIconProps = {
     /** In date fields, we want the icon's background to stay transparent when hovering/pressing it */
     hasBackgroundColor?: boolean;
-    onPress: (event: React.MouseEvent<HTMLElement>) => void;
     disabled?: boolean;
 } & ExclusifyUnion<
-    | {Icon: React.FC<IconProps>; 'aria-label'?: string}
+    | {
+          Icon: React.FC<IconProps>;
+          'aria-label'?: string;
+          onPress: (event: React.MouseEvent<HTMLElement>) => void;
+      }
     | {
           checkedProps: {Icon: React.FC<IconProps>; 'aria-label'?: string};
           uncheckedProps: {Icon: React.FC<IconProps>; 'aria-label'?: string};
+          onChange?: (checked: boolean) => void | undefined | Promise<void>;
+          checked?: boolean;
       }
 >;
 
 export const FieldEndIcon: React.FC<FieldEndIconProps> = ({
     hasBackgroundColor = true,
     onPress,
+    onChange,
     disabled,
     Icon,
     checkedProps,
@@ -57,6 +63,9 @@ export const FieldEndIcon: React.FC<FieldEndIconProps> = ({
                 <InternalToggleIconButton
                     checkedProps={{...checkedProps, 'aria-label': checkedProps['aria-label'] || ''}}
                     uncheckedProps={{...uncheckedProps, 'aria-label': uncheckedProps['aria-label'] || ''}}
+                    onChange={onChange}
+                    hasOverlay={hasBackgroundColor}
+                    disabled={disabled}
                 />
             ) : (
                 <InternalIconButton
