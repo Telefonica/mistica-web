@@ -252,6 +252,25 @@ const buttonSnippets: Array<Snippet> = [
           backgroundType="soft"
         />`,
     },
+    {
+        name: 'ToggleIconButton',
+        code: `
+        <ToggleIconButton
+          checkedProps={{
+            Icon: IconPauseFilled,
+            type: "danger",
+            backgroundType: "soft",
+            "aria-label": "checked icon button",
+          }}
+          uncheckedProps={{
+            Icon: IconPlayFilled,
+            type: "neutral",
+            backgroundType: "transparent",
+            "aria-label": "checked icon button",
+          }}
+          onChange={(checked) => console.log("checked:", checked)}
+        />`,
+    },
 ].map((snippet) => ({...snippet, group: 'Buttons'}));
 
 const formSnippets: Array<Snippet> = [

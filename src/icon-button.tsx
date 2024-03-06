@@ -156,27 +156,33 @@ export const RawDeprecatedIconButton = React.forwardRef<TouchableElement, Deprec
     );
 });
 
-type IconButtonType = 'neutral' | 'brand' | 'danger';
-type IconButtonBackgroundType = 'transparent' | 'solid' | 'soft';
+export type IconButtonType = 'neutral' | 'brand' | 'danger';
+export type IconButtonBackgroundType = 'transparent' | 'solid' | 'soft';
+
+type AriaProps = ExclusifyUnion<{'aria-label': string} | {'aria-labelledby': string}>;
 
 interface BaseProps {
     children?: undefined;
-    Icon: React.FC<IconProps>;
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
     dataAttributes?: DataAttributes;
     disabled?: boolean;
     showSpinner?: boolean;
     small?: boolean;
-    type?: IconButtonType;
-    backgroundType?: IconButtonBackgroundType;
     bleedLeft?: boolean;
     bleedRight?: boolean;
     bleedY?: boolean;
 }
 
+interface IconButtonBaseProps {
+    Icon: React.FC<IconProps>;
+    type?: IconButtonType;
+    backgroundType?: IconButtonBackgroundType;
+}
+
 export type IconButtonProps = BaseProps &
+    IconButtonBaseProps &
     ExclusifyUnion<HrefProps | ToProps | OnPressProps | MaybeProps> &
-    ExclusifyUnion<{'aria-label': string} | {'aria-labelledby': string}>;
+    AriaProps;
 
 export const RawIconButton = React.forwardRef<TouchableElement, IconButtonProps & {isOverMedia?: boolean}>(
     (
@@ -290,10 +296,10 @@ export const RawIconButton = React.forwardRef<TouchableElement, IconButtonProps 
                 <BaseTouchable
                     {...commonProps}
                     onPress={(e) => {
-                        const result = props.onPress(e);
-                        if (result) {
+                        const promise = props.onPress(e);
+                        if (promise) {
                             setIsOnPressPromiseResolving(true);
-                            result.finally(() => setIsOnPressPromiseResolving(false));
+                            promise.finally(() => setIsOnPressPromiseResolving(false));
                         }
                     }}
                 >
@@ -363,4 +369,53 @@ export const BaseIconButton = (props: ExclusifyUnion<DeprecatedProps | IconButto
     );
 };
 
-export default IconButton;
+type ToggleStateProps = {
+    Icon: React.FC<IconProps>;
+    type?: IconButtonType;
+    backgroundType?: IconButtonBackgroundType;
+} & AriaProps;
+
+interface BaseToggleProps {
+    checkedProps: ToggleStateProps;
+    uncheckedProps: ToggleStateProps;
+    onChange?: (checked: boolean) => void | undefined | Promise<void>;
+    checked?: boolean;
+    defaultChecked?: boolean;
+}
+
+export type ToggleIconButtonProps = BaseProps & BaseToggleProps;
+
+export const InternalToggleIconButton = React.forwardRef<
+    TouchableElement,
+    ToggleIconButtonProps & {isOverMedia?: boolean}
+>(({checked, defaultChecked, checkedProps, uncheckedProps, onChange, dataAttributes, ...props}, ref) => {
+    const [checkedState, setCheckedState] = React.useState(!!defaultChecked);
+
+    const handleChange = () => {
+        if (checked === undefined) {
+            // if onChange is asynchronous, wait until it finishes and change the state if there was no error
+            const promise = onChange?.(!checkedState);
+            if (promise) {
+                return promise.then(() => setCheckedState((checkedState) => !checkedState)).catch(() => {});
+            } else {
+                setCheckedState((checkedState) => !checkedState);
+            }
+        } else {
+            return onChange?.(!checked);
+        }
+    };
+
+    return (
+        <RawIconButton
+            ref={ref}
+            {...props}
+            {...(checked ?? checkedState ? checkedProps : uncheckedProps)}
+            dataAttributes={{'component-name': 'ToggleIconButton', ...dataAttributes}}
+            onPress={handleChange}
+        />
+    );
+});
+
+export const ToggleIconButton = React.forwardRef<TouchableElement, ToggleIconButtonProps>((props, ref) => {
+    return <InternalToggleIconButton ref={ref} {...props} />;
+});
