@@ -179,7 +179,7 @@ interface IconButtonBaseProps {
     backgroundType?: IconButtonBackgroundType;
 }
 
-interface InternalIconButtonProps {
+interface InternalIconButtonBaseProps {
     isOverMedia?: boolean;
     hasOverlay?: boolean;
 }
@@ -187,10 +187,12 @@ interface InternalIconButtonProps {
 export type IconButtonProps = BaseProps &
     IconButtonBaseProps &
     ExclusifyUnion<HrefProps | ToProps | OnPressProps | MaybeProps> &
-    AriaProps &
-    InternalIconButtonProps;
+    AriaProps;
 
-export const RawIconButton = React.forwardRef<TouchableElement, IconButtonProps>(
+export const RawIconButton = React.forwardRef<
+    TouchableElement,
+    IconButtonProps & InternalIconButtonBaseProps
+>(
     (
         {
             disabled,
@@ -325,7 +327,7 @@ export const RawIconButton = React.forwardRef<TouchableElement, IconButtonProps>
 
 export const InternalIconButton = React.forwardRef<
     TouchableElement,
-    ExclusifyUnion<DeprecatedProps | IconButtonProps>
+    ExclusifyUnion<DeprecatedProps | (IconButtonProps & InternalIconButtonBaseProps)>
 >((props, ref) => {
     /**
      * The new IconButton requires Icon prop, so if it it's used we render the new version.
@@ -390,39 +392,38 @@ interface BaseToggleProps {
     defaultChecked?: boolean;
 }
 
-export type ToggleIconButtonProps = BaseProps & BaseToggleProps & InternalIconButtonProps;
+export type ToggleIconButtonProps = BaseProps & BaseToggleProps;
 
-export const InternalToggleIconButton = React.forwardRef<TouchableElement, ToggleIconButtonProps>(
-    ({checked, defaultChecked, checkedProps, uncheckedProps, onChange, dataAttributes, ...props}, ref) => {
-        const [checkedState, setCheckedState] = React.useState(!!defaultChecked);
+export const InternalToggleIconButton = React.forwardRef<
+    TouchableElement,
+    ToggleIconButtonProps & InternalIconButtonBaseProps
+>(({checked, defaultChecked, checkedProps, uncheckedProps, onChange, dataAttributes, ...props}, ref) => {
+    const [checkedState, setCheckedState] = React.useState(!!defaultChecked);
 
-        const handleChange = () => {
-            if (checked === undefined) {
-                // if onChange is asynchronous, wait until it finishes and change the state if there was no error
-                const promise = onChange?.(!checkedState);
-                if (promise) {
-                    return promise
-                        .then(() => setCheckedState((checkedState) => !checkedState))
-                        .catch(() => {});
-                } else {
-                    setCheckedState((checkedState) => !checkedState);
-                }
+    const handleChange = () => {
+        if (checked === undefined) {
+            // if onChange is asynchronous, wait until it finishes and change the state if there was no error
+            const promise = onChange?.(!checkedState);
+            if (promise) {
+                return promise.then(() => setCheckedState((checkedState) => !checkedState)).catch(() => {});
             } else {
-                return onChange?.(!checked);
+                setCheckedState((checkedState) => !checkedState);
             }
-        };
+        } else {
+            return onChange?.(!checked);
+        }
+    };
 
-        return (
-            <RawIconButton
-                ref={ref}
-                {...props}
-                {...(checked ?? checkedState ? checkedProps : uncheckedProps)}
-                dataAttributes={{'component-name': 'ToggleIconButton', ...dataAttributes}}
-                onPress={handleChange}
-            />
-        );
-    }
-);
+    return (
+        <RawIconButton
+            ref={ref}
+            {...props}
+            {...(checked ?? checkedState ? checkedProps : uncheckedProps)}
+            dataAttributes={{'component-name': 'ToggleIconButton', ...dataAttributes}}
+            onPress={handleChange}
+        />
+    );
+});
 
 export const ToggleIconButton = React.forwardRef<TouchableElement, ToggleIconButtonProps>((props, ref) => {
     return <InternalToggleIconButton ref={ref} {...props} />;
