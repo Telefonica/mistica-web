@@ -13,7 +13,7 @@ import * as styles from './card.css';
 import * as mediaStyles from './image.css';
 import {useTheme} from './hooks';
 import {sprinkles} from './sprinkles.css';
-import IconButton from './icon-button';
+import {RawIconButton} from './icon-button';
 import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
 import IconPauseFilled from './generated/mistica-icons/icon-pause-filled';
 import IconPlayFilled from './generated/mistica-icons/icon-play-filled';
@@ -80,35 +80,23 @@ export const TOP_ACTION_BUTTON_SIZE = 48;
 export const CardActionIconButton = ({Icon, label, ...restProps}: CardAction): JSX.Element => {
     const type = React.useContext(CardActionTypeContext);
 
-    const iconColor = {
-        default: vars.colors.neutralHigh,
-        inverse: vars.colors.inverse,
-        media: '#000000',
-    };
-
-    const iconBackgroundStyle = {
-        default: styles.cardAction,
-        inverse: styles.cardActionInverse,
-        media: styles.cardActionMedia,
-    };
     return (
-        <IconButton
-            {...restProps}
-            aria-label={label}
-            size={TOP_ACTION_BUTTON_SIZE}
-            className={styles.cardActionIconButton}
-            style={{display: 'flex'}}
-        >
-            <div className={iconBackgroundStyle[type]}>
-                <Icon color={iconColor[type]} size={20} />
-            </div>
-        </IconButton>
+        <ThemeVariant isInverse={type === 'inverse'}>
+            <RawIconButton
+                {...restProps}
+                aria-label={label}
+                Icon={Icon}
+                small
+                isOverMedia={type === 'media'}
+                hasInteractiveAreaBleed
+            />
+        </ThemeVariant>
     );
 };
 
 export const CardActionsGroup = ({
     actions,
-    padding = 8,
+    padding = 16,
     onClose,
     type = 'default',
 }: CardActionsGroupProps): JSX.Element => {
@@ -125,7 +113,7 @@ export const CardActionsGroup = ({
                     zIndex: 3, // needed because images has zIndex 1 and touchable overlay has zIndex 2
                 }}
             >
-                <div className={sprinkles({display: 'flex'})}>
+                <Inline space={16}>
                     {finalActions.map((action, index) => {
                         if ('label' in action) {
                             // action is a CardAction object
@@ -134,7 +122,7 @@ export const CardActionsGroup = ({
                         // action is a React.ReactElement
                         return action;
                     })}
-                </div>
+                </Inline>
             </div>
         </CardActionTypeContext.Provider>
     ) : (

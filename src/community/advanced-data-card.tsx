@@ -364,7 +364,7 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
                          * By default, all the other cards use padding of 8px for the actions, so we use 7px in here to compensate for
                          * that extra pixel that was added by the <Boxed/> component.
                          */}
-                        <CardActionsGroup actions={actions} onClose={onClose} padding={7} />
+                        <CardActionsGroup actions={actions} onClose={onClose} padding={15} />
                     </div>
                     {hasFooter && <CardFooter {...footerProps} />}
                 </Boxed>
