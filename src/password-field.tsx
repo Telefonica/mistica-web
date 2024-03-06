@@ -20,8 +20,8 @@ const PasswordAdornment: React.FC<{
     const {texts} = useTheme();
     return (
         <FieldEndIcon
-            Icon={isVisible ? IconEyeOffRegular : IconEyeRegular}
-            aria-label={texts.togglePasswordVisibilityLabel}
+            checkedProps={{Icon: IconEyeOffRegular, 'aria-label': texts.togglePasswordVisibilityLabel}}
+            uncheckedProps={{Icon: IconEyeRegular, 'aria-label': texts.togglePasswordVisibilityLabel}}
             onPress={() => {
                 setVisibility(!isVisible);
                 focus();

@@ -9,13 +9,14 @@ import classNames from 'classnames';
 import {combineRefs} from './utils/common';
 import * as styles from './text-field-base.css';
 import {vars} from './skins/skin-contract.css';
-import {RawIconButton} from './icon-button';
+import {InternalIconButton, InternalToggleIconButton} from './icon-button';
 import {ThemeVariant} from './theme-variant-context';
 import {iconSize} from './icon-button.css';
 
 import type {DataAttributes, IconProps} from './utils/types';
 import type {InputState} from './text-field-components';
 import type {FieldValidator} from './form-context';
+import type {ExclusifyUnion} from './utils/utility-types';
 
 const isValidInputValue = (value?: string, inputType?: React.HTMLInputTypeAttribute) => {
     if (!inputType) {
@@ -28,31 +29,44 @@ const isValidInputValue = (value?: string, inputType?: React.HTMLInputTypeAttrib
     return input.value !== '';
 };
 
-interface FieldEndIconProps {
-    Icon: React.FC<IconProps>;
+type FieldEndIconProps = {
     /** In date fields, we want the icon's background to stay transparent when hovering/pressing it */
     hasBackgroundColor?: boolean;
     onPress: (event: React.MouseEvent<HTMLElement>) => void;
     disabled?: boolean;
-    'aria-label'?: string;
-}
+} & ExclusifyUnion<
+    | {Icon: React.FC<IconProps>; 'aria-label'?: string}
+    | {
+          checkedProps: {Icon: React.FC<IconProps>; 'aria-label'?: string};
+          uncheckedProps: {Icon: React.FC<IconProps>; 'aria-label'?: string};
+      }
+>;
 
 export const FieldEndIcon: React.FC<FieldEndIconProps> = ({
-    Icon,
     hasBackgroundColor = true,
     onPress,
     disabled,
+    Icon,
+    checkedProps,
+    uncheckedProps,
     'aria-label': ariaLabel,
 }) => {
     return (
         <div className={styles.fieldEndIconContainer}>
-            <RawIconButton
-                Icon={Icon}
-                disabled={disabled}
-                aria-label={ariaLabel || ''}
-                onPress={onPress}
-                hasOverlay={hasBackgroundColor}
-            />
+            {checkedProps ? (
+                <InternalToggleIconButton
+                    checkedProps={{...checkedProps, 'aria-label': checkedProps['aria-label'] || ''}}
+                    uncheckedProps={{...uncheckedProps, 'aria-label': uncheckedProps['aria-label'] || ''}}
+                />
+            ) : (
+                <InternalIconButton
+                    Icon={Icon}
+                    disabled={disabled}
+                    aria-label={ariaLabel || ''}
+                    onPress={onPress}
+                    hasOverlay={hasBackgroundColor}
+                />
+            )}
         </div>
     );
 };
