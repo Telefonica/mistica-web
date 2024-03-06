@@ -230,6 +230,7 @@ export const getO2NewSkin: GetKnownSkin = () => {
             controlInverse: palette.darkModeGrey6,
             controlActivatedInverse: palette.beyondBlue30,
             controlError: palette.o2Red,
+            barTrack: palette.darkModeGrey6,
             loadingBar: palette.darkModeBeyondBlue,
             loadingBarBackground: palette.darkModeGrey6,
             toggleAndroidInactive: palette.grey60,
