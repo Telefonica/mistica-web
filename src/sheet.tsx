@@ -20,7 +20,7 @@ import Divider from './divider';
 import {getPrefixedDataAttributes, getScrollableParentElement} from './utils/dom';
 import {ButtonLink, ButtonPrimary, ButtonSecondary} from './button';
 import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
-import {RawIconButton} from './icon-button';
+import {InternalIconButton} from './icon-button';
 import ButtonLayout from './button-layout';
 import Image from './image';
 import {InternalResponsiveLayout} from './responsive-layout';
@@ -256,7 +256,7 @@ const Sheet = React.forwardRef<HTMLDivElement, SheetProps>(({onClose, children, 
                             </section>
                         </div>
                         <div className={styles.modalCloseButton}>
-                            <RawIconButton
+                            <InternalIconButton
                                 onPress={closeModal}
                                 aria-label={texts.modalClose}
                                 Icon={IconCloseRegular}

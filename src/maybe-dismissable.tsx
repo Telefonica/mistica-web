@@ -2,7 +2,7 @@
 import * as React from 'react';
 import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
 import {useTheme} from './hooks';
-import {RawIconButton} from './icon-button';
+import {InternalIconButton} from './icon-button';
 import * as styles from './maybe-dismissable.css';
 import {ThemeVariant} from './theme-variant-context';
 
@@ -41,7 +41,7 @@ const MaybeDismissable = ({
             <DismissableContext.Provider value>{children}</DismissableContext.Provider>
             <ThemeVariant isInverse={isInverse}>
                 <div className={styles.dismissableButton}>
-                    <RawIconButton
+                    <InternalIconButton
                         onPress={onClose}
                         aria-label={texts.closeButtonLabel}
                         small

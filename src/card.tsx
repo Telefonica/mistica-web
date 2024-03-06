@@ -13,7 +13,7 @@ import * as styles from './card.css';
 import * as mediaStyles from './image.css';
 import {useTheme} from './hooks';
 import {sprinkles} from './sprinkles.css';
-import {RawIconButton} from './icon-button';
+import {InternalIconButton} from './icon-button';
 import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
 import IconPauseFilled from './generated/mistica-icons/icon-pause-filled';
 import IconPlayFilled from './generated/mistica-icons/icon-play-filled';
@@ -82,7 +82,7 @@ export const CardActionIconButton = ({Icon, label, ...restProps}: CardAction): J
 
     return (
         <ThemeVariant isInverse={type === 'inverse'}>
-            <RawIconButton
+            <InternalIconButton
                 {...restProps}
                 aria-label={label}
                 Icon={Icon}

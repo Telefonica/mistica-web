@@ -6,7 +6,7 @@ import {useTheme} from './hooks';
 import {ThemeVariant, useThemeVariant} from './theme-variant-context';
 import {Text2, Text3} from './text';
 import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
-import {RawIconButton} from './icon-button';
+import {InternalIconButton} from './icon-button';
 import classNames from 'classnames';
 import ButtonGroup from './button-group';
 import * as styles from './callout.css';
@@ -92,7 +92,7 @@ const Callout: React.FC<Props> = ({
                 </div>
                 {onClose && (
                     <div className={styles.closeButtonContainer}>
-                        <RawIconButton
+                        <InternalIconButton
                             small
                             hasInteractiveAreaBleed
                             Icon={IconCloseRegular}

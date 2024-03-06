@@ -16,7 +16,7 @@ import {ThemeVariant, useIsInverseVariant} from './theme-variant-context';
 import {combineRefs} from './utils/common';
 import {useSetTooltipState, useTooltipState} from './tooltip-context-provider';
 import {isRunningAcceptanceTest} from './utils/platform';
-import {RawIconButton} from './icon-button';
+import {InternalIconButton} from './icon-button';
 import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
 import Box from './box';
 
@@ -585,7 +585,7 @@ export const BaseTooltip: React.FC<BaseTooltipProps> = ({
 
                                                 {onClose && (
                                                     <div className={styles.closeButtonIcon}>
-                                                        <RawIconButton
+                                                        <InternalIconButton
                                                             onPress={() => {
                                                                 setIsMouseOverTarget(false);
                                                                 onClose();

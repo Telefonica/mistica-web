@@ -6,7 +6,7 @@ import {ButtonPrimary, ButtonSecondary, ButtonDanger} from './button';
 import {Portal} from './portal';
 import FocusTrap from './focus-trap';
 import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
-import {RawIconButton} from './icon-button';
+import {InternalIconButton} from './icon-button';
 import {isWebViewBridgeAvailable, nativeConfirm, nativeAlert} from '@tef-novum/webview-bridge';
 import {useTheme} from './hooks';
 import ButtonLayout from './button-layout';
@@ -387,7 +387,7 @@ const ModalDialog = (props: ModalDialogProps): JSX.Element => {
                         >
                             {shouldDismissOnPressOverlay && (
                                 <div className={styles.modalCloseButtonContainer}>
-                                    <RawIconButton
+                                    <InternalIconButton
                                         onPress={dismiss}
                                         aria-label={texts.modalClose || texts.closeButtonLabel}
                                         hasInteractiveAreaBleed
