@@ -955,6 +955,18 @@ const cardSnippets: Array<Snippet> = [
               onPress: () => {},
               label: "Lightning",
             },
+            {
+              checkedProps: {
+                Icon: IconPauseRegular,
+                label: "Pause",
+              },
+              uncheckedProps: {
+                Icon: IconPlayRegular,
+                label: "Play",
+              },
+              defaultChecked: false,
+              onChange: () => {},
+            },
           ]}
         />`,
     },
@@ -979,6 +991,18 @@ const cardSnippets: Array<Snippet> = [
               Icon: IconLightningRegular,
               onPress: () => {},
               label: "Lightning",
+            },
+            {
+              checkedProps: {
+                Icon: IconPauseRegular,
+                label: "Pause",
+              },
+              uncheckedProps: {
+                Icon: IconPlayRegular,
+                label: "Play",
+              },
+              defaultChecked: false,
+              onChange: () => {},
             },
           ]}
         />`,
@@ -1018,6 +1042,18 @@ const cardSnippets: Array<Snippet> = [
               Icon: IconLightningRegular,
               onPress: () => {},
               label: "Lightning",
+            },
+            {
+              checkedProps: {
+                Icon: IconPauseRegular,
+                label: "Pause",
+              },
+              uncheckedProps: {
+                Icon: IconPlayRegular,
+                label: "Play",
+              },
+              defaultChecked: false,
+              onChange: () => {},
             },
           ]}
         />`,
@@ -1059,6 +1095,18 @@ const cardSnippets: Array<Snippet> = [
               onPress: () => {},
               label: "Lightning",
             },
+            {
+              checkedProps: {
+                Icon: IconPauseRegular,
+                label: "Pause",
+              },
+              uncheckedProps: {
+                Icon: IconPlayRegular,
+                label: "Play",
+              },
+              defaultChecked: false,
+              onChange: () => {},
+            },
           ]}
         />`,
     },
@@ -1080,6 +1128,18 @@ const cardSnippets: Array<Snippet> = [
               Icon: IconLightningRegular,
               onPress: () => {},
               label: "Lightning",
+            },
+            {
+              checkedProps: {
+                Icon: IconPauseRegular,
+                label: "Pause",
+              },
+              uncheckedProps: {
+                Icon: IconPlayRegular,
+                label: "Play",
+              },
+              defaultChecked: false,
+              onChange: () => {},
             },
           ]}
         />`,

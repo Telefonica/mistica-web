@@ -14,6 +14,8 @@ import {
     Text2,
     Box,
     Carousel,
+    IconPauseRegular,
+    IconPlayRegular,
 } from '..';
 import usingVrImg from './images/using-vr.jpg';
 import avatarImg from './images/avatar.jpg';
@@ -107,6 +109,18 @@ export const Default: StoryComponent<DisplayMediaCardArgs> = ({
                                 Icon: IconLightningRegular,
                                 onPress: () => {},
                                 label: 'Lightning',
+                            },
+                            {
+                                checkedProps: {
+                                    Icon: IconPauseRegular,
+                                    label: 'Pause',
+                                },
+                                uncheckedProps: {
+                                    Icon: IconPlayRegular,
+                                    label: 'Play',
+                                },
+                                defaultChecked: false,
+                                onChange: () => {},
                             },
                         ]
                       : undefined,

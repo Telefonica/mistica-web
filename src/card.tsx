@@ -13,7 +13,7 @@ import * as styles from './card.css';
 import * as mediaStyles from './image.css';
 import {useTheme} from './hooks';
 import {sprinkles} from './sprinkles.css';
-import {InternalIconButton} from './icon-button';
+import {InternalIconButton, InternalToggleIconButton} from './icon-button';
 import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
 import IconPauseFilled from './generated/mistica-icons/icon-pause-filled';
 import IconPlayFilled from './generated/mistica-icons/icon-play-filled';
@@ -40,16 +40,30 @@ import type {
     TrackingEvent,
 } from './utils/types';
 
-export type CardAction = {
-    label: string;
+type BaseIconButtonAction = {
     Icon: React.FC<IconProps>;
+    label: string;
+};
+
+type IconButtonAction = BaseIconButtonAction &
+    ExclusifyUnion<
+        | {href: string; newTab?: boolean}
+        | {to: string; fullPageOnWebView?: boolean; replace?: boolean}
+        | {onPress: () => void}
+    >;
+
+type ToggleIconButtonAction = {
+    checkedProps: BaseIconButtonAction;
+    uncheckedProps: BaseIconButtonAction;
+    onChange?: (checked: boolean) => void | undefined | Promise<void>;
+    checked?: boolean;
+    defaultChecked?: boolean;
+};
+
+export type CardAction = {
     disabled?: boolean;
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
-} & ExclusifyUnion<
-    | {href: string; newTab?: boolean}
-    | {to: string; fullPageOnWebView?: boolean; replace?: boolean}
-    | {onPress: () => void}
->;
+} & ExclusifyUnion<IconButtonAction | ToggleIconButtonAction>;
 
 const useTopActions = (actions?: Array<CardAction | React.ReactElement>, onClose?: () => void) => {
     const {texts} = useTheme();
@@ -75,21 +89,42 @@ type CardActionsGroupProps = {
     type?: 'default' | 'inverse' | 'media';
 };
 
-export const TOP_ACTION_BUTTON_SIZE = 48;
-
-export const CardActionIconButton = ({Icon, label, ...restProps}: CardAction): JSX.Element => {
+export const CardActionIconButton = (props: CardAction): JSX.Element => {
     const type = React.useContext(CardActionTypeContext);
 
     return (
         <ThemeVariant isInverse={type === 'inverse'}>
-            <InternalIconButton
-                {...restProps}
-                aria-label={label}
-                Icon={Icon}
-                small
-                isOverMedia={type === 'media'}
-                hasInteractiveAreaBleed
-            />
+            {/** we render IconButton if Icon prop was passed. Otherwise, ToggleIconButton will be used */}
+            {props.Icon ? (
+                <InternalIconButton
+                    {...props}
+                    aria-label={props.label}
+                    small
+                    isOverMedia={type === 'media'}
+                    type="neutral"
+                    backgroundType="transparent"
+                    hasInteractiveAreaBleed
+                />
+            ) : (
+                <InternalToggleIconButton
+                    {...props}
+                    checkedProps={{
+                        ...props.checkedProps,
+                        'aria-label': props.checkedProps.label,
+                        type: type === 'media' ? 'neutral' : 'brand',
+                        backgroundType: 'solid',
+                    }}
+                    uncheckedProps={{
+                        ...props.uncheckedProps,
+                        'aria-label': props.uncheckedProps.label,
+                        type: 'neutral',
+                        backgroundType: 'transparent',
+                    }}
+                    small
+                    isOverMedia={type === 'media'}
+                    hasInteractiveAreaBleed
+                />
+            )}
         </ThemeVariant>
     );
 };
@@ -115,7 +150,7 @@ export const CardActionsGroup = ({
             >
                 <Inline space={16}>
                     {finalActions.map((action, index) => {
-                        if ('label' in action) {
+                        if ('Icon' in action || 'checkedProps' in action) {
                             // action is a CardAction object
                             return <CardActionIconButton key={index} {...action} />;
                         }
@@ -776,11 +811,6 @@ export const DataCard = React.forwardRef<HTMLDivElement, DataCardProps>(
         const isTouchable = touchableProps.href || touchableProps.to || touchableProps.onPress;
 
         const finalActions = useTopActions(actions, onClose);
-        const topActionsStylesWithoutIcon = {
-            marginRight: -16,
-            marginTop: -24,
-            width: TOP_ACTION_BUTTON_SIZE * finalActions.length,
-        } as const;
 
         return (
             <CardContainer
@@ -824,7 +854,14 @@ export const DataCard = React.forwardRef<HTMLDivElement, DataCardProps>(
                                     />
                                 </Stack>
                                 {/** Hack to avoid content from rendering on top of the top action buttons */}
-                                {!hasIcon && <div style={topActionsStylesWithoutIcon} />}
+                                {!hasIcon && (
+                                    <div
+                                        style={applyCssVars({
+                                            [styles.vars.topActionsCount]: String(finalActions.length),
+                                        })}
+                                        className={styles.dataCardTopActionsWithoutIcon}
+                                    />
+                                )}
                             </Inline>
 
                             {extra && <div>{extra}</div>}

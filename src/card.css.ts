@@ -2,6 +2,7 @@ import {createVar, style} from '@vanilla-extract/css';
 import {sprinkles} from './sprinkles.css';
 import * as mq from './media-queries.css';
 import {vars as skinVars} from './skins/skin-contract.css';
+import {iconContainerSize} from './icon-button.css';
 
 export const actions = style([
     sprinkles({display: 'flex', flex: 1, alignItems: 'flex-end'}),
@@ -353,8 +354,9 @@ export const displayCardGradient = style({
 });
 
 const aspectRatio = createVar();
+const topActionsCount = createVar();
 
-export const vars = {aspectRatio};
+export const vars = {aspectRatio, topActionsCount};
 
 export const cardContainer = style({
     position: 'relative',
@@ -368,5 +370,18 @@ export const cardContainer = style({
         display: 'block',
         content: '""',
         clear: 'both',
+    },
+});
+
+export const dataCardTopActionsWithoutIcon = style({
+    marginRight: -17,
+    marginTop: -9,
+    width: `calc((${iconContainerSize.small} + 16px) * ${topActionsCount})`,
+
+    '@media': {
+        [mq.desktopOrBigger]: {
+            marginRight: -25,
+            marginTop: -17,
+        },
     },
 });

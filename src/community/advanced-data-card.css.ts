@@ -1,8 +1,9 @@
-import {style, styleVariants} from '@vanilla-extract/css';
+import {createVar, style, styleVariants} from '@vanilla-extract/css';
 import {sprinkles} from '../sprinkles.css';
 import * as mq from '../media-queries.css';
-import {vars} from '../skins/skin-contract.css';
+import {vars as skinVars} from '../skins/skin-contract.css';
 import {applyAlpha} from '../utils/color';
+import {iconContainerSize} from '../icon-button.css';
 
 const horizontalPadding = 24;
 
@@ -74,17 +75,17 @@ export const touchableCardOverlay = style({
     transition: 'background-color 0.1s ease-in-out',
     selectors: {
         [`${touchable}:active &`]: {
-            backgroundColor: vars.colors.backgroundContainerPressed,
+            backgroundColor: skinVars.colors.backgroundContainerPressed,
         },
     },
     '@media': {
         [mq.supportsHover]: {
             selectors: {
                 [`${touchableContainer}:hover &`]: {
-                    backgroundColor: vars.colors.backgroundContainerHover,
+                    backgroundColor: skinVars.colors.backgroundContainerHover,
                 },
                 [`${touchable}:active &`]: {
-                    backgroundColor: vars.colors.backgroundContainerPressed,
+                    backgroundColor: skinVars.colors.backgroundContainerPressed,
                 },
             },
         },
@@ -149,12 +150,12 @@ export const cardActionIconButton = sprinkles({
 export const cardAction = style([
     cardActionBase,
     {
-        background: vars.colors.backgroundContainer,
+        background: skinVars.colors.backgroundContainer,
         transition: 'background-color 0.1s ease-in-out',
         '@media': {
             [mq.supportsHover]: {
                 ':hover': {
-                    background: vars.colors.backgroundAlternative,
+                    background: skinVars.colors.backgroundAlternative,
                 },
             },
             [mq.touchableOnly]: {
@@ -167,12 +168,12 @@ export const cardAction = style([
 export const cardActionInverse = style([
     cardActionBase,
     {
-        background: applyAlpha(vars.rawColors.backgroundContainer, 0.7),
+        background: applyAlpha(skinVars.rawColors.backgroundContainer, 0.7),
         transition: 'background-color 0.1s ease-in-out',
         '@media': {
             [mq.supportsHover]: {
                 ':hover': {
-                    background: applyAlpha(vars.rawColors.backgroundContainer, 0.9),
+                    background: applyAlpha(skinVars.rawColors.backgroundContainer, 0.9),
                 },
             },
             [mq.touchableOnly]: {
@@ -254,4 +255,21 @@ export const adjustButtonLink = style({
 
 export const marginRightButton = style({
     marginRight: 16,
+});
+
+const topActionsCount = createVar();
+
+export const vars = {topActionsCount};
+
+export const topActionsWithoutIcon = style({
+    marginRight: -17,
+    marginTop: -1,
+    width: `calc((${iconContainerSize.small} + 16px) * ${topActionsCount})`,
+
+    '@media': {
+        [mq.desktopOrBigger]: {
+            marginRight: -25,
+            marginTop: -25,
+        },
+    },
 });

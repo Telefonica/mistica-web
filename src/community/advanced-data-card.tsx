@@ -13,7 +13,7 @@ import {vars} from '../skins/skin-contract.css';
 import Box from '../box';
 import Touchable from '../touchable';
 import classNames from 'classnames';
-import {CardActionsGroup, TOP_ACTION_BUTTON_SIZE} from '../card';
+import {CardActionsGroup} from '../card';
 import {useTheme} from '../hooks';
 import {getPrefixedDataAttributes} from '../utils/dom';
 import Inline from '../inline';
@@ -290,11 +290,6 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
         const hasExtras = !!extra?.length;
 
         const topActionsCount = (actions?.length || 0) + (onClose ? 1 : 0);
-        const topActionsStylesWithoutIcon = {
-            marginRight: -16,
-            marginTop: -24,
-            width: TOP_ACTION_BUTTON_SIZE * topActionsCount,
-        } as const;
 
         return (
             <section
@@ -337,7 +332,14 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
                                         />
                                     </Stack>
                                     {/** Hack to avoid content from rendering on top of the top action buttons */}
-                                    {!stackingGroup && <div style={topActionsStylesWithoutIcon} />}
+                                    {!stackingGroup && (
+                                        <div
+                                            style={applyCssVars({
+                                                [styles.vars.topActionsCount]: String(topActionsCount),
+                                            })}
+                                            className={styles.topActionsWithoutIcon}
+                                        />
+                                    )}
                                 </Inline>
                             </Box>
                         </div>

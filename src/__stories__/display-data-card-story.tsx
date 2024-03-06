@@ -14,6 +14,8 @@ import {
     Stack,
     Text2,
     Carousel,
+    IconPauseRegular,
+    IconPlayRegular,
 } from '..';
 import {Placeholder} from '../placeholder';
 import avatarImg from './images/avatar.jpg';
@@ -109,6 +111,18 @@ export const Default: StoryComponent<DisplayDataCardArgs> = ({
                               Icon: IconLightningRegular,
                               onPress: () => {},
                               label: 'Lightning',
+                          },
+                          {
+                              checkedProps: {
+                                  Icon: IconPauseRegular,
+                                  label: 'Pause',
+                              },
+                              uncheckedProps: {
+                                  Icon: IconPlayRegular,
+                                  label: 'Play',
+                              },
+                              defaultChecked: false,
+                              onChange: () => {},
                           },
                       ]
                     : undefined
