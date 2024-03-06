@@ -16,7 +16,7 @@ import {ThemeVariant, useIsInverseVariant} from './theme-variant-context';
 import {combineRefs} from './utils/common';
 import {useSetTooltipState, useTooltipState} from './tooltip-context-provider';
 import {isRunningAcceptanceTest} from './utils/platform';
-import IconButton from './icon-button';
+import {IconButton} from './icon-button';
 import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
 import Box from './box';
 

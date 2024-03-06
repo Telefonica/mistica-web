@@ -30,7 +30,7 @@ export {
     SuccessFeedback,
 } from './feedback';
 export {LoadingScreen, BrandLoadingScreen} from './loading-screen';
-export {default as IconButton} from './icon-button';
+export {IconButton, ToggleIconButton} from './icon-button';
 export {default as Popover} from './popover';
 export {default as FocusTrap} from './focus-trap';
 export {confirm, alert, dialog, useDialog} from './dialog-context';

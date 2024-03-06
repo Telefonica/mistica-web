@@ -2,7 +2,7 @@
 import * as React from 'react';
 import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
 import {useTheme} from './hooks';
-import IconButton from './icon-button';
+import {IconButton} from './icon-button';
 import {vars} from './skins/skin-contract.css';
 import * as styles from './maybe-dismissable.css';
 
