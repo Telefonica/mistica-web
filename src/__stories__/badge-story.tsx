@@ -23,7 +23,7 @@ export const Default: StoryComponent<Args> = ({inverse, value}) => {
             <Box padding={16} width="fit-content" dataAttributes={{testid: 'content'}}>
                 <Badge value={value !== 'undefined' ? +value : undefined}>
                     <Touchable
-                        style={{width: 24, height: 24}}
+                        style={{display: 'inline-block', width: 24, height: 24}}
                         onPress={() => {}}
                         aria-label="Read notifications"
                     >
