@@ -255,17 +255,26 @@ const ModalDialog = (props: ModalDialogProps): JSX.Element => {
 
     const startClosing = React.useCallback(() => {
         window.removeEventListener('popstate', handleBackNavigationRef.current);
+        let timeout: NodeJS.Timeout;
+
+        const doClose = () => {
+            if (!isClosingRef.current && isReady) {
+                isClosingRef.current = true;
+                setIsReady(false);
+                setIsClosing(true);
+                timeout = setTimeout(close, animationDurationRef.current);
+            }
+        };
+
         if (historyWasPushedRef.current) {
             historyWasPushedRef.current = false;
+            // to avoid race conditions, perform the close action after receiving the popstate event
+            window.addEventListener('popstate', () => doClose(), {once: true});
             window.history.back();
+        } else {
+            doClose();
         }
-        let timeout: NodeJS.Timeout;
-        if (!isClosingRef.current && isReady) {
-            isClosingRef.current = true;
-            setIsReady(false);
-            setIsClosing(true);
-            timeout = setTimeout(close, animationDurationRef.current);
-        }
+
         return () => {
             if (timeout) {
                 clearTimeout(timeout);
