@@ -233,7 +233,7 @@ export const getO2NewSkin: GetKnownSkin = () => {
             barTrack: palette.darkModeGrey6,
             loadingBar: palette.darkModeBeyondBlue,
             loadingBarBackground: palette.darkModeGrey6,
-            toggleAndroidInactive: palette.grey60,
+            toggleAndroidInactive: palette.grey20,
             toggleAndroidBackgroundActive: palette.o2BlueLight30,
             iosControlKnob: palette.grey30,
             badge: palette.o2Red65,
