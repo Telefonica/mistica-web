@@ -323,20 +323,20 @@ const useVideoWithControls = (
     }
 
     const videoAction: CardAction = {
-        Icon: {
-            playing: CardActionPauseIcon,
-            loading: CardActionPauseIcon,
-            paused: CardActionPlayIcon,
-            loadingTimeout: isRunningAcceptanceTest() ? CardActionPauseIcon : CardActionSpinner,
-        }[videoStatus],
-        onPress: onVideoControlPress,
-        label: {
-            playing: texts.pauseIconButtonLabel,
-            loading: texts.pauseIconButtonLabel,
-            paused: texts.playIconButtonLabel,
-            loadingTimeout: '',
-        }[videoStatus],
+        uncheckedProps: {
+            Icon:
+                videoStatus === 'loadingTimeout' && !isRunningAcceptanceTest()
+                    ? CardActionSpinner
+                    : CardActionPauseIcon,
+            label: videoStatus === 'loadingTimeout' ? '' : texts.pauseIconButtonLabel,
+        },
+        checkedProps: {
+            Icon: CardActionPlayIcon,
+            label: texts.playIconButtonLabel,
+        },
+        onChange: onVideoControlPress,
         disabled: videoStatus === 'loadingTimeout',
+        checked: videoStatus === 'paused',
     };
 
     return {

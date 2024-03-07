@@ -374,6 +374,7 @@ export const cardContainer = style({
 });
 
 export const dataCardTopActionsWithoutIcon = style({
+    /** Move the div to match the card border, ignoring content's padding. We add one extra pixel because of border's width */
     marginRight: -17,
     marginTop: -9,
     width: `calc((${iconContainerSize.small} + 16px) * ${topActionsCount})`,

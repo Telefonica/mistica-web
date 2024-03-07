@@ -262,6 +262,7 @@ const topActionsCount = createVar();
 export const vars = {topActionsCount};
 
 export const topActionsWithoutIcon = style({
+    /** Move the div to match the card border, ignoring content's padding. We add one extra pixel because of border's width */
     marginRight: -17,
     marginTop: -1,
     width: `calc((${iconContainerSize.small} + 16px) * ${topActionsCount})`,
