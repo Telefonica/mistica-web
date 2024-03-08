@@ -179,12 +179,20 @@ interface IconButtonBaseProps {
     backgroundType?: IconButtonBackgroundType;
 }
 
+interface InternalIconButtonBaseProps {
+    isOverMedia?: boolean;
+    hasOverlay?: boolean;
+}
+
 export type IconButtonProps = BaseProps &
     IconButtonBaseProps &
     ExclusifyUnion<HrefProps | ToProps | OnPressProps | MaybeProps> &
     AriaProps;
 
-export const RawIconButton = React.forwardRef<TouchableElement, IconButtonProps & {isOverMedia?: boolean}>(
+export const RawIconButton = React.forwardRef<
+    TouchableElement,
+    IconButtonProps & InternalIconButtonBaseProps
+>(
     (
         {
             disabled,
@@ -193,6 +201,7 @@ export const RawIconButton = React.forwardRef<TouchableElement, IconButtonProps 
             type = 'neutral',
             backgroundType = 'transparent',
             isOverMedia,
+            hasOverlay = true,
             'aria-label': ariaLabel,
             'aria-labelledby': ariaLabelledby,
             small,
@@ -249,7 +258,7 @@ export const RawIconButton = React.forwardRef<TouchableElement, IconButtonProps 
 
         const content = (
             <div className={classNames(styles.iconContainer[buttonSize], {[styles.isLoading]: showSpinner})}>
-                <div className={styles.overlay} />
+                {hasOverlay && <div className={styles.overlay} />}
 
                 <div aria-hidden={showSpinner ? true : undefined} className={styles.icon}>
                     <Icon size={styles.iconSize[buttonSize]} color="currentColor" />
@@ -318,7 +327,7 @@ export const RawIconButton = React.forwardRef<TouchableElement, IconButtonProps 
 
 export const InternalIconButton = React.forwardRef<
     TouchableElement,
-    ExclusifyUnion<DeprecatedProps | IconButtonProps> & {isOverMedia?: boolean}
+    ExclusifyUnion<DeprecatedProps | (IconButtonProps & InternalIconButtonBaseProps)>
 >((props, ref) => {
     /**
      * The new IconButton requires Icon prop, so if it it's used we render the new version.
@@ -387,7 +396,7 @@ export type ToggleIconButtonProps = BaseProps & BaseToggleProps;
 
 export const InternalToggleIconButton = React.forwardRef<
     TouchableElement,
-    ToggleIconButtonProps & {isOverMedia?: boolean}
+    ToggleIconButtonProps & InternalIconButtonBaseProps
 >(({checked, defaultChecked, checkedProps, uncheckedProps, onChange, dataAttributes, ...props}, ref) => {
     const [checkedState, setCheckedState] = React.useState(!!defaultChecked);
 

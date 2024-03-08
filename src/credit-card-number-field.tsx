@@ -19,7 +19,7 @@ import {createChangeEvent} from './utils/dom';
 import {combineRefs} from './utils/common';
 import * as styles from './credit-card-number-field.css';
 import {vars} from './skins/skin-contract.css';
-import {iconSize} from './text-field-base.css';
+import {iconSize} from './icon-button.css';
 
 import type {CardOptions} from './utils/credit-card';
 import type {CommonFormFieldProps} from './text-field-base';
@@ -77,20 +77,20 @@ const CreditCardInput: React.FC<Props> = ({inputRef, value, defaultValue, onChan
 
 const getAnimationTarget = (value?: string) => {
     if (isVisa(value)) {
-        return <IconVisa size={iconSize} />;
+        return <IconVisa size={iconSize.default} />;
     }
     if (isMasterCard(value)) {
-        return <IconMastercard size={iconSize} />;
+        return <IconMastercard size={iconSize.default} />;
     }
     if (isAmericanExpress(value)) {
-        return <IconAmex size={iconSize} />;
+        return <IconAmex size={iconSize.default} />;
     }
     return null;
 };
 
 const initialState = {
     showBackface: false,
-    animationTarget: <IconCreditCardVisaRegular size={iconSize} />,
+    animationTarget: <IconCreditCardVisaRegular size={iconSize.default} />,
     isAnimating: false,
 };
 
@@ -138,7 +138,7 @@ const CreditcardAdornment = ({value}: {value?: string}) => {
                 onTransitionEnd={() => isAnimating && dispatch({type: 'TRANSITION_END'})}
             >
                 <div className={styles.flipFront}>
-                    <IconCreditCardVisaRegular size={iconSize} color={vars.colors.neutralMedium} />
+                    <IconCreditCardVisaRegular size={iconSize.default} color={vars.colors.neutralMedium} />
                 </div>
                 <div className={styles.flipBack}>{animationTarget}</div>
             </div>
