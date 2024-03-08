@@ -276,7 +276,7 @@ export const getO2NewSkin: GetKnownSkin = () => {
             textNavigationBarSecondary: palette.grey45,
             textNavigationSearchBarHint: palette.grey45,
             textNavigationSearchBarText: palette.grey30,
-            textAppBar: palette.grey80,
+            textAppBar: palette.grey45,
             textAppBarSelected: palette.grey30,
             customTabsBackground: palette.darkModeBlack,
         },
