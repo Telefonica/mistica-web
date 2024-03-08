@@ -14,8 +14,8 @@ import {
     Text2,
     Box,
     Carousel,
-    IconPauseRegular,
-    IconPlayRegular,
+    IconStarFilled,
+    IconStarRegular,
 } from '..';
 import usingVrImg from './images/using-vr.jpg';
 import avatarImg from './images/avatar.jpg';
@@ -112,12 +112,12 @@ export const Default: StoryComponent<DisplayMediaCardArgs> = ({
                             },
                             {
                                 checkedProps: {
-                                    Icon: IconPauseRegular,
-                                    label: 'Pause',
+                                    Icon: IconStarFilled,
+                                    label: 'checked',
                                 },
                                 uncheckedProps: {
-                                    Icon: IconPlayRegular,
-                                    label: 'Play',
+                                    Icon: IconStarRegular,
+                                    label: 'unchecked',
                                 },
                                 defaultChecked: false,
                                 onChange: () => {},

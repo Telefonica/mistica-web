@@ -957,16 +957,16 @@ const cardSnippets: Array<Snippet> = [
             },
             {
               checkedProps: {
-                Icon: IconPauseRegular,
-                label: "Pause",
+                  Icon: IconStarFilled,
+                  label: 'checked',
               },
               uncheckedProps: {
-                Icon: IconPlayRegular,
-                label: "Play",
+                  Icon: IconStarRegular,
+                  label: 'unchecked',
               },
               defaultChecked: false,
               onChange: () => {},
-            },
+          },
           ]}
         />`,
     },
@@ -994,16 +994,16 @@ const cardSnippets: Array<Snippet> = [
             },
             {
               checkedProps: {
-                Icon: IconPauseRegular,
-                label: "Pause",
+                  Icon: IconStarFilled,
+                  label: 'checked',
               },
               uncheckedProps: {
-                Icon: IconPlayRegular,
-                label: "Play",
+                  Icon: IconStarRegular,
+                  label: 'unchecked',
               },
               defaultChecked: false,
               onChange: () => {},
-            },
+          },
           ]}
         />`,
     },
@@ -1045,16 +1045,16 @@ const cardSnippets: Array<Snippet> = [
             },
             {
               checkedProps: {
-                Icon: IconPauseRegular,
-                label: "Pause",
+                  Icon: IconStarFilled,
+                  label: 'checked',
               },
               uncheckedProps: {
-                Icon: IconPlayRegular,
-                label: "Play",
+                  Icon: IconStarRegular,
+                  label: 'unchecked',
               },
               defaultChecked: false,
               onChange: () => {},
-            },
+          },
           ]}
         />`,
     },
@@ -1097,16 +1097,16 @@ const cardSnippets: Array<Snippet> = [
             },
             {
               checkedProps: {
-                Icon: IconPauseRegular,
-                label: "Pause",
+                  Icon: IconStarFilled,
+                  label: 'checked',
               },
               uncheckedProps: {
-                Icon: IconPlayRegular,
-                label: "Play",
+                  Icon: IconStarRegular,
+                  label: 'unchecked',
               },
               defaultChecked: false,
               onChange: () => {},
-            },
+          },
           ]}
         />`,
     },
@@ -1131,12 +1131,12 @@ const cardSnippets: Array<Snippet> = [
             },
             {
               checkedProps: {
-                Icon: IconPauseRegular,
-                label: "Pause",
+                  Icon: IconStarFilled,
+                  label: 'checked',
               },
               uncheckedProps: {
-                Icon: IconPlayRegular,
-                label: "Play",
+                  Icon: IconStarRegular,
+                  label: 'unchecked',
               },
               defaultChecked: false,
               onChange: () => {},

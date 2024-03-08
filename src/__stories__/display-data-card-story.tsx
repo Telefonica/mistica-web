@@ -14,8 +14,8 @@ import {
     Stack,
     Text2,
     Carousel,
-    IconPauseRegular,
-    IconPlayRegular,
+    IconStarFilled,
+    IconStarRegular,
 } from '..';
 import {Placeholder} from '../placeholder';
 import avatarImg from './images/avatar.jpg';
@@ -114,12 +114,12 @@ export const Default: StoryComponent<DisplayDataCardArgs> = ({
                           },
                           {
                               checkedProps: {
-                                  Icon: IconPauseRegular,
-                                  label: 'Pause',
+                                  Icon: IconStarFilled,
+                                  label: 'checked',
                               },
                               uncheckedProps: {
-                                  Icon: IconPlayRegular,
-                                  label: 'Play',
+                                  Icon: IconStarRegular,
+                                  label: 'unchecked',
                               },
                               defaultChecked: false,
                               onChange: () => {},

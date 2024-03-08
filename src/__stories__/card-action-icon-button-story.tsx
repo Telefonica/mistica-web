@@ -11,8 +11,8 @@ import {
     CardActionIconButton,
     Text2,
     Stack,
-    IconPauseRegular,
-    IconPlayRegular,
+    IconStarFilled,
+    IconStarRegular,
 } from '..';
 
 export default {
@@ -39,8 +39,8 @@ const MyCustomCardActionToggleComponent = () => {
 
     return (
         <CardActionIconButton
-            checkedProps={{Icon: IconPauseRegular, label: 'Pause'}}
-            uncheckedProps={{Icon: IconPlayRegular, label: 'Play'}}
+            checkedProps={{Icon: IconStarFilled, label: 'checked'}}
+            uncheckedProps={{Icon: IconStarRegular, label: 'unchecked'}}
             checked={checked}
             onChange={(checkedValue) => setChecked(checkedValue)}
         />

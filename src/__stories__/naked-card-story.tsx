@@ -14,8 +14,8 @@ import {
     Circle,
     skinVars,
     Carousel,
-    IconPauseRegular,
-    IconPlayRegular,
+    IconStarFilled,
+    IconStarRegular,
 } from '..';
 import {Placeholder} from '../placeholder';
 import tennisImg from './images/tennis.jpg';
@@ -131,12 +131,12 @@ export const Default: StoryComponent<Args> = ({
                                   },
                                   {
                                       checkedProps: {
-                                          Icon: IconPauseRegular,
-                                          label: 'Pause',
+                                          Icon: IconStarFilled,
+                                          label: 'checked',
                                       },
                                       uncheckedProps: {
-                                          Icon: IconPlayRegular,
-                                          label: 'Play',
+                                          Icon: IconStarRegular,
+                                          label: 'unchecked',
                                       },
                                       defaultChecked: false,
                                       onChange: () => {},
