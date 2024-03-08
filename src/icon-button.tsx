@@ -182,6 +182,7 @@ interface IconButtonBaseProps {
 interface InternalIconButtonBaseProps {
     isOverMedia?: boolean;
     hasInteractiveAreaBleed?: boolean;
+    hasOverlay?: boolean;
 }
 
 export type IconButtonProps = BaseProps &
@@ -201,6 +202,7 @@ export const RawIconButton = React.forwardRef<
             type = 'neutral',
             backgroundType = 'transparent',
             isOverMedia,
+            hasOverlay = true,
             'aria-label': ariaLabel,
             'aria-labelledby': ariaLabelledby,
             small,
@@ -259,7 +261,7 @@ export const RawIconButton = React.forwardRef<
 
         const content = (
             <div className={classNames(styles.iconContainer[buttonSize], {[styles.isLoading]: showSpinner})}>
-                <div className={styles.overlay} />
+                {hasOverlay && <div className={styles.overlay} />}
 
                 <div aria-hidden={showSpinner ? true : undefined} className={styles.icon}>
                     <Icon size={styles.iconSize[buttonSize]} color="currentColor" />

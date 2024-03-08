@@ -5,7 +5,8 @@ Some components use some default texts that you can customize using [`theme` pro
 These are the customizable texts and their default values:
 
 - `expirationDatePlaceholder`: `'MM/AA'`
-- `togglePasswordVisibilityLabel`: `'Mostrar u ocultar contraseña'`
+- `enablePasswordVisibility`: `'Mostrar contraseña'`,
+- `disablePasswordVisibility`: `'Ocultar contraseña'`,
 - `loading`: `'Cargando'`
 - `linkOpensInNewTab`: `'Se abre en ventana nueva'`
 - `modalClose`: `'Cerrar'`
