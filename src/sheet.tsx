@@ -261,7 +261,6 @@ const Sheet = React.forwardRef<HTMLDivElement, SheetProps>(({onClose, children, 
                                 aria-label={texts.modalClose}
                                 Icon={IconCloseRegular}
                                 hasInteractiveAreaBleed
-                                small
                             />
                         </div>
                     </div>

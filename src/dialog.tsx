@@ -391,7 +391,6 @@ const ModalDialog = (props: ModalDialogProps): JSX.Element => {
                                         onPress={dismiss}
                                         aria-label={texts.modalClose || texts.closeButtonLabel}
                                         hasInteractiveAreaBleed
-                                        small
                                         Icon={IconCloseRegular}
                                     />
                                 </div>

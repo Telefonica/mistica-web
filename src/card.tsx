@@ -807,7 +807,7 @@ export const DataCard = React.forwardRef<HTMLDivElement, DataCardProps>(
         },
         ref
     ) => {
-        const hasIcon = !!icon;
+        const hasIconOrHeadline = !!icon || !!headline;
         const isTouchable = touchableProps.href || touchableProps.to || touchableProps.onPress;
 
         const finalActions = useTopActions(actions, onClose);
@@ -854,7 +854,7 @@ export const DataCard = React.forwardRef<HTMLDivElement, DataCardProps>(
                                     />
                                 </Stack>
                                 {/** Hack to avoid content from rendering on top of the top action buttons */}
-                                {!hasIcon && (
+                                {!hasIconOrHeadline && (
                                     <div
                                         style={applyCssVars({
                                             [styles.vars.topActionsCount]: String(finalActions.length),
