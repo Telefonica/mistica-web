@@ -46,10 +46,7 @@ export const palette = {
     darkModeGrey: '#242424',
 };
 
-/**
- * @deprecated Use `getMovistarSkin` instead.
- */
-export const getMovistarLegacySkin: GetKnownSkin = (variant) => {
+export const getMovistarLegacySkin: GetKnownSkin = () => {
     const skin: KnownSkin = {
         name: MOVISTAR_LEGACY_SKIN,
         colors: {
@@ -112,7 +109,7 @@ export const getMovistarLegacySkin: GetKnownSkin = (variant) => {
             textLinkSnackbar: palette.movistarBlue30,
             control: palette.grey3,
             controlActivated: palette.movistarBlue,
-            controlInverse: palette.white,
+            controlInverse: palette.movistarBlue20,
             controlActivatedInverse: palette.white,
             controlError: palette.pepper,
             barTrack: palette.grey3,
@@ -164,6 +161,19 @@ export const getMovistarLegacySkin: GetKnownSkin = (variant) => {
             textAppBar: palette.grey4,
             textAppBarSelected: palette.movistarBlue,
             customTabsBackground: palette.white,
+            tagTextPromo: palette.purple70,
+            tagTextActive: palette.movistarBlue,
+            tagTextInactive: palette.grey5,
+            tagTextSuccess: palette.movistarGreen70,
+            tagTextWarning: palette.egg80,
+            tagTextError: palette.pepper70,
+            tagBackgroundPromo: palette.purple10,
+            tagBackgroundActive: palette.movistarBlue10,
+            tagBackgroundInactive: palette.grey2,
+            tagBackgroundSuccess: palette.movistarGreen10,
+            tagBackgroundWarning: palette.egg10,
+            tagBackgroundError: palette.pepper10,
+            overscroll: palette.movistarBlue,
         },
         darkModeColors: {
             background: palette.darkModeBlack,
@@ -277,6 +287,19 @@ export const getMovistarLegacySkin: GetKnownSkin = (variant) => {
             textAppBar: palette.grey5,
             textAppBarSelected: palette.grey2,
             customTabsBackground: palette.darkModeBlack,
+            tagTextPromo: palette.purple70,
+            tagTextActive: palette.movistarBlue,
+            tagTextInactive: palette.grey5,
+            tagTextSuccess: palette.movistarGreen70,
+            tagTextWarning: palette.egg80,
+            tagTextError: palette.pepper70,
+            tagBackgroundPromo: palette.grey6,
+            tagBackgroundActive: palette.grey6,
+            tagBackgroundInactive: palette.grey6,
+            tagBackgroundSuccess: palette.grey6,
+            tagBackgroundWarning: palette.grey6,
+            tagBackgroundError: palette.grey6,
+            overscroll: palette.darkModeBlack,
         },
         borderRadii: {
             avatar: '50%',
@@ -312,15 +335,5 @@ export const getMovistarLegacySkin: GetKnownSkin = (variant) => {
             text10: {weight: 'bold'},
         },
     };
-
-    if (variant === 'prominent') {
-        skin.colors.brand = palette.movistarProminentBlue;
-        skin.colors.brandHigh = palette.movistarProminentBlueDark;
-        skin.colors.backgroundBrand = palette.movistarProminentBlue;
-        skin.colors.navigationBarBackground = palette.movistarProminentBlue;
-        skin.colors.backgroundFeedbackBottom = palette.movistarProminentBlue;
-        skin.colors.controlActivated = palette.movistarProminentBlue;
-        skin.colors.dividerInverse = palette.movistarProminentBlueDark;
-    }
     return skin;
 };
