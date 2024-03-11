@@ -10,9 +10,9 @@ import classNames from 'classnames';
 
 import type {DataAttributes} from './utils/types';
 
-type VideoState = 'loading' | 'loaded' | 'playing' | 'paused' | 'error';
+type VideoState = 'loading' | 'loaded' | 'playing' | 'paused' | 'error' | 'stopped';
 
-type VideoAction = 'play' | 'finishLoad' | 'pause' | 'fail' | 'reset';
+type VideoAction = 'play' | 'finishLoad' | 'pause' | 'fail' | 'reset' | 'stop';
 
 const transitions: Record<VideoState, Partial<Record<VideoAction, VideoState>>> = {
     loading: {
@@ -36,20 +36,28 @@ const transitions: Record<VideoState, Partial<Record<VideoAction, VideoState>>> 
     playing: {
         pause: 'paused',
         reset: 'loading',
+        stop: 'stopped',
     },
 
     paused: {
         play: 'playing',
         reset: 'loading',
+        stop: 'stopped',
     },
 
     error: {
         reset: 'loading',
     },
+
+    stopped: {
+        play: 'playing',
+        reset: 'loading',
+    },
 };
 
-const videoReducer = (state: VideoState, action: VideoAction): VideoState =>
-    transitions[state][action] || state;
+const videoReducer = (state: VideoState, action: VideoAction): VideoState => {
+    return transitions[state][action] || state;
+};
 
 export type AspectRatio = '1:1' | '16:9' | '4:3';
 
@@ -105,6 +113,8 @@ export interface VideoElement extends HTMLDivElement {
     play: () => Promise<void>;
     pause: () => void;
     load: () => void;
+    /** Stops the video and shows the poster image (if available) */
+    stop: () => void;
     setCurrentTime: (time: number) => void;
 }
 
@@ -168,12 +178,17 @@ const Video = React.forwardRef<VideoElement, VideoProps>(
 
         const handleLoadFinish = () => {
             onLoad?.();
+            if (videoStatus === 'stopped') {
+                // the video was intentionally stopped
+                return;
+            }
             const video = videoRef.current;
             const shouldAutoPlay = autoPlay && !isRunningAcceptanceTest();
 
             dispatch('finishLoad');
             if (video && shouldAutoPlay && video.paused) {
                 video.play();
+                dispatch('play');
             }
         };
 
@@ -186,7 +201,7 @@ const Video = React.forwardRef<VideoElement, VideoProps>(
             }
         });
 
-        const showPoster = videoStatus === 'error' || videoStatus === 'loading' || videoStatus === 'loaded';
+        const showPoster = ['error', 'loading', 'loaded', 'stopped'].includes(videoStatus);
 
         const video = (
             <video
@@ -204,6 +219,7 @@ const Video = React.forwardRef<VideoElement, VideoProps>(
                     dispatch('pause');
                 }}
                 onTimeUpdate={() => {
+                    // The state update is performed here instead of in "onPlay" to avoid flickering when hiding the poster
                     if (videoStatus !== 'playing' && videoRef.current?.currentTime !== 0) {
                         onPlay?.();
                         dispatch('play');
@@ -271,7 +287,11 @@ const Video = React.forwardRef<VideoElement, VideoProps>(
                         const containerElement = element ? (element as VideoElement) : null;
 
                         if (containerElement) {
-                            containerElement.play = () => videoRef.current?.play() || Promise.resolve();
+                            containerElement.play = () => {
+                                // old browsers don't return a promise when calling play()
+                                // see https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/play#browser_compatibility
+                                return videoRef.current?.play() || Promise.resolve();
+                            };
                             containerElement.pause = () => videoRef.current?.pause();
                             containerElement.load = () => {
                                 /**
@@ -298,6 +318,13 @@ const Video = React.forwardRef<VideoElement, VideoProps>(
                             containerElement.setCurrentTime = (time: number) => {
                                 if (videoRef.current) {
                                     videoRef.current.currentTime = time;
+                                }
+                            };
+                            containerElement.stop = () => {
+                                if (videoRef.current) {
+                                    videoRef.current.pause();
+                                    videoRef.current.currentTime = 0;
+                                    dispatch('stop');
                                 }
                             };
                         }
