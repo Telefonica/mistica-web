@@ -314,6 +314,13 @@ const ModalDialog = (props: ModalDialogProps): JSX.Element => {
         };
     }, [handleKeyDown, shouldRenderNative]);
 
+    React.useEffect(() => {
+        window.addEventListener('popstate', dismiss);
+        return () => {
+            window.removeEventListener('popstate', dismiss);
+        };
+    }, [dismiss]);
+
     const handleOverlayPress = React.useCallback(
         (event: React.MouseEvent) => {
             event.stopPropagation();
