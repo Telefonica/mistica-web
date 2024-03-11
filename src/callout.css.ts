@@ -25,9 +25,6 @@ const baseCloseButtonContainer = style([
         position: 'absolute',
         right: 8,
     }),
-    {
-        top: 8,
-    },
 ]);
 
 export const centeredCloseButtonContainer = style([

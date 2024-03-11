@@ -20,7 +20,7 @@ import {iconContainerSize} from './icon-button.css';
 import type {ButtonLink, ButtonPrimary, ButtonSecondary} from './button';
 import type {DataAttributes, RendersNullableElement} from './utils/types';
 
-const CALLOUT_MIN_HEIGHT = 56;
+const CENTERED_CLOSE_BUTTON_MAX_HEIGHT = 56;
 
 type Props = {
     title?: string;
@@ -49,14 +49,14 @@ const Callout: React.FC<Props> = ({
     const variant = useThemeVariant();
     const {texts} = useTheme();
     const ref = React.useRef<HTMLDivElement>(null);
-    const [hasMinHeight, setHasMinHeight] = React.useState(false);
+    const [hasCenteredCloseButton, setHasCenteredCloseButton] = React.useState(false);
 
     useIsomorphicLayoutEffect(() => {
         const element = ref.current;
         if (element) {
             const handleResize = () => {
-                // When the container has min height, the close button should be vertically centered
-                setHasMinHeight(element.clientHeight === CALLOUT_MIN_HEIGHT);
+                // If the container's height is not large enough, the close button should be vertically centered
+                setHasCenteredCloseButton(element.clientHeight <= CENTERED_CLOSE_BUTTON_MAX_HEIGHT);
             };
 
             // Handle first render
@@ -120,7 +120,7 @@ const Callout: React.FC<Props> = ({
                 {onClose && (
                     <div
                         className={
-                            hasMinHeight
+                            hasCenteredCloseButton
                                 ? styles.centeredCloseButtonContainer
                                 : styles.defaultCloseButtonContainer
                         }
