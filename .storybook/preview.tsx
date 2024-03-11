@@ -50,8 +50,15 @@ const getPlatformByUrl = (searchParams: URLSearchParams): Platform | undefined =
     return getPlatformByValue(searchParams.get('platform'));
 };
 
-const getTheme = (selectedSkin?: string, platform?: Platform, colorScheme?: ColorScheme): ThemeConfig => {
-    const themeConfig = AVAILABLE_THEMES.find(({skin}) => skin.name === selectedSkin) || Movistar;
+const getTheme = (
+    selectedSkin?: string,
+    selectedPlatform?: Platform,
+    selectedColorScheme?: ColorScheme
+): ThemeConfig => {
+    const skin = selectedSkin ?? MOVISTAR_SKIN;
+    const platform = selectedPlatform ?? 'desktop';
+    const colorScheme = selectedColorScheme ?? 'auto';
+    const themeConfig = AVAILABLE_THEMES.find(({skin: skinConfig}) => skinConfig.name === skin) || Movistar;
     return {
         ...themeConfig,
         colorScheme,
