@@ -103,9 +103,7 @@ export const Default: StoryComponent<Args> = ({
                     <ButtonPrimary
                         small
                         onPress={() => {
-                            if (videoRef.current) {
-                                videoRef.current.play();
-                            }
+                            videoRef.current?.play();
                         }}
                     >
                         Play
@@ -116,9 +114,18 @@ export const Default: StoryComponent<Args> = ({
                             videoRef.current?.pause();
                         }}
                     >
+                        Pause
+                    </ButtonPrimary>
+                    <ButtonPrimary
+                        small
+                        onPress={() => {
+                            videoRef.current?.stop();
+                        }}
+                    >
                         Stop
                     </ButtonPrimary>
                 </Inline>
+
                 {video}
             </Stack>
         </Stack>

@@ -37,3 +37,20 @@ test('HighlightedCard group', async () => {
 
     expect(image).toMatchImageSnapshot();
 });
+
+test.each`
+    title      | description
+    ${'Title'} | ${'Description description description description'}
+    ${''}      | ${'Description description description description'}
+    ${'Title'} | ${''}
+`('HighlightedCard combinations $title $description', async ({title, description}) => {
+    await openStoryPage({
+        id: 'components-cards-highlightedcard--default',
+        device: 'MOBILE_IOS',
+        args: {title, description},
+    });
+
+    const highlightedCard = await screen.findByTestId('highlighted-card');
+    const image = await highlightedCard.screenshot();
+    expect(image).toMatchImageSnapshot();
+});

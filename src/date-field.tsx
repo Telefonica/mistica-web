@@ -9,7 +9,7 @@ import {getLocalDateString} from './utils/time';
 import {useTheme} from './hooks';
 import {isFirefox} from './utils/platform';
 import * as styles from './date-field.css';
-import {iconSize} from './text-field-base.css';
+import {iconSize} from './icon-button.css';
 
 import type {CommonFormFieldProps} from './text-field-base';
 
@@ -98,7 +98,7 @@ const DateField: React.FC<DateFieldProps> = ({
             type="date"
             endIconOverlay={
                 <div className={styles.iconContainer}>
-                    <IconCalendarRegular size={iconSize} />
+                    <IconCalendarRegular size={iconSize.default} />
                 </div>
             }
             dataAttributes={{'component-name': 'DateField', ...dataAttributes}}

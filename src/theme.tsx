@@ -9,7 +9,8 @@ export type ThemeTexts = Readonly<typeof TEXTS_ES>;
 
 const TEXTS_ES = {
     expirationDatePlaceholder: 'MM/AA',
-    togglePasswordVisibilityLabel: 'Mostrar u ocultar contraseña',
+    enablePasswordVisibility: 'Mostrar contraseña',
+    disablePasswordVisibility: 'Ocultar contraseña',
     loading: 'Cargando',
     linkOpensInNewTab: 'Se abre en ventana nueva',
     modalClose: 'Cerrar',
@@ -55,7 +56,8 @@ const TEXTS_ES = {
 
 const TEXTS_EN: ThemeTexts = {
     expirationDatePlaceholder: 'MM/YY',
-    togglePasswordVisibilityLabel: 'Toggle password visibility',
+    enablePasswordVisibility: 'Show password',
+    disablePasswordVisibility: 'Hide password',
     loading: 'Loading',
     linkOpensInNewTab: 'Opens in a new window',
     modalClose: 'Close',
@@ -101,7 +103,8 @@ const TEXTS_EN: ThemeTexts = {
 
 const TEXTS_DE: ThemeTexts = {
     expirationDatePlaceholder: 'MM/JJ',
-    togglePasswordVisibilityLabel: 'Passwort un-/sichtbar machen',
+    enablePasswordVisibility: 'Passwort anzeigen',
+    disablePasswordVisibility: 'Passwort verbergen',
     loading: 'Wird gespeichert',
     linkOpensInNewTab: 'Wird in neuem Fenster geöffnet',
     modalClose: 'Schließen',
@@ -147,7 +150,8 @@ const TEXTS_DE: ThemeTexts = {
 
 const TEXTS_PT: ThemeTexts = {
     expirationDatePlaceholder: 'MM/AA',
-    togglePasswordVisibilityLabel: 'Mostrar ou ocultar senha',
+    enablePasswordVisibility: 'mostrar senha',
+    disablePasswordVisibility: 'esconder a senha',
     loading: 'Carregando',
     linkOpensInNewTab: 'Abre em nova janela',
     modalClose: 'Fechar',

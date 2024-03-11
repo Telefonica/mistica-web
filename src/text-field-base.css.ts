@@ -3,6 +3,7 @@ import {sprinkles} from './sprinkles.css';
 import {vars} from './skins/skin-contract.css';
 import * as mq from './media-queries.css';
 import {pxToRem} from './utils/css';
+import {iconContainerSize} from './icon-button.css';
 
 const borderSize = 1;
 
@@ -12,8 +13,7 @@ export const fieldLeftPadding = 12 - borderSize;
 export const fieldRightPadding = 16 - borderSize;
 
 export const fieldElementsGap = 12;
-export const iconSize = pxToRem(24);
-export const iconButtonSize = pxToRem(40);
+export const iconButtonSize = iconContainerSize.default;
 
 export const mobileFontSize = pxToRem(16);
 export const desktopFontSize = pxToRem(18);
@@ -365,40 +365,7 @@ globalStyle(`${suggestionsContainer} > ul`, {
     margin: 0,
 });
 
-export const endIcon = style([
-    sprinkles({
-        background: 'transparent',
-        padding: 0,
-    }),
-    {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-]);
-
-export const endIconWithShadow = style([
-    endIcon,
-    sprinkles({
-        borderRadius: '50%',
-    }),
-    {
-        height: iconButtonSize,
-        width: iconButtonSize,
-        backgroundSize: '200%',
-        transition: 'background-color 0.1s ease-in-out',
-
-        '@media': {
-            [mq.supportsHover]: {
-                ':hover': {
-                    background: vars.colors.backgroundAlternative,
-                },
-            },
-        },
-    },
-]);
-
 export const fieldEndIconContainer = style({
     // remove extra button space on the right so that icon is not too far from field's container
-    marginRight: -8,
+    marginRight: -12,
 });
