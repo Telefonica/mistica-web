@@ -287,12 +287,6 @@ const ModalDialog = (props: ModalDialogProps): JSX.Element => {
         }
     }, [handleAccept, handleCancel, shouldAcceptOnDismiss]);
 
-    React.useEffect(() => {
-        if (shouldRenderNative) {
-            return;
-        }
-    }, [shouldRenderNative]);
-
     const handleKeyDown = React.useCallback(
         (event: KeyboardEvent) => {
             if (event.key === ESC) {
@@ -315,12 +309,15 @@ const ModalDialog = (props: ModalDialogProps): JSX.Element => {
     }, [handleKeyDown, shouldRenderNative]);
 
     React.useEffect(() => {
+        if (shouldRenderNative) {
+            return;
+        }
         // Consider any page navigation as a dismiss
         window.addEventListener('popstate', dismiss);
         return () => {
             window.removeEventListener('popstate', dismiss);
         };
-    }, [dismiss]);
+    }, [dismiss, shouldRenderNative]);
 
     const handleOverlayPress = React.useCallback(
         (event: React.MouseEvent) => {
