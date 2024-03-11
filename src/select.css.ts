@@ -7,6 +7,7 @@ import {
     fieldEndIconGap,
     fieldLeftPadding,
     fieldRightPadding,
+    iconButtonSize,
     inputLineHeight,
     mobileFontSize,
 } from './text-field-base.css';
@@ -116,7 +117,7 @@ const selectBase = style([
     }),
     {
         fontFamily: 'inherit',
-        paddingRight: `calc(${chevronSize} + ${fieldEndIconGap}px + ${fieldRightPadding}px)`,
+        paddingRight: `calc(${iconButtonSize} + ${fieldEndIconGap}px)`,
         paddingLeft: fieldLeftPadding,
         outline: 0,
         textOverflow: 'ellipsis',
@@ -158,7 +159,7 @@ const selectTextBase = style([
         pointerEvents: 'none',
         top: 1, // for border
         left: fieldLeftPadding + 1, // +1 for border
-        right: `calc(${chevronSize} + ${fieldEndIconGap}px + ${fieldRightPadding}px + 1px)`, // icon width and +1 for border
+        right: `calc(${iconButtonSize} + ${fieldEndIconGap}px + 1px)`, // +1 for border
         lineHeight: inputLineHeight,
         fontSize: desktopFontSize,
         '@media': {
@@ -182,10 +183,20 @@ export const arrowDown = style([
     }),
     {
         right: fieldRightPadding,
-        top: `calc(50% - ${chevronSize} / 2)`,
+        top: `calc(50% - ${iconButtonSize} / 2)`,
         pointerEvents: 'none',
     },
 ]);
+
+export const iconContainer = style({
+    width: iconButtonSize,
+    height: iconButtonSize,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    // remove extra button space on the right so that icon is not too far from field's container
+    marginRight: -12,
+});
 
 export const menuItem = style([
     sprinkles({
