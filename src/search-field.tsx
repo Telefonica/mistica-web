@@ -7,7 +7,7 @@ import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
 import {useTheme} from './hooks';
 import {createChangeEvent} from './utils/dom';
 import {combineRefs} from './utils/common';
-import {endIconWithShadow, iconSize} from './text-field-base.css';
+import {iconSize} from './icon-button.css';
 
 import type {CommonFormFieldProps} from './text-field-base';
 
@@ -79,12 +79,11 @@ const SearchField = React.forwardRef<any, SearchFieldProps>(
         return (
             <TextFieldBaseAutosuggest
                 ref={combineRefs(inputRef, ref)}
-                startIcon={<IconSearchRegular size={iconSize} />}
+                startIcon={<IconSearchRegular size={iconSize.default} />}
                 endIcon={
                     controlledValue ? (
                         <FieldEndIcon
                             Icon={IconCloseRegular}
-                            className={endIconWithShadow}
                             aria-label={theme.texts.formSearchClear}
                             onPress={clearInput}
                         />

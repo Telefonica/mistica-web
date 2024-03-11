@@ -276,7 +276,7 @@ const minButtonArea = {
     touchable: '48px',
 };
 
-const iconContainerSize = {
+export const iconContainerSize = {
     default: '3rem',
     small: '2rem',
 };

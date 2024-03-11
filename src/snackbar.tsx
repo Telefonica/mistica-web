@@ -11,7 +11,7 @@ import {vars} from './skins/skin-contract.css';
 import {getPrefixedDataAttributes} from './utils/dom';
 import {Portal} from './portal';
 import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
-import IconButton from './icon-button';
+import {IconButton} from './icon-button';
 
 import type {DataAttributes} from './utils/types';
 

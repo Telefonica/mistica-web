@@ -5,7 +5,6 @@ import {FieldEndIcon, TextFieldBaseAutosuggest} from './text-field-base';
 import {useTheme} from './hooks';
 import IconEyeOffRegular from './generated/mistica-icons/icon-eye-off-regular';
 import IconEyeRegular from './generated/mistica-icons/icon-eye-regular';
-import {endIconWithShadow} from './text-field-base.css';
 
 import type {CommonFormFieldProps} from './text-field-base';
 
@@ -21,11 +20,11 @@ const PasswordAdornment: React.FC<{
     const {texts} = useTheme();
     return (
         <FieldEndIcon
-            Icon={isVisible ? IconEyeOffRegular : IconEyeRegular}
-            aria-label={texts.togglePasswordVisibilityLabel}
-            className={endIconWithShadow}
-            onPress={() => {
-                setVisibility(!isVisible);
+            checkedProps={{Icon: IconEyeOffRegular, 'aria-label': texts.disablePasswordVisibility}}
+            uncheckedProps={{Icon: IconEyeRegular, 'aria-label': texts.enablePasswordVisibility}}
+            checked={isVisible}
+            onChange={(visible) => {
+                setVisibility(visible);
                 focus();
             }}
         />

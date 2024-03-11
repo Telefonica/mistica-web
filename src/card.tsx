@@ -13,7 +13,7 @@ import * as styles from './card.css';
 import * as mediaStyles from './image.css';
 import {useTheme} from './hooks';
 import {sprinkles} from './sprinkles.css';
-import IconButton from './icon-button';
+import {IconButton} from './icon-button';
 import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
 import IconPauseFilled from './generated/mistica-icons/icon-pause-filled';
 import IconPlayFilled from './generated/mistica-icons/icon-play-filled';
