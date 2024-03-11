@@ -1,6 +1,9 @@
 import {style} from '@vanilla-extract/css';
 import {sprinkles} from './sprinkles.css';
 import * as skin from './skins/skin-contract.css';
+import {iconContainerSize} from './icon-button.css';
+
+const CALLOUT_MIN_HEIGHT = 56;
 
 export const container = style([
     sprinkles({
@@ -11,15 +14,32 @@ export const container = style([
         position: 'relative',
     }),
     {
-        minHeight: 56,
+        minHeight: [CALLOUT_MIN_HEIGHT, `max(${CALLOUT_MIN_HEIGHT}px, ${iconContainerSize.small} + 16px)`],
     },
 ]);
 
 export const content = style([sprinkles({flex: 1}), {alignSelf: 'center'}]);
 
-export const closeButtonContainer = sprinkles({
-    position: 'absolute',
-    top: 0,
-    right: 0,
-    padding: 8,
-});
+const baseCloseButtonContainer = style([
+    sprinkles({
+        position: 'absolute',
+        right: 8,
+    }),
+    {
+        top: 8,
+    },
+]);
+
+export const centeredCloseButtonContainer = style([
+    baseCloseButtonContainer,
+    {
+        top: `calc(50% - ${iconContainerSize.small} / 2)`,
+    },
+]);
+
+export const defaultCloseButtonContainer = style([
+    baseCloseButtonContainer,
+    {
+        top: 8,
+    },
+]);

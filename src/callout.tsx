@@ -2,7 +2,7 @@
 import * as React from 'react';
 import Stack from './stack';
 import Box from './box';
-import {useTheme} from './hooks';
+import {useTheme, useIsomorphicLayoutEffect} from './hooks';
 import {ThemeVariant, useThemeVariant} from './theme-variant-context';
 import {Text2, Text3} from './text';
 import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
@@ -13,12 +13,14 @@ import * as styles from './callout.css';
 import * as mediaStyles from './image.css';
 import {sprinkles} from './sprinkles.css';
 import {vars} from './skins/skin-contract.css';
-import {getPrefixedDataAttributes} from './utils/dom';
+import {getPrefixedDataAttributes, listenResize} from './utils/dom';
 import {applyCssVars} from './utils/css';
 import {iconContainerSize} from './icon-button.css';
 
 import type {ButtonLink, ButtonPrimary, ButtonSecondary} from './button';
 import type {DataAttributes, RendersNullableElement} from './utils/types';
+
+const CALLOUT_MIN_HEIGHT = 56;
 
 type Props = {
     title?: string;
@@ -46,8 +48,33 @@ const Callout: React.FC<Props> = ({
 }) => {
     const variant = useThemeVariant();
     const {texts} = useTheme();
+    const ref = React.useRef<HTMLDivElement>(null);
+    const [hasMinHeight, setHasMinHeight] = React.useState(false);
+
+    useIsomorphicLayoutEffect(() => {
+        const element = ref.current;
+        if (element) {
+            const handleResize = () => {
+                // When the container has min height, the close button should be vertically centered
+                setHasMinHeight(element.clientHeight === CALLOUT_MIN_HEIGHT);
+            };
+
+            // Handle first render
+            handleResize();
+
+            const unlistenResize = listenResize(ref?.current, () => {
+                handleResize();
+            });
+
+            return () => {
+                unlistenResize();
+            };
+        }
+    }, []);
+
     return (
         <section
+            ref={ref}
             className={classNames(
                 styles.container,
                 sprinkles({
@@ -91,7 +118,13 @@ const Callout: React.FC<Props> = ({
                     </Stack>
                 </div>
                 {onClose && (
-                    <div className={styles.closeButtonContainer}>
+                    <div
+                        className={
+                            hasMinHeight
+                                ? styles.centeredCloseButtonContainer
+                                : styles.defaultCloseButtonContainer
+                        }
+                    >
                         <InternalIconButton
                             small
                             hasInteractiveAreaBleed
