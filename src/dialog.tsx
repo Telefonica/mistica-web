@@ -315,6 +315,7 @@ const ModalDialog = (props: ModalDialogProps): JSX.Element => {
     }, [handleKeyDown, shouldRenderNative]);
 
     React.useEffect(() => {
+        // Consider any page navigation as a dismiss
         window.addEventListener('popstate', dismiss);
         return () => {
             window.removeEventListener('popstate', dismiss);
