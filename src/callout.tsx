@@ -20,7 +20,7 @@ import {iconContainerSize} from './icon-button.css';
 import type {ButtonLink, ButtonPrimary, ButtonSecondary} from './button';
 import type {DataAttributes, RendersNullableElement} from './utils/types';
 
-const CENTERED_CLOSE_BUTTON_MAX_HEIGHT = 56;
+const CENTERED_CLOSE_BUTTON_MAX_HEIGHT = 64;
 
 type Props = {
     title?: string;
