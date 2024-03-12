@@ -347,19 +347,18 @@ export const buttonContainer = styleVariants({
 
 export const interactiveAreaBleed = styleVariants({
     default: {
-        // we add "!important" to override the margin reset applied by Touchable
-        margin: `calc(-1 * (${pointerArea.default} - ${iconContainerSize.default}) / 2) !important`,
+        margin: `calc(-1 * (${pointerArea.default} - ${iconContainerSize.default}) / 2)`,
         '@media': {
             [mq.touchableOnly]: {
-                margin: `calc(-1 * (${touchableArea.default} - ${iconContainerSize.default}) / 2) !important`,
+                margin: `calc(-1 * (${touchableArea.default} - ${iconContainerSize.default}) / 2)`,
             },
         },
     },
     small: {
-        margin: `calc(-1 * (${pointerArea.small} - ${iconContainerSize.small}) / 2) !important`,
+        margin: `calc(-1 * (${pointerArea.small} - ${iconContainerSize.small}) / 2)`,
         '@media': {
             [mq.touchableOnly]: {
-                margin: `calc(-1 * (${touchableArea.small} - ${iconContainerSize.small}) / 2) !important`,
+                margin: `calc(-1 * (${touchableArea.small} - ${iconContainerSize.small}) / 2)`,
             },
         },
     },

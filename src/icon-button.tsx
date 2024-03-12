@@ -257,6 +257,7 @@ export const RawIconButton = React.forwardRef<
                     [styles.interactiveAreaBleed[buttonSize]]: hasInteractiveAreaBleed,
                 }
             ),
+            resetMargin: !bleedLeft && !bleedRight && !bleedY && !hasInteractiveAreaBleed,
         };
 
         const content = (
