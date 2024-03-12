@@ -283,7 +283,7 @@ export const iconSize = {
 
 export const iconContainerSize = {
     default: `calc(${iconSize.default} + 24px)`,
-    small: `calc(${iconSize.default} + 12px)`,
+    small: `calc(${iconSize.small} + 12px)`,
 };
 
 const pointerArea = {
