@@ -7,7 +7,7 @@ import {Text2, Text3} from './text';
 import Box from './box';
 import * as styles from './popover.css';
 import {vars as skinVars} from './skins/skin-contract.css';
-import {iconContainerSize, iconSize} from './icon-button.css';
+import {iconContainerSize} from './icon-button.css';
 
 import type {TrackingEvent, DataAttributes} from './utils/types';
 
@@ -52,7 +52,7 @@ const Popover: React.FC<Props> = ({
                     {(title || description || asset) && (
                         <div
                             style={{
-                                paddingRight: `calc((${iconContainerSize.small} + ${iconSize.small}) / 2)`,
+                                paddingRight: `calc((${iconContainerSize.small} - 8px)`,
                             }}
                         >
                             <Inline space={16}>

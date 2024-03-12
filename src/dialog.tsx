@@ -390,7 +390,9 @@ const ModalDialog = (props: ModalDialogProps): JSX.Element => {
                                     <InternalIconButton
                                         onPress={dismiss}
                                         aria-label={texts.modalClose || texts.closeButtonLabel}
-                                        hasInteractiveAreaBleed
+                                        bleedLeft
+                                        bleedRight
+                                        bleedY
                                         Icon={IconCloseRegular}
                                     />
                                 </div>

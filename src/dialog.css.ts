@@ -62,7 +62,7 @@ export const modalCloseButtonContainer = sprinkles({
     position: 'absolute',
     top: 0,
     right: 0,
-    padding: 16,
+    padding: 24,
 });
 
 export const modalContent = style([

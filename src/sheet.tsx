@@ -260,7 +260,9 @@ const Sheet = React.forwardRef<HTMLDivElement, SheetProps>(({onClose, children, 
                                 onPress={closeModal}
                                 aria-label={texts.modalClose}
                                 Icon={IconCloseRegular}
-                                hasInteractiveAreaBleed
+                                bleedLeft
+                                bleedRight
+                                bleedY
                             />
                         </div>
                     </div>
