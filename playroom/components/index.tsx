@@ -169,11 +169,11 @@ const PreviewToolsControls = React.forwardRef<HTMLDivElement, PreviewToolsContro
                         <ToggleIconButton
                             checkedProps={{
                                 Icon: IconSun as React.FC<IconProps>,
-                                'aria-label': 'Change color scheme',
+                                'aria-label': 'Switch to light mode',
                             }}
                             uncheckedProps={{
                                 Icon: IconMoon as React.FC<IconProps>,
-                                'aria-label': 'Change color scheme',
+                                'aria-label': 'Switch to dark mode',
                             }}
                             checked={colorScheme === alternativeColorScheme}
                             onChange={(checked) => {
