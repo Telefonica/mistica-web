@@ -95,7 +95,6 @@ const Callout: React.FC<Props> = ({
                                 </div>
                             )}
                         </Inline>
-
                         {(button || secondaryButton || buttonLink) && (
                             <ButtonGroup
                                 primaryButton={button}
