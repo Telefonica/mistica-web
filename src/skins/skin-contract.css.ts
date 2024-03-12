@@ -19,7 +19,8 @@ const colors: Colors = {
     backgroundSkeleton: '',
     backgroundSkeletonInverse: '',
     backgroundAlternative: '',
-    backgroundFeedbackBottom: '',
+    backgroundBrandTop: '',
+    backgroundBrandBottom: '',
     navigationBarBackground: '',
 
     skeletonWave: '',
@@ -153,7 +154,6 @@ const colors: Colors = {
     customTabsBackground: '',
     coverBackgroundHover: '',
     coverBackgroundPressed: '',
-    overscroll: '',
 };
 
 const borderRadii: BorderRadiiConfig = {

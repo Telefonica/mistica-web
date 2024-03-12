@@ -68,7 +68,8 @@ export const getMovistarLegacySkin: GetKnownSkin = (variant) => {
             backgroundOverlay: applyAlpha(palette.grey6, 0.6),
             backgroundSkeleton: palette.grey2,
             backgroundSkeletonInverse: palette.movistarBlue55,
-            backgroundFeedbackBottom: palette.movistarBlue,
+            backgroundBrandTop: palette.movistarBlue,
+            backgroundBrandBottom: palette.movistarBlue,
             appBarBackground: palette.white,
             navigationBarBackground: palette.movistarBlue,
             skeletonWave: palette.grey2,
@@ -176,7 +177,6 @@ export const getMovistarLegacySkin: GetKnownSkin = (variant) => {
             tagBackgroundSuccess: palette.movistarGreen10,
             tagBackgroundWarning: palette.egg10,
             tagBackgroundError: palette.pepper10,
-            overscroll: palette.movistarBlue,
         },
         darkModeColors: {
             background: palette.darkModeBlack,
@@ -194,7 +194,8 @@ export const getMovistarLegacySkin: GetKnownSkin = (variant) => {
             backgroundOverlay: applyAlpha(palette.darkModeGrey, 0.8),
             backgroundSkeleton: palette.grey6,
             backgroundSkeletonInverse: palette.grey6,
-            backgroundFeedbackBottom: palette.darkModeBlack,
+            backgroundBrandTop: palette.darkModeBlack,
+            backgroundBrandBottom: palette.darkModeBlack,
             appBarBackground: palette.darkModeGrey,
             navigationBarBackground: palette.darkModeBlack,
             skeletonWave: palette.grey5,
@@ -302,7 +303,6 @@ export const getMovistarLegacySkin: GetKnownSkin = (variant) => {
             tagBackgroundSuccess: palette.grey6,
             tagBackgroundWarning: palette.grey6,
             tagBackgroundError: palette.grey6,
-            overscroll: palette.darkModeBlack,
         },
         borderRadii: {
             avatar: '50%',
@@ -344,7 +344,7 @@ export const getMovistarLegacySkin: GetKnownSkin = (variant) => {
         skin.colors.brandHigh = palette.movistarProminentBlueDark;
         skin.colors.backgroundBrand = palette.movistarProminentBlue;
         skin.colors.navigationBarBackground = palette.movistarProminentBlue;
-        skin.colors.backgroundFeedbackBottom = palette.movistarProminentBlue;
+        skin.colors.backgroundBrandBottom = palette.movistarProminentBlue;
         skin.colors.controlActivated = palette.movistarProminentBlue;
         skin.colors.dividerInverse = palette.movistarProminentBlueDark;
     }

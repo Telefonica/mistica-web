@@ -96,7 +96,8 @@ export const getO2ClassicSkin: GetKnownSkin = () => {
             backgroundSkeletonInverse: applyAlpha(palette.white, 0.2),
             navigationBarBackground: palette.o2Blue,
             backgroundAlternative: palette.grey1,
-            backgroundFeedbackBottom: palette.o2GradientFourth,
+            backgroundBrandTop: palette.o2GradientFirst,
+            backgroundBrandBottom: palette.o2GradientFourth,
 
             skeletonWave: palette.grey2,
 
@@ -229,7 +230,6 @@ export const getO2ClassicSkin: GetKnownSkin = () => {
             tagBackgroundSuccess: palette.o2Green10,
             tagBackgroundWarning: palette.orange10,
             tagBackgroundError: palette.pepper10,
-            overscroll: palette.o2GradientFourth,
         },
         darkModeColors: {
             appBarBackground: palette.darkModeGrey,
@@ -249,7 +249,8 @@ export const getO2ClassicSkin: GetKnownSkin = () => {
             backgroundSkeletonInverse: palette.darkModeGrey6,
             navigationBarBackground: palette.darkModeBlack,
             backgroundAlternative: palette.darkModeGrey,
-            backgroundFeedbackBottom: palette.darkModeBlack,
+            backgroundBrandTop: palette.darkModeBlack,
+            backgroundBrandBottom: palette.darkModeBlack,
             skeletonWave: palette.grey5,
             borderLow: palette.darkModeBlack,
             border: palette.darkModeGrey,
@@ -343,7 +344,6 @@ export const getO2ClassicSkin: GetKnownSkin = () => {
             tagBackgroundSuccess: palette.darkModeGrey6,
             tagBackgroundWarning: palette.darkModeGrey6,
             tagBackgroundError: palette.darkModeGrey6,
-            overscroll: palette.darkModeBlack,
         },
     };
     return skin;

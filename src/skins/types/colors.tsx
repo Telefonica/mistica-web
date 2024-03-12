@@ -16,7 +16,7 @@ export type Colors = {
     backgroundSkeletonInverse: string;
     navigationBarBackground: string;
     backgroundAlternative: string;
-    backgroundFeedbackBottom: string;
+    backgroundBrandBottom: string;
     skeletonWave: string;
     borderLow: string;
     border: string;
@@ -122,5 +122,5 @@ export type Colors = {
     tagBackgroundSuccess: string;
     tagBackgroundWarning: string;
     tagBackgroundError: string;
-    overscroll: string;
+    backgroundBrandTop: string;
 };

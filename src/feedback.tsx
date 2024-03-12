@@ -262,9 +262,7 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
                                 secondaryButton={secondaryButton}
                                 link={link}
                                 footerBgColor={
-                                    isInverse && !isDarkMode
-                                        ? vars.colors.backgroundFeedbackBottom
-                                        : undefined
+                                    isInverse && !isDarkMode ? vars.colors.backgroundBrandBottom : undefined
                                 }
                                 containerBgColor="transparent"
                                 onChangeFooterHeight={setFooterHeight}
