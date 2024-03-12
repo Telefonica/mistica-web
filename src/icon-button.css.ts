@@ -276,14 +276,14 @@ const minButtonArea = {
     touchable: '48px',
 };
 
-export const iconContainerSize = {
-    default: '3rem',
-    small: '2rem',
-};
-
 export const iconSize = {
     default: '1.5rem',
     small: '1.25rem',
+};
+
+export const iconContainerSize = {
+    default: `calc(${iconSize.default} + 24px)`,
+    small: `calc(${iconSize.default} + 12px)`,
 };
 
 const pointerArea = {
