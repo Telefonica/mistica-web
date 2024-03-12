@@ -46,7 +46,10 @@ export const palette = {
     darkModeGrey: '#242424',
 };
 
-export const getMovistarLegacySkin: GetKnownSkin = () => {
+/**
+ * @deprecated Use `getMovistarSkin` instead.
+ */
+export const getMovistarLegacySkin: GetKnownSkin = (variant) => {
     const skin: KnownSkin = {
         name: MOVISTAR_LEGACY_SKIN,
         colors: {
@@ -335,5 +338,15 @@ export const getMovistarLegacySkin: GetKnownSkin = () => {
             text10: {weight: 'bold'},
         },
     };
+
+    if (variant === 'prominent') {
+        skin.colors.brand = palette.movistarProminentBlue;
+        skin.colors.brandHigh = palette.movistarProminentBlueDark;
+        skin.colors.backgroundBrand = palette.movistarProminentBlue;
+        skin.colors.navigationBarBackground = palette.movistarProminentBlue;
+        skin.colors.backgroundFeedbackBottom = palette.movistarProminentBlue;
+        skin.colors.controlActivated = palette.movistarProminentBlue;
+        skin.colors.dividerInverse = palette.movistarProminentBlueDark;
+    }
     return skin;
 };

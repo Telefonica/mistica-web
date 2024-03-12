@@ -216,6 +216,20 @@ export const getO2ClassicSkin: GetKnownSkin = () => {
             neutralMediumInverse: palette.grey5,
 
             customTabsBackground: palette.o2Blue,
+
+            tagTextPromo: palette.o2Blue,
+            tagTextActive: palette.o2Blue,
+            tagTextInactive: palette.o2Blue,
+            tagTextSuccess: palette.o2Blue,
+            tagTextWarning: palette.o2Blue,
+            tagTextError: palette.o2Blue,
+            tagBackgroundPromo: palette.o2Blue,
+            tagBackgroundActive: palette.o2Blue,
+            tagBackgroundInactive: palette.o2Blue,
+            tagBackgroundSuccess: palette.o2Blue,
+            tagBackgroundWarning: palette.o2Blue,
+            tagBackgroundError: palette.o2Blue,
+            overscroll: palette.darkModeBlack,
         },
         darkModeColors: {
             appBarBackground: palette.darkModeGrey,

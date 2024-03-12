@@ -137,10 +137,23 @@ const colors: Colors = {
     warningHighInverse: '',
     errorHighInverse: '',
     promoHighInverse: '',
+    tagTextPromo: '',
+    tagTextActive: '',
+    tagTextInactive: '',
+    tagTextSuccess: '',
+    tagTextWarning: '',
+    tagTextError: '',
+    tagBackgroundPromo: '',
+    tagBackgroundActive: '',
+    tagBackgroundInactive: '',
+    tagBackgroundSuccess: '',
+    tagBackgroundWarning: '',
+    tagBackgroundError: '',
 
     customTabsBackground: '',
     coverBackgroundHover: '',
     coverBackgroundPressed: '',
+    overscroll: '',
 };
 
 const borderRadii: BorderRadiiConfig = {
