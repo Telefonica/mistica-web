@@ -87,6 +87,7 @@ const Callout: React.FC<Props> = ({
                                     <InternalIconButton
                                         small
                                         bleedY
+                                        bleedRight
                                         Icon={IconCloseRegular}
                                         onPress={onClose}
                                         aria-label={texts.closeButtonLabel}
