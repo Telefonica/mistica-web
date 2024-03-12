@@ -7,7 +7,7 @@ import {useTheme} from './hooks';
 import {ThemeVariant, useThemeVariant} from './theme-variant-context';
 import {Text2, Text3} from './text';
 import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
-import {InternalIconButton} from './icon-button';
+import {IconButton} from './icon-button';
 import classNames from 'classnames';
 import ButtonGroup from './button-group';
 import * as styles from './callout.css';
@@ -80,11 +80,11 @@ const Callout: React.FC<Props> = ({
                             {onClose && (
                                 <div
                                     style={{
-                                        marginRight: -8,
+                                        // Align the X with the text content
                                         marginTop: '0.125rem',
                                     }}
                                 >
-                                    <InternalIconButton
+                                    <IconButton
                                         small
                                         bleedY
                                         bleedRight

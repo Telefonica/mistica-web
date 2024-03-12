@@ -388,7 +388,7 @@ export const bleedRight = styleVariants({
         marginRight: `calc(-1 * ${pointerBleedArea.default})`,
         '@media': {
             [mq.touchableOnly]: {
-                marginLeft: `calc(-1 * ${touchableBleedArea.default})`,
+                marginRight: `calc(-1 * ${touchableBleedArea.default})`,
             },
         },
     },
@@ -396,7 +396,7 @@ export const bleedRight = styleVariants({
         marginRight: `calc(-1 * ${pointerBleedArea.small})`,
         '@media': {
             [mq.touchableOnly]: {
-                marginLeft: `calc(-1 * ${touchableBleedArea.small})`,
+                marginRight: `calc(-1 * ${touchableBleedArea.small})`,
             },
         },
     },
