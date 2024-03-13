@@ -220,9 +220,7 @@ const ModalDialog = (props: ModalDialogProps): JSX.Element => {
     /** this flag is used to disable user interactions while the component is animating */
     const [isReady, setIsReady] = React.useState<boolean>(false);
     const dialogWasAcceptedRef = React.useRef<boolean>(false);
-    const historyWasPushedRef = React.useRef<boolean>(false);
     const animationDurationRef = React.useRef<number>(shouldAnimate() ? styles.ANIMATION_DURATION_MS : 0);
-    const handleBackNavigationRef = React.useRef(() => {});
 
     const shouldRenderNative = props.type !== 'dialog' && isWebViewBridgeAvailable();
     const shouldDismissOnPressOverlay = props.type === 'dialog';
@@ -254,11 +252,6 @@ const ModalDialog = (props: ModalDialogProps): JSX.Element => {
     }, [onAccept, onCancel, onDestroy]);
 
     const startClosing = React.useCallback(() => {
-        window.removeEventListener('popstate', handleBackNavigationRef.current);
-        if (historyWasPushedRef.current) {
-            historyWasPushedRef.current = false;
-            window.history.back();
-        }
         let timeout: NodeJS.Timeout;
         if (!isClosingRef.current && isReady) {
             isClosingRef.current = true;
@@ -294,28 +287,6 @@ const ModalDialog = (props: ModalDialogProps): JSX.Element => {
         }
     }, [handleAccept, handleCancel, shouldAcceptOnDismiss]);
 
-    const handleBackNavigation = React.useCallback(() => {
-        if (historyWasPushedRef.current) {
-            historyWasPushedRef.current = false;
-            dismiss();
-        }
-    }, [dismiss]);
-
-    React.useEffect(() => {
-        if (shouldRenderNative) {
-            return;
-        }
-        if (!historyWasPushedRef.current && !isClosingRef.current) {
-            historyWasPushedRef.current = true;
-            window.history.pushState(null, document.title, window.location.href);
-        }
-        handleBackNavigationRef.current = handleBackNavigation;
-        window.addEventListener('popstate', handleBackNavigationRef.current);
-        return () => {
-            window.removeEventListener('popstate', handleBackNavigationRef.current);
-        };
-    }, [handleBackNavigation, shouldRenderNative]);
-
     const handleKeyDown = React.useCallback(
         (event: KeyboardEvent) => {
             if (event.key === ESC) {
@@ -336,6 +307,17 @@ const ModalDialog = (props: ModalDialogProps): JSX.Element => {
             document.removeEventListener('keydown', handleKeyDown);
         };
     }, [handleKeyDown, shouldRenderNative]);
+
+    React.useEffect(() => {
+        if (shouldRenderNative) {
+            return;
+        }
+        // Consider any page navigation as a dismiss
+        window.addEventListener('popstate', dismiss);
+        return () => {
+            window.removeEventListener('popstate', dismiss);
+        };
+    }, [dismiss, shouldRenderNative]);
 
     const handleOverlayPress = React.useCallback(
         (event: React.MouseEvent) => {
