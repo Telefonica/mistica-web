@@ -230,6 +230,7 @@ export const nakedCardContent = style([
         flexDirection: 'column',
         justifyContent: 'space-between',
         paddingTop: 16,
+        paddingRight: 16,
     }),
     {
         transition: 'opacity 0.1s ease-in-out',
@@ -253,6 +254,9 @@ export const nakedCardContent = style([
             },
             [mq.touchableOnly]: {
                 transition: 'none',
+            },
+            [mq.desktopOrBigger]: {
+                paddingRight: 8,
             },
         },
     },
