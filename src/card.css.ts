@@ -2,7 +2,7 @@ import {createVar, style} from '@vanilla-extract/css';
 import {sprinkles} from './sprinkles.css';
 import * as mq from './media-queries.css';
 import {vars as skinVars} from './skins/skin-contract.css';
-import {applyAlpha} from './utils/color';
+import {iconContainerSize} from './icon-button.css';
 
 export const actions = style([
     sprinkles({display: 'flex', flex: 1, alignItems: 'flex-end'}),
@@ -357,108 +357,10 @@ export const displayCardGradient = style({
     background: `linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.4) 29.02%, rgba(0, 0, 0, 0.7) 100%)`,
 });
 
-export const cardActionIconButton = sprinkles({
-    display: 'flex',
-    width: 48,
-    height: 48,
-    alignItems: 'center',
-    justifyContent: 'center',
-});
-
-const cardActionBase = sprinkles({
-    width: 32,
-    height: 32,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: '50%',
-});
-
-export const cardAction = style([
-    cardActionBase,
-    {
-        transition: 'background-color 0.1s ease-in-out',
-        selectors: {
-            ':not(:disabled) > &:active': {
-                background: skinVars.colors.backgroundContainerPressed,
-            },
-        },
-        '@media': {
-            [mq.supportsHover]: {
-                selectors: {
-                    ':not(:disabled) > &:hover': {
-                        background: skinVars.colors.backgroundContainerHover,
-                    },
-                    ':not(:disabled) > &:active': {
-                        background: skinVars.colors.backgroundContainerPressed,
-                    },
-                },
-            },
-            [mq.touchableOnly]: {
-                transition: 'none',
-            },
-        },
-    },
-]);
-
-export const cardActionInverse = style([
-    cardActionBase,
-    {
-        transition: 'background-color 0.1s ease-in-out',
-        selectors: {
-            ':not(:disabled) > &:active': {
-                background: skinVars.colors.backgroundContainerBrandPressed,
-            },
-        },
-        '@media': {
-            [mq.supportsHover]: {
-                selectors: {
-                    ':not(:disabled) > &:hover': {
-                        background: skinVars.colors.backgroundContainerBrandHover,
-                    },
-                    ':not(:disabled) > &:active': {
-                        background: skinVars.colors.backgroundContainerBrandPressed,
-                    },
-                },
-            },
-            [mq.touchableOnly]: {
-                transition: 'none',
-            },
-        },
-    },
-]);
-
-export const cardActionMedia = style([
-    cardActionBase,
-    {
-        backgroundColor: applyAlpha(skinVars.rawColors.inverse, 0.7),
-        transition: 'background-color 0.1s ease-in-out',
-        selectors: {
-            ':not(:disabled) > &:active': {
-                backgroundColor: applyAlpha(skinVars.rawColors.inverse, 1.0),
-            },
-        },
-        '@media': {
-            [mq.supportsHover]: {
-                selectors: {
-                    ':not(:disabled) > &:hover': {
-                        backgroundColor: applyAlpha(skinVars.rawColors.inverse, 0.9),
-                    },
-                    ':not(:disabled) > &:active': {
-                        backgroundColor: applyAlpha(skinVars.rawColors.inverse, 1.0),
-                    },
-                },
-            },
-            [mq.touchableOnly]: {
-                transition: 'none',
-            },
-        },
-    },
-]);
-
 const aspectRatio = createVar();
+const topActionsCount = createVar();
 
-export const vars = {aspectRatio};
+export const vars = {aspectRatio, topActionsCount};
 
 export const cardContainer = style({
     position: 'relative',
@@ -472,5 +374,19 @@ export const cardContainer = style({
         display: 'block',
         content: '""',
         clear: 'both',
+    },
+});
+
+export const dataCardTopActionsWithoutIcon = style({
+    /** Move the div to match the card border, ignoring content's padding. We add one extra pixel because of border's width */
+    marginRight: -17,
+    marginTop: -9,
+    width: `calc((${iconContainerSize.small} + 16px) * ${topActionsCount})`,
+
+    '@media': {
+        [mq.desktopOrBigger]: {
+            marginRight: -25,
+            marginTop: -17,
+        },
     },
 });

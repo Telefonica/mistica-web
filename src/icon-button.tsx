@@ -181,6 +181,7 @@ interface IconButtonBaseProps {
 
 interface InternalIconButtonBaseProps {
     isOverMedia?: boolean;
+    hasInteractiveAreaBleed?: boolean;
     hasOverlay?: boolean;
 }
 
@@ -209,6 +210,7 @@ export const RawIconButton = React.forwardRef<
             bleedLeft,
             bleedRight,
             bleedY,
+            hasInteractiveAreaBleed,
             ...props
         },
         ref
@@ -249,11 +251,13 @@ export const RawIconButton = React.forwardRef<
                 {
                     [styles.disabled]: disabled,
                     [styles.overlayContainer]: !disabled && !showSpinner,
-                    [styles.bleedLeft[buttonSize]]: bleedLeft,
-                    [styles.bleedRight[buttonSize]]: bleedRight,
-                    [styles.bleedY[buttonSize]]: bleedY,
+                    [styles.bleedLeft[buttonSize]]: bleedLeft && !hasInteractiveAreaBleed,
+                    [styles.bleedRight[buttonSize]]: bleedRight && !hasInteractiveAreaBleed,
+                    [styles.bleedY[buttonSize]]: bleedY && !hasInteractiveAreaBleed,
+                    [styles.interactiveAreaBleed[buttonSize]]: hasInteractiveAreaBleed,
                 }
             ),
+            resetMargin: !bleedLeft && !bleedRight && !bleedY && !hasInteractiveAreaBleed,
         };
 
         const content = (

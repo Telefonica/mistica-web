@@ -5,14 +5,13 @@ import {useTheme} from './hooks';
 import Badge from './badge';
 import Box from './box';
 import {Text2} from './text';
-import {IconButton} from './icon-button';
 import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
 import {pxToRem} from './utils/css';
 import * as styles from './chip.css';
 import {vars} from './skins/skin-contract.css';
 import {getPrefixedDataAttributes} from './utils/dom';
 import {useThemeVariant} from './theme-variant-context';
-import {BaseTouchable} from './touchable';
+import Touchable, {BaseTouchable} from './touchable';
 
 import type {ExclusifyUnion} from './utils/utility-types';
 import type {DataAttributes, IconProps, TrackingEvent} from './utils/types';
@@ -116,18 +115,19 @@ const Chip: React.FC<ChipProps> = (props: ChipProps) => {
                 {...getPrefixedDataAttributes(dataAttributes, 'Chip')}
             >
                 {body}
-                <IconButton
-                    size={24}
+                <Touchable
                     style={{
                         display: 'flex',
                         justifyContent: 'center',
                         alignItems: 'center',
+                        width: pxToRem(24),
+                        height: pxToRem(24),
                     }}
                     aria-label={texts.closeButtonLabel}
                     onPress={() => onClose()}
                 >
-                    <IconCloseRegular size={16} color={vars.colors.neutralMedium} />
-                </IconButton>
+                    <IconCloseRegular size={pxToRem(16)} color={vars.colors.neutralMedium} />
+                </Touchable>
             </Box>
         );
     }

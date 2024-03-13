@@ -13,6 +13,7 @@ export const fieldLeftPadding = 12 - borderSize;
 export const fieldRightPadding = 16 - borderSize;
 
 export const fieldElementsGap = 12;
+export const fieldEndIconGap = 4;
 export const iconButtonSize = iconContainerSize.default;
 
 export const mobileFontSize = pxToRem(16);
@@ -288,7 +289,7 @@ export const textAreaWithoutLabel = style({
 
 export const endIconContainer = style([
     sprinkles({
-        paddingLeft: fieldElementsGap,
+        paddingLeft: fieldEndIconGap,
         display: 'flex',
         alignItems: 'center',
     }),

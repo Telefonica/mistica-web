@@ -368,7 +368,9 @@ const Select: React.FC<SelectProps> = ({
                         ))}
                     </select>
                     <div className={styles.arrowDown} aria-hidden>
-                        <ChevronDownRegular size={iconSize} />
+                        <div className={styles.iconContainer}>
+                            <ChevronDownRegular size={iconSize} />
+                        </div>
                     </div>
                 </FieldContainer>
             ) : (
@@ -383,7 +385,11 @@ const Select: React.FC<SelectProps> = ({
                         <TextFieldBaseAutosuggest
                             style={{visibility: 'hidden'}}
                             fullWidth={fullWidth}
-                            endIcon={<ChevronDownRegular size={iconSize} />}
+                            endIcon={
+                                <div className={styles.iconContainer}>
+                                    <ChevronDownRegular size={iconSize} />
+                                </div>
+                            }
                             focus={isFocused}
                             label={label}
                             value={value}
