@@ -15,7 +15,7 @@ type OverscrollColorConfig = {topColor?: string; bottomColor?: string};
 const {Provider, useSetValue, useValue} = createNestableContext<OverscrollColorConfig>({});
 
 const shouldRender = (platformOverrides: Theme['platformOverrides']) =>
-    getPlatform(platformOverrides) === 'ios';
+    getPlatform(platformOverrides) === 'ios' || true;
 
 const TopOverscrollColor = () => {
     const {topColor} = useValue();
@@ -42,21 +42,34 @@ const TopOverscrollColor = () => {
 };
 
 const BottomOverscrollColor = () => {
+    const [defaultBottomColor, setDefaultBottomColor] = React.useState<string>(vars.colors.background);
+
+    React.useEffect(() => {
+        setDefaultBottomColor(getComputedStyle(document.body).backgroundColor);
+    }, []);
+
     const {topColor, bottomColor} = useValue();
+    // if not specified a bottom color, dont render it, except if there is a top color defined,
+    // in that case we need to render the bottom color to avoid theme-color affecting the bottom overscroll
     if (!bottomColor && !topColor) {
         return null;
     }
+    // if top and bottom color are the same, theme-color set for top color will work for bottom too, so this is not needed
+    if (bottomColor === topColor) {
+        return null;
+    }
+
     return (
         <div
             style={{
-                position: 'absolute',
+                position: 'fixed',
                 zIndex: -1,
-                background: bottomColor ?? vars.colors.background,
+                background: bottomColor ?? defaultBottomColor,
                 width: '100%',
-                height: 500,
+                height: 300,
                 left: 0,
-                bottom: -500,
-                transform: 'translate3d(0,0,0)',
+                right: 0,
+                bottom: 0,
             }}
         />
     );

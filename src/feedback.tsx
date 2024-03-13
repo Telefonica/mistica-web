@@ -172,7 +172,7 @@ const renderFeedback = ({
 
 const FeedbackScreenOverscrollColor = () => {
     useSetOverscrollColor({
-        topColor: vars.colors.backgroundBrand, // in brands with gradient, this is wrong :/
+        topColor: vars.colors.backgroundBrand, // TODO: use the new backgroundBrandTop/backgroundBrandBottom colors when available
         bottomColor: vars.colors.backgroundFeedbackBottom,
     });
     return null;
