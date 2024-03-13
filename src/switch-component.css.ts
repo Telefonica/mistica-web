@@ -63,6 +63,7 @@ export const barVariants = styleVariants({
     default: [barBase, {background: colorsVars.colors.control, height: 14}],
     // Hardcoded color because the native switch in iOS doesn't allow modification of this color
     ios: [barBase, {background: '#E9E9EA', height: 31}],
+    iosDark: [barBase, {background: '#39393D', height: 31}],
     checked: [barBase, {background: colorsVars.colors.toggleAndroidBackgroundActive, height: 14}],
     checkedIos: [barBase, {background: colorsVars.colors.controlActivated, height: 31}],
 });
