@@ -122,3 +122,10 @@ input::-ms-clear,
 input::-ms-reveal {
     display: none;
 }
+
+/* Avoid browser default behaviour when dragging or long pressing a link */
+a {
+    -webkit-touch-callout: none;
+    -webkit-user-drag: none;
+    -moz-user-drag: none;
+}
