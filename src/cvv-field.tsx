@@ -3,8 +3,8 @@ import * as React from 'react';
 import {useTheme} from './hooks';
 import IconCvvVisaMc from './icons/icon-cvv-visa-mc';
 import IconCvvAmex from './icons/icon-cvv-amex';
-import Tooltip from './tooltip';
-import IconButton from './icon-button';
+import Popover from './popover';
+import {IconButton} from './icon-button';
 import IconInformationRegular from './generated/mistica-icons/icon-information-regular';
 import {useFieldProps, useForm} from './form-context';
 import {TextFieldBaseAutosuggest} from './text-field-base';
@@ -70,6 +70,7 @@ const CvvField: React.FC<CvvFieldProps> = ({
 }) => {
     const {texts} = useTheme();
     const {setFormError, jumpToNext} = useForm();
+    const [isCvvHelpOpen, setIsCvvHelpOpen] = React.useState(false);
 
     const validate = (value: string, rawValue: string) => {
         if (!value) {
@@ -119,9 +120,11 @@ const CvvField: React.FC<CvvFieldProps> = ({
                 }
             }}
             endIcon={
-                <Tooltip
+                <Popover
                     position="top"
+                    open={isCvvHelpOpen}
                     children={<TooltipContent acceptedCards={acceptedCards} />}
+                    onClose={() => setIsCvvHelpOpen(false)}
                     target={
                         <div style={{width: iconSize, height: iconSize}}>
                             <IconButton
@@ -134,7 +137,12 @@ const CvvField: React.FC<CvvFieldProps> = ({
                                     left: `calc(-1 * (${iconButtonSize} - ${iconSize}) / 2)`,
                                     top: `calc(-1 * (${iconButtonSize} - ${iconSize}) / 2)`,
                                 }}
-                                aria-label={texts.formCreditCardCvvTooltipVisaMcButton}
+                                onPress={() => setIsCvvHelpOpen(!isCvvHelpOpen)}
+                                aria-label={
+                                    isCvvHelpOpen
+                                        ? texts.formCreditCardCvvTooltipVisaMcButtonClose
+                                        : texts.formCreditCardCvvTooltipVisaMcButtonOpen
+                                }
                             >
                                 <IconInformationRegular size={iconSize} color={vars.colors.neutralMedium} />
                             </IconButton>

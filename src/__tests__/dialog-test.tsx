@@ -50,11 +50,6 @@ const TestComponent = () => {
     );
 };
 
-beforeEach(() => {
-    // The history object is not cleared between tests. This way we put the history position at the end
-    act(() => window.history.pushState({}, '', '/'));
-});
-
 test('does not render anything initially', () => {
     const {asFragment} = render(<ThemeContextProvider theme={makeTheme()} />);
     expect(asFragment()).toMatchInlineSnapshot(`<DocumentFragment />`);
@@ -206,7 +201,7 @@ test('closes confirm dialog when clicking on any button', async () => {
     await waitFor(() => {
         expect(onAcceptSpy).toHaveBeenCalled();
     });
-}, 10000);
+}, 20000);
 
 test('closing a previous accepted dialog does not trigger onAccept callback', async () => {
     render(
@@ -222,6 +217,7 @@ test('closing a previous accepted dialog does not trigger onAccept callback', as
     await userEvent.click(acceptButton);
 
     await waitForElementToBeRemoved(() => screen.queryByRole('dialog', {hidden: true}));
+
     expect(onAcceptSpy).toHaveBeenCalled();
 
     onAcceptSpy.mockClear();
@@ -232,8 +228,9 @@ test('closing a previous accepted dialog does not trigger onAccept callback', as
     await userEvent.click(cancelButton);
 
     await waitForElementToBeRemoved(() => screen.queryByRole('dialog', {hidden: true}));
+
     expect(onAcceptSpy).not.toHaveBeenCalled();
-}, 10000);
+}, 20000);
 
 test('when webview bridge is available nativeAlert is shown', async () => {
     jest.spyOn(webviewBridge, 'isWebViewBridgeAvailable').mockReturnValue(true);
@@ -278,57 +275,4 @@ test('when webview bridge is available nativeConfirm is shown', async () => {
             cancelText: 'Nope!',
         });
     });
-});
-
-test('history restored after closing a dialog using back', async () => {
-    const pushStateSpy = jest.spyOn(window.history, 'pushState');
-    const backSpy = jest.spyOn(window.history, 'back');
-    const initialHistoryLength = window.history.length;
-
-    render(
-        <ThemeContextProvider theme={makeTheme()}>
-            <TestComponent />
-        </ThemeContextProvider>
-    );
-
-    const alertButton = await screen.findByRole('button', {name: 'Alert'});
-    await userEvent.click(alertButton);
-
-    expect(await screen.findByRole('dialog')).toBeInTheDocument();
-    expect(window.history.length).toBe(initialHistoryLength + 1);
-
-    act(() => {
-        window.history.back();
-    });
-
-    await waitForElementToBeRemoved(() => screen.queryByRole('dialog', {hidden: true}));
-
-    expect(pushStateSpy).toHaveBeenCalledTimes(1);
-    expect(backSpy).toHaveBeenCalledTimes(1);
-});
-
-test('history restored after closing a dialog using a button', async () => {
-    const pushStateSpy = jest.spyOn(window.history, 'pushState');
-    const backSpy = jest.spyOn(window.history, 'back');
-    const initialHistoryLength = window.history.length;
-
-    render(
-        <ThemeContextProvider theme={makeTheme()}>
-            <TestComponent />
-        </ThemeContextProvider>
-    );
-
-    const alertButton = await screen.findByRole('button', {name: 'Alert'});
-    await userEvent.click(alertButton);
-
-    expect(await screen.findByRole('dialog')).toBeInTheDocument();
-    expect(window.history.length).toBe(initialHistoryLength + 1);
-
-    const acceptButton = await screen.findByRole('button', {name: 'Yay!'});
-    await userEvent.click(acceptButton);
-
-    await waitForElementToBeRemoved(() => screen.queryByRole('dialog', {hidden: true}));
-
-    expect(pushStateSpy).toHaveBeenCalledTimes(1);
-    expect(backSpy).toHaveBeenCalledTimes(1);
 });

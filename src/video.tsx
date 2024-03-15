@@ -6,14 +6,13 @@ import {isRunningAcceptanceTest} from './utils/platform';
 import * as styles from './video.css';
 import * as mediaStyles from './image.css';
 import {getPrefixedDataAttributes} from './utils/dom';
-import {vars} from './skins/skin-contract.css';
-import {fallbackStyles} from './utils/css';
+import classNames from 'classnames';
 
 import type {DataAttributes} from './utils/types';
 
-type VideoState = 'loading' | 'loaded' | 'playing' | 'paused' | 'error';
+type VideoState = 'loading' | 'loaded' | 'playing' | 'paused' | 'error' | 'stopped';
 
-type VideoAction = 'play' | 'finishLoad' | 'pause' | 'fail' | 'reset';
+type VideoAction = 'play' | 'finishLoad' | 'pause' | 'fail' | 'reset' | 'stop';
 
 const transitions: Record<VideoState, Partial<Record<VideoAction, VideoState>>> = {
     loading: {
@@ -37,20 +36,28 @@ const transitions: Record<VideoState, Partial<Record<VideoAction, VideoState>>> 
     playing: {
         pause: 'paused',
         reset: 'loading',
+        stop: 'stopped',
     },
 
     paused: {
         play: 'playing',
         reset: 'loading',
+        stop: 'stopped',
     },
 
     error: {
         reset: 'loading',
     },
+
+    stopped: {
+        play: 'playing',
+        reset: 'loading',
+    },
 };
 
-const videoReducer = (state: VideoState, action: VideoAction): VideoState =>
-    transitions[state][action] || state;
+const videoReducer = (state: VideoState, action: VideoAction): VideoState => {
+    return transitions[state][action] || state;
+};
 
 export type AspectRatio = '1:1' | '16:9' | '4:3';
 
@@ -106,6 +113,8 @@ export interface VideoElement extends HTMLDivElement {
     play: () => Promise<void>;
     pause: () => void;
     load: () => void;
+    /** Stops the video and shows the poster image (if available) */
+    stop: () => void;
     setCurrentTime: (time: number) => void;
 }
 
@@ -134,7 +143,6 @@ const Video = React.forwardRef<VideoElement, VideoProps>(
         const loadedSource = React.useRef<VideoSource>();
         const posterRef = React.useRef<HTMLDivElement>(null);
 
-        const borderRadius = fallbackStyles(mediaStyles.vars.mediaBorderRadius, vars.borderRadii.container);
         const ratio =
             props.width && props.height
                 ? undefined
@@ -170,12 +178,17 @@ const Video = React.forwardRef<VideoElement, VideoProps>(
 
         const handleLoadFinish = () => {
             onLoad?.();
+            if (videoStatus === 'stopped') {
+                // the video was intentionally stopped
+                return;
+            }
             const video = videoRef.current;
             const shouldAutoPlay = autoPlay && !isRunningAcceptanceTest();
 
             dispatch('finishLoad');
             if (video && shouldAutoPlay && video.paused) {
                 video.play();
+                dispatch('play');
             }
         };
 
@@ -188,7 +201,7 @@ const Video = React.forwardRef<VideoElement, VideoProps>(
             }
         });
 
-        const showPoster = videoStatus === 'error' || videoStatus === 'loading' || videoStatus === 'loaded';
+        const showPoster = ['error', 'loading', 'loaded', 'stopped'].includes(videoStatus);
 
         const video = (
             <video
@@ -198,7 +211,7 @@ const Video = React.forwardRef<VideoElement, VideoProps>(
                 disableRemotePlayback
                 muted={muted}
                 loop={loop}
-                className={styles.video}
+                className={classNames(styles.video, mediaStyles.defaultBorderRadius)}
                 preload={preload}
                 onError={handleError}
                 onPause={() => {
@@ -206,6 +219,7 @@ const Video = React.forwardRef<VideoElement, VideoProps>(
                     dispatch('pause');
                 }}
                 onTimeUpdate={() => {
+                    // The state update is performed here instead of in "onPlay" to avoid flickering when hiding the poster
                     if (videoStatus !== 'playing' && videoRef.current?.currentTime !== 0) {
                         onPlay?.();
                         dispatch('play');
@@ -220,8 +234,6 @@ const Video = React.forwardRef<VideoElement, VideoProps>(
                 // This transparent pixel fallback avoids showing the ugly "play" image in android webviews
                 poster={TRANSPARENT_PIXEL}
                 style={{
-                    // For some reason adding this style with classnames doesn't add the border radius in safari
-                    borderRadius,
                     visibility: showPoster ? 'hidden' : 'visible',
                     position: showPoster || ratio !== 0 ? 'absolute' : 'static',
                     width: '100%',
@@ -247,10 +259,10 @@ const Video = React.forwardRef<VideoElement, VideoProps>(
                 />
             ) : withErrorFallback ? (
                 <div style={{position: 'absolute', width: '100%', height: '100%'}}>
-                    <ImageError borderRadius={borderRadius} withIcon={hasError} />
+                    <ImageError className={mediaStyles.defaultBorderRadius} withIcon={hasError} />
                 </div>
             ) : undefined;
-        }, [aspectRatio, props.height, props.width, borderRadius, hasError, poster, withErrorFallback]);
+        }, [aspectRatio, props.height, props.width, hasError, poster, withErrorFallback]);
 
         return (
             <AspectRatioContainer
@@ -275,7 +287,11 @@ const Video = React.forwardRef<VideoElement, VideoProps>(
                         const containerElement = element ? (element as VideoElement) : null;
 
                         if (containerElement) {
-                            containerElement.play = () => videoRef.current?.play() || Promise.resolve();
+                            containerElement.play = () => {
+                                // old browsers don't return a promise when calling play()
+                                // see https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/play#browser_compatibility
+                                return videoRef.current?.play() || Promise.resolve();
+                            };
                             containerElement.pause = () => videoRef.current?.pause();
                             containerElement.load = () => {
                                 /**
@@ -302,6 +318,13 @@ const Video = React.forwardRef<VideoElement, VideoProps>(
                             containerElement.setCurrentTime = (time: number) => {
                                 if (videoRef.current) {
                                     videoRef.current.currentTime = time;
+                                }
+                            };
+                            containerElement.stop = () => {
+                                if (videoRef.current) {
+                                    videoRef.current.pause();
+                                    videoRef.current.currentTime = 0;
+                                    dispatch('stop');
                                 }
                             };
                         }

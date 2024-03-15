@@ -1,13 +1,11 @@
 import * as React from 'react';
 import {
     Select,
-    IconButton,
     IconSettingsRegular,
     Overlay,
     useTheme,
     useScreenSize,
     Tabs,
-    Checkbox,
     ThemeContextProvider,
     skinVars,
     MovistarLogo,
@@ -15,10 +13,14 @@ import {
     O2Logo,
     TelefonicaLogo,
     BlauLogo,
+    TuLogo,
     Inline,
     Circle,
+    Touchable,
+    IconButton,
+    ToggleIconButton,
 } from '../../src';
-import {Movistar, Vivo, O2, Telefonica, Blau, Vivo_New} from '../themes';
+import {Movistar, Vivo, O2, Telefonica, Blau, Vivo_New, Tu} from '../themes';
 import {useOverrideTheme} from '../frame-component';
 import IconSun from '../icons/icon-sun';
 import IconMoon from '../icons/icon-moon';
@@ -28,6 +30,7 @@ import IconCode from '../icons/icon-code';
 import * as styles from '../preview-tools.css';
 import {CSSTransition} from 'react-transition-group';
 
+import type {IconProps} from '../../dist';
 import type {ThemeConfig, ColorScheme, KnownSkinName} from '../../src';
 
 export * from '../../src';
@@ -99,6 +102,11 @@ const themesMap: {
         themeConfig: Blau,
         icon: <BlauLogo size={24} />,
     },
+    Tu: {
+        text: 'Tu',
+        themeConfig: Tu,
+        icon: <TuLogo size={24} />,
+    },
 };
 
 type PreviewToolsControlsProps = {
@@ -143,21 +151,30 @@ const PreviewToolsControls = React.forwardRef<HTMLDivElement, PreviewToolsContro
                         value={skinName}
                         onChangeValue={onSkinNameChange as (value: string) => void}
                     />
-                    <Inline space={16} alignItems="center">
+                    <Inline space={0} alignItems="center">
                         {showPlatformSelector && (
-                            <Checkbox
-                                name="iOS"
-                                aria-label="Change platform to iOS"
+                            <ToggleIconButton
+                                checkedProps={{
+                                    Icon: IconAppleOn as React.FC<IconProps>,
+                                    'aria-label': 'Change platform to android',
+                                }}
+                                uncheckedProps={{
+                                    Icon: IconAppleOff as React.FC<IconProps>,
+                                    'aria-label': 'Change platform to iOS',
+                                }}
                                 checked={os === 'ios'}
                                 onChange={(checked) => onOsChange(checked ? 'ios' : 'android')}
-                                render={({checked}) =>
-                                    checked ? <IconAppleOn size={24} /> : <IconAppleOff size={24} />
-                                }
                             />
                         )}
-                        <Checkbox
-                            aria-label="Change color scheme"
-                            name="colorScheme"
+                        <ToggleIconButton
+                            checkedProps={{
+                                Icon: IconSun as React.FC<IconProps>,
+                                'aria-label': 'Switch to light mode',
+                            }}
+                            uncheckedProps={{
+                                Icon: IconMoon as React.FC<IconProps>,
+                                'aria-label': 'Switch to dark mode',
+                            }}
                             checked={colorScheme === alternativeColorScheme}
                             onChange={(checked) => {
                                 if (checked) {
@@ -166,11 +183,12 @@ const PreviewToolsControls = React.forwardRef<HTMLDivElement, PreviewToolsContro
                                     onColorSchemeChange(systemColorScheme);
                                 }
                             }}
-                            render={({checked}) => (checked ? <IconSun size={24} /> : <IconMoon size={24} />)}
                         />
-                        <IconButton aria-label="Edit in Playroom" size={24} onPress={onEditStoryPress}>
-                            <IconCode size={24} color={skinVars.colors.neutralHigh} />
-                        </IconButton>
+                        <IconButton
+                            aria-label="Edit in Playroom"
+                            Icon={IconCode as React.FC<IconProps>}
+                            onPress={onEditStoryPress}
+                        />
                     </Inline>
                 </div>
             );
@@ -187,17 +205,30 @@ const PreviewToolsControls = React.forwardRef<HTMLDivElement, PreviewToolsContro
                         />
                     </div>
                     <div className={styles.flexSpacer} />
-                    <Inline space={32} alignItems="center" fullWidth>
+                    <Inline space={8} alignItems="center" fullWidth>
                         {showPlatformSelector && (
-                            <Checkbox
-                                name="iOS"
+                            <ToggleIconButton
+                                checkedProps={{
+                                    Icon: IconAppleOn as React.FC<IconProps>,
+                                    'aria-label': 'Change platform to android',
+                                }}
+                                uncheckedProps={{
+                                    Icon: IconAppleOff as React.FC<IconProps>,
+                                    'aria-label': 'Change platform to iOS',
+                                }}
                                 checked={os === 'ios'}
                                 onChange={(checked) => onOsChange(checked ? 'ios' : 'android')}
-                                render={({checked}) => (checked ? <IconAppleOn /> : <IconAppleOff />)}
                             />
                         )}
-                        <Checkbox
-                            name="colorScheme"
+                        <ToggleIconButton
+                            checkedProps={{
+                                Icon: IconSun as React.FC<IconProps>,
+                                'aria-label': 'Change color scheme',
+                            }}
+                            uncheckedProps={{
+                                Icon: IconMoon as React.FC<IconProps>,
+                                'aria-label': 'Change color scheme',
+                            }}
                             checked={colorScheme === alternativeColorScheme}
                             onChange={(checked) => {
                                 if (checked) {
@@ -206,12 +237,12 @@ const PreviewToolsControls = React.forwardRef<HTMLDivElement, PreviewToolsContro
                                     onColorSchemeChange(systemColorScheme);
                                 }
                             }}
-                            render={({checked}) => (checked ? <IconSun /> : <IconMoon />)}
                         />
-
-                        <IconButton aria-label="Edit in Playroom" size={24} onPress={onEditStoryPress}>
-                            <IconCode size={24} color={skinVars.colors.neutralHigh} />
-                        </IconButton>
+                        <IconButton
+                            aria-label="Edit in Playroom"
+                            Icon={IconCode as React.FC<IconProps>}
+                            onPress={onEditStoryPress}
+                        />
                     </Inline>
                 </div>
             );
@@ -364,8 +395,8 @@ export const PreviewTools = ({
                                 left: position.endsWith('left') ? 0 : undefined,
                             }}
                         >
-                            <IconButton
-                                size={56}
+                            <Touchable
+                                style={{width: 56, height: 56}}
                                 aria-label="settings"
                                 onPress={() => {
                                     if (state === 'entered') {
@@ -386,7 +417,7 @@ export const PreviewTools = ({
                                         />
                                     </Circle>
                                 </div>
-                            </IconButton>
+                            </Touchable>
                         </div>
                     )}
                 </CSSTransition>

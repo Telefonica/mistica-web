@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {BlauLogo, Logo, MovistarLogo, O2Logo, TelefonicaLogo, VivoLogo} from '../logo';
+import {BlauLogo, Logo, MovistarLogo, O2Logo, TelefonicaLogo, VivoLogo, TuLogo} from '../logo';
 import {Box, ResponsiveLayout} from '../index';
 
 export default {
@@ -16,7 +16,7 @@ type Args = {
     inverse: boolean;
     action: 'none' | 'onPress' | 'href' | 'to';
     forceBrandLogo: boolean;
-    brand: 'Movistar' | 'O2' | 'Vivo' | 'Telefonica' | 'Blau';
+    brand: 'Movistar' | 'O2' | 'Vivo' | 'Telefonica' | 'Blau' | 'Tu';
 };
 
 const getLogoActionProps = (action: string) => {
@@ -56,6 +56,7 @@ export const Default: StoryComponent<Args> = ({type, size, inverse, action, forc
         O2: O2Logo,
         Telefonica: TelefonicaLogo,
         Blau: BlauLogo,
+        Tu: TuLogo,
     }[forceBrandLogo ? brand : 'default'];
 
     return (
@@ -80,7 +81,7 @@ Default.args = {
 
 Default.argTypes = {
     brand: {
-        options: ['Movistar', 'O2', 'Vivo', 'Telefonica', 'Blau'],
+        options: ['Movistar', 'O2', 'Vivo', 'Telefonica', 'Blau', 'Tu'],
         control: {type: 'select'},
         if: {arg: 'forceBrandLogo'},
     },

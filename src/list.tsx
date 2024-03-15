@@ -26,7 +26,9 @@ import * as styles from './list.css';
 import * as mediaStyles from './image.css';
 import {vars} from './skins/skin-contract.css';
 import {applyCssVars} from './utils/css';
+import {IconButton, ToggleIconButton} from './icon-button';
 
+import type {IconButtonProps, ToggleIconButtonProps} from './icon-button';
 import type {TouchableElement} from './touchable';
 import type {DataAttributes, TrackingEvent} from './utils/types';
 import type {ExclusifyUnion} from './utils/utility-types';
@@ -241,6 +243,12 @@ interface RadioRowContentProps extends CommonProps {
     radioValue: string;
 }
 
+interface IconButtonRowContentProps extends CommonProps {
+    onPress?: (() => void) | undefined;
+
+    iconButton: ExclusifyUnion<IconButtonProps | ToggleIconButtonProps> | undefined;
+}
+
 interface HrefRowContentProps extends CommonProps {
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
     href: string | undefined;
@@ -266,6 +274,7 @@ type RowContentProps = ExclusifyUnion<
     | BasicRowContentProps
     | SwitchRowContentProps
     | RadioRowContentProps
+    | IconButtonRowContentProps
     | CheckboxRowContentProps
     | HrefRowContentProps
     | ToRowContentProps
@@ -310,6 +319,10 @@ const areCheckboxRowContentProps = (obj: any): obj is CheckboxRowContentProps =>
 
 const areRadioRowContentProps = (obj: any): obj is RadioRowContentProps => {
     return obj.radioValue !== undefined;
+};
+
+const areIconButtonRowContentProps = (obj: any): obj is IconButtonRowContentProps => {
+    return obj.iconButton !== undefined;
 };
 
 const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, ref) => {
@@ -391,7 +404,8 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
         props.onPress &&
         !areSwitchRowContentProps(props) &&
         !areCheckboxRowContentProps(props) &&
-        !areRadioRowContentProps(props)
+        !areRadioRowContentProps(props) &&
+        !areIconButtonRowContentProps(props)
     ) {
         return (
             <BaseTouchable
@@ -518,6 +532,53 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
         return renderRowWithControl(Checkbox);
     }
 
+    if (props.iconButton) {
+        return props.onPress ? (
+            <div className={styles.dualActionContainer}>
+                <div
+                    className={classNames(styles.dualActionLeft, {
+                        [styles.touchableBackground]: hasHoverDefault,
+                        [styles.touchableBackgroundInverse]: hasHoverInverse,
+                    })}
+                >
+                    {renderContent({type: 'basic', labelId: titleId})}
+                </div>
+                <div className={styles.dualActionDivider} />
+                <Box padding={16}>
+                    <Stack space="around">
+                        {props.iconButton.Icon ? (
+                            <IconButton {...props.iconButton} disabled={props.disabled} ref={ref} />
+                        ) : (
+                            <ToggleIconButton {...props.iconButton} disabled={props.disabled} ref={ref} />
+                        )}
+                    </Stack>
+                </Box>
+            </div>
+        ) : (
+            <div className={classNames(styles.rowContent)}>
+                <Box paddingX={16}>
+                    {renderContent({
+                        labelId: titleId,
+                        type: 'control',
+                        right: (
+                            <Stack space="around">
+                                {props.iconButton.Icon ? (
+                                    <IconButton {...props.iconButton} disabled={props.disabled} ref={ref} />
+                                ) : (
+                                    <ToggleIconButton
+                                        {...props.iconButton}
+                                        disabled={props.disabled}
+                                        ref={ref}
+                                    />
+                                )}
+                            </Stack>
+                        ),
+                    })}
+                </Box>
+            </div>
+        );
+    }
+
     if (props.radioValue) {
         return props.onPress ? (
             <div className={styles.dualActionContainer}>
@@ -627,6 +688,7 @@ interface BasicBoxedRowProps extends BasicRowContentProps, CommonBoxedRowProps {
 interface SwitchBoxedRowProps extends SwitchRowContentProps, CommonBoxedRowProps {}
 interface CheckboxBoxedRowProps extends CheckboxRowContentProps, CommonBoxedRowProps {}
 interface RadioBoxedRowProps extends RadioRowContentProps, CommonBoxedRowProps {}
+interface IconButtonBoxedRowProps extends IconButtonRowContentProps, CommonBoxedRowProps {}
 interface HrefBoxedRowProps extends HrefRowContentProps, CommonBoxedRowProps {}
 interface ToBoxedRowProps extends ToRowContentProps, CommonBoxedRowProps {}
 interface OnPressBoxedRowProps extends OnPressRowContentProps, CommonBoxedRowProps {}
@@ -635,6 +697,7 @@ type BoxedRowProps = ExclusifyUnion<
     | BasicBoxedRowProps
     | SwitchBoxedRowProps
     | RadioBoxedRowProps
+    | IconButtonBoxedRowProps
     | CheckboxBoxedRowProps
     | HrefBoxedRowProps
     | ToBoxedRowProps

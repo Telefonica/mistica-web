@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Tooltip, Placeholder, ResponsiveLayout, IconShopRegular} from '..';
+import {Tooltip, Placeholder, ResponsiveLayout, IconShopRegular, Touchable} from '..';
 
 export default {
     title: 'Components/Tooltip',
@@ -92,13 +92,9 @@ export const Default: StoryComponent<Args> = ({
                                 transform: `translate(${translateX}, ${translateY})`,
                             }}
                         >
-                            <div
-                                // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
-                                tabIndex={0}
-                                data-testid="target"
-                            >
+                            <Touchable onPress={() => {}} dataAttributes={{testid: 'target'}}>
                                 <IconShopRegular style={{display: 'block'}} />
-                            </div>
+                            </Touchable>
                         </div>
                     }
                     title={title}

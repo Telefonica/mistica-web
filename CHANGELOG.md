@@ -1,3 +1,69 @@
+# [14.46.0](https://github.com/Telefonica/mistica-web/compare/v14.45.0...v14.46.0) (2024-03-13)
+
+
+### Bug Fixes
+
+* **CSS:** prevent browser default behaviours when long pressing or dragging links ([#1045](https://github.com/Telefonica/mistica-web/issues/1045)) ([717343d](https://github.com/Telefonica/mistica-web/commit/717343dd27c536d7760d37c72ea2cc89a19c66bf))
+* **HighlightedCard:** improve optional types of title and description, make one mandatory ([#1039](https://github.com/Telefonica/mistica-web/issues/1039)) ([a818ffa](https://github.com/Telefonica/mistica-web/commit/a818ffa4f58bdf77c9d1ce3a42ea82de12a7a214))
+* **Logo:** old version of Tu logo ([#1036](https://github.com/Telefonica/mistica-web/issues/1036)) ([0dc09e2](https://github.com/Telefonica/mistica-web/commit/0dc09e2103ffbefac2ef8573edd30172488b789a))
+* **Switch:** iOS background in dark mode ([#1037](https://github.com/Telefonica/mistica-web/issues/1037)) ([a77c42d](https://github.com/Telefonica/mistica-web/commit/a77c42d587dbec0512559cf82cc841a2abf24171))
+
+
+### Features
+
+* **dialogs:** Remove history hacks in dialog ([#1041](https://github.com/Telefonica/mistica-web/issues/1041)) ([2a48cb4](https://github.com/Telefonica/mistica-web/commit/2a48cb48fb923cf97ee8f88ddc990dd865c246de))
+* **IconButton:** update internal usages in Mistica components ([#1044](https://github.com/Telefonica/mistica-web/issues/1044)) ([12bf970](https://github.com/Telefonica/mistica-web/commit/12bf970d1b11e58ec88a9339df9921fac2623df9))
+* **Icons:** New vivo icons ([#1038](https://github.com/Telefonica/mistica-web/issues/1038)) ([d070a25](https://github.com/Telefonica/mistica-web/commit/d070a250083f630e1b566c4f1c92cd4001fba1b8))
+* **Input fields:** update iconButton in all fields ([#1042](https://github.com/Telefonica/mistica-web/issues/1042)) ([062c0bd](https://github.com/Telefonica/mistica-web/commit/062c0bdc627926a08dd18faea8a3777cb40c4988))
+* **Naked & Small Naked Card:** Inner padding right in card content ([#1040](https://github.com/Telefonica/mistica-web/issues/1040)) ([d97ea17](https://github.com/Telefonica/mistica-web/commit/d97ea17c095bc1315b151fbf68dd051ea9444040))
+* **Rows:** add icon button as control ([#1030](https://github.com/Telefonica/mistica-web/issues/1030)) ([4d47e8f](https://github.com/Telefonica/mistica-web/commit/4d47e8f5b1f2645c1d6036822bc3198eea806422))
+* **ToggleIconButton:** create component ([#1034](https://github.com/Telefonica/mistica-web/issues/1034)) ([f4b9c6e](https://github.com/Telefonica/mistica-web/commit/f4b9c6e599eabe1c8492ab1ce55c422f14875fad))
+* **Video:** `stop` method. To stop video and show the poster (if available) ([#1035](https://github.com/Telefonica/mistica-web/issues/1035)) ([e21998f](https://github.com/Telefonica/mistica-web/commit/e21998f66d601dee75c9d54aa5ab3c13203d502b))
+
+# [14.45.0](https://github.com/Telefonica/mistica-web/compare/v14.44.0...v14.45.0) (2024-02-29)
+
+
+### Bug Fixes
+
+* **SuccessFeedbackScreen:** remove unnecesary background color ([#1029](https://github.com/Telefonica/mistica-web/issues/1029)) ([557b989](https://github.com/Telefonica/mistica-web/commit/557b98965e9a382bcc590619a65117f1761d5944))
+
+
+### Features
+
+* **Badge, Tag:** add badge to Tag and fix Badge's border and fontSize scaling ([#1025](https://github.com/Telefonica/mistica-web/issues/1025)) ([a7b31a7](https://github.com/Telefonica/mistica-web/commit/a7b31a707f31c4d8baf490de84e52f867a60d860))
+* **ButtonIcon:** refactor component ([#1022](https://github.com/Telefonica/mistica-web/issues/1022)) ([c8a82c6](https://github.com/Telefonica/mistica-web/commit/c8a82c6ce7f8a89a9a6ea5d9ed53b3361613d1e5))
+* **HighlightedCard:** Title & Description optional ([#1033](https://github.com/Telefonica/mistica-web/issues/1033)) ([7ebbb48](https://github.com/Telefonica/mistica-web/commit/7ebbb48bc7669f6e29be0e0aa333b50cc216c453))
+
+# [14.44.0](https://github.com/Telefonica/mistica-web/compare/v14.43.0...v14.44.0) (2024-02-20)
+
+
+### Features
+
+* **skins:** new Tu skin ([#959](https://github.com/Telefonica/mistica-web/issues/959)) ([11197a8](https://github.com/Telefonica/mistica-web/commit/11197a8fcb3810f9017449056e84b64968f5a7f9))
+
+# [14.43.0](https://github.com/Telefonica/mistica-web/compare/v14.42.1...v14.43.0) (2024-02-20)
+
+
+### Bug Fixes
+
+* **Carousel:** Add workaround for zero width webviews. Remount when webview size changes from 0 to any other value ([#1026](https://github.com/Telefonica/mistica-web/issues/1026)) ([36ab108](https://github.com/Telefonica/mistica-web/commit/36ab108bff9b9f3504cf479cd4d0ff2e188bf4ad))
+* **Select:** options have wrong styling when field is over inverse variant  ([#1024](https://github.com/Telefonica/mistica-web/issues/1024)) ([fc7849f](https://github.com/Telefonica/mistica-web/commit/fc7849f585839a2712024348a77e0a2986be7eb3))
+* **SuccessFeebackScreen:** fix content background ([#1021](https://github.com/Telefonica/mistica-web/issues/1021)) ([dff56b2](https://github.com/Telefonica/mistica-web/commit/dff56b28b9e4c035c5c1e57d8781fdab64180d74))
+
+
+### Features
+
+* **Popover, Tooltip:** refactor components in order to share the same logic between them ([#1014](https://github.com/Telefonica/mistica-web/issues/1014)) ([a343fbd](https://github.com/Telefonica/mistica-web/commit/a343fbdba0383c62552361f27aa5c8b03640d654))
+
+## [14.42.1](https://github.com/Telefonica/mistica-web/compare/v14.42.0...v14.42.1) (2024-02-08)
+
+
+### Bug Fixes
+
+* **Dialogs:** Execute back navigation before accept/cancel callbacks ([#1018](https://github.com/Telefonica/mistica-web/issues/1018)) ([a631f9a](https://github.com/Telefonica/mistica-web/commit/a631f9aa511706a903729c8c94965d89a149c773))
+* **FeedbackScreen:** inverse background color and overscroll color ([#1020](https://github.com/Telefonica/mistica-web/issues/1020)) ([bee7dd6](https://github.com/Telefonica/mistica-web/commit/bee7dd62ce8c5ea99e0c717c8e19fdaca651822e))
+* **Text:** word wrapping is not working when truncate's value is greater than one ([#1017](https://github.com/Telefonica/mistica-web/issues/1017)) ([d65b149](https://github.com/Telefonica/mistica-web/commit/d65b149ea14ca47dc8f95fc4110b1d7024df0a6c))
+
 # [14.42.0](https://github.com/Telefonica/mistica-web/compare/v14.41.0...v14.42.0) (2024-02-05)
 
 

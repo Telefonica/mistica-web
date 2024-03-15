@@ -9,7 +9,8 @@ export type ThemeTexts = Readonly<typeof TEXTS_ES>;
 
 const TEXTS_ES = {
     expirationDatePlaceholder: 'MM/AA',
-    togglePasswordVisibilityLabel: 'Mostrar u ocultar contraseña',
+    enablePasswordVisibility: 'Mostrar contraseña',
+    disablePasswordVisibility: 'Ocultar contraseña',
     loading: 'Cargando',
     linkOpensInNewTab: 'Se abre en ventana nueva',
     modalClose: 'Cerrar',
@@ -21,7 +22,8 @@ const TEXTS_ES = {
     formCreditCardExpirationLabel: 'Caducidad',
     formCreditCardCvvLabel: 'CVV',
     formCreditCardCvvError: 'CVV incorrecto',
-    formCreditCardCvvTooltipVisaMcButton: 'Mostrar ayuda CVV',
+    formCreditCardCvvTooltipVisaMcButtonOpen: 'Mostrar ayuda CVV',
+    formCreditCardCvvTooltipVisaMcButtonClose: 'Ocultar ayuda CVV',
     formCreditCardCvvTooltipVisaMc: 'El CVV son los 3 últimos dígitos del reverso de tu tarjeta',
     formCreditCardCvvTooltipAmex: 'Si es American Express, añade los 4 dígitos del anverso',
     formCreditCardExpirationError: 'Fecha no válida',
@@ -54,7 +56,8 @@ const TEXTS_ES = {
 
 const TEXTS_EN: ThemeTexts = {
     expirationDatePlaceholder: 'MM/YY',
-    togglePasswordVisibilityLabel: 'Toggle password visibility',
+    enablePasswordVisibility: 'Show password',
+    disablePasswordVisibility: 'Hide password',
     loading: 'Loading',
     linkOpensInNewTab: 'Opens in a new window',
     modalClose: 'Close',
@@ -66,7 +69,8 @@ const TEXTS_EN: ThemeTexts = {
     formCreditCardExpirationLabel: 'Expiry',
     formCreditCardCvvLabel: 'CVV',
     formCreditCardCvvError: 'Incorrect CVV',
-    formCreditCardCvvTooltipVisaMcButton: 'Show CVV help',
+    formCreditCardCvvTooltipVisaMcButtonOpen: 'Show CVV help',
+    formCreditCardCvvTooltipVisaMcButtonClose: 'Hide CVV help',
     formCreditCardCvvTooltipVisaMc: 'The CVV is the 3 digits of the back of your card',
     formCreditCardCvvTooltipAmex: "If it's American Express, add the 4-digit number on the front of the card",
     formCreditCardExpirationError: 'Invalid date',
@@ -99,7 +103,8 @@ const TEXTS_EN: ThemeTexts = {
 
 const TEXTS_DE: ThemeTexts = {
     expirationDatePlaceholder: 'MM/JJ',
-    togglePasswordVisibilityLabel: 'Passwort un-/sichtbar machen',
+    enablePasswordVisibility: 'Passwort anzeigen',
+    disablePasswordVisibility: 'Passwort verbergen',
     loading: 'Wird gespeichert',
     linkOpensInNewTab: 'Wird in neuem Fenster geöffnet',
     modalClose: 'Schließen',
@@ -111,7 +116,8 @@ const TEXTS_DE: ThemeTexts = {
     formCreditCardExpirationLabel: 'Ablaufdatum',
     formCreditCardCvvLabel: 'CVV',
     formCreditCardCvvError: 'Falsche CVV',
-    formCreditCardCvvTooltipVisaMcButton: 'CVV-Hilfe anzeigen',
+    formCreditCardCvvTooltipVisaMcButtonOpen: 'CVV-Hilfe anzeigen',
+    formCreditCardCvvTooltipVisaMcButtonClose: 'CVV-Hilfe ausblenden',
     formCreditCardCvvTooltipVisaMc: 'Der CVV-Code besteht aus den 3 Ziffern auf der Kartenrückseite',
     formCreditCardCvvTooltipAmex: 'Bei American Express 4-stelligen Code auf der Rückseite hinzufügen',
     formCreditCardExpirationError: 'Datum ungültig',
@@ -144,7 +150,8 @@ const TEXTS_DE: ThemeTexts = {
 
 const TEXTS_PT: ThemeTexts = {
     expirationDatePlaceholder: 'MM/AA',
-    togglePasswordVisibilityLabel: 'Mostrar ou ocultar senha',
+    enablePasswordVisibility: 'mostrar senha',
+    disablePasswordVisibility: 'esconder a senha',
     loading: 'Carregando',
     linkOpensInNewTab: 'Abre em nova janela',
     modalClose: 'Fechar',
@@ -156,7 +163,8 @@ const TEXTS_PT: ThemeTexts = {
     formCreditCardExpirationLabel: 'Expiração',
     formCreditCardCvvLabel: 'CVV',
     formCreditCardCvvError: 'CVV incorreto',
-    formCreditCardCvvTooltipVisaMcButton: 'Exibir ajuda CVV',
+    formCreditCardCvvTooltipVisaMcButtonOpen: 'Exibir ajuda CVV',
+    formCreditCardCvvTooltipVisaMcButtonClose: 'Ocultar ajuda CVV',
     formCreditCardCvvTooltipVisaMc: 'O CVV são os 3  dígitos do reverso de seu cartão',
     formCreditCardCvvTooltipAmex: 'Se for American Express, adicione os 4 dígitos do anverso',
     formCreditCardExpirationError: 'Data inválida',

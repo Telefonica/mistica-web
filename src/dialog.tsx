@@ -5,8 +5,8 @@ import classnames from 'classnames';
 import {ButtonPrimary, ButtonSecondary, ButtonDanger} from './button';
 import {Portal} from './portal';
 import FocusTrap from './focus-trap';
-import IcnCloseRegular from './generated/mistica-icons/icon-close-regular';
-import IconButton from './icon-button';
+import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
+import {InternalIconButton} from './icon-button';
 import {isWebViewBridgeAvailable, nativeConfirm, nativeAlert} from '@tef-novum/webview-bridge';
 import {useTheme} from './hooks';
 import ButtonLayout from './button-layout';
@@ -220,7 +220,6 @@ const ModalDialog = (props: ModalDialogProps): JSX.Element => {
     /** this flag is used to disable user interactions while the component is animating */
     const [isReady, setIsReady] = React.useState<boolean>(false);
     const dialogWasAcceptedRef = React.useRef<boolean>(false);
-    const historyWasPushedRef = React.useRef<boolean>(false);
     const animationDurationRef = React.useRef<number>(shouldAnimate() ? styles.ANIMATION_DURATION_MS : 0);
 
     const shouldRenderNative = props.type !== 'dialog' && isWebViewBridgeAvailable();
@@ -278,37 +277,15 @@ const ModalDialog = (props: ModalDialogProps): JSX.Element => {
     }, [startClosing]);
 
     const dismiss = React.useCallback(() => {
+        if (isClosingRef.current) {
+            return;
+        }
         if (shouldAcceptOnDismiss) {
             handleAccept();
         } else {
             handleCancel();
         }
     }, [handleAccept, handleCancel, shouldAcceptOnDismiss]);
-
-    const handleBackNavigation = React.useCallback(() => {
-        if (historyWasPushedRef.current) {
-            historyWasPushedRef.current = false;
-            dismiss();
-        }
-    }, [dismiss]);
-
-    React.useEffect(() => {
-        if (shouldRenderNative) {
-            return;
-        }
-        if (!historyWasPushedRef.current && !isClosingRef.current) {
-            historyWasPushedRef.current = true;
-            window.history.pushState(null, document.title, window.location.href);
-        }
-        window.addEventListener('popstate', handleBackNavigation);
-        return () => {
-            window.removeEventListener('popstate', handleBackNavigation);
-            if (isClosingRef.current && historyWasPushedRef.current) {
-                historyWasPushedRef.current = false;
-                window.history.back();
-            }
-        };
-    }, [handleBackNavigation, shouldRenderNative]);
 
     const handleKeyDown = React.useCallback(
         (event: KeyboardEvent) => {
@@ -330,6 +307,17 @@ const ModalDialog = (props: ModalDialogProps): JSX.Element => {
             document.removeEventListener('keydown', handleKeyDown);
         };
     }, [handleKeyDown, shouldRenderNative]);
+
+    React.useEffect(() => {
+        if (shouldRenderNative) {
+            return;
+        }
+        // Consider any page navigation as a dismiss
+        window.addEventListener('popstate', dismiss);
+        return () => {
+            window.removeEventListener('popstate', dismiss);
+        };
+    }, [dismiss, shouldRenderNative]);
 
     const handleOverlayPress = React.useCallback(
         (event: React.MouseEvent) => {
@@ -381,12 +369,14 @@ const ModalDialog = (props: ModalDialogProps): JSX.Element => {
                         >
                             {shouldDismissOnPressOverlay && (
                                 <div className={styles.modalCloseButtonContainer}>
-                                    <IconButton
+                                    <InternalIconButton
                                         onPress={dismiss}
                                         aria-label={texts.modalClose || texts.closeButtonLabel}
-                                    >
-                                        <IcnCloseRegular color={vars.colors.neutralHigh} />
-                                    </IconButton>
+                                        bleedLeft
+                                        bleedRight
+                                        bleedY
+                                        Icon={IconCloseRegular}
+                                    />
                                 </div>
                             )}
                             <Dialog {...dialogProps} onCancel={handleCancel} onAccept={handleAccept} />

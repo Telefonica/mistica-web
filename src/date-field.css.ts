@@ -1,5 +1,6 @@
 import {style} from '@vanilla-extract/css';
-import {fieldRightPadding, iconButtonSize, iconSize} from './text-field-base.css';
+import {iconSize} from './icon-button.css';
+import {fieldRightPadding, iconButtonSize} from './text-field-base.css';
 
 export const iconContainer = style({
     position: 'absolute',
@@ -8,6 +9,6 @@ export const iconContainer = style({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    right: `calc(${fieldRightPadding}px + (${iconButtonSize} - ${iconSize}) / 2)`,
-    marginRight: -8,
+    right: `calc(${fieldRightPadding}px + (${iconButtonSize} - ${iconSize.default}) / 2)`,
+    marginRight: -12,
 });

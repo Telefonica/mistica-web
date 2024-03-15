@@ -49,7 +49,7 @@ type PropsChildren = {
 };
 
 const Switch: React.FC<PropsRender | PropsChildren> = (props) => {
-    const {isIos} = useTheme();
+    const {isIos, isDarkMode} = useTheme();
     const labelId = useAriaId(props['aria-labelledby']);
     const {defaultValue, value, onChange, focusableRef, disabled} = useControlProps({
         name: props.name,
@@ -102,7 +102,15 @@ const Switch: React.FC<PropsRender | PropsChildren> = (props) => {
                     <span
                         className={
                             styles.barVariants[
-                                isIos ? (isChecked ? 'checkedIos' : 'ios') : isChecked ? 'checked' : 'default'
+                                isIos
+                                    ? isChecked
+                                        ? 'checkedIos'
+                                        : isDarkMode
+                                        ? 'iosDark'
+                                        : 'ios'
+                                    : isChecked
+                                    ? 'checked'
+                                    : 'default'
                             ]
                         }
                     />
