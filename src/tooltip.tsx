@@ -141,21 +141,6 @@ type Props = {
     dataAttributes?: DataAttributes;
     centerContent?: boolean;
     open?: boolean;
-    /**
-     * @deprecated This field is deprecated.
-     */
-    targetLabel?: string;
-    /**
-     * @deprecated This field is deprecated.
-     */
-    targetStyle?: React.CSSProperties;
-    /**
-     * @deprecated This field is deprecated.
-     */
-    unstable_offsetX?: number | string;
-    /**
-     * @deprecated This field is deprecated, use centerContent instead.
-     */
     textCenter?: boolean;
 };
 

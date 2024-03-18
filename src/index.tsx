@@ -91,19 +91,7 @@ export {
     NavigationBarActionGroup,
     NavigationBarAction,
 } from './navigation-bar';
-export {
-    /**
-     * @deprecated This component is deprecated, please use Logo instead
-     */
-    Logo as NavigationBarLogo,
-    Logo,
-    MovistarLogo,
-    VivoLogo,
-    O2Logo,
-    TelefonicaLogo,
-    BlauLogo,
-    TuLogo,
-} from './logo';
+export {Logo, MovistarLogo, VivoLogo, O2Logo, TelefonicaLogo, BlauLogo, TuLogo} from './logo';
 export {default as Image} from './image';
 export {default as Chip} from './chip';
 export {default as Video} from './video';
@@ -115,8 +103,6 @@ export {
     PageBullets,
     CarouselContextProvider,
     useCarouselContext,
-    /** @deprecated Contains a typo. Please use CarouselContextConsumer */
-    CarouselContextConsumer as CarouselContextConsummer,
     CarouselContextConsumer,
 } from './carousel';
 export {Grid, GridItem} from './grid';
