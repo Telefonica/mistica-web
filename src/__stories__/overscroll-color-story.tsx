@@ -1,29 +1,19 @@
 import * as React from 'react';
-import {OverscrollColor, skinVars, Text2, Box, ResponsiveLayout} from '..';
+import {skinVars, Text2, Box, ResponsiveLayout, useSetOverscrollColor} from '..';
 
 export default {
     title: 'Utilities/OverscrollColor',
     parameters: {
         fullScreen: true,
     },
-    argTypes: {
-        theme: {
-            options: ['default', 'inverse', 'alternative'],
-            control: {type: 'select'},
-        },
-    },
 };
 
-type Args = {
-    theme: 'default' | 'inverse' | 'alternative';
-};
-
-export const Default: StoryComponent<Args> = ({theme}) => {
+export const Default: StoryComponent = () => {
+    useSetOverscrollColor({topColor: skinVars.colors.backgroundBrand});
     return (
         <>
-            <ResponsiveLayout fullWidth variant={theme}>
+            <ResponsiveLayout fullWidth isInverse>
                 <div style={{height: 200}} />
-                <OverscrollColor />
             </ResponsiveLayout>
 
             <Box padding={16}>
@@ -37,6 +27,3 @@ export const Default: StoryComponent<Args> = ({theme}) => {
 };
 
 Default.storyName = 'OverscrollColor';
-Default.args = {
-    theme: 'inverse',
-};
