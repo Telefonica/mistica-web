@@ -193,7 +193,7 @@ export const HeaderLayout: React.FC<HeaderLayoutProps> = ({
         </div>
     );
 
-    useSetOverscrollColor(isInverse ? {topColor: vars.colors.backgroundBrand} : {});
+    useSetOverscrollColor(isInverse ? {topColor: vars.colors.backgroundBrandTop} : {});
 
     return (
         <div {...getPrefixedDataAttributes({'component-name': 'HeaderLayout', ...dataAttributes})}>
@@ -253,7 +253,7 @@ export const MainSectionHeaderLayout: React.FC<MainSectionHeaderLayoutProps> = (
     children,
     dataAttributes,
 }) => {
-    useSetOverscrollColor(isInverse ? {topColor: vars.colors.backgroundBrand} : {});
+    useSetOverscrollColor(isInverse ? {topColor: vars.colors.backgroundBrandTop} : {});
     return (
         <ResponsiveLayout
             isInverse={isInverse}

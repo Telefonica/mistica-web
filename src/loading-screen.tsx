@@ -198,7 +198,7 @@ const BaseLoadingScreen = React.forwardRef<HTMLDivElement, Props>(
 
         const centerContent = !children;
 
-        useSetOverscrollColor(isInverse ? {topColor: vars.colors.backgroundBrand} : {});
+        useSetOverscrollColor(isInverse ? {topColor: vars.colors.backgroundBrandTop} : {});
 
         return (
             <ThemeVariant isInverse={isInverse}>
