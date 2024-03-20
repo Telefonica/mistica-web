@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Badge, IconButton, IconBellFilled, ResponsiveLayout, Box} from '..';
+import {Badge, IconBellFilled, ResponsiveLayout, Box, Touchable} from '..';
 
 export default {
     title: 'Components/Badge',
@@ -22,9 +22,13 @@ export const Default: StoryComponent<Args> = ({inverse, value}) => {
         <ResponsiveLayout fullWidth isInverse={inverse}>
             <Box padding={16} width="fit-content" dataAttributes={{testid: 'content'}}>
                 <Badge value={value !== 'undefined' ? +value : undefined}>
-                    <IconButton onPress={() => {}} aria-label="Read notifications">
+                    <Touchable
+                        style={{display: 'inline-block', width: 24, height: 24}}
+                        onPress={() => {}}
+                        aria-label="Read notifications"
+                    >
                         <IconBellFilled />
-                    </IconButton>
+                    </Touchable>
                 </Badge>
             </Box>
         </ResponsiveLayout>

@@ -71,9 +71,11 @@ export const Default: StoryComponent = () => {
                         <Stack space={16}>
                             <Title1
                                 right={
-                                    <IconButton onPress={clearLog}>
-                                        <IconTrashCanRegular />
-                                    </IconButton>
+                                    <IconButton
+                                        aria-label="Clear actions log"
+                                        onPress={clearLog}
+                                        Icon={IconTrashCanRegular}
+                                    />
                                 }
                             >
                                 Actions

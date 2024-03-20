@@ -1,6 +1,6 @@
 'use client';
 import * as React from 'react';
-import {BaseTouchable} from './touchable';
+import Touchable, {BaseTouchable} from './touchable';
 import classNames from 'classnames';
 import {isWebViewBridgeAvailable, nativeMessage} from '@tef-novum/webview-bridge';
 import {useElementDimensions, useScreenSize, useTheme} from './hooks';
@@ -11,7 +11,6 @@ import {vars} from './skins/skin-contract.css';
 import {getPrefixedDataAttributes} from './utils/dom';
 import {Portal} from './portal';
 import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
-import {IconButton} from './icon-button';
 
 import type {DataAttributes} from './utils/types';
 
@@ -157,19 +156,18 @@ const SnackbarComponent = React.forwardRef<ImperativeHandle, Props>(
                             )}
                         </div>
                         {shouldShowDismissButton ? (
-                            <IconButton
-                                size={32}
+                            <Touchable
                                 onPress={() => {
                                     close({action: 'DISMISS'});
                                 }}
                                 aria-label={texts.closeButtonLabel}
                                 className={styles.dismissButton[hasLongButton ? 'topRight' : 'centered']}
-                                style={{display: 'flex'}}
+                                style={{display: 'flex', width: 32, height: 32}}
                             >
                                 <div className={styles.dismissIcon}>
                                     <IconCloseRegular color={vars.colors.inverse} size={20} />
                                 </div>
-                            </IconButton>
+                            </Touchable>
                         ) : null}
                     </div>
                 </div>

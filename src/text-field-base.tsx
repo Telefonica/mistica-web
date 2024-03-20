@@ -282,7 +282,7 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
         };
 
         const startIconWidth = `calc(${iconSize.default} + ${styles.fieldElementsGap}px)`;
-        const endIconWidth = `calc(${styles.iconButtonSize} + ${styles.fieldElementsGap}px)`;
+        const endIconWidth = `calc(${styles.iconButtonSize} + ${styles.fieldEndIconGap}px)`;
 
         const isShrinked = shrinkLabel || inputState === 'focused' || inputState === 'filled';
         const scale = isShrinked ? (isTabletOrSmaller ? LABEL_SCALE_MOBILE : LABEL_SCALE_DESKTOP) : 1;
@@ -344,7 +344,7 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
                                     paddingRight: endIcon
                                         ? 0
                                         : endIconOverlay
-                                        ? `calc(${styles.fieldRightPadding}px + ${endIconWidth})`
+                                        ? endIconWidth
                                         : styles.fieldRightPadding,
                                     paddingLeft: prefix
                                         ? 0

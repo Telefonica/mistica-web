@@ -11,6 +11,8 @@ import {
     CardActionIconButton,
     Text2,
     Stack,
+    IconStarFilled,
+    IconStarRegular,
 } from '..';
 
 export default {
@@ -32,6 +34,19 @@ const MyCustomCardActionComponent = () => {
     );
 };
 
+const MyCustomCardActionToggleComponent = () => {
+    const [checked, setChecked] = React.useState(false);
+
+    return (
+        <CardActionIconButton
+            checkedProps={{Icon: IconStarFilled, label: 'checked'}}
+            uncheckedProps={{Icon: IconStarRegular, label: 'unchecked'}}
+            checked={checked}
+            onChange={(checkedValue) => setChecked(checkedValue)}
+        />
+    );
+};
+
 export const Default: StoryComponent = () => {
     return (
         <Stack space={16}>
@@ -49,6 +64,7 @@ export const Default: StoryComponent = () => {
                         label="Device"
                     />,
                     <MyCustomCardActionComponent key="2" />,
+                    <MyCustomCardActionToggleComponent key="3" />,
                 ]}
                 icon={
                     <Circle backgroundColor={skinVars.colors.brandLow} size={40}>

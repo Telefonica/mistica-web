@@ -67,7 +67,9 @@ export const modalCloseButtonContainer = style([
     }),
     {
         '@media': {
-            [mq.desktopOrBigger]: {padding: 24},
+            [mq.desktopOrBigger]: {
+                padding: 24,
+            },
         },
     },
 ]);

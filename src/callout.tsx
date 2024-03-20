@@ -78,19 +78,21 @@ const Callout: React.FC<Props> = ({
                                 </Text2>
                             </Stack>
                             {onClose && (
-                                <IconButton
-                                    size={40}
+                                <div
                                     style={{
-                                        display: 'flex',
-                                        margin: '-8px -12px',
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
+                                        // Align the X with the text content
+                                        marginTop: '0.125rem',
                                     }}
-                                    onPress={onClose}
-                                    aria-label={texts.closeButtonLabel}
                                 >
-                                    <IconCloseRegular size={24} color={vars.colors.neutralHigh} />
-                                </IconButton>
+                                    <IconButton
+                                        small
+                                        bleedY
+                                        bleedRight
+                                        Icon={IconCloseRegular}
+                                        onPress={onClose}
+                                        aria-label={texts.closeButtonLabel}
+                                    />
+                                </div>
                             )}
                         </Inline>
                         {(button || secondaryButton || buttonLink) && (
