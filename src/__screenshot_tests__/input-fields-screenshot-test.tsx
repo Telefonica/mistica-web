@@ -662,7 +662,7 @@ test('PasswordField', async () => {
 
     expect(filledScreenshot).toMatchImageSnapshot();
 
-    await page.click(await screen.findByLabelText('Mostrar u ocultar contraseña'));
+    await page.click(await screen.findByLabelText('Mostrar contraseña'));
 
     const visibleScreenshot = await fieldWrapper.screenshot();
 

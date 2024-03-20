@@ -4,7 +4,7 @@ import {useTheme} from './hooks';
 import IconCvvVisaMc from './icons/icon-cvv-visa-mc';
 import IconCvvAmex from './icons/icon-cvv-amex';
 import Popover from './popover';
-import IconButton from './icon-button';
+import {IconButton} from './icon-button';
 import IconInformationRegular from './generated/mistica-icons/icon-information-regular';
 import {useFieldProps, useForm} from './form-context';
 import {TextFieldBaseAutosuggest} from './text-field-base';

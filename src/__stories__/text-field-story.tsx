@@ -3,7 +3,7 @@ import {TextField, Box, Text1, Stack, ResponsiveLayout} from '..';
 import {inspect} from 'util';
 import IconMusicRegular from '../generated/mistica-icons/icon-music-regular';
 import {countriesList} from './helpers';
-import {iconSize} from '../text-field-base.css';
+import {iconSize} from '../icon-button.css';
 
 export default {
     title: 'Components/Input fields/TextField',
@@ -75,7 +75,7 @@ export const Controlled: StoryComponent<TextFieldControlledArgs> = ({
                         autoComplete="off"
                         dataAttributes={{testid: 'text-field'}}
                         maxLength={maxLength ? 200 : undefined}
-                        endIcon={icon ? <IconMusicRegular size={iconSize} /> : undefined}
+                        endIcon={icon ? <IconMusicRegular size={iconSize.default} /> : undefined}
                         getSuggestions={suggestions ? getCountrySuggestions : undefined}
                         {...rest}
                     />
@@ -131,7 +131,7 @@ export const Uncontrolled: StoryComponent<TextFieldUncontrolledArgs> = ({
                         autoComplete="off"
                         dataAttributes={{testid: 'text-field'}}
                         maxLength={maxLength ? 200 : undefined}
-                        endIcon={icon ? <IconMusicRegular size={iconSize} /> : undefined}
+                        endIcon={icon ? <IconMusicRegular size={iconSize.default} /> : undefined}
                         {...rest}
                     />
                     <Stack space={8}>

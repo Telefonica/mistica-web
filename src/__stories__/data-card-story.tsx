@@ -11,6 +11,8 @@ import {
     Circle,
     Tag,
     Carousel,
+    IconStarFilled,
+    IconStarRegular,
 } from '..';
 import {Placeholder} from '../placeholder';
 import avatarImg from './images/avatar.jpg';
@@ -108,6 +110,18 @@ export const Default: StoryComponent<DataCardArgs> = ({
                                   alert('icon press');
                               },
                               label: 'Device',
+                          },
+                          {
+                              checkedProps: {
+                                  Icon: IconStarFilled,
+                                  label: 'checked',
+                              },
+                              uncheckedProps: {
+                                  Icon: IconStarRegular,
+                                  label: 'unchecked',
+                              },
+                              defaultChecked: false,
+                              onChange: () => {},
                           },
                       ]
                     : undefined

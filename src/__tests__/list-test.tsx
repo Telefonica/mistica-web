@@ -1,8 +1,16 @@
 import * as React from 'react';
 import {RowList, Row} from '../list';
 import {RadioGroup} from '../radio-button';
-import {screen, fireEvent, render, waitFor} from '@testing-library/react';
-import {ButtonPrimary, Form, IconPlayFilled, ThemeContextProvider} from '..';
+import {screen, render, waitFor} from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import {
+    ButtonPrimary,
+    Form,
+    IconPlayFilled,
+    IconShopRegular,
+    IconTrashCanRegular,
+    ThemeContextProvider,
+} from '..';
 import {makeTheme} from './test-utils';
 
 test('Row which navigates', () => {
@@ -20,7 +28,7 @@ test('Row which navigates', () => {
     expect(anchor).toHaveAttribute('href', '/some/url');
 });
 
-test('Row as a button', () => {
+test('Row as a button', async () => {
     const spy = jest.fn();
     render(
         <ThemeContextProvider theme={makeTheme()}>
@@ -32,11 +40,11 @@ test('Row as a button', () => {
 
     const button = screen.getByRole('button', {name: 'Title'});
     expect(button).toBeInTheDocument();
-    fireEvent.click(button);
+    await userEvent.click(button);
     expect(spy).toHaveBeenCalled();
 });
 
-test('Row with switch', () => {
+test('Row with switch', async () => {
     const spyOnChange = jest.fn();
 
     render(
@@ -51,17 +59,17 @@ test('Row with switch', () => {
 
     expect(switchEl).not.toBeChecked();
 
-    fireEvent.click(switchEl);
+    await userEvent.click(switchEl);
 
     expect(switchEl).toBeChecked();
     expect(spyOnChange).toHaveBeenCalledWith(true);
 
-    fireEvent.click(switchEl);
+    await userEvent.click(switchEl);
 
     expect(spyOnChange).toHaveBeenCalledWith(false);
 });
 
-test('Row with checkbox', () => {
+test('Row with checkbox', async () => {
     const spyOnChange = jest.fn();
 
     render(
@@ -76,12 +84,12 @@ test('Row with checkbox', () => {
 
     expect(checkboxEl).not.toBeChecked();
 
-    fireEvent.click(checkboxEl);
+    await userEvent.click(checkboxEl);
 
     expect(checkboxEl).toBeChecked();
     expect(spyOnChange).toHaveBeenCalledWith(true);
 
-    fireEvent.click(checkboxEl);
+    await userEvent.click(checkboxEl);
 
     expect(spyOnChange).toHaveBeenCalledWith(false);
 });
@@ -98,7 +106,7 @@ test('Row with custom right element', () => {
     expect(screen.getByText('custom')).toBeInTheDocument();
 });
 
-test('Row list with radio buttons', () => {
+test('Row list with radio buttons', async () => {
     render(
         <ThemeContextProvider theme={makeTheme()}>
             <RadioGroup name="radio-group">
@@ -117,12 +125,12 @@ test('Row list with radio buttons', () => {
     expect(radioBanana).not.toBeChecked();
     expect(radioApple).not.toBeChecked();
 
-    fireEvent.click(radioBanana);
+    await userEvent.click(radioBanana);
 
     expect(radioBanana).toBeChecked();
     expect(radioApple).not.toBeChecked();
 
-    fireEvent.click(radioApple);
+    await userEvent.click(radioApple);
 
     expect(radioBanana).not.toBeChecked();
     expect(radioApple).toBeChecked();
@@ -166,10 +174,10 @@ test('RowList inside Form', async () => {
         </ThemeContextProvider>
     );
 
-    fireEvent.click(screen.getByRole('radio', {name: 'Banana'}));
-    fireEvent.click(screen.getByRole('checkbox', {name: 'Checkbox 1'}));
-    fireEvent.click(screen.getByRole('switch', {name: 'Switch 1'}));
-    fireEvent.click(screen.getByRole('button', {name: 'Submit'}));
+    await userEvent.click(screen.getByRole('radio', {name: 'Banana'}));
+    await userEvent.click(screen.getByRole('checkbox', {name: 'Checkbox 1'}));
+    await userEvent.click(screen.getByRole('switch', {name: 'Switch 1'}));
+    await userEvent.click(screen.getByRole('button', {name: 'Submit'}));
 
     expect(screen.getByTestId('check1')).toBeChecked();
     expect(screen.getByTestId('check2')).not.toBeChecked();
@@ -190,7 +198,7 @@ test('RowList inside Form', async () => {
     });
 });
 
-test('Row list with icon buttons', () => {
+test('Row list with icon buttons', async () => {
     const firstButtonSpy = jest.fn();
     const secondButtonSpy = jest.fn();
 
@@ -222,10 +230,48 @@ test('Row list with icon buttons', () => {
     const firstButton = screen.getByRole('button', {name: 'first-button'});
     const secondButton = screen.getByRole('button', {name: 'second-button'});
 
-    fireEvent.click(firstButton);
-    fireEvent.click(secondButton);
-    fireEvent.click(secondButton);
+    await userEvent.click(firstButton);
+    await userEvent.click(secondButton);
+    await userEvent.click(secondButton);
 
     expect(firstButtonSpy).toHaveBeenCalledTimes(1);
     expect(secondButtonSpy).toHaveBeenCalledTimes(2);
+});
+
+test('Row list with iconButton', async () => {
+    const onPressSpy = jest.fn();
+    const iconButtonOnPressSpy = jest.fn();
+    const logEventSpy = jest.fn();
+    render(
+        <ThemeContextProvider theme={makeTheme({analytics: {logEvent: logEventSpy}})}>
+            <RowList>
+                <Row
+                    asset={<IconShopRegular />}
+                    title="Title"
+                    description="Description"
+                    onPress={onPressSpy}
+                    trackingEvent={{name: 'row-tracking-event'}}
+                    iconButton={{
+                        'aria-label': 'Remove',
+                        Icon: IconTrashCanRegular,
+                        small: true,
+                        backgroundType: 'transparent',
+                        type: 'neutral',
+                        onPress: iconButtonOnPressSpy,
+                        trackingEvent: {name: 'icon-button-tracking-event'},
+                    }}
+                />
+            </RowList>
+        </ThemeContextProvider>
+    );
+
+    const rowButton = screen.getByRole('button', {name: 'Title Description'});
+    await userEvent.click(rowButton);
+    expect(onPressSpy).toHaveBeenCalledTimes(1);
+    expect(logEventSpy).toHaveBeenCalledWith({name: 'row-tracking-event'});
+
+    const iconButton = screen.getByRole('button', {name: 'Remove'});
+    await userEvent.click(iconButton);
+    expect(iconButtonOnPressSpy).toHaveBeenCalledTimes(1);
+    expect(logEventSpy).toHaveBeenCalledWith({name: 'icon-button-tracking-event'});
 });

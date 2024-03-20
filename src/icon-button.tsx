@@ -156,29 +156,44 @@ export const RawDeprecatedIconButton = React.forwardRef<TouchableElement, Deprec
     );
 });
 
-type IconButtonType = 'neutral' | 'brand' | 'danger';
-type IconButtonBackgroundType = 'transparent' | 'solid' | 'soft';
+export type IconButtonType = 'neutral' | 'brand' | 'danger';
+export type IconButtonBackgroundType = 'transparent' | 'solid' | 'soft';
+
+type AriaProps = ExclusifyUnion<{'aria-label': string} | {'aria-labelledby': string}>;
 
 interface BaseProps {
     children?: undefined;
-    Icon: React.FC<IconProps>;
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
     dataAttributes?: DataAttributes;
     disabled?: boolean;
     showSpinner?: boolean;
     small?: boolean;
-    type?: IconButtonType;
-    backgroundType?: IconButtonBackgroundType;
     bleedLeft?: boolean;
     bleedRight?: boolean;
     bleedY?: boolean;
 }
 
-export type IconButtonProps = BaseProps &
-    ExclusifyUnion<HrefProps | ToProps | OnPressProps | MaybeProps> &
-    ExclusifyUnion<{'aria-label': string} | {'aria-labelledby': string}>;
+interface IconButtonBaseProps {
+    Icon: React.FC<IconProps>;
+    type?: IconButtonType;
+    backgroundType?: IconButtonBackgroundType;
+}
 
-export const RawIconButton = React.forwardRef<TouchableElement, IconButtonProps & {isOverMedia?: boolean}>(
+interface InternalIconButtonBaseProps {
+    isOverMedia?: boolean;
+    hasInteractiveAreaBleed?: boolean;
+    hasOverlay?: boolean;
+}
+
+export type IconButtonProps = BaseProps &
+    IconButtonBaseProps &
+    ExclusifyUnion<HrefProps | ToProps | OnPressProps | MaybeProps> &
+    AriaProps;
+
+export const RawIconButton = React.forwardRef<
+    TouchableElement,
+    IconButtonProps & InternalIconButtonBaseProps
+>(
     (
         {
             disabled,
@@ -187,6 +202,7 @@ export const RawIconButton = React.forwardRef<TouchableElement, IconButtonProps 
             type = 'neutral',
             backgroundType = 'transparent',
             isOverMedia,
+            hasOverlay = true,
             'aria-label': ariaLabel,
             'aria-labelledby': ariaLabelledby,
             small,
@@ -194,6 +210,7 @@ export const RawIconButton = React.forwardRef<TouchableElement, IconButtonProps 
             bleedLeft,
             bleedRight,
             bleedY,
+            hasInteractiveAreaBleed,
             ...props
         },
         ref
@@ -234,16 +251,18 @@ export const RawIconButton = React.forwardRef<TouchableElement, IconButtonProps 
                 {
                     [styles.disabled]: disabled,
                     [styles.overlayContainer]: !disabled && !showSpinner,
-                    [styles.bleedLeft[buttonSize]]: bleedLeft,
-                    [styles.bleedRight[buttonSize]]: bleedRight,
-                    [styles.bleedY[buttonSize]]: bleedY,
+                    [styles.bleedLeft[buttonSize]]: bleedLeft && !hasInteractiveAreaBleed,
+                    [styles.bleedRight[buttonSize]]: bleedRight && !hasInteractiveAreaBleed,
+                    [styles.bleedY[buttonSize]]: bleedY && !hasInteractiveAreaBleed,
+                    [styles.interactiveAreaBleed[buttonSize]]: hasInteractiveAreaBleed,
                 }
             ),
+            resetMargin: !bleedLeft && !bleedRight && !bleedY && !hasInteractiveAreaBleed,
         };
 
         const content = (
             <div className={classNames(styles.iconContainer[buttonSize], {[styles.isLoading]: showSpinner})}>
-                <div className={styles.overlay} />
+                {hasOverlay && <div className={styles.overlay} />}
 
                 <div aria-hidden={showSpinner ? true : undefined} className={styles.icon}>
                     <Icon size={styles.iconSize[buttonSize]} color="currentColor" />
@@ -290,10 +309,10 @@ export const RawIconButton = React.forwardRef<TouchableElement, IconButtonProps 
                 <BaseTouchable
                     {...commonProps}
                     onPress={(e) => {
-                        const result = props.onPress(e);
-                        if (result) {
+                        const promise = props.onPress(e);
+                        if (promise) {
                             setIsOnPressPromiseResolving(true);
-                            result.finally(() => setIsOnPressPromiseResolving(false));
+                            promise.finally(() => setIsOnPressPromiseResolving(false));
                         }
                     }}
                 >
@@ -312,7 +331,7 @@ export const RawIconButton = React.forwardRef<TouchableElement, IconButtonProps 
 
 export const InternalIconButton = React.forwardRef<
     TouchableElement,
-    ExclusifyUnion<DeprecatedProps | IconButtonProps> & {isOverMedia?: boolean}
+    ExclusifyUnion<DeprecatedProps | (IconButtonProps & InternalIconButtonBaseProps)>
 >((props, ref) => {
     /**
      * The new IconButton requires Icon prop, so if it it's used we render the new version.
@@ -363,4 +382,53 @@ export const BaseIconButton = (props: ExclusifyUnion<DeprecatedProps | IconButto
     );
 };
 
-export default IconButton;
+type ToggleStateProps = {
+    Icon: React.FC<IconProps>;
+    type?: IconButtonType;
+    backgroundType?: IconButtonBackgroundType;
+} & AriaProps;
+
+interface BaseToggleProps {
+    checkedProps: ToggleStateProps;
+    uncheckedProps: ToggleStateProps;
+    onChange?: (checked: boolean) => void | undefined | Promise<void>;
+    checked?: boolean;
+    defaultChecked?: boolean;
+}
+
+export type ToggleIconButtonProps = BaseProps & BaseToggleProps;
+
+export const InternalToggleIconButton = React.forwardRef<
+    TouchableElement,
+    ToggleIconButtonProps & InternalIconButtonBaseProps
+>(({checked, defaultChecked, checkedProps, uncheckedProps, onChange, dataAttributes, ...props}, ref) => {
+    const [checkedState, setCheckedState] = React.useState(!!defaultChecked);
+
+    const handleChange = () => {
+        if (checked === undefined) {
+            // if onChange is asynchronous, wait until it finishes and change the state if there was no error
+            const promise = onChange?.(!checkedState);
+            if (promise) {
+                return promise.then(() => setCheckedState((checkedState) => !checkedState)).catch(() => {});
+            } else {
+                setCheckedState((checkedState) => !checkedState);
+            }
+        } else {
+            return onChange?.(!checked);
+        }
+    };
+
+    return (
+        <RawIconButton
+            ref={ref}
+            {...props}
+            {...(checked ?? checkedState ? checkedProps : uncheckedProps)}
+            dataAttributes={{'component-name': 'ToggleIconButton', ...dataAttributes}}
+            onPress={handleChange}
+        />
+    );
+});
+
+export const ToggleIconButton = React.forwardRef<TouchableElement, ToggleIconButtonProps>((props, ref) => {
+    return <InternalToggleIconButton ref={ref} {...props} />;
+});

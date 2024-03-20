@@ -252,6 +252,25 @@ const buttonSnippets: Array<Snippet> = [
           backgroundType="soft"
         />`,
     },
+    {
+        name: 'ToggleIconButton',
+        code: `
+        <ToggleIconButton
+          checkedProps={{
+            Icon: IconPauseFilled,
+            type: "danger",
+            backgroundType: "soft",
+            "aria-label": "checked icon button",
+          }}
+          uncheckedProps={{
+            Icon: IconPlayFilled,
+            type: "neutral",
+            backgroundType: "transparent",
+            "aria-label": "checked icon button",
+          }}
+          onChange={(checked) => console.log("checked:", checked)}
+        />`,
+    },
 ].map((snippet) => ({...snippet, group: 'Buttons'}));
 
 const formSnippets: Array<Snippet> = [
@@ -565,6 +584,7 @@ const listRowSnippets: Array<Snippet> = ['Row', 'BoxedRow'].flatMap((rowName) =>
         title="Title"
         description="Description"
         iconButton={{
+          "aria-label": "Borrar",
           Icon: IconTrashCanRegular,
           small: true,
           backgroundType: "transparent",
@@ -936,6 +956,18 @@ const cardSnippets: Array<Snippet> = [
               onPress: () => {},
               label: "Lightning",
             },
+            {
+              checkedProps: {
+                  Icon: IconStarFilled,
+                  label: 'checked',
+              },
+              uncheckedProps: {
+                  Icon: IconStarRegular,
+                  label: 'unchecked',
+              },
+              defaultChecked: false,
+              onChange: () => {},
+          },
           ]}
         />`,
     },
@@ -961,6 +993,18 @@ const cardSnippets: Array<Snippet> = [
               onPress: () => {},
               label: "Lightning",
             },
+            {
+              checkedProps: {
+                  Icon: IconStarFilled,
+                  label: 'checked',
+              },
+              uncheckedProps: {
+                  Icon: IconStarRegular,
+                  label: 'unchecked',
+              },
+              defaultChecked: false,
+              onChange: () => {},
+          },
           ]}
         />`,
     },
@@ -1000,6 +1044,18 @@ const cardSnippets: Array<Snippet> = [
               onPress: () => {},
               label: "Lightning",
             },
+            {
+              checkedProps: {
+                  Icon: IconStarFilled,
+                  label: 'checked',
+              },
+              uncheckedProps: {
+                  Icon: IconStarRegular,
+                  label: 'unchecked',
+              },
+              defaultChecked: false,
+              onChange: () => {},
+          },
           ]}
         />`,
     },
@@ -1040,6 +1096,18 @@ const cardSnippets: Array<Snippet> = [
               onPress: () => {},
               label: "Lightning",
             },
+            {
+              checkedProps: {
+                  Icon: IconStarFilled,
+                  label: 'checked',
+              },
+              uncheckedProps: {
+                  Icon: IconStarRegular,
+                  label: 'unchecked',
+              },
+              defaultChecked: false,
+              onChange: () => {},
+          },
           ]}
         />`,
     },
@@ -1061,6 +1129,18 @@ const cardSnippets: Array<Snippet> = [
               Icon: IconLightningRegular,
               onPress: () => {},
               label: "Lightning",
+            },
+            {
+              checkedProps: {
+                  Icon: IconStarFilled,
+                  label: 'checked',
+              },
+              uncheckedProps: {
+                  Icon: IconStarRegular,
+                  label: 'unchecked',
+              },
+              defaultChecked: false,
+              onChange: () => {},
             },
           ]}
         />`,

@@ -288,8 +288,16 @@ const Touchable = React.forwardRef<TouchableElement, Props>((props, ref) => {
 });
 
 // Used internally by Mística's components to avoid styles collisions
-export const BaseTouchable = React.forwardRef<TouchableElement, Props>((props, ref) => {
-    return <RawTouchable {...props} className={classnames(classes.base, props.className)} ref={ref} />;
-});
+export const BaseTouchable = React.forwardRef<TouchableElement, Props & {resetMargin?: boolean}>(
+    ({resetMargin = true, ...props}, ref) => {
+        return (
+            <RawTouchable
+                {...props}
+                className={classnames(classes.base, props.className, {[classes.marginReset]: resetMargin})}
+                ref={ref}
+            />
+        );
+    }
+);
 
 export default Touchable;

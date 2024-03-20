@@ -12,6 +12,8 @@ import {
     Circle,
     skinVars,
     Carousel,
+    IconStarFilled,
+    IconStarRegular,
 } from '..';
 import ResponsiveLayout from '../responsive-layout';
 import {Placeholder} from '../placeholder';
@@ -121,6 +123,18 @@ export const Default: StoryComponent<Args> = ({
                                   alert('icon press');
                               },
                               label: 'Device',
+                          },
+                          {
+                              checkedProps: {
+                                  Icon: IconStarFilled,
+                                  label: 'checked',
+                              },
+                              uncheckedProps: {
+                                  Icon: IconStarRegular,
+                                  label: 'unchecked',
+                              },
+                              defaultChecked: false,
+                              onChange: () => {},
                           },
                       ]
                     : undefined

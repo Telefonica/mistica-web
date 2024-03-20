@@ -16,7 +16,7 @@ import {ThemeVariant, useIsInverseVariant} from './theme-variant-context';
 import {combineRefs} from './utils/common';
 import {useSetTooltipState, useTooltipState} from './tooltip-context-provider';
 import {isRunningAcceptanceTest} from './utils/platform';
-import IconButton from './icon-button';
+import {InternalIconButton} from './icon-button';
 import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
 import Box from './box';
 
@@ -584,17 +584,19 @@ export const BaseTooltip: React.FC<BaseTooltipProps> = ({
                                                 {content}
 
                                                 {onClose && (
-                                                    <IconButton
-                                                        className={styles.closeButtonIcon}
-                                                        onPress={() => {
-                                                            setIsMouseOverTarget(false);
-                                                            onClose();
-                                                        }}
-                                                        trackingEvent={trackingEvent}
-                                                        aria-label={texts.modalClose}
-                                                    >
-                                                        <IconCloseRegular color={vars.colors.neutralHigh} />
-                                                    </IconButton>
+                                                    <div className={styles.closeButtonIcon}>
+                                                        <InternalIconButton
+                                                            onPress={() => {
+                                                                setIsMouseOverTarget(false);
+                                                                onClose();
+                                                            }}
+                                                            trackingEvent={trackingEvent}
+                                                            aria-label={texts.modalClose}
+                                                            Icon={IconCloseRegular}
+                                                            hasInteractiveAreaBleed
+                                                            small
+                                                        />
+                                                    </div>
                                                 )}
                                             </ThemeVariant>
                                         </div>

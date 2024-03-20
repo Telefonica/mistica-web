@@ -1,4 +1,5 @@
 import * as React from 'react';
+import Icon2GRegular from '../generated/mistica-icons/icon-2-g-regular';
 import IconPlayFilled from '../generated/mistica-icons/icon-play-filled';
 import {RowList, BoxedRowList, BoxedRow, Row} from '../list';
 
@@ -47,14 +48,46 @@ const v = true as boolean;
     {/* @ts-expect-error - fullPageOnWebView not allowed in onPress */}
     <Row title="onPress" onPress={() => {}} fullPageOnWebView />
     {/* OK - switch */}
-    <Row title="switch" switch={{name: 'switch', value: true}} />
-    <Row title="switch + onPress" switch={{name: 'switch', value: true}} onPress={() => {}} />
+    <Row title="switch" trackingEvent={{name: 'something'}} switch={{name: 'switch', value: true}} />
+    <Row
+        title="switch + onPress"
+        trackingEvent={{name: 'something'}}
+        switch={{name: 'switch', value: true}}
+        onPress={() => {}}
+    />
     {/* OK - checkbox */}
-    <Row title="checkbox" checkbox={{name: 'checkbox', value: true}} />
-    <Row title="checkbox + onPress" checkbox={{name: 'checkbox', value: true}} onPress={() => {}} />
+    <Row title="checkbox" trackingEvent={{name: 'something'}} checkbox={{name: 'checkbox', value: true}} />
+    <Row
+        title="checkbox + onPress"
+        trackingEvent={{name: 'something'}}
+        checkbox={{name: 'checkbox', value: true}}
+        onPress={() => {}}
+    />
     {/* OK - radio */}
-    <Row title="radio" radioValue="radio" />
-    <Row title="radio + onPress" radioValue="radio" onPress={() => {}} />
+    <Row title="radio" trackingEvent={{name: 'something'}} radioValue="radio" />
+    <Row title="radio + onPress" trackingEvent={{name: 'something'}} radioValue="radio" onPress={() => {}} />
+    {/* OK - iconButton */}
+    <Row
+        title="iconButton"
+        trackingEvent={{name: 'something'}}
+        iconButton={{
+            'aria-label': 'do something',
+            Icon: Icon2GRegular,
+            onPress: () => {},
+            trackingEvent: {name: 'something'},
+        }}
+    />
+    <Row
+        title="iconButton + onPress"
+        onPress={() => {}}
+        trackingEvent={{name: 'something'}}
+        iconButton={{
+            'aria-label': 'do something',
+            Icon: Icon2GRegular,
+            onPress: () => {},
+            trackingEvent: {name: 'something'},
+        }}
+    />
     {/* @ts-expect-error - can't use trackingEvent without to/href/onPress */}
     <Row title="tracking event without to/href/onPress" trackingEvent={{name: 'something'}} />
 
@@ -118,6 +151,28 @@ const v = true as boolean;
 
     {/* OK - checkbox */}
     <BoxedRow title="with checkbox" checkbox={v ? {name: 'checkbox', value: true} : undefined} />
+
+    {/* OK - iconButton */}
+    <BoxedRow
+        title="iconButton"
+        iconButton={{
+            'aria-label': 'do something',
+            Icon: Icon2GRegular,
+            onPress: () => {},
+            trackingEvent: {name: 'something'},
+        }}
+    />
+    <BoxedRow
+        title="iconButton + onPress"
+        onPress={() => {}}
+        trackingEvent={{name: 'something'}}
+        iconButton={{
+            'aria-label': 'do something',
+            Icon: Icon2GRegular,
+            onPress: () => {},
+            trackingEvent: {name: 'something'},
+        }}
+    />
 
     {/* @ts-expect-error - both checkbox and switch cannot be defined at the same time */}
     <BoxedRow

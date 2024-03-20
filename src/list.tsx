@@ -26,9 +26,9 @@ import * as styles from './list.css';
 import * as mediaStyles from './image.css';
 import {vars} from './skins/skin-contract.css';
 import {applyCssVars} from './utils/css';
-import {IconButton} from './icon-button';
+import {IconButton, ToggleIconButton} from './icon-button';
 
-import type {IconButtonProps} from './icon-button';
+import type {IconButtonProps, ToggleIconButtonProps} from './icon-button';
 import type {TouchableElement} from './touchable';
 import type {DataAttributes, TrackingEvent} from './utils/types';
 import type {ExclusifyUnion} from './utils/utility-types';
@@ -227,26 +227,30 @@ interface BasicRowContentProps extends CommonProps {
 
 interface SwitchRowContentProps extends CommonProps {
     onPress?: (() => void) | undefined;
+    trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
 
     switch: ControlProps | undefined;
 }
 
 interface CheckboxRowContentProps extends CommonProps {
     onPress?: (() => void) | undefined;
+    trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
 
     checkbox: ControlProps | undefined;
 }
 
 interface RadioRowContentProps extends CommonProps {
     onPress?: (() => void) | undefined;
+    trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
 
     radioValue: string;
 }
 
 interface IconButtonRowContentProps extends CommonProps {
     onPress?: (() => void) | undefined;
+    trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
 
-    iconButton: IconButtonProps | undefined;
+    iconButton: ExclusifyUnion<IconButtonProps | ToggleIconButtonProps> | undefined;
 }
 
 interface HrefRowContentProps extends CommonProps {
@@ -475,6 +479,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
                     dataAttributes={dataAttributes}
                     disabled={disabled}
                     onPress={props.onPress}
+                    trackingEvent={props.trackingEvent}
                     role={role}
                     className={classNames(styles.dualActionLeft, {
                         [styles.touchableBackground]: hasHoverDefault,
@@ -535,18 +540,27 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
     if (props.iconButton) {
         return props.onPress ? (
             <div className={styles.dualActionContainer}>
-                <div
+                <BaseTouchable
+                    dataAttributes={dataAttributes}
+                    disabled={disabled}
+                    onPress={props.onPress}
+                    trackingEvent={props.trackingEvent}
+                    role={role}
                     className={classNames(styles.dualActionLeft, {
                         [styles.touchableBackground]: hasHoverDefault,
                         [styles.touchableBackgroundInverse]: hasHoverInverse,
                     })}
                 >
                     {renderContent({type: 'basic', labelId: titleId})}
-                </div>
+                </BaseTouchable>
                 <div className={styles.dualActionDivider} />
                 <Box padding={16}>
                     <Stack space="around">
-                        <IconButton {...props.iconButton} disabled={props.disabled} ref={ref} />
+                        {props.iconButton.Icon ? (
+                            <IconButton {...props.iconButton} disabled={props.disabled} ref={ref} />
+                        ) : (
+                            <ToggleIconButton {...props.iconButton} disabled={props.disabled} ref={ref} />
+                        )}
                     </Stack>
                 </Box>
             </div>
@@ -558,7 +572,15 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
                         type: 'control',
                         right: (
                             <Stack space="around">
-                                <IconButton {...props.iconButton} disabled={props.disabled} ref={ref} />
+                                {props.iconButton.Icon ? (
+                                    <IconButton {...props.iconButton} disabled={props.disabled} ref={ref} />
+                                ) : (
+                                    <ToggleIconButton
+                                        {...props.iconButton}
+                                        disabled={props.disabled}
+                                        ref={ref}
+                                    />
+                                )}
                             </Stack>
                         ),
                     })}
