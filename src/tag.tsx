@@ -40,16 +40,12 @@ const Tag: React.FC<TagProps> = ({Icon, children, dataAttributes, type = 'promo'
 
     const tagTypeToColors = {
         // [textColor, inverseTextColor, backgroundColor]
-        promo: [colors.promoHigh, colors.promoHighInverse, colors.promoLow],
-        active: [colors.brand, colors.brand, colors.brandLow],
-        inactive: [
-            colors.neutralMedium,
-            colors.neutralMediumInverse,
-            themeVariant === 'alternative' ? colors.neutralLowAlternative : colors.neutralLow,
-        ],
-        success: [colors.successHigh, colors.successHighInverse, colors.successLow],
-        warning: [colors.warningHigh, colors.warningHighInverse, colors.warningLow],
-        error: [colors.errorHigh, colors.errorHighInverse, colors.errorLow],
+        promo: [colors.tagTextPromo, colors.tagTextPromo, colors.tagBackgroundPromo],
+        active: [colors.tagTextActive, colors.tagTextActive, colors.tagBackgroundActive],
+        inactive: [colors.tagTextInactive, colors.tagTextInactive, colors.tagBackgroundInactive],
+        success: [colors.tagTextSuccess, colors.tagTextSuccess, colors.tagBackgroundSuccess],
+        warning: [colors.tagTextWarning, colors.tagTextWarning, colors.tagBackgroundWarning],
+        error: [colors.tagTextError, colors.tagTextError, colors.tagBackgroundError],
     } as const;
 
     const [textColor, inverseTextColor, backgroundColor] = tagTypeToColors[type];
