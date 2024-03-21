@@ -58,7 +58,7 @@ const Tag: React.FC<TagProps> = ({Icon, children, dataAttributes, type = 'promo'
                 sprinkles({
                     paddingLeft: Icon ? 8 : 12,
                     paddingRight: badgeValue !== 0 ? 8 : 12,
-                    background: isInverse ? colors.inverse : backgroundColor,
+                    background: backgroundColor,
                 })
             )}
         >
