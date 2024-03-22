@@ -44,9 +44,7 @@ const FormTest = (): JSX.Element => (
                 <CreditCardExpirationField name="expiration-date" label="Expiration date" />
                 <CvvField name="cvv" label="CVV" />
                 <SearchField name="search" label="Search" />
-                <ButtonLayout>
-                    <ButtonPrimary submit>Send</ButtonPrimary>
-                </ButtonLayout>
+                <ButtonLayout primaryButton={<ButtonPrimary submit>Send</ButtonPrimary>} />
             </Stack>
         </Box>
     </Form>

@@ -117,26 +117,31 @@ const Dialog: React.FC<DialogProps> = (props) => {
             </div>
 
             <div className={styles.dialogActions}>
-                <ButtonLayout link={isDialog ? props.link : undefined}>
-                    {destructive ? (
-                        <ButtonDanger
-                            tabIndex={1} // eslint-disable-line jsx-a11y/tabindex-no-positive
-                            {...acceptButtonProps}
-                        />
-                    ) : (
-                        <ButtonPrimary tabIndex={1} {...acceptButtonProps} /> // eslint-disable-line jsx-a11y/tabindex-no-positive
-                    )}
-                    {showCancelButton && (
-                        <ButtonSecondary
-                            tabIndex={2} // eslint-disable-line jsx-a11y/tabindex-no-positive
-                            onPress={handleCancel || (() => {})}
-                            // @deprecated - testid should be removed but many webapp tests depend on this
-                            dataAttributes={{testid: 'dialog-cancel-button'}}
-                        >
-                            {cancelText}
-                        </ButtonSecondary>
-                    )}
-                </ButtonLayout>
+                <ButtonLayout
+                    link={isDialog ? props.link : undefined}
+                    primaryButton={
+                        destructive ? (
+                            <ButtonDanger
+                                tabIndex={1} // eslint-disable-line jsx-a11y/tabindex-no-positive
+                                {...acceptButtonProps}
+                            />
+                        ) : (
+                            <ButtonPrimary tabIndex={1} {...acceptButtonProps} /> // eslint-disable-line jsx-a11y/tabindex-no-positive
+                        )
+                    }
+                    secondaryButton={
+                        showCancelButton ? (
+                            <ButtonSecondary
+                                tabIndex={2} // eslint-disable-line jsx-a11y/tabindex-no-positive
+                                onPress={handleCancel || (() => {})}
+                                // @deprecated - testid should be removed but many webapp tests depend on this
+                                dataAttributes={{testid: 'dialog-cancel-button'}}
+                            >
+                                {cancelText}
+                            </ButtonSecondary>
+                        ) : undefined
+                    }
+                />
             </div>
         </div>
     );

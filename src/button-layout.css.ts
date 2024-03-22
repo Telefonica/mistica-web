@@ -17,45 +17,11 @@ export const margins = style({
     },
 });
 
-const linkBase = style([
-    {
-        margin: buttonLayoutSpacing / 2,
-        justifyContent: 'inherit',
-        '@media': {
-            [mq.desktopOrBigger]: {
-                flexDirection: 'row-reverse',
-            },
-        },
-    },
-    sprinkles({display: 'flex', width: '100%'}),
-]);
-
-export const link = style([
-    linkBase,
-    {
-        '@media': {
-            [mq.desktopOrBigger]: {
-                width: 'auto',
-            },
-        },
-    },
-]);
-
-export const linkWithTwoButtons = linkBase;
-
-export const linkAlignment = style({
-    '@media': {
-        [mq.desktopOrBigger]: {
-            marginLeft: buttonLayoutSpacing / 2 - PADDING_X_LINK,
-        },
-    },
-});
-
-export const baseContainer = style([
+export const container = style([
     sprinkles({display: 'flex', alignItems: 'center'}),
     {
-        flexWrap: 'wrap-reverse',
-        margin: -buttonLayoutSpacing / 2,
+        margin: -buttonLayoutSpacing / 2, // compensates the buttons margin
+        flexWrap: 'wrap',
 
         ':empty': {
             margin: 0,
@@ -63,11 +29,40 @@ export const baseContainer = style([
     },
 ]);
 
-export const container = style({});
-export const fullWidthContainer = style({});
+export const containerWithTwoButtons = style({});
+
+export const alignVariant = styleVariants({
+    // the empty {} is needed because we need vanilla-extract to generate a class for every variant so we
+    // can use them in the globalStyle rules below. For some reason, vanilla-extract doesn't generate new
+    // classes if we only use sprinkles in the variant definition.
+    right: [{}, sprinkles({justifyContent: 'flex-end'})],
+    left: [{}, sprinkles({justifyContent: 'flex-start'})],
+    center: [{}, sprinkles({justifyContent: 'center'})],
+    'full-width': [
+        sprinkles({justifyContent: 'center'}),
+        {
+            '@media': {
+                [mq.desktopOrBigger]: {
+                    justifyContent: 'flex-start',
+                },
+            },
+        },
+    ],
+});
+
+const linkBase = style([
+    sprinkles({display: 'flex', width: '100%'}),
+    {
+        margin: buttonLayoutSpacing / 2,
+        justifyContent: 'inherit',
+    },
+]);
 
 globalStyle(`${container} > *:not(${linkBase})`, {
     margin: buttonLayoutSpacing / 2,
+});
+
+globalStyle(`${containerWithTwoButtons} > *:not(${linkBase})`, {
     '@media': {
         [mq.tabletOrSmaller]: {
             minWidth: `calc(50% - ${buttonLayoutSpacing}px)`,
@@ -75,65 +70,52 @@ globalStyle(`${container} > *:not(${linkBase})`, {
     },
 });
 
-globalStyle(`${fullWidthContainer} > *:not(${linkBase})`, {
-    margin: buttonLayoutSpacing / 2,
+globalStyle(`${alignVariant['full-width']} > *:not(${linkBase})`, {
     '@media': {
         [mq.tabletOrSmaller]: {
-            width: `calc(100% - ${buttonLayoutSpacing}px)`,
+            width: '100%',
         },
     },
 });
 
-export const alignVariant = styleVariants({
-    right: [
-        sprinkles({justifyContent: 'flex-end'}),
-        {
-            '@media': {
-                [mq.desktopOrBigger]: {
-                    flexDirection: 'row-reverse',
-                    justifyContent: 'flex-start',
-                },
-            },
-        },
-    ],
-    left: [
-        sprinkles({justifyContent: 'flex-start'}),
-        {
-            '@media': {
-                [mq.desktopOrBigger]: {
-                    flexDirection: 'row-reverse',
-                    justifyContent: 'flex-end',
-                },
-            },
-        },
-    ],
-    center: [
-        sprinkles({justifyContent: 'center'}),
-        {
-            '@media': {
-                [mq.desktopOrBigger]: {
-                    flexDirection: 'row-reverse',
-                },
-            },
-        },
-    ],
-    'full-width': [
-        sprinkles({justifyContent: 'center'}),
-        {
-            '@media': {
-                [mq.desktopOrBigger]: {
-                    flexDirection: 'row-reverse',
-                    justifyContent: 'flex-end',
-                },
-            },
-        },
-    ],
-});
+const bleedLeft = {marginLeft: buttonLayoutSpacing / 2 - PADDING_X_LINK};
+const bleedRight = {marginRight: buttonLayoutSpacing / 2 - PADDING_X_LINK};
 
-export const alignMoreThanOneChildren = style({
-    '@media': {
-        [mq.tabletOrSmaller]: {
-            justifyContent: 'center',
+export const link = style([
+    linkBase,
+    {
+        '@media': {
+            [mq.desktopOrBigger]: {
+                width: 'auto',
+                ...bleedLeft,
+            },
+        },
+
+        selectors: {
+            [`${alignVariant.right} &`]: bleedRight,
+
+            [`${alignVariant.left} &`]: {
+                '@media': {
+                    [mq.tabletOrSmaller]: bleedLeft,
+                },
+            },
         },
     },
-});
+]);
+
+export const linkWithTwoButtons = style([
+    linkBase,
+    {
+        selectors: {
+            [`${alignVariant.right} &`]: bleedRight,
+
+            [`${alignVariant.left} &`]: bleedLeft,
+            // in desktop, full-width is equivalent to left
+            [`${alignVariant['full-width']} &`]: {
+                '@media': {
+                    [mq.desktopOrBigger]: bleedLeft,
+                },
+            },
+        },
+    },
+]);

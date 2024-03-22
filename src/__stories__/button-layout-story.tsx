@@ -16,32 +16,41 @@ const Template: React.FC<Props> = ({align = 'full-width'}) => (
     <StorySection title={`ButtonLayout (align = ${align})`}>
         <Stack space={16}>
             <Title1 as="h2">One button</Title1>
-            <ButtonLayout align={align}>
-                <ButtonPrimary fake>Ok</ButtonPrimary>
-            </ButtonLayout>
+            <ButtonLayout
+                align={align}
+                primaryButton={<ButtonPrimary onPress={() => {}}>Ok</ButtonPrimary>}
+            />
 
             <Title1 as="h2">Two buttons</Title1>
-            <ButtonLayout align={align}>
-                <ButtonSecondary fake>Cancel</ButtonSecondary>
-                <ButtonPrimary fake>Ok</ButtonPrimary>
-            </ButtonLayout>
+            <ButtonLayout
+                align={align}
+                primaryButton={<ButtonPrimary onPress={() => {}}>Ok</ButtonPrimary>}
+                secondaryButton={<ButtonSecondary onPress={() => {}}>Cancel</ButtonSecondary>}
+            />
 
             <Title1 as="h2">Long captions</Title1>
-            <ButtonLayout align={align}>
-                <ButtonSecondary fake>The text in this button is very long</ButtonSecondary>
-                <ButtonPrimary fake>This one isn't so long</ButtonPrimary>
-            </ButtonLayout>
+            <ButtonLayout
+                align={align}
+                primaryButton={<ButtonPrimary onPress={() => {}}>This one isn't so long</ButtonPrimary>}
+                secondaryButton={
+                    <ButtonSecondary onPress={() => {}}>The text in this button is very long</ButtonSecondary>
+                }
+            />
 
             <Title1 as="h2">One button with link</Title1>
-            <ButtonLayout align={align} link={<ButtonLink href="#">Text link</ButtonLink>}>
-                <ButtonPrimary fake>Ok</ButtonPrimary>
-            </ButtonLayout>
+            <ButtonLayout
+                align={align}
+                link={<ButtonLink href="#">Text link</ButtonLink>}
+                primaryButton={<ButtonPrimary onPress={() => {}}>Ok</ButtonPrimary>}
+            />
 
             <Title1 as="h2">Two buttons with link</Title1>
-            <ButtonLayout align={align} link={<ButtonLink href="#">Text link</ButtonLink>}>
-                <ButtonSecondary fake>Cancel</ButtonSecondary>
-                <ButtonPrimary fake>Ok</ButtonPrimary>
-            </ButtonLayout>
+            <ButtonLayout
+                align={align}
+                link={<ButtonLink href="#">Text link</ButtonLink>}
+                primaryButton={<ButtonPrimary onPress={() => {}}>Ok</ButtonPrimary>}
+                secondaryButton={<ButtonSecondary onPress={() => {}}>Cancel</ButtonSecondary>}
+            />
         </Stack>
     </StorySection>
 );
@@ -65,7 +74,7 @@ export const Default: StoryComponent = () => (
                         <br />
                         {'  <Box paddingX={16}>'}
                         <br />
-                        {'      <ButtonLayout>//...</ButtonLayout>'}
+                        {'      <ButtonLayout/>'}
                         <br />
                         {'  </Box>'}
                         <br />
