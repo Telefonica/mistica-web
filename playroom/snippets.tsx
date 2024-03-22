@@ -231,7 +231,7 @@ const buttonSnippets: Array<Snippet> = [
         name: 'ButtonLayout',
         code: `
         <ButtonLayout
-            primaryButton={<ButtonPrimary onPress={() => {}}>Action</ButtonPrimary>}>
+            primaryButton={<ButtonPrimary onPress={() => {}}>Action</ButtonPrimary>}
             secondaryButton={<ButtonSecondary onPress={() => {}}>Action</ButtonSecondary>}
         />`,
     },
