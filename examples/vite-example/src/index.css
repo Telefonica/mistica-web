@@ -1,0 +1,12 @@
+body {
+  font-family: -apple-system, 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  padding: 0;
+  margin: 0;
+}
+
+input,
+textarea,
+pre,
+code {
+  font: inherit;
+}
