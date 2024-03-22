@@ -43,11 +43,19 @@ const ButtonLayout: React.FC<ButtonLayoutProps> = ({
         ? sortedButtons.length
         : (primaryButton ? 1 : 0) + (secondaryButton ? 1 : 0);
 
-    const buttons = children
-        ? sortedButtons
-        : align === 'right'
-        ? [secondaryButton, primaryButton]
-        : [primaryButton, secondaryButton];
+    const buttons = children ? (
+        sortedButtons
+    ) : align === 'right' ? (
+        <>
+            {secondaryButton}
+            {primaryButton}
+        </>
+    ) : (
+        <>
+            {primaryButton}
+            {secondaryButton}
+        </>
+    );
 
     const content = (
         <div
