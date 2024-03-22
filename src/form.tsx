@@ -76,8 +76,11 @@ const Form: React.FC<FormProps> = ({
         []
     );
 
-    const setFormError = ({name, error}: {name: string; error?: string}) =>
-        setFormErrors((formErrors) => ({...formErrors, [name]: error}));
+    const setFormError = React.useCallback(
+        ({name, error}: {name: string; error?: string}) =>
+            setFormErrors((formErrors) => ({...formErrors, [name]: error})),
+        []
+    );
 
     /**
      * returns true if all fields are ok and focuses the first field with an error
