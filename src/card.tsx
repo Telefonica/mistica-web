@@ -671,6 +671,7 @@ export const SmallNakedCard = React.forwardRef<HTMLDivElement, SmallNakedCardPro
     ) => {
         const isTouchable = touchableProps.href || touchableProps.to || touchableProps.onPress;
         const isCircularMedia = media && media.type === Image && (media.props as any).circular;
+        const {textPresets} = useTheme();
 
         return (
             <CardContainer
@@ -695,9 +696,18 @@ export const SmallNakedCard = React.forwardRef<HTMLDivElement, SmallNakedCardPro
                             <div>
                                 <Stack space={8}>
                                     {title && (
-                                        <Text2 truncate={titleLinesMax} as="h3" regular hyphens="auto">
+                                        <Text
+                                            desktopSize={16}
+                                            mobileSize={14}
+                                            mobileLineHeight="20px"
+                                            desktopLineHeight="24px"
+                                            truncate={titleLinesMax}
+                                            weight={textPresets.cardTitle.weight}
+                                            as="h3"
+                                            hyphens="auto"
+                                        >
                                             {title}
-                                        </Text2>
+                                        </Text>
                                     )}
                                     {subtitle && (
                                         <Text2 truncate={subtitleLinesMax} regular as="p" hyphens="auto">
