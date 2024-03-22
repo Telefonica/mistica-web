@@ -1,10 +1,9 @@
 import * as React from 'react';
-import {findByText, render, screen, waitFor} from '@testing-library/react';
+import {render, screen, waitFor} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import {ButtonPrimary, Form, TextField, EmailField, PasswordField, Switch, PhoneNumberField} from '..';
 import ThemeContextProvider from '../theme-context-provider';
 import {makeTheme} from './test-utils';
-import {find} from 'lodash';
 
 test('happy case', async () => {
     const handleSubmitSpy: any = jest.fn();
