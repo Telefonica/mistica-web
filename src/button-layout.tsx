@@ -36,12 +36,18 @@ const ButtonLayout: React.FC<ButtonLayoutProps> = ({
     const sortedButtons = React.Children.toArray(children as any).sort((b1: any, b2: any) => {
         const range1 = buttonsRange.indexOf(b1.type);
         const range2 = buttonsRange.indexOf(b2.type);
-        return range1 - range2;
+        return align === 'right' ? range2 - range1 : range1 - range2;
     });
 
     const numberOfButtons = children
         ? sortedButtons.length
         : (primaryButton ? 1 : 0) + (secondaryButton ? 1 : 0);
+
+    const buttons = children
+        ? sortedButtons
+        : align === 'right'
+        ? [secondaryButton, primaryButton]
+        : [primaryButton, secondaryButton];
 
     const content = (
         <div
@@ -50,14 +56,7 @@ const ButtonLayout: React.FC<ButtonLayoutProps> = ({
             })}
             {...getPrefixedDataAttributes(dataAttributes, 'ButtonLayout')}
         >
-            {children ? (
-                sortedButtons
-            ) : (
-                <>
-                    {primaryButton}
-                    {secondaryButton}
-                </>
-            )}
+            {buttons}
             {link ? (
                 <div
                     className={classnames(numberOfButtons > 1 ? styles.linkWithTwoButtons : styles.link)}
