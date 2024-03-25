@@ -57,6 +57,15 @@ const ButtonLayout: React.FC<ButtonLayoutProps> = ({
         </>
     );
 
+    const linkContainer = link ? (
+        <div
+            className={classnames(numberOfButtons > 1 ? styles.linkWithTwoButtons : styles.link)}
+            data-link="true"
+        >
+            {link}
+        </div>
+    ) : null;
+
     const content = (
         <div
             className={classnames(styles.container, styles.alignVariant[align], {
@@ -64,15 +73,17 @@ const ButtonLayout: React.FC<ButtonLayoutProps> = ({
             })}
             {...getPrefixedDataAttributes(dataAttributes, 'ButtonLayout')}
         >
-            {buttons}
-            {link ? (
-                <div
-                    className={classnames(numberOfButtons > 1 ? styles.linkWithTwoButtons : styles.link)}
-                    data-link="true"
-                >
-                    {link}
-                </div>
-            ) : null}
+            {align !== 'right' || numberOfButtons > 1 ? (
+                <>
+                    {buttons}
+                    {linkContainer}
+                </>
+            ) : (
+                <>
+                    {linkContainer}
+                    {buttons}
+                </>
+            )}
         </div>
     );
 

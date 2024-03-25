@@ -84,21 +84,7 @@ const bleedRight = {marginRight: buttonLayoutSpacing / 2 - PADDING_X_LINK};
 export const link = style([
     linkBase,
     {
-        '@media': {
-            [mq.desktopOrBigger]: {
-                width: 'auto',
-            },
-        },
-
-        selectors: {
-            [`${alignVariant.right} &`]: bleedRight,
-
-            [`${alignVariant.left} &`]: {
-                '@media': {
-                    [mq.tabletOrSmaller]: bleedLeft,
-                },
-            },
-        },
+        width: 'auto',
     },
 ]);
 
