@@ -39,6 +39,7 @@ type PosterCardArgs = {
     headline: string;
     pretitle: string;
     title: string;
+    subtitle: string;
     description: string;
     closable: boolean;
     actions: 'on press' | 'none';
@@ -60,6 +61,7 @@ export const Default: StoryComponent<PosterCardArgs> = ({
     headlineType,
     pretitle,
     title,
+    subtitle,
     description,
     closable,
     actions,
@@ -132,6 +134,7 @@ export const Default: StoryComponent<PosterCardArgs> = ({
                     headline={headline ? <Tag type={headlineType}>{headline}</Tag> : undefined}
                     pretitle={pretitle}
                     title={title}
+                    subtitle={subtitle}
                     description={description}
                     aria-label="Poster card label"
                     width={width}
@@ -155,6 +158,7 @@ Default.args = {
     headline: 'Priority',
     pretitle: 'Pretitle',
     title: 'Title',
+    subtitle: 'Subtitle',
     description: 'This is a description for the card',
     closable: false,
     actions: 'none',
