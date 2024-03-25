@@ -14,6 +14,8 @@ import {
     Stack,
     Text2,
     Carousel,
+    IconStarFilled,
+    IconStarRegular,
 } from '..';
 import {Placeholder} from '../placeholder';
 import avatarImg from './images/avatar.jpg';
@@ -109,6 +111,18 @@ export const Default: StoryComponent<DisplayDataCardArgs> = ({
                               Icon: IconLightningRegular,
                               onPress: () => {},
                               label: 'Lightning',
+                          },
+                          {
+                              checkedProps: {
+                                  Icon: IconStarFilled,
+                                  label: 'checked',
+                              },
+                              uncheckedProps: {
+                                  Icon: IconStarRegular,
+                                  label: 'unchecked',
+                              },
+                              defaultChecked: false,
+                              onChange: () => {},
                           },
                       ]
                     : undefined

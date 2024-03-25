@@ -1,3 +1,38 @@
+# [14.47.0](https://github.com/Telefonica/mistica-web/compare/v14.46.0...v14.47.0) (2024-03-20)
+
+
+### Bug Fixes
+
+* **Row,BoxedRow:** main touchable area when using iconButton + onPress. Allow trackingEvent in rows with double interaction ([#1053](https://github.com/Telefonica/mistica-web/issues/1053)) ([db3347f](https://github.com/Telefonica/mistica-web/commit/db3347f3f78ce3c2dcf6aabc8ae4b15696d98c24))
+
+
+### Features
+
+* **overscroll color:** change implementation and allow setting bottom overscroll color too ([#1043](https://github.com/Telefonica/mistica-web/issues/1043)) ([468bd0c](https://github.com/Telefonica/mistica-web/commit/468bd0c17c2ee7c6254bb7a55042c210dd29b028))
+* **skin:** update design tokens ([#1049](https://github.com/Telefonica/mistica-web/issues/1049)) ([4b87c32](https://github.com/Telefonica/mistica-web/commit/4b87c326788fc436e907cefa361ddd5f8a06425e))
+
+# [14.46.0](https://github.com/Telefonica/mistica-web/compare/v14.45.0...v14.46.0) (2024-03-13)
+
+
+### Bug Fixes
+
+* **CSS:** prevent browser default behaviours when long pressing or dragging links ([#1045](https://github.com/Telefonica/mistica-web/issues/1045)) ([717343d](https://github.com/Telefonica/mistica-web/commit/717343dd27c536d7760d37c72ea2cc89a19c66bf))
+* **HighlightedCard:** improve optional types of title and description, make one mandatory ([#1039](https://github.com/Telefonica/mistica-web/issues/1039)) ([a818ffa](https://github.com/Telefonica/mistica-web/commit/a818ffa4f58bdf77c9d1ce3a42ea82de12a7a214))
+* **Logo:** old version of Tu logo ([#1036](https://github.com/Telefonica/mistica-web/issues/1036)) ([0dc09e2](https://github.com/Telefonica/mistica-web/commit/0dc09e2103ffbefac2ef8573edd30172488b789a))
+* **Switch:** iOS background in dark mode ([#1037](https://github.com/Telefonica/mistica-web/issues/1037)) ([a77c42d](https://github.com/Telefonica/mistica-web/commit/a77c42d587dbec0512559cf82cc841a2abf24171))
+
+
+### Features
+
+* **dialogs:** Remove history hacks in dialog ([#1041](https://github.com/Telefonica/mistica-web/issues/1041)) ([2a48cb4](https://github.com/Telefonica/mistica-web/commit/2a48cb48fb923cf97ee8f88ddc990dd865c246de))
+* **IconButton:** update internal usages in Mistica components ([#1044](https://github.com/Telefonica/mistica-web/issues/1044)) ([12bf970](https://github.com/Telefonica/mistica-web/commit/12bf970d1b11e58ec88a9339df9921fac2623df9))
+* **Icons:** New vivo icons ([#1038](https://github.com/Telefonica/mistica-web/issues/1038)) ([d070a25](https://github.com/Telefonica/mistica-web/commit/d070a250083f630e1b566c4f1c92cd4001fba1b8))
+* **Input fields:** update iconButton in all fields ([#1042](https://github.com/Telefonica/mistica-web/issues/1042)) ([062c0bd](https://github.com/Telefonica/mistica-web/commit/062c0bdc627926a08dd18faea8a3777cb40c4988))
+* **Naked & Small Naked Card:** Inner padding right in card content ([#1040](https://github.com/Telefonica/mistica-web/issues/1040)) ([d97ea17](https://github.com/Telefonica/mistica-web/commit/d97ea17c095bc1315b151fbf68dd051ea9444040))
+* **Rows:** add icon button as control ([#1030](https://github.com/Telefonica/mistica-web/issues/1030)) ([4d47e8f](https://github.com/Telefonica/mistica-web/commit/4d47e8f5b1f2645c1d6036822bc3198eea806422))
+* **ToggleIconButton:** create component ([#1034](https://github.com/Telefonica/mistica-web/issues/1034)) ([f4b9c6e](https://github.com/Telefonica/mistica-web/commit/f4b9c6e599eabe1c8492ab1ce55c422f14875fad))
+* **Video:** `stop` method. To stop video and show the poster (if available) ([#1035](https://github.com/Telefonica/mistica-web/issues/1035)) ([e21998f](https://github.com/Telefonica/mistica-web/commit/e21998f66d601dee75c9d54aa5ab3c13203d502b))
+
 # [14.45.0](https://github.com/Telefonica/mistica-web/compare/v14.44.0...v14.45.0) (2024-02-29)
 
 

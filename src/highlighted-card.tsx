@@ -205,8 +205,17 @@ const Content = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
 const HighlightedCard = React.forwardRef<HTMLDivElement, Props>(
     ({'aria-label': ariaLabel, ...props}, ref) => {
         const label = ariaLabel || props.title || props.description;
+
+        const isInverseOutside = useIsInverseVariant();
+        const isInverse = props.isInverse ?? isInverseOutside;
         return (
-            <MaybeDismissable onClose={props.onClose} aria-label={label} width={props.width}>
+            <MaybeDismissable
+                onClose={props.onClose}
+                aria-label={label}
+                width={props.width}
+                isOverMedia={!!props.imageUrl}
+                isInverse={isInverse}
+            >
                 <Content {...props} aria-label={label} ref={ref} />
             </MaybeDismissable>
         );

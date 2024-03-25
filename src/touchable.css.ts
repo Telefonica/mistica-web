@@ -1,16 +1,19 @@
 import {style} from '@vanilla-extract/css';
 import {sprinkles} from './sprinkles.css';
 
+export const marginReset = style({
+    /**
+     * Setting margin to 0, in order to avoid Safari from automatically adding extra margin to
+     * the touchable container (https://stackoverflow.com/a/71093016)
+     */
+    margin: 0,
+});
+
 export const base = style([
     sprinkles({
         cursor: 'pointer',
     }),
     {
-        /**
-         * Setting margin to 0, in order to avoid Safari from automatically adding extra margin to
-         * the touchable container (https://stackoverflow.com/a/71093016)
-         */
-        margin: 0,
         verticalAlign: 'bottom', // required to remove bottom gap when rendered as inline-block div
         fontFamily: 'inherit',
         appearance: 'none',

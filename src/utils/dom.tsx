@@ -130,7 +130,7 @@ const parseVarCall = (cssVar: string) => {
     return {varName, fallback};
 };
 
-const isCssVar = (cssVar: string) => cssVar.startsWith('var(') || cssVar.startsWith('--');
+export const isCssVar = (cssVar: string): boolean => cssVar.startsWith('var(') || cssVar.startsWith('--');
 
 export const getCssVarValue = (cssVar: string, element?: Element): string => {
     if (!isCssVar(cssVar)) {
