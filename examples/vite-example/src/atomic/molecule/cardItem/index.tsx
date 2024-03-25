@@ -24,7 +24,7 @@ export const CardItem = () => {
               <Avatar
                 key={idx}
                 border={true}
-                size={36}
+                size={40}
                 initials={["TT", "AA", "GC", "", "MA", "PA"][idx % 5]}
                 src="https://mistica-web.vercel.app/static/media/avatar.cb2db2e6.jpg"
               />
