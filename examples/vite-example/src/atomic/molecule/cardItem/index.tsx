@@ -14,7 +14,7 @@ export const CardItem = () => {
     <DisplayDataCard
       headline={
         <Stack space={12}>
-          <Tag type="active">{"TAG EXAMPLE"}</Tag>
+          <Tag type="active">{"Tag example"}</Tag>
           <StackingGroup
             stacked={true}
             maxItems={3}
