@@ -32,7 +32,7 @@ export const CardItem = () => {
           </StackingGroup>
         </Stack>
       }
-      pretitle={"prettier prop"}
+      pretitle={"Pretitle"}
       title={"Title prop"}
       description={"Description example test"}
       actions={[
