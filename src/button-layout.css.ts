@@ -87,7 +87,6 @@ export const link = style([
         '@media': {
             [mq.desktopOrBigger]: {
                 width: 'auto',
-                ...bleedLeft,
             },
         },
 
