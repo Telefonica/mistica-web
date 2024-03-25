@@ -34,7 +34,7 @@ export const CardItem = () => {
       }
       pretitle={"prettier prop"}
       title={"Title prop"}
-      description={"description example test"}
+      description={"Description example test"}
       actions={[
         {
           Icon: IconLightningRegular,
