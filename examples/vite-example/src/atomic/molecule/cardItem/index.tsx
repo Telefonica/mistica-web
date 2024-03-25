@@ -18,7 +18,7 @@ export const CardItem = () => {
           <StackingGroup
             stacked={true}
             maxItems={3}
-            moreItemsStyle={{ type: "circle", size: 36 }}
+            moreItemsStyle={{ type: "circle", size: 40 }}
           >
             {Array.from({ length: 12 }, (_, idx) => (
               <Avatar
