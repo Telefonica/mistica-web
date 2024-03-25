@@ -717,7 +717,7 @@ export const SmallNakedCard = React.forwardRef<HTMLDivElement, SmallNakedCardPro
                         </div>
                         <div className={styles.nakedCardContent}>
                             <div>
-                                <Stack space={8}>
+                                <Stack space={4}>
                                     {title && (
                                         <Text
                                             desktopSize={16}
@@ -737,18 +737,18 @@ export const SmallNakedCard = React.forwardRef<HTMLDivElement, SmallNakedCardPro
                                             {subtitle}
                                         </Text2>
                                     )}
+                                    {description && (
+                                        <Text2
+                                            truncate={descriptionLinesMax}
+                                            regular
+                                            as="p"
+                                            color={vars.colors.textSecondary}
+                                            hyphens="auto"
+                                        >
+                                            {description}
+                                        </Text2>
+                                    )}
                                 </Stack>
-                                {description && (
-                                    <Text2
-                                        truncate={descriptionLinesMax}
-                                        regular
-                                        as="p"
-                                        color={vars.colors.textSecondary}
-                                        hyphens="auto"
-                                    >
-                                        {description}
-                                    </Text2>
-                                )}
                             </div>
                             {extra && <div>{extra}</div>}
                         </div>
