@@ -33,7 +33,7 @@ export const CardItem = () => {
         </Stack>
       }
       pretitle={"prettier prop"}
-      title={"title prop"}
+      title={"Title prop"}
       description={"description example test"}
       actions={[
         {
