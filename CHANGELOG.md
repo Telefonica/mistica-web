@@ -1,3 +1,16 @@
+# [14.47.0](https://github.com/Telefonica/mistica-web/compare/v14.46.0...v14.47.0) (2024-03-20)
+
+
+### Bug Fixes
+
+* **Row,BoxedRow:** main touchable area when using iconButton + onPress. Allow trackingEvent in rows with double interaction ([#1053](https://github.com/Telefonica/mistica-web/issues/1053)) ([db3347f](https://github.com/Telefonica/mistica-web/commit/db3347f3f78ce3c2dcf6aabc8ae4b15696d98c24))
+
+
+### Features
+
+* **overscroll color:** change implementation and allow setting bottom overscroll color too ([#1043](https://github.com/Telefonica/mistica-web/issues/1043)) ([468bd0c](https://github.com/Telefonica/mistica-web/commit/468bd0c17c2ee7c6254bb7a55042c210dd29b028))
+* **skin:** update design tokens ([#1049](https://github.com/Telefonica/mistica-web/issues/1049)) ([4b87c32](https://github.com/Telefonica/mistica-web/commit/4b87c326788fc436e907cefa361ddd5f8a06425e))
+
 # [14.46.0](https://github.com/Telefonica/mistica-web/compare/v14.45.0...v14.46.0) (2024-03-13)
 
 

@@ -584,6 +584,7 @@ const listRowSnippets: Array<Snippet> = ['Row', 'BoxedRow'].flatMap((rowName) =>
         title="Title"
         description="Description"
         iconButton={{
+          "aria-label": "Borrar",
           Icon: IconTrashCanRegular,
           small: true,
           backgroundType: "transparent",
