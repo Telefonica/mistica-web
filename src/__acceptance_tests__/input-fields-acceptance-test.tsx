@@ -144,7 +144,7 @@ test.each(STORY_TYPES)('PasswordField (%s)', async (storyType) => {
         // move the caret
         (el as HTMLInputElement).setSelectionRange(6, 6);
     });
-    await page.click(await screen.findByLabelText('Mostrar u ocultar contraseña'));
+    await page.click(await screen.findByLabelText('Mostrar contraseña'));
 
     await waitFor(async () => {
         expect(await field.getProperty('selectionStart').then((t) => t?.jsonValue())).toBe(6);
@@ -155,7 +155,7 @@ test.each(STORY_TYPES)('PasswordField (%s)', async (storyType) => {
         (el as HTMLInputElement).setSelectionRange(0, 0);
     });
 
-    await page.click(await screen.findByLabelText('Mostrar u ocultar contraseña'));
+    await page.click(await screen.findByLabelText('Ocultar contraseña'));
 
     expect(await field.getProperty('selectionStart').then((t) => t?.jsonValue())).toBe(0);
 });

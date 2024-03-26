@@ -18,7 +18,7 @@ const controls = [
 ];
 
 const controlsWithOnPress = ['checkbox', 'switch', 'radio'];
-const controlsWithIconButton = ['iconButton', 'iconButton and onPress'];
+const controlsWithIconButton = ['iconButton', 'iconButton and onPress', 'toggleIconButton'];
 
 const getCases = () => {
     const cases = [];

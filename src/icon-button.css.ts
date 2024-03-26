@@ -276,14 +276,14 @@ const minButtonArea = {
     touchable: '48px',
 };
 
-const iconContainerSize = {
-    default: '3rem',
-    small: '2rem',
-};
-
 export const iconSize = {
     default: '1.5rem',
     small: '1.25rem',
+};
+
+export const iconContainerSize = {
+    default: `calc(${iconSize.default} + 24px)`,
+    small: `calc(${iconSize.small} + 12px)`,
 };
 
 const pointerArea = {
@@ -345,6 +345,25 @@ export const buttonContainer = styleVariants({
     ],
 });
 
+export const interactiveAreaBleed = styleVariants({
+    default: {
+        margin: `calc(-1 * (${pointerArea.default} - ${iconContainerSize.default}) / 2)`,
+        '@media': {
+            [mq.touchableOnly]: {
+                margin: `calc(-1 * (${touchableArea.default} - ${iconContainerSize.default}) / 2)`,
+            },
+        },
+    },
+    small: {
+        margin: `calc(-1 * (${pointerArea.small} - ${iconContainerSize.small}) / 2)`,
+        '@media': {
+            [mq.touchableOnly]: {
+                margin: `calc(-1 * (${touchableArea.small} - ${iconContainerSize.small}) / 2)`,
+            },
+        },
+    },
+});
+
 export const bleedLeft = styleVariants({
     default: {
         marginLeft: `calc(-1 * ${pointerBleedArea.default})`,
@@ -369,7 +388,7 @@ export const bleedRight = styleVariants({
         marginRight: `calc(-1 * ${pointerBleedArea.default})`,
         '@media': {
             [mq.touchableOnly]: {
-                marginLeft: `calc(-1 * ${touchableBleedArea.default})`,
+                marginRight: `calc(-1 * ${touchableBleedArea.default})`,
             },
         },
     },
@@ -377,7 +396,7 @@ export const bleedRight = styleVariants({
         marginRight: `calc(-1 * ${pointerBleedArea.small})`,
         '@media': {
             [mq.touchableOnly]: {
-                marginLeft: `calc(-1 * ${touchableBleedArea.small})`,
+                marginRight: `calc(-1 * ${touchableBleedArea.small})`,
             },
         },
     },

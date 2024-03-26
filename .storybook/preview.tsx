@@ -10,7 +10,6 @@ import {
     VIVO_SKIN,
     VIVO_NEW_SKIN,
     O2_SKIN,
-    O2_NEW_SKIN,
     TELEFONICA_SKIN,
     BLAU_SKIN,
     TU_SKIN,
@@ -27,32 +26,39 @@ type Platform = 'android' | 'desktop' | 'ios';
 
 const getSkin = (searchParams: URLSearchParams) => {
     const qsSkin = searchParams.get('skin');
-    return [
-        MOVISTAR_SKIN,
-        O2_SKIN,
-        O2_NEW_SKIN,
-        VIVO_SKIN,
-        VIVO_NEW_SKIN,
-        TELEFONICA_SKIN,
-        BLAU_SKIN,
-        TU_SKIN,
-    ].find((skin) => skin === qsSkin);
+    return [MOVISTAR_SKIN, O2_SKIN, VIVO_SKIN, VIVO_NEW_SKIN, TELEFONICA_SKIN, BLAU_SKIN, TU_SKIN].find(
+        (skin) => skin === qsSkin
+    );
 };
 
-const getPlatformByValue = (value?: string | null): Platform => {
+const getColorScheme = (searchParams: URLSearchParams): ColorScheme | undefined => {
+    const colorScheme = searchParams.get('colorScheme');
+    return colorScheme === 'light' || colorScheme === 'dark' || colorScheme === 'auto'
+        ? colorScheme
+        : undefined;
+};
+
+const getPlatformByValue = (value?: string | null): Platform | undefined => {
     if (value === 'ios' || value === 'android' || value === 'desktop') {
         return value;
     }
 
-    return getPlatform();
+    return value === 'auto' ? getPlatform() : undefined;
 };
 
-const getPlatformByUrl = (searchParams: URLSearchParams): Platform => {
+const getPlatformByUrl = (searchParams: URLSearchParams): Platform | undefined => {
     return getPlatformByValue(searchParams.get('platform'));
 };
 
-const getTheme = (selectedSkin: string, platform: Platform, colorScheme: ColorScheme): ThemeConfig => {
-    const themeConfig = AVAILABLE_THEMES.find(({skin}) => skin.name === selectedSkin) || Movistar;
+const getTheme = (
+    selectedSkin?: string,
+    selectedPlatform?: Platform,
+    selectedColorScheme?: ColorScheme
+): ThemeConfig => {
+    const skin = selectedSkin ?? MOVISTAR_SKIN;
+    const platform = selectedPlatform ?? 'desktop';
+    const colorScheme = selectedColorScheme ?? 'auto';
+    const themeConfig = AVAILABLE_THEMES.find(({skin: skinConfig}) => skinConfig.name === skin) || Movistar;
     return {
         ...themeConfig,
         colorScheme,
@@ -67,8 +73,9 @@ const getTheme = (selectedSkin: string, platform: Platform, colorScheme: ColorSc
 const MisticaThemeProvider = ({Story, context}): React.ReactElement => {
     const searchParams = new URLSearchParams(location.search);
     const [skin, setSkin] = React.useState(getSkin(searchParams));
-    const [platform, setPlatform] = React.useState<Platform>(getPlatformByUrl(searchParams));
-    const [colorScheme, setColorScheme] = React.useState<ColorScheme>('auto');
+    const [platform, setPlatform] = React.useState(getPlatformByUrl(searchParams));
+    const [colorScheme, setColorScheme] = React.useState(getColorScheme(searchParams));
+    const isStoryOnNewTab = window.frameElement === null;
 
     React.useEffect(() => {
         const channel = addons.getChannel();
@@ -90,18 +97,22 @@ const MisticaThemeProvider = ({Story, context}): React.ReactElement => {
 
     return (
         <React.StrictMode>
-            <ThemeContextProvider theme={getTheme(skin as string, platform, colorScheme)}>
-                <OverscrollColorProvider>
-                    {skin === VIVO_NEW_SKIN && <style>{`body {font-family: "Vivo Type"}`}</style>}
-                    {(skin === TELEFONICA_SKIN || skin === TU_SKIN) && (
-                        <style>{`body {font-family: "Telefonica Sans"}`}</style>
-                    )}
-                    {(skin === O2_SKIN || skin === O2_NEW_SKIN) && (
-                        <style>{`body {font-family: "On Air"}`}</style>
-                    )}
-                    <Story {...context} />
-                </OverscrollColorProvider>
-            </ThemeContextProvider>
+            {/**
+             * Avoid rendering story until storybook addons finish loading skin, color scheme and platform.
+             * If story is opened in a new tab, we always render it because the addons don't exist in there.
+             */}
+            {((skin && colorScheme && platform) || isStoryOnNewTab) && (
+                <ThemeContextProvider theme={getTheme(skin as string, platform, colorScheme)}>
+                    <OverscrollColorProvider>
+                        {skin === VIVO_NEW_SKIN && <style>{`body {font-family: "Vivo Type"}`}</style>}
+                        {(skin === TELEFONICA_SKIN || skin === TU_SKIN) && (
+                            <style>{`body {font-family: "Telefonica Sans"}`}</style>
+                        )}
+                        {skin === O2_SKIN && <style>{`body {font-family: "On Air"}`}</style>}
+                        <Story {...context} />
+                    </OverscrollColorProvider>
+                </ThemeContextProvider>
+            )}
         </React.StrictMode>
     );
 };

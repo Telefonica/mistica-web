@@ -50,11 +50,6 @@ const TestComponent = () => {
     );
 };
 
-beforeEach(() => {
-    // The history object is not cleared between tests. This way we put the history position at the end
-    window.history.pushState({}, '', '/');
-});
-
 test('does not render anything initially', () => {
     const {asFragment} = render(<ThemeContextProvider theme={makeTheme()} />);
     expect(asFragment()).toMatchInlineSnapshot(`<DocumentFragment />`);
@@ -280,57 +275,4 @@ test('when webview bridge is available nativeConfirm is shown', async () => {
             cancelText: 'Nope!',
         });
     });
-});
-
-test('history restored after closing a dialog using back', async () => {
-    const pushStateSpy = jest.spyOn(window.history, 'pushState');
-    const backSpy = jest.spyOn(window.history, 'back');
-    const initialHistoryLength = window.history.length;
-
-    render(
-        <ThemeContextProvider theme={makeTheme()}>
-            <TestComponent />
-        </ThemeContextProvider>
-    );
-
-    const alertButton = await screen.findByRole('button', {name: 'Alert'});
-    await userEvent.click(alertButton);
-
-    expect(await screen.findByRole('dialog')).toBeInTheDocument();
-    expect(window.history.length).toBe(initialHistoryLength + 1);
-
-    act(() => {
-        window.history.back();
-    });
-
-    await waitForElementToBeRemoved(() => screen.queryByRole('dialog', {hidden: true}));
-
-    expect(pushStateSpy).toHaveBeenCalledTimes(1);
-    expect(backSpy).toHaveBeenCalledTimes(1);
-});
-
-test('history restored after closing a dialog using a button', async () => {
-    const pushStateSpy = jest.spyOn(window.history, 'pushState');
-    const backSpy = jest.spyOn(window.history, 'back');
-    const initialHistoryLength = window.history.length;
-
-    render(
-        <ThemeContextProvider theme={makeTheme()}>
-            <TestComponent />
-        </ThemeContextProvider>
-    );
-
-    const alertButton = await screen.findByRole('button', {name: 'Alert'});
-    await userEvent.click(alertButton);
-
-    expect(await screen.findByRole('dialog')).toBeInTheDocument();
-    expect(window.history.length).toBe(initialHistoryLength + 1);
-
-    const acceptButton = await screen.findByRole('button', {name: 'Yay!'});
-    await userEvent.click(acceptButton);
-
-    await waitForElementToBeRemoved(() => screen.queryByRole('dialog', {hidden: true}));
-
-    expect(pushStateSpy).toHaveBeenCalledTimes(1);
-    expect(backSpy).toHaveBeenCalledTimes(1);
 });

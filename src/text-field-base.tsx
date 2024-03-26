@@ -9,12 +9,14 @@ import classNames from 'classnames';
 import {combineRefs} from './utils/common';
 import * as styles from './text-field-base.css';
 import {vars} from './skins/skin-contract.css';
-import {BaseIconButton} from './icon-button';
+import {InternalIconButton, InternalToggleIconButton} from './icon-button';
 import {ThemeVariant} from './theme-variant-context';
+import {iconSize} from './icon-button.css';
 
 import type {DataAttributes, IconProps} from './utils/types';
 import type {InputState} from './text-field-components';
 import type {FieldValidator} from './form-context';
+import type {ExclusifyUnion} from './utils/utility-types';
 
 const isValidInputValue = (value?: string, inputType?: React.HTMLInputTypeAttribute) => {
     if (!inputType) {
@@ -27,37 +29,53 @@ const isValidInputValue = (value?: string, inputType?: React.HTMLInputTypeAttrib
     return input.value !== '';
 };
 
-interface FieldEndIconProps {
-    Icon: React.FC<IconProps>;
-    className?: string;
-    onPress: (event: React.MouseEvent<HTMLElement>) => void;
+type FieldEndIconProps = {
+    /** In date fields, we want the icon's background to stay transparent when hovering/pressing it */
+    hasBackgroundColor?: boolean;
     disabled?: boolean;
-    'aria-label'?: string;
-}
+} & ExclusifyUnion<
+    | {
+          Icon: React.FC<IconProps>;
+          'aria-label'?: string;
+          onPress: (event: React.MouseEvent<HTMLElement>) => void;
+      }
+    | {
+          checkedProps: {Icon: React.FC<IconProps>; 'aria-label'?: string};
+          uncheckedProps: {Icon: React.FC<IconProps>; 'aria-label'?: string};
+          onChange?: (checked: boolean) => void | undefined | Promise<void>;
+          checked?: boolean;
+      }
+>;
 
 export const FieldEndIcon: React.FC<FieldEndIconProps> = ({
-    Icon,
-    className,
+    hasBackgroundColor = true,
     onPress,
+    onChange,
     disabled,
+    Icon,
+    checkedProps,
+    uncheckedProps,
     'aria-label': ariaLabel,
 }) => {
     return (
-        /**
-         * If we try to add fieldEndIconContainer styles to the BaseIconButton instead,
-         * there may be collisions because that component sets margin internally. We
-         * create a wrapper around it so that the margin's value won't be overrided.
-         */
         <div className={styles.fieldEndIconContainer}>
-            <BaseIconButton
-                disabled={disabled}
-                aria-label={ariaLabel}
-                onPress={onPress}
-                size={styles.iconButtonSize}
-                className={className}
-            >
-                <Icon size={styles.iconSize} />
-            </BaseIconButton>
+            {checkedProps ? (
+                <InternalToggleIconButton
+                    checkedProps={{...checkedProps, 'aria-label': checkedProps['aria-label'] || ''}}
+                    uncheckedProps={{...uncheckedProps, 'aria-label': uncheckedProps['aria-label'] || ''}}
+                    onChange={onChange}
+                    hasOverlay={hasBackgroundColor}
+                    disabled={disabled}
+                />
+            ) : (
+                <InternalIconButton
+                    Icon={Icon}
+                    disabled={disabled}
+                    aria-label={ariaLabel || ''}
+                    onPress={onPress}
+                    hasOverlay={hasBackgroundColor}
+                />
+            )}
         </div>
     );
 };
@@ -263,8 +281,8 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
             ...inputProps,
         };
 
-        const startIconWidth = `calc(${styles.iconSize} + ${styles.fieldElementsGap}px)`;
-        const endIconWidth = `calc(${styles.iconButtonSize} + ${styles.fieldElementsGap}px)`;
+        const startIconWidth = `calc(${iconSize.default} + ${styles.fieldElementsGap}px)`;
+        const endIconWidth = `calc(${styles.iconButtonSize} + ${styles.fieldEndIconGap}px)`;
 
         const isShrinked = shrinkLabel || inputState === 'focused' || inputState === 'filled';
         const scale = isShrinked ? (isTabletOrSmaller ? LABEL_SCALE_MOBILE : LABEL_SCALE_DESKTOP) : 1;
@@ -326,7 +344,7 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
                                     paddingRight: endIcon
                                         ? 0
                                         : endIconOverlay
-                                        ? `calc(${styles.fieldRightPadding}px + ${endIconWidth})`
+                                        ? endIconWidth
                                         : styles.fieldRightPadding,
                                     paddingLeft: prefix
                                         ? 0

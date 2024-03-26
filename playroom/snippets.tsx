@@ -230,10 +230,10 @@ const buttonSnippets: Array<Snippet> = [
     {
         name: 'ButtonLayout',
         code: `
-        <ButtonLayout>
-            <ButtonPrimary onPress={() => {}}>Action</ButtonPrimary>
-            <ButtonSecondary onPress={() => {}}>Action</ButtonSecondary>
-        </ButtonLayout>`,
+        <ButtonLayout
+            primaryButton={<ButtonPrimary onPress={() => {}}>Action</ButtonPrimary>}
+            secondaryButton={<ButtonSecondary onPress={() => {}}>Action</ButtonSecondary>}
+        />`,
     },
     {
         name: 'ButtonFixedFooterLayout',
@@ -320,9 +320,7 @@ const formSnippets: Array<Snippet> = [
                         name="email"
                         label="e-mail"
                     />
-                    <ButtonLayout>
-                        <ButtonPrimary submit>Send</ButtonPrimary>
-                    </ButtonLayout>
+                    <ButtonLayout primaryButton={<ButtonPrimary submit>Send</ButtonPrimary>} />
                 </Stack>
             </Box>
         </Form>`,
@@ -584,6 +582,7 @@ const listRowSnippets: Array<Snippet> = ['Row', 'BoxedRow'].flatMap((rowName) =>
         title="Title"
         description="Description"
         iconButton={{
+          "aria-label": "Borrar",
           Icon: IconTrashCanRegular,
           small: true,
           backgroundType: "transparent",
@@ -955,6 +954,18 @@ const cardSnippets: Array<Snippet> = [
               onPress: () => {},
               label: "Lightning",
             },
+            {
+              checkedProps: {
+                  Icon: IconStarFilled,
+                  label: 'checked',
+              },
+              uncheckedProps: {
+                  Icon: IconStarRegular,
+                  label: 'unchecked',
+              },
+              defaultChecked: false,
+              onChange: () => {},
+          },
           ]}
         />`,
     },
@@ -980,6 +991,18 @@ const cardSnippets: Array<Snippet> = [
               onPress: () => {},
               label: "Lightning",
             },
+            {
+              checkedProps: {
+                  Icon: IconStarFilled,
+                  label: 'checked',
+              },
+              uncheckedProps: {
+                  Icon: IconStarRegular,
+                  label: 'unchecked',
+              },
+              defaultChecked: false,
+              onChange: () => {},
+          },
           ]}
         />`,
     },
@@ -1009,6 +1032,7 @@ const cardSnippets: Array<Snippet> = [
           headline={<Tag type="promo">Headline</Tag>}
           pretitle="Pretitle"
           title="Title"
+          subtitle="Subtitle"
           description="Description"
           backgroundImage="https://source.unsplash.com/900x900/?landscape"
           onClose={() => {}}
@@ -1019,6 +1043,18 @@ const cardSnippets: Array<Snippet> = [
               onPress: () => {},
               label: "Lightning",
             },
+            {
+              checkedProps: {
+                  Icon: IconStarFilled,
+                  label: 'checked',
+              },
+              uncheckedProps: {
+                  Icon: IconStarRegular,
+                  label: 'unchecked',
+              },
+              defaultChecked: false,
+              onChange: () => {},
+          },
           ]}
         />`,
     },
@@ -1030,6 +1066,7 @@ const cardSnippets: Array<Snippet> = [
           headline={<Tag type="promo">Headline</Tag>}
           pretitle="Pretitle"
           title="Title"
+          subtitle="Subtitle"
           description="Description"
           backgroundVideo="https://fr-cert1-es.mytelco.io/2O4-xBJqiMlAfLkseq8RkXs_mv2ACV7Hnt20HqXxNl-mK7KLI3M2dAw"
           poster="https://source.unsplash.com/900x900/?landscape"
@@ -1049,6 +1086,7 @@ const cardSnippets: Array<Snippet> = [
           headline={<Tag type="promo">Headline</Tag>}
           pretitle="Pretitle"
           title="Title"
+          subtitle="Subtitle"
           description="Description"
           isInverse
           onClose={() => {}}
@@ -1059,6 +1097,18 @@ const cardSnippets: Array<Snippet> = [
               onPress: () => {},
               label: "Lightning",
             },
+            {
+              checkedProps: {
+                  Icon: IconStarFilled,
+                  label: 'checked',
+              },
+              uncheckedProps: {
+                  Icon: IconStarRegular,
+                  label: 'unchecked',
+              },
+              defaultChecked: false,
+              onChange: () => {},
+          },
           ]}
         />`,
     },
@@ -1070,6 +1120,7 @@ const cardSnippets: Array<Snippet> = [
           headline={<Tag type="promo">Headline</Tag>}
           pretitle="Pretitle"
           title="Title"
+          subtitle="Subtitle"
           description="Description"
           backgroundColor={colors.promo}
           isInverse
@@ -1080,6 +1131,18 @@ const cardSnippets: Array<Snippet> = [
               Icon: IconLightningRegular,
               onPress: () => {},
               label: "Lightning",
+            },
+            {
+              checkedProps: {
+                  Icon: IconStarFilled,
+                  label: 'checked',
+              },
+              uncheckedProps: {
+                  Icon: IconStarRegular,
+                  label: 'unchecked',
+              },
+              defaultChecked: false,
+              onChange: () => {},
             },
           ]}
         />`,

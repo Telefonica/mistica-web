@@ -23,9 +23,7 @@ type Props = {
  * set the label to the child element
  *
  * <Badge value={2}>
- *   <IconButton aria-label="Shopping Cart with 2 items">
- *     <IconShoppingCartFilled />
- *   </IconButton>
+ *   <IconButton aria-label="Shopping Cart with 2 items" Icon={IconShoppingCartFilled}/>
  * </Badge>
  */
 const Badge: React.FC<Props> = ({children, value, right, top, dataAttributes}) => {

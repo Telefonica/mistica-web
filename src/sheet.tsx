@@ -20,7 +20,7 @@ import Divider from './divider';
 import {getPrefixedDataAttributes, getScrollableParentElement} from './utils/dom';
 import {ButtonLink, ButtonPrimary, ButtonSecondary} from './button';
 import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
-import {IconButton} from './icon-button';
+import {InternalIconButton} from './icon-button';
 import ButtonLayout from './button-layout';
 import Image from './image';
 import {InternalResponsiveLayout} from './responsive-layout';
@@ -256,11 +256,14 @@ const Sheet = React.forwardRef<HTMLDivElement, SheetProps>(({onClose, children, 
                             </section>
                         </div>
                         <div className={styles.modalCloseButton}>
-                            <IconButton size={32} onPress={closeModal} aria-label={texts.modalClose}>
-                                <div className={styles.modalCloseButtonIcon}>
-                                    <IconCloseRegular size={20} />
-                                </div>
-                            </IconButton>
+                            <InternalIconButton
+                                onPress={closeModal}
+                                aria-label={texts.modalClose}
+                                Icon={IconCloseRegular}
+                                bleedLeft
+                                bleedRight
+                                bleedY
+                            />
                         </div>
                     </div>
                 </div>
@@ -372,10 +375,12 @@ export const SheetBody = ({
                     {showButtonsDivider && <Divider />}
                     <Box paddingY={{mobile: 16, desktop: 40}}>
                         <InternalResponsiveLayout>
-                            <ButtonLayout align="full-width" link={link}>
-                                {button}
-                                {secondaryButton}
-                            </ButtonLayout>
+                            <ButtonLayout
+                                align="full-width"
+                                link={link}
+                                primaryButton={button}
+                                secondaryButton={secondaryButton}
+                            />
                         </InternalResponsiveLayout>
                     </Box>
                 </div>

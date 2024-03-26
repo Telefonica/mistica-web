@@ -141,6 +141,12 @@ export const useFieldProps = ({
         setValue({name, value: processValueRef.current(rawValue)});
     }, [name, rawValue, setRawValue, setValue]);
 
+    React.useEffect(() => {
+        if (disabled) {
+            setFormError({name, error: undefined});
+        }
+    }, [disabled, name, setFormError]);
+
     return {
         value,
         defaultValue: defaultValue ?? (value === undefined ? rawValues[name] ?? '' : undefined),

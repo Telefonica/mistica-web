@@ -6,6 +6,7 @@
  */
 
 import * as React from 'react';
+import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
 
@@ -14,15 +15,26 @@ import type {IconProps} from '../../utils/types';
 const IconTelephoneIpRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
-
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path
-                fill={fillColor}
-                d="M10.304 3.787h9.186c1.123 0 2.042.964 2.038 2.144V18.07c0 1.179-.92 2.143-2.042 2.143h-9.182V22H4.86v-1.787H2.48V3.787h2.381V2h5.443v1.787Zm-6.461 1.43v13.57H4.86V5.217H3.843Zm5.442 15.709V3.074h-3.4v17.852h3.4Zm10.205-2.144c.374 0 .68-.32.68-.712h-.005V5.93c0-.393-.305-.712-.68-.712h-9.181v13.564h9.186Zm-.853-12.138h-6.8c-.27 0-.51.25-.51.534v3.213c0 .284.24.535.51.535h6.8c.27 0 .51-.251.51-.535V7.178c.003-.283-.236-.534-.51-.534Zm-6.292 3.212V7.713h5.782v2.143h-5.781Z"
-            />
-        </svg>
-    );
+    const {skinName} = useTheme();
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M9.804 3.787h9.164c1.12 0 2.036.964 2.032 2.144V18.07c0 1.179-.916 2.143-2.037 2.143H9.804V21a1 1 0 0 1-1 1H5.376a1 1 0 0 1-1-1v-.787H3a1 1 0 0 1-1-1V4.787a1 1 0 0 1 1-1h1.376V3a1 1 0 0 1 1-1h3.428a1 1 0 0 1 1 1zM3.56 5.217a.2.2 0 0 0-.2.2v13.17c0 .11.09.2.2.2h.817V5.217zm5.029 15.709a.2.2 0 0 0 .2-.2V3.274a.2.2 0 0 0-.2-.2H5.596a.2.2 0 0 0-.2.2v17.452c0 .11.09.2.2.2zm10.38-2.144c.373 0 .677-.32.677-.712h-.004V5.93c0-.393-.304-.712-.678-.712H9.804v13.564zm-.852-12.138h-6.783c-.27 0-.508.25-.508.534v3.213c0 .284.239.535.508.535h6.783c.27 0 .508-.251.508-.535V7.178c.005-.283-.234-.534-.508-.534m-6.275 3.212V7.713h5.767v2.143z"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M10.304 3.787h9.186c1.123 0 2.042.964 2.038 2.144V18.07c0 1.179-.92 2.143-2.042 2.143h-9.182V22H4.86v-1.787H2.48V3.787h2.381V2h5.443zm-6.461 1.43v13.57H4.86V5.217zm5.442 15.709V3.074h-3.4v17.852zm10.205-2.144c.374 0 .68-.32.68-.712h-.005V5.93c0-.393-.305-.712-.68-.712h-9.181v13.564zm-.853-12.138h-6.8c-.27 0-.51.25-.51.534v3.213c0 .284.24.535.51.535h6.8c.27 0 .51-.251.51-.535V7.178c.003-.283-.236-.534-.51-.534m-6.292 3.212V7.713h5.782v2.143z"
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconTelephoneIpRegular;

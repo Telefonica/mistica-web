@@ -5,8 +5,8 @@ import classnames from 'classnames';
 import {ButtonPrimary, ButtonSecondary, ButtonDanger} from './button';
 import {Portal} from './portal';
 import FocusTrap from './focus-trap';
-import IcnCloseRegular from './generated/mistica-icons/icon-close-regular';
-import {IconButton} from './icon-button';
+import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
+import {InternalIconButton} from './icon-button';
 import {isWebViewBridgeAvailable, nativeConfirm, nativeAlert} from '@tef-novum/webview-bridge';
 import {useTheme} from './hooks';
 import ButtonLayout from './button-layout';
@@ -117,26 +117,31 @@ const Dialog: React.FC<DialogProps> = (props) => {
             </div>
 
             <div className={styles.dialogActions}>
-                <ButtonLayout link={isDialog ? props.link : undefined}>
-                    {destructive ? (
-                        <ButtonDanger
-                            tabIndex={1} // eslint-disable-line jsx-a11y/tabindex-no-positive
-                            {...acceptButtonProps}
-                        />
-                    ) : (
-                        <ButtonPrimary tabIndex={1} {...acceptButtonProps} /> // eslint-disable-line jsx-a11y/tabindex-no-positive
-                    )}
-                    {showCancelButton && (
-                        <ButtonSecondary
-                            tabIndex={2} // eslint-disable-line jsx-a11y/tabindex-no-positive
-                            onPress={handleCancel || (() => {})}
-                            // @deprecated - testid should be removed but many webapp tests depend on this
-                            dataAttributes={{testid: 'dialog-cancel-button'}}
-                        >
-                            {cancelText}
-                        </ButtonSecondary>
-                    )}
-                </ButtonLayout>
+                <ButtonLayout
+                    link={isDialog ? props.link : undefined}
+                    primaryButton={
+                        destructive ? (
+                            <ButtonDanger
+                                tabIndex={1} // eslint-disable-line jsx-a11y/tabindex-no-positive
+                                {...acceptButtonProps}
+                            />
+                        ) : (
+                            <ButtonPrimary tabIndex={1} {...acceptButtonProps} /> // eslint-disable-line jsx-a11y/tabindex-no-positive
+                        )
+                    }
+                    secondaryButton={
+                        showCancelButton ? (
+                            <ButtonSecondary
+                                tabIndex={2} // eslint-disable-line jsx-a11y/tabindex-no-positive
+                                onPress={handleCancel || (() => {})}
+                                // @deprecated - testid should be removed but many webapp tests depend on this
+                                dataAttributes={{testid: 'dialog-cancel-button'}}
+                            >
+                                {cancelText}
+                            </ButtonSecondary>
+                        ) : undefined
+                    }
+                />
             </div>
         </div>
     );
@@ -220,9 +225,7 @@ const ModalDialog = (props: ModalDialogProps): JSX.Element => {
     /** this flag is used to disable user interactions while the component is animating */
     const [isReady, setIsReady] = React.useState<boolean>(false);
     const dialogWasAcceptedRef = React.useRef<boolean>(false);
-    const historyWasPushedRef = React.useRef<boolean>(false);
     const animationDurationRef = React.useRef<number>(shouldAnimate() ? styles.ANIMATION_DURATION_MS : 0);
-    const handleBackNavigationRef = React.useRef(() => {});
 
     const shouldRenderNative = props.type !== 'dialog' && isWebViewBridgeAvailable();
     const shouldDismissOnPressOverlay = props.type === 'dialog';
@@ -254,11 +257,6 @@ const ModalDialog = (props: ModalDialogProps): JSX.Element => {
     }, [onAccept, onCancel, onDestroy]);
 
     const startClosing = React.useCallback(() => {
-        window.removeEventListener('popstate', handleBackNavigationRef.current);
-        if (historyWasPushedRef.current) {
-            historyWasPushedRef.current = false;
-            window.history.back();
-        }
         let timeout: NodeJS.Timeout;
         if (!isClosingRef.current && isReady) {
             isClosingRef.current = true;
@@ -294,28 +292,6 @@ const ModalDialog = (props: ModalDialogProps): JSX.Element => {
         }
     }, [handleAccept, handleCancel, shouldAcceptOnDismiss]);
 
-    const handleBackNavigation = React.useCallback(() => {
-        if (historyWasPushedRef.current) {
-            historyWasPushedRef.current = false;
-            dismiss();
-        }
-    }, [dismiss]);
-
-    React.useEffect(() => {
-        if (shouldRenderNative) {
-            return;
-        }
-        if (!historyWasPushedRef.current && !isClosingRef.current) {
-            historyWasPushedRef.current = true;
-            window.history.pushState(null, document.title, window.location.href);
-        }
-        handleBackNavigationRef.current = handleBackNavigation;
-        window.addEventListener('popstate', handleBackNavigationRef.current);
-        return () => {
-            window.removeEventListener('popstate', handleBackNavigationRef.current);
-        };
-    }, [handleBackNavigation, shouldRenderNative]);
-
     const handleKeyDown = React.useCallback(
         (event: KeyboardEvent) => {
             if (event.key === ESC) {
@@ -336,6 +312,17 @@ const ModalDialog = (props: ModalDialogProps): JSX.Element => {
             document.removeEventListener('keydown', handleKeyDown);
         };
     }, [handleKeyDown, shouldRenderNative]);
+
+    React.useEffect(() => {
+        if (shouldRenderNative) {
+            return;
+        }
+        // Consider any page navigation as a dismiss
+        window.addEventListener('popstate', dismiss);
+        return () => {
+            window.removeEventListener('popstate', dismiss);
+        };
+    }, [dismiss, shouldRenderNative]);
 
     const handleOverlayPress = React.useCallback(
         (event: React.MouseEvent) => {
@@ -387,12 +374,14 @@ const ModalDialog = (props: ModalDialogProps): JSX.Element => {
                         >
                             {shouldDismissOnPressOverlay && (
                                 <div className={styles.modalCloseButtonContainer}>
-                                    <IconButton
+                                    <InternalIconButton
                                         onPress={dismiss}
                                         aria-label={texts.modalClose || texts.closeButtonLabel}
-                                    >
-                                        <IcnCloseRegular color={vars.colors.neutralHigh} />
-                                    </IconButton>
+                                        bleedLeft
+                                        bleedRight
+                                        bleedY
+                                        Icon={IconCloseRegular}
+                                    />
                                 </div>
                             )}
                             <Dialog {...dialogProps} onCancel={handleCancel} onAccept={handleAccept} />

@@ -16,6 +16,8 @@ import {
     Inline,
     Avatar,
     IconTrashCanRegular,
+    IconPauseFilled,
+    IconPlayFilled,
 } from '..';
 import usingVrImg from './images/using-vr.jpg';
 import laptopImg from './images/laptop.jpg';
@@ -38,6 +40,7 @@ export default {
                 'radio and onPress',
                 'iconButton',
                 'iconButton and onPress',
+                'toggleIconButton',
                 'custom element',
                 'custom element with text',
                 'action with custom element',
@@ -158,6 +161,26 @@ const Template: StoryComponent<Args & {boxed?: boolean}> = ({
                         onPress: () => console.log('Pressed button'),
                         type: 'brand',
                         backgroundType: 'solid',
+                    },
+                };
+                break;
+            case 'toggleIconButton':
+                controlProps = {
+                    iconButton: {
+                        checkedProps: {
+                            Icon: IconPauseFilled,
+                            label: 'Pause',
+                            type: 'brand',
+                            backgroundType: 'solid',
+                        },
+                        uncheckedProps: {
+                            Icon: IconPlayFilled,
+                            label: 'Play',
+                            type: 'brand',
+                            backgroundType: 'solid',
+                        },
+                        defaultChecked: false,
+                        onChange: () => {},
                     },
                 };
                 break;
