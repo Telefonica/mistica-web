@@ -202,10 +202,6 @@ export const AccordionItem = React.forwardRef<TouchableElement, AccordionItemCon
 
 type AccordionBaseProps = {
     children: React.ReactNode;
-    /**
-     * @deprecated This field is deprecated and it has no effect.
-     */
-    noLastDivider?: boolean;
     dataAttributes?: DataAttributes;
     onChange?: (index: number, value: boolean) => void;
 };
@@ -276,9 +272,7 @@ export const BoxedAccordionItem = React.forwardRef<HTMLDivElement, BoxedAccordio
     )
 );
 
-type BoxedAccordionProps = Omit<AccordionProps, 'noLastDivider'>;
-
-export const BoxedAccordion: React.FC<BoxedAccordionProps> = ({
+export const BoxedAccordion: React.FC<AccordionProps> = ({
     children,
     dataAttributes,
     index,

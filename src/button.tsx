@@ -442,10 +442,6 @@ interface ButtonLinkCommonProps {
     trackEvent?: boolean;
     /** "data-" prefix is automatically added. For example, use "testid" instead of "data-testid" */
     dataAttributes?: DataAttributes;
-    /**
-     * @deprecated This field is deprecated, please use bleedLeft instead.
-     */
-    aligned?: boolean;
     showSpinner?: boolean;
     loadingText?: string;
     StartIcon?: React.FC<IconProps>;
@@ -543,7 +539,7 @@ const BaseButtonLink = React.forwardRef<
          * If we set it using className, it may not work depending on the order in which the styles are applied.
          */
         style: {
-            ...(props.bleedLeft || props.aligned ? {marginLeft: -styles.PADDING_X_LINK} : undefined),
+            ...(props.bleedLeft ? {marginLeft: -styles.PADDING_X_LINK} : undefined),
             ...(props.bleedRight ? {marginRight: -styles.PADDING_X_LINK} : undefined),
             ...(props.bleedY
                 ? {marginTop: -styles.PADDING_Y_LINK, marginBottom: -styles.PADDING_Y_LINK}

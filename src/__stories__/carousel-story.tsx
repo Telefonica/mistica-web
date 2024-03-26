@@ -13,7 +13,7 @@ import {
     Image,
     CarouselContextProvider,
     FixedFooterLayout,
-    CarouselContextConsummer,
+    CarouselContextConsumer,
     Inline,
     PageBullets,
 } from '..';
@@ -134,7 +134,7 @@ export const WithCarouselContext: StoryComponent<WithCarouselContextArgs> = ({nu
                 footer={
                     <ResponsiveLayout>
                         <Box paddingY={16}>
-                            <CarouselContextConsummer>
+                            <CarouselContextConsumer>
                                 {({goNext, goPrev, goToPage, bulletsProps}) => (
                                     <Inline space="between" alignItems="center">
                                         <ButtonLink bleedLeft onPress={goPrev}>
@@ -146,7 +146,7 @@ export const WithCarouselContext: StoryComponent<WithCarouselContextArgs> = ({nu
                                         </ButtonLink>
                                     </Inline>
                                 )}
-                            </CarouselContextConsummer>
+                            </CarouselContextConsumer>
                         </Box>
                     </ResponsiveLayout>
                 }

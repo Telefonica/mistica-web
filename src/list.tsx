@@ -660,10 +660,6 @@ type RowListProps = {
     children: React.ReactNode;
     ariaLabelledby?: string;
     role?: string;
-    /**
-     * @deprecated This field is deprecated and it has no effect.
-     */
-    noLastDivider?: boolean;
     dataAttributes?: DataAttributes;
 };
 

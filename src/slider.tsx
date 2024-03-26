@@ -29,14 +29,6 @@ interface BaseSliderProps {
     'aria-label'?: string;
     'aria-labelledby'?: string;
     id?: string;
-    /**
-     * @deprecated This field is deprecated, please use step or values instead.
-     */
-    steps?: number | Array<number>;
-    /**
-     * @deprecated This field is deprecated.
-     */
-    getStepArrayIndex?: (value: number) => void;
 }
 
 interface SliderWithValuesProps {
@@ -99,8 +91,6 @@ const Slider = React.forwardRef<HTMLInputElement, SliderProps>(
         {
             values,
             step = 1,
-            steps,
-            getStepArrayIndex,
             min = 0,
             max = 100,
             'aria-label': ariaLabel,

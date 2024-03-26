@@ -26,15 +26,10 @@ type Props = {
     children?: React.ReactNode;
     extra?: React.ReactNode;
     dataAttributes?: DataAttributes;
-    /**
-     * @deprecated This field is deprecated, use open instead.
-     */
-    isVisible?: boolean;
 };
 
 const Popover: React.FC<Props> = ({
     open,
-    isVisible,
     extra,
     children,
     onClose = () => {},
@@ -73,7 +68,7 @@ const Popover: React.FC<Props> = ({
                 </Box>
             }
             centerContent={false}
-            open={open ?? isVisible}
+            open={open}
             hasPointerInteractionOnly
             delay={false}
             onClose={onClose}

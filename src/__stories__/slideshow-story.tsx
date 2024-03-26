@@ -8,7 +8,7 @@ import {
     IconInformationRegular,
     Image,
     Text4,
-    CarouselContextConsummer,
+    CarouselContextConsumer,
     CarouselContextProvider,
     FixedFooterLayout,
     Inline,
@@ -70,7 +70,7 @@ export const WithCarouselContext: StoryComponent<WithCarouselContextArgs> = ({nu
                 footer={
                     <ResponsiveLayout>
                         <Box paddingY={16}>
-                            <CarouselContextConsummer>
+                            <CarouselContextConsumer>
                                 {({goNext, goPrev, bulletsProps}) => (
                                     <Inline space="between" alignItems="center">
                                         <ButtonLink bleedLeft onPress={goPrev}>
@@ -82,7 +82,7 @@ export const WithCarouselContext: StoryComponent<WithCarouselContextArgs> = ({nu
                                         </ButtonLink>
                                     </Inline>
                                 )}
-                            </CarouselContextConsummer>
+                            </CarouselContextConsumer>
                         </Box>
                     </ResponsiveLayout>
                 }
