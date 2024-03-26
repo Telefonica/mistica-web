@@ -1264,6 +1264,8 @@ interface PosterCardBaseProps {
     pretitleLinesMax?: number;
     title?: string;
     titleLinesMax?: number;
+    subtitle?: string;
+    subtitleLinesMax?: number;
     description?: string;
     descriptionLinesMax?: number;
 }
@@ -1313,6 +1315,8 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
             pretitleLinesMax,
             title,
             titleLinesMax,
+            subtitle,
+            subtitleLinesMax,
             description,
             descriptionLinesMax,
             variant,
@@ -1438,7 +1442,7 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                                     <Stack space={24}>
                                         <div>
                                             <Stack space={8}>
-                                                {(headline || pretitle || title) && (
+                                                {(headline || pretitle || title || subtitle) && (
                                                     <header>
                                                         <Stack space={16}>
                                                             {headline}
@@ -1467,6 +1471,16 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                                                                 >
                                                                     {title}
                                                                 </Text>
+                                                                <Text2
+                                                                    forceMobileSizes
+                                                                    truncate={subtitleLinesMax}
+                                                                    as="div"
+                                                                    regular
+                                                                    textShadow={textShadow}
+                                                                    hyphens="auto"
+                                                                >
+                                                                    {subtitle}
+                                                                </Text2>
                                                             </Stack>
                                                         </Stack>
                                                     </header>
@@ -1479,6 +1493,11 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                                                         regular
                                                         textShadow={textShadow}
                                                         hyphens="auto"
+                                                        color={
+                                                            withGradient
+                                                                ? vars.colors.textPrimary
+                                                                : vars.colors.textSecondary
+                                                        }
                                                     >
                                                         {description}
                                                     </Text2>
