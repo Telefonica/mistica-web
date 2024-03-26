@@ -201,6 +201,7 @@ export {
     VIVO_NEW_SKIN,
     O2_CLASSIC_SKIN,
     O2_SKIN,
+    O2_NEW_SKIN,
     MOVISTAR_SKIN,
     TELEFONICA_SKIN,
     BLAU_SKIN,
@@ -213,6 +214,7 @@ export {getMovistarSkin} from './skins/movistar';
 export {getMovistarLegacySkin} from './skins/movistar-legacy';
 export {getO2Skin} from './skins/o2';
 export {getO2ClassicSkin} from './skins/o2-classic';
+export {getO2NewSkin} from './skins/o2-new';
 export {getTelefonicaSkin} from './skins/telefonica';
 export {getBlauSkin} from './skins/blau';
 export {getTuSkin} from './skins/tu';

@@ -6,6 +6,7 @@ import Touchable from './touchable';
 import {getMovistarSkin} from './skins/movistar';
 import {getVivoSkin} from './skins/vivo';
 import {getO2Skin} from './skins/o2';
+import {getO2NewSkin} from './skins/o2-new';
 import {getBlauSkin} from './skins/blau';
 import {getTuSkin} from './skins/tu';
 import {getTelefonicaSkin} from './skins/telefonica';
@@ -151,10 +152,11 @@ const VivoLogoImage = ({size, type}: LogoImageProps) => {
 };
 
 const O2LogoImage = ({size, type}: LogoImageProps) => {
-    const {isDarkMode} = useTheme();
+    const {isDarkMode, skinName} = useTheme();
     const isInverse = useIsInverseVariant();
     // todo WEB-761 what about classic?
-    const {colors} = getO2Skin();
+    const {colors} = skinName === 'O2-new' ? getO2NewSkin() : getO2Skin();
+
     const color = isInverse && !isDarkMode ? colors.inverse : colors.brand;
 
     if (type === 'vertical') {
@@ -371,6 +373,7 @@ const LogoBase: React.FC<LogoBaseProps> = ({size = 48, skinName, type = 'isotype
             return <VivoLogoImage size={size} type={type} />;
         case 'O2':
         case 'O2-classic':
+        case 'O2-new':
             return <O2LogoImage size={size} type={type} />;
         case 'Telefonica':
             return <TelefonicaLogoImage size={size} type={type} />;
@@ -491,6 +494,11 @@ export const VivoLogo: React.FC<LogoProps> = ({size, type = 'isotype', ...props}
     </MaybeTouchableLogo>
 );
 export const O2Logo: React.FC<LogoProps> = ({size, type = 'isotype', ...props}) => (
+    <MaybeTouchableLogo {...props}>
+        <LogoBase skinName="O2" type={type} size={size} />
+    </MaybeTouchableLogo>
+);
+export const O2NewLogo: React.FC<LogoProps> = ({size, type = 'isotype', ...props}) => (
     <MaybeTouchableLogo {...props}>
         <LogoBase skinName="O2" type={type} size={size} />
     </MaybeTouchableLogo>

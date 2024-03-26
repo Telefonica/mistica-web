@@ -13,6 +13,7 @@ import {
     VIVO_NEW_SKIN,
     TELEFONICA_SKIN,
     O2_SKIN,
+    O2_NEW_SKIN,
     TU_SKIN,
     MOVISTAR_SKIN,
 } from '../src';
@@ -44,7 +45,12 @@ const App = ({children, skinName}: {children: React.ReactNode; skinName: string}
 
         ${skinName === VIVO_NEW_SKIN ? 'body {font-family: "Vivo Type"}' : ''}
         ${skinName === TELEFONICA_SKIN || skinName === TU_SKIN ? 'body {font-family: "Telefonica Sans"}' : ''}
-        ${skinName === MOVISTAR_SKIN || skinName === O2_SKIN ? 'body {font-family: "On Air"}' : ''}
+        ${
+            skinName === MOVISTAR_SKIN || skinName === O2_SKIN || skinName === O2_NEW_SKIN
+                ? 'body {font-family: "On Air"}'
+                : ''
+        }
+        
 
         *[class^='_1fu0koy1'] {
             display: none;

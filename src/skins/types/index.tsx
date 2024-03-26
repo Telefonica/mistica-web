@@ -8,6 +8,7 @@ export type KnownSkinName =
     | 'Movistar'
     | 'O2'
     | 'O2-classic'
+    | 'O2-new'
     | 'Vivo'
     | 'Vivo-new'
     | 'Telefonica'
