@@ -46,10 +46,7 @@ export const palette = {
     darkModeGrey: '#242424',
 };
 
-/**
- * @deprecated Use `getMovistarSkin` instead.
- */
-export const getMovistarLegacySkin: GetKnownSkin = (variant) => {
+export const getMovistarLegacySkin: GetKnownSkin = () => {
     const skin: KnownSkin = {
         name: MOVISTAR_LEGACY_SKIN,
         colors: {

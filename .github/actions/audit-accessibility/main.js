@@ -80,8 +80,6 @@ const audit = async (browser, url, disabledRules = []) => {
             'page-has-heading-one',
             // ignored because we use invented autocomplete values to workaround related chrome issues
             'autocomplete-valid',
-            // ignored because disabled input fields have a low contrast by design spec
-            'color-contrast',
             // https://jira.tid.es/browse/WEB-612
             'scrollable-region-focusable',
             // https://jira.tid.es/browse/WEB-616
