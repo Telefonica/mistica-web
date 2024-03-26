@@ -64,9 +64,7 @@ const exampleCode = `
     <Stack space={16}>
       <TextField name="name" label="Name" />
       <EmailField name="email" label="e-mail" />
-      <ButtonLayout>
-        <ButtonPrimary submit>Send</ButtonPrimary>
-      </ButtonLayout>
+      <ButtonLayout primaryButton={<ButtonPrimary submit>Send</ButtonPrimary>} />
     </Stack>
   </Box>
 </Form>`;

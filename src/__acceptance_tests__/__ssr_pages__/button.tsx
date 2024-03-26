@@ -3,20 +3,21 @@ import {ButtonPrimary, ButtonSecondary, ButtonLink, ButtonDanger, ButtonLayout, 
 
 const ButtonTest = (): JSX.Element => (
     <Stack space={8}>
-        <ButtonLayout>
-            <ButtonPrimary href="https://google.com">Primary</ButtonPrimary>
-            <ButtonSecondary href="https://google.com">Secondary</ButtonSecondary>
-        </ButtonLayout>
+        <ButtonLayout
+            primaryButton={<ButtonPrimary href="https://google.com">Primary</ButtonPrimary>}
+            secondaryButton={<ButtonSecondary href="https://google.com">Secondary</ButtonSecondary>}
+        />
 
-        <ButtonLayout>
-            <ButtonDanger href="https://google.com">Danger</ButtonDanger>
-            <ButtonSecondary href="https://google.com">Secondary</ButtonSecondary>
-        </ButtonLayout>
+        <ButtonLayout
+            primaryButton={<ButtonDanger href="https://google.com">Danger</ButtonDanger>}
+            secondaryButton={<ButtonSecondary href="https://google.com">Secondary</ButtonSecondary>}
+        />
 
-        <ButtonLayout link={<ButtonLink to="https://google.com">Link</ButtonLink>}>
-            <ButtonPrimary href="https://google.com">Primary</ButtonPrimary>
-            <ButtonSecondary href="https://google.com">Secondary</ButtonSecondary>
-        </ButtonLayout>
+        <ButtonLayout
+            link={<ButtonLink to="https://google.com">Link</ButtonLink>}
+            primaryButton={<ButtonPrimary href="https://google.com">Primary</ButtonPrimary>}
+            secondaryButton={<ButtonSecondary href="https://google.com">Secondary</ButtonSecondary>}
+        />
     </Stack>
 );
 

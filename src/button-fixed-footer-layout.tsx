@@ -51,14 +51,13 @@ const ButtonFixedFooterLayout: React.FC<Props> = ({
                         }}
                     >
                         <ButtonLayout
+                            primaryButton={button}
+                            secondaryButton={secondaryButton}
                             align={
                                 isDesktopOrBigger && desktopButtonAlign ? desktopButtonAlign : 'full-width'
                             }
                             link={link}
-                        >
-                            {button}
-                            {secondaryButton}
-                        </ButtonLayout>
+                        />
                     </Box>
                 </InternalResponsiveLayout>
             }
