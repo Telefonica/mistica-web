@@ -1,3 +1,16 @@
+# [14.48.0](https://github.com/Telefonica/mistica-web/compare/v14.47.0...v14.48.0) (2024-03-26)
+
+
+### Bug Fixes
+
+* **Form:** remove error state when input is disabled ([#1057](https://github.com/Telefonica/mistica-web/issues/1057)) ([82f1938](https://github.com/Telefonica/mistica-web/commit/82f19382563c17ba362ad4b104c36db6eade9afa))
+
+
+### Features
+
+* **ButtonLayout:** change alignment logic ([#1055](https://github.com/Telefonica/mistica-web/issues/1055)) ([3ce0fac](https://github.com/Telefonica/mistica-web/commit/3ce0fac8848874b52fc2cd169304ebee8a449a81))
+* **PosterCard:** add subtitle and change description color ([#1056](https://github.com/Telefonica/mistica-web/issues/1056)) ([ec3f40c](https://github.com/Telefonica/mistica-web/commit/ec3f40c2207044b7d5e4f4436ebafe9a67ce770a))
+
 # [14.47.0](https://github.com/Telefonica/mistica-web/compare/v14.46.0...v14.47.0) (2024-03-20)
 
 
