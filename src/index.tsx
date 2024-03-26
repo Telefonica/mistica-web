@@ -21,7 +21,11 @@ export {default as LoadingBar} from './loading-bar';
 export {default as FixedToTop, TopDistanceContext} from './fixed-to-top';
 export {createNestableContext} from './nestable-context';
 export type {NestableContext} from './nestable-context';
-export {default as OverscrollColor, OverscrollColorProvider} from './overscroll-color-context';
+export {
+    default as OverscrollColor,
+    useSetOverscrollColor,
+    OverscrollColorProvider,
+} from './overscroll-color-context';
 export {
     FeedbackScreen,
     ErrorFeedbackScreen,

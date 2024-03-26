@@ -19,7 +19,7 @@ const skin: Skin = {
         backgroundSkeletonInverse: '#ac9c22',
         navigationBarBackground: '#ffe833',
         backgroundAlternative: '#F6F6F6',
-        backgroundFeedbackBottom: '#ffe833',
+        backgroundBrandBottom: '#ffe833',
         skeletonWave: '#EEEEEE',
         borderLow: '#F6F6F6',
         border: '#DDDDDD',

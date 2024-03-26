@@ -65,7 +65,8 @@ export const getMovistarLegacySkin: GetKnownSkin = () => {
             backgroundOverlay: applyAlpha(palette.grey6, 0.6),
             backgroundSkeleton: palette.grey2,
             backgroundSkeletonInverse: palette.movistarBlue55,
-            backgroundFeedbackBottom: palette.movistarBlue,
+            backgroundBrandTop: palette.movistarBlue,
+            backgroundBrandBottom: palette.movistarBlue,
             appBarBackground: palette.white,
             navigationBarBackground: palette.movistarBlue,
             skeletonWave: palette.grey2,
@@ -109,7 +110,7 @@ export const getMovistarLegacySkin: GetKnownSkin = () => {
             textLinkSnackbar: palette.movistarBlue30,
             control: palette.grey3,
             controlActivated: palette.movistarBlue,
-            controlInverse: palette.white,
+            controlInverse: palette.movistarBlue20,
             controlActivatedInverse: palette.white,
             controlError: palette.pepper,
             barTrack: palette.grey3,
@@ -161,6 +162,18 @@ export const getMovistarLegacySkin: GetKnownSkin = () => {
             textAppBar: palette.grey4,
             textAppBarSelected: palette.movistarBlue,
             customTabsBackground: palette.white,
+            tagTextPromo: palette.purple70,
+            tagTextActive: palette.movistarBlue,
+            tagTextInactive: palette.grey5,
+            tagTextSuccess: palette.movistarGreen70,
+            tagTextWarning: palette.egg80,
+            tagTextError: palette.pepper70,
+            tagBackgroundPromo: palette.purple10,
+            tagBackgroundActive: palette.movistarBlue10,
+            tagBackgroundInactive: palette.grey2,
+            tagBackgroundSuccess: palette.movistarGreen10,
+            tagBackgroundWarning: palette.egg10,
+            tagBackgroundError: palette.pepper10,
         },
         darkModeColors: {
             background: palette.darkModeBlack,
@@ -178,7 +191,8 @@ export const getMovistarLegacySkin: GetKnownSkin = () => {
             backgroundOverlay: applyAlpha(palette.darkModeGrey, 0.8),
             backgroundSkeleton: palette.grey6,
             backgroundSkeletonInverse: palette.grey6,
-            backgroundFeedbackBottom: palette.darkModeBlack,
+            backgroundBrandTop: palette.darkModeBlack,
+            backgroundBrandBottom: palette.darkModeBlack,
             appBarBackground: palette.darkModeGrey,
             navigationBarBackground: palette.darkModeBlack,
             skeletonWave: palette.grey5,
@@ -274,6 +288,18 @@ export const getMovistarLegacySkin: GetKnownSkin = () => {
             textAppBar: palette.grey5,
             textAppBarSelected: palette.grey2,
             customTabsBackground: palette.darkModeBlack,
+            tagTextPromo: palette.purple70,
+            tagTextActive: palette.movistarBlue,
+            tagTextInactive: palette.grey5,
+            tagTextSuccess: palette.movistarGreen70,
+            tagTextWarning: palette.egg80,
+            tagTextError: palette.pepper70,
+            tagBackgroundPromo: palette.grey6,
+            tagBackgroundActive: palette.grey6,
+            tagBackgroundInactive: palette.grey6,
+            tagBackgroundSuccess: palette.grey6,
+            tagBackgroundWarning: palette.grey6,
+            tagBackgroundError: palette.grey6,
         },
         borderRadii: {
             avatar: '50%',
@@ -309,5 +335,15 @@ export const getMovistarLegacySkin: GetKnownSkin = () => {
             text10: {weight: 'bold'},
         },
     };
+
+    if (variant === 'prominent') {
+        skin.colors.brand = palette.movistarProminentBlue;
+        skin.colors.brandHigh = palette.movistarProminentBlueDark;
+        skin.colors.backgroundBrand = palette.movistarProminentBlue;
+        skin.colors.navigationBarBackground = palette.movistarProminentBlue;
+        skin.colors.backgroundBrandBottom = palette.movistarProminentBlue;
+        skin.colors.controlActivated = palette.movistarProminentBlue;
+        skin.colors.dividerInverse = palette.movistarProminentBlueDark;
+    }
     return skin;
 };
