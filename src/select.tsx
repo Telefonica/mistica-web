@@ -34,6 +34,7 @@ export type SelectProps = {
     }>;
     autoFocus?: boolean;
     value?: string;
+    defaultValue?: string;
     fullWidth?: boolean;
     native?: boolean;
     children?: void;
@@ -44,6 +45,7 @@ const Select: React.FC<SelectProps> = ({
     label,
     helperText: helperTextProp,
     value: valueProp,
+    defaultValue,
     onChangeValue: onChangeValueProp,
     name,
     fullWidth,
@@ -61,7 +63,7 @@ const Select: React.FC<SelectProps> = ({
     const optionsMenuRef = React.useRef<HTMLUListElement>(null);
     const optionRefs = React.useRef(new Map<string, HTMLLIElement>());
     const [isServerSide, setIsServerSide] = React.useState(true);
-    const [valueState, setValueState] = React.useState<string>();
+    const [valueState, setValueState] = React.useState<string | undefined>(defaultValue);
     const [optionsShown, setOptionsShown] = React.useState(false);
     const [animateShowOptions, setAnimateShowOptions] = React.useState(false);
     const [isFocused, setIsFocused] = React.useState(false);
@@ -331,10 +333,11 @@ const Select: React.FC<SelectProps> = ({
                         )}
                         id={inputId}
                         aria-invalid={!!error}
-                        value={value}
+                        value={value ?? valueState}
                         required={!optional}
                         disabled={disabled}
                         onChange={(e) => {
+                            setValue(e.target.value);
                             if (onChangeValue) {
                                 onChangeValue(e.target.value);
                             }
@@ -392,7 +395,7 @@ const Select: React.FC<SelectProps> = ({
                             }
                             focus={isFocused}
                             label={label}
-                            value={value}
+                            value={value ?? valueState}
                             shrinkLabel={!!(value || valueState)}
                             name={name}
                             helperText={helperText}
