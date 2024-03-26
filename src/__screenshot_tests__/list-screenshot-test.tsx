@@ -48,6 +48,7 @@ test.each(getCases())(
                 withBadge,
                 headline: 'Headline',
                 detail: 'Detail',
+                subtitle: 'Subtitle',
             },
         });
 
@@ -69,6 +70,7 @@ test.each(getCases())(
                 withBadge,
                 headline: 'Headline',
                 detail: 'Detail',
+                subtitle: 'Subtitle',
             },
         });
 
@@ -88,6 +90,7 @@ test.each(controls)('Row list disabled - %s', async (control) => {
             withBadge: true,
             disabled: true,
             detail: 'Detail',
+            subtitle: 'Subtitle',
         },
     });
 
@@ -106,6 +109,7 @@ test.each(controls)('Boxed row list disabled - %s', async (control) => {
             withBadge: true,
             disabled: true,
             detail: 'Detail',
+            subtitle: 'Subtitle',
         },
     });
 
@@ -120,7 +124,7 @@ test('Rows with only a Title content are centered', async () => {
         device: 'MOBILE_IOS',
         args: {
             title: 'Title',
-            subtitle: '',
+            subtitle: 'Subtitle',
             headline: '',
             description: '',
             control: 'chevron',
@@ -140,7 +144,7 @@ test.each(devices)('Custom row with text centered', async (device) => {
         args: {
             control: 'custom element with text',
             title: 'Title',
-            subtitle: '',
+            subtitle: 'Subtitle',
             headline: '',
             description: '',
             detail: 'Detail',
