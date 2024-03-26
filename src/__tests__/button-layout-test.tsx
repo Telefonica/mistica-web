@@ -8,9 +8,7 @@ import {makeTheme} from './test-utils';
 test('One button is rendered', () => {
     render(
         <ThemeContextProvider theme={makeTheme()}>
-            <ButtonLayout withMargins>
-                <ButtonPrimary onPress={() => {}}>Button1</ButtonPrimary>
-            </ButtonLayout>
+            <ButtonLayout primaryButton={<ButtonPrimary onPress={() => {}}>Button1</ButtonPrimary>} />
         </ThemeContextProvider>
     );
 
@@ -20,10 +18,10 @@ test('One button is rendered', () => {
 test('Two buttons are rendered', () => {
     render(
         <ThemeContextProvider theme={makeTheme()}>
-            <ButtonLayout withMargins>
-                <ButtonPrimary onPress={() => {}}>Button1</ButtonPrimary>
-                <ButtonSecondary onPress={() => {}}>Button2</ButtonSecondary>
-            </ButtonLayout>
+            <ButtonLayout
+                primaryButton={<ButtonPrimary onPress={() => {}}>Button1</ButtonPrimary>}
+                secondaryButton={<ButtonSecondary onPress={() => {}}>Button2</ButtonSecondary>}
+            />
         </ThemeContextProvider>
     );
 
