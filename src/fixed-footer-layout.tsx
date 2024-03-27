@@ -22,7 +22,6 @@ import {
 import {vars} from './skins/skin-contract.css';
 import * as styles from './fixed-footer-layout.css';
 import {applyCssVars, safeAreaInsetBottom} from './utils/css';
-import {hidden} from './loading-bar.css';
 
 const FOOTER_CANVAS_RATIO = 2;
 const getScrollEventTarget = (el: HTMLElement) => (el === document.documentElement ? window : el);
@@ -110,35 +109,36 @@ const FixedFooterLayout: React.FC<Props> = ({
 
     const isFixedFooter = hasContentEnoughVSpace;
 
-    containerBgColor = 'linear-gradient(180deg, #8552F5, #D33A7F)';
-
-    const hasGradientBackground = containerBgColor.includes('gradient');
+    // containerBgColor = 'linear-gradient(180deg, #8552F5, #D33A7F)';
+    // footerBgColor = '#D33A7F';
 
     return (
         <>
             <div
                 ref={containerRef}
                 className={styles.container}
-                style={{
-                    ...applyCssVars({
-                        [styles.vars.footerHeight]: isFixedFooter
-                            ? `calc(${safeAreaInsetBottom} + ${domFooterHeight}px)`
-                            : '0px',
+                style={applyCssVars({
+                    ...(containerBgColor && {
+                        [styles.vars.backgroundColor]: containerBgColor,
                     }),
-                    position: 'relative',
-                }}
+
+                    [styles.vars.footerHeight]: isFixedFooter
+                        ? `calc(${safeAreaInsetBottom} + ${domFooterHeight}px)`
+                        : '0px',
+                })}
             >
-                <div
+                {/* <div
                     ref={backgroundRef}
                     style={{
-                        background: containerBgColor,
-                        position: 'absolute',
-                        inset: 0,
-                        minHeight: '100vh',
+                        //       background: containerBgColor,
+                        position: 'fixed',
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        height: `calc(100vh - calc(${safeAreaInsetBottom} + ${domFooterHeight}px))`,
                         zIndex: -1, // ensure this layer is behind the children
                     }}
-                />
-                <div>backgroundHeight: {backgroundHeight}</div>
+                /> */}
                 {children}
             </div>
             <div
@@ -152,11 +152,7 @@ const FixedFooterLayout: React.FC<Props> = ({
                  * other fixed footers during the page animation transition
                  */
                 style={{
-                    background: hasGradientBackground
-                        ? 'transparent'
-                        : isTabletOrSmaller
-                        ? footerBgColor
-                        : undefined,
+                    background: isTabletOrSmaller ? footerBgColor : 'transparent',
                 }}
                 data-testid={`fixed-footer${isFooterVisible ? '-visible' : '-hidden'}`}
                 /**
@@ -173,23 +169,8 @@ const FixedFooterLayout: React.FC<Props> = ({
                         style={{
                             height: footerHeight,
                             marginBottom: safeAreaInsetBottom,
-                            position: 'relative',
-                            overflow: 'hidden',
                         }}
                     >
-                        {hasGradientBackground && (
-                            <div
-                                style={{
-                                    position: 'absolute',
-                                    bottom: 0,
-                                    left: 0,
-                                    right: 0,
-                                    height: backgroundHeight,
-                                    background: containerBgColor,
-                                }}
-                            ></div>
-                        )}
-
                         {footer}
                     </aside>
                 )}
