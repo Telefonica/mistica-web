@@ -22,6 +22,7 @@ import {
 import {vars} from './skins/skin-contract.css';
 import * as styles from './fixed-footer-layout.css';
 import {applyCssVars, safeAreaInsetBottom} from './utils/css';
+import {hidden} from './loading-bar.css';
 
 const FOOTER_CANVAS_RATIO = 2;
 const getScrollEventTarget = (el: HTMLElement) => (el === document.documentElement ? window : el);
@@ -56,7 +57,8 @@ const FixedFooterLayout: React.FC<Props> = ({
     const containerRef = React.useRef<HTMLDivElement>(null);
     const {isTabletOrSmaller} = useScreenSize();
     const {platformOverrides} = useTheme();
-    const {height: domFooterHeight, ref} = useElementDimensions();
+    const {height: domFooterHeight, ref: footerRef} = useElementDimensions();
+    const {height: backgroundHeight, ref: backgroundRef} = useElementDimensions();
     const isWithinIFrame = useIsWithinIFrame();
     const windowHeight = useWindowHeight();
     const screenHeight = useScreenHeight();
@@ -108,20 +110,35 @@ const FixedFooterLayout: React.FC<Props> = ({
 
     const isFixedFooter = hasContentEnoughVSpace;
 
+    containerBgColor = 'linear-gradient(180deg, #8552F5, #D33A7F)';
+
+    const hasGradientBackground = containerBgColor.includes('gradient');
+
     return (
         <>
             <div
                 ref={containerRef}
                 className={styles.container}
-                style={applyCssVars({
-                    ...(containerBgColor && {
-                        [styles.vars.backgroundColor]: containerBgColor,
+                style={{
+                    ...applyCssVars({
+                        [styles.vars.footerHeight]: isFixedFooter
+                            ? `calc(${safeAreaInsetBottom} + ${domFooterHeight}px)`
+                            : '0px',
                     }),
-                    [styles.vars.footerHeight]: isFixedFooter
-                        ? `calc(${safeAreaInsetBottom} + ${domFooterHeight}px)`
-                        : '0px',
-                })}
+                    position: 'relative',
+                }}
             >
+                <div
+                    ref={backgroundRef}
+                    style={{
+                        background: containerBgColor,
+                        position: 'absolute',
+                        inset: 0,
+                        minHeight: '100vh',
+                        zIndex: -1, // ensure this layer is behind the children
+                    }}
+                />
+                <div>backgroundHeight: {backgroundHeight}</div>
                 {children}
             </div>
             <div
@@ -135,7 +152,11 @@ const FixedFooterLayout: React.FC<Props> = ({
                  * other fixed footers during the page animation transition
                  */
                 style={{
-                    background: isTabletOrSmaller ? footerBgColor : undefined,
+                    background: hasGradientBackground
+                        ? 'transparent'
+                        : isTabletOrSmaller
+                        ? footerBgColor
+                        : undefined,
                 }}
                 data-testid={`fixed-footer${isFooterVisible ? '-visible' : '-hidden'}`}
                 /**
@@ -147,13 +168,28 @@ const FixedFooterLayout: React.FC<Props> = ({
             >
                 {isFooterVisible && (
                     <aside
-                        ref={ref}
+                        ref={footerRef}
                         data-component-name="FixedFooter"
                         style={{
                             height: footerHeight,
                             marginBottom: safeAreaInsetBottom,
+                            position: 'relative',
+                            overflow: 'hidden',
                         }}
                     >
+                        {hasGradientBackground && (
+                            <div
+                                style={{
+                                    position: 'absolute',
+                                    bottom: 0,
+                                    left: 0,
+                                    right: 0,
+                                    height: backgroundHeight,
+                                    background: containerBgColor,
+                                }}
+                            ></div>
+                        )}
+
                         {footer}
                     </aside>
                 )}
