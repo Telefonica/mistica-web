@@ -165,7 +165,7 @@ export const getTelefonicaSkin: GetKnownSkin = () => {
             tagTextError: palette.coral70,
             tagBackgroundPromo: palette.orchid10,
             tagBackgroundActive: palette.telefonicaBlue10,
-            tagBackgroundInactive: palette.grey2,
+            tagBackgroundInactive: palette.grey1,
             tagBackgroundSuccess: palette.turquoise10,
             tagBackgroundWarning: palette.ambar10,
             tagBackgroundError: palette.coral10,

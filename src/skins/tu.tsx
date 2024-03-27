@@ -169,7 +169,7 @@ export const getTuSkin: GetKnownSkin = () => {
             tagTextError: palette.red70,
             tagBackgroundPromo: palette.blue10,
             tagBackgroundActive: palette.blue10,
-            tagBackgroundInactive: palette.grey2,
+            tagBackgroundInactive: palette.grey1,
             tagBackgroundSuccess: palette.green10,
             tagBackgroundWarning: palette.orange20,
             tagBackgroundError: palette.red10,

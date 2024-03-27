@@ -171,7 +171,7 @@ export const getO2Skin: GetKnownSkin = () => {
             tagTextError: palette.pepper60,
             tagBackgroundPromo: palette.o2Purple10,
             tagBackgroundActive: palette.o2BluePrimary10,
-            tagBackgroundInactive: palette.grey2,
+            tagBackgroundInactive: palette.grey1,
             tagBackgroundSuccess: palette.o2Green10,
             tagBackgroundWarning: palette.o2Orange10,
             tagBackgroundError: palette.pepper10,

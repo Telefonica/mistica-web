@@ -167,7 +167,7 @@ export const getBlauSkin: GetKnownSkin = () => {
             tagTextError: palette.blauRed70,
             tagBackgroundPromo: palette.blauPurple10,
             tagBackgroundActive: palette.blauBlueSecondary10,
-            tagBackgroundInactive: palette.grey2,
+            tagBackgroundInactive: palette.grey1,
             tagBackgroundSuccess: palette.blauGreen10,
             tagBackgroundWarning: palette.blauYellow10,
             tagBackgroundError: palette.blauRed10,
