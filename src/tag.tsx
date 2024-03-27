@@ -39,16 +39,16 @@ const Tag: React.FC<TagProps> = ({Icon, children, dataAttributes, type = 'promo'
     }
 
     const tagTypeToColors = {
-        // [textColor, inverseTextColor, backgroundColor]
-        promo: [colors.tagTextPromo, colors.tagTextPromo, colors.tagBackgroundPromo],
-        active: [colors.tagTextActive, colors.tagTextActive, colors.tagBackgroundActive],
-        inactive: [colors.tagTextInactive, colors.tagTextInactive, colors.tagBackgroundInactive],
-        success: [colors.tagTextSuccess, colors.tagTextSuccess, colors.tagBackgroundSuccess],
-        warning: [colors.tagTextWarning, colors.tagTextWarning, colors.tagBackgroundWarning],
-        error: [colors.tagTextError, colors.tagTextError, colors.tagBackgroundError],
+        // [textColor, backgroundColor]
+        promo: [colors.tagTextPromo, colors.tagBackgroundPromo],
+        active: [colors.tagTextActive, colors.tagBackgroundActive],
+        inactive: [colors.tagTextInactive, colors.tagBackgroundInactive],
+        success: [colors.tagTextSuccess, colors.tagBackgroundSuccess],
+        warning: [colors.tagTextWarning, colors.tagBackgroundWarning],
+        error: [colors.tagTextError, colors.tagBackgroundError],
     } as const;
 
-    const [textColor, inverseTextColor, backgroundColor] = tagTypeToColors[type];
+    const [textColor, backgroundColor] = tagTypeToColors[type];
 
     return (
         <span
@@ -64,16 +64,12 @@ const Tag: React.FC<TagProps> = ({Icon, children, dataAttributes, type = 'promo'
         >
             {Icon && (
                 <Box paddingRight={4}>
-                    <Icon
-                        color={isInverse ? inverseTextColor : textColor}
-                        size={pxToRem(16)}
-                        className={sprinkles({display: 'block'})}
-                    />
+                    <Icon color={textColor} size={pxToRem(16)} className={sprinkles({display: 'block'})} />
                 </Box>
             )}
             <ThemeVariant isInverse={false}>
                 <Text
-                    color={isInverse ? inverseTextColor : textColor}
+                    color={textColor}
                     size={14}
                     lineHeight={20}
                     weight={textPresets.indicator.weight}
