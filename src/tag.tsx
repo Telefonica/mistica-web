@@ -31,7 +31,6 @@ const {colors} = vars;
 const Tag: React.FC<TagProps> = ({Icon, children, dataAttributes, type = 'promo', badge}) => {
     const {textPresets} = useTheme();
     const themeVariant = useThemeVariant();
-    const isInverse = themeVariant === 'inverse';
     const badgeValue = badge === true ? undefined : badge || 0;
 
     if (!children) {
