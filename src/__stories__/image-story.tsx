@@ -67,19 +67,7 @@ export const Default: StoryComponent<Args> = ({
         dataAttributes: {testid: 'image'},
     };
 
-    const image = <Image src={usingVrImg} {...props} />;
-    const emptySourceImage = <Image src="" {...props} />;
-
-    /**
-     * For some reason, if we write this logic with a conditional (isEmptySource ? error : image),
-     * the image element triggers an error when switching the isEmptySource control from true to false
-     */
-    return (
-        <>
-            {!isEmptySource && image}
-            {isEmptySource && emptySourceImage}
-        </>
-    );
+    return <Image src={isEmptySource ? '' : usingVrImg} {...props} />;
 };
 
 Default.storyName = 'Image';
