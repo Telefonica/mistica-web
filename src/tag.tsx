@@ -42,7 +42,10 @@ const Tag: React.FC<TagProps> = ({Icon, children, dataAttributes, type = 'promo'
         // [textColor, backgroundColor]
         promo: [colors.tagTextPromo, colors.tagBackgroundPromo],
         active: [colors.tagTextActive, colors.tagBackgroundActive],
-        inactive: [colors.tagTextInactive, colors.tagBackgroundInactive],
+        inactive: [
+            colors.tagTextInactive,
+            themeVariant === 'alternative' ? colors.neutralLowAlternative : colors.tagBackgroundInactive,
+        ],
         success: [colors.tagTextSuccess, colors.tagBackgroundSuccess],
         warning: [colors.tagTextWarning, colors.tagBackgroundWarning],
         error: [colors.tagTextError, colors.tagBackgroundError],
