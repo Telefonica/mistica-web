@@ -184,6 +184,7 @@ export const ImageContent = React.forwardRef<HTMLImageElement, ImageProps>(
 
         React.useEffect(() => {
             setIsError(!src);
+            setHideLoadingFallback(false);
         }, [src]);
 
         React.useEffect(() => {
