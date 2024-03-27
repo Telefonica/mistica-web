@@ -183,6 +183,10 @@ export const ImageContent = React.forwardRef<HTMLImageElement, ImageProps>(
         }, [onLoad]);
 
         React.useEffect(() => {
+            setIsError(!src);
+        }, [src]);
+
+        React.useEffect(() => {
             // Needed because there is some race condition with SSR and onLoad events
             // load event could be fired before the component is hydrated and mounted client side
             // https://github.com/facebook/react/issues/15446
