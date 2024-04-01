@@ -171,7 +171,7 @@ export const getMovistarSkin: GetKnownSkin = () => {
             tagTextError: palette.pepper70,
             tagBackgroundPromo: palette.purple10,
             tagBackgroundActive: palette.movistarBlue10,
-            tagBackgroundInactive: palette.grey2,
+            tagBackgroundInactive: palette.grey1,
             tagBackgroundSuccess: palette.movistarGreen10,
             tagBackgroundWarning: palette.egg10,
             tagBackgroundError: palette.pepper10,
