@@ -1,8 +1,6 @@
 export type Colors = {
+    appBarBackground: string;
     background: string;
-    backgroundAlternative: string;
-    backgroundBrand: string;
-    backgroundBrandSecondary: string;
     backgroundContainer: string;
     backgroundContainerHover: string;
     backgroundContainerPressed: string;
@@ -11,12 +9,15 @@ export type Colors = {
     backgroundContainerBrandPressed: string;
     backgroundContainerBrandOverInverse: string;
     backgroundContainerAlternative: string;
+    backgroundBrand: string;
+    backgroundBrandSecondary: string;
     backgroundOverlay: string;
     backgroundSkeleton: string;
     backgroundSkeletonInverse: string;
-    backgroundFeedbackBottom: string;
-    appBarBackground: string;
     navigationBarBackground: string;
+    backgroundAlternative: string;
+    backgroundBrandTop: string;
+    backgroundBrandBottom: string;
     skeletonWave: string;
     borderLow: string;
     border: string;
@@ -85,9 +86,9 @@ export type Colors = {
     textPrimaryInverse: string;
     textSecondary: string;
     textSecondaryInverse: string;
+    error: string;
     success: string;
     warning: string;
-    error: string;
     promo: string;
     highlight: string;
     successLow: string;
@@ -110,4 +111,16 @@ export type Colors = {
     textAppBar: string;
     textAppBarSelected: string;
     customTabsBackground: string;
+    tagTextPromo: string;
+    tagTextActive: string;
+    tagTextInactive: string;
+    tagTextSuccess: string;
+    tagTextWarning: string;
+    tagTextError: string;
+    tagBackgroundPromo: string;
+    tagBackgroundActive: string;
+    tagBackgroundInactive: string;
+    tagBackgroundSuccess: string;
+    tagBackgroundWarning: string;
+    tagBackgroundError: string;
 };

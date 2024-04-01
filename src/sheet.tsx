@@ -375,10 +375,12 @@ export const SheetBody = ({
                     {showButtonsDivider && <Divider />}
                     <Box paddingY={{mobile: 16, desktop: 40}}>
                         <InternalResponsiveLayout>
-                            <ButtonLayout align="full-width" link={link}>
-                                {button}
-                                {secondaryButton}
-                            </ButtonLayout>
+                            <ButtonLayout
+                                align="full-width"
+                                link={link}
+                                primaryButton={button}
+                                secondaryButton={secondaryButton}
+                            />
                         </InternalResponsiveLayout>
                     </Box>
                 </div>

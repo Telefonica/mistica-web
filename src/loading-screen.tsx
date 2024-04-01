@@ -1,6 +1,6 @@
 'use client';
 import * as React from 'react';
-import OverscrollColor from './overscroll-color-context';
+import {useSetOverscrollColor} from './overscroll-color-context';
 import {ThemeVariant} from './theme-variant-context';
 import {vars} from './skins/skin-contract.css';
 import ResponsiveLayout from './responsive-layout';
@@ -198,9 +198,10 @@ const BaseLoadingScreen = React.forwardRef<HTMLDivElement, Props>(
 
         const centerContent = !children;
 
+        useSetOverscrollColor(isInverse ? {topColor: vars.colors.backgroundBrandTop} : {});
+
         return (
             <ThemeVariant isInverse={isInverse}>
-                {isInverse && <OverscrollColor />}
                 <div
                     ref={ref}
                     {...getPrefixedDataAttributes(dataAttributes)}

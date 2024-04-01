@@ -56,9 +56,7 @@ const App = () => (
       <Stack space={16}>
         <TextField name="name" label="Name" />
         <EmailField name="email" label="Email" />
-        <ButtonLayout>
-          <ButtonPrimary submit>Send</ButtonPrimary>
-        </ButtonLayout>
+        <ButtonLayout primaryButton={<ButtonPrimary submit>Send</ButtonPrimary>} />
       </Stack>
     </Box>
   </Form>

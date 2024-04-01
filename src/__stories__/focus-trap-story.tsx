@@ -14,15 +14,19 @@ export const Default: StoryComponent = () => {
                 This is useful for some components like modals.
             </Text2>
             <FocusTrap>
-                <ButtonLayout>
-                    <ButtonPrimary onPress={() => alert('clicked')}>Inside 1</ButtonPrimary>
-                    <ButtonSecondary onPress={() => alert('clicked')}>Inside 2</ButtonSecondary>
-                </ButtonLayout>
+                <ButtonLayout
+                    primaryButton={<ButtonPrimary onPress={() => alert('clicked')}>Inside 1</ButtonPrimary>}
+                    secondaryButton={
+                        <ButtonSecondary onPress={() => alert('clicked')}>Inside 2</ButtonSecondary>
+                    }
+                />
             </FocusTrap>
-            <ButtonLayout>
-                <ButtonPrimary onPress={() => alert('clicked')}>Outside 1</ButtonPrimary>
-                <ButtonSecondary onPress={() => alert('clicked')}>Outside 2</ButtonSecondary>
-            </ButtonLayout>
+            <ButtonLayout
+                primaryButton={<ButtonPrimary onPress={() => alert('clicked')}>Outside 1</ButtonPrimary>}
+                secondaryButton={
+                    <ButtonSecondary onPress={() => alert('clicked')}>Outside 2</ButtonSecondary>
+                }
+            />
         </Stack>
     );
 };

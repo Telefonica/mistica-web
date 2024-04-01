@@ -78,11 +78,13 @@ export const Default: StoryComponent = () => {
                         <RadioButton value="apple">Apple</RadioButton>
                     </Stack>
                 </RadioGroup>
-                <ButtonLayout>
-                    <ButtonPrimary submit loadingText="Sending">
-                        Send
-                    </ButtonPrimary>
-                </ButtonLayout>
+                <ButtonLayout
+                    primaryButton={
+                        <ButtonPrimary submit loadingText="Sending">
+                            Send
+                        </ButtonPrimary>
+                    }
+                />
             </Stack>
         </Form>
     );

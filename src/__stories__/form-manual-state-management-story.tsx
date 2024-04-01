@@ -88,11 +88,13 @@ export const Default: StoryComponent = () => {
                 <Checkbox name="t&c" checked={acceptTC} onChange={setAcceptTC}>
                     <Text2 regular>Accept Terms and Conditions</Text2>
                 </Checkbox>
-                <ButtonLayout>
-                    <ButtonPrimary submit loadingText="Sending">
-                        Send
-                    </ButtonPrimary>
-                </ButtonLayout>
+                <ButtonLayout
+                    primaryButton={
+                        <ButtonPrimary submit loadingText="Sending">
+                            Send
+                        </ButtonPrimary>
+                    }
+                />
             </Stack>
         </form>
     );
