@@ -43,6 +43,7 @@ const Tag: React.FC<TagProps> = ({Icon, children, dataAttributes, type = 'promo'
         active: [colors.tagTextActive, colors.tagBackgroundActive],
         inactive: [
             colors.tagTextInactive,
+            // TODO: remove logic for alternative variant (https://jira.tid.es/browse/WEB-1803)
             themeVariant === 'alternative' ? colors.neutralLowAlternative : colors.tagBackgroundInactive,
         ],
         success: [colors.tagTextSuccess, colors.tagBackgroundSuccess],
