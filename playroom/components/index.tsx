@@ -183,6 +183,7 @@ const PreviewToolsControls = React.forwardRef<HTMLDivElement, PreviewToolsContro
                             }}
                         />
                         <IconButton
+                            bleedRight
                             aria-label="Edit in Playroom"
                             Icon={IconCode as React.FC<IconProps>}
                             onPress={onEditStoryPress}
@@ -237,6 +238,7 @@ const PreviewToolsControls = React.forwardRef<HTMLDivElement, PreviewToolsContro
                             }}
                         />
                         <IconButton
+                            bleedRight
                             aria-label="Edit in Playroom"
                             Icon={IconCode as React.FC<IconProps>}
                             onPress={onEditStoryPress}
