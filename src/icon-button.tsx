@@ -359,29 +359,6 @@ export const IconButton = React.forwardRef<
     return <InternalIconButton ref={ref} {...props} />;
 });
 
-// Used internally by Mistica's components to avoid styles collisions
-
-export const BaseIconButton = (props: ExclusifyUnion<DeprecatedProps | IconButtonProps>): JSX.Element => {
-    if (props.Icon) {
-        return <RawIconButton {...props} />;
-    }
-
-    const {size = ICON_SIZE_1, disabled} = props;
-    return (
-        <RawDeprecatedIconButton
-            {...props}
-            className={classNames(styles.deprecatedIconButtonBase, props.className)}
-            style={{
-                height: size,
-                width: size,
-                cursor: disabled ? 'default' : 'pointer',
-                verticalAlign: 'middle',
-                textAlign: 'center',
-            }}
-        />
-    );
-};
-
 type ToggleStateProps = {
     Icon: React.FC<IconProps>;
     type?: IconButtonType;

@@ -165,7 +165,7 @@ export const getVivoNewSkin: GetKnownSkin = () => {
             tagTextError: palette.pepperDark80,
             tagBackgroundPromo: palette.vivoPurpleLight10,
             tagBackgroundActive: palette.vivoPurpleLight10,
-            tagBackgroundInactive: palette.grey2,
+            tagBackgroundInactive: palette.grey1,
             tagBackgroundSuccess: palette.vivoGreenLight10,
             tagBackgroundWarning: palette.orangeLight10,
             tagBackgroundError: palette.pepperLight10,

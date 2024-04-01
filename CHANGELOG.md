@@ -1,3 +1,25 @@
+# [15.0.0](https://github.com/Telefonica/mistica-web/compare/v14.48.0...v15.0.0) (2024-04-01)
+
+
+### Bug Fixes
+
+* **Image:** reset error state when src changes ([#1062](https://github.com/Telefonica/mistica-web/issues/1062)) ([1cdb87a](https://github.com/Telefonica/mistica-web/commit/1cdb87af0da4e90150da23d7db115815bf03ce48))
+
+
+### Features
+
+* **Accordion,ButtonLink,List,Popover,Slider,Tooltip:** remove deprecated props ([#1052](https://github.com/Telefonica/mistica-web/issues/1052)) ([2e8add2](https://github.com/Telefonica/mistica-web/commit/2e8add2b9bc4e8dae10f57f0d2889ac27b817848))
+* **IconButton:** update usage in CvvField and remove baseIconButton ([#1060](https://github.com/Telefonica/mistica-web/issues/1060)) ([117fc44](https://github.com/Telefonica/mistica-web/commit/117fc44eaf28333f81a1ab19c9cdb65420612d06))
+* **Select:** add default value ([#1061](https://github.com/Telefonica/mistica-web/issues/1061)) ([a0d6a9b](https://github.com/Telefonica/mistica-web/commit/a0d6a9b22ea2758515e34e4c74ecbf1302f410a9))
+* **skins:** remove O2 classic and Movistar legacy skins ([#1051](https://github.com/Telefonica/mistica-web/issues/1051)) ([c8be29a](https://github.com/Telefonica/mistica-web/commit/c8be29a8fbedf409e2cc5f5ceb4df18ed0046530))
+* **Tag:** Use new tokens in tags ([#1054](https://github.com/Telefonica/mistica-web/issues/1054)) ([ff87327](https://github.com/Telefonica/mistica-web/commit/ff873279171e3703740f286fcb5cbaef86cebc1e))
+
+
+### BREAKING CHANGES
+
+* **skins:** remove O2 classic and Movistar legacy skins
+* **Accordion,ButtonLink,List,Popover,Slider,Tooltip:** remove deprecated props in some components
+
 # [14.48.0](https://github.com/Telefonica/mistica-web/compare/v14.47.0...v14.48.0) (2024-03-26)
 
 

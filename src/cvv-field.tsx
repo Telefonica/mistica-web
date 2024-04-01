@@ -4,7 +4,6 @@ import {useTheme} from './hooks';
 import IconCvvVisaMc from './icons/icon-cvv-visa-mc';
 import IconCvvAmex from './icons/icon-cvv-amex';
 import Popover from './popover';
-import {IconButton} from './icon-button';
 import IconInformationRegular from './generated/mistica-icons/icon-information-regular';
 import {useFieldProps, useForm} from './form-context';
 import {TextFieldBaseAutosuggest} from './text-field-base';
@@ -17,6 +16,7 @@ import Text2 from './text';
 import {vars} from './skins/skin-contract.css';
 import {pxToRem} from './utils/css';
 import {iconButtonSize} from './text-field-base.css';
+import Touchable from './touchable';
 
 import type {CommonFormFieldProps} from './text-field-base';
 import type {CardOptions} from './utils/credit-card';
@@ -127,12 +127,13 @@ const CvvField: React.FC<CvvFieldProps> = ({
                     onClose={() => setIsCvvHelpOpen(false)}
                     target={
                         <div style={{width: iconSize, height: iconSize}}>
-                            <IconButton
-                                size={iconButtonSize}
+                            <Touchable
                                 style={{
                                     display: 'flex',
                                     alignItems: 'center',
                                     justifyContent: 'center',
+                                    width: iconButtonSize,
+                                    height: iconButtonSize,
                                     position: 'relative',
                                     left: `calc(-1 * (${iconButtonSize} - ${iconSize}) / 2)`,
                                     top: `calc(-1 * (${iconButtonSize} - ${iconSize}) / 2)`,
@@ -145,7 +146,7 @@ const CvvField: React.FC<CvvFieldProps> = ({
                                 }
                             >
                                 <IconInformationRegular size={iconSize} color={vars.colors.neutralMedium} />
-                            </IconButton>
+                            </Touchable>
                         </div>
                     }
                 />
