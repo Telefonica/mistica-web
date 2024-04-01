@@ -141,22 +141,6 @@ type Props = {
     dataAttributes?: DataAttributes;
     centerContent?: boolean;
     open?: boolean;
-    /**
-     * @deprecated This field is deprecated.
-     */
-    targetLabel?: string;
-    /**
-     * @deprecated This field is deprecated.
-     */
-    targetStyle?: React.CSSProperties;
-    /**
-     * @deprecated This field is deprecated.
-     */
-    unstable_offsetX?: number | string;
-    /**
-     * @deprecated This field is deprecated, use centerContent instead.
-     */
-    textCenter?: boolean;
 };
 
 type BaseTooltipProps = {
@@ -619,7 +603,6 @@ export const BaseTooltip: React.FC<BaseTooltipProps> = ({
 
 const Tooltip: React.FC<Props> = ({
     centerContent,
-    textCenter,
     extra,
     children,
     dataAttributes,
@@ -640,7 +623,7 @@ const Tooltip: React.FC<Props> = ({
                     {extra ?? children}
                 </Box>
             }
-            centerContent={centerContent ?? textCenter}
+            centerContent={centerContent}
             dataAttributes={{'component-name': 'Tooltip', ...dataAttributes}}
             {...props}
         />
