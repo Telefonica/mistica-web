@@ -372,7 +372,6 @@ const LogoBase: React.FC<LogoBaseProps> = ({size = 48, skinName, type = 'isotype
         case 'Vivo-new':
             return <VivoLogoImage size={size} type={type} />;
         case 'O2':
-        case 'O2-classic':
         case 'O2-new':
             return <O2LogoImage size={size} type={type} />;
         case 'Telefonica':

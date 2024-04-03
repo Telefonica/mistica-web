@@ -1,10 +1,10 @@
 'use client';
 import * as React from 'react';
-import {useTheme, useScreenSize, useWindowHeight, useIsomorphicLayoutEffect} from './hooks';
+import {useTheme, useScreenSize} from './hooks';
 import * as mq from './media-queries.css';
 import ButtonFixedFooterLayout from './button-fixed-footer-layout';
+import {VIVO_NEW_SKIN, VIVO_SKIN} from './skins/constants';
 import {useSetOverscrollColor} from './overscroll-color-context';
-import {O2_CLASSIC_SKIN, VIVO_NEW_SKIN, VIVO_SKIN} from './skins/constants';
 import IconSuccess from './icons/icon-success';
 import IconSuccessVivo from './icons/icon-success-vivo';
 import IconError from './icons/icon-error';
@@ -222,21 +222,10 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
     dataAttributes,
 }) => {
     useHapticFeedback(hapticFeedback);
-    const {platformOverrides, isDarkMode, skinName} = useTheme();
-    const windowHeight = useWindowHeight();
+    const {platformOverrides, isDarkMode} = useTheme();
     const {isTabletOrSmaller} = useScreenSize();
-    const [isServerSide, setIsServerSide] = React.useState(typeof self !== 'undefined');
-    const [footerHeight, setFooterHeight] = React.useState(0);
 
-    const contentHeight = isServerSide ? '100vh' : `${windowHeight - footerHeight}px`;
     const hasButtons = checkHasButtons({primaryButton, secondaryButton, link});
-
-    // This trick along with the 100vh measure allows us to perform a first meaningful render on the server side.
-    // We can't use vh on client side because it causes problems with iOS (as sometimes the height is calculated as
-    // if there were no OS buttons on bottom): https://bugs.webkit.org/show_bug.cgi?id=141832
-    useIsomorphicLayoutEffect(() => {
-        setIsServerSide(false);
-    }, []);
 
     const feedbackBody = renderFeedbackBody(
         {icon, title, description, extra: extra ?? children},
@@ -268,7 +257,6 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
                                     isInverse && !isDarkMode ? vars.colors.backgroundBrandBottom : undefined
                                 }
                                 containerBgColor="transparent"
-                                onChangeFooterHeight={setFooterHeight}
                             >
                                 <div className={styles.container}>
                                     <div
@@ -288,23 +276,8 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
                     })}
                 </Box>
             </ResponsiveLayout>
-            {skinName === O2_CLASSIC_SKIN && (
-                <div
-                    style={{
-                        position: 'absolute',
-                        bottom: footerHeight,
-                        top: 0,
-                        left: 0,
-                        right: 0,
-                        // This extra height is a workaround to make sure the background div is displayed *under* the fixed footer.
-                        // Otherwise in some devices (Galaxy S20+) the background and the fixed footer are rendered with some distance between them
-                        height: hasButtons ? `calc(${contentHeight} + 1px)` : `calc(${contentHeight})`,
-                        background: isInverse ? vars.colors.backgroundBrand : vars.colors.background,
-                    }}
-                />
-            )}
-            {/* Bug: https://jira.tid.es/browse/CHECKOUT-3340. Solution for all brands but o2-classic (gradient background) is setting body color. */}
-            {skinName !== O2_CLASSIC_SKIN && <BackgroundColor isInverse={isInverse} />}
+            {/* Bug: https://jira.tid.es/browse/CHECKOUT-3340. The solution for all brands without gradient background is setting body color. */}
+            <BackgroundColor isInverse={isInverse} />
         </div>
     );
 };

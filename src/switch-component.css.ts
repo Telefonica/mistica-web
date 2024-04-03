@@ -1,6 +1,7 @@
 import {style, styleVariants, createVar} from '@vanilla-extract/css';
 import {sprinkles} from './sprinkles.css';
 import {vars as colorsVars} from './skins/skin-contract.css';
+import * as mq from './media-queries.css';
 
 const SWITCH_ANIMATION = '0.2s ease-in 0s';
 
@@ -70,6 +71,29 @@ export const barVariants = styleVariants({
 
 const containerBase = style({
     WebkitTapHighlightColor: 'transparent',
+});
+
+const MIN_TOUCHABLE_AREA = 48;
+
+export const interactiveArea = style({
+    '@media': {
+        [mq.touchableOnly]: {
+            /** In touchable devices, we force a minimum touchable area of 48px (without affecting content layout) */
+            position: 'relative',
+            '::after': {
+                content: '',
+                position: 'absolute',
+                /**
+                 * min() is not supported in old browsers (https://caniuse.com/css-math-functions).
+                 * We don't force the minimum touchable area in that case.
+                 */
+                top: [0, `min(0px, calc((100% - ${MIN_TOUCHABLE_AREA}px) / 2))`],
+                bottom: [0, `min(0px, calc((100% - ${MIN_TOUCHABLE_AREA}px) / 2))`],
+                left: [0, `min(0px, calc((100% - ${MIN_TOUCHABLE_AREA}px) / 2))`],
+                right: [0, `min(0px, calc((100% - ${MIN_TOUCHABLE_AREA}px) / 2))`],
+            },
+        },
+    },
 });
 
 export const container = style([

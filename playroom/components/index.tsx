@@ -67,10 +67,10 @@ const VivoNewLogo = () => (
     </svg>
 );
 
-type PlayroomSkinName = Exclude<KnownSkinName, 'O2-classic' | 'O2-new'>;
+type PlayroomSkinName = Exclude<KnownSkinName, 'O2-new'>;
 
 const themesMap: {
-    [skinName in PlayroomSkinName]: {themeConfig: ThemeConfig; text: string; icon: React.ReactNode};
+    [skinName in KnownSkinName]: {themeConfig: ThemeConfig; text: string; icon: React.ReactNode};
 } = {
     Movistar: {
         text: 'Movistar',
@@ -112,8 +112,8 @@ const themesMap: {
 type PreviewToolsControlsProps = {
     os: 'android' | 'ios' | 'desktop';
     onOsChange: (newOs: 'android' | 'ios' | 'desktop') => void;
-    skinName: PlayroomSkinName;
-    onSkinNameChange: (newSkinName: PlayroomSkinName) => void;
+    skinName: KnownSkinName;
+    onSkinNameChange: (newSkinName: KnownSkinName) => void;
     colorScheme: ColorScheme;
     onColorSchemeChange: (newColorScheme: ColorScheme) => void;
     onEditStoryPress: () => void;
@@ -185,6 +185,7 @@ const PreviewToolsControls = React.forwardRef<HTMLDivElement, PreviewToolsContro
                             }}
                         />
                         <IconButton
+                            bleedRight
                             aria-label="Edit in Playroom"
                             Icon={IconCode as React.FC<IconProps>}
                             onPress={onEditStoryPress}
@@ -200,7 +201,7 @@ const PreviewToolsControls = React.forwardRef<HTMLDivElement, PreviewToolsContro
                             tabs={Object.values(themesMap).map(({icon}) => ({text: '', icon}))}
                             selectedIndex={Object.keys(themesMap).indexOf(skinName)}
                             onChange={(index) => {
-                                onSkinNameChange((Object.keys(themesMap) as Array<PlayroomSkinName>)[index]);
+                                onSkinNameChange((Object.keys(themesMap) as Array<KnownSkinName>)[index]);
                             }}
                         />
                     </div>
@@ -239,6 +240,7 @@ const PreviewToolsControls = React.forwardRef<HTMLDivElement, PreviewToolsContro
                             }}
                         />
                         <IconButton
+                            bleedRight
                             aria-label="Edit in Playroom"
                             Icon={IconCode as React.FC<IconProps>}
                             onPress={onEditStoryPress}
@@ -276,7 +278,7 @@ export const PreviewTools = ({
         skinName: initialSkinName,
         platformOverrides: {platform: initialOs = 'android'},
     } = useTheme();
-    const [skinName, setSkinName] = React.useState<PlayroomSkinName>(initialSkinName as PlayroomSkinName);
+    const [skinName, setSkinName] = React.useState<KnownSkinName>(initialSkinName as KnownSkinName);
     const [os, setOs] = React.useState<'android' | 'ios' | 'desktop'>(initialOs);
     const [colorScheme, setColorScheme] = React.useState<ColorScheme>('light');
     const overrideTheme = useOverrideTheme();

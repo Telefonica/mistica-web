@@ -31,7 +31,6 @@ const {colors} = vars;
 const Tag: React.FC<TagProps> = ({Icon, children, dataAttributes, type = 'promo', badge}) => {
     const {textPresets} = useTheme();
     const themeVariant = useThemeVariant();
-    const isInverse = themeVariant === 'inverse';
     const badgeValue = badge === true ? undefined : badge || 0;
 
     if (!children) {
@@ -39,20 +38,20 @@ const Tag: React.FC<TagProps> = ({Icon, children, dataAttributes, type = 'promo'
     }
 
     const tagTypeToColors = {
-        // [textColor, inverseTextColor, backgroundColor]
-        promo: [colors.promoHigh, colors.promoHighInverse, colors.promoLow],
-        active: [colors.brand, colors.brand, colors.brandLow],
+        // [textColor, backgroundColor]
+        promo: [colors.tagTextPromo, colors.tagBackgroundPromo],
+        active: [colors.tagTextActive, colors.tagBackgroundActive],
         inactive: [
-            colors.neutralMedium,
-            colors.neutralMediumInverse,
-            themeVariant === 'alternative' ? colors.neutralLowAlternative : colors.neutralLow,
+            colors.tagTextInactive,
+            // TODO: remove logic for alternative variant (https://jira.tid.es/browse/WEB-1803)
+            themeVariant === 'alternative' ? colors.neutralLowAlternative : colors.tagBackgroundInactive,
         ],
-        success: [colors.successHigh, colors.successHighInverse, colors.successLow],
-        warning: [colors.warningHigh, colors.warningHighInverse, colors.warningLow],
-        error: [colors.errorHigh, colors.errorHighInverse, colors.errorLow],
+        success: [colors.tagTextSuccess, colors.tagBackgroundSuccess],
+        warning: [colors.tagTextWarning, colors.tagBackgroundWarning],
+        error: [colors.tagTextError, colors.tagBackgroundError],
     } as const;
 
-    const [textColor, inverseTextColor, backgroundColor] = tagTypeToColors[type];
+    const [textColor, backgroundColor] = tagTypeToColors[type];
 
     return (
         <span
@@ -62,22 +61,18 @@ const Tag: React.FC<TagProps> = ({Icon, children, dataAttributes, type = 'promo'
                 sprinkles({
                     paddingLeft: Icon ? 8 : 12,
                     paddingRight: badgeValue !== 0 ? 8 : 12,
-                    background: isInverse ? colors.inverse : backgroundColor,
+                    background: backgroundColor,
                 })
             )}
         >
             {Icon && (
                 <Box paddingRight={4}>
-                    <Icon
-                        color={isInverse ? inverseTextColor : textColor}
-                        size={pxToRem(16)}
-                        className={sprinkles({display: 'block'})}
-                    />
+                    <Icon color={textColor} size={pxToRem(16)} className={sprinkles({display: 'block'})} />
                 </Box>
             )}
             <ThemeVariant isInverse={false}>
                 <Text
-                    color={isInverse ? inverseTextColor : textColor}
+                    color={textColor}
                     size={14}
                     lineHeight={20}
                     weight={textPresets.indicator.weight}
