@@ -37,6 +37,7 @@ interface CommonProps {
     children?: void; // no children allowed
     headline?: string | React.ReactNode;
     title: string;
+    titleAs?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
     titleLinesMax?: number;
     subtitle?: string;
     subtitleLinesMax?: number;
@@ -76,6 +77,7 @@ export const Content: React.FC<ContentProps> = ({
     withChevron,
     headline,
     title,
+    titleAs = 'h3',
     titleLinesMax,
     subtitle,
     subtitleLinesMax,
@@ -140,6 +142,7 @@ export const Content: React.FC<ContentProps> = ({
                             truncate={titleLinesMax}
                             id={labelId}
                             hyphens="auto"
+                            as={titleAs}
                         >
                             {title}
                         </Text3>
