@@ -27,7 +27,7 @@ import Stack from './stack';
 import Box from './box';
 import {isRunningAcceptanceTest} from './utils/platform';
 
-import type {Props as TouchableProps} from './touchable';
+import type {TouchableProps} from './touchable';
 import type {DataAttributes} from './utils/types';
 
 const BurgerMenuIcon = ({isOpen}: {isOpen: boolean}) => {

@@ -243,7 +243,6 @@ export const RawIconButton = React.forwardRef<
             trackingEvent,
             'aria-label': ariaLabel,
             'aria-labelledby': ariaLabelledby,
-            role: props.onPress || props.to || props.href ? 'button' : undefined,
             dataAttributes: {'component-name': 'IconButton', ...dataAttributes},
             className: classNames(
                 styles.buttonContainer[buttonSize],

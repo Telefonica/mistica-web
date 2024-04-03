@@ -6,12 +6,18 @@ import ThemeContextProvider from '../theme-context-provider';
 import {makeTheme} from './test-utils';
 import {type ThemeConfig} from '../theme';
 import {SPACE} from '../utils/keys';
+import {redirect} from '../utils/browser';
 
 const trackingEvent = {
     category: 'test',
     action: 'test',
     label: 'test',
 };
+
+jest.mock('../utils/browser', () => ({
+    ...jest.requireActual('../utils/browser'),
+    redirect: jest.fn(),
+}));
 
 const Link: ThemeConfig['Link'] = ({innerRef, ...props}) => <ReactRouterLink {...props} ref={innerRef} />;
 
@@ -400,4 +406,29 @@ test('"to" paths with "fullPageOnWebView" are not decorated', () => {
     const anchor = screen.getByRole('link', {name: 'Test'});
 
     expect(anchor).toHaveAttribute('href', '/foo/bar/?param=123#hash');
+});
+
+test.only('onNavigate is called before navigation when using "href" prop', async () => {
+    const onNavigateSpy = jest.fn();
+    const logEventSpy = jest.fn();
+    // const redirectSpy = jest.spyOn(browser, 'redirect').mockImplementation(() => {});
+    const href = '/foo';
+
+    render(
+        <ThemeContextProvider theme={makeTheme({analytics: {logEvent: logEventSpy}})}>
+            <Touchable href={href} trackingEvent={trackingEvent} onNavigate={onNavigateSpy}>
+                Test
+            </Touchable>
+        </ThemeContextProvider>
+    );
+
+    const link = screen.getByRole('link', {name: 'Test'});
+    fireEvent.click(link);
+
+    expect(onNavigateSpy).toHaveBeenCalledTimes(1);
+
+    await waitFor(() => {
+        expect(redirect).toHaveBeenCalledWith(href, false, false);
+    });
+    // expect(logEventSpy).toHaveBeenCalledTimes(1);
 });
