@@ -152,7 +152,7 @@ const VivoLogoImage = ({size, type}: LogoImageProps) => {
 };
 
 const O2LogoImage = ({size, type, isO2NewSkin}: LogoImageProps & {isO2NewSkin: boolean}) => {
-    const {isDarkMode, skinName} = useTheme();
+    const {isDarkMode} = useTheme();
     const isInverse = useIsInverseVariant();
     // todo WEB-761 what about classic?
     const {colors} = isO2NewSkin ? getO2NewSkin() : getO2Skin();
