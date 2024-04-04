@@ -427,6 +427,7 @@ test('onNavigate is called before navigation when using "href" prop', async () =
     fireEvent.click(link);
 
     expect(onNavigateSpy).toHaveBeenCalledTimes(1);
+    expect(redirectSpy).not.toHaveBeenCalled();
 
     await waitFor(() => {
         expect(redirectSpy).toHaveBeenCalledWith(href, false, false);

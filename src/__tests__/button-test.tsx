@@ -226,7 +226,7 @@ test.each`
 `(
     'onNavigate is called before navigation when using "href" prop - $name',
     async ({Button}: {Button: typeof ButtonLink | typeof ButtonPrimary}) => {
-        const onNavigateSpy = jest.fn();
+        const onNavigateSpy = jest.fn().mockResolvedValue(undefined);
         const logEventSpy = jest.fn();
         const href = 'https://example.org';
 
@@ -243,12 +243,14 @@ test.each`
 
         expect(onNavigateSpy).toHaveBeenCalledTimes(1);
 
-        await waitFor(() => {
-            expect(redirectSpy).toHaveBeenCalledWith(href, false, false);
-        });
+        expect(redirectSpy).not.toHaveBeenCalled();
 
         await waitFor(() => {
             expect(logEventSpy).toHaveBeenCalledWith(trackingEvent);
+        });
+
+        await waitFor(() => {
+            expect(redirectSpy).toHaveBeenCalledWith(href, false, false);
         });
     }
 );
