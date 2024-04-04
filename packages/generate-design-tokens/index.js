@@ -1,20 +1,57 @@
 const fs = require('fs');
 const path = require('path');
 
-const DESIGN_TOKENS_FOLDER = path.join(__dirname, '..', '..', '.github', 'mistica-design', 'tokens');
+/*
+To run this script locally:
+
+DESIGN_TOKENS_FOLDER="/path/to/mistica-design/tokens" node index.js
+*/
+
+const DESIGN_TOKENS_FOLDER =
+    process.env.DESIGN_TOKENS_FOLDER ||
+    path.join(__dirname, '..', '..', '.github', 'mistica-design', 'tokens');
+
 const SKINS_FOLDER = path.join(__dirname, '..', '..', 'src', 'skins');
+
+const KNOWN_SKINS = ['blau', 'movistar', 'o2', 'o2-new', 'telefonica', 'vivo', 'vivo-new', 'tu'];
 
 const capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1);
 const toCamelCase = (str) => str.replace(/-([a-z])/g, (g) => g[1].toUpperCase());
 const toPascalCase = (str) => capitalize(toCamelCase(str));
 
+/**
+ * @param {{angle: number, colors: Array<{
+ *     value: string,
+ *     stop: number, // value from 0 to 1
+ * }>}} gradientDescription
+ * @returns {string}
+ */
+const buildGradient = (gradientDescription) => {
+    const stops = gradientDescription.colors.map((color) => {
+        // eslint-disable-next-line no-use-before-define
+        const formattedColor = '${' + buildColor(color) + '}';
+        return `${formattedColor} ${color.stop * 100}%`;
+    });
+    return '`' + `linear-gradient(${gradientDescription.angle}deg, ${stops.join(', ')})` + '`';
+};
+
 const buildColor = (colorDescription) => {
+    if (colorDescription.type === 'linear-gradient') {
+        return buildGradient(colorDescription.value);
+    }
+
+    if (typeof colorDescription.value !== 'string') {
+        console.error('Unexpected color description:', JSON.stringify(colorDescription, null, 2));
+        process.exit(1);
+    }
+
     if (colorDescription.value.startsWith('{') && colorDescription.value.endsWith('}')) {
         return colorDescription.value.replace('{', '').replace('}', '');
     }
 
-    const colorWithAlphaRegExp = /rgba\(\{(.+)\}, (0\.\d+)\)/;
+    const colorWithAlphaRegExp = /rgba\(\{(.+)\}, (0|1|0(?:\.\d+)?)\)/;
     const colorWithAlphaMatches = colorDescription.value.match(colorWithAlphaRegExp);
+
     if (colorWithAlphaMatches) {
         const colorName = colorWithAlphaMatches[1];
         const alpha = colorWithAlphaMatches[2];
@@ -110,8 +147,6 @@ export type Colors = {
 };
 
 const generateSkinFiles = () => {
-    const KNOWN_SKINS = ['blau', 'movistar', 'o2', 'telefonica', 'vivo', 'vivo-new', 'tu'];
-
     let anyGeneratedSkin;
 
     KNOWN_SKINS.forEach((skinName) => {
