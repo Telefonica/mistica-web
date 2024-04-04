@@ -240,6 +240,7 @@ interface CommonProps {
     tabIndex?: number;
     StartIcon?: React.FC<IconProps>;
     EndIcon?: React.FC<IconProps>;
+    /** IMPORTANT: try to avoid using role="link" with onPress and first consider other alternatives like to/href + onNavigate */
     role?: string;
 }
 
@@ -467,6 +468,7 @@ interface ButtonLinkCommonProps {
     'aria-controls'?: string;
     'aria-expanded'?: 'true' | 'false' | boolean;
     'aria-haspopup'?: 'true' | 'false' | 'menu' | 'dialog' | boolean;
+    /** IMPORTANT: try to avoid using role="link" with onPress and first consider other alternatives like to/href + onNavigate */
     role?: string;
 }
 
