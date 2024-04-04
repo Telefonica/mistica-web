@@ -103,7 +103,6 @@ export const CardActionIconButton = (props: CardAction): JSX.Element => {
                     isOverMedia={type === 'media'}
                     type="neutral"
                     backgroundType="transparent"
-                    hasInteractiveAreaBleed
                 />
             ) : (
                 <InternalToggleIconButton
@@ -122,7 +121,6 @@ export const CardActionIconButton = (props: CardAction): JSX.Element => {
                     }}
                     small
                     isOverMedia={type === 'media'}
-                    hasInteractiveAreaBleed
                 />
             )}
         </ThemeVariant>
