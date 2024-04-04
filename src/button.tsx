@@ -240,6 +240,7 @@ interface CommonProps {
     tabIndex?: number;
     StartIcon?: React.FC<IconProps>;
     EndIcon?: React.FC<IconProps>;
+    role?: string;
 }
 
 export interface ToButtonProps extends CommonProps {
@@ -382,6 +383,7 @@ const Button = React.forwardRef<TouchableElement, ButtonProps & {type: ButtonTyp
             EndIcon: props.EndIcon,
         }),
         disabled: props.disabled || showSpinner || isFormSending,
+        role: props.role,
     };
 
     if (process.env.NODE_ENV !== 'production') {
