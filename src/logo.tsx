@@ -151,11 +151,11 @@ const VivoLogoImage = ({size, type}: LogoImageProps) => {
     );
 };
 
-const O2LogoImage = ({size, type}: LogoImageProps) => {
+const O2LogoImage = ({size, type, isO2NewSkin}: LogoImageProps & {isO2NewSkin: boolean}) => {
     const {isDarkMode, skinName} = useTheme();
     const isInverse = useIsInverseVariant();
     // todo WEB-761 what about classic?
-    const {colors} = skinName === 'O2-new' ? getO2NewSkin() : getO2Skin();
+    const {colors} = isO2NewSkin ? getO2NewSkin() : getO2Skin();
 
     const color = isInverse && !isDarkMode ? colors.inverse : colors.brand;
 
@@ -373,7 +373,7 @@ const LogoBase: React.FC<LogoBaseProps> = ({size = 48, skinName, type = 'isotype
             return <VivoLogoImage size={size} type={type} />;
         case 'O2':
         case 'O2-new':
-            return <O2LogoImage size={size} type={type} />;
+            return <O2LogoImage isO2NewSkin={skinName === 'O2-new'} size={size} type={type} />;
         case 'Telefonica':
             return <TelefonicaLogoImage size={size} type={type} />;
         case 'Blau':
