@@ -654,12 +654,9 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
 
 export const Row = React.forwardRef<TouchableElement, RowContentProps>(
     ({dataAttributes, role = 'listitem', ...props}, ref) => (
-        <RowContent
-            role={role}
-            {...props}
-            ref={ref}
-            dataAttributes={{'component-name': 'Row', ...dataAttributes}}
-        />
+        <div role={role}>
+            <RowContent {...props} ref={ref} dataAttributes={{'component-name': 'Row', ...dataAttributes}} />
+        </div>
     )
 );
 
