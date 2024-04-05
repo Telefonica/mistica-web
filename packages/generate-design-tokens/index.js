@@ -4,7 +4,9 @@ const path = require('path');
 /*
 To run this script locally:
 
-1. clone this repo: https://github.com/Telefonica/mistica-design
+1. Clone this repo:
+    https://github.com/Telefonica/mistica-design
+
 2. Run:
     DESIGN_TOKENS_FOLDER="/path/to/mistica-design/tokens" node index.js
 */
