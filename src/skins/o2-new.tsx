@@ -63,10 +63,7 @@ export const getO2NewSkin: GetKnownSkin = () => {
             backgroundContainer: palette.white,
             backgroundContainerHover: applyAlpha(palette.darkModeBlack, 0.03),
             backgroundContainerPressed: applyAlpha(palette.darkModeBlack, 0.05),
-            backgroundContainerBrand: `linear-gradient(180deg, ${applyAlpha(
-                palette.darkBlue,
-                0
-            )} 0%, ${applyAlpha(palette.beyondBlue, 0.4)} 30%, ${applyAlpha(palette.beyondBlue45, 1)} 100%)`,
+            backgroundContainerBrand: `linear-gradient(180deg, ${palette.darkBlue} 0%, ${palette.beyondBlue} 64%, ${palette.beyondBlue45} 100%)`,
             backgroundContainerBrandHover: applyAlpha(palette.darkModeBlack, 0.2),
             backgroundContainerBrandPressed: applyAlpha(palette.darkModeBlack, 0.4),
             backgroundContainerBrandOverInverse: palette.beyondBlue70,
