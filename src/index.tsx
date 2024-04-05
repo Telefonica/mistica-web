@@ -95,7 +95,7 @@ export {
     NavigationBarActionGroup,
     NavigationBarAction,
 } from './navigation-bar';
-export {Logo, MovistarLogo, VivoLogo, O2Logo, TelefonicaLogo, BlauLogo, TuLogo} from './logo';
+export {Logo, MovistarLogo, VivoLogo, O2Logo, O2NewLogo, TelefonicaLogo, BlauLogo, TuLogo} from './logo';
 export {default as Image} from './image';
 export {default as Chip} from './chip';
 export {default as Video} from './video';
