@@ -53,7 +53,8 @@ const buildColor = (colorDescription) => {
         return colorDescription.value.replace('{', '').replace('}', '');
     }
 
-    const colorWithAlphaRegExp = /rgba\(\{(.+)\}, (0|1|0(?:\.\d+)?)\)/;
+    // https://regexper.com/#%2Frgba%5C%28%5C%7B%28.%2B%29%5C%7D%2C%20%28%5B01%5D%28%3F%3A%5C.%5Cd%2B%29%3F%29%5C%29%2F
+    const colorWithAlphaRegExp = /rgba\(\{(.+)\}, ([01](?:\.\d+)?)\)/;
     const colorWithAlphaMatches = colorDescription.value.match(colorWithAlphaRegExp);
 
     if (colorWithAlphaMatches) {
