@@ -2,7 +2,9 @@ const fs = require('fs');
 const path = require('path');
 
 /*
-To run this script locally:
+By default, this script will look for the design tokens inside .github folder but you may want to clone the mistica-design repo elsewhere.
+
+To run this script locally using a custom path for the tokens, you can do the following:
 
 1. Clone this repo:
     https://github.com/Telefonica/mistica-design
