@@ -4,7 +4,7 @@ export type {Colors} from './colors';
 
 export type SkinVariant = 'prominent';
 
-export type KnownSkinName = 'Movistar' | 'O2' | 'Vivo' | 'Vivo-new' | 'Telefonica' | 'Blau' | 'Tu';
+export type KnownSkinName = 'Movistar' | 'O2' | 'O2-new' | 'Vivo' | 'Vivo-new' | 'Telefonica' | 'Blau' | 'Tu';
 export type SkinName = KnownSkinName | string;
 
 export type GetKnownSkin = (variant?: SkinVariant) => KnownSkin;
