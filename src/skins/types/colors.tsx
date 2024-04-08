@@ -123,4 +123,5 @@ export type Colors = {
     tagBackgroundSuccess: string;
     tagBackgroundWarning: string;
     tagBackgroundError: string;
+    cardContentOverlay: string;
 };
