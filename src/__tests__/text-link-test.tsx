@@ -45,7 +45,7 @@ test('TextLink can track events', async () => {
     expect(logEventSpy).toHaveBeenCalledTimes(2);
 });
 
-test('TextkLink indicates that opens in a new tab', async () => {
+test('TextLink indicates that opens in a new tab', async () => {
     render(
         <ThemeContextProvider theme={makeTheme()}>
             <TextLink newTab href="/test">
