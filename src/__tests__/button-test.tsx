@@ -1,12 +1,32 @@
 import * as React from 'react';
 import {ButtonDanger, ButtonLink, ButtonPrimary, ButtonSecondary} from '../button';
-import {render, screen} from '@testing-library/react';
+import {fireEvent, render, screen, waitFor} from '@testing-library/react';
 import ThemeContextProvider from '../theme-context-provider';
 import {makeTheme} from './test-utils';
 import userEvent from '@testing-library/user-event';
 import IconPhotoCameraRegular from '../generated/mistica-icons/icon-photo-camera-regular';
+import {MemoryRouter, useLocation, Link as ReactRouterLink} from 'react-router-dom';
+import {redirect as redirectSpy} from '../utils/browser';
 
 import type {TouchableElement} from '../touchable';
+import type {ThemeConfig} from '../theme';
+
+jest.mock('../utils/browser', () => ({
+    ...jest.requireActual('../utils/browser'),
+    redirect: jest.fn(),
+}));
+
+beforeEach(() => {
+    (redirectSpy as any).mockReset();
+});
+
+const Link: ThemeConfig['Link'] = ({innerRef, ...props}) => <ReactRouterLink {...props} ref={innerRef} />;
+
+const trackingEvent = {
+    category: 'someCategory',
+    action: 'someAction',
+    label: 'someLabel',
+};
 
 test('button is accesible', () => {
     render(
@@ -44,18 +64,13 @@ test('<a> is rendered when using "to" prop', () => {
         </ThemeContextProvider>
     );
 
-    const anchor = screen.getByRole('button', {name: 'test'});
+    const anchor = screen.getByRole('link', {name: 'test'});
 
     expect(anchor).toHaveAttribute('href', to);
 });
 
 test('buttons can track events', async () => {
     const logEventSpy = jest.fn();
-    const trackingEvent = {
-        category: 'someCategory',
-        action: 'someAction',
-        label: 'someLabel',
-    };
 
     render(
         <ThemeContextProvider theme={makeTheme({analytics: {logEvent: logEventSpy}})}>
@@ -71,8 +86,8 @@ test('buttons can track events', async () => {
         </ThemeContextProvider>
     );
 
-    const hrefButton = await screen.findByRole('button', {name: 'button with href'});
-    const toButton = await screen.findByRole('button', {name: 'button with to'});
+    const hrefButton = await screen.findByRole('link', {name: 'button with href'});
+    const toButton = await screen.findByRole('link', {name: 'button with to'});
     const onPressButton = await screen.findByRole('button', {name: 'button with onPress'});
 
     await userEvent.click(hrefButton);
@@ -114,9 +129,9 @@ test('buttons track default events', async () => {
         </ThemeContextProvider>
     );
 
-    const noTrackButton = await screen.findByRole('button', {name: 'no track'});
-    const primaryButton = await screen.findByRole('button', {name: 'primary'});
-    const secondaryButton = await screen.findByRole('button', {name: 'secondary'});
+    const noTrackButton = await screen.findByRole('link', {name: 'no track'});
+    const primaryButton = await screen.findByRole('link', {name: 'primary'});
+    const secondaryButton = await screen.findByRole('link', {name: 'secondary'});
     const dangerButton = await screen.findByRole('button', {name: 'danger'});
     const buttonWithIcon = await screen.findByRole('button', {name: 'Take a photo'});
     const noTrackLink = await screen.findByRole('link', {name: 'no track link'});
@@ -203,3 +218,114 @@ test('Button ref', () => {
 
     render(<TestComponent />);
 });
+
+test.each`
+    Button           | name
+    ${ButtonPrimary} | ${'ButtonPrimary'}
+    ${ButtonLink}    | ${'ButtonLink'}
+`(
+    'onNavigate is called before navigation when using "href" prop - $name',
+    async ({Button}: {Button: typeof ButtonLink | typeof ButtonPrimary}) => {
+        const onNavigateSpy = jest.fn().mockResolvedValue(undefined);
+        const logEventSpy = jest.fn();
+        const href = 'https://example.org';
+
+        render(
+            <ThemeContextProvider theme={makeTheme({analytics: {logEvent: logEventSpy}})}>
+                <Button href={href} trackingEvent={trackingEvent} onNavigate={onNavigateSpy}>
+                    Test
+                </Button>
+            </ThemeContextProvider>
+        );
+
+        const link = screen.getByRole('link', {name: 'Test'});
+        fireEvent.click(link);
+
+        expect(onNavigateSpy).toHaveBeenCalledTimes(1);
+
+        expect(redirectSpy).not.toHaveBeenCalled();
+
+        await waitFor(() => {
+            expect(logEventSpy).toHaveBeenCalledWith(trackingEvent);
+        });
+
+        await waitFor(() => {
+            expect(redirectSpy).toHaveBeenCalledWith(href, false, false);
+        });
+    }
+);
+
+test.each`
+    Button           | name
+    ${ButtonPrimary} | ${'ButtonPrimary'}
+    ${ButtonLink}    | ${'ButtonLink'}
+`(
+    'onNavigate is called during navigation when using "to" prop - $name',
+    async ({Button}: {Button: typeof ButtonLink | typeof ButtonPrimary}) => {
+        const onNavigateSpy = jest.fn();
+        const logEventSpy = jest.fn();
+        const to = '/example/path';
+
+        const CurrentPath = () => {
+            return <div>Current path: {useLocation().pathname}</div>;
+        };
+
+        render(
+            <ThemeContextProvider theme={makeTheme({Link, analytics: {logEvent: logEventSpy}})}>
+                <MemoryRouter>
+                    <Button to={to} trackingEvent={trackingEvent} onNavigate={onNavigateSpy}>
+                        Test
+                    </Button>
+                    <CurrentPath />
+                </MemoryRouter>
+            </ThemeContextProvider>
+        );
+
+        expect(screen.getByText('Current path: /')).toBeInTheDocument();
+
+        const link = screen.getByRole('link', {name: 'Test'});
+        fireEvent.click(link);
+
+        expect(screen.getByText(`Current path: ${to}`)).toBeInTheDocument();
+
+        expect(onNavigateSpy).toHaveBeenCalledTimes(1);
+
+        await waitFor(() => {
+            expect(logEventSpy).toHaveBeenCalledWith(trackingEvent);
+        });
+    }
+);
+
+test.each`
+    Button           | name
+    ${ButtonPrimary} | ${'ButtonPrimary'}
+    ${ButtonLink}    | ${'ButtonLink'}
+`(
+    'Buttons have the appropiate role - $name',
+    async ({Button}: {Button: typeof ButtonLink | typeof ButtonPrimary}) => {
+        render(
+            <ThemeContextProvider theme={makeTheme()}>
+                <Button to="/to">to</Button>
+                <Button href="/href">href</Button>
+                <Button onPress={() => {}}>onPress</Button>
+
+                <Button to="/to" role="menuitem">
+                    to
+                </Button>
+                <Button href="/href" role="tab">
+                    href
+                </Button>
+                <Button onPress={() => {}} role="link">
+                    onPress
+                </Button>
+            </ThemeContextProvider>
+        );
+
+        expect(screen.getByRole('link', {name: 'to'})).toBeInTheDocument();
+        expect(screen.getByRole('link', {name: 'href'})).toBeInTheDocument();
+        expect(screen.getByRole('button', {name: 'onPress'})).toBeInTheDocument();
+        expect(screen.getByRole('menuitem', {name: 'to'})).toBeInTheDocument();
+        expect(screen.getByRole('tab', {name: 'href'})).toBeInTheDocument();
+        expect(screen.getByRole('link', {name: 'onPress'})).toBeInTheDocument();
+    }
+);
