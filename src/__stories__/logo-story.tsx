@@ -16,7 +16,7 @@ type Args = {
     inverse: boolean;
     action: 'none' | 'onPress' | 'href' | 'to';
     forceBrandLogo: boolean;
-    brand: 'Movistar' | 'O2' | 'O2 New' | 'Vivo' | 'Telefonica' | 'Blau' | 'Tu';
+    brand: 'Movistar' | 'O2' | 'O2-new' | 'Vivo' | 'Telefonica' | 'Blau' | 'Tu';
 };
 
 const getLogoActionProps = (action: string) => {
@@ -54,7 +54,7 @@ export const Default: StoryComponent<Args> = ({type, size, inverse, action, forc
         Movistar: MovistarLogo,
         Vivo: VivoLogo,
         O2: O2Logo,
-        'O2 New': O2NewLogo,
+        'O2-new': O2NewLogo,
         Telefonica: TelefonicaLogo,
         Blau: BlauLogo,
         Tu: TuLogo,
@@ -82,7 +82,7 @@ Default.args = {
 
 Default.argTypes = {
     brand: {
-        options: ['Movistar', 'O2', 'O2 New', 'Vivo', 'Telefonica', 'Blau', 'Tu'],
+        options: ['Movistar', 'O2', 'O2-new', 'Vivo', 'Telefonica', 'Blau', 'Tu'],
         control: {type: 'select'},
         if: {arg: 'forceBrandLogo'},
     },

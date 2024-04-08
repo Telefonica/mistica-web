@@ -1,6 +1,6 @@
 import {openStoryPage, screen} from '../test-utils';
 
-const SKINS = ['Movistar', 'O2', 'Vivo', 'Vivo-new', 'Telefonica', 'Blau', 'Tu'] as const;
+const SKINS = ['Movistar', 'O2', 'O2-new', 'Vivo', 'Vivo-new', 'Telefonica', 'Blau', 'Tu'] as const;
 const LOGO_TYPES = ['imagotype', 'vertical', 'isotype'];
 const INVERSE_VALUES = [false, true];
 const DARK_MODE_VALUES = [false, true];
