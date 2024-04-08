@@ -271,11 +271,6 @@ export const disabled = style({
 export const isLoading = style({});
 export const overlayContainer = style({});
 
-const minButtonArea = {
-    pointer: '24px',
-    touchable: '48px',
-};
-
 export const iconSize = {
     default: '1.5rem',
     small: '1.25rem',
@@ -286,24 +281,9 @@ export const iconContainerSize = {
     small: `calc(${iconSize.small} + 12px)`,
 };
 
-const pointerArea = {
-    default: `max(${minButtonArea.pointer}, ${iconContainerSize.default})`,
-    small: `max(${minButtonArea.pointer}, ${iconContainerSize.small})`,
-};
-
-const touchableArea = {
-    default: `max(${minButtonArea.touchable}, ${iconContainerSize.default})`,
-    small: `max(${minButtonArea.touchable}, ${iconContainerSize.small})`,
-};
-
-const pointerBleedArea = {
-    default: `calc((${pointerArea.default} - ${iconSize.default}) / 2)`,
-    small: `calc((${pointerArea.small} - ${iconSize.small}) / 2)`,
-};
-
-const touchableBleedArea = {
-    default: `calc((${touchableArea.default} - ${iconSize.default}) / 2)`,
-    small: `calc((${touchableArea.small} - ${iconSize.small}) / 2)`,
+const bleedArea = {
+    default: `calc((${iconContainerSize.default} - ${iconSize.default}) / 2)`,
+    small: `calc((${iconContainerSize.small} - ${iconSize.small}) / 2)`,
 };
 
 const baseButtonContainer = sprinkles({
@@ -319,109 +299,84 @@ export const buttonContainer = styleVariants({
     default: [
         baseButtonContainer,
         {
-            // if max() is not supported, we use iconContainerSize as fallback
-            width: [iconContainerSize.default, pointerArea.default],
-            height: [iconContainerSize.default, pointerArea.default],
-            '@media': {
-                [mq.touchableOnly]: {
-                    width: [iconContainerSize.default, touchableArea.default],
-                    height: [iconContainerSize.default, touchableArea.default],
-                },
-            },
+            width: iconContainerSize.default,
+            height: iconContainerSize.default,
         },
     ],
     small: [
         baseButtonContainer,
         {
-            width: [iconContainerSize.small, pointerArea.small],
-            height: [iconContainerSize.small, pointerArea.small],
-            '@media': {
-                [mq.touchableOnly]: {
-                    width: [iconContainerSize.small, touchableArea.small],
-                    height: [iconContainerSize.small, touchableArea.small],
-                },
-            },
+            width: iconContainerSize.small,
+            height: iconContainerSize.small,
         },
     ],
 });
 
-export const interactiveAreaBleed = styleVariants({
-    default: {
-        margin: `calc(-1 * (${pointerArea.default} - ${iconContainerSize.default}) / 2)`,
-        '@media': {
-            [mq.touchableOnly]: {
-                margin: `calc(-1 * (${touchableArea.default} - ${iconContainerSize.default}) / 2)`,
+/**
+ * In touchable devices, minimum interactive area of 48px.
+ * In pointer devices, minimum interactive area is 24px.
+ */
+
+const minButtonArea = {
+    pointer: '24px',
+    touchable: '48px',
+};
+
+const interactiveAreaSize = createVar();
+
+export const minimumInteractiveArea = style({
+    vars: {
+        [interactiveAreaSize]: minButtonArea.pointer,
+    },
+    '@media': {
+        [mq.touchableOnly]: {
+            vars: {
+                [interactiveAreaSize]: minButtonArea.touchable,
             },
         },
     },
-    small: {
-        margin: `calc(-1 * (${pointerArea.small} - ${iconContainerSize.small}) / 2)`,
-        '@media': {
-            [mq.touchableOnly]: {
-                margin: `calc(-1 * (${touchableArea.small} - ${iconContainerSize.small}) / 2)`,
-            },
-        },
+
+    position: 'relative',
+    '::after': {
+        content: '',
+        position: 'absolute',
+        /**
+         * min() is not supported in old browsers (https://caniuse.com/css-math-functions).
+         * We don't force the minimum touchable area in that case.
+         */
+        top: [0, `min(0px, calc((100% - ${interactiveAreaSize}) / 2))`],
+        bottom: [0, `min(0px, calc((100% - ${interactiveAreaSize}) / 2))`],
+        left: [0, `min(0px, calc((100% - ${interactiveAreaSize}) / 2))`],
+        right: [0, `min(0px, calc((100% - ${interactiveAreaSize}) / 2))`],
     },
 });
 
 export const bleedLeft = styleVariants({
     default: {
-        marginLeft: `calc(-1 * ${pointerBleedArea.default})`,
-        '@media': {
-            [mq.touchableOnly]: {
-                marginLeft: `calc(-1 * ${touchableBleedArea.default})`,
-            },
-        },
+        marginLeft: `calc(-1 * ${bleedArea.default})`,
     },
     small: {
-        marginLeft: `calc(-1 * ${pointerBleedArea.small})`,
-        '@media': {
-            [mq.touchableOnly]: {
-                marginLeft: `calc(-1 * ${touchableBleedArea.small})`,
-            },
-        },
+        marginLeft: `calc(-1 * ${bleedArea.small})`,
     },
 });
 
 export const bleedRight = styleVariants({
     default: {
-        marginRight: `calc(-1 * ${pointerBleedArea.default})`,
-        '@media': {
-            [mq.touchableOnly]: {
-                marginRight: `calc(-1 * ${touchableBleedArea.default})`,
-            },
-        },
+        marginRight: `calc(-1 * ${bleedArea.default})`,
     },
     small: {
-        marginRight: `calc(-1 * ${pointerBleedArea.small})`,
-        '@media': {
-            [mq.touchableOnly]: {
-                marginRight: `calc(-1 * ${touchableBleedArea.small})`,
-            },
-        },
+        marginRight: `calc(-1 * ${bleedArea.small})`,
     },
 });
 
 export const bleedY = styleVariants({
     default: {
-        marginTop: `calc(-1 * ${pointerBleedArea.default})`,
-        marginBottom: `calc(-1 * ${pointerBleedArea.default})`,
-        '@media': {
-            [mq.touchableOnly]: {
-                marginTop: `calc(-1 * ${touchableBleedArea.default})`,
-                marginBottom: `calc(-1 * ${touchableBleedArea.default})`,
-            },
-        },
+        marginTop: `calc(-1 * ${bleedArea.default})`,
+        marginBottom: `calc(-1 * ${bleedArea.default})`,
     },
     small: {
-        marginTop: `calc(-1 * ${pointerBleedArea.small})`,
-        marginBottom: `calc(-1 * ${pointerBleedArea.small})`,
-        '@media': {
-            [mq.touchableOnly]: {
-                marginTop: `calc(-1 * ${touchableBleedArea.small})`,
-                marginBottom: `calc(-1 * ${touchableBleedArea.small})`,
-            },
-        },
+        marginTop: `calc(-1 * ${bleedArea.small})`,
+        marginBottom: `calc(-1 * ${bleedArea.small})`,
     },
 });
 

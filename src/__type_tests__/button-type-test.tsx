@@ -51,3 +51,24 @@ import {ButtonPrimary} from '..';
 <ButtonPrimary href="/foo" newTab>
     Text
 </ButtonPrimary>;
+
+<ButtonPrimary href="/foo" onNavigate={() => {}}>
+    Text
+</ButtonPrimary>;
+
+<ButtonPrimary href="/foo" onNavigate={() => Promise.resolve()}>
+    Text
+</ButtonPrimary>;
+
+<ButtonPrimary to="/foo" onNavigate={() => {}}>
+    Text
+</ButtonPrimary>;
+
+<ButtonPrimary to="/foo" onNavigate={() => Promise.resolve()}>
+    Text
+</ButtonPrimary>;
+
+// @ts-expect-error - onPress doesn't support onNavigate
+<ButtonPrimary onPress={() => {}} onNavigate={() => Promise.resolve()}>
+    Text
+</ButtonPrimary>;

@@ -29,6 +29,7 @@ type RichText = string | ({text: string} & OverridableTextProps);
 type HeaderProps = {
     pretitle?: RichText;
     title?: string;
+    titleAs?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
     description?: string;
     small?: boolean;
     dataAttributes?: DataAttributes;
@@ -61,6 +62,7 @@ type HeaderProps = {
 export const Header: React.FC<HeaderProps> = ({
     pretitle,
     title,
+    titleAs = 'h2',
     description,
     dataAttributes,
     small = false,
@@ -96,7 +98,11 @@ export const Header: React.FC<HeaderProps> = ({
                     <Stack space={8}>
                         {pretitle && renderRichText(pretitle, {color: vars.colors.textPrimary})}
                         {title &&
-                            (small ? <Title2 as="h2">{title}</Title2> : <Title3 as="h2">{title}</Title3>)}
+                            (small ? (
+                                <Title2 as={titleAs}>{title}</Title2>
+                            ) : (
+                                <Title3 as={titleAs}>{title}</Title3>
+                            ))}
                         {description &&
                             (small ? (
                                 <Text2 regular color={vars.colors.textSecondary}>
@@ -138,19 +144,21 @@ export const Header: React.FC<HeaderProps> = ({
 
 type MainSectionHeaderProps = {
     title: string;
+    titleAs?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
     description?: string;
     button?: RendersNullableElement<typeof ButtonPrimary> | RendersNullableElement<typeof ButtonSecondary>;
 };
 
-export const MainSectionHeader: React.FC<MainSectionHeaderProps> = ({title, description, button}) => {
+export const MainSectionHeader: React.FC<MainSectionHeaderProps> = ({
+    title,
+    titleAs = 'h1',
+    description,
+    button,
+}) => {
     return (
         <Stack space={32}>
             <Stack space={{mobile: 12, desktop: 16}}>
-                {title && (
-                    <Text7 role="heading" aria-level={1}>
-                        {title}
-                    </Text7>
-                )}
+                {title && <Text7 as={titleAs}>{title}</Text7>}
                 {description && <Text6>{description}</Text6>}
             </Stack>
             {button}
