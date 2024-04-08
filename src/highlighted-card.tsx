@@ -28,9 +28,8 @@ type TextProps =
       };
 
 type CommonProps = TextProps & {
-    title?: string;
+    titleAs?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
     titleLinesMax?: number;
-    description?: string;
     descriptionLinesMax?: number;
     imageUrl?: string;
     imageFit?: 'fit' | 'fill' | 'fill-center';
@@ -87,7 +86,7 @@ type OnPressProps = CommonProps & {
 type Props = BasicProps | ButtonProps | HrefProps | ToProps | OnPressProps;
 
 const Content = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
-    const {title, description, imageUrl, imageFit} = props;
+    const {title, description, imageUrl, imageFit, titleAs = 'h3'} = props;
     const isInverseOutside = useIsInverseVariant();
     const isInverse = props.isInverse ?? isInverseOutside;
     const isDismissable = useIsDismissable();
@@ -118,7 +117,7 @@ const Content = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
                             desktopLineHeight="28px"
                             truncate={props.titleLinesMax}
                             weight={textPresets.cardTitle.weight}
-                            as="h3"
+                            as={titleAs}
                             hyphens="auto"
                         >
                             {title}

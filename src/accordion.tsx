@@ -35,6 +35,7 @@ export const useAccordionContext = (): AccordionContextType => React.useContext(
 interface AccordionItemContentProps {
     children?: void;
     title: string;
+    titleAs?: string;
     subtitle?: string;
     asset?: React.ReactNode;
     content: React.ReactNode;

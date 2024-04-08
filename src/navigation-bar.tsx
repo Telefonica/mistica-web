@@ -303,6 +303,7 @@ interface NavigationBarCommonProps {
     isInverse?: boolean;
     onBack?: () => void;
     title?: string;
+    titleAs?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
     right?: React.ReactElement;
     withBorder?: boolean;
     children?: undefined;
@@ -323,6 +324,7 @@ type NavigationBarProps = NavigationBarTopFixedProps | NavigationBarNotFixedProp
 export const NavigationBar: React.FC<NavigationBarProps> = ({
     onBack,
     title,
+    titleAs,
     right,
     isInverse = false,
     topFixed = true,
@@ -342,7 +344,7 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
                         bleedRight
                     />
                 )}
-                <Text3 regular truncate>
+                <Text3 regular truncate as={titleAs}>
                     {title}
                 </Text3>
             </Inline>

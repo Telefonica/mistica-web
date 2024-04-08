@@ -350,6 +350,7 @@ type CardContentProps = {
     pretitle?: string;
     pretitleLinesMax?: number;
     title?: string;
+    titleAs?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
     titleLinesMax?: number;
     subtitle?: string;
     subtitleLinesMax?: number;
@@ -365,6 +366,7 @@ const CardContent: React.FC<CardContentProps> = ({
     pretitle,
     pretitleLinesMax,
     title,
+    titleAs = 'h3',
     titleLinesMax,
     subtitle,
     subtitleLinesMax,
@@ -412,7 +414,7 @@ const CardContent: React.FC<CardContentProps> = ({
                                         desktopLineHeight="28px"
                                         truncate={titleLinesMax}
                                         weight={textPresets.cardTitle.weight}
-                                        as="h3"
+                                        as={titleAs}
                                         hyphens="auto"
                                     >
                                         {title}
@@ -468,6 +470,7 @@ interface MediaCardBaseProps {
     pretitle?: string;
     pretitleLinesMax?: number;
     title?: string;
+    titleAs?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
     titleLinesMax?: number;
     subtitle?: string;
     subtitleLinesMax?: number;
@@ -501,6 +504,7 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
             subtitle,
             subtitleLinesMax,
             title,
+            titleAs = 'h3',
             titleLinesMax,
             description,
             descriptionLinesMax,
@@ -542,6 +546,7 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
                                     pretitle={pretitle}
                                     pretitleLinesMax={pretitleLinesMax}
                                     title={title}
+                                    titleAs={titleAs}
                                     titleLinesMax={titleLinesMax}
                                     subtitle={subtitle}
                                     subtitleLinesMax={subtitleLinesMax}
@@ -587,6 +592,7 @@ export const NakedCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
             subtitle,
             subtitleLinesMax,
             title,
+            titleAs = 'h3',
             titleLinesMax,
             description,
             descriptionLinesMax,
@@ -629,6 +635,7 @@ export const NakedCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
                                 pretitle={pretitle}
                                 pretitleLinesMax={pretitleLinesMax}
                                 title={title}
+                                titleAs={titleAs}
                                 titleLinesMax={titleLinesMax}
                                 subtitle={subtitle}
                                 subtitleLinesMax={subtitleLinesMax}
@@ -665,6 +672,7 @@ export const NakedCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
 type SmallNakedCardProps = MaybeTouchableCard<{
     media: RendersElement<typeof Image> | RendersElement<typeof Video>;
     title?: string;
+    titleAs?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
     titleLinesMax?: number;
     subtitle?: string;
     subtitleLinesMax?: number;
@@ -680,6 +688,7 @@ export const SmallNakedCard = React.forwardRef<HTMLDivElement, SmallNakedCardPro
         {
             media,
             title,
+            titleAs = 'h3',
             titleLinesMax,
             subtitle,
             subtitleLinesMax,
@@ -718,7 +727,7 @@ export const SmallNakedCard = React.forwardRef<HTMLDivElement, SmallNakedCardPro
                             <div>
                                 <Stack space={8}>
                                     {title && (
-                                        <Text2 truncate={titleLinesMax} as="h3" regular hyphens="auto">
+                                        <Text2 truncate={titleLinesMax} as={titleAs} regular hyphens="auto">
                                             {title}
                                         </Text2>
                                     )}
@@ -758,6 +767,7 @@ interface DataCardBaseProps {
     pretitle?: string;
     pretitleLinesMax?: number;
     title?: string;
+    titleAs?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
     titleLinesMax?: number;
     subtitle?: string;
     subtitleLinesMax?: number;
@@ -790,6 +800,7 @@ export const DataCard = React.forwardRef<HTMLDivElement, DataCardProps>(
             pretitle,
             pretitleLinesMax,
             title,
+            titleAs = 'h3',
             titleLinesMax,
             subtitle,
             subtitleLinesMax,
@@ -846,6 +857,7 @@ export const DataCard = React.forwardRef<HTMLDivElement, DataCardProps>(
                                         pretitle={pretitle}
                                         pretitleLinesMax={pretitleLinesMax}
                                         title={title}
+                                        titleAs={titleAs}
                                         titleLinesMax={titleLinesMax}
                                         subtitle={subtitle}
                                         subtitleLinesMax={subtitleLinesMax}
@@ -883,6 +895,7 @@ export const DataCard = React.forwardRef<HTMLDivElement, DataCardProps>(
 type SnapCardProps = MaybeTouchableCard<{
     icon?: React.ReactElement;
     title?: string;
+    titleAs?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
     titleLinesMax?: number;
     subtitle?: string;
     subtitleLinesMax?: number;
@@ -900,6 +913,7 @@ export const SnapCard = React.forwardRef<HTMLDivElement, SnapCardProps>(
         {
             icon,
             title,
+            titleAs = 'h3',
             titleLinesMax,
             subtitle,
             subtitleLinesMax,
@@ -943,7 +957,7 @@ export const SnapCard = React.forwardRef<HTMLDivElement, SnapCardProps>(
                                 )}
                                 <Stack space={4}>
                                     {title && (
-                                        <Text2 truncate={titleLinesMax} as="h3" regular hyphens="auto">
+                                        <Text2 truncate={titleLinesMax} as={titleAs} regular hyphens="auto">
                                             {title}
                                         </Text2>
                                     )}
@@ -981,6 +995,7 @@ interface CommonDisplayCardProps {
     pretitle?: string;
     pretitleLinesMax?: number;
     title: string;
+    titleAs?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
     titleLinesMax?: number;
     description?: string;
     descriptionLinesMax?: number;
@@ -1043,6 +1058,7 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
             pretitle,
             pretitleLinesMax,
             title,
+            titleAs = 'h3',
             titleLinesMax,
             description,
             descriptionLinesMax,
@@ -1175,7 +1191,7 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
                                                                 <Text6
                                                                     forceMobileSizes
                                                                     truncate={titleLinesMax}
-                                                                    as="h3"
+                                                                    as={titleAs}
                                                                     textShadow={textShadow}
                                                                     hyphens="auto"
                                                                 >
@@ -1263,6 +1279,7 @@ interface PosterCardBaseProps {
     pretitle?: string;
     pretitleLinesMax?: number;
     title?: string;
+    titleAs?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
     titleLinesMax?: number;
     subtitle?: string;
     subtitleLinesMax?: number;
@@ -1314,6 +1331,7 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
             pretitle,
             pretitleLinesMax,
             title,
+            titleAs = 'h3',
             titleLinesMax,
             subtitle,
             subtitleLinesMax,
@@ -1466,7 +1484,7 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                                                                     desktopLineHeight="28px"
                                                                     truncate={titleLinesMax}
                                                                     weight={textPresets.cardTitle.weight}
-                                                                    as="h3"
+                                                                    as={titleAs}
                                                                     hyphens="auto"
                                                                 >
                                                                     {title}

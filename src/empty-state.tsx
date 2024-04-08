@@ -20,6 +20,7 @@ import type {DataAttributes, RendersNullableElement} from './utils/types';
 
 interface BaseProps {
     title: string;
+    titleAs?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
     button?: RendersNullableElement<typeof ButtonPrimary> | RendersNullableElement<typeof ButtonSecondary>;
     buttonLink?: RendersNullableElement<typeof ButtonLink>;
     description?: string;
@@ -54,6 +55,7 @@ type Props = IconProps | ImageProps | LargeImageProps;
 
 const EmptyState: React.FC<Props> = ({
     title,
+    titleAs = 'h1',
     description,
     button,
     buttonLink,
@@ -96,7 +98,7 @@ const EmptyState: React.FC<Props> = ({
                 >
                     {image ?? (icon && <div className={styles.iconContainer}>{icon}</div>)}
                     <Stack space={16}>
-                        <Text6 as="h1">{title}</Text6>
+                        <Text6 as={titleAs}>{title}</Text6>
                         <Text3
                             regular
                             as="p"
