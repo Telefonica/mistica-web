@@ -154,6 +154,7 @@ const colors: Colors = {
     customTabsBackground: '',
     coverBackgroundHover: '',
     coverBackgroundPressed: '',
+    cardContentOverlay: '',
 };
 
 const borderRadii: BorderRadiiConfig = {

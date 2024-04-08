@@ -46,7 +46,6 @@ const MaybeDismissable = ({
                         aria-label={texts.closeButtonLabel}
                         small
                         isOverMedia={isOverMedia}
-                        hasInteractiveAreaBleed
                         Icon={IconCloseRegular}
                     />
                 </div>

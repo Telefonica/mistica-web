@@ -72,10 +72,10 @@ test('IconButton - big font size', async () => {
     expect(image).toMatchImageSnapshot();
 });
 
-test('IconButton - small and big font size', async () => {
+test.each(DEVICES)('IconButton - small and big font size in %s', async (device) => {
     await openStoryPage({
         id: 'components-buttons--icon-button-story',
-        device: 'MOBILE_IOS',
+        device,
         args: {backgroundType: 'solid', small: true},
     });
 
