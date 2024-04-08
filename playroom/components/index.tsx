@@ -30,7 +30,7 @@ import IconCode from '../icons/icon-code';
 import * as styles from '../preview-tools.css';
 import {CSSTransition} from 'react-transition-group';
 
-import type {IconProps} from '../../dist';
+import type {IconProps} from '../../src/utils/types';
 import type {ThemeConfig, ColorScheme, KnownSkinName} from '../../src';
 
 export * from '../../src';
