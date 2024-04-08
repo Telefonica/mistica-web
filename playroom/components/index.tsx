@@ -90,6 +90,11 @@ const themesMap: {
         themeConfig: O2,
         icon: <O2Logo size={24} />,
     },
+    'O2-new': {
+        text: 'O2',
+        themeConfig: O2, // TODO
+        icon: <O2Logo size={24} />,
+    },
     Telefonica: {
         text: 'Telefónica',
         themeConfig: Telefonica,

@@ -40,6 +40,7 @@ export const palette = {
     grey8: '#2B3447',
     grey9: '#031A34',
     white: '#FFFFFF',
+    black: '#000000',
     darkModeBlack: '#161A24',
     darkModeGrey: '#202735',
     darkModeGrey6: '#2B3447',
@@ -173,6 +174,10 @@ export const getTuSkin: GetKnownSkin = () => {
             tagBackgroundSuccess: palette.green10,
             tagBackgroundWarning: palette.orange20,
             tagBackgroundError: palette.red10,
+            cardContentOverlay: `linear-gradient(180deg, ${applyAlpha(palette.black, 0)} 0%, ${applyAlpha(
+                palette.black,
+                0.4
+            )} 30%, ${applyAlpha(palette.black, 0.7)} 100%)`,
         },
         darkModeColors: {
             background: palette.darkModeBlack,
@@ -299,6 +304,10 @@ export const getTuSkin: GetKnownSkin = () => {
             tagBackgroundSuccess: palette.darkModeGrey6,
             tagBackgroundWarning: palette.darkModeGrey6,
             tagBackgroundError: palette.darkModeGrey6,
+            cardContentOverlay: `linear-gradient(180deg, ${applyAlpha(palette.black, 0)} 0%, ${applyAlpha(
+                palette.black,
+                0.4
+            )} 30%, ${applyAlpha(palette.black, 0.7)} 100%)`,
         },
         borderRadii: {
             avatar: '50%',

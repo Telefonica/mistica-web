@@ -4,6 +4,7 @@ import {
     TELEFONICA_SKIN,
     VIVO_SKIN,
     O2_SKIN,
+    O2_NEW_SKIN,
     MOVISTAR_SKIN,
     VIVO_NEW_SKIN,
     TU_SKIN,
@@ -29,6 +30,9 @@ export const getSkinByName = (name: KnownSkinName, variant?: SkinVariant): Known
         case VIVO_NEW_SKIN:
             return getVivoNewSkin(variant);
         case O2_SKIN:
+            return getO2Skin(variant);
+        case O2_NEW_SKIN:
+            // TODO
             return getO2Skin(variant);
         case MOVISTAR_SKIN:
             return getMovistarSkin(variant);
