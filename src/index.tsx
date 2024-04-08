@@ -95,7 +95,7 @@ export {
     NavigationBarActionGroup,
     NavigationBarAction,
 } from './navigation-bar';
-export {Logo, MovistarLogo, VivoLogo, O2Logo, TelefonicaLogo, BlauLogo, TuLogo} from './logo';
+export {Logo, MovistarLogo, VivoLogo, O2Logo, O2NewLogo, TelefonicaLogo, BlauLogo, TuLogo} from './logo';
 export {default as Image} from './image';
 export {default as Chip} from './chip';
 export {default as Video} from './video';
@@ -186,6 +186,7 @@ export {
     VIVO_SKIN,
     VIVO_NEW_SKIN,
     O2_SKIN,
+    O2_NEW_SKIN,
     MOVISTAR_SKIN,
     TELEFONICA_SKIN,
     BLAU_SKIN,
@@ -196,12 +197,14 @@ export {getVivoSkin} from './skins/vivo';
 export {getVivoNewSkin} from './skins/vivo-new';
 export {getMovistarSkin} from './skins/movistar';
 export {getO2Skin} from './skins/o2';
+export {getO2NewSkin} from './skins/o2-new';
 export {getTelefonicaSkin} from './skins/telefonica';
 export {getBlauSkin} from './skins/blau';
 export {getTuSkin} from './skins/tu';
 export {palette as vivoPalette} from './skins/vivo';
 export {palette as movistarPalette} from './skins/movistar';
 export {palette as o2Palette} from './skins/o2';
+export {palette as o2NewPalette} from './skins/o2-new';
 export {palette as telefonicaPalette} from './skins/telefonica';
 export {palette as blauPalette} from './skins/blau';
 export {palette as tuPalette} from './skins/tu';
