@@ -10,6 +10,7 @@ import {
     VIVO_SKIN,
     VIVO_NEW_SKIN,
     O2_SKIN,
+    O2_NEW_SKIN,
     TELEFONICA_SKIN,
     BLAU_SKIN,
     TU_SKIN,
@@ -26,9 +27,16 @@ type Platform = 'android' | 'desktop' | 'ios';
 
 const getSkin = (searchParams: URLSearchParams) => {
     const qsSkin = searchParams.get('skin');
-    return [MOVISTAR_SKIN, O2_SKIN, VIVO_SKIN, VIVO_NEW_SKIN, TELEFONICA_SKIN, BLAU_SKIN, TU_SKIN].find(
-        (skin) => skin === qsSkin
-    );
+    return [
+        MOVISTAR_SKIN,
+        O2_SKIN,
+        O2_NEW_SKIN,
+        VIVO_SKIN,
+        VIVO_NEW_SKIN,
+        TELEFONICA_SKIN,
+        BLAU_SKIN,
+        TU_SKIN,
+    ].find((skin) => skin === qsSkin);
 };
 
 const getColorScheme = (searchParams: URLSearchParams): ColorScheme | undefined => {
@@ -108,7 +116,9 @@ const MisticaThemeProvider = ({Story, context}): React.ReactElement => {
                         {(skin === TELEFONICA_SKIN || skin === TU_SKIN) && (
                             <style>{`body {font-family: "Telefonica Sans"}`}</style>
                         )}
-                        {skin === O2_SKIN && <style>{`body {font-family: "On Air"}`}</style>}
+                        {(skin === O2_SKIN || skin === O2_NEW_SKIN) && (
+                            <style>{`body {font-family: "On Air"}`}</style>
+                        )}
                         <Story {...context} />
                     </OverscrollColorProvider>
                 </ThemeContextProvider>

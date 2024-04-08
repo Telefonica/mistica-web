@@ -48,7 +48,7 @@ const FixedFooterLayout: React.FC<Props> = ({
     footer,
     footerHeight = 'auto',
     footerBgColor = vars.colors.background,
-    containerBgColor,
+    containerBgColor = vars.colors.background,
     children,
     onChangeFooterHeight,
 }) => {
@@ -106,7 +106,49 @@ const FixedFooterLayout: React.FC<Props> = ({
         };
     }, [hasContentEnoughVSpace, platformOverrides]);
 
-    const isFixedFooter = hasContentEnoughVSpace;
+    const footerIsFixed = hasContentEnoughVSpace;
+    const footerHeightStyle = `calc(${safeAreaInsetBottom} + ${domFooterHeight}px)`;
+
+    /**
+     * Notes about the background:
+     *
+     * - If a gradient is used as background color, the end color of the gradient must start at the
+     *   top of the fixed footer. That means that the gradient height is "viewable area" minus "footer height".
+     *
+     * - The content could be scrollable and the gradient must scroll with it, so an additional background is
+     *   needed to fill the gap between the gradient and the fixed footer. A fullscreen fixed div does this job.
+     *
+     * - When there is not enough vertical space, instead of a fixed footer, the footer is placed at the
+     *   bottom of the content. In this case, the background size is the same as the content (height: 100%).
+     */
+    const renderBackground = () => {
+        return (
+            <>
+                <div
+                    style={{
+                        background: footerBgColor,
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        bottom: 0,
+                        position: 'fixed',
+                        zIndex: -2,
+                    }}
+                />
+                <div
+                    style={{
+                        background: containerBgColor,
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        height: footerIsFixed ? `calc(100vh - ${footerHeightStyle}` : '100%',
+                        zIndex: -1,
+                    }}
+                />
+            </>
+        );
+    };
 
     return (
         <>
@@ -114,21 +156,19 @@ const FixedFooterLayout: React.FC<Props> = ({
                 ref={containerRef}
                 className={styles.container}
                 style={applyCssVars({
-                    ...(containerBgColor && {
-                        [styles.vars.backgroundColor]: containerBgColor,
-                    }),
-                    [styles.vars.footerHeight]: isFixedFooter
+                    [styles.vars.footerHeight]: footerIsFixed
                         ? `calc(${safeAreaInsetBottom} + ${domFooterHeight}px)`
                         : '0px',
                 })}
             >
+                {isTabletOrSmaller && renderBackground()}
                 {children}
             </div>
             <div
                 className={classnames(styles.footer, {
                     [styles.withoutFooter]: !isFooterVisible,
                     [styles.elevated]: displayElevation,
-                    [styles.fixedFooter]: isFixedFooter,
+                    [styles.fixedFooter]: footerIsFixed,
                 })}
                 /**
                  * This style is inline to avoid creating a class that may collide with

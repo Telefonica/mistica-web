@@ -31,7 +31,11 @@ const useTextLines = (): [Array<string>, () => void, () => void] => {
     return [textLines, loadMoreText, loadLessText];
 };
 
-export const FooterWithButtonsOnly: StoryComponent = () => {
+type Args = {
+    isInverse: boolean;
+};
+
+export const FooterWithButtonsOnly: StoryComponent<Args> = ({isInverse}) => {
     const [isFooterVisible, isFooterVisibleCheckbox] = useCheckbox('isFooterVisible', true);
     const [textLines, loadMoreText, loadLessText] = useTextLines();
     return (
@@ -39,6 +43,7 @@ export const FooterWithButtonsOnly: StoryComponent = () => {
             button={<ButtonPrimary onPress={loadMoreText}>Load more text</ButtonPrimary>}
             secondaryButton={<ButtonSecondary onPress={loadLessText}>Load less text</ButtonSecondary>}
             isFooterVisible={isFooterVisible}
+            containerBgColor={isInverse ? 'black' : undefined}
         >
             <ResponsiveLayout>
                 <Box paddingY={16}>
@@ -58,6 +63,7 @@ export const FooterWithButtonsOnly: StoryComponent = () => {
 
 FooterWithButtonsOnly.storyName = 'ButtonFixedFooterLayout';
 FooterWithButtonsOnly.parameters = {fullScreen: true};
+FooterWithButtonsOnly.args = {isInverse: false};
 
 export const MoreComplexFooter: StoryComponent = () => {
     const [textLines, loadMoreText] = useTextLines();

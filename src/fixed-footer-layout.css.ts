@@ -1,4 +1,4 @@
-import {createVar, fallbackVar, style} from '@vanilla-extract/css';
+import {createVar, style} from '@vanilla-extract/css';
 import {sprinkles} from './sprinkles.css';
 import {vars as skinVars} from './skins/skin-contract.css';
 import * as mq from './media-queries.css';
@@ -48,7 +48,6 @@ export const container = style({
         [mq.tabletOrSmaller]: {
             isolation: 'isolate',
             paddingBottom: footerHeight,
-            background: fallbackVar(backgroundColor, skinVars.colors.background),
         },
     },
 });
