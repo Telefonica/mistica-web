@@ -71,8 +71,8 @@ test('buttons can track events', async () => {
         </ThemeContextProvider>
     );
 
-    const hrefButton = await screen.findByRole('button', {name: 'button with href'});
-    const toButton = await screen.findByRole('button', {name: 'button with to'});
+    const hrefButton = await screen.findByRole('button', {name: /button with href/});
+    const toButton = await screen.findByRole('button', {name: /button with to/});
     const onPressButton = await screen.findByRole('button', {name: 'button with onPress'});
 
     await userEvent.click(hrefButton);
@@ -114,13 +114,13 @@ test('buttons track default events', async () => {
         </ThemeContextProvider>
     );
 
-    const noTrackButton = await screen.findByRole('button', {name: 'no track'});
-    const primaryButton = await screen.findByRole('button', {name: 'primary'});
-    const secondaryButton = await screen.findByRole('button', {name: 'secondary'});
-    const dangerButton = await screen.findByRole('button', {name: 'danger'});
-    const buttonWithIcon = await screen.findByRole('button', {name: 'Take a photo'});
-    const noTrackLink = await screen.findByRole('link', {name: 'no track link'});
-    const link = await screen.findByRole('link', {name: 'link'});
+    const noTrackButton = await screen.findByRole('button', {name: /no track/});
+    const primaryButton = await screen.findByRole('button', {name: /primary/});
+    const secondaryButton = await screen.findByRole('button', {name: /secondary/});
+    const dangerButton = await screen.findByRole('button', {name: /danger/});
+    const buttonWithIcon = await screen.findByRole('button', {name: /Take a photo/});
+    const noTrackLink = await screen.findByRole('link', {name: /no track link/});
+    const link = await screen.findByRole('link', {name: /^link/});
 
     await userEvent.click(noTrackButton);
     await userEvent.click(noTrackLink);
