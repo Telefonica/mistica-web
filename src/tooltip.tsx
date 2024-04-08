@@ -577,7 +577,6 @@ export const BaseTooltip: React.FC<BaseTooltipProps> = ({
                                                             trackingEvent={trackingEvent}
                                                             aria-label={texts.modalClose}
                                                             Icon={IconCloseRegular}
-                                                            hasInteractiveAreaBleed
                                                             small
                                                         />
                                                     </div>
