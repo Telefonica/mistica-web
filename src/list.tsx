@@ -655,9 +655,13 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
     );
 });
 
-export const Row = React.forwardRef<TouchableElement, RowContentProps>(({dataAttributes, ...props}, ref) => (
-    <RowContent {...props} ref={ref} dataAttributes={{'component-name': 'Row', ...dataAttributes}} />
-));
+export const Row = React.forwardRef<TouchableElement, RowContentProps>(
+    ({dataAttributes, role = 'listitem', ...props}, ref) => (
+        <div role={role}>
+            <RowContent {...props} ref={ref} dataAttributes={{'component-name': 'Row', ...dataAttributes}} />
+        </div>
+    )
+);
 
 type RowListProps = {
     children: React.ReactNode;
@@ -666,7 +670,12 @@ type RowListProps = {
     dataAttributes?: DataAttributes;
 };
 
-export const RowList: React.FC<RowListProps> = ({children, ariaLabelledby, role, dataAttributes}) => {
+export const RowList: React.FC<RowListProps> = ({
+    children,
+    ariaLabelledby,
+    role = 'list',
+    dataAttributes,
+}) => {
     const lastIndex = React.Children.count(children) - 1;
     return (
         <div
@@ -733,7 +742,7 @@ type BoxedRowListProps = {
 export const BoxedRowList: React.FC<BoxedRowListProps> = ({
     children,
     ariaLabelledby,
-    role,
+    role = 'list',
     dataAttributes,
 }) => (
     <Stack
