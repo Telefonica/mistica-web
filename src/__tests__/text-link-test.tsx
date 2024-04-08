@@ -60,7 +60,7 @@ test('TextLink indicates that opens in a new tab', async () => {
     expect(link).toHaveAttribute('target');
 });
 
-test('TextkLink indicates that opens in the same page', async () => {
+test('TextLink indicates that opens in the same page', async () => {
     render(
         <ThemeContextProvider theme={makeTheme()}>
             <TextLink href="#test">my link</TextLink>
