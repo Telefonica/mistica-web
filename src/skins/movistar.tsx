@@ -37,6 +37,7 @@ export const palette = {
     grey5: '#86888C',
     grey6: '#313235',
     white: '#FFFFFF',
+    black: '#000000',
     movistarBlueDark: '#0B2739',
     darkModeBlack: '#061824',
     darkModeGrey: '#081F2E',
@@ -175,6 +176,10 @@ export const getMovistarSkin: GetKnownSkin = () => {
             tagBackgroundSuccess: palette.movistarGreen10,
             tagBackgroundWarning: palette.egg10,
             tagBackgroundError: palette.pepper10,
+            cardContentOverlay: `linear-gradient(180deg, ${applyAlpha(palette.black, 0)} 0%, ${applyAlpha(
+                palette.black,
+                0.4
+            )} 30%, ${applyAlpha(palette.black, 0.7)} 100%)`,
         },
         darkModeColors: {
             background: palette.darkModeBlack,
@@ -301,6 +306,10 @@ export const getMovistarSkin: GetKnownSkin = () => {
             tagBackgroundSuccess: palette.movistarBlueDark,
             tagBackgroundWarning: palette.movistarBlueDark,
             tagBackgroundError: palette.movistarBlueDark,
+            cardContentOverlay: `linear-gradient(180deg, ${applyAlpha(palette.black, 0)} 0%, ${applyAlpha(
+                palette.black,
+                0.4
+            )} 30%, ${applyAlpha(palette.black, 0.7)} 100%)`,
         },
         borderRadii: {
             avatar: '50%',
