@@ -7,19 +7,10 @@ import {useTheme} from './hooks';
 import {isInsideNovumNativeApp} from './utils/platform';
 import {ENTER, SPACE} from './utils/keys';
 import {getPrefixedDataAttributes} from './utils/dom';
+import {redirect} from './utils/browser';
 
 import type {DataAttributes, TrackingEvent} from './utils/types';
 import type {Location} from 'history';
-
-const redirect = (url: string, external = false, loadOnTop = false): void => {
-    if (external) {
-        window.open(url, '_blank');
-    } else if (loadOnTop) {
-        window.open(url, '_top');
-    } else {
-        document.location.href = url;
-    }
-};
 
 export type PressHandler = (event: React.MouseEvent<HTMLElement>) => void;
 
@@ -40,6 +31,7 @@ interface CommonProps {
     'aria-selected'?: 'true' | 'false' | boolean;
     'aria-labelledby'?: string;
     'aria-live'?: 'polite' | 'off' | 'assertive';
+    /** IMPORTANT: try to avoid using role="link" with onPress and first consider other alternatives like to/href + onNavigate */
     role?: string;
     type?: 'button' | 'submit';
     tabIndex?: number;
@@ -52,56 +44,80 @@ interface CommonProps {
  * this way we can know the type of the union by checking that property
  * See https://www.typescriptlang.org/docs/handbook/advanced-types.html#discriminated-unions
  */
-export interface PropsHref extends CommonProps {
+
+interface PropsHref extends CommonProps {
+    maybe?: undefined;
     href: string;
     newTab?: boolean;
     loadOnTop?: boolean;
     to?: undefined;
     onPress?: undefined;
-}
-export interface PropsOnPress extends CommonProps {
-    onPress: PressHandler;
-    href?: undefined;
-    to?: undefined;
-    formId?: string;
+    /** with "href", onNavigate will be executed before the navigation */
+    onNavigate?: () => void | Promise<void>;
 }
 
-export interface PropsTo extends CommonProps {
-    to: string | Location;
-    fullPageOnWebView?: boolean;
-    replace?: boolean;
-    href?: undefined;
-    onPress?: undefined;
-}
-export interface PropsMaybeHref extends CommonProps {
+interface PropsMaybeHref extends CommonProps {
     maybe: true;
     href?: string;
     newTab?: boolean;
     loadOnTop?: boolean;
     to?: undefined;
     onPress?: undefined;
+    /** with "href", onNavigate will be executed before the navigation */
+    onNavigate?: () => void | Promise<void>;
 }
-export interface PropsMaybeTo extends CommonProps {
+
+interface PropsTo extends CommonProps {
+    maybe?: undefined;
+    to: string | Location;
+    fullPageOnWebView?: boolean;
+    replace?: boolean;
+    href?: undefined;
+    onPress?: undefined;
+    /** with "to", onNavigate will be executed in parallel to the navigation */
+    onNavigate?: () => void | Promise<void>;
+}
+
+interface PropsMaybeTo extends CommonProps {
     maybe: true;
     to?: string | Location;
     fullPageOnWebView?: boolean;
     replace?: boolean;
     href?: undefined;
     onPress?: undefined;
+    /** with "to", onNavigate will be executed in parallel to the navigation */
+    onNavigate?: () => void | Promise<void>;
 }
 
-export interface PropsMaybeOnPress extends CommonProps {
+interface PropsOnPress extends CommonProps {
+    maybe?: undefined;
+    onPress: PressHandler;
+    href?: undefined;
+    to?: undefined;
+    formId?: string;
+    onNavigate?: undefined;
+}
+
+interface PropsMaybeOnPress extends CommonProps {
     maybe: true;
     onPress?: PressHandler;
     href?: undefined;
     to?: undefined;
     formId?: string;
+    onNavigate?: undefined;
 }
 
-export type Props = PropsHref | PropsTo | PropsOnPress | PropsMaybeHref | PropsMaybeTo | PropsMaybeOnPress;
+export type TouchableProps =
+    | PropsHref
+    | PropsTo
+    | PropsOnPress
+    | PropsMaybeHref
+    | PropsMaybeTo
+    | PropsMaybeOnPress;
+
 export type TouchableElement = HTMLDivElement | HTMLAnchorElement | HTMLButtonElement;
 
-const RawTouchable = React.forwardRef<TouchableElement, Props>((props, ref) => {
+const RawTouchable = React.forwardRef<TouchableElement, TouchableProps>((props, ref) => {
     const {texts, analytics, platformOverrides, Link, useHrefDecorator} = useTheme();
     const hrefDecorator = useHrefDecorator();
     const isClicked = React.useRef(false);
@@ -189,16 +205,24 @@ const RawTouchable = React.forwardRef<TouchableElement, Props>((props, ref) => {
 
     const handleHrefClick = (event: React.MouseEvent<HTMLElement>) => {
         stopPropagationIfNeeded(event);
-        if (!trackingEvents.length) {
-            return; // leave the browser handle the href
-        }
 
+        const hasOnNavigate = !!(props.href && props.onNavigate);
+
+        if (!trackingEvents.length && !hasOnNavigate) {
+            return; // let the browser handle the href
+        }
         event.preventDefault();
-        trackOnce(() => redirect(getHref(), openNewTab, loadOnTop));
+
+        Promise.resolve(hasOnNavigate ? props.onNavigate?.() : undefined).finally(() => {
+            trackOnce(() => redirect(getHref(), openNewTab, loadOnTop));
+        });
     };
 
     const handleToClick = (event: React.MouseEvent<HTMLElement>) => {
         stopPropagationIfNeeded(event);
+        if (props.to && props.onNavigate) {
+            props.onNavigate();
+        }
         trackEvent();
     };
 
@@ -288,12 +312,12 @@ const RawTouchable = React.forwardRef<TouchableElement, Props>((props, ref) => {
     );
 });
 
-const Touchable = React.forwardRef<TouchableElement, Props>((props, ref) => {
+const Touchable = React.forwardRef<TouchableElement, TouchableProps>((props, ref) => {
     return <RawTouchable {...props} className={classnames(classes.touchable, props.className)} ref={ref} />;
 });
 
 // Used internally by Mística's components to avoid styles collisions
-export const BaseTouchable = React.forwardRef<TouchableElement, Props & {resetMargin?: boolean}>(
+export const BaseTouchable = React.forwardRef<TouchableElement, TouchableProps & {resetMargin?: boolean}>(
     ({resetMargin = true, ...props}, ref) => {
         return (
             <RawTouchable

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {RowList, Row} from '../list';
+import {RowList, Row, BoxedRowList, BoxedRow} from '../list';
 import {RadioGroup} from '../radio-button';
 import {screen, render, waitFor} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -12,6 +12,40 @@ import {
     ThemeContextProvider,
 } from '..';
 import {makeTheme} from './test-utils';
+
+test('RowList has a list role by default', () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <RowList>
+                <Row title="Title" to="/somewhere" />
+                <Row title="Title 2" />
+            </RowList>
+        </ThemeContextProvider>
+    );
+
+    const list = screen.getByRole('list');
+    expect(list).toBeInTheDocument();
+
+    const items = screen.getAllByRole('listitem');
+    expect(items).toHaveLength(2);
+});
+
+test('BoxedRowList has a list role by default', () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <BoxedRowList>
+                <BoxedRow title="Title" to="/somewhere" />
+                <BoxedRow title="Title 2" />
+            </BoxedRowList>
+        </ThemeContextProvider>
+    );
+
+    const list = screen.getByRole('list');
+    expect(list).toBeInTheDocument();
+
+    const items = screen.getAllByRole('listitem');
+    expect(items).toHaveLength(2);
+});
 
 test('Row which navigates', () => {
     render(

@@ -21,7 +21,7 @@ export const controls = style([
         paddingRight: 16,
     }),
     {
-        gap: 16,
+        gap: 8,
         zIndex: 2,
         background: 'white',
         borderBottom: `1px solid ${skinVars.colors.divider}`,

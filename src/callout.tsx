@@ -22,6 +22,7 @@ import type {DataAttributes, RendersNullableElement} from './utils/types';
 
 type Props = {
     title?: string;
+    titleAs?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
     description: string;
     onClose?: () => void;
     icon?: React.ReactElement;
@@ -35,6 +36,7 @@ type Props = {
 
 const Callout: React.FC<Props> = ({
     title,
+    titleAs = 'h2',
     description,
     icon,
     onClose,
@@ -70,7 +72,7 @@ const Callout: React.FC<Props> = ({
                     <Stack space={16}>
                         <Inline fullWidth alignItems="flex-start" space="between">
                             <Stack space={4}>
-                                <Text3 as="h2" regular>
+                                <Text3 as={titleAs} regular>
                                     {title}
                                 </Text3>
                                 <Text2 as="p" regular color={vars.colors.textSecondary}>

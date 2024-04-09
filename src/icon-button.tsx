@@ -181,7 +181,6 @@ interface IconButtonBaseProps {
 
 interface InternalIconButtonBaseProps {
     isOverMedia?: boolean;
-    hasInteractiveAreaBleed?: boolean;
     hasOverlay?: boolean;
 }
 
@@ -210,7 +209,6 @@ export const RawIconButton = React.forwardRef<
             bleedLeft,
             bleedRight,
             bleedY,
-            hasInteractiveAreaBleed,
             ...props
         },
         ref
@@ -243,21 +241,20 @@ export const RawIconButton = React.forwardRef<
             trackingEvent,
             'aria-label': ariaLabel,
             'aria-labelledby': ariaLabelledby,
-            role: props.onPress || props.to || props.href ? 'button' : undefined,
             dataAttributes: {'component-name': 'IconButton', ...dataAttributes},
             className: classNames(
                 styles.buttonContainer[buttonSize],
                 styles.iconButtonTokens[buttonTokensKey],
+                styles.minimumInteractiveArea,
                 {
                     [styles.disabled]: disabled,
                     [styles.overlayContainer]: !disabled && !showSpinner,
-                    [styles.bleedLeft[buttonSize]]: bleedLeft && !hasInteractiveAreaBleed,
-                    [styles.bleedRight[buttonSize]]: bleedRight && !hasInteractiveAreaBleed,
-                    [styles.bleedY[buttonSize]]: bleedY && !hasInteractiveAreaBleed,
-                    [styles.interactiveAreaBleed[buttonSize]]: hasInteractiveAreaBleed,
+                    [styles.bleedLeft[buttonSize]]: bleedLeft,
+                    [styles.bleedRight[buttonSize]]: bleedRight,
+                    [styles.bleedY[buttonSize]]: bleedY,
                 }
             ),
-            resetMargin: !bleedLeft && !bleedRight && !bleedY && !hasInteractiveAreaBleed,
+            resetMargin: !bleedLeft && !bleedRight && !bleedY,
         };
 
         const content = (

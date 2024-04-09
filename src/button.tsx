@@ -240,6 +240,8 @@ interface CommonProps {
     tabIndex?: number;
     StartIcon?: React.FC<IconProps>;
     EndIcon?: React.FC<IconProps>;
+    /** IMPORTANT: try to avoid using role="link" with onPress and first consider other alternatives like to/href + onNavigate */
+    role?: string;
 }
 
 export interface ToButtonProps extends CommonProps {
@@ -249,6 +251,7 @@ export interface ToButtonProps extends CommonProps {
     fake?: undefined;
     onPress?: undefined;
     href?: undefined;
+    onNavigate?: () => void | Promise<void>;
 }
 export interface OnPressButtonProps extends CommonProps {
     onPress: (event: React.MouseEvent<HTMLElement>) => void | undefined | Promise<void>;
@@ -256,6 +259,7 @@ export interface OnPressButtonProps extends CommonProps {
     fake?: undefined;
     to?: undefined;
     href?: undefined;
+    onNavigate?: undefined;
 }
 export interface HrefButtonProps extends CommonProps {
     href: string;
@@ -265,6 +269,7 @@ export interface HrefButtonProps extends CommonProps {
     fake?: undefined;
     onPress?: undefined;
     to?: undefined;
+    onNavigate?: () => void | Promise<void>;
 }
 export interface FakeButtonProps extends CommonProps {
     fake: true;
@@ -272,6 +277,7 @@ export interface FakeButtonProps extends CommonProps {
     onPress?: undefined;
     to?: undefined;
     href?: undefined;
+    onNavigate?: undefined;
 }
 export interface SubmitButtonProps extends CommonProps {
     submit: true;
@@ -279,6 +285,7 @@ export interface SubmitButtonProps extends CommonProps {
     fake?: undefined;
     onPress?: undefined;
     href?: undefined;
+    onNavigate?: undefined;
 }
 
 export type ButtonProps =
@@ -377,7 +384,7 @@ const Button = React.forwardRef<TouchableElement, ButtonProps & {type: ButtonTyp
             EndIcon: props.EndIcon,
         }),
         disabled: props.disabled || showSpinner || isFormSending,
-        role: 'button',
+        role: props.role,
     };
 
     if (process.env.NODE_ENV !== 'production') {
@@ -411,7 +418,14 @@ const Button = React.forwardRef<TouchableElement, ButtonProps & {type: ButtonTyp
     }
 
     if (props.to || props.to === '') {
-        return <BaseTouchable {...commonProps} to={props.to} fullPageOnWebView={props.fullPageOnWebView} />;
+        return (
+            <BaseTouchable
+                {...commonProps}
+                to={props.to}
+                fullPageOnWebView={props.fullPageOnWebView}
+                onNavigate={props.onNavigate}
+            />
+        );
     }
 
     if (props.href || props.href === '') {
@@ -421,6 +435,7 @@ const Button = React.forwardRef<TouchableElement, ButtonProps & {type: ButtonTyp
                 href={props.href}
                 newTab={props.newTab}
                 loadOnTop={props.loadOnTop}
+                onNavigate={props.onNavigate}
             />
         );
     }
@@ -453,23 +468,31 @@ interface ButtonLinkCommonProps {
     'aria-controls'?: string;
     'aria-expanded'?: 'true' | 'false' | boolean;
     'aria-haspopup'?: 'true' | 'false' | 'menu' | 'dialog' | boolean;
+    /** IMPORTANT: try to avoid using role="link" with onPress and first consider other alternatives like to/href + onNavigate */
+    role?: string;
 }
+
 interface ButtonLinkOnPressProps extends ButtonLinkCommonProps {
     onPress: (event: React.MouseEvent<HTMLElement>) => void | undefined | Promise<void>;
     to?: undefined;
     href?: undefined;
+    onNavigate?: undefined;
 }
+
 interface ButtonLinkHrefProps extends ButtonLinkCommonProps {
     href: string;
     newTab?: boolean;
     onPress?: undefined;
     to?: undefined;
+    onNavigate?: () => void | Promise<void>;
 }
+
 interface ButtonLinkToProps extends ButtonLinkCommonProps {
     to: string;
     fullPageOnWebView?: boolean;
     onPress?: undefined;
     href?: undefined;
+    onNavigate?: () => void | Promise<void>;
 }
 
 export type ButtonLinkProps = ButtonLinkOnPressProps | ButtonLinkHrefProps | ButtonLinkToProps;
@@ -565,6 +588,7 @@ const BaseButtonLink = React.forwardRef<
             withChevron: showChevron,
         }),
         disabled: props.disabled || showSpinner || isFormSending,
+        role: props.role,
     };
 
     if (process.env.NODE_ENV !== 'production') {
@@ -596,12 +620,21 @@ const BaseButtonLink = React.forwardRef<
                 {...commonProps}
                 to={props.to}
                 fullPageOnWebView={props.fullPageOnWebView}
+                onNavigate={props.onNavigate}
             />
         );
     }
 
     if (props.href || props.href === '') {
-        return <BaseTouchable ref={ref} {...commonProps} href={props.href} newTab={props.newTab} />;
+        return (
+            <BaseTouchable
+                ref={ref}
+                {...commonProps}
+                href={props.href}
+                newTab={props.newTab}
+                onNavigate={props.onNavigate}
+            />
+        );
     }
 
     if (process.env.NODE_ENV !== 'production') {
