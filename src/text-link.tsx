@@ -19,6 +19,7 @@ interface CommonProps {
     style?: React.CSSProperties;
     classes?: {[className: string]: string};
     disabled?: boolean;
+    'aria-label'?: string;
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
     trackEvent?: boolean;
     /** "data-" prefix is automatically added. For example, use "testid" instead of "data-testid" */

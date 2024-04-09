@@ -1,3 +1,18 @@
+## [15.2.1](https://github.com/Telefonica/mistica-web/compare/v15.2.0...v15.2.1) (2024-04-09)
+
+
+### Bug Fixes
+
+* **Row:** not having full width in some cases ([#1075](https://github.com/Telefonica/mistica-web/issues/1075)) ([434944f](https://github.com/Telefonica/mistica-web/commit/434944fc643df19d8a325d2c29ec9f0bcb10a18f))
+
+# [15.2.0](https://github.com/Telefonica/mistica-web/compare/v15.1.0...v15.2.0) (2024-04-09)
+
+
+### Features
+
+* **DisplayMediaCard & PosterCard:** use cardContentOverlay token in overlay ([#1074](https://github.com/Telefonica/mistica-web/issues/1074)) ([a885ce2](https://github.com/Telefonica/mistica-web/commit/a885ce29e3e25c9c8b65de00e8dd9b84f5cc2a7c))
+* **TextLink:** accesibility improvements ([#1072](https://github.com/Telefonica/mistica-web/issues/1072)) ([4179b3e](https://github.com/Telefonica/mistica-web/commit/4179b3ee74c19f8353327641f5cf1fca2af60735))
+
 # [15.1.0](https://github.com/Telefonica/mistica-web/compare/v15.0.0...v15.1.0) (2024-04-08)
 
 

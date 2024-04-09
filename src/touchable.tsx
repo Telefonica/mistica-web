@@ -152,6 +152,7 @@ const RawTouchable = React.forwardRef<TouchableElement, TouchableProps>((props, 
     const type = props.type ? props.type : 'button';
 
     const openNewTab = !!props.href && !!props.newTab;
+    const openInCurrentPage = props.href?.startsWith('#');
     const loadOnTop = !openNewTab && !!props.href && !!props.loadOnTop;
 
     const stopPropagationIfNeeded = (event: React.MouseEvent<HTMLElement>) => {
@@ -250,11 +251,15 @@ const RawTouchable = React.forwardRef<TouchableElement, TouchableProps>((props, 
                 ref={ref as React.RefObject<HTMLAnchorElement>}
             >
                 {children}
-                {openNewTab && (
+                {openNewTab ? (
                     <ScreenReaderOnly>
                         <span>{texts.linkOpensInNewTab}</span>
                     </ScreenReaderOnly>
-                )}
+                ) : openInCurrentPage ? (
+                    <ScreenReaderOnly>
+                        <span>{texts.linkOpensInCurrentPage}</span>
+                    </ScreenReaderOnly>
+                ) : null}
             </a>
         );
     }
