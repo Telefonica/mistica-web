@@ -1,3 +1,10 @@
+## [15.2.1](https://github.com/Telefonica/mistica-web/compare/v15.2.0...v15.2.1) (2024-04-09)
+
+
+### Bug Fixes
+
+* **Row:** not having full width in some cases ([#1075](https://github.com/Telefonica/mistica-web/issues/1075)) ([434944f](https://github.com/Telefonica/mistica-web/commit/434944fc643df19d8a325d2c29ec9f0bcb10a18f))
+
 # [15.2.0](https://github.com/Telefonica/mistica-web/compare/v15.1.0...v15.2.0) (2024-04-09)
 
 
