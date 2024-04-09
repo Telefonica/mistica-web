@@ -354,7 +354,7 @@ export const displayCardBackground = style({
 });
 
 export const displayCardGradient = style({
-    background: `linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.4) 29.02%, rgba(0, 0, 0, 0.7) 100%)`,
+    background: skinVars.colors.cardContentOverlay,
 });
 
 const aspectRatio = createVar();
