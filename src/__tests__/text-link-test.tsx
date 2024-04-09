@@ -41,9 +41,9 @@ test('TextLink can track events', async () => {
         </ThemeContextProvider>
     );
 
-    const linkWithoutEvent = await screen.findByRole('link', {name: 'link without event'});
-    const linkWithCustomEvent = await screen.findByRole('link', {name: 'link with custom event'});
-    const linkWithDefaultEvent = await screen.findByRole('link', {name: 'link with default event'});
+    const linkWithoutEvent = await screen.findByRole('link', {name: /link without event/});
+    const linkWithCustomEvent = await screen.findByRole('link', {name: /link with custom event/});
+    const linkWithDefaultEvent = await screen.findByRole('link', {name: /link with default event/});
 
     await userEvent.click(linkWithoutEvent);
     expect(logEventSpy).not.toHaveBeenCalled();
@@ -148,4 +148,45 @@ test('Buttons have the appropiate role', async () => {
     expect(screen.getByRole('menuitem', {name: 'to'})).toBeInTheDocument();
     expect(screen.getByRole('tab', {name: 'href'})).toBeInTheDocument();
     expect(screen.getByRole('link', {name: 'onPress'})).toBeInTheDocument();
+});
+
+test('TextLink indicates that opens in a new tab', async () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <TextLink newTab href="/test">
+                my link
+            </TextLink>
+        </ThemeContextProvider>
+    );
+
+    const link = await screen.findByRole('link', {name: 'my link Se abre en ventana nueva'});
+
+    expect(link).toBeInTheDocument();
+    expect(link).toHaveAttribute('target');
+});
+
+test('TextLink indicates that opens in the same page', async () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <TextLink href="#test">my link</TextLink>
+        </ThemeContextProvider>
+    );
+
+    const link = await screen.findByRole('link', {name: 'my link Página actual'});
+
+    expect(link).toBeInTheDocument();
+});
+
+test('TextLink allows customizing the aria-label', async () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <TextLink aria-label="custom label" href="#test">
+                my link
+            </TextLink>
+        </ThemeContextProvider>
+    );
+
+    const link = await screen.findByRole('link', {name: 'custom label'});
+
+    expect(link).toBeInTheDocument();
 });
