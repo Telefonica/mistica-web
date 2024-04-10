@@ -42,6 +42,7 @@ import {
     Title2,
     Title3,
     IconButton,
+    Hero,
 } from '..';
 import {InternalIconButton} from '../icon-button';
 import avatarImg from '../__stories__/images/avatar.jpg';
@@ -382,6 +383,18 @@ export const Default: StoryComponent<Args> = ({variant}) => {
                             />
                         </div>
                     </Inline>
+
+                    <Hero
+                        background="none"
+                        media={<Image src={usingVrImg} aspectRatio="16:9" />}
+                        noPaddingY
+                        headline={<Tag>headline</Tag>}
+                        pretitle="pretitle"
+                        title="title"
+                        description="description"
+                        button={<ButtonPrimary onPress={() => {}}>Action</ButtonPrimary>}
+                        buttonLink={<ButtonLink onPress={() => {}}>Link</ButtonLink>}
+                    />
                 </Stack>
             </Box>
         </ResponsiveLayout>

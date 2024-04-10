@@ -23,7 +23,7 @@ type HeroArgs = {
     description: string;
     withExtra: boolean;
     actions: 'button' | 'link' | 'button and link';
-    background: 'default' | 'alternative' | 'brand' | 'brand-secondary';
+    background: 'default' | 'alternative' | 'brand' | 'brand-secondary' | 'none';
     desktopMediaPosition: 'left' | 'right';
     height?: string;
     aspectRatio: string;
@@ -111,7 +111,7 @@ Default.argTypes = {
         control: {type: 'select'},
     },
     background: {
-        options: ['default', 'alternative', 'brand', 'brand-secondary'],
+        options: ['default', 'alternative', 'brand', 'brand-secondary', 'none'],
         control: {type: 'select'},
     },
     desktopMediaPosition: {
