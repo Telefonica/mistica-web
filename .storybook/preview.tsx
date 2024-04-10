@@ -116,7 +116,7 @@ const MisticaThemeProvider = ({Story, context}): React.ReactElement => {
                         {(skin === TELEFONICA_SKIN || skin === TU_SKIN) && (
                             <style>{`body {font-family: "Telefonica Sans"}`}</style>
                         )}
-                        {(skin === O2_SKIN || skin === O2_NEW_SKIN) && (
+                        {(skin === O2_SKIN || skin === O2_NEW_SKIN || skin === MOVISTAR_SKIN) && (
                             <style>{`body {font-family: "On Air"}`}</style>
                         )}
                         <Story {...context} />
