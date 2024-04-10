@@ -19,10 +19,13 @@ interface CommonProps {
     style?: React.CSSProperties;
     classes?: {[className: string]: string};
     disabled?: boolean;
+    'aria-label'?: string;
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
     trackEvent?: boolean;
     /** "data-" prefix is automatically added. For example, use "testid" instead of "data-testid" */
     dataAttributes?: DataAttributes;
+    /** IMPORTANT: try to avoid using role="link" with onPress and first consider other alternatives like to/href + onNavigate */
+    role?: string;
 }
 
 export interface HrefProps extends CommonProps {
@@ -30,6 +33,7 @@ export interface HrefProps extends CommonProps {
     newTab?: boolean;
     onPress?: undefined;
     to?: undefined;
+    onNavigate?: () => void | Promise<void>;
 }
 
 export interface ToProps extends CommonProps {
@@ -37,11 +41,13 @@ export interface ToProps extends CommonProps {
     fullPageOnWebView?: boolean;
     href?: undefined;
     onPress?: undefined;
+    onNavigate?: () => void | Promise<void>;
 }
 export interface OnPressProps extends CommonProps {
     onPress: (event: React.MouseEvent<HTMLElement>) => void | boolean;
     href?: undefined;
     to?: undefined;
+    onNavigate?: undefined;
 }
 
 export type TextLinkProps = HrefProps | ToProps | OnPressProps;

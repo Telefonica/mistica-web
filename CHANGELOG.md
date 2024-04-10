@@ -1,3 +1,34 @@
+## [15.2.1](https://github.com/Telefonica/mistica-web/compare/v15.2.0...v15.2.1) (2024-04-09)
+
+
+### Bug Fixes
+
+* **Row:** not having full width in some cases ([#1075](https://github.com/Telefonica/mistica-web/issues/1075)) ([434944f](https://github.com/Telefonica/mistica-web/commit/434944fc643df19d8a325d2c29ec9f0bcb10a18f))
+
+# [15.2.0](https://github.com/Telefonica/mistica-web/compare/v15.1.0...v15.2.0) (2024-04-09)
+
+
+### Features
+
+* **DisplayMediaCard & PosterCard:** use cardContentOverlay token in overlay ([#1074](https://github.com/Telefonica/mistica-web/issues/1074)) ([a885ce2](https://github.com/Telefonica/mistica-web/commit/a885ce29e3e25c9c8b65de00e8dd9b84f5cc2a7c))
+* **TextLink:** accesibility improvements ([#1072](https://github.com/Telefonica/mistica-web/issues/1072)) ([4179b3e](https://github.com/Telefonica/mistica-web/commit/4179b3ee74c19f8353327641f5cf1fca2af60735))
+
+# [15.1.0](https://github.com/Telefonica/mistica-web/compare/v15.0.0...v15.1.0) (2024-04-08)
+
+
+### Bug Fixes
+
+* **IconButton:** prevent interactive area from affecting button layout ([#1069](https://github.com/Telefonica/mistica-web/issues/1069)) ([f377aac](https://github.com/Telefonica/mistica-web/commit/f377aac4eea1bc698ec9cfa1354ba2a37114fd15))
+
+
+### Features
+
+* **Accordion,Callout,Cards,EmptyState,Header,Hero,Row,NavigationBar:** added titleAs prop to allow configuring heading level ([#1067](https://github.com/Telefonica/mistica-web/issues/1067)) ([814c297](https://github.com/Telefonica/mistica-web/commit/814c2977d2612f65b290f89dda9a2f361cde4b71))
+* **RowList, BoxedRowList, Inline:** support list a11y role ([#1068](https://github.com/Telefonica/mistica-web/issues/1068)) ([7e2fe37](https://github.com/Telefonica/mistica-web/commit/7e2fe3736d3399d990ec28d2e0107a7b7a3057c9)), closes [/github.com/Telefonica/mistica-web/blob/master/src/stack.tsx#L64](https://github.com//github.com/Telefonica/mistica-web/blob/master/src/stack.tsx/issues/L64)
+* **skin:** o2 new brand ([#968](https://github.com/Telefonica/mistica-web/issues/968)) ([56e3945](https://github.com/Telefonica/mistica-web/commit/56e39454e7b144a3d6fe852162df8c52ed7a76bd))
+* **Switch:** add minimum interactive area in touchable devices ([#1063](https://github.com/Telefonica/mistica-web/issues/1063)) ([fb202e7](https://github.com/Telefonica/mistica-web/commit/fb202e7669c651061d0ce473e8c22f0d31dbd8c1))
+* **Touchable, Buttons:** Improve touchable and buttons accessibility ([#1070](https://github.com/Telefonica/mistica-web/issues/1070)) ([8d93c71](https://github.com/Telefonica/mistica-web/commit/8d93c71a672f1943d352f8ad7bb26b296c81b21d))
+
 # [15.0.0](https://github.com/Telefonica/mistica-web/compare/v14.48.0...v15.0.0) (2024-04-01)
 
 

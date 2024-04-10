@@ -14,6 +14,7 @@ import type {DataAttributes, RendersNullableElement} from './utils/types';
 
 interface CommonProps {
     title: string;
+    titleAs?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
     button?: RendersNullableElement<typeof ButtonPrimary>;
     secondaryButton?: RendersNullableElement<typeof ButtonSecondary>;
     buttonLink?: RendersNullableElement<typeof ButtonLink>;
@@ -38,6 +39,7 @@ type Props = IconProps | ImageProps;
 
 const EmptyStateCard: React.FC<Props> = ({
     title,
+    titleAs = 'h3',
     description,
     button,
     secondaryButton,
@@ -70,6 +72,7 @@ const EmptyStateCard: React.FC<Props> = ({
                                     desktopSize={20}
                                     desktopLineHeight="28px"
                                     weight={textPresets.cardTitle.weight}
+                                    as={titleAs}
                                 >
                                     {title}
                                 </Text>

@@ -38,6 +38,7 @@ type HeroContentProps = {
     headline?: RendersNullableElement<typeof Tag>;
     pretitle?: string;
     title?: string;
+    titleAs?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
     description?: string;
     descriptionLinesMax?: number;
     extra?: React.ReactNode;
@@ -49,6 +50,7 @@ type HeroContentProps = {
 const HeroContent = ({
     headline,
     title,
+    titleAs = 'h1',
     pretitle,
     description,
     descriptionLinesMax,
@@ -75,7 +77,7 @@ const HeroContent = ({
                                 {pretitle}
                             </Text3>
                         )}
-                        {title && <Text8 as="h1">{title}</Text8>}
+                        {title && <Text8 as={titleAs}>{title}</Text8>}
                     </Stack>
                     {description && (
                         <Text3
@@ -107,6 +109,7 @@ type HeroProps = {
     headline?: RendersNullableElement<typeof Tag>;
     pretitle?: string;
     title?: string;
+    titleAs?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
     description?: string;
     descriptionLinesMax?: number;
     extra?: React.ReactNode;

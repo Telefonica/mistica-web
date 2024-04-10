@@ -204,6 +204,7 @@ export {getTuSkin} from './skins/tu';
 export {palette as vivoPalette} from './skins/vivo';
 export {palette as movistarPalette} from './skins/movistar';
 export {palette as o2Palette} from './skins/o2';
+export {palette as o2NewPalette} from './skins/o2-new';
 export {palette as telefonicaPalette} from './skins/telefonica';
 export {palette as blauPalette} from './skins/blau';
 export {palette as tuPalette} from './skins/tu';
