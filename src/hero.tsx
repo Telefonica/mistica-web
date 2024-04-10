@@ -13,7 +13,7 @@ import * as mediaStyles from './image.css';
 import {useIsInsideSlideshowContext} from './carousel';
 import {getPrefixedDataAttributes} from './utils/dom';
 import {sprinkles} from './sprinkles.css';
-import {ThemeVariant} from './theme-variant-context';
+import {ThemeVariant, useIsInverseVariant} from './theme-variant-context';
 import {applyCssVars} from './utils/css';
 
 import type Image from './image';
@@ -103,7 +103,8 @@ const HeroContent = ({
 
 type HeroProps = {
     height?: string;
-    background?: 'default' | 'alternative' | 'brand' | 'brand-secondary';
+    background?: 'default' | 'alternative' | 'brand' | 'brand-secondary' | 'none';
+    noPaddingY?: boolean;
     media: RendersElement<typeof Image> | RendersElement<typeof Video>;
     headline?: RendersNullableElement<typeof Tag>;
     pretitle?: string;
@@ -123,16 +124,29 @@ const BACKGROUND_COLOR = {
     alternative: vars.colors.backgroundAlternative,
     brand: vars.colors.backgroundBrand,
     'brand-secondary': vars.colors.backgroundBrandSecondary,
+    none: 'transparent',
 };
 
 const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
     (
-        {height, background = 'default', media, desktopMediaPosition = 'left', dataAttributes, ...rest},
+        {
+            height,
+            background = 'default',
+            media,
+            desktopMediaPosition = 'left',
+            dataAttributes,
+            noPaddingY,
+            ...rest
+        },
         ref
     ) => {
         const {isTabletOrSmaller} = useScreenSize();
         const isInsideSlideShow = useIsInsideSlideshowContext();
-        const isInverse = background === 'brand' || background === 'brand-secondary';
+        const isInverseOutside = useIsInverseVariant();
+        const isInverse =
+            background === 'none'
+                ? isInverseOutside
+                : background === 'brand' || background === 'brand-secondary';
 
         if (isTabletOrSmaller) {
             return (
@@ -151,7 +165,7 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
                     >
                         {media}
                         <Layout isInverse={isInverse}>
-                            <Box paddingTop={24} paddingBottom={isInsideSlideShow ? 48 : 24}>
+                            <Box paddingTop={24} paddingBottom={noPaddingY ? 0 : isInsideSlideShow ? 48 : 24}>
                                 <HeroContent {...rest} />
                             </Box>
                         </Layout>
@@ -197,7 +211,7 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
                             template="6+6"
                             left={
                                 <Box
-                                    paddingY={56}
+                                    paddingY={noPaddingY ? 0 : 56}
                                     className={classnames(styles.container, styles.containerDesktop)}
                                 >
                                     {left}
@@ -205,7 +219,7 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
                             }
                             right={
                                 <Box
-                                    paddingY={56}
+                                    paddingY={noPaddingY ? 0 : 56}
                                     className={classnames(styles.container, styles.containerDesktop)}
                                 >
                                     {right}
