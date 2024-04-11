@@ -32,6 +32,7 @@ const Layout = ({children, isInverse}: LayoutProps) => {
             className={styles.layout}
             innerDivClassName={styles.layout}
             shouldExpandWhenNested="desktop"
+            backgroundColor="transparent"
         >
             {children}
         </InternalResponsiveLayout>
