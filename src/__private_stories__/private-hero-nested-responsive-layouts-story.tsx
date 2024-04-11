@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {ResponsiveLayout, Box, Slideshow, Hero, Image, ButtonPrimary, ButtonLink} from '..';
+import usingVrImg from '../__stories__/images/using-vr.jpg';
 
 export default {
     title: 'Private/Hero with nested responsiveLayouts',
@@ -16,12 +17,7 @@ export const Default: StoryComponent = () => {
                             background="default"
                             height="500px"
                             key={idx}
-                            media={
-                                <Image
-                                    src="https://source.unsplash.com/1600x900/?furniture"
-                                    aspectRatio="16:9"
-                                />
-                            }
+                            media={<Image src={usingVrImg} aspectRatio="16:9" />}
                             pretitle="Pretitle"
                             title="Title"
                             description="This is a long description with a long text to see how this works"
