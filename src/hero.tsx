@@ -13,8 +13,9 @@ import * as mediaStyles from './image.css';
 import {useIsInsideSlideshowContext} from './carousel';
 import {getPrefixedDataAttributes} from './utils/dom';
 import {sprinkles} from './sprinkles.css';
-import {ThemeVariant, useIsInverseVariant} from './theme-variant-context';
+import {useIsInverseVariant} from './theme-variant-context';
 import {applyCssVars} from './utils/css';
+import {InternalResponsiveLayout} from './responsive-layout';
 
 import type Image from './image';
 import type Video from './video';
@@ -24,13 +25,16 @@ import type {DataAttributes, RendersElement, RendersNullableElement} from './uti
 
 type LayoutProps = {children: React.ReactNode; isInverse: boolean};
 
-// This is a duplication of the ResponsiveLayout, needed because original ResponsiveLayout has a inner div that we cannot control and the height is missing there.
-// We need to control this height to fix the actions at the bottom of the Hero component when we are inside a Slidehow with differents Hero heights.
 const Layout = ({children, isInverse}: LayoutProps) => {
     return (
-        <ThemeVariant isInverse={isInverse}>
-            <div className={styles.layout}>{children}</div>
-        </ThemeVariant>
+        <InternalResponsiveLayout
+            isInverse={isInverse}
+            className={styles.layout}
+            innerDivClassName={styles.layout}
+            shouldExpandWhenNested="desktop"
+        >
+            {children}
+        </InternalResponsiveLayout>
     );
 };
 
@@ -161,7 +165,9 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
                                 [styles.vars.height]: height ?? '100%',
                             }),
                         }}
-                        className={classnames(styles.container, styles.containerMobile)}
+                        className={classnames(styles.container, styles.containerMobile, {
+                            [styles.containerMinHeight]: !noPaddingY,
+                        })}
                     >
                         {media}
                         <Layout isInverse={isInverse}>
@@ -212,7 +218,9 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
                             left={
                                 <Box
                                     paddingY={noPaddingY ? 0 : 56}
-                                    className={classnames(styles.container, styles.containerDesktop)}
+                                    className={classnames(styles.container, styles.containerDesktop, {
+                                        [styles.containerMinHeight]: !noPaddingY,
+                                    })}
                                 >
                                     {left}
                                 </Box>

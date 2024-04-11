@@ -27,6 +27,7 @@ type HeroArgs = {
     desktopMediaPosition: 'left' | 'right';
     height?: string;
     aspectRatio: string;
+    noPaddingY: boolean;
 };
 
 export const Default: StoryComponent<HeroArgs> = ({
@@ -42,6 +43,7 @@ export const Default: StoryComponent<HeroArgs> = ({
     height,
     withExtra,
     aspectRatio,
+    noPaddingY,
 }) => {
     const mediaComponent =
         media === 'video' ? (
@@ -76,6 +78,7 @@ export const Default: StoryComponent<HeroArgs> = ({
             dataAttributes={{testid: 'hero'}}
             desktopMediaPosition={desktopMediaPosition}
             height={height}
+            noPaddingY={noPaddingY}
         />
     );
 };
@@ -95,6 +98,7 @@ Default.args = {
     desktopMediaPosition: 'right',
     height: '100vh',
     aspectRatio: '16 9',
+    noPaddingY: false,
 };
 
 Default.argTypes = {

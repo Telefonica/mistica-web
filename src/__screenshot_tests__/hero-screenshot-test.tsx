@@ -25,3 +25,14 @@ test.each(getCases())('Hero - %s (%s)', async (background, device) => {
     const story = await screen.findByTestId('hero');
     expect(await story.screenshot()).toMatchImageSnapshot();
 });
+
+test('Hero - no vertical padding', async () => {
+    await openStoryPage({
+        id: 'components-hero--default',
+        device: 'DESKTOP',
+        args: {noPaddingY: true, height: '300px'},
+    });
+
+    const story = await screen.findByTestId('hero');
+    expect(await story.screenshot()).toMatchImageSnapshot();
+});
