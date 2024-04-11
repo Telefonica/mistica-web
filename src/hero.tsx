@@ -211,7 +211,7 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
                             [styles.vars.height]: height ?? '100%',
                         }),
                     }}
-                    className={sprinkles({height: '100%', display: 'flex', alignItems: 'center'})}
+                    className={sprinkles({height: '100%'})}
                 >
                     <Layout isInverse={isInverse}>
                         <GridLayout
