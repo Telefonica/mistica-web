@@ -152,9 +152,8 @@ test('Row list with radio buttons', async () => {
         </ThemeContextProvider>
     );
 
-    const radioBanana = screen.getByRole('radio', {name: 'Banana'});
-    // alternate accessible selector
-    const radioApple = screen.getByLabelText('Apple');
+    const radioBanana = screen.getByRole('radio', {name: 'Banana bananabanana'});
+    const radioApple = screen.getByRole('radio', {name: 'Apple appleapple'});
 
     expect(radioBanana).not.toBeChecked();
     expect(radioApple).not.toBeChecked();
