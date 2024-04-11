@@ -52,6 +52,7 @@ interface CommonProps {
     dataAttributes?: DataAttributes;
     disabled?: boolean;
     withChevron?: boolean;
+    'aria-label'?: string;
 }
 
 type Right = (({centerY}: {centerY: boolean}) => React.ReactNode) | React.ReactNode;
@@ -129,6 +130,7 @@ export const Content: React.FC<ContentProps> = ({
             <div
                 className={classNames(styles.rowBody, {[styles.disabled]: disabled})}
                 style={{justifyContent: centerY ? 'center' : 'flex-start'}}
+                id={labelId}
             >
                 <Stack space={4}>
                     {headline && (
@@ -141,7 +143,6 @@ export const Content: React.FC<ContentProps> = ({
                             regular
                             color={vars.colors.textPrimary}
                             truncate={titleLinesMax}
-                            id={labelId}
                             hyphens="auto"
                             as={titleAs}
                         >
@@ -350,7 +351,11 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
         role,
         extra,
         dataAttributes,
+        'aria-label': ariaLabel,
     } = props;
+
+    // iOS voiceover reads links with multiple lines as separate links. By setting aria-label and marking content as aria-hidden, we can make it read the whole row as one link.
+    const iosVoiceOverLabelForLink = [title, subtitle, description, detail].filter(Boolean).join(' ');
 
     const radioContext = useRadioContext();
     const disabled = props.disabled || (props.radioValue !== undefined && radioContext.disabled);
@@ -388,22 +393,20 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
         />
     );
 
-    const renderBaseTouchableContent = (
-        props: HrefRowContentProps | ToRowContentProps | OnPressRowContentProps
-    ) => {
+    const renderBaseTouchableContent = ({hidden, right}: {hidden?: boolean; right?: Right} = {}) => {
         let type: ContentProps['type'] = 'chevron';
 
-        if (props.right === null) {
+        if (right === null) {
             type = 'basic';
         }
 
-        if (props.right) {
+        if (right) {
             type = 'custom';
         }
 
         return (
-            <Box paddingX={16} ref={ref as React.Ref<HTMLDivElement>}>
-                {renderContent({type, right: props.right})}
+            <Box paddingX={16} aria-hidden={hidden || undefined}>
+                {renderContent({type, right})}
             </Box>
         );
     };
@@ -428,8 +431,9 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
                 role={role}
                 dataAttributes={dataAttributes}
                 disabled={disabled}
+                aria-label={ariaLabel}
             >
-                {renderBaseTouchableContent(props)}
+                {renderBaseTouchableContent({right: props.right})}
             </BaseTouchable>
         );
     }
@@ -437,6 +441,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
     if (props.to) {
         return (
             <BaseTouchable
+                ref={ref}
                 className={classNames(styles.rowContent, {
                     [styles.touchableBackground]: hasHoverDefault,
                     [styles.touchableBackgroundInverse]: hasHoverInverse,
@@ -448,8 +453,9 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
                 role={role}
                 dataAttributes={dataAttributes}
                 disabled={disabled}
+                aria-label={ariaLabel ?? iosVoiceOverLabelForLink}
             >
-                {renderBaseTouchableContent(props)}
+                {renderBaseTouchableContent({right: props.right, hidden: true})}
             </BaseTouchable>
         );
     }
@@ -457,6 +463,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
     if (props.href) {
         return (
             <BaseTouchable
+                ref={ref}
                 className={classNames(styles.rowContent, {
                     [styles.touchableBackground]: hasHoverDefault,
                     [styles.touchableBackgroundInverse]: hasHoverInverse,
@@ -468,8 +475,9 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
                 role={role}
                 dataAttributes={dataAttributes}
                 disabled={disabled}
+                aria-label={ariaLabel ?? iosVoiceOverLabelForLink}
             >
-                {renderBaseTouchableContent(props)}
+                {renderBaseTouchableContent({right: props.right, hidden: true})}
             </BaseTouchable>
         );
     }
@@ -489,6 +497,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
                         [styles.touchableBackground]: hasHoverDefault,
                         [styles.touchableBackgroundInverse]: hasHoverInverse,
                     })}
+                    aria-label={ariaLabel}
                 >
                     {renderContent({type: 'basic', labelId: titleId})}
                 </BaseTouchable>
@@ -498,6 +507,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
                     disabled={disabled}
                     name={name}
                     checked={isChecked}
+                    aria-label={ariaLabel}
                     aria-labelledby={titleId}
                     onChange={toggle}
                     render={({controlElement}) => (
@@ -519,6 +529,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
                     name={name}
                     checked={isChecked}
                     onChange={toggle}
+                    aria-label={ariaLabel}
                     render={({controlElement, labelId}) => (
                         <Box paddingX={16} role={role}>
                             {renderContent({
@@ -554,6 +565,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
                         [styles.touchableBackground]: hasHoverDefault,
                         [styles.touchableBackgroundInverse]: hasHoverInverse,
                     })}
+                    aria-label={ariaLabel}
                 >
                     {renderContent({type: 'basic', labelId: titleId})}
                 </BaseTouchable>
@@ -604,6 +616,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
                         [styles.touchableBackground]: hasHoverDefault,
                         [styles.touchableBackgroundInverse]: hasHoverInverse,
                     })}
+                    aria-label={ariaLabel}
                 >
                     {renderContent({type: 'basic', labelId: titleId})}
                 </BaseTouchable>
@@ -612,6 +625,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
                     dataAttributes={dataAttributes}
                     value={props.radioValue}
                     aria-labelledby={titleId}
+                    aria-label={ariaLabel}
                     render={({controlElement}) => (
                         <Stack space="around">
                             <Box paddingX={16}>{controlElement}</Box>
@@ -633,6 +647,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
                     dataAttributes={dataAttributes}
                     value={props.radioValue}
                     aria-labelledby={titleId}
+                    aria-label={ariaLabel}
                     render={({controlElement}) => (
                         <Box paddingX={16}>
                             {renderContent({
