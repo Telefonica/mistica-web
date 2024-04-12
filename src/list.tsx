@@ -341,6 +341,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
         asset,
         headline,
         title,
+        titleAs,
         titleLinesMax,
         subtitle,
         subtitleLinesMax,
@@ -377,6 +378,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
             asset={asset}
             headline={headline}
             title={title}
+            titleAs={titleAs}
             subtitle={subtitle}
             description={description}
             badge={badge}
