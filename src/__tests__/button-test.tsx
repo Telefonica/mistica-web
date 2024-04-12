@@ -86,8 +86,8 @@ test('buttons can track events', async () => {
         </ThemeContextProvider>
     );
 
-    const hrefButton = await screen.findByRole('link', {name: 'button with href'});
-    const toButton = await screen.findByRole('link', {name: 'button with to'});
+    const hrefButton = await screen.findByRole('link', {name: /button with href/});
+    const toButton = await screen.findByRole('link', {name: /button with to/});
     const onPressButton = await screen.findByRole('button', {name: 'button with onPress'});
 
     await userEvent.click(hrefButton);
@@ -108,7 +108,7 @@ test('buttons track default events', async () => {
 
     render(
         <ThemeContextProvider theme={makeTheme({analytics: {logEvent: logEventSpy}})}>
-            <ButtonPrimary href="#test">no track</ButtonPrimary>
+            <ButtonPrimary href="#test">no track button</ButtonPrimary>
             <ButtonPrimary trackEvent href="#test">
                 primary
             </ButtonPrimary>
@@ -129,13 +129,13 @@ test('buttons track default events', async () => {
         </ThemeContextProvider>
     );
 
-    const noTrackButton = await screen.findByRole('link', {name: 'no track'});
-    const primaryButton = await screen.findByRole('link', {name: 'primary'});
-    const secondaryButton = await screen.findByRole('link', {name: 'secondary'});
-    const dangerButton = await screen.findByRole('button', {name: 'danger'});
-    const buttonWithIcon = await screen.findByRole('button', {name: 'Take a photo'});
-    const noTrackLink = await screen.findByRole('link', {name: 'no track link'});
-    const link = await screen.findByRole('link', {name: 'link'});
+    const noTrackButton = await screen.findByRole('link', {name: /no track button/});
+    const primaryButton = await screen.findByRole('link', {name: /primary/});
+    const secondaryButton = await screen.findByRole('link', {name: /secondary/});
+    const dangerButton = await screen.findByRole('button', {name: /danger/});
+    const buttonWithIcon = await screen.findByRole('button', {name: /Take a photo/});
+    const noTrackLink = await screen.findByRole('link', {name: /no track link/});
+    const link = await screen.findByRole('link', {name: /^link/});
 
     await userEvent.click(noTrackButton);
     await userEvent.click(noTrackLink);

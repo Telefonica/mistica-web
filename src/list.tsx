@@ -27,6 +27,7 @@ import * as mediaStyles from './image.css';
 import {vars} from './skins/skin-contract.css';
 import {applyCssVars} from './utils/css';
 import {IconButton, ToggleIconButton} from './icon-button';
+import {sprinkles} from '../src/sprinkles.css';
 
 import type {IconButtonProps, ToggleIconButtonProps} from './icon-button';
 import type {TouchableElement} from './touchable';
@@ -657,7 +658,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
 
 export const Row = React.forwardRef<TouchableElement, RowContentProps>(
     ({dataAttributes, role = 'listitem', ...props}, ref) => (
-        <div role={role}>
+        <div role={role} className={sprinkles({width: '100%'})}>
             <RowContent {...props} ref={ref} dataAttributes={{'component-name': 'Row', ...dataAttributes}} />
         </div>
     )
