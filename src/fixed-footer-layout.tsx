@@ -68,6 +68,11 @@ const FixedFooterLayout: React.FC<Props> = ({
     }, [onChangeFooterHeight, domFooterHeight]);
 
     React.useEffect(() => {
+        // There is no elevation in desktop devices, so we avoid unnecesary calculations
+        if (!isTabletOrSmaller) {
+            return;
+        }
+
         const scrollable = getScrollableParentElement(containerRef.current);
 
         const shouldDisplayElevation = () => {
@@ -104,7 +109,7 @@ const FixedFooterLayout: React.FC<Props> = ({
             removePassiveEventListener(scrollEventTarget, 'resize', checkDisplayElevation);
             transitionAwaiter.cancel();
         };
-    }, [hasContentEnoughVSpace, platformOverrides]);
+    }, [hasContentEnoughVSpace, platformOverrides, isTabletOrSmaller]);
 
     const isFixedFooter = hasContentEnoughVSpace;
 
