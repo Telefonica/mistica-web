@@ -51,3 +51,27 @@ export const container = style({
         },
     },
 });
+
+export const fixedBackgroundLayer = style([
+    sprinkles({
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        position: 'fixed',
+    }),
+    {
+        zIndex: -2,
+    },
+]);
+
+export const absoluteBackgroundLayer = style([
+    sprinkles({
+        left: 0,
+        right: 0,
+        position: 'absolute',
+    }),
+    {
+        zIndex: -1,
+    },
+]);

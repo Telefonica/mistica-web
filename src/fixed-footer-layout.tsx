@@ -4,6 +4,7 @@ import classnames from 'classnames';
 import {debounce} from './utils/helpers';
 import {isRunningAcceptanceTest} from './utils/platform';
 import {
+    useBoundingRect,
     useElementDimensions,
     useIsomorphicLayoutEffect,
     useIsWithinIFrame,
@@ -22,6 +23,7 @@ import {
 import {vars} from './skins/skin-contract.css';
 import * as styles from './fixed-footer-layout.css';
 import {applyCssVars, safeAreaInsetBottom} from './utils/css';
+import {Portal} from './portal';
 
 const FOOTER_CANVAS_RATIO = 2;
 const getScrollEventTarget = (el: HTMLElement) => (el === document.documentElement ? window : el);
@@ -54,6 +56,11 @@ const FixedFooterLayout: React.FC<Props> = ({
 }) => {
     const [displayElevation, setDisplayElevation] = React.useState(false);
     const containerRef = React.useRef<HTMLDivElement>(null);
+    /**
+     * This topDistance is the top position of the content.
+     * Needed because this layout could be rendered inside a screen with a navigationBar
+     */
+    const {top: topDistance} = useBoundingRect(containerRef) || {top: 0};
     const {isTabletOrSmaller} = useScreenSize();
     const {platformOverrides} = useTheme();
     const {height: domFooterHeight, ref} = useElementDimensions();
@@ -121,32 +128,22 @@ const FixedFooterLayout: React.FC<Props> = ({
      * - When there is not enough vertical space, instead of a fixed footer, the footer is placed at the
      *   bottom of the content. In this case, the background size is the same as the content (height: 100%).
      */
+
     const renderBackground = () => {
         return (
-            <>
+            <Portal>
+                <div className={styles.fixedBackgroundLayer} style={{background: footerBgColor}} />
                 <div
+                    className={styles.absoluteBackgroundLayer}
                     style={{
-                        background: footerBgColor,
-                        top: 0,
-                        left: 0,
-                        right: 0,
-                        bottom: 0,
-                        position: 'fixed',
-                        zIndex: -2,
+                        background: containerBgColor, // this color could be a gradient
+                        top: topDistance,
+                        height: footerIsFixed
+                            ? `calc((100vh - ${footerHeightStyle}) - ${topDistance}px)`
+                            : `calc(100% - ${topDistance}px)`,
                     }}
                 />
-                <div
-                    style={{
-                        background: containerBgColor,
-                        position: 'absolute',
-                        top: 0,
-                        left: 0,
-                        right: 0,
-                        height: footerIsFixed ? `calc(100vh - ${footerHeightStyle}` : '100%',
-                        zIndex: -1,
-                    }}
-                />
-            </>
+            </Portal>
         );
     };
 
