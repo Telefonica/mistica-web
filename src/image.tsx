@@ -245,18 +245,12 @@ export const ImageContent = React.forwardRef<HTMLImageElement, ImageProps>(
         return (
             <>
                 {withLoadingFallback && !hideLoadingFallback && (
-                    <div style={{position: 'absolute', width: '100%', height: '100%'}}>
+                    <div
+                        style={{position: 'absolute', width: '100%', height: '100%', overflow: 'hidden'}}
+                        className={borderRadiusStyle}
+                    >
                         <SkeletonAnimation height={props.height ?? '100%'} width={props.width ?? '100%'}>
-                            <SkeletonBase
-                                height="100%"
-                                width="100%"
-                                className={borderRadiusStyle}
-                                /**
-                                 * We pass an empty string as radius so that the borderRadius is not overrided
-                                 * by the SkeletonBase prop's default value.
-                                 */
-                                radius=""
-                            />
+                            <SkeletonBase height="100%" width="100%" noBorderRadius />
                         </SkeletonAnimation>
                     </div>
                 )}
