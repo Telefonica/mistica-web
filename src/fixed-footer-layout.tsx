@@ -23,7 +23,6 @@ import {
 import {vars} from './skins/skin-contract.css';
 import * as styles from './fixed-footer-layout.css';
 import {applyCssVars, safeAreaInsetBottom} from './utils/css';
-import {Portal} from './portal';
 
 const FOOTER_CANVAS_RATIO = 2;
 const getScrollEventTarget = (el: HTMLElement) => (el === document.documentElement ? window : el);
@@ -45,7 +44,7 @@ type Props = {
     onChangeFooterHeight?: (heightInPx: number) => void;
 };
 
-const FixedFooterLayout: React.FC<Props> = ({
+const FixedFooterLayout = ({
     isFooterVisible = true,
     footer,
     footerHeight = 'auto',
@@ -53,14 +52,14 @@ const FixedFooterLayout: React.FC<Props> = ({
     containerBgColor = vars.colors.background,
     children,
     onChangeFooterHeight,
-}) => {
+}: Props): JSX.Element => {
     const [displayElevation, setDisplayElevation] = React.useState(false);
     const containerRef = React.useRef<HTMLDivElement>(null);
     /**
      * This topDistance is the top position of the content.
      * Needed because this layout could be rendered inside a screen with a navigationBar
      */
-    const {top: topDistance} = useBoundingRect(containerRef) || {top: 0};
+    const {top: topDistance, height: contentHeight} = useBoundingRect(containerRef) || {top: 0};
     const {isTabletOrSmaller} = useScreenSize();
     const {platformOverrides} = useTheme();
     const {height: domFooterHeight, ref} = useElementDimensions();
@@ -74,44 +73,48 @@ const FixedFooterLayout: React.FC<Props> = ({
         onChangeFooterHeight?.(domFooterHeight);
     }, [onChangeFooterHeight, domFooterHeight]);
 
-    React.useEffect(() => {
-        const scrollable = getScrollableParentElement(containerRef.current);
+    React.useEffect(
+        () => {
+            const scrollable = getScrollableParentElement(containerRef.current);
 
-        const shouldDisplayElevation = () => {
-            if (isRunningAcceptanceTest(platformOverrides)) {
+            const shouldDisplayElevation = () => {
+                if (isRunningAcceptanceTest(platformOverrides)) {
+                    return false;
+                }
+
+                if (!hasContentEnoughVSpace) {
+                    return false;
+                }
+
+                if (hasScroll(scrollable)) {
+                    return getScrollDistanceToBottom(scrollable) > 1; // This is 1 and not 0 because a weird bug with Safari
+                }
+
                 return false;
-            }
+            };
 
-            if (!hasContentEnoughVSpace) {
-                return false;
-            }
+            const checkDisplayElevation = debounce(
+                () => {
+                    setDisplayElevation(shouldDisplayElevation());
+                },
+                50,
+                {leading: true, maxWait: 200}
+            );
 
-            if (hasScroll(scrollable)) {
-                return getScrollDistanceToBottom(scrollable) > 1; // This is 1 and not 0 because a weird bug with Safari
-            }
-
-            return false;
-        };
-
-        const checkDisplayElevation = debounce(
-            () => {
-                setDisplayElevation(shouldDisplayElevation());
-            },
-            50,
-            {leading: true, maxWait: 200}
-        );
-
-        const transitionAwaiter = waitForSwitchTransitionToStart(checkDisplayElevation);
-        const scrollEventTarget = getScrollEventTarget(scrollable);
-        addPassiveEventListener(scrollEventTarget, 'resize', checkDisplayElevation);
-        addPassiveEventListener(scrollEventTarget, 'scroll', checkDisplayElevation);
-        return () => {
-            checkDisplayElevation.cancel();
-            removePassiveEventListener(scrollEventTarget, 'scroll', checkDisplayElevation);
-            removePassiveEventListener(scrollEventTarget, 'resize', checkDisplayElevation);
-            transitionAwaiter.cancel();
-        };
-    }, [hasContentEnoughVSpace, platformOverrides]);
+            const transitionAwaiter = waitForSwitchTransitionToStart(checkDisplayElevation);
+            const scrollEventTarget = getScrollEventTarget(scrollable);
+            addPassiveEventListener(scrollEventTarget, 'resize', checkDisplayElevation);
+            addPassiveEventListener(scrollEventTarget, 'scroll', checkDisplayElevation);
+            return () => {
+                checkDisplayElevation.cancel();
+                removePassiveEventListener(scrollEventTarget, 'scroll', checkDisplayElevation);
+                removePassiveEventListener(scrollEventTarget, 'resize', checkDisplayElevation);
+                transitionAwaiter.cancel();
+            };
+        },
+        // `topDistance` and `contentHeight` dependencies are needed to recalculate the elevation state
+        [hasContentEnoughVSpace, platformOverrides, topDistance, contentHeight]
+    );
 
     const footerIsFixed = hasContentEnoughVSpace;
     const footerHeightStyle = `calc(${safeAreaInsetBottom} + ${domFooterHeight}px)`;
@@ -127,23 +130,23 @@ const FixedFooterLayout: React.FC<Props> = ({
      *
      * - When there is not enough vertical space, instead of a fixed footer, the footer is placed at the
      *   bottom of the content. In this case, the background size is the same as the content (height: 100%).
+     *
+     * - A feedback screen could contain a navigation bar. The topDistance is needed to calculate the gradient height.
      */
-
     const renderBackground = () => {
         return (
-            <Portal>
+            <>
                 <div className={styles.fixedBackgroundLayer} style={{background: footerBgColor}} />
                 <div
                     className={styles.absoluteBackgroundLayer}
                     style={{
                         background: containerBgColor, // this color could be a gradient
-                        top: topDistance,
                         height: footerIsFixed
                             ? `calc((100vh - ${footerHeightStyle}) - ${topDistance}px)`
                             : `calc(100% - ${topDistance}px)`,
                     }}
                 />
-            </Portal>
+            </>
         );
     };
 
@@ -158,7 +161,7 @@ const FixedFooterLayout: React.FC<Props> = ({
                         : '0px',
                 })}
             >
-                {isTabletOrSmaller && renderBackground()}
+                {renderBackground()}
                 {children}
             </div>
             <div

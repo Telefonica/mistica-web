@@ -62,16 +62,27 @@ export const fixedBackgroundLayer = style([
     }),
     {
         zIndex: -2,
+        '@media': {
+            [mq.desktopOrBigger]: {
+                display: 'none',
+            },
+        },
     },
 ]);
 
 export const absoluteBackgroundLayer = style([
     sprinkles({
+        top: 0,
         left: 0,
         right: 0,
         position: 'absolute',
     }),
     {
         zIndex: -1,
+        '@media': {
+            [mq.desktopOrBigger]: {
+                display: 'none',
+            },
+        },
     },
 ]);
