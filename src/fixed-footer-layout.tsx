@@ -73,48 +73,50 @@ const FixedFooterLayout = ({
         onChangeFooterHeight?.(domFooterHeight);
     }, [onChangeFooterHeight, domFooterHeight]);
 
-    React.useEffect(
-        () => {
-            const scrollable = getScrollableParentElement(containerRef.current);
+    React.useEffect(() => {
+        const scrollable = getScrollableParentElement(containerRef.current);
 
-            const shouldDisplayElevation = () => {
-                if (isRunningAcceptanceTest(platformOverrides)) {
-                    return false;
-                }
-
-                if (!hasContentEnoughVSpace) {
-                    return false;
-                }
-
-                if (hasScroll(scrollable)) {
-                    return getScrollDistanceToBottom(scrollable) > 1; // This is 1 and not 0 because a weird bug with Safari
-                }
-
+        const shouldDisplayElevation = () => {
+            if (isRunningAcceptanceTest(platformOverrides)) {
                 return false;
-            };
+            }
 
-            const checkDisplayElevation = debounce(
-                () => {
-                    setDisplayElevation(shouldDisplayElevation());
-                },
-                50,
-                {leading: true, maxWait: 200}
-            );
+            if (!hasContentEnoughVSpace) {
+                return false;
+            }
 
-            const transitionAwaiter = waitForSwitchTransitionToStart(checkDisplayElevation);
-            const scrollEventTarget = getScrollEventTarget(scrollable);
-            addPassiveEventListener(scrollEventTarget, 'resize', checkDisplayElevation);
-            addPassiveEventListener(scrollEventTarget, 'scroll', checkDisplayElevation);
-            return () => {
-                checkDisplayElevation.cancel();
-                removePassiveEventListener(scrollEventTarget, 'scroll', checkDisplayElevation);
-                removePassiveEventListener(scrollEventTarget, 'resize', checkDisplayElevation);
-                transitionAwaiter.cancel();
-            };
-        },
+            if (hasScroll(scrollable)) {
+                return getScrollDistanceToBottom(scrollable) > 1; // This is 1 and not 0 because a weird bug with Safari
+            }
+
+            return false;
+        };
+
+        const checkDisplayElevation = debounce(
+            () => {
+                setDisplayElevation(shouldDisplayElevation());
+            },
+            50,
+            {leading: true, maxWait: 200}
+        );
+
+        const transitionAwaiter = waitForSwitchTransitionToStart(checkDisplayElevation);
+        const scrollEventTarget = getScrollEventTarget(scrollable);
+        addPassiveEventListener(scrollEventTarget, 'resize', checkDisplayElevation);
+        addPassiveEventListener(scrollEventTarget, 'scroll', checkDisplayElevation);
+        return () => {
+            checkDisplayElevation.cancel();
+            removePassiveEventListener(scrollEventTarget, 'scroll', checkDisplayElevation);
+            removePassiveEventListener(scrollEventTarget, 'resize', checkDisplayElevation);
+            transitionAwaiter.cancel();
+        };
+    }, [
+        hasContentEnoughVSpace,
+        platformOverrides,
         // `topDistance` and `contentHeight` dependencies are needed to recalculate the elevation state
-        [hasContentEnoughVSpace, platformOverrides, topDistance, contentHeight]
-    );
+        topDistance,
+        contentHeight,
+    ]);
 
     const footerIsFixed = hasContentEnoughVSpace;
     const footerHeightStyle = `calc(${safeAreaInsetBottom} + ${domFooterHeight}px)`;
