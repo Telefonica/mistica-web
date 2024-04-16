@@ -8,7 +8,6 @@ import {
     MainNavigationBar,
     NavigationBarAction,
     NavigationBarActionGroup,
-    Placeholder,
     SuccessFeedbackScreen,
     useScreenSize,
     useTheme,
