@@ -14,7 +14,7 @@ import {
 } from '..';
 
 export default {
-    title: 'Private/SuccessFeedbackScreenWithNavbar',
+    title: 'Private/Fixed Footer',
     parameters: {
         fullScreen: true,
     },

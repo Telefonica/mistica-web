@@ -15,7 +15,7 @@ for (const skin of testableSkins) {
 
 test.each(cases)('SuccessFeedbackScreen with NavigationBar - %s - %s', async (skin, device) => {
     const page = await openStoryPage({
-        id: `private-successfeedbackscreenwithnavbar--default`,
+        id: `private-fixed-footer--default`,
         skin: skin as never,
         device,
     });
