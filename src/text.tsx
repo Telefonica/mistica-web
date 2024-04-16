@@ -43,26 +43,13 @@ const vivinhoForScreenReaders = (
 
 const makeVivinhoCharReadableForScreenReaders = (text: string): React.ReactNode => {
     if (text.includes(VIVINHO_CHAR)) {
-        const texts = [];
-        let currentText = '';
-        Array.from(text).forEach((char) => {
-            if (char === VIVINHO_CHAR) {
-                if (currentText) {
-                    texts.push(currentText);
-                    currentText = '';
-                }
-                texts.push(vivinhoForScreenReaders);
-            } else {
-                currentText += char;
-            }
-        });
-        if (currentText) {
-            texts.push(currentText);
-        }
         return (
             <>
-                {texts.map((t, idx) => (
-                    <React.Fragment key={idx}>{t}</React.Fragment>
+                {text.split(VIVINHO_CHAR).map((segment, idx) => (
+                    <React.Fragment key={idx}>
+                        {idx > 0 && vivinhoForScreenReaders}
+                        {segment}
+                    </React.Fragment>
                 ))}
             </>
         );
