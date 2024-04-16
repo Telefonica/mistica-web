@@ -7,6 +7,8 @@ import {getPrefixedDataAttributes} from './utils/dom';
 import {useTheme} from './hooks';
 import {vars} from './skins/skin-contract.css';
 import * as styles from './text.css';
+import {VIVO_NEW_SKIN} from './skins/constants';
+import ScreenReaderOnly from './screen-reader-only';
 
 import type {ExclusifyUnion} from './utils/utility-types';
 import type {FontWeight} from './skins/types';
@@ -27,6 +29,46 @@ const lineClamp = (truncate?: boolean | number) => {
         return truncate;
     }
     return 'initial';
+};
+
+const VIVINHO_CHAR = 'Ħ'; // vivo-type font replaces this char with a vivinho icon
+const vivinhoForScreenReaders = (
+    <>
+        <span aria-hidden>{VIVINHO_CHAR}</span>
+        <ScreenReaderOnly>
+            <span>Vivo</span>
+        </ScreenReaderOnly>
+    </>
+);
+
+const makeVivinhoCharReadableForScreenReaders = (text: string): React.ReactNode => {
+    if (text.includes(VIVINHO_CHAR)) {
+        const texts = [];
+        let currentText = '';
+        Array.from(text).forEach((char) => {
+            if (char === VIVINHO_CHAR) {
+                if (currentText) {
+                    texts.push(currentText);
+                    currentText = '';
+                }
+                texts.push(vivinhoForScreenReaders);
+            } else {
+                currentText += char;
+            }
+        });
+        if (currentText) {
+            texts.push(currentText);
+        }
+        return (
+            <>
+                {texts.map((t, idx) => (
+                    <React.Fragment key={idx}>{t}</React.Fragment>
+                ))}
+            </>
+        );
+    } else {
+        return text;
+    }
 };
 
 export interface TextPresetProps {
@@ -90,6 +132,7 @@ export const Text: React.FC<TextProps> = ({
     'aria-level': ariaLevel,
     dataAttributes,
 }) => {
+    const {skinName} = useTheme();
     const isInverse = useIsInverseVariant();
     const lineClampValue = lineClamp(truncate);
 
@@ -142,7 +185,9 @@ export const Text: React.FC<TextProps> = ({
                 textShadow,
             },
         },
-        children
+        typeof children === 'string' && skinName === VIVO_NEW_SKIN
+            ? makeVivinhoCharReadableForScreenReaders(children)
+            : children
     );
 };
 
