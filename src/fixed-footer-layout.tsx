@@ -23,6 +23,7 @@ import {
 import {vars} from './skins/skin-contract.css';
 import * as styles from './fixed-footer-layout.css';
 import {applyCssVars, safeAreaInsetBottom} from './utils/css';
+import {useFixedToTopHeight} from './fixed-to-top';
 
 const FOOTER_CANVAS_RATIO = 2;
 const getScrollEventTarget = (el: HTMLElement) => (el === document.documentElement ? window : el);
@@ -55,11 +56,7 @@ const FixedFooterLayout = ({
 }: Props): JSX.Element => {
     const [displayElevation, setDisplayElevation] = React.useState(false);
     const containerRef = React.useRef<HTMLDivElement>(null);
-    /**
-     * This topDistance is the top position of the content.
-     * Needed because this layout could be rendered inside a screen with a navigationBar
-     */
-    const {top: topDistance, height: contentHeight} = useBoundingRect(containerRef) || {top: 0};
+    const {height: contentHeight} = useBoundingRect(containerRef) || {top: 0};
     const {isTabletOrSmaller} = useScreenSize();
     const {platformOverrides} = useTheme();
     const {height: domFooterHeight, ref} = useElementDimensions();
@@ -68,6 +65,7 @@ const FixedFooterLayout = ({
     const screenHeight = useScreenHeight();
     const hasContentEnoughVSpace =
         windowHeight - domFooterHeight > (isWithinIFrame ? windowHeight : screenHeight) / FOOTER_CANVAS_RATIO;
+    const topDistance = useFixedToTopHeight();
 
     useIsomorphicLayoutEffect(() => {
         onChangeFooterHeight?.(domFooterHeight);
@@ -138,7 +136,9 @@ const FixedFooterLayout = ({
     const renderBackground = () => {
         return (
             <>
-                <div className={styles.fixedBackgroundLayer} style={{background: footerBgColor}} />
+                {footerIsFixed && (
+                    <div className={styles.fixedBackgroundLayer} style={{background: footerBgColor}} />
+                )}
                 <div
                     className={styles.absoluteBackgroundLayer}
                     style={{
