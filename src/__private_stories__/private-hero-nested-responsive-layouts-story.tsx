@@ -12,6 +12,8 @@ export const Default: StoryComponent = () => {
             <ResponsiveLayout>
                 <Slideshow
                     dataAttributes={{testid: 'slideshow'}}
+                    withBullets
+                    inverseBullets={false}
                     items={Array.from({length: 3}, (_, idx) => (
                         <Hero
                             background="default"
