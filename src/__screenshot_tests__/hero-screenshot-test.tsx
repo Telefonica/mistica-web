@@ -30,7 +30,18 @@ test('Hero - no vertical padding', async () => {
     await openStoryPage({
         id: 'components-hero--default',
         device: 'DESKTOP',
-        args: {noPaddingY: true, height: '300px'},
+        args: {noPaddingY: true},
+    });
+
+    const story = await screen.findByTestId('hero');
+    expect(await story.screenshot()).toMatchImageSnapshot();
+});
+
+test('Hero - custom height', async () => {
+    await openStoryPage({
+        id: 'components-hero--default',
+        device: 'MOBILE_IOS',
+        args: {height: '1000px'},
     });
 
     const story = await screen.findByTestId('hero');

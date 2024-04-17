@@ -15,7 +15,6 @@ export const Default: StoryComponent = () => {
                     items={Array.from({length: 3}, (_, idx) => (
                         <Hero
                             background="default"
-                            height="500px"
                             key={idx}
                             media={<Image src={usingVrImg} aspectRatio="16:9" />}
                             pretitle="Pretitle"

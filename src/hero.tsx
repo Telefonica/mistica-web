@@ -23,15 +23,15 @@ import type {ButtonLink, ButtonPrimary, ButtonSecondary} from './button';
 import type Tag from './tag';
 import type {DataAttributes, RendersElement, RendersNullableElement} from './utils/types';
 
-type LayoutProps = {children: React.ReactNode; isInverse: boolean};
+type LayoutProps = {children: React.ReactNode; isInverse: boolean; isInsideSlideShow?: boolean};
 
-const Layout = ({children, isInverse}: LayoutProps) => {
+const Layout = ({children, isInverse, isInsideSlideShow}: LayoutProps) => {
     return (
         <InternalResponsiveLayout
             isInverse={isInverse}
             className={styles.layout}
             innerDivClassName={styles.layout}
-            shouldExpandWhenNested="desktop"
+            shouldExpandWhenNested={isInsideSlideShow ? 'desktop' : true}
             backgroundColor="transparent"
         >
             {children}
@@ -170,9 +170,13 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
                             [styles.containerMinHeight]: !noPaddingY,
                         })}
                     >
-                        {media}
-                        <Layout isInverse={isInverse}>
-                            <Box paddingTop={24} paddingBottom={noPaddingY ? 0 : isInsideSlideShow ? 48 : 24}>
+                        <Layout isInverse={isInverse} isInsideSlideShow={isInsideSlideShow}>
+                            <div className={styles.mediaContainer}>{media}</div>
+                            <Box
+                                paddingTop={24}
+                                paddingBottom={isInsideSlideShow ? 48 : noPaddingY ? 0 : 24}
+                                className={styles.layout}
+                            >
                                 <HeroContent {...rest} />
                             </Box>
                         </Layout>

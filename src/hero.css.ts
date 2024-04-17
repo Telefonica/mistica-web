@@ -1,10 +1,12 @@
-import {createVar, style} from '@vanilla-extract/css';
+import {createVar, fallbackVar, style} from '@vanilla-extract/css';
 import * as mq from './media-queries.css';
 import {sprinkles} from './sprinkles.css';
+import {vars as responsiveLayoutVars} from './responsive-layout.css';
 
 const height = createVar();
 
 export const vars = {height};
+const responsiveLayoutSideMargin = fallbackVar(responsiveLayoutVars.sideMargin, '0px');
 
 export const container = style([
     sprinkles({display: 'flex'}),
@@ -35,7 +37,17 @@ export const layout = style({
     '@media': {
         [mq.tabletOrSmaller]: {
             display: 'flex',
+            flexDirection: 'column',
             flex: 1,
+        },
+    },
+});
+
+export const mediaContainer = style({
+    '@media': {
+        [mq.tabletOrSmaller]: {
+            width: 'auto',
+            margin: `0 calc(-1 * ${responsiveLayoutSideMargin})`,
         },
     },
 });

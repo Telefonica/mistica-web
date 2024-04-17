@@ -51,14 +51,9 @@ export const Default: StoryComponent<HeroArgs> = ({
                 src={beachVideo}
                 poster={beachImg}
                 aspectRatio={aspectRatio.replace(' ', ':') as AspectRatio}
-                height="100%"
             />
         ) : (
-            <Image
-                src={usingVrImg}
-                aspectRatio={aspectRatio.replace(' ', ':') as AspectRatio}
-                height="100%"
-            />
+            <Image src={usingVrImg} aspectRatio={aspectRatio.replace(' ', ':') as AspectRatio} />
         );
 
     const button = actions.includes('button') ? <ButtonPrimary fake>Action</ButtonPrimary> : undefined;
@@ -96,7 +91,7 @@ Default.args = {
     actions: 'button and link',
     background: 'default',
     desktopMediaPosition: 'right',
-    height: '100vh',
+    height: '',
     aspectRatio: '16 9',
     noPaddingY: false,
 };
