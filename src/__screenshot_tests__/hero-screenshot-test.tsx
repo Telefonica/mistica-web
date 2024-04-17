@@ -2,7 +2,7 @@ import {openStoryPage, screen} from '../test-utils';
 
 import type {Device} from '../test-utils';
 
-const DEVICES = ['MOBILE_IOS', 'DESKTOP'];
+const DEVICES = ['MOBILE_IOS', 'DESKTOP'] as const;
 const BACKGROUND = ['default', 'brand'];
 
 const getCases = () => {
@@ -26,10 +26,10 @@ test.each(getCases())('Hero - %s (%s)', async (background, device) => {
     expect(await story.screenshot()).toMatchImageSnapshot();
 });
 
-test('Hero - no vertical padding', async () => {
+test.each(DEVICES)('Hero - no vertical padding (%s)', async (device) => {
     await openStoryPage({
         id: 'components-hero--default',
-        device: 'DESKTOP',
+        device,
         args: {noPaddingY: true},
     });
 
