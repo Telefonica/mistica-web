@@ -68,23 +68,18 @@ const FixedFooterLayout: React.FC<Props> = ({
     }, [onChangeFooterHeight, domFooterHeight]);
 
     React.useEffect(() => {
+        /**
+         * There is no elevation in desktop devices and we don't display it in acceptance tests or when the
+         * content's height is too small, so we avoid unnecesary calculations in these cases.
+         */
+        if (!isTabletOrSmaller || isRunningAcceptanceTest(platformOverrides) || hasContentEnoughVSpace) {
+            return;
+        }
+
         const scrollable = getScrollableParentElement(containerRef.current);
 
-        const shouldDisplayElevation = () => {
-            if (isRunningAcceptanceTest(platformOverrides)) {
-                return false;
-            }
-
-            if (!hasContentEnoughVSpace) {
-                return false;
-            }
-
-            if (hasScroll(scrollable)) {
-                return getScrollDistanceToBottom(scrollable) > 1; // This is 1 and not 0 because a weird bug with Safari
-            }
-
-            return false;
-        };
+        const shouldDisplayElevation = () =>
+            hasScroll(scrollable) && getScrollDistanceToBottom(scrollable) > 1; // This is 1 and not 0 because a weird bug with Safari
 
         const checkDisplayElevation = debounce(
             () => {
@@ -104,7 +99,7 @@ const FixedFooterLayout: React.FC<Props> = ({
             removePassiveEventListener(scrollEventTarget, 'resize', checkDisplayElevation);
             transitionAwaiter.cancel();
         };
-    }, [hasContentEnoughVSpace, platformOverrides]);
+    }, [hasContentEnoughVSpace, platformOverrides, isTabletOrSmaller]);
 
     const isFixedFooter = hasContentEnoughVSpace;
 
