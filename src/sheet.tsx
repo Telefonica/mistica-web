@@ -23,12 +23,11 @@ import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
 import {InternalIconButton} from './icon-button';
 import ButtonLayout from './button-layout';
 import Image from './image';
-import {InternalResponsiveLayout} from './responsive-layout';
 import {safeAreaInsetBottom} from './utils/css';
+import {MOBILE_SIDE_MARGIN, SMALL_DESKTOP_SIDE_MARGIN, TABLET_SIDE_MARGIN} from './responsive-layout.css';
 
 import type {ExclusifyUnion} from './utils/utility-types';
 import type {DataAttributes, IconProps, RendersNullableElement, TrackingEvent} from './utils/types';
-import {MOBILE_SIDE_MARGIN, SMALL_DESKTOP_SIDE_MARGIN, TABLET_SIDE_MARGIN} from './responsive-layout.css';
 
 const getClientY = (ev: TouchEvent | MouseEvent | React.TouchEvent | React.MouseEvent) => {
     if ('touches' in ev) {
