@@ -19,7 +19,7 @@ test.each(TESTABLE_DEVICES)('Sheet in %s', async (device) => {
     expect(image).toMatchImageSnapshot();
 });
 
-test.each(TESTABLE_DEVICES_WITH_LARGE_DESKTOP)('ActionsListSheet in %s', async (device) => {
+test.each(TESTABLE_DEVICES)('ActionsListSheet in %s', async (device) => {
     const page = await openStoryPage({
         id: 'components-modals-sheet--actions-list',
         device,
@@ -87,7 +87,7 @@ test('InfoSheet with multiple description paragraphs', async () => {
     expect(image).toMatchImageSnapshot();
 });
 
-test.each(TESTABLE_DEVICES)('ActionsSheet in %s', async (device) => {
+test.each(TESTABLE_DEVICES_WITH_LARGE_DESKTOP)('ActionsSheet in %s', async (device) => {
     const page = await openStoryPage({
         id: 'components-modals-sheet--actions',
         device,
