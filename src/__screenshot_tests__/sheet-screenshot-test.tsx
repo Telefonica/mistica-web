@@ -1,6 +1,7 @@
 import {openStoryPage, screen} from '../test-utils';
 
 const TESTABLE_DEVICES = ['MOBILE_IOS', 'DESKTOP'] as const;
+const TESTABLE_DEVICES_WITH_LARGE_DESKTOP = [...TESTABLE_DEVICES, 'LARGE_DESKTOP'] as const;
 
 test.each(TESTABLE_DEVICES)('Sheet in %s', async (device) => {
     const page = await openStoryPage({
@@ -18,7 +19,7 @@ test.each(TESTABLE_DEVICES)('Sheet in %s', async (device) => {
     expect(image).toMatchImageSnapshot();
 });
 
-test.each(TESTABLE_DEVICES)('ActionsListSheet in %s', async (device) => {
+test.each(TESTABLE_DEVICES_WITH_LARGE_DESKTOP)('ActionsListSheet in %s', async (device) => {
     const page = await openStoryPage({
         id: 'components-modals-sheet--actions-list',
         device,
