@@ -1321,7 +1321,7 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
             width,
             height,
             aspectRatio = '7:10',
-            ariaLabel,
+            ariaLabel: ariaLabelProp,
             actions,
             onClose,
             icon,
@@ -1381,6 +1381,14 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                 ? styles.touchableCardOverlayInverse
                 : styles.touchableCardOverlay;
 
+        const ariaLabel =
+            ariaLabelProp ||
+            (isTouchable
+                ? [title, typeof headline === 'string' ? headline : '', pretitle, subtitle, description]
+                      .filter(Boolean)
+                      .join(' ')
+                : undefined);
+
         return (
             <CardContainer
                 width={width}
@@ -1388,7 +1396,6 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                 dataAttributes={{'component-name': 'PosterCard', ...dataAttributes}}
                 ref={ref}
                 aspectRatio={aspectRatio}
-                aria-label={ariaLabel}
                 className={styles.touchableContainer}
             >
                 <InternalBoxed
@@ -1455,71 +1462,67 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                                     paddingBottom={24}
                                     className={withGradient ? styles.displayCardGradient : undefined}
                                 >
-                                    <Stack space={24}>
-                                        <div>
-                                            <Stack space={8}>
-                                                {(headline || pretitle || title || subtitle) && (
-                                                    <header>
-                                                        <Stack space={16}>
-                                                            {headline}
-                                                            <Stack space={4}>
-                                                                {pretitle && (
-                                                                    <Text2
-                                                                        forceMobileSizes
-                                                                        truncate={pretitleLinesMax}
-                                                                        as="div"
-                                                                        regular
-                                                                        textShadow={textShadow}
-                                                                        hyphens="auto"
-                                                                    >
-                                                                        {pretitle}
-                                                                    </Text2>
-                                                                )}
-                                                                <Text
-                                                                    desktopSize={20}
-                                                                    mobileSize={18}
-                                                                    mobileLineHeight="24px"
-                                                                    desktopLineHeight="28px"
-                                                                    truncate={titleLinesMax}
-                                                                    weight={textPresets.cardTitle.weight}
-                                                                    as={titleAs}
-                                                                    hyphens="auto"
-                                                                >
-                                                                    {title}
-                                                                </Text>
-                                                                <Text2
-                                                                    forceMobileSizes
-                                                                    truncate={subtitleLinesMax}
-                                                                    as="div"
-                                                                    regular
-                                                                    textShadow={textShadow}
-                                                                    hyphens="auto"
-                                                                >
-                                                                    {subtitle}
-                                                                </Text2>
-                                                            </Stack>
-                                                        </Stack>
-                                                    </header>
-                                                )}
-                                                {description && (
-                                                    <Text2
-                                                        forceMobileSizes
-                                                        truncate={descriptionLinesMax}
-                                                        as="p"
-                                                        regular
-                                                        textShadow={textShadow}
-                                                        hyphens="auto"
-                                                        color={
-                                                            withGradient
-                                                                ? vars.colors.textPrimary
-                                                                : vars.colors.textSecondary
-                                                        }
-                                                    >
-                                                        {description}
-                                                    </Text2>
-                                                )}
-                                            </Stack>
-                                        </div>
+                                    <Stack space={8}>
+                                        {(headline || pretitle || title || subtitle) && (
+                                            <header>
+                                                <Stack space={16}>
+                                                    {headline}
+                                                    <Stack space={4}>
+                                                        {pretitle && (
+                                                            <Text2
+                                                                forceMobileSizes
+                                                                truncate={pretitleLinesMax}
+                                                                as="div"
+                                                                regular
+                                                                textShadow={textShadow}
+                                                                hyphens="auto"
+                                                            >
+                                                                {pretitle}
+                                                            </Text2>
+                                                        )}
+                                                        <Text
+                                                            desktopSize={20}
+                                                            mobileSize={18}
+                                                            mobileLineHeight="24px"
+                                                            desktopLineHeight="28px"
+                                                            truncate={titleLinesMax}
+                                                            weight={textPresets.cardTitle.weight}
+                                                            as={titleAs}
+                                                            hyphens="auto"
+                                                        >
+                                                            {title}
+                                                        </Text>
+                                                        <Text2
+                                                            forceMobileSizes
+                                                            truncate={subtitleLinesMax}
+                                                            as="div"
+                                                            regular
+                                                            textShadow={textShadow}
+                                                            hyphens="auto"
+                                                        >
+                                                            {subtitle}
+                                                        </Text2>
+                                                    </Stack>
+                                                </Stack>
+                                            </header>
+                                        )}
+                                        {description && (
+                                            <Text2
+                                                forceMobileSizes
+                                                truncate={descriptionLinesMax}
+                                                as="p"
+                                                regular
+                                                textShadow={textShadow}
+                                                hyphens="auto"
+                                                color={
+                                                    withGradient
+                                                        ? vars.colors.textPrimary
+                                                        : vars.colors.textSecondary
+                                                }
+                                            >
+                                                {description}
+                                            </Text2>
+                                        )}
                                     </Stack>
                                 </Box>
                             </Box>
