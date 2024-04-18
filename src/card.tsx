@@ -26,6 +26,7 @@ import Inline from './inline';
 import {getPrefixedDataAttributes} from './utils/dom';
 import {isRunningAcceptanceTest} from './utils/platform';
 import {applyCssVars} from './utils/css';
+import ScreenReaderOnly from './screen-reader-only';
 
 import type {Variant} from './theme-variant-context';
 import type {PressHandler} from './touchable';
@@ -1357,7 +1358,7 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
         const hasTopActions = actions?.length || onClose;
         const {textPresets} = useTheme();
 
-        const isTouchable = touchableProps.href || touchableProps.to || touchableProps.onPress;
+        const isTouchable = !!(touchableProps.href || touchableProps.to || touchableProps.onPress);
         const normalizedVariant = variant || (isInverse ? 'inverse' : 'default');
 
         const calcBackgroundColor = () => {
@@ -1416,6 +1417,7 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                         maybe
                         {...touchableProps}
                         className={styles.touchable}
+                        style={{border: '4px solid blue'}}
                         aria-label={ariaLabel}
                     >
                         {isTouchable && <div className={overlayStyle} />}
@@ -1429,6 +1431,7 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                                 </ThemeVariant>
                             )}
                             <Box
+                                aria-hidden={isTouchable}
                                 className={styles.displayCardContent}
                                 paddingTop={
                                     withGradient && !icon && !hasTopActions && !hasVideo

@@ -42,7 +42,7 @@ type PosterCardArgs = {
     subtitle: string;
     description: string;
     closable: boolean;
-    actions: 'on press' | 'none';
+    actions: 'onPress' | 'href' | 'to' | 'none';
     withTopAction: boolean;
     width: string;
     height: string;
@@ -124,6 +124,12 @@ export const Default: StoryComponent<PosterCardArgs> = ({
                   variant,
               };
 
+    const touchableProps = {
+        onPress: actions === 'onPress' ? () => {} : undefined,
+        to: actions === 'to' ? '#' : undefined,
+        href: actions === 'href' ? 'https://example.org' : undefined,
+    } as {onPress: () => void} | {to: string} | {href: string} | {[key: string]: never};
+
     return (
         <ResponsiveLayout isInverse={inverse} fullWidth>
             <Box padding={16}>
@@ -140,7 +146,7 @@ export const Default: StoryComponent<PosterCardArgs> = ({
                     width={width}
                     height={height}
                     aspectRatio={aspectRatio}
-                    onPress={actions === 'on press' ? () => {} : undefined}
+                    {...touchableProps}
                 />
             </Box>
         </ResponsiveLayout>
@@ -203,7 +209,7 @@ Default.argTypes = {
         control: {type: 'select'},
     },
     actions: {
-        options: ['on press', 'none'],
+        options: ['onPress', 'href', 'to', 'none'],
         control: {type: 'select'},
     },
 };
