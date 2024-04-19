@@ -41,6 +41,7 @@ type PosterCardArgs = {
     title: string;
     subtitle: string;
     description: string;
+    ariaLabel: string;
     closable: boolean;
     actions: 'onPress' | 'href' | 'to' | 'none';
     withTopAction: boolean;
@@ -63,6 +64,7 @@ export const Default: StoryComponent<PosterCardArgs> = ({
     title,
     subtitle,
     description,
+    ariaLabel,
     closable,
     actions,
     withTopAction,
@@ -142,7 +144,7 @@ export const Default: StoryComponent<PosterCardArgs> = ({
                     title={title}
                     subtitle={subtitle}
                     description={description}
-                    aria-label="Poster card label"
+                    aria-label={ariaLabel}
                     width={width}
                     height={height}
                     aspectRatio={aspectRatio}
@@ -166,6 +168,7 @@ Default.args = {
     title: 'Title',
     subtitle: 'Subtitle',
     description: 'This is a description for the card',
+    ariaLabel: '',
     closable: false,
     actions: 'none',
     withTopAction: false,
