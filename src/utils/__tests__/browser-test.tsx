@@ -1,8 +1,8 @@
 import {redirect} from '../browser';
 
 // mock location.assign
-const assignSpy = jest.fn();
-Object.defineProperty(window, 'location', {value: {...window.location, assign: assignSpy}});
+const redirectSpy = jest.fn();
+Object.defineProperty(window, 'location', {value: {...window.location, assign: redirectSpy}});
 
 // mock window.open
 const openSpy = jest.fn();
@@ -14,18 +14,15 @@ afterEach(() => {
 
 test('redirect', () => {
     redirect('https://example.org');
-    expect(assignSpy).toHaveBeenCalledWith('https://example.org');
-    expect(openSpy).not.toHaveBeenCalled();
+    expect(redirectSpy.mock.calls).toEqual([['https://example.org']]);
 });
 
 test('open external', () => {
     redirect('https://example.org', true, false);
-    expect(assignSpy).not.toHaveBeenCalled();
-    expect(openSpy).toHaveBeenCalledWith('https://example.org', '_blank');
+    expect(openSpy.mock.calls).toEqual([['https://example.org', '_blank']]);
 });
 
 test('open loadOnTop', () => {
     redirect('https://example.org', false, true);
-    expect(assignSpy).not.toHaveBeenCalled();
-    expect(openSpy).toHaveBeenCalledWith('https://example.org', '_top');
+    expect(openSpy.mock.calls).toEqual([['https://example.org', '_top']]);
 });
