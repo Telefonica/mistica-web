@@ -1474,6 +1474,7 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                                     paddingBottom={24}
                                     className={withGradient ? styles.displayCardGradient : undefined}
                                 >
+                                    {/* using flex instead of nested Stacks, this way we can rearrange texts so the DOM structure makes more sense for screen reader users */}
                                     <div className={styles.flexColumn}>
                                         {title && (
                                             <div style={{order: 3, paddingBottom: 4}}>
