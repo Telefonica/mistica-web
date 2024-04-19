@@ -71,6 +71,8 @@ interface ContentProps extends CommonProps {
     isClickable?: boolean;
     type?: 'chevron' | 'basic' | 'custom' | 'control';
     right?: Right;
+    headlineRef?: React.Ref<HTMLDivElement>;
+    extraRef?: React.Ref<HTMLDivElement>;
     /** This id is to link the title with the related control */
     labelId?: string;
 }
@@ -78,6 +80,8 @@ interface ContentProps extends CommonProps {
 export const Content: React.FC<ContentProps> = ({
     withChevron,
     headline,
+    headlineRef,
+    extraRef,
     title,
     titleAs,
     titleLinesMax,
@@ -132,45 +136,51 @@ export const Content: React.FC<ContentProps> = ({
                 style={{justifyContent: centerY ? 'center' : 'flex-start'}}
                 id={labelId}
             >
-                <Stack space={4}>
-                    {headline && (
+                <Text3
+                    regular
+                    color={vars.colors.textPrimary}
+                    truncate={titleLinesMax}
+                    hyphens="auto"
+                    as={titleAs}
+                >
+                    {title}
+                </Text3>
+                {headline && (
+                    <div ref={headlineRef} style={{order: -1, paddingBottom: 4}}>
                         <Text1 regular color={vars.colors.textPrimary} hyphens="auto">
                             {headline}
                         </Text1>
-                    )}
-                    <Stack space={2}>
-                        <Text3
+                    </div>
+                )}
+                {subtitle && (
+                    <Box paddingTop={2}>
+                        <Text2
                             regular
-                            color={vars.colors.textPrimary}
-                            truncate={titleLinesMax}
+                            color={vars.colors.textSecondary}
+                            truncate={subtitleLinesMax}
                             hyphens="auto"
-                            as={titleAs}
                         >
-                            {title}
-                        </Text3>
-                        {subtitle && (
-                            <Text2
-                                regular
-                                color={vars.colors.textSecondary}
-                                truncate={subtitleLinesMax}
-                                hyphens="auto"
-                            >
-                                {subtitle}
-                            </Text2>
-                        )}
-                        {description && (
-                            <Text2
-                                regular
-                                color={vars.colors.textSecondary}
-                                truncate={descriptionLinesMax}
-                                hyphens="auto"
-                            >
-                                {description}
-                            </Text2>
-                        )}
+                            {subtitle}
+                        </Text2>
+                    </Box>
+                )}
+                {description && (
+                    <Box paddingTop={2}>
+                        <Text2
+                            regular
+                            color={vars.colors.textSecondary}
+                            truncate={descriptionLinesMax}
+                            hyphens="auto"
+                        >
+                            {description}
+                        </Text2>
+                    </Box>
+                )}
+                {extra && (
+                    <Box ref={extraRef} paddingTop={2}>
                         {extra}
-                    </Stack>
-                </Stack>
+                    </Box>
+                )}
             </div>
 
             {renderBadge()}
@@ -355,8 +365,13 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
         'aria-label': ariaLabel,
     } = props;
 
+    const [headlineText, setHeadlineText] = React.useState<string>('');
+    const [extraText, setExtraText] = React.useState<string>('');
+
     // iOS voiceover reads links with multiple lines as separate links. By setting aria-label and marking content as aria-hidden, we can make it read the whole row as one link.
-    const iosVoiceOverLabelForLink = [title, subtitle, description, detail].filter(Boolean).join(' ');
+    const computedAriaLabelForLink = [title, headlineText, subtitle, description, extraText, detail]
+        .filter(Boolean)
+        .join(' ');
 
     const radioContext = useRadioContext();
     const disabled = props.disabled || (props.radioValue !== undefined && radioContext.disabled);
@@ -377,6 +392,11 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
         <Content
             asset={asset}
             headline={headline}
+            headlineRef={(node) => {
+                if (node) {
+                    setHeadlineText(node.textContent || '');
+                }
+            }}
             title={title}
             titleAs={titleAs}
             subtitle={subtitle}
@@ -389,6 +409,12 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
             type={type}
             right={right}
             extra={extra}
+            extraRef={(node) => {
+                if (node) {
+                    // jsdom doesn't support innerText so we fallback to textContent https://github.com/jsdom/jsdom/issues/1245
+                    setExtraText(node.innerText || node.textContent || '');
+                }
+            }}
             labelId={labelId}
             disabled={disabled}
             withChevron={!!props.onPress || !!props.href || !!props.to}
@@ -455,7 +481,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
                 role={role}
                 dataAttributes={dataAttributes}
                 disabled={disabled}
-                aria-label={ariaLabel ?? iosVoiceOverLabelForLink}
+                aria-label={ariaLabel ?? computedAriaLabelForLink}
             >
                 {renderBaseTouchableContent({right: props.right, hidden: true})}
             </BaseTouchable>
@@ -477,7 +503,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
                 role={role}
                 dataAttributes={dataAttributes}
                 disabled={disabled}
-                aria-label={ariaLabel ?? iosVoiceOverLabelForLink}
+                aria-label={ariaLabel ?? computedAriaLabelForLink}
             >
                 {renderBaseTouchableContent({right: props.right, hidden: true})}
             </BaseTouchable>
