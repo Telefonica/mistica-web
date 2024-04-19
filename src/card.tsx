@@ -1552,7 +1552,7 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                                             </div>
                                         )}
                                     </div>
-                                    -------------------------
+                                    {/* -------------------------
                                     <Stack space={8}>
                                         {(headline || pretitle || title || subtitle) && (
                                             <Stack space={16}>
@@ -1608,7 +1608,7 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                                                 {description}
                                             </Text2>
                                         )}
-                                    </Stack>
+                                    </Stack> */}
                                 </Box>
                             </Box>
                         </div>
