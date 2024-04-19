@@ -1428,7 +1428,6 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                         maybe
                         {...touchableProps}
                         className={styles.touchable}
-                        style={{border: '4px solid blue'}}
                         aria-label={isTouchable ? ariaLabel : undefined}
                     >
                         {isTouchable && <div className={overlayStyle} />}
@@ -1492,14 +1491,8 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                                             </div>
                                         )}
                                         {headline && (
-                                            <div
-                                                ref={headlineRef}
-                                                style={{
-                                                    paddingBottom:
-                                                        pretitle || title || subtitle || description ? 16 : 0,
-                                                    order: 1,
-                                                }}
-                                            >
+                                            // assuming that the headline will always be followed by one of: pretitle, title, subtitle, description
+                                            <div ref={headlineRef} style={{paddingBottom: 16, order: 1}}>
                                                 {headline}
                                             </div>
                                         )}
@@ -1529,6 +1522,8 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                                             </div>
                                         )}
                                         {description && (
+                                            // this is tricky, the padding between a headline and a description is 16px
+                                            // but the padding between a title|pretitle|subtitle and a description is 8px (4px + 4px)
                                             <div
                                                 style={{
                                                     order: 5,
@@ -1552,63 +1547,6 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                                             </div>
                                         )}
                                     </div>
-                                    {/* -------------------------
-                                    <Stack space={8}>
-                                        {(headline || pretitle || title || subtitle) && (
-                                            <Stack space={16}>
-                                                <div ref={headlineRef}>{headline}</div>
-                                                <Stack space={4}>
-                                                    {pretitle && (
-                                                        <Text2
-                                                            forceMobileSizes
-                                                            truncate={pretitleLinesMax}
-                                                            as="div"
-                                                            regular
-                                                            textShadow={textShadow}
-                                                        >
-                                                            {pretitle}
-                                                        </Text2>
-                                                    )}
-                                                    <Text
-                                                        desktopSize={20}
-                                                        mobileSize={18}
-                                                        mobileLineHeight="24px"
-                                                        desktopLineHeight="28px"
-                                                        truncate={titleLinesMax}
-                                                        weight={textPresets.cardTitle.weight}
-                                                        as={titleAs}
-                                                    >
-                                                        {title}
-                                                    </Text>
-                                                    <Text2
-                                                        forceMobileSizes
-                                                        truncate={subtitleLinesMax}
-                                                        as="div"
-                                                        regular
-                                                        textShadow={textShadow}
-                                                    >
-                                                        {subtitle}
-                                                    </Text2>
-                                                </Stack>
-                                            </Stack>
-                                        )}
-                                        {description && (
-                                            <Text2
-                                                forceMobileSizes
-                                                truncate={descriptionLinesMax}
-                                                as="p"
-                                                regular
-                                                textShadow={textShadow}
-                                                color={
-                                                    withGradient
-                                                        ? vars.colors.textPrimary
-                                                        : vars.colors.textSecondary
-                                                }
-                                            >
-                                                {description}
-                                            </Text2>
-                                        )}
-                                    </Stack> */}
                                 </Box>
                             </Box>
                         </div>
