@@ -22,7 +22,6 @@ type Props = {
     /** "data-" prefix is automatically added. For example, use "testid" instead of "data-testid" */
     dataAttributes?: DataAttributes;
     'aria-label'?: string;
-    'aria-hidden'?: boolean | 'true' | 'false';
 };
 
 const Box = React.forwardRef<HTMLDivElement, Props>(
@@ -41,7 +40,6 @@ const Box = React.forwardRef<HTMLDivElement, Props>(
             role,
             dataAttributes,
             'aria-label': ariaLabel,
-            'aria-hidden': ariaHidden,
         },
         ref
     ) => {
@@ -66,7 +64,6 @@ const Box = React.forwardRef<HTMLDivElement, Props>(
                 {...getPrefixedDataAttributes(dataAttributes)}
                 role={role}
                 aria-label={ariaLabel}
-                aria-hidden={ariaHidden}
                 ref={ref}
                 className={classnames(className, paddingClasses)}
                 style={{
