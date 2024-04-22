@@ -41,11 +41,17 @@ const vivinhoForScreenReaders = (
     </>
 );
 
-const makeVivinhoCharReadableForScreenReaders = (text: string): React.ReactNode => {
-    if (text.includes(VIVINHO_CHAR)) {
+const makeVivinhoCharReadableForScreenReaders = (children: React.ReactNode): React.ReactNode => {
+    return React.Children.map(children, (child) => {
+        if (typeof child !== 'string') {
+            return child;
+        }
+        if (!child.includes(VIVINHO_CHAR)) {
+            return child;
+        }
         return (
             <>
-                {text.split(VIVINHO_CHAR).map((segment, idx) => (
+                {child.split(VIVINHO_CHAR).map((segment, idx) => (
                     <React.Fragment key={idx}>
                         {idx > 0 && vivinhoForScreenReaders}
                         {segment}
@@ -53,9 +59,7 @@ const makeVivinhoCharReadableForScreenReaders = (text: string): React.ReactNode 
                 ))}
             </>
         );
-    } else {
-        return text;
-    }
+    });
 };
 
 export interface TextPresetProps {
@@ -172,9 +176,7 @@ export const Text: React.FC<TextProps> = ({
                 textShadow,
             },
         },
-        typeof children === 'string' && skinName === VIVO_NEW_SKIN
-            ? makeVivinhoCharReadableForScreenReaders(children)
-            : children
+        skinName === VIVO_NEW_SKIN ? makeVivinhoCharReadableForScreenReaders(children) : children
     );
 };
 
