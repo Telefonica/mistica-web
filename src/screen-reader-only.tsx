@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as styles from './screen-reader-only.css';
 
-type Props = {children: React.ReactNode | string};
+type Props = {children: React.ReactNode};
 
 const ScreenReaderOnly: React.FC<Props> = ({children}) => {
     if (React.Children.count(children) === 1) {
