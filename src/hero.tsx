@@ -160,7 +160,7 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
                         {...getPrefixedDataAttributes({'component-name': 'Hero', ...dataAttributes})}
                         ref={ref}
                         style={{
-                            backgroundColor: BACKGROUND_COLOR[background],
+                            background: BACKGROUND_COLOR[background],
                             ...(height === '100vh' ? {maxHeight: '-webkit-fill-available'} : {}), // Hack to avoid issues in Safari with 100vh
                             ...applyCssVars({
                                 [styles.vars.height]: height ?? '100%',
@@ -209,7 +209,7 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
                     {...getPrefixedDataAttributes({'component-name': 'Hero', ...dataAttributes})}
                     ref={ref}
                     style={{
-                        backgroundColor: BACKGROUND_COLOR[background],
+                        background: BACKGROUND_COLOR[background],
                         ...(height === '100vh' ? {maxHeight: '-webkit-fill-available'} : {}), // Hack to avoid issues in Safari with 100vh
                         ...applyCssVars({
                             [styles.vars.height]: height ?? '100%',
