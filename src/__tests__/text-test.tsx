@@ -24,6 +24,22 @@ test.each([
     expect(screen.getByRole('link', {name: expected})).toBeInTheDocument();
 });
 
+test('vivinho char replacement works in Texts with multiple children', () => {
+    const someVar = 'something';
+    const vivinhoVar = 'Ħ';
+    render(
+        <ThemeContextProvider theme={makeTheme({skin: getVivoNewSkin()})}>
+            <a href="/">
+                <Text>
+                    Ħ {someVar} {vivinhoVar}
+                </Text>
+            </a>
+        </ThemeContextProvider>
+    );
+
+    expect(screen.getByRole('link', {name: 'Vivo something Vivo'})).toBeInTheDocument();
+});
+
 test('vivinho char is only replaced in vivo-new skin', () => {
     render(
         <ThemeContextProvider theme={makeTheme({skin: getMovistarSkin()})}>
