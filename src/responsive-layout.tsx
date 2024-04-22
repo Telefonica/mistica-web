@@ -18,7 +18,9 @@ type Props = {
     dataAttributes?: DataAttributes;
 };
 
-export const InternalResponsiveLayout: React.FC<Props & {shouldExpandWhenNested?: boolean | 'desktop'}> = ({
+export const InternalResponsiveLayout: React.FC<
+    Props & {shouldExpandWhenNested?: boolean | 'desktop'; innerDivClassName?: string}
+> = ({
     children,
     isInverse = false,
     variant,
@@ -27,6 +29,7 @@ export const InternalResponsiveLayout: React.FC<Props & {shouldExpandWhenNested?
     fullWidth,
     dataAttributes,
     shouldExpandWhenNested = false,
+    innerDivClassName,
 }) => {
     // @deprecated @TODO https://jira.tid.es/browse/WEB-1611
     const outsideVariant: Variant = useThemeVariant();
@@ -51,7 +54,14 @@ export const InternalResponsiveLayout: React.FC<Props & {shouldExpandWhenNested?
                 style={backgroundColor ? {background: backgroundColor} : undefined}
                 {...getPrefixedDataAttributes(dataAttributes)}
             >
-                <div className={fullWidth ? styles.fullWidth : styles.responsiveLayout}>{children}</div>
+                <div
+                    className={classnames(
+                        fullWidth ? styles.fullWidth : styles.responsiveLayout,
+                        innerDivClassName
+                    )}
+                >
+                    {children}
+                </div>
             </div>
         </ThemeVariant>
     );
