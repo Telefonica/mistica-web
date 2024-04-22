@@ -1477,7 +1477,7 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                                     {/* using flex instead of nested Stacks, this way we can rearrange texts so the DOM structure makes more sense for screen reader users */}
                                     <div className={styles.flexColumn}>
                                         {title && (
-                                            <div style={{order: 3, paddingBottom: 4}}>
+                                            <div style={{paddingBottom: 4}}>
                                                 <Text
                                                     desktopSize={20}
                                                     mobileSize={18}
@@ -1491,26 +1491,29 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                                                 </Text>
                                             </div>
                                         )}
-                                        {headline && (
-                                            // assuming that the headline will always be followed by one of: pretitle, title, subtitle, description
-                                            <div ref={headlineRef} style={{paddingBottom: 16, order: 1}}>
-                                                {headline}
-                                            </div>
-                                        )}
-                                        {pretitle && (
-                                            <div style={{order: 2, paddingBottom: 4}}>
-                                                <Text2
-                                                    forceMobileSizes
-                                                    truncate={pretitleLinesMax}
-                                                    regular
-                                                    textShadow={textShadow}
-                                                >
-                                                    {pretitle}
-                                                </Text2>
-                                            </div>
-                                        )}
+                                        {/* the headline and pretitle are grouped and placed above the title */}
+                                        <div style={{order: -1}}>
+                                            {headline && (
+                                                // assuming that the headline will always be followed by one of: pretitle, title, subtitle, description
+                                                <div ref={headlineRef} style={{paddingBottom: 16}}>
+                                                    {headline}
+                                                </div>
+                                            )}
+                                            {pretitle && (
+                                                <div style={{paddingBottom: 4}}>
+                                                    <Text2
+                                                        forceMobileSizes
+                                                        truncate={pretitleLinesMax}
+                                                        regular
+                                                        textShadow={textShadow}
+                                                    >
+                                                        {pretitle}
+                                                    </Text2>
+                                                </div>
+                                            )}
+                                        </div>
                                         {subtitle && (
-                                            <div style={{order: 4, paddingBottom: 4}}>
+                                            <div style={{paddingBottom: 4}}>
                                                 <Text2
                                                     forceMobileSizes
                                                     truncate={subtitleLinesMax}
@@ -1527,7 +1530,6 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                                             // but the padding between a title|pretitle|subtitle and a description is 8px (4px + 4px)
                                             <div
                                                 style={{
-                                                    order: 5,
                                                     paddingTop: pretitle || title || subtitle ? 4 : 0,
                                                 }}
                                             >
