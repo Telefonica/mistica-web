@@ -23,10 +23,11 @@ type HeroArgs = {
     description: string;
     withExtra: boolean;
     actions: 'button' | 'link' | 'button and link';
-    background: 'default' | 'alternative' | 'brand' | 'brand-secondary';
+    background: 'default' | 'alternative' | 'brand' | 'brand-secondary' | 'none';
     desktopMediaPosition: 'left' | 'right';
     height?: string;
     aspectRatio: string;
+    noPaddingY: boolean;
 };
 
 export const Default: StoryComponent<HeroArgs> = ({
@@ -42,6 +43,7 @@ export const Default: StoryComponent<HeroArgs> = ({
     height,
     withExtra,
     aspectRatio,
+    noPaddingY,
 }) => {
     const mediaComponent =
         media === 'video' ? (
@@ -49,14 +51,9 @@ export const Default: StoryComponent<HeroArgs> = ({
                 src={beachVideo}
                 poster={beachImg}
                 aspectRatio={aspectRatio.replace(' ', ':') as AspectRatio}
-                height="100%"
             />
         ) : (
-            <Image
-                src={usingVrImg}
-                aspectRatio={aspectRatio.replace(' ', ':') as AspectRatio}
-                height="100%"
-            />
+            <Image src={usingVrImg} aspectRatio={aspectRatio.replace(' ', ':') as AspectRatio} />
         );
 
     const button = actions.includes('button') ? <ButtonPrimary fake>Action</ButtonPrimary> : undefined;
@@ -76,6 +73,7 @@ export const Default: StoryComponent<HeroArgs> = ({
             dataAttributes={{testid: 'hero'}}
             desktopMediaPosition={desktopMediaPosition}
             height={height}
+            noPaddingY={noPaddingY}
         />
     );
 };
@@ -93,8 +91,9 @@ Default.args = {
     actions: 'button and link',
     background: 'default',
     desktopMediaPosition: 'right',
-    height: '100vh',
+    height: '',
     aspectRatio: '16 9',
+    noPaddingY: false,
 };
 
 Default.argTypes = {
@@ -111,7 +110,7 @@ Default.argTypes = {
         control: {type: 'select'},
     },
     background: {
-        options: ['default', 'alternative', 'brand', 'brand-secondary'],
+        options: ['default', 'alternative', 'brand', 'brand-secondary', 'none'],
         control: {type: 'select'},
     },
     desktopMediaPosition: {

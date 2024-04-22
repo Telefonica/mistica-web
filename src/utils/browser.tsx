@@ -4,6 +4,6 @@ export const redirect = (url: string, external = false, loadOnTop = false): void
     } else if (loadOnTop) {
         window.open(url, '_top');
     } else {
-        document.location.href = url;
+        window.location.assign(url);
     }
 };

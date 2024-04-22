@@ -13,8 +13,9 @@ import * as mediaStyles from './image.css';
 import {useIsInsideSlideshowContext} from './carousel';
 import {getPrefixedDataAttributes} from './utils/dom';
 import {sprinkles} from './sprinkles.css';
-import {ThemeVariant} from './theme-variant-context';
+import {useIsInverseVariant} from './theme-variant-context';
 import {applyCssVars} from './utils/css';
+import {InternalResponsiveLayout} from './responsive-layout';
 
 import type Image from './image';
 import type Video from './video';
@@ -22,15 +23,19 @@ import type {ButtonLink, ButtonPrimary, ButtonSecondary} from './button';
 import type Tag from './tag';
 import type {DataAttributes, RendersElement, RendersNullableElement} from './utils/types';
 
-type LayoutProps = {children: React.ReactNode; isInverse: boolean};
+type LayoutProps = {children: React.ReactNode; isInverse: boolean; isInsideSlideShow?: boolean};
 
-// This is a duplication of the ResponsiveLayout, needed because original ResponsiveLayout has a inner div that we cannot control and the height is missing there.
-// We need to control this height to fix the actions at the bottom of the Hero component when we are inside a Slidehow with differents Hero heights.
-const Layout = ({children, isInverse}: LayoutProps) => {
+const Layout = ({children, isInverse, isInsideSlideShow}: LayoutProps) => {
     return (
-        <ThemeVariant isInverse={isInverse}>
-            <div className={styles.layout}>{children}</div>
-        </ThemeVariant>
+        <InternalResponsiveLayout
+            isInverse={isInverse}
+            className={styles.layout}
+            innerDivClassName={styles.layout}
+            shouldExpandWhenNested={isInsideSlideShow ? 'desktop' : true}
+            backgroundColor="transparent"
+        >
+            {children}
+        </InternalResponsiveLayout>
     );
 };
 
@@ -103,7 +108,8 @@ const HeroContent = ({
 
 type HeroProps = {
     height?: string;
-    background?: 'default' | 'alternative' | 'brand' | 'brand-secondary';
+    background?: 'default' | 'alternative' | 'brand' | 'brand-secondary' | 'none';
+    noPaddingY?: boolean;
     media: RendersElement<typeof Image> | RendersElement<typeof Video>;
     headline?: RendersNullableElement<typeof Tag>;
     pretitle?: string;
@@ -123,16 +129,29 @@ const BACKGROUND_COLOR = {
     alternative: vars.colors.backgroundAlternative,
     brand: vars.colors.backgroundBrand,
     'brand-secondary': vars.colors.backgroundBrandSecondary,
+    none: 'transparent',
 };
 
 const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
     (
-        {height, background = 'default', media, desktopMediaPosition = 'left', dataAttributes, ...rest},
+        {
+            height,
+            background = 'default',
+            media,
+            desktopMediaPosition = 'left',
+            dataAttributes,
+            noPaddingY,
+            ...rest
+        },
         ref
     ) => {
         const {isTabletOrSmaller} = useScreenSize();
         const isInsideSlideShow = useIsInsideSlideshowContext();
-        const isInverse = background === 'brand' || background === 'brand-secondary';
+        const isInverseOutside = useIsInverseVariant();
+        const isInverse =
+            background === 'none'
+                ? isInverseOutside
+                : background === 'brand' || background === 'brand-secondary';
 
         if (isTabletOrSmaller) {
             return (
@@ -147,11 +166,17 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
                                 [styles.vars.height]: height ?? '100%',
                             }),
                         }}
-                        className={classnames(styles.container, styles.containerMobile)}
+                        className={classnames(styles.container, styles.containerMobile, {
+                            [styles.containerMinHeight]: !noPaddingY,
+                        })}
                     >
-                        {media}
-                        <Layout isInverse={isInverse}>
-                            <Box paddingTop={24} paddingBottom={isInsideSlideShow ? 48 : 24}>
+                        <Layout isInverse={isInverse} isInsideSlideShow={isInsideSlideShow}>
+                            <div className={styles.mediaContainer}>{media}</div>
+                            <Box
+                                paddingTop={24}
+                                paddingBottom={isInsideSlideShow ? 48 : noPaddingY ? 0 : 24}
+                                className={styles.layout}
+                            >
                                 <HeroContent {...rest} />
                             </Box>
                         </Layout>
@@ -190,22 +215,24 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
                             [styles.vars.height]: height ?? '100%',
                         }),
                     }}
-                    className={sprinkles({height: '100%', display: 'flex', alignItems: 'center'})}
+                    className={sprinkles({height: '100%'})}
                 >
                     <Layout isInverse={isInverse}>
                         <GridLayout
                             template="6+6"
                             left={
                                 <Box
-                                    paddingY={56}
-                                    className={classnames(styles.container, styles.containerDesktop)}
+                                    paddingY={noPaddingY ? 0 : 56}
+                                    className={classnames(styles.container, styles.containerDesktop, {
+                                        [styles.containerMinHeight]: !noPaddingY,
+                                    })}
                                 >
                                     {left}
                                 </Box>
                             }
                             right={
                                 <Box
-                                    paddingY={56}
+                                    paddingY={noPaddingY ? 0 : 56}
                                     className={classnames(styles.container, styles.containerDesktop)}
                                 >
                                     {right}
