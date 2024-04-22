@@ -24,7 +24,7 @@ test.each([
     expect(screen.getByRole('link', {name: expected})).toBeInTheDocument();
 });
 
-test('vivinho char relacement works in Texts with multiple children', () => {
+test('vivinho char replacement works in Texts with multiple children', () => {
     const someVar = 'something';
     const vivinhoVar = 'Ħ';
     render(
