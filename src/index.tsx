@@ -852,6 +852,9 @@ export {default as IconEscalatorRegular} from './generated/mistica-icons/icon-es
 export {default as IconEsimFilled} from './generated/mistica-icons/icon-esim-filled';
 export {default as IconEsimLight} from './generated/mistica-icons/icon-esim-light';
 export {default as IconEsimRegular} from './generated/mistica-icons/icon-esim-regular';
+export {default as IconEthernetFilled} from './generated/mistica-icons/icon-ethernet-filled';
+export {default as IconEthernetLight} from './generated/mistica-icons/icon-ethernet-light';
+export {default as IconEthernetRegular} from './generated/mistica-icons/icon-ethernet-regular';
 export {default as IconEuroSymbolCircleFilled} from './generated/mistica-icons/icon-euro-symbol-circle-filled';
 export {default as IconEuroSymbolCircleLight} from './generated/mistica-icons/icon-euro-symbol-circle-light';
 export {default as IconEuroSymbolCircleRegular} from './generated/mistica-icons/icon-euro-symbol-circle-regular';
@@ -1552,6 +1555,9 @@ export {default as IconRouteRegular} from './generated/mistica-icons/icon-route-
 export {default as IconRouterFilled} from './generated/mistica-icons/icon-router-filled';
 export {default as IconRouterLight} from './generated/mistica-icons/icon-router-light';
 export {default as IconRouterRegular} from './generated/mistica-icons/icon-router-regular';
+export {default as IconRoutineFilled} from './generated/mistica-icons/icon-routine-filled';
+export {default as IconRoutineLight} from './generated/mistica-icons/icon-routine-light';
+export {default as IconRoutineRegular} from './generated/mistica-icons/icon-routine-regular';
 export {default as IconRulerFilled} from './generated/mistica-icons/icon-ruler-filled';
 export {default as IconRulerLight} from './generated/mistica-icons/icon-ruler-light';
 export {default as IconRulerRegular} from './generated/mistica-icons/icon-ruler-regular';
