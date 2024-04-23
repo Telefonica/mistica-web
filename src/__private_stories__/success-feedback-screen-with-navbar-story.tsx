@@ -10,6 +10,7 @@ import {
     NavigationBarActionGroup,
     Placeholder,
     SuccessFeedbackScreen,
+    TextField,
     useScreenSize,
     useTheme,
 } from '..';
@@ -21,7 +22,12 @@ export default {
     },
 };
 
-export const Default: StoryComponent = () => {
+type Args = {
+    showLargeContent: boolean;
+    showInput: boolean;
+};
+
+export const Default: StoryComponent<Args> = ({showLargeContent, showInput}) => {
     const {isDesktopOrBigger} = useScreenSize();
     const [index, setIndex] = React.useState(0);
     const {dimensions} = useTheme();
@@ -63,12 +69,22 @@ export const Default: StoryComponent = () => {
                         title="Some title"
                         description="Some description text"
                         primaryButton={<ButtonPrimary onPress={() => {}}>Action</ButtonPrimary>}
-                        extra={<Placeholder height={1000} />}
+                        extra={
+                            <>
+                                {showInput ? <TextField name="text" label="Text" /> : undefined}
+                                {showLargeContent ? <Placeholder height={1000} /> : undefined}
+                            </>
+                        }
                     />
                 </>
             )}
         </FixedToTop>
     );
+};
+
+Default.args = {
+    showLargeContent: false,
+    showInput: false,
 };
 
 Default.storyName = 'SuccessFeedbackScreen with Navigation Bar';
