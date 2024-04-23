@@ -58,7 +58,9 @@ export type DialogProps = ExclusifyUnion<AlertProps | ConfirmProps | ExtendedDia
     type: 'dialog' | 'alert' | 'confirm';
 };
 
-const Dialog: React.FC<DialogProps> = (props) => {
+type InternalDialogProps = DialogProps & {showCancelButton: boolean; showAcceptButton: boolean};
+
+const InternalDialog: React.FC<InternalDialogProps> = (props) => {
     const {texts} = useTheme();
     const {
         className,
@@ -66,6 +68,8 @@ const Dialog: React.FC<DialogProps> = (props) => {
         message,
         icon,
         extra,
+        showCancelButton,
+        showAcceptButton,
         cancelText = texts.dialogCancelButton,
         acceptText = texts.dialogAcceptButton,
         onCancel: handleCancel,
@@ -73,9 +77,6 @@ const Dialog: React.FC<DialogProps> = (props) => {
         destructive = false,
     } = props;
     const isDialog = props.type === 'dialog';
-    const showCancelButton = props.type === 'confirm' || (isDialog && !!handleCancel);
-    // "alert" and "confirm" always show the accept button; "dialog" only when the callback is provided
-    const showAcceptButton = !isDialog || !!handleAccept;
     const showActions = (isDialog && !!props.link) || showAcceptButton || showCancelButton;
 
     const acceptButtonProps = {
@@ -391,10 +392,16 @@ const ModalDialog = (props: ModalDialogProps): JSX.Element => {
                                     />
                                 </div>
                             )}
-                            <Dialog
+                            <InternalDialog
                                 {...dialogProps}
-                                onCancel={onCancel ? handleCancel : undefined}
-                                onAccept={onAccept ? handleAccept : undefined}
+                                // "alert" and "confirm" always show the accept button, "dialog" only when the callback is provided
+                                showAcceptButton={props.type !== 'dialog' || !!props.onAccept}
+                                // "alert" never shows the cancel button, "confirm" always shows it, "dialog" only when the callback is provided
+                                showCancelButton={
+                                    props.type === 'confirm' || (props.type === 'dialog' && !!props.onCancel)
+                                }
+                                onCancel={handleCancel}
+                                onAccept={handleAccept}
                             />
                         </div>
                     </div>
