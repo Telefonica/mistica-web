@@ -74,6 +74,9 @@ const Dialog: React.FC<DialogProps> = (props) => {
     } = props;
     const isDialog = props.type === 'dialog';
     const showCancelButton = props.type === 'confirm' || (isDialog && !!handleCancel);
+    // "alert" and "confirm" always show the accept button; "dialog" only when the callback is provided
+    const showAcceptButton = !isDialog || !!handleAccept;
+    const showActions = (isDialog && !!props.link) || showAcceptButton || showCancelButton;
 
     const acceptButtonProps = {
         onPress: handleAccept || (() => {}),
@@ -116,33 +119,37 @@ const Dialog: React.FC<DialogProps> = (props) => {
                 </Stack>
             </div>
 
-            <div className={styles.dialogActions}>
-                <ButtonLayout
-                    link={isDialog ? props.link : undefined}
-                    primaryButton={
-                        destructive ? (
-                            <ButtonDanger
-                                tabIndex={1} // eslint-disable-line jsx-a11y/tabindex-no-positive
-                                {...acceptButtonProps}
-                            />
-                        ) : (
-                            <ButtonPrimary tabIndex={1} {...acceptButtonProps} /> // eslint-disable-line jsx-a11y/tabindex-no-positive
-                        )
-                    }
-                    secondaryButton={
-                        showCancelButton ? (
-                            <ButtonSecondary
-                                tabIndex={2} // eslint-disable-line jsx-a11y/tabindex-no-positive
-                                onPress={handleCancel || (() => {})}
-                                // @deprecated - testid should be removed but many webapp tests depend on this
-                                dataAttributes={{testid: 'dialog-cancel-button'}}
-                            >
-                                {cancelText}
-                            </ButtonSecondary>
-                        ) : undefined
-                    }
-                />
-            </div>
+            {showActions && (
+                <div className={styles.dialogActions}>
+                    <ButtonLayout
+                        link={isDialog ? props.link : undefined}
+                        primaryButton={
+                            showAcceptButton ? (
+                                destructive ? (
+                                    <ButtonDanger
+                                        tabIndex={1} // eslint-disable-line jsx-a11y/tabindex-no-positive
+                                        {...acceptButtonProps}
+                                    />
+                                ) : (
+                                    <ButtonPrimary tabIndex={1} {...acceptButtonProps} /> // eslint-disable-line jsx-a11y/tabindex-no-positive
+                                )
+                            ) : undefined
+                        }
+                        secondaryButton={
+                            showCancelButton ? (
+                                <ButtonSecondary
+                                    tabIndex={2} // eslint-disable-line jsx-a11y/tabindex-no-positive
+                                    onPress={handleCancel || (() => {})}
+                                    // @deprecated - testid should be removed but many webapp tests depend on this
+                                    dataAttributes={{testid: 'dialog-cancel-button'}}
+                                >
+                                    {cancelText}
+                                </ButtonSecondary>
+                            ) : undefined
+                        }
+                    />
+                </div>
+            )}
         </div>
     );
 };
@@ -384,7 +391,11 @@ const ModalDialog = (props: ModalDialogProps): JSX.Element => {
                                     />
                                 </div>
                             )}
-                            <Dialog {...dialogProps} onCancel={handleCancel} onAccept={handleAccept} />
+                            <Dialog
+                                {...dialogProps}
+                                onCancel={onCancel ? handleCancel : undefined}
+                                onAccept={onAccept ? handleAccept : undefined}
+                            />
                         </div>
                     </div>
                 </div>

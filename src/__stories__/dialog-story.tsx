@@ -63,7 +63,35 @@ export const Confirm: StoryComponent<{destructive: boolean}> = ({destructive}) =
     );
 };
 
-export const Dialog: StoryComponent = () => {
+Confirm.args = {
+    destructive: false,
+};
+
+type DialogArgs = {
+    title: string;
+    subtitle: string;
+    message: string;
+    acceptText: string;
+    cancelText: string;
+    onAccept: boolean;
+    onCancel: boolean;
+    link: boolean;
+    icon: boolean;
+    extra: boolean;
+};
+
+export const Dialog: StoryComponent<DialogArgs> = ({
+    onAccept,
+    onCancel,
+    link,
+    icon,
+    extra,
+    title,
+    subtitle,
+    message,
+    acceptText,
+    cancelText,
+}) => {
     const {dialog} = useDialog();
     return (
         <ButtonLayout
@@ -72,11 +100,12 @@ export const Dialog: StoryComponent = () => {
                     aria-haspopup="dialog"
                     onPress={() =>
                         dialog({
-                            title: 'Title',
-                            subtitle: 'Subtitle',
-                            message: 'Message',
-                            acceptText: 'Accept terms and conditions',
-                            extra: (
+                            title,
+                            subtitle,
+                            message,
+                            acceptText,
+                            cancelText,
+                            extra: extra ? (
                                 <Stack space={16}>
                                     <Text1 regular>Extra content</Text1>
                                     <Select
@@ -89,11 +118,13 @@ export const Dialog: StoryComponent = () => {
                                         ]}
                                     />
                                 </Stack>
-                            ),
-                            link: <ButtonLink href="https://google.com">Link</ButtonLink>,
-                            icon: <IconInformationUserLight color={skinVars.colors.brand} />,
-                            onAccept: () => console.log('Accepted'),
-                            onCancel: () => console.log('Canceled'),
+                            ) : undefined,
+                            link: link ? <ButtonLink href="https://google.com">Link</ButtonLink> : undefined,
+                            icon: icon ? (
+                                <IconInformationUserLight color={skinVars.colors.brand} />
+                            ) : undefined,
+                            onAccept: onAccept ? () => console.log('Accepted') : undefined,
+                            onCancel: onCancel ? () => console.log('Canceled') : undefined,
                         })
                     }
                 >
@@ -104,6 +135,15 @@ export const Dialog: StoryComponent = () => {
     );
 };
 
-Confirm.args = {
-    destructive: false,
+Dialog.args = {
+    title: 'Title',
+    subtitle: 'Subtitle',
+    message: 'Message',
+    acceptText: 'Accept terms and conditions',
+    cancelText: 'Cancel',
+    onAccept: true,
+    onCancel: true,
+    link: true,
+    icon: true,
+    extra: true,
 };
