@@ -74,7 +74,7 @@ const BottomOverscrollColor = () => {
         <div
             style={{
                 position: 'fixed',
-                zIndex: -1,
+                zIndex: -100,
                 background: bottomColorToApply,
                 width: '100%',
                 height: 300,

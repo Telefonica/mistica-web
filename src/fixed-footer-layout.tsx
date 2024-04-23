@@ -20,10 +20,12 @@ import {
     hasScroll,
     removePassiveEventListener,
 } from './utils/dom';
+import {Portal} from './portal';
 import {vars} from './skins/skin-contract.css';
 import * as styles from './fixed-footer-layout.css';
 import {applyCssVars, safeAreaInsetBottom} from './utils/css';
 import {useFixedToTopHeight} from './fixed-to-top';
+import {content} from './snackbar.css';
 
 const FOOTER_CANVAS_RATIO = 2;
 const getScrollEventTarget = (el: HTMLElement) => (el === document.documentElement ? window : el);
@@ -71,6 +73,9 @@ const FixedFooterLayout = ({
         onChangeFooterHeight?.(domFooterHeight);
     }, [onChangeFooterHeight, domFooterHeight]);
 
+    const footerIsFixed = hasContentEnoughVSpace;
+    const footerHeightStyle = `calc(${safeAreaInsetBottom} + ${domFooterHeight}px)`;
+
     React.useEffect(() => {
         /**
          * There is no elevation in desktop devices and we don't display it in acceptance tests or when the
@@ -83,7 +88,7 @@ const FixedFooterLayout = ({
         const scrollable = getScrollableParentElement(containerRef.current);
 
         const shouldDisplayElevation = () =>
-            hasScroll(scrollable) && getScrollDistanceToBottom(scrollable) > 1; // This is 1 and not 0 because a weird bug with Safari
+            footerIsFixed && hasScroll(scrollable) && getScrollDistanceToBottom(scrollable) > 1; // This is 1 and not 0 because a weird bug with Safari
 
         const checkDisplayElevation = debounce(
             () => {
@@ -110,10 +115,8 @@ const FixedFooterLayout = ({
         topDistance,
         contentHeight,
         isTabletOrSmaller,
+        footerIsFixed,
     ]);
-
-    const footerIsFixed = hasContentEnoughVSpace;
-    const footerHeightStyle = `calc(${safeAreaInsetBottom} + ${domFooterHeight}px)`;
 
     /**
      * Notes about the background:
@@ -131,25 +134,24 @@ const FixedFooterLayout = ({
      */
     const renderBackground = () => {
         return (
-            <>
-                {footerIsFixed && (
-                    <div className={styles.fixedBackgroundLayer} style={{background: footerBgColor}} />
-                )}
+            <Portal>
+                <div className={styles.fixedBackgroundLayer} style={{background: footerBgColor}} />
                 <div
                     className={styles.absoluteBackgroundLayer}
                     style={{
                         background: containerBgColor, // this color could be a gradient
-                        height: footerIsFixed
-                            ? `calc((100vh - ${footerHeightStyle}) - ${topDistance}px)`
-                            : `calc(100% - ${topDistance}px)`,
+                        top: topDistance,
+                        bottom: footerIsFixed ? footerHeightStyle : 'unset',
+                        height: footerIsFixed ? 'unset' : contentHeight,
                     }}
                 />
-            </>
+            </Portal>
         );
     };
 
     return (
         <>
+            {renderBackground()}
             <div
                 ref={containerRef}
                 className={styles.container}
@@ -159,7 +161,6 @@ const FixedFooterLayout = ({
                         : '0px',
                 })}
             >
-                {renderBackground()}
                 {children}
             </div>
             <div

@@ -68,7 +68,6 @@ export const fixedBackgroundLayer = style([
 
 export const absoluteBackgroundLayer = style([
     sprinkles({
-        top: 0,
         left: 0,
         right: 0,
         position: 'absolute',

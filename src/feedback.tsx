@@ -232,7 +232,6 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
 
     return (
         <div style={{position: 'relative'}}>
-            {isInverse && <FeedbackScreenOverscrollColor />}
             <ResponsiveLayout>
                 <Box paddingTop={{desktop: 64, mobile: 0}}>
                     {renderFeedback({
