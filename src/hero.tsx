@@ -124,14 +124,6 @@ type HeroProps = {
     desktopMediaPosition?: 'left' | 'right';
 };
 
-const BACKGROUND_COLOR = {
-    default: vars.colors.background,
-    alternative: vars.colors.backgroundAlternative,
-    brand: vars.colors.backgroundBrand,
-    'brand-secondary': vars.colors.backgroundBrandSecondary,
-    none: 'transparent',
-};
-
 const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
     (
         {
@@ -160,7 +152,6 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
                         {...getPrefixedDataAttributes({'component-name': 'Hero', ...dataAttributes})}
                         ref={ref}
                         style={{
-                            background: BACKGROUND_COLOR[background],
                             ...(height === '100vh' ? {maxHeight: '-webkit-fill-available'} : {}), // Hack to avoid issues in Safari with 100vh
                             ...applyCssVars({
                                 [styles.vars.height]: height ?? '100%',
@@ -171,14 +162,24 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
                         })}
                     >
                         <Layout isInverse={isInverse} isInsideSlideShow={isInsideSlideShow}>
-                            <div className={styles.mediaContainer}>{media}</div>
-                            <Box
-                                paddingTop={24}
-                                paddingBottom={isInsideSlideShow ? 48 : noPaddingY ? 0 : 24}
-                                className={styles.layout}
-                            >
-                                <HeroContent {...rest} />
-                            </Box>
+                            <div className={classnames(styles.contentWrapper)}>
+                                {media}
+
+                                <div
+                                    className={classnames(
+                                        styles.containerBackground[background],
+                                        styles.expandedContent
+                                    )}
+                                >
+                                    <Box
+                                        paddingTop={24}
+                                        paddingBottom={isInsideSlideShow ? 48 : noPaddingY ? 0 : 24}
+                                        className={classnames(styles.layout, styles.contentContainer)}
+                                    >
+                                        <HeroContent {...rest} />
+                                    </Box>
+                                </div>
+                            </div>
                         </Layout>
                     </div>
                 </div>
@@ -209,13 +210,15 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
                     {...getPrefixedDataAttributes({'component-name': 'Hero', ...dataAttributes})}
                     ref={ref}
                     style={{
-                        background: BACKGROUND_COLOR[background],
                         ...(height === '100vh' ? {maxHeight: '-webkit-fill-available'} : {}), // Hack to avoid issues in Safari with 100vh
                         ...applyCssVars({
                             [styles.vars.height]: height ?? '100%',
                         }),
                     }}
-                    className={sprinkles({height: '100%'})}
+                    className={classnames(
+                        sprinkles({height: '100%'}),
+                        styles.containerBackground[background]
+                    )}
                 >
                     <Layout isInverse={isInverse}>
                         <GridLayout
