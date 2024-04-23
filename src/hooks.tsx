@@ -138,6 +138,8 @@ export const useWindowSize = (): {
     width: number;
     screenHeight: number;
     screenWidth: number;
+    /** Size of the available window size, removing virtual keyboard and native navigation bar or status bar */
+    visualHeight: number;
 } => {
     const [windowHeight, setWindowHeight] = React.useState<number>(
         isClientSide() ? window.innerHeight : 1200 // Best guess
@@ -153,12 +155,17 @@ export const useWindowSize = (): {
         isClientSide() ? window.screen.availWidth : 800
     );
 
+    const [visualHeight, setVisualHeight] = React.useState<number>(
+        isClientSide() ? window.visualViewport?.height || window.screen.availWidth : 1200
+    );
+
     React.useEffect(() => {
         const handleResize = () => {
             setWindowHeight(window.innerHeight);
             setWindowWidth(window.innerWidth);
             setScreenHeight(window.screen.availHeight);
             setScreenWidth(window.screen.availWidth);
+            setVisualHeight(window.visualViewport?.height || window.screen.availWidth);
         };
 
         window.addEventListener('resize', handleResize);
@@ -170,8 +177,14 @@ export const useWindowSize = (): {
 
     // do not create new result instances if values don't change
     return React.useMemo(
-        () => ({height: windowHeight, width: windowWidth, screenHeight, screenWidth}),
-        [windowHeight, windowWidth, screenHeight, screenWidth]
+        () => ({
+            height: windowHeight,
+            width: windowWidth,
+            screenHeight,
+            screenWidth,
+            visualHeight,
+        }),
+        [windowHeight, windowWidth, screenHeight, screenWidth, visualHeight]
     );
 };
 

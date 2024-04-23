@@ -8,6 +8,7 @@ import {
     MainNavigationBar,
     NavigationBarAction,
     NavigationBarActionGroup,
+    Placeholder,
     SuccessFeedbackScreen,
     useScreenSize,
     useTheme,
@@ -62,6 +63,7 @@ export const Default: StoryComponent = () => {
                         title="Some title"
                         description="Some description text"
                         primaryButton={<ButtonPrimary onPress={() => {}}>Action</ButtonPrimary>}
+                        extra={<Placeholder height={1000} />}
                     />
                 </>
             )}

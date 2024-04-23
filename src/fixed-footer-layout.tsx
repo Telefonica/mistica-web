@@ -7,11 +7,9 @@ import {
     useBoundingRect,
     useElementDimensions,
     useIsomorphicLayoutEffect,
-    useIsWithinIFrame,
-    useScreenHeight,
     useScreenSize,
     useTheme,
-    useWindowHeight,
+    useWindowSize,
 } from './hooks';
 import {
     addPassiveEventListener,
@@ -25,9 +23,7 @@ import {vars} from './skins/skin-contract.css';
 import * as styles from './fixed-footer-layout.css';
 import {applyCssVars, safeAreaInsetBottom} from './utils/css';
 import {useFixedToTopHeight} from './fixed-to-top';
-import {content} from './snackbar.css';
 
-const FOOTER_CANVAS_RATIO = 2;
 const getScrollEventTarget = (el: HTMLElement) => (el === document.documentElement ? window : el);
 
 const waitForSwitchTransitionToStart = (fn: () => void) => {
@@ -47,6 +43,8 @@ type Props = {
     onChangeFooterHeight?: (heightInPx: number) => void;
 };
 
+const MIN_AVAILABLE_HEIGHT_FOR_FIXED = 200;
+
 const FixedFooterLayout = ({
     isFooterVisible = true,
     footer,
@@ -62,18 +60,15 @@ const FixedFooterLayout = ({
     const {isTabletOrSmaller} = useScreenSize();
     const {platformOverrides} = useTheme();
     const {height: domFooterHeight, ref} = useElementDimensions();
-    const isWithinIFrame = useIsWithinIFrame();
-    const windowHeight = useWindowHeight();
-    const screenHeight = useScreenHeight();
-    const hasContentEnoughVSpace =
-        windowHeight - domFooterHeight > (isWithinIFrame ? windowHeight : screenHeight) / FOOTER_CANVAS_RATIO;
+    const {visualHeight} = useWindowSize();
     const topDistance = useFixedToTopHeight();
+    const availableHeight = visualHeight - topDistance - domFooterHeight;
+    const footerIsFixed = availableHeight > MIN_AVAILABLE_HEIGHT_FOR_FIXED;
 
     useIsomorphicLayoutEffect(() => {
         onChangeFooterHeight?.(domFooterHeight);
     }, [onChangeFooterHeight, domFooterHeight]);
 
-    const footerIsFixed = hasContentEnoughVSpace;
     const footerHeightStyle = `calc(${safeAreaInsetBottom} + ${domFooterHeight}px)`;
 
     React.useEffect(() => {
@@ -81,7 +76,8 @@ const FixedFooterLayout = ({
          * There is no elevation in desktop devices and we don't display it in acceptance tests or when the
          * content's height is too small, so we avoid unnecesary calculations in these cases.
          */
-        if (!isTabletOrSmaller || isRunningAcceptanceTest(platformOverrides) || hasContentEnoughVSpace) {
+        if (!isTabletOrSmaller || isRunningAcceptanceTest(platformOverrides) || !footerIsFixed) {
+            setDisplayElevation(false);
             return;
         }
 
@@ -109,13 +105,12 @@ const FixedFooterLayout = ({
             transitionAwaiter.cancel();
         };
     }, [
-        hasContentEnoughVSpace,
         platformOverrides,
+        isTabletOrSmaller,
+        footerIsFixed,
         // `topDistance` and `contentHeight` dependencies are needed to recalculate the elevation state
         topDistance,
         contentHeight,
-        isTabletOrSmaller,
-        footerIsFixed,
     ]);
 
     /**
@@ -131,6 +126,8 @@ const FixedFooterLayout = ({
      *   bottom of the content. In this case, the background size is the same as the content (height: 100%).
      *
      * - A feedback screen could contain a navigation bar. The topDistance is needed to calculate the gradient height.
+     *
+     * - Using a Portal because the background must be rendered outside the content container
      */
     const renderBackground = () => {
         return (
@@ -151,7 +148,6 @@ const FixedFooterLayout = ({
 
     return (
         <>
-            {renderBackground()}
             <div
                 ref={containerRef}
                 className={styles.container}
@@ -161,6 +157,7 @@ const FixedFooterLayout = ({
                         : '0px',
                 })}
             >
+                {renderBackground()}
                 {children}
             </div>
             <div
