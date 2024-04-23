@@ -7,6 +7,8 @@ import {getPrefixedDataAttributes} from './utils/dom';
 import {useTheme} from './hooks';
 import {vars} from './skins/skin-contract.css';
 import * as styles from './text.css';
+import {VIVO_NEW_SKIN} from './skins/constants';
+import ScreenReaderOnly from './screen-reader-only';
 
 import type {ExclusifyUnion} from './utils/utility-types';
 import type {FontWeight} from './skins/types';
@@ -27,6 +29,37 @@ const lineClamp = (truncate?: boolean | number) => {
         return truncate;
     }
     return 'initial';
+};
+
+const VIVINHO_CHAR = 'Ħ'; // vivo-type font replaces this char with a vivinho icon
+const vivinhoForScreenReaders = (
+    <>
+        <span aria-hidden>{VIVINHO_CHAR}</span>
+        <ScreenReaderOnly>
+            <span>Vivo</span>
+        </ScreenReaderOnly>
+    </>
+);
+
+const makeVivinhoCharReadableForScreenReaders = (children: React.ReactNode): React.ReactNode => {
+    return React.Children.map(children, (child) => {
+        if (typeof child !== 'string') {
+            return child;
+        }
+        if (!child.includes(VIVINHO_CHAR)) {
+            return child;
+        }
+        return (
+            <>
+                {child.split(VIVINHO_CHAR).map((segment, idx) => (
+                    <React.Fragment key={idx}>
+                        {idx > 0 && vivinhoForScreenReaders}
+                        {segment}
+                    </React.Fragment>
+                ))}
+            </>
+        );
+    });
 };
 
 export interface TextPresetProps {
@@ -90,6 +123,7 @@ export const Text: React.FC<TextProps> = ({
     'aria-level': ariaLevel,
     dataAttributes,
 }) => {
+    const {skinName} = useTheme();
     const isInverse = useIsInverseVariant();
     const lineClampValue = lineClamp(truncate);
 
@@ -142,7 +176,7 @@ export const Text: React.FC<TextProps> = ({
                 textShadow,
             },
         },
-        children
+        skinName === VIVO_NEW_SKIN ? makeVivinhoCharReadableForScreenReaders(children) : children
     );
 };
 

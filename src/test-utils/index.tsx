@@ -124,8 +124,8 @@ const DEVICES: DeviceCollection = {
     [LARGE_DESKTOP_DEVICE]: {
         platform: undefined,
         viewport: {
-            width: 1368,
-            height: 800,
+            width: 1920,
+            height: 1080,
             deviceScaleFactor: 1,
             isMobile: false,
             hasTouch: false,
