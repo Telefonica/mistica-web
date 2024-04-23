@@ -1,3 +1,21 @@
+# [15.3.0](https://github.com/Telefonica/mistica-web/compare/v15.2.1...v15.3.0) (2024-04-22)
+
+
+### Bug Fixes
+
+* **FixedFooterLayout:** remove background applied by elevation in desktop ([#1081](https://github.com/Telefonica/mistica-web/issues/1081)) ([79804f8](https://github.com/Telefonica/mistica-web/commit/79804f8648606ed77029bfa02435dd7ffa06f9e5))
+* **Image:** prevent loading skeleton from using default border radius value ([#1082](https://github.com/Telefonica/mistica-web/issues/1082)) ([68658df](https://github.com/Telefonica/mistica-web/commit/68658df54dcc4ddaa28ff32360597870eadea0ba))
+* **Sheet:** fix sheets in large desktop sizes ([#1088](https://github.com/Telefonica/mistica-web/issues/1088)) ([0c49bf2](https://github.com/Telefonica/mistica-web/commit/0c49bf26de47cbfad411ed7906dcc6274805806f))
+* **utils:** use `location.assign` to redirect, instead of `location.href` ([#1089](https://github.com/Telefonica/mistica-web/issues/1089)) ([428f0f6](https://github.com/Telefonica/mistica-web/commit/428f0f697126db995ccb1aea65cd1a79cdc50bd2))
+
+
+### Features
+
+* **AdvancedDataCard:** add trackingEvent when card is interactive ([#1086](https://github.com/Telefonica/mistica-web/issues/1086)) ([ff81726](https://github.com/Telefonica/mistica-web/commit/ff81726315aa8c84bfb3c4c28fdd15862116d22e))
+* **Hero:** add noPaddingY and transparent background props ([#1077](https://github.com/Telefonica/mistica-web/issues/1077)) ([f80fe23](https://github.com/Telefonica/mistica-web/commit/f80fe23c0a37c92bdc7deb4e8e69d60b53099fd2))
+* **Storybook:** use on-air font with movistar skin ([#1078](https://github.com/Telefonica/mistica-web/issues/1078)) ([a4d55bf](https://github.com/Telefonica/mistica-web/commit/a4d55bf624ad2e52f01556f962c289a6c10340e8))
+* **vivo-type:** make screen readers read vivinho char as Vivo ([#1084](https://github.com/Telefonica/mistica-web/issues/1084)) ([fbb6611](https://github.com/Telefonica/mistica-web/commit/fbb6611ab5521648d8dbfa61ed9ba02a2aefbb6f))
+
 ## [15.2.1](https://github.com/Telefonica/mistica-web/compare/v15.2.0...v15.2.1) (2024-04-09)
 
 

@@ -25,7 +25,7 @@ import type {CardAction} from '../card';
 import type StackingGroup from '../stacking-group';
 import type Image from '../image';
 import type {ButtonPrimary, ButtonLink} from '../button';
-import type {DataAttributes} from '../utils/types';
+import type {DataAttributes, TrackingEvent} from '../utils/types';
 import type {RendersNullableElement} from '../utils/renders-element';
 import type Tag from '../tag';
 import type {
@@ -37,8 +37,12 @@ import type {
     ValueBlock,
 } from './blocks';
 
-type TouchableProps = ExclusifyUnion<
-    {href: string | undefined} | {to: string | undefined} | {onPress: PressHandler | undefined}
+type TouchableProps = {
+    trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
+} & ExclusifyUnion<
+    | {href: string | undefined; newTab?: boolean}
+    | {to: string | undefined; fullPageOnWebView?: boolean}
+    | {onPress: PressHandler | undefined}
 >;
 type TouchableCard<T> = T & TouchableProps;
 type MaybeTouchableCard<T> = ExclusifyUnion<TouchableCard<T> | T>;
