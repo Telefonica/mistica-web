@@ -96,7 +96,7 @@ export const controlsTransitionClasses = {
     }),
 };
 
-export const floatingButtonTopTransitionClasses = controlsTransitionClasses;
+export const floatingButtonTopTransitionClasses = {...controlsTransitionClasses};
 
 export const floatingButtonBottomTransitionClasses = {
     enter: style({
