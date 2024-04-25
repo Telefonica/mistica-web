@@ -3,6 +3,7 @@ import * as React from 'react';
 import {useTheme, useScreenSize} from './hooks';
 import ButtonFixedFooterLayout from './button-fixed-footer-layout';
 import {VIVO_NEW_SKIN, VIVO_SKIN} from './skins/constants';
+import {useSetOverscrollColor} from './overscroll-color-context';
 import IconSuccess from './icons/icon-success';
 import IconSuccessVivo from './icons/icon-success-vivo';
 import IconError from './icons/icon-error';
@@ -159,6 +160,13 @@ const renderFeedback = ({
     </InternalBoxed>
 );
 
+const FeedbackScreenOverscrollColor = () => {
+    useSetOverscrollColor({
+        topColor: vars.colors.backgroundBrandTop,
+    });
+    return null;
+};
+
 type FeedbackButtonsProps = ButtonGroupProps;
 
 interface FeedbackProps extends FeedbackButtonsProps {
@@ -224,6 +232,7 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
     return (
         <div style={{position: 'relative'}}>
             <ResponsiveLayout>
+                {isInverse && <FeedbackScreenOverscrollColor />}
                 <Box paddingTop={{desktop: 64, mobile: 0}}>
                     {renderFeedback({
                         isInverse,
