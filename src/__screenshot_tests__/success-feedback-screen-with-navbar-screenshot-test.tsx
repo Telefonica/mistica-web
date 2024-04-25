@@ -3,7 +3,7 @@ import {MOVISTAR_SKIN, O2_NEW_SKIN} from '../skins/constants';
 
 import type {Device} from '../test-utils';
 
-const testableSkins = [MOVISTAR_SKIN, O2_NEW_SKIN];
+const testableSkins = [MOVISTAR_SKIN, O2_NEW_SKIN] as const;
 const testableDevices: Array<Device> = ['MOBILE_IOS', 'DESKTOP'];
 
 const cases: Array<[string, Device]> = [];
@@ -16,7 +16,7 @@ for (const skin of testableSkins) {
 test.each(cases)('SuccessFeedbackScreen with NavigationBar - %s - %s', async (skin, device) => {
     const page = await openStoryPage({
         id: `private-fixed-footer--default`,
-        skin: skin as never,
+        skin: skin as (typeof testableSkins)[number],
         device,
     });
 

@@ -156,7 +156,7 @@ export const useWindowSize = (): {
     );
 
     const [visualHeight, setVisualHeight] = React.useState<number>(
-        isClientSide() ? window.visualViewport?.height || window.screen.availWidth : 1200
+        isClientSide() ? window.visualViewport?.height || window.screen.availHeight : 1200
     );
 
     React.useEffect(() => {
@@ -165,7 +165,7 @@ export const useWindowSize = (): {
             setWindowWidth(window.innerWidth);
             setScreenHeight(window.screen.availHeight);
             setScreenWidth(window.screen.availWidth);
-            setVisualHeight(window.visualViewport?.height || window.screen.availWidth);
+            setVisualHeight(window.visualViewport?.height || window.screen.availHeight);
         };
 
         window.addEventListener('resize', handleResize);

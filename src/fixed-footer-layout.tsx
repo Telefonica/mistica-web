@@ -63,7 +63,7 @@ const FixedFooterLayout = ({
     const {visualHeight} = useWindowSize();
     const topDistance = useFixedToTopHeight();
     const availableHeight = visualHeight - topDistance - domFooterHeight;
-    const footerIsFixed = availableHeight > MIN_AVAILABLE_HEIGHT_FOR_FIXED;
+    const isFooterFixed = availableHeight > MIN_AVAILABLE_HEIGHT_FOR_FIXED;
 
     useIsomorphicLayoutEffect(() => {
         onChangeFooterHeight?.(domFooterHeight);
@@ -76,7 +76,7 @@ const FixedFooterLayout = ({
          * There is no elevation in desktop devices and we don't display it in acceptance tests or when the
          * content's height is too small, so we avoid unnecesary calculations in these cases.
          */
-        if (!isTabletOrSmaller || isRunningAcceptanceTest(platformOverrides) || !footerIsFixed) {
+        if (!isTabletOrSmaller || isRunningAcceptanceTest(platformOverrides) || !isFooterFixed) {
             setDisplayElevation(false);
             return;
         }
@@ -84,7 +84,7 @@ const FixedFooterLayout = ({
         const scrollable = getScrollableParentElement(containerRef.current);
 
         const shouldDisplayElevation = () =>
-            footerIsFixed && hasScroll(scrollable) && getScrollDistanceToBottom(scrollable) > 1; // This is 1 and not 0 because a weird bug with Safari
+            hasScroll(scrollable) && getScrollDistanceToBottom(scrollable) > 1; // This is 1 and not 0 because a weird bug with Safari
 
         const checkDisplayElevation = debounce(
             () => {
@@ -107,7 +107,7 @@ const FixedFooterLayout = ({
     }, [
         platformOverrides,
         isTabletOrSmaller,
-        footerIsFixed,
+        isFooterFixed,
         // `topDistance` and `contentHeight` dependencies are needed to recalculate the elevation state
         topDistance,
         contentHeight,
@@ -138,8 +138,8 @@ const FixedFooterLayout = ({
                     style={{
                         background: containerBgColor, // this color could be a gradient
                         top: topDistance,
-                        bottom: footerIsFixed ? footerHeightStyle : 'unset',
-                        height: footerIsFixed ? 'unset' : contentHeight,
+                        bottom: isFooterFixed ? footerHeightStyle : 'unset',
+                        height: isFooterFixed ? 'unset' : contentHeight,
                     }}
                 />
             </Portal>
@@ -152,7 +152,7 @@ const FixedFooterLayout = ({
                 ref={containerRef}
                 className={styles.container}
                 style={applyCssVars({
-                    [styles.vars.footerHeight]: footerIsFixed
+                    [styles.vars.footerHeight]: isFooterFixed
                         ? `calc(${safeAreaInsetBottom} + ${domFooterHeight}px)`
                         : '0px',
                 })}
@@ -164,7 +164,7 @@ const FixedFooterLayout = ({
                 className={classnames(styles.footer, {
                     [styles.withoutFooter]: !isFooterVisible,
                     [styles.elevated]: displayElevation,
-                    [styles.fixedFooter]: footerIsFixed,
+                    [styles.fixedFooter]: isFooterFixed,
                 })}
                 /**
                  * This style is inline to avoid creating a class that may collide with
