@@ -84,7 +84,7 @@ const FixedFooterLayout = ({
         const scrollable = getScrollableParentElement(containerRef.current);
 
         const shouldDisplayElevation = () =>
-            hasScroll(scrollable) && getScrollDistanceToBottom(scrollable) > 1; // This is 1 and not 0 because a weird bug with Safari
+            hasScroll(scrollable) && getScrollDistanceToBottom(scrollable) > topDistance + 1; // This is 1 and not 0 because a weird bug with Safari
 
         const checkDisplayElevation = debounce(
             () => {
@@ -137,7 +137,7 @@ const FixedFooterLayout = ({
                     className={styles.absoluteBackgroundLayer}
                     style={{
                         background: containerBgColor, // this color could be a gradient
-                        top: topDistance,
+                        top: topDistance - 1, // -1 because the navigationbar could have a 1px transparent background
                         bottom: isFooterFixed ? footerHeightStyle : 'unset',
                         height: isFooterFixed ? 'unset' : contentHeight,
                     }}

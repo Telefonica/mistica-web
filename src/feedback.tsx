@@ -163,6 +163,7 @@ const renderFeedback = ({
 const FeedbackScreenOverscrollColor = () => {
     useSetOverscrollColor({
         topColor: vars.colors.backgroundBrandTop,
+        bottomColor: 'transparent',
     });
     return null;
 };

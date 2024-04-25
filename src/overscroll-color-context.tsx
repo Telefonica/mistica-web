@@ -65,6 +65,10 @@ const BottomOverscrollColor = () => {
         return null;
     }
 
+    if (bottomColorToApply === 'transparent') {
+        return null;
+    }
+
     // This sets a fixed div at the bottom of the screen with the bottom color. Fixed elements aren't affected by iOS scroll bounce,
     // so this div is always visible as background.
     // There is a known issue with this approach, if the bottom overscroll color is different from the body background color and there is a
