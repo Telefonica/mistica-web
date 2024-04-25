@@ -240,7 +240,7 @@ type AdvancedDataCardProps = MaybeTouchableCard<{
     subtitleLinesMax?: number;
     description?: string;
     descriptionLinesMax?: number;
-    extra?: Array<RendersNullableElement<AllowedExtra>>;
+    extra?: ReadonlyArray<RendersNullableElement<AllowedExtra>>;
     extraDividerPadding?: 8 | 24;
     button?: RendersNullableElement<typeof ButtonPrimary>;
     footerImage?: RendersNullableElement<typeof Image>;
@@ -248,7 +248,7 @@ type AdvancedDataCardProps = MaybeTouchableCard<{
     footerTextLinesMax?: number;
     buttonLink?: RendersNullableElement<typeof ButtonLink>;
     dataAttributes?: DataAttributes;
-    actions?: Array<CardAction | React.ReactElement>;
+    actions?: ReadonlyArray<CardAction | React.ReactElement>;
     'aria-label'?: string;
     onClose?: () => void;
 }>;
