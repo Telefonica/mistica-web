@@ -204,7 +204,7 @@ const normalizeItemsPerPage = (
     };
 };
 
-const calcPagesScrollPositions = (itemsScrollPosition: ReadonlyArray<number>, numPages: number) => {
+const calcPagesScrollPositions = (itemsScrollPosition: Array<number>, numPages: number) => {
     if (itemsScrollPosition.length === 0) {
         return [];
     }
@@ -220,7 +220,7 @@ const calcPagesScrollPositions = (itemsScrollPosition: ReadonlyArray<number>, nu
     return pagesScrollPositions;
 };
 
-const calcCurrentPageIndex = (scrollPosition: number, pagesScrollPositions: ReadonlyArray<number>) => {
+const calcCurrentPageIndex = (scrollPosition: number, pagesScrollPositions: Array<number>) => {
     const middlePageScrollPositions = [];
     for (let i = 0; i < pagesScrollPositions.length; i++) {
         if (i === 0) {
@@ -256,7 +256,7 @@ type BaseCarouselProps = {
     /** centered mode only applies to mobile. It includes a horizontal padding of half of the size of an item to show the items centered */
     centered?: boolean;
     autoplay?: boolean | {time: number; loop?: boolean};
-    onPageChange?: (newPageInfo: {pageIndex: number; shownItemIndexes: ReadonlyArray<number>}) => void;
+    onPageChange?: (newPageInfo: {pageIndex: number; shownItemIndexes: Array<number>}) => void;
     dataAttributes?: DataAttributes;
     children?: void;
 };
@@ -582,7 +582,7 @@ type CarouselProps = {
     /** If true, scroll snap doesn't apply and the user has a free scroll */
     free?: boolean;
     autoplay?: boolean | {time: number; loop?: boolean};
-    onPageChange?: (newPageInfo: {pageIndex: number; shownItemIndexes: ReadonlyArray<number>}) => void;
+    onPageChange?: (newPageInfo: {pageIndex: number; shownItemIndexes: Array<number>}) => void;
     dataAttributes?: DataAttributes;
 
     children?: void;
@@ -628,7 +628,7 @@ type CenteredCarouselProps = {
     withBullets?: boolean;
     renderBullets?: (bulletsProps: PageBulletsProps) => React.ReactNode;
     initialActiveItem?: number;
-    onPageChange?: (newPageInfo: {pageIndex: number; shownItemIndexes: ReadonlyArray<number>}) => void;
+    onPageChange?: (newPageInfo: {pageIndex: number; shownItemIndexes: Array<number>}) => void;
     dataAttributes?: DataAttributes;
 
     children?: void;
