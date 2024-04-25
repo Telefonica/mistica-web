@@ -9,10 +9,11 @@ import {ENTER, SPACE} from './utils/keys';
 import {getPrefixedDataAttributes} from './utils/dom';
 import {redirect} from './utils/browser';
 
+import type {ExclusifyUnion} from './utils/utility-types';
 import type {DataAttributes, TrackingEvent} from './utils/types';
 import type {Location} from 'history';
 
-export type PressHandler = (event: React.MouseEvent<HTMLElement>) => void;
+export type PressHandler = (event: React.MouseEvent<HTMLElement>) => void | undefined | Promise<void>;
 
 interface CommonProps {
     children: React.ReactNode;
@@ -39,81 +40,50 @@ interface CommonProps {
     stopPropagation?: boolean;
 }
 
-/*
- * We are using "href", "to" and "onPress" as union discriminant.
- * this way we can know the type of the union by checking that property
- * See https://www.typescriptlang.org/docs/handbook/advanced-types.html#discriminated-unions
- */
+type OnPressProps = {
+    onPress: PressHandler;
+};
 
-interface PropsHref extends CommonProps {
-    maybe?: undefined;
+type HrefProps = {
     href: string;
     newTab?: boolean;
     loadOnTop?: boolean;
-    to?: undefined;
-    onPress?: undefined;
-    /** with "href", onNavigate will be executed before the navigation */
     onNavigate?: () => void | Promise<void>;
-}
+};
 
-interface PropsMaybeHref extends CommonProps {
-    maybe: true;
-    href?: string;
-    newTab?: boolean;
-    loadOnTop?: boolean;
-    to?: undefined;
-    onPress?: undefined;
-    /** with "href", onNavigate will be executed before the navigation */
-    onNavigate?: () => void | Promise<void>;
-}
-
-interface PropsTo extends CommonProps {
-    maybe?: undefined;
+type ToProps = {
     to: string | Location;
     fullPageOnWebView?: boolean;
     replace?: boolean;
-    href?: undefined;
-    onPress?: undefined;
-    /** with "to", onNavigate will be executed in parallel to the navigation */
     onNavigate?: () => void | Promise<void>;
-}
+};
 
-interface PropsMaybeTo extends CommonProps {
-    maybe: true;
-    to?: string | Location;
-    fullPageOnWebView?: boolean;
-    replace?: boolean;
-    href?: undefined;
-    onPress?: undefined;
-    /** with "to", onNavigate will be executed in parallel to the navigation */
-    onNavigate?: () => void | Promise<void>;
-}
-
-interface PropsOnPress extends CommonProps {
-    maybe?: undefined;
-    onPress: PressHandler;
-    href?: undefined;
-    to?: undefined;
+type SubmitProps = {
+    type: 'submit';
     formId?: string;
-    onNavigate?: undefined;
-}
-
-interface PropsMaybeOnPress extends CommonProps {
-    maybe: true;
     onPress?: PressHandler;
-    href?: undefined;
-    to?: undefined;
-    formId?: string;
-    onNavigate?: undefined;
-}
+};
 
-export type TouchableProps =
-    | PropsHref
-    | PropsTo
-    | PropsOnPress
-    | PropsMaybeHref
-    | PropsMaybeTo
-    | PropsMaybeOnPress;
+export type AlwaysTouchableComponentProps = ExclusifyUnion<OnPressProps | HrefProps | ToProps> &
+    Pick<CommonProps, 'trackingEvent' | 'dataAttributes' | 'role' | 'aria-label'>;
+
+export type TouchableComponentProps<Props> = ExclusifyUnion<
+    Props | (OnPressProps & Props) | (HrefProps & Props) | (ToProps & Props)
+> &
+    Pick<CommonProps, 'trackingEvent' | 'dataAttributes' | 'role' | 'aria-label'>;
+
+type Maybe<T, K extends keyof T> = Pick<Partial<T>, K> & Omit<T, K> & {maybe: true};
+
+export type TouchableProps = ExclusifyUnion<
+    | OnPressProps
+    | HrefProps
+    | ToProps
+    | Maybe<OnPressProps, 'onPress'>
+    | Maybe<HrefProps, 'href'>
+    | Maybe<ToProps, 'to'>
+    | SubmitProps
+> &
+    CommonProps;
 
 export type TouchableElement = HTMLDivElement | HTMLAnchorElement | HTMLButtonElement;
 

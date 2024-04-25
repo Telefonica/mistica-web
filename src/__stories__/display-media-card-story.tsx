@@ -89,7 +89,7 @@ export const Default: StoryComponent<DisplayMediaCardArgs> = ({
         </ButtonSecondary>
     ) : undefined;
 
-    const onPress = actions.includes('press') ? () => null : undefined;
+    const onPress = actions.includes('press') ? () => {} : undefined;
 
     const interactiveActions = onPress
         ? {onPress}

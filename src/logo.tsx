@@ -14,9 +14,9 @@ import {getPrefixedDataAttributes} from './utils/dom';
 import * as styles from './logo.css';
 import {applyCssVars} from './utils/css';
 
+import type {TouchableComponentProps} from './touchable';
 import type {SkinName} from './skins/types';
-import type {ByBreakpoint, DataAttributes, TrackingEvent} from './utils/types';
-import type {ExclusifyUnion} from './utils/utility-types';
+import type {ByBreakpoint, DataAttributes} from './utils/types';
 
 const calcInlineVars = (size: ByBreakpoint<number>) => {
     if (typeof size === 'number') {
@@ -366,85 +366,24 @@ const LogoBase: React.FC<LogoBaseProps> = ({size = 48, skinName, type = 'isotype
             return null;
     }
 };
-type LogoPropsBase = {
+
+type LogoProps = TouchableComponentProps<{
     size?: ByBreakpoint<number>;
     type?: LogoType;
     /** "data-" prefix is automatically added. For example, use "testid" instead of "data-testid" */
     dataAttributes?: DataAttributes;
-};
-
-type LogoToProps = LogoPropsBase & {
-    trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
-    to: string;
-    fullPageOnWebView?: boolean;
-    replace?: boolean;
-    'aria-label': string;
-};
-
-type LogoHrefProps = LogoPropsBase & {
-    trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
-    href: string;
-    newTab?: boolean;
-    'aria-label': string;
-};
-
-type LogoOnPressProps = LogoPropsBase & {
-    trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
-    onPress: () => void;
-    'aria-label': string;
-};
-
-type LogoProps = ExclusifyUnion<LogoPropsBase | LogoToProps | LogoHrefProps | LogoOnPressProps>;
+}>;
 
 const MaybeTouchableLogo = (
-    logoTouchableProps: Omit<LogoProps, 'children'> & {children: JSX.Element}
+    logoTouchableProps: TouchableComponentProps<{
+        children: React.ReactElement;
+        dataAttributes?: DataAttributes;
+    }>
 ): JSX.Element => {
     const dataAttributes = getPrefixedDataAttributes(logoTouchableProps.dataAttributes, 'Logo');
 
-    if (logoTouchableProps.to) {
-        return (
-            <Touchable
-                trackingEvent={logoTouchableProps.trackingEvent}
-                to={logoTouchableProps.to}
-                fullPageOnWebView={logoTouchableProps.fullPageOnWebView}
-                replace={logoTouchableProps.replace}
-                aria-label={logoTouchableProps['aria-label']}
-                className={styles.logoContainer}
-                dataAttributes={dataAttributes}
-            >
-                {logoTouchableProps.children}
-            </Touchable>
-        );
-    }
-
-    if (logoTouchableProps.href) {
-        return (
-            <Touchable
-                trackingEvent={logoTouchableProps.trackingEvent}
-                href={logoTouchableProps.href}
-                newTab={logoTouchableProps.newTab}
-                replace={logoTouchableProps.replace}
-                aria-label={logoTouchableProps['aria-label']}
-                className={styles.logoContainer}
-                dataAttributes={dataAttributes}
-            >
-                {logoTouchableProps.children}
-            </Touchable>
-        );
-    }
-
-    if (logoTouchableProps.onPress) {
-        return (
-            <Touchable
-                trackingEvent={logoTouchableProps.trackingEvent}
-                onPress={logoTouchableProps.onPress}
-                aria-label={logoTouchableProps.href}
-                className={styles.logoContainer}
-                dataAttributes={dataAttributes}
-            >
-                {logoTouchableProps.children}
-            </Touchable>
-        );
+    if (logoTouchableProps.to || logoTouchableProps.href || logoTouchableProps.onPress) {
+        return <Touchable {...logoTouchableProps} />;
     }
 
     return (

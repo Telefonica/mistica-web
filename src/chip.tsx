@@ -13,8 +13,9 @@ import {getPrefixedDataAttributes} from './utils/dom';
 import {useThemeVariant} from './theme-variant-context';
 import Touchable, {BaseTouchable} from './touchable';
 
+import type {TouchableComponentProps} from './touchable';
 import type {ExclusifyUnion} from './utils/utility-types';
-import type {DataAttributes, IconProps, TrackingEvent} from './utils/types';
+import type {DataAttributes, IconProps} from './utils/types';
 
 interface SimpleChipProps {
     children: string;
@@ -32,28 +33,7 @@ interface ToggleChipProps extends SimpleChipProps {
     active: boolean;
 }
 
-interface HrefChipProps extends SimpleChipProps {
-    trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
-    href: string;
-    newTab?: boolean;
-    active?: boolean;
-}
-
-interface ToChipProps extends SimpleChipProps {
-    trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
-    to: string;
-    fullPageOnWebView?: boolean;
-    replace?: boolean;
-    active?: boolean;
-}
-
-interface OnPressChipProps extends SimpleChipProps {
-    trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
-    onPress: () => void;
-    active?: boolean;
-}
-
-type ClickableChipProps = ExclusifyUnion<HrefChipProps | ToChipProps | OnPressChipProps>;
+type ClickableChipProps = TouchableComponentProps<SimpleChipProps>;
 
 type ChipProps = ExclusifyUnion<SimpleChipProps | ClosableChipProps | ToggleChipProps | ClickableChipProps>;
 
@@ -151,40 +131,9 @@ const Chip: React.FC<ChipProps> = (props: ChipProps) => {
         </Box>
     );
 
-    if (props.onPress) {
+    if (props.onPress || props.to || props.href) {
         return (
-            <BaseTouchable
-                className={styles.button}
-                trackingEvent={props.trackingEvent}
-                onPress={props.onPress}
-                dataAttributes={chipDataAttributes}
-            >
-                {renderContent()}
-            </BaseTouchable>
-        );
-    }
-
-    if (props.to) {
-        return (
-            <BaseTouchable
-                trackingEvent={props.trackingEvent}
-                to={props.to}
-                fullPageOnWebView={props.fullPageOnWebView}
-                dataAttributes={chipDataAttributes}
-            >
-                {renderContent()}
-            </BaseTouchable>
-        );
-    }
-
-    if (props.href) {
-        return (
-            <BaseTouchable
-                trackingEvent={props.trackingEvent}
-                href={props.href}
-                newTab={props.newTab}
-                dataAttributes={chipDataAttributes}
-            >
+            <BaseTouchable {...props} className={styles.button} dataAttributes={chipDataAttributes}>
                 {renderContent()}
             </BaseTouchable>
         );

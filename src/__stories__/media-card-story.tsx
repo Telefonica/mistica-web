@@ -82,7 +82,7 @@ export const Default: StoryComponent<Args> = ({
         <ButtonLink href="https://google.com">Link</ButtonLink>
     ) : undefined;
 
-    const onPress = actions.includes('press') ? () => null : undefined;
+    const onPress = actions.includes('press') ? () => {} : undefined;
 
     const interactiveActions = onPress
         ? {onPress}
