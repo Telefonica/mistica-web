@@ -59,6 +59,9 @@ export const resetDesktop = style({
 
 export const responsiveLayoutContainer = style({
     width: 'auto',
+    display: 'flex',
+    flexDirection: 'column',
+    flex: 1,
     margin: `0 calc(-1 * ${fallbackVar(sideMargin, '0px')})`,
     vars: {
         [currentMargin]: '0px',
@@ -84,12 +87,12 @@ export const forcedMarginDesktopContainer = style({
     '@media': {
         [mq.largeDesktop]: {
             vars: {
-                [currentMargin]: `calc(${marginValue.largeDesktop} + ${sideMargin})`,
+                [currentMargin]: `calc(${marginValue.largeDesktop} + ${fallbackVar(sideMargin, '0px')})`,
             },
         },
         [mq.desktop]: {
             vars: {
-                [currentMargin]: `calc(${marginValue.desktop} + ${sideMargin})`,
+                [currentMargin]: `calc(${marginValue.desktop} + ${fallbackVar(sideMargin, '0px')})`,
             },
         },
     },
@@ -114,12 +117,12 @@ export const forcedMarginMobileContainer = style({
     '@media': {
         [mq.tablet]: {
             vars: {
-                [currentMargin]: `calc(${marginValue.tablet} + ${sideMargin})`,
+                [currentMargin]: `calc(${marginValue.tablet} + ${fallbackVar(sideMargin, '0px')})`,
             },
         },
         [mq.mobile]: {
             vars: {
-                [currentMargin]: `calc(${marginValue.mobile} + ${sideMargin})`,
+                [currentMargin]: `calc(${marginValue.mobile} + ${fallbackVar(sideMargin, '0px')})`,
             },
         },
     },
@@ -133,6 +136,9 @@ export const backgroundVariant = {
 export const responsiveLayout = style({
     paddingLeft: 'env(safe-area-inset-left)',
     paddingRight: 'env(safe-area-inset-right)',
+    display: 'flex',
+    flexDirection: 'column',
+    flex: 1,
     margin: `0 ${currentMargin}`,
     vars: {
         [sideMargin]: currentMargin,
