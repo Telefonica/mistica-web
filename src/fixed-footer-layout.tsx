@@ -65,6 +65,8 @@ const FixedFooterLayout = ({
     const topDistance = useFixedToTopHeight();
     const availableHeight = visualHeight - topDistance - domFooterHeight;
     const isFooterFixed = availableHeight > MIN_AVAILABLE_HEIGHT_FOR_FIXED;
+    const {topColor = footerBgColor} = useOverScrollColor();
+    const {height: gradientHeight, ref: gradientRef} = useElementDimensions();
 
     useIsomorphicLayoutEffect(() => {
         onChangeFooterHeight?.(domFooterHeight);
@@ -118,17 +120,13 @@ const FixedFooterLayout = ({
      * Diagram of the layout:
      * https://excalidraw.com/#json=No0s6LB7QO735nv-wGIEP,9OOuqiaFInbtr1YjMm4g4Q
      */
-
-    const {topColor} = useOverScrollColor();
-    const {height: height2, ref: gradientRef} = useElementDimensions();
-
     const renderBackground = () => {
         return (
             <Portal>
                 <div
                     className={styles.fixedBackgroundLayer}
                     style={{
-                        background: `linear-gradient(to bottom, ${topColor} 0%,${topColor} 50%, ${footerBgColor} 50.1%, ${footerBgColor} 100%)`,
+                        background: `linear-gradient(180deg, ${topColor} 0%,${topColor} 50%, ${footerBgColor} 50.1%, ${footerBgColor} 100%)`,
                     }}
                 />
                 <div
@@ -141,12 +139,13 @@ const FixedFooterLayout = ({
                         height: isFooterFixed ? 'unset' : contentHeight,
                     }}
                 />
+
                 <div
                     className={styles.absoluteBackgroundLayer}
                     style={{
                         background: footerBgColor,
-                        top: height2 + topDistance - 1,
-                        height: `calc(${contentHeight}px - ${height2}px)`,
+                        top: gradientHeight + topDistance - 1,
+                        height: `calc(${contentHeight}px - ${gradientHeight}px)`,
                     }}
                 />
             </Portal>
