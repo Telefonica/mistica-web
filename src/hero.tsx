@@ -7,7 +7,7 @@ import GridLayout from './grid-layout';
 import Box from './box';
 import Stack from './stack';
 import ButtonGroup from './button-group';
-import {vars} from './skins/skin-contract.css';
+import {vars, vars as skinVars} from './skins/skin-contract.css';
 import * as styles from './hero.css';
 import * as mediaStyles from './image.css';
 import {useIsInsideSlideshowContext} from './carousel';
@@ -15,7 +15,7 @@ import {getPrefixedDataAttributes} from './utils/dom';
 import {sprinkles} from './sprinkles.css';
 import {useIsInverseVariant} from './theme-variant-context';
 import {applyCssVars} from './utils/css';
-import {InternalResponsiveLayout} from './responsive-layout';
+import {InternalResponsiveLayout, ResetResponsiveLayout} from './responsive-layout';
 
 import type Image from './image';
 import type Video from './video';
@@ -23,16 +23,24 @@ import type {ButtonLink, ButtonPrimary, ButtonSecondary} from './button';
 import type Tag from './tag';
 import type {DataAttributes, RendersElement, RendersNullableElement} from './utils/types';
 
-type LayoutProps = {children: React.ReactNode; isInverse: boolean; isInsideSlideShow?: boolean};
+const CONTENT_BACKGROUND_COLOR = {
+    default: skinVars.colors.background,
+    alternative: skinVars.colors.backgroundAlternative,
+    brand: skinVars.colors.backgroundBrand,
+    'brand-secondary': skinVars.colors.backgroundBrandSecondary,
+    none: 'transparent',
+};
 
-const Layout = ({children, isInverse, isInsideSlideShow}: LayoutProps) => {
+type LayoutProps = {children: React.ReactNode; isInverse: boolean; backgroundColor?: string};
+
+const Layout = ({children, isInverse, backgroundColor}: LayoutProps) => {
     return (
         <InternalResponsiveLayout
             isInverse={isInverse}
             className={styles.layout}
             innerDivClassName={styles.layout}
-            shouldExpandWhenNested={isInsideSlideShow ? 'desktop' : true}
-            backgroundColor="transparent"
+            shouldExpandWhenNested
+            backgroundColor={backgroundColor ?? 'transparent'}
         >
             {children}
         </InternalResponsiveLayout>
@@ -147,42 +155,40 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
 
         if (isTabletOrSmaller) {
             return (
-                <div style={applyCssVars({[mediaStyles.vars.mediaBorderRadius]: '0px'})}>
-                    <div
-                        {...getPrefixedDataAttributes({'component-name': 'Hero', ...dataAttributes})}
-                        ref={ref}
-                        style={{
-                            ...(height === '100vh' ? {maxHeight: '-webkit-fill-available'} : {}), // Hack to avoid issues in Safari with 100vh
-                            ...applyCssVars({
-                                [styles.vars.height]: height ?? '100%',
-                            }),
-                        }}
-                        className={classnames(styles.container, styles.containerMobile, {
-                            [styles.containerMinHeight]: !noPaddingY,
-                        })}
-                    >
-                        <Layout isInverse={isInverse} isInsideSlideShow={isInsideSlideShow}>
-                            <div className={classnames(styles.contentWrapper)}>
-                                {media}
+                <ResetResponsiveLayout>
+                    <div style={applyCssVars({[mediaStyles.vars.mediaBorderRadius]: '0px'})}>
+                        <div
+                            {...getPrefixedDataAttributes({'component-name': 'Hero', ...dataAttributes})}
+                            ref={ref}
+                            style={{
+                                ...(height === '100vh' ? {maxHeight: '-webkit-fill-available'} : {}), // Hack to avoid issues in Safari with 100vh
+                                ...applyCssVars({
+                                    [styles.vars.height]: height ?? '100%',
+                                }),
+                            }}
+                            className={classnames(styles.container, styles.containerMobile, {
+                                [styles.containerMinHeight]: !noPaddingY,
+                            })}
+                        >
+                            {media}
 
-                                <div
-                                    className={classnames(
-                                        styles.containerBackground[background],
-                                        styles.expandedContent
-                                    )}
-                                >
+                            <Layout
+                                isInverse={isInverse}
+                                backgroundColor={CONTENT_BACKGROUND_COLOR[background]}
+                            >
+                                <div className={classnames(styles.expandedContent)}>
                                     <Box
                                         paddingTop={24}
                                         paddingBottom={isInsideSlideShow ? 48 : noPaddingY ? 0 : 24}
-                                        className={classnames(styles.layout, styles.contentContainer)}
+                                        className={styles.layout}
                                     >
                                         <HeroContent {...rest} />
                                     </Box>
                                 </div>
-                            </div>
-                        </Layout>
+                            </Layout>
+                        </div>
                     </div>
-                </div>
+                </ResetResponsiveLayout>
             );
         }
 
@@ -214,11 +220,9 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
                         ...applyCssVars({
                             [styles.vars.height]: height ?? '100%',
                         }),
+                        background: CONTENT_BACKGROUND_COLOR[background],
                     }}
-                    className={classnames(
-                        sprinkles({height: '100%'}),
-                        styles.containerBackground[background]
-                    )}
+                    className={classnames(sprinkles({height: '100%'}))}
                 >
                     <Layout isInverse={isInverse}>
                         <GridLayout

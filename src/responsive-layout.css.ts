@@ -15,37 +15,57 @@ const marginValue = {
     mobile: `${MOBILE_SIDE_MARGIN}px`,
 };
 
-const prevSideMargin = createVar();
 const currentMargin = createVar();
 const sideMargin = createVar();
 export const vars = {sideMargin};
 
-export const responsiveLayoutContainer = style([
-    sprinkles({width: '100%'}),
-    {
-        vars: {
-            [currentMargin]: '0px',
-            [prevSideMargin]: fallbackVar(sideMargin, '0px'),
+export const resetContainerMobile = style({
+    '@media': {
+        [mq.tabletOrSmaller]: {
+            width: 'auto',
+            margin: `0 calc(-1 * ${fallbackVar(sideMargin, '0px')})`,
         },
     },
-]);
+});
 
-export const desktopContainer = style({
+export const resetContainerDesktop = style({
     '@media': {
-        [mq.largeDesktop]: {
-            vars: {
-                [currentMargin]: `calc(${marginValue.largeDesktop} - ${prevSideMargin})`,
-            },
+        [mq.desktopOrBigger]: {
+            width: 'auto',
+            margin: `0 calc(-1 * ${fallbackVar(sideMargin, '0px')})`,
         },
-        [mq.desktop]: {
+    },
+});
+
+export const resetMobile = style({
+    '@media': {
+        [mq.tabletOrSmaller]: {
             vars: {
-                [currentMargin]: `calc(${marginValue.desktop} - ${prevSideMargin})`,
+                [sideMargin]: '0px',
             },
         },
     },
 });
 
-export const forcedMarginDesktopContainer = style({
+export const resetDesktop = style({
+    '@media': {
+        [mq.desktopOrBigger]: {
+            vars: {
+                [sideMargin]: '0px',
+            },
+        },
+    },
+});
+
+export const responsiveLayoutContainer = style({
+    width: 'auto',
+    margin: `0 calc(-1 * ${fallbackVar(sideMargin, '0px')})`,
+    vars: {
+        [currentMargin]: '0px',
+    },
+});
+
+export const desktopContainer = style({
     '@media': {
         [mq.largeDesktop]: {
             vars: {
@@ -60,22 +80,22 @@ export const forcedMarginDesktopContainer = style({
     },
 });
 
-export const mobileContainer = style({
+export const forcedMarginDesktopContainer = style({
     '@media': {
-        [mq.tablet]: {
+        [mq.largeDesktop]: {
             vars: {
-                [currentMargin]: `calc(${marginValue.tablet} - ${prevSideMargin})`,
+                [currentMargin]: `calc(${marginValue.largeDesktop} + ${sideMargin})`,
             },
         },
-        [mq.mobile]: {
+        [mq.desktop]: {
             vars: {
-                [currentMargin]: `calc(${marginValue.mobile} - ${prevSideMargin})`,
+                [currentMargin]: `calc(${marginValue.desktop} + ${sideMargin})`,
             },
         },
     },
 });
 
-export const forcedMarginMobileContainer = style({
+export const mobileContainer = style({
     '@media': {
         [mq.tablet]: {
             vars: {
@@ -85,6 +105,21 @@ export const forcedMarginMobileContainer = style({
         [mq.mobile]: {
             vars: {
                 [currentMargin]: marginValue.mobile,
+            },
+        },
+    },
+});
+
+export const forcedMarginMobileContainer = style({
+    '@media': {
+        [mq.tablet]: {
+            vars: {
+                [currentMargin]: `calc(${marginValue.tablet} + ${sideMargin})`,
+            },
+        },
+        [mq.mobile]: {
+            vars: {
+                [currentMargin]: `calc(${marginValue.mobile} + ${sideMargin})`,
             },
         },
     },
@@ -100,7 +135,7 @@ export const responsiveLayout = style({
     paddingRight: 'env(safe-area-inset-right)',
     margin: `0 ${currentMargin}`,
     vars: {
-        [sideMargin]: `calc(${prevSideMargin} + ${currentMargin})`,
+        [sideMargin]: currentMargin,
     },
 });
 
@@ -111,14 +146,3 @@ export const fullWidth = style([
         paddingRight: 'env(safe-area-inset-right)',
     },
 ]);
-
-export const resetMargin = style({
-    width: 'auto',
-    margin: `0 calc(-1 * ${fallbackVar(sideMargin, '0px')})`,
-});
-
-export const resetVars = style({
-    vars: {
-        [sideMargin]: '0px',
-    },
-});
