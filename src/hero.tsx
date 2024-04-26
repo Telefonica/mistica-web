@@ -176,7 +176,7 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
                                 isInverse={isInverse}
                                 backgroundColor={CONTENT_BACKGROUND_COLOR[background]}
                             >
-                                <div className={classnames(styles.expandedContent)}>
+                                <div className={styles.expandedContent}>
                                     <Box
                                         paddingTop={24}
                                         paddingBottom={isInsideSlideShow ? 48 : noPaddingY ? 0 : 24}
@@ -222,7 +222,7 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
                         }),
                         background: CONTENT_BACKGROUND_COLOR[background],
                     }}
-                    className={classnames(sprinkles({height: '100%'}))}
+                    className={sprinkles({height: '100%'})}
                 >
                     <Layout isInverse={isInverse}>
                         <GridLayout
