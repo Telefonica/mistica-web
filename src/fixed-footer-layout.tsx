@@ -65,7 +65,6 @@ const FixedFooterLayout = ({
     const topDistance = useFixedToTopHeight();
     const availableHeight = visualHeight - topDistance - domFooterHeight;
     const isFooterFixed = availableHeight > MIN_AVAILABLE_HEIGHT_FOR_FIXED;
-    const [showFixedBackground, setShowFixedBackground] = React.useState(true);
 
     useIsomorphicLayoutEffect(() => {
         onChangeFooterHeight?.(domFooterHeight);
@@ -88,23 +87,13 @@ const FixedFooterLayout = ({
         const shouldDisplayElevation = () =>
             hasScroll(scrollable) && getScrollDistanceToBottom(scrollable) > topDistance + 1; // This is 1 and not 0 because a weird bug with Safari
 
-        // const checkDisplayElevation = debounce(
-        //     () => {
-        //         setDisplayElevation(shouldDisplayElevation());
-
-        //         console.log('scroll:', scrollable.scrollTop, 'show:', scrollable.scrollTop < 200);
-
-        //         setShowFixedBackground(scrollable.scrollTop < 200);
-        //     },
-        //     50,
-        //     {leading: true, maxWait: 50}
-        // );
-
-        const checkDisplayElevation = () => {
-            setDisplayElevation(shouldDisplayElevation());
-            console.log('scroll:', scrollable.scrollTop, 'show:', scrollable.scrollTop < 200);
-            setShowFixedBackground(scrollable.scrollTop < 200);
-        };
+        const checkDisplayElevation = debounce(
+            () => {
+                setDisplayElevation(shouldDisplayElevation());
+            },
+            50,
+            {leading: true, maxWait: 100}
+        );
 
         const transitionAwaiter = waitForSwitchTransitionToStart(checkDisplayElevation);
         const scrollEventTarget = getScrollEventTarget(scrollable);
