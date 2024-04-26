@@ -39,17 +39,21 @@ export const InternalResponsiveLayout: React.FC<
         <ThemeVariant variant={internalVariant ?? outsideVariant}>
             <div
                 className={classnames(
-                    fullWidth ? styles.fullwidthContainer : styles.responsiveLayoutContainer,
                     className,
                     internalVariant &&
                         internalVariant !== 'default' &&
                         styles.backgroundVariant[internalVariant],
-                    {
-                        [styles.expandedResponsiveLayoutContainerMobile]:
-                            shouldExpandWhenNested === true && !fullWidth,
-                        [styles.expandedResponsiveLayoutContainerDesktop]:
-                            shouldExpandWhenNested && !fullWidth,
-                    }
+                    ...(fullWidth
+                        ? []
+                        : [
+                              shouldExpandWhenNested
+                                  ? styles.desktopContainer
+                                  : styles.forcedMarginDesktopContainer,
+                              shouldExpandWhenNested === true
+                                  ? styles.mobileContainer
+                                  : styles.forcedMarginMobileContainer,
+                              styles.responsiveLayoutContainer,
+                          ])
                 )}
                 style={backgroundColor ? {background: backgroundColor} : undefined}
                 {...getPrefixedDataAttributes(dataAttributes)}
@@ -73,4 +77,15 @@ const ResponsiveLayout: React.FC<Props> = ({children, ...props}) => (
     </InternalResponsiveLayout>
 );
 
+export const ResetResponsiveLayout: React.FC<{
+    children: React.ReactNode;
+    className?: string;
+    innerDivClassName?: string;
+}> = ({children, className, innerDivClassName}) => {
+    return (
+        <div className={classnames(styles.resetMargin, className)}>
+            <div className={classnames(styles.resetVars, innerDivClassName)}>{children}</div>
+        </div>
+    );
+};
 export default ResponsiveLayout;
