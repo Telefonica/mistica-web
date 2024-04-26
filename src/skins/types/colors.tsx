@@ -2,6 +2,7 @@ export type Colors = {
     appBarBackground: string;
     background: string;
     backgroundContainer: string;
+    backgroundContainerError: string;
     backgroundContainerHover: string;
     backgroundContainerPressed: string;
     backgroundContainerBrand: string;
@@ -87,6 +88,8 @@ export type Colors = {
     textSecondary: string;
     textSecondaryInverse: string;
     error: string;
+    textError: string;
+    textErrorInverse: string;
     success: string;
     warning: string;
     promo: string;
