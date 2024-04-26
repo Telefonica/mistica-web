@@ -59,9 +59,6 @@ export const resetDesktop = style({
 
 export const responsiveLayoutContainer = style({
     width: 'auto',
-    display: 'flex',
-    flexDirection: 'column',
-    flex: 1,
     margin: `0 calc(-1 * ${fallbackVar(sideMargin, '0px')})`,
     vars: {
         [currentMargin]: '0px',
@@ -136,9 +133,6 @@ export const backgroundVariant = {
 export const responsiveLayout = style({
     paddingLeft: 'env(safe-area-inset-left)',
     paddingRight: 'env(safe-area-inset-right)',
-    display: 'flex',
-    flexDirection: 'column',
-    flex: 1,
     margin: `0 ${currentMargin}`,
     vars: {
         [sideMargin]: currentMargin,
