@@ -58,7 +58,7 @@ export const resetDesktop = style({
 });
 
 export const responsiveLayoutContainer = style({
-    width: 'auto',
+    width: `calc(100% + 2 * ${fallbackVar(sideMargin, '0px')})`,
     margin: `0 calc(-1 * ${fallbackVar(sideMargin, '0px')})`,
     vars: {
         [currentMargin]: '0px',
