@@ -23,6 +23,7 @@ import {vars} from './skins/skin-contract.css';
 import * as styles from './fixed-footer-layout.css';
 import {applyCssVars, safeAreaInsetBottom} from './utils/css';
 import {useFixedToTopHeight} from './fixed-to-top';
+import {useOverScrollColor} from './overscroll-color-context';
 
 const getScrollEventTarget = (el: HTMLElement) => (el === document.documentElement ? window : el);
 
@@ -64,6 +65,7 @@ const FixedFooterLayout = ({
     const topDistance = useFixedToTopHeight();
     const availableHeight = visualHeight - topDistance - domFooterHeight;
     const isFooterFixed = availableHeight > MIN_AVAILABLE_HEIGHT_FOR_FIXED;
+    const [showFixedBackground, setShowFixedBackground] = React.useState(true);
 
     useIsomorphicLayoutEffect(() => {
         onChangeFooterHeight?.(domFooterHeight);
@@ -86,20 +88,30 @@ const FixedFooterLayout = ({
         const shouldDisplayElevation = () =>
             hasScroll(scrollable) && getScrollDistanceToBottom(scrollable) > topDistance + 1; // This is 1 and not 0 because a weird bug with Safari
 
-        const checkDisplayElevation = debounce(
-            () => {
-                setDisplayElevation(shouldDisplayElevation());
-            },
-            50,
-            {leading: true, maxWait: 200}
-        );
+        // const checkDisplayElevation = debounce(
+        //     () => {
+        //         setDisplayElevation(shouldDisplayElevation());
+
+        //         console.log('scroll:', scrollable.scrollTop, 'show:', scrollable.scrollTop < 200);
+
+        //         setShowFixedBackground(scrollable.scrollTop < 200);
+        //     },
+        //     50,
+        //     {leading: true, maxWait: 50}
+        // );
+
+        const checkDisplayElevation = () => {
+            setDisplayElevation(shouldDisplayElevation());
+            console.log('scroll:', scrollable.scrollTop, 'show:', scrollable.scrollTop < 200);
+            setShowFixedBackground(scrollable.scrollTop < 200);
+        };
 
         const transitionAwaiter = waitForSwitchTransitionToStart(checkDisplayElevation);
         const scrollEventTarget = getScrollEventTarget(scrollable);
         addPassiveEventListener(scrollEventTarget, 'resize', checkDisplayElevation);
         addPassiveEventListener(scrollEventTarget, 'scroll', checkDisplayElevation);
         return () => {
-            checkDisplayElevation.cancel();
+            //  checkDisplayElevation.cancel();
             removePassiveEventListener(scrollEventTarget, 'scroll', checkDisplayElevation);
             removePassiveEventListener(scrollEventTarget, 'resize', checkDisplayElevation);
             transitionAwaiter.cancel();
@@ -114,32 +126,38 @@ const FixedFooterLayout = ({
     ]);
 
     /**
-     * Notes about the background:
-     *
-     * - If a gradient is used as background color, the end color of the gradient must start at the
-     *   top of the fixed footer. That means that the gradient height is "viewable area" minus "footer height".
-     *
-     * - The content could be scrollable and the gradient must scroll with it, so an additional background is
-     *   needed to fill the gap between the gradient and the fixed footer. A fullscreen fixed div does this job.
-     *
-     * - When there is not enough vertical space, instead of a fixed footer, the footer is placed at the
-     *   bottom of the content. In this case, the background size is the same as the content (height: 100%).
-     *
-     * - A feedback screen could contain a navigation bar. The topDistance is needed to calculate the gradient height.
-     *
-     * - Using a Portal because the background must be rendered outside the content container
+     * Diagram of the layout:
+     * https://excalidraw.com/#json=No0s6LB7QO735nv-wGIEP,9OOuqiaFInbtr1YjMm4g4Q
      */
+
+    const {topColor} = useOverScrollColor();
+    const {height: height2, ref: gradientRef} = useElementDimensions();
+
     const renderBackground = () => {
         return (
             <Portal>
-                <div className={styles.fixedBackgroundLayer} style={{background: footerBgColor}} />
                 <div
+                    className={styles.fixedBackgroundLayer}
+                    style={{
+                        background: `linear-gradient(to bottom, ${topColor} 0%,${topColor} 50%, ${footerBgColor} 50.1%, ${footerBgColor} 100%)`,
+                    }}
+                />
+                <div
+                    ref={gradientRef}
                     className={styles.absoluteBackgroundLayer}
                     style={{
                         background: containerBgColor, // this color could be a gradient
                         top: topDistance - 1, // -1 because the navigationbar could have a 1px transparent background
                         bottom: isFooterFixed ? footerHeightStyle : 'unset',
                         height: isFooterFixed ? 'unset' : contentHeight,
+                    }}
+                />
+                <div
+                    className={styles.absoluteBackgroundLayer}
+                    style={{
+                        background: footerBgColor,
+                        top: height2 + topDistance - 1,
+                        height: `calc(${contentHeight}px - ${height2}px)`,
                     }}
                 />
             </Portal>

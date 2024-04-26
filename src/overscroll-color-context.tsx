@@ -14,6 +14,8 @@ type OverscrollColorConfig = {topColor?: string; bottomColor?: string};
 
 const {Provider, useSetValue, useValue} = createNestableContext<OverscrollColorConfig>({});
 
+export const useOverScrollColor = useValue;
+
 const shouldRender = (platformOverrides: Theme['platformOverrides']) =>
     getPlatform(platformOverrides) === 'ios';
 

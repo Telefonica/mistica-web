@@ -58,7 +58,7 @@ export const fixedBackgroundLayer = style([
         position: 'fixed',
     }),
     {
-        zIndex: -2,
+        zIndex: -3,
         '@media': {
             [mq.desktopOrBigger]: {
                 display: 'none',
