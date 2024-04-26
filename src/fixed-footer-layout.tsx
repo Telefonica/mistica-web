@@ -102,7 +102,7 @@ const FixedFooterLayout = ({
         addPassiveEventListener(scrollEventTarget, 'resize', checkDisplayElevation);
         addPassiveEventListener(scrollEventTarget, 'scroll', checkDisplayElevation);
         return () => {
-            //  checkDisplayElevation.cancel();
+            checkDisplayElevation.cancel();
             removePassiveEventListener(scrollEventTarget, 'scroll', checkDisplayElevation);
             removePassiveEventListener(scrollEventTarget, 'resize', checkDisplayElevation);
             transitionAwaiter.cancel();
@@ -126,7 +126,7 @@ const FixedFooterLayout = ({
                 <div
                     className={styles.fixedBackgroundLayer}
                     style={{
-                        background: `linear-gradient(180deg, ${topColor} 0%,${topColor} 50%, ${footerBgColor} 50.1%, ${footerBgColor} 100%)`,
+                        background: `linear-gradient(180deg, ${topColor} 50%, ${footerBgColor} 50% 100%)`,
                     }}
                 />
                 <div
