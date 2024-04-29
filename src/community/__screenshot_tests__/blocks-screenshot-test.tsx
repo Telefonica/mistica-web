@@ -41,6 +41,7 @@ test('Blocks Row Block', async () => {
     await openStoryPage({
         id: 'community-blocks--block-row',
         device: 'MOBILE_IOS',
+        args: {description: 'This is a very long description to verify text alignment'},
     });
 
     const stepper = await screen.findByTestId('row-block');
