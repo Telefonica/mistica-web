@@ -19,7 +19,7 @@ import IconChevron from './icons/icon-chevron';
 import Switch from './switch-component';
 import RadioButton, {useRadioContext} from './radio-button';
 import Checkbox from './checkbox';
-import {Boxed} from './boxed';
+import {InternalBoxed} from './boxed';
 import Divider from './divider';
 import {getPrefixedDataAttributes} from './utils/dom';
 import * as styles from './list.css';
@@ -45,6 +45,7 @@ interface CommonProps {
     description?: string | null;
     descriptionLinesMax?: number;
     detail?: string;
+    danger?: boolean;
     asset?: React.ReactNode;
     badge?: boolean | number;
     role?: string;
@@ -86,6 +87,7 @@ export const Content: React.FC<ContentProps> = ({
     descriptionLinesMax,
     detail,
     asset,
+    danger,
     type = 'basic',
     badge,
     right,
@@ -139,7 +141,7 @@ export const Content: React.FC<ContentProps> = ({
                     <Stack space={2}>
                         <Text3
                             regular
-                            color={vars.colors.textPrimary}
+                            color={danger ? vars.colors.textError : vars.colors.textPrimary}
                             truncate={titleLinesMax}
                             id={labelId}
                             hyphens="auto"
@@ -346,6 +348,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
         description,
         descriptionLinesMax,
         detail,
+        danger,
         badge,
         role,
         extra,
@@ -379,6 +382,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
             subtitleLinesMax={subtitleLinesMax}
             descriptionLinesMax={descriptionLinesMax}
             detail={detail}
+            danger={danger}
             type={type}
             right={right}
             extra={extra}
@@ -724,13 +728,14 @@ type BoxedRowProps = ExclusifyUnion<
 >;
 
 export const BoxedRow = React.forwardRef<HTMLDivElement, BoxedRowProps>(({dataAttributes, ...props}, ref) => (
-    <Boxed
-        isInverse={props.isInverse}
+    <InternalBoxed
+        isInverse={props.isInverse && !props.danger}
+        background={props.danger && props.isInverse ? vars.colors.backgroundContainerError : undefined}
         ref={ref}
         dataAttributes={{'component-name': 'BoxedRow', ...dataAttributes}}
     >
         <RowContent {...props} />
-    </Boxed>
+    </InternalBoxed>
 ));
 
 type BoxedRowListProps = {

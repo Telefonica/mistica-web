@@ -131,6 +131,7 @@ export const Text: React.FC<TextProps> = ({
         [vars.colors.textPrimary]: vars.colors.textPrimaryInverse,
         [vars.colors.textSecondary]: vars.colors.textSecondaryInverse,
         [vars.colors.textLink]: vars.colors.textLinkInverse,
+        [vars.colors.textError]: vars.colors.textErrorInverse,
     };
 
     if (!children && children !== 0) {
