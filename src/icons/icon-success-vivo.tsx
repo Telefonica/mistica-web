@@ -14,7 +14,7 @@ const IconSuccessVivo = ({size = 48}: Props): JSX.Element => {
     const {platformOverrides} = useTheme();
 
     return (
-        <svg width={size} height={size} viewBox="0 0 64 64" overflow="visible">
+        <svg role="presentation" width={size} height={size} viewBox="0 0 64 64" overflow="visible">
             <g
                 fill={isInverse ? vars.colors.inverse : vars.colors.brand}
                 stroke={isInverse ? vars.colors.inverse : vars.colors.brand}
