@@ -24,6 +24,85 @@ export const Default: StoryComponent = () => {
     return (
         <Box paddingY={24}>
             <Stack space={24}>
+                {/** Carousel with alternating fullWidth and not fullWidth layouts */}
+                <ResponsiveLayout>
+                    <ResponsiveLayout fullWidth>
+                        <ResponsiveLayout>
+                            <ResponsiveLayout fullWidth>
+                                <ResponsiveLayout>
+                                    <ResponsiveLayout fullWidth>
+                                        <Carousel
+                                            withBullets
+                                            items={Array.from({length: 6}, (_, idx) => (
+                                                <MediaCard
+                                                    aria-label={`Carousel item ${idx}`}
+                                                    key={idx}
+                                                    title={`Title ${idx}`}
+                                                    description="Some description"
+                                                    media={<Image src={usingVrImg} aspectRatio="16:9" />}
+                                                    buttonLink={
+                                                        <ButtonLink href="https://google.com">
+                                                            Link {idx}
+                                                        </ButtonLink>
+                                                    }
+                                                />
+                                            ))}
+                                        />
+                                    </ResponsiveLayout>
+                                </ResponsiveLayout>
+                            </ResponsiveLayout>
+                        </ResponsiveLayout>
+                    </ResponsiveLayout>
+                </ResponsiveLayout>
+
+                {/** Hero wrapped in multiple layouts */}
+                <ResponsiveLayout>
+                    <ResponsiveLayout>
+                        <ResponsiveLayout>
+                            <Hero
+                                background="default"
+                                media={<Image src={usingVrImg} aspectRatio="16:9" />}
+                                pretitle="Pretitle"
+                                title="Title"
+                                description="This is a long description with a long text to see how this works"
+                                desktopMediaPosition="right"
+                                button={
+                                    <ButtonPrimary small onPress={() => {}}>
+                                        Action
+                                    </ButtonPrimary>
+                                }
+                                buttonLink={<ButtonLink onPress={() => {}}>Link</ButtonLink>}
+                            />
+                        </ResponsiveLayout>
+                    </ResponsiveLayout>
+                </ResponsiveLayout>
+
+                {/** Slideshow with Hero wrapped in layout */}
+                <ResponsiveLayout>
+                    <Slideshow
+                        dataAttributes={{testid: 'slideshow'}}
+                        withBullets
+                        inverseBullets={false}
+                        items={Array.from({length: 3}, (_, idx) => (
+                            <Hero
+                                background="default"
+                                key={idx}
+                                media={<Image src={usingVrImg} aspectRatio="16:9" />}
+                                pretitle="Pretitle"
+                                title="Title"
+                                description="This is a long description with a long text to see how this works"
+                                desktopMediaPosition="right"
+                                button={
+                                    <ButtonPrimary small onPress={() => {}}>
+                                        Action
+                                    </ButtonPrimary>
+                                }
+                                buttonLink={<ButtonLink onPress={() => {}}>Link</ButtonLink>}
+                            />
+                        ))}
+                    />
+                </ResponsiveLayout>
+
                 {/** Multiple layouts */}
                 <ResponsiveLayout>
                     <ResponsiveLayout>
@@ -142,91 +221,6 @@ export const Default: StoryComponent = () => {
                             <Placeholder />
                         </InternalResponsiveLayout>
                     </ResetResponsiveLayout>
-                </ResponsiveLayout>
-
-                {/** Hero wrapped in multiple layouts */}
-                <ResponsiveLayout>
-                    <ResponsiveLayout>
-                        <ResponsiveLayout>
-                            <Hero
-                                background="default"
-                                media={<Image src={usingVrImg} aspectRatio="16:9" />}
-                                pretitle="Pretitle"
-                                title="Title"
-                                description="This is a long description with a long text to see how this works"
-                                desktopMediaPosition="right"
-                                button={
-                                    <ButtonPrimary small onPress={() => {}}>
-                                        Action
-                                    </ButtonPrimary>
-                                }
-                                buttonLink={<ButtonLink onPress={() => {}}>Link</ButtonLink>}
-                            />
-                        </ResponsiveLayout>
-                    </ResponsiveLayout>
-                </ResponsiveLayout>
-
-                {/** Slideshow with Hero wrapped in layout */}
-                <ResponsiveLayout>
-                    <Slideshow
-                        dataAttributes={{testid: 'slideshow'}}
-                        withBullets
-                        inverseBullets={false}
-                        items={Array.from({length: 3}, (_, idx) => (
-                            <Hero
-                                background="default"
-                                key={idx}
-                                media={<Image src={usingVrImg} aspectRatio="16:9" />}
-                                pretitle="Pretitle"
-                                title="Title"
-                                description="This is a long description with a long text to see how this works"
-                                desktopMediaPosition="right"
-                                button={
-                                    <ButtonPrimary small onPress={() => {}}>
-                                        Action
-                                    </ButtonPrimary>
-                                }
-                                buttonLink={<ButtonLink onPress={() => {}}>Link</ButtonLink>}
-                            />
-                        ))}
-                    />
-                </ResponsiveLayout>
-
-                {/** Carousel with alternating fullWidth and not fullWidth layouts */}
-                <ResponsiveLayout>
-                    <ResponsiveLayout fullWidth>
-                        <ResponsiveLayout>
-                            <ResponsiveLayout fullWidth>
-                                <ResponsiveLayout>
-                                    <ResponsiveLayout fullWidth>
-                                        <Carousel
-                                            withBullets
-                                            items={Array.from({length: 6}, (_, idx) => (
-                                                <MediaCard
-                                                    title={'Card ' + idx}
-                                                    description="Description"
-                                                    media={
-                                                        <Image
-                                                            src="https://source.unsplash.com/1600x900/?watch"
-                                                            aspectRatio="16:9"
-                                                        />
-                                                    }
-                                                    button={
-                                                        <ButtonPrimary small onPress={() => {}}>
-                                                            Action
-                                                        </ButtonPrimary>
-                                                    }
-                                                    buttonLink={
-                                                        <ButtonLink onPress={() => {}}>Link</ButtonLink>
-                                                    }
-                                                />
-                                            ))}
-                                        />
-                                    </ResponsiveLayout>
-                                </ResponsiveLayout>
-                            </ResponsiveLayout>
-                        </ResponsiveLayout>
-                    </ResponsiveLayout>
                 </ResponsiveLayout>
             </Stack>
         </Box>
