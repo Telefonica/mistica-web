@@ -33,6 +33,7 @@ type PropsRender = {
     render: RenderSwitch;
     children?: undefined;
     'aria-labelledby'?: string;
+    'aria-label'?: string;
     dataAttributes?: DataAttributes;
 };
 
@@ -45,6 +46,7 @@ type PropsChildren = {
     children?: React.ReactNode;
     render?: undefined;
     'aria-labelledby'?: string;
+    'aria-label'?: string;
     dataAttributes?: DataAttributes;
 };
 
@@ -143,7 +145,8 @@ const Switch: React.FC<PropsRender | PropsChildren> = (props) => {
             ref={focusableRef}
             className={disabled ? styles.containerDisabled : styles.container}
             aria-disabled={disabled}
-            aria-labelledby={labelId}
+            aria-label={props['aria-label']}
+            aria-labelledby={props['aria-label'] ? undefined : labelId}
             {...getPrefixedDataAttributes(props.dataAttributes, 'Switch')}
         >
             {props.render ? (
