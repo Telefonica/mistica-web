@@ -509,6 +509,17 @@ const listRowSnippets: Array<Snippet> = ['Row', 'BoxedRow'].flatMap((rowName) =>
     },
     {
         group: 'List',
+        name: `${rowName} (danger)`,
+        code: `
+        <${rowName}
+            title="Title"
+            description="Description"
+            onPress={() => {}}
+            danger
+        />`,
+    },
+    {
+        group: 'List',
         name: `${rowName} (image)`,
         code: `
         <${rowName}
