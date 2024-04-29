@@ -98,6 +98,7 @@ const v = true as boolean;
         title="conditional iconButton"
         iconButton={v ? {Icon: IconPlayFilled, 'aria-label': 'label'} : undefined}
     />
+    <Row title="danger" danger />
 </RowList>;
 
 <BoxedRowList>
@@ -184,4 +185,11 @@ const v = true as boolean;
 
     {/* OK - radio */}
     <BoxedRow title="radio" radioValue="radio" />
+
+    <BoxedRow title="danger" danger />
+
+    <BoxedRow title="inverse" isInverse />
+
+    {/* @ts-expect-error - danger inverse is forbbiden */}
+    <BoxedRow title="danger inverse is forbbiden" danger isInverse />
 </BoxedRowList>;

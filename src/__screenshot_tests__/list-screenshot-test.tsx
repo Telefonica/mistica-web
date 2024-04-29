@@ -282,34 +282,3 @@ test('BoxedRows danger', async () => {
     const image = await list.screenshot();
     expect(image).toMatchImageSnapshot();
 });
-
-test('BoxedRows danger inverse', async () => {
-    await openStoryPage({
-        id: 'components-lists--boxed-row-list-story',
-        device: 'MOBILE_IOS',
-        args: {
-            danger: true,
-            isInverse: true,
-        },
-    });
-
-    const list = await screen.findByTestId('list');
-    const image = await list.screenshot();
-    expect(image).toMatchImageSnapshot();
-});
-
-test('BoxedRows danger inverse over inverse background', async () => {
-    await openStoryPage({
-        id: 'components-lists--boxed-row-list-story',
-        device: 'MOBILE_IOS',
-        args: {
-            danger: true,
-            isInverse: true,
-            overInverse: true,
-        },
-    });
-
-    const list = await screen.findByTestId('list');
-    const image = await list.screenshot();
-    expect(image).toMatchImageSnapshot();
-});

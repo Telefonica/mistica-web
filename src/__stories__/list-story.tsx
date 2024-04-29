@@ -233,7 +233,7 @@ const Template: StoryComponent<Args & {boxed?: boolean; isInverse?: boolean}> = 
                     {...getControlProps(row++)}
                 />
                 <RowComponent
-                    asset={<IconLikeFilled size={24} />}
+                    asset={<IconLikeFilled size={24} color="currentColor" />}
                     headline={headline && <Tag type="promo">{headline}</Tag>}
                     title={title}
                     subtitle={subtitle}
@@ -411,3 +411,4 @@ export const BoxedRowListStory: StoryComponent<Args & {isInverse: boolean}> = (a
 );
 BoxedRowListStory.storyName = 'BoxedRowList';
 BoxedRowListStory.args = {...defaultArgs, isInverse: false};
+BoxedRowListStory.argTypes = {danger: {if: {arg: 'isInverse', eq: false}}};

@@ -19,7 +19,7 @@ import IconChevron from './icons/icon-chevron';
 import Switch from './switch-component';
 import RadioButton, {useRadioContext} from './radio-button';
 import Checkbox from './checkbox';
-import {InternalBoxed} from './boxed';
+import {Boxed} from './boxed';
 import Divider from './divider';
 import {getPrefixedDataAttributes} from './utils/dom';
 import * as styles from './list.css';
@@ -45,7 +45,6 @@ interface CommonProps {
     description?: string | null;
     descriptionLinesMax?: number;
     detail?: string;
-    danger?: boolean;
     asset?: React.ReactNode;
     badge?: boolean | number;
     role?: string;
@@ -71,6 +70,7 @@ interface ContentProps extends CommonProps {
     isClickable?: boolean;
     type?: 'chevron' | 'basic' | 'custom' | 'control';
     right?: Right;
+    danger?: boolean;
     /** This id is to link the title with the related control */
     labelId?: string;
 }
@@ -121,6 +121,13 @@ export const Content: React.FC<ContentProps> = ({
                     <div
                         className={styles.asset}
                         style={applyCssVars({
+                            color: danger
+                                ? isInverse
+                                    ? vars.colors.textErrorInverse
+                                    : vars.colors.textError
+                                : isInverse
+                                ? vars.colors.textPrimaryInverse
+                                : vars.colors.textPrimary,
                             [mediaStyles.vars.mediaBorderRadius]: vars.borderRadii.mediaSmall,
                         })}
                     >
@@ -289,7 +296,7 @@ type RowContentProps = ExclusifyUnion<
     | HrefRowContentProps
     | ToRowContentProps
     | OnPressRowContentProps
->;
+> & {danger?: boolean};
 
 const useControlState = ({
     value,
@@ -704,38 +711,36 @@ export const RowList: React.FC<RowListProps> = ({
     );
 };
 
-interface CommonBoxedRowProps {
-    isInverse?: boolean;
-}
-interface BasicBoxedRowProps extends BasicRowContentProps, CommonBoxedRowProps {}
-interface SwitchBoxedRowProps extends SwitchRowContentProps, CommonBoxedRowProps {}
-interface CheckboxBoxedRowProps extends CheckboxRowContentProps, CommonBoxedRowProps {}
-interface RadioBoxedRowProps extends RadioRowContentProps, CommonBoxedRowProps {}
-interface IconButtonBoxedRowProps extends IconButtonRowContentProps, CommonBoxedRowProps {}
-interface HrefBoxedRowProps extends HrefRowContentProps, CommonBoxedRowProps {}
-interface ToBoxedRowProps extends ToRowContentProps, CommonBoxedRowProps {}
-interface OnPressBoxedRowProps extends OnPressRowContentProps, CommonBoxedRowProps {}
+type CommonBoxedRowProps =
+    | {
+          isInverse?: true;
+          danger?: false;
+      }
+    | {
+          danger?: true;
+          isInverse?: false;
+      };
 
 type BoxedRowProps = ExclusifyUnion<
-    | BasicBoxedRowProps
-    | SwitchBoxedRowProps
-    | RadioBoxedRowProps
-    | IconButtonBoxedRowProps
-    | CheckboxBoxedRowProps
-    | HrefBoxedRowProps
-    | ToBoxedRowProps
-    | OnPressBoxedRowProps
->;
+    | BasicRowContentProps
+    | SwitchRowContentProps
+    | RadioRowContentProps
+    | IconButtonRowContentProps
+    | CheckboxRowContentProps
+    | HrefRowContentProps
+    | ToRowContentProps
+    | OnPressRowContentProps
+> &
+    CommonBoxedRowProps;
 
 export const BoxedRow = React.forwardRef<HTMLDivElement, BoxedRowProps>(({dataAttributes, ...props}, ref) => (
-    <InternalBoxed
-        isInverse={props.isInverse && !props.danger}
-        background={props.danger && props.isInverse ? vars.colors.backgroundContainerError : undefined}
+    <Boxed
+        isInverse={props.isInverse}
         ref={ref}
         dataAttributes={{'component-name': 'BoxedRow', ...dataAttributes}}
     >
         <RowContent {...props} />
-    </InternalBoxed>
+    </Boxed>
 ));
 
 type BoxedRowListProps = {

@@ -512,6 +512,9 @@ const listRowSnippets: Array<Snippet> = ['Row', 'BoxedRow'].flatMap((rowName) =>
         name: `${rowName} (danger)`,
         code: `
         <${rowName}
+            asset={
+                <IconShopRegular color="currentColor" />
+            }
             title="Title"
             description="Description"
             onPress={() => {}}
