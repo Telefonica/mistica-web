@@ -13,6 +13,7 @@ import {eventActions, eventCategories, eventNames, useTrackingConfig} from './ut
 import {useTheme} from './hooks';
 import {flattenChildren} from './skins/utils';
 import * as styles from './button.css';
+import {VIVO_NEW_SKIN} from './skins/constants';
 
 import type {TouchableElement} from './touchable';
 import type {
@@ -81,6 +82,20 @@ const renderButtonElement = ({
 };
 
 const ButtonLinkChevron: React.FC = () => {
+    const {skinName} = useTheme();
+
+    // vivo new skin has a different chevron
+    if (skinName === VIVO_NEW_SKIN) {
+        return (
+            <svg width="0.25em" height="0.375em" viewBox="0 0 4 6" fill="none">
+                <path
+                    d="M3.11111 2.68886L0.735341 0.303827C0.63671 0.215263 0.513388 0.190898 0.405205 0.202848C0.299523 0.214521 0.19613 0.261624 0.121443 0.334577C0.0495715 0.402707 0.00869411 0.507933 0.00125738 0.60783C-0.00659698 0.713337 0.0210362 0.839777 0.121314 0.936392L2.33333 3.07775L0.114057 5.20689L0.110571 5.21056L0.108209 5.21315L0.103815 5.21806C0.0152508 5.31669 -0.0091142 5.44001 0.00283534 5.5482C0.0145086 5.65388 0.0616117 5.75727 0.134565 5.83196C0.202695 5.90383 0.307921 5.94471 0.407818 5.95215C0.513325 5.96 0.639765 5.93237 0.73638 5.83209L3.11111 3.46664C3.32589 3.25186 3.32589 2.90364 3.11111 2.68886Z"
+                    fill="currentColor"
+                />
+            </svg>
+        );
+    }
+
     return (
         <svg width="0.5em" height="0.5em" viewBox="0 0 8 8">
             <path
