@@ -41,6 +41,7 @@ type PropsRender = {
     }) => React.ReactNode;
     children?: undefined;
     dataAttributes?: DataAttributes;
+    'aria-label'?: string;
     'aria-labelledby'?: string;
 };
 
@@ -50,6 +51,7 @@ type PropsChildren = {
     children?: React.ReactNode;
     render?: undefined;
     dataAttributes?: DataAttributes;
+    'aria-label'?: string;
     'aria-labelledby'?: string;
 };
 
@@ -58,6 +60,7 @@ const RadioButton: React.FC<PropsRender | PropsChildren> = ({
     id,
     dataAttributes,
     'aria-labelledby': ariaLabelledby,
+    'aria-label': ariaLabel,
     ...rest
 }) => {
     const {disabled, selectedValue, focusableValue, select, selectNext, selectPrev} = useRadioContext();
@@ -117,7 +120,8 @@ const RadioButton: React.FC<PropsRender | PropsChildren> = ({
             data-value={value}
             aria-checked={checked}
             aria-disabled={disabled}
-            aria-labelledby={labelId}
+            aria-label={ariaLabel}
+            aria-labelledby={ariaLabel ? undefined : labelId}
             onClick={(e) => {
                 e.stopPropagation();
                 if (!disabled) {

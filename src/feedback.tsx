@@ -172,7 +172,7 @@ type FeedbackButtonsProps = ButtonGroupProps;
 
 interface FeedbackProps extends FeedbackButtonsProps {
     title: string;
-    description?: string | Array<string>;
+    description?: string | ReadonlyArray<string>;
     /**
      * @deprecated This field is deprecated, please use extra instead.
      */
