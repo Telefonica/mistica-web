@@ -14,7 +14,7 @@ const IconErrorO2 = ({size = 48}: Props): JSX.Element => {
     const {platformOverrides} = useTheme();
 
     return (
-        <svg width={size} height={size} viewBox="0 0 64 64" overflow="visible">
+        <svg role="presentation" width={size} height={size} viewBox="0 0 64 64" overflow="visible">
             <g
                 stroke={vars.colors.error}
                 fill={vars.colors.error}
@@ -62,7 +62,7 @@ const IconErrorDefault = ({size = 48}: Props): JSX.Element => {
     const {platformOverrides} = useTheme();
 
     return (
-        <svg width={size} height={size} viewBox="0 0 64 64" overflow="visible">
+        <svg role="presentation" width={size} height={size} viewBox="0 0 64 64" overflow="visible">
             <g
                 stroke={vars.colors.error}
                 fill="none"
