@@ -9,6 +9,8 @@ import {
     Stack,
     Placeholder,
     Box,
+    Carousel,
+    MediaCard,
 } from '..';
 import {InternalResponsiveLayout, ResetResponsiveLayout} from '../responsive-layout';
 import usingVrImg from '../__stories__/images/using-vr.jpg';
@@ -188,6 +190,43 @@ export const Default: StoryComponent = () => {
                             />
                         ))}
                     />
+                </ResponsiveLayout>
+
+                {/** Carousel with alternating fullWidth and not fullWidth layouts */}
+                <ResponsiveLayout>
+                    <ResponsiveLayout fullWidth>
+                        <ResponsiveLayout>
+                            <ResponsiveLayout fullWidth>
+                                <ResponsiveLayout>
+                                    <ResponsiveLayout fullWidth>
+                                        <Carousel
+                                            withBullets
+                                            items={Array.from({length: 6}, (_, idx) => (
+                                                <MediaCard
+                                                    title={'Card ' + idx}
+                                                    description="Description"
+                                                    media={
+                                                        <Image
+                                                            src="https://source.unsplash.com/1600x900/?watch"
+                                                            aspectRatio="16:9"
+                                                        />
+                                                    }
+                                                    button={
+                                                        <ButtonPrimary small onPress={() => {}}>
+                                                            Action
+                                                        </ButtonPrimary>
+                                                    }
+                                                    buttonLink={
+                                                        <ButtonLink onPress={() => {}}>Link</ButtonLink>
+                                                    }
+                                                />
+                                            ))}
+                                        />
+                                    </ResponsiveLayout>
+                                </ResponsiveLayout>
+                            </ResponsiveLayout>
+                        </ResponsiveLayout>
+                    </ResponsiveLayout>
                 </ResponsiveLayout>
             </Stack>
         </Box>
