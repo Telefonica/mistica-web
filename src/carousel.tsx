@@ -204,7 +204,7 @@ const normalizeItemsPerPage = (
     };
 };
 
-const calcPagesScrollPositions = (itemsScrollPosition: ReadonlyArray<number>, numPages: number) => {
+const calcPagesScrollPositions = (itemsScrollPosition: Array<number>, numPages: number) => {
     if (itemsScrollPosition.length === 0) {
         return [];
     }
@@ -220,7 +220,7 @@ const calcPagesScrollPositions = (itemsScrollPosition: ReadonlyArray<number>, nu
     return pagesScrollPositions;
 };
 
-const calcCurrentPageIndex = (scrollPosition: number, pagesScrollPositions: ReadonlyArray<number>) => {
+const calcCurrentPageIndex = (scrollPosition: number, pagesScrollPositions: Array<number>) => {
     const middlePageScrollPositions = [];
     for (let i = 0; i < pagesScrollPositions.length; i++) {
         if (i === 0) {

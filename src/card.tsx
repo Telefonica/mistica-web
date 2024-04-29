@@ -65,7 +65,7 @@ export type CardAction = {
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
 } & ExclusifyUnion<IconButtonAction | ToggleIconButtonAction>;
 
-const useTopActions = (actions?: Array<CardAction | React.ReactElement>, onClose?: () => void) => {
+const useTopActions = (actions?: ReadonlyArray<CardAction | React.ReactElement>, onClose?: () => void) => {
     const {texts} = useTheme();
     const finalActions = actions ? [...actions] : [];
 
@@ -83,7 +83,7 @@ const useTopActions = (actions?: Array<CardAction | React.ReactElement>, onClose
 const CardActionTypeContext = React.createContext<'default' | 'inverse' | 'media'>('default');
 
 type CardActionsGroupProps = {
-    actions?: Array<CardAction | React.ReactElement>;
+    actions?: ReadonlyArray<CardAction | React.ReactElement>;
     onClose?: () => void;
     padding?: number;
     type?: 'default' | 'inverse' | 'media';
@@ -475,7 +475,7 @@ interface MediaCardBaseProps {
     description?: string;
     descriptionLinesMax?: number;
     extra?: React.ReactNode;
-    actions?: Array<CardAction | React.ReactElement>;
+    actions?: ReadonlyArray<CardAction | React.ReactElement>;
     children?: void;
     dataAttributes?: DataAttributes;
     'aria-label'?: string;
@@ -772,7 +772,7 @@ interface DataCardBaseProps {
     description?: string;
     descriptionLinesMax?: number;
     extra?: React.ReactNode;
-    actions?: Array<CardAction | React.ReactElement>;
+    actions?: ReadonlyArray<CardAction | React.ReactElement>;
     aspectRatio?: AspectRatio | number;
     children?: void;
     /** "data-" prefix is automatically added. For example, use "testid" instead of "data-testid" */
@@ -986,7 +986,7 @@ interface CommonDisplayCardProps {
      * Typically a mistica-icons component element
      */
     icon?: React.ReactElement;
-    actions?: Array<CardAction | React.ReactElement>;
+    actions?: ReadonlyArray<CardAction | React.ReactElement>;
     onClose?: () => void;
     dataAttributes?: DataAttributes;
     headline?: React.ReactComponentElement<typeof Tag>;
@@ -1270,7 +1270,7 @@ interface PosterCardBaseProps {
     width?: number | string;
     height?: number | string;
     icon?: React.ReactElement;
-    actions?: Array<CardAction | React.ReactElement>;
+    actions?: ReadonlyArray<CardAction | React.ReactElement>;
     onClose?: () => void;
     dataAttributes?: DataAttributes;
     headline?: string | RendersNullableElement<typeof Tag>;
