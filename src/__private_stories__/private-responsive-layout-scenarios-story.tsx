@@ -11,6 +11,7 @@ import {
     Box,
     Carousel,
     MediaCard,
+    Text5,
 } from '..';
 import {InternalResponsiveLayout, ResetResponsiveLayout} from '../responsive-layout';
 import usingVrImg from '../__stories__/images/using-vr.jpg';
@@ -20,208 +21,183 @@ export default {
     parameters: {fullScreen: true},
 };
 
+const WithTitle: React.FC<{title: string; children: React.ReactNode}> = ({title, children}) => (
+    <Stack space={24} dataAttributes={{testid: title}}>
+        <Text5 as="div" textAlign="center">
+            {title}
+        </Text5>
+
+        {children}
+    </Stack>
+);
+
 export const Default: StoryComponent = () => {
     return (
         <Box paddingY={24}>
             <Stack space={24}>
-                {/** Carousel with alternating fullWidth and not fullWidth layouts */}
-                <ResponsiveLayout>
-                    <ResponsiveLayout fullWidth>
+                <WithTitle title="Carousel wrapped in layouts with and without fullWidth">
+                    <ResponsiveLayout>
+                        <ResponsiveLayout fullWidth>
+                            <Carousel
+                                withBullets
+                                items={Array.from({length: 6}, (_, idx) => (
+                                    <MediaCard
+                                        aria-label={`Carousel item ${idx}`}
+                                        key={idx}
+                                        title={`Title ${idx}`}
+                                        description="Some description"
+                                        media={<Image src={usingVrImg} aspectRatio="16:9" />}
+                                        buttonLink={
+                                            <ButtonLink href="https://google.com">Link {idx}</ButtonLink>
+                                        }
+                                    />
+                                ))}
+                            />
+                        </ResponsiveLayout>
+                    </ResponsiveLayout>
+                </WithTitle>
+
+                <WithTitle title="Hero wrapped in multiple layouts">
+                    <ResponsiveLayout>
                         <ResponsiveLayout>
-                            <ResponsiveLayout fullWidth>
-                                <ResponsiveLayout>
-                                    <ResponsiveLayout fullWidth>
-                                        <Carousel
-                                            withBullets
-                                            items={Array.from({length: 6}, (_, idx) => (
-                                                <MediaCard
-                                                    aria-label={`Carousel item ${idx}`}
-                                                    key={idx}
-                                                    title={`Title ${idx}`}
-                                                    description="Some description"
-                                                    media={<Image src={usingVrImg} aspectRatio="16:9" />}
-                                                    buttonLink={
-                                                        <ButtonLink href="https://google.com">
-                                                            Link {idx}
-                                                        </ButtonLink>
-                                                    }
-                                                />
-                                            ))}
-                                        />
-                                    </ResponsiveLayout>
-                                </ResponsiveLayout>
+                            <ResponsiveLayout>
+                                <Hero
+                                    background="default"
+                                    media={<Image src={usingVrImg} aspectRatio="16:9" />}
+                                    pretitle="Pretitle"
+                                    title="Title"
+                                    description="This is a long description with a long text to see how this works"
+                                    desktopMediaPosition="right"
+                                    button={
+                                        <ButtonPrimary small onPress={() => {}}>
+                                            Action
+                                        </ButtonPrimary>
+                                    }
+                                    buttonLink={<ButtonLink onPress={() => {}}>Link</ButtonLink>}
+                                />
                             </ResponsiveLayout>
                         </ResponsiveLayout>
                     </ResponsiveLayout>
-                </ResponsiveLayout>
+                </WithTitle>
 
-                {/** Hero wrapped in multiple layouts */}
-                <ResponsiveLayout>
+                <WithTitle title="Slideshow with Hero wrapped in layout">
+                    <ResponsiveLayout>
+                        <Slideshow
+                            dataAttributes={{testid: 'slideshow'}}
+                            withBullets
+                            inverseBullets={false}
+                            items={Array.from({length: 3}, (_, idx) => (
+                                <Hero
+                                    background="default"
+                                    key={idx}
+                                    media={<Image src={usingVrImg} aspectRatio="16:9" />}
+                                    pretitle="Pretitle"
+                                    title="Title"
+                                    description="This is a long description with a long text to see how this works"
+                                    desktopMediaPosition="right"
+                                    button={
+                                        <ButtonPrimary small onPress={() => {}}>
+                                            Action
+                                        </ButtonPrimary>
+                                    }
+                                    buttonLink={<ButtonLink onPress={() => {}}>Link</ButtonLink>}
+                                />
+                            ))}
+                        />
+                    </ResponsiveLayout>
+                </WithTitle>
+
+                <WithTitle title="Multiple nested layouts">
                     <ResponsiveLayout>
                         <ResponsiveLayout>
-                            <Hero
-                                background="default"
-                                media={<Image src={usingVrImg} aspectRatio="16:9" />}
-                                pretitle="Pretitle"
-                                title="Title"
-                                description="This is a long description with a long text to see how this works"
-                                desktopMediaPosition="right"
-                                button={
-                                    <ButtonPrimary small onPress={() => {}}>
-                                        Action
-                                    </ButtonPrimary>
-                                }
-                                buttonLink={<ButtonLink onPress={() => {}}>Link</ButtonLink>}
-                            />
+                            <ResponsiveLayout>
+                                <Placeholder />
+                            </ResponsiveLayout>
                         </ResponsiveLayout>
                     </ResponsiveLayout>
-                </ResponsiveLayout>
+                </WithTitle>
 
-                {/** Slideshow with Hero wrapped in layout */}
-                <ResponsiveLayout>
-                    <Slideshow
-                        dataAttributes={{testid: 'slideshow'}}
-                        withBullets
-                        inverseBullets={false}
-                        items={Array.from({length: 3}, (_, idx) => (
-                            <Hero
-                                background="default"
-                                key={idx}
-                                media={<Image src={usingVrImg} aspectRatio="16:9" />}
-                                pretitle="Pretitle"
-                                title="Title"
-                                description="This is a long description with a long text to see how this works"
-                                desktopMediaPosition="right"
-                                button={
-                                    <ButtonPrimary small onPress={() => {}}>
-                                        Action
-                                    </ButtonPrimary>
-                                }
-                                buttonLink={<ButtonLink onPress={() => {}}>Link</ButtonLink>}
-                            />
-                        ))}
-                    />
-                </ResponsiveLayout>
-
-                {/** Multiple layouts */}
-                <ResponsiveLayout>
+                <WithTitle title="Multiple layouts and reset">
                     <ResponsiveLayout>
-                        <ResponsiveLayout>
-                            <Placeholder />
-                        </ResponsiveLayout>
-                    </ResponsiveLayout>
-                </ResponsiveLayout>
-
-                {/** Multiple layouts and reset */}
-                <ResponsiveLayout>
-                    <ResponsiveLayout>
-                        <ResetResponsiveLayout>
-                            <Placeholder />
-                        </ResetResponsiveLayout>
-                    </ResponsiveLayout>
-                </ResponsiveLayout>
-
-                {/** Reset without layout */}
-                <ResetResponsiveLayout>
-                    <Placeholder />
-                </ResetResponsiveLayout>
-
-                {/** Multiple resets without layouts */}
-                <ResetResponsiveLayout>
-                    <ResetResponsiveLayout>
-                        <ResetResponsiveLayout>
-                            <Placeholder />
-                        </ResetResponsiveLayout>
-                    </ResetResponsiveLayout>
-                </ResetResponsiveLayout>
-
-                {/** Alternate layouts and resets ending with layout */}
-                <ResponsiveLayout>
-                    <ResetResponsiveLayout>
-                        <ResponsiveLayout>
-                            <ResetResponsiveLayout>
-                                <ResponsiveLayout>
-                                    <Placeholder />
-                                </ResponsiveLayout>
-                            </ResetResponsiveLayout>
-                        </ResponsiveLayout>
-                    </ResetResponsiveLayout>
-                </ResponsiveLayout>
-
-                {/** Alternate layouts and resets ending with reset */}
-                <ResponsiveLayout>
-                    <ResetResponsiveLayout>
                         <ResponsiveLayout>
                             <ResetResponsiveLayout>
                                 <Placeholder />
                             </ResetResponsiveLayout>
                         </ResponsiveLayout>
-                    </ResetResponsiveLayout>
-                </ResponsiveLayout>
+                    </ResponsiveLayout>
+                </WithTitle>
 
-                {/** Alternate layouts and resets with multiple repetitions ending with layout */}
-                <ResponsiveLayout>
+                <WithTitle title="Multiple resets without layouts">
                     <ResetResponsiveLayout>
                         <ResetResponsiveLayout>
-                            <ResponsiveLayout>
-                                <ResponsiveLayout>
-                                    <ResponsiveLayout>
-                                        <ResetResponsiveLayout>
-                                            <ResponsiveLayout>
-                                                <ResponsiveLayout>
-                                                    <Placeholder />
-                                                </ResponsiveLayout>
-                                            </ResponsiveLayout>
-                                        </ResetResponsiveLayout>
-                                    </ResponsiveLayout>
-                                </ResponsiveLayout>
-                            </ResponsiveLayout>
+                            <ResetResponsiveLayout>
+                                <Placeholder />
+                            </ResetResponsiveLayout>
                         </ResetResponsiveLayout>
                     </ResetResponsiveLayout>
-                </ResponsiveLayout>
+                </WithTitle>
 
-                {/** Layout with fullWidth */}
-                <ResponsiveLayout fullWidth>
-                    <Placeholder />
-                </ResponsiveLayout>
+                <WithTitle title="Alternated layouts and resets ending with layout">
+                    <ResponsiveLayout>
+                        <ResetResponsiveLayout>
+                            <ResponsiveLayout>
+                                <ResetResponsiveLayout>
+                                    <ResponsiveLayout>
+                                        <Placeholder />
+                                    </ResponsiveLayout>
+                                </ResetResponsiveLayout>
+                            </ResponsiveLayout>
+                        </ResetResponsiveLayout>
+                    </ResponsiveLayout>
+                </WithTitle>
 
-                {/** Layout with fullWidth after reset */}
-                <ResponsiveLayout>
-                    <ResetResponsiveLayout>
-                        <ResponsiveLayout fullWidth>
-                            <Placeholder />
-                        </ResponsiveLayout>
-                    </ResetResponsiveLayout>
-                </ResponsiveLayout>
+                <WithTitle title="Alternated layouts and resets ending with reset">
+                    <ResponsiveLayout>
+                        <ResetResponsiveLayout>
+                            <ResponsiveLayout>
+                                <ResetResponsiveLayout>
+                                    <Placeholder />
+                                </ResetResponsiveLayout>
+                            </ResponsiveLayout>
+                        </ResetResponsiveLayout>
+                    </ResponsiveLayout>
+                </WithTitle>
 
-                {/** Layout after fullWidth and reset */}
-                <ResponsiveLayout fullWidth>
-                    <ResetResponsiveLayout>
-                        <ResponsiveLayout>
-                            <Placeholder />
-                        </ResponsiveLayout>
-                    </ResetResponsiveLayout>
-                </ResponsiveLayout>
+                <WithTitle title="Layout with fullWidth">
+                    <ResponsiveLayout fullWidth>
+                        <Placeholder />
+                    </ResponsiveLayout>
+                </WithTitle>
 
-                {/** Internal layout expands (desktop) */}
-                <ResponsiveLayout>
-                    <InternalResponsiveLayout shouldExpandWhenNested="desktop">
+                <WithTitle title="Layout with fullWidth after reset">
+                    <ResponsiveLayout>
+                        <ResetResponsiveLayout>
+                            <ResponsiveLayout fullWidth>
+                                <Placeholder />
+                            </ResponsiveLayout>
+                        </ResetResponsiveLayout>
+                    </ResponsiveLayout>
+                </WithTitle>
+
+                <WithTitle title="Layout after one with fullWidth and reset">
+                    <ResponsiveLayout fullWidth>
+                        <ResetResponsiveLayout>
+                            <ResponsiveLayout>
+                                <Placeholder />
+                            </ResponsiveLayout>
+                        </ResetResponsiveLayout>
+                    </ResponsiveLayout>
+                </WithTitle>
+
+                <WithTitle title="Internal layout expands (only in desktop)">
+                    <ResponsiveLayout>
                         <InternalResponsiveLayout shouldExpandWhenNested="desktop">
                             <InternalResponsiveLayout shouldExpandWhenNested="desktop">
                                 <Placeholder />
                             </InternalResponsiveLayout>
                         </InternalResponsiveLayout>
-                    </InternalResponsiveLayout>
-                </ResponsiveLayout>
-
-                {/** Internal layout doesn't expand after reset (desktop) */}
-                <ResponsiveLayout>
-                    <ResetResponsiveLayout>
-                        <InternalResponsiveLayout shouldExpandWhenNested="desktop">
-                            <Placeholder />
-                        </InternalResponsiveLayout>
-                    </ResetResponsiveLayout>
-                </ResponsiveLayout>
+                    </ResponsiveLayout>
+                </WithTitle>
             </Stack>
         </Box>
     );

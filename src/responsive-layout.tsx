@@ -79,23 +79,21 @@ const ResponsiveLayout: React.FC<Props> = ({children, ...props}) => (
 
 export const ResetResponsiveLayout: React.FC<{
     children: React.ReactNode;
-    mobile?: boolean;
-    desktop?: boolean;
-    className?: string;
-    innerDivClassName?: string;
-}> = ({children, mobile = true, desktop = true, className, innerDivClassName}) => {
+    skipMobile?: boolean;
+    skipDesktop?: boolean;
+}> = ({children, skipMobile = false, skipDesktop = false}) => {
     return (
         <div
-            className={classnames(
-                {[styles.resetContainerMobile]: mobile, [styles.resetContainerDesktop]: desktop},
-                className
-            )}
+            className={classnames({
+                [styles.resetContainerMobile]: !skipMobile,
+                [styles.resetContainerDesktop]: !skipDesktop,
+            })}
         >
             <div
-                className={classnames(
-                    {[styles.resetMobile]: mobile, [styles.resetDesktop]: desktop},
-                    innerDivClassName
-                )}
+                className={classnames({
+                    [styles.resetMobile]: !skipMobile,
+                    [styles.resetDesktop]: !skipDesktop,
+                })}
             >
                 {children}
             </div>

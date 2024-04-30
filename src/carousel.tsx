@@ -818,7 +818,7 @@ export const Slideshow = ({
 
     return (
         <IsInsideSlideshowProvider>
-            <ResetResponsiveLayout desktop={false}>
+            <ResetResponsiveLayout skipDesktop>
                 <div
                     className={styles.slideshowContainer}
                     {...getPrefixedDataAttributes(dataAttributes, 'SlideShow')}
