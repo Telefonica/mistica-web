@@ -64,6 +64,7 @@ const colors: Colors = {
     barTrack: '',
     loadingBar: '',
     loadingBarBackground: '',
+    textActivated: '',
 
     toggleAndroidInactive: '',
     toggleAndroidBackgroundActive: '',
@@ -89,6 +90,7 @@ const colors: Colors = {
     neutralMedium: '',
     neutralMediumInverse: '',
     promo: '',
+    textBrand: '',
 
     // STATES
     error: '',
