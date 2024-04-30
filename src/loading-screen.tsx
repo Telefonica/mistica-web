@@ -30,7 +30,7 @@ type TextProps = ExclusifyUnion<
           description?: string;
       }
     | {
-          texts: Array<{
+          texts: ReadonlyArray<{
               title?: string;
               description?: string;
               duration?: number;
@@ -42,7 +42,7 @@ type LoadingScreenTextsProps = {
     animateText?: boolean;
     isLoading?: boolean;
     onClose?: () => void;
-    texts: Array<{
+    texts: ReadonlyArray<{
         title?: string;
         description?: string;
         duration?: number;

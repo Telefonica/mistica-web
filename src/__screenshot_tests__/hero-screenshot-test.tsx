@@ -47,3 +47,14 @@ test('Hero - custom height', async () => {
     const story = await screen.findByTestId('hero');
     expect(await story.screenshot()).toMatchImageSnapshot();
 });
+
+test('Hero - background brand in O2-new skin', async () => {
+    await openStoryPage({
+        id: 'components-hero--default',
+        skin: 'O2-new',
+        args: {background: 'brand'},
+    });
+
+    const story = await screen.findByTestId('hero');
+    expect(await story.screenshot()).toMatchImageSnapshot();
+});
