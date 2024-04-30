@@ -64,7 +64,7 @@ const interactive = style({
         [mq.supportsHover]: {
             selectors: {
                 [`&:hover:not(${chipActive})`]: {
-                    color: vars.colors.controlActivated,
+                    color: vars.colors.textActivated,
                     backgroundColor: vars.colors.brandLow,
                     cursor: 'pointer',
                 },
