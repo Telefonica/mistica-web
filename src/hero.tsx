@@ -10,7 +10,7 @@ import ButtonGroup from './button-group';
 import {vars} from './skins/skin-contract.css';
 import * as styles from './hero.css';
 import * as mediaStyles from './image.css';
-import {useIsInsideSlideshowContext} from './carousel';
+import {useSlideshowContext} from './carousel';
 import {getPrefixedDataAttributes} from './utils/dom';
 import {sprinkles} from './sprinkles.css';
 import {useIsInverseVariant} from './theme-variant-context';
@@ -138,7 +138,9 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
         ref
     ) => {
         const {isTabletOrSmaller} = useScreenSize();
-        const isInsideSlideShow = useIsInsideSlideshowContext();
+        const slideshowContextValue = useSlideshowContext();
+        const isInsideSlideShow = !!slideshowContextValue;
+        const hasSlideshowBullets = isInsideSlideShow && slideshowContextValue.withBullets;
         const isInverseOutside = useIsInverseVariant();
         const isInverse =
             background === 'none'
@@ -173,7 +175,7 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
                                 >
                                     <Box
                                         paddingTop={24}
-                                        paddingBottom={isInsideSlideShow ? 48 : noPaddingY ? 0 : 24}
+                                        paddingBottom={hasSlideshowBullets ? 48 : noPaddingY ? 0 : 24}
                                         className={classnames(styles.layout, styles.contentContainer)}
                                     >
                                         <HeroContent {...rest} />
@@ -225,7 +227,8 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
                             template="6+6"
                             left={
                                 <Box
-                                    paddingY={noPaddingY ? 0 : 56}
+                                    paddingTop={noPaddingY ? 0 : 56}
+                                    paddingBottom={hasSlideshowBullets ? 48 : noPaddingY ? 0 : 56}
                                     className={classnames(styles.container, styles.containerDesktop, {
                                         [styles.containerMinHeight]: !noPaddingY,
                                     })}
@@ -235,7 +238,8 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
                             }
                             right={
                                 <Box
-                                    paddingY={noPaddingY ? 0 : 56}
+                                    paddingTop={noPaddingY ? 0 : 56}
+                                    paddingBottom={hasSlideshowBullets ? 48 : noPaddingY ? 0 : 56}
                                     className={classnames(styles.container, styles.containerDesktop)}
                                 >
                                     {right}
