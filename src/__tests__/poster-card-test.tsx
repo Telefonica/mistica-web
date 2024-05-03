@@ -14,6 +14,7 @@ test('PosterCard "href" label', async () => {
                 subtitle="Subtitle"
                 description="Description"
                 href="https://example.org"
+                isInverse
             />
         </ThemeContextProvider>
     );
@@ -33,6 +34,7 @@ test('PosterCard "to" label', async () => {
                 subtitle="Subtitle"
                 description="Description"
                 to="/foo/bar"
+                isInverse
             />
         </ThemeContextProvider>
     );
@@ -52,6 +54,7 @@ test('PosterCard "onPress" label', async () => {
                 subtitle="Subtitle"
                 description="Description"
                 onPress={() => {}}
+                isInverse
             />
         </ThemeContextProvider>
     );

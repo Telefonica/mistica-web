@@ -1317,7 +1317,7 @@ type PosterCardWithBackgroundColorProps = PosterCardBaseProps & {
               variant: Variant;
           }
         | {
-              isInverse?: boolean;
+              isInverse: boolean;
           }
     >;
 
@@ -1352,7 +1352,7 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
             description,
             descriptionLinesMax,
             variant,
-            isInverse = false,
+            isInverse,
             backgroundColor,
             ...touchableProps
         },
