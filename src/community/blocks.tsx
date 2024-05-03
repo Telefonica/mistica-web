@@ -71,7 +71,7 @@ export const RowBlock: React.FC<RowBlockProps> = ({
                 {stackingGroup ? (
                     stackingGroup
                 ) : (
-                    <Text2 regular color={vars.colors.textSecondary}>
+                    <Text2 regular color={vars.colors.textSecondary} textAlign="right" as="div">
                         {description}
                     </Text2>
                 )}

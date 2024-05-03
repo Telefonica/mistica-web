@@ -9,6 +9,9 @@ import {
     IconPlayFilled,
     IconShopRegular,
     IconTrashCanRegular,
+    Stack,
+    Tag,
+    Text2,
     ThemeContextProvider,
 } from '..';
 import {makeTheme} from './test-utils';
@@ -152,9 +155,8 @@ test('Row list with radio buttons', async () => {
         </ThemeContextProvider>
     );
 
-    const radioBanana = screen.getByRole('radio', {name: 'Banana'});
-    // alternate accessible selector
-    const radioApple = screen.getByLabelText('Apple');
+    const radioBanana = screen.getByRole('radio', {name: 'Banana bananabanana'});
+    const radioApple = screen.getByRole('radio', {name: 'Apple appleapple'});
 
     expect(radioBanana).not.toBeChecked();
     expect(radioApple).not.toBeChecked();
@@ -308,4 +310,144 @@ test('Row list with iconButton', async () => {
     await userEvent.click(iconButton);
     expect(iconButtonOnPressSpy).toHaveBeenCalledTimes(1);
     expect(logEventSpy).toHaveBeenCalledWith({name: 'icon-button-tracking-event'});
+});
+
+test('Text content is read by screen readers in the right order in Rows with link', () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <RowList>
+                <Row
+                    headline={<Tag type="promo">Headline</Tag>}
+                    title="Title"
+                    subtitle="Subtitle"
+                    description="Description"
+                    detail="Detail"
+                    extra={
+                        <Stack space={4}>
+                            <Text2 regular>Extra line 1</Text2>
+                            <Text2 regular>Extra line 2</Text2>
+                        </Stack>
+                    }
+                    href="/"
+                />
+            </RowList>
+        </ThemeContextProvider>
+    );
+
+    const row = screen.getByRole('link', {
+        // WARN: There should be a space between the extra lines, but jsdom doesn't support .innerText method, so we fallback to .textContent https://github.com/jsdom/jsdom/issues/1245
+        name: 'Title Headline Subtitle Description Extra line 1Extra line 2 Detail',
+    });
+    expect(row).toBeInTheDocument();
+});
+
+test('Text content is read by screen readers in the right order in Rows with button', () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <RowList>
+                <Row
+                    headline={<Tag type="promo">Headline</Tag>}
+                    title="Title"
+                    subtitle="Subtitle"
+                    description="Description"
+                    detail="Detail"
+                    extra={
+                        <Stack space={4}>
+                            <Text2 regular>Extra line 1</Text2>
+                            <Text2 regular>Extra line 2</Text2>
+                        </Stack>
+                    }
+                    onPress={() => {}}
+                />
+            </RowList>
+        </ThemeContextProvider>
+    );
+
+    const row = screen.getByRole('button', {
+        name: 'Title Headline Subtitle Description Extra line 1 Extra line 2 Detail',
+    });
+    expect(row).toBeInTheDocument();
+});
+
+test('Text content is read by screen readers in the right order in Rows with checkbox', () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <RowList>
+                <Row
+                    headline={<Tag type="promo">Headline</Tag>}
+                    title="Title"
+                    subtitle="Subtitle"
+                    description="Description"
+                    extra={
+                        <Stack space={4}>
+                            <Text2 regular>Extra line 1</Text2>
+                            <Text2 regular>Extra line 2</Text2>
+                        </Stack>
+                    }
+                    checkbox={{defaultValue: false}}
+                />
+            </RowList>
+        </ThemeContextProvider>
+    );
+
+    const row = screen.getByRole('checkbox', {
+        name: 'Title Headline Subtitle Description Extra line 1 Extra line 2',
+    });
+    expect(row).toBeInTheDocument();
+});
+
+test('Text content is read by screen readers in the right order in Rows with switch', () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <RowList>
+                <Row
+                    headline={<Tag type="promo">Headline</Tag>}
+                    title="Title"
+                    subtitle="Subtitle"
+                    description="Description"
+                    extra={
+                        <Stack space={4}>
+                            <Text2 regular>Extra line 1</Text2>
+                            <Text2 regular>Extra line 2</Text2>
+                        </Stack>
+                    }
+                    switch={{defaultValue: false}}
+                />
+            </RowList>
+        </ThemeContextProvider>
+    );
+
+    const row = screen.getByRole('switch', {
+        name: 'Title Headline Subtitle Description Extra line 1 Extra line 2',
+    });
+    expect(row).toBeInTheDocument();
+});
+
+test('Text content is read by screen readers in the right order in Rows with radio', () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <RadioGroup name="radio-group">
+                <RowList>
+                    <Row
+                        headline={<Tag type="promo">Headline</Tag>}
+                        title="Title"
+                        subtitle="Subtitle"
+                        description="Description"
+                        extra={
+                            <Stack space={4}>
+                                <Text2 regular>Extra line 1</Text2>
+                                <Text2 regular>Extra line 2</Text2>
+                            </Stack>
+                        }
+                        radioValue="radio1"
+                    />
+                </RowList>
+            </RadioGroup>
+        </ThemeContextProvider>
+    );
+
+    const row = screen.getByRole('radio', {
+        name: 'Title Headline Subtitle Description Extra line 1 Extra line 2',
+    });
+    expect(row).toBeInTheDocument();
 });

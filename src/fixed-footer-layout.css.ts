@@ -28,18 +28,14 @@ export const fixedFooter = style({
     },
 });
 
-export const elevated = style([
-    sprinkles({
-        background: skinVars.colors.backgroundContainer,
-    }),
-    {
-        '@media': {
-            [mq.tabletOrSmaller]: {
-                boxShadow: '0 -2px 8px 0 rgba(0, 0, 0, 0.10)',
-            },
+export const elevated = style({
+    '@media': {
+        [mq.tabletOrSmaller]: {
+            background: skinVars.colors.backgroundContainer,
+            boxShadow: '0 -2px 8px 0 rgba(0, 0, 0, 0.10)',
         },
     },
-]);
+});
 
 export const withoutFooter = sprinkles({display: 'none'});
 

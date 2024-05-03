@@ -6,6 +6,7 @@ const colors: Colors = {
     appBarBackground: '',
     background: '',
     backgroundContainer: '',
+    backgroundContainerError: '',
     backgroundContainerHover: '',
     backgroundContainerPressed: '',
     backgroundContainerBrand: '',
@@ -100,6 +101,8 @@ const colors: Colors = {
     textPrimaryInverse: '',
     textSecondary: '',
     textSecondaryInverse: '',
+    textError: '',
+    textErrorInverse: '',
 
     // TEXT BUTTONS
     textButtonPrimary: '',
