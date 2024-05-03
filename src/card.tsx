@@ -45,7 +45,8 @@ const useInnerText = () => {
 
     const ref: React.LegacyRef<HTMLElement> = React.useCallback((node: HTMLElement) => {
         if (node) {
-            setText(node.innerText || '');
+            // jsdom doesn't implements innerText. Using textContent as fallback in unit tests although it's not the same
+            setText((process.env.NODE_ENV === 'test' ? node.textContent : node.innerText) || '');
         }
     }, []);
 
@@ -465,7 +466,7 @@ const CardContent: React.FC<CardContentProps> = ({
 type TouchableProps = {
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
 } & ExclusifyUnion<
-    | {href: string | undefined; newTab?: boolean}
+    | {href: string | undefined; newTab?: boolean; onPress?: undefined}
     | {to: string | undefined; fullPageOnWebView?: boolean}
     | {onPress: PressHandler | undefined}
 >;
@@ -1316,7 +1317,7 @@ type PosterCardWithBackgroundColorProps = PosterCardBaseProps & {
               variant: Variant;
           }
         | {
-              isInverse: boolean;
+              isInverse?: boolean;
           }
     >;
 
@@ -1351,7 +1352,7 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
             description,
             descriptionLinesMax,
             variant,
-            isInverse,
+            isInverse = false,
             backgroundColor,
             ...touchableProps
         },
