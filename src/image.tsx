@@ -13,6 +13,7 @@ import {vars} from './skins/skin-contract.css';
 import {combineRefs} from './utils/common';
 import SkeletonBase from './skeleton-base';
 import {isServerSide} from './utils/environment';
+import {isSafari} from './utils/platform';
 
 import type {ExclusifyUnion} from './utils/utility-types';
 import type {DataAttributes} from './utils/types';
@@ -228,6 +229,9 @@ export const ImageContent = React.forwardRef<HTMLImageElement, ImageProps>(
                         onError?.();
                     }}
                     onLoad={onLoadHandler}
+                    // Sometimes Safari doesn't render images completely
+                    // https://stackoverflow.com/questions/58323768/ios-safari-images-not-rendering-fully-cut-off
+                    decoding={isSafari() ? 'sync' : 'auto'}
                 />
                 {/* When using SSR, we render a small script that makes the img visible as soon as it finishes loading, without waiting for React client hydrate. */}
                 {/* Note that this <script> does nothing when rendering client side (the browser only execute scripts injected inside <head>), it's only executed when the browser receives the SSRed html */}
