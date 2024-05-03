@@ -720,25 +720,24 @@ export const RowList: React.FC<RowListProps> = ({
     role = 'list',
     dataAttributes,
 }) => {
-    const lastIndex = React.Children.count(children) - 1;
+    const childrenContent = React.Children.toArray(children).filter(Boolean);
+    const lastIndex = childrenContent.length - 1;
     return (
         <div
             role={role}
             aria-labelledby={ariaLabelledby}
             {...getPrefixedDataAttributes(dataAttributes, 'RowList')}
         >
-            {React.Children.toArray(children)
-                .filter(Boolean)
-                .map((child, index) => (
-                    <React.Fragment key={index}>
-                        {child}
-                        {index < lastIndex && (
-                            <Box paddingX={16}>
-                                <Divider />
-                            </Box>
-                        )}
-                    </React.Fragment>
-                ))}
+            {childrenContent.map((child, index) => (
+                <React.Fragment key={index}>
+                    {child}
+                    {index < lastIndex && (
+                        <Box paddingX={16}>
+                            <Divider />
+                        </Box>
+                    )}
+                </React.Fragment>
+            ))}
         </div>
     );
 };
