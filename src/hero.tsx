@@ -107,7 +107,7 @@ const HeroContent = ({
 };
 
 type HeroProps = {
-    height?: string;
+    height?: string | number;
     background?: 'default' | 'alternative' | 'brand' | 'brand-secondary' | 'none';
     noPaddingY?: boolean;
     media: RendersElement<typeof Image> | RendersElement<typeof Video>;
@@ -156,7 +156,8 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
                         style={{
                             ...(height === '100vh' ? {maxHeight: '-webkit-fill-available'} : {}), // Hack to avoid issues in Safari with 100vh
                             ...applyCssVars({
-                                [styles.vars.height]: height ?? '100%',
+                                [styles.vars.height]:
+                                    typeof height === 'number' ? `${height}px` : height ?? '100%',
                             }),
                         }}
                         className={classnames(styles.container, styles.containerMobile, {
@@ -214,7 +215,8 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
                     style={{
                         ...(height === '100vh' ? {maxHeight: '-webkit-fill-available'} : {}), // Hack to avoid issues in Safari with 100vh
                         ...applyCssVars({
-                            [styles.vars.height]: height ?? '100%',
+                            [styles.vars.height]:
+                                typeof height === 'number' ? `${height}px` : height ?? '100%',
                         }),
                     }}
                     className={classnames(
@@ -228,7 +230,7 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
                             left={
                                 <Box
                                     paddingTop={noPaddingY ? 0 : 56}
-                                    paddingBottom={hasSlideshowBullets ? 48 : noPaddingY ? 0 : 56}
+                                    paddingBottom={noPaddingY && !hasSlideshowBullets ? 0 : 56}
                                     className={classnames(styles.container, styles.containerDesktop, {
                                         [styles.containerMinHeight]: !noPaddingY,
                                     })}
@@ -239,7 +241,7 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
                             right={
                                 <Box
                                     paddingTop={noPaddingY ? 0 : 56}
-                                    paddingBottom={hasSlideshowBullets ? 48 : noPaddingY ? 0 : 56}
+                                    paddingBottom={noPaddingY && !hasSlideshowBullets ? 0 : 56}
                                     className={classnames(styles.container, styles.containerDesktop)}
                                 >
                                     {right}
