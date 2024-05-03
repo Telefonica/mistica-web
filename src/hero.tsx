@@ -149,42 +149,41 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
 
         if (isTabletOrSmaller) {
             return (
-                <div style={applyCssVars({[mediaStyles.vars.mediaBorderRadius]: '0px'})}>
-                    <div
-                        {...getPrefixedDataAttributes({'component-name': 'Hero', ...dataAttributes})}
-                        ref={ref}
-                        style={{
-                            ...(height === '100vh' ? {maxHeight: '-webkit-fill-available'} : {}), // Hack to avoid issues in Safari with 100vh
-                            ...applyCssVars({
-                                [styles.vars.height]:
-                                    typeof height === 'number' ? `${height}px` : height ?? '100%',
-                            }),
-                        }}
-                        className={classnames(styles.container, styles.containerMobile, {
-                            [styles.containerMinHeight]: !noPaddingY,
-                        })}
-                    >
-                        <Layout isInverse={isInverse} isInsideSlideShow={isInsideSlideShow}>
-                            <div className={classnames(styles.contentWrapper)}>
-                                {media}
+                <div
+                    {...getPrefixedDataAttributes({'component-name': 'Hero', ...dataAttributes})}
+                    ref={ref}
+                    style={{
+                        ...(height === '100vh' ? {maxHeight: '-webkit-fill-available'} : {}), // Hack to avoid issues in Safari with 100vh
+                        ...applyCssVars({
+                            [styles.vars.height]:
+                                typeof height === 'number' ? `${height}px` : height ?? '100%',
+                            [mediaStyles.vars.mediaBorderRadius]: '0px',
+                        }),
+                    }}
+                    className={classnames(styles.container, styles.containerMobile, {
+                        [styles.containerMinHeight]: !noPaddingY,
+                    })}
+                >
+                    <Layout isInverse={isInverse} isInsideSlideShow={isInsideSlideShow}>
+                        <div className={classnames(styles.contentWrapper)}>
+                            {media}
 
-                                <div
-                                    className={classnames(
-                                        styles.containerBackground[background],
-                                        styles.expandedContent
-                                    )}
+                            <div
+                                className={classnames(
+                                    styles.containerBackground[background],
+                                    styles.expandedContent
+                                )}
+                            >
+                                <Box
+                                    paddingTop={24}
+                                    paddingBottom={hasSlideshowBullets ? 48 : noPaddingY ? 0 : 24}
+                                    className={classnames(styles.layout, styles.contentContainer)}
                                 >
-                                    <Box
-                                        paddingTop={24}
-                                        paddingBottom={hasSlideshowBullets ? 48 : noPaddingY ? 0 : 24}
-                                        className={classnames(styles.layout, styles.contentContainer)}
-                                    >
-                                        <HeroContent {...rest} />
-                                    </Box>
-                                </div>
+                                    <HeroContent {...rest} />
+                                </Box>
                             </div>
-                        </Layout>
-                    </div>
+                        </div>
+                    </Layout>
                 </div>
             );
         }
@@ -208,48 +207,43 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
             );
 
         return (
-            <div style={applyCssVars({[mediaStyles.vars.mediaBorderRadius]: vars.borderRadii.container})}>
-                <div
-                    {...getPrefixedDataAttributes({'component-name': 'Hero', ...dataAttributes})}
-                    ref={ref}
-                    style={{
-                        ...(height === '100vh' ? {maxHeight: '-webkit-fill-available'} : {}), // Hack to avoid issues in Safari with 100vh
-                        ...applyCssVars({
-                            [styles.vars.height]:
-                                typeof height === 'number' ? `${height}px` : height ?? '100%',
-                        }),
-                    }}
-                    className={classnames(
-                        sprinkles({height: '100%'}),
-                        styles.containerBackground[background]
-                    )}
-                >
-                    <Layout isInverse={isInverse}>
-                        <GridLayout
-                            template="6+6"
-                            left={
-                                <Box
-                                    paddingTop={noPaddingY ? 0 : 56}
-                                    paddingBottom={noPaddingY && !hasSlideshowBullets ? 0 : 56}
-                                    className={classnames(styles.container, styles.containerDesktop, {
-                                        [styles.containerMinHeight]: !noPaddingY,
-                                    })}
-                                >
-                                    {left}
-                                </Box>
-                            }
-                            right={
-                                <Box
-                                    paddingTop={noPaddingY ? 0 : 56}
-                                    paddingBottom={noPaddingY && !hasSlideshowBullets ? 0 : 56}
-                                    className={classnames(styles.container, styles.containerDesktop)}
-                                >
-                                    {right}
-                                </Box>
-                            }
-                        />
-                    </Layout>
-                </div>
+            <div
+                {...getPrefixedDataAttributes({'component-name': 'Hero', ...dataAttributes})}
+                ref={ref}
+                style={{
+                    ...(height === '100vh' ? {maxHeight: '-webkit-fill-available'} : {}), // Hack to avoid issues in Safari with 100vh
+                    ...applyCssVars({
+                        [styles.vars.height]: typeof height === 'number' ? `${height}px` : height ?? '100%',
+                        [mediaStyles.vars.mediaBorderRadius]: vars.borderRadii.container,
+                    }),
+                }}
+                className={classnames(sprinkles({height: '100%'}), styles.containerBackground[background])}
+            >
+                <Layout isInverse={isInverse}>
+                    <GridLayout
+                        template="6+6"
+                        left={
+                            <Box
+                                paddingTop={noPaddingY ? 0 : 56}
+                                paddingBottom={noPaddingY && !hasSlideshowBullets ? 0 : 56}
+                                className={classnames(styles.container, styles.containerDesktop, {
+                                    [styles.containerMinHeight]: !noPaddingY,
+                                })}
+                            >
+                                {left}
+                            </Box>
+                        }
+                        right={
+                            <Box
+                                paddingTop={noPaddingY ? 0 : 56}
+                                paddingBottom={noPaddingY && !hasSlideshowBullets ? 0 : 56}
+                                className={classnames(styles.container, styles.containerDesktop)}
+                            >
+                                {right}
+                            </Box>
+                        }
+                    />
+                </Layout>
             </div>
         );
     }
