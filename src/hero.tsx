@@ -7,7 +7,7 @@ import GridLayout from './grid-layout';
 import Box from './box';
 import Stack from './stack';
 import ButtonGroup from './button-group';
-import {vars, vars as skinVars} from './skins/skin-contract.css';
+import {vars as skinVars} from './skins/skin-contract.css';
 import * as styles from './hero.css';
 import * as mediaStyles from './image.css';
 import {useSlideshowContext} from './carousel';
@@ -96,7 +96,7 @@ const HeroContent = ({
                         <Text3
                             as="p"
                             regular
-                            color={vars.colors.textSecondary}
+                            color={skinVars.colors.textSecondary}
                             truncate={descriptionLinesMax}
                         >
                             {description}
@@ -221,7 +221,7 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
                     ...(height === '100vh' ? {maxHeight: '-webkit-fill-available'} : {}), // Hack to avoid issues in Safari with 100vh
                     ...applyCssVars({
                         [styles.vars.height]: typeof height === 'number' ? `${height}px` : height ?? '100%',
-                        [mediaStyles.vars.mediaBorderRadius]: vars.borderRadii.container,
+                        [mediaStyles.vars.mediaBorderRadius]: skinVars.borderRadii.container,
                     }),
                     background: CONTENT_BACKGROUND_COLOR[background],
                 }}
