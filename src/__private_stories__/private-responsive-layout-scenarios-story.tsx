@@ -14,7 +14,7 @@ import {
     Text5,
 } from '..';
 import {InternalResponsiveLayout, ResetResponsiveLayout} from '../responsive-layout';
-import usingVrImg from '../__stories__/images/using-vr.jpg';
+import tennisUrl from '../__stories__/images/tennis.jpg';
 
 export default {
     title: 'Private/ResponsiveLayout scenarios',
@@ -46,7 +46,7 @@ export const Default: StoryComponent = () => {
                                         key={idx}
                                         title={`Title ${idx}`}
                                         description="Some description"
-                                        media={<Image src={usingVrImg} aspectRatio="16:9" />}
+                                        media={<Image src={tennisUrl} aspectRatio="16:9" />}
                                         buttonLink={
                                             <ButtonLink href="https://google.com">Link {idx}</ButtonLink>
                                         }
@@ -63,7 +63,7 @@ export const Default: StoryComponent = () => {
                             <ResponsiveLayout>
                                 <Hero
                                     background="default"
-                                    media={<Image src={usingVrImg} aspectRatio="16:9" />}
+                                    media={<Image src={tennisUrl} aspectRatio="16:9" />}
                                     pretitle="Pretitle"
                                     title="Title"
                                     description="This is a long description with a long text to see how this works"
@@ -90,7 +90,7 @@ export const Default: StoryComponent = () => {
                                 <Hero
                                     background="default"
                                     key={idx}
-                                    media={<Image src={usingVrImg} aspectRatio="16:9" />}
+                                    media={<Image src={tennisUrl} aspectRatio="16:9" />}
                                     pretitle="Pretitle"
                                     title="Title"
                                     description="This is a long description with a long text to see how this works"
