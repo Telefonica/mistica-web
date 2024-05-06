@@ -3,11 +3,21 @@ import * as mq from './media-queries.css';
 import {vars} from './skins/skin-contract.css';
 import {sprinkles} from './sprinkles.css';
 
+export const chipWrapper = sprinkles({
+    display: 'inline-flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+});
+
+export const wrappedContent = sprinkles({
+    display: 'flex',
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+});
+
 const containerBase = style([
     sprinkles({
-        display: 'inline-flex',
-        justifyContent: 'center',
-        alignItems: 'center',
         border: 'regular',
     }),
     {
