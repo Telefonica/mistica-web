@@ -1,5 +1,8 @@
+import classNames from 'classnames';
 import * as React from 'react';
 import {vars} from '../skins/skin-contract.css';
+import {applyCssVars} from '../utils/css';
+import * as styles from './icon-chevron.css';
 
 type IcnChevronRightSvgProps = {
     size: number | string;
@@ -23,11 +26,15 @@ const IconChevronRightSvg: React.FC<IcnChevronRightSvgProps> = ({
         width={size}
         height={size}
         viewBox="0 0 24 24"
-        className={className}
-        style={{transform, transition: `transform ${transitionDuration}ms`, ...style}}
+        className={classNames(className, styles.chevronRotateTransition)}
+        style={{
+            transform,
+            ...style,
+            ...applyCssVars({[styles.vars.transitionDuration]: `${transitionDuration}ms`}),
+        }}
     >
         <path
-            style={{transition: `fill ${transitionDuration}ms`}}
+            className={styles.chevronColorTransition}
             fill={color}
             fillRule="evenodd"
             d="M14.338 11.478a.75.75 0 0 1 0 1.044l-3.837 3.997a.75.75 0 1 1-1.082-1.038L12.76 12 9.42 8.52a.75.75 0 0 1 1.082-1.04l3.837 3.998z"

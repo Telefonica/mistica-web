@@ -15,6 +15,7 @@ import {useIsInverseVariant} from './theme-variant-context';
 import {useAriaId} from './hooks';
 import {CSSTransition} from 'react-transition-group';
 import {isRunningAcceptanceTest} from './utils/platform';
+import {sprinkles} from './sprinkles.css';
 
 import type {ExclusifyUnion} from './utils/utility-types';
 import type {DataAttributes, TrackingEvent} from './utils/types';
@@ -42,6 +43,7 @@ interface AccordionItemContentProps {
     onToogle?: (value: boolean) => void;
     dataAttributes?: DataAttributes;
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
+    role?: string;
 }
 
 const useAccordionState = ({
@@ -194,12 +196,14 @@ const AccordionItemContent = React.forwardRef<TouchableElement, AccordionItemCon
 );
 
 export const AccordionItem = React.forwardRef<TouchableElement, AccordionItemContentProps>(
-    ({dataAttributes, ...props}, ref) => (
-        <AccordionItemContent
-            {...props}
-            ref={ref}
-            dataAttributes={{'component-name': 'AccordionItem', ...dataAttributes}}
-        />
+    ({dataAttributes, role = 'listitem', ...props}, ref) => (
+        <div role={role} className={sprinkles({width: '100%'})}>
+            <AccordionItemContent
+                {...props}
+                ref={ref}
+                dataAttributes={{'component-name': 'AccordionItem', ...dataAttributes}}
+            />
+        </div>
     )
 );
 
@@ -207,6 +211,7 @@ type AccordionBaseProps = {
     children: React.ReactNode;
     dataAttributes?: DataAttributes;
     onChange?: (index: number, value: boolean) => void;
+    role?: string;
 };
 
 type SingleOpenProps = {
@@ -230,6 +235,7 @@ export const Accordion: React.FC<AccordionProps> = ({
     defaultIndex,
     onChange,
     singleOpen,
+    role = 'list',
 }) => {
     const [indexList, toogle] = useAccordionState({
         value: index,
@@ -241,7 +247,10 @@ export const Accordion: React.FC<AccordionProps> = ({
 
     return (
         <AccordionContext.Provider value={{index: indexList, toogle}}>
-            <div {...getPrefixedDataAttributes({...dataAttributes, accordion: true}, 'Accordion')}>
+            <div
+                role={role}
+                {...getPrefixedDataAttributes({...dataAttributes, accordion: true}, 'Accordion')}
+            >
                 {React.Children.toArray(children)
                     .filter(Boolean)
                     .map((child, index) => (
@@ -264,10 +273,11 @@ interface BoxedAccordionItemProps extends AccordionItemContentProps {
 }
 
 export const BoxedAccordionItem = React.forwardRef<HTMLDivElement, BoxedAccordionItemProps>(
-    ({dataAttributes, isInverse, ...props}, ref) => (
+    ({dataAttributes, isInverse, role = 'listitem', ...props}, ref) => (
         <Boxed
             isInverse={isInverse}
             ref={ref}
+            role={role}
             dataAttributes={{'component-name': 'BoxedAccordionItem', ...dataAttributes}}
         >
             <AccordionItemContent {...props} />
@@ -282,6 +292,7 @@ export const BoxedAccordion: React.FC<AccordionProps> = ({
     defaultIndex,
     onChange,
     singleOpen,
+    role = 'list',
 }) => {
     const [indexList, toogle] = useAccordionState({
         value: index,
@@ -294,6 +305,7 @@ export const BoxedAccordion: React.FC<AccordionProps> = ({
         <AccordionContext.Provider value={{index: indexList, toogle}}>
             <Stack
                 space={16}
+                role={role}
                 dataAttributes={{'component-name': 'BoxedAccordion', accordion: true, ...dataAttributes}}
             >
                 {children}
