@@ -90,13 +90,12 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children, as}) => {
     const isDarkModeEnabled = (colorScheme === 'auto' && isOsDarkModeEnabled) || colorScheme === 'dark';
     const colors: Colors = isDarkModeEnabled ? darkColors : lightColors;
 
-    const contextTheme = React.useMemo<Theme>(() => {
+    const contextTheme = React.useMemo((): Theme => {
         const platformOverrides = {
             platform: getPlatform(),
             insideNovumNativeApp: isInsideNovumNativeApp(),
             ...theme.platformOverrides,
         };
-
         return {
             skinName: theme.skin.name,
             i18n: theme.i18n,
@@ -110,6 +109,7 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children, as}) => {
                 eventFormat: 'universal-analytics',
                 ...theme.analytics,
             },
+            colorValues: colors,
             dimensions: {
                 ...dimensions,
                 ...sanitizeDimensions(theme.dimensions),
@@ -139,19 +139,24 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children, as}) => {
             useHrefDecorator: theme.useHrefDecorator ?? useDefaultHrefDecorator,
             useId: theme.useId,
         };
-    }, [theme, isDarkModeEnabled]);
+    }, [colors, theme, isDarkModeEnabled]);
 
     // Define the same colors in css variables as rgb components, to allow applying alpha aftherwards. See utils/color.tsx
-    const rawColors = Object.fromEntries(
-        Object.entries(colors).map(([colorName, colorValue]) => {
-            let rawColorValue = '';
-            if (colorValue.startsWith('#')) {
-                const [r, g, b] = fromHexToRgb(colorValue);
-                rawColorValue = `${r}, ${g}, ${b}`;
-            }
-            return [colorName, rawColorValue];
-        })
-    ) as Colors;
+    const rawColors = React.useMemo(
+        () =>
+            Object.fromEntries(
+                Object.entries(colors).map(([colorName, colorValue]) => {
+                    let rawColorValue = '';
+                    if (colorValue.startsWith('#')) {
+                        const [r, g, b] = fromHexToRgb(colorValue);
+                        rawColorValue = `${r}, ${g}, ${b}`;
+                    }
+                    return [colorName, rawColorValue];
+                })
+            ) as Colors,
+        [colors]
+    );
+
     const themeVars = assignInlineVars(vars, {
         colors,
         rawColors,
