@@ -37,8 +37,8 @@ const currentNumberKeyframes = keyframes({
         backgroundColor: 'transparent',
     },
     '100%': {
-        borderColor: skinVars.colors.controlActivated,
-        backgroundColor: skinVars.colors.controlActivated,
+        borderColor: skinVars.colors.textActivated,
+        backgroundColor: skinVars.colors.textActivated,
     },
 });
 
@@ -53,11 +53,11 @@ const currentNumberTextKeyframes = keyframes({
 
 const stepIconKeyframes = keyframes({
     '0%': {
-        backgroundColor: skinVars.colors.controlActivated,
+        backgroundColor: skinVars.colors.textActivated,
         transform: 'scale(1)',
     },
     '100%': {
-        backgroundColor: skinVars.colors.controlActivated,
+        backgroundColor: skinVars.colors.textActivated,
         transform: 'scale(0)',
     },
 });
@@ -147,8 +147,8 @@ export const currentNumber = style({
     transition: 'border-color .3s ease-in-out, background-color .3s ease-in-out',
     willChange: 'border-color, background-color',
     animation: `${currentNumberKeyframes} .3s ease-in-out`,
-    background: skinVars.colors.controlActivated,
-    borderColor: skinVars.colors.controlActivated,
+    background: skinVars.colors.textActivated,
+    borderColor: skinVars.colors.textActivated,
 });
 
 globalStyle(`${currentNumber} span`, {
