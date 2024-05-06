@@ -14,6 +14,8 @@ type OverscrollColorConfig = {topColor?: string; bottomColor?: string};
 
 const {Provider, useSetValue, useValue} = createNestableContext<OverscrollColorConfig>({});
 
+export const useOverScrollColor = useValue;
+
 const shouldRender = (platformOverrides: Theme['platformOverrides']) =>
     getPlatform(platformOverrides) === 'ios';
 
@@ -62,6 +64,10 @@ const BottomOverscrollColor = () => {
 
     // if top and bottom color are the same, theme-color set for top color will work for bottom too, so this is not needed
     if (bottomColorToApply === topColor) {
+        return null;
+    }
+
+    if (bottomColorToApply === 'transparent') {
         return null;
     }
 

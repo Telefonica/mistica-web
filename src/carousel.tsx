@@ -680,13 +680,10 @@ type SlideshowProps = {
  * This context is used internally to let other components (Hero) now if they are rendered inside a Slideshow
  * to make some tweaks in the UI
  */
-const IsInsideSlideshowContext = React.createContext(false);
+const SlideshowContext = React.createContext<{withBullets: boolean} | undefined>(undefined);
 
-export const useIsInsideSlideshowContext = (): boolean => React.useContext(IsInsideSlideshowContext);
-
-export const IsInsideSlideshowProvider = ({children}: {children: React.ReactNode}): JSX.Element => (
-    <IsInsideSlideshowContext.Provider value>{children}</IsInsideSlideshowContext.Provider>
-);
+export const useSlideshowContext = (): {withBullets: boolean} | undefined =>
+    React.useContext(SlideshowContext);
 
 export const Slideshow = ({
     items,
@@ -816,7 +813,7 @@ export const Slideshow = ({
     }, [controlsSetter, goNext, goPrev, bulletsProps, goToPage]);
 
     return (
-        <IsInsideSlideshowProvider>
+        <SlideshowContext.Provider value={{withBullets: !!withBullets}}>
             <div
                 className={styles.slideshowContainer}
                 {...getPrefixedDataAttributes(dataAttributes, 'SlideShow')}
@@ -864,6 +861,6 @@ export const Slideshow = ({
                     </ThemeVariant>
                 )}
             </div>
-        </IsInsideSlideshowProvider>
+        </SlideshowContext.Provider>
     );
 };

@@ -1,9 +1,9 @@
 import {openStoryPage, setRootFontSize} from '../test-utils';
-import {MOVISTAR_SKIN, VIVO_SKIN, O2_SKIN, VIVO_NEW_SKIN} from '../skins/constants';
+import {MOVISTAR_SKIN, VIVO_SKIN, O2_SKIN, O2_NEW_SKIN, VIVO_NEW_SKIN} from '../skins/constants';
 
 import type {Device} from '../test-utils';
 
-const testableSkins = [MOVISTAR_SKIN, VIVO_SKIN, O2_SKIN] as const;
+const testableSkins = [MOVISTAR_SKIN, VIVO_SKIN, O2_SKIN, O2_NEW_SKIN] as const;
 const testableDevices: Array<Device> = ['MOBILE_IOS', 'DESKTOP'];
 const feedbackTypes = [
     'successfeedbackscreen--success',

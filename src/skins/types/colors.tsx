@@ -58,6 +58,8 @@ export type Colors = {
     textLinkInverse: string;
     textLinkDanger: string;
     textLinkSnackbar: string;
+    textActivated: string;
+    textBrand: string;
     control: string;
     controlActivated: string;
     controlInverse: string;

@@ -58,7 +58,7 @@ export const chipVariants = styleVariants({
         chipActive,
         containerBase,
         sprinkles({
-            color: vars.colors.controlActivated,
+            color: vars.colors.textActivated,
             background: vars.colors.brandLow,
         }),
         {
@@ -74,7 +74,7 @@ const interactive = style({
         [mq.supportsHover]: {
             selectors: {
                 [`&:hover:not(${chipActive})`]: {
-                    color: vars.colors.controlActivated,
+                    color: vars.colors.textActivated,
                     backgroundColor: vars.colors.brandLow,
                     cursor: 'pointer',
                 },

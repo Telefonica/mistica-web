@@ -14,4 +14,8 @@ const FixedToTop: React.FC<Props> = ({children, height}) => {
     return <TopDistanceContext.Provider value={top + height}>{children(top)}</TopDistanceContext.Provider>;
 };
 
+export const useFixedToTopHeight = (): number => {
+    return React.useContext(TopDistanceContext);
+};
+
 export default FixedToTop;
