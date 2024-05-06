@@ -41,8 +41,9 @@ type PosterCardArgs = {
     title: string;
     subtitle: string;
     description: string;
+    ariaLabel: string;
     closable: boolean;
-    actions: 'on press' | 'none';
+    actions: 'onPress' | 'href' | 'to' | 'none';
     withTopAction: boolean;
     width: string;
     height: string;
@@ -63,6 +64,7 @@ export const Default: StoryComponent<PosterCardArgs> = ({
     title,
     subtitle,
     description,
+    ariaLabel,
     closable,
     actions,
     withTopAction,
@@ -124,6 +126,12 @@ export const Default: StoryComponent<PosterCardArgs> = ({
                   variant,
               };
 
+    const touchableProps = {
+        onPress: actions === 'onPress' ? () => {} : undefined,
+        to: actions === 'to' ? '#' : undefined,
+        href: actions === 'href' ? 'https://example.org' : undefined,
+    } as {onPress: () => void} | {to: string} | {href: string} | {[key: string]: never};
+
     return (
         <ResponsiveLayout isInverse={inverse} fullWidth>
             <Box padding={16}>
@@ -136,11 +144,11 @@ export const Default: StoryComponent<PosterCardArgs> = ({
                     title={title}
                     subtitle={subtitle}
                     description={description}
-                    aria-label="Poster card label"
+                    aria-label={ariaLabel}
                     width={width}
                     height={height}
                     aspectRatio={aspectRatio}
-                    onPress={actions === 'on press' ? () => {} : undefined}
+                    {...touchableProps}
                 />
             </Box>
         </ResponsiveLayout>
@@ -160,6 +168,7 @@ Default.args = {
     title: 'Title',
     subtitle: 'Subtitle',
     description: 'This is a description for the card',
+    ariaLabel: '',
     closable: false,
     actions: 'none',
     withTopAction: false,
@@ -203,7 +212,7 @@ Default.argTypes = {
         control: {type: 'select'},
     },
     actions: {
-        options: ['on press', 'none'],
+        options: ['onPress', 'href', 'to', 'none'],
         control: {type: 'select'},
     },
 };
