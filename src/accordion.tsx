@@ -25,13 +25,15 @@ const ACCORDION_TRANSITION_DURATION_IN_MS = 400;
 
 type AccordionContextType = {
     index: ReadonlyArray<number>;
-    toogle: (item: number) => void;
+    toggle: (item: number) => void;
 };
+
 const AccordionContext = React.createContext<AccordionContextType>({
     index: [],
-    toogle: () => {},
+    toggle: () => {},
 });
-export const useAccordionContext = (): AccordionContextType => React.useContext(AccordionContext);
+
+const useAccordionContext = (): AccordionContextType => React.useContext(AccordionContext);
 
 interface AccordionItemContentProps {
     children?: void;
@@ -40,10 +42,11 @@ interface AccordionItemContentProps {
     subtitle?: string;
     asset?: React.ReactNode;
     content: React.ReactNode;
-    onToogle?: (value: boolean) => void;
     dataAttributes?: DataAttributes;
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
     role?: string;
+    /** @deprecated Use onChange Accordion's onChange callback instead */
+    onToogle?: (value: boolean) => void;
 }
 
 const useAccordionState = ({
@@ -73,7 +76,7 @@ const useAccordionState = ({
         }
     }, [singleOpen, index]);
 
-    const updateIndexOnToogle = (item: number, index?: ReadonlyArray<number>) => {
+    const updateIndexOnToggle = (item: number, index?: ReadonlyArray<number>) => {
         if (!index) {
             return [item];
         }
@@ -95,7 +98,7 @@ const useAccordionState = ({
 
     const toggle = (item: number) => {
         if (!isControlledByParent) {
-            setIndex(updateIndexOnToogle(item, index));
+            setIndex(updateIndexOnToggle(item, index));
         }
         if (onChange) {
             const currentItemValue = (isControlledByParent ? getValueAsList(value) : index).includes(item);
@@ -123,7 +126,7 @@ const AccordionItemContent = React.forwardRef<TouchableElement, AccordionItemCon
     ({content, dataAttributes, trackingEvent, ...props}, ref) => {
         const panelContainerRef = React.useRef<HTMLDivElement | null>(null);
         const itemRef = React.useRef<HTMLDivElement | null>(null);
-        const {index, toogle} = useAccordionContext();
+        const {index, toggle} = useAccordionContext();
         const isInverse = useIsInverseVariant();
         const labelId = useAriaId();
         const panelId = useAriaId();
@@ -144,7 +147,7 @@ const AccordionItemContent = React.forwardRef<TouchableElement, AccordionItemCon
                         isInverse ? styles.touchableBackgroundInverse : styles.touchableBackground
                     )}
                     onPress={() => {
-                        if (itemIndex !== undefined) toogle(itemIndex);
+                        if (itemIndex !== undefined) toggle(itemIndex);
                     }}
                     trackingEvent={trackingEvent}
                     aria-expanded={isOpen}
@@ -159,7 +162,7 @@ const AccordionItemContent = React.forwardRef<TouchableElement, AccordionItemCon
                                 <div className={styles.chevronContainer}>
                                     <IconChevron
                                         size={24}
-                                        transitionDuration={400}
+                                        transitionDuration={ACCORDION_TRANSITION_DURATION_IN_MS}
                                         direction={isOpen ? 'up' : 'down'}
                                         color={
                                             isInverse
@@ -237,7 +240,7 @@ export const Accordion: React.FC<AccordionProps> = ({
     singleOpen,
     role = 'list',
 }) => {
-    const [indexList, toogle] = useAccordionState({
+    const [indexList, toggle] = useAccordionState({
         value: index,
         defaultValue: defaultIndex,
         onChange,
@@ -246,7 +249,7 @@ export const Accordion: React.FC<AccordionProps> = ({
     const lastIndex = React.Children.count(children) - 1;
 
     return (
-        <AccordionContext.Provider value={{index: indexList, toogle}}>
+        <AccordionContext.Provider value={{index: indexList, toggle}}>
             <div
                 role={role}
                 {...getPrefixedDataAttributes({...dataAttributes, accordion: true}, 'Accordion')}
@@ -294,7 +297,7 @@ export const BoxedAccordion: React.FC<AccordionProps> = ({
     singleOpen,
     role = 'list',
 }) => {
-    const [indexList, toogle] = useAccordionState({
+    const [indexList, toggle] = useAccordionState({
         value: index,
         defaultValue: defaultIndex,
         onChange,
@@ -302,7 +305,7 @@ export const BoxedAccordion: React.FC<AccordionProps> = ({
     });
 
     return (
-        <AccordionContext.Provider value={{index: indexList, toogle}}>
+        <AccordionContext.Provider value={{index: indexList, toggle}}>
             <Stack
                 space={16}
                 role={role}
