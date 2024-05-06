@@ -685,14 +685,6 @@ const SlideshowContext = React.createContext<{withBullets: boolean} | undefined>
 export const useSlideshowContext = (): {withBullets: boolean} | undefined =>
     React.useContext(SlideshowContext);
 
-export const SlideshowProvider = ({
-    children,
-    withBullets,
-}: {
-    children: React.ReactNode;
-    withBullets: boolean;
-}): JSX.Element => <SlideshowContext.Provider value={{withBullets}}>{children}</SlideshowContext.Provider>;
-
 export const Slideshow = ({
     items,
     withBullets,
@@ -821,7 +813,7 @@ export const Slideshow = ({
     }, [controlsSetter, goNext, goPrev, bulletsProps, goToPage]);
 
     return (
-        <SlideshowProvider withBullets={!!withBullets}>
+        <SlideshowContext.Provider value={{withBullets: !!withBullets}}>
             <div
                 className={styles.slideshowContainer}
                 {...getPrefixedDataAttributes(dataAttributes, 'SlideShow')}
@@ -869,6 +861,6 @@ export const Slideshow = ({
                     </ThemeVariant>
                 )}
             </div>
-        </SlideshowProvider>
+        </SlideshowContext.Provider>
     );
 };
