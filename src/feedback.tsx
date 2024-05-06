@@ -1,7 +1,6 @@
 'use client';
 import * as React from 'react';
 import {useTheme, useScreenSize} from './hooks';
-import * as mq from './media-queries.css';
 import ButtonFixedFooterLayout from './button-fixed-footer-layout';
 import {VIVO_NEW_SKIN, VIVO_SKIN} from './skins/constants';
 import {useSetOverscrollColor} from './overscroll-color-context';
@@ -34,15 +33,6 @@ const areAnimationsSupported = (platformOverrides: Theme['platformOverrides']) =
 
 const checkHasButtons = ({primaryButton, secondaryButton}: FeedbackButtonsProps) =>
     !!primaryButton || !!secondaryButton;
-
-const BackgroundColor = ({isInverse}: {isInverse: boolean}): JSX.Element => {
-    const css = `@media ${mq.tabletOrSmaller} {
-        body {background:${
-            isInverse ? vars.colors.backgroundBrand : vars.colors.background
-        }; background-attachment: fixed;}
-    }`;
-    return <style>{css}</style>;
-};
 
 type HapticFeedback = 'error' | 'success';
 
@@ -173,7 +163,7 @@ const renderFeedback = ({
 const FeedbackScreenOverscrollColor = () => {
     useSetOverscrollColor({
         topColor: vars.colors.backgroundBrandTop,
-        bottomColor: vars.colors.backgroundBrandBottom,
+        bottomColor: 'transparent',
     });
     return null;
 };
@@ -242,8 +232,8 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
 
     return (
         <div style={{position: 'relative'}}>
-            {isInverse && <FeedbackScreenOverscrollColor />}
             <ResponsiveLayout>
+                {isInverse && <FeedbackScreenOverscrollColor />}
                 <Box paddingTop={{desktop: 64, mobile: 0}}>
                     {renderFeedback({
                         isInverse,
@@ -256,7 +246,9 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
                                 footerBgColor={
                                     isInverse && !isDarkMode ? vars.colors.backgroundBrandBottom : undefined
                                 }
-                                containerBgColor="transparent"
+                                containerBgColor={
+                                    isInverse ? vars.colors.backgroundBrand : vars.colors.background
+                                }
                             >
                                 <div className={styles.container}>
                                     <div
@@ -276,8 +268,6 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
                     })}
                 </Box>
             </ResponsiveLayout>
-            {/* Bug: https://jira.tid.es/browse/CHECKOUT-3340. The solution for all brands without gradient background is setting body color. */}
-            <BackgroundColor isInverse={isInverse} />
         </div>
     );
 };
