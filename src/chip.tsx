@@ -92,9 +92,10 @@ const Chip: React.FC<ChipProps> = (props: ChipProps) => {
     if (badge) {
         return (
             <Box
-                className={
-                    overAlternative ? styles.chipVariants.overAlternative : styles.chipVariants.default
-                }
+                className={classnames(
+                    overAlternative ? styles.chipVariants.overAlternative : styles.chipVariants.default,
+                    styles.chipWrapper
+                )}
                 paddingLeft={paddingLeft}
                 paddingRight={paddingIcon}
                 {...getPrefixedDataAttributes(dataAttributes, 'Chip')}
@@ -107,9 +108,10 @@ const Chip: React.FC<ChipProps> = (props: ChipProps) => {
     if (onClose) {
         return (
             <Box
-                className={
-                    overAlternative ? styles.chipVariants.overAlternative : styles.chipVariants.default
-                }
+                className={classnames(
+                    overAlternative ? styles.chipVariants.overAlternative : styles.chipVariants.default,
+                    styles.chipWrapper
+                )}
                 paddingLeft={paddingLeft}
                 paddingRight={paddingIcon}
                 {...getPrefixedDataAttributes(dataAttributes, 'Chip')}
@@ -139,6 +141,8 @@ const Chip: React.FC<ChipProps> = (props: ChipProps) => {
         <Box
             className={classnames(
                 styles.chipVariants[active ? 'active' : overAlternative ? 'overAlternative' : 'default'],
+                // If the chip is wrapped inside a BaseTouchable, we set inline-flex to the Touchable instead
+                props.href || props.onPress || props.to ? styles.wrappedContent : styles.chipWrapper,
                 {
                     [styles.chipInteractiveVariants[isDarkMode ? 'dark' : 'light']]: isInteractive,
                 }
@@ -154,7 +158,7 @@ const Chip: React.FC<ChipProps> = (props: ChipProps) => {
     if (props.onPress) {
         return (
             <BaseTouchable
-                className={styles.button}
+                className={classnames(styles.chipWrapper, styles.button)}
                 trackingEvent={props.trackingEvent}
                 onPress={props.onPress}
                 dataAttributes={chipDataAttributes}
@@ -171,6 +175,7 @@ const Chip: React.FC<ChipProps> = (props: ChipProps) => {
                 to={props.to}
                 fullPageOnWebView={props.fullPageOnWebView}
                 dataAttributes={chipDataAttributes}
+                className={styles.chipWrapper}
             >
                 {renderContent()}
             </BaseTouchable>
@@ -184,6 +189,7 @@ const Chip: React.FC<ChipProps> = (props: ChipProps) => {
                 href={props.href}
                 newTab={props.newTab}
                 dataAttributes={chipDataAttributes}
+                className={styles.chipWrapper}
             >
                 {renderContent()}
             </BaseTouchable>

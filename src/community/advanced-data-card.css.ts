@@ -115,6 +115,8 @@ export const zindex = style({zIndex: -1});
 
 export const minHeight = style({minHeight: 216});
 
+export const minHeightBox = style({minHeight: 110}); // This minHeight is taking into account that 216px - 106px which is the combined height of the padding, border and footer
+
 export const dataCard = style([
     {
         isolation: 'isolate', // This avoids problems with some screenshot tests in webapp

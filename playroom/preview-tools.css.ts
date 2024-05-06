@@ -96,7 +96,8 @@ export const controlsTransitionClasses = {
     }),
 };
 
-export const floatingButtonTopTransitionClasses = controlsTransitionClasses;
+// If we don't spread controlsTransitionClasses object, the animation is not working for some reason
+export const floatingButtonTopTransitionClasses = {...controlsTransitionClasses};
 
 export const floatingButtonBottomTransitionClasses = {
     enter: style({

@@ -205,7 +205,7 @@ const normalizeItemsPerPage = (
     };
 };
 
-const calcPagesScrollPositions = (itemsScrollPosition: ReadonlyArray<number>, numPages: number) => {
+const calcPagesScrollPositions = (itemsScrollPosition: Array<number>, numPages: number) => {
     if (itemsScrollPosition.length === 0) {
         return [];
     }
@@ -221,7 +221,7 @@ const calcPagesScrollPositions = (itemsScrollPosition: ReadonlyArray<number>, nu
     return pagesScrollPositions;
 };
 
-const calcCurrentPageIndex = (scrollPosition: number, pagesScrollPositions: ReadonlyArray<number>) => {
+const calcCurrentPageIndex = (scrollPosition: number, pagesScrollPositions: Array<number>) => {
     const middlePageScrollPositions = [];
     for (let i = 0; i < pagesScrollPositions.length; i++) {
         if (i === 0) {
@@ -681,13 +681,10 @@ type SlideshowProps = {
  * This context is used internally to let other components (Hero) now if they are rendered inside a Slideshow
  * to make some tweaks in the UI
  */
-const IsInsideSlideshowContext = React.createContext(false);
+const SlideshowContext = React.createContext<{withBullets: boolean} | undefined>(undefined);
 
-export const useIsInsideSlideshowContext = (): boolean => React.useContext(IsInsideSlideshowContext);
-
-export const IsInsideSlideshowProvider = ({children}: {children: React.ReactNode}): JSX.Element => (
-    <IsInsideSlideshowContext.Provider value>{children}</IsInsideSlideshowContext.Provider>
-);
+export const useSlideshowContext = (): {withBullets: boolean} | undefined =>
+    React.useContext(SlideshowContext);
 
 export const Slideshow = ({
     items,
@@ -817,7 +814,7 @@ export const Slideshow = ({
     }, [controlsSetter, goNext, goPrev, bulletsProps, goToPage]);
 
     return (
-        <IsInsideSlideshowProvider>
+        <SlideshowContext.Provider value={{withBullets: !!withBullets}}>
             <ResetResponsiveLayout skipDesktop>
                 <div
                     className={styles.slideshowContainer}
@@ -867,6 +864,6 @@ export const Slideshow = ({
                     )}
                 </div>
             </ResetResponsiveLayout>
-        </IsInsideSlideshowProvider>
+        </SlideshowContext.Provider>
     );
 };

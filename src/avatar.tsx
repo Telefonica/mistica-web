@@ -70,7 +70,7 @@ const Avatar = ({
     const isInverse = useIsInverseVariant();
     const backgroundColor =
         props.backgroundColor ?? (isInverse ? vars.colors.brandHigh : vars.colors.brandLow);
-    const textColor = props.textColor ?? (isInverse ? vars.colors.textPrimaryInverse : vars.colors.brand);
+    const textColor = props.textColor ?? (isInverse ? vars.colors.textPrimaryInverse : vars.colors.textBrand);
     const [imgLoadError, setImgLoadError] = React.useState(false);
     React.useEffect(() => {
         setImgLoadError(false); // reset error state when url changes

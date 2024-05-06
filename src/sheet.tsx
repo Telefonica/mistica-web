@@ -281,7 +281,7 @@ const paddingX = {
 type SheetBodyProps = {
     title?: string;
     subtitle?: string;
-    description?: string | Array<string>;
+    description?: string | ReadonlyArray<string>;
     button?: RendersNullableElement<typeof ButtonPrimary>;
     secondaryButton?: RendersNullableElement<typeof ButtonSecondary>;
     link?: RendersNullableElement<typeof ButtonLink>;
@@ -393,8 +393,8 @@ export const SheetBody = ({
 type RadioListSheetProps = {
     title?: string;
     subtitle?: string;
-    description?: string | Array<string>;
-    items: Array<{
+    description?: string | ReadonlyArray<string>;
+    items: ReadonlyArray<{
         id: string;
         title?: string;
         description?: string;
@@ -487,8 +487,8 @@ export const RadioListSheet = React.forwardRef<HTMLDivElement, RadioListSheetPro
 type ActionsListSheetProps = {
     title?: string;
     subtitle?: string;
-    description?: string | Array<string>;
-    items: Array<{
+    description?: string | ReadonlyArray<string>;
+    items: ReadonlyArray<{
         id: string;
         title: string;
         style?: 'normal' | 'destructive'; // "normal" by default
@@ -582,8 +582,8 @@ export const ActionsListSheet = React.forwardRef<HTMLDivElement, ActionsListShee
 type InfoSheetProps = {
     title?: string;
     subtitle?: string;
-    description?: string | Array<string>;
-    items: Array<{
+    description?: string | ReadonlyArray<string>;
+    items: ReadonlyArray<{
         id?: string;
         title: string;
         description?: string;
@@ -674,7 +674,7 @@ type ButtonProps = {
 type ActionsSheetProps = {
     title?: string;
     subtitle?: string;
-    description?: string | Array<string>;
+    description?: string | ReadonlyArray<string>;
     button: ButtonProps;
     secondaryButton?: ButtonProps;
     buttonLink?: ButtonProps & {withChevron?: boolean};

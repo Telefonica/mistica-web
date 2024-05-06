@@ -32,7 +32,7 @@ interface BaseSliderProps {
 }
 
 interface SliderWithValuesProps {
-    values: Array<number>;
+    values: ReadonlyArray<number>;
 }
 
 interface SliderWithStepProps {
@@ -69,7 +69,7 @@ const getValueInRange = (isPercentage: boolean, min: number, max: number, step: 
         : valueRoundedDown;
 };
 
-const getClosestValidValue = (min: number, value?: number, values?: Array<number>) => {
+const getClosestValidValue = (min: number, value?: number, values?: ReadonlyArray<number>) => {
     if (!values) {
         return value;
     }

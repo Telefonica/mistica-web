@@ -10,7 +10,7 @@ import ButtonGroup from './button-group';
 import {vars, vars as skinVars} from './skins/skin-contract.css';
 import * as styles from './hero.css';
 import * as mediaStyles from './image.css';
-import {useIsInsideSlideshowContext} from './carousel';
+import {useSlideshowContext} from './carousel';
 import {getPrefixedDataAttributes} from './utils/dom';
 import {sprinkles} from './sprinkles.css';
 import {useIsInverseVariant} from './theme-variant-context';
@@ -115,7 +115,7 @@ const HeroContent = ({
 };
 
 type HeroProps = {
-    height?: string;
+    height?: string | number;
     background?: 'default' | 'alternative' | 'brand' | 'brand-secondary' | 'none';
     noPaddingY?: boolean;
     media: RendersElement<typeof Image> | RendersElement<typeof Video>;
@@ -146,7 +146,8 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
         ref
     ) => {
         const {isTabletOrSmaller} = useScreenSize();
-        const isInsideSlideShow = useIsInsideSlideshowContext();
+        const slideshowContext = useSlideshowContext();
+        const hasSlideshowBullets = !!slideshowContext?.withBullets;
         const isInverseOutside = useIsInverseVariant();
         const isInverse =
             background === 'none'
@@ -163,7 +164,9 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
                             style={{
                                 ...(height === '100vh' ? {maxHeight: '-webkit-fill-available'} : {}), // Hack to avoid issues in Safari with 100vh
                                 ...applyCssVars({
-                                    [styles.vars.height]: height ?? '100%',
+                                    [styles.vars.height]:
+                                        typeof height === 'number' ? `${height}px` : height ?? '100%',
+                                    [mediaStyles.vars.mediaBorderRadius]: '0px',
                                 }),
                             }}
                             className={classnames(styles.container, styles.containerMobile, {
@@ -179,7 +182,7 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
                                 <div className={styles.expandedContent}>
                                     <Box
                                         paddingTop={24}
-                                        paddingBottom={isInsideSlideShow ? 48 : noPaddingY ? 0 : 24}
+                                        paddingBottom={hasSlideshowBullets ? 48 : noPaddingY ? 0 : 24}
                                         className={styles.layout}
                                     >
                                         <HeroContent {...rest} />
@@ -211,43 +214,44 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
             );
 
         return (
-            <div style={applyCssVars({[mediaStyles.vars.mediaBorderRadius]: vars.borderRadii.container})}>
-                <div
-                    {...getPrefixedDataAttributes({'component-name': 'Hero', ...dataAttributes})}
-                    ref={ref}
-                    style={{
-                        ...(height === '100vh' ? {maxHeight: '-webkit-fill-available'} : {}), // Hack to avoid issues in Safari with 100vh
-                        ...applyCssVars({
-                            [styles.vars.height]: height ?? '100%',
-                        }),
-                        background: CONTENT_BACKGROUND_COLOR[background],
-                    }}
-                    className={sprinkles({height: '100%'})}
-                >
-                    <Layout isInverse={isInverse}>
-                        <GridLayout
-                            template="6+6"
-                            left={
-                                <Box
-                                    paddingY={noPaddingY ? 0 : 56}
-                                    className={classnames(styles.container, styles.containerDesktop, {
-                                        [styles.containerMinHeight]: !noPaddingY,
-                                    })}
-                                >
-                                    {left}
-                                </Box>
-                            }
-                            right={
-                                <Box
-                                    paddingY={noPaddingY ? 0 : 56}
-                                    className={classnames(styles.container, styles.containerDesktop)}
-                                >
-                                    {right}
-                                </Box>
-                            }
-                        />
-                    </Layout>
-                </div>
+            <div
+                {...getPrefixedDataAttributes({'component-name': 'Hero', ...dataAttributes})}
+                ref={ref}
+                style={{
+                    ...(height === '100vh' ? {maxHeight: '-webkit-fill-available'} : {}), // Hack to avoid issues in Safari with 100vh
+                    ...applyCssVars({
+                        [styles.vars.height]: typeof height === 'number' ? `${height}px` : height ?? '100%',
+                        [mediaStyles.vars.mediaBorderRadius]: vars.borderRadii.container,
+                    }),
+                    background: CONTENT_BACKGROUND_COLOR[background],
+                }}
+                className={sprinkles({height: '100%'})}
+            >
+                <Layout isInverse={isInverse}>
+                    <GridLayout
+                        template="6+6"
+                        left={
+                            <Box
+                                paddingTop={noPaddingY ? 0 : 56}
+                                paddingBottom={noPaddingY && !hasSlideshowBullets ? 0 : 56}
+                                className={classnames(styles.container, styles.containerDesktop, {
+                                    [styles.containerMinHeight]: !noPaddingY,
+                                })}
+                            >
+                                {left}
+                            </Box>
+                        }
+                        right={
+                            <Box
+                                paddingTop={noPaddingY ? 0 : 56}
+                                paddingBottom={noPaddingY && !hasSlideshowBullets ? 0 : 56}
+                                className={classnames(styles.container, styles.containerDesktop)}
+                            >
+                                {right}
+                            </Box>
+                        }
+                    />
+                </Layout>
             </div>
         );
     }
