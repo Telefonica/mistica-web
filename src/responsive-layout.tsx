@@ -39,17 +39,21 @@ export const InternalResponsiveLayout: React.FC<
         <ThemeVariant variant={internalVariant ?? outsideVariant}>
             <div
                 className={classnames(
-                    fullWidth ? styles.fullwidthContainer : styles.responsiveLayoutContainer,
                     className,
                     internalVariant &&
                         internalVariant !== 'default' &&
                         styles.backgroundVariant[internalVariant],
-                    {
-                        [styles.expandedResponsiveLayoutContainerMobile]:
-                            shouldExpandWhenNested === true && !fullWidth,
-                        [styles.expandedResponsiveLayoutContainerDesktop]:
-                            shouldExpandWhenNested && !fullWidth,
-                    }
+                    ...(fullWidth
+                        ? []
+                        : [
+                              shouldExpandWhenNested
+                                  ? styles.desktopContainer
+                                  : styles.forcedMarginDesktopContainer,
+                              shouldExpandWhenNested === true
+                                  ? styles.mobileContainer
+                                  : styles.forcedMarginMobileContainer,
+                              styles.responsiveLayoutContainer,
+                          ])
                 )}
                 style={backgroundColor ? {background: backgroundColor} : undefined}
                 {...getPrefixedDataAttributes(dataAttributes)}
@@ -73,4 +77,27 @@ const ResponsiveLayout: React.FC<Props> = ({children, ...props}) => (
     </InternalResponsiveLayout>
 );
 
+export const ResetResponsiveLayout: React.FC<{
+    children: React.ReactNode;
+    skipMobile?: boolean;
+    skipDesktop?: boolean;
+}> = ({children, skipMobile = false, skipDesktop = false}) => {
+    return (
+        <div
+            className={classnames({
+                [styles.resetContainerMobile]: !skipMobile,
+                [styles.resetContainerDesktop]: !skipDesktop,
+            })}
+        >
+            <div
+                className={classnames({
+                    [styles.resetMobile]: !skipMobile,
+                    [styles.resetDesktop]: !skipDesktop,
+                })}
+            >
+                {children}
+            </div>
+        </div>
+    );
+};
 export default ResponsiveLayout;
