@@ -15,6 +15,7 @@ import * as mediaStyles from './image.css';
 import {useDesktopContainerType} from './desktop-container-type-context';
 import {VIVO_NEW_SKIN} from './skins/constants';
 import {applyCssVars} from './utils/css';
+import {ResetResponsiveLayout} from './responsive-layout';
 
 import type {DesktopContainerType} from './desktop-container-type-context';
 import type {ByBreakpoint, DataAttributes} from './utils/types';
@@ -204,7 +205,7 @@ const normalizeItemsPerPage = (
     };
 };
 
-const calcPagesScrollPositions = (itemsScrollPosition: ReadonlyArray<number>, numPages: number) => {
+const calcPagesScrollPositions = (itemsScrollPosition: Array<number>, numPages: number) => {
     if (itemsScrollPosition.length === 0) {
         return [];
     }
@@ -220,7 +221,7 @@ const calcPagesScrollPositions = (itemsScrollPosition: ReadonlyArray<number>, nu
     return pagesScrollPositions;
 };
 
-const calcCurrentPageIndex = (scrollPosition: number, pagesScrollPositions: ReadonlyArray<number>) => {
+const calcCurrentPageIndex = (scrollPosition: number, pagesScrollPositions: Array<number>) => {
     const middlePageScrollPositions = [];
     for (let i = 0; i < pagesScrollPositions.length; i++) {
         if (i === 0) {
@@ -680,13 +681,10 @@ type SlideshowProps = {
  * This context is used internally to let other components (Hero) now if they are rendered inside a Slideshow
  * to make some tweaks in the UI
  */
-const IsInsideSlideshowContext = React.createContext(false);
+const SlideshowContext = React.createContext<{withBullets: boolean} | undefined>(undefined);
 
-export const useIsInsideSlideshowContext = (): boolean => React.useContext(IsInsideSlideshowContext);
-
-export const IsInsideSlideshowProvider = ({children}: {children: React.ReactNode}): JSX.Element => (
-    <IsInsideSlideshowContext.Provider value>{children}</IsInsideSlideshowContext.Provider>
-);
+export const useSlideshowContext = (): {withBullets: boolean} | undefined =>
+    React.useContext(SlideshowContext);
 
 export const Slideshow = ({
     items,
@@ -816,54 +814,56 @@ export const Slideshow = ({
     }, [controlsSetter, goNext, goPrev, bulletsProps, goToPage]);
 
     return (
-        <IsInsideSlideshowProvider>
-            <div
-                className={styles.slideshowContainer}
-                {...getPrefixedDataAttributes(dataAttributes, 'SlideShow')}
-            >
-                <ThemeVariant isInverse={false}>
-                    <BaseTouchable
-                        className={styles.slideshowPrevArrowButton}
-                        aria-label={texts.carouselPrevButton}
-                        onPress={goPrev}
-                        disabled={!showPrevArrow}
-                    >
-                        <IconChevronLeftRegular />
-                    </BaseTouchable>
-                </ThemeVariant>
-                <div style={applyCssVars({[mediaStyles.vars.mediaBorderRadius]: '0px'})}>
-                    <div className={styles.slideshow} ref={carouselRef}>
-                        {items.map((item, index) => (
-                            <div
-                                key={index}
-                                className={styles.slideshowItem}
-                                style={{
-                                    scrollSnapStop: isAndroid(platformOverrides) ? 'always' : 'normal',
-                                }}
-                            >
-                                {item}
-                            </div>
-                        ))}
-                    </div>
-                </div>
-                <ThemeVariant isInverse={false}>
-                    <BaseTouchable
-                        className={styles.slideshowNextArrowButton}
-                        aria-label={texts.carouselNextButton}
-                        onPress={goNext}
-                        disabled={!showNextArrow}
-                    >
-                        <IconChevronRightRegular />
-                    </BaseTouchable>
-                </ThemeVariant>
-                {withBullets && items.length > 1 && (
-                    <ThemeVariant isInverse={inverseBullets}>
-                        <div className={styles.slideshowBullets}>
-                            <PageBullets {...bulletsProps} />
-                        </div>
+        <SlideshowContext.Provider value={{withBullets: !!withBullets}}>
+            <ResetResponsiveLayout skipDesktop>
+                <div
+                    className={styles.slideshowContainer}
+                    {...getPrefixedDataAttributes(dataAttributes, 'SlideShow')}
+                >
+                    <ThemeVariant isInverse={false}>
+                        <BaseTouchable
+                            className={styles.slideshowPrevArrowButton}
+                            aria-label={texts.carouselPrevButton}
+                            onPress={goPrev}
+                            disabled={!showPrevArrow}
+                        >
+                            <IconChevronLeftRegular />
+                        </BaseTouchable>
                     </ThemeVariant>
-                )}
-            </div>
-        </IsInsideSlideshowProvider>
+                    <div style={applyCssVars({[mediaStyles.vars.mediaBorderRadius]: '0px'})}>
+                        <div className={styles.slideshow} ref={carouselRef}>
+                            {items.map((item, index) => (
+                                <div
+                                    key={index}
+                                    className={styles.slideshowItem}
+                                    style={{
+                                        scrollSnapStop: isAndroid(platformOverrides) ? 'always' : 'normal',
+                                    }}
+                                >
+                                    {item}
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                    <ThemeVariant isInverse={false}>
+                        <BaseTouchable
+                            className={styles.slideshowNextArrowButton}
+                            aria-label={texts.carouselNextButton}
+                            onPress={goNext}
+                            disabled={!showNextArrow}
+                        >
+                            <IconChevronRightRegular />
+                        </BaseTouchable>
+                    </ThemeVariant>
+                    {withBullets && items.length > 1 && (
+                        <ThemeVariant isInverse={inverseBullets}>
+                            <div className={styles.slideshowBullets}>
+                                <PageBullets {...bulletsProps} />
+                            </div>
+                        </ThemeVariant>
+                    )}
+                </div>
+            </ResetResponsiveLayout>
+        </SlideshowContext.Provider>
     );
 };

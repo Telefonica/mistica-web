@@ -1,4 +1,4 @@
-import {createVar, fallbackVar, style} from '@vanilla-extract/css';
+import {createVar, style} from '@vanilla-extract/css';
 import {sprinkles} from './sprinkles.css';
 import {vars as skinVars} from './skins/skin-contract.css';
 import * as mq from './media-queries.css';
@@ -24,6 +24,7 @@ export const fixedFooter = style({
             left: 0,
             bottom: 0,
             zIndex: 1,
+            boxShadow: '0 -2px 8px 0 rgba(0, 0, 0, 0)', // without this chrome mobile shows strange artifacts in the shadow animation
         },
     },
 });
@@ -44,7 +45,40 @@ export const container = style({
         [mq.tabletOrSmaller]: {
             isolation: 'isolate',
             paddingBottom: footerHeight,
-            background: fallbackVar(backgroundColor, skinVars.colors.background),
         },
     },
 });
+
+export const fixedBackgroundLayer = style([
+    sprinkles({
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        position: 'fixed',
+    }),
+    {
+        zIndex: -3,
+        '@media': {
+            [mq.desktopOrBigger]: {
+                display: 'none',
+            },
+        },
+    },
+]);
+
+export const absoluteBackgroundLayer = style([
+    sprinkles({
+        left: 0,
+        right: 0,
+        position: 'absolute',
+    }),
+    {
+        zIndex: -1,
+        '@media': {
+            [mq.desktopOrBigger]: {
+                display: 'none',
+            },
+        },
+    },
+]);

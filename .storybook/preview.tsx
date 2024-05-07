@@ -75,6 +75,9 @@ const getTheme = (
             insideNovumNativeApp: platform !== 'desktop',
         },
         enableTabFocus: true,
+        dimensions: {
+            headerMobileHeight: 'mistica',
+        },
     };
 };
 

@@ -49,3 +49,13 @@ test.each`
 
     expect(await story.screenshot()).toMatchImageSnapshot();
 });
+
+test('Chip - should expand when inside a grid', async () => {
+    await openStoryPage({
+        id: 'private-chips-inside-a-grid--default',
+    });
+
+    const story = await screen.findByTestId('chips');
+
+    expect(await story.screenshot()).toMatchImageSnapshot();
+});

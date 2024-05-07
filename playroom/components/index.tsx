@@ -354,6 +354,9 @@ export const PreviewTools = ({
             // Dont override mediaqueries for PreviewToolsControls, to avoid using Select instead of Tabs in desktop
             enableTabFocus: false,
             colorScheme: 'light',
+            dimensions: {
+                headerMobileHeight: 'mistica',
+            },
         };
     }, [os, skinName]);
 
