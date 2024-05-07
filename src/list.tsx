@@ -272,6 +272,8 @@ interface HrefRowContentProps extends CommonProps {
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
     href: string | undefined;
     newTab?: boolean;
+    loadOnTop?: boolean;
+    onNavigate?: () => void | Promise<void>;
     right?: Right;
 }
 
@@ -280,6 +282,7 @@ interface ToRowContentProps extends CommonProps {
     to: string | undefined;
     fullPageOnWebView?: boolean;
     replace?: boolean;
+    onNavigate?: () => void | Promise<void>;
     right?: Right;
 }
 
@@ -478,6 +481,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
                 trackingEvent={props.trackingEvent}
                 to={props.to}
                 fullPageOnWebView={props.fullPageOnWebView}
+                onNavigate={props.onNavigate}
                 role={role}
                 dataAttributes={dataAttributes}
                 disabled={disabled}
@@ -500,6 +504,8 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
                 trackingEvent={props.trackingEvent}
                 href={props.href}
                 newTab={props.newTab}
+                onNavigate={props.onNavigate}
+                loadOnTop={props.loadOnTop}
                 role={role}
                 dataAttributes={dataAttributes}
                 disabled={disabled}

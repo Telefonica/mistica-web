@@ -18,7 +18,7 @@ export default {
 type Args = {
     title: string;
     description: string;
-    actions: 'ButtonPrimary' | 'ButtonSecondary' | 'ButtonLink' | 'on press' | 'none';
+    actions: 'ButtonPrimary' | 'ButtonSecondary' | 'ButtonLink' | 'onPress' | 'none';
     image: 'fit' | 'fill' | 'none';
     inverse: boolean;
     closable: boolean;
@@ -58,6 +58,9 @@ export const Default: StoryComponent<Args> = ({
         }
     };
 
+    const actionProps =
+        actions === 'none' ? {} : actions === 'onPress' ? {onPress: () => {}} : {button: getButton(actions)};
+
     return (
         <HighlightedCard
             title={title}
@@ -65,10 +68,9 @@ export const Default: StoryComponent<Args> = ({
             imageUrl={image !== 'none' ? personPortraitImg : undefined}
             imageFit={image !== 'none' ? image : undefined}
             dataAttributes={{testid: 'highlighted-card'}}
-            button={getButton(actions) as any}
-            onPress={actions === 'on press' ? () => {} : undefined}
             isInverse={inverse}
             onClose={closable ? () => {} : undefined}
+            {...actionProps}
         />
     );
 };
@@ -85,7 +87,7 @@ Default.args = {
 
 Default.argTypes = {
     actions: {
-        options: ['ButtonPrimary', 'ButtonSecondary', 'ButtonLink', 'on press', 'none'],
+        options: ['ButtonPrimary', 'ButtonSecondary', 'ButtonLink', 'onPress', 'none'],
         control: {type: 'select'},
     },
     image: {

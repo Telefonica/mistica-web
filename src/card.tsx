@@ -466,8 +466,18 @@ const CardContent: React.FC<CardContentProps> = ({
 type TouchableProps = {
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
 } & ExclusifyUnion<
-    | {href: string | undefined; newTab?: boolean}
-    | {to: string | undefined; fullPageOnWebView?: boolean}
+    | {
+          href: string | undefined;
+          newTab?: boolean;
+          loadOnTop?: boolean;
+          onNavigate?: () => void | Promise<void>;
+      }
+    | {
+          to: string | undefined;
+          fullPageOnWebView?: boolean;
+          replace?: boolean;
+          onNavigate?: () => void | Promise<void>;
+      }
     | {onPress: PressHandler | undefined}
 >;
 

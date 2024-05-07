@@ -74,7 +74,7 @@ export const Default: StoryComponent<DataCardArgs> = ({
 
     const buttonLink = actions.includes('link') ? <ButtonLink href="#">Link</ButtonLink> : undefined;
 
-    const onPress = actions.includes('press') ? () => null : undefined;
+    const onPress = actions.includes('press') ? () => {} : undefined;
 
     const interactiveActions = onPress
         ? {onPress}
