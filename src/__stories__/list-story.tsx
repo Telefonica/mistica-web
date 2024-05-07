@@ -19,6 +19,7 @@ import {
     IconPauseFilled,
     IconPlayFilled,
     ResponsiveLayout,
+    NegativeBox,
 } from '..';
 import usingVrImg from './images/using-vr.jpg';
 import laptopImg from './images/laptop.jpg';
@@ -49,6 +50,9 @@ export default {
             ],
             control: {type: 'select'},
         },
+    },
+    parameters: {
+        fullScreen: true,
     },
 };
 
@@ -214,174 +218,178 @@ const Template: StoryComponent<Args & {boxed?: boolean; isInverse?: boolean}> = 
 
     let row = 1;
     const list = (
-        <ResponsiveLayout fullWidth isInverse={overInverse}>
-            <ListComponent dataAttributes={{testid: 'list'}}>
-                <RowComponent
-                    headline={headline}
-                    title={title}
-                    subtitle={subtitle}
-                    description={description}
-                    detail={detail}
-                    badge={withBadge}
-                    titleLinesMax={oneLineTitle ? 1 : 2}
-                    subtitleLinesMax={oneLineSubtitle ? 1 : 2}
-                    descriptionLinesMax={oneLineDescription ? 1 : 2}
-                    extra={extra}
-                    disabled={disabled}
-                    danger={danger}
-                    isInverse={isInverse}
-                    {...getControlProps(row++)}
-                />
-                <RowComponent
-                    asset={<IconLikeFilled size={24} color="currentColor" />}
-                    headline={headline && <Tag type="promo">{headline}</Tag>}
-                    title={title}
-                    subtitle={subtitle}
-                    description={description}
-                    detail={detail}
-                    badge={withBadge ? 2 : undefined}
-                    titleLinesMax={oneLineTitle ? 1 : 2}
-                    subtitleLinesMax={oneLineSubtitle ? 1 : 2}
-                    descriptionLinesMax={oneLineDescription ? 1 : 2}
-                    extra={extra}
-                    disabled={disabled}
-                    danger={danger}
-                    isInverse={isInverse}
-                    {...getControlProps(row++)}
-                />
-                <RowComponent
-                    asset={
-                        <Circle backgroundColor={skinVars.colors.brandLow} size={40}>
-                            <IconMobileDeviceRegular color={skinVars.colors.brand} />
-                        </Circle>
-                    }
-                    headline={headline}
-                    title={title}
-                    subtitle={subtitle}
-                    description={description}
-                    detail={detail}
-                    badge={withBadge ? 22 : undefined}
-                    titleLinesMax={oneLineTitle ? 1 : 2}
-                    subtitleLinesMax={oneLineSubtitle ? 1 : 2}
-                    descriptionLinesMax={oneLineDescription ? 1 : 2}
-                    extra={extra}
-                    disabled={disabled}
-                    danger={danger}
-                    isInverse={isInverse}
-                    {...getControlProps(row++)}
-                />
-                <RowComponent
-                    asset={<Circle size={40} backgroundImage={laptopImg} />}
-                    headline={headline}
-                    title={title}
-                    subtitle={subtitle}
-                    description={description}
-                    detail={detail}
-                    badge={withBadge ? 22 : undefined}
-                    titleLinesMax={oneLineTitle ? 1 : 2}
-                    subtitleLinesMax={oneLineSubtitle ? 1 : 2}
-                    descriptionLinesMax={oneLineDescription ? 1 : 2}
-                    extra={extra}
-                    disabled={disabled}
-                    danger={danger}
-                    isInverse={isInverse}
-                    {...getControlProps(row++)}
-                />
-                <RowComponent
-                    asset={<Image src={usingVrImg} height={80} aspectRatio="16:9" />}
-                    headline={headline}
-                    title={title}
-                    subtitle={subtitle}
-                    description={description}
-                    detail={detail}
-                    badge={withBadge ? 22 : undefined}
-                    titleLinesMax={oneLineTitle ? 1 : 2}
-                    subtitleLinesMax={oneLineSubtitle ? 1 : 2}
-                    descriptionLinesMax={oneLineDescription ? 1 : 2}
-                    extra={extra}
-                    disabled={disabled}
-                    danger={danger}
-                    isInverse={isInverse}
-                    {...getControlProps(row++)}
-                />
-                <RowComponent
-                    asset={<Image src={personPortraitImg} width={80} aspectRatio="7:10" />}
-                    headline={headline}
-                    title={title}
-                    subtitle={subtitle}
-                    description={description}
-                    detail={detail}
-                    badge={withBadge ? 22 : undefined}
-                    titleLinesMax={oneLineTitle ? 1 : 2}
-                    subtitleLinesMax={oneLineSubtitle ? 1 : 2}
-                    descriptionLinesMax={oneLineDescription ? 1 : 2}
-                    extra={extra}
-                    disabled={disabled}
-                    danger={danger}
-                    isInverse={isInverse}
-                    {...getControlProps(row++)}
-                />
-                <RowComponent
-                    asset={<Image src={touchImg} width={80} />}
-                    headline={headline}
-                    title={title}
-                    subtitle={subtitle}
-                    description={description}
-                    detail={detail}
-                    badge={withBadge ? 22 : undefined}
-                    titleLinesMax={oneLineTitle ? 1 : 2}
-                    subtitleLinesMax={oneLineSubtitle ? 1 : 2}
-                    descriptionLinesMax={oneLineDescription ? 1 : 2}
-                    extra={extra}
-                    disabled={disabled}
-                    danger={danger}
-                    isInverse={isInverse}
-                    {...getControlProps(row++)}
-                />
-                <RowComponent
-                    asset={<Avatar size={40} src={avatarImg} />}
-                    headline={headline}
-                    title={title}
-                    subtitle={subtitle}
-                    description={description}
-                    detail={detail}
-                    badge={withBadge ? 22 : undefined}
-                    titleLinesMax={oneLineTitle ? 1 : 2}
-                    subtitleLinesMax={oneLineSubtitle ? 1 : 2}
-                    descriptionLinesMax={oneLineDescription ? 1 : 2}
-                    extra={extra}
-                    disabled={disabled}
-                    danger={danger}
-                    isInverse={isInverse}
-                    {...getControlProps(row++)}
-                />
-                <RowComponent
-                    asset={<Avatar size={40} initials="MS" />}
-                    headline={headline}
-                    title={title}
-                    subtitle={subtitle}
-                    description={description}
-                    detail={detail}
-                    badge={withBadge ? 22 : undefined}
-                    titleLinesMax={oneLineTitle ? 1 : 2}
-                    subtitleLinesMax={oneLineSubtitle ? 1 : 2}
-                    descriptionLinesMax={oneLineDescription ? 1 : 2}
-                    extra={extra}
-                    disabled={disabled}
-                    danger={danger}
-                    isInverse={isInverse}
-                    {...getControlProps(row++)}
-                />
-            </ListComponent>
+        <ListComponent dataAttributes={{testid: 'list'}}>
+            <RowComponent
+                headline={headline}
+                title={title}
+                subtitle={subtitle}
+                description={description}
+                detail={detail}
+                badge={withBadge}
+                titleLinesMax={oneLineTitle ? 1 : 2}
+                subtitleLinesMax={oneLineSubtitle ? 1 : 2}
+                descriptionLinesMax={oneLineDescription ? 1 : 2}
+                extra={extra}
+                disabled={disabled}
+                danger={danger}
+                isInverse={isInverse}
+                {...getControlProps(row++)}
+            />
+            <RowComponent
+                asset={<IconLikeFilled size={24} color="currentColor" />}
+                headline={headline && <Tag type="promo">{headline}</Tag>}
+                title={title}
+                subtitle={subtitle}
+                description={description}
+                detail={detail}
+                badge={withBadge ? 2 : undefined}
+                titleLinesMax={oneLineTitle ? 1 : 2}
+                subtitleLinesMax={oneLineSubtitle ? 1 : 2}
+                descriptionLinesMax={oneLineDescription ? 1 : 2}
+                extra={extra}
+                disabled={disabled}
+                danger={danger}
+                isInverse={isInverse}
+                {...getControlProps(row++)}
+            />
+            <RowComponent
+                asset={
+                    <Circle backgroundColor={skinVars.colors.brandLow} size={40}>
+                        <IconMobileDeviceRegular color={skinVars.colors.brand} />
+                    </Circle>
+                }
+                headline={headline}
+                title={title}
+                subtitle={subtitle}
+                description={description}
+                detail={detail}
+                badge={withBadge ? 22 : undefined}
+                titleLinesMax={oneLineTitle ? 1 : 2}
+                subtitleLinesMax={oneLineSubtitle ? 1 : 2}
+                descriptionLinesMax={oneLineDescription ? 1 : 2}
+                extra={extra}
+                disabled={disabled}
+                danger={danger}
+                isInverse={isInverse}
+                {...getControlProps(row++)}
+            />
+            <RowComponent
+                asset={<Circle size={40} backgroundImage={laptopImg} />}
+                headline={headline}
+                title={title}
+                subtitle={subtitle}
+                description={description}
+                detail={detail}
+                badge={withBadge ? 22 : undefined}
+                titleLinesMax={oneLineTitle ? 1 : 2}
+                subtitleLinesMax={oneLineSubtitle ? 1 : 2}
+                descriptionLinesMax={oneLineDescription ? 1 : 2}
+                extra={extra}
+                disabled={disabled}
+                danger={danger}
+                isInverse={isInverse}
+                {...getControlProps(row++)}
+            />
+            <RowComponent
+                asset={<Image src={usingVrImg} height={80} aspectRatio="16:9" />}
+                headline={headline}
+                title={title}
+                subtitle={subtitle}
+                description={description}
+                detail={detail}
+                badge={withBadge ? 22 : undefined}
+                titleLinesMax={oneLineTitle ? 1 : 2}
+                subtitleLinesMax={oneLineSubtitle ? 1 : 2}
+                descriptionLinesMax={oneLineDescription ? 1 : 2}
+                extra={extra}
+                disabled={disabled}
+                danger={danger}
+                isInverse={isInverse}
+                {...getControlProps(row++)}
+            />
+            <RowComponent
+                asset={<Image src={personPortraitImg} width={80} aspectRatio="7:10" />}
+                headline={headline}
+                title={title}
+                subtitle={subtitle}
+                description={description}
+                detail={detail}
+                badge={withBadge ? 22 : undefined}
+                titleLinesMax={oneLineTitle ? 1 : 2}
+                subtitleLinesMax={oneLineSubtitle ? 1 : 2}
+                descriptionLinesMax={oneLineDescription ? 1 : 2}
+                extra={extra}
+                disabled={disabled}
+                danger={danger}
+                isInverse={isInverse}
+                {...getControlProps(row++)}
+            />
+            <RowComponent
+                asset={<Image src={touchImg} width={80} />}
+                headline={headline}
+                title={title}
+                subtitle={subtitle}
+                description={description}
+                detail={detail}
+                badge={withBadge ? 22 : undefined}
+                titleLinesMax={oneLineTitle ? 1 : 2}
+                subtitleLinesMax={oneLineSubtitle ? 1 : 2}
+                descriptionLinesMax={oneLineDescription ? 1 : 2}
+                extra={extra}
+                disabled={disabled}
+                danger={danger}
+                isInverse={isInverse}
+                {...getControlProps(row++)}
+            />
+            <RowComponent
+                asset={<Avatar size={40} src={avatarImg} />}
+                headline={headline}
+                title={title}
+                subtitle={subtitle}
+                description={description}
+                detail={detail}
+                badge={withBadge ? 22 : undefined}
+                titleLinesMax={oneLineTitle ? 1 : 2}
+                subtitleLinesMax={oneLineSubtitle ? 1 : 2}
+                descriptionLinesMax={oneLineDescription ? 1 : 2}
+                extra={extra}
+                disabled={disabled}
+                danger={danger}
+                isInverse={isInverse}
+                {...getControlProps(row++)}
+            />
+            <RowComponent
+                asset={<Avatar size={40} initials="MS" />}
+                headline={headline}
+                title={title}
+                subtitle={subtitle}
+                description={description}
+                detail={detail}
+                badge={withBadge ? 22 : undefined}
+                titleLinesMax={oneLineTitle ? 1 : 2}
+                subtitleLinesMax={oneLineSubtitle ? 1 : 2}
+                descriptionLinesMax={oneLineDescription ? 1 : 2}
+                extra={extra}
+                disabled={disabled}
+                danger={danger}
+                isInverse={isInverse}
+                {...getControlProps(row++)}
+            />
+        </ListComponent>
+    );
+
+    const withLayout = (
+        <ResponsiveLayout isInverse={overInverse}>
+            {boxed ? list : <NegativeBox>{list}</NegativeBox>}
         </ResponsiveLayout>
     );
 
     return control.includes('radio') ? (
         <RadioGroup disabled={disabled} name="radio-group" defaultValue="apple" data-testid="radio-row-list">
-            {list}
+            {withLayout}
         </RadioGroup>
     ) : (
-        list
+        withLayout
     );
 };
 
