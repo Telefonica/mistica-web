@@ -62,6 +62,7 @@ export const useIsOsDarkModeEnabled = (): boolean => {
 type Props = {
     theme: ThemeConfig;
     as?: string;
+    withoutStyles?: boolean;
     children?: React.ReactNode;
 };
 
@@ -78,7 +79,7 @@ const sanitizeDimensions = (dimensions: ThemeConfig['dimensions']): Partial<Them
     };
 };
 
-const ThemeContextProvider: React.FC<Props> = ({theme, children, as}) => {
+const ThemeContextProvider: React.FC<Props> = ({theme, children, as, withoutStyles = false}) => {
     const nextAriaId = React.useRef(1);
     const getAriaId = React.useCallback((): string => `aria-id-hook-${nextAriaId.current++}`, []);
 
@@ -176,13 +177,18 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children, as}) => {
                                             <DialogRoot>
                                                 <SnackbarRoot>
                                                     {as ? (
-                                                        React.createElement(as, {style: themeVars}, children)
+                                                        React.createElement(
+                                                            as,
+                                                            {style: withoutStyles ? undefined : themeVars},
+                                                            children
+                                                        )
                                                     ) : (
                                                         <>
-                                                            {(process.env.NODE_ENV !== 'test' ||
-                                                                process.env.SSR_TEST) && (
-                                                                <style>{`:root {${themeVars}}`}</style>
-                                                            )}
+                                                            {!withoutStyles &&
+                                                                (process.env.NODE_ENV !== 'test' ||
+                                                                    process.env.SSR_TEST) && (
+                                                                    <style>{`:root {${themeVars}}`}</style>
+                                                                )}
                                                             {children}
                                                         </>
                                                     )}
