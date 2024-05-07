@@ -6,6 +6,7 @@ const colors: Colors = {
     appBarBackground: '',
     background: '',
     backgroundContainer: '',
+    backgroundContainerError: '',
     backgroundContainerHover: '',
     backgroundContainerPressed: '',
     backgroundContainerBrand: '',
@@ -63,6 +64,7 @@ const colors: Colors = {
     barTrack: '',
     loadingBar: '',
     loadingBarBackground: '',
+    textActivated: '',
 
     toggleAndroidInactive: '',
     toggleAndroidBackgroundActive: '',
@@ -88,6 +90,7 @@ const colors: Colors = {
     neutralMedium: '',
     neutralMediumInverse: '',
     promo: '',
+    textBrand: '',
 
     // STATES
     error: '',
@@ -100,6 +103,8 @@ const colors: Colors = {
     textPrimaryInverse: '',
     textSecondary: '',
     textSecondaryInverse: '',
+    textError: '',
+    textErrorInverse: '',
 
     // TEXT BUTTONS
     textButtonPrimary: '',

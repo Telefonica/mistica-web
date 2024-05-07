@@ -95,6 +95,7 @@ export const RATIO = {
 
 type CommonImageProps = {
     src: string;
+    srcSet?: string;
     /** defaults to empty string */
     alt?: string;
     children?: void;
@@ -139,6 +140,7 @@ export const ImageContent = React.forwardRef<HTMLImageElement, ImageProps>(
             dataAttributes,
             noBorderRadius,
             src,
+            srcSet,
             onError,
             onLoad,
             loadingFallback = true,
@@ -213,6 +215,7 @@ export const ImageContent = React.forwardRef<HTMLImageElement, ImageProps>(
                     }}
                     ref={combineRefs(imageRef, ref)}
                     src={src}
+                    srcSet={srcSet}
                     className={classnames(
                         borderRadiusStyle,
                         styles.image,

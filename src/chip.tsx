@@ -72,9 +72,10 @@ const Chip: React.FC<ChipProps> = (props: ChipProps) => {
     if (badge) {
         return (
             <Box
-                className={
-                    overAlternative ? styles.chipVariants.overAlternative : styles.chipVariants.default
-                }
+                className={classnames(
+                    overAlternative ? styles.chipVariants.overAlternative : styles.chipVariants.default,
+                    styles.chipWrapper
+                )}
                 paddingLeft={paddingLeft}
                 paddingRight={paddingIcon}
                 {...getPrefixedDataAttributes(dataAttributes, 'Chip')}
@@ -87,9 +88,10 @@ const Chip: React.FC<ChipProps> = (props: ChipProps) => {
     if (onClose) {
         return (
             <Box
-                className={
-                    overAlternative ? styles.chipVariants.overAlternative : styles.chipVariants.default
-                }
+                className={classnames(
+                    overAlternative ? styles.chipVariants.overAlternative : styles.chipVariants.default,
+                    styles.chipWrapper
+                )}
                 paddingLeft={paddingLeft}
                 paddingRight={paddingIcon}
                 {...getPrefixedDataAttributes(dataAttributes, 'Chip')}
@@ -111,7 +113,8 @@ const Chip: React.FC<ChipProps> = (props: ChipProps) => {
             </Box>
         );
     }
-    const isInteractive = active !== undefined || props.href || props.onPress || props.to;
+    const isTouchable = props.href || props.onPress || props.to;
+    const isInteractive = active !== undefined || isTouchable;
 
     const chipDataAttributes = {'component-name': 'Chip', ...dataAttributes};
 
@@ -119,6 +122,8 @@ const Chip: React.FC<ChipProps> = (props: ChipProps) => {
         <Box
             className={classnames(
                 styles.chipVariants[active ? 'active' : overAlternative ? 'overAlternative' : 'default'],
+                // If the chip is wrapped inside a BaseTouchable, we set inline-flex to the Touchable instead
+                isTouchable ? styles.wrappedContent : styles.chipWrapper,
                 {
                     [styles.chipInteractiveVariants[isDarkMode ? 'dark' : 'light']]: isInteractive,
                 }
@@ -131,9 +136,13 @@ const Chip: React.FC<ChipProps> = (props: ChipProps) => {
         </Box>
     );
 
-    if (props.onPress || props.to || props.href) {
+    if (isTouchable) {
         return (
-            <BaseTouchable {...props} className={styles.button} dataAttributes={chipDataAttributes}>
+            <BaseTouchable
+                {...props}
+                className={classnames(styles.chipWrapper, styles.button)}
+                dataAttributes={chipDataAttributes}
+            >
                 {renderContent()}
             </BaseTouchable>
         );

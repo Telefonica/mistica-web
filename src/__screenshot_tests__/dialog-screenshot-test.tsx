@@ -40,3 +40,26 @@ test('Select options are correctly positioned inside a dialog', async () => {
     const image = await page.screenshot({fullPage: true});
     expect(image).toMatchImageSnapshot();
 });
+
+test('Dialog optional elements are not displayed if not provided', async () => {
+    const page = await openStoryPage({
+        id: 'components-modals--dialog',
+        device: 'DESKTOP',
+        args: {
+            message: 'Message',
+            title: '',
+            subtitle: '',
+            onAccept: false,
+            onCancel: false,
+            link: false,
+            icon: false,
+            extra: false,
+        },
+    });
+
+    await (await screen.findByRole('button', {name: 'Open'})).click();
+    await screen.findByRole('dialog');
+
+    const image = await page.screenshot({fullPage: true});
+    expect(image).toMatchImageSnapshot();
+});

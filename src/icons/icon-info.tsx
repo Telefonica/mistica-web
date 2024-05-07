@@ -10,7 +10,7 @@ type Props = {
 
 const IconInfoO2 = ({size = 48}: Props): JSX.Element => {
     return (
-        <svg width={size} height={size} viewBox="0 0 64 64">
+        <svg role="presentation" width={size} height={size} viewBox="0 0 64 64">
             <g
                 stroke={vars.colors.brand}
                 fill={vars.colors.brand}
@@ -32,7 +32,7 @@ const IconInfoO2 = ({size = 48}: Props): JSX.Element => {
 
 const IconInfoDefault = ({size = 48}: Props): JSX.Element => {
     return (
-        <svg width={size} height={size} viewBox="0 0 64 64">
+        <svg role="presentation" width={size} height={size} viewBox="0 0 64 64">
             <g fill={vars.colors.brand}>
                 <path
                     fillRule="nonzero"

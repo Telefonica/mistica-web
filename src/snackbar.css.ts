@@ -32,7 +32,7 @@ export const wrapper = style([
         minWidth: 360,
         minHeight: 48,
         padding: `14px 16px`,
-        bottom: 24,
+        bottom: 40,
         zIndex: 1000, // above anything
         opacity: 0,
         transform: 'translateY(100px)',

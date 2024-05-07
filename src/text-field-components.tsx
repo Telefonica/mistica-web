@@ -53,7 +53,7 @@ export const Label: React.FC<LabelProps> = ({
     if (error && inputState !== 'default') {
         color = vars.colors.error;
     } else if (inputState === 'focused') {
-        color = vars.colors.controlActivated;
+        color = vars.colors.textActivated;
     }
 
     return (

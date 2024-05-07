@@ -376,11 +376,6 @@ export const slideshow = style([
     {
         overflowX: 'auto',
         scrollSnapType: 'x mandatory',
-        '@media': {
-            [mq.tabletOrSmaller]: {
-                margin: `0 calc(${responsiveLayoutSideMargin} * -1)`,
-            },
-        },
     },
 ]);
 
