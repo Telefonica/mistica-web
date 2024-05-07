@@ -18,6 +18,8 @@ import {
     IconTrashCanRegular,
     IconPauseFilled,
     IconPlayFilled,
+    ResponsiveLayout,
+    NegativeBox,
 } from '..';
 import usingVrImg from './images/using-vr.jpg';
 import laptopImg from './images/laptop.jpg';
@@ -49,6 +51,9 @@ export default {
             control: {type: 'select'},
         },
     },
+    parameters: {
+        fullScreen: true,
+    },
 };
 
 type Args = {
@@ -64,9 +69,11 @@ type Args = {
     oneLineDescription: boolean;
     extraContent: boolean;
     disabled: boolean;
+    danger: boolean;
+    overInverse: boolean;
 };
 
-const Template: StoryComponent<Args & {boxed?: boolean}> = ({
+const Template: StoryComponent<Args & {boxed?: boolean; isInverse?: boolean}> = ({
     boxed,
     headline,
     title,
@@ -80,6 +87,9 @@ const Template: StoryComponent<Args & {boxed?: boolean}> = ({
     oneLineDescription,
     extraContent,
     disabled,
+    overInverse,
+    isInverse,
+    danger,
 }) => {
     const extra = extraContent ? <Placeholder height={56} /> : undefined;
 
@@ -221,10 +231,12 @@ const Template: StoryComponent<Args & {boxed?: boolean}> = ({
                 descriptionLinesMax={oneLineDescription ? 1 : 2}
                 extra={extra}
                 disabled={disabled}
+                danger={danger}
+                isInverse={isInverse}
                 {...getControlProps(row++)}
             />
             <RowComponent
-                asset={<IconLikeFilled size={24} />}
+                asset={<IconLikeFilled size={24} color="currentColor" />}
                 headline={headline && <Tag type="promo">{headline}</Tag>}
                 title={title}
                 subtitle={subtitle}
@@ -236,6 +248,8 @@ const Template: StoryComponent<Args & {boxed?: boolean}> = ({
                 descriptionLinesMax={oneLineDescription ? 1 : 2}
                 extra={extra}
                 disabled={disabled}
+                danger={danger}
+                isInverse={isInverse}
                 {...getControlProps(row++)}
             />
             <RowComponent
@@ -255,6 +269,8 @@ const Template: StoryComponent<Args & {boxed?: boolean}> = ({
                 descriptionLinesMax={oneLineDescription ? 1 : 2}
                 extra={extra}
                 disabled={disabled}
+                danger={danger}
+                isInverse={isInverse}
                 {...getControlProps(row++)}
             />
             <RowComponent
@@ -270,6 +286,8 @@ const Template: StoryComponent<Args & {boxed?: boolean}> = ({
                 descriptionLinesMax={oneLineDescription ? 1 : 2}
                 extra={extra}
                 disabled={disabled}
+                danger={danger}
+                isInverse={isInverse}
                 {...getControlProps(row++)}
             />
             <RowComponent
@@ -285,6 +303,8 @@ const Template: StoryComponent<Args & {boxed?: boolean}> = ({
                 descriptionLinesMax={oneLineDescription ? 1 : 2}
                 extra={extra}
                 disabled={disabled}
+                danger={danger}
+                isInverse={isInverse}
                 {...getControlProps(row++)}
             />
             <RowComponent
@@ -300,6 +320,8 @@ const Template: StoryComponent<Args & {boxed?: boolean}> = ({
                 descriptionLinesMax={oneLineDescription ? 1 : 2}
                 extra={extra}
                 disabled={disabled}
+                danger={danger}
+                isInverse={isInverse}
                 {...getControlProps(row++)}
             />
             <RowComponent
@@ -315,6 +337,8 @@ const Template: StoryComponent<Args & {boxed?: boolean}> = ({
                 descriptionLinesMax={oneLineDescription ? 1 : 2}
                 extra={extra}
                 disabled={disabled}
+                danger={danger}
+                isInverse={isInverse}
                 {...getControlProps(row++)}
             />
             <RowComponent
@@ -330,6 +354,8 @@ const Template: StoryComponent<Args & {boxed?: boolean}> = ({
                 descriptionLinesMax={oneLineDescription ? 1 : 2}
                 extra={extra}
                 disabled={disabled}
+                danger={danger}
+                isInverse={isInverse}
                 {...getControlProps(row++)}
             />
             <RowComponent
@@ -345,17 +371,25 @@ const Template: StoryComponent<Args & {boxed?: boolean}> = ({
                 descriptionLinesMax={oneLineDescription ? 1 : 2}
                 extra={extra}
                 disabled={disabled}
+                danger={danger}
+                isInverse={isInverse}
                 {...getControlProps(row++)}
             />
         </ListComponent>
     );
 
+    const withLayout = (
+        <ResponsiveLayout isInverse={overInverse}>
+            {boxed ? list : <NegativeBox>{list}</NegativeBox>}
+        </ResponsiveLayout>
+    );
+
     return control.includes('radio') ? (
         <RadioGroup disabled={disabled} name="radio-group" defaultValue="apple" data-testid="radio-row-list">
-            {list}
+            {withLayout}
         </RadioGroup>
     ) : (
-        list
+        withLayout
     );
 };
 
@@ -372,12 +406,17 @@ const defaultArgs = {
     oneLineDescription: false,
     extraContent: false,
     disabled: false,
+    danger: false,
+    overInverse: false,
 };
 
 export const RowListStory: StoryComponent<Args> = (args) => <Template {...args} />;
 RowListStory.storyName = 'RowList';
 RowListStory.args = defaultArgs;
 
-export const BoxedRowListStory: StoryComponent<Args> = (args) => <Template boxed {...args} />;
+export const BoxedRowListStory: StoryComponent<Args & {isInverse: boolean}> = (args) => (
+    <Template boxed {...args} />
+);
 BoxedRowListStory.storyName = 'BoxedRowList';
-BoxedRowListStory.args = defaultArgs;
+BoxedRowListStory.args = {...defaultArgs, isInverse: false};
+BoxedRowListStory.argTypes = {danger: {if: {arg: 'isInverse', eq: false}}};
