@@ -1,3 +1,11 @@
+# [15.5.0](https://github.com/Telefonica/mistica-web/compare/v15.4.0...v15.5.0) (2024-05-07)
+
+
+### Features
+
+* **ResponsiveLayout, ResetResponsiveLayout, Hero, Slideshow:** refactor ResponsiveLayout and update components ([#1100](https://github.com/Telefonica/mistica-web/issues/1100)) ([7fc17d0](https://github.com/Telefonica/mistica-web/commit/7fc17d003f15a6cee11684901e0d718af49e3847))
+* **ThemeContextProvider:** withoutStyles prop, to avoid injecting styles ([#1114](https://github.com/Telefonica/mistica-web/issues/1114)) ([da98f68](https://github.com/Telefonica/mistica-web/commit/da98f68f08844316ae3adf2ae1540a963a303bdf))
+
 # [15.4.0](https://github.com/Telefonica/mistica-web/compare/v15.3.0...v15.4.0) (2024-05-06)
 
 

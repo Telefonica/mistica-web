@@ -15,6 +15,7 @@ import * as mediaStyles from './image.css';
 import {useDesktopContainerType} from './desktop-container-type-context';
 import {VIVO_NEW_SKIN} from './skins/constants';
 import {applyCssVars} from './utils/css';
+import {ResetResponsiveLayout} from './responsive-layout';
 
 import type {DesktopContainerType} from './desktop-container-type-context';
 import type {ByBreakpoint, DataAttributes} from './utils/types';
@@ -814,53 +815,55 @@ export const Slideshow = ({
 
     return (
         <SlideshowContext.Provider value={{withBullets: !!withBullets}}>
-            <div
-                className={styles.slideshowContainer}
-                {...getPrefixedDataAttributes(dataAttributes, 'SlideShow')}
-            >
-                <ThemeVariant isInverse={false}>
-                    <BaseTouchable
-                        className={styles.slideshowPrevArrowButton}
-                        aria-label={texts.carouselPrevButton}
-                        onPress={goPrev}
-                        disabled={!showPrevArrow}
-                    >
-                        <IconChevronLeftRegular />
-                    </BaseTouchable>
-                </ThemeVariant>
-                <div style={applyCssVars({[mediaStyles.vars.mediaBorderRadius]: '0px'})}>
-                    <div className={styles.slideshow} ref={carouselRef}>
-                        {items.map((item, index) => (
-                            <div
-                                key={index}
-                                className={styles.slideshowItem}
-                                style={{
-                                    scrollSnapStop: isAndroid(platformOverrides) ? 'always' : 'normal',
-                                }}
-                            >
-                                {item}
-                            </div>
-                        ))}
-                    </div>
-                </div>
-                <ThemeVariant isInverse={false}>
-                    <BaseTouchable
-                        className={styles.slideshowNextArrowButton}
-                        aria-label={texts.carouselNextButton}
-                        onPress={goNext}
-                        disabled={!showNextArrow}
-                    >
-                        <IconChevronRightRegular />
-                    </BaseTouchable>
-                </ThemeVariant>
-                {withBullets && items.length > 1 && (
-                    <ThemeVariant isInverse={inverseBullets}>
-                        <div className={styles.slideshowBullets}>
-                            <PageBullets {...bulletsProps} />
-                        </div>
+            <ResetResponsiveLayout skipDesktop>
+                <div
+                    className={styles.slideshowContainer}
+                    {...getPrefixedDataAttributes(dataAttributes, 'SlideShow')}
+                >
+                    <ThemeVariant isInverse={false}>
+                        <BaseTouchable
+                            className={styles.slideshowPrevArrowButton}
+                            aria-label={texts.carouselPrevButton}
+                            onPress={goPrev}
+                            disabled={!showPrevArrow}
+                        >
+                            <IconChevronLeftRegular />
+                        </BaseTouchable>
                     </ThemeVariant>
-                )}
-            </div>
+                    <div style={applyCssVars({[mediaStyles.vars.mediaBorderRadius]: '0px'})}>
+                        <div className={styles.slideshow} ref={carouselRef}>
+                            {items.map((item, index) => (
+                                <div
+                                    key={index}
+                                    className={styles.slideshowItem}
+                                    style={{
+                                        scrollSnapStop: isAndroid(platformOverrides) ? 'always' : 'normal',
+                                    }}
+                                >
+                                    {item}
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                    <ThemeVariant isInverse={false}>
+                        <BaseTouchable
+                            className={styles.slideshowNextArrowButton}
+                            aria-label={texts.carouselNextButton}
+                            onPress={goNext}
+                            disabled={!showNextArrow}
+                        >
+                            <IconChevronRightRegular />
+                        </BaseTouchable>
+                    </ThemeVariant>
+                    {withBullets && items.length > 1 && (
+                        <ThemeVariant isInverse={inverseBullets}>
+                            <div className={styles.slideshowBullets}>
+                                <PageBullets {...bulletsProps} />
+                            </div>
+                        </ThemeVariant>
+                    )}
+                </div>
+            </ResetResponsiveLayout>
         </SlideshowContext.Provider>
     );
 };
