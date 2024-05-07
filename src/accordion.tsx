@@ -275,14 +275,13 @@ interface BoxedAccordionItemProps extends AccordionItemContentProps {
     isInverse?: boolean;
 }
 
-export const BoxedAccordionItem = React.forwardRef<HTMLDivElement, BoxedAccordionItemProps>(
+export const BoxedAccordionItem = React.forwardRef<TouchableElement, BoxedAccordionItemProps>(
     ({dataAttributes, isInverse, ...props}, ref) => (
         <Boxed
             isInverse={isInverse}
-            ref={ref}
             dataAttributes={{'component-name': 'BoxedAccordionItem', ...dataAttributes}}
         >
-            <AccordionItemContent {...props} />
+            <AccordionItemContent {...props} ref={ref} />
         </Boxed>
     )
 );
