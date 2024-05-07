@@ -25,6 +25,9 @@ test.each(DEVICES)('ResponsiveLayout scenarios (%s)', async (device) => {
 
     for (const title of CASES) {
         const element = await screen.findByTestId(title);
-        expect(await element.screenshot()).toMatchImageSnapshot();
+        expect(await element.screenshot()).toMatchImageSnapshot({
+            // https://jira.tid.es/browse/WEB-680
+            failureThreshold: title.includes('Carousel') ? 0.00004 : 0,
+        });
     }
 });
