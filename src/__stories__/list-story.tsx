@@ -101,7 +101,7 @@ const Template: StoryComponent<Args & {boxed?: boolean; isInverse?: boolean}> = 
                 controlProps = {href: 'https://example.org', newTab: true};
                 break;
             case 'navigates without chevron':
-                controlProps = {href: 'https://example.org', newTab: true, right: null}; // right null removes the chevron
+                controlProps = {href: 'https://example.org', newTab: true, withChevron: false};
                 break;
             case 'switch':
                 controlProps = {switch: {defaultValue: true, onChange: () => {}}};

@@ -34,6 +34,8 @@ import type {TouchableElement} from './touchable';
 import type {DataAttributes, TrackingEvent} from './utils/types';
 import type {ExclusifyUnion} from './utils/utility-types';
 
+type Right = (({centerY}: {centerY: boolean}) => React.ReactNode) | React.ReactNode;
+
 interface CommonProps {
     children?: void; // no children allowed
     headline?: string | React.ReactNode;
@@ -53,9 +55,8 @@ interface CommonProps {
     disabled?: boolean;
     withChevron?: boolean;
     'aria-label'?: string;
+    right?: Right;
 }
-
-type Right = (({centerY}: {centerY: boolean}) => React.ReactNode) | React.ReactNode;
 
 const renderRight = (right: Right, centerY: boolean) => {
     if (typeof right === 'function') return right?.({centerY});
@@ -222,7 +223,7 @@ export const Content: React.FC<ContentProps> = ({
                     </div>
                 )}
 
-                {(type === 'chevron' || (type === 'custom' && withChevron)) && (
+                {type !== 'control' && type !== 'basic' && withChevron && (
                     <Box
                         paddingLeft={detail || type === 'custom' ? 4 : 0}
                         className={classNames(styles.center, {[styles.disabled]: disabled})}
@@ -245,9 +246,7 @@ type ControlProps = {
     onChange?: (checked: boolean) => void;
 };
 
-interface BasicRowContentProps extends CommonProps {
-    right?: Right;
-}
+type BasicRowContentProps = CommonProps;
 
 interface SwitchRowContentProps extends CommonProps {
     onPress?: (() => void) | undefined;
@@ -283,7 +282,6 @@ interface HrefRowContentProps extends CommonProps {
     newTab?: boolean;
     loadOnTop?: boolean;
     onNavigate?: () => void | Promise<void>;
-    right?: Right;
 }
 
 interface ToRowContentProps extends CommonProps {
@@ -292,13 +290,11 @@ interface ToRowContentProps extends CommonProps {
     fullPageOnWebView?: boolean;
     replace?: boolean;
     onNavigate?: () => void | Promise<void>;
-    right?: Right;
 }
 
 interface OnPressRowContentProps extends CommonProps {
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
     onPress: (() => void) | undefined;
-    right?: Right;
 }
 
 type RowContentProps = ExclusifyUnion<
@@ -375,6 +371,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
         role,
         extra,
         dataAttributes,
+        withChevron,
         'aria-label': ariaLabel,
     } = props;
 
@@ -392,6 +389,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
     const hasHoverInverse = !disabled && isInverse;
 
     const [isChecked, toggle] = useControlState(props.switch || props.checkbox || {});
+    const shouldRenderChevron = withChevron ?? (!!props.onPress || !!props.href || !!props.to);
 
     const renderContent = ({
         type,
@@ -431,14 +429,14 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
             }}
             labelId={labelId}
             disabled={disabled}
-            withChevron={!!props.onPress || !!props.href || !!props.to}
+            withChevron={shouldRenderChevron}
         />
     );
 
     const renderBaseTouchableContent = ({hidden, right}: {hidden?: boolean; right?: Right} = {}) => {
         let type: ContentProps['type'] = 'chevron';
 
-        if (right === null) {
+        if (right === null && !shouldRenderChevron) {
             type = 'basic';
         }
 
@@ -711,7 +709,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
         <Box paddingX={16} className={styles.rowContent} role={role} dataAttributes={dataAttributes}>
             {props.right
                 ? renderContent({type: 'custom', right: props.right})
-                : renderContent({type: 'basic'})}
+                : renderContent({type: shouldRenderChevron ? 'chevron' : 'basic'})}
         </Box>
     );
 });
