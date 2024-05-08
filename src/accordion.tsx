@@ -199,7 +199,7 @@ const AccordionItemContent = React.forwardRef<TouchableElement, AccordionItemCon
 );
 
 export const AccordionItem = React.forwardRef<TouchableElement, AccordionItemContentProps>(
-    ({dataAttributes, role = 'listitem', ...props}, ref) => (
+    ({dataAttributes, role, ...props}, ref) => (
         <div role={role} className={sprinkles({width: '100%'})}>
             <AccordionItemContent
                 {...props}
@@ -238,7 +238,7 @@ export const Accordion: React.FC<AccordionProps> = ({
     defaultIndex,
     onChange,
     singleOpen,
-    role = 'list',
+    role,
 }) => {
     const [indexList, toggle] = useAccordionState({
         value: index,
@@ -293,7 +293,7 @@ export const BoxedAccordion: React.FC<AccordionProps> = ({
     defaultIndex,
     onChange,
     singleOpen,
-    role = 'list',
+    role,
 }) => {
     const [indexList, toggle] = useAccordionState({
         value: index,
