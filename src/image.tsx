@@ -231,6 +231,10 @@ export const ImageContent = React.forwardRef<HTMLImageElement, ImageProps>(
                         onError?.();
                     }}
                     onLoad={onLoadHandler}
+                    // Sometimes Safari doesn't render images completely
+                    // https://stackoverflow.com/questions/58323768/ios-safari-images-not-rendering-fully-cut-off
+                    // https://www.tunetheweb.com/blog/what-does-the-image-decoding-attribute-actually-do/
+                    decoding="async"
                 />
                 {/* When using SSR, we render a small script that makes the img visible as soon as it finishes loading, without waiting for React client hydrate. */}
                 {/* Note that this <script> does nothing when rendering client side (the browser only execute scripts injected inside <head>), it's only executed when the browser receives the SSRed html */}
