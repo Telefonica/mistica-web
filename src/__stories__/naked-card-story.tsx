@@ -87,7 +87,7 @@ export const Default: StoryComponent<Args> = ({
         <ButtonLink href="https://google.com">Link</ButtonLink>
     ) : undefined;
 
-    const onPress = actions.includes('press') ? () => null : undefined;
+    const onPress = actions.includes('press') ? () => {} : undefined;
 
     const interactiveActions = onPress
         ? {onPress}
@@ -219,7 +219,7 @@ export const Small: StoryComponent<SmallArgs> = ({
                     title={title}
                     subtitle={subtitle}
                     description={description}
-                    onPress={touchable ? () => null : undefined}
+                    onPress={touchable ? () => {} : undefined}
                     extra={withExtra ? <Placeholder /> : undefined}
                 />
             </Box>

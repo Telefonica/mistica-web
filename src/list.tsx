@@ -71,6 +71,7 @@ interface ContentProps extends CommonProps {
     isClickable?: boolean;
     type?: 'chevron' | 'basic' | 'custom' | 'control';
     right?: Right;
+    danger?: boolean;
     headlineRef?: React.Ref<HTMLDivElement>;
     extraRef?: React.Ref<HTMLDivElement>;
     /** This id is to link the title with the related control */
@@ -91,6 +92,7 @@ export const Content: React.FC<ContentProps> = ({
     descriptionLinesMax,
     detail,
     asset,
+    danger,
     type = 'basic',
     badge,
     right,
@@ -124,6 +126,13 @@ export const Content: React.FC<ContentProps> = ({
                     <div
                         className={styles.asset}
                         style={applyCssVars({
+                            color: danger
+                                ? isInverse
+                                    ? vars.colors.textErrorInverse
+                                    : vars.colors.textError
+                                : isInverse
+                                ? vars.colors.textPrimaryInverse
+                                : vars.colors.textPrimary,
                             [mediaStyles.vars.mediaBorderRadius]: vars.borderRadii.mediaSmall,
                         })}
                     >
@@ -138,7 +147,7 @@ export const Content: React.FC<ContentProps> = ({
             >
                 <Text3
                     regular
-                    color={vars.colors.textPrimary}
+                    color={danger ? vars.colors.textError : vars.colors.textPrimary}
                     truncate={titleLinesMax}
                     hyphens="auto"
                     as={titleAs}
@@ -272,6 +281,8 @@ interface HrefRowContentProps extends CommonProps {
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
     href: string | undefined;
     newTab?: boolean;
+    loadOnTop?: boolean;
+    onNavigate?: () => void | Promise<void>;
     right?: Right;
 }
 
@@ -280,6 +291,7 @@ interface ToRowContentProps extends CommonProps {
     to: string | undefined;
     fullPageOnWebView?: boolean;
     replace?: boolean;
+    onNavigate?: () => void | Promise<void>;
     right?: Right;
 }
 
@@ -298,7 +310,7 @@ type RowContentProps = ExclusifyUnion<
     | HrefRowContentProps
     | ToRowContentProps
     | OnPressRowContentProps
->;
+> & {danger?: boolean};
 
 const useControlState = ({
     value,
@@ -358,6 +370,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
         description,
         descriptionLinesMax,
         detail,
+        danger,
         badge,
         role,
         extra,
@@ -406,6 +419,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
             subtitleLinesMax={subtitleLinesMax}
             descriptionLinesMax={descriptionLinesMax}
             detail={detail}
+            danger={danger}
             type={type}
             right={right}
             extra={extra}
@@ -478,6 +492,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
                 trackingEvent={props.trackingEvent}
                 to={props.to}
                 fullPageOnWebView={props.fullPageOnWebView}
+                onNavigate={props.onNavigate}
                 role={role}
                 dataAttributes={dataAttributes}
                 disabled={disabled}
@@ -500,6 +515,8 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
                 trackingEvent={props.trackingEvent}
                 href={props.href}
                 newTab={props.newTab}
+                onNavigate={props.onNavigate}
+                loadOnTop={props.loadOnTop}
                 role={role}
                 dataAttributes={dataAttributes}
                 disabled={disabled}
@@ -742,28 +759,32 @@ export const RowList: React.FC<RowListProps> = ({
     );
 };
 
-interface CommonBoxedRowProps {
-    isInverse?: boolean;
-}
-interface BasicBoxedRowProps extends BasicRowContentProps, CommonBoxedRowProps {}
-interface SwitchBoxedRowProps extends SwitchRowContentProps, CommonBoxedRowProps {}
-interface CheckboxBoxedRowProps extends CheckboxRowContentProps, CommonBoxedRowProps {}
-interface RadioBoxedRowProps extends RadioRowContentProps, CommonBoxedRowProps {}
-interface IconButtonBoxedRowProps extends IconButtonRowContentProps, CommonBoxedRowProps {}
-interface HrefBoxedRowProps extends HrefRowContentProps, CommonBoxedRowProps {}
-interface ToBoxedRowProps extends ToRowContentProps, CommonBoxedRowProps {}
-interface OnPressBoxedRowProps extends OnPressRowContentProps, CommonBoxedRowProps {}
+// danger + isInverse is not allowed
+type CommonBoxedRowProps =
+    | {
+          danger: true;
+          isInverse?: false;
+      }
+    | {
+          isInverse?: boolean;
+          danger?: false;
+      }
+    | {
+          isInverse?: false;
+          danger: boolean;
+      };
 
 type BoxedRowProps = ExclusifyUnion<
-    | BasicBoxedRowProps
-    | SwitchBoxedRowProps
-    | RadioBoxedRowProps
-    | IconButtonBoxedRowProps
-    | CheckboxBoxedRowProps
-    | HrefBoxedRowProps
-    | ToBoxedRowProps
-    | OnPressBoxedRowProps
->;
+    | BasicRowContentProps
+    | SwitchRowContentProps
+    | RadioRowContentProps
+    | IconButtonRowContentProps
+    | CheckboxRowContentProps
+    | HrefRowContentProps
+    | ToRowContentProps
+    | OnPressRowContentProps
+> &
+    CommonBoxedRowProps;
 
 export const BoxedRow = React.forwardRef<HTMLDivElement, BoxedRowProps>(({dataAttributes, ...props}, ref) => (
     <Boxed

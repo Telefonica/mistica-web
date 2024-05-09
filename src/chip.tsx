@@ -13,8 +13,9 @@ import {getPrefixedDataAttributes} from './utils/dom';
 import {useThemeVariant} from './theme-variant-context';
 import Touchable, {BaseTouchable} from './touchable';
 
+import type {TouchableComponentProps} from './touchable';
 import type {ExclusifyUnion} from './utils/utility-types';
-import type {DataAttributes, IconProps, TrackingEvent} from './utils/types';
+import type {DataAttributes, IconProps} from './utils/types';
 
 interface SimpleChipProps {
     children: string;
@@ -32,30 +33,9 @@ interface ToggleChipProps extends SimpleChipProps {
     active: boolean;
 }
 
-interface HrefChipProps extends SimpleChipProps {
-    trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
-    href: string;
-    newTab?: boolean;
-    active?: boolean;
-}
+type ClickableChipProps = TouchableComponentProps<SimpleChipProps & {active?: boolean}>;
 
-interface ToChipProps extends SimpleChipProps {
-    trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
-    to: string;
-    fullPageOnWebView?: boolean;
-    replace?: boolean;
-    active?: boolean;
-}
-
-interface OnPressChipProps extends SimpleChipProps {
-    trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
-    onPress: () => void;
-    active?: boolean;
-}
-
-type ClickableChipProps = ExclusifyUnion<HrefChipProps | ToChipProps | OnPressChipProps>;
-
-type ChipProps = ExclusifyUnion<SimpleChipProps | ClosableChipProps | ToggleChipProps | ClickableChipProps>;
+type ChipProps = ExclusifyUnion<ClosableChipProps | ToggleChipProps | ClickableChipProps>;
 
 const Chip: React.FC<ChipProps> = (props: ChipProps) => {
     const {Icon, children, id, dataAttributes, active, badge, onClose} = props;
@@ -133,7 +113,8 @@ const Chip: React.FC<ChipProps> = (props: ChipProps) => {
             </Box>
         );
     }
-    const isInteractive = active !== undefined || props.href || props.onPress || props.to;
+    const isTouchable = props.href || props.onPress || props.to;
+    const isInteractive = active !== undefined || isTouchable;
 
     const chipDataAttributes = {'component-name': 'Chip', ...dataAttributes};
 
@@ -142,7 +123,7 @@ const Chip: React.FC<ChipProps> = (props: ChipProps) => {
             className={classnames(
                 styles.chipVariants[active ? 'active' : overAlternative ? 'overAlternative' : 'default'],
                 // If the chip is wrapped inside a BaseTouchable, we set inline-flex to the Touchable instead
-                props.href || props.onPress || props.to ? styles.wrappedContent : styles.chipWrapper,
+                isTouchable ? styles.wrappedContent : styles.chipWrapper,
                 {
                     [styles.chipInteractiveVariants[isDarkMode ? 'dark' : 'light']]: isInteractive,
                 }
@@ -155,41 +136,12 @@ const Chip: React.FC<ChipProps> = (props: ChipProps) => {
         </Box>
     );
 
-    if (props.onPress) {
+    if (isTouchable) {
         return (
             <BaseTouchable
+                {...props}
                 className={classnames(styles.chipWrapper, styles.button)}
-                trackingEvent={props.trackingEvent}
-                onPress={props.onPress}
                 dataAttributes={chipDataAttributes}
-            >
-                {renderContent()}
-            </BaseTouchable>
-        );
-    }
-
-    if (props.to) {
-        return (
-            <BaseTouchable
-                trackingEvent={props.trackingEvent}
-                to={props.to}
-                fullPageOnWebView={props.fullPageOnWebView}
-                dataAttributes={chipDataAttributes}
-                className={styles.chipWrapper}
-            >
-                {renderContent()}
-            </BaseTouchable>
-        );
-    }
-
-    if (props.href) {
-        return (
-            <BaseTouchable
-                trackingEvent={props.trackingEvent}
-                href={props.href}
-                newTab={props.newTab}
-                dataAttributes={chipDataAttributes}
-                className={styles.chipWrapper}
             >
                 {renderContent()}
             </BaseTouchable>

@@ -10,21 +10,20 @@ import * as styles from './highlighted-card.css';
 import {vars} from './skins/skin-contract.css';
 import {useTheme} from './hooks';
 
+import type {ExclusifyUnion} from './utils/utility-types';
+import type {TouchableComponentProps} from './touchable';
 import type {ButtonLink, NullableButtonElement} from './button';
 import type {DataAttributes, RendersNullableElement, TrackingEvent} from './utils/types';
 
+// At least one of title or description is required
 type TextProps =
     | {
-          title?: undefined;
+          title?: string;
           description: string;
       }
     | {
           title: string;
-          description?: undefined;
-      }
-    | {
-          title: string;
-          description: string;
+          description?: string;
       };
 
 type CommonProps = TextProps & {
@@ -42,51 +41,27 @@ type CommonProps = TextProps & {
     dataAttributes?: DataAttributes;
 };
 
-type BasicProps = CommonProps & {
-    button?: undefined;
-    onPress?: undefined;
-    to?: undefined;
-    href?: undefined;
-};
-
 type ButtonProps = CommonProps & {
-    button?: NullableButtonElement | RendersNullableElement<typeof ButtonLink>;
-    onPress?: undefined;
-    to?: undefined;
-    href?: undefined;
+    button: NullableButtonElement | RendersNullableElement<typeof ButtonLink> | undefined;
 };
 
-type HrefProps = CommonProps & {
-    href?: string;
-    newTab?: boolean;
-    onPress?: undefined;
-    to?: undefined;
-    button?: undefined;
-    fullPageOnWebView?: undefined;
-};
+type TouchableCardProps = TouchableComponentProps<CommonProps>;
 
-type ToProps = CommonProps & {
-    to?: string;
-    fullPageOnWebView?: boolean;
-    href?: undefined;
-    onPress?: undefined;
-    button?: undefined;
-    newTab?: undefined;
-};
-
-type OnPressProps = CommonProps & {
-    onPress?: () => void;
-    href?: undefined;
-    to?: undefined;
-    button?: undefined;
-    newTab?: undefined;
-    fullPageOnWebView?: undefined;
-};
-
-type Props = BasicProps | ButtonProps | HrefProps | ToProps | OnPressProps;
+type Props = ExclusifyUnion<ButtonProps | TouchableCardProps>;
 
 const Content = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
-    const {title, description, imageUrl, imageFit, titleAs = 'h3'} = props;
+    const {
+        title,
+        description,
+        imageUrl,
+        imageFit,
+        titleAs = 'h3',
+        width,
+        dataAttributes,
+        titleLinesMax,
+        descriptionLinesMax,
+        ...restProps
+    } = props;
     const isInverseOutside = useIsInverseVariant();
     const isInverse = props.isInverse ?? isInverseOutside;
     const isDismissable = useIsDismissable();
@@ -97,8 +72,8 @@ const Content = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
             ref={ref}
             isInverse={isInverse}
             className={styles.container}
-            dataAttributes={{'component-name': 'HighlightedCard', ...props.dataAttributes}}
-            width={props.width ? `${props.width}px` : '100%'}
+            dataAttributes={{'component-name': 'HighlightedCard', ...dataAttributes}}
+            width={width ? `${width}px` : '100%'}
             minHeight="100%"
         >
             <div
@@ -106,7 +81,7 @@ const Content = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
                 role={!isDismissable ? 'region' : undefined}
                 className={styles.textContainerVariant[imageUrl ? 'withImage' : 'withoutImage']}
                 // aria-label is already in Dismisable wrapper
-                aria-label={!isDismissable ? props['aria-label'] : undefined}
+                aria-label={!isDismissable ? restProps['aria-label'] : undefined}
             >
                 <Stack space={8}>
                     {!!title && (
@@ -115,7 +90,7 @@ const Content = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
                             mobileLineHeight="24px"
                             desktopSize={20}
                             desktopLineHeight="28px"
-                            truncate={props.titleLinesMax}
+                            truncate={titleLinesMax}
                             weight={textPresets.cardTitle.weight}
                             as={titleAs}
                             hyphens="auto"
@@ -127,7 +102,7 @@ const Content = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
                         <Text2
                             regular
                             color={vars.colors.textSecondary}
-                            truncate={props.descriptionLinesMax}
+                            truncate={descriptionLinesMax}
                             as="p"
                             hyphens="auto"
                         >
@@ -135,10 +110,10 @@ const Content = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
                         </Text2>
                     )}
                 </Stack>
-                {props.button && (
+                {restProps.button && (
                     <>
                         <div style={{minHeight: 16, flexGrow: 1}} />
-                        {props.button}
+                        {restProps.button}
                     </>
                 )}
             </div>
@@ -159,40 +134,13 @@ const Content = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
         </Boxed>
     );
 
-    if (props.button) {
+    if (restProps.button) {
         return content;
     }
-    if (props.onPress) {
+
+    if (restProps.onPress || restProps.to || restProps.href) {
         return (
-            <BaseTouchable
-                onPress={props.onPress}
-                trackingEvent={props.trackingEvent}
-                className={styles.touchableContainer}
-            >
-                {content}
-            </BaseTouchable>
-        );
-    }
-    if (props.to) {
-        return (
-            <BaseTouchable
-                to={props.to}
-                trackingEvent={props.trackingEvent}
-                fullPageOnWebView={props.fullPageOnWebView}
-                className={styles.touchableContainer}
-            >
-                {content}
-            </BaseTouchable>
-        );
-    }
-    if (props.href) {
-        return (
-            <BaseTouchable
-                trackingEvent={props.trackingEvent}
-                href={props.href}
-                newTab={props.newTab}
-                className={styles.touchableContainer}
-            >
+            <BaseTouchable {...restProps} className={styles.touchableContainer}>
                 {content}
             </BaseTouchable>
         );
