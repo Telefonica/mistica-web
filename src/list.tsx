@@ -30,9 +30,11 @@ import {IconButton, ToggleIconButton} from './icon-button';
 import {sprinkles} from '../src/sprinkles.css';
 
 import type {IconButtonProps, ToggleIconButtonProps} from './icon-button';
-import type {TouchableElement} from './touchable';
+import type {TouchableElement, TouchableProps} from './touchable';
 import type {DataAttributes, TrackingEvent} from './utils/types';
 import type {ExclusifyUnion} from './utils/utility-types';
+
+type Right = (({centerY}: {centerY: boolean}) => React.ReactNode) | React.ReactNode;
 
 interface CommonProps {
     children?: void; // no children allowed
@@ -53,9 +55,8 @@ interface CommonProps {
     disabled?: boolean;
     withChevron?: boolean;
     'aria-label'?: string;
+    right?: Right;
 }
-
-type Right = (({centerY}: {centerY: boolean}) => React.ReactNode) | React.ReactNode;
 
 const renderRight = (right: Right, centerY: boolean) => {
     if (typeof right === 'function') return right?.({centerY});
@@ -68,9 +69,6 @@ const renderRight = (right: Right, centerY: boolean) => {
 };
 
 interface ContentProps extends CommonProps {
-    isClickable?: boolean;
-    type?: 'chevron' | 'basic' | 'custom' | 'control';
-    right?: Right;
     danger?: boolean;
     headlineRef?: React.Ref<HTMLDivElement>;
     extraRef?: React.Ref<HTMLDivElement>;
@@ -93,7 +91,6 @@ export const Content: React.FC<ContentProps> = ({
     detail,
     asset,
     danger,
-    type = 'basic',
     badge,
     right,
     extra,
@@ -104,25 +101,10 @@ export const Content: React.FC<ContentProps> = ({
     const numTextLines = [headline, title, subtitle, description, extra].filter(Boolean).length;
     const centerY = numTextLines === 1;
 
-    const renderBadge = () => {
-        if (!badge) {
-            return null;
-        }
-        return (
-            <Box paddingLeft={16}>
-                <div className={classNames(styles.center, styles.badge, {[styles.disabled]: disabled})}>
-                    {badge === true ? <Badge /> : <Badge value={badge} />}
-                </div>
-            </Box>
-        );
-    };
     return (
-        <Box paddingY={16} className={styles.content}>
+        <Box paddingY={16} className={classNames(styles.content, {[styles.disabled]: disabled})}>
             {asset && (
-                <Box
-                    paddingRight={16}
-                    className={classNames({[styles.center]: centerY, [styles.disabled]: disabled})}
-                >
+                <Box paddingRight={16} className={classNames({[styles.center]: centerY})}>
                     <div
                         className={styles.asset}
                         style={applyCssVars({
@@ -140,8 +122,9 @@ export const Content: React.FC<ContentProps> = ({
                     </div>
                 </Box>
             )}
+
             <div
-                className={classNames(styles.rowBody, {[styles.disabled]: disabled})}
+                className={styles.rowBody}
                 style={{justifyContent: centerY ? 'center' : 'flex-start'}}
                 id={labelId}
             >
@@ -192,48 +175,40 @@ export const Content: React.FC<ContentProps> = ({
                 )}
             </div>
 
-            {renderBadge()}
-
-            <div
-                className={classNames({
-                    [styles.right]: !!detail || type !== 'basic',
-                    [styles.rightRestrictedWidth]: !!detail,
-                })}
-            >
-                {detail && (
-                    <div className={classNames(styles.center, styles.detail, {[styles.disabled]: disabled})}>
-                        <Text2 regular color={vars.colors.textSecondary} hyphens="auto">
-                            {detail}
-                        </Text2>
+            {badge && (
+                <Box paddingLeft={16}>
+                    <div className={classNames(styles.badge)}>
+                        <Badge value={badge === true ? undefined : badge} />
                     </div>
-                )}
+                </Box>
+            )}
 
-                {type === 'control' && (
-                    <div className={classNames({[styles.detailRight]: !!detail})}>
-                        {renderRight(right, centerY)}
-                    </div>
-                )}
+            {(detail || right || withChevron) && (
+                <div className={styles.rightContent}>
+                    {detail && (
+                        <div className={styles.detail}>
+                            <Text2 regular color={vars.colors.textSecondary} hyphens="auto">
+                                {detail}
+                            </Text2>
+                        </div>
+                    )}
 
-                {type === 'custom' && (
-                    <div
-                        className={classNames({[styles.detailRight]: !!detail, [styles.disabled]: disabled})}
-                    >
-                        {renderRight(right, centerY)}
-                    </div>
-                )}
+                    {right && (
+                        <div className={classNames({[styles.detailRight]: !!detail})}>
+                            {renderRight(right, centerY)}
+                        </div>
+                    )}
 
-                {(type === 'chevron' || (type === 'custom' && withChevron)) && (
-                    <Box
-                        paddingLeft={detail || type === 'custom' ? 4 : 0}
-                        className={classNames(styles.center, {[styles.disabled]: disabled})}
-                    >
-                        <IconChevron
-                            color={isInverse ? vars.colors.inverse : vars.colors.neutralMedium}
-                            direction="right"
-                        />
-                    </Box>
-                )}
-            </div>
+                    {withChevron && (
+                        <Box paddingLeft={detail || right ? 4 : 0} className={classNames(styles.center)}>
+                            <IconChevron
+                                color={isInverse ? vars.colors.inverse : vars.colors.neutralMedium}
+                                direction="right"
+                            />
+                        </Box>
+                    )}
+                </div>
+            )}
         </Box>
     );
 };
@@ -245,9 +220,7 @@ type ControlProps = {
     onChange?: (checked: boolean) => void;
 };
 
-interface BasicRowContentProps extends CommonProps {
-    right?: Right;
-}
+type BasicRowContentProps = CommonProps;
 
 interface SwitchRowContentProps extends CommonProps {
     onPress?: (() => void) | undefined;
@@ -283,7 +256,6 @@ interface HrefRowContentProps extends CommonProps {
     newTab?: boolean;
     loadOnTop?: boolean;
     onNavigate?: () => void | Promise<void>;
-    right?: Right;
 }
 
 interface ToRowContentProps extends CommonProps {
@@ -292,13 +264,11 @@ interface ToRowContentProps extends CommonProps {
     fullPageOnWebView?: boolean;
     replace?: boolean;
     onNavigate?: () => void | Promise<void>;
-    right?: Right;
 }
 
 interface OnPressRowContentProps extends CommonProps {
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
     onPress: (() => void) | undefined;
-    right?: Right;
 }
 
 type RowContentProps = ExclusifyUnion<
@@ -328,32 +298,20 @@ const useControlState = ({
         if (!isControlledByParent) {
             setIsChecked(!isChecked);
         }
-        if (onChange) {
-            onChange(isControlledByParent ? !value : !isChecked);
-        }
+        onChange?.(isControlledByParent ? !value : !isChecked);
     };
 
-    if (isControlledByParent) {
-        return [!!value, toggle];
-    }
-
-    return [isChecked, toggle];
+    return [isControlledByParent ? !!value : isChecked, toggle];
 };
 
-const areSwitchRowContentProps = (obj: any): obj is SwitchRowContentProps => {
-    return obj.switch !== undefined;
-};
-
-const areCheckboxRowContentProps = (obj: any): obj is CheckboxRowContentProps => {
-    return obj.checkbox !== undefined;
-};
-
-const areRadioRowContentProps = (obj: any): obj is RadioRowContentProps => {
-    return obj.radioValue !== undefined;
-};
-
-const areIconButtonRowContentProps = (obj: any): obj is IconButtonRowContentProps => {
-    return obj.iconButton !== undefined;
+const hasControlProps = (
+    obj: any
+): obj is
+    | SwitchRowContentProps
+    | CheckboxRowContentProps
+    | RadioRowContentProps
+    | IconButtonRowContentProps => {
+    return ['switch', 'checkbox', 'radioValue', 'iconButton'].some((prop) => obj[prop] !== undefined);
 };
 
 const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, ref) => {
@@ -374,8 +332,9 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
         badge,
         role,
         extra,
+        withChevron,
         dataAttributes,
-        'aria-label': ariaLabel,
+        'aria-label': ariaLabelProp,
     } = props;
 
     const [headlineText, setHeadlineText] = React.useState<string>('');
@@ -386,22 +345,33 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
         .filter(Boolean)
         .join(' ');
 
+    const ariaLabel = ariaLabelProp ?? (props.href || props.to) ? computedAriaLabelForLink : undefined;
+
     const radioContext = useRadioContext();
     const disabled = props.disabled || (props.radioValue !== undefined && radioContext.disabled);
     const hasHoverDefault = !disabled && !isInverse;
     const hasHoverInverse = !disabled && isInverse;
+    const hasControl = hasControlProps(props);
+    const isInteractive = !!props.onPress || !!props.href || !!props.to;
+    const hasChevron = hasControl ? false : withChevron ?? isInteractive;
+
+    const interactiveProps = {
+        href: props.href,
+        newTab: props.newTab,
+        loadOnTop: props.loadOnTop,
+
+        to: props.to,
+        fullPageOnWebView: props.fullPageOnWebView,
+        replace: props.replace,
+
+        onNavigate: props.onNavigate,
+        onPress: props.onPress,
+        trackingEvent: props.trackingEvent,
+    } as unknown as TouchableProps;
 
     const [isChecked, toggle] = useControlState(props.switch || props.checkbox || {});
 
-    const renderContent = ({
-        type,
-        right,
-        labelId,
-    }: {
-        type: ContentProps['type'];
-        right?: ContentProps['right'];
-        labelId?: string;
-    }) => (
+    const renderContent = ({right, labelId}: {right?: Right; labelId?: string}) => (
         <Content
             asset={asset}
             headline={headline}
@@ -420,7 +390,6 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
             descriptionLinesMax={descriptionLinesMax}
             detail={detail}
             danger={danger}
-            type={type}
             right={right}
             extra={extra}
             extraRef={(node) => {
@@ -431,35 +400,11 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
             }}
             labelId={labelId}
             disabled={disabled}
-            withChevron={!!props.onPress || !!props.href || !!props.to}
+            withChevron={hasChevron}
         />
     );
 
-    const renderBaseTouchableContent = ({hidden, right}: {hidden?: boolean; right?: Right} = {}) => {
-        let type: ContentProps['type'] = 'chevron';
-
-        if (right === null) {
-            type = 'basic';
-        }
-
-        if (right) {
-            type = 'custom';
-        }
-
-        return (
-            <Box paddingX={16} aria-hidden={hidden || undefined}>
-                {renderContent({type, right})}
-            </Box>
-        );
-    };
-
-    if (
-        props.onPress &&
-        !areSwitchRowContentProps(props) &&
-        !areCheckboxRowContentProps(props) &&
-        !areRadioRowContentProps(props) &&
-        !areIconButtonRowContentProps(props)
-    ) {
+    if (isInteractive && !hasControl) {
         return (
             <BaseTouchable
                 ref={ref}
@@ -468,61 +413,15 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
                     [styles.touchableBackgroundInverse]: hasHoverInverse,
                     [styles.pointer]: !disabled,
                 })}
-                trackingEvent={props.trackingEvent}
-                onPress={props.onPress}
+                {...interactiveProps}
                 role={role}
                 dataAttributes={dataAttributes}
                 disabled={disabled}
                 aria-label={ariaLabel}
             >
-                {renderBaseTouchableContent({right: props.right})}
-            </BaseTouchable>
-        );
-    }
-
-    if (props.to) {
-        return (
-            <BaseTouchable
-                ref={ref}
-                className={classNames(styles.rowContent, {
-                    [styles.touchableBackground]: hasHoverDefault,
-                    [styles.touchableBackgroundInverse]: hasHoverInverse,
-                    [styles.pointer]: !disabled,
-                })}
-                trackingEvent={props.trackingEvent}
-                to={props.to}
-                fullPageOnWebView={props.fullPageOnWebView}
-                onNavigate={props.onNavigate}
-                role={role}
-                dataAttributes={dataAttributes}
-                disabled={disabled}
-                aria-label={ariaLabel ?? computedAriaLabelForLink}
-            >
-                {renderBaseTouchableContent({right: props.right, hidden: true})}
-            </BaseTouchable>
-        );
-    }
-
-    if (props.href) {
-        return (
-            <BaseTouchable
-                ref={ref}
-                className={classNames(styles.rowContent, {
-                    [styles.touchableBackground]: hasHoverDefault,
-                    [styles.touchableBackgroundInverse]: hasHoverInverse,
-                    [styles.pointer]: !disabled,
-                })}
-                trackingEvent={props.trackingEvent}
-                href={props.href}
-                newTab={props.newTab}
-                onNavigate={props.onNavigate}
-                loadOnTop={props.loadOnTop}
-                role={role}
-                dataAttributes={dataAttributes}
-                disabled={disabled}
-                aria-label={ariaLabel ?? computedAriaLabelForLink}
-            >
-                {renderBaseTouchableContent({right: props.right, hidden: true})}
+                <Box paddingX={16} aria-hidden={!!props.to || !!props.href || undefined}>
+                    {renderContent({right: props.right})}
+                </Box>
             </BaseTouchable>
         );
     }
@@ -544,7 +443,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
                     })}
                     aria-label={ariaLabel}
                 >
-                    {renderContent({type: 'basic', labelId: titleId})}
+                    {renderContent({labelId: titleId})}
                 </BaseTouchable>
                 <div className={styles.dualActionDivider} />
 
@@ -579,7 +478,6 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
                         <Box paddingX={16} role={role}>
                             {renderContent({
                                 labelId,
-                                type: 'control',
                                 right: () => <Stack space="around">{controlElement}</Stack>,
                             })}
                         </Box>
@@ -612,7 +510,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
                     })}
                     aria-label={ariaLabel}
                 >
-                    {renderContent({type: 'basic', labelId: titleId})}
+                    {renderContent({labelId: titleId})}
                 </BaseTouchable>
                 <div className={styles.dualActionDivider} />
                 <Box padding={16}>
@@ -630,7 +528,6 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
                 <Box paddingX={16}>
                     {renderContent({
                         labelId: titleId,
-                        type: 'control',
                         right: (
                             <Stack space="around">
                                 {props.iconButton.Icon ? (
@@ -663,7 +560,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
                     })}
                     aria-label={ariaLabel}
                 >
-                    {renderContent({type: 'basic', labelId: titleId})}
+                    {renderContent({labelId: titleId})}
                 </BaseTouchable>
                 <div className={styles.dualActionDivider} />
                 <RadioButton
@@ -697,7 +594,6 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
                         <Box paddingX={16}>
                             {renderContent({
                                 labelId: titleId,
-                                type: 'control',
                                 right: () => <Stack space="around">{controlElement}</Stack>,
                             })}
                         </Box>
@@ -709,9 +605,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
 
     return (
         <Box paddingX={16} className={styles.rowContent} role={role} dataAttributes={dataAttributes}>
-            {props.right
-                ? renderContent({type: 'custom', right: props.right})
-                : renderContent({type: 'basic'})}
+            {renderContent({right: props.right})}
         </Box>
     );
 });

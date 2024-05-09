@@ -81,12 +81,15 @@ export const center = sprinkles({
     alignItems: 'center',
 });
 
-export const badge = sprinkles({
-    justifyContent: 'center',
-    minWidth: 16,
-    height: '100%',
-    flexShrink: 0,
-});
+export const badge = style([
+    center,
+    sprinkles({
+        justifyContent: 'center',
+        minWidth: 16,
+        height: '100%',
+        flexShrink: 0,
+    }),
+]);
 
 export const control = style([
     sprinkles({
@@ -101,11 +104,10 @@ export const control = style([
     },
 ]);
 
-export const right = style({display: 'flex', marginLeft: 16});
-export const rightRestrictedWidth = style({maxWidth: '40%'});
+export const rightContent = style({display: 'flex', marginLeft: 16, maxWidth: '40%'});
 
 export const detailRight = style({paddingLeft: 8});
-export const detail = style({textAlign: 'right'});
+export const detail = style([center, {textAlign: 'right'}]);
 
 export const centeredControl = sprinkles({
     display: 'flex',
