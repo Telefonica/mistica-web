@@ -1,3 +1,16 @@
+# [15.6.0](https://github.com/Telefonica/mistica-web/compare/v15.5.0...v15.6.0) (2024-05-09)
+
+
+### Bug Fixes
+
+* **AdvancedDataCard:** minHeight issues caused by [#1102](https://github.com/Telefonica/mistica-web/issues/1102) ([#1118](https://github.com/Telefonica/mistica-web/issues/1118)) ([5ff819f](https://github.com/Telefonica/mistica-web/commit/5ff819f12a20089b1c49dfbbf486f2a49eea75ae))
+* **Image:** force async image decoding to avoid broken images in iOS ([#1111](https://github.com/Telefonica/mistica-web/issues/1111)) ([06b97f9](https://github.com/Telefonica/mistica-web/commit/06b97f94a38e640fcbf8e0726640dc4365334dfc))
+
+
+### Features
+
+* **Row,BoxedRow:** danger style ([#1101](https://github.com/Telefonica/mistica-web/issues/1101)) ([d1ab168](https://github.com/Telefonica/mistica-web/commit/d1ab168379bd76a77fb106f4dc796d7fc4abbbb9))
+
 # [15.5.0](https://github.com/Telefonica/mistica-web/compare/v15.4.0...v15.5.0) (2024-05-07)
 
 
