@@ -33,9 +33,9 @@ interface ToggleChipProps extends SimpleChipProps {
     active: boolean;
 }
 
-type ClickableChipProps = TouchableComponentProps<SimpleChipProps>;
+type ClickableChipProps = TouchableComponentProps<SimpleChipProps & {active?: boolean}>;
 
-type ChipProps = ExclusifyUnion<SimpleChipProps | ClosableChipProps | ToggleChipProps | ClickableChipProps>;
+type ChipProps = ExclusifyUnion<ClosableChipProps | ToggleChipProps | ClickableChipProps>;
 
 const Chip: React.FC<ChipProps> = (props: ChipProps) => {
     const {Icon, children, id, dataAttributes, active, badge, onClose} = props;

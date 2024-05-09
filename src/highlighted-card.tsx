@@ -18,16 +18,12 @@ import type {DataAttributes, RendersNullableElement, TrackingEvent} from './util
 // At least one of title or description is required
 type TextProps =
     | {
-          title?: undefined;
+          title?: string;
           description: string;
       }
     | {
           title: string;
-          description?: undefined;
-      }
-    | {
-          title: string;
-          description: string;
+          description?: string;
       };
 
 type CommonProps = TextProps & {
