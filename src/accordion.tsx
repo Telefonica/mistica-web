@@ -151,7 +151,6 @@ const AccordionItemContent = React.forwardRef<TouchableElement, AccordionItemCon
                     <Box paddingX={16}>
                         <HeaderContent
                             labelId={labelId}
-                            type="custom"
                             {...props}
                             right={
                                 <div className={styles.chevronContainer}>
