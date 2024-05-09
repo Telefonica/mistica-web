@@ -1,3 +1,10 @@
+## [15.6.1](https://github.com/Telefonica/mistica-web/compare/v15.6.0...v15.6.1) (2024-05-09)
+
+
+### Bug Fixes
+
+* **Chip, HighlightedCard, Row:** wrong types ([#1120](https://github.com/Telefonica/mistica-web/issues/1120)) ([47e8851](https://github.com/Telefonica/mistica-web/commit/47e885128d59ec5492bb57bddb6f4217d73ef7d7))
+
 # [15.6.0](https://github.com/Telefonica/mistica-web/compare/v15.5.0...v15.6.0) (2024-05-09)
 
 
