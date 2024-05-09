@@ -759,14 +759,19 @@ export const RowList: React.FC<RowListProps> = ({
     );
 };
 
+// danger + isInverse is not allowed
 type CommonBoxedRowProps =
     | {
-          isInverse?: true;
+          danger: true;
+          isInverse?: false;
+      }
+    | {
+          isInverse?: boolean;
           danger?: false;
       }
     | {
-          danger?: true;
           isInverse?: false;
+          danger: boolean;
       };
 
 type BoxedRowProps = ExclusifyUnion<

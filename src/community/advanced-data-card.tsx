@@ -315,10 +315,7 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
                                 !hasFooter && !hasExtras ? styles.minHeight : ''
                             )}
                         >
-                            <Box
-                                paddingTop={8}
-                                className={!hasFooter && !hasExtras ? '' : styles.minHeightBox}
-                            >
+                            <Box paddingTop={8}>
                                 <Inline space={0}>
                                     <Stack space={8}>
                                         {stackingGroup}
