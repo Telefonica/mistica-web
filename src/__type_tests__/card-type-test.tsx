@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {ButtonPrimary} from '../button';
 import {DisplayMediaCard, NakedCard, PosterCard, SmallNakedCard, SnapCard} from '../card';
+import HighlightedCard from '../highlighted-card';
 import Image from '../image';
 
 <SnapCard title="title" />;

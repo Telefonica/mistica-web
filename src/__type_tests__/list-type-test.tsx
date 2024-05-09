@@ -190,6 +190,16 @@ const v = true as boolean;
 
     <BoxedRow title="inverse" isInverse />
 
-    {/* @ts-expect-error - danger inverse is forbbiden */}
+    {/* @ts-expect-error - danger+inverse is forbbiden */}
     <BoxedRow title="danger inverse is forbbiden" danger isInverse />
+
+    {/* @ts-expect-error - danger+inverse is forbbiden and v can be true here */}
+    <BoxedRow title="maybe inverse danger" isInverse={v} danger />
+    {/* @ts-expect-error - danger+inverse is forbbiden and v can be true here */}
+    <BoxedRow title="inverse and maybe danger" isInverse danger={v} />
+    {/* @ts-expect-error - danger+inverse is forbbiden and v can be true here */}
+    <BoxedRow title="maybe inverse and maybe danger" isInverse={v} danger={v} />
+
+    <BoxedRow title="maybe inverse no danger" isInverse={v} />
+    <BoxedRow title="maybe danger no inverse" danger={v} />
 </BoxedRowList>;
