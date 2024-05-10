@@ -63,8 +63,8 @@ const renderRight = (right: Right, centerY: boolean) => {
     if (typeof right === 'function') return right?.({centerY});
 
     return centerY ? (
-        <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', height: '100%'}}>
-            {right}
+        <div style={{display: 'flex', alignItems: 'center', height: '100%'}}>
+            <div>{right}</div>
         </div>
     ) : (
         right
