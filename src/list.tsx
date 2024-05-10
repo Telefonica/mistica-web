@@ -191,7 +191,7 @@ export const Content: React.FC<ContentProps> = ({
             )}
 
             {(detail || right || withChevron || control) && (
-                <div className={styles.rightContent}>
+                <div className={classNames(styles.rightContent, {[styles.rightRestrictedWidth]: !!detail})}>
                     {detail && (
                         <div className={classNames(styles.detail, {[styles.disabled]: disabled})}>
                             <Text2 regular color={vars.colors.textSecondary} hyphens="auto">
