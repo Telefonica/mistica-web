@@ -56,20 +56,22 @@ interface CommonProps {
     withChevron?: boolean;
     'aria-label'?: string;
     right?: Right;
+    danger?: boolean;
 }
 
 const renderRight = (right: Right, centerY: boolean) => {
     if (typeof right === 'function') return right?.({centerY});
 
     return centerY ? (
-        <div style={{display: 'flex', alignItems: 'center', height: '100%'}}>{right}</div>
+        <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', height: '100%'}}>
+            {right}
+        </div>
     ) : (
         right
     );
 };
 
 interface ContentProps extends CommonProps {
-    danger?: boolean;
     headlineRef?: React.Ref<HTMLDivElement>;
     extraRef?: React.Ref<HTMLDivElement>;
     /** This id is to link the title with the related control */
@@ -280,7 +282,7 @@ type RowContentProps = ExclusifyUnion<
     | HrefRowContentProps
     | ToRowContentProps
     | OnPressRowContentProps
-> & {danger?: boolean};
+>;
 
 const useControlState = ({
     value,
@@ -430,7 +432,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
         const name = props.switch?.name ?? props.checkbox?.name ?? titleId;
 
         return props.onPress ? (
-            <div className={styles.dualActionContainer}>
+            <div className={styles.dualActionContainer} ref={ref as React.Ref<HTMLDivElement>}>
                 <BaseTouchable
                     dataAttributes={dataAttributes}
                     disabled={disabled}
@@ -466,6 +468,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
                     [styles.touchableBackgroundInverse]: hasHoverInverse,
                     [styles.pointer]: !disabled,
                 })}
+                ref={ref as React.Ref<HTMLDivElement>}
             >
                 <Control
                     disabled={disabled}
@@ -497,7 +500,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
 
     if (props.iconButton) {
         return props.onPress ? (
-            <div className={styles.dualActionContainer}>
+            <div className={styles.dualActionContainer} ref={ref as React.Ref<HTMLDivElement>}>
                 <BaseTouchable
                     dataAttributes={dataAttributes}
                     disabled={disabled}
@@ -516,28 +519,24 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
                 <Box padding={16}>
                     <Stack space="around">
                         {props.iconButton.Icon ? (
-                            <IconButton {...props.iconButton} disabled={props.disabled} ref={ref} />
+                            <IconButton {...props.iconButton} disabled={props.disabled} />
                         ) : (
-                            <ToggleIconButton {...props.iconButton} disabled={props.disabled} ref={ref} />
+                            <ToggleIconButton {...props.iconButton} disabled={props.disabled} />
                         )}
                     </Stack>
                 </Box>
             </div>
         ) : (
-            <div className={classNames(styles.rowContent)}>
+            <div className={classNames(styles.rowContent)} ref={ref as React.Ref<HTMLDivElement>}>
                 <Box paddingX={16}>
                     {renderContent({
                         labelId: titleId,
                         right: (
                             <Stack space="around">
                                 {props.iconButton.Icon ? (
-                                    <IconButton {...props.iconButton} disabled={props.disabled} ref={ref} />
+                                    <IconButton {...props.iconButton} disabled={props.disabled} />
                                 ) : (
-                                    <ToggleIconButton
-                                        {...props.iconButton}
-                                        disabled={props.disabled}
-                                        ref={ref}
-                                    />
+                                    <ToggleIconButton {...props.iconButton} disabled={props.disabled} />
                                 )}
                             </Stack>
                         ),
@@ -549,7 +548,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
 
     if (props.radioValue) {
         return props.onPress ? (
-            <div className={styles.dualActionContainer}>
+            <div className={styles.dualActionContainer} ref={ref as React.Ref<HTMLDivElement>}>
                 <BaseTouchable
                     disabled={disabled}
                     onPress={props.onPress}
@@ -604,7 +603,13 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
     }
 
     return (
-        <Box paddingX={16} className={styles.rowContent} role={role} dataAttributes={dataAttributes}>
+        <Box
+            paddingX={16}
+            className={styles.rowContent}
+            role={role}
+            dataAttributes={dataAttributes}
+            ref={ref as React.Ref<HTMLDivElement>}
+        >
             {renderContent({right: props.right})}
         </Box>
     );
