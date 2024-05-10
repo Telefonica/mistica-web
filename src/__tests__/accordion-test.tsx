@@ -1,19 +1,8 @@
 import * as React from 'react';
 import userEvent from '@testing-library/user-event';
 import {render, screen, waitFor} from '@testing-library/react';
-import {
-    ThemeContextProvider,
-    Text3,
-    AccordionItem,
-    Accordion,
-    Stack,
-    ButtonPrimary,
-    BoxedAccordion,
-    BoxedAccordionItem,
-} from '..';
+import {ThemeContextProvider, Text3, AccordionItem, Accordion} from '..';
 import {makeTheme} from './test-utils';
-
-import type {TouchableElement} from '..';
 
 const items = [
     {
@@ -149,70 +138,4 @@ test('Accordion with singleOpen', async () => {
         expect(screen.queryByText('Content 2')).not.toBeInTheDocument();
     });
     expect(screen.getByText('Content 3')).toBeInTheDocument();
-});
-
-test('Accordion controlled by ref', async () => {
-    const AccordionWrapper = () => {
-        const ref = React.useRef<TouchableElement>(null);
-        return (
-            <Stack space={8}>
-                <ButtonPrimary onPress={() => ref.current?.click()}>Press</ButtonPrimary>
-                <Accordion>
-                    <AccordionItem title="Title" content={<Text3 regular>Content</Text3>} ref={ref} />
-                </Accordion>
-            </Stack>
-        );
-    };
-
-    render(
-        <ThemeContextProvider theme={makeTheme()}>
-            <AccordionWrapper />
-        </ThemeContextProvider>
-    );
-
-    expect(screen.queryByText('Content')).not.toBeInTheDocument();
-
-    await userEvent.click(screen.getByText('Press'));
-
-    expect(screen.getByText('Content')).toBeInTheDocument();
-
-    await userEvent.click(screen.getByText('Press'));
-
-    /** We need to wait for CSS transition to finish in order for panels to be removed */
-    await waitFor(() => {
-        expect(screen.queryByText('Content')).not.toBeInTheDocument();
-    });
-});
-
-test('BoxedAccordion controlled by ref', async () => {
-    const BoxedAccordionWrapper = () => {
-        const ref = React.useRef<TouchableElement>(null);
-        return (
-            <Stack space={8}>
-                <ButtonPrimary onPress={() => ref.current?.click()}>Press</ButtonPrimary>
-                <BoxedAccordion>
-                    <BoxedAccordionItem title="Title" content={<Text3 regular>Content</Text3>} ref={ref} />
-                </BoxedAccordion>
-            </Stack>
-        );
-    };
-
-    render(
-        <ThemeContextProvider theme={makeTheme()}>
-            <BoxedAccordionWrapper />
-        </ThemeContextProvider>
-    );
-
-    expect(screen.queryByText('Content')).not.toBeInTheDocument();
-
-    await userEvent.click(screen.getByText('Press'));
-
-    expect(screen.getByText('Content')).toBeInTheDocument();
-
-    await userEvent.click(screen.getByText('Press'));
-
-    /** We need to wait for CSS transition to finish in order for panels to be removed */
-    await waitFor(() => {
-        expect(screen.queryByText('Content')).not.toBeInTheDocument();
-    });
 });

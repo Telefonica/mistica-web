@@ -246,7 +246,8 @@ export const Accordion: React.FC<AccordionProps> = ({
         onChange,
         singleOpen,
     });
-    const lastIndex = React.Children.count(children) - 1;
+    const childrenContent = React.Children.toArray(children).filter(Boolean);
+    const lastIndex = childrenContent.length - 1;
 
     return (
         <AccordionContext.Provider value={{index: indexList, toggle}}>
@@ -254,18 +255,16 @@ export const Accordion: React.FC<AccordionProps> = ({
                 role={role}
                 {...getPrefixedDataAttributes({...dataAttributes, accordion: true}, 'Accordion')}
             >
-                {React.Children.toArray(children)
-                    .filter(Boolean)
-                    .map((child, index) => (
-                        <React.Fragment key={index}>
-                            {child}
-                            {index < lastIndex && (
-                                <Box paddingX={16}>
-                                    <Divider />
-                                </Box>
-                            )}
-                        </React.Fragment>
-                    ))}
+                {childrenContent.map((child, index) => (
+                    <React.Fragment key={index}>
+                        {child}
+                        {index < lastIndex && (
+                            <Box paddingX={16}>
+                                <Divider />
+                            </Box>
+                        )}
+                    </React.Fragment>
+                ))}
             </div>
         </AccordionContext.Provider>
     );
@@ -275,13 +274,14 @@ interface BoxedAccordionItemProps extends AccordionItemContentProps {
     isInverse?: boolean;
 }
 
-export const BoxedAccordionItem = React.forwardRef<TouchableElement, BoxedAccordionItemProps>(
+export const BoxedAccordionItem = React.forwardRef<HTMLDivElement, BoxedAccordionItemProps>(
     ({dataAttributes, isInverse, ...props}, ref) => (
         <Boxed
             isInverse={isInverse}
+            ref={ref}
             dataAttributes={{'component-name': 'BoxedAccordionItem', ...dataAttributes}}
         >
-            <AccordionItemContent {...props} ref={ref} />
+            <AccordionItemContent {...props} />
         </Boxed>
     )
 );
