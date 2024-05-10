@@ -106,9 +106,12 @@ export const Content: React.FC<ContentProps> = ({
     const centerY = numTextLines === 1;
 
     return (
-        <Box paddingY={16} className={classNames(styles.content, {[styles.isDisabled]: disabled})}>
+        <Box paddingY={16} className={styles.content}>
             {asset && (
-                <Box paddingRight={16} className={classNames({[styles.center]: centerY})}>
+                <Box
+                    paddingRight={16}
+                    className={classNames({[styles.center]: centerY, [styles.disabled]: disabled})}
+                >
                     <div
                         className={styles.asset}
                         style={applyCssVars({
@@ -128,7 +131,7 @@ export const Content: React.FC<ContentProps> = ({
             )}
 
             <div
-                className={styles.rowBody}
+                className={classNames(styles.rowBody, {[styles.disabled]: disabled})}
                 style={{justifyContent: centerY ? 'center' : 'flex-start'}}
                 id={labelId}
             >
@@ -181,7 +184,7 @@ export const Content: React.FC<ContentProps> = ({
 
             {badge && (
                 <Box paddingLeft={16}>
-                    <div className={classNames(styles.badge)}>
+                    <div className={classNames(styles.badge, {[styles.disabled]: disabled})}>
                         <Badge value={badge === true ? undefined : badge} />
                     </div>
                 </Box>
@@ -190,7 +193,7 @@ export const Content: React.FC<ContentProps> = ({
             {(detail || right || withChevron || control) && (
                 <div className={styles.rightContent}>
                     {detail && (
-                        <div className={styles.detail}>
+                        <div className={classNames(styles.detail, {[styles.disabled]: disabled})}>
                             <Text2 regular color={vars.colors.textSecondary} hyphens="auto">
                                 {detail}
                             </Text2>
@@ -199,7 +202,10 @@ export const Content: React.FC<ContentProps> = ({
 
                     {right && (
                         <div
-                            className={classNames(styles.dimmedIfDisabled, {[styles.detailRight]: !!detail})}
+                            className={classNames({
+                                [styles.detailRight]: !!detail,
+                                [styles.disabled]: disabled,
+                            })}
                         >
                             {renderRight(right, centerY)}
                         </div>
@@ -208,7 +214,7 @@ export const Content: React.FC<ContentProps> = ({
                     {withChevron && (
                         <Box
                             paddingLeft={detail || right ? 4 : 0}
-                            className={classNames(styles.dimmedIfDisabled, styles.center)}
+                            className={classNames(styles.center, {[styles.disabled]: disabled})}
                         >
                             <IconChevron
                                 color={isInverse ? vars.colors.inverse : vars.colors.neutralMedium}
