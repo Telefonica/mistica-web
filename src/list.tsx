@@ -428,178 +428,153 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
         );
     }
 
-    const renderRowWithControl = (Control: typeof Switch | typeof Checkbox) => {
-        const name = props.switch?.name ?? props.checkbox?.name ?? titleId;
-
-        return props.onPress ? (
-            <div className={styles.dualActionContainer} ref={ref as React.Ref<HTMLDivElement>}>
-                <BaseTouchable
-                    dataAttributes={dataAttributes}
-                    disabled={disabled}
-                    onPress={props.onPress}
-                    trackingEvent={props.trackingEvent}
-                    role={role}
-                    className={classNames(styles.dualActionLeft, {
-                        [styles.touchableBackground]: hasHoverDefault,
-                        [styles.touchableBackgroundInverse]: hasHoverInverse,
-                    })}
-                    aria-label={ariaLabel}
-                >
-                    {renderContent({labelId: titleId})}
-                </BaseTouchable>
-                <div className={styles.dualActionDivider} />
-
-                <Control
-                    disabled={disabled}
-                    name={name}
-                    checked={isChecked}
-                    aria-label={ariaLabel}
-                    aria-labelledby={titleId}
-                    onChange={toggle}
-                    render={({controlElement}) => (
-                        <div className={styles.dualActionRight}>{controlElement}</div>
-                    )}
-                />
-            </div>
-        ) : (
-            <div
-                className={classNames(styles.rowContent, {
+    const renderRowWithDoubleInteraction = (control: React.ReactNode) => (
+        <div
+            className={styles.dualActionContainer}
+            ref={ref as React.Ref<HTMLDivElement>}
+            {...getPrefixedDataAttributes(dataAttributes)}
+        >
+            <BaseTouchable
+                disabled={disabled}
+                {...interactiveProps}
+                role={role}
+                className={classNames(styles.dualActionLeft, {
                     [styles.touchableBackground]: hasHoverDefault,
                     [styles.touchableBackgroundInverse]: hasHoverInverse,
-                    [styles.pointer]: !disabled,
                 })}
-                ref={ref as React.Ref<HTMLDivElement>}
+                aria-label={ariaLabel}
             >
-                <Control
-                    disabled={disabled}
-                    dataAttributes={dataAttributes}
-                    name={name}
-                    checked={isChecked}
-                    onChange={toggle}
-                    aria-label={ariaLabel}
-                    render={({controlElement, labelId}) => (
-                        <Box paddingX={16} role={role}>
-                            {renderContent({
-                                labelId,
-                                right: () => <Stack space="around">{controlElement}</Stack>,
-                            })}
-                        </Box>
-                    )}
-                />
-            </div>
-        );
-    };
+                {renderContent({labelId: titleId})}
+            </BaseTouchable>
 
-    if (props.switch) {
-        return renderRowWithControl(Switch);
-    }
+            <div className={styles.dualActionDivider} />
 
-    if (props.checkbox) {
-        return renderRowWithControl(Checkbox);
-    }
+            {control}
+        </div>
+    );
 
-    if (props.iconButton) {
-        return props.onPress ? (
-            <div className={styles.dualActionContainer} ref={ref as React.Ref<HTMLDivElement>}>
-                <BaseTouchable
-                    dataAttributes={dataAttributes}
-                    disabled={disabled}
-                    onPress={props.onPress}
-                    trackingEvent={props.trackingEvent}
-                    role={role}
-                    className={classNames(styles.dualActionLeft, {
-                        [styles.touchableBackground]: hasHoverDefault,
-                        [styles.touchableBackgroundInverse]: hasHoverInverse,
-                    })}
-                    aria-label={ariaLabel}
-                >
-                    {renderContent({labelId: titleId})}
-                </BaseTouchable>
-                <div className={styles.dualActionDivider} />
-                <Box padding={16}>
-                    <Stack space="around">
-                        {props.iconButton.Icon ? (
-                            <IconButton {...props.iconButton} disabled={props.disabled} />
-                        ) : (
-                            <ToggleIconButton {...props.iconButton} disabled={props.disabled} />
-                        )}
-                    </Stack>
-                </Box>
-            </div>
-        ) : (
-            <div className={classNames(styles.rowContent)} ref={ref as React.Ref<HTMLDivElement>}>
-                <Box paddingX={16}>
-                    {renderContent({
-                        labelId: titleId,
-                        right: (
-                            <Stack space="around">
-                                {props.iconButton.Icon ? (
-                                    <IconButton {...props.iconButton} disabled={props.disabled} />
-                                ) : (
-                                    <ToggleIconButton {...props.iconButton} disabled={props.disabled} />
-                                )}
-                            </Stack>
-                        ),
-                    })}
-                </Box>
-            </div>
-        );
+    const renderRowWithSingleControl = (control: React.ReactNode, isContentInsideControl?: boolean) => (
+        <div
+            className={classNames(styles.rowContent, {
+                [styles.touchableBackground]: hasHoverDefault && isContentInsideControl,
+                [styles.touchableBackgroundInverse]: hasHoverInverse && isContentInsideControl,
+                [styles.pointer]: !disabled && isContentInsideControl,
+            })}
+            ref={ref as React.Ref<HTMLDivElement>}
+            {...getPrefixedDataAttributes(dataAttributes)}
+        >
+            {control}
+        </div>
+    );
+
+    if (props.switch || props.checkbox) {
+        const Control = props.switch ? Switch : Checkbox;
+        const name = props.switch?.name ?? props.checkbox?.name ?? titleId;
+
+        return isInteractive
+            ? renderRowWithDoubleInteraction(
+                  <Control
+                      disabled={disabled}
+                      name={name}
+                      checked={isChecked}
+                      aria-label={ariaLabel}
+                      aria-labelledby={titleId}
+                      onChange={toggle}
+                      render={({controlElement}) => (
+                          <div className={styles.dualActionRight}>{controlElement}</div>
+                      )}
+                  />
+              )
+            : renderRowWithSingleControl(
+                  <Control
+                      disabled={disabled}
+                      name={name}
+                      checked={isChecked}
+                      aria-label={ariaLabel}
+                      aria-labelledby={titleId}
+                      onChange={toggle}
+                      render={({controlElement, labelId}) => (
+                          <Box paddingX={16} role={role}>
+                              {renderContent({
+                                  labelId,
+                                  right: () => <Stack space="around">{controlElement}</Stack>,
+                              })}
+                          </Box>
+                      )}
+                  />,
+                  true
+              );
     }
 
     if (props.radioValue) {
-        return props.onPress ? (
-            <div className={styles.dualActionContainer} ref={ref as React.Ref<HTMLDivElement>}>
-                <BaseTouchable
-                    disabled={disabled}
-                    onPress={props.onPress}
-                    role={role}
-                    className={classNames(styles.dualActionLeft, {
-                        [styles.touchableBackground]: hasHoverDefault,
-                        [styles.touchableBackgroundInverse]: hasHoverInverse,
-                    })}
-                    aria-label={ariaLabel}
-                >
-                    {renderContent({labelId: titleId})}
-                </BaseTouchable>
-                <div className={styles.dualActionDivider} />
-                <RadioButton
-                    dataAttributes={dataAttributes}
-                    value={props.radioValue}
-                    aria-labelledby={titleId}
-                    aria-label={ariaLabel}
-                    render={({controlElement}) => (
-                        <Stack space="around">
-                            <Box paddingX={16}>{controlElement}</Box>
-                        </Stack>
-                    )}
-                />
-            </div>
-        ) : (
-            <div
-                className={classNames(styles.rowContent, {
-                    [styles.touchableBackground]: hasHoverDefault,
-                    [styles.touchableBackgroundInverse]: hasHoverInverse,
-                    [styles.pointer]: !disabled,
-                })}
-                role={role}
-                ref={ref as React.Ref<HTMLDivElement>}
-            >
-                <RadioButton
-                    dataAttributes={dataAttributes}
-                    value={props.radioValue}
-                    aria-labelledby={titleId}
-                    aria-label={ariaLabel}
-                    render={({controlElement}) => (
-                        <Box paddingX={16}>
-                            {renderContent({
-                                labelId: titleId,
-                                right: () => <Stack space="around">{controlElement}</Stack>,
-                            })}
-                        </Box>
-                    )}
-                />
-            </div>
-        );
+        return isInteractive
+            ? renderRowWithDoubleInteraction(
+                  <RadioButton
+                      value={props.radioValue}
+                      aria-label={ariaLabel}
+                      aria-labelledby={titleId}
+                      render={({controlElement}) => (
+                          <Stack space="around">
+                              <Box paddingX={16}>{controlElement}</Box>
+                          </Stack>
+                      )}
+                  />
+              )
+            : renderRowWithSingleControl(
+                  <RadioButton
+                      value={props.radioValue}
+                      aria-label={ariaLabel}
+                      aria-labelledby={titleId}
+                      render={({controlElement}) => (
+                          <Box paddingX={16} role={role}>
+                              {renderContent({
+                                  labelId: titleId,
+                                  right: () => <Stack space="around">{controlElement}</Stack>,
+                              })}
+                          </Box>
+                      )}
+                  />,
+                  true
+              );
+    }
+
+    if (props.iconButton) {
+        return isInteractive
+            ? renderRowWithDoubleInteraction(
+                  <Box padding={16}>
+                      <Stack space="around">
+                          {props.iconButton.Icon ? (
+                              <IconButton {...props.iconButton} disabled={props.disabled} />
+                          ) : (
+                              <ToggleIconButton {...props.iconButton} disabled={props.disabled} />
+                          )}
+                      </Stack>
+                  </Box>
+              )
+            : renderRowWithSingleControl(
+                  <Box paddingX={16}>
+                      {renderContent({
+                          labelId: titleId,
+                          right: (
+                              <Stack space="around">
+                                  {props.iconButton.Icon ? (
+                                      <IconButton
+                                          {...props.iconButton}
+                                          disabled={props.disabled}
+                                          role={role}
+                                      />
+                                  ) : (
+                                      <ToggleIconButton
+                                          {...props.iconButton}
+                                          disabled={props.disabled}
+                                          role={role}
+                                      />
+                                  )}
+                              </Stack>
+                          ),
+                      })}
+                  </Box>
+              );
     }
 
     return (
