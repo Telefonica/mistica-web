@@ -74,6 +74,7 @@ const renderRight = (right: Right, centerY: boolean) => {
 interface ContentProps extends CommonProps {
     headlineRef?: React.Ref<HTMLDivElement>;
     extraRef?: React.Ref<HTMLDivElement>;
+    control?: React.ReactNode;
     /** This id is to link the title with the related control */
     labelId?: string;
 }
@@ -98,13 +99,14 @@ export const Content: React.FC<ContentProps> = ({
     extra,
     labelId,
     disabled,
+    control,
 }) => {
     const isInverse = useIsInverseVariant();
     const numTextLines = [headline, title, subtitle, description, extra].filter(Boolean).length;
     const centerY = numTextLines === 1;
 
     return (
-        <Box paddingY={16} className={classNames(styles.content, {[styles.disabled]: disabled})}>
+        <Box paddingY={16} className={classNames(styles.content, {[styles.isDisabled]: disabled})}>
             {asset && (
                 <Box paddingRight={16} className={classNames({[styles.center]: centerY})}>
                     <div
@@ -185,7 +187,7 @@ export const Content: React.FC<ContentProps> = ({
                 </Box>
             )}
 
-            {(detail || right || withChevron) && (
+            {(detail || right || withChevron || control) && (
                 <div className={styles.rightContent}>
                     {detail && (
                         <div className={styles.detail}>
@@ -196,17 +198,28 @@ export const Content: React.FC<ContentProps> = ({
                     )}
 
                     {right && (
-                        <div className={classNames({[styles.detailRight]: !!detail})}>
+                        <div
+                            className={classNames(styles.dimmedIfDisabled, {[styles.detailRight]: !!detail})}
+                        >
                             {renderRight(right, centerY)}
                         </div>
                     )}
 
                     {withChevron && (
-                        <Box paddingLeft={detail || right ? 4 : 0} className={classNames(styles.center)}>
+                        <Box
+                            paddingLeft={detail || right ? 4 : 0}
+                            className={classNames(styles.dimmedIfDisabled, styles.center)}
+                        >
                             <IconChevron
                                 color={isInverse ? vars.colors.inverse : vars.colors.neutralMedium}
                                 direction="right"
                             />
+                        </Box>
+                    )}
+
+                    {control && (
+                        <Box paddingLeft={detail || right ? 8 : 0} className={styles.center}>
+                            {control}
                         </Box>
                     )}
                 </div>
@@ -336,6 +349,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
         extra,
         withChevron,
         dataAttributes,
+        right,
         'aria-label': ariaLabelProp,
     } = props;
 
@@ -373,7 +387,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
 
     const [isChecked, toggle] = useControlState(props.switch || props.checkbox || {});
 
-    const renderContent = ({right, labelId}: {right?: Right; labelId?: string}) => (
+    const renderContent = (contentProps?: {control?: React.ReactNode; labelId?: string}) => (
         <Content
             asset={asset}
             headline={headline}
@@ -393,6 +407,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
             detail={detail}
             danger={danger}
             right={right}
+            control={contentProps?.control}
             extra={extra}
             extraRef={(node) => {
                 if (node) {
@@ -400,7 +415,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
                     setExtraText(node.innerText || node.textContent || '');
                 }
             }}
-            labelId={labelId}
+            labelId={contentProps?.labelId}
             disabled={disabled}
             withChevron={hasChevron}
         />
@@ -422,7 +437,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
                 aria-label={ariaLabel}
             >
                 <Box paddingX={16} aria-hidden={!!props.to || !!props.href || undefined}>
-                    {renderContent({right: props.right})}
+                    {renderContent()}
                 </Box>
             </BaseTouchable>
         );
@@ -453,7 +468,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
         </div>
     );
 
-    const renderRowWithSingleControl = (control: React.ReactNode, isContentInsideControl?: boolean) => (
+    const renderRowWithSingleControl = (content: React.ReactNode, isContentInsideControl?: boolean) => (
         <div
             className={classNames(styles.rowContent, {
                 [styles.touchableBackground]: hasHoverDefault && isContentInsideControl,
@@ -463,7 +478,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
             ref={ref as React.Ref<HTMLDivElement>}
             {...getPrefixedDataAttributes(dataAttributes)}
         >
-            {control}
+            {content}
         </div>
     );
 
@@ -497,7 +512,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
                           <Box paddingX={16} role={role}>
                               {renderContent({
                                   labelId,
-                                  right: () => <Stack space="around">{controlElement}</Stack>,
+                                  control: <Stack space="around">{controlElement}</Stack>,
                               })}
                           </Box>
                       )}
@@ -529,7 +544,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
                           <Box paddingX={16} role={role}>
                               {renderContent({
                                   labelId: titleId,
-                                  right: () => <Stack space="around">{controlElement}</Stack>,
+                                  control: <Stack space="around">{controlElement}</Stack>,
                               })}
                           </Box>
                       )}
@@ -555,7 +570,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
                   <Box paddingX={16}>
                       {renderContent({
                           labelId: titleId,
-                          right: (
+                          control: (
                               <Stack space="around">
                                   {props.iconButton.Icon ? (
                                       <IconButton
@@ -585,7 +600,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
             dataAttributes={dataAttributes}
             ref={ref as React.Ref<HTMLDivElement>}
         >
-            {renderContent({right: props.right})}
+            {renderContent()}
         </Box>
     );
 });
