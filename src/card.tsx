@@ -724,6 +724,7 @@ export const SmallNakedCard = React.forwardRef<HTMLDivElement, SmallNakedCardPro
     ) => {
         const isTouchable = touchableProps.href || touchableProps.to || touchableProps.onPress;
         const isCircularMedia = media && media.type === Image && (media.props as any).circular;
+        const {textPresets} = useTheme();
 
         return (
             <CardContainer
@@ -746,29 +747,38 @@ export const SmallNakedCard = React.forwardRef<HTMLDivElement, SmallNakedCardPro
                         </div>
                         <div className={styles.nakedCardContent}>
                             <div>
-                                <Stack space={8}>
+                                <Stack space={4}>
                                     {title && (
-                                        <Text2 truncate={titleLinesMax} as={titleAs} regular hyphens="auto">
+                                        <Text
+                                            desktopSize={16}
+                                            mobileSize={14}
+                                            mobileLineHeight="20px"
+                                            desktopLineHeight="24px"
+                                            truncate={titleLinesMax}
+                                            weight={textPresets.cardTitle.weight}
+                                            as={titleAs}
+                                            hyphens="auto"
+                                        >
                                             {title}
-                                        </Text2>
+                                        </Text>
                                     )}
                                     {subtitle && (
                                         <Text2 truncate={subtitleLinesMax} regular as="p" hyphens="auto">
                                             {subtitle}
                                         </Text2>
                                     )}
+                                    {description && (
+                                        <Text2
+                                            truncate={descriptionLinesMax}
+                                            regular
+                                            as="p"
+                                            color={vars.colors.textSecondary}
+                                            hyphens="auto"
+                                        >
+                                            {description}
+                                        </Text2>
+                                    )}
                                 </Stack>
-                                {description && (
-                                    <Text2
-                                        truncate={descriptionLinesMax}
-                                        regular
-                                        as="p"
-                                        color={vars.colors.textSecondary}
-                                        hyphens="auto"
-                                    >
-                                        {description}
-                                    </Text2>
-                                )}
                             </div>
                             {extra && <div>{extra}</div>}
                         </div>
@@ -920,6 +930,8 @@ type SnapCardProps = MaybeTouchableCard<{
     titleLinesMax?: number;
     subtitle?: string;
     subtitleLinesMax?: number;
+    description?: string;
+    descriptionLinesMax?: number;
     /** "data-" prefix is automatically added. For example, use "testid" instead of "data-testid" */
     dataAttributes?: DataAttributes;
     'aria-label'?: string;
@@ -938,6 +950,8 @@ export const SnapCard = React.forwardRef<HTMLDivElement, SnapCardProps>(
             titleLinesMax,
             subtitle,
             subtitleLinesMax,
+            description,
+            descriptionLinesMax,
             dataAttributes,
             'aria-label': ariaLabel,
             extra,
@@ -947,6 +961,7 @@ export const SnapCard = React.forwardRef<HTMLDivElement, SnapCardProps>(
         },
         ref
     ) => {
+        const {textPresets} = useTheme();
         const isTouchable = touchableProps.href || touchableProps.to || touchableProps.onPress;
         const overlayStyle = isInverse ? styles.touchableCardOverlayInverse : styles.touchableCardOverlay;
 
@@ -978,19 +993,39 @@ export const SnapCard = React.forwardRef<HTMLDivElement, SnapCardProps>(
                                 )}
                                 <Stack space={4}>
                                     {title && (
-                                        <Text2 truncate={titleLinesMax} as={titleAs} regular hyphens="auto">
+                                        <Text
+                                            desktopSize={16}
+                                            mobileSize={14}
+                                            mobileLineHeight="20px"
+                                            desktopLineHeight="24px"
+                                            truncate={titleLinesMax}
+                                            weight={textPresets.cardTitle.weight}
+                                            as={titleAs}
+                                            hyphens="auto"
+                                        >
                                             {title}
-                                        </Text2>
+                                        </Text>
                                     )}
                                     {subtitle && (
                                         <Text2
                                             truncate={subtitleLinesMax}
                                             regular
-                                            color={vars.colors.textSecondary}
+                                            color={vars.colors.textPrimary}
                                             as="p"
                                             hyphens="auto"
                                         >
                                             {subtitle}
+                                        </Text2>
+                                    )}
+                                    {description && (
+                                        <Text2
+                                            truncate={descriptionLinesMax}
+                                            regular
+                                            color={vars.colors.textSecondary}
+                                            as="p"
+                                            hyphens="auto"
+                                        >
+                                            {description}
                                         </Text2>
                                     )}
                                 </Stack>
