@@ -188,7 +188,6 @@ const Video = React.forwardRef<VideoElement, VideoProps>(
             dispatch('finishLoad');
             if (video && shouldAutoPlay && video.paused) {
                 video.play();
-                dispatch('play');
             }
         };
 

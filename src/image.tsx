@@ -95,6 +95,7 @@ export const RATIO = {
 
 type CommonImageProps = {
     src: string;
+    srcSet?: string;
     /** defaults to empty string */
     alt?: string;
     children?: void;
@@ -139,6 +140,7 @@ export const ImageContent = React.forwardRef<HTMLImageElement, ImageProps>(
             dataAttributes,
             noBorderRadius,
             src,
+            srcSet,
             onError,
             onLoad,
             loadingFallback = true,
@@ -183,6 +185,11 @@ export const ImageContent = React.forwardRef<HTMLImageElement, ImageProps>(
         }, [onLoad]);
 
         React.useEffect(() => {
+            setIsError(!src);
+            setHideLoadingFallback(false);
+        }, [src]);
+
+        React.useEffect(() => {
             // Needed because there is some race condition with SSR and onLoad events
             // load event could be fired before the component is hydrated and mounted client side
             // https://github.com/facebook/react/issues/15446
@@ -208,6 +215,7 @@ export const ImageContent = React.forwardRef<HTMLImageElement, ImageProps>(
                     }}
                     ref={combineRefs(imageRef, ref)}
                     src={src}
+                    srcSet={srcSet}
                     className={classnames(
                         borderRadiusStyle,
                         styles.image,
@@ -223,6 +231,10 @@ export const ImageContent = React.forwardRef<HTMLImageElement, ImageProps>(
                         onError?.();
                     }}
                     onLoad={onLoadHandler}
+                    // Sometimes Safari doesn't render images completely
+                    // https://stackoverflow.com/questions/58323768/ios-safari-images-not-rendering-fully-cut-off
+                    // https://www.tunetheweb.com/blog/what-does-the-image-decoding-attribute-actually-do/
+                    decoding="async"
                 />
                 {/* When using SSR, we render a small script that makes the img visible as soon as it finishes loading, without waiting for React client hydrate. */}
                 {/* Note that this <script> does nothing when rendering client side (the browser only execute scripts injected inside <head>), it's only executed when the browser receives the SSRed html */}
@@ -240,9 +252,12 @@ export const ImageContent = React.forwardRef<HTMLImageElement, ImageProps>(
         return (
             <>
                 {withLoadingFallback && !hideLoadingFallback && (
-                    <div style={{position: 'absolute', width: '100%', height: '100%'}}>
+                    <div
+                        style={{position: 'absolute', width: '100%', height: '100%', overflow: 'hidden'}}
+                        className={borderRadiusStyle}
+                    >
                         <SkeletonAnimation height={props.height ?? '100%'} width={props.width ?? '100%'}>
-                            <SkeletonBase height="100%" width="100%" className={borderRadiusStyle} />
+                            <SkeletonBase height="100%" width="100%" noBorderRadius />
                         </SkeletonAnimation>
                     </div>
                 )}

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {render, screen, waitFor} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import {ButtonPrimary, Form, TextField, EmailField, PasswordField} from '..';
+import {ButtonPrimary, Form, TextField, EmailField, PasswordField, Switch, PhoneNumberField} from '..';
 import ThemeContextProvider from '../theme-context-provider';
 import {makeTheme} from './test-utils';
 
@@ -226,4 +226,50 @@ test('can listen to form validation errors', async () => {
         email: 'Email incorrecto',
         surname: 'Este campo es obligatorio',
     });
+});
+
+test('Disabling a field removes the error state and disabled fields are not submitted', async () => {
+    const submitSpy = jest.fn();
+
+    const MyComponent = () => {
+        const [isEmailSelected, setIsEmailSelected] = React.useState(true);
+        return (
+            <ThemeContextProvider theme={makeTheme()}>
+                <Form onSubmit={submitSpy}>
+                    <PhoneNumberField disabled={isEmailSelected} name="phone" label="Phone" />
+                    <EmailField disabled={!isEmailSelected} name="email" label="Email" />
+                    <Switch
+                        name="switch"
+                        checked={isEmailSelected}
+                        onChange={() => setIsEmailSelected(!isEmailSelected)}
+                    />
+                    <ButtonPrimary submit>Submit</ButtonPrimary>
+                </Form>
+            </ThemeContextProvider>
+        );
+    };
+
+    render(<MyComponent />);
+
+    const submitButton = await screen.findByRole('button', {name: 'Submit'});
+    const emailField = await screen.findByLabelText('Email');
+    const phoneField = await screen.findByLabelText('Phone');
+
+    await userEvent.type(emailField, 'bad-email');
+    await userEvent.click(submitButton);
+
+    await screen.findByText('Email incorrecto');
+    expect(submitSpy).not.toHaveBeenCalled();
+
+    await userEvent.click(screen.getByRole('switch'));
+    expect(emailField).toBeDisabled();
+    expect(screen.queryByText('Email incorrecto')).not.toBeInTheDocument();
+
+    await userEvent.type(phoneField, '654834455');
+    await userEvent.click(submitButton);
+
+    expect(submitSpy).toHaveBeenCalledWith(
+        {phone: '654834455', switch: false},
+        {phone: '654 83 44 55', switch: false}
+    );
 });

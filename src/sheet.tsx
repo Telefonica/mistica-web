@@ -23,8 +23,8 @@ import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
 import {InternalIconButton} from './icon-button';
 import ButtonLayout from './button-layout';
 import Image from './image';
-import {InternalResponsiveLayout} from './responsive-layout';
 import {safeAreaInsetBottom} from './utils/css';
+import {MOBILE_SIDE_MARGIN, SMALL_DESKTOP_SIDE_MARGIN, TABLET_SIDE_MARGIN} from './responsive-layout.css';
 
 import type {ExclusifyUnion} from './utils/utility-types';
 import type {DataAttributes, IconProps, RendersNullableElement, TrackingEvent} from './utils/types';
@@ -272,10 +272,16 @@ const Sheet = React.forwardRef<HTMLDivElement, SheetProps>(({onClose, children, 
     );
 });
 
+const paddingX = {
+    mobile: MOBILE_SIDE_MARGIN,
+    tablet: TABLET_SIDE_MARGIN,
+    desktop: SMALL_DESKTOP_SIDE_MARGIN,
+} as const;
+
 type SheetBodyProps = {
     title?: string;
     subtitle?: string;
-    description?: string | Array<string>;
+    description?: string | ReadonlyArray<string>;
     button?: RendersNullableElement<typeof ButtonPrimary>;
     secondaryButton?: RendersNullableElement<typeof ButtonSecondary>;
     link?: RendersNullableElement<typeof ButtonLink>;
@@ -317,12 +323,10 @@ export const SheetBody = ({
             <div ref={topScrollSignalRef} />
             <div className={styles.stickyTitle}>
                 {title ? (
-                    <Box paddingBottom={8} paddingTop={{mobile: 0, desktop: 40}}>
-                        <InternalResponsiveLayout>
-                            <Text5 as="h2" id={modalTitleId} truncate>
-                                {title}
-                            </Text5>
-                        </InternalResponsiveLayout>
+                    <Box paddingBottom={8} paddingTop={{mobile: 0, desktop: 40}} paddingX={paddingX}>
+                        <Text5 as="h2" id={modalTitleId} truncate>
+                            {title}
+                        </Text5>
                     </Box>
                 ) : (
                     <Box paddingTop={{mobile: 0, desktop: 40}} />
@@ -330,56 +334,54 @@ export const SheetBody = ({
                 {showTitleDivider && <Divider />}
             </div>
             <div className={styles.bodyContent}>
-                <Box paddingBottom={hasButtons ? 0 : {desktop: 40, mobile: 0}}>
-                    <InternalResponsiveLayout>
-                        <Stack space={8}>
-                            {subtitle || description ? (
-                                <Stack space={{mobile: 8, desktop: 16}}>
-                                    {subtitle && (
-                                        <Text3 as="p" regular>
-                                            {subtitle}
-                                        </Text3>
-                                    )}
-                                    {description &&
-                                        (Array.isArray(description) ? (
-                                            <Text2 as="div" regular color={skinVars.colors.textSecondary}>
-                                                {description.map((text, index) => (
-                                                    <p
-                                                        key={index}
-                                                        style={{
-                                                            margin: 0,
-                                                            marginBottom:
-                                                                index < description.length - 1
-                                                                    ? '1em'
-                                                                    : undefined,
-                                                        }}
-                                                    >
-                                                        {text}
-                                                    </p>
-                                                ))}
-                                            </Text2>
-                                        ) : (
-                                            <Text2 as="p" regular color={skinVars.colors.textSecondary}>
-                                                {description}
-                                            </Text2>
-                                        ))}
-                                </Stack>
-                            ) : null}
-                            {children}
-                        </Stack>
-                    </InternalResponsiveLayout>
+                <Box paddingBottom={hasButtons ? 0 : {desktop: 40, mobile: 0}} paddingX={paddingX}>
+                    <Stack space={8}>
+                        {subtitle || description ? (
+                            <Stack space={{mobile: 8, desktop: 16}}>
+                                {subtitle && (
+                                    <Text3 as="p" regular>
+                                        {subtitle}
+                                    </Text3>
+                                )}
+                                {description &&
+                                    (Array.isArray(description) ? (
+                                        <Text2 as="div" regular color={skinVars.colors.textSecondary}>
+                                            {description.map((text, index) => (
+                                                <p
+                                                    key={index}
+                                                    style={{
+                                                        margin: 0,
+                                                        marginBottom:
+                                                            index < description.length - 1
+                                                                ? '1em'
+                                                                : undefined,
+                                                    }}
+                                                >
+                                                    {text}
+                                                </p>
+                                            ))}
+                                        </Text2>
+                                    ) : (
+                                        <Text2 as="p" regular color={skinVars.colors.textSecondary}>
+                                            {description}
+                                        </Text2>
+                                    ))}
+                            </Stack>
+                        ) : null}
+                        {children}
+                    </Stack>
                 </Box>
             </div>
             {hasButtons && (
                 <div className={styles.stickyButtons}>
                     {showButtonsDivider && <Divider />}
-                    <Box paddingY={{mobile: 16, desktop: 40}}>
-                        <InternalResponsiveLayout>
-                            <ButtonLayout align="full-width" link={link}>
-                                {button}
-                                {secondaryButton}
-                            </ButtonLayout>
-                        </InternalResponsiveLayout>
+                    <Box paddingY={{mobile: 16, desktop: 40}} paddingX={paddingX}>
+                        <ButtonLayout
+                            align="full-width"
+                            link={link}
+                            primaryButton={button}
+                            secondaryButton={secondaryButton}
+                        />
                     </Box>
                 </div>
             )}
@@ -391,8 +393,8 @@ export const SheetBody = ({
 type RadioListSheetProps = {
     title?: string;
     subtitle?: string;
-    description?: string | Array<string>;
-    items: Array<{
+    description?: string | ReadonlyArray<string>;
+    items: ReadonlyArray<{
         id: string;
         title?: string;
         description?: string;
@@ -485,8 +487,8 @@ export const RadioListSheet = React.forwardRef<HTMLDivElement, RadioListSheetPro
 type ActionsListSheetProps = {
     title?: string;
     subtitle?: string;
-    description?: string | Array<string>;
-    items: Array<{
+    description?: string | ReadonlyArray<string>;
+    items: ReadonlyArray<{
         id: string;
         title: string;
         style?: 'normal' | 'destructive'; // "normal" by default
@@ -580,8 +582,8 @@ export const ActionsListSheet = React.forwardRef<HTMLDivElement, ActionsListShee
 type InfoSheetProps = {
     title?: string;
     subtitle?: string;
-    description?: string | Array<string>;
-    items: Array<{
+    description?: string | ReadonlyArray<string>;
+    items: ReadonlyArray<{
         id?: string;
         title: string;
         description?: string;
@@ -672,7 +674,7 @@ type ButtonProps = {
 type ActionsSheetProps = {
     title?: string;
     subtitle?: string;
-    description?: string | Array<string>;
+    description?: string | ReadonlyArray<string>;
     button: ButtonProps;
     secondaryButton?: ButtonProps;
     buttonLink?: ButtonProps & {withChevron?: boolean};

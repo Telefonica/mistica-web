@@ -124,8 +124,8 @@ const DEVICES: DeviceCollection = {
     [LARGE_DESKTOP_DEVICE]: {
         platform: undefined,
         viewport: {
-            width: 1368,
-            height: 800,
+            width: 1920,
+            height: 1080,
             deviceScaleFactor: 1,
             isMobile: false,
             hasTouch: false,
@@ -172,7 +172,7 @@ export const openStoryPage = ({
     id: string;
     device?: Device;
     viewport?: TestViewport;
-    skin?: 'Movistar' | 'Vivo' | 'Vivo-new' | 'O2' | 'Telefonica' | 'Blau' | 'Tu';
+    skin?: 'Movistar' | 'Vivo' | 'Vivo-new' | 'O2' | 'O2-new' | 'Telefonica' | 'Blau' | 'Tu';
     args?: StoryArgs;
     isDarkMode?: boolean;
 }): Promise<PageApi> =>

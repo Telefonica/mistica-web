@@ -2,7 +2,7 @@
 import * as React from 'react';
 import {getAnimateDrawLineProps, getAnimateFadeInProps} from '../utils/animation';
 import {useTheme} from '../hooks';
-import {O2_SKIN, O2_CLASSIC_SKIN} from '../skins/constants';
+import {O2_SKIN} from '../skins/constants';
 import {vars} from '../skins/skin-contract.css';
 import * as styles from './icon-error.css';
 
@@ -14,7 +14,7 @@ const IconErrorO2 = ({size = 48}: Props): JSX.Element => {
     const {platformOverrides} = useTheme();
 
     return (
-        <svg width={size} height={size} viewBox="0 0 64 64" overflow="visible">
+        <svg role="presentation" width={size} height={size} viewBox="0 0 64 64" overflow="visible">
             <g
                 stroke={vars.colors.error}
                 fill={vars.colors.error}
@@ -62,7 +62,7 @@ const IconErrorDefault = ({size = 48}: Props): JSX.Element => {
     const {platformOverrides} = useTheme();
 
     return (
-        <svg width={size} height={size} viewBox="0 0 64 64" overflow="visible">
+        <svg role="presentation" width={size} height={size} viewBox="0 0 64 64" overflow="visible">
             <g
                 stroke={vars.colors.error}
                 fill="none"
@@ -107,11 +107,7 @@ const IconErrorDefault = ({size = 48}: Props): JSX.Element => {
 const IconError = (props: Props): JSX.Element => {
     const {skinName} = useTheme();
 
-    return skinName === O2_SKIN || skinName === O2_CLASSIC_SKIN ? (
-        <IconErrorO2 {...props} />
-    ) : (
-        <IconErrorDefault {...props} />
-    );
+    return skinName === O2_SKIN ? <IconErrorO2 {...props} /> : <IconErrorDefault {...props} />;
 };
 
 export default IconError;

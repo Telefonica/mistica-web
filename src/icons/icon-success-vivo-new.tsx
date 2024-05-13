@@ -12,7 +12,7 @@ const IconSuccessVivoNew = ({size = 48}: Props): JSX.Element => {
     const gradientId = useAriaId();
 
     return (
-        <svg width={size} height={size} viewBox="0 0 64 64" fill="none">
+        <svg role="presentation" width={size} height={size} viewBox="0 0 64 64" fill="none">
             <circle
                 cx="32"
                 cy="32"

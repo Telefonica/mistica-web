@@ -23,14 +23,19 @@ export const Default: StoryComponent = () => {
             <div data-testid="stepper">
                 <Stepper currentIndex={step} steps={texts} aria-label="Progress" />
             </div>
-            <ButtonLayout align="center">
-                <ButtonPrimary onPress={stepDecrement} disabled={step === 0}>
-                    Previous step
-                </ButtonPrimary>
-                <ButtonPrimary onPress={stepIncrement} disabled={step === texts.length - 1}>
-                    Next step
-                </ButtonPrimary>
-            </ButtonLayout>
+            <ButtonLayout
+                align="center"
+                primaryButton={
+                    <ButtonPrimary onPress={stepDecrement} disabled={step === 0}>
+                        Previous step
+                    </ButtonPrimary>
+                }
+                secondaryButton={
+                    <ButtonPrimary onPress={stepIncrement} disabled={step === texts.length - 1}>
+                        Next step
+                    </ButtonPrimary>
+                }
+            />
         </Stack>
     );
 };

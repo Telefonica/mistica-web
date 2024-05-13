@@ -6,7 +6,7 @@ import classNames from 'classnames';
 import Spinner from './spinner';
 import {useThemeVariant} from './theme-variant-context';
 
-import type {TouchableElement} from './touchable';
+import type {TouchableElement, TouchableComponentProps} from './touchable';
 import type {ExclusifyUnion} from './utils/utility-types';
 import type {DataAttributes, IconProps, TrackingEvent} from './utils/types';
 
@@ -97,60 +97,16 @@ const getButtonStyle = (
  *
  */
 export const RawDeprecatedIconButton = React.forwardRef<TouchableElement, DeprecatedProps>((props, ref) => {
-    const {icon, children} = props;
-    const commonProps = {
-        className: props.className || '',
-        ref,
-        disabled: props.disabled,
-        style: props.style,
-        trackingEvent: props.trackingEvent,
-        'aria-live': props['aria-live'],
-        dataAttributes: {'component-name': 'IconButton', ...props.dataAttributes},
-    };
-
-    if (props.href) {
-        return (
-            <BaseTouchable
-                {...commonProps}
-                href={props.href}
-                newTab={props.newTab}
-                aria-label={props['aria-label']}
-            >
-                {!icon && React.Children.only(children)}
-            </BaseTouchable>
-        );
-    }
-    if (props.to) {
-        return (
-            <BaseTouchable
-                {...commonProps}
-                to={props.to}
-                fullPageOnWebView={props.fullPageOnWebView}
-                replace={props.replace}
-                aria-label={props['aria-label']}
-            >
-                {!icon && React.Children.only(children)}
-            </BaseTouchable>
-        );
-    }
-
-    if (props.onPress) {
-        return (
-            <BaseTouchable
-                {...commonProps}
-                onPress={(event) => {
-                    event.stopPropagation();
-                    props.onPress(event);
-                }}
-                aria-label={props['aria-label']}
-            >
-                {!icon && React.Children.only(children)}
-            </BaseTouchable>
-        );
-    }
+    const {icon, children, ...rest} = props;
 
     return (
-        <BaseTouchable {...commonProps} maybe>
+        <BaseTouchable
+            ref={ref}
+            {...rest}
+            maybe
+            stopPropagation
+            dataAttributes={{'component-name': 'IconButton', ...props.dataAttributes}}
+        >
             {!icon && React.Children.only(children)}
         </BaseTouchable>
     );
@@ -181,14 +137,10 @@ interface IconButtonBaseProps {
 
 interface InternalIconButtonBaseProps {
     isOverMedia?: boolean;
-    hasInteractiveAreaBleed?: boolean;
     hasOverlay?: boolean;
 }
 
-export type IconButtonProps = BaseProps &
-    IconButtonBaseProps &
-    ExclusifyUnion<HrefProps | ToProps | OnPressProps | MaybeProps> &
-    AriaProps;
+export type IconButtonProps = TouchableComponentProps<BaseProps & IconButtonBaseProps & AriaProps>;
 
 export const RawIconButton = React.forwardRef<
     TouchableElement,
@@ -210,15 +162,15 @@ export const RawIconButton = React.forwardRef<
             bleedLeft,
             bleedRight,
             bleedY,
-            hasInteractiveAreaBleed,
-            ...props
+            showSpinner: showSpinnerProp,
+            ...touchableProps
         },
         ref
     ) => {
         const themeVariant = useThemeVariant();
         const [isOnPressPromiseResolving, setIsOnPressPromiseResolving] = React.useState(false);
 
-        const showSpinner = props.showSpinner || isOnPressPromiseResolving;
+        const showSpinner = showSpinnerProp || isOnPressPromiseResolving;
 
         // This state is needed to not render the spinner when hidden (because it causes high CPU usage
         // specially in iPhone). But we want the spinner to be visible during the show/hide animation.
@@ -243,21 +195,20 @@ export const RawIconButton = React.forwardRef<
             trackingEvent,
             'aria-label': ariaLabel,
             'aria-labelledby': ariaLabelledby,
-            role: props.onPress || props.to || props.href ? 'button' : undefined,
             dataAttributes: {'component-name': 'IconButton', ...dataAttributes},
             className: classNames(
                 styles.buttonContainer[buttonSize],
                 styles.iconButtonTokens[buttonTokensKey],
+                styles.minimumInteractiveArea,
                 {
                     [styles.disabled]: disabled,
                     [styles.overlayContainer]: !disabled && !showSpinner,
-                    [styles.bleedLeft[buttonSize]]: bleedLeft && !hasInteractiveAreaBleed,
-                    [styles.bleedRight[buttonSize]]: bleedRight && !hasInteractiveAreaBleed,
-                    [styles.bleedY[buttonSize]]: bleedY && !hasInteractiveAreaBleed,
-                    [styles.interactiveAreaBleed[buttonSize]]: hasInteractiveAreaBleed,
+                    [styles.bleedLeft[buttonSize]]: bleedLeft,
+                    [styles.bleedRight[buttonSize]]: bleedRight,
+                    [styles.bleedY[buttonSize]]: bleedY,
                 }
             ),
-            resetMargin: !bleedLeft && !bleedRight && !bleedY && !hasInteractiveAreaBleed,
+            resetMargin: !bleedLeft && !bleedRight && !bleedY,
         };
 
         const content = (
@@ -284,45 +235,19 @@ export const RawIconButton = React.forwardRef<
             </div>
         );
 
-        if (props.href) {
-            return (
-                <BaseTouchable {...commonProps} href={props.href} newTab={props.newTab}>
-                    {content}
-                </BaseTouchable>
-            );
-        }
-        if (props.to) {
-            return (
-                <BaseTouchable
-                    {...commonProps}
-                    to={props.to}
-                    fullPageOnWebView={props.fullPageOnWebView}
-                    replace={props.replace}
-                >
-                    {content}
-                </BaseTouchable>
-            );
-        }
-
-        if (props.onPress) {
-            return (
-                <BaseTouchable
-                    {...commonProps}
-                    onPress={(e) => {
-                        const promise = props.onPress(e);
-                        if (promise) {
-                            setIsOnPressPromiseResolving(true);
-                            promise.finally(() => setIsOnPressPromiseResolving(false));
-                        }
-                    }}
-                >
-                    {content}
-                </BaseTouchable>
-            );
+        if (touchableProps.onPress) {
+            const originalOnPress = touchableProps.onPress;
+            touchableProps.onPress = (e) => {
+                const promise = originalOnPress(e);
+                if (promise) {
+                    setIsOnPressPromiseResolving(true);
+                    promise.finally(() => setIsOnPressPromiseResolving(false));
+                }
+            };
         }
 
         return (
-            <BaseTouchable {...commonProps} maybe>
+            <BaseTouchable {...commonProps} {...touchableProps} maybe>
                 {content}
             </BaseTouchable>
         );
@@ -358,29 +283,6 @@ export const IconButton = React.forwardRef<
 >((props, ref) => {
     return <InternalIconButton ref={ref} {...props} />;
 });
-
-// Used internally by Mistica's components to avoid styles collisions
-
-export const BaseIconButton = (props: ExclusifyUnion<DeprecatedProps | IconButtonProps>): JSX.Element => {
-    if (props.Icon) {
-        return <RawIconButton {...props} />;
-    }
-
-    const {size = ICON_SIZE_1, disabled} = props;
-    return (
-        <RawDeprecatedIconButton
-            {...props}
-            className={classNames(styles.deprecatedIconButtonBase, props.className)}
-            style={{
-                height: size,
-                width: size,
-                cursor: disabled ? 'default' : 'pointer',
-                verticalAlign: 'middle',
-                textAlign: 'center',
-            }}
-        />
-    );
-};
 
 type ToggleStateProps = {
     Icon: React.FC<IconProps>;

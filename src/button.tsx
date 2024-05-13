@@ -13,6 +13,7 @@ import {eventActions, eventCategories, eventNames, useTrackingConfig} from './ut
 import {useTheme} from './hooks';
 import {flattenChildren} from './skins/utils';
 import * as styles from './button.css';
+import {VIVO_NEW_SKIN} from './skins/constants';
 
 import type {TouchableElement} from './touchable';
 import type {
@@ -81,6 +82,20 @@ const renderButtonElement = ({
 };
 
 const ButtonLinkChevron: React.FC = () => {
+    const {skinName} = useTheme();
+
+    // vivo new skin has a different chevron
+    if (skinName === VIVO_NEW_SKIN) {
+        return (
+            <svg width="0.5em" height="0.5em" viewBox="0 0 8 8" fill="none">
+                <path
+                    d="M5.11111 3.68886L2.73534 1.30383C2.63671 1.21526 2.51339 1.1909 2.4052 1.20285C2.29952 1.21452 2.19613 1.26162 2.12144 1.33458C2.04957 1.40271 2.00869 1.50793 2.00126 1.60783C1.9934 1.71334 2.02104 1.83978 2.12131 1.93639L4.33333 4.07775L2.11406 6.20689L2.11057 6.21056L2.10821 6.21315L2.10381 6.21806C2.01525 6.31669 1.99089 6.44001 2.00284 6.5482C2.01451 6.65388 2.06161 6.75727 2.13456 6.83196C2.20269 6.90383 2.30792 6.94471 2.40782 6.95215C2.51332 6.96 2.63976 6.93237 2.73638 6.83209L5.11111 4.46664C5.32589 4.25186 5.32589 3.90364 5.11111 3.68886Z"
+                    fill="currentColor"
+                />
+            </svg>
+        );
+    }
+
     return (
         <svg width="0.5em" height="0.5em" viewBox="0 0 8 8">
             <path
@@ -240,6 +255,8 @@ interface CommonProps {
     tabIndex?: number;
     StartIcon?: React.FC<IconProps>;
     EndIcon?: React.FC<IconProps>;
+    /** IMPORTANT: try to avoid using role="link" with onPress and first consider other alternatives like to/href + onNavigate */
+    role?: string;
 }
 
 export interface ToButtonProps extends CommonProps {
@@ -249,6 +266,7 @@ export interface ToButtonProps extends CommonProps {
     fake?: undefined;
     onPress?: undefined;
     href?: undefined;
+    onNavigate?: () => void | Promise<void>;
 }
 export interface OnPressButtonProps extends CommonProps {
     onPress: (event: React.MouseEvent<HTMLElement>) => void | undefined | Promise<void>;
@@ -256,6 +274,7 @@ export interface OnPressButtonProps extends CommonProps {
     fake?: undefined;
     to?: undefined;
     href?: undefined;
+    onNavigate?: undefined;
 }
 export interface HrefButtonProps extends CommonProps {
     href: string;
@@ -265,6 +284,7 @@ export interface HrefButtonProps extends CommonProps {
     fake?: undefined;
     onPress?: undefined;
     to?: undefined;
+    onNavigate?: () => void | Promise<void>;
 }
 export interface FakeButtonProps extends CommonProps {
     fake: true;
@@ -272,6 +292,7 @@ export interface FakeButtonProps extends CommonProps {
     onPress?: undefined;
     to?: undefined;
     href?: undefined;
+    onNavigate?: undefined;
 }
 export interface SubmitButtonProps extends CommonProps {
     submit: true;
@@ -279,6 +300,7 @@ export interface SubmitButtonProps extends CommonProps {
     fake?: undefined;
     onPress?: undefined;
     href?: undefined;
+    onNavigate?: undefined;
 }
 
 export type ButtonProps =
@@ -377,7 +399,7 @@ const Button = React.forwardRef<TouchableElement, ButtonProps & {type: ButtonTyp
             EndIcon: props.EndIcon,
         }),
         disabled: props.disabled || showSpinner || isFormSending,
-        role: 'button',
+        role: props.role,
     };
 
     if (process.env.NODE_ENV !== 'production') {
@@ -411,7 +433,14 @@ const Button = React.forwardRef<TouchableElement, ButtonProps & {type: ButtonTyp
     }
 
     if (props.to || props.to === '') {
-        return <BaseTouchable {...commonProps} to={props.to} fullPageOnWebView={props.fullPageOnWebView} />;
+        return (
+            <BaseTouchable
+                {...commonProps}
+                to={props.to}
+                fullPageOnWebView={props.fullPageOnWebView}
+                onNavigate={props.onNavigate}
+            />
+        );
     }
 
     if (props.href || props.href === '') {
@@ -421,6 +450,7 @@ const Button = React.forwardRef<TouchableElement, ButtonProps & {type: ButtonTyp
                 href={props.href}
                 newTab={props.newTab}
                 loadOnTop={props.loadOnTop}
+                onNavigate={props.onNavigate}
             />
         );
     }
@@ -442,10 +472,6 @@ interface ButtonLinkCommonProps {
     trackEvent?: boolean;
     /** "data-" prefix is automatically added. For example, use "testid" instead of "data-testid" */
     dataAttributes?: DataAttributes;
-    /**
-     * @deprecated This field is deprecated, please use bleedLeft instead.
-     */
-    aligned?: boolean;
     showSpinner?: boolean;
     loadingText?: string;
     StartIcon?: React.FC<IconProps>;
@@ -457,23 +483,31 @@ interface ButtonLinkCommonProps {
     'aria-controls'?: string;
     'aria-expanded'?: 'true' | 'false' | boolean;
     'aria-haspopup'?: 'true' | 'false' | 'menu' | 'dialog' | boolean;
+    /** IMPORTANT: try to avoid using role="link" with onPress and first consider other alternatives like to/href + onNavigate */
+    role?: string;
 }
+
 interface ButtonLinkOnPressProps extends ButtonLinkCommonProps {
     onPress: (event: React.MouseEvent<HTMLElement>) => void | undefined | Promise<void>;
     to?: undefined;
     href?: undefined;
+    onNavigate?: undefined;
 }
+
 interface ButtonLinkHrefProps extends ButtonLinkCommonProps {
     href: string;
     newTab?: boolean;
     onPress?: undefined;
     to?: undefined;
+    onNavigate?: () => void | Promise<void>;
 }
+
 interface ButtonLinkToProps extends ButtonLinkCommonProps {
     to: string;
     fullPageOnWebView?: boolean;
     onPress?: undefined;
     href?: undefined;
+    onNavigate?: () => void | Promise<void>;
 }
 
 export type ButtonLinkProps = ButtonLinkOnPressProps | ButtonLinkHrefProps | ButtonLinkToProps;
@@ -543,7 +577,7 @@ const BaseButtonLink = React.forwardRef<
          * If we set it using className, it may not work depending on the order in which the styles are applied.
          */
         style: {
-            ...(props.bleedLeft || props.aligned ? {marginLeft: -styles.PADDING_X_LINK} : undefined),
+            ...(props.bleedLeft ? {marginLeft: -styles.PADDING_X_LINK} : undefined),
             ...(props.bleedRight ? {marginRight: -styles.PADDING_X_LINK} : undefined),
             ...(props.bleedY
                 ? {marginTop: -styles.PADDING_Y_LINK, marginBottom: -styles.PADDING_Y_LINK}
@@ -569,6 +603,7 @@ const BaseButtonLink = React.forwardRef<
             withChevron: showChevron,
         }),
         disabled: props.disabled || showSpinner || isFormSending,
+        role: props.role,
     };
 
     if (process.env.NODE_ENV !== 'production') {
@@ -600,12 +635,21 @@ const BaseButtonLink = React.forwardRef<
                 {...commonProps}
                 to={props.to}
                 fullPageOnWebView={props.fullPageOnWebView}
+                onNavigate={props.onNavigate}
             />
         );
     }
 
     if (props.href || props.href === '') {
-        return <BaseTouchable ref={ref} {...commonProps} href={props.href} newTab={props.newTab} />;
+        return (
+            <BaseTouchable
+                ref={ref}
+                {...commonProps}
+                href={props.href}
+                newTab={props.newTab}
+                onNavigate={props.onNavigate}
+            />
+        );
     }
 
     if (process.env.NODE_ENV !== 'production') {

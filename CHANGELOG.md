@@ -1,3 +1,145 @@
+## [15.6.1](https://github.com/Telefonica/mistica-web/compare/v15.6.0...v15.6.1) (2024-05-09)
+
+
+### Bug Fixes
+
+* **Chip, HighlightedCard, Row:** wrong types ([#1120](https://github.com/Telefonica/mistica-web/issues/1120)) ([47e8851](https://github.com/Telefonica/mistica-web/commit/47e885128d59ec5492bb57bddb6f4217d73ef7d7))
+
+# [15.6.0](https://github.com/Telefonica/mistica-web/compare/v15.5.0...v15.6.0) (2024-05-09)
+
+
+### Bug Fixes
+
+* **AdvancedDataCard:** minHeight issues caused by [#1102](https://github.com/Telefonica/mistica-web/issues/1102) ([#1118](https://github.com/Telefonica/mistica-web/issues/1118)) ([5ff819f](https://github.com/Telefonica/mistica-web/commit/5ff819f12a20089b1c49dfbbf486f2a49eea75ae))
+* **Image:** force async image decoding to avoid broken images in iOS ([#1111](https://github.com/Telefonica/mistica-web/issues/1111)) ([06b97f9](https://github.com/Telefonica/mistica-web/commit/06b97f94a38e640fcbf8e0726640dc4365334dfc))
+
+
+### Features
+
+* **Row,BoxedRow:** danger style ([#1101](https://github.com/Telefonica/mistica-web/issues/1101)) ([d1ab168](https://github.com/Telefonica/mistica-web/commit/d1ab168379bd76a77fb106f4dc796d7fc4abbbb9))
+
+# [15.5.0](https://github.com/Telefonica/mistica-web/compare/v15.4.0...v15.5.0) (2024-05-07)
+
+
+### Features
+
+* **ResponsiveLayout, ResetResponsiveLayout, Hero, Slideshow:** refactor ResponsiveLayout and update components ([#1100](https://github.com/Telefonica/mistica-web/issues/1100)) ([7fc17d0](https://github.com/Telefonica/mistica-web/commit/7fc17d003f15a6cee11684901e0d718af49e3847))
+* **ThemeContextProvider:** withoutStyles prop, to avoid injecting styles ([#1114](https://github.com/Telefonica/mistica-web/issues/1114)) ([da98f68](https://github.com/Telefonica/mistica-web/commit/da98f68f08844316ae3adf2ae1540a963a303bdf))
+
+# [15.4.0](https://github.com/Telefonica/mistica-web/compare/v15.3.0...v15.4.0) (2024-05-06)
+
+
+### Bug Fixes
+
+* **AdvancedDataCard:** footer extra space ([#1102](https://github.com/Telefonica/mistica-web/issues/1102)) ([78e0e80](https://github.com/Telefonica/mistica-web/commit/78e0e805de8c6fb97c17fc82b5f4af0a0a5d5697))
+* **Chip:** expand chips when inside a grid ([#1108](https://github.com/Telefonica/mistica-web/issues/1108)) ([32810ee](https://github.com/Telefonica/mistica-web/commit/32810ee9c082fe6b6157ffc83d1efc024f33ab88))
+* **Dialog:** hide optional elements if not provided ([#1093](https://github.com/Telefonica/mistica-web/issues/1093)) ([1134b4a](https://github.com/Telefonica/mistica-web/commit/1134b4ad6be80fcae1f49d28800f46e5bfb94fbd))
+* **Hero:** add bottom padding inside slideshow only when it has bullets ([#1106](https://github.com/Telefonica/mistica-web/issues/1106)) ([9be0e88](https://github.com/Telefonica/mistica-web/commit/9be0e88454260e1d752b59889346c867407976a9))
+* **Hero:** use background instead of backgroundColor to support gradients ([#1091](https://github.com/Telefonica/mistica-web/issues/1091)) ([f4ba119](https://github.com/Telefonica/mistica-web/commit/f4ba119d14dd426df49729ccb8ef8c5df0abd332))
+* **PreviewTools:** update non working animation for floating case ([#1095](https://github.com/Telefonica/mistica-web/issues/1095)) ([dfccad5](https://github.com/Telefonica/mistica-web/commit/dfccad5bc73ee19d008596b8bbf0ce653aa48c93))
+* **RowBlock:** set description text alignment to the right ([#1092](https://github.com/Telefonica/mistica-web/issues/1092)) ([9494d02](https://github.com/Telefonica/mistica-web/commit/9494d0274444da9647aa76853a63f384357e943e))
+* **RowList:** update logic to render last divider ([#1110](https://github.com/Telefonica/mistica-web/issues/1110)) ([8db09d7](https://github.com/Telefonica/mistica-web/commit/8db09d7e4328c3346d9b2138f7359f7d0cf841af))
+* **Snackbar:** Desktop position ([#1096](https://github.com/Telefonica/mistica-web/issues/1096)) ([346f446](https://github.com/Telefonica/mistica-web/commit/346f4465ee825d2fb7f86e80efd370e3d15604bb))
+* **Text:** make vivinho char replacement for screen readers work when Text have multiple children ([#1090](https://github.com/Telefonica/mistica-web/issues/1090)) ([e5c239c](https://github.com/Telefonica/mistica-web/commit/e5c239cac7fc97daf11de671d40453c21a7172dc))
+* **Video:** avoid duplicated state update in Video's state machine ([#1107](https://github.com/Telefonica/mistica-web/issues/1107)) ([8ae2ea0](https://github.com/Telefonica/mistica-web/commit/8ae2ea000bba32c9b2d1cdfb4c448206cc88b462))
+
+
+### Features
+
+* **Accordion, Cards, Carousel, Feedback, Sheet, Slider:** replace Array with ReadonlyArray in props ([#1098](https://github.com/Telefonica/mistica-web/issues/1098)) ([22ee93a](https://github.com/Telefonica/mistica-web/commit/22ee93ac2952e5bcfbb758410cd52c4ab48e6f52))
+* **ButtonLink:** change chevron icon in Vivo-new skin ([#1103](https://github.com/Telefonica/mistica-web/issues/1103)) ([caedc61](https://github.com/Telefonica/mistica-web/commit/caedc61fa8ffa88ee145e00f1b3d4b0c15b3c351))
+* **FixedFooter:** Gradient background support ([#1073](https://github.com/Telefonica/mistica-web/issues/1073)) ([a7d4bd8](https://github.com/Telefonica/mistica-web/commit/a7d4bd8325bd76479560a834b66d993594f2a187))
+* **Icons:** New routine and ethernet icons ([#1083](https://github.com/Telefonica/mistica-web/issues/1083)) ([edd7173](https://github.com/Telefonica/mistica-web/commit/edd71732f05367081e5868f745f304754bdb8a10))
+* **Image:** add srcSet ([#1109](https://github.com/Telefonica/mistica-web/issues/1109)) ([fa63884](https://github.com/Telefonica/mistica-web/commit/fa63884a4aeb2b89e0f4504bae7607cfe1edeb98))
+* **o2-new:** dark mode improvements ([#1105](https://github.com/Telefonica/mistica-web/issues/1105)) ([d92e404](https://github.com/Telefonica/mistica-web/commit/d92e404cfd3098c9c2f345aeefc37f80a3b69efc))
+* **PosterCard:** improve accessibility ([#1087](https://github.com/Telefonica/mistica-web/issues/1087)) ([c56e177](https://github.com/Telefonica/mistica-web/commit/c56e1777c73cb9d4f337cc7e0e6d375cb8b4961c))
+* **Row:** improve VoiceOver compatibility ([#1079](https://github.com/Telefonica/mistica-web/issues/1079)) ([02f43d7](https://github.com/Telefonica/mistica-web/commit/02f43d7c85f9978bd4f714c0c6a8c428e228929c))
+* **Theme:** expose `colorValues` in theme ([#1104](https://github.com/Telefonica/mistica-web/issues/1104)) ([63c644e](https://github.com/Telefonica/mistica-web/commit/63c644e51b667868e7e3a2a7fb4f927158fffd02))
+
+# [15.3.0](https://github.com/Telefonica/mistica-web/compare/v15.2.1...v15.3.0) (2024-04-22)
+
+
+### Bug Fixes
+
+* **FixedFooterLayout:** remove background applied by elevation in desktop ([#1081](https://github.com/Telefonica/mistica-web/issues/1081)) ([79804f8](https://github.com/Telefonica/mistica-web/commit/79804f8648606ed77029bfa02435dd7ffa06f9e5))
+* **Image:** prevent loading skeleton from using default border radius value ([#1082](https://github.com/Telefonica/mistica-web/issues/1082)) ([68658df](https://github.com/Telefonica/mistica-web/commit/68658df54dcc4ddaa28ff32360597870eadea0ba))
+* **Sheet:** fix sheets in large desktop sizes ([#1088](https://github.com/Telefonica/mistica-web/issues/1088)) ([0c49bf2](https://github.com/Telefonica/mistica-web/commit/0c49bf26de47cbfad411ed7906dcc6274805806f))
+* **utils:** use `location.assign` to redirect, instead of `location.href` ([#1089](https://github.com/Telefonica/mistica-web/issues/1089)) ([428f0f6](https://github.com/Telefonica/mistica-web/commit/428f0f697126db995ccb1aea65cd1a79cdc50bd2))
+
+
+### Features
+
+* **AdvancedDataCard:** add trackingEvent when card is interactive ([#1086](https://github.com/Telefonica/mistica-web/issues/1086)) ([ff81726](https://github.com/Telefonica/mistica-web/commit/ff81726315aa8c84bfb3c4c28fdd15862116d22e))
+* **Hero:** add noPaddingY and transparent background props ([#1077](https://github.com/Telefonica/mistica-web/issues/1077)) ([f80fe23](https://github.com/Telefonica/mistica-web/commit/f80fe23c0a37c92bdc7deb4e8e69d60b53099fd2))
+* **Storybook:** use on-air font with movistar skin ([#1078](https://github.com/Telefonica/mistica-web/issues/1078)) ([a4d55bf](https://github.com/Telefonica/mistica-web/commit/a4d55bf624ad2e52f01556f962c289a6c10340e8))
+* **vivo-type:** make screen readers read vivinho char as Vivo ([#1084](https://github.com/Telefonica/mistica-web/issues/1084)) ([fbb6611](https://github.com/Telefonica/mistica-web/commit/fbb6611ab5521648d8dbfa61ed9ba02a2aefbb6f))
+
+## [15.2.1](https://github.com/Telefonica/mistica-web/compare/v15.2.0...v15.2.1) (2024-04-09)
+
+
+### Bug Fixes
+
+* **Row:** not having full width in some cases ([#1075](https://github.com/Telefonica/mistica-web/issues/1075)) ([434944f](https://github.com/Telefonica/mistica-web/commit/434944fc643df19d8a325d2c29ec9f0bcb10a18f))
+
+# [15.2.0](https://github.com/Telefonica/mistica-web/compare/v15.1.0...v15.2.0) (2024-04-09)
+
+
+### Features
+
+* **DisplayMediaCard & PosterCard:** use cardContentOverlay token in overlay ([#1074](https://github.com/Telefonica/mistica-web/issues/1074)) ([a885ce2](https://github.com/Telefonica/mistica-web/commit/a885ce29e3e25c9c8b65de00e8dd9b84f5cc2a7c))
+* **TextLink:** accesibility improvements ([#1072](https://github.com/Telefonica/mistica-web/issues/1072)) ([4179b3e](https://github.com/Telefonica/mistica-web/commit/4179b3ee74c19f8353327641f5cf1fca2af60735))
+
+# [15.1.0](https://github.com/Telefonica/mistica-web/compare/v15.0.0...v15.1.0) (2024-04-08)
+
+
+### Bug Fixes
+
+* **IconButton:** prevent interactive area from affecting button layout ([#1069](https://github.com/Telefonica/mistica-web/issues/1069)) ([f377aac](https://github.com/Telefonica/mistica-web/commit/f377aac4eea1bc698ec9cfa1354ba2a37114fd15))
+
+
+### Features
+
+* **Accordion,Callout,Cards,EmptyState,Header,Hero,Row,NavigationBar:** added titleAs prop to allow configuring heading level ([#1067](https://github.com/Telefonica/mistica-web/issues/1067)) ([814c297](https://github.com/Telefonica/mistica-web/commit/814c2977d2612f65b290f89dda9a2f361cde4b71))
+* **RowList, BoxedRowList, Inline:** support list a11y role ([#1068](https://github.com/Telefonica/mistica-web/issues/1068)) ([7e2fe37](https://github.com/Telefonica/mistica-web/commit/7e2fe3736d3399d990ec28d2e0107a7b7a3057c9)), closes [/github.com/Telefonica/mistica-web/blob/master/src/stack.tsx#L64](https://github.com//github.com/Telefonica/mistica-web/blob/master/src/stack.tsx/issues/L64)
+* **skin:** o2 new brand ([#968](https://github.com/Telefonica/mistica-web/issues/968)) ([56e3945](https://github.com/Telefonica/mistica-web/commit/56e39454e7b144a3d6fe852162df8c52ed7a76bd))
+* **Switch:** add minimum interactive area in touchable devices ([#1063](https://github.com/Telefonica/mistica-web/issues/1063)) ([fb202e7](https://github.com/Telefonica/mistica-web/commit/fb202e7669c651061d0ce473e8c22f0d31dbd8c1))
+* **Touchable, Buttons:** Improve touchable and buttons accessibility ([#1070](https://github.com/Telefonica/mistica-web/issues/1070)) ([8d93c71](https://github.com/Telefonica/mistica-web/commit/8d93c71a672f1943d352f8ad7bb26b296c81b21d))
+
+# [15.0.0](https://github.com/Telefonica/mistica-web/compare/v14.48.0...v15.0.0) (2024-04-01)
+
+
+### Bug Fixes
+
+* **Image:** reset error state when src changes ([#1062](https://github.com/Telefonica/mistica-web/issues/1062)) ([1cdb87a](https://github.com/Telefonica/mistica-web/commit/1cdb87af0da4e90150da23d7db115815bf03ce48))
+
+
+### Features
+
+* **Accordion,ButtonLink,List,Popover,Slider,Tooltip:** remove deprecated props ([#1052](https://github.com/Telefonica/mistica-web/issues/1052)) ([2e8add2](https://github.com/Telefonica/mistica-web/commit/2e8add2b9bc4e8dae10f57f0d2889ac27b817848))
+* **IconButton:** update usage in CvvField and remove baseIconButton ([#1060](https://github.com/Telefonica/mistica-web/issues/1060)) ([117fc44](https://github.com/Telefonica/mistica-web/commit/117fc44eaf28333f81a1ab19c9cdb65420612d06))
+* **Select:** add default value ([#1061](https://github.com/Telefonica/mistica-web/issues/1061)) ([a0d6a9b](https://github.com/Telefonica/mistica-web/commit/a0d6a9b22ea2758515e34e4c74ecbf1302f410a9))
+* **skins:** remove O2 classic and Movistar legacy skins ([#1051](https://github.com/Telefonica/mistica-web/issues/1051)) ([c8be29a](https://github.com/Telefonica/mistica-web/commit/c8be29a8fbedf409e2cc5f5ceb4df18ed0046530))
+* **Tag:** Use new tokens in tags ([#1054](https://github.com/Telefonica/mistica-web/issues/1054)) ([ff87327](https://github.com/Telefonica/mistica-web/commit/ff873279171e3703740f286fcb5cbaef86cebc1e))
+
+
+### BREAKING CHANGES
+
+* **skins:** remove O2 classic and Movistar legacy skins
+* **Accordion,ButtonLink,List,Popover,Slider,Tooltip:** remove deprecated props in some components
+
+# [14.48.0](https://github.com/Telefonica/mistica-web/compare/v14.47.0...v14.48.0) (2024-03-26)
+
+
+### Bug Fixes
+
+* **Form:** remove error state when input is disabled ([#1057](https://github.com/Telefonica/mistica-web/issues/1057)) ([82f1938](https://github.com/Telefonica/mistica-web/commit/82f19382563c17ba362ad4b104c36db6eade9afa))
+
+
+### Features
+
+* **ButtonLayout:** change alignment logic ([#1055](https://github.com/Telefonica/mistica-web/issues/1055)) ([3ce0fac](https://github.com/Telefonica/mistica-web/commit/3ce0fac8848874b52fc2cd169304ebee8a449a81))
+* **PosterCard:** add subtitle and change description color ([#1056](https://github.com/Telefonica/mistica-web/issues/1056)) ([ec3f40c](https://github.com/Telefonica/mistica-web/commit/ec3f40c2207044b7d5e4f4436ebafe9a67ce770a))
+
 # [14.47.0](https://github.com/Telefonica/mistica-web/compare/v14.46.0...v14.47.0) (2024-03-20)
 
 

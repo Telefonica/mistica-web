@@ -1,4 +1,4 @@
-import {createVar, style} from '@vanilla-extract/css';
+import {createVar, fallbackVar, style} from '@vanilla-extract/css';
 import * as mq from './media-queries.css';
 import {sprinkles} from './sprinkles.css';
 import {vars as skinVars} from './skins/skin-contract.css';
@@ -8,72 +8,122 @@ export const TABLET_SIDE_MARGIN = 32;
 export const SMALL_DESKTOP_SIDE_MARGIN = 40;
 export const LARGE_DESKTOP_MAX_WIDTH = 1224;
 
+const marginValue = {
+    largeDesktop: `calc((100vw - ${LARGE_DESKTOP_MAX_WIDTH}px) / 2)`,
+    desktop: `${SMALL_DESKTOP_SIDE_MARGIN}px`,
+    tablet: `${TABLET_SIDE_MARGIN}px`,
+    mobile: `${MOBILE_SIDE_MARGIN}px`,
+};
+
+const currentMargin = createVar();
 const sideMargin = createVar();
 export const vars = {sideMargin};
 
-export const responsiveLayoutContainer = style([
-    sprinkles({width: '100%'}),
-    {
-        vars: {
-            [sideMargin]: '0px',
-        },
-        '@media': {
-            [mq.desktopOrBigger]: {
-                vars: {
-                    [sideMargin]: `${SMALL_DESKTOP_SIDE_MARGIN}px`,
-                },
-            },
-            [mq.tablet]: {
-                vars: {
-                    [sideMargin]: `${TABLET_SIDE_MARGIN}px`,
-                },
-            },
-            [mq.mobile]: {
-                vars: {
-                    [sideMargin]: `${MOBILE_SIDE_MARGIN}px`,
-                },
-            },
+export const resetContainerMobile = style({
+    '@media': {
+        [mq.tabletOrSmaller]: {
+            width: 'auto',
+            margin: `0 calc(-1 * ${fallbackVar(sideMargin, '0px')})`,
         },
     },
-]);
+});
 
-export const expandedResponsiveLayoutContainerMobile = style({
-    selectors: {
-        '& &': {
-            '@media': {
-                [mq.tabletOrSmaller]: {
-                    width: 'auto',
-                    margin: `0 calc(-1 * ${sideMargin})`,
-                },
+export const resetContainerDesktop = style({
+    '@media': {
+        [mq.desktopOrBigger]: {
+            width: 'auto',
+            margin: `0 calc(-1 * ${fallbackVar(sideMargin, '0px')})`,
+        },
+    },
+});
+
+export const resetMobile = style({
+    '@media': {
+        [mq.tabletOrSmaller]: {
+            vars: {
+                [sideMargin]: '0px',
             },
         },
     },
 });
 
-export const expandedResponsiveLayoutContainerDesktop = style({
-    selectors: {
-        '& &': {
-            '@media': {
-                [mq.desktop]: {
-                    width: 'auto',
-                    margin: `0 calc(-1 * ${sideMargin})`,
-                },
-                [mq.largeDesktop]: {
-                    width: 'auto',
-                    margin: `0 calc(-1 * (100vw - ${LARGE_DESKTOP_MAX_WIDTH}px) / 2)`,
-                },
+export const resetDesktop = style({
+    '@media': {
+        [mq.desktopOrBigger]: {
+            vars: {
+                [sideMargin]: '0px',
             },
         },
     },
 });
 
-export const fullwidthContainer = style([
-    {
-        vars: {
-            [sideMargin]: '0px',
+export const responsiveLayoutContainer = style({
+    width: `calc(100% + 2 * ${fallbackVar(sideMargin, '0px')})`,
+    margin: `0 calc(-1 * ${fallbackVar(sideMargin, '0px')})`,
+    vars: {
+        [currentMargin]: '0px',
+    },
+});
+
+export const desktopContainer = style({
+    '@media': {
+        [mq.largeDesktop]: {
+            vars: {
+                [currentMargin]: marginValue.largeDesktop,
+            },
+        },
+        [mq.desktop]: {
+            vars: {
+                [currentMargin]: marginValue.desktop,
+            },
         },
     },
-]);
+});
+
+export const forcedMarginDesktopContainer = style({
+    '@media': {
+        [mq.largeDesktop]: {
+            vars: {
+                [currentMargin]: `calc(${marginValue.largeDesktop} + ${fallbackVar(sideMargin, '0px')})`,
+            },
+        },
+        [mq.desktop]: {
+            vars: {
+                [currentMargin]: `calc(${marginValue.desktop} + ${fallbackVar(sideMargin, '0px')})`,
+            },
+        },
+    },
+});
+
+export const mobileContainer = style({
+    '@media': {
+        [mq.tablet]: {
+            vars: {
+                [currentMargin]: marginValue.tablet,
+            },
+        },
+        [mq.mobile]: {
+            vars: {
+                [currentMargin]: marginValue.mobile,
+            },
+        },
+    },
+});
+
+export const forcedMarginMobileContainer = style({
+    '@media': {
+        [mq.tablet]: {
+            vars: {
+                [currentMargin]: `calc(${marginValue.tablet} + ${fallbackVar(sideMargin, '0px')})`,
+            },
+        },
+        [mq.mobile]: {
+            vars: {
+                [currentMargin]: `calc(${marginValue.mobile} + ${fallbackVar(sideMargin, '0px')})`,
+            },
+        },
+    },
+});
 
 export const backgroundVariant = {
     inverse: sprinkles({background: skinVars.colors.backgroundBrand}),
@@ -83,12 +133,9 @@ export const backgroundVariant = {
 export const responsiveLayout = style({
     paddingLeft: 'env(safe-area-inset-left)',
     paddingRight: 'env(safe-area-inset-right)',
-
-    margin: `0 ${sideMargin}`,
-    '@media': {
-        [mq.largeDesktop]: {
-            margin: `0 calc((100vw - ${LARGE_DESKTOP_MAX_WIDTH}px) / 2)`,
-        },
+    margin: `0 ${currentMargin}`,
+    vars: {
+        [sideMargin]: currentMargin,
     },
 });
 

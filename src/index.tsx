@@ -95,19 +95,7 @@ export {
     NavigationBarActionGroup,
     NavigationBarAction,
 } from './navigation-bar';
-export {
-    /**
-     * @deprecated This component is deprecated, please use Logo instead
-     */
-    Logo as NavigationBarLogo,
-    Logo,
-    MovistarLogo,
-    VivoLogo,
-    O2Logo,
-    TelefonicaLogo,
-    BlauLogo,
-    TuLogo,
-} from './logo';
+export {Logo, MovistarLogo, VivoLogo, O2Logo, O2NewLogo, TelefonicaLogo, BlauLogo, TuLogo} from './logo';
 export {default as Image} from './image';
 export {default as Chip} from './chip';
 export {default as Video} from './video';
@@ -119,8 +107,6 @@ export {
     PageBullets,
     CarouselContextProvider,
     useCarouselContext,
-    /** @deprecated Contains a typo. Please use CarouselContextConsumer */
-    CarouselContextConsumer as CarouselContextConsummer,
     CarouselContextConsumer,
 } from './carousel';
 export {Grid, GridItem} from './grid';
@@ -199,8 +185,8 @@ export type {Skin, KnownSkinName, SkinName} from './skins/types';
 export {
     VIVO_SKIN,
     VIVO_NEW_SKIN,
-    O2_CLASSIC_SKIN,
     O2_SKIN,
+    O2_NEW_SKIN,
     MOVISTAR_SKIN,
     TELEFONICA_SKIN,
     BLAU_SKIN,
@@ -210,16 +196,15 @@ export {getSkinByName} from './skins/utils';
 export {getVivoSkin} from './skins/vivo';
 export {getVivoNewSkin} from './skins/vivo-new';
 export {getMovistarSkin} from './skins/movistar';
-export {getMovistarLegacySkin} from './skins/movistar-legacy';
 export {getO2Skin} from './skins/o2';
-export {getO2ClassicSkin} from './skins/o2-classic';
+export {getO2NewSkin} from './skins/o2-new';
 export {getTelefonicaSkin} from './skins/telefonica';
 export {getBlauSkin} from './skins/blau';
 export {getTuSkin} from './skins/tu';
 export {palette as vivoPalette} from './skins/vivo';
 export {palette as movistarPalette} from './skins/movistar';
 export {palette as o2Palette} from './skins/o2';
-export {palette as o2ClassicPalette} from './skins/o2-classic';
+export {palette as o2NewPalette} from './skins/o2-new';
 export {palette as telefonicaPalette} from './skins/telefonica';
 export {palette as blauPalette} from './skins/blau';
 export {palette as tuPalette} from './skins/tu';
@@ -867,6 +852,9 @@ export {default as IconEscalatorRegular} from './generated/mistica-icons/icon-es
 export {default as IconEsimFilled} from './generated/mistica-icons/icon-esim-filled';
 export {default as IconEsimLight} from './generated/mistica-icons/icon-esim-light';
 export {default as IconEsimRegular} from './generated/mistica-icons/icon-esim-regular';
+export {default as IconEthernetFilled} from './generated/mistica-icons/icon-ethernet-filled';
+export {default as IconEthernetLight} from './generated/mistica-icons/icon-ethernet-light';
+export {default as IconEthernetRegular} from './generated/mistica-icons/icon-ethernet-regular';
 export {default as IconEuroSymbolCircleFilled} from './generated/mistica-icons/icon-euro-symbol-circle-filled';
 export {default as IconEuroSymbolCircleLight} from './generated/mistica-icons/icon-euro-symbol-circle-light';
 export {default as IconEuroSymbolCircleRegular} from './generated/mistica-icons/icon-euro-symbol-circle-regular';
@@ -1567,6 +1555,9 @@ export {default as IconRouteRegular} from './generated/mistica-icons/icon-route-
 export {default as IconRouterFilled} from './generated/mistica-icons/icon-router-filled';
 export {default as IconRouterLight} from './generated/mistica-icons/icon-router-light';
 export {default as IconRouterRegular} from './generated/mistica-icons/icon-router-regular';
+export {default as IconRoutineFilled} from './generated/mistica-icons/icon-routine-filled';
+export {default as IconRoutineLight} from './generated/mistica-icons/icon-routine-light';
+export {default as IconRoutineRegular} from './generated/mistica-icons/icon-routine-regular';
 export {default as IconRulerFilled} from './generated/mistica-icons/icon-ruler-filled';
 export {default as IconRulerLight} from './generated/mistica-icons/icon-ruler-light';
 export {default as IconRulerRegular} from './generated/mistica-icons/icon-ruler-regular';

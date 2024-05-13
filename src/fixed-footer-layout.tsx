@@ -4,13 +4,12 @@ import classnames from 'classnames';
 import {debounce} from './utils/helpers';
 import {isRunningAcceptanceTest} from './utils/platform';
 import {
+    useBoundingRect,
     useElementDimensions,
     useIsomorphicLayoutEffect,
-    useIsWithinIFrame,
-    useScreenHeight,
     useScreenSize,
     useTheme,
-    useWindowHeight,
+    useWindowSize,
 } from './hooks';
 import {
     addPassiveEventListener,
@@ -19,11 +18,13 @@ import {
     hasScroll,
     removePassiveEventListener,
 } from './utils/dom';
+import {Portal} from './portal';
 import {vars} from './skins/skin-contract.css';
 import * as styles from './fixed-footer-layout.css';
 import {applyCssVars, safeAreaInsetBottom} from './utils/css';
+import {useFixedToTopHeight} from './fixed-to-top';
+import {useOverScrollColor} from './overscroll-color-context';
 
-const FOOTER_CANVAS_RATIO = 2;
 const getScrollEventTarget = (el: HTMLElement) => (el === document.documentElement ? window : el);
 
 const waitForSwitchTransitionToStart = (fn: () => void) => {
@@ -43,55 +44,57 @@ type Props = {
     onChangeFooterHeight?: (heightInPx: number) => void;
 };
 
-const FixedFooterLayout: React.FC<Props> = ({
+const MIN_AVAILABLE_HEIGHT_FOR_FIXED = 200;
+
+const FixedFooterLayout = ({
     isFooterVisible = true,
     footer,
     footerHeight = 'auto',
     footerBgColor = vars.colors.background,
-    containerBgColor,
+    containerBgColor = vars.colors.background,
     children,
     onChangeFooterHeight,
-}) => {
+}: Props): JSX.Element => {
     const [displayElevation, setDisplayElevation] = React.useState(false);
     const containerRef = React.useRef<HTMLDivElement>(null);
+    const {height: contentHeight} = useBoundingRect(containerRef) || {height: 0};
     const {isTabletOrSmaller} = useScreenSize();
     const {platformOverrides} = useTheme();
     const {height: domFooterHeight, ref} = useElementDimensions();
-    const isWithinIFrame = useIsWithinIFrame();
-    const windowHeight = useWindowHeight();
-    const screenHeight = useScreenHeight();
-    const hasContentEnoughVSpace =
-        windowHeight - domFooterHeight > (isWithinIFrame ? windowHeight : screenHeight) / FOOTER_CANVAS_RATIO;
+    const {visualHeight} = useWindowSize();
+    const topDistance = useFixedToTopHeight();
+    const availableHeight = visualHeight - topDistance - domFooterHeight;
+    const isFooterFixed = availableHeight > MIN_AVAILABLE_HEIGHT_FOR_FIXED;
+    const {topColor = footerBgColor} = useOverScrollColor();
+    const {height: gradientHeight, ref: gradientRef} = useElementDimensions();
 
     useIsomorphicLayoutEffect(() => {
         onChangeFooterHeight?.(domFooterHeight);
     }, [onChangeFooterHeight, domFooterHeight]);
 
+    const footerHeightStyle = `calc(${safeAreaInsetBottom} + ${domFooterHeight}px)`;
+
     React.useEffect(() => {
+        /**
+         * There is no elevation in desktop devices and we don't display it in acceptance tests or when the
+         * content's height is too small, so we avoid unnecesary calculations in these cases.
+         */
+        if (!isTabletOrSmaller || isRunningAcceptanceTest(platformOverrides) || !isFooterFixed) {
+            setDisplayElevation(false);
+            return;
+        }
+
         const scrollable = getScrollableParentElement(containerRef.current);
 
-        const shouldDisplayElevation = () => {
-            if (isRunningAcceptanceTest(platformOverrides)) {
-                return false;
-            }
-
-            if (!hasContentEnoughVSpace) {
-                return false;
-            }
-
-            if (hasScroll(scrollable)) {
-                return getScrollDistanceToBottom(scrollable) > 1; // This is 1 and not 0 because a weird bug with Safari
-            }
-
-            return false;
-        };
+        const shouldDisplayElevation = () =>
+            hasScroll(scrollable) && getScrollDistanceToBottom(scrollable) > topDistance + 1; // This is 1 and not 0 because a weird bug with Safari
 
         const checkDisplayElevation = debounce(
             () => {
                 setDisplayElevation(shouldDisplayElevation());
             },
             50,
-            {leading: true, maxWait: 200}
+            {leading: true, maxWait: 100}
         );
 
         const transitionAwaiter = waitForSwitchTransitionToStart(checkDisplayElevation);
@@ -104,9 +107,50 @@ const FixedFooterLayout: React.FC<Props> = ({
             removePassiveEventListener(scrollEventTarget, 'resize', checkDisplayElevation);
             transitionAwaiter.cancel();
         };
-    }, [hasContentEnoughVSpace, platformOverrides]);
+    }, [
+        platformOverrides,
+        isTabletOrSmaller,
+        isFooterFixed,
+        // `topDistance` and `contentHeight` dependencies are needed to recalculate the elevation state
+        topDistance,
+        contentHeight,
+    ]);
 
-    const isFixedFooter = hasContentEnoughVSpace;
+    /**
+     * Diagram of the layout:
+     * https://excalidraw.com/#json=No0s6LB7QO735nv-wGIEP,9OOuqiaFInbtr1YjMm4g4Q
+     */
+    const renderBackground = () => {
+        return (
+            <Portal>
+                <div
+                    className={styles.fixedBackgroundLayer}
+                    style={{
+                        background: `linear-gradient(180deg, ${topColor} 50%, ${footerBgColor} 50% 100%)`,
+                    }}
+                />
+                <div
+                    ref={gradientRef}
+                    className={styles.absoluteBackgroundLayer}
+                    style={{
+                        background: containerBgColor, // this color could be a gradient
+                        top: topDistance - 1, // -1 because the navigationbar could have a 1px transparent background
+                        bottom: isFooterFixed ? footerHeightStyle : 'unset',
+                        height: isFooterFixed ? 'unset' : contentHeight,
+                    }}
+                />
+
+                <div
+                    className={styles.absoluteBackgroundLayer}
+                    style={{
+                        background: footerBgColor,
+                        top: gradientHeight + topDistance - 1,
+                        height: `calc(${contentHeight}px - ${gradientHeight}px)`,
+                    }}
+                />
+            </Portal>
+        );
+    };
 
     return (
         <>
@@ -114,21 +158,19 @@ const FixedFooterLayout: React.FC<Props> = ({
                 ref={containerRef}
                 className={styles.container}
                 style={applyCssVars({
-                    ...(containerBgColor && {
-                        [styles.vars.backgroundColor]: containerBgColor,
-                    }),
-                    [styles.vars.footerHeight]: isFixedFooter
+                    [styles.vars.footerHeight]: isFooterFixed
                         ? `calc(${safeAreaInsetBottom} + ${domFooterHeight}px)`
                         : '0px',
                 })}
             >
+                {renderBackground()}
                 {children}
             </div>
             <div
                 className={classnames(styles.footer, {
                     [styles.withoutFooter]: !isFooterVisible,
                     [styles.elevated]: displayElevation,
-                    [styles.fixedFooter]: isFixedFooter,
+                    [styles.fixedFooter]: isFooterFixed,
                 })}
                 /**
                  * This style is inline to avoid creating a class that may collide with

@@ -186,3 +186,103 @@ test.each(controlsWithIconButton)('Rows with %s using big fontSize', async (cont
     const image = await list.screenshot();
     expect(image).toMatchImageSnapshot();
 });
+
+test('Rows over inverse background', async () => {
+    await openStoryPage({
+        id: 'components-lists--row-list-story',
+        device: 'MOBILE_IOS',
+        args: {
+            overInverse: true,
+        },
+    });
+
+    const list = await screen.findByTestId('list');
+    const image = await list.screenshot();
+    expect(image).toMatchImageSnapshot();
+});
+
+test('BoxedRows over inverse background', async () => {
+    await openStoryPage({
+        id: 'components-lists--boxed-row-list-story',
+        device: 'MOBILE_IOS',
+        args: {
+            overInverse: true,
+        },
+    });
+
+    const list = await screen.findByTestId('list');
+    const image = await list.screenshot();
+    expect(image).toMatchImageSnapshot();
+});
+
+test('BoxedRows inverse', async () => {
+    await openStoryPage({
+        id: 'components-lists--boxed-row-list-story',
+        device: 'MOBILE_IOS',
+        args: {
+            isInverse: true,
+        },
+    });
+
+    const list = await screen.findByTestId('list');
+    const image = await list.screenshot();
+    expect(image).toMatchImageSnapshot();
+});
+
+test('BoxedRows inverse over inverse', async () => {
+    await openStoryPage({
+        id: 'components-lists--boxed-row-list-story',
+        device: 'MOBILE_IOS',
+        args: {
+            isInverse: true,
+            overInverse: true,
+        },
+    });
+
+    const list = await screen.findByTestId('list');
+    const image = await list.screenshot();
+    expect(image).toMatchImageSnapshot();
+});
+
+test('Rows danger', async () => {
+    await openStoryPage({
+        id: 'components-lists--row-list-story',
+        device: 'MOBILE_IOS',
+        args: {
+            danger: true,
+        },
+    });
+
+    const list = await screen.findByTestId('list');
+    const image = await list.screenshot();
+    expect(image).toMatchImageSnapshot();
+});
+
+test('Rows danger over inverse background', async () => {
+    await openStoryPage({
+        id: 'components-lists--row-list-story',
+        device: 'MOBILE_IOS',
+        args: {
+            overInverse: true,
+            danger: true,
+        },
+    });
+
+    const list = await screen.findByTestId('list');
+    const image = await list.screenshot();
+    expect(image).toMatchImageSnapshot();
+});
+
+test('BoxedRows danger', async () => {
+    await openStoryPage({
+        id: 'components-lists--boxed-row-list-story',
+        device: 'MOBILE_IOS',
+        args: {
+            danger: true,
+        },
+    });
+
+    const list = await screen.findByTestId('list');
+    const image = await list.screenshot();
+    expect(image).toMatchImageSnapshot();
+});

@@ -230,10 +230,10 @@ const buttonSnippets: Array<Snippet> = [
     {
         name: 'ButtonLayout',
         code: `
-        <ButtonLayout>
-            <ButtonPrimary onPress={() => {}}>Action</ButtonPrimary>
-            <ButtonSecondary onPress={() => {}}>Action</ButtonSecondary>
-        </ButtonLayout>`,
+        <ButtonLayout
+            primaryButton={<ButtonPrimary onPress={() => {}}>Action</ButtonPrimary>}
+            secondaryButton={<ButtonSecondary onPress={() => {}}>Action</ButtonSecondary>}
+        />`,
     },
     {
         name: 'ButtonFixedFooterLayout',
@@ -320,9 +320,7 @@ const formSnippets: Array<Snippet> = [
                         name="email"
                         label="e-mail"
                     />
-                    <ButtonLayout>
-                        <ButtonPrimary submit>Send</ButtonPrimary>
-                    </ButtonLayout>
+                    <ButtonLayout primaryButton={<ButtonPrimary submit>Send</ButtonPrimary>} />
                 </Stack>
             </Box>
         </Form>`,
@@ -507,6 +505,20 @@ const listRowSnippets: Array<Snippet> = ['Row', 'BoxedRow'].flatMap((rowName) =>
             title="Title"
             description="Description"
             onPress={() => {}}
+        />`,
+    },
+    {
+        group: 'List',
+        name: `${rowName} (danger)`,
+        code: `
+        <${rowName}
+            asset={
+                <IconShopRegular color="currentColor" />
+            }
+            title="Title"
+            description="Description"
+            onPress={() => {}}
+            danger
         />`,
     },
     {

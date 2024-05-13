@@ -29,18 +29,10 @@ interface BaseSliderProps {
     'aria-label'?: string;
     'aria-labelledby'?: string;
     id?: string;
-    /**
-     * @deprecated This field is deprecated, please use step or values instead.
-     */
-    steps?: number | Array<number>;
-    /**
-     * @deprecated This field is deprecated.
-     */
-    getStepArrayIndex?: (value: number) => void;
 }
 
 interface SliderWithValuesProps {
-    values: Array<number>;
+    values: ReadonlyArray<number>;
 }
 
 interface SliderWithStepProps {
@@ -77,7 +69,7 @@ const getValueInRange = (isPercentage: boolean, min: number, max: number, step: 
         : valueRoundedDown;
 };
 
-const getClosestValidValue = (min: number, value?: number, values?: Array<number>) => {
+const getClosestValidValue = (min: number, value?: number, values?: ReadonlyArray<number>) => {
     if (!values) {
         return value;
     }
@@ -99,8 +91,6 @@ const Slider = React.forwardRef<HTMLInputElement, SliderProps>(
         {
             values,
             step = 1,
-            steps,
-            getStepArrayIndex,
             min = 0,
             max = 100,
             'aria-label': ariaLabel,

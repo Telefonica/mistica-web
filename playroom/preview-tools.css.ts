@@ -21,7 +21,7 @@ export const controls = style([
         paddingRight: 16,
     }),
     {
-        gap: 16,
+        gap: 8,
         zIndex: 2,
         background: 'white',
         borderBottom: `1px solid ${skinVars.colors.divider}`,
@@ -96,7 +96,8 @@ export const controlsTransitionClasses = {
     }),
 };
 
-export const floatingButtonTopTransitionClasses = controlsTransitionClasses;
+// If we don't spread controlsTransitionClasses object, the animation is not working for some reason
+export const floatingButtonTopTransitionClasses = {...controlsTransitionClasses};
 
 export const floatingButtonBottomTransitionClasses = {
     enter: style({

@@ -23,7 +23,7 @@ import type {TouchableElement} from './touchable';
 const ACCORDION_TRANSITION_DURATION_IN_MS = 400;
 
 type AccordionContextType = {
-    index: Array<number>;
+    index: ReadonlyArray<number>;
     toogle: (item: number) => void;
 };
 const AccordionContext = React.createContext<AccordionContextType>({
@@ -35,6 +35,7 @@ export const useAccordionContext = (): AccordionContextType => React.useContext(
 interface AccordionItemContentProps {
     children?: void;
     title: string;
+    titleAs?: string;
     subtitle?: string;
     asset?: React.ReactNode;
     content: React.ReactNode;
@@ -49,43 +50,45 @@ const useAccordionState = ({
     onChange,
     singleOpen,
 }: {
-    value?: number | Array<number>;
-    defaultValue?: number | Array<number>;
+    value?: number | ReadonlyArray<number>;
+    defaultValue?: number | ReadonlyArray<number>;
     onChange?: (item: number, value: boolean) => void;
     singleOpen?: boolean;
-}): [Array<number>, (value: number) => void] => {
+}): [ReadonlyArray<number>, (value: number) => void] => {
     const isControlledByParent = value !== undefined;
 
-    const getValueAsList = (value?: number | Array<number>) => {
+    const getValueAsList = (value?: number | ReadonlyArray<number>) => {
         return value === undefined ? [] : typeof value === 'number' ? [value] : value;
     };
 
-    const [index, setIndex] = React.useState<Array<number>>(getValueAsList(defaultValue));
+    const [index, setIndex] = React.useState<ReadonlyArray<number>>(getValueAsList(defaultValue));
 
     React.useEffect(() => {
         if (index.length > 1 && singleOpen) {
-            index.splice(1);
-            setIndex([...index]);
+            const newIndex = [...index];
+            newIndex.splice(1);
+            setIndex(newIndex);
         }
     }, [singleOpen, index]);
 
-    const updateIndexOnToogle = (item: number, index?: Array<number>) => {
+    const updateIndexOnToogle = (item: number, index?: ReadonlyArray<number>) => {
         if (!index) {
             return [item];
         }
 
         const valueIndex = index.indexOf(item);
+        let newIndex = [...index];
         if (valueIndex === -1) {
             if (singleOpen) {
-                index = [item];
+                newIndex = [item];
             } else {
-                index.push(item);
+                newIndex.push(item);
             }
         } else {
-            index.splice(valueIndex, 1);
+            newIndex.splice(valueIndex, 1);
         }
 
-        return [...index];
+        return newIndex;
     };
 
     const toggle = (item: number) => {
@@ -202,10 +205,6 @@ export const AccordionItem = React.forwardRef<TouchableElement, AccordionItemCon
 
 type AccordionBaseProps = {
     children: React.ReactNode;
-    /**
-     * @deprecated This field is deprecated and it has no effect.
-     */
-    noLastDivider?: boolean;
     dataAttributes?: DataAttributes;
     onChange?: (index: number, value: boolean) => void;
 };
@@ -218,8 +217,8 @@ type SingleOpenProps = {
 
 type MultipleOpenProps = {
     singleOpen?: false;
-    index?: number | Array<number>;
-    defaultIndex?: number | Array<number>;
+    index?: number | ReadonlyArray<number>;
+    defaultIndex?: number | ReadonlyArray<number>;
 };
 
 type AccordionProps = AccordionBaseProps & ExclusifyUnion<SingleOpenProps | MultipleOpenProps>;
@@ -276,9 +275,7 @@ export const BoxedAccordionItem = React.forwardRef<HTMLDivElement, BoxedAccordio
     )
 );
 
-type BoxedAccordionProps = Omit<AccordionProps, 'noLastDivider'>;
-
-export const BoxedAccordion: React.FC<BoxedAccordionProps> = ({
+export const BoxedAccordion: React.FC<AccordionProps> = ({
     children,
     dataAttributes,
     index,

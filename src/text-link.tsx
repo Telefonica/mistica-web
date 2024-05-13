@@ -11,6 +11,7 @@ import {getTextFromChildren} from './utils/common';
 import {eventActions, eventCategories, eventNames, useTrackingConfig} from './utils/analytics';
 import * as styles from './text-link.css';
 
+import type {AlwaysTouchableComponentProps} from './touchable';
 import type {TrackingEvent, DataAttributes} from './utils/types';
 
 interface CommonProps {
@@ -19,34 +20,25 @@ interface CommonProps {
     style?: React.CSSProperties;
     classes?: {[className: string]: string};
     disabled?: boolean;
+    'aria-label'?: string;
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
     trackEvent?: boolean;
     /** "data-" prefix is automatically added. For example, use "testid" instead of "data-testid" */
     dataAttributes?: DataAttributes;
+    /** IMPORTANT: try to avoid using role="link" with onPress and first consider other alternatives like to/href + onNavigate */
+    role?: string;
 }
 
-export interface HrefProps extends CommonProps {
-    href: string;
-    newTab?: boolean;
-    onPress?: undefined;
-    to?: undefined;
-}
+export type TextLinkProps = AlwaysTouchableComponentProps & CommonProps;
 
-export interface ToProps extends CommonProps {
-    to: string;
-    fullPageOnWebView?: boolean;
-    href?: undefined;
-    onPress?: undefined;
-}
-export interface OnPressProps extends CommonProps {
-    onPress: (event: React.MouseEvent<HTMLElement>) => void | boolean;
-    href?: undefined;
-    to?: undefined;
-}
-
-export type TextLinkProps = HrefProps | ToProps | OnPressProps;
-
-const TextLink: React.FC<TextLinkProps> = ({children, className = '', disabled, style, ...props}) => {
+const TextLink: React.FC<TextLinkProps> = ({
+    children,
+    className = '',
+    disabled,
+    style,
+    trackEvent,
+    ...props
+}) => {
     const isInverse = useIsInverseVariant();
     const {isDarkMode} = useTheme();
     const {formStatus} = useForm();
@@ -73,9 +65,7 @@ const TextLink: React.FC<TextLinkProps> = ({children, className = '', disabled, 
             {...props}
             stopPropagation
             as={props.onPress ? 'a' : undefined}
-            trackingEvent={
-                props.trackingEvent ?? (props.trackEvent ? createDefaultTrackingEvent() : undefined)
-            }
+            trackingEvent={props.trackingEvent ?? (trackEvent ? createDefaultTrackingEvent() : undefined)}
             disabled={disabled || formStatus === 'sending'}
             className={classnames(
                 isInverse

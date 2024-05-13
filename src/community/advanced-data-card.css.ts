@@ -25,7 +25,6 @@ export const actions = style([
     paddingX,
     sprinkles({
         display: 'flex',
-        flex: 1,
         justifyContent: 'space-between',
         paddingBottom: 24,
     }),
@@ -49,6 +48,7 @@ export const touchableArea = style({
 
 export const touchableContainer = style({
     display: 'flex',
+    flex: 1,
     position: 'relative',
     flexDirection: 'column',
     width: '100%',

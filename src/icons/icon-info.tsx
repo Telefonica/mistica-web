@@ -1,7 +1,7 @@
 'use client';
 import * as React from 'react';
 import {useTheme} from '../hooks';
-import {O2_SKIN, O2_CLASSIC_SKIN} from '../skins/constants';
+import {O2_SKIN} from '../skins/constants';
 import {vars} from '../skins/skin-contract.css';
 
 type Props = {
@@ -10,7 +10,7 @@ type Props = {
 
 const IconInfoO2 = ({size = 48}: Props): JSX.Element => {
     return (
-        <svg width={size} height={size} viewBox="0 0 64 64">
+        <svg role="presentation" width={size} height={size} viewBox="0 0 64 64">
             <g
                 stroke={vars.colors.brand}
                 fill={vars.colors.brand}
@@ -32,7 +32,7 @@ const IconInfoO2 = ({size = 48}: Props): JSX.Element => {
 
 const IconInfoDefault = ({size = 48}: Props): JSX.Element => {
     return (
-        <svg width={size} height={size} viewBox="0 0 64 64">
+        <svg role="presentation" width={size} height={size} viewBox="0 0 64 64">
             <g fill={vars.colors.brand}>
                 <path
                     fillRule="nonzero"
@@ -46,11 +46,7 @@ const IconInfoDefault = ({size = 48}: Props): JSX.Element => {
 
 const IconInfo = (props: Props): JSX.Element => {
     const {skinName} = useTheme();
-    return skinName === O2_CLASSIC_SKIN || skinName === O2_SKIN ? (
-        <IconInfoO2 {...props} />
-    ) : (
-        <IconInfoDefault {...props} />
-    );
+    return skinName === O2_SKIN ? <IconInfoO2 {...props} /> : <IconInfoDefault {...props} />;
 };
 
 export default IconInfo;

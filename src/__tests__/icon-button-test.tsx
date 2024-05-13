@@ -43,7 +43,7 @@ test('<a> is rendered when using "to" prop', () => {
         </ThemeContextProvider>
     );
 
-    const anchor = screen.getByRole('button', {name: 'icon-button'});
+    const anchor = screen.getByRole('link', {name: 'icon-button'});
 
     expect(anchor).toHaveAttribute('href', '/test');
 });
