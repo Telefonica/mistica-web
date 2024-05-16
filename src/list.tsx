@@ -367,7 +367,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
         .filter(Boolean)
         .join(' ');
 
-    const ariaLabel = ariaLabelProp ?? (props.href || props.to) ? computedAriaLabelForLink : undefined;
+    const ariaLabel = ariaLabelProp ?? (props.href || props.to ? computedAriaLabelForLink : undefined);
 
     const radioContext = useRadioContext();
     const disabled = props.disabled || (props.radioValue !== undefined && radioContext.disabled);
