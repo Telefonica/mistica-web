@@ -259,7 +259,7 @@ export const ProgressBlock: React.FC<ProgressBlockProps> = ({
                     {stackingGroup}
                 </Inline>
                 {progressPercent !== undefined && (
-                    <ProgressBar progressPercent={progressPercent} reverse={reverse} />
+                    <ProgressBar aria-hidden progressPercent={progressPercent} reverse={reverse} />
                 )}
                 <Inline space={8} alignItems="baseline">
                     <Text8 color={heading.valueColor || vars.colors.textPrimary}>{heading.value}</Text8>

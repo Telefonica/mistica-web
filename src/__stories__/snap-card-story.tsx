@@ -24,6 +24,7 @@ type Args = {
     asset: 'icon' | 'icon in circle' | 'image' | 'none';
     title: string;
     subtitle: string;
+    description: string;
     actions: 'on press' | 'none';
     isInverse: boolean;
     withExtra: boolean;
@@ -36,6 +37,7 @@ export const Default: StoryComponent<Args> = ({
     asset,
     title,
     subtitle,
+    description,
     actions,
     isInverse,
     withExtra,
@@ -68,6 +70,7 @@ export const Default: StoryComponent<Args> = ({
             icon={assetToIcon[asset]}
             title={title}
             subtitle={subtitle}
+            description={description}
             dataAttributes={{testid: 'snap-card'}}
             aria-label="SnapCard card label"
             isInverse={isInverse}
@@ -89,6 +92,7 @@ Default.args = {
     asset: 'icon in circle',
     title: 'Some title',
     subtitle: 'Some subtitle',
+    description: 'Description',
     actions: 'none',
     isInverse: false,
     withExtra: false,
