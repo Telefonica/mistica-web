@@ -1,3 +1,16 @@
+# [15.8.0](https://github.com/Telefonica/mistica-web/compare/v15.7.0...v15.8.0) (2024-05-17)
+
+
+### Bug Fixes
+
+* **Image:** fix bad aspect ratio cases ([#1119](https://github.com/Telefonica/mistica-web/issues/1119)) ([2bc69e1](https://github.com/Telefonica/mistica-web/commit/2bc69e1b1b51a68c9b91df256a867cc9c3823923))
+* **TextFields:** Use textError color for errors ([#1125](https://github.com/Telefonica/mistica-web/issues/1125)) ([e9c5abd](https://github.com/Telefonica/mistica-web/commit/e9c5abd34d938a9367431b9ec1c7d3f8a5a4d7a4))
+
+
+### Features
+
+* **Accordion:** improve accessibility ([#1113](https://github.com/Telefonica/mistica-web/issues/1113)) ([f85142c](https://github.com/Telefonica/mistica-web/commit/f85142ce65037df78e420a9fbe439665960e5c8c))
+
 # [15.7.0](https://github.com/Telefonica/mistica-web/compare/v15.6.1...v15.7.0) (2024-05-13)
 
 
