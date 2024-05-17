@@ -165,7 +165,7 @@ export const Content: React.FC<ContentProps> = ({
                     <Box paddingTop={2}>
                         <Text2
                             regular
-                            color={vars.colors.textSecondary}
+                            color={vars.colors.textPrimary}
                             truncate={subtitleLinesMax}
                             hyphens="auto"
                         >

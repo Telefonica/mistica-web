@@ -1,3 +1,10 @@
+# [15.7.0](https://github.com/Telefonica/mistica-web/compare/v15.6.1...v15.7.0) (2024-05-13)
+
+
+### Features
+
+* **Rows, BoxedRow, Accordion, SnapCard, SmallNakedCard:** Color and structure hierarchy ([#1046](https://github.com/Telefonica/mistica-web/issues/1046)) ([3c7fc4f](https://github.com/Telefonica/mistica-web/commit/3c7fc4f9594d6121d30f6702e9f40878e50d333f))
+
 ## [15.6.1](https://github.com/Telefonica/mistica-web/compare/v15.6.0...v15.6.1) (2024-05-09)
 
 

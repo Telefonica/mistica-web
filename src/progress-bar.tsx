@@ -15,6 +15,7 @@ type ProgressBarProps = {
     children?: void;
     'aria-label'?: string;
     'aria-labelledby'?: string;
+    'aria-hidden'?: React.HTMLAttributes<HTMLDivElement>['aria-hidden'];
     dataAttributes?: DataAttributes;
     reverse?: boolean;
 };
@@ -24,6 +25,7 @@ export const ProgressBar: React.FC<ProgressBarProps> = ({
     color,
     'aria-label': ariaLabel,
     'aria-labelledby': ariaLabelledBy,
+    'aria-hidden': ariaHidden,
     dataAttributes,
     reverse = false,
 }) => {
@@ -34,18 +36,23 @@ export const ProgressBar: React.FC<ProgressBarProps> = ({
         return `${ariaLabel || texts.loading}, ${progressValue}% ${texts.progressBarCompletedLabel}`;
     };
 
-    const label = ariaLabelledBy ? undefined : getFormattedLabel();
+    const a11yProps =
+        ariaHidden && ariaHidden !== 'false'
+            ? {'aria-hidden': ariaHidden}
+            : {
+                  role: 'progressbar',
+                  'aria-valuenow': progressValue,
+                  'aria-valuemin': 0,
+                  'aria-valuemax': 100,
+                  'aria-label': ariaLabelledBy ? undefined : getFormattedLabel(),
+                  'aria-labelledby': ariaLabelledBy,
+              };
 
     return (
         <div
             {...getPrefixedDataAttributes(dataAttributes, 'ProgressBar')}
             className={styles.barBackground}
-            role="progressbar"
-            aria-valuenow={progressValue}
-            aria-valuemin={0}
-            aria-valuemax={100}
-            aria-label={label}
-            aria-labelledby={ariaLabelledBy}
+            {...a11yProps}
         >
             <div
                 className={classNames(styles.bar, reverse ? styles.inverse : styles.normal)}
@@ -65,6 +72,7 @@ type ProgressBarSteppedProps = {
     dataAttributes?: DataAttributes;
     'aria-label'?: string;
     'aria-labelledby'?: string;
+    'aria-hidden'?: React.HTMLAttributes<HTMLDivElement>['aria-hidden'];
 };
 
 export const ProgressBarStepped: React.FC<ProgressBarSteppedProps> = ({
@@ -74,6 +82,7 @@ export const ProgressBarStepped: React.FC<ProgressBarSteppedProps> = ({
     dataAttributes,
     'aria-label': ariaLabel,
     'aria-labelledby': ariaLabelledBy,
+    'aria-hidden': ariaHidden,
 }) => {
     const {texts} = useTheme();
 
@@ -93,17 +102,23 @@ export const ProgressBarStepped: React.FC<ProgressBarSteppedProps> = ({
         return ariaLabel ? `${ariaLabel}, ${label.toLowerCase()}` : label;
     };
 
-    const label = ariaLabelledBy ? undefined : getFormattedLabel();
+    const a11yProps =
+        ariaHidden && ariaHidden !== 'false'
+            ? {'aria-hidden': ariaHidden}
+            : {
+                  role: 'progressbar',
+                  'aria-valuenow': step,
+                  'aria-valuemin': 0,
+                  'aria-valuemax': steps,
+                  'aria-label': ariaLabelledBy ? undefined : getFormattedLabel(),
+                  'aria-labelledby': ariaLabelledBy,
+              };
 
     return (
         <div
             {...getPrefixedDataAttributes(dataAttributes, 'ProgressBarStepped')}
             role="progressbar"
-            aria-valuenow={step}
-            aria-valuemin={0}
-            aria-valuemax={steps}
-            aria-label={label}
-            aria-labelledby={ariaLabelledBy}
+            {...a11yProps}
             className={styles.progressBarSteppedContainer}
         >
             <Inline space={8} fullWidth>

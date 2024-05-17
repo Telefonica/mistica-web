@@ -49,7 +49,10 @@ const StackingGroup: React.FC<Props> = ({moreItemsStyle, stacked = true, maxItem
                             border: stacked ? `1px solid ${vars.colors.borderLow}` : 'none',
                         }}
                     >
-                        <Text4 regular color={isInverse ? vars.colors.textPrimaryInverse : vars.colors.brand}>
+                        <Text4
+                            regular
+                            color={isInverse ? vars.colors.textPrimaryInverse : vars.colors.textBrand}
+                        >
                             {'+' + moreItemsCount}
                         </Text4>
                     </div>
