@@ -249,7 +249,7 @@ export const openSSRPage = async ({
         if (type === 'error') {
             console.error(...args);
         }
-        if (type === 'warning') {
+        if (type === 'warn') {
             console.warn(...args);
         }
     });
