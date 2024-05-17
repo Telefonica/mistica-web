@@ -45,7 +45,10 @@ type AspectRatioContainerProps = {
 };
 
 export const AspectRatioContainer = (props: AspectRatioContainerProps): JSX.Element => {
-    const supportsAspectRatio = useSupportsAspectRatio();
+    // forceNonCssAspectRatio is intentionally not included in the props type and should only be used for testing purposes
+    const forceNonCssAspectRatio = !!(props as any).forceNonCssAspectRatio;
+
+    const supportsAspectRatio = useSupportsAspectRatio() && !forceNonCssAspectRatio;
     // if width or height are numeric, we can calculate the other with the ratio without css.
     // if aspect ratio is 0, we use the original image proportions
     const withCssAspectRatio =
@@ -63,6 +66,8 @@ export const AspectRatioContainer = (props: AspectRatioContainerProps): JSX.Elem
         height = props.aspectRatio !== 0 ? props.width / (props.aspectRatio ?? 1) : undefined;
     } else if (typeof props.height === 'number') {
         width = props.aspectRatio !== 0 ? props.height * (props.aspectRatio ?? 1) : undefined;
+    } else if (props.height) {
+        height = props.height;
     } else {
         width = props.width || '100%';
     }
@@ -84,8 +89,8 @@ export const AspectRatioContainer = (props: AspectRatioContainerProps): JSX.Elem
                       }
                     : {
                           ...props.style,
-                          width: !isNaN(Number(width)) ? Number(width) : width,
-                          height: !isNaN(Number(height)) ? Number(height) : height,
+                          width: (!isNaN(Number(width)) ? Number(width) : width) ?? 'fit-content',
+                          height: (!isNaN(Number(height)) ? Number(height) : height) ?? 'fit-content',
                       }),
                 ...applyCssVars({
                     [styles.vars.aspectRatio]: aspectRatio ? String(aspectRatio) : 'unset',
@@ -102,7 +107,7 @@ export const AspectRatioContainer = (props: AspectRatioContainerProps): JSX.Elem
                 return 0;
             }
             if (props.width && typeof props.width === 'string' && props.width.endsWith('%')) {
-                return `${Number(props.width.replace('%', '')) / aspectRatio}%`;
+                return `${parseFloat(props.width) / aspectRatio}%`;
             }
             return `${100 / aspectRatio}%`;
         })();
