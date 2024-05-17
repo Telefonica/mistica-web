@@ -5579,9 +5579,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@telefonica/acceptance-testing@npm:3.0.0-beta1":
-  version: 3.0.0-beta1
-  resolution: "@telefonica/acceptance-testing@npm:3.0.0-beta1"
+"@telefonica/acceptance-testing@npm:3.0.0-beta2":
+  version: 3.0.0-beta2
+  resolution: "@telefonica/acceptance-testing@npm:3.0.0-beta2"
   dependencies:
     "@types/jest-image-snapshot": ^6.4.0
     find-root: ^1.1.0
@@ -5595,7 +5595,7 @@ __metadata:
     jest-environment-puppeteer: ">=10"
   bin:
     test-acceptance: bin/test-acceptance.js
-  checksum: a28542e0e82be20e0fe700c39ea6fa9888bf8ce453716f2c5983996f03f24fd5da2a846733ab61c3a8f2edc2fa4851a50049c3b31670b0efa2a754711015f9a6
+  checksum: e6c76466841ea8fd83e96bb2ad56994529df0b2bca77bee6de6349ddc815697471f1da0a6cc6d75d3f9f8a4046dc79fb886f45cc74ab5c00292b571e900b87ef
   languageName: node
   linkType: hard
 
@@ -5674,7 +5674,7 @@ __metadata:
     "@swc/core": ^1.3.95
     "@swc/jest": ^0.2.29
     "@tef-novum/webview-bridge": ^3.27.0
-    "@telefonica/acceptance-testing": 3.0.0-beta1
+    "@telefonica/acceptance-testing": 3.0.0-beta2
     "@telefonica/eslint-config": ^1.7.0
     "@telefonica/libphonenumber": ^2.9.0
     "@telefonica/prettier-config": ^1.1.0
