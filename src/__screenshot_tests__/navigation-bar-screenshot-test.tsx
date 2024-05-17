@@ -16,7 +16,7 @@ test.each`
 
     const image = await page.screenshot();
 
-    expect(image).toMatchImageSnapshot({failureThreshold: 0.00001});
+    expect(image).toMatchImageSnapshot();
 });
 
 test.each`
