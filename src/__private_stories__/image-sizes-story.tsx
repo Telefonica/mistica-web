@@ -17,7 +17,7 @@ const cases = [
     {width: '50%', height: undefined, aspectRatio: 1},
 ] as const;
 
-const casesWithFixedHeight = [
+const casesWithFixedHeightParent = [
     {width: '100%', height: '100%', aspectRatio: undefined},
     {width: '50%', height: '50%', aspectRatio: undefined},
     {width: '100%', height: undefined, aspectRatio: 2},
@@ -79,7 +79,7 @@ export const Default: StoryComponent<Args> = ({forceNonCssAspectRatio}) => {
                 <Stack space={16}>{cases.map((props, index) => renderCase(props, index))}</Stack>
             </div>
             <Stack space={16}>
-                {casesWithFixedHeight.map((props, index) => renderFixedHeightCase(props, index))}
+                {casesWithFixedHeightParent.map((props, index) => renderFixedHeightCase(props, index))}
             </Stack>
         </Stack>
     );
