@@ -51,7 +51,7 @@ export const Label: React.FC<LabelProps> = ({
 
     let color = vars.colors.textSecondary;
     if (error && inputState !== 'default') {
-        color = vars.colors.error;
+        color = vars.colors.textError;
     } else if (inputState === 'focused') {
         color = vars.colors.textActivated;
     }
@@ -81,7 +81,7 @@ export const HelperText: React.FC<HelperTextProps> = ({leftText, rightText, erro
     const leftColor = isInverse
         ? vars.colors.textPrimaryInverse
         : error
-        ? vars.colors.error
+        ? vars.colors.textError
         : vars.colors.textSecondary;
     const rightColor = isInverse ? vars.colors.textPrimaryInverse : vars.colors.textSecondary;
 

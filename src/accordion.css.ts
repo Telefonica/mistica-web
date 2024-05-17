@@ -69,6 +69,11 @@ export const panelTransitionClasses = {
     enterActive: style({
         gridTemplateRows: '1fr',
         transition: 'grid-template-rows 0.4s',
+        '@media': {
+            ['(prefers-reduced-motion)']: {
+                transition: 'none',
+            },
+        },
     }),
     exit: style({
         gridTemplateRows: '1fr',
@@ -76,6 +81,11 @@ export const panelTransitionClasses = {
     exitActive: style({
         gridTemplateRows: '0fr',
         transition: 'grid-template-rows 0.4s',
+        '@media': {
+            ['(prefers-reduced-motion)']: {
+                transition: 'none',
+            },
+        },
     }),
 };
 

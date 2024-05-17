@@ -5,7 +5,7 @@ import beachImg from '../__stories__/images/beach.jpg';
 import laptopImg from '../__stories__/images/laptop.jpg';
 
 export default {
-    title: 'Private/Image with srcSet attribute is responsive',
+    title: 'Private/Image/Image with srcSet attribute is responsive',
 };
 
 export const Default: StoryComponent = () => {
