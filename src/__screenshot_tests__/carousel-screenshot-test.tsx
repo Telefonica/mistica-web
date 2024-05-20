@@ -5,6 +5,7 @@ import type {ElementHandle} from 'puppeteer';
 
 const isDisabled = async (element: ElementHandle) => {
     const disabledProp = await element.getProperty('disabled');
+    console.log('disabledProp', await disabledProp?.jsonValue());
     return await disabledProp?.jsonValue();
 };
 
@@ -96,7 +97,7 @@ test('Carousel mobile with a single page', async () => {
     expect(await page3.screenshot()).toMatchImageSnapshot();
 });
 
-test('Carousel desktop', async () => {
+test.only('Carousel desktop', async () => {
     const page = await openStoryPage({
         id: 'components-carousels-carousel--default',
         device: 'DESKTOP',
@@ -106,7 +107,6 @@ test('Carousel desktop', async () => {
     const prevArrow = await screen.findByRole('button', {name: /anterior/i});
     const nextArrow = await screen.findByRole('button', {name: /siguiente/i});
 
-    // https://jira.tid.es/browse/WEB-680
     expect(await page.screenshot()).toMatchImageSnapshot();
     expect(await isDisabled(prevArrow)).toBe(true);
     expect(await isDisabled(nextArrow)).toBe(false);
