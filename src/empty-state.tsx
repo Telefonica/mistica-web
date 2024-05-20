@@ -116,6 +116,7 @@ const EmptyState: React.FC<Props> = ({
                         aspectRatio={16 / 9}
                         className={styles.largeImageContainer}
                         height="100%"
+                        width="100%"
                     >
                         <div
                             className={styles.largeImage}
