@@ -5,9 +5,7 @@ const getConfig = async () => {
 
     if (process.env.CI) {
         config.launch.args = [
-            // https://peter.sh/experiments/chromium-command-line-switches/
-            '--no-sandbox', // probably not needed in ubuntu
-            '--font-render-hinting=none', // this flag is important because we use it when launching dockerized chromium too
+            '--lang=es_ES',
             '--disable-background-networking',
             '--disable-background-timer-throttling',
             '--disable-breakpad',
@@ -21,7 +19,25 @@ const getConfig = async () => {
             '--disable-prompt-on-repost',
             '--disable-sync',
             '--disable-translate',
-            '--disable-smooth-scrolling',
+            '--disable-gpu',
+            '--metrics-recording-only',
+            '--no-first-run',
+            '--safebrowsing-disable-auto-update',
+            '--enable-automation',
+            '--password-store=basic',
+            '--use-mock-keychain',
+            '--headless',
+            '--hide-scrollbars',
+            // Disable sandbox mode
+            '--no-sandbox',
+            // Avoids font rendering differences between headless/headfull
+            '--font-render-hinting=none',
+            '--force-color-profile=sRGB',
+            '--disable-font-subpixel-positioning',
+            // Expose port 9222 for remote debugging
+            '--remote-debugging-port=9222',
+            '--remote-debugging-address=0.0.0.0',
+            '--ignore-certificate-errors',
         ];
     }
     console.log(JSON.stringify(config, null, 2));
