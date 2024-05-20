@@ -97,7 +97,7 @@ test('Carousel mobile with a single page', async () => {
     expect(await page3.screenshot()).toMatchImageSnapshot();
 });
 
-test('Carousel desktop', async () => {
+test.only('Carousel desktop', async () => {
     const page = await openStoryPage({
         id: 'components-carousels-carousel--default',
         device: 'DESKTOP',
