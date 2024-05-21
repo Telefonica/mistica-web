@@ -8,6 +8,7 @@ module.exports = (async () => {
         TZ: 'UTC',
         LANG: 'es_ES',
         LANGUAGE: 'es_ES',
+        DBUS_SESSION_BUS_ADDRESS: 'autolaunch:',
     };
     config.launch.dumpio = true;
     config.launch.args = [
