@@ -8,5 +8,6 @@ module.exports = async () => {
         LANG: 'es_ES',
         LANGUAGE: 'es_ES',
     };
+    console.log(config);
     return config;
 };
