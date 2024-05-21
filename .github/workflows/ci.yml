@@ -53,6 +53,9 @@ jobs:
         steps:
             - uses: actions/checkout@v4
 
+            - run: ps aux
+            - run: curl localhost:9222/json/version
+
             - name: Install dependencies
               env:
                   PUPPETEER_SKIP_CHROME_DOWNLOAD: 'true'
