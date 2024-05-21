@@ -36,7 +36,7 @@ export const palette = {
     egg80: '#6D3F09',
     pink: '#E63780',
     pink45: '#EB5F99',
-    pink55: '#EB5F99',
+    pink55: '#C42F6D',
     purple: '#A13EA1',
     purple10: '#F6ECF6',
     purple35: '#C78BC7',
