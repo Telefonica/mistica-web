@@ -8,6 +8,7 @@ module.exports = (async () => {
         LANG: 'es_ES',
         LANGUAGE: 'es_ES',
     };
+    config.launch.dumpio = true;
     console.log(config);
     return config;
 })();
