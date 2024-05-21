@@ -40,10 +40,11 @@ module.exports = (async () => {
         '--disabled-setupid-sandbox',
         '--font-render-hinting=none',
         '--disable-font-subpixel-positioning',
-        '--remote-debugging-port=9222', // https://github.com/puppeteer/puppeteer/issues/8546
-        '--remote-debugging-address=0.0.0.0',
+        // '--remote-debugging-port=9222', // https://github.com/puppeteer/puppeteer/issues/8546
+        // '--remote-debugging-address=0.0.0.0',
         '--ignore-certificate-errors',
     ];
+    config.launch.headless = 'new';
     console.log(config);
     return config;
 })();
