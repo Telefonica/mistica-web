@@ -28,7 +28,7 @@ jobs:
 
             - name: Install dependencies
               env:
-                  PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: 'true'
+                  PUPPETEER_SKIP_CHROME_DOWNLOAD: 'true'
               run: yarn install --immutable --immutable-cache
 
             - name: Generate skins from design tokens
