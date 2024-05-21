@@ -1,7 +1,7 @@
-const getConfig = require('@telefonica/acceptance-testing/jest-puppeteer-config');
+const configPromise = require('@telefonica/acceptance-testing/jest-puppeteer-config');
 
 module.exports = async () => {
-    const config = await getConfig();
+    const config = await configPromise;
     config.launch.env = {
         ...process.env,
         TZ: 'UTC',
