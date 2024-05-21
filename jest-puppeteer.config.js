@@ -4,12 +4,12 @@ module.exports = (async () => {
     const config = await configPromise;
 
     config.launch.env = {
-        ...process.env,
+        // ...process.env,
         TZ: 'UTC',
         LANG: 'es_ES',
         LANGUAGE: 'es_ES',
-        DBUS_SESSION_BUS_ADDRESS: 'autolaunch:',
-        DISPLAY: ':0', // https://github.com/puppeteer/puppeteer/issues/8148
+        // DBUS_SESSION_BUS_ADDRESS: 'autolaunch:',
+        // DISPLAY: ':0', // https://github.com/puppeteer/puppeteer/issues/8148
     };
     config.launch.dumpio = true;
     config.launch.args = [
