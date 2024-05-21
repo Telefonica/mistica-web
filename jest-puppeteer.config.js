@@ -1,6 +1,6 @@
 const configPromise = require('@telefonica/acceptance-testing/jest-puppeteer-config');
 
-module.exports = async () => {
+module.exports = (async () => {
     const config = await configPromise;
     config.launch.env = {
         ...process.env,
@@ -10,4 +10,4 @@ module.exports = async () => {
     };
     console.log(config);
     return config;
-};
+})();
