@@ -2,6 +2,7 @@ const configPromise = require('@telefonica/acceptance-testing/jest-puppeteer-con
 
 module.exports = (async () => {
     const config = await configPromise;
+
     config.launch.env = {
         ...process.env,
         TZ: 'UTC',
@@ -34,6 +35,7 @@ module.exports = (async () => {
         '--headless',
         '--hide-scrollbars',
         '--no-sandbox',
+        '--disabled-setupid-sandbox',
         '--font-render-hinting=none',
         '--disable-font-subpixel-positioning',
         // '--remote-debugging-port=9222', // https://github.com/puppeteer/puppeteer/issues/8546
