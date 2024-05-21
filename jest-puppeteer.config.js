@@ -9,6 +9,37 @@ module.exports = (async () => {
         LANGUAGE: 'es_ES',
     };
     config.launch.dumpio = true;
+    config.launch.args = [
+        '--lang=es_ES',
+        '--disable-background-networking',
+        '--disable-background-timer-throttling',
+        '--disable-breakpad',
+        '--disable-client-side-phishing-detection',
+        '--disable-default-apps',
+        '--disable-dev-shm-usage',
+        '--disable-extensions',
+        '--disable-features=site-per-process',
+        '--disable-hang-monitor',
+        '--disable-popup-blocking',
+        '--disable-prompt-on-repost',
+        '--disable-sync',
+        '--disable-translate',
+        '--disable-gpu',
+        '--metrics-recording-only',
+        '--no-first-run',
+        '--safebrowsing-disable-auto-update',
+        '--enable-automation',
+        '--password-store=basic',
+        '--use-mock-keychain',
+        '--headless',
+        '--hide-scrollbars',
+        '--no-sandbox',
+        '--font-render-hinting=none',
+        '--disable-font-subpixel-positioning',
+        // '--remote-debugging-port=9222', // https://github.com/puppeteer/puppeteer/issues/8546
+        '--remote-debugging-address=0.0.0.0',
+        '--ignore-certificate-errors',
+    ];
     console.log(config);
     return config;
 })();
