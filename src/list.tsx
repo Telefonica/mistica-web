@@ -389,7 +389,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
         onNavigate: props.onNavigate,
         onPress: props.onPress,
         trackingEvent: props.trackingEvent,
-    } as unknown as TouchableProps;
+    } as TouchableProps;
 
     const [isChecked, toggle] = useControlState(props.switch || props.checkbox || {});
 
