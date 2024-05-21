@@ -59,6 +59,7 @@ export const palette = {
     darkModeGrey5: '#6D7D88',
     darkModeGrey6: '#3C5261',
     darkModeGrey7: '#032F46',
+    darkModeGrey7: '#032F46',
 };
 
 export const getMovistarSkin: GetKnownSkin = () => {
