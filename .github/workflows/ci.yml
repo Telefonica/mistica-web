@@ -53,7 +53,7 @@ jobs:
         steps:
             - uses: actions/checkout@v4
 
-            - run: service dbus start
+            # - run: service dbus start
             - run: ps aux # debug
 
             - name: Install dependencies
