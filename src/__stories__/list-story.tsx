@@ -38,6 +38,7 @@ export default {
                 'switch and onPress',
                 'checkbox',
                 'checkbox and onPress',
+                'checkbox with custom element',
                 'radio',
                 'radio and onPress',
                 'iconButton',
@@ -119,6 +120,16 @@ const Template: StoryComponent<Args & {boxed?: boolean; isInverse?: boolean}> = 
                 controlProps = {
                     checkbox: {defaultValue: true, onChange: () => {}},
                     onPress,
+                };
+                break;
+            case 'checkbox with custom element':
+                controlProps = {
+                    checkbox: {defaultValue: true, onChange: () => {}},
+                    right: () => (
+                        <div style={{display: 'flex', alignItems: 'center', height: '100%'}}>
+                            <div style={{width: 32, height: 32, borderRadius: '50%', background: 'pink'}} />
+                        </div>
+                    ),
                 };
                 break;
             case 'custom element':

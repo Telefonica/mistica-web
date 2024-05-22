@@ -7,6 +7,7 @@ const controls = [
     'chevron',
     'checkbox',
     'checkbox and onPress',
+    'checkbox with custom element',
     'switch',
     'switch and onPress',
     'radio',

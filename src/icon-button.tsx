@@ -127,6 +127,7 @@ interface BaseProps {
     bleedLeft?: boolean;
     bleedRight?: boolean;
     bleedY?: boolean;
+    role?: string;
 }
 
 interface IconButtonBaseProps {
@@ -150,6 +151,7 @@ export const RawIconButton = React.forwardRef<
         {
             disabled,
             trackingEvent,
+            role,
             dataAttributes,
             type = 'neutral',
             backgroundType = 'transparent',
@@ -193,6 +195,7 @@ export const RawIconButton = React.forwardRef<
             disabled: disabled || showSpinner,
             ref,
             trackingEvent,
+            role,
             'aria-label': ariaLabel,
             'aria-labelledby': ariaLabelledby,
             dataAttributes: {'component-name': 'IconButton', ...dataAttributes},
