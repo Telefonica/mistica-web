@@ -4655,6 +4655,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@storybook/addon-a11y@npm:7.6.16":
+  version: 7.6.16
+  resolution: "@storybook/addon-a11y@npm:7.6.16"
+  dependencies:
+    "@storybook/addon-highlight": 7.6.16
+    axe-core: ^4.2.0
+  checksum: 407b827a579116d4e17856be1faa84a2cf4ebc59fb8b33341fc12f48d7142b636d67727deb705c7e0ad729ead8ffb3a1f2892b6634582515e3f57790f260df39
+  languageName: node
+  linkType: hard
+
 "@storybook/addon-actions@npm:^7.6.17":
   version: 7.6.17
   resolution: "@storybook/addon-actions@npm:7.6.17"
@@ -4677,6 +4687,15 @@ __metadata:
     lodash: ^4.17.21
     ts-dedent: ^2.0.0
   checksum: a50d281d8c3a39d411b6a997f16cbd001db431f4c5e27bdb0da10fb211c83fb8671d74b851563caa2a13afca7f26f08cba16bc50c53bd629c9883c2214c6aacd
+  languageName: node
+  linkType: hard
+
+"@storybook/addon-highlight@npm:7.6.16":
+  version: 7.6.16
+  resolution: "@storybook/addon-highlight@npm:7.6.16"
+  dependencies:
+    "@storybook/global": ^5.0.0
+  checksum: d5493f260b0b90e8d75c6327adc2fb77905f7938b37fb051d6046511a4145b5291b102369d3a687da4543603e4aed2353951d25c7c77e272c5faa1c901e17b7d
   languageName: node
   linkType: hard
 
@@ -5632,6 +5651,7 @@ __metadata:
     "@juggle/resize-observer": ^3.3.1
     "@semantic-release/changelog": ^6.0.1
     "@semantic-release/git": ^10.0.1
+    "@storybook/addon-a11y": 7.6.16
     "@storybook/addon-actions": ^7.6.17
     "@storybook/addon-controls": ^7.6.17
     "@storybook/addon-links": ^7.6.17
@@ -7847,6 +7867,13 @@ __metadata:
   version: 1.0.5
   resolution: "available-typed-arrays@npm:1.0.5"
   checksum: 20eb47b3cefd7db027b9bbb993c658abd36d4edd3fe1060e83699a03ee275b0c9b216cc076ff3f2db29073225fb70e7613987af14269ac1fe2a19803ccc97f1a
+  languageName: node
+  linkType: hard
+
+"axe-core@npm:^4.2.0":
+  version: 4.9.1
+  resolution: "axe-core@npm:4.9.1"
+  checksum: 41d9227871781f96c2952e2a777fca73624959dd0e98864f6d82806a77602f82b4fc490852082a7e524d8cd864e50d8b4d9931819b4a150112981d8c932110c5
   languageName: node
   linkType: hard
 

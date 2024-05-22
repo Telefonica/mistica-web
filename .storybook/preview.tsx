@@ -81,6 +81,16 @@ const getTheme = (
     };
 };
 
+const findAccessibilityAddonButton = (): HTMLButtonElement | undefined => {
+    const storybookPanel = parent.document.getElementById('storybook-panel-root');
+    const panelButtons = [...(storybookPanel?.getElementsByTagName('button') ?? [])];
+
+    return panelButtons.find((button) => {
+        const buttonContent = button.textContent?.trim();
+        return buttonContent === 'Run test' || buttonContent === 'Tests completed';
+    });
+};
+
 const MisticaThemeProvider = ({Story, context}): React.ReactElement => {
     const searchParams = new URLSearchParams(location.search);
     const [skin, setSkin] = React.useState(getSkin(searchParams));
@@ -105,6 +115,13 @@ const MisticaThemeProvider = ({Story, context}): React.ReactElement => {
             });
         };
     }, []);
+
+    React.useEffect(() => {
+        if (skin && colorScheme && platform && !isStoryOnNewTab) {
+            const a11yButton = findAccessibilityAddonButton();
+            a11yButton?.click();
+        }
+    }, [skin, colorScheme, platform, isStoryOnNewTab]);
 
     return (
         <React.StrictMode>
@@ -191,4 +208,7 @@ export const parameters = {
     },
     // Workaround for: https://github.com/storybookjs/storybook/issues/17098
     docs: {source: {type: 'code'}},
+    a11y: {
+        manual: true,
+    },
 };
