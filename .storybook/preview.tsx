@@ -117,11 +117,11 @@ const MisticaThemeProvider = ({Story, context}): React.ReactElement => {
     }, []);
 
     React.useEffect(() => {
-        if (skin && colorScheme && platform && !isStoryOnNewTab) {
+        if (skin && colorScheme && platform) {
             const a11yButton = findAccessibilityAddonButton();
             a11yButton?.click();
         }
-    }, [skin, colorScheme, platform, isStoryOnNewTab]);
+    }, [skin, colorScheme, platform]);
 
     return (
         <React.StrictMode>
