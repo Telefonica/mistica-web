@@ -27,7 +27,7 @@ export default {
             control: {type: 'range', min: 24, max: 48, step: 4},
         },
     },
-    parameters: {fullScreen: true},
+    parameters: {fullScreen: true, a11y: {disable: true}},
 };
 
 type Args = {

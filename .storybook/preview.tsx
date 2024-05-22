@@ -124,7 +124,8 @@ const MisticaThemeProvider = ({Story, context}): React.ReactElement => {
          */
         if (skin && colorScheme && platform) {
             const a11yButton = findAccessibilityAddonButton();
-            a11yButton?.click();
+            // We need to wait some time until the story finishes rendering
+            setTimeout(() => a11yButton?.click(), 100);
         }
     }, [skin, colorScheme, platform]);
 
