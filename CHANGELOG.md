@@ -1,3 +1,10 @@
+# [15.9.0](https://github.com/Telefonica/mistica-web/compare/v15.8.0...v15.9.0) (2024-05-22)
+
+
+### Features
+
+* **Rows:** simplify component's logic, implement withChevron prop and allow right with controls ([#1122](https://github.com/Telefonica/mistica-web/issues/1122)) ([eb987e4](https://github.com/Telefonica/mistica-web/commit/eb987e4a56f2a081fa13fa21d34af1db238bf85b))
+
 # [15.8.0](https://github.com/Telefonica/mistica-web/compare/v15.7.0...v15.8.0) (2024-05-17)
 
 
