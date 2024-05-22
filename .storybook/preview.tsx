@@ -117,6 +117,11 @@ const MisticaThemeProvider = ({Story, context}): React.ReactElement => {
     }, []);
 
     React.useEffect(() => {
+        /**
+         * We want the a11y addon to be reactive to changes in skin, colorScheme and platform.
+         * Given that the storybook addon doesn't provide a way to re-run the tests in a simple
+         * way, we can try to click the "Run tests" button in the storybook UI by using JS.
+         */
         if (skin && colorScheme && platform) {
             const a11yButton = findAccessibilityAddonButton();
             a11yButton?.click();
@@ -209,6 +214,7 @@ export const parameters = {
     // Workaround for: https://github.com/storybookjs/storybook/issues/17098
     docs: {source: {type: 'code'}},
     a11y: {
+        // If we leave it as automatic, the tests are not executed when switching to another story for some reason
         manual: true,
     },
 };
