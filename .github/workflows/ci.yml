@@ -36,7 +36,7 @@ jobs:
             - run: yarn test --ci
             - run: NO_BUILD=true yarn test-ssr --ci
 
-            - uses: actions/upload-artifact@v3
+            - uses: actions/upload-artifact@v4
               if: always()
               with:
                   name: failed-screenshots
@@ -64,7 +64,7 @@ jobs:
             - run: yarn storybook-static
             - run: yarn test-acceptance --ci --shard=${{ matrix.shard }}/${{ strategy.job-total }}
 
-            - uses: actions/upload-artifact@v3
+            - uses: actions/upload-artifact@v4
               if: always()
               with:
                   name: failed-screenshots
@@ -85,7 +85,7 @@ jobs:
               run: yarn install --immutable --immutable-cache
 
             - if: needs.build.result == 'failure' || needs.build-acceptance.result == 'failure'
-              uses: actions/download-artifact@v3
+              uses: actions/download-artifact@v4
               with:
                   name: failed-screenshots
                   path: src/
