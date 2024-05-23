@@ -67,7 +67,7 @@ jobs:
             - uses: actions/upload-artifact@v4
               if: always()
               with:
-                  name: failed-screenshots-{{ matrix.shard }}
+                  name: failed-screenshots-${{ matrix.shard }}
                   path: src/**/__diff_output__/*-diff.png
 
     build-upload-failed-screenshots:

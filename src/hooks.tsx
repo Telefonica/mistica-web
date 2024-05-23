@@ -238,7 +238,11 @@ export const useIsInViewport = (
             (entries) => {
                 setIsInViewport(entries[0].isIntersecting);
             },
-            {root: options?.root, rootMargin: options?.rootMargin, threshold: options?.threshold}
+            {
+                root: options?.root,
+                rootMargin: options?.rootMargin,
+                threshold: options?.threshold,
+            }
         );
 
         observer.observe(ref.current);
