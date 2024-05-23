@@ -116,16 +116,41 @@ const MisticaThemeProvider = ({Story, context}): React.ReactElement => {
         };
     }, []);
 
+    /**
+     * Given that the storybook a11y addon doesn't provide a way to re-run the tests in a simple
+     * way, we try to click the "Run tests" button in the storybook UI by using JS.
+     */
+    const runAccessibilityTests = () => {
+        const a11yButton = findAccessibilityAddonButton();
+        a11yButton?.click();
+    };
+
+    /**
+     * Check if the a11y addon tab was opened and run tests. We need to listen to click event
+     * in the document because the tab can be opened by pressing a button inside a tooltip that
+     * is positioned as an absolute child of the document itself.
+     */
     React.useEffect(() => {
-        /**
-         * We want the a11y addon to be reactive to changes in skin, colorScheme and platform.
-         * Given that the storybook addon doesn't provide a way to re-run the tests in a simple
-         * way, we can try to click the "Run tests" button in the storybook UI by using JS.
-         */
+        const storybookPanel = parent.document.getElementById('panel-tab-content');
+
+        const handleClick = () => {
+            if (storybookPanel?.innerText?.includes('Manually run the accessibility scan.')) {
+                runAccessibilityTests();
+            }
+        };
+
+        parent.document.addEventListener('click', handleClick);
+
+        return () => {
+            parent.document.removeEventListener('click', handleClick);
+        };
+    }, []);
+
+    React.useEffect(() => {
+        // We want the a11y addon to be reactive to changes in skin, colorScheme and platform.
         if (skin && colorScheme && platform) {
-            const a11yButton = findAccessibilityAddonButton();
             // We need to wait some time until the story finishes rendering
-            setTimeout(() => a11yButton?.click(), 100);
+            setTimeout(runAccessibilityTests, 100);
         }
     }, [skin, colorScheme, platform]);
 
