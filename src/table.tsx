@@ -50,7 +50,7 @@ export const Table = React.forwardRef(
             columnWidth,
             ...otherProps
         }: TableProps,
-        ref: React.Ref<HTMLTableElement>
+        ref: React.Ref<HTMLDivElement>
     ) => {
         const collapsedRowsMode = responsive === 'collapse-rows';
         const table = (
@@ -60,8 +60,6 @@ export const Table = React.forwardRef(
                     [styles.collapsedRowsInMobile]: collapsedRowsMode,
                     [styles.fullWidth]: fullWidth,
                 })}
-                ref={ref}
-                {...getPrefixedDataAttributes(dataAttributes, 'Table')}
                 aria-label={otherProps['aria-label']}
                 aria-labelledby={otherProps['aria-labelledby']}
                 aria-describedby={otherProps['aria-describedby']}
@@ -147,6 +145,8 @@ export const Table = React.forwardRef(
                     width="fit-content"
                     maxWidth="100%"
                     minWidth={fullWidth ? '100%' : 'auto'}
+                    ref={ref}
+                    dataAttributes={{'component-name': 'Table', ...dataAttributes}}
                 >
                     <div
                         className={classNames(styles.scrollContainer, {
@@ -169,6 +169,8 @@ export const Table = React.forwardRef(
 
         return (
             <div
+                ref={ref}
+                {...getPrefixedDataAttributes(dataAttributes, 'Table')}
                 className={classNames(styles.scrollContainer, {
                     [styles.collapsedRowsInMobile]: collapsedRowsMode,
                     [styles.fullWidth]: fullWidth,

@@ -6,7 +6,6 @@ export default {
     parameters: {fullScreen: true},
 };
 
-// a long list of food items
 const foodList = [
     ['Slice of pizza', '450', '95%', '5,00€', <Tag>Common</Tag>, '8/10'],
     ['Hamburger', '350', '87%', '3,50€', <Tag>Common</Tag>, '7.5/10'],
