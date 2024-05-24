@@ -6,6 +6,7 @@ import {getPrefixedDataAttributes} from './utils/dom';
 import {vars} from './skins/skin-contract.css';
 import * as styles from './boxed.css';
 import {sprinkles} from './sprinkles.css';
+import {applyCssVars} from './utils/css';
 
 import type {DataAttributes} from './utils/types';
 
@@ -19,6 +20,8 @@ type Props = {
     'aria-label'?: string;
     'aria-labelledby'?: string;
     width?: number | string;
+    maxWidth?: number | string;
+    minWidth?: number | string;
     height?: number | string;
     minHeight?: number | string;
 };
@@ -36,6 +39,13 @@ const getBorderStyle = (isInverseOutside: boolean, isInverseInside: boolean) => 
     return styles.boxBorder;
 };
 
+const normalizeDimension = (value: number | string | undefined) => {
+    if (typeof value === 'number') {
+        return `${value}px`;
+    }
+    return value ?? 'auto';
+};
+
 export const InternalBoxed = React.forwardRef<HTMLDivElement, Props & InternalProps>(
     (
         {
@@ -47,6 +57,8 @@ export const InternalBoxed = React.forwardRef<HTMLDivElement, Props & InternalPr
             'aria-label': ariaLabel,
             'aria-labelledby': ariaLabelledby,
             width,
+            maxWidth,
+            minWidth,
             height,
             minHeight,
             borderRadius = vars.borderRadii.container,
@@ -60,9 +72,19 @@ export const InternalBoxed = React.forwardRef<HTMLDivElement, Props & InternalPr
         return (
             <div
                 ref={ref}
-                style={{width, height, minHeight, boxSizing: 'border-box', background}}
+                style={{
+                    ...applyCssVars({
+                        [styles.vars.width]: normalizeDimension(width),
+                        [styles.vars.maxWidth]: normalizeDimension(maxWidth),
+                        [styles.vars.minWidth]: normalizeDimension(minWidth),
+                        [styles.vars.height]: normalizeDimension(height),
+                        [styles.vars.minHeight]: normalizeDimension(minHeight),
+                    }),
+                    background,
+                }}
                 className={classnames(
                     className,
+                    styles.boxed,
                     getBorderStyle(isInverseOutside, isInverseInside),
                     sprinkles({
                         borderRadius,
