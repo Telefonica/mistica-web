@@ -3,7 +3,7 @@ import classnames from 'classnames';
 import * as React from 'react';
 import * as styles from './sheet.css';
 import FocusTrap from './focus-trap';
-import {useAriaId, useDisableBodyScroll, useIsInViewport, useScreenSize, useTheme} from './hooks';
+import {useAriaId, useDisableBodyScroll, useScreenSize, useTheme} from './hooks';
 import {useSetModalStateEffect} from './modal-context-provider';
 import {Portal} from './portal';
 import {Text2, Text3, Text5} from './text';
@@ -299,17 +299,25 @@ export const SheetBody = ({
     link,
     children,
 }: SheetBodyProps): JSX.Element => {
-    const topScrollSignalRef = React.useRef<HTMLDivElement>(null);
-    const bottomScrollSignalRef = React.useRef<HTMLDivElement>(null);
-
     const hasSubtitleOrDescription = !!(subtitle || description);
     const hasButtons = !!button || !!secondaryButton || !!link;
+    const scrollableContentRef = React.useRef<HTMLDivElement | null>(null);
 
-    const showTitleDivider = !useIsInViewport(topScrollSignalRef, true, {
-        // rootMargin: '1px',
-    });
-    const showButtonsDivider = !useIsInViewport(bottomScrollSignalRef, true, {
-        // rootMargin: '1px',
+    const [showTitleDivider, setShowTitleDivider] = React.useState(false);
+    const [showButtonsDivider, setShowButtonsDivider] = React.useState(false);
+
+    const handleScroll = () => {
+        const target = scrollableContentRef.current;
+        if (target) {
+            const isTop = target.scrollTop === 0;
+            const isBottom = target.scrollHeight - target.scrollTop === target.clientHeight;
+            setShowTitleDivider(!isTop);
+            setShowButtonsDivider(!isBottom);
+        }
+    };
+
+    React.useLayoutEffect(() => {
+        handleScroll();
     });
 
     return (
@@ -324,15 +332,10 @@ export const SheetBody = ({
                 ) : (
                     <Box paddingTop={{mobile: 0, desktop: 40}} />
                 )}
-                {showTitleDivider ? (
-                    <div style={{borderBottom: '1px solid red'}} />
-                ) : (
-                    <div style={{borderBottom: '1px solid transparent'}} />
-                )}
+                {showTitleDivider && <Divider />}
             </div>
-            <div className={styles.bodyContent}>
+            <div className={styles.bodyContent} onScroll={handleScroll} ref={scrollableContentRef}>
                 <Box paddingBottom={hasButtons ? 0 : {desktop: 40, mobile: 0}} paddingX={paddingX}>
-                    <div ref={topScrollSignalRef} className={styles.topScrollSignal} />
                     <Stack space={8}>
                         {hasSubtitleOrDescription && (
                             <Stack space={{mobile: 8, desktop: 16}}>
@@ -368,16 +371,11 @@ export const SheetBody = ({
                         )}
                         {children}
                     </Stack>
-                    <div ref={bottomScrollSignalRef} className={styles.bottomScrollSignal} />
                 </Box>
             </div>
             {hasButtons && (
                 <div className={styles.stickyButtons}>
-                    {showButtonsDivider ? (
-                        <div style={{borderBottom: '1px solid red'}} />
-                    ) : (
-                        <div style={{borderBottom: '1px solid transparent'}} />
-                    )}
+                    {showButtonsDivider && <Divider />}
                     <Box paddingY={{mobile: 16, desktop: 40}} paddingX={paddingX}>
                         <ButtonLayout
                             align="full-width"

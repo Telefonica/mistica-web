@@ -291,7 +291,3 @@ export const infoItemIcon = sprinkles({
     alignItems: 'center',
     height: 24,
 });
-
-export const topScrollSignal = style({height: 1, background: 'green'});
-
-export const bottomScrollSignal = style({height: 1, background: 'green'});
