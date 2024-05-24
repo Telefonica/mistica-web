@@ -3048,4 +3048,5 @@ export default [
     ...ValueBlockSnippets,
     ...ProgressBlockSnippets,
     ...loadingScreenSnippets,
+    ...tableSnippets,
 ].sort((s1, s2) => s1.group.localeCompare(s2.group)) as Array<Snippet>;
