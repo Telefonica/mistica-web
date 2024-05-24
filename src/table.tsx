@@ -20,7 +20,7 @@ type TableProps = {
     columnWidth?: Array<number | string>;
     /**
      * by default, the table expands to all the available width, if you want the table to have the minimum width to fit the rows content, set fullWidth to false.
-     * It's ignored in mobile when responsive move is 'collapse-rows'
+     * It's ignored in mobile
      * */
     fullWidth?: boolean;
     /**
