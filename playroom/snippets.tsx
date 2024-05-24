@@ -385,6 +385,54 @@ const loadingScreenSnippets: Array<Snippet> = [
     },
 ];
 
+const tableSnippets: Array<Snippet> = [
+    {
+        group: 'Table',
+        name: 'Table',
+        code: `
+            <Table
+                heading={[
+                    'Type of food',
+                    'Calories',
+                    'Tasty Factor',
+                    'Average Price',
+                    'Rarity',
+                    'Average Rating',
+                ]}
+                content={[
+                    ['Slice of pizza', '450', '95%', '5,00€', <Tag>Common</Tag>, '8/10'],
+                    ['Hamburger', '350', '87%', '3,50€', <Tag>Common</Tag>, '7.5/10'],
+                    ['Salad', '150', '70%', '4,00€', <Tag>Common</Tag>, '6/10'],
+                    ['Sushi', '200', '90%', '12,00€', <Tag type="warning">Rare</Tag>, '9/10'],
+                    ['Ice cream', '350', '95%', '3,00€', <Tag>Common</Tag>, '8/10'],
+                ]}
+            />`,
+    },
+    {
+        group: 'Table',
+        name: 'boxed Table',
+        code: `
+            <Table
+                boxed
+                heading={[
+                    'Type of food',
+                    'Calories',
+                    'Tasty Factor',
+                    'Average Price',
+                    'Rarity',
+                    'Average Rating',
+                ]}
+                content={[
+                    ['Slice of pizza', '450', '95%', '5,00€', <Tag>Common</Tag>, '8/10'],
+                    ['Hamburger', '350', '87%', '3,50€', <Tag>Common</Tag>, '7.5/10'],
+                    ['Salad', '150', '70%', '4,00€', <Tag>Common</Tag>, '6/10'],
+                    ['Sushi', '200', '90%', '12,00€', <Tag type="warning">Rare</Tag>, '9/10'],
+                    ['Ice cream', '350', '95%', '3,00€', <Tag>Common</Tag>, '8/10'],
+                ]}
+            />`,
+    },
+];
+
 const listSnippets: Array<Snippet> = [
     ['RowList', 'Row'],
     ['BoxedRowList', 'BoxedRow'],
