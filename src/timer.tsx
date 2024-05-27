@@ -80,22 +80,22 @@ const Timer: React.FC<Props> = ({endTime, labelType = 'none'}) => {
             case 'short':
                 return (
                     <>
-                        <div style={{display: 'flex'}}>
+                        <div style={{display: 'inline-flex'}}>
                             {renderFormattedValue(days, 'days')}
                             {' d '}
                         </div>
 
-                        <div style={{display: 'flex'}}>
+                        <div style={{display: 'inline-flex'}}>
                             {renderFormattedValue(hours, 'hours')}
                             {' h '}
                         </div>
 
-                        <div style={{display: 'flex'}}>
+                        <div style={{display: 'inline-flex'}}>
                             {renderFormattedValue(minutes, 'minutes')}
                             {' min '}
                         </div>
 
-                        <div style={{display: 'flex'}}>
+                        <div style={{display: 'inline-flex'}}>
                             {renderFormattedValue(seconds, 'seconds')}
                             {' s'}
                         </div>
@@ -105,25 +105,17 @@ const Timer: React.FC<Props> = ({endTime, labelType = 'none'}) => {
             default:
                 return (
                     <>
-                        <div style={{display: 'flex'}}>
-                            {renderFormattedValue(days, 'days')}
-                            {` day${days === 1 ? '' : 's'}, `}
-                        </div>
+                        {renderFormattedValue(days, 'days')}
+                        {` day${days === 1 ? '' : 's'}, `}
 
-                        <div style={{display: 'flex'}}>
-                            {renderFormattedValue(hours, 'hours')}
-                            {` hour${hours === 1 ? '' : 's'}, `}
-                        </div>
+                        {renderFormattedValue(hours, 'hours')}
+                        {` hour${hours === 1 ? '' : 's'}, `}
 
-                        <div style={{display: 'flex'}}>
-                            {renderFormattedValue(minutes, 'minutes')}
-                            {` minute${minutes === 1 ? '' : 's'} and `}
-                        </div>
+                        {renderFormattedValue(minutes, 'minutes')}
+                        {` minute${minutes === 1 ? '' : 's'} and `}
 
-                        <div style={{display: 'flex'}}>
-                            {renderFormattedValue(seconds, 'seconds')}
-                            {` second${seconds === 1 ? '' : 's'}`}
-                        </div>
+                        {renderFormattedValue(seconds, 'seconds')}
+                        {` second${seconds === 1 ? '' : 's'}`}
                     </>
                 );
         }
