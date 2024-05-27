@@ -5,60 +5,62 @@ import type {ElementHandle} from 'puppeteer';
 
 const isDisabled = async (element: ElementHandle) => {
     const disabledProp = await element.getProperty('disabled');
-    console.log('disabledProp', await disabledProp?.jsonValue());
     return await disabledProp?.jsonValue();
 };
 
 test('Carousel mobile', async () => {
     const page = await openStoryPage({id: 'components-carousels-carousel--default', device: 'MOBILE_IOS'});
 
-    expect(await page.screenshot()).toMatchImageSnapshot();
+    const story = await screen.findByTestId('story');
+    expect(await story.screenshot({captureBeyondViewport: false})).toMatchImageSnapshot();
 
     await (await screen.findByLabelText('Carousel item 2')).evaluate((el) => el.scrollIntoView());
 
-    expect(await page.screenshot()).toMatchImageSnapshot();
+    expect(await page.screenshot({captureBeyondViewport: false})).toMatchImageSnapshot();
 });
 
 test('Carousel mobile without bullets', async () => {
-    const page = await openStoryPage({
+    await openStoryPage({
         id: 'components-carousels-carousel--default',
         device: 'MOBILE_IOS',
         args: {withBullets: false},
     });
 
-    expect(await page.screenshot()).toMatchImageSnapshot();
+    const story = await screen.findByTestId('story');
+    expect(await story.screenshot({captureBeyondViewport: false})).toMatchImageSnapshot();
 
     await (await screen.findByLabelText('Carousel item 2')).evaluate((el) => el.scrollIntoView());
-
-    expect(await page.screenshot()).toMatchImageSnapshot();
+    expect(await story.screenshot({captureBeyondViewport: false})).toMatchImageSnapshot();
 });
 
 test('Carousel mobile in Vivo new', async () => {
-    const page = await openStoryPage({
+    await openStoryPage({
         id: 'components-carousels-carousel--default',
         device: 'MOBILE_IOS',
         skin: VIVO_NEW_SKIN,
     });
 
-    expect(await page.screenshot()).toMatchImageSnapshot();
+    const story = await screen.findByTestId('story');
+    expect(await story.screenshot({captureBeyondViewport: false})).toMatchImageSnapshot();
 
     await (await screen.findByLabelText('Carousel item 2')).evaluate((el) => el.scrollIntoView());
 
-    expect(await page.screenshot()).toMatchImageSnapshot();
+    expect(await story.screenshot({captureBeyondViewport: false})).toMatchImageSnapshot();
 });
 
 test('Carousel mobile with large mobilePageOffset', async () => {
-    const page = await openStoryPage({
+    await openStoryPage({
         id: 'components-carousels-carousel--default',
         device: 'MOBILE_IOS',
         args: {mobilePageOffset: 'large'},
     });
 
-    expect(await page.screenshot()).toMatchImageSnapshot();
+    const story = await screen.findByTestId('story');
+    expect(await story.screenshot({captureBeyondViewport: false})).toMatchImageSnapshot();
 
     await (await screen.findByLabelText('Carousel item 2')).evaluate((el) => el.scrollIntoView());
 
-    expect(await page.screenshot()).toMatchImageSnapshot();
+    expect(await story.screenshot({captureBeyondViewport: false})).toMatchImageSnapshot();
 });
 
 test('Carousel mobile with initialActiveItem=1', async () => {
@@ -68,7 +70,7 @@ test('Carousel mobile with initialActiveItem=1', async () => {
         args: {initialActiveItem: 1},
     });
 
-    expect(await page.screenshot()).toMatchImageSnapshot();
+    expect(await page.screenshot({captureBeyondViewport: false})).toMatchImageSnapshot();
 });
 
 test('Carousel mobile with a single page', async () => {
@@ -78,7 +80,7 @@ test('Carousel mobile with a single page', async () => {
         args: {numItems: 1, itemsPerPageMobile: 1},
     });
 
-    expect(await page.screenshot()).toMatchImageSnapshot();
+    expect(await page.screenshot({captureBeyondViewport: false})).toMatchImageSnapshot();
 
     const page2 = await openStoryPage({
         id: 'components-carousels-carousel--default',
@@ -86,7 +88,7 @@ test('Carousel mobile with a single page', async () => {
         args: {numItems: 2, itemsPerPageMobile: 2},
     });
 
-    expect(await page2.screenshot()).toMatchImageSnapshot();
+    expect(await page2.screenshot({captureBeyondViewport: false})).toMatchImageSnapshot();
 
     const page3 = await openStoryPage({
         id: 'components-carousels-carousel--default',
@@ -94,7 +96,7 @@ test('Carousel mobile with a single page', async () => {
         args: {numItems: 1, itemsPerPageMobile: 2},
     });
 
-    expect(await page3.screenshot()).toMatchImageSnapshot();
+    expect(await page3.screenshot({captureBeyondViewport: false})).toMatchImageSnapshot();
 });
 
 test('Carousel desktop', async () => {
@@ -107,19 +109,23 @@ test('Carousel desktop', async () => {
     const prevArrow = await screen.findByRole('button', {name: /anterior/i});
     const nextArrow = await screen.findByRole('button', {name: /siguiente/i});
 
-    expect(await page.screenshot()).toMatchImageSnapshot();
+    const story = await screen.findByTestId('story');
+
+    expect(await story.screenshot({captureBeyondViewport: false})).toMatchImageSnapshot();
     expect(await isDisabled(prevArrow)).toBe(true);
     expect(await isDisabled(nextArrow)).toBe(false);
 
     await page.click(nextArrow);
+    await new Promise((r) => setTimeout(r, 3000));
 
-    expect(await page.screenshot()).toMatchImageSnapshot();
+    expect(await story.screenshot({captureBeyondViewport: false})).toMatchImageSnapshot();
     expect(await isDisabled(prevArrow)).toBe(false);
     expect(await isDisabled(nextArrow)).toBe(false);
 
     await page.click(nextArrow);
+    await new Promise((r) => setTimeout(r, 3000));
 
-    expect(await page.screenshot()).toMatchImageSnapshot();
+    expect(await story.screenshot({captureBeyondViewport: false})).toMatchImageSnapshot();
     expect(await isDisabled(prevArrow)).toBe(false);
     expect(await isDisabled(nextArrow)).toBe(true);
 });
@@ -131,7 +137,7 @@ test('Carousel desktop  with initialActiveItem=3', async () => {
         args: {initialActiveItem: 3},
     });
 
-    expect(await page.screenshot()).toMatchImageSnapshot();
+    expect(await page.screenshot({captureBeyondViewport: false})).toMatchImageSnapshot();
 });
 
 // no screenshot test for desktop because it's like the regular carousel
@@ -141,11 +147,11 @@ test('CenteredCarousel mobile', async () => {
         device: 'MOBILE_IOS',
     });
 
-    expect(await page.screenshot()).toMatchImageSnapshot();
+    expect(await page.screenshot({captureBeyondViewport: false})).toMatchImageSnapshot();
 
     await (await screen.findByLabelText('Carousel item 1')).evaluate((el) => el.scrollIntoView());
 
-    expect(await page.screenshot()).toMatchImageSnapshot();
+    expect(await page.screenshot({captureBeyondViewport: false})).toMatchImageSnapshot();
 });
 
 test('CenteredCarousel mobile with initialActiveItem=1', async () => {
@@ -155,7 +161,7 @@ test('CenteredCarousel mobile with initialActiveItem=1', async () => {
         args: {initialActiveItem: 1},
     });
 
-    expect(await page.screenshot()).toMatchImageSnapshot();
+    expect(await page.screenshot({captureBeyondViewport: false})).toMatchImageSnapshot();
 });
 
 test('Slideshow mobile', async () => {
@@ -164,32 +170,32 @@ test('Slideshow mobile', async () => {
         device: 'MOBILE_IOS',
     });
 
-    expect(await page.screenshot()).toMatchImageSnapshot();
+    expect(await page.screenshot({captureBeyondViewport: false})).toMatchImageSnapshot();
 });
 
 test('Slideshow desktop', async () => {
     const page = await openStoryPage({
         id: 'components-carousels-slideshow--default',
-        device: 'DESKTOP',
+        device: 'LARGE_DESKTOP',
         args: {numItems: 3},
     });
 
     const prevArrow = await screen.findByRole('button', {name: /anterior/i});
     const nextArrow = await screen.findByRole('button', {name: /siguiente/i});
 
-    expect(await page.screenshot()).toMatchImageSnapshot();
+    expect(await page.screenshot({captureBeyondViewport: false})).toMatchImageSnapshot();
     expect(await isDisabled(prevArrow)).toBe(true);
     expect(await isDisabled(nextArrow)).toBe(false);
 
     await page.click(nextArrow);
 
-    expect(await page.screenshot()).toMatchImageSnapshot();
+    expect(await page.screenshot({captureBeyondViewport: false})).toMatchImageSnapshot();
     expect(await isDisabled(prevArrow)).toBe(false);
     expect(await isDisabled(nextArrow)).toBe(false);
 
     await page.click(nextArrow);
 
-    expect(await page.screenshot()).toMatchImageSnapshot();
+    expect(await page.screenshot({captureBeyondViewport: false})).toMatchImageSnapshot();
     expect(await isDisabled(prevArrow)).toBe(false);
     expect(await isDisabled(nextArrow)).toBe(true);
 });
@@ -212,16 +218,15 @@ test('Carousel with external controls', async () => {
     const prevLink = await screen.findByRole('button', {name: /Prev/i});
     const nextLink = await screen.findByRole('button', {name: /Next/i});
 
-    // https://jira.tid.es/browse/WEB-680
-    expect(await page.screenshot()).toMatchImageSnapshot();
+    expect(await page.screenshot({captureBeyondViewport: false})).toMatchImageSnapshot();
 
     await page.click(nextLink);
 
-    expect(await page.screenshot()).toMatchImageSnapshot();
+    expect(await page.screenshot({captureBeyondViewport: false})).toMatchImageSnapshot();
 
     await page.click(prevLink);
 
-    expect(await page.screenshot()).toMatchImageSnapshot();
+    expect(await page.screenshot({captureBeyondViewport: false})).toMatchImageSnapshot();
 });
 
 test('Slideshow with external controls', async () => {
@@ -233,13 +238,13 @@ test('Slideshow with external controls', async () => {
     const prevLink = await screen.findByRole('button', {name: /Prev/i});
     const nextLink = await screen.findByRole('button', {name: /Next/i});
 
-    expect(await page.screenshot()).toMatchImageSnapshot();
+    expect(await page.screenshot({captureBeyondViewport: false})).toMatchImageSnapshot();
 
     await page.click(nextLink);
 
-    expect(await page.screenshot()).toMatchImageSnapshot();
+    expect(await page.screenshot({captureBeyondViewport: false})).toMatchImageSnapshot();
 
     await page.click(prevLink);
 
-    expect(await page.screenshot()).toMatchImageSnapshot();
+    expect(await page.screenshot({captureBeyondViewport: false})).toMatchImageSnapshot();
 });
