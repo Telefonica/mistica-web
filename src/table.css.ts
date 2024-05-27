@@ -28,7 +28,7 @@ const baseTextAlign = style({
         [`${collapsedRowsInMobile} &`]: {
             '@media': {
                 [mq.tabletOrSmaller]: {
-                    textAlign: 'left',
+                    textAlign: 'initial',
                 },
             },
         },
@@ -73,6 +73,7 @@ globalStyle(`${table} th, ${table} td`, {
     borderBottom: `1px solid ${skinVars.colors.divider}`,
     padding: '16px 12px',
     minHeight: 56,
+    verticalAlign: 'middle',
 });
 
 globalStyle(`${table}:not(${boxed}) th:first-child, ${table}:not(${boxed}) td:first-child`, {
@@ -122,6 +123,7 @@ export const collapsedRowTittle = style({
 globalStyle(`${collapsedRowsInMobile} tbody td`, {
     '@media': {
         [mq.tabletOrSmaller]: {
+            verticalAlign: 'initial',
             border: 'none',
             minHeight: 0,
             padding: '0 0 8px 0',
