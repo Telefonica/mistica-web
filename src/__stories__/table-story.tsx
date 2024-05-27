@@ -42,6 +42,7 @@ type Args = {
     numItems: number;
     emptyCase: string;
     columnTextAlign: Array<'left' | 'right' | 'center'>;
+    rowVerticalAlign: 'top' | 'middle';
     columnWidth: Array<number | string>;
 };
 
@@ -54,6 +55,7 @@ export const Default: StoryComponent<Args> = ({
     numItems,
     emptyCase,
     columnTextAlign,
+    rowVerticalAlign,
     columnWidth,
 }) => {
     return (
@@ -74,6 +76,7 @@ export const Default: StoryComponent<Args> = ({
                     ]}
                     columnTextAlign={columnTextAlign}
                     columnWidth={columnWidth}
+                    rowVerticalAlign={rowVerticalAlign}
                     content={foodList.slice(0, numItems)}
                     emptyCase={emptyCase}
                 />
@@ -92,6 +95,7 @@ Default.args = {
     numItems: 5,
     emptyCase: 'No food items found',
     columnTextAlign: ['left', 'right', 'right', 'right', 'center', 'right'],
+    rowVerticalAlign: 'middle',
     columnWidth: ['auto', 'auto', 'auto', 'auto', 'auto', 'auto'],
 };
 Default.argTypes = {
@@ -104,5 +108,9 @@ Default.argTypes = {
     },
     numItems: {
         control: {type: 'range', min: 0, max: foodList.length, step: 1},
+    },
+    rowVerticalAlign: {
+        options: ['top', 'middle'],
+        control: {type: 'select'},
     },
 };

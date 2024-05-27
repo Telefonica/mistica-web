@@ -62,6 +62,11 @@ export const scrollContainer = style({
     },
 });
 
+export const verticalAlign = styleVariants({
+    top: {verticalAlign: 'top'},
+    middle: {verticalAlign: 'middle'},
+});
+
 // we can only apply sticky head to boxed tables, because non-boxed tables don't have a background
 globalStyle(`${boxed} thead`, {
     position: 'sticky',
@@ -69,11 +74,12 @@ globalStyle(`${boxed} thead`, {
     background: skinVars.colors.backgroundContainer,
 });
 
+const ROW_MIN_HEIGHT = 56;
+
 globalStyle(`${table} th, ${table} td`, {
     borderBottom: `1px solid ${skinVars.colors.divider}`,
     padding: '16px 12px',
-    minHeight: 56,
-    verticalAlign: 'middle',
+    height: ROW_MIN_HEIGHT, // height behaves like a min-height in table layout
 });
 
 globalStyle(`${table}:not(${boxed}) th:first-child, ${table}:not(${boxed}) td:first-child`, {
@@ -125,7 +131,7 @@ globalStyle(`${collapsedRowsInMobile} tbody td`, {
         [mq.tabletOrSmaller]: {
             verticalAlign: 'initial',
             border: 'none',
-            minHeight: 0,
+            height: 'auto', // reset min-height
             padding: '0 0 8px 0',
         },
     },

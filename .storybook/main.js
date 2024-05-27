@@ -72,6 +72,7 @@ module.exports = {
     stories,
     addons: [
         '@storybook/addon-links',
+        '@storybook/addon-controls',
         {
             name: '@storybook/addon-storysource',
             options: {
@@ -88,7 +89,6 @@ module.exports = {
         './platform-selector-addon/register',
         './dark-mode-addon/register',
         './font-size-addon/register',
-        '@storybook/addon-controls',
     ],
     webpackFinal: async (config) => {
         config.watchOptions = {

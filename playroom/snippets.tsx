@@ -399,6 +399,7 @@ const tableSnippets: Array<Snippet> = [
                     'Rarity',
                     'Average Rating',
                 ]}
+                columnTextAlign={["left", "right", "right", "right", "center", "right"]}
                 content={[
                     ['Slice of pizza', '450', '95%', '5,00€', <Tag>Common</Tag>, '8/10'],
                     ['Hamburger', '350', '87%', '3,50€', <Tag>Common</Tag>, '7.5/10'],
@@ -422,6 +423,7 @@ const tableSnippets: Array<Snippet> = [
                     'Rarity',
                     'Average Rating',
                 ]}
+                columnTextAlign={["left", "right", "right", "right", "center", "right"]}
                 content={[
                     ['Slice of pizza', '450', '95%', '5,00€', <Tag>Common</Tag>, '8/10'],
                     ['Hamburger', '350', '87%', '3,50€', <Tag>Common</Tag>, '7.5/10'],

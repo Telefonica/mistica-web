@@ -7,8 +7,12 @@ import {InternalBoxed} from './boxed';
 import classNames from 'classnames';
 import Box from './box';
 import {applyCssVars} from './utils/css';
+import ResponsiveLayout, {ResetResponsiveLayout} from './responsive-layout';
 
 import type {DataAttributes} from './utils/types';
+
+type TextAlign = 'left' | 'right' | 'center';
+type VerticalAlign = 'top' | 'middle';
 
 type TableProps = {
     heading: Array<string>;
@@ -20,7 +24,8 @@ type TableProps = {
      * render every row as a card
      */
     responsive?: 'scroll' | 'collapse-rows';
-    columnTextAlign?: Array<'left' | 'right' | 'center'>;
+    columnTextAlign?: Array<TextAlign> | TextAlign;
+    rowVerticalAlign?: VerticalAlign;
     columnWidth?: Array<number | string>;
     /**
      * by default, the table expands to all the available width, if you want the table to have the minimum width to fit the rows content, set fullWidth to false.
@@ -51,11 +56,23 @@ export const Table = React.forwardRef(
             maxHeight,
             emptyCase,
             columnTextAlign,
+            rowVerticalAlign = 'middle',
             columnWidth,
             ...otherProps
         }: TableProps,
         ref: React.Ref<HTMLDivElement>
     ) => {
+        const getColumnTextAlign = (column: number) => {
+            const defaultTextAlign = 'left';
+            if (columnTextAlign) {
+                if (Array.isArray(columnTextAlign)) {
+                    return columnTextAlign[column] ?? defaultTextAlign;
+                }
+                return columnTextAlign;
+            }
+            return defaultTextAlign;
+        };
+
         const collapsedRowsMode = responsive === 'collapse-rows';
         const table = (
             <table
@@ -80,7 +97,10 @@ export const Table = React.forwardRef(
                             <th
                                 scope="col"
                                 key={idx}
-                                className={styles.cellTextAlign[columnTextAlign?.[idx] ?? 'left']}
+                                className={classNames(
+                                    styles.cellTextAlign[getColumnTextAlign(idx)],
+                                    styles.verticalAlign[rowVerticalAlign]
+                                )}
                                 style={{width: columnWidth?.[idx]}}
                             >
                                 {header}
@@ -90,10 +110,10 @@ export const Table = React.forwardRef(
                 </thead>
                 <tbody>
                     {content && content.length ? (
-                        content.map((row, idx) => (
-                            <tr key={idx}>
+                        content.map((row, rowIdx) => (
+                            <tr key={rowIdx}>
                                 {row.map((cell, idx) => (
-                                    <td key={idx}>
+                                    <td key={idx} className={styles.verticalAlign[rowVerticalAlign]}>
                                         {/**
                                          * In collapsedRowsMode, we render the row heading text before every cell content, except for the first cell
                                          * of every row, which is rendered with a medium weight font, as it's the row title.
@@ -114,7 +134,7 @@ export const Table = React.forwardRef(
                                         >
                                             <div
                                                 className={classNames(
-                                                    styles.cellTextAlign[columnTextAlign?.[idx] ?? 'left'],
+                                                    styles.cellTextAlign[getColumnTextAlign(idx)],
                                                     {
                                                         [styles.collapsedRowTittle]:
                                                             idx === 0 && collapsedRowsMode,
@@ -169,16 +189,27 @@ export const Table = React.forwardRef(
                     dataAttributes={{'component-name': 'Table', ...dataAttributes}}
                 >
                     <div {...scrollContainerStyles}>
-                        <Box paddingX={{desktop: 8, mobile: collapsedRowsMode ? 0 : 8}}>{table}</Box>
+                        <Box
+                            paddingX={{desktop: 16, mobile: collapsedRowsMode ? 0 : 8}}
+                            paddingY={{desktop: 8, mobile: 0}}
+                        >
+                            {table}
+                        </Box>
                     </div>
                 </InternalBoxed>
             );
         }
 
         return (
-            <div ref={ref} {...getPrefixedDataAttributes(dataAttributes, 'Table')} {...scrollContainerStyles}>
-                {table}
-            </div>
+            <ResetResponsiveLayout>
+                <div
+                    ref={ref}
+                    {...getPrefixedDataAttributes(dataAttributes, 'Table')}
+                    {...scrollContainerStyles}
+                >
+                    <ResponsiveLayout>{table}</ResponsiveLayout>
+                </div>
+            </ResetResponsiveLayout>
         );
     }
 );
