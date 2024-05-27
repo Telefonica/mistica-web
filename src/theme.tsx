@@ -53,6 +53,11 @@ const TEXTS_ES = {
     counterQuantity: 'cantidad',
     counterMinValue: 'mínimo',
     counterMaxValue: 'máximo',
+    timerDaysShortLabel: 'd',
+    timerHoursShortLabel: 'h',
+    timerMinutesShortLabel: 'min',
+    timerSecondsShortLabel: 's',
+    timerAnd: 'y',
 };
 
 const TEXTS_EN: ThemeTexts = {
@@ -101,6 +106,11 @@ const TEXTS_EN: ThemeTexts = {
     counterQuantity: 'quantity',
     counterMinValue: 'minimum of',
     counterMaxValue: 'maximum of',
+    timerDaysShortLabel: 'd',
+    timerHoursShortLabel: 'h',
+    timerMinutesShortLabel: 'min',
+    timerSecondsShortLabel: 's',
+    timerAnd: 'and',
 };
 
 const TEXTS_DE: ThemeTexts = {
@@ -149,6 +159,11 @@ const TEXTS_DE: ThemeTexts = {
     counterQuantity: 'menge',
     counterMinValue: 'minimal',
     counterMaxValue: 'maximal',
+    timerDaysShortLabel: 'Tg.',
+    timerHoursShortLabel: 'Std.',
+    timerMinutesShortLabel: 'Min.',
+    timerSecondsShortLabel: 'Sek.',
+    timerAnd: 'und',
 };
 
 const TEXTS_PT: ThemeTexts = {
@@ -197,6 +212,11 @@ const TEXTS_PT: ThemeTexts = {
     counterQuantity: 'quantidade',
     counterMinValue: 'mínimo',
     counterMaxValue: 'máximo',
+    timerDaysShortLabel: 'd',
+    timerHoursShortLabel: 'h',
+    timerMinutesShortLabel: 'min',
+    timerSecondsShortLabel: 's',
+    timerAnd: 'e',
 };
 
 export const getTexts = (locale: Locale): typeof TEXTS_ES => {

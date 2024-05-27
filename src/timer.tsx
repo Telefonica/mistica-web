@@ -1,18 +1,23 @@
 'use client';
 import * as React from 'react';
-import {useIsomorphicLayoutEffect} from './hooks';
+import {useIsomorphicLayoutEffect, useTheme} from './hooks';
 import ScreenReaderOnly from './screen-reader-only';
 import * as styles from './timer.css';
 import {getPrefixedDataAttributes} from './utils/dom';
 
 import type {DataAttributes} from './utils/types';
 
+const DAY_IN_HOURS = 24;
+const HOUR_IN_MINUTES = 60;
+const MINUTE_IN_SECONDS = 60;
 const SECOND_IN_MS = 1000;
-const MINUTE_IN_MS = SECOND_IN_MS * 60;
-const HOUR_IN_MS = MINUTE_IN_MS * 60;
-const DAY_IN_MS = HOUR_IN_MS * 24;
+
+const MINUTE_IN_MS = MINUTE_IN_SECONDS * SECOND_IN_MS;
+const HOUR_IN_MS = HOUR_IN_MINUTES * MINUTE_IN_MS;
+const DAY_IN_MS = DAY_IN_HOURS * HOUR_IN_MS;
 
 type TimeUnit = 'days' | 'hours' | 'minutes' | 'seconds';
+type Label = 'none' | 'short' | 'long';
 
 type Timestamp = {
     days: number;
@@ -23,7 +28,9 @@ type Timestamp = {
 
 interface Props {
     endTime: string;
-    labelType?: 'none' | 'short' | 'long';
+    labelType?: Label;
+    minTimeUnit?: TimeUnit;
+    maxTimeUnit?: TimeUnit;
     children?: void;
     dataAttributes?: DataAttributes;
 }
@@ -53,12 +60,98 @@ const useRemainingTime = (endTime: string) => {
     return {days: currentDays, hours: currentHours, minutes: currentMinutes, seconds: currentSeconds};
 };
 
+// TODO: localize this
 const getTimestampLabel = ({days, hours, minutes, seconds}: Timestamp) => {
     return `${days} days, ${hours} hours, ${minutes} minutes, ${seconds} seconds`;
 };
 
-const Timer: React.FC<Props> = ({endTime, labelType = 'none', dataAttributes}) => {
-    const {days, hours, minutes, seconds} = useRemainingTime(endTime);
+const shouldRenderUnit = (
+    unit: TimeUnit,
+    labelType: Label,
+    minTimeUnit?: TimeUnit,
+    maxTimeUnit?: TimeUnit
+) => {
+    if (!minTimeUnit && !maxTimeUnit) {
+        minTimeUnit = 'seconds';
+        maxTimeUnit = 'hours';
+    }
+    minTimeUnit = minTimeUnit ?? 'seconds';
+    maxTimeUnit = maxTimeUnit ?? 'days';
+
+    // If label is "none", days shouldn't be displayed
+    minTimeUnit = labelType === 'none' && minTimeUnit === 'days' ? 'hours' : minTimeUnit;
+    maxTimeUnit = labelType === 'none' && maxTimeUnit === 'days' ? 'hours' : maxTimeUnit;
+
+    const unitsOrder: Array<TimeUnit> = ['seconds', 'minutes', 'hours', 'days'];
+
+    const minValue = unitsOrder.indexOf(minTimeUnit);
+    // If max < min, we display only the min unit
+    const maxValue = Math.max(unitsOrder.indexOf(maxTimeUnit), minValue);
+    const unitValue = unitsOrder.indexOf(unit);
+
+    return minValue <= unitValue && unitValue <= maxValue;
+};
+
+const Timer: React.FC<Props> = ({endTime, labelType = 'none', minTimeUnit, maxTimeUnit, dataAttributes}) => {
+    const {
+        days,
+        hours: currentHours,
+        minutes: currentMinutes,
+        seconds: currentSeconds,
+    } = useRemainingTime(endTime);
+    const {texts} = useTheme();
+
+    const shouldRenderDays = shouldRenderUnit('days', labelType, minTimeUnit, maxTimeUnit);
+    const shouldRenderHours = shouldRenderUnit('hours', labelType, minTimeUnit, maxTimeUnit);
+    const shouldRenderMinutes = shouldRenderUnit('minutes', labelType, minTimeUnit, maxTimeUnit);
+
+    const maximumRenderedUnit = shouldRenderDays
+        ? 'days'
+        : shouldRenderHours
+        ? 'hours'
+        : shouldRenderMinutes
+        ? 'minutes'
+        : 'seconds';
+
+    // if hours is the maximum unit, add remaining days
+    const hours = maximumRenderedUnit === 'hours' ? currentHours + days * DAY_IN_HOURS : currentHours;
+
+    // if minutes is the maximum unit, add remaining days and hours
+    const minutes =
+        maximumRenderedUnit === 'minutes'
+            ? currentMinutes + HOUR_IN_MINUTES * (days * DAY_IN_HOURS + hours)
+            : currentMinutes;
+
+    // if minutes is the maximum unit, add remaining days, hours and minutes
+    const seconds =
+        maximumRenderedUnit === 'seconds'
+            ? currentSeconds +
+              MINUTE_IN_SECONDS * (days * DAY_IN_HOURS * HOUR_IN_MINUTES + hours * HOUR_IN_MINUTES + minutes)
+            : currentSeconds;
+
+    const visibleUnits = (
+        [
+            {unit: 'days', value: days},
+            {unit: 'hours', value: hours},
+            {unit: 'minutes', value: minutes},
+            {unit: 'seconds', value: seconds},
+        ] as Array<{unit: TimeUnit; value: number}>
+    ).filter((item) => shouldRenderUnit(item.unit, labelType, minTimeUnit, maxTimeUnit));
+
+    const unitShortLabel: {[key in TimeUnit]: string} = {
+        days: texts.timerDaysShortLabel,
+        hours: texts.timerHoursShortLabel,
+        minutes: texts.timerMinutesShortLabel,
+        seconds: texts.timerSecondsShortLabel,
+    };
+
+    // TODO: localize this
+    const unitLongLabel: {[key in TimeUnit]: string} = {
+        days: 'day',
+        hours: 'hour',
+        minutes: 'minute',
+        seconds: 'second',
+    };
 
     const renderFormattedValue = (value: number, timeUnit: TimeUnit) => {
         const digitCount =
@@ -67,32 +160,12 @@ const Timer: React.FC<Props> = ({endTime, labelType = 'none', dataAttributes}) =
                 ? 1
                 : 2;
 
+        // Set container's width in ch to avoid it from updating it's width when numbers change
         return (
             <span className={styles.unitContainer} style={{minWidth: `${digitCount}ch`}}>
                 {String(value).padStart(digitCount, '0')}
             </span>
         );
-    };
-
-    const visibleUnits: Array<{unit: TimeUnit; value: number}> = [
-        {unit: 'days', value: days},
-        {unit: 'hours', value: hours},
-        {unit: 'minutes', value: minutes},
-        {unit: 'seconds', value: seconds},
-    ];
-
-    const unitShortLabel: {[key in TimeUnit]: string} = {
-        days: 'd',
-        hours: 'h',
-        minutes: 'm',
-        seconds: 's',
-    };
-
-    const unitLongLabel: {[key in TimeUnit]: string} = {
-        days: 'day',
-        hours: 'hour',
-        minutes: 'minute',
-        seconds: 'second',
     };
 
     const renderTime = () => {
@@ -106,6 +179,7 @@ const Timer: React.FC<Props> = ({endTime, labelType = 'none', dataAttributes}) =
                 ));
 
             case 'short':
+                // Using a div to treat each unit and its value as a single element when wrapping is required
                 return visibleUnits.map((item, index) => (
                     <div style={{display: 'inline-flex'}} key={index}>
                         {renderFormattedValue(item.value, item.unit)}
@@ -119,11 +193,12 @@ const Timer: React.FC<Props> = ({endTime, labelType = 'none', dataAttributes}) =
                 return visibleUnits.map((item, index) => (
                     <React.Fragment key={index}>
                         {renderFormattedValue(item.value, item.unit)}
+                        {/** TODO: localize plural */}
                         {` ${unitLongLabel[item.unit]}${item.value === 1 ? '' : 's'}`}
                         {index === visibleUnits.length - 1
                             ? ''
                             : index === visibleUnits.length - 2
-                            ? ' and '
+                            ? ` ${texts.timerAnd} `
                             : ', '}
                     </React.Fragment>
                 ));
