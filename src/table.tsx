@@ -15,18 +15,22 @@ type TableProps = {
     content?: Array<Array<React.ReactNode>>;
     boxed?: boolean;
     emptyCase?: React.ReactNode;
+    /**
+     * In mobile, the table will be scrollable horizontally by default. Alternatively, you can set it to 'collapse-rows', which will
+     * render every row as a card
+     */
     responsive?: 'scroll' | 'collapse-rows';
     columnTextAlign?: Array<'left' | 'right' | 'center'>;
     columnWidth?: Array<number | string>;
     /**
      * by default, the table expands to all the available width, if you want the table to have the minimum width to fit the rows content, set fullWidth to false.
      * It's ignored in mobile
-     * */
+     */
     fullWidth?: boolean;
     /**
      * Limits the height of the table and the content will have vertical scroll.
      * It's ignored in mobile when responsive move is 'collapse-rows'
-     * */
+     */
     maxHeight?: number | string;
     /** "data-" prefix is automatically added. For example, use "testid" instead of "data-testid" */
     dataAttributes?: DataAttributes;
@@ -90,14 +94,19 @@ export const Table = React.forwardRef(
                             <tr key={idx}>
                                 {row.map((cell, idx) => (
                                     <td key={idx}>
+                                        {/**
+                                         * In collapsedRowsMode, we render the row heading text before every cell content, except for the first cell
+                                         * of every row, which is rendered with a medium weight font, as it's the row title.
+                                         * */}
                                         {idx !== 0 && collapsedRowsMode && (
-                                            // this is aria hidden because screen readers already read the column heading from the th
+                                            // this is aria-hidden because screen readers already read the column heading from the th
                                             <div className={styles.mobileCellHeading} aria-hidden>
                                                 <Text1 medium color={vars.colors.textSecondary}>
                                                     {heading[idx]}
                                                 </Text1>
                                             </div>
                                         )}
+
                                         <Text2
                                             as="div"
                                             weight={idx === 0 && collapsedRowsMode ? 'medium' : 'regular'}
@@ -121,7 +130,7 @@ export const Table = React.forwardRef(
                         ))
                     ) : (
                         <tr>
-                            <td colSpan={heading.length} style={{minHeight: 100}}>
+                            <td colSpan={heading.length}>
                                 {typeof emptyCase === 'string' ? (
                                     <Box paddingY={56}>
                                         <Text2 regular textAlign="center" as="div">
@@ -138,6 +147,17 @@ export const Table = React.forwardRef(
             </table>
         );
 
+        const scrollContainerStyles = {
+            className: classNames(styles.scrollContainer, {
+                [styles.collapsedRowsInMobile]: collapsedRowsMode,
+                [styles.fullWidth]: fullWidth,
+            }),
+            style: applyCssVars({
+                [styles.vars.maxHeight]:
+                    typeof maxHeight === 'number' ? `${maxHeight}px` : maxHeight ?? 'auto',
+            }),
+        };
+
         if (boxed) {
             return (
                 <InternalBoxed
@@ -148,19 +168,7 @@ export const Table = React.forwardRef(
                     ref={ref}
                     dataAttributes={{'component-name': 'Table', ...dataAttributes}}
                 >
-                    <div
-                        className={classNames(styles.scrollContainer, {
-                            [styles.collapsedRowsInMobile]: collapsedRowsMode,
-                            [styles.fullWidth]: fullWidth,
-                        })}
-                        style={{
-                            overflowX: 'auto',
-                            ...applyCssVars({
-                                [styles.vars.maxHeight]:
-                                    typeof maxHeight === 'number' ? `${maxHeight}px` : maxHeight ?? 'none',
-                            }),
-                        }}
-                    >
+                    <div {...scrollContainerStyles}>
                         <Box paddingX={{desktop: 8, mobile: collapsedRowsMode ? 0 : 8}}>{table}</Box>
                     </div>
                 </InternalBoxed>
@@ -168,18 +176,7 @@ export const Table = React.forwardRef(
         }
 
         return (
-            <div
-                ref={ref}
-                {...getPrefixedDataAttributes(dataAttributes, 'Table')}
-                className={classNames(styles.scrollContainer, {
-                    [styles.collapsedRowsInMobile]: collapsedRowsMode,
-                    [styles.fullWidth]: fullWidth,
-                })}
-                style={applyCssVars({
-                    [styles.vars.maxHeight]:
-                        typeof maxHeight === 'number' ? `${maxHeight}px` : maxHeight ?? 'none',
-                })}
-            >
+            <div ref={ref} {...getPrefixedDataAttributes(dataAttributes, 'Table')} {...scrollContainerStyles}>
                 {table}
             </div>
         );

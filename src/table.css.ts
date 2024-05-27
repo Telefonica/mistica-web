@@ -12,13 +12,15 @@ export const table = style({
     position: 'relative',
     '@media': {
         [mq.tabletOrSmaller]: {
-            minWidth: '100%',
+            minWidth: '100%', // always render the table fullWidth in mobile
         },
     },
 });
 
 export const fullWidth = style({minWidth: '100%'});
 export const boxed = style({});
+
+// In mobile, we have 2 rendering modes: horizontal scroll, or collapsed rows. In collapsed rows mode, every row is rendered as a card
 export const collapsedRowsInMobile = style({});
 
 const baseTextAlign = style({
@@ -49,9 +51,10 @@ export const scrollContainer = style({
         [`${collapsedRowsInMobile}&`]: {
             '@media': {
                 [mq.tabletOrSmaller]: {
+                    // revert styles
                     overflow: 'visible',
-                    maxHeight: 'none',
-                    maxWidth: 'none',
+                    maxHeight: 'auto',
+                    maxWidth: 'auto',
                     width: 'auto',
                 },
             },
@@ -59,6 +62,7 @@ export const scrollContainer = style({
     },
 });
 
+// we can only apply sticky head to boxed tables, because non-boxed tables don't have a background
 globalStyle(`${boxed} thead`, {
     position: 'sticky',
     top: 0,
@@ -78,8 +82,6 @@ globalStyle(`${table}:not(${boxed}) th:first-child, ${table}:not(${boxed}) td:fi
 globalStyle(`${table}:not(${boxed}) th:last-child, ${table}:not(${boxed}) td:last-child`, {
     paddingRight: 0,
 });
-
-globalStyle(`${table} td`, {});
 
 globalStyle(`${table} tr:last-child td`, {
     borderBottom: 'none',
@@ -111,6 +113,7 @@ export const collapsedRowTittle = style({
             paddingBottom: 8,
         },
         [mq.desktopOrBigger]: {
+            // revert the medium weight to regular in desktop
             fontWeight: 400,
         },
     },
