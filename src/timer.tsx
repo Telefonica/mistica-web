@@ -38,45 +38,6 @@ interface Props {
     'aria-label'?: string;
 }
 
-const getRemainingTime = (endTimestamp: Date | number) => {
-    const remainingTime = Math.max(
-        0,
-        (typeof endTimestamp === 'object' ? endTimestamp : new Date(endTimestamp)).valueOf() - Date.now()
-    );
-
-    return {
-        days: Math.floor(remainingTime / DAY_IN_MS),
-        hours: Math.floor(remainingTime / HOUR_IN_MS) % 24,
-        minutes: Math.floor(remainingTime / MINUTE_IN_MS) % 60,
-        seconds: Math.floor(remainingTime / SECOND_IN_MS) % 60,
-    };
-};
-
-const useRemainingTime = (endTimestamp: Date | number) => {
-    const remainingTime = getRemainingTime(endTimestamp);
-    const [currentDays, setCurrentDays] = React.useState(remainingTime.days);
-    const [currentHours, setCurrentHours] = React.useState(remainingTime.hours);
-    const [currentMinutes, setCurrentMinutes] = React.useState(remainingTime.minutes);
-    const [currentSeconds, setCurrentSeconds] = React.useState(remainingTime.seconds);
-
-    useIsomorphicLayoutEffect(() => {
-        const updateCurrentTime = () => {
-            const remainingTime = getRemainingTime(endTimestamp);
-            setCurrentDays(remainingTime.days);
-            setCurrentHours(remainingTime.hours);
-            setCurrentMinutes(remainingTime.minutes);
-            setCurrentSeconds(remainingTime.seconds);
-        };
-
-        updateCurrentTime();
-        const intervalId = setInterval(updateCurrentTime, SECOND_IN_MS);
-
-        return () => clearInterval(intervalId);
-    }, [endTimestamp]);
-
-    return {days: currentDays, hours: currentHours, minutes: currentMinutes, seconds: currentSeconds};
-};
-
 const shouldRenderUnit = (
     unit: TimeUnit,
     labelType: Label,
@@ -120,23 +81,53 @@ const getFilteredTimerValue = (
     ).filter((item) => shouldRenderUnit(item.unit, labelType, minTimeUnit, maxTimeUnit));
 };
 
-const Timer: React.FC<Props> = ({
+const getRemainingTime = (endTimestamp: Date | number) => {
+    const remainingTime = Math.max(
+        0,
+        (typeof endTimestamp === 'object' ? endTimestamp : new Date(endTimestamp)).valueOf() - Date.now()
+    );
+
+    return {
+        days: Math.floor(remainingTime / DAY_IN_MS),
+        hours: Math.floor(remainingTime / HOUR_IN_MS) % 24,
+        minutes: Math.floor(remainingTime / MINUTE_IN_MS) % 60,
+        seconds: Math.floor(remainingTime / SECOND_IN_MS) % 60,
+    };
+};
+
+const useTimerState = ({
     endTimestamp,
-    labelType = 'none',
+    labelType,
     minTimeUnit,
     maxTimeUnit,
     onProgress,
-    dataAttributes,
-    'aria-label': ariaLabel,
+}: {
+    endTimestamp: Date | number;
+    labelType: Label;
+    minTimeUnit?: TimeUnit;
+    maxTimeUnit?: TimeUnit;
+    onProgress?: (value: Timestamp) => void;
 }) => {
-    const {texts} = useTheme();
+    const remainingTime = getRemainingTime(endTimestamp);
+    const [currentDays, setCurrentDays] = React.useState(remainingTime.days);
+    const [currentHours, setCurrentHours] = React.useState(remainingTime.hours);
+    const [currentMinutes, setCurrentMinutes] = React.useState(remainingTime.minutes);
+    const [currentSeconds, setCurrentSeconds] = React.useState(remainingTime.seconds);
 
-    const {
-        days,
-        hours: currentHours,
-        minutes: currentMinutes,
-        seconds: currentSeconds,
-    } = useRemainingTime(endTimestamp);
+    useIsomorphicLayoutEffect(() => {
+        const updateCurrentTime = () => {
+            const remainingTime = getRemainingTime(endTimestamp);
+            setCurrentDays(remainingTime.days);
+            setCurrentHours(remainingTime.hours);
+            setCurrentMinutes(remainingTime.minutes);
+            setCurrentSeconds(remainingTime.seconds);
+        };
+
+        updateCurrentTime();
+        const intervalId = setInterval(updateCurrentTime, SECOND_IN_MS);
+
+        return () => clearInterval(intervalId);
+    }, [endTimestamp]);
 
     const shouldRenderDays = shouldRenderUnit('days', labelType, minTimeUnit, maxTimeUnit);
     const shouldRenderHours = shouldRenderUnit('hours', labelType, minTimeUnit, maxTimeUnit);
@@ -149,6 +140,8 @@ const Timer: React.FC<Props> = ({
         : shouldRenderMinutes
         ? 'minutes'
         : 'seconds';
+
+    const days = currentDays;
 
     // if hours is the maximum unit, add remaining days
     const hours = maximumRenderedUnit === 'hours' ? currentHours + days * DAY_IN_HOURS : currentHours;
@@ -186,6 +179,22 @@ const Timer: React.FC<Props> = ({
         }
     }, [days, hours, minutes, seconds, labelType, minTimeUnit, maxTimeUnit, timerValue, onProgress]);
 
+    return timerValue;
+};
+
+const Timer: React.FC<Props> = ({
+    endTimestamp,
+    labelType = 'none',
+    minTimeUnit,
+    maxTimeUnit,
+    onProgress,
+    dataAttributes,
+    'aria-label': ariaLabel,
+}) => {
+    const {texts} = useTheme();
+
+    const timerValue = useTimerState({endTimestamp, labelType, minTimeUnit, maxTimeUnit, onProgress});
+
     const unitShortLabel: {[key in TimeUnit]: string} = {
         days: texts.timerDaysShortLabel,
         hours: texts.timerHoursShortLabel,
@@ -194,13 +203,20 @@ const Timer: React.FC<Props> = ({
     };
 
     const unitLongLabel: {[key in TimeUnit]: string} = {
-        days: days === 1 ? texts.timerDayLongLabel : texts.timerDaysLongLabel,
-        hours: hours === 1 ? texts.timerHourLongLabel : texts.timerHoursLongLabel,
-        minutes: minutes === 1 ? texts.timerMinuteLongLabel : texts.timerMinutesLongLabel,
-        seconds: seconds === 1 ? texts.timerSecondLongLabel : texts.timerSecondsLongLabel,
+        days: texts.timerDayLongLabel,
+        hours: texts.timerHourLongLabel,
+        minutes: texts.timerMinuteLongLabel,
+        seconds: texts.timerSecondLongLabel,
     };
 
-    const renderFormattedValue = (value: number, timeUnit: TimeUnit) => {
+    const unitLongLabelPlural: {[key in TimeUnit]: string} = {
+        days: texts.timerDaysLongLabel,
+        hours: texts.timerHoursLongLabel,
+        minutes: texts.timerMinutesLongLabel,
+        seconds: texts.timerSecondsLongLabel,
+    };
+
+    const renderFormattedNumber = (value: number, timeUnit: TimeUnit) => {
         const digitCount =
             value < 10 &&
             (labelType === 'long' || (labelType === 'short' && (timeUnit === 'days' || timeUnit === 'hours')))
@@ -220,7 +236,7 @@ const Timer: React.FC<Props> = ({
             case 'none':
                 return timerValue.map((item, index) => (
                     <React.Fragment key={index}>
-                        {renderFormattedValue(item.value, item.unit)}
+                        {renderFormattedNumber(item.value, item.unit)}
                         {index === timerValue.length - 1 ? '' : ':'}
                     </React.Fragment>
                 ));
@@ -229,7 +245,7 @@ const Timer: React.FC<Props> = ({
                 // Using a div to treat each unit and its value as a single element when wrapping is required
                 return timerValue.map((item, index) => (
                     <div style={{display: 'inline-flex'}} key={index}>
-                        {renderFormattedValue(item.value, item.unit)}
+                        {renderFormattedNumber(item.value, item.unit)}
                         {` ${unitShortLabel[item.unit]}`}
                         {index === timerValue.length - 1 ? '' : ' '}
                     </div>
@@ -239,8 +255,8 @@ const Timer: React.FC<Props> = ({
             default:
                 return timerValue.map((item, index) => (
                     <React.Fragment key={index}>
-                        {renderFormattedValue(item.value, item.unit)}
-                        {` ${unitLongLabel[item.unit]}`}
+                        {renderFormattedNumber(item.value, item.unit)}
+                        {` ${item.value === 1 ? unitLongLabel[item.unit] : unitLongLabelPlural[item.unit]}`}
                         {index === timerValue.length - 1
                             ? ''
                             : index === timerValue.length - 2
@@ -254,7 +270,9 @@ const Timer: React.FC<Props> = ({
     const timerLabel = timerValue
         .map(
             (item, index) =>
-                `${item.value} ${unitLongLabel[item.unit]}${
+                `${item.value} ${
+                    item.value === 1 ? unitLongLabel[item.unit] : unitLongLabelPlural[item.unit]
+                }${
                     index === timerValue.length - 1
                         ? ''
                         : index === timerValue.length - 2
