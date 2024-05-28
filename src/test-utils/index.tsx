@@ -39,7 +39,7 @@ type DeviceCollection = Record<
     }
 >;
 
-const DEVICES: DeviceCollection = {
+export const DEVICES: DeviceCollection = {
     [MOBILE_DEVICE_IOS_SMALL]: {
         userAgent:
             'Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Mobile/15A372 Safari/604.1',
@@ -132,7 +132,7 @@ const DEVICES: DeviceCollection = {
             isLandscape: false,
         },
     },
-};
+} as const;
 
 const buildStoryPath = (id: string, skin?: string, platform?: string, args?: StoryArgs) => {
     const params = new URLSearchParams();

@@ -378,16 +378,10 @@ const Template: StoryComponent<Args & {boxed?: boolean; isInverse?: boolean}> = 
         </ListComponent>
     );
 
-    // const withLayout = (
-    //     <ResponsiveLayout isInverse={overInverse}>
-    //         {boxed ? list : <NegativeBox>{list}</NegativeBox>}
-    //     </ResponsiveLayout>
-    // );
-
     const withLayout = (
-        <div style={{minWidth: 320, padding: '0 16px'}}>
+        <ResponsiveLayout isInverse={overInverse}>
             {boxed ? list : <NegativeBox>{list}</NegativeBox>}
-        </div>
+        </ResponsiveLayout>
     );
 
     return control.includes('radio') ? (
