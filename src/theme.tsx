@@ -58,6 +58,14 @@ const TEXTS_ES = {
     timerMinutesShortLabel: 'min',
     timerSecondsShortLabel: 's',
     timerAnd: 'y',
+    timerDayLongLabel: 'día',
+    timerDaysLongLabel: 'días',
+    timerHourLongLabel: 'hora',
+    timerHoursLongLabel: 'horas',
+    timerMinuteLongLabel: 'minuto',
+    timerMinutesLongLabel: 'minutos',
+    timerSecondLongLabel: 'segundo',
+    timerSecondsLongLabel: 'segundos',
 };
 
 const TEXTS_EN: ThemeTexts = {
@@ -111,6 +119,14 @@ const TEXTS_EN: ThemeTexts = {
     timerMinutesShortLabel: 'min',
     timerSecondsShortLabel: 's',
     timerAnd: 'and',
+    timerDayLongLabel: 'day',
+    timerDaysLongLabel: 'days',
+    timerHourLongLabel: 'hour',
+    timerHoursLongLabel: 'hours',
+    timerMinuteLongLabel: 'minute',
+    timerMinutesLongLabel: 'minutes',
+    timerSecondLongLabel: 'second',
+    timerSecondsLongLabel: 'seconds',
 };
 
 const TEXTS_DE: ThemeTexts = {
@@ -164,6 +180,14 @@ const TEXTS_DE: ThemeTexts = {
     timerMinutesShortLabel: 'Min.',
     timerSecondsShortLabel: 'Sek.',
     timerAnd: 'und',
+    timerDayLongLabel: 'Tag',
+    timerDaysLongLabel: 'Tage',
+    timerHourLongLabel: 'Stunde',
+    timerHoursLongLabel: 'Stunden',
+    timerMinuteLongLabel: 'Minute',
+    timerMinutesLongLabel: 'Minuten',
+    timerSecondLongLabel: 'Sekunde',
+    timerSecondsLongLabel: 'Sekunden',
 };
 
 const TEXTS_PT: ThemeTexts = {
@@ -217,6 +241,14 @@ const TEXTS_PT: ThemeTexts = {
     timerMinutesShortLabel: 'min',
     timerSecondsShortLabel: 's',
     timerAnd: 'e',
+    timerDayLongLabel: 'dia',
+    timerDaysLongLabel: 'dias',
+    timerHourLongLabel: 'hora',
+    timerHoursLongLabel: 'horas',
+    timerMinuteLongLabel: 'minuto',
+    timerMinutesLongLabel: 'minutos',
+    timerSecondLongLabel: 'segundo',
+    timerSecondsLongLabel: 'segundos',
 };
 
 export const getTexts = (locale: Locale): typeof TEXTS_ES => {

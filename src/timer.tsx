@@ -19,13 +19,6 @@ const DAY_IN_MS = DAY_IN_HOURS * HOUR_IN_MS;
 type TimeUnit = 'days' | 'hours' | 'minutes' | 'seconds';
 type Label = 'none' | 'short' | 'long';
 
-type Timestamp = {
-    days: number;
-    hours: number;
-    minutes: number;
-    seconds: number;
-};
-
 interface Props {
     endTime: string;
     labelType?: Label;
@@ -58,11 +51,6 @@ const useRemainingTime = (endTime: string) => {
     }, [endTime]);
 
     return {days: currentDays, hours: currentHours, minutes: currentMinutes, seconds: currentSeconds};
-};
-
-// TODO: localize this
-const getTimestampLabel = ({days, hours, minutes, seconds}: Timestamp) => {
-    return `${days} days, ${hours} hours, ${minutes} minutes, ${seconds} seconds`;
 };
 
 const shouldRenderUnit = (
@@ -145,12 +133,11 @@ const Timer: React.FC<Props> = ({endTime, labelType = 'none', minTimeUnit, maxTi
         seconds: texts.timerSecondsShortLabel,
     };
 
-    // TODO: localize this
     const unitLongLabel: {[key in TimeUnit]: string} = {
-        days: 'day',
-        hours: 'hour',
-        minutes: 'minute',
-        seconds: 'second',
+        days: days === 1 ? texts.timerDayLongLabel : texts.timerDaysLongLabel,
+        hours: hours === 1 ? texts.timerHourLongLabel : texts.timerHoursLongLabel,
+        minutes: minutes === 1 ? texts.timerMinuteLongLabel : texts.timerMinutesLongLabel,
+        seconds: seconds === 1 ? texts.timerSecondLongLabel : texts.timerSecondsLongLabel,
     };
 
     const renderFormattedValue = (value: number, timeUnit: TimeUnit) => {
@@ -193,8 +180,7 @@ const Timer: React.FC<Props> = ({endTime, labelType = 'none', minTimeUnit, maxTi
                 return visibleUnits.map((item, index) => (
                     <React.Fragment key={index}>
                         {renderFormattedValue(item.value, item.unit)}
-                        {/** TODO: localize plural */}
-                        {` ${unitLongLabel[item.unit]}${item.value === 1 ? '' : 's'}`}
+                        {` ${unitLongLabel[item.unit]}`}
                         {index === visibleUnits.length - 1
                             ? ''
                             : index === visibleUnits.length - 2
@@ -205,10 +191,25 @@ const Timer: React.FC<Props> = ({endTime, labelType = 'none', minTimeUnit, maxTi
         }
     };
 
+    const getTimerLabel = () => {
+        return visibleUnits
+            .map(
+                (item, index) =>
+                    `${item.value} ${unitLongLabel[item.unit]}${
+                        index === visibleUnits.length - 1
+                            ? ''
+                            : index === visibleUnits.length - 2
+                            ? ` ${texts.timerAnd} `
+                            : ', '
+                    }`
+            )
+            .join('');
+    };
+
     return (
         <div className={styles.timerWrapper} {...getPrefixedDataAttributes(dataAttributes, 'Timer')}>
             <ScreenReaderOnly>
-                <span>{getTimestampLabel({days, hours, minutes, seconds})}</span>
+                <span>{getTimerLabel()}</span>
             </ScreenReaderOnly>
 
             <div aria-hidden className={styles.content}>
