@@ -35,6 +35,7 @@ interface Props {
     children?: void;
     dataAttributes?: DataAttributes;
     onProgress?: (value: Timestamp) => void;
+    'aria-label'?: string;
 }
 
 const getRemainingTime = (endTimestamp: Date | number) => {
@@ -126,6 +127,7 @@ const Timer: React.FC<Props> = ({
     maxTimeUnit,
     onProgress,
     dataAttributes,
+    'aria-label': ariaLabel,
 }) => {
     const {texts} = useTheme();
 
@@ -265,7 +267,7 @@ const Timer: React.FC<Props> = ({
     return (
         <div className={styles.timerWrapper} {...getPrefixedDataAttributes(dataAttributes, 'Timer')}>
             <ScreenReaderOnly>
-                <span>{timerLabel}</span>
+                <span>{ariaLabel ? `${ariaLabel}. ${timerLabel}` : timerLabel}</span>
             </ScreenReaderOnly>
 
             <div aria-hidden className={styles.content}>
