@@ -67,7 +67,7 @@ export {default as HighlightedCard} from './highlighted-card';
 export {default as Stepper} from './stepper';
 export {ProgressBar, ProgressBarStepped} from './progress-bar';
 export {VerticalMosaic, HorizontalMosaic} from './mosaic';
-export {default as Timer} from './timer';
+export {Timer, TimerDisplay, BoxedTimerDisplay} from './timer';
 export {
     MediaCard,
     DataCard,

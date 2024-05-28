@@ -1,7 +1,11 @@
 'use client';
 import * as React from 'react';
+import Box from './box';
 import {useIsomorphicLayoutEffect, useTheme} from './hooks';
+import Inline from './inline';
 import ScreenReaderOnly from './screen-reader-only';
+import {Text2, Text6} from './text';
+import {ThemeVariant, useThemeVariant} from './theme-variant-context';
 import * as styles from './timer.css';
 import {getPrefixedDataAttributes} from './utils/dom';
 import {isEqual} from './utils/helpers';
@@ -27,9 +31,8 @@ interface Timestamp {
     seconds?: number;
 }
 
-interface Props {
+interface TimerDisplayProps {
     endTimestamp: Date | number;
-    labelType?: Label;
     minTimeUnit?: TimeUnit;
     maxTimeUnit?: TimeUnit;
     children?: void;
@@ -38,9 +41,13 @@ interface Props {
     'aria-label'?: string;
 }
 
+interface TimerProps extends TimerDisplayProps {
+    labelType?: Label;
+}
+
 const shouldRenderUnit = (
     unit: TimeUnit,
-    labelType: Label,
+    labelType?: Label,
     minTimeUnit?: TimeUnit,
     maxTimeUnit?: TimeUnit
 ) => {
@@ -67,7 +74,7 @@ const shouldRenderUnit = (
 
 const getFilteredTimerValue = (
     timestamp: Timestamp,
-    labelType: Label,
+    labelType?: Label,
     minTimeUnit?: TimeUnit,
     maxTimeUnit?: TimeUnit
 ) => {
@@ -103,7 +110,7 @@ const useTimerState = ({
     onProgress,
 }: {
     endTimestamp: Date | number;
-    labelType: Label;
+    labelType?: Label;
     minTimeUnit?: TimeUnit;
     maxTimeUnit?: TimeUnit;
     onProgress?: (value: Timestamp) => void;
@@ -182,7 +189,7 @@ const useTimerState = ({
     return timerValue;
 };
 
-const Timer: React.FC<Props> = ({
+export const Timer: React.FC<TimerProps> = ({
     endTimestamp,
     labelType = 'none',
     minTimeUnit,
@@ -202,28 +209,24 @@ const Timer: React.FC<Props> = ({
         seconds: texts.timerSecondsShortLabel,
     };
 
-    const unitLongLabel: {[key in TimeUnit]: string} = {
+    const unitLabel: {[key in TimeUnit]: string} = {
         days: texts.timerDayLongLabel,
         hours: texts.timerHourLongLabel,
         minutes: texts.timerMinuteLongLabel,
         seconds: texts.timerSecondLongLabel,
     };
 
-    const unitLongLabelPlural: {[key in TimeUnit]: string} = {
+    const unitLabelPlural: {[key in TimeUnit]: string} = {
         days: texts.timerDaysLongLabel,
         hours: texts.timerHoursLongLabel,
         minutes: texts.timerMinutesLongLabel,
         seconds: texts.timerSecondsLongLabel,
     };
 
-    const renderFormattedNumber = (value: number, timeUnit: TimeUnit) => {
-        const digitCount =
-            value < 10 &&
-            (labelType === 'long' || (labelType === 'short' && (timeUnit === 'days' || timeUnit === 'hours')))
-                ? 1
-                : 2;
+    const renderFormattedNumber = (value: number) => {
+        const digitCount = Math.max(String(value).length, labelType === 'long' ? 1 : 2);
 
-        // Set container's width in ch to avoid it from updating it's width when numbers change
+        // Set container's minWidth in ch to avoid it from updating it's width when numbers change
         return (
             <span className={styles.unitContainer} style={{minWidth: `${digitCount}ch`}}>
                 {String(value).padStart(digitCount, '0')}
@@ -236,7 +239,7 @@ const Timer: React.FC<Props> = ({
             case 'none':
                 return timerValue.map((item, index) => (
                     <React.Fragment key={index}>
-                        {renderFormattedNumber(item.value, item.unit)}
+                        {renderFormattedNumber(item.value)}
                         {index === timerValue.length - 1 ? '' : ':'}
                     </React.Fragment>
                 ));
@@ -245,7 +248,7 @@ const Timer: React.FC<Props> = ({
                 // Using a div to treat each unit and its value as a single element when wrapping is required
                 return timerValue.map((item, index) => (
                     <div style={{display: 'inline-flex'}} key={index}>
-                        {renderFormattedNumber(item.value, item.unit)}
+                        {renderFormattedNumber(item.value)}
                         {` ${unitShortLabel[item.unit]}`}
                         {index === timerValue.length - 1 ? '' : ' '}
                     </div>
@@ -255,8 +258,8 @@ const Timer: React.FC<Props> = ({
             default:
                 return timerValue.map((item, index) => (
                     <React.Fragment key={index}>
-                        {renderFormattedNumber(item.value, item.unit)}
-                        {` ${item.value === 1 ? unitLongLabel[item.unit] : unitLongLabelPlural[item.unit]}`}
+                        {renderFormattedNumber(item.value)}
+                        {` ${item.value === 1 ? unitLabel[item.unit] : unitLabelPlural[item.unit]}`}
                         {index === timerValue.length - 1
                             ? ''
                             : index === timerValue.length - 2
@@ -270,9 +273,7 @@ const Timer: React.FC<Props> = ({
     const timerLabel = timerValue
         .map(
             (item, index) =>
-                `${item.value} ${
-                    item.value === 1 ? unitLongLabel[item.unit] : unitLongLabelPlural[item.unit]
-                }${
+                `${item.value} ${item.value === 1 ? unitLabel[item.unit] : unitLabelPlural[item.unit]}${
                     index === timerValue.length - 1
                         ? ''
                         : index === timerValue.length - 2
@@ -295,4 +296,119 @@ const Timer: React.FC<Props> = ({
     );
 };
 
-export default Timer;
+const BaseTimerDisplay: React.FC<TimerDisplayProps & {className?: string}> = ({
+    endTimestamp,
+    minTimeUnit,
+    maxTimeUnit,
+    onProgress,
+    dataAttributes,
+    'aria-label': ariaLabel,
+    className,
+}) => {
+    const {texts} = useTheme();
+
+    const timerValue = useTimerState({endTimestamp, minTimeUnit, maxTimeUnit, onProgress});
+
+    const displayLabel: {[key in TimeUnit]: string} = {
+        days: texts.timerDayLongLabel,
+        hours: texts.timerHourLongLabel,
+        minutes: texts.timerDisplayMinutesLabel,
+        seconds: texts.timerDisplaySecondsLabel,
+    };
+
+    const displayLabelPlural: {[key in TimeUnit]: string} = {
+        days: texts.timerDaysLongLabel,
+        hours: texts.timerHoursLongLabel,
+        minutes: texts.timerDisplayMinutesLabel,
+        seconds: texts.timerDisplaySecondsLabel,
+    };
+
+    const unitLabel: {[key in TimeUnit]: string} = {
+        days: texts.timerDayLongLabel,
+        hours: texts.timerHourLongLabel,
+        minutes: texts.timerMinuteLongLabel,
+        seconds: texts.timerSecondLongLabel,
+    };
+
+    const unitLabelPlural: {[key in TimeUnit]: string} = {
+        days: texts.timerDaysLongLabel,
+        hours: texts.timerHoursLongLabel,
+        minutes: texts.timerMinutesLongLabel,
+        seconds: texts.timerSecondsLongLabel,
+    };
+
+    const renderFormattedNumber = (value: number) => {
+        const digitCount = Math.max(String(value).length, 2);
+
+        // Set container's minWidth in ch to avoid it from updating it's width when numbers change
+        return (
+            <Text6>
+                <div className={styles.unitContainer} style={{minWidth: `${digitCount}ch`}}>
+                    {String(value).padStart(digitCount, '0')}
+                </div>
+            </Text6>
+        );
+    };
+
+    const timerLabel = timerValue
+        .map(
+            (item, index) =>
+                `${item.value} ${item.value === 1 ? unitLabel[item.unit] : unitLabelPlural[item.unit]}${
+                    index === timerValue.length - 1
+                        ? ''
+                        : index === timerValue.length - 2
+                        ? ` ${texts.timerAnd} `
+                        : ', '
+                }`
+        )
+        .join('');
+
+    const renderTime = () => {
+        return timerValue.map((item, index) => (
+            <Box className={className} key={index}>
+                <ThemeVariant variant="default">
+                    <div className={styles.timerDisplayValue}>
+                        {renderFormattedNumber(item.value)}
+                        <Text2 regular>
+                            {item.value === 1 ? displayLabel[item.unit] : displayLabelPlural[item.unit]}
+                        </Text2>
+                    </div>
+                </ThemeVariant>
+            </Box>
+        ));
+    };
+
+    return (
+        <div className={styles.timerWrapper} {...getPrefixedDataAttributes(dataAttributes)}>
+            <ScreenReaderOnly>
+                <span>{ariaLabel ? `${ariaLabel}. ${timerLabel}` : timerLabel}</span>
+            </ScreenReaderOnly>
+
+            <div aria-hidden>
+                <Inline space={8}>{renderTime()}</Inline>
+            </div>
+        </div>
+    );
+};
+
+export const TimerDisplay: React.FC<TimerDisplayProps> = ({dataAttributes, ...props}) => {
+    return (
+        <BaseTimerDisplay {...props} dataAttributes={{...dataAttributes, 'component-name': 'TimerDisplay'}} />
+    );
+};
+
+export const BoxedTimerDisplay: React.FC<TimerDisplayProps> = ({dataAttributes, ...props}) => {
+    const variant = useThemeVariant();
+
+    return (
+        <BaseTimerDisplay
+            {...props}
+            className={
+                variant === 'default'
+                    ? styles.boxedTimerValueContainer
+                    : styles.boxedTimerValueContainerInverse
+            }
+            dataAttributes={{...dataAttributes, 'component-name': 'BoxedTimerDisplay'}}
+        />
+    );
+};

@@ -66,6 +66,8 @@ const TEXTS_ES = {
     timerMinutesLongLabel: 'minutos',
     timerSecondLongLabel: 'segundo',
     timerSecondsLongLabel: 'segundos',
+    timerDisplayMinutesLabel: 'min',
+    timerDisplaySecondsLabel: 'seg',
 };
 
 const TEXTS_EN: ThemeTexts = {
@@ -127,6 +129,8 @@ const TEXTS_EN: ThemeTexts = {
     timerMinutesLongLabel: 'minutes',
     timerSecondLongLabel: 'second',
     timerSecondsLongLabel: 'seconds',
+    timerDisplayMinutesLabel: 'min',
+    timerDisplaySecondsLabel: 'sec',
 };
 
 const TEXTS_DE: ThemeTexts = {
@@ -188,6 +192,8 @@ const TEXTS_DE: ThemeTexts = {
     timerMinutesLongLabel: 'Minuten',
     timerSecondLongLabel: 'Sekunde',
     timerSecondsLongLabel: 'Sekunden',
+    timerDisplayMinutesLabel: 'Min.',
+    timerDisplaySecondsLabel: 'Sek.',
 };
 
 const TEXTS_PT: ThemeTexts = {
@@ -249,6 +255,8 @@ const TEXTS_PT: ThemeTexts = {
     timerMinutesLongLabel: 'minutos',
     timerSecondLongLabel: 'segundo',
     timerSecondsLongLabel: 'segundos',
+    timerDisplayMinutesLabel: 'min',
+    timerDisplaySecondsLabel: 'seg',
 };
 
 export const getTexts = (locale: Locale): typeof TEXTS_ES => {
