@@ -37,6 +37,7 @@ type TableProps = {
      * It's ignored in mobile when responsive move is 'collapse-rows'
      */
     maxHeight?: number | string;
+    scrollOverResponsiveLayout?: boolean;
     /** "data-" prefix is automatically added. For example, use "testid" instead of "data-testid" */
     dataAttributes?: DataAttributes;
     'aria-label'?: string;
@@ -44,6 +45,7 @@ type TableProps = {
     'aria-describedby'?: string;
 };
 
+const defaultTextAlign = 'left';
 export const Table = React.forwardRef(
     (
         {
@@ -55,22 +57,19 @@ export const Table = React.forwardRef(
             fullWidth = true,
             maxHeight,
             emptyCase,
-            columnTextAlign,
+            columnTextAlign = defaultTextAlign,
             rowVerticalAlign = 'middle',
             columnWidth,
+            scrollOverResponsiveLayout,
             ...otherProps
         }: TableProps,
         ref: React.Ref<HTMLDivElement>
     ) => {
         const getColumnTextAlign = (column: number) => {
-            const defaultTextAlign = 'left';
-            if (columnTextAlign) {
-                if (Array.isArray(columnTextAlign)) {
-                    return columnTextAlign[column] ?? defaultTextAlign;
-                }
-                return columnTextAlign;
+            if (Array.isArray(columnTextAlign)) {
+                return columnTextAlign[column] ?? defaultTextAlign;
             }
-            return defaultTextAlign;
+            return columnTextAlign;
         };
 
         const collapsedRowsMode = responsive === 'collapse-rows';
@@ -184,7 +183,7 @@ export const Table = React.forwardRef(
                     desktopOnly={collapsedRowsMode}
                     width="fit-content"
                     maxWidth="100%"
-                    minWidth={fullWidth ? '100%' : 'auto'}
+                    minWidth={{desktop: fullWidth ? '100%' : 'auto', mobile: '100%'}}
                     ref={ref}
                     dataAttributes={{'component-name': 'Table', ...dataAttributes}}
                 >
@@ -200,16 +199,24 @@ export const Table = React.forwardRef(
             );
         }
 
+        if (scrollOverResponsiveLayout) {
+            return (
+                <ResetResponsiveLayout>
+                    <div
+                        ref={ref}
+                        {...getPrefixedDataAttributes(dataAttributes, 'Table')}
+                        {...scrollContainerStyles}
+                    >
+                        <ResponsiveLayout>{table}</ResponsiveLayout>
+                    </div>
+                </ResetResponsiveLayout>
+            );
+        }
+
         return (
-            <ResetResponsiveLayout>
-                <div
-                    ref={ref}
-                    {...getPrefixedDataAttributes(dataAttributes, 'Table')}
-                    {...scrollContainerStyles}
-                >
-                    <ResponsiveLayout>{table}</ResponsiveLayout>
-                </div>
-            </ResetResponsiveLayout>
+            <div ref={ref} {...getPrefixedDataAttributes(dataAttributes, 'Table')} {...scrollContainerStyles}>
+                {table}
+            </div>
         );
     }
 );

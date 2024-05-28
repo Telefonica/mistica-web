@@ -51,10 +51,11 @@ export const scrollContainer = style({
         [`${collapsedRowsInMobile}&`]: {
             '@media': {
                 [mq.tabletOrSmaller]: {
+                    minWidth: '100%', // always render the table fullWidth in mobile
                     // revert styles
                     overflow: 'visible',
-                    maxHeight: 'auto',
-                    maxWidth: 'auto',
+                    maxHeight: 'none',
+                    maxWidth: 'none',
                     width: 'auto',
                 },
             },
@@ -82,11 +83,11 @@ globalStyle(`${table} th, ${table} td`, {
     height: ROW_MIN_HEIGHT, // height behaves like a min-height in table layout
 });
 
-globalStyle(`${table}:not(${boxed}) th:first-child, ${table}:not(${boxed}) td:first-child`, {
+globalStyle(`${table} th:first-child, ${table} td:first-child`, {
     paddingLeft: 0,
 });
 
-globalStyle(`${table}:not(${boxed}) th:last-child, ${table}:not(${boxed}) td:last-child`, {
+globalStyle(`${table} th:last-child, ${table} td:last-child`, {
     paddingRight: 0,
 });
 

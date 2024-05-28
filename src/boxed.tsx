@@ -8,7 +8,7 @@ import * as styles from './boxed.css';
 import {sprinkles} from './sprinkles.css';
 import {applyCssVars} from './utils/css';
 
-import type {DataAttributes} from './utils/types';
+import type {ByBreakpoint, DataAttributes} from './utils/types';
 
 type Props = {
     children: React.ReactNode;
@@ -19,11 +19,11 @@ type Props = {
     dataAttributes?: DataAttributes;
     'aria-label'?: string;
     'aria-labelledby'?: string;
-    width?: number | string;
-    maxWidth?: number | string;
-    minWidth?: number | string;
-    height?: number | string;
-    minHeight?: number | string;
+    width?: ByBreakpoint<number | string>;
+    maxWidth?: ByBreakpoint<number | string>;
+    minWidth?: ByBreakpoint<number | string>;
+    height?: ByBreakpoint<number | string>;
+    minHeight?: ByBreakpoint<number | string>;
 };
 
 type InternalProps = {
@@ -43,7 +43,26 @@ const normalizeDimension = (value: number | string | undefined) => {
     if (typeof value === 'number') {
         return `${value}px`;
     }
-    return value ?? 'auto';
+    return value ?? 'initial';
+};
+
+const calcCssVars = (
+    varName: 'width' | 'height' | 'minHeight' | 'maxWidth' | 'minWidth',
+    value: ByBreakpoint<string | number> | undefined
+) => {
+    if (typeof value === 'number' || typeof value === 'string' || typeof value === 'undefined') {
+        return {
+            [styles.vars[varName]]: normalizeDimension(value),
+        };
+    }
+    const vars = {
+        [styles.vars.mobile[varName]]: normalizeDimension(value.mobile),
+        [styles.vars.desktop[varName]]: normalizeDimension(value.desktop),
+    };
+    if (value.tablet) {
+        vars[styles.vars.tablet[varName]] = normalizeDimension(value.tablet);
+    }
+    return vars;
 };
 
 export const InternalBoxed = React.forwardRef<HTMLDivElement, Props & InternalProps>(
@@ -74,11 +93,11 @@ export const InternalBoxed = React.forwardRef<HTMLDivElement, Props & InternalPr
                 ref={ref}
                 style={{
                     ...applyCssVars({
-                        [styles.vars.width]: normalizeDimension(width),
-                        [styles.vars.maxWidth]: normalizeDimension(maxWidth),
-                        [styles.vars.minWidth]: normalizeDimension(minWidth),
-                        [styles.vars.height]: normalizeDimension(height),
-                        [styles.vars.minHeight]: normalizeDimension(minHeight),
+                        ...calcCssVars('width', width),
+                        ...calcCssVars('maxWidth', maxWidth),
+                        ...calcCssVars('minWidth', minWidth),
+                        ...calcCssVars('height', height),
+                        ...calcCssVars('minHeight', minHeight),
                     }),
                     background,
                 }}

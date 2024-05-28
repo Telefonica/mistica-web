@@ -79,6 +79,7 @@ export const Default: StoryComponent<Args> = ({
                     rowVerticalAlign={rowVerticalAlign}
                     content={foodList.slice(0, numItems)}
                     emptyCase={emptyCase}
+                    scrollOverResponsiveLayout
                 />
             </Box>
         </ResponsiveLayout>
