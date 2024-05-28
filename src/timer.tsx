@@ -11,6 +11,7 @@ import {getPrefixedDataAttributes} from './utils/dom';
 import {isEqual} from './utils/helpers';
 import {isRunningAcceptanceTest} from './utils/platform';
 
+import type {Variant} from './theme-variant-context';
 import type {DataAttributes} from './utils/types';
 
 const DAY_IN_HOURS = 24;
@@ -22,7 +23,7 @@ const MINUTE_IN_MS = MINUTE_IN_SECONDS * SECOND_IN_MS;
 const HOUR_IN_MS = HOUR_IN_MINUTES * MINUTE_IN_MS;
 const DAY_IN_MS = DAY_IN_HOURS * HOUR_IN_MS;
 
-type TimeUnit = 'days' | 'hours' | 'minutes' | 'seconds';
+export type TimeUnit = 'days' | 'hours' | 'minutes' | 'seconds';
 type Label = 'none' | 'short' | 'long';
 
 interface Timestamp {
@@ -302,7 +303,7 @@ export const Timer: React.FC<TimerProps> = ({
     );
 };
 
-const BaseTimerDisplay: React.FC<TimerDisplayProps & {className?: string}> = ({
+const BaseTimerDisplay: React.FC<TimerDisplayProps & {className?: string; internalThemeVariant: Variant}> = ({
     endTimestamp,
     minTimeUnit,
     maxTimeUnit,
@@ -310,6 +311,7 @@ const BaseTimerDisplay: React.FC<TimerDisplayProps & {className?: string}> = ({
     dataAttributes,
     'aria-label': ariaLabel,
     className,
+    internalThemeVariant,
 }) => {
     const {texts} = useTheme();
 
@@ -372,7 +374,7 @@ const BaseTimerDisplay: React.FC<TimerDisplayProps & {className?: string}> = ({
     const renderTime = () => {
         return timerValue.map((item, index) => (
             <Box className={className} key={index}>
-                <ThemeVariant variant="default">
+                <ThemeVariant variant={internalThemeVariant}>
                     <div className={styles.timerDisplayValue}>
                         {renderFormattedNumber(item.value)}
                         <Text2 regular>
@@ -398,8 +400,14 @@ const BaseTimerDisplay: React.FC<TimerDisplayProps & {className?: string}> = ({
 };
 
 export const TimerDisplay: React.FC<TimerDisplayProps> = ({dataAttributes, ...props}) => {
+    const variant = useThemeVariant();
+
     return (
-        <BaseTimerDisplay {...props} dataAttributes={{...dataAttributes, 'component-name': 'TimerDisplay'}} />
+        <BaseTimerDisplay
+            {...props}
+            internalThemeVariant={variant}
+            dataAttributes={{...dataAttributes, 'component-name': 'TimerDisplay'}}
+        />
     );
 };
 
@@ -409,6 +417,7 @@ export const BoxedTimerDisplay: React.FC<TimerDisplayProps> = ({dataAttributes, 
     return (
         <BaseTimerDisplay
             {...props}
+            internalThemeVariant="default"
             className={
                 variant === 'default'
                     ? styles.boxedTimerValueContainer
