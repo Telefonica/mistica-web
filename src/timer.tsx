@@ -9,6 +9,7 @@ import {ThemeVariant, useThemeVariant} from './theme-variant-context';
 import * as styles from './timer.css';
 import {getPrefixedDataAttributes} from './utils/dom';
 import {isEqual} from './utils/helpers';
+import {isRunningAcceptanceTest} from './utils/platform';
 
 import type {DataAttributes} from './utils/types';
 
@@ -130,10 +131,11 @@ const useTimerState = ({
             setCurrentSeconds(remainingTime.seconds);
         };
 
-        updateCurrentTime();
-        const intervalId = setInterval(updateCurrentTime, SECOND_IN_MS);
-
-        return () => clearInterval(intervalId);
+        if (!isRunningAcceptanceTest()) {
+            updateCurrentTime();
+            const intervalId = setInterval(updateCurrentTime, SECOND_IN_MS);
+            return () => clearInterval(intervalId);
+        }
     }, [endTimestamp]);
 
     const shouldRenderDays = shouldRenderUnit('days', labelType, minTimeUnit, maxTimeUnit);
