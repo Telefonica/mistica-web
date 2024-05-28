@@ -286,7 +286,11 @@ export const Timer: React.FC<TimerProps> = ({
         .join('');
 
     return (
-        <div className={styles.timerWrapper} {...getPrefixedDataAttributes(dataAttributes, 'Timer')}>
+        <div
+            role="timer"
+            className={styles.timerWrapper}
+            {...getPrefixedDataAttributes(dataAttributes, 'Timer')}
+        >
             <ScreenReaderOnly>
                 <span>{ariaLabel ? `${ariaLabel}. ${timerLabel}` : timerLabel}</span>
             </ScreenReaderOnly>
@@ -381,7 +385,7 @@ const BaseTimerDisplay: React.FC<TimerDisplayProps & {className?: string}> = ({
     };
 
     return (
-        <div className={styles.timerWrapper} {...getPrefixedDataAttributes(dataAttributes)}>
+        <div role="timer" className={styles.timerWrapper} {...getPrefixedDataAttributes(dataAttributes)}>
             <ScreenReaderOnly>
                 <span>{ariaLabel ? `${ariaLabel}. ${timerLabel}` : timerLabel}</span>
             </ScreenReaderOnly>
