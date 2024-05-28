@@ -186,7 +186,10 @@ export const Table = React.forwardRef(
                     desktopOnly={collapsedRowsMode}
                     width="fit-content"
                     maxWidth="100%"
-                    minWidth={{desktop: fullWidth ? '100%' : 'auto', mobile: '100%'}}
+                    minWidth={{
+                        desktop: fullWidth ? '100%' : 'auto',
+                        mobile: collapsedRowsMode ? '100%' : fullWidth ? '100%' : 'auto',
+                    }}
                     ref={ref}
                     dataAttributes={{'component-name': 'Table', ...dataAttributes}}
                 >
