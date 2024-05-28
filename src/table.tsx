@@ -37,6 +37,9 @@ type TableProps = {
      * It's ignored in mobile when responsive move is 'collapse-rows'
      */
     maxHeight?: number | string;
+    /**
+     * when rendering the table inside a responsive layout, you can enable this prop to make the table scrollable over the layout paddings
+     */
     scrollOverResponsiveLayout?: boolean;
     /** "data-" prefix is automatically added. For example, use "testid" instead of "data-testid" */
     dataAttributes?: DataAttributes;
