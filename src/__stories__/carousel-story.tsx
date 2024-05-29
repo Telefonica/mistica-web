@@ -57,7 +57,7 @@ export const Default: StoryComponent<Args> = ({
         shownItemIndexes: Array<number>;
     } | null>(null);
     return (
-        <Box paddingY={24}>
+        <Box paddingY={24} dataAttributes={{testid: 'story'}}>
             <ResponsiveLayout>
                 <Stack space={16}>
                     <Callout

@@ -1,4 +1,4 @@
-import {openStoryPage, screen, ssimScreenshotConfig} from '../test-utils';
+import {openStoryPage, screen} from '../test-utils';
 
 test.each`
     type        | stacked  | inverse
@@ -20,5 +20,5 @@ test.each`
     const element = await screen.findByTestId('stacking-group');
     const image = await element.screenshot();
 
-    expect(image).toMatchImageSnapshot(ssimScreenshotConfig);
+    expect(image).toMatchImageSnapshot();
 });

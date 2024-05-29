@@ -405,6 +405,13 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
                                 value,
                                 ...(error && {'aria-invalid': true}),
                                 ...(helperText && {'aria-describedby': helperTextid}),
+                                // disable spellchecking in acceptance tests
+                                ...(isRunningAcceptanceTest() &&
+                                    ({
+                                        spellCheck: false,
+                                        autoCorrect: 'off',
+                                        autoCapitalize: 'off',
+                                    } as React.InputHTMLAttributes<HTMLInputElement>)),
                             })}
                         </Text3>
                     </div>

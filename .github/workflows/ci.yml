@@ -18,14 +18,14 @@ concurrency:
 jobs:
     build:
         runs-on: ubuntu-latest
-        container: telefonica/web-builder:chromium93.0.4577-1.2.4
+        container: telefonica/web-builder:chromium125.0.6422-node20.13-1.0.4
 
         steps:
-            - uses: actions/checkout@v3
+            - uses: actions/checkout@v4
 
             - name: Install dependencies
               env:
-                  PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: 'true'
+                  PUPPETEER_SKIP_CHROME_DOWNLOAD: 'true'
               run: yarn install --immutable --immutable-cache
 
             - run: yarn lint
@@ -36,55 +36,59 @@ jobs:
             - run: yarn test --ci
             - run: NO_BUILD=true yarn test-ssr --ci
 
-            - uses: actions/upload-artifact@v3
+            - uses: actions/upload-artifact@v4
               if: always()
               with:
-                  name: failed-screenshots
+                  name: failed-screenshots-ssr
                   path: src/**/__diff_output__/*-diff.png
 
     build-acceptance:
         runs-on: ubuntu-latest
-        container: telefonica/web-builder:chromium93.0.4577-1.2.4
+        container: telefonica/web-builder:chromium125.0.6422-node20.13-1.0.4
         strategy:
             matrix:
                 shard: [1, 2, 3]
             fail-fast: false
 
         steps:
-            - uses: actions/checkout@v3
+            - uses: actions/checkout@v4
+
+            # - run: service dbus start
+            - run: ps aux # debug
 
             - name: Install dependencies
               env:
-                  PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: 'true'
+                  PUPPETEER_SKIP_CHROME_DOWNLOAD: 'true'
               run: yarn install --immutable --immutable-cache
 
             - run: yarn storybook-static
             - run: yarn test-acceptance --ci --shard=${{ matrix.shard }}/${{ strategy.job-total }}
 
-            - uses: actions/upload-artifact@v3
+            - uses: actions/upload-artifact@v4
               if: always()
               with:
-                  name: failed-screenshots
+                  name: failed-screenshots-${{ matrix.shard }}
                   path: src/**/__diff_output__/*-diff.png
 
     build-upload-failed-screenshots:
         runs-on: ubuntu-latest
-        container: telefonica/web-builder:chromium93.0.4577-1.2.4
+        container: telefonica/web-builder:chromium125.0.6422-node20.13-1.0.4
         needs: [build, build-acceptance]
         if: '!cancelled()'
 
         steps:
-            - uses: actions/checkout@v3
+            - uses: actions/checkout@v4
 
             - name: Install dependencies
               env:
-                  PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: 'true'
+                  PUPPETEER_SKIP_CHROME_DOWNLOAD: 'true'
               run: yarn install --immutable --immutable-cache
 
             - if: needs.build.result == 'failure' || needs.build-acceptance.result == 'failure'
-              uses: actions/download-artifact@v3
+              uses: actions/download-artifact@v4
               with:
-                  name: failed-screenshots
+                  pattern: failed-screenshots-*
+                  merge-multiple: true
                   path: src/
 
             - name: 'Upload failed screenshot diffs'

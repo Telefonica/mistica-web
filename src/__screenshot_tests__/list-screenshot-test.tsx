@@ -1,4 +1,4 @@
-import {openStoryPage, screen, setRootFontSize} from '../test-utils';
+import {DEVICES, openStoryPage, screen, setRootFontSize} from '../test-utils';
 
 import type {Device} from '../test-utils';
 
@@ -37,6 +37,13 @@ const getCases = () => {
     return cases;
 };
 
+const fullPageScreenshot = async (element: any, device: Device) => {
+    const height = await page.evaluate(() => document.documentElement.scrollHeight);
+    const currentDevice = DEVICES[device as Device];
+    await page.setViewport({...currentDevice.viewport, height});
+    return element.screenshot({captureBeyondViewport: false});
+};
+
 test.each(getCases())(
     'Row list - %s %s extra %s badge %s',
     async (device, control, extraContent, withBadge) => {
@@ -54,7 +61,8 @@ test.each(getCases())(
         });
 
         const list = await screen.findByTestId('list');
-        const image = await list.screenshot();
+        // const image = await list.screenshot();
+        const image = await fullPageScreenshot(list, device as Device);
         expect(image).toMatchImageSnapshot();
     }
 );
@@ -76,7 +84,8 @@ test.each(getCases())(
         });
 
         const list = await screen.findByTestId('list');
-        const image = await list.screenshot();
+        // const image = await list.screenshot();
+        const image = await fullPageScreenshot(list, device as Device);
         expect(image).toMatchImageSnapshot();
     }
 );
@@ -96,7 +105,8 @@ test.each(controls)('Row list disabled - %s', async (control) => {
     });
 
     const list = await screen.findByTestId('list');
-    const image = await list.screenshot();
+    // const image = await list.screenshot();
+    const image = await fullPageScreenshot(list, 'MOBILE_IOS');
     expect(image).toMatchImageSnapshot();
 });
 
@@ -115,7 +125,8 @@ test.each(controls)('Boxed row list disabled - %s', async (control) => {
     });
 
     const list = await screen.findByTestId('list');
-    const image = await list.screenshot();
+    // const image = await list.screenshot();
+    const image = await fullPageScreenshot(list, 'MOBILE_IOS');
     expect(image).toMatchImageSnapshot();
 });
 
@@ -134,7 +145,8 @@ test('Rows with only a Title content are centered', async () => {
     });
 
     const list = await screen.findByTestId('list');
-    const image = await list.screenshot();
+    // const image = await list.screenshot();
+    const image = await fullPageScreenshot(list, 'MOBILE_IOS');
     expect(image).toMatchImageSnapshot();
 });
 
@@ -153,7 +165,8 @@ test.each(devices)('Custom row with text centered', async (device) => {
     });
 
     const list = await screen.findByTestId('list');
-    const image = await list.screenshot();
+    // const image = await list.screenshot();
+    const image = await fullPageScreenshot(list, device);
     expect(image).toMatchImageSnapshot();
 });
 
@@ -170,7 +183,8 @@ test.each(controlsWithOnPress)('Click control with onPress - %s', async (control
     await elements[0].click();
 
     const list = await screen.findByTestId('list');
-    const image = await list.screenshot();
+    // const image = await list.screenshot();
+    const image = await fullPageScreenshot(list, 'MOBILE_IOS');
     expect(image).toMatchImageSnapshot();
 });
 
@@ -184,7 +198,8 @@ test.each(controlsWithIconButton)('Rows with %s using big fontSize', async (cont
     await setRootFontSize(32);
 
     const list = await screen.findByTestId('list');
-    const image = await list.screenshot();
+    // const image = await list.screenshot();
+    const image = await fullPageScreenshot(list, 'DESKTOP');
     expect(image).toMatchImageSnapshot();
 });
 
@@ -198,7 +213,8 @@ test('Rows over inverse background', async () => {
     });
 
     const list = await screen.findByTestId('list');
-    const image = await list.screenshot();
+    // const image = await list.screenshot();
+    const image = await fullPageScreenshot(list, 'MOBILE_IOS');
     expect(image).toMatchImageSnapshot();
 });
 
@@ -212,7 +228,8 @@ test('BoxedRows over inverse background', async () => {
     });
 
     const list = await screen.findByTestId('list');
-    const image = await list.screenshot();
+    // const image = await list.screenshot();
+    const image = await fullPageScreenshot(list, 'MOBILE_IOS');
     expect(image).toMatchImageSnapshot();
 });
 
@@ -226,7 +243,8 @@ test('BoxedRows inverse', async () => {
     });
 
     const list = await screen.findByTestId('list');
-    const image = await list.screenshot();
+    // const image = await list.screenshot();
+    const image = await fullPageScreenshot(list, 'MOBILE_IOS');
     expect(image).toMatchImageSnapshot();
 });
 
@@ -241,7 +259,8 @@ test('BoxedRows inverse over inverse', async () => {
     });
 
     const list = await screen.findByTestId('list');
-    const image = await list.screenshot();
+    // const image = await list.screenshot();
+    const image = await fullPageScreenshot(list, 'MOBILE_IOS');
     expect(image).toMatchImageSnapshot();
 });
 
@@ -255,7 +274,8 @@ test('Rows danger', async () => {
     });
 
     const list = await screen.findByTestId('list');
-    const image = await list.screenshot();
+    // const image = await list.screenshot();
+    const image = await fullPageScreenshot(list, 'MOBILE_IOS');
     expect(image).toMatchImageSnapshot();
 });
 
@@ -270,7 +290,8 @@ test('Rows danger over inverse background', async () => {
     });
 
     const list = await screen.findByTestId('list');
-    const image = await list.screenshot();
+    // const image = await list.screenshot();
+    const image = await fullPageScreenshot(list, 'MOBILE_IOS');
     expect(image).toMatchImageSnapshot();
 });
 
@@ -284,6 +305,7 @@ test('BoxedRows danger', async () => {
     });
 
     const list = await screen.findByTestId('list');
-    const image = await list.screenshot();
+    // const image = await list.screenshot();
+    const image = await fullPageScreenshot(list, 'MOBILE_IOS');
     expect(image).toMatchImageSnapshot();
 });

@@ -1,4 +1,4 @@
-import {openStoryPage, screen, ssimScreenshotConfig} from '../test-utils';
+import {openStoryPage, screen} from '../test-utils';
 
 const ASPECT_RATIO = ['1:1', '16:9', '4:3', '0'];
 
@@ -7,7 +7,7 @@ test('Video - width and height', async () => {
 
     const story = await screen.findByTestId('video');
 
-    expect(await story.screenshot()).toMatchImageSnapshot(ssimScreenshotConfig);
+    expect(await story.screenshot()).toMatchImageSnapshot();
 });
 
 test.each(ASPECT_RATIO)('Video - aspect ratio %s', async (aspectRatio) => {
@@ -21,7 +21,7 @@ test.each(ASPECT_RATIO)('Video - aspect ratio %s', async (aspectRatio) => {
 
     const story = await screen.findByTestId('video');
 
-    expect(await story.screenshot()).toMatchImageSnapshot(ssimScreenshotConfig);
+    expect(await story.screenshot()).toMatchImageSnapshot();
 });
 
 test.each(ASPECT_RATIO)('Video - full width with aspect ratio %s', async (aspectRatio) => {
@@ -32,7 +32,7 @@ test.each(ASPECT_RATIO)('Video - full width with aspect ratio %s', async (aspect
 
     const story = await screen.findByTestId('video');
 
-    expect(await story.screenshot()).toMatchImageSnapshot(ssimScreenshotConfig);
+    expect(await story.screenshot()).toMatchImageSnapshot();
 });
 
 test.each(ASPECT_RATIO.slice(0, 3))('Video - no poster with aspect ratio %s', async (aspectRatio) => {
@@ -43,7 +43,7 @@ test.each(ASPECT_RATIO.slice(0, 3))('Video - no poster with aspect ratio %s', as
 
     const story = await screen.findByTestId('video');
 
-    expect(await story.screenshot()).toMatchImageSnapshot(ssimScreenshotConfig);
+    expect(await story.screenshot()).toMatchImageSnapshot();
 });
 
 test.each(ASPECT_RATIO.slice(0, 3))('Video - error fallback with aspect ratio %s', async (aspectRatio) => {
@@ -59,5 +59,5 @@ test.each(ASPECT_RATIO.slice(0, 3))('Video - error fallback with aspect ratio %s
 
     const story = await screen.findByTestId('video');
 
-    expect(await story.screenshot()).toMatchImageSnapshot(ssimScreenshotConfig);
+    expect(await story.screenshot()).toMatchImageSnapshot();
 });

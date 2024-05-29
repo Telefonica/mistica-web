@@ -2,13 +2,10 @@
 // https://jestjs.io/docs/en/configuration.html
 
 const getMaxWorkers = () => {
-    if (process.platform === 'darwin') {
-        return '50%';
-    }
     if (process.argv.includes('--ci')) {
         return 2;
     }
-    return '100%';
+    return '50%';
 };
 
 module.exports = {

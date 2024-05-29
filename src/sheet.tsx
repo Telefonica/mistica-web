@@ -3,7 +3,7 @@ import classnames from 'classnames';
 import * as React from 'react';
 import * as styles from './sheet.css';
 import FocusTrap from './focus-trap';
-import {useAriaId, useDisableBodyScroll, useIsInViewport, useScreenSize, useTheme} from './hooks';
+import {useAriaId, useDisableBodyScroll, useScreenSize, useTheme} from './hooks';
 import {useSetModalStateEffect} from './modal-context-provider';
 import {Portal} from './portal';
 import {Text2, Text3, Text5} from './text';
@@ -17,7 +17,7 @@ import Touchable from './touchable';
 import Inline from './inline';
 import Circle from './circle';
 import Divider from './divider';
-import {getPrefixedDataAttributes, getScrollableParentElement} from './utils/dom';
+import {getPrefixedDataAttributes} from './utils/dom';
 import {ButtonLink, ButtonPrimary, ButtonSecondary} from './button';
 import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
 import {InternalIconButton} from './icon-button';
@@ -299,28 +299,29 @@ export const SheetBody = ({
     link,
     children,
 }: SheetBodyProps): JSX.Element => {
-    const topScrollSignalRef = React.useRef<HTMLDivElement>(null);
-    const bottomScrollSignalRef = React.useRef<HTMLDivElement>(null);
-    const scrollableParentRef = React.useRef<HTMLElement | null>(null);
-
-    React.useEffect(() => {
-        if (bottomScrollSignalRef.current) {
-            scrollableParentRef.current = getScrollableParentElement(bottomScrollSignalRef.current);
-        }
-    }, []);
-
-    const showTitleDivider = !useIsInViewport(topScrollSignalRef, true, {
-        root: scrollableParentRef.current,
-    });
-    const showButtonsDivider = !useIsInViewport(bottomScrollSignalRef, true, {
-        rootMargin: '1px', // bottomScrollSignal div has 0px height so we need a 1px margin to trigger the intersection observer
-        root: scrollableParentRef.current,
-    });
-
+    const hasSubtitleOrDescription = !!(subtitle || description);
     const hasButtons = !!button || !!secondaryButton || !!link;
+    const scrollableContentRef = React.useRef<HTMLDivElement | null>(null);
+
+    const [showTitleDivider, setShowTitleDivider] = React.useState(false);
+    const [showButtonsDivider, setShowButtonsDivider] = React.useState(false);
+
+    const handleScroll = () => {
+        const target = scrollableContentRef.current;
+        if (target) {
+            const isTop = target.scrollTop === 0;
+            const isBottom = target.scrollHeight - target.scrollTop === target.clientHeight;
+            setShowTitleDivider(!isTop);
+            setShowButtonsDivider(!isBottom);
+        }
+    };
+
+    React.useLayoutEffect(() => {
+        handleScroll();
+    });
+
     return (
         <>
-            <div ref={topScrollSignalRef} />
             <div className={styles.stickyTitle}>
                 {title ? (
                     <Box paddingBottom={8} paddingTop={{mobile: 0, desktop: 40}} paddingX={paddingX}>
@@ -333,10 +334,10 @@ export const SheetBody = ({
                 )}
                 {showTitleDivider && <Divider />}
             </div>
-            <div className={styles.bodyContent}>
+            <div className={styles.bodyContent} onScroll={handleScroll} ref={scrollableContentRef}>
                 <Box paddingBottom={hasButtons ? 0 : {desktop: 40, mobile: 0}} paddingX={paddingX}>
                     <Stack space={8}>
-                        {subtitle || description ? (
+                        {hasSubtitleOrDescription && (
                             <Stack space={{mobile: 8, desktop: 16}}>
                                 {subtitle && (
                                     <Text3 as="p" regular>
@@ -367,7 +368,7 @@ export const SheetBody = ({
                                         </Text2>
                                     ))}
                             </Stack>
-                        ) : null}
+                        )}
                         {children}
                     </Stack>
                 </Box>
@@ -385,7 +386,6 @@ export const SheetBody = ({
                     </Box>
                 </div>
             )}
-            <div ref={bottomScrollSignalRef} />
         </>
     );
 };
