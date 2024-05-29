@@ -268,32 +268,29 @@ export const TextTimer: React.FC<TextTimerProps> = ({
             case 'none':
                 return timerValue.map((item, index) => (
                     <React.Fragment key={index}>
+                        {index > 0 && <span>:</span>}
                         {renderFormattedNumber(item.value)}
-                        {index === timerValue.length - 1 ? '' : ':'}
                     </React.Fragment>
                 ));
 
             case 'short':
-                // Using a div to treat each unit and its value as a single element when wrapping is required
                 return timerValue.map((item, index) => (
-                    <div style={{display: 'inline-flex'}} key={index}>
+                    <React.Fragment key={index}>
+                        {index > 0 && <span> </span>}
                         {renderFormattedNumber(item.value)}
-                        {` ${unitShortLabel[item.unit]}`}
-                        {index === timerValue.length - 1 ? '' : ' '}
-                    </div>
+                        <span> {unitShortLabel[item.unit]}</span>
+                    </React.Fragment>
                 ));
 
             case 'long':
             default:
                 return timerValue.map((item, index) => (
                     <React.Fragment key={index}>
+                        {index > 0 && <span> </span>}
                         {renderFormattedNumber(item.value)}
-                        {` ${item.value === 1 ? unitLabel[item.unit] : unitLabelPlural[item.unit]}`}
-                        {index === timerValue.length - 1
-                            ? ''
-                            : index === timerValue.length - 2
-                            ? ` ${texts.timerAnd} `
-                            : ', '}
+                        <span> {item.value === 1 ? unitLabel[item.unit] : unitLabelPlural[item.unit]}</span>
+                        {index === timerValue.length - 2 && <span> {texts.timerAnd}</span>}
+                        {index < timerValue.length - 2 && <span>,</span>}
                     </React.Fragment>
                 ));
         }
@@ -323,9 +320,7 @@ export const TextTimer: React.FC<TextTimerProps> = ({
                 <span id={labelId}>{ariaLabel ? `${ariaLabel}. ${timerLabel}` : timerLabel}</span>
             </ScreenReaderOnly>
 
-            <div aria-hidden className={styles.content}>
-                {renderTime()}
-            </div>
+            <div aria-hidden>{renderTime()}</div>
         </div>
     );
 };

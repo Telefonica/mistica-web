@@ -13,39 +13,12 @@ export const timerWrapper = style([
     },
 ]);
 
-export const content = style([
-    sprinkles({
-        display: 'inline-flex',
-    }),
-    {
-        flexWrap: 'wrap',
-        whiteSpace: 'break-spaces',
-        textDecoration: 'inherit',
-    },
-]);
-
 export const unitContainer = sprinkles({
-    display: 'flex',
+    display: 'inline-flex',
     justifyContent: 'center',
 });
 
 export const timerDisplayValue = style([
-    sprinkles({
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-    }),
-    {
-        minWidth: pxToRem(64),
-        '@media': {
-            [mq.tabletOrSmaller]: {
-                minWidth: pxToRem(56),
-            },
-        },
-    },
-]);
-
-export const timerDisplayValueContainer = style([
     sprinkles({
         display: 'flex',
         flexDirection: 'column',
