@@ -1,4 +1,5 @@
 'use client';
+import classNames from 'classnames';
 import * as React from 'react';
 import Box from './box';
 import {useIsomorphicLayoutEffect, useTheme} from './hooks';
@@ -11,7 +12,6 @@ import {getPrefixedDataAttributes} from './utils/dom';
 import {isEqual} from './utils/helpers';
 import {isRunningAcceptanceTest} from './utils/platform';
 
-import type {Variant} from './theme-variant-context';
 import type {DataAttributes} from './utils/types';
 
 const DAY_IN_HOURS = 24;
@@ -33,7 +33,7 @@ interface Timestamp {
     seconds?: number;
 }
 
-interface TimerDisplayProps {
+interface BaseProps {
     endTimestamp: Date | number;
     minTimeUnit?: TimeUnit;
     maxTimeUnit?: TimeUnit;
@@ -43,8 +43,12 @@ interface TimerDisplayProps {
     'aria-label'?: string;
 }
 
-interface TimerProps extends TimerDisplayProps {
+interface TextTimerProps extends BaseProps {
     labelType?: Label;
+}
+
+interface TimerProps extends BaseProps {
+    boxed?: boolean;
 }
 
 const shouldRenderUnit = (
@@ -124,17 +128,27 @@ const useTimerState = ({
     const [currentSeconds, setCurrentSeconds] = React.useState(remainingTime.seconds);
 
     useIsomorphicLayoutEffect(() => {
+        let intervalId: NodeJS.Timeout;
+
         const updateCurrentTime = () => {
             const remainingTime = getRemainingTime(endTimestamp);
             setCurrentDays(remainingTime.days);
             setCurrentHours(remainingTime.hours);
             setCurrentMinutes(remainingTime.minutes);
             setCurrentSeconds(remainingTime.seconds);
+            if (
+                !remainingTime.days &&
+                !remainingTime.hours &&
+                !remainingTime.minutes &&
+                !remainingTime.seconds
+            ) {
+                clearInterval(intervalId);
+            }
         };
 
         if (!isRunningAcceptanceTest()) {
             updateCurrentTime();
-            const intervalId = setInterval(updateCurrentTime, SECOND_IN_MS);
+            intervalId = setInterval(updateCurrentTime, SECOND_IN_MS);
             return () => clearInterval(intervalId);
         }
     }, [endTimestamp]);
@@ -192,7 +206,7 @@ const useTimerState = ({
     return timerValue;
 };
 
-export const Timer: React.FC<TimerProps> = ({
+export const TextTimer: React.FC<TextTimerProps> = ({
     endTimestamp,
     labelType = 'none',
     minTimeUnit,
@@ -290,7 +304,7 @@ export const Timer: React.FC<TimerProps> = ({
         <div
             role="timer"
             className={styles.timerWrapper}
-            {...getPrefixedDataAttributes(dataAttributes, 'Timer')}
+            {...getPrefixedDataAttributes(dataAttributes, 'TextTimer')}
         >
             <ScreenReaderOnly>
                 <span>{ariaLabel ? `${ariaLabel}. ${timerLabel}` : timerLabel}</span>
@@ -303,17 +317,17 @@ export const Timer: React.FC<TimerProps> = ({
     );
 };
 
-const BaseTimerDisplay: React.FC<TimerDisplayProps & {className?: string; internalThemeVariant: Variant}> = ({
+export const Timer: React.FC<TimerProps> = ({
+    boxed,
     endTimestamp,
     minTimeUnit,
     maxTimeUnit,
     onProgress,
     dataAttributes,
     'aria-label': ariaLabel,
-    className,
-    internalThemeVariant,
 }) => {
     const {texts} = useTheme();
+    const themeVariant = useThemeVariant();
 
     const timerValue = useTimerState({endTimestamp, minTimeUnit, maxTimeUnit, onProgress});
 
@@ -373,8 +387,14 @@ const BaseTimerDisplay: React.FC<TimerDisplayProps & {className?: string; intern
 
     const renderTime = () => {
         return timerValue.map((item, index) => (
-            <Box className={className} key={index}>
-                <ThemeVariant variant={internalThemeVariant}>
+            <Box
+                className={classNames({
+                    [styles.boxedTimerValueContainer]: themeVariant === 'default' && boxed,
+                    [styles.boxedTimerValueContainerInverse]: themeVariant !== 'default' && boxed,
+                })}
+                key={index}
+            >
+                <ThemeVariant variant={boxed ? 'default' : themeVariant}>
                     <div className={styles.timerDisplayValue}>
                         {renderFormattedNumber(item.value)}
                         <Text2 regular>
@@ -387,43 +407,20 @@ const BaseTimerDisplay: React.FC<TimerDisplayProps & {className?: string; intern
     };
 
     return (
-        <div role="timer" className={styles.timerWrapper} {...getPrefixedDataAttributes(dataAttributes)}>
+        <div
+            role="timer"
+            className={styles.timerWrapper}
+            {...getPrefixedDataAttributes(dataAttributes, 'Timer')}
+        >
             <ScreenReaderOnly>
                 <span>{ariaLabel ? `${ariaLabel}. ${timerLabel}` : timerLabel}</span>
             </ScreenReaderOnly>
 
             <div aria-hidden>
-                <Inline space={8}>{renderTime()}</Inline>
+                <Inline space={8} wrap>
+                    {renderTime()}
+                </Inline>
             </div>
         </div>
-    );
-};
-
-export const TimerDisplay: React.FC<TimerDisplayProps> = ({dataAttributes, ...props}) => {
-    const variant = useThemeVariant();
-
-    return (
-        <BaseTimerDisplay
-            {...props}
-            internalThemeVariant={variant}
-            dataAttributes={{...dataAttributes, 'component-name': 'TimerDisplay'}}
-        />
-    );
-};
-
-export const BoxedTimerDisplay: React.FC<TimerDisplayProps> = ({dataAttributes, ...props}) => {
-    const variant = useThemeVariant();
-
-    return (
-        <BaseTimerDisplay
-            {...props}
-            internalThemeVariant="default"
-            className={
-                variant === 'default'
-                    ? styles.boxedTimerValueContainer
-                    : styles.boxedTimerValueContainerInverse
-            }
-            dataAttributes={{...dataAttributes, 'component-name': 'BoxedTimerDisplay'}}
-        />
     );
 };

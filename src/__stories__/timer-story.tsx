@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {ResponsiveLayout, Box, Text3, Timer, TimerDisplay, BoxedTimerDisplay} from '..';
+import {ResponsiveLayout, Box, Text3, Timer, TextTimer} from '..';
 
 import type {TimeUnit} from '../timer';
 import type {Variant} from '../theme-variant-context';
@@ -9,7 +9,7 @@ export default {
     parameters: {fullScreen: true},
 };
 
-interface TimerDisplayArgs {
+interface BaseArgs {
     themeVariant: Variant;
     minTimeUnit: TimeUnit | 'undefined';
     maxTimeUnit: TimeUnit | 'undefined';
@@ -19,14 +19,12 @@ interface TimerDisplayArgs {
     seconds: number;
 }
 
-type TimerArgs = TimerDisplayArgs & {labelType: 'none' | 'short' | 'long'};
-
 const SECOND = 1000;
 const MINUTE = SECOND * 60;
 const HOUR = MINUTE * 60;
 const DAY = HOUR * 24;
 
-const baseArgs: TimerDisplayArgs = {
+const baseArgs: BaseArgs = {
     themeVariant: 'default',
     minTimeUnit: 'undefined',
     maxTimeUnit: 'undefined',
@@ -51,7 +49,9 @@ const baseArgTypes = {
     },
 };
 
-export const TimerStory: StoryComponent<TimerArgs> = ({
+type TextTimerArgs = BaseArgs & {labelType: 'none' | 'short' | 'long'};
+
+export const TextTimerStory: StoryComponent<TextTimerArgs> = ({
     labelType,
     themeVariant,
     minTimeUnit,
@@ -73,7 +73,7 @@ export const TimerStory: StoryComponent<TimerArgs> = ({
         <ResponsiveLayout fullWidth variant={themeVariant}>
             <Box padding={16}>
                 <Text3 regular>
-                    <Timer
+                    <TextTimer
                         dataAttributes={{testid: 'timer'}}
                         endTimestamp={endTimestamp}
                         labelType={labelType}
@@ -86,12 +86,12 @@ export const TimerStory: StoryComponent<TimerArgs> = ({
     );
 };
 
-TimerStory.storyName = 'Timer';
-TimerStory.args = {
+TextTimerStory.storyName = 'TextTimer';
+TextTimerStory.args = {
     labelType: 'none',
     ...baseArgs,
 };
-TimerStory.argTypes = {
+TextTimerStory.argTypes = {
     ...baseArgTypes,
     labelType: {
         options: ['none', 'short', 'long'],
@@ -99,7 +99,9 @@ TimerStory.argTypes = {
     },
 };
 
-export const TimerDisplayStory: StoryComponent<TimerDisplayArgs> = ({
+type TimerArgs = BaseArgs & {boxed: boolean};
+
+export const TimerStory: StoryComponent<TimerArgs> = ({
     themeVariant,
     minTimeUnit,
     maxTimeUnit,
@@ -107,6 +109,7 @@ export const TimerDisplayStory: StoryComponent<TimerDisplayArgs> = ({
     hours,
     minutes,
     seconds,
+    boxed,
 }) => {
     const [endTimestamp, setEndTimestamp] = React.useState(
         Date.now() + DAY * days + HOUR * hours + MINUTE * minutes + SECOND * seconds
@@ -119,60 +122,23 @@ export const TimerDisplayStory: StoryComponent<TimerDisplayArgs> = ({
     return (
         <ResponsiveLayout fullWidth variant={themeVariant}>
             <Box padding={16}>
-                <TimerDisplay
+                <Timer
                     dataAttributes={{testid: 'timer'}}
                     endTimestamp={endTimestamp}
                     minTimeUnit={minTimeUnit === 'undefined' ? undefined : minTimeUnit}
                     maxTimeUnit={maxTimeUnit === 'undefined' ? undefined : maxTimeUnit}
+                    boxed={boxed}
                 />
             </Box>
         </ResponsiveLayout>
     );
 };
 
-TimerDisplayStory.storyName = 'TimerDisplay';
-TimerDisplayStory.args = {
+TimerStory.storyName = 'Timer';
+TimerStory.args = {
     ...baseArgs,
+    boxed: false,
 };
-TimerDisplayStory.argTypes = {
-    ...baseArgTypes,
-};
-
-export const BoxedTimerDisplayStory: StoryComponent<TimerDisplayArgs> = ({
-    themeVariant,
-    minTimeUnit,
-    maxTimeUnit,
-    days,
-    hours,
-    minutes,
-    seconds,
-}) => {
-    const [endTimestamp, setEndTimestamp] = React.useState(
-        Date.now() + DAY * days + HOUR * hours + MINUTE * minutes + SECOND * seconds
-    );
-
-    React.useEffect(() => {
-        setEndTimestamp(Date.now() + DAY * days + HOUR * hours + MINUTE * minutes + SECOND * seconds);
-    }, [days, hours, minutes, seconds]);
-
-    return (
-        <ResponsiveLayout fullWidth variant={themeVariant}>
-            <Box padding={16}>
-                <BoxedTimerDisplay
-                    dataAttributes={{testid: 'timer'}}
-                    endTimestamp={endTimestamp}
-                    minTimeUnit={minTimeUnit === 'undefined' ? undefined : minTimeUnit}
-                    maxTimeUnit={maxTimeUnit === 'undefined' ? undefined : maxTimeUnit}
-                />
-            </Box>
-        </ResponsiveLayout>
-    );
-};
-
-BoxedTimerDisplayStory.storyName = 'BoxedTimerDisplay';
-BoxedTimerDisplayStory.args = {
-    ...baseArgs,
-};
-BoxedTimerDisplayStory.argTypes = {
+TimerStory.argTypes = {
     ...baseArgTypes,
 };
