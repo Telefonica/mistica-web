@@ -268,7 +268,7 @@ export const TextTimer: React.FC<TextTimerProps> = ({
             case 'none':
                 return timerValue.map((item, index) => (
                     <React.Fragment key={index}>
-                        {index > 0 && <span>:</span>}
+                        {index > 0 && ':'}
                         {renderFormattedNumber(item.value)}
                     </React.Fragment>
                 ));
@@ -276,9 +276,9 @@ export const TextTimer: React.FC<TextTimerProps> = ({
             case 'short':
                 return timerValue.map((item, index) => (
                     <React.Fragment key={index}>
-                        {index > 0 && <span> </span>}
+                        {index > 0 && ' '}
                         {renderFormattedNumber(item.value)}
-                        <span> {unitShortLabel[item.unit]}</span>
+                        {` ${unitShortLabel[item.unit]}`}
                     </React.Fragment>
                 ));
 
@@ -286,11 +286,11 @@ export const TextTimer: React.FC<TextTimerProps> = ({
             default:
                 return timerValue.map((item, index) => (
                     <React.Fragment key={index}>
-                        {index > 0 && <span> </span>}
+                        {index > 0 && ' '}
                         {renderFormattedNumber(item.value)}
-                        <span> {item.value === 1 ? unitLabel[item.unit] : unitLabelPlural[item.unit]}</span>
-                        {index === timerValue.length - 2 && <span> {texts.timerAnd}</span>}
-                        {index < timerValue.length - 2 && <span>,</span>}
+                        {` ${item.value === 1 ? unitLabel[item.unit] : unitLabelPlural[item.unit]}`}
+                        {index === timerValue.length - 2 && ` ${texts.timerAnd}`}
+                        {index < timerValue.length - 2 && ','}
                     </React.Fragment>
                 ));
         }
