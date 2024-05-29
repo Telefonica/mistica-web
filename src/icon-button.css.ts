@@ -417,6 +417,7 @@ export const overlay = style({
     width: '100%',
     height: '100%',
     backgroundColor: 'transparent',
+    borderRadius: '50%',
     transition: `background-color ${colorTransitionTiming}`,
 
     selectors: {
