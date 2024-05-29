@@ -2,7 +2,7 @@
 import classNames from 'classnames';
 import * as React from 'react';
 import Box from './box';
-import {useIsomorphicLayoutEffect, useTheme} from './hooks';
+import {useAriaId, useIsomorphicLayoutEffect, useTheme} from './hooks';
 import Inline from './inline';
 import ScreenReaderOnly from './screen-reader-only';
 import {Text2, Text6} from './text';
@@ -227,6 +227,7 @@ export const TextTimer: React.FC<TextTimerProps> = ({
     'aria-label': ariaLabel,
 }) => {
     const {texts} = useTheme();
+    const labelId = useAriaId();
 
     const timerValue = useTimerState({endTimestamp, labelType, minTimeUnit, maxTimeUnit, onProgress});
 
@@ -314,11 +315,12 @@ export const TextTimer: React.FC<TextTimerProps> = ({
     return (
         <div
             role="timer"
+            aria-labelledby={labelId}
             className={styles.timerWrapper}
             {...getPrefixedDataAttributes(dataAttributes, 'TextTimer')}
         >
             <ScreenReaderOnly>
-                <span>{ariaLabel ? `${ariaLabel}. ${timerLabel}` : timerLabel}</span>
+                <span id={labelId}>{ariaLabel ? `${ariaLabel}. ${timerLabel}` : timerLabel}</span>
             </ScreenReaderOnly>
 
             <div aria-hidden className={styles.content}>
@@ -338,6 +340,7 @@ export const Timer: React.FC<TimerProps> = ({
     'aria-label': ariaLabel,
 }) => {
     const {texts} = useTheme();
+    const labelId = useAriaId();
     const themeVariant = useThemeVariant();
 
     const timerValue = useTimerState({endTimestamp, minTimeUnit, maxTimeUnit, onProgress});
@@ -420,11 +423,12 @@ export const Timer: React.FC<TimerProps> = ({
     return (
         <div
             role="timer"
+            aria-labelledby={labelId}
             className={styles.timerWrapper}
             {...getPrefixedDataAttributes(dataAttributes, 'Timer')}
         >
             <ScreenReaderOnly>
-                <span>{ariaLabel ? `${ariaLabel}. ${timerLabel}` : timerLabel}</span>
+                <span id={labelId}>{ariaLabel ? `${ariaLabel}. ${timerLabel}` : timerLabel}</span>
             </ScreenReaderOnly>
 
             <div aria-hidden>

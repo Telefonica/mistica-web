@@ -99,6 +99,18 @@ test('Timer - render days', async () => {
     await screen.findByText('0 días, 0 horas, 0 minutos y 0 segundos');
 });
 
+test('Timer - component is accessible', async () => {
+    jest.useFakeTimers();
+
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Timer endTimestamp={Date.now() + SECOND} aria-label="A label" />
+        </ThemeContextProvider>
+    );
+
+    await screen.findByLabelText('A label. 0 horas, 0 minutos y 1 segundo');
+});
+
 test("TextTimer - doesn't render days", async () => {
     jest.useFakeTimers();
 
@@ -115,4 +127,16 @@ test("TextTimer - doesn't render days", async () => {
 
     act(() => jest.runAllTimers());
     await screen.findByText('0 horas, 0 minutos y 0 segundos');
+});
+
+test('TextTimer - component is accessible', async () => {
+    jest.useFakeTimers();
+
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <TextTimer endTimestamp={Date.now() + SECOND} aria-label="A label" />
+        </ThemeContextProvider>
+    );
+
+    await screen.findByLabelText('A label. 0 horas, 0 minutos y 1 segundo');
 });
