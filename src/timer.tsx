@@ -95,6 +95,15 @@ const getFilteredTimerValue = (
 };
 
 const getRemainingTime = (endTimestamp: Date | number) => {
+    // Always return 0 ms remaining for screenshot tests to avoid unstable values caused by delays in browser
+    if (isRunningAcceptanceTest()) {
+        return {
+            days: 0,
+            hours: 0,
+            minutes: 0,
+            seconds: 0,
+        };
+    }
     const remainingTime = Math.max(
         0,
         (typeof endTimestamp === 'object' ? endTimestamp : new Date(endTimestamp)).valueOf() - Date.now()
@@ -136,6 +145,8 @@ const useTimerState = ({
             setCurrentHours(remainingTime.hours);
             setCurrentMinutes(remainingTime.minutes);
             setCurrentSeconds(remainingTime.seconds);
+
+            // Stop computing values if there is no time remaining
             if (
                 !remainingTime.days &&
                 !remainingTime.hours &&

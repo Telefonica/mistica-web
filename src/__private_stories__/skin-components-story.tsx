@@ -43,6 +43,7 @@ import {
     Title3,
     IconButton,
     Hero,
+    Timer,
 } from '..';
 import {InternalIconButton} from '../icon-button';
 import avatarImg from '../__stories__/images/avatar.jpg';
@@ -396,6 +397,10 @@ export const Default: StoryComponent<Args> = ({variant}) => {
                         button={<ButtonPrimary onPress={() => {}}>Action</ButtonPrimary>}
                         buttonLink={<ButtonLink onPress={() => {}}>Link</ButtonLink>}
                     />
+
+                    {/** Timer */}
+                    <Timer endTimestamp={0} maxTimeUnit="days" />
+                    <Timer endTimestamp={0} maxTimeUnit="days" boxed />
                 </Stack>
             </Box>
         </ResponsiveLayout>
