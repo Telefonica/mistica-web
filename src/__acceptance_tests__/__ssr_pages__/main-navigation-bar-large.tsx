@@ -23,7 +23,7 @@ const NavigationBarTest = (): JSX.Element => (
                     </Badge>
                 </NavigationBarAction>
                 <NavigationBarAction onPress={() => {}} aria-label="Open profile">
-                    <Avatar size={24} initials="ML" src="https://source.unsplash.com/600x600/?face" />
+                    <Avatar size={24} initials="ML" src="avatar.jpg" />
                 </NavigationBarAction>
             </NavigationBarActionGroup>
         }

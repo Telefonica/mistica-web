@@ -202,4 +202,22 @@ const v = true as boolean;
 
     <BoxedRow title="maybe inverse no danger" isInverse={v} />
     <BoxedRow title="maybe danger no inverse" danger={v} />
+
+    {/* OK - controls with right content */}
+    <BoxedRow title="radio + right" radioValue="radio" right={<Icon2GRegular />} />
+    <BoxedRow title="checkbox + right" checkbox={{name: 'checkbox', value: true}} right={<Icon2GRegular />} />
+    <BoxedRow title="switch + right" switch={{name: 'switch', value: true}} right={<Icon2GRegular />} />
+    <BoxedRow
+        title="iconButton + right"
+        iconButton={{Icon: Icon2GRegular, 'aria-label': 'do something'}}
+        right={<Icon2GRegular />}
+    />
+
+    {/* OK - force chevron */}
+    <BoxedRow title="basic with chevron" withChevron />
+
+    {/* OK - disable chevron in interactive rows */}
+    <BoxedRow title="basic" onPress={() => {}} withChevron={false} />
+    <BoxedRow title="basic" href="#" withChevron={false} />
+    <BoxedRow title="basic" to="#" withChevron={false} />
 </BoxedRowList>;
