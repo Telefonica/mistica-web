@@ -7,7 +7,6 @@ import {InternalBoxed} from './boxed';
 import classNames from 'classnames';
 import Box from './box';
 import {applyCssVars} from './utils/css';
-import ResponsiveLayout, {ResetResponsiveLayout} from './responsive-layout';
 
 import type {DataAttributes} from './utils/types';
 
@@ -103,7 +102,7 @@ export const Table = React.forwardRef(
                                     styles.cellTextAlign[getColumnTextAlign(idx)],
                                     styles.verticalAlign[rowVerticalAlign]
                                 )}
-                                style={{width: columnWidth?.[idx]}}
+                                style={{minWidth: columnWidth?.[idx], width: columnWidth?.[idx]}}
                             >
                                 {header}
                             </th>
@@ -169,15 +168,18 @@ export const Table = React.forwardRef(
             </table>
         );
 
-        const scrollContainerStyles = {
-            className: classNames(styles.scrollContainer, {
-                [styles.collapsedRowsInMobile]: collapsedRowsMode,
-                [styles.fullWidth]: fullWidth,
-            }),
-            style: applyCssVars({
-                [styles.vars.maxHeight]:
-                    typeof maxHeight === 'number' ? `${maxHeight}px` : maxHeight ?? 'auto',
-            }),
+        const getScrollContainerStyles = (overResponsiveLayout = false) => {
+            return {
+                className: classNames(styles.scrollContainer, {
+                    [styles.scrollOverResponsiveLayout]: overResponsiveLayout,
+                    [styles.collapsedRowsInMobile]: collapsedRowsMode,
+                    [styles.fullWidth]: fullWidth,
+                }),
+                style: applyCssVars({
+                    [styles.vars.maxHeight]:
+                        typeof maxHeight === 'number' ? `${maxHeight}px` : maxHeight ?? 'auto',
+                }),
+            };
         };
 
         if (boxed) {
@@ -193,34 +195,17 @@ export const Table = React.forwardRef(
                     ref={ref}
                     dataAttributes={{'component-name': 'Table', ...dataAttributes}}
                 >
-                    <div {...scrollContainerStyles}>
-                        <Box
-                            paddingX={{desktop: 16, mobile: collapsedRowsMode ? 0 : 8}}
-                            paddingY={{desktop: 8, mobile: 0}}
-                        >
-                            {table}
-                        </Box>
-                    </div>
+                    <div {...getScrollContainerStyles()}>{table}</div>
                 </InternalBoxed>
             );
         }
 
-        if (scrollOverResponsiveLayout) {
-            return (
-                <ResetResponsiveLayout>
-                    <div
-                        ref={ref}
-                        {...getPrefixedDataAttributes(dataAttributes, 'Table')}
-                        {...scrollContainerStyles}
-                    >
-                        <ResponsiveLayout>{table}</ResponsiveLayout>
-                    </div>
-                </ResetResponsiveLayout>
-            );
-        }
-
         return (
-            <div ref={ref} {...getPrefixedDataAttributes(dataAttributes, 'Table')} {...scrollContainerStyles}>
+            <div
+                ref={ref}
+                {...getPrefixedDataAttributes(dataAttributes, 'Table')}
+                {...getScrollContainerStyles(scrollOverResponsiveLayout)}
+            >
                 {table}
             </div>
         );

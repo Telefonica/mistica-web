@@ -1,6 +1,9 @@
-import {createVar, globalStyle, style, styleVariants} from '@vanilla-extract/css';
+import {createVar, fallbackVar, globalStyle, style, styleVariants} from '@vanilla-extract/css';
 import * as mq from './media-queries.css';
 import {vars as skinVars} from './skins/skin-contract.css';
+import {vars as responsiveLayoutVars} from './responsive-layout.css';
+
+const responsiveLayoutSideMargin = fallbackVar(responsiveLayoutVars.sideMargin, '0px');
 
 const maxHeight = createVar();
 
@@ -10,18 +13,30 @@ export const table = style({
     borderCollapse: 'separate',
     borderSpacing: 0,
     position: 'relative',
-    '@media': {
-        [mq.tabletOrSmaller]: {
-            minWidth: '100%', // always render the table fullWidth in mobile
-        },
-    },
 });
 
 export const fullWidth = style({minWidth: '100%'});
-export const boxed = style({});
 
 // In mobile, we have 2 rendering modes: horizontal scroll, or collapsed rows. In collapsed rows mode, every row is rendered as a card
 export const collapsedRowsInMobile = style({});
+
+const BOXED_PADDING_Y_DESKTOP = 8;
+
+export const boxed = style({
+    padding: '0 16px',
+    paddingBottom: BOXED_PADDING_Y_DESKTOP,
+    '@media': {
+        [mq.tabletOrSmaller]: {
+            padding: '0 8px',
+            paddingBottom: 0,
+            selectors: {
+                [`${collapsedRowsInMobile}&`]: {
+                    padding: 0,
+                },
+            },
+        },
+    },
+});
 
 const baseTextAlign = style({
     selectors: {
@@ -63,6 +78,16 @@ export const scrollContainer = style({
     },
 });
 
+export const scrollOverResponsiveLayout = style({
+    '@media': {
+        [mq.tabletOrSmaller]: {
+            boxSizing: 'content-box', // because we need the padding to be included in the width (we need width: fit-content + paddings)
+            margin: `0 calc(${responsiveLayoutSideMargin} * -1)`,
+            padding: `0 ${responsiveLayoutSideMargin}`,
+        },
+    },
+});
+
 export const verticalAlign = styleVariants({
     top: {verticalAlign: 'top'},
     middle: {verticalAlign: 'middle'},
@@ -81,6 +106,14 @@ globalStyle(`${table} th, ${table} td`, {
     borderBottom: `1px solid ${skinVars.colors.divider}`,
     padding: '16px 12px',
     height: ROW_MIN_HEIGHT, // height behaves like a min-height in table layout
+});
+
+globalStyle(`${boxed} th`, {
+    '@media': {
+        [mq.desktopOrBigger]: {
+            paddingTop: 16 + BOXED_PADDING_Y_DESKTOP,
+        },
+    },
 });
 
 globalStyle(`${table} th:first-child, ${table} td:first-child`, {

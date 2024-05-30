@@ -38,6 +38,7 @@ type Args = {
     boxed: boolean;
     responsive: 'scroll' | 'collapse-rows';
     fullWidth: boolean;
+    scrollOverResponsiveLayout: boolean;
     maxHeight: string | undefined;
     numItems: number;
     emptyCase: string;
@@ -51,6 +52,7 @@ export const Default: StoryComponent<Args> = ({
     boxed,
     responsive,
     fullWidth,
+    scrollOverResponsiveLayout,
     maxHeight,
     numItems,
     emptyCase,
@@ -79,7 +81,7 @@ export const Default: StoryComponent<Args> = ({
                     rowVerticalAlign={rowVerticalAlign}
                     content={foodList.slice(0, numItems)}
                     emptyCase={emptyCase}
-                    scrollOverResponsiveLayout
+                    scrollOverResponsiveLayout={scrollOverResponsiveLayout}
                 />
             </Box>
         </ResponsiveLayout>
@@ -92,6 +94,7 @@ Default.args = {
     boxed: false,
     responsive: 'scroll',
     fullWidth: true,
+    scrollOverResponsiveLayout: true,
     maxHeight: undefined,
     numItems: 5,
     emptyCase: 'No food items found',
