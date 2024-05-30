@@ -154,6 +154,19 @@ test('PosterCard with custom background color inverse', async () => {
     expect(image).toMatchImageSnapshot();
 });
 
+test('PosterCard with extra content', async () => {
+    await openStoryPage({
+        id: 'components-cards-postercard--default',
+        args: {withExtra: true},
+    });
+
+    const posterCard = await screen.findByTestId('poster-card');
+
+    const image = await posterCard.screenshot();
+
+    expect(image).toMatchImageSnapshot();
+});
+
 test.each`
     background | inverse
     ${'image'} | ${false}
