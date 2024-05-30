@@ -277,8 +277,10 @@ export const TextTimer: React.FC<TextTimerProps> = ({
                 return timerValue.map((item, index) => (
                     <React.Fragment key={index}>
                         {index > 0 && ' '}
-                        {renderFormattedNumber(item.value)}
-                        {` ${unitShortLabel[item.unit]}`}
+                        <span style={{display: 'inline-block'}}>
+                            {renderFormattedNumber(item.value)}
+                            {` ${unitShortLabel[item.unit]}`}
+                        </span>
                     </React.Fragment>
                 ));
 
