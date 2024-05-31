@@ -27,9 +27,7 @@ const App = () => {
                         <img height={40} src="/vite.svg" alt="Vite Logo" />
                         <TextField name="name" label="Name" autoComplete="name" />
                         <EmailField name="email" label="E-mail" autoComplete="email" />
-                        <ButtonLayout>
-                            <ButtonPrimary submit>Send</ButtonPrimary>
-                        </ButtonLayout>
+                        <ButtonLayout primaryButton={<ButtonPrimary submit>Send</ButtonPrimary>} />
                     </Stack>
                 </Box>
             </Form>
