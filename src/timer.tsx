@@ -26,7 +26,7 @@ const DAY_IN_MS = DAY_IN_HOURS * HOUR_IN_MS;
 export type TimeUnit = 'days' | 'hours' | 'minutes' | 'seconds';
 type Label = 'none' | 'short' | 'long';
 
-interface Timestamp {
+export interface RemainingTime {
     days?: number;
     hours?: number;
     minutes?: number;
@@ -37,9 +37,8 @@ interface BaseProps {
     endTimestamp: Date | number;
     minTimeUnit?: TimeUnit;
     maxTimeUnit?: TimeUnit;
-    children?: void;
     dataAttributes?: DataAttributes;
-    onProgress?: (value: Timestamp) => void;
+    onProgress?: (value: RemainingTime) => void;
     'aria-label'?: string;
 }
 
@@ -79,7 +78,7 @@ const shouldRenderUnit = (
 };
 
 const getFilteredTimerValue = (
-    timestamp: Timestamp,
+    timestamp: RemainingTime,
     labelType?: Label,
     minTimeUnit?: TimeUnit,
     maxTimeUnit?: TimeUnit
@@ -97,24 +96,13 @@ const getFilteredTimerValue = (
 const getRemainingTime = (endTimestamp: Date | number) => {
     // Always return 0 ms remaining for screenshot tests to avoid unstable values caused by delays in browser
     if (isRunningAcceptanceTest()) {
-        return {
-            days: 0,
-            hours: 0,
-            minutes: 0,
-            seconds: 0,
-        };
+        return 0;
     }
-    const remainingTime = Math.max(
+
+    return Math.max(
         0,
         (typeof endTimestamp === 'object' ? endTimestamp : new Date(endTimestamp)).valueOf() - Date.now()
     );
-
-    return {
-        days: Math.floor(remainingTime / DAY_IN_MS),
-        hours: Math.floor(remainingTime / HOUR_IN_MS) % 24,
-        minutes: Math.floor(remainingTime / MINUTE_IN_MS) % 60,
-        seconds: Math.floor(remainingTime / SECOND_IN_MS) % 60,
-    };
 };
 
 const useTimerState = ({
@@ -128,31 +116,19 @@ const useTimerState = ({
     labelType?: Label;
     minTimeUnit?: TimeUnit;
     maxTimeUnit?: TimeUnit;
-    onProgress?: (value: Timestamp) => void;
+    onProgress?: (value: RemainingTime) => void;
 }) => {
-    const remainingTime = getRemainingTime(endTimestamp);
-    const [currentDays, setCurrentDays] = React.useState(remainingTime.days);
-    const [currentHours, setCurrentHours] = React.useState(remainingTime.hours);
-    const [currentMinutes, setCurrentMinutes] = React.useState(remainingTime.minutes);
-    const [currentSeconds, setCurrentSeconds] = React.useState(remainingTime.seconds);
+    const [remainingTime, setRemainingTime] = React.useState(getRemainingTime(endTimestamp));
 
     useIsomorphicLayoutEffect(() => {
         let intervalId: NodeJS.Timeout;
 
         const updateCurrentTime = () => {
-            const remainingTime = getRemainingTime(endTimestamp);
-            setCurrentDays(remainingTime.days);
-            setCurrentHours(remainingTime.hours);
-            setCurrentMinutes(remainingTime.minutes);
-            setCurrentSeconds(remainingTime.seconds);
+            const currentRemainingTime = getRemainingTime(endTimestamp);
+            setRemainingTime(currentRemainingTime);
 
             // Stop computing values if there is no time remaining
-            if (
-                !remainingTime.days &&
-                !remainingTime.hours &&
-                !remainingTime.minutes &&
-                !remainingTime.seconds
-            ) {
+            if (!currentRemainingTime) {
                 clearInterval(intervalId);
             }
         };
@@ -176,7 +152,11 @@ const useTimerState = ({
         ? 'minutes'
         : 'seconds';
 
-    const days = currentDays;
+    const currentHours = Math.floor(remainingTime / HOUR_IN_MS) % 24;
+    const currentMinutes = Math.floor(remainingTime / MINUTE_IN_MS) % 60;
+    const currentSeconds = Math.floor(remainingTime / SECOND_IN_MS) % 60;
+
+    const days = Math.floor(remainingTime / DAY_IN_MS);
 
     // if hours is the maximum unit, add remaining days
     const hours = maximumRenderedUnit === 'hours' ? currentHours + days * DAY_IN_HOURS : currentHours;
@@ -208,7 +188,7 @@ const useTimerState = ({
 
         if (!isEqual(currentTimerValue, timerValue)) {
             setTimerValue(currentTimerValue);
-            const timestampValue: Timestamp = {};
+            const timestampValue: RemainingTime = {};
             currentTimerValue.forEach((item) => (timestampValue[item.unit] = item.value));
             onProgress?.(timestampValue);
         }

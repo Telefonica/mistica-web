@@ -36,14 +36,13 @@ export const timerDisplayValue = style([
 
 const baseBoxedTimerValueContainer = style([
     sprinkles({
-        padding: 8,
+        paddingX: 4,
+        paddingY: 8,
         borderRadius: vars.borderRadii.container,
     }),
     {
         '@media': {
             [mq.tabletOrSmaller]: {
-                paddingLeft: 4,
-                paddingRight: 4,
                 paddingTop: 10,
                 paddingBottom: 10,
             },

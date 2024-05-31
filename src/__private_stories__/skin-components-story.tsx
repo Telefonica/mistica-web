@@ -399,8 +399,10 @@ export const Default: StoryComponent<Args> = ({variant}) => {
                     />
 
                     {/** Timer */}
-                    <Timer endTimestamp={0} maxTimeUnit="days" />
-                    <Timer endTimestamp={0} maxTimeUnit="days" boxed />
+                    <Inline space={16}>
+                        <Timer endTimestamp={0} maxTimeUnit="days" />
+                        <Timer endTimestamp={0} maxTimeUnit="days" boxed />
+                    </Inline>
                 </Stack>
             </Box>
         </ResponsiveLayout>

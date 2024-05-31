@@ -1,7 +1,8 @@
 import * as React from 'react';
-import {ResponsiveLayout, Box, Text3, Timer, TextTimer} from '..';
+import {ResponsiveLayout, Box, Text3, Timer, TextTimer, Stack, Title1, Text2} from '..';
+import {isEqual} from '../utils/helpers';
 
-import type {TimeUnit} from '../timer';
+import type {RemainingTime, TimeUnit} from '../timer';
 import type {Variant} from '../theme-variant-context';
 
 export default {
@@ -61,6 +62,7 @@ export const TextTimerStory: StoryComponent<TextTimerArgs> = ({
     minutes,
     seconds,
 }) => {
+    const [remainingTime, setRemainingTime] = React.useState<RemainingTime>();
     const [endTimestamp, setEndTimestamp] = React.useState(
         Date.now() + DAY * days + HOUR * hours + MINUTE * minutes + SECOND * seconds
     );
@@ -72,15 +74,30 @@ export const TextTimerStory: StoryComponent<TextTimerArgs> = ({
     return (
         <ResponsiveLayout fullWidth variant={themeVariant}>
             <Box padding={16}>
-                <Text3 regular>
-                    <TextTimer
-                        dataAttributes={{testid: 'timer'}}
-                        endTimestamp={endTimestamp}
-                        labelType={labelType}
-                        minTimeUnit={minTimeUnit === 'undefined' ? undefined : minTimeUnit}
-                        maxTimeUnit={maxTimeUnit === 'undefined' ? undefined : maxTimeUnit}
-                    />
-                </Text3>
+                <Stack space={16}>
+                    <Text3 regular>
+                        <TextTimer
+                            dataAttributes={{testid: 'timer'}}
+                            endTimestamp={endTimestamp}
+                            labelType={labelType}
+                            minTimeUnit={minTimeUnit === 'undefined' ? undefined : minTimeUnit}
+                            maxTimeUnit={maxTimeUnit === 'undefined' ? undefined : maxTimeUnit}
+                            onProgress={(currentValue) => {
+                                if (!isEqual(currentValue, remainingTime)) {
+                                    setRemainingTime(currentValue);
+                                }
+                            }}
+                        />
+                    </Text3>
+                    <Stack space={8}>
+                        <Title1 as="h2">onProgress callback value</Title1>
+                        {remainingTime && (
+                            <Text2 regular as="pre">
+                                {JSON.stringify(remainingTime, null, 2)}
+                            </Text2>
+                        )}
+                    </Stack>
+                </Stack>
             </Box>
         </ResponsiveLayout>
     );
@@ -111,6 +128,7 @@ export const TimerStory: StoryComponent<TimerArgs> = ({
     seconds,
     boxed,
 }) => {
+    const [remainingTime, setRemainingTime] = React.useState<RemainingTime>();
     const [endTimestamp, setEndTimestamp] = React.useState(
         Date.now() + DAY * days + HOUR * hours + MINUTE * minutes + SECOND * seconds
     );
@@ -122,13 +140,29 @@ export const TimerStory: StoryComponent<TimerArgs> = ({
     return (
         <ResponsiveLayout fullWidth variant={themeVariant}>
             <Box padding={16}>
-                <Timer
-                    dataAttributes={{testid: 'timer'}}
-                    endTimestamp={endTimestamp}
-                    minTimeUnit={minTimeUnit === 'undefined' ? undefined : minTimeUnit}
-                    maxTimeUnit={maxTimeUnit === 'undefined' ? undefined : maxTimeUnit}
-                    boxed={boxed}
-                />
+                <Stack space={16}>
+                    <Timer
+                        dataAttributes={{testid: 'timer'}}
+                        endTimestamp={endTimestamp}
+                        minTimeUnit={minTimeUnit === 'undefined' ? undefined : minTimeUnit}
+                        maxTimeUnit={maxTimeUnit === 'undefined' ? undefined : maxTimeUnit}
+                        boxed={boxed}
+                        onProgress={(currentValue) => {
+                            if (!isEqual(currentValue, remainingTime)) {
+                                setRemainingTime(currentValue);
+                            }
+                        }}
+                    />
+
+                    <Stack space={8}>
+                        <Title1 as="h2">onProgress callback value</Title1>
+                        {remainingTime && (
+                            <Text2 regular as="pre">
+                                {JSON.stringify(remainingTime, null, 2)}
+                            </Text2>
+                        )}
+                    </Stack>
+                </Stack>
             </Box>
         </ResponsiveLayout>
     );

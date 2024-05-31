@@ -99,6 +99,21 @@ test('Timer - render days', async () => {
     await screen.findByText('0 días, 0 horas, 0 minutos y 0 segundos');
 });
 
+test('Timer - render only seconds', async () => {
+    jest.useFakeTimers();
+
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Timer endTimestamp={Date.now() + DAY} maxTimeUnit="seconds" />
+        </ThemeContextProvider>
+    );
+
+    await screen.findByText('86400 segundos');
+
+    act(() => jest.runAllTimers());
+    await screen.findByText('0 segundos');
+});
+
 test('Timer - component is accessible', async () => {
     jest.useFakeTimers();
 

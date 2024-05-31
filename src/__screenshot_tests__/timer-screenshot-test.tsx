@@ -1,5 +1,7 @@
 import {openStoryPage, screen, setRootFontSize} from '../test-utils';
 
+const DEVICE = ['DESKTOP', 'MOBILE_IOS'] as const;
+
 test.each`
     minTimeUnit  | maxTimeUnit
     ${undefined} | ${undefined}
@@ -41,9 +43,10 @@ test.each`
     expect(image).toMatchImageSnapshot();
 });
 
-test('Timer - boxed', async () => {
+test.each(DEVICE)('Timer - boxed (%s)', async (device) => {
     await openStoryPage({
         id: 'components-timer--timer-story',
+        device,
         args: {minTimeUnit: 'seconds', maxTimeUnit: 'days', boxed: true},
     });
 

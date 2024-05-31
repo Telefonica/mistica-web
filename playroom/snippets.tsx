@@ -2835,10 +2835,10 @@ const ProgressBlockSnippets = [
 
 const timerSnippets: Array<Snippet> = [
     {
-        group: 'Timer',
+        group: 'TextTimer',
         name: 'No Label',
         code: `
-          <Timer
+          <TextTimer
             endTimestamp={Date.now() + 1000 * 60 * 60 * 24}
             minTimeUnit="seconds"
             maxTimeUnit="days"
@@ -2846,10 +2846,10 @@ const timerSnippets: Array<Snippet> = [
         `,
     },
     {
-        group: 'Timer',
+        group: 'TextTimer',
         name: 'Short Label',
         code: `
-          <Timer
+          <TextTimer
             endTimestamp={Date.now() + 1000 * 60 * 60 * 24}
             minTimeUnit="seconds"
             maxTimeUnit="days"
@@ -2858,10 +2858,10 @@ const timerSnippets: Array<Snippet> = [
         `,
     },
     {
-        group: 'Timer',
+        group: 'TextTimer',
         name: 'Long Label',
         code: `
-          <Timer
+          <TextTimer
             endTimestamp={Date.now() + 1000 * 60 * 60 * 24}
             minTimeUnit="seconds"
             maxTimeUnit="days"
@@ -2871,9 +2871,9 @@ const timerSnippets: Array<Snippet> = [
     },
     {
         group: 'Timer',
-        name: 'TimerDisplay',
+        name: 'default',
         code: `
-          <TimerDisplay
+          <Timer
             endTimestamp={Date.now() + 1000 * 60 * 60 * 24}
             minTimeUnit="seconds"
             maxTimeUnit="days"
@@ -2882,12 +2882,13 @@ const timerSnippets: Array<Snippet> = [
     },
     {
         group: 'Timer',
-        name: 'BoxedTimerDisplay',
+        name: 'boxed',
         code: `
-          <BoxedTimerDisplay
+          <Timer
             endTimestamp={Date.now() + 1000 * 60 * 60 * 24}
             minTimeUnit="seconds"
             maxTimeUnit="days"
+            boxed
           />
         `,
     },
