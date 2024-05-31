@@ -19,13 +19,15 @@ type Args = {
     content: string;
     size: number;
     border: boolean;
+    customBackground: boolean;
 };
 
-export const Default: StoryComponent<Args> = ({content, size, border}) => {
+export const Default: StoryComponent<Args> = ({content, size, border, customBackground}) => {
     return (
         <Circle
             size={size}
             dataAttributes={{testid: 'circle'}}
+            background={customBackground ? 'linear-gradient(yellow, red)' : undefined}
             backgroundColor={
                 content === 'color'
                     ? skinVars.colors.brand
@@ -46,4 +48,5 @@ Default.args = {
     size: 40,
     content: 'color',
     border: true,
+    customBackground: false,
 };

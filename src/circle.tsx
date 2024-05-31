@@ -6,7 +6,10 @@ import {getPrefixedDataAttributes} from './utils/dom';
 import type {DataAttributes} from './utils/types';
 
 type Props = {
+    background?: string;
+    /** ignored if background is set */
     backgroundColor?: string;
+    /** ignored if background is set */
     backgroundImage?: string;
     size?: number | string;
     children?: React.ReactElement;
@@ -16,6 +19,7 @@ type Props = {
 
 const Circle: React.FC<Props> = ({
     children,
+    background,
     backgroundColor,
     backgroundImage,
     size,
@@ -24,6 +28,7 @@ const Circle: React.FC<Props> = ({
 }) => {
     const borderColor = border === true ? vars.colors.border : border;
     const borderProp = border ? `1px solid ${borderColor}` : undefined;
+    const imageStyle = backgroundImage ? `url(${backgroundImage})` : '';
 
     return (
         <div
@@ -31,8 +36,9 @@ const Circle: React.FC<Props> = ({
             style={{
                 width: size,
                 height: size,
-                backgroundColor,
-                backgroundImage: backgroundImage ? `url(${backgroundImage})` : 'none',
+                background: background
+                    ? background
+                    : `center / cover no-repeat ${imageStyle} ${backgroundColor}`,
                 border: borderProp,
             }}
             {...getPrefixedDataAttributes(dataAttributes, 'Circle')}
