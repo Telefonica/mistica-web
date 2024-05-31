@@ -237,6 +237,9 @@ export const Default: StoryComponent<Args> = ({variant}) => {
 
                     {/** Chip */}
                     <Inline space={16} wrap>
+                        <Chip badge={10} Icon={IconLightningRegular}>
+                            Default chip
+                        </Chip>
                         <Chip Icon={IconLightningRegular} active>
                             Active chip
                         </Chip>
