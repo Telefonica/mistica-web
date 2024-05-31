@@ -257,7 +257,7 @@ export const TextTimer: React.FC<TextTimerProps> = ({
                 return timerValue.map((item, index) => (
                     <React.Fragment key={index}>
                         {index > 0 && ' '}
-                        <span style={{display: 'inline-block'}}>
+                        <span className={styles.shortLabelText}>
                             {renderFormattedNumber(item.value)}
                             {` ${unitShortLabel[item.unit]}`}
                         </span>
@@ -292,18 +292,24 @@ export const TextTimer: React.FC<TextTimerProps> = ({
         .join('');
 
     return (
-        <div
+        <span
             role="timer"
             aria-labelledby={labelId}
-            className={styles.timerWrapper}
+            className={styles.inlineText}
+            style={{
+                // try to keep the timer in the same line without wrapping only when label is not long
+                display: labelType !== 'long' ? 'inline-block' : undefined,
+            }}
             {...getPrefixedDataAttributes(dataAttributes, 'TextTimer')}
         >
             <ScreenReaderOnly>
                 <span id={labelId}>{ariaLabel ? `${ariaLabel}. ${timerLabel}` : timerLabel}</span>
             </ScreenReaderOnly>
 
-            <div aria-hidden>{renderTime()}</div>
-        </div>
+            <span aria-hidden className={styles.inlineText}>
+                {renderTime()}
+            </span>
+        </span>
     );
 };
 

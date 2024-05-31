@@ -4,19 +4,26 @@ import * as mq from './media-queries.css';
 import {pxToRem} from './utils/css';
 import {vars} from './skins/skin-contract.css';
 
-export const timerWrapper = style([
+export const timerWrapper = sprinkles({display: 'inline-block'});
+
+export const inlineText = style({
+    textDecoration: 'inherit',
+});
+
+export const unitContainer = style([
+    inlineText,
+    sprinkles({
+        display: 'inline-flex',
+        justifyContent: 'center',
+    }),
+]);
+
+export const shortLabelText = style([
+    inlineText,
     sprinkles({
         display: 'inline-block',
     }),
-    {
-        textDecoration: 'inherit',
-    },
 ]);
-
-export const unitContainer = sprinkles({
-    display: 'inline-flex',
-    justifyContent: 'center',
-});
 
 export const timerDisplayValue = style([
     sprinkles({
