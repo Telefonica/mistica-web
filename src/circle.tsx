@@ -14,7 +14,7 @@ type CommonProps = {
 };
 
 type BackgroundProps = {background: string};
-type BackgroundShorthandProps = {backgroundColor: string; backgroundImage?: string};
+type BackgroundShorthandProps = {backgroundColor?: string; backgroundImage?: string};
 
 type Props = CommonProps & ExclusifyUnion<BackgroundProps | BackgroundShorthandProps>;
 
