@@ -1,3 +1,15 @@
+# [15.10.0](https://github.com/Telefonica/mistica-web/compare/v15.9.0...v15.10.0) (2024-05-30)
+
+
+### Bug Fixes
+
+* **IconButton:** add borderRadius to button's overlay ([#1127](https://github.com/Telefonica/mistica-web/issues/1127)) ([5c4a665](https://github.com/Telefonica/mistica-web/commit/5c4a665fd56350fa84fb77f9e78cc6fa21b741fb))
+
+
+### Features
+
+* **Skin:** Movistar new a11y colors ([#1126](https://github.com/Telefonica/mistica-web/issues/1126)) ([1b203f4](https://github.com/Telefonica/mistica-web/commit/1b203f48a688423fef70ce8253c6659eae1e1db6))
+
 # [15.9.0](https://github.com/Telefonica/mistica-web/compare/v15.8.0...v15.9.0) (2024-05-22)
 
 
