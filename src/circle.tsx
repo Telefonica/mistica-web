@@ -27,7 +27,7 @@ const Circle: React.FC<Props> = ({
     border = false,
     dataAttributes,
 }) => {
-    const borderColor = border === true ? vars.colors.border : border;
+    const borderColor = border ? vars.colors.border : undefined;
     const borderProp = border ? `1px solid ${borderColor}` : undefined;
     const imageStyle = backgroundImage ? `url(${backgroundImage})` : '';
 
