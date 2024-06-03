@@ -53,6 +53,6 @@ Default.storyName = 'Circle';
 Default.args = {
     size: 40,
     background: 'color',
-    border: true,
+    border: false,
     children: false,
 };
