@@ -1,29 +1,19 @@
 import {openStoryPage, screen} from '../test-utils';
 
-const CONTENT_OPTIONS = ['color', 'image', 'icon', 'none'];
+const CASES = [
+    {size: 100, background: 'color'},
+    {size: 100, background: 'color', icon: true},
+    {size: 100, background: 'color', icon: true, border: true},
+    {size: 100, background: 'image'},
+    {size: 100, background: 'custom', icon: true},
+] as const;
 
-test.each(CONTENT_OPTIONS)('Circle - %s', async (content) => {
+test.each(CASES)('Circle - %s', async (args) => {
     await openStoryPage({
         id: 'components-primitives-circle--default',
-        args: {content, border: content === 'none', size: 100},
+        args,
     });
 
-    const story = await screen.findByTestId('circle');
-
-    expect(await story.screenshot()).toMatchImageSnapshot();
-});
-
-test('Circle with custom background', async () => {
-    await openStoryPage({
-        id: 'components-primitives-circle--default',
-        skin: 'O2-new',
-        args: {
-            content: 'none',
-            border: true,
-            size: 100,
-            customBackground: true,
-        },
-    });
     const story = await screen.findByTestId('circle');
 
     expect(await story.screenshot()).toMatchImageSnapshot();

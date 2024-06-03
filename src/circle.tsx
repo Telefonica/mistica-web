@@ -4,18 +4,19 @@ import {vars} from './skins/skin-contract.css';
 import {getPrefixedDataAttributes} from './utils/dom';
 
 import type {DataAttributes} from './utils/types';
+import type {ExclusifyUnion} from './utils/utility-types';
 
-type Props = {
-    background?: string;
-    /** ignored if background is set */
-    backgroundColor?: string;
-    /** ignored if background is set */
-    backgroundImage?: string;
+type CommonProps = {
     size?: number | string;
-    children?: React.ReactElement;
+    children?: React.ReactNode;
     border?: boolean | string;
     dataAttributes?: DataAttributes;
 };
+
+type BackgroundProps = {background: string};
+type BackgroundShorthandProps = {backgroundColor: string; backgroundImage?: string};
+
+type Props = CommonProps & ExclusifyUnion<BackgroundProps | BackgroundShorthandProps>;
 
 const Circle: React.FC<Props> = ({
     children,

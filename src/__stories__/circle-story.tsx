@@ -8,37 +8,43 @@ export default {
         size: {
             control: {type: 'range', min: 40, max: 128, step: 4},
         },
-        content: {
-            options: ['color', 'image', 'icon', 'none'],
+        background: {
+            options: ['color', 'image', 'custom'],
             control: {type: 'select'},
         },
     },
 };
 
 type Args = {
-    content: string;
+    background: string;
     size: number;
     border: boolean;
-    customBackground: boolean;
+    icon: boolean;
 };
 
-export const Default: StoryComponent<Args> = ({content, size, border, customBackground}) => {
+export const Default: StoryComponent<Args> = ({size, border, background, icon}) => {
+    if (background === 'custom') {
+        return (
+            <Circle
+                size={size}
+                dataAttributes={{testid: 'circle'}}
+                background="linear-gradient(yellow, red)"
+                border={border}
+            >
+                {!!icon && <IconShopRegular color={skinVars.colors.inverse} />}
+            </Circle>
+        );
+    }
+
     return (
         <Circle
             size={size}
             dataAttributes={{testid: 'circle'}}
-            background={customBackground ? 'linear-gradient(yellow, red)' : undefined}
-            backgroundColor={
-                content === 'color'
-                    ? skinVars.colors.brand
-                    : content === 'icon'
-                    ? skinVars.colors.brandLow
-                    : skinVars.colors.background
-            }
-            backgroundImage={content === 'image' ? avatarImg : undefined}
+            backgroundColor={background === 'color' ? skinVars.colors.brand : skinVars.colors.background}
+            backgroundImage={background === 'image' ? avatarImg : undefined}
             border={border}
         >
-            {content === 'icon' ? <IconShopRegular color={skinVars.colors.brand} /> : undefined}
+            {!!icon && <IconShopRegular color={skinVars.colors.inverse} />}
         </Circle>
     );
 };
@@ -46,7 +52,7 @@ export const Default: StoryComponent<Args> = ({content, size, border, customBack
 Default.storyName = 'Circle';
 Default.args = {
     size: 40,
-    content: 'color',
+    background: 'color',
     border: true,
-    customBackground: false,
+    icon: false,
 };
