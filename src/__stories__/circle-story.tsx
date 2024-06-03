@@ -19,10 +19,10 @@ type Args = {
     background: string;
     size: number;
     border: boolean;
-    icon: boolean;
+    children: boolean;
 };
 
-export const Default: StoryComponent<Args> = ({size, border, background, icon}) => {
+export const Default: StoryComponent<Args> = ({size, border, background, children}) => {
     if (background === 'custom') {
         return (
             <Circle
@@ -31,7 +31,7 @@ export const Default: StoryComponent<Args> = ({size, border, background, icon}) 
                 background="linear-gradient(yellow, red)"
                 border={border}
             >
-                {!!icon && <IconShopRegular color={skinVars.colors.inverse} />}
+                {!!children && <IconShopRegular color={skinVars.colors.inverse} />}
             </Circle>
         );
     }
@@ -44,7 +44,7 @@ export const Default: StoryComponent<Args> = ({size, border, background, icon}) 
             backgroundImage={background === 'image' ? avatarImg : undefined}
             border={border}
         >
-            {!!icon && <IconShopRegular color={skinVars.colors.inverse} />}
+            {!!children && <IconShopRegular color={skinVars.colors.inverse} />}
         </Circle>
     );
 };
@@ -54,5 +54,5 @@ Default.args = {
     size: 40,
     background: 'color',
     border: true,
-    icon: false,
+    children: false,
 };
