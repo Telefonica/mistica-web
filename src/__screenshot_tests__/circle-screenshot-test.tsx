@@ -1,5 +1,4 @@
 import {openStoryPage, screen} from '../test-utils';
-import {vars} from '../skins/skin-contract.css';
 
 const CONTENT_OPTIONS = ['color', 'image', 'icon', 'none'];
 
@@ -25,7 +24,6 @@ test('Circle with custom background', async () => {
             customBackground: true,
         },
     });
-    console.log('screen', vars.colors.backgroundBrand);
     const story = await screen.findByTestId('circle');
 
     expect(await story.screenshot()).toMatchImageSnapshot();
