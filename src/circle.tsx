@@ -38,7 +38,7 @@ const Circle: React.FC<Props> = ({
                 height: size,
                 background: background
                     ? background
-                    : `center / cover no-repeat ${imageStyle} ${backgroundColor}`,
+                    : `center / cover no-repeat ${imageStyle} ${backgroundColor || ''}`,
                 border: borderProp,
             }}
             {...getPrefixedDataAttributes(dataAttributes, 'Circle')}
