@@ -14,7 +14,7 @@ type TextAlign = 'left' | 'right' | 'center';
 type VerticalAlign = 'top' | 'middle';
 
 type TableProps = {
-    heading: Array<string>;
+    heading: Array<React.ReactNode>;
     content?: Array<Array<React.ReactNode>>;
     boxed?: boolean;
     emptyCase?: React.ReactNode;
