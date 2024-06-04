@@ -32,6 +32,7 @@ type CommonProps = TextProps & {
     descriptionLinesMax?: number;
     imageUrl?: string;
     imageFit?: 'fit' | 'fill' | 'fill-center';
+    imageAlt?: string;
     onClose?: () => void;
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
     isInverse?: boolean;
@@ -55,6 +56,7 @@ const Content = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
         description,
         imageUrl,
         imageFit,
+        imageAlt,
         titleAs = 'h3',
         width,
         dataAttributes,
@@ -119,6 +121,12 @@ const Content = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
             </div>
             {imageUrl && (
                 <div
+                    {...(imageAlt
+                        ? {
+                              role: 'img',
+                              'aria-label': imageAlt,
+                          }
+                        : {})}
                     className={styles.imageContent}
                     style={{
                         backgroundImage: `url(${imageUrl})`,

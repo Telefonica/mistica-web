@@ -10,9 +10,9 @@ export const getColors = (skin) => {
         case 'Movistar':
             return {
                 primary: '#019DF4',
-                textPrimary: '#313235',
+                textPrimary: '#0B2739',
                 textPrimaryInverse: '#FFFFFF',
-                textSecondary: '#86888C',
+                textSecondary: '#6B6C6F',
             };
         case 'Vivo':
         case 'Vivo-new':
