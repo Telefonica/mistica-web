@@ -12,8 +12,8 @@ export default {
 
 interface BaseArgs {
     themeVariant: Variant;
-    minTimeUnit: TimeUnit | 'undefined';
-    maxTimeUnit: TimeUnit | 'undefined';
+    minTimeUnit: TimeUnit;
+    maxTimeUnit: TimeUnit;
     days: number;
     hours: number;
     minutes: number;
@@ -27,8 +27,8 @@ const DAY = HOUR * 24;
 
 const baseArgs: BaseArgs = {
     themeVariant: 'default',
-    minTimeUnit: 'undefined',
-    maxTimeUnit: 'undefined',
+    minTimeUnit: 'seconds',
+    maxTimeUnit: 'hours',
     days: 1,
     hours: 0,
     minutes: 0,
@@ -80,8 +80,8 @@ export const TextTimerStory: StoryComponent<TextTimerArgs> = ({
                             dataAttributes={{testid: 'timer'}}
                             endTimestamp={endTimestamp}
                             labelType={labelType}
-                            minTimeUnit={minTimeUnit === 'undefined' ? undefined : minTimeUnit}
-                            maxTimeUnit={maxTimeUnit === 'undefined' ? undefined : maxTimeUnit}
+                            minTimeUnit={minTimeUnit}
+                            maxTimeUnit={maxTimeUnit}
                             onProgress={(currentValue) => {
                                 if (!isEqual(currentValue, remainingTime)) {
                                     setRemainingTime(currentValue);
@@ -96,6 +96,7 @@ export const TextTimerStory: StoryComponent<TextTimerArgs> = ({
                                 {JSON.stringify(remainingTime, null, 2)}
                             </Text2>
                         )}
+                        <div style={{width: '1ch', height: '1ch', border: '1px solid red'}} />
                     </Stack>
                 </Stack>
             </Box>
@@ -144,8 +145,8 @@ export const TimerStory: StoryComponent<TimerArgs> = ({
                     <Timer
                         dataAttributes={{testid: 'timer'}}
                         endTimestamp={endTimestamp}
-                        minTimeUnit={minTimeUnit === 'undefined' ? undefined : minTimeUnit}
-                        maxTimeUnit={maxTimeUnit === 'undefined' ? undefined : maxTimeUnit}
+                        minTimeUnit={minTimeUnit}
+                        maxTimeUnit={maxTimeUnit}
                         boxed={boxed}
                         onProgress={(currentValue) => {
                             if (!isEqual(currentValue, remainingTime)) {

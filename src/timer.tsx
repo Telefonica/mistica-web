@@ -35,8 +35,8 @@ export interface RemainingTime {
 
 interface BaseProps {
     endTimestamp: Date | number;
-    minTimeUnit?: TimeUnit;
-    maxTimeUnit?: TimeUnit;
+    minTimeUnit: TimeUnit;
+    maxTimeUnit: TimeUnit;
     dataAttributes?: DataAttributes;
     onProgress?: (value: RemainingTime) => void;
     'aria-label'?: string;
@@ -52,17 +52,10 @@ interface TimerProps extends BaseProps {
 
 const shouldRenderUnit = (
     unit: TimeUnit,
-    labelType?: Label,
-    minTimeUnit?: TimeUnit,
-    maxTimeUnit?: TimeUnit
+    minTimeUnit: TimeUnit,
+    maxTimeUnit: TimeUnit,
+    labelType?: Label
 ) => {
-    if (!minTimeUnit && !maxTimeUnit) {
-        minTimeUnit = 'seconds';
-        maxTimeUnit = 'hours';
-    }
-    minTimeUnit = minTimeUnit ?? 'seconds';
-    maxTimeUnit = maxTimeUnit ?? 'days';
-
     // If label is "none", days shouldn't be displayed
     minTimeUnit = labelType === 'none' && minTimeUnit === 'days' ? 'hours' : minTimeUnit;
     maxTimeUnit = labelType === 'none' && maxTimeUnit === 'days' ? 'hours' : maxTimeUnit;
@@ -79,9 +72,9 @@ const shouldRenderUnit = (
 
 const getFilteredTimerValue = (
     timestamp: RemainingTime,
-    labelType?: Label,
-    minTimeUnit?: TimeUnit,
-    maxTimeUnit?: TimeUnit
+    minTimeUnit: TimeUnit,
+    maxTimeUnit: TimeUnit,
+    labelType?: Label
 ) => {
     return (
         [
@@ -90,7 +83,7 @@ const getFilteredTimerValue = (
             {unit: 'minutes', value: timestamp.minutes},
             {unit: 'seconds', value: timestamp.seconds},
         ] as Array<{unit: TimeUnit; value: number}>
-    ).filter((item) => shouldRenderUnit(item.unit, labelType, minTimeUnit, maxTimeUnit));
+    ).filter((item) => shouldRenderUnit(item.unit, minTimeUnit, maxTimeUnit, labelType));
 };
 
 const getRemainingTime = (endTimestamp: Date | number) => {
@@ -114,8 +107,8 @@ const useTimerState = ({
 }: {
     endTimestamp: Date | number;
     labelType?: Label;
-    minTimeUnit?: TimeUnit;
-    maxTimeUnit?: TimeUnit;
+    minTimeUnit: TimeUnit;
+    maxTimeUnit: TimeUnit;
     onProgress?: (value: RemainingTime) => void;
 }) => {
     const [remainingTime, setRemainingTime] = React.useState(getRemainingTime(endTimestamp));
@@ -140,9 +133,9 @@ const useTimerState = ({
         }
     }, [endTimestamp]);
 
-    const shouldRenderDays = shouldRenderUnit('days', labelType, minTimeUnit, maxTimeUnit);
-    const shouldRenderHours = shouldRenderUnit('hours', labelType, minTimeUnit, maxTimeUnit);
-    const shouldRenderMinutes = shouldRenderUnit('minutes', labelType, minTimeUnit, maxTimeUnit);
+    const shouldRenderDays = shouldRenderUnit('days', minTimeUnit, maxTimeUnit, labelType);
+    const shouldRenderHours = shouldRenderUnit('hours', minTimeUnit, maxTimeUnit, labelType);
+    const shouldRenderMinutes = shouldRenderUnit('minutes', minTimeUnit, maxTimeUnit, labelType);
 
     const maximumRenderedUnit = shouldRenderDays
         ? 'days'
@@ -175,15 +168,15 @@ const useTimerState = ({
             : currentSeconds;
 
     const [timerValue, setTimerValue] = React.useState(
-        getFilteredTimerValue({days, hours, minutes, seconds}, labelType, minTimeUnit, maxTimeUnit)
+        getFilteredTimerValue({days, hours, minutes, seconds}, minTimeUnit, maxTimeUnit, labelType)
     );
 
     React.useEffect(() => {
         const currentTimerValue = getFilteredTimerValue(
             {days, hours, minutes, seconds},
-            labelType,
             minTimeUnit,
-            maxTimeUnit
+            maxTimeUnit,
+            labelType
         );
 
         if (!isEqual(currentTimerValue, timerValue)) {
@@ -392,7 +385,11 @@ export const Timer: React.FC<TimerProps> = ({
                 key={index}
             >
                 <ThemeVariant variant={boxed ? 'default' : themeVariant}>
-                    <div className={styles.timerDisplayValue}>
+                    <div
+                        className={classNames(styles.timerDisplayValue, {
+                            [styles.boxedTimerDisplayValue]: boxed,
+                        })}
+                    >
                         {renderFormattedNumber(item.value)}
                         <Text2 regular>
                             {item.value === 1 ? displayLabel[item.unit] : displayLabelPlural[item.unit]}
@@ -415,7 +412,7 @@ export const Timer: React.FC<TimerProps> = ({
             </ScreenReaderOnly>
 
             <div aria-hidden>
-                <Inline space={8} wrap>
+                <Inline space={boxed ? 8 : 16} wrap>
                     {renderTime()}
                 </Inline>
             </div>

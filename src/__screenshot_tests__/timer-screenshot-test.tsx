@@ -4,9 +4,9 @@ const DEVICE = ['DESKTOP', 'MOBILE_IOS'] as const;
 
 test.each`
     minTimeUnit  | maxTimeUnit
-    ${undefined} | ${undefined}
-    ${'minutes'} | ${undefined}
-    ${undefined} | ${'days'}
+    ${'seconds'} | ${'hours'}
+    ${'minutes'} | ${'days'}
+    ${'seconds'} | ${'days'}
     ${'minutes'} | ${'days'}
     ${'seconds'} | ${'seconds'}
 `(
@@ -26,9 +26,9 @@ test.each`
 
 test.each`
     minTimeUnit  | maxTimeUnit
-    ${undefined} | ${undefined}
-    ${'minutes'} | ${undefined}
-    ${undefined} | ${'days'}
+    ${'seconds'} | ${'hours'}
+    ${'minutes'} | ${'days'}
+    ${'seconds'} | ${'days'}
     ${'minutes'} | ${'days'}
     ${'seconds'} | ${'seconds'}
 `('Timer - minTimeUnit = $minTimeUnit, maxTimeUnit = $maxTimeUnit', async ({minTimeUnit, maxTimeUnit}) => {

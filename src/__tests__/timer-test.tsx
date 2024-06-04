@@ -12,7 +12,7 @@ test('Timer', async () => {
 
     render(
         <ThemeContextProvider theme={makeTheme()}>
-            <Timer endTimestamp={Date.now() + 60 * SECOND} />
+            <Timer minTimeUnit="seconds" maxTimeUnit="hours" endTimestamp={Date.now() + 60 * SECOND} />
         </ThemeContextProvider>
     );
 
@@ -35,7 +35,7 @@ test('Timer - timestamp from the past', async () => {
 
     render(
         <ThemeContextProvider theme={makeTheme()}>
-            <Timer endTimestamp={Date.now() - SECOND} />
+            <Timer minTimeUnit="seconds" maxTimeUnit="hours" endTimestamp={Date.now() - SECOND} />
         </ThemeContextProvider>
     );
 
@@ -86,7 +86,7 @@ test('Timer - render days', async () => {
 
     render(
         <ThemeContextProvider theme={makeTheme()}>
-            <Timer endTimestamp={Date.now() + DAY} maxTimeUnit="days" />
+            <Timer minTimeUnit="seconds" maxTimeUnit="days" endTimestamp={Date.now() + DAY} />
         </ThemeContextProvider>
     );
 
@@ -104,7 +104,7 @@ test('Timer - render only seconds', async () => {
 
     render(
         <ThemeContextProvider theme={makeTheme()}>
-            <Timer endTimestamp={Date.now() + DAY} maxTimeUnit="seconds" />
+            <Timer minTimeUnit="seconds" maxTimeUnit="seconds" endTimestamp={Date.now() + DAY} />
         </ThemeContextProvider>
     );
 
@@ -119,7 +119,12 @@ test('Timer - component is accessible', async () => {
 
     render(
         <ThemeContextProvider theme={makeTheme()}>
-            <Timer endTimestamp={Date.now() + SECOND} aria-label="A label" />
+            <Timer
+                minTimeUnit="seconds"
+                maxTimeUnit="hours"
+                endTimestamp={Date.now() + SECOND}
+                aria-label="A label"
+            />
         </ThemeContextProvider>
     );
 
@@ -131,7 +136,7 @@ test("TextTimer - doesn't render days", async () => {
 
     render(
         <ThemeContextProvider theme={makeTheme()}>
-            <TextTimer endTimestamp={Date.now() + DAY} />
+            <TextTimer minTimeUnit="seconds" maxTimeUnit="days" endTimestamp={Date.now() + DAY} />
         </ThemeContextProvider>
     );
 
@@ -149,7 +154,12 @@ test('TextTimer - component is accessible', async () => {
 
     render(
         <ThemeContextProvider theme={makeTheme()}>
-            <TextTimer endTimestamp={Date.now() + SECOND} aria-label="A label" />
+            <TextTimer
+                minTimeUnit="seconds"
+                maxTimeUnit="hours"
+                endTimestamp={Date.now() + SECOND}
+                aria-label="A label"
+            />
         </ThemeContextProvider>
     );
 

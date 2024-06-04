@@ -31,6 +31,9 @@ export const timerDisplayValue = style([
         flexDirection: 'column',
         alignItems: 'center',
     }),
+]);
+
+export const boxedTimerDisplayValue = style([
     {
         minWidth: pxToRem(64),
         '@media': {
