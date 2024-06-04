@@ -19,9 +19,7 @@ test('PosterCard "href" label', async () => {
         </ThemeContextProvider>
     );
 
-    expect(
-        await screen.findByRole('link', {name: 'Title Headline Pretitle Subtitle Description'})
-    ).toBeInTheDocument();
+    await screen.findByRole('link', {name: 'Title Headline Pretitle Subtitle Description'});
 });
 
 test('PosterCard "to" label', async () => {
@@ -39,9 +37,7 @@ test('PosterCard "to" label', async () => {
         </ThemeContextProvider>
     );
 
-    expect(
-        await screen.findByRole('link', {name: 'Title Headline Pretitle Subtitle Description'})
-    ).toBeInTheDocument();
+    await screen.findByRole('link', {name: 'Title Headline Pretitle Subtitle Description'});
 });
 
 test('PosterCard "onPress" label', async () => {
@@ -59,7 +55,5 @@ test('PosterCard "onPress" label', async () => {
         </ThemeContextProvider>
     );
 
-    expect(
-        await screen.findByRole('button', {name: 'Title Headline Pretitle Subtitle Description'})
-    ).toBeInTheDocument();
+    await screen.findByRole('button', {name: 'Title Headline Pretitle Subtitle Description'});
 });

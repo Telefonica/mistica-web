@@ -1128,7 +1128,7 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
             width,
             height,
             aspectRatio,
-            'aria-label': ariaLabel,
+            'aria-label': ariaLabelProp,
             ...touchableProps
         },
         ref
@@ -1137,6 +1137,8 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
         const hasVideo = backgroundVideo !== undefined;
         const image = renderBackgroundImage(backgroundImage);
         const {video, videoAction} = useVideoWithControls(backgroundVideo, poster, backgroundVideoRef);
+        const {text: headlineText, ref: headlineRef} = useInnerText();
+        const {text: extraText, ref: extraRef} = useInnerText();
 
         if (hasVideo) {
             actions = videoAction ? [videoAction] : [];
@@ -1147,13 +1149,17 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
         const textShadow = withGradient ? '0 0 16px rgba(0,0,0,0.4)' : undefined;
         const hasTopActions = actions?.length || onClose;
 
-        const isTouchable = touchableProps.href || touchableProps.to || touchableProps.onPress;
+        const isTouchable = !!(touchableProps.href || touchableProps.to || touchableProps.onPress);
         const overlayStyle =
             hasImage || hasVideo
                 ? styles.touchableCardOverlayMedia
                 : isInverse
                 ? styles.touchableCardOverlayInverse
                 : styles.touchableCardOverlay;
+
+        const ariaLabel =
+            ariaLabelProp ||
+            [title, headlineText, pretitle, description, extraText].filter(Boolean).join(' ');
 
         return (
             <CardContainer
@@ -1226,39 +1232,49 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
                                     className={withGradient ? styles.displayCardGradient : undefined}
                                 >
                                     <Stack space={24}>
-                                        <div>
-                                            <Stack space={8}>
-                                                {(headline || pretitle || title) && (
-                                                    <header>
-                                                        <Stack space={16}>
-                                                            {headline}
-                                                            <Stack space={4}>
-                                                                {pretitle && (
-                                                                    <Text2
-                                                                        forceMobileSizes
-                                                                        truncate={pretitleLinesMax}
-                                                                        as="div"
-                                                                        regular
-                                                                        textShadow={textShadow}
-                                                                    >
-                                                                        {pretitle}
-                                                                    </Text2>
-                                                                )}
-                                                                <Text6
-                                                                    forceMobileSizes
-                                                                    truncate={titleLinesMax}
-                                                                    as={titleAs}
-                                                                    textShadow={textShadow}
-                                                                    hyphens="auto"
-                                                                >
-                                                                    {title}
-                                                                </Text6>
-                                                            </Stack>
-                                                        </Stack>
-                                                    </header>
-                                                )}
+                                        {/* using flex instead of nested Stacks, this way we can rearrange texts so the DOM structure makes more sense for screen reader users */}
+                                        <div className={styles.flexColumn}>
+                                            {title && (
+                                                <div style={{paddingBottom: 4}}>
+                                                    <Text6
+                                                        forceMobileSizes
+                                                        truncate={titleLinesMax}
+                                                        as={titleAs}
+                                                        textShadow={textShadow}
+                                                        hyphens="auto"
+                                                    >
+                                                        {title}
+                                                    </Text6>
+                                                </div>
+                                            )}
+                                            {headline && (
+                                                // assuming that the headline will always be followed by one of: pretitle, title, description
+                                                <div ref={headlineRef} style={{order: -2, paddingBottom: 16}}>
+                                                    {headline}
+                                                </div>
+                                            )}
+                                            {pretitle && (
+                                                <div style={{order: -1, paddingBottom: 4}}>
+                                                    <Text2
+                                                        forceMobileSizes
+                                                        truncate={pretitleLinesMax}
+                                                        as="div"
+                                                        regular
+                                                        textShadow={textShadow}
+                                                    >
+                                                        {pretitle}
+                                                    </Text2>
+                                                </div>
+                                            )}
 
-                                                {description && (
+                                            {description && (
+                                                // this is tricky, the padding between a headline and a description is 16px
+                                                // but the padding between a title|pretitle and a description is 8px (4px + 4px)
+                                                <div
+                                                    style={{
+                                                        paddingTop: pretitle || title ? 4 : 0,
+                                                    }}
+                                                >
                                                     <Text3
                                                         forceMobileSizes
                                                         truncate={descriptionLinesMax}
@@ -1274,10 +1290,12 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
                                                     >
                                                         {description}
                                                     </Text3>
-                                                )}
-                                            </Stack>
-                                            {extra}
+                                                </div>
+                                            )}
+
+                                            {extra && <Box ref={extraRef}>{extra}</Box>}
                                         </div>
+
                                         {(button || secondaryButton || buttonLink) && (
                                             <ButtonGroup
                                                 primaryButton={button}
