@@ -47,13 +47,6 @@ const Chip: React.FC<ChipProps> = (props: ChipProps) => {
     const paddingRight = {mobile: 20, desktop: 12} as const;
     const paddingIcon = {mobile: 16, desktop: 8} as const;
 
-    const renderBadge = () => {
-        if (!badge) {
-            return null;
-        }
-        return <>{badge === true ? <Badge /> : <Badge value={badge} />}</>;
-    };
-
     const body = (
         <>
             {Icon && (
@@ -69,22 +62,6 @@ const Chip: React.FC<ChipProps> = (props: ChipProps) => {
         </>
     );
 
-    if (badge) {
-        return (
-            <Box
-                className={classnames(
-                    overAlternative ? styles.chipVariants.overAlternative : styles.chipVariants.default,
-                    styles.chipWrapper
-                )}
-                paddingLeft={paddingLeft}
-                paddingRight={paddingIcon}
-                {...getPrefixedDataAttributes(dataAttributes, 'Chip')}
-            >
-                {body}
-                {renderBadge()}
-            </Box>
-        );
-    }
     if (onClose) {
         return (
             <Box
@@ -118,6 +95,13 @@ const Chip: React.FC<ChipProps> = (props: ChipProps) => {
 
     const chipDataAttributes = {'component-name': 'Chip', ...dataAttributes};
 
+    const renderBadge = () => {
+        if (!badge) {
+            return null;
+        }
+        return <>{badge === true ? <Badge /> : <Badge value={badge} />}</>;
+    };
+
     const renderContent = (dataAttributes?: DataAttributes) => (
         <Box
             className={classnames(
@@ -129,10 +113,11 @@ const Chip: React.FC<ChipProps> = (props: ChipProps) => {
                 }
             )}
             paddingLeft={paddingLeft}
-            paddingRight={paddingRight}
+            paddingRight={badge ? paddingIcon : paddingRight}
             dataAttributes={dataAttributes}
         >
             {body}
+            {renderBadge()}
         </Box>
     );
 

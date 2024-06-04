@@ -12,6 +12,7 @@ import {
     Carousel,
     IconStarFilled,
     IconStarRegular,
+    Placeholder,
 } from '..';
 import {PosterCard} from '../card';
 import usingVrImg from './images/using-vr.jpg';
@@ -41,6 +42,7 @@ type PosterCardArgs = {
     title: string;
     subtitle: string;
     description: string;
+    withExtra: boolean;
     ariaLabel: string;
     closable: boolean;
     actions: 'onPress' | 'href' | 'to' | 'none';
@@ -64,6 +66,7 @@ export const Default: StoryComponent<PosterCardArgs> = ({
     title,
     subtitle,
     description,
+    withExtra,
     ariaLabel,
     closable,
     actions,
@@ -144,6 +147,7 @@ export const Default: StoryComponent<PosterCardArgs> = ({
                     title={title}
                     subtitle={subtitle}
                     description={description}
+                    extra={withExtra ? <Placeholder /> : undefined}
                     aria-label={ariaLabel}
                     width={width}
                     height={height}
@@ -168,6 +172,7 @@ Default.args = {
     title: 'Title',
     subtitle: 'Subtitle',
     description: 'This is a description for the card',
+    withExtra: false,
     ariaLabel: '',
     closable: false,
     actions: 'none',

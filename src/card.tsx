@@ -1159,6 +1159,7 @@ interface CommonDisplayCardProps {
     descriptionLinesMax?: number;
     'aria-label'?: string;
     aspectRatio?: AspectRatio | number;
+    extra?: React.ReactNode;
 }
 
 type DisplayMediaCardBaseProps = {
@@ -1188,7 +1189,6 @@ type DisplayMediaCardProps = DisplayMediaCardBaseProps &
     >;
 
 type DisplayDataCardProps = CommonDisplayCardProps & {
-    extra?: React.ReactNode;
     isInverse?: boolean;
 } & ExclusifyUnion<
         | TouchableProps
@@ -1451,6 +1451,7 @@ interface PosterCardBaseProps {
     subtitleLinesMax?: number;
     description?: string;
     descriptionLinesMax?: number;
+    extra?: React.ReactNode;
 }
 
 interface PosterCardWithImageProps extends PosterCardBaseProps {
@@ -1504,6 +1505,7 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
             subtitleLinesMax,
             description,
             descriptionLinesMax,
+            extra,
             variant,
             isInverse,
             backgroundColor,
@@ -1516,6 +1518,7 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
         const image = renderBackgroundImage(backgroundImage);
         const {video, videoAction} = useVideoWithControls(backgroundVideo, poster, backgroundVideoRef);
         const {text: headlineText, ref: headlineRef} = useInnerText();
+        const {text: extraText, ref: extraRef} = useInnerText();
 
         if (hasVideo) {
             actions = videoAction ? [videoAction] : [];
@@ -1552,7 +1555,8 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                 : styles.touchableCardOverlay;
 
         const ariaLabel =
-            ariaLabelProp || [title, headlineText, pretitle, subtitle, description].filter(Boolean).join(' ');
+            ariaLabelProp ||
+            [title, headlineText, pretitle, subtitle, description, extraText].filter(Boolean).join(' ');
 
         return (
             <CardContainer
@@ -1690,6 +1694,8 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                                             ) : undefined
                                         }
                                         headlineRef={headlineRef}
+                                        extra={extra}
+                                        extraRef={extraRef}
                                     />
                                 </Box>
                             </Box>

@@ -3,23 +3,33 @@ import {PosterCard} from '../card';
 import {makeTheme} from './test-utils';
 import {render, screen} from '@testing-library/react';
 import ThemeContextProvider from '../theme-context-provider';
+import Stack from '../stack';
+import {Text2} from '../text';
 
 test('PosterCard "href" label', async () => {
     render(
         <ThemeContextProvider theme={makeTheme()}>
             <PosterCard
                 href="https://example.org"
+                isInverse
                 headline="Headline"
                 pretitle="Pretitle"
                 title="Title"
                 subtitle="Subtitle"
                 description="Description"
-                isInverse
+                extra={
+                    <Stack space={4}>
+                        <Text2 regular>Extra line 1</Text2>
+                        <Text2 regular>Extra line 2</Text2>
+                    </Stack>
+                }
             />
         </ThemeContextProvider>
     );
 
-    await screen.findByRole('link', {name: 'Title Headline Pretitle Subtitle Description'});
+    await screen.findByRole('link', {
+        name: 'Title Headline Pretitle Subtitle Description Extra line 1Extra line 2',
+    });
 });
 
 test('PosterCard "to" label', async () => {
@@ -27,17 +37,25 @@ test('PosterCard "to" label', async () => {
         <ThemeContextProvider theme={makeTheme()}>
             <PosterCard
                 to="/foo/bar"
+                isInverse
                 headline="Headline"
                 pretitle="Pretitle"
                 title="Title"
                 subtitle="Subtitle"
                 description="Description"
-                isInverse
+                extra={
+                    <Stack space={4}>
+                        <Text2 regular>Extra line 1</Text2>
+                        <Text2 regular>Extra line 2</Text2>
+                    </Stack>
+                }
             />
         </ThemeContextProvider>
     );
 
-    await screen.findByRole('link', {name: 'Title Headline Pretitle Subtitle Description'});
+    await screen.findByRole('link', {
+        name: 'Title Headline Pretitle Subtitle Description Extra line 1Extra line 2',
+    });
 });
 
 test('PosterCard "onPress" label', async () => {
@@ -45,15 +63,23 @@ test('PosterCard "onPress" label', async () => {
         <ThemeContextProvider theme={makeTheme()}>
             <PosterCard
                 onPress={() => {}}
+                isInverse
                 headline="Headline"
                 pretitle="Pretitle"
                 title="Title"
                 subtitle="Subtitle"
                 description="Description"
-                isInverse
+                extra={
+                    <Stack space={4}>
+                        <Text2 regular>Extra line 1</Text2>
+                        <Text2 regular>Extra line 2</Text2>
+                    </Stack>
+                }
             />
         </ThemeContextProvider>
     );
 
-    await screen.findByRole('button', {name: 'Title Headline Pretitle Subtitle Description'});
+    await screen.findByRole('button', {
+        name: 'Title Headline Pretitle Subtitle Description Extra line 1Extra line 2',
+    });
 });

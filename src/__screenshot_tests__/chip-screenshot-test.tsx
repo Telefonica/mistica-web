@@ -26,16 +26,20 @@ test.each(CHIP_OPTIONS)('Chip - %s', async (option) => {
 });
 
 test.each`
-    selection     | inverse
-    ${'single'}   | ${false}
-    ${'single'}   | ${true}
-    ${'multiple'} | ${false}
-    ${'multiple'} | ${true}
-`('Chip - $selection selection (inverse = $inverse)', async ({selection, inverse}) => {
+    selection     | inverse  | badge
+    ${'single'}   | ${false} | ${undefined}
+    ${'single'}   | ${true}  | ${undefined}
+    ${'multiple'} | ${false} | ${undefined}
+    ${'multiple'} | ${true}  | ${undefined}
+    ${'single'}   | ${false} | ${2}
+    ${'single'}   | ${true}  | ${2}
+    ${'multiple'} | ${false} | ${2}
+    ${'multiple'} | ${true}  | ${2}
+`('Chip - $selection selection (inverse = $inverse, badge = $badge)', async ({selection, inverse, badge}) => {
     const page = await openStoryPage({
         id: `components-chip--${selection}-selection`,
         device: 'DESKTOP',
-        args: {inverse, withIcon: true},
+        args: {inverse, withIcon: true, badge},
     });
 
     const story = await screen.findByTestId(`chip-${selection}-selection`);
