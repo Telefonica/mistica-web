@@ -8,12 +8,12 @@ test('PosterCard "href" label', async () => {
     render(
         <ThemeContextProvider theme={makeTheme()}>
             <PosterCard
+                href="https://example.org"
                 headline="Headline"
                 pretitle="Pretitle"
                 title="Title"
                 subtitle="Subtitle"
                 description="Description"
-                href="https://example.org"
                 isInverse
             />
         </ThemeContextProvider>
@@ -26,12 +26,12 @@ test('PosterCard "to" label', async () => {
     render(
         <ThemeContextProvider theme={makeTheme()}>
             <PosterCard
+                to="/foo/bar"
                 headline="Headline"
                 pretitle="Pretitle"
                 title="Title"
                 subtitle="Subtitle"
                 description="Description"
-                to="/foo/bar"
                 isInverse
             />
         </ThemeContextProvider>
@@ -44,12 +44,12 @@ test('PosterCard "onPress" label', async () => {
     render(
         <ThemeContextProvider theme={makeTheme()}>
             <PosterCard
+                onPress={() => {}}
                 headline="Headline"
                 pretitle="Pretitle"
                 title="Title"
                 subtitle="Subtitle"
                 description="Description"
-                onPress={() => {}}
                 isInverse
             />
         </ThemeContextProvider>

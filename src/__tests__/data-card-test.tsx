@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {DisplayDataCard} from '../card';
+import {DataCard} from '../card';
 import {makeTheme} from './test-utils';
 import {render, screen} from '@testing-library/react';
 import ThemeContextProvider from '../theme-context-provider';
@@ -7,10 +7,10 @@ import Tag from '../tag';
 import Stack from '../stack';
 import {Text2} from '../text';
 
-test('DisplayDataCard "href" label', async () => {
+test('DataCard "href" label', async () => {
     render(
         <ThemeContextProvider theme={makeTheme()}>
-            <DisplayDataCard
+            <DataCard
                 href="https://example.org"
                 headline={<Tag type="promo">Headline</Tag>}
                 pretitle="Pretitle"
@@ -29,10 +29,10 @@ test('DisplayDataCard "href" label', async () => {
     await screen.findByRole('link', {name: 'Title Headline Pretitle Description Extra line 1Extra line 2'});
 });
 
-test('DisplayDataCard "to" label', async () => {
+test('DataCard "to" label', async () => {
     render(
         <ThemeContextProvider theme={makeTheme()}>
-            <DisplayDataCard
+            <DataCard
                 to="/foo/bar"
                 headline={<Tag type="promo">Headline</Tag>}
                 pretitle="Pretitle"
@@ -51,10 +51,10 @@ test('DisplayDataCard "to" label', async () => {
     await screen.findByRole('link', {name: 'Title Headline Pretitle Description Extra line 1Extra line 2'});
 });
 
-test('DisplayDataCard "onPress" label', async () => {
+test('DataCard "onPress" label', async () => {
     render(
         <ThemeContextProvider theme={makeTheme()}>
-            <DisplayDataCard
+            <DataCard
                 onPress={() => {}}
                 headline={<Tag type="promo">Headline</Tag>}
                 pretitle="Pretitle"

@@ -1,20 +1,18 @@
 import * as React from 'react';
-import {DisplayDataCard} from '../card';
+import {SnapCard} from '../card';
 import {makeTheme} from './test-utils';
 import {render, screen} from '@testing-library/react';
 import ThemeContextProvider from '../theme-context-provider';
-import Tag from '../tag';
 import Stack from '../stack';
 import {Text2} from '../text';
 
-test('DisplayDataCard "href" label', async () => {
+test('SnapCard "href" label', async () => {
     render(
         <ThemeContextProvider theme={makeTheme()}>
-            <DisplayDataCard
+            <SnapCard
                 href="https://example.org"
-                headline={<Tag type="promo">Headline</Tag>}
-                pretitle="Pretitle"
                 title="Title"
+                subtitle="Subtitle"
                 description="Description"
                 extra={
                     <Stack space={4}>
@@ -26,17 +24,16 @@ test('DisplayDataCard "href" label', async () => {
         </ThemeContextProvider>
     );
 
-    await screen.findByRole('link', {name: 'Title Headline Pretitle Description Extra line 1Extra line 2'});
+    await screen.findByRole('link', {name: 'Title Subtitle Description Extra line 1Extra line 2'});
 });
 
-test('DisplayDataCard "to" label', async () => {
+test('SnapCard "to" label', async () => {
     render(
         <ThemeContextProvider theme={makeTheme()}>
-            <DisplayDataCard
+            <SnapCard
                 to="/foo/bar"
-                headline={<Tag type="promo">Headline</Tag>}
-                pretitle="Pretitle"
                 title="Title"
+                subtitle="Subtitle"
                 description="Description"
                 extra={
                     <Stack space={4}>
@@ -48,17 +45,16 @@ test('DisplayDataCard "to" label', async () => {
         </ThemeContextProvider>
     );
 
-    await screen.findByRole('link', {name: 'Title Headline Pretitle Description Extra line 1Extra line 2'});
+    await screen.findByRole('link', {name: 'Title Subtitle Description Extra line 1Extra line 2'});
 });
 
-test('DisplayDataCard "onPress" label', async () => {
+test('SnapCard "onPress" label', async () => {
     render(
         <ThemeContextProvider theme={makeTheme()}>
-            <DisplayDataCard
+            <SnapCard
                 onPress={() => {}}
-                headline={<Tag type="promo">Headline</Tag>}
-                pretitle="Pretitle"
                 title="Title"
+                subtitle="Subtitle"
                 description="Description"
                 extra={
                     <Stack space={4}>
@@ -70,5 +66,5 @@ test('DisplayDataCard "onPress" label', async () => {
         </ThemeContextProvider>
     );
 
-    await screen.findByRole('button', {name: 'Title Headline Pretitle Description Extra line 1Extra line 2'});
+    await screen.findByRole('button', {name: 'Title Subtitle Description Extra line 1Extra line 2'});
 });

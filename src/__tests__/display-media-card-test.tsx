@@ -9,12 +9,12 @@ test('DisplayMediaCard "href" label', async () => {
     render(
         <ThemeContextProvider theme={makeTheme()}>
             <DisplayMediaCard
+                href="https://example.org"
                 headline={<Tag type="promo">Headline</Tag>}
                 pretitle="Pretitle"
                 title="Title"
                 description="Description"
-                backgroundImage="https://source.unsplash.com/900x900/?landscape"
-                href="https://example.org"
+                backgroundImage="https://source.unsplash.com/900x900/"
             />
         </ThemeContextProvider>
     );
@@ -26,12 +26,12 @@ test('DisplayMediaCard "to" label', async () => {
     render(
         <ThemeContextProvider theme={makeTheme()}>
             <DisplayMediaCard
+                to="/foo/bar"
                 headline={<Tag type="promo">Headline</Tag>}
                 pretitle="Pretitle"
                 title="Title"
                 description="Description"
-                backgroundImage="https://source.unsplash.com/900x900/?landscape"
-                to="/foo/bar"
+                backgroundImage="https://source.unsplash.com/900x900/"
             />
         </ThemeContextProvider>
     );
@@ -43,12 +43,12 @@ test('DisplayMediaCard "onPress" label', async () => {
     render(
         <ThemeContextProvider theme={makeTheme()}>
             <DisplayMediaCard
+                onPress={() => {}}
                 headline={<Tag type="promo">Headline</Tag>}
                 pretitle="Pretitle"
                 title="Title"
                 description="Description"
-                backgroundImage="https://source.unsplash.com/900x900/?landscape"
-                onPress={() => {}}
+                backgroundImage="https://source.unsplash.com/900x900/"
             />
         </ThemeContextProvider>
     );
