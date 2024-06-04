@@ -27,7 +27,6 @@ export const boxed = style({
     paddingBottom: BOXED_PADDING_Y_DESKTOP,
     '@media': {
         [mq.tabletOrSmaller]: {
-            padding: '0 8px',
             paddingBottom: 0,
             selectors: {
                 [`${collapsedRowsInMobile}&`]: {
