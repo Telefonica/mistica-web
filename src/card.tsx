@@ -1039,6 +1039,56 @@ export const SnapCard = React.forwardRef<HTMLDivElement, SnapCardProps>(
     }
 );
 
+interface DisplayCardContentProps {
+    title?: React.ReactNode;
+    headline?: React.ReactNode;
+    pretitle?: React.ReactNode;
+    subtitle?: React.ReactNode;
+    description?: React.ReactNode;
+    extra?: React.ReactNode;
+    headlineRef?: (instance: HTMLElement | null) => void;
+    extraRef?: (instance: HTMLElement | null) => void;
+}
+
+const DisplayCardContent: React.FC<DisplayCardContentProps> = ({
+    title,
+    headline,
+    pretitle,
+    subtitle,
+    description,
+    extra,
+    headlineRef,
+    extraRef,
+}) => {
+    // using flex instead of nested Stacks, this way we can rearrange texts so the DOM structure makes more sense for screen reader users
+    return (
+        <div className={styles.flexColumn}>
+            {title && <div style={{paddingBottom: 4}}>{title}</div>}
+            {headline && (
+                // assuming that the headline will always be followed by one of: pretitle, title, subtitle, description
+                <div ref={headlineRef} style={{order: -2, paddingBottom: 16}}>
+                    {headline}
+                </div>
+            )}
+            {pretitle && <div style={{order: -1, paddingBottom: 4}}>{pretitle}</div>}
+
+            {subtitle && <div style={{paddingBottom: 4}}>{subtitle}</div>}
+            {description && (
+                // this is tricky, the padding between a headline and a description is 16px
+                // but the padding between a title|pretitle|subtitle and a description is 8px (4px + 4px)
+                <div
+                    style={{
+                        paddingTop: pretitle || title || subtitle ? 4 : 0,
+                    }}
+                >
+                    {description}
+                </div>
+            )}
+            {extra && <Box ref={extraRef}>{extra}</Box>}
+        </div>
+    );
+};
+
 interface CommonDisplayCardProps {
     /**
      * Typically a mistica-icons component element
@@ -1232,10 +1282,9 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
                                     className={withGradient ? styles.displayCardGradient : undefined}
                                 >
                                     <Stack space={24}>
-                                        {/* using flex instead of nested Stacks, this way we can rearrange texts so the DOM structure makes more sense for screen reader users */}
-                                        <div className={styles.flexColumn}>
-                                            {title && (
-                                                <div style={{paddingBottom: 4}}>
+                                        <DisplayCardContent
+                                            title={
+                                                title ? (
                                                     <Text6
                                                         forceMobileSizes
                                                         truncate={titleLinesMax}
@@ -1245,16 +1294,11 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
                                                     >
                                                         {title}
                                                     </Text6>
-                                                </div>
-                                            )}
-                                            {headline && (
-                                                // assuming that the headline will always be followed by one of: pretitle, title, description
-                                                <div ref={headlineRef} style={{order: -2, paddingBottom: 16}}>
-                                                    {headline}
-                                                </div>
-                                            )}
-                                            {pretitle && (
-                                                <div style={{order: -1, paddingBottom: 4}}>
+                                                ) : undefined
+                                            }
+                                            headline={headline}
+                                            pretitle={
+                                                pretitle ? (
                                                     <Text2
                                                         forceMobileSizes
                                                         truncate={pretitleLinesMax}
@@ -1264,17 +1308,10 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
                                                     >
                                                         {pretitle}
                                                     </Text2>
-                                                </div>
-                                            )}
-
-                                            {description && (
-                                                // this is tricky, the padding between a headline and a description is 16px
-                                                // but the padding between a title|pretitle and a description is 8px (4px + 4px)
-                                                <div
-                                                    style={{
-                                                        paddingTop: pretitle || title ? 4 : 0,
-                                                    }}
-                                                >
+                                                ) : undefined
+                                            }
+                                            description={
+                                                description ? (
                                                     <Text3
                                                         forceMobileSizes
                                                         truncate={descriptionLinesMax}
@@ -1290,11 +1327,12 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
                                                     >
                                                         {description}
                                                     </Text3>
-                                                </div>
-                                            )}
-
-                                            {extra && <Box ref={extraRef}>{extra}</Box>}
-                                        </div>
+                                                ) : undefined
+                                            }
+                                            extra={extra}
+                                            headlineRef={headlineRef}
+                                            extraRef={extraRef}
+                                        />
 
                                         {(button || secondaryButton || buttonLink) && (
                                             <ButtonGroup
@@ -1538,10 +1576,9 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                                     paddingBottom={24}
                                     className={withGradient ? styles.displayCardGradient : undefined}
                                 >
-                                    {/* using flex instead of nested Stacks, this way we can rearrange texts so the DOM structure makes more sense for screen reader users */}
-                                    <div className={styles.flexColumn}>
-                                        {title && (
-                                            <div style={{paddingBottom: 4}}>
+                                    <DisplayCardContent
+                                        title={
+                                            title ? (
                                                 <Text
                                                     desktopSize={20}
                                                     mobileSize={18}
@@ -1553,29 +1590,24 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                                                 >
                                                     {title}
                                                 </Text>
-                                            </div>
-                                        )}
-                                        {headline && (
-                                            // assuming that the headline will always be followed by one of: pretitle, title, subtitle, description
-                                            <div ref={headlineRef} style={{order: -2, paddingBottom: 16}}>
-                                                {headline}
-                                            </div>
-                                        )}
-                                        {pretitle && (
-                                            <div style={{order: -1, paddingBottom: 4}}>
+                                            ) : undefined
+                                        }
+                                        headline={headline}
+                                        pretitle={
+                                            pretitle ? (
                                                 <Text2
                                                     forceMobileSizes
                                                     truncate={pretitleLinesMax}
+                                                    as="div"
                                                     regular
                                                     textShadow={textShadow}
                                                 >
                                                     {pretitle}
                                                 </Text2>
-                                            </div>
-                                        )}
-
-                                        {subtitle && (
-                                            <div style={{paddingBottom: 4}}>
+                                            ) : undefined
+                                        }
+                                        subtitle={
+                                            subtitle ? (
                                                 <Text2
                                                     forceMobileSizes
                                                     truncate={subtitleLinesMax}
@@ -1585,16 +1617,10 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                                                 >
                                                     {subtitle}
                                                 </Text2>
-                                            </div>
-                                        )}
-                                        {description && (
-                                            // this is tricky, the padding between a headline and a description is 16px
-                                            // but the padding between a title|pretitle|subtitle and a description is 8px (4px + 4px)
-                                            <div
-                                                style={{
-                                                    paddingTop: pretitle || title || subtitle ? 4 : 0,
-                                                }}
-                                            >
+                                            ) : undefined
+                                        }
+                                        description={
+                                            description ? (
                                                 <Text2
                                                     forceMobileSizes
                                                     truncate={descriptionLinesMax}
@@ -1609,9 +1635,10 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                                                 >
                                                     {description}
                                                 </Text2>
-                                            </div>
-                                        )}
-                                    </div>
+                                            ) : undefined
+                                        }
+                                        headlineRef={headlineRef}
+                                    />
                                 </Box>
                             </Box>
                         </div>
