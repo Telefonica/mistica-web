@@ -1057,6 +1057,7 @@ interface CommonDisplayCardProps {
     descriptionLinesMax?: number;
     'aria-label'?: string;
     aspectRatio?: AspectRatio | number;
+    extra?: React.ReactNode;
 }
 
 type DisplayMediaCardBaseProps = {
@@ -1086,7 +1087,6 @@ type DisplayMediaCardProps = DisplayMediaCardBaseProps &
     >;
 
 type DisplayDataCardProps = CommonDisplayCardProps & {
-    extra?: React.ReactNode;
     isInverse?: boolean;
 } & ExclusifyUnion<
         | TouchableProps
@@ -1343,6 +1343,7 @@ interface PosterCardBaseProps {
     subtitleLinesMax?: number;
     description?: string;
     descriptionLinesMax?: number;
+    extra?: React.ReactNode;
 }
 
 interface PosterCardWithImageProps extends PosterCardBaseProps {
@@ -1396,6 +1397,7 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
             subtitleLinesMax,
             description,
             descriptionLinesMax,
+            extra,
             variant,
             isInverse,
             backgroundColor,
@@ -1593,6 +1595,7 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                                                 </Text2>
                                             </div>
                                         )}
+                                        {extra}
                                     </div>
                                 </Box>
                             </Box>
