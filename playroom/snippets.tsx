@@ -2833,11 +2833,73 @@ const ProgressBlockSnippets = [
     },
 ];
 
+const timerSnippets: Array<Snippet> = [
+    {
+        group: 'TextTimer',
+        name: 'No Label',
+        code: `
+          <TextTimer
+            endTimestamp={Date.now() + 1000 * 60 * 60 * 24}
+            minTimeUnit="seconds"
+            maxTimeUnit="days"
+          />
+        `,
+    },
+    {
+        group: 'TextTimer',
+        name: 'Short Label',
+        code: `
+          <TextTimer
+            endTimestamp={Date.now() + 1000 * 60 * 60 * 24}
+            minTimeUnit="seconds"
+            maxTimeUnit="days"
+            labelType="short"
+          />
+        `,
+    },
+    {
+        group: 'TextTimer',
+        name: 'Long Label',
+        code: `
+          <TextTimer
+            endTimestamp={Date.now() + 1000 * 60 * 60 * 24}
+            minTimeUnit="seconds"
+            maxTimeUnit="days"
+            labelType="long"
+          />
+        `,
+    },
+    {
+        group: 'Timer',
+        name: 'default',
+        code: `
+          <Timer
+            endTimestamp={Date.now() + 1000 * 60 * 60 * 24}
+            minTimeUnit="seconds"
+            maxTimeUnit="days"
+          />
+        `,
+    },
+    {
+        group: 'Timer',
+        name: 'boxed',
+        code: `
+          <Timer
+            endTimestamp={Date.now() + 1000 * 60 * 60 * 24}
+            minTimeUnit="seconds"
+            maxTimeUnit="days"
+            boxed
+          />
+        `,
+    },
+];
+
 export default [
     ...buttonSnippets,
     ...formSnippets,
     ...feedbackSnippets,
     ...skeletonSnippets,
+    ...timerSnippets,
     {group: 'Feedbacks', name: 'Snackbar', code: '<Snackbar message="Some message here" />'},
     ...layoutSnippets,
     {
