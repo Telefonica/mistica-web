@@ -1168,7 +1168,7 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
                 width={width}
                 height={height}
                 aspectRatio={aspectRatio}
-                aria-label={ariaLabel}
+                aria-label={isTouchable ? undefined : ariaLabelProp}
                 className={styles.touchableContainer}
             >
                 <InternalBoxed
@@ -1189,7 +1189,7 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
                         maybe
                         {...touchableProps}
                         className={styles.touchable}
-                        aria-label={ariaLabel}
+                        aria-label={isTouchable ? ariaLabel : undefined}
                     >
                         {isTouchable && <div className={overlayStyle} />}
 
