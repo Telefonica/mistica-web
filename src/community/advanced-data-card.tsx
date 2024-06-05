@@ -305,7 +305,7 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
                 ref={ref}
                 aria-label={ariaLabel}
             >
-                <Boxed className={styles.dataCard}>
+                <Boxed className={styles.dataCard} width="100%" height="100%" minHeight={styles.MIN_HEIGHT}>
                     <div className={styles.touchableContainer}>
                         {isTouchable && <div className={styles.touchableCardOverlay} />}
 

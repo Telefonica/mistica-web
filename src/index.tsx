@@ -67,6 +67,7 @@ export {default as HighlightedCard} from './highlighted-card';
 export {default as Stepper} from './stepper';
 export {ProgressBar, ProgressBarStepped} from './progress-bar';
 export {VerticalMosaic, HorizontalMosaic} from './mosaic';
+export {Timer, TextTimer} from './timer';
 export {
     MediaCard,
     DataCard,
@@ -80,6 +81,7 @@ export {
     CardActionIconButton,
 } from './card';
 export {default as Hero} from './hero';
+export {Table} from './table';
 export {default as Divider} from './divider';
 export {Menu, MenuItem, MenuSection} from './menu';
 export {default as EmptyState} from './empty-state';

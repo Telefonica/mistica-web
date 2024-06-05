@@ -141,6 +141,10 @@ export const isEqual = (a: unknown, b: unknown): boolean => {
         return true;
     }
 
+    if (typeof a === 'number' && typeof b === 'number' && isNaN(a) && isNaN(b)) {
+        return true;
+    }
+
     if (isPrimitive(a) || isPrimitive(b)) {
         return false;
     }

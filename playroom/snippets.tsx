@@ -385,6 +385,56 @@ const loadingScreenSnippets: Array<Snippet> = [
     },
 ];
 
+const tableSnippets: Array<Snippet> = [
+    {
+        group: 'Table',
+        name: 'Table',
+        code: `
+            <Table
+                heading={[
+                    'Type of food',
+                    'Calories',
+                    'Tasty Factor',
+                    'Average Price',
+                    'Rarity',
+                    'Average Rating',
+                ]}
+                columnTextAlign={["left", "right", "right", "right", "center", "right"]}
+                content={[
+                    ['Slice of pizza', '450', '95%', '5,00€', <Tag>Common</Tag>, '8/10'],
+                    ['Hamburger', '350', '87%', '3,50€', <Tag>Common</Tag>, '7.5/10'],
+                    ['Salad', '150', '70%', '4,00€', <Tag>Common</Tag>, '6/10'],
+                    ['Sushi', '200', '90%', '12,00€', <Tag type="warning">Rare</Tag>, '9/10'],
+                    ['Ice cream', '350', '95%', '3,00€', <Tag>Common</Tag>, '8/10'],
+                ]}
+            />`,
+    },
+    {
+        group: 'Table',
+        name: 'boxed Table',
+        code: `
+            <Table
+                boxed
+                heading={[
+                    'Type of food',
+                    'Calories',
+                    'Tasty Factor',
+                    'Average Price',
+                    'Rarity',
+                    'Average Rating',
+                ]}
+                columnTextAlign={["left", "right", "right", "right", "center", "right"]}
+                content={[
+                    ['Slice of pizza', '450', '95%', '5,00€', <Tag>Common</Tag>, '8/10'],
+                    ['Hamburger', '350', '87%', '3,50€', <Tag>Common</Tag>, '7.5/10'],
+                    ['Salad', '150', '70%', '4,00€', <Tag>Common</Tag>, '6/10'],
+                    ['Sushi', '200', '90%', '12,00€', <Tag type="warning">Rare</Tag>, '9/10'],
+                    ['Ice cream', '350', '95%', '3,00€', <Tag>Common</Tag>, '8/10'],
+                ]}
+            />`,
+    },
+];
+
 const listSnippets: Array<Snippet> = [
     ['RowList', 'Row'],
     ['BoxedRowList', 'BoxedRow'],
@@ -2833,11 +2883,73 @@ const ProgressBlockSnippets = [
     },
 ];
 
+const timerSnippets: Array<Snippet> = [
+    {
+        group: 'TextTimer',
+        name: 'No Label',
+        code: `
+          <TextTimer
+            endTimestamp={Date.now() + 1000 * 60 * 60 * 24}
+            minTimeUnit="seconds"
+            maxTimeUnit="days"
+          />
+        `,
+    },
+    {
+        group: 'TextTimer',
+        name: 'Short Label',
+        code: `
+          <TextTimer
+            endTimestamp={Date.now() + 1000 * 60 * 60 * 24}
+            minTimeUnit="seconds"
+            maxTimeUnit="days"
+            labelType="short"
+          />
+        `,
+    },
+    {
+        group: 'TextTimer',
+        name: 'Long Label',
+        code: `
+          <TextTimer
+            endTimestamp={Date.now() + 1000 * 60 * 60 * 24}
+            minTimeUnit="seconds"
+            maxTimeUnit="days"
+            labelType="long"
+          />
+        `,
+    },
+    {
+        group: 'Timer',
+        name: 'default',
+        code: `
+          <Timer
+            endTimestamp={Date.now() + 1000 * 60 * 60 * 24}
+            minTimeUnit="seconds"
+            maxTimeUnit="days"
+          />
+        `,
+    },
+    {
+        group: 'Timer',
+        name: 'boxed',
+        code: `
+          <Timer
+            endTimestamp={Date.now() + 1000 * 60 * 60 * 24}
+            minTimeUnit="seconds"
+            maxTimeUnit="days"
+            boxed
+          />
+        `,
+    },
+];
+
 export default [
     ...buttonSnippets,
     ...formSnippets,
     ...feedbackSnippets,
     ...skeletonSnippets,
+    ...timerSnippets,
     {group: 'Feedbacks', name: 'Snackbar', code: '<Snackbar message="Some message here" />'},
     ...layoutSnippets,
     {
@@ -3000,4 +3112,5 @@ export default [
     ...ValueBlockSnippets,
     ...ProgressBlockSnippets,
     ...loadingScreenSnippets,
+    ...tableSnippets,
 ].sort((s1, s2) => s1.group.localeCompare(s2.group)) as Array<Snippet>;
