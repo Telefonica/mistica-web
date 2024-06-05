@@ -70,7 +70,7 @@ export interface TextPresetProps {
     truncate?: boolean | number;
     wordBreak?: boolean;
     hyphens?: 'auto' | 'manual' | 'none';
-    textAlign?: 'center' | 'right';
+    textAlign?: 'center' | 'right' | 'left';
     id?: string;
     as?: React.ComponentType<any> | string;
     role?: string;

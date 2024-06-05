@@ -81,6 +81,7 @@ export {
     CardActionIconButton,
 } from './card';
 export {default as Hero} from './hero';
+export {Table} from './table';
 export {default as Divider} from './divider';
 export {Menu, MenuItem, MenuSection} from './menu';
 export {default as EmptyState} from './empty-state';
@@ -211,7 +212,7 @@ export {palette as blauPalette} from './skins/blau';
 export {palette as tuPalette} from './skins/tu';
 
 export type {Locale} from './utils/locale';
-export type {TrackingEvent, IconProps} from './utils/types';
+export type {TrackingEvent, IconProps, DataAttributes} from './utils/types';
 export type {RegionCode} from './utils/region-code';
 
 /*

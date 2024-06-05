@@ -43,7 +43,12 @@ import {
     Title3,
     IconButton,
     Hero,
+    Table,
     Timer,
+    HeaderLayout,
+    Header,
+    Placeholder,
+    NegativeBox,
 } from '..';
 import {InternalIconButton} from '../icon-button';
 import avatarImg from '../__stories__/images/avatar.jpg';
@@ -67,29 +72,41 @@ type Args = {
 };
 
 export const Default: StoryComponent<Args> = ({variant}) => {
+    // Only show inverse header when the rest of the screen is default
+    const inverseHeader = variant === 'default';
     return (
-        <ResponsiveLayout fullWidth variant={variant}>
-            <Box padding={16}>
+        <ResponsiveLayout variant={variant}>
+            <Box paddingTop={inverseHeader ? 0 : {mobile: 32, desktop: 48}} paddingBottom={16}>
                 <Stack space={32}>
-                    <Text2 regular>
-                        This story is created to verify how some of the components look like when using
-                        different skins
-                    </Text2>
-
-                    <RowList>
-                        <Row
-                            title="Title 1"
-                            subtitle="Subtitle"
-                            description="Description"
-                            href="https://www.google.com/"
-                        />
-                        <Row
-                            title="Title 2"
-                            subtitle="Subtitle"
-                            description="Description"
-                            href="https://www.google.com/"
-                        />
-                    </RowList>
+                    <HeaderLayout
+                        isInverse={inverseHeader}
+                        bleed
+                        header={
+                            <Header
+                                title="Components in different skins"
+                                description="This story is created to verify how some of the components look like when using
+                        different skins"
+                            />
+                        }
+                        extra={<Placeholder />}
+                        noPaddingY={!inverseHeader}
+                    />
+                    <NegativeBox>
+                        <RowList>
+                            <Row
+                                title="Title 1"
+                                subtitle="Subtitle"
+                                description="Description"
+                                href="https://www.google.com/"
+                            />
+                            <Row
+                                title="Title 2"
+                                subtitle="Subtitle"
+                                description="Description"
+                                href="https://www.google.com/"
+                            />
+                        </RowList>
+                    </NegativeBox>
                     {/** BoxedAccordion */}
                     <BoxedAccordion index={1}>
                         <BoxedAccordionItem
@@ -399,6 +416,42 @@ export const Default: StoryComponent<Args> = ({variant}) => {
                         description="description"
                         button={<ButtonPrimary onPress={() => {}}>Action</ButtonPrimary>}
                         buttonLink={<ButtonLink onPress={() => {}}>Link</ButtonLink>}
+                    />
+                    {/** Table */}
+                    <Table
+                        heading={[
+                            'Type of food',
+                            'Calories',
+                            'Tasty Factor',
+                            'Average Price',
+                            'Rarity',
+                            'Average Rating',
+                        ]}
+                        content={[
+                            ['Slice of pizza', '450', '95%', '5,00€', <Tag>Common</Tag>, '8/10'],
+                            ['Hamburger', '350', '87%', '3,50€', <Tag>Common</Tag>, '7.5/10'],
+                            ['Salad', '150', '70%', '4,00€', <Tag>Common</Tag>, '6/10'],
+                            ['Sushi', '200', '90%', '12,00€', <Tag type="warning">Rare</Tag>, '9/10'],
+                            ['Ice cream', '350', '95%', '3,00€', <Tag>Common</Tag>, '8/10'],
+                        ]}
+                    />
+                    <Table
+                        boxed
+                        heading={[
+                            'Type of food',
+                            'Calories',
+                            'Tasty Factor',
+                            'Average Price',
+                            'Rarity',
+                            'Average Rating',
+                        ]}
+                        content={[
+                            ['Slice of pizza', '450', '95%', '5,00€', <Tag>Common</Tag>, '8/10'],
+                            ['Hamburger', '350', '87%', '3,50€', <Tag>Common</Tag>, '7.5/10'],
+                            ['Salad', '150', '70%', '4,00€', <Tag>Common</Tag>, '6/10'],
+                            ['Sushi', '200', '90%', '12,00€', <Tag type="warning">Rare</Tag>, '9/10'],
+                            ['Ice cream', '350', '95%', '3,00€', <Tag>Common</Tag>, '8/10'],
+                        ]}
                     />
 
                     {/** Timer */}

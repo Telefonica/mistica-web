@@ -113,7 +113,8 @@ export const cardContentStyle = style([
 
 export const zindex = style({zIndex: -1});
 
-export const minHeight = style({minHeight: 216});
+export const MIN_HEIGHT = 216;
+export const minHeight = style({minHeight: MIN_HEIGHT});
 
 export const dataCard = style([
     {
@@ -124,10 +125,7 @@ export const dataCard = style([
         display: 'flex',
         flex: 1,
         flexDirection: 'column',
-        width: '100%',
-        height: '100%',
     }),
-    minHeight,
 ]);
 
 const cardActionBase = sprinkles({
