@@ -365,7 +365,9 @@ const Select: React.FC<SelectProps> = ({
                             <option value="" style={{display: 'none'}} />
                         )}
                         {options.map(({value: val, text}) => (
-                            <option key={val} value={val}>
+                            // set color: 'initial' to avoid wrong text color in some browsers when using dark mode
+                            // similar issue in another lib: https://github.com/chakra-ui/chakra-ui/issues/417#issue-566611352
+                            <option key={val} value={val} style={{color: 'initial'}}>
                                 {text}
                             </option>
                         ))}
