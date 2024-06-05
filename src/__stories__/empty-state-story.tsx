@@ -9,29 +9,44 @@ export default {
         fullScreen: true,
     },
     argTypes: {
-        asset: {
-            options: ['Icon', 'Image', 'img'],
+        actions: {
+            options: ['button and link', 'button', 'link'],
             control: {type: 'select'},
         },
     },
+    args: {
+        actions: 'button and link',
+    },
 };
 
-type Args = {asset: string};
+interface Args {
+    actions: 'button and link' | 'button' | 'link';
+}
 
-export const WithImage: StoryComponent = () => (
+export const WithImage: StoryComponent<Args> = ({actions}) => (
     <div data-testid="empty-state-with-image">
         <EmptyState
             largeImageUrl={emptyStateImg}
             title="Your cart is empty"
             description="Check our marketplaces and find something for you. Check our marketplaces and find something"
-            button={<ButtonPrimary onPress={() => {}}>Explore marketplace</ButtonPrimary>}
-            buttonLink={<ButtonLink onPress={() => {}}>More info</ButtonLink>}
+            button={
+                actions.includes('button') ? (
+                    <ButtonPrimary onPress={() => {}}>Explore marketplace</ButtonPrimary>
+                ) : undefined
+            }
+            buttonLink={
+                actions.includes('link') ? <ButtonLink onPress={() => {}}>More info</ButtonLink> : undefined
+            }
         />
     </div>
 );
 WithImage.storyName = 'With image';
 
-export const WithIcon: StoryComponent<Args> = ({asset}) => {
+interface WithIconArgs extends Args {
+    asset: string;
+}
+
+export const WithIcon: StoryComponent<WithIconArgs> = ({actions, asset}) => {
     let assetProps;
     if (asset === 'Icon') {
         assetProps = {
@@ -53,23 +68,46 @@ export const WithIcon: StoryComponent<Args> = ({asset}) => {
                 {...assetProps}
                 title="Your cart is empty"
                 description="Check our marketplaces and find something for you. Check our marketplaces and find something"
-                button={<ButtonPrimary onPress={() => {}}>Explore marketplace</ButtonPrimary>}
+                button={
+                    actions.includes('button') ? (
+                        <ButtonPrimary onPress={() => {}}>Explore marketplace</ButtonPrimary>
+                    ) : undefined
+                }
+                buttonLink={
+                    actions.includes('link') ? (
+                        <ButtonLink onPress={() => {}}>More info</ButtonLink>
+                    ) : undefined
+                }
             />
         </div>
     );
 };
 WithIcon.storyName = 'With icon';
+WithIcon.argTypes = {
+    asset: {
+        options: ['Icon', 'Image', 'img'],
+        control: {type: 'select'},
+    },
+};
 WithIcon.args = {
     asset: 'Icon',
+    actions: 'button and link',
 };
 
-export const WithSmallImage: StoryComponent = () => (
+export const WithSmallImage: StoryComponent<Args> = ({actions}) => (
     <div data-testid="empty-state-with-small-image">
         <EmptyState
             imageUrl={avatars4Img}
             title="Your cart is empty"
             description="Check our marketplaces and find something for you. Check our marketplaces and find something"
-            button={<ButtonPrimary onPress={() => {}}>Explore marketplace</ButtonPrimary>}
+            button={
+                actions.includes('button') ? (
+                    <ButtonPrimary onPress={() => {}}>Explore marketplace</ButtonPrimary>
+                ) : undefined
+            }
+            buttonLink={
+                actions.includes('link') ? <ButtonLink onPress={() => {}}>More info</ButtonLink> : undefined
+            }
         />
     </div>
 );
