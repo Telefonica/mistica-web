@@ -10,7 +10,7 @@ export default {
     },
     argTypes: {
         actions: {
-            options: ['button and link', 'button', 'link'],
+            options: ['button and link', 'button', 'link', 'none'],
             control: {type: 'select'},
         },
     },
@@ -20,7 +20,7 @@ export default {
 };
 
 interface Args {
-    actions: 'button and link' | 'button' | 'link';
+    actions: 'button and link' | 'button' | 'link' | 'none';
 }
 
 export const WithImage: StoryComponent<Args> = ({actions}) => (

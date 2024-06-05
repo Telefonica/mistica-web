@@ -4,7 +4,7 @@ import type {Device} from '../test-utils';
 
 const devices: Array<Device> = ['MOBILE_IOS', 'TABLET', 'DESKTOP'];
 const assets = ['Icon', 'Image', 'img'];
-const actions = ['button and link', 'button', 'link'];
+const actions = ['button and link', 'button', 'link', 'none'];
 const createCases = () => {
     const cases = [];
     for (const device of devices) {
