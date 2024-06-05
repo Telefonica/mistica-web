@@ -241,7 +241,7 @@ export const HeaderLayout: React.FC<HeaderLayoutProps> = ({
             {isBleedActivated && (
                 <ResponsiveLayout
                     className={sideBySideExtraOnDesktop ? styles.hideOnDesktop : ''}
-                    backgroundColor={`linear-gradient(to bottom, ${vars.colors.backgroundBrand} 40px, ${vars.colors.background} 0%)`}
+                    backgroundColor={`linear-gradient(to bottom, ${vars.colors.backgroundBrandBottom} 40px, ${vars.colors.background} 0%)`}
                 >
                     {extra}
                 </ResponsiveLayout>

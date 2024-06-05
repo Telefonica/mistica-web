@@ -212,7 +212,7 @@ export {palette as blauPalette} from './skins/blau';
 export {palette as tuPalette} from './skins/tu';
 
 export type {Locale} from './utils/locale';
-export type {TrackingEvent, IconProps} from './utils/types';
+export type {TrackingEvent, IconProps, DataAttributes} from './utils/types';
 export type {RegionCode} from './utils/region-code';
 
 /*
