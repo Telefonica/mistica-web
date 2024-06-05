@@ -37,7 +37,15 @@ type DisplayDataCardArgs = {
     withExtra: boolean;
     closable: boolean;
     withTopAction: boolean;
-    actions: 'button' | 'link' | 'button and link' | 'button and secondary button';
+    actions:
+        | 'button'
+        | 'link'
+        | 'button and link'
+        | 'button and secondary button'
+        | 'onPress'
+        | 'href'
+        | 'to'
+        | 'none';
     isInverse: boolean;
     aspectRatio: AspectRatio;
 };
@@ -73,28 +81,27 @@ export const Default: StoryComponent<DisplayDataCardArgs> = ({
         icon = <Image src={avatarImg} width={40} height={40} />;
     }
 
-    const button = actions.includes('button') ? (
-        <ButtonPrimary small fake>
-            Action
-        </ButtonPrimary>
-    ) : undefined;
-
-    const buttonLink = actions.includes('link') ? <ButtonLink href="#">Link</ButtonLink> : undefined;
-    const secondaryButton = actions.includes('secondary') ? (
-        <ButtonSecondary small fake>
-            Action 2
-        </ButtonSecondary>
-    ) : undefined;
-
-    const onPress = actions.includes('press') ? () => {} : undefined;
-
-    const interactiveActions = onPress
-        ? {onPress}
-        : {
-              button,
-              buttonLink,
-              secondaryButton,
-          };
+    const interactiveActions = {
+        button: actions.includes('button') ? (
+            <ButtonPrimary small fake>
+                Action
+            </ButtonPrimary>
+        ) : undefined,
+        secondaryButton: actions.includes('secondary') ? (
+            <ButtonSecondary small fake>
+                Action 2
+            </ButtonSecondary>
+        ) : undefined,
+        buttonLink: actions.includes('link') ? <ButtonLink href="#">Link</ButtonLink> : undefined,
+        onPress: actions === 'onPress' ? () => {} : undefined,
+        to: actions === 'to' ? '#' : undefined,
+        href: actions === 'href' ? 'https://example.org' : undefined,
+    } as
+        | {button?: JSX.Element; buttonLink?: JSX.Element; secondaryButton?: JSX.Element}
+        | {onPress: () => void}
+        | {to: string}
+        | {href: string}
+        | {[key: string]: never};
 
     const aspectRatioValue = fixedAspectRatioValues.includes(aspectRatio)
         ? aspectRatio.replace(' ', ':')
@@ -166,7 +173,16 @@ Default.argTypes = {
         control: {type: 'select'},
     },
     actions: {
-        options: ['button', 'link', 'button and link', 'button and secondary button', 'on press'],
+        options: [
+            'button',
+            'link',
+            'button and link',
+            'button and secondary button',
+            'onPress',
+            'href',
+            'to',
+            'none',
+        ],
         control: {type: 'select'},
     },
     aspectRatio: {
