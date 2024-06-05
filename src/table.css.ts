@@ -80,6 +80,7 @@ export const scrollContainer = style({
 export const scrollOverResponsiveLayout = style({
     '@media': {
         [mq.tabletOrSmaller]: {
+            display: 'flex',
             boxSizing: 'content-box', // because we need the padding to be included in the width (we need width: fit-content + paddings)
             margin: `0 calc(${responsiveLayoutSideMargin} * -1)`,
             padding: `0 ${responsiveLayoutSideMargin}`,
