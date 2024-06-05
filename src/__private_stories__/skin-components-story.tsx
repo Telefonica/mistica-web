@@ -44,6 +44,7 @@ import {
     IconButton,
     Hero,
     Table,
+    Timer,
 } from '..';
 import {InternalIconButton} from '../icon-button';
 import avatarImg from '../__stories__/images/avatar.jpg';
@@ -238,6 +239,9 @@ export const Default: StoryComponent<Args> = ({variant}) => {
 
                     {/** Chip */}
                     <Inline space={16} wrap>
+                        <Chip badge={10} Icon={IconLightningRegular}>
+                            Default chip
+                        </Chip>
                         <Chip Icon={IconLightningRegular} active>
                             Active chip
                         </Chip>
@@ -415,7 +419,6 @@ export const Default: StoryComponent<Args> = ({variant}) => {
                             ['Ice cream', '350', '95%', '3,00€', <Tag>Common</Tag>, '8/10'],
                         ]}
                     />
-                    {/** Table */}
                     <Table
                         boxed
                         heading={[
@@ -434,6 +437,12 @@ export const Default: StoryComponent<Args> = ({variant}) => {
                             ['Ice cream', '350', '95%', '3,00€', <Tag>Common</Tag>, '8/10'],
                         ]}
                     />
+
+                    {/** Timer */}
+                    <Inline space={16}>
+                        <Timer endTimestamp={0} minTimeUnit="seconds" maxTimeUnit="days" />
+                        <Timer endTimestamp={0} minTimeUnit="seconds" maxTimeUnit="days" boxed />
+                    </Inline>
                 </Stack>
             </Box>
         </ResponsiveLayout>

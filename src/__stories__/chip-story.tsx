@@ -67,9 +67,10 @@ export const Default: StoryComponent<Args> = ({inverse, withIcon, closable, badg
     );
 };
 
-export const SingleSelection: StoryComponent<Omit<Args, 'closable' | 'badge'>> = ({inverse, withIcon}) => {
+export const SingleSelection: StoryComponent<Omit<Args, 'closable'>> = ({inverse, badge, withIcon}) => {
     const props = {
         Icon: withIcon ? IconLightningFilled : undefined,
+        badge: badge !== 'undefined' ? +badge : undefined,
     };
 
     return (
@@ -106,9 +107,10 @@ export const SingleSelection: StoryComponent<Omit<Args, 'closable' | 'badge'>> =
     );
 };
 
-export const MultipleSelection: StoryComponent<Omit<Args, 'closable' | 'badge'>> = ({inverse, withIcon}) => {
+export const MultipleSelection: StoryComponent<Omit<Args, 'closable'>> = ({inverse, badge, withIcon}) => {
     const props = {
         Icon: withIcon ? IconLightningFilled : undefined,
+        badge: badge !== 'undefined' ? +badge : undefined,
     };
 
     return (
@@ -150,15 +152,19 @@ const defaultArgs = {
     closable: false,
 };
 
-Default.storyName = 'Chip';
-
-Default.argTypes = {
+const defaultArgTypes = {
     badge: {
         options: badgeOptions,
         control: {type: 'select'},
     },
 };
 
+Default.storyName = 'Chip';
+Default.argTypes = defaultArgTypes;
 Default.args = defaultArgs;
-SingleSelection.args = {...(({closable, badge, ...o}) => o)(defaultArgs)};
-MultipleSelection.args = {...(({closable, badge, ...o}) => o)(defaultArgs)};
+
+SingleSelection.argTypes = defaultArgTypes;
+SingleSelection.args = {...(({closable, ...o}) => o)(defaultArgs)};
+
+MultipleSelection.argTypes = defaultArgTypes;
+MultipleSelection.args = {...(({closable, ...o}) => o)(defaultArgs)};

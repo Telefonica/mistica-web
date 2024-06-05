@@ -16,6 +16,7 @@ import {
     Carousel,
     IconStarFilled,
     IconStarRegular,
+    Placeholder,
 } from '..';
 import usingVrImg from './images/using-vr.jpg';
 import avatarImg from './images/avatar.jpg';
@@ -40,6 +41,7 @@ type DisplayMediaCardArgs = {
     pretitle: string;
     title: string;
     description: string;
+    withExtra: boolean;
     closable: boolean;
     withTopAction: boolean;
     actions: 'button' | 'link' | 'button and link' | 'button and secondary button' | 'onPress';
@@ -57,6 +59,7 @@ export const Default: StoryComponent<DisplayMediaCardArgs> = ({
     pretitle,
     title,
     description,
+    withExtra,
     actions = 'button',
     closable,
     withTopAction,
@@ -145,6 +148,7 @@ export const Default: StoryComponent<DisplayMediaCardArgs> = ({
                     aria-label="Display media card label"
                     width={width}
                     aspectRatio={aspectRatio}
+                    extra={withExtra ? <Placeholder /> : undefined}
                     dataAttributes={{testid: 'display-media-card'}}
                 />
             </Box>
@@ -161,6 +165,7 @@ Default.args = {
     pretitle: 'Pretitle',
     title: 'Title',
     description: 'This is a description for the card',
+    withExtra: false,
     actions: 'button',
     closable: false,
     withTopAction: false,

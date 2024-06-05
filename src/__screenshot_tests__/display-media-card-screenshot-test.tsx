@@ -61,6 +61,19 @@ test('DisplayMediaCard with asset', async () => {
     expect(image).toMatchImageSnapshot();
 });
 
+test('DisplayMediaCard with extra content', async () => {
+    await openStoryPage({
+        id: 'components-cards-displaymediacard--default',
+        args: {withExtra: true},
+    });
+
+    const displayMediaCard = await screen.findByTestId('display-media-card');
+
+    const image = await displayMediaCard.screenshot();
+
+    expect(image).toMatchImageSnapshot();
+});
+
 test.each`
     background | inverse
     ${'image'} | ${false}
