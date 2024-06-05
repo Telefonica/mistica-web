@@ -43,6 +43,7 @@ import {
     Title3,
     IconButton,
     Hero,
+    Table,
     Timer,
 } from '..';
 import {InternalIconButton} from '../icon-button';
@@ -399,6 +400,42 @@ export const Default: StoryComponent<Args> = ({variant}) => {
                         description="description"
                         button={<ButtonPrimary onPress={() => {}}>Action</ButtonPrimary>}
                         buttonLink={<ButtonLink onPress={() => {}}>Link</ButtonLink>}
+                    />
+                    {/** Table */}
+                    <Table
+                        heading={[
+                            'Type of food',
+                            'Calories',
+                            'Tasty Factor',
+                            'Average Price',
+                            'Rarity',
+                            'Average Rating',
+                        ]}
+                        content={[
+                            ['Slice of pizza', '450', '95%', '5,00€', <Tag>Common</Tag>, '8/10'],
+                            ['Hamburger', '350', '87%', '3,50€', <Tag>Common</Tag>, '7.5/10'],
+                            ['Salad', '150', '70%', '4,00€', <Tag>Common</Tag>, '6/10'],
+                            ['Sushi', '200', '90%', '12,00€', <Tag type="warning">Rare</Tag>, '9/10'],
+                            ['Ice cream', '350', '95%', '3,00€', <Tag>Common</Tag>, '8/10'],
+                        ]}
+                    />
+                    <Table
+                        boxed
+                        heading={[
+                            'Type of food',
+                            'Calories',
+                            'Tasty Factor',
+                            'Average Price',
+                            'Rarity',
+                            'Average Rating',
+                        ]}
+                        content={[
+                            ['Slice of pizza', '450', '95%', '5,00€', <Tag>Common</Tag>, '8/10'],
+                            ['Hamburger', '350', '87%', '3,50€', <Tag>Common</Tag>, '7.5/10'],
+                            ['Salad', '150', '70%', '4,00€', <Tag>Common</Tag>, '6/10'],
+                            ['Sushi', '200', '90%', '12,00€', <Tag type="warning">Rare</Tag>, '9/10'],
+                            ['Ice cream', '350', '95%', '3,00€', <Tag>Common</Tag>, '8/10'],
+                        ]}
                     />
 
                     {/** Timer */}
