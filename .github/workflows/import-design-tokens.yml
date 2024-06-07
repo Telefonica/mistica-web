@@ -16,10 +16,10 @@ jobs:
     import-design-tokens:
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v3
+            - uses: actions/checkout@v4
 
             - name: Checkout mistica-design repo with the tokens
-              uses: actions/checkout@v3
+              uses: actions/checkout@v4
               with:
                   repository: Telefonica/mistica-design
                   path: '.github/mistica-design'
