@@ -40,9 +40,19 @@ import type {
 type TouchableProps = {
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
 } & ExclusifyUnion<
-    | {href: string | undefined; newTab?: boolean}
-    | {to: string | undefined; fullPageOnWebView?: boolean}
-    | {onPress: PressHandler | undefined}
+    | {
+          href: string | undefined;
+          newTab?: boolean;
+      }
+    | {
+          to: string | undefined;
+          newTab?: boolean;
+          /** @deprecated use newTab */
+          fullPageOnWebView?: boolean;
+      }
+    | {
+          onPress: PressHandler | undefined;
+      }
 >;
 type TouchableCard<T> = T & TouchableProps;
 type MaybeTouchableCard<T> = ExclusifyUnion<TouchableCard<T> | T>;

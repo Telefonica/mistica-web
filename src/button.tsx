@@ -24,6 +24,7 @@ import type {
     TrackingEvent,
 } from './utils/types';
 import type {Location} from 'history';
+import type {ExclusifyUnion} from './utils/utility-types';
 
 const renderButtonElement = ({
     content,
@@ -261,54 +262,31 @@ interface CommonProps {
 
 export interface ToButtonProps extends CommonProps {
     to: string | Location;
+    newTab?: string;
+    /** @deprecated use newTab */
     fullPageOnWebView?: boolean;
-    submit?: undefined;
-    fake?: undefined;
-    onPress?: undefined;
-    href?: undefined;
     onNavigate?: () => void | Promise<void>;
 }
 export interface OnPressButtonProps extends CommonProps {
     onPress: (event: React.MouseEvent<HTMLElement>) => void | undefined | Promise<void>;
-    submit?: undefined;
-    fake?: undefined;
-    to?: undefined;
-    href?: undefined;
-    onNavigate?: undefined;
 }
 export interface HrefButtonProps extends CommonProps {
     href: string;
     newTab?: boolean;
     loadOnTop?: boolean;
-    submit?: undefined;
-    fake?: undefined;
-    onPress?: undefined;
-    to?: undefined;
+
     onNavigate?: () => void | Promise<void>;
 }
 export interface FakeButtonProps extends CommonProps {
     fake: true;
-    submit?: undefined;
-    onPress?: undefined;
-    to?: undefined;
-    href?: undefined;
-    onNavigate?: undefined;
 }
 export interface SubmitButtonProps extends CommonProps {
     submit: true;
-    to?: undefined;
-    fake?: undefined;
-    onPress?: undefined;
-    href?: undefined;
-    onNavigate?: undefined;
 }
 
-export type ButtonProps =
-    | FakeButtonProps
-    | SubmitButtonProps
-    | ToButtonProps
-    | OnPressButtonProps
-    | HrefButtonProps;
+export type ButtonProps = ExclusifyUnion<
+    FakeButtonProps | SubmitButtonProps | ToButtonProps | OnPressButtonProps | HrefButtonProps
+>;
 
 const Button = React.forwardRef<TouchableElement, ButtonProps & {type: ButtonType}>((props, ref) => {
     const {textPresets} = useTheme();
@@ -504,6 +482,8 @@ interface ButtonLinkHrefProps extends ButtonLinkCommonProps {
 
 interface ButtonLinkToProps extends ButtonLinkCommonProps {
     to: string;
+    newTab?: boolean;
+    /** @deprecated use newTab */
     fullPageOnWebView?: boolean;
     onPress?: undefined;
     href?: undefined;

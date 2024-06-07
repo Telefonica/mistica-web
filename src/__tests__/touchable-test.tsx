@@ -498,3 +498,27 @@ test('Touchable has the appropiate role', async () => {
     expect(screen.getByRole('tab', {name: 'href'})).toBeInTheDocument();
     expect(screen.getByRole('link', {name: 'onPress'})).toBeInTheDocument();
 });
+
+test('target="_blank" is set with newTab', async () => {
+    const url = 'https://example.org';
+
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Touchable to={url} newTab>
+                to link
+            </Touchable>
+            <Touchable href={url} newTab>
+                href link
+            </Touchable>
+        </ThemeContextProvider>
+    );
+
+    const toLink = screen.getByRole('link', {name: /to link/});
+    const hrefLink = screen.getByRole('link', {name: /href link/});
+
+    expect(toLink).toHaveAttribute('href', url);
+    expect(hrefLink).toHaveAttribute('href', url);
+
+    expect(toLink).toHaveAttribute('target', '_blank');
+    expect(hrefLink).toHaveAttribute('target', '_blank');
+});

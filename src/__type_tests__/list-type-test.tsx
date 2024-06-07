@@ -34,7 +34,6 @@ const v = true as boolean;
     <Row title="to" to="/to" />
     <Row title="to" to="/to" trackingEvent={{name: 'something'}} />
     <Row title="to" to="/to" fullPageOnWebView />
-    {/* @ts-expect-error - newTab not allowed in to */}
     <Row title="to" to="/to" newTab />
     {/* OK - href */}
     <Row title="href" href="/href" />
