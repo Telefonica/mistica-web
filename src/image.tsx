@@ -66,7 +66,6 @@ export const ImageError = React.forwardRef<HTMLDivElement, ImageErrorProps>(
                     skinName === VIVO_SKIN ? (
                         <VivoLogo style={{width: '10%', minWidth: 24, maxWidth: 48}} />
                     ) : skinName === VIVO_NEW_SKIN ? (
-                        // Add the specific icon or logic for "o2" skinName
                         <svg
                             viewBox="0 0 24 24"
                             role="presentation"
