@@ -458,7 +458,7 @@ const CardContent: React.FC<CardContentProps> = ({
                         </Text2>
                     </div>
                 )}
-                {extra && <Box ref={extraRef}>{extra}</Box>}
+                {extra && <div ref={extraRef}>{extra}</div>}
             </div>
 
             {(button || buttonLink) && (
@@ -817,7 +817,7 @@ export const SmallNakedCard = React.forwardRef<HTMLDivElement, SmallNakedCardPro
                                     )}
                                 </Stack>
                             </div>
-                            {extra && <Box ref={extraRef}>{extra}</Box>}
+                            {extra && <div ref={extraRef}>{extra}</div>}
                         </div>
                     </div>
                 </BaseTouchable>
@@ -951,7 +951,7 @@ export const DataCard = React.forwardRef<HTMLDivElement, DataCardProps>(
                                 )}
                             </Inline>
 
-                            {extra && <Box ref={extraRef}>{extra}</Box>}
+                            {extra && <div ref={extraRef}>{extra}</div>}
 
                             {(button || buttonLink) && (
                                 <div className={styles.actions}>
@@ -1079,7 +1079,7 @@ export const SnapCard = React.forwardRef<HTMLDivElement, SnapCardProps>(
                                     )}
                                 </Stack>
                             </div>
-                            {extra && <Box ref={extraRef}>{extra}</Box>}
+                            {extra && <div ref={extraRef}>{extra}</div>}
                         </section>
                     </BaseTouchable>
                 </Boxed>
@@ -1133,7 +1133,7 @@ const DisplayCardContent: React.FC<DisplayCardContentProps> = ({
                     {description}
                 </div>
             )}
-            {extra && <Box ref={extraRef}>{extra}</Box>}
+            {extra && <div ref={extraRef}>{extra}</div>}
         </div>
     );
 };
