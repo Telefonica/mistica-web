@@ -118,7 +118,7 @@ const CoverHero = React.forwardRef<HTMLDivElement, CoverHeroProps>(
                                 as="p"
                                 regular
                                 truncate={descriptionLinesMax}
-                                color={vars.colors.textSecondary}
+                                color={hasMedia ? vars.colors.textPrimary : vars.colors.textSecondary}
                                 textShadow={textShadow}
                             >
                                 {description}
