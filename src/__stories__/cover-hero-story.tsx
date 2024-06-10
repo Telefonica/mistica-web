@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {CoverHero, ButtonPrimary, ButtonLink, Tag, Placeholder, skinVars} from '..';
+import {CoverHero, ButtonPrimary, ButtonLink, Tag, Placeholder, skinVars, Slideshow} from '..';
 import usingVrImg from './images/using-vr.jpg';
 import beachImg from './images/beach.jpg';
 import beachVideo from './videos/beach.mp4';
@@ -158,3 +158,28 @@ Default.argTypes = {
         },
     },
 };
+
+export const CoverHeroInSlideshow: StoryComponent = () => (
+    <Slideshow
+        withBullets
+        items={Array.from({length: 3}, (_, idx) => (
+            <CoverHero
+                backgroundImage={usingVrImg}
+                headline={<Tag type="active">Headline</Tag>}
+                pretitle="Pretitle"
+                title={['Title', 'Title 2', 'Title 3'][idx]}
+                description={
+                    ['Description', 'This is a long description with a long text to see how this works', ''][
+                        idx
+                    ]
+                }
+                extra={<Placeholder />}
+                sideExtra={<Placeholder />}
+                button={<ButtonPrimary fake>Action</ButtonPrimary>}
+                buttonLink={<ButtonLink href="#">Link</ButtonLink>}
+            />
+        ))}
+    />
+);
+
+CoverHeroInSlideshow.storyName = 'CoverHero in Slideshow';

@@ -1,7 +1,7 @@
 import {globalStyle, style} from '@vanilla-extract/css';
 import {sprinkles} from './sprinkles.css';
 import * as mq from './media-queries.css';
-import {slideshowWithBullets} from './carousel.css';
+import {slideshowWithBullets, slideshowContainer} from './carousel.css';
 
 export const coverHero = style([
     sprinkles({
@@ -12,6 +12,13 @@ export const coverHero = style([
         justifyContent: 'center',
         width: '100%',
     }),
+    {
+        selectors: {
+            [`${slideshowContainer} &`]: {
+                height: '100%',
+            },
+        },
+    },
 ]);
 
 export const minHeight = style({

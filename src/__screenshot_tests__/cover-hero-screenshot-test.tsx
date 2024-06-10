@@ -195,3 +195,15 @@ test.each(cases)('CoverHero %s', async (_name, {device, args}) => {
     const image = await page.screenshot();
     expect(image).toMatchImageSnapshot();
 });
+
+test('CoverHero inside a Slideshow', async () => {
+    const page = await openStoryPage({
+        id: 'components-hero-coverhero--cover-hero-in-slideshow',
+        args: {
+            background: 'image',
+        },
+    });
+
+    const image = await page.screenshot();
+    expect(image).toMatchImageSnapshot();
+});
