@@ -45,7 +45,7 @@ type Args = {
     subtitle: string;
     description: string;
     withExtra: boolean;
-    actions: 'button' | 'link' | 'button and link' | 'on press' | 'none';
+    actions: 'button' | 'link' | 'button and link' | 'onPress' | 'href' | 'to' | 'none';
     closable: boolean;
     withTopAction: boolean;
     isEmptySource: boolean;
@@ -77,24 +77,23 @@ export const Default: StoryComponent<Args> = ({
         icon = <Circle size={40} backgroundImage={avatarImg} />;
     }
 
-    const button = actions.includes('button') ? (
-        <ButtonPrimary small href="https://google.com">
-            Action
-        </ButtonPrimary>
-    ) : undefined;
+    const interactiveActions = {
+        button: actions.includes('button') ? (
+            <ButtonPrimary small fake>
+                Action
+            </ButtonPrimary>
+        ) : undefined,
 
-    const buttonLink = actions.includes('link') ? (
-        <ButtonLink href="https://google.com">Link</ButtonLink>
-    ) : undefined;
-
-    const onPress = actions.includes('press') ? () => {} : undefined;
-
-    const interactiveActions = onPress
-        ? {onPress}
-        : {
-              button,
-              buttonLink,
-          };
+        buttonLink: actions.includes('link') ? <ButtonLink href="#">Link</ButtonLink> : undefined,
+        onPress: actions === 'onPress' ? () => {} : undefined,
+        to: actions === 'to' ? '#' : undefined,
+        href: actions === 'href' ? 'https://example.org' : undefined,
+    } as
+        | {button?: JSX.Element; buttonLink?: JSX.Element; secondaryButton?: JSX.Element}
+        | {onPress: () => void}
+        | {to: string}
+        | {href: string}
+        | {[key: string]: never};
 
     return (
         <ResponsiveLayout>
@@ -180,7 +179,7 @@ Default.argTypes = {
         control: {type: 'select'},
     },
     actions: {
-        options: ['button', 'link', 'button and link', 'on press', 'none'],
+        options: ['button', 'link', 'button and link', 'onPress', 'href', 'to', 'none'],
         control: {type: 'select'},
     },
 };

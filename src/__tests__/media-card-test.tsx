@@ -1,21 +1,23 @@
 import * as React from 'react';
-import {PosterCard} from '../card';
+import {MediaCard} from '../card';
 import {makeTheme} from './test-utils';
 import {render, screen} from '@testing-library/react';
 import ThemeContextProvider from '../theme-context-provider';
+import Tag from '../tag';
 import Stack from '../stack';
+import Image from '../image';
 import {Text2} from '../text';
 
-test('PosterCard "href" label', async () => {
+test('MediaCard "href" label', async () => {
     render(
         <ThemeContextProvider theme={makeTheme()}>
-            <PosterCard
+            <MediaCard
                 href="https://example.org"
-                isInverse
-                headline="Headline"
+                media={<Image src="https://source.unsplash.com/900x900/" />}
+                headline={<Tag type="promo">Headline</Tag>}
                 pretitle="Pretitle"
-                title="Title"
                 subtitle="Subtitle"
+                title="Title"
                 description="Description"
                 extra={
                     <Stack space={4}>
@@ -32,16 +34,16 @@ test('PosterCard "href" label', async () => {
     });
 });
 
-test('PosterCard "to" label', async () => {
+test('MediaCard "to" label', async () => {
     render(
         <ThemeContextProvider theme={makeTheme()}>
-            <PosterCard
+            <MediaCard
                 to="/foo/bar"
-                isInverse
-                headline="Headline"
+                media={<Image src="https://source.unsplash.com/900x900/" />}
+                headline={<Tag type="promo">Headline</Tag>}
                 pretitle="Pretitle"
-                title="Title"
                 subtitle="Subtitle"
+                title="Title"
                 description="Description"
                 extra={
                     <Stack space={4}>
@@ -58,16 +60,16 @@ test('PosterCard "to" label', async () => {
     });
 });
 
-test('PosterCard "onPress" label', async () => {
+test('MediaCard "onPress" label', async () => {
     render(
         <ThemeContextProvider theme={makeTheme()}>
-            <PosterCard
+            <MediaCard
                 onPress={() => {}}
-                isInverse
-                headline="Headline"
+                media={<Image src="https://source.unsplash.com/900x900/" />}
+                headline={<Tag type="promo">Headline</Tag>}
                 pretitle="Pretitle"
-                title="Title"
                 subtitle="Subtitle"
+                title="Title"
                 description="Description"
                 extra={
                     <Stack space={4}>

@@ -25,7 +25,7 @@ type Args = {
     title: string;
     subtitle: string;
     description: string;
-    actions: 'on press' | 'none';
+    actions: 'onPress' | 'href' | 'to' | 'none';
     isInverse: boolean;
     withExtra: boolean;
     aspectRatio: AspectRatio;
@@ -65,6 +65,12 @@ export const Default: StoryComponent<Args> = ({
         ? aspectRatio.replace(' ', ':')
         : aspectRatio;
 
+    const interactiveProps = {
+        onPress: actions === 'onPress' ? () => {} : undefined,
+        to: actions === 'to' ? '#' : undefined,
+        href: actions === 'href' ? 'https://example.org' : undefined,
+    } as {onPress: () => void} | {to: string} | {href: string} | {[key: string]: never};
+
     return (
         <SnapCard
             icon={assetToIcon[asset]}
@@ -75,14 +81,8 @@ export const Default: StoryComponent<Args> = ({
             aria-label="SnapCard card label"
             isInverse={isInverse}
             extra={withExtra ? <Placeholder /> : undefined}
-            onPress={
-                actions === 'on press'
-                    ? () => {
-                          window.alert('SnapCard clicked');
-                      }
-                    : undefined
-            }
             aspectRatio={aspectRatioValue as AspectRatio}
+            {...interactiveProps}
         />
     );
 };
@@ -116,7 +116,7 @@ Default.argTypes = {
         },
     },
     actions: {
-        options: ['on press', 'none'],
+        options: ['onPress', 'href', 'to', 'none'],
         control: {type: 'select'},
     },
 };

@@ -32,8 +32,9 @@ type DataCardArgs = {
     title: string;
     subtitle: string;
     description: string;
+    ariaLabel: string;
     withExtra: boolean;
-    actions: 'button' | 'link' | 'button and link' | 'on press';
+    actions: 'button' | 'link' | 'button and link' | 'onPress' | 'href' | 'to' | 'none';
     closable: boolean;
     withTopAction: boolean;
     aspectRatio: AspectRatio;
@@ -49,6 +50,7 @@ export const Default: StoryComponent<DataCardArgs> = ({
     title,
     subtitle,
     description,
+    ariaLabel,
     withExtra,
     actions = 'button',
     closable,
@@ -66,22 +68,22 @@ export const Default: StoryComponent<DataCardArgs> = ({
         icon = <Circle size={40} backgroundImage={avatarImg} />;
     }
 
-    const button = actions.includes('button') ? (
-        <ButtonPrimary small fake>
-            Action
-        </ButtonPrimary>
-    ) : undefined;
-
-    const buttonLink = actions.includes('link') ? <ButtonLink href="#">Link</ButtonLink> : undefined;
-
-    const onPress = actions.includes('press') ? () => {} : undefined;
-
-    const interactiveActions = onPress
-        ? {onPress}
-        : {
-              button,
-              buttonLink,
-          };
+    const interactiveActions = {
+        button: actions.includes('button') ? (
+            <ButtonPrimary small fake>
+                Action
+            </ButtonPrimary>
+        ) : undefined,
+        buttonLink: actions.includes('link') ? <ButtonLink href="#">Link</ButtonLink> : undefined,
+        onPress: actions === 'onPress' ? () => {} : undefined,
+        to: actions === 'to' ? '#' : undefined,
+        href: actions === 'href' ? 'https://example.org' : undefined,
+    } as
+        | {button?: JSX.Element; buttonLink?: JSX.Element}
+        | {onPress: () => void}
+        | {to: string}
+        | {href: string}
+        | {[key: string]: never};
 
     const aspectRatioValue = fixedAspectRatioValues.includes(aspectRatio)
         ? aspectRatio.replace(' ', ':')
@@ -100,7 +102,7 @@ export const Default: StoryComponent<DataCardArgs> = ({
             {...interactiveActions}
             aspectRatio={aspectRatioValue as AspectRatio}
             dataAttributes={{testid: 'data-card'}}
-            aria-label="Data card label"
+            aria-label={ariaLabel}
             actions={
                 withTopAction
                     ? [
@@ -141,6 +143,7 @@ Default.args = {
     description: 'This is a description for the card',
     withExtra: false,
     actions: 'button',
+    ariaLabel: '',
     closable: false,
     withTopAction: false,
     aspectRatio: 'auto',
@@ -155,7 +158,7 @@ Default.argTypes = {
         control: {type: 'select'},
     },
     actions: {
-        options: ['button', 'link', 'button and link', 'on press', 'none'],
+        options: ['button', 'link', 'button and link', 'onPress', 'href', 'to', 'none'],
         control: {type: 'select'},
     },
     aspectRatio: {
