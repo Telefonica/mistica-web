@@ -61,7 +61,7 @@ export const Default: StoryComponent<Args> = ({
                   poster: beachImg,
               }
             : {
-                  backgroundColor: backgroundColorFromSkin || backgroundColorCustom,
+                  background: backgroundColorFromSkin || backgroundColorCustom,
                   variant,
               };
 

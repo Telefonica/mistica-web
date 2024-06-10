@@ -11,7 +11,9 @@ import {applyCssVars} from './utils/css';
 import * as mediaStyles from './image.css';
 import GridLayout from './grid-layout';
 import {CoverHeroMedia} from './cover-hero-media';
+import {getPrefixedDataAttributes} from './utils/dom';
 
+import type {DataAttributes} from './utils/types';
 import type {ImageProps, VideoProps} from './cover-hero-media';
 import type {AspectRatio} from './image';
 import type {ExclusifyUnion} from './utils/utility-types';
@@ -38,14 +40,17 @@ type BaseProps = {
     aspectRatio?: AspectRatio | number | 'auto';
     centered?: boolean;
     noPaddingY?: boolean;
+    /** "data-" prefix is automatically added. For example, use "testid" instead of "data-testid" */
+    dataAttributes?: DataAttributes;
+    'aria-label'?: string;
 };
 
-type BackgroundColorProps = {
-    backgroundColor?: string;
+type BackgroundProps = {
+    background?: string;
     variant?: Variant;
 };
 
-type CoverHeroProps = BaseProps & ExclusifyUnion<ImageProps | VideoProps | BackgroundColorProps>;
+type CoverHeroProps = BaseProps & ExclusifyUnion<ImageProps | VideoProps | BackgroundProps>;
 
 const aspectRatioToCssString = (aspectRatio?: BaseProps['aspectRatio']) => {
     if (!aspectRatio) {
@@ -76,9 +81,10 @@ const CoverHero = React.forwardRef<HTMLDivElement, CoverHeroProps>(
             minHeight,
             aspectRatio = 'auto',
             variant,
-            backgroundColor,
             centered,
             noPaddingY,
+            dataAttributes,
+            'aria-label': ariaLabel,
             ...mediaProps
         },
         ref
@@ -87,7 +93,7 @@ const CoverHero = React.forwardRef<HTMLDivElement, CoverHeroProps>(
 
         const background = hasMedia
             ? 'none'
-            : backgroundColor ||
+            : mediaProps.background ||
               {
                   default: vars.colors.background,
                   inverse: vars.colors.backgroundBrand,
@@ -132,6 +138,8 @@ const CoverHero = React.forwardRef<HTMLDivElement, CoverHeroProps>(
 
         return (
             <section
+                {...getPrefixedDataAttributes(dataAttributes, 'CoverHero')}
+                aria-label={ariaLabel}
                 ref={ref}
                 className={classnames(styles.coverHero, {
                     [styles.centered]: centered,
