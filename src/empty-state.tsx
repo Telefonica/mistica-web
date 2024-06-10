@@ -107,7 +107,7 @@ const EmptyState: React.FC<Props> = ({
                             {description}
                         </Text3>
                     </Stack>
-                    {button && <ButtonGroup {...buttons} />}
+                    <ButtonGroup {...buttons} />
                 </Stack>
             </div>
             <div style={{flex: 1, position: 'relative'}}>

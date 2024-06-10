@@ -151,6 +151,21 @@ test('Select - display all options', async () => {
     expect(image).toMatchImageSnapshot();
 });
 
+test('Select - display all options in dark mode', async () => {
+    const page = await openStoryPage({
+        id: 'components-select--controlled',
+        isDarkMode: true,
+        device: 'DESKTOP',
+    });
+
+    const field = await screen.findByRole('button', {name: 'Select a fruit'});
+    await field.click();
+
+    const image = await page.screenshot();
+
+    expect(image).toMatchImageSnapshot();
+});
+
 test('Select - display all options over inverse', async () => {
     const page = await openStoryPage({
         id: 'components-select--controlled',
@@ -170,6 +185,22 @@ test('Select - display all options with native select', async () => {
     const page = await openStoryPage({
         id: 'components-select--controlled',
         device: 'DESKTOP',
+        args: {native: true},
+    });
+
+    const field = await screen.findByLabelText('Select a fruit');
+    await field.click();
+
+    const image = await page.screenshot();
+
+    expect(image).toMatchImageSnapshot();
+});
+
+test('Select - display all options with native select in dark mode', async () => {
+    const page = await openStoryPage({
+        id: 'components-select--controlled',
+        device: 'DESKTOP',
+        isDarkMode: true,
         args: {native: true},
     });
 

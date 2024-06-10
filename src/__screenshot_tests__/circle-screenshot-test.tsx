@@ -1,11 +1,18 @@
 import {openStoryPage, screen} from '../test-utils';
 
-const CONTENT_OPTIONS = ['color', 'image', 'icon', 'none'];
+const CASES = [
+    {size: 100, background: 'color'},
+    {size: 40, background: 'color', children: true},
+    {size: 40, background: 'color', children: true, border: true},
+    {size: 100, background: 'image'},
+    {size: 100, background: 'custom'},
+    {size: 40, background: 'custom', children: true},
+] as const;
 
-test.each(CONTENT_OPTIONS)('Circle - %s', async (content) => {
+test.each(CASES)('Circle - %s', async (args) => {
     await openStoryPage({
         id: 'components-primitives-circle--default',
-        args: {content, border: content === 'none', size: 100},
+        args,
     });
 
     const story = await screen.findByTestId('circle');
