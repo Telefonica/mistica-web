@@ -282,11 +282,14 @@ const CardActionPauseIcon = ({color}: IconProps) => <IconPauseFilled color={colo
 
 const CardActionPlayIcon = ({color}: IconProps) => <IconPlayFilled color={color} size={12} />;
 
-const useVideoWithControls = (
+export const useVideoWithControls = (
     videoSrc?: VideoSource,
     poster?: string,
     videoRef?: React.RefObject<VideoElement>
-) => {
+): {
+    video?: React.ReactNode;
+    videoAction?: CardAction;
+} => {
     const {texts} = useTheme();
     const videoController = React.useRef<VideoElement>(null);
     const [videoStatus, dispatch] = React.useReducer(videoReducer, 'loading');
@@ -333,22 +336,24 @@ const useVideoWithControls = (
         return {video};
     }
 
-    const videoAction: CardAction = {
-        uncheckedProps: {
-            Icon:
-                videoStatus === 'loadingTimeout' && !isRunningAcceptanceTest()
-                    ? CardActionSpinner
-                    : CardActionPauseIcon,
-            label: videoStatus === 'loadingTimeout' ? '' : texts.pauseIconButtonLabel,
-        },
-        checkedProps: {
-            Icon: CardActionPlayIcon,
-            label: texts.playIconButtonLabel,
-        },
-        onChange: onVideoControlPress,
-        disabled: videoStatus === 'loadingTimeout',
-        checked: videoStatus === 'paused',
-    };
+    const videoAction: CardAction | undefined = video
+        ? {
+              uncheckedProps: {
+                  Icon:
+                      videoStatus === 'loadingTimeout' && !isRunningAcceptanceTest()
+                          ? CardActionSpinner
+                          : CardActionPauseIcon,
+                  label: videoStatus === 'loadingTimeout' ? '' : texts.pauseIconButtonLabel,
+              },
+              checkedProps: {
+                  Icon: CardActionPlayIcon,
+                  label: texts.playIconButtonLabel,
+              },
+              onChange: onVideoControlPress,
+              disabled: videoStatus === 'loadingTimeout',
+              checked: videoStatus === 'paused',
+          }
+        : undefined;
 
     return {
         video,

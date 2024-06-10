@@ -6,8 +6,14 @@ import Stack from './stack';
 import {Text3, Text8} from './text';
 import {vars} from './skins/skin-contract.css';
 import * as styles from './cover-hero.css';
+import classnames from 'classnames';
+import {applyCssVars} from './utils/css';
+import * as mediaStyles from './image.css';
+import GridLayout from './grid-layout';
+import {CoverHeroMedia} from './cover-hero-media';
 
-import type {VideoElement, VideoSource} from './video';
+import type {ImageProps, VideoProps} from './cover-hero-media';
+import type {AspectRatio} from './image';
 import type {ExclusifyUnion} from './utils/utility-types';
 import type {ButtonLink, ButtonPrimary, ButtonSecondary} from './button';
 import type Tag from './tag';
@@ -17,25 +23,21 @@ import type {Variant} from './theme-variant-context';
 type BaseProps = {
     headline?: RendersNullableElement<typeof Tag>;
     pretitle?: string;
+    pretitleLinesMax?: number;
     title: string;
+    titleLinesMax?: number;
     titleAs?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
     description?: string;
     descriptionLinesMax?: number;
     extra?: React.ReactNode;
-    rightExtra?: React.ReactNode;
+    sideExtra?: React.ReactNode;
     button?: RendersNullableElement<typeof ButtonPrimary>;
     secondaryButton?: RendersNullableElement<typeof ButtonSecondary>;
     buttonLink?: RendersNullableElement<typeof ButtonLink>;
-};
-
-type ImageProps = {
-    backgroundImage: string;
-};
-
-type VideoProps = {
-    backgroundVideo: VideoSource;
-    poster?: string;
-    backgroundVideoRef?: React.RefObject<VideoElement>;
+    minHeight?: string | number;
+    aspectRatio?: AspectRatio | number | 'auto';
+    centered?: boolean;
+    noPaddingY?: boolean;
 };
 
 type BackgroundColorProps = {
@@ -45,54 +47,132 @@ type BackgroundColorProps = {
 
 type CoverHeroProps = BaseProps & ExclusifyUnion<ImageProps | VideoProps | BackgroundColorProps>;
 
-const CoverHero = React.forwardRef<HTMLDivElement, CoverHeroProps>((props, ref) => {
-    const responsiveLayoutBackground =
-        props.backgroundVideo || props.backgroundImage ? 'none' : props.backgroundColor;
-    const responsiveLayoutVariant =
-        props.backgroundVideo || props.backgroundImage ? 'inverse' : props.variant;
+const aspectRatioToCssString = (aspectRatio?: BaseProps['aspectRatio']) => {
+    if (!aspectRatio) {
+        return 'initial';
+    }
+    if (typeof aspectRatio === 'number' || aspectRatio === 'auto') {
+        return String(aspectRatio);
+    }
+    return aspectRatio.replace(':', ' / ');
+};
 
-    const image = renderBackgroundImage(backgroundImage);
-    const {video, videoAction} = useVideoWithControls(backgroundVideo, poster, backgroundVideoRef);
+const CoverHero = React.forwardRef<HTMLDivElement, CoverHeroProps>(
+    (
+        {
+            headline,
+            pretitle,
+            pretitleLinesMax,
+            title,
+            titleLinesMax,
+            titleAs = 'h1',
+            description,
+            descriptionLinesMax,
+            extra,
+            sideExtra,
+            button,
+            secondaryButton,
+            buttonLink,
+            minHeight,
+            aspectRatio = 'auto',
+            variant,
+            backgroundColor,
+            centered,
+            noPaddingY,
+            ...mediaProps
+        },
+        ref
+    ) => {
+        const hasMedia = mediaProps.backgroundVideo || mediaProps.backgroundImage;
 
-    return (
-        <div ref={ref}>
-            <ResponsiveLayout variant={responsiveLayoutVariant} backgroundColor={responsiveLayoutBackground}>
-                <Box paddingY={{desktop: 56, mobile: 24}}>
-                    <Stack space={24}>
-                        <div className={styles.textContainer}>
-                            <div>
-                                {props.headline && (
-                                    <Box paddingBottom={{mobile: 16, desktop: 8}}>{props.headline}</Box>
-                                )}
-                                <Stack space={16}>
-                                    <Stack space={8}>
-                                        {props.pretitle && <Text3 regular>{props.pretitle}</Text3>}
-                                        <Text8 as={props.titleAs}>{props.title}</Text8>
-                                    </Stack>
-                                    <div>
-                                        <Text3
-                                            regular
-                                            truncate={props.descriptionLinesMax}
-                                            color={vars.colors.textSecondary}
-                                        >
-                                            {props.description}
-                                        </Text3>
-                                        {props.extra}
-                                    </div>
-                                </Stack>
+        const background = hasMedia
+            ? 'none'
+            : backgroundColor ||
+              {
+                  default: vars.colors.background,
+                  inverse: vars.colors.backgroundBrand,
+                  alternative: vars.colors.backgroundAlternative,
+              }[variant ?? 'default'];
+
+        const textShadow = hasMedia ? '0 0 15px rgba(0, 0, 0, 0.4)' : undefined;
+
+        const mainContent = (
+            <div className={styles.mainContent}>
+                {headline && <Box paddingBottom={{desktop: 8, tablet: 8, mobile: 16}}>{headline}</Box>}
+                <Stack space={16}>
+                    <Stack space={8}>
+                        {pretitle && (
+                            <div className={styles.sixColumns}>
+                                <Text3 regular truncate={pretitleLinesMax} textShadow={textShadow}>
+                                    {pretitle}
+                                </Text3>
                             </div>
-                            {props.rightExtra}
-                        </div>
-                        <ButtonGroup
-                            primaryButton={props.button}
-                            secondaryButton={props.secondaryButton}
-                            link={props.buttonLink}
-                        />
+                        )}
+                        <Text8 as={titleAs} truncate={titleLinesMax} textShadow={textShadow}>
+                            {title}
+                        </Text8>
                     </Stack>
-                </Box>
-            </ResponsiveLayout>
-        </div>
-    );
-});
+                    {description && (
+                        <div className={styles.sixColumns}>
+                            <Text3
+                                as="p"
+                                regular
+                                truncate={descriptionLinesMax}
+                                color={vars.colors.textSecondary}
+                                textShadow={textShadow}
+                            >
+                                {description}
+                            </Text3>
+                        </div>
+                    )}
+                </Stack>
+                {extra}
+            </div>
+        );
+
+        return (
+            <section
+                ref={ref}
+                className={classnames(styles.coverHero, {
+                    [styles.centered]: centered,
+                    [styles.hasSideExtra]: sideExtra,
+                    [styles.minHeight]: !noPaddingY,
+                })}
+                style={{
+                    minHeight: aspectRatio && aspectRatio !== 'auto' ? 'auto' : minHeight,
+                    boxSizing: 'border-box',
+                    background,
+                    aspectRatio: aspectRatioToCssString(aspectRatio),
+                    ...applyCssVars({
+                        [mediaStyles.vars.mediaBorderRadius]: '0px',
+                    }),
+                }}
+            >
+                {hasMedia ? <CoverHeroMedia {...mediaProps} /> : null}
+                <ResponsiveLayout variant={hasMedia ? 'inverse' : variant} backgroundColor="none">
+                    <Box paddingY={noPaddingY ? 0 : {desktop: 56, tablet: 56, mobile: 24}}>
+                        <Stack space={24}>
+                            {centered && !sideExtra ? (
+                                mainContent
+                            ) : (
+                                <GridLayout
+                                    template="8+4"
+                                    collapseBreakpoint="mobile"
+                                    left={mainContent}
+                                    right={<div>{sideExtra}</div>}
+                                />
+                            )}
+                            <ButtonGroup
+                                primaryButton={button}
+                                secondaryButton={secondaryButton}
+                                link={buttonLink}
+                            />
+                        </Stack>
+                    </Box>
+                </ResponsiveLayout>
+            </section>
+        );
+    }
+);
 
 export default CoverHero;

@@ -27,7 +27,7 @@ export const image = style([
         borderRadius: skinVars.borderRadii.container,
     }),
     {
-        zIndex: 1,
+        // zIndex: 1,
         transition: `opacity ${FADE_IN_DURATION_MS}ms`,
     },
 ]);

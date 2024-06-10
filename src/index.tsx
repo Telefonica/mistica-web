@@ -81,6 +81,7 @@ export {
     CardActionIconButton,
 } from './card';
 export {default as Hero} from './hero';
+export {default as CoverHero} from './cover-hero';
 export {Table} from './table';
 export {default as Divider} from './divider';
 export {Menu, MenuItem, MenuSection} from './menu';

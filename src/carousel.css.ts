@@ -88,6 +88,8 @@ export const slideshowContainer = sprinkles({
     position: 'relative',
 });
 
+export const slideshowWithBullets = style({});
+
 const hideScrollbar = style({
     scrollbarWidth: 'none', // Hide in FF
     '::-webkit-scrollbar': {
