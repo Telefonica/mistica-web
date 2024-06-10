@@ -392,9 +392,6 @@ const CardContent: React.FC<CardContentProps> = ({
     buttonLink,
 }) => {
     const {textPresets} = useTheme();
-
-    // title headline pretitle subtitle description extra
-
     return (
         <div
             className={sprinkles({
