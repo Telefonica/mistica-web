@@ -344,13 +344,13 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
                                     paddingRight: endIcon
                                         ? 0
                                         : endIconOverlay
-                                        ? endIconWidth
-                                        : styles.fieldRightPadding,
+                                          ? endIconWidth
+                                          : styles.fieldRightPadding,
                                     paddingLeft: prefix
                                         ? 0
                                         : startIcon
-                                        ? `calc(${startIconWidth} + ${styles.fieldLeftPadding}px)`
-                                        : styles.fieldLeftPadding,
+                                          ? `calc(${startIconWidth} + ${styles.fieldLeftPadding}px)`
+                                          : styles.fieldLeftPadding,
                                     ...props.style,
                                     fontFamily,
                                 },

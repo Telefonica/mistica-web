@@ -28,18 +28,18 @@ const getLogoActionProps = (action: string) => {
               'aria-label': 'pressable logo',
           }
         : action === 'href'
-        ? {
-              href: 'https://www.google.com',
-              newTab: true,
-              'aria-label': 'logo-link',
-          }
-        : action === 'to'
-        ? {
-              to: '#',
-              replace: true,
-              'aria-label': 'logo-link',
-          }
-        : {};
+          ? {
+                href: 'https://www.google.com',
+                newTab: true,
+                'aria-label': 'logo-link',
+            }
+          : action === 'to'
+            ? {
+                  to: '#',
+                  replace: true,
+                  'aria-label': 'logo-link',
+              }
+            : {};
 };
 
 export const Default: StoryComponent<Args> = ({type, size, inverse, action, forceBrandLogo, brand}) => {

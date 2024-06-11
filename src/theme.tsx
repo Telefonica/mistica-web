@@ -332,28 +332,25 @@ const getReactRouter5Link = (ReactRouterLink: React.ComponentType<any>): LinkCom
 
 const getReactRouter6Link =
     (ReactRouterLink: React.ComponentType<any>): LinkComponent =>
-    ({innerRef, ...props}) =>
-        <ReactRouterLink ref={innerRef} {...props} />;
+    ({innerRef, ...props}) => <ReactRouterLink ref={innerRef} {...props} />;
 
 const getNext12Link =
     (NextLink: React.ComponentType<any>): LinkComponent =>
-    ({to, innerRef, children, ...props}) =>
-        (
-            <NextLink href={to}>
-                <a ref={innerRef} {...props}>
-                    {children}
-                </a>
-            </NextLink>
-        );
+    ({to, innerRef, children, ...props}) => (
+        <NextLink href={to}>
+            <a ref={innerRef} {...props}>
+                {children}
+            </a>
+        </NextLink>
+    );
 
 const getNext13Or14Link =
     (NextLink: React.ComponentType<any>): LinkComponent =>
-    ({to, innerRef, children, ...props}) =>
-        (
-            <NextLink href={to} ref={innerRef} {...props}>
-                {children}
-            </NextLink>
-        );
+    ({to, innerRef, children, ...props}) => (
+        <NextLink href={to} ref={innerRef} {...props}>
+            {children}
+        </NextLink>
+    );
 
 export const getMisticaLinkComponent = (Link?: ThemeConfig['Link']): LinkComponent => {
     if (!Link) {

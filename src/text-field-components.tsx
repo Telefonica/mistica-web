@@ -81,8 +81,8 @@ export const HelperText: React.FC<HelperTextProps> = ({leftText, rightText, erro
     const leftColor = isInverse
         ? vars.colors.textPrimaryInverse
         : error
-        ? vars.colors.textError
-        : vars.colors.textSecondary;
+          ? vars.colors.textError
+          : vars.colors.textSecondary;
     const rightColor = isInverse ? vars.colors.textPrimaryInverse : vars.colors.textSecondary;
 
     return (

@@ -70,9 +70,7 @@ export const Controlled: StoryComponent<DateTimeFieldControlledArgs> = ({
                         dataAttributes={{testid: 'datetime-field'}}
                         min={min ? minDate : undefined}
                         max={max ? maxDate : undefined}
-                        helperText={`min: ${min ? getLocalDateTimeString(minDate) : '-'} / max: ${
-                            max ? getLocalDateTimeString(maxDate) : '-'
-                        }`}
+                        helperText={`min: ${min ? getLocalDateTimeString(minDate) : '-'} / max: ${max ? getLocalDateTimeString(maxDate) : '-'}`}
                         {...rest}
                     />
                     <Stack space={8}>
@@ -136,9 +134,7 @@ export const Uncontrolled: StoryComponent<DateTimeFieldUncontrolledArgs> = ({
                         dataAttributes={{testid: 'datetime-field'}}
                         min={min ? minDate : undefined}
                         max={max ? maxDate : undefined}
-                        helperText={`min: ${min ? getLocalDateTimeString(minDate) : '-'} / max: ${
-                            max ? getLocalDateTimeString(maxDate) : '-'
-                        }`}
+                        helperText={`min: ${min ? getLocalDateTimeString(minDate) : '-'} / max: ${max ? getLocalDateTimeString(maxDate) : '-'}`}
                         {...rest}
                     />
                     <Stack space={8}>

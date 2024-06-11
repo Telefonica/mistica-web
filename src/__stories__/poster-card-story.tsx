@@ -119,15 +119,15 @@ export const Default: StoryComponent<PosterCardArgs> = ({
                   backgroundImage: isEmptySource ? '' : BACKGROUND_IMAGE_SRC,
               }
             : background === 'video'
-            ? {
-                  backgroundVideo: isEmptySource ? '' : BACKGROUND_VIDEO_SRC,
-                  poster: isEmptySource ? '' : BACKGROUND_VIDEO_POSTER_SRC,
-              }
-            : {
-                  ...topActionsProps,
-                  backgroundColor: backgroundColorFromSkin || backgroundColorCustom,
-                  variant,
-              };
+              ? {
+                    backgroundVideo: isEmptySource ? '' : BACKGROUND_VIDEO_SRC,
+                    poster: isEmptySource ? '' : BACKGROUND_VIDEO_POSTER_SRC,
+                }
+              : {
+                    ...topActionsProps,
+                    backgroundColor: backgroundColorFromSkin || backgroundColorCustom,
+                    variant,
+                };
 
     const interactiveProps = {
         onPress: actions === 'onPress' ? () => {} : undefined,

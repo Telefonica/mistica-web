@@ -101,11 +101,11 @@ const Tabs: React.FC<TabsProps> = ({selectedIndex, onChange, tabs, dataAttribute
                                                         ? styles.tabSelectionVariants.selectedAnimatingInverse
                                                         : styles.tabSelectionVariants.selectedAnimating
                                                     : isInverse
-                                                    ? styles.tabSelectionVariants.selectedInverse
-                                                    : styles.tabSelectionVariants.selected
+                                                      ? styles.tabSelectionVariants.selectedInverse
+                                                      : styles.tabSelectionVariants.selected
                                                 : isInverse
-                                                ? styles.tabSelectionVariants.noSelectedInverse
-                                                : styles.tabSelectionVariants.noSelected,
+                                                  ? styles.tabSelectionVariants.noSelectedInverse
+                                                  : styles.tabSelectionVariants.noSelected,
                                             isInverse ? styles.tabHover.inverse : styles.tabHover.default
                                         )}
                                         onPress={() => {
