@@ -33,7 +33,6 @@ export const wrapper = style([
         minHeight: 48,
         padding: `14px 16px`,
         bottom: 40,
-        zIndex: 1000, // above anything
         opacity: 0,
         transform: 'translateY(100px)',
         transition: `transform ${TRANSITION_TIME_IN_MS}ms ease-in-out, opacity ${TRANSITION_TIME_IN_MS}ms ease-in-out`,
