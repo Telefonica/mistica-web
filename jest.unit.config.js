@@ -18,5 +18,5 @@ module.exports = {
     testEnvironment: 'jsdom',
     testMatch: ['**/__tests__/*-test.tsx'],
     testEnvironmentOptions: {url: 'http://test.tuenti.com'},
-    setupFilesAfterEnv: [require.resolve('./setup-test-env.tsx'), '@testing-library/jest-dom/extend-expect'],
+    setupFilesAfterEnv: [require.resolve('./setup-test-env.tsx')],
 };

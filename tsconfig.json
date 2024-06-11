@@ -76,6 +76,11 @@
         "resolveJsonModule": true,
         "noEmit": true
     },
+
+    "include": [
+        // extended matchers for @testing-library/jest-dom
+        "./setup-test-env.tsx"
+    ],
     // this also excludes paths from VSCode auto import feature
     "exclude": ["dist", "dist-ts", "dist-es", "node_modules", "examples"]
 }

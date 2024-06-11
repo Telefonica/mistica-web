@@ -18,6 +18,11 @@ const DisableScroll = () => {
     return <span>scroll is disabled</span>;
 };
 
+const getBodyElement = () => {
+    // eslint-disable-next-line testing-library/no-node-access
+    return document?.querySelector('body');
+};
+
 const ToggleComponent = ({children, toggleText}: any) => {
     const [show, setShow] = React.useState(false);
     React.useLayoutEffect(() => {
@@ -43,7 +48,7 @@ test('useDisableScroll: happy case', async () => {
     expect(screen.queryByText('scroll is disabled')).not.toBeInTheDocument();
 
     const toggleButton = screen.getByRole('button', {name: 'toggle'});
-    const body = toggleButton.parentElement?.parentElement;
+    const body = getBodyElement();
 
     userEvent.click(toggleButton);
     expect(await screen.findByText('scroll is disabled')).toBeInTheDocument();
@@ -69,7 +74,7 @@ test('useDisableScroll: nested instances - closing all at once', async () => {
     );
 
     const toggleButton1 = screen.getByRole('button', {name: 'toggle1'});
-    const body = toggleButton1.parentElement?.parentElement;
+    const body = getBodyElement();
 
     userEvent.click(toggleButton1);
     expect(await screen.findByText('scroll is disabled')).toBeInTheDocument();
@@ -103,7 +108,7 @@ test('useDisableScroll: nested instances - closing ony by one', async () => {
     );
 
     const toggleButton1 = screen.getByRole('button', {name: 'toggle1'});
-    const body = toggleButton1.parentElement?.parentElement;
+    const body = getBodyElement();
 
     userEvent.click(toggleButton1);
     expect(await screen.findByText('scroll is disabled')).toBeInTheDocument();

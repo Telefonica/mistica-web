@@ -263,20 +263,19 @@ test('<a> element is rendered when "href" prop is passed and multiple trackingEv
 
 test('<button> element is rendered when "onPress" prop is passed', () => {
     const onPress = () => {};
-    const {container} = render(
+    render(
         <ThemeContextProvider theme={makeTheme()}>
             <Touchable onPress={onPress}>Test</Touchable>
         </ThemeContextProvider>
     );
 
-    expect(screen.getByText('Test')).toBeInTheDocument();
-    expect(container.querySelector('button')).toBeInTheDocument();
+    expect(screen.getByRole('button', {name: 'Test'})).toBeInTheDocument();
 });
 
 test('<button> element is rendered when "onPress" prop is passed and trackingEvent', async () => {
     const onPressSpy = jest.fn().mockReturnValue(undefined);
     const logEventSpy = jest.fn(() => Promise.resolve());
-    const {container} = render(
+    render(
         <ThemeContextProvider theme={makeTheme({analytics: {logEvent: logEventSpy}})}>
             <Touchable onPress={onPressSpy} trackingEvent={trackingEvent}>
                 Test
@@ -284,10 +283,7 @@ test('<button> element is rendered when "onPress" prop is passed and trackingEve
         </ThemeContextProvider>
     );
 
-    expect(screen.getByText('Test')).toBeInTheDocument();
-    expect(container.querySelector('button')).toBeInTheDocument();
-
-    fireEvent.click(screen.getByText('Test'));
+    fireEvent.click(screen.getByRole('button', {name: 'Test'}));
 
     await waitFor(() => {
         expect(logEventSpy).toHaveBeenCalledTimes(1);
@@ -299,7 +295,7 @@ test('<button> element is rendered when "onPress" prop is passed and trackingEve
 test('<button> element is rendered when "onPress" prop is passed and multiple trackingEvent', async () => {
     const onPressSpy = jest.fn().mockReturnValue(undefined);
     const logEventSpy = jest.fn(() => Promise.resolve());
-    const {container} = render(
+    render(
         <ThemeContextProvider theme={makeTheme({analytics: {logEvent: logEventSpy}})}>
             <Touchable onPress={onPressSpy} trackingEvent={[trackingEvent, trackingEvent]}>
                 Test
@@ -307,10 +303,7 @@ test('<button> element is rendered when "onPress" prop is passed and multiple tr
         </ThemeContextProvider>
     );
 
-    expect(screen.getByText('Test')).toBeInTheDocument();
-    expect(container.querySelector('button')).toBeInTheDocument();
-
-    fireEvent.click(screen.getByText('Test'));
+    fireEvent.click(screen.getByRole('button', {name: 'Test'}));
 
     await waitFor(() => {
         expect(logEventSpy).toHaveBeenCalledTimes(2);
@@ -330,9 +323,7 @@ test('<a> component has click-like behaviour on "space" key press', async () => 
         </ThemeContextProvider>
     );
 
-    const anchor = screen.getByText(/Test/);
-
-    fireEvent.keyDown(anchor, {key: SPACE});
+    fireEvent.keyDown(screen.getByRole('button', {name: /Test/}), {key: SPACE});
 
     await waitFor(() => {
         expect(redirectSpy).toHaveBeenCalledTimes(1);
