@@ -1,5 +1,14 @@
 import * as React from 'react';
-import {CoverHero, ButtonPrimary, ButtonLink, Tag, Placeholder, skinVars, Slideshow} from '..';
+import {
+    CoverHero,
+    ButtonPrimary,
+    ButtonLink,
+    Tag,
+    Placeholder,
+    skinVars,
+    Slideshow,
+    ButtonSecondary,
+} from '..';
 import usingVrImg from './images/using-vr.jpg';
 import beachImg from './images/beach.jpg';
 import beachVideo from './videos/beach.mp4';
@@ -25,7 +34,13 @@ type Args = {
     description: string;
     withExtra: boolean;
     withSideExtra: boolean;
-    actions: 'button' | 'link' | 'button and link';
+    actions:
+        | 'button'
+        | 'link'
+        | 'button and link'
+        | 'button and secondaryButton'
+        | 'secondaryButton and link'
+        | 'button, secondaryButton and link';
     minHeight: string | undefined;
     aspectRatio: '1:1' | '16:9' | '7:10' | '4:3' | 'auto';
     centered: boolean;
@@ -67,6 +82,9 @@ export const Default: StoryComponent<Args> = ({
 
     const button = actions.includes('button') ? <ButtonPrimary fake>Action</ButtonPrimary> : undefined;
     const buttonLink = actions.includes('link') ? <ButtonLink href="#">Link</ButtonLink> : undefined;
+    const secondaryButton = actions.includes('secondaryButton') ? (
+        <ButtonSecondary fake>Secondary</ButtonSecondary>
+    ) : undefined;
 
     return (
         <CoverHero
@@ -77,6 +95,7 @@ export const Default: StoryComponent<Args> = ({
             extra={withExtra ? <Placeholder /> : undefined}
             sideExtra={withSideExtra ? <Placeholder /> : undefined}
             button={button}
+            secondaryButton={secondaryButton}
             buttonLink={buttonLink}
             minHeight={minHeight}
             aspectRatio={aspectRatio}
@@ -133,8 +152,20 @@ Default.argTypes = {
         // if: {arg: 'background', eq: 'color'},
     },
     actions: {
-        options: ['button', 'link', 'button and link'],
-        control: {type: 'select'},
+        options: [
+            'button',
+            'link',
+            'button and link',
+            'button and secondaryButton',
+            'secondaryButton and link',
+            'button secondaryButton and link',
+        ],
+        control: {
+            type: 'select',
+            labels: {
+                'button secondaryButton and link': 'button, secondaryButton and link',
+            },
+        },
     },
     minHeight: {
         control: {type: 'text'},

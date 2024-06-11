@@ -61,28 +61,38 @@ const cases = [
         'desktop centered',
         {
             device: 'DESKTOP',
-            args: {centered: true},
+            args: {centered: true, actions: 'button secondaryButton and link'},
         },
     ],
     [
         'mobile centered',
         {
             device: 'MOBILE_IOS',
-            args: {centered: true},
+            args: {centered: true, actions: 'button secondaryButton and link'},
         },
     ],
     [
         'desktop centered with extra and sideExtra',
         {
             device: 'DESKTOP',
-            args: {centered: true, withExtra: true, withSideExtra: true},
+            args: {
+                centered: true,
+                withExtra: true,
+                withSideExtra: true,
+                actions: 'button secondaryButton and link',
+            },
         },
     ],
     [
         'mobile centered with extra and sideExtra',
         {
             device: 'MOBILE_IOS',
-            args: {centered: true, withExtra: true, withSideExtra: true},
+            args: {
+                centered: true,
+                withExtra: true,
+                withSideExtra: true,
+                actions: 'button secondaryButton and link',
+            },
         },
     ],
     [
@@ -97,6 +107,20 @@ const cases = [
         {
             device: 'DESKTOP',
             args: {actions: 'link'},
+        },
+    ],
+    [
+        'desktop two buttons',
+        {
+            device: 'DESKTOP',
+            args: {actions: 'button and secondaryButton'},
+        },
+    ],
+    [
+        'desktop two buttons and link',
+        {
+            device: 'DESKTOP',
+            args: {actions: 'button secondaryButton and link'},
         },
     ],
     [

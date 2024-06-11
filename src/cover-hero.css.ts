@@ -97,3 +97,5 @@ export const sixColumns = style({
         },
     },
 });
+
+export const sideExtra = sprinkles({position: 'relative'});

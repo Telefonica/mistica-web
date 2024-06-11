@@ -167,10 +167,15 @@ const CoverHero = React.forwardRef<HTMLDivElement, CoverHeroProps>(
                                     template="8+4"
                                     collapseBreakpoint="mobile"
                                     left={mainContent}
-                                    right={<div>{sideExtra}</div>}
+                                    right={<div className={styles.sideExtra}>{sideExtra}</div>}
                                 />
                             )}
                             <ButtonGroup
+                                align={{
+                                    mobile: centered ? 'center' : 'left',
+                                    tablet: centered && !sideExtra ? 'center' : 'left',
+                                    desktop: centered && !sideExtra ? 'center' : 'left',
+                                }}
                                 primaryButton={button}
                                 secondaryButton={secondaryButton}
                                 link={buttonLink}
