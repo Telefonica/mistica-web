@@ -90,7 +90,7 @@ export const sixColumns = style({
         [mq.tabletOrBigger]: {
             width: '75%',
             selectors: {
-                [`${centered} &`]: {
+                [`${centered}:not(${hasSideExtra}) &`]: {
                     width: '100%',
                 },
             },
