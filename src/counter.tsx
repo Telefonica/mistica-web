@@ -10,7 +10,7 @@ import {BaseTouchable} from './touchable';
 import IconSubtractRegular from './generated/mistica-icons/icon-subtract-regular';
 import IconAddMoreRegular from './generated/mistica-icons/icon-add-more-regular';
 import IconTrashCanRegular from './generated/mistica-icons/icon-trash-can-regular';
-import {useTheme} from './hooks';
+import {useAriaId, useTheme} from './hooks';
 import classNames from 'classnames';
 import ScreenReaderOnly from './screen-reader-only';
 
@@ -83,6 +83,7 @@ const Counter: React.FC<Props> = ({
     valueLabel,
 }) => {
     const variant = useThemeVariant();
+    const counterId = useAriaId();
     const {texts} = useTheme();
 
     const minValue = min === undefined ? 0 : min;
@@ -139,6 +140,7 @@ const Counter: React.FC<Props> = ({
                         disabled={(!hasTrashIcon && currentValue === minValue) || disabled}
                         onPress={() => (hasTrashIcon ? onRemove?.() : setCurrentValue(currentValue - 1))}
                         aria-label={hasTrashIcon ? getRemoveLabel() : getDecreaseLabel()}
+                        aria-controls={counterId}
                     >
                         <div className={styles.buttonBackground} />
                         <div className={styles.decreaseButtonIcon} aria-hidden={hasTrashIcon}>
@@ -165,6 +167,8 @@ const Counter: React.FC<Props> = ({
                      * for new Vivo font.
                      * */
                     style={{width: `${Math.max(3, String(maxValue).length) * 1.25}ch`}}
+                    id={counterId}
+                    aria-live="polite"
                 >
                     <ThemeVariant variant="default">
                         <div aria-hidden>
@@ -189,6 +193,7 @@ const Counter: React.FC<Props> = ({
                         disabled={currentValue === maxValue || disabled}
                         onPress={() => setCurrentValue(currentValue + 1)}
                         aria-label={getIncreaseLabel()}
+                        aria-controls={counterId}
                     >
                         <div className={styles.buttonBackground} />
                         <div className={styles.defaultButtonIcon}>

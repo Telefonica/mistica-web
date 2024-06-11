@@ -3,7 +3,7 @@ import {sprinkles} from './sprinkles.css';
 import {vars as colorsVars} from './skins/skin-contract.css';
 import * as mq from './media-queries.css';
 
-const SWITCH_ANIMATION = '0.2s ease-in 0s';
+const SWITCH_ANIMATION = '.25s cubic-bezier(.5, 1.35, .77, 1)';
 
 const top = createVar();
 const left = createVar();

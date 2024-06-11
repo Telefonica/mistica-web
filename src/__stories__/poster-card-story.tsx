@@ -129,7 +129,7 @@ export const Default: StoryComponent<PosterCardArgs> = ({
                   variant,
               };
 
-    const touchableProps = {
+    const interactiveProps = {
         onPress: actions === 'onPress' ? () => {} : undefined,
         to: actions === 'to' ? '#' : undefined,
         href: actions === 'href' ? 'https://example.org' : undefined,
@@ -152,7 +152,7 @@ export const Default: StoryComponent<PosterCardArgs> = ({
                     width={width}
                     height={height}
                     aspectRatio={aspectRatio}
-                    {...touchableProps}
+                    {...interactiveProps}
                 />
             </Box>
         </ResponsiveLayout>
