@@ -33,7 +33,6 @@ import type {TouchableComponentProps} from '../touchable';
     text
 </Touchable>;
 
-// @ts-expect-error - to doesn't support newTab
 <Touchable to="/" newTab>
     text
 </Touchable>;

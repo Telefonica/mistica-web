@@ -61,7 +61,12 @@ type BaseIconButtonAction = {
 type IconButtonAction = BaseIconButtonAction &
     ExclusifyUnion<
         | {href: string; newTab?: boolean}
-        | {to: string; fullPageOnWebView?: boolean; replace?: boolean}
+        | {
+              to: string;
+              newTab?: boolean;
+              fullPageOnWebView?: boolean;
+              replace?: boolean;
+          }
         | {onPress: () => void}
     >;
 
@@ -481,6 +486,7 @@ type TouchableProps = {
       }
     | {
           to: string | undefined;
+          newTab?: boolean;
           fullPageOnWebView?: boolean;
           replace?: boolean;
           onNavigate?: () => void | Promise<void>;

@@ -53,6 +53,8 @@ type HrefProps = {
 
 type ToProps = {
     to: string | Location;
+    newTab?: boolean;
+    /** @deprecated set the newTab */
     fullPageOnWebView?: boolean;
     replace?: boolean;
     onNavigate?: () => void | Promise<void>;
@@ -121,7 +123,7 @@ const RawTouchable = React.forwardRef<TouchableElement, TouchableProps>((props, 
 
     const type = props.type ? props.type : 'button';
 
-    const openNewTab = !!props.href && !!props.newTab;
+    const openNewTab = !!props.newTab;
     const openInCurrentPage = props.href?.startsWith('#');
     const loadOnTop = !openNewTab && !!props.href && !!props.loadOnTop;
 
@@ -203,6 +205,18 @@ const RawTouchable = React.forwardRef<TouchableElement, TouchableProps>((props, 
         }
     };
 
+    const renderScreenReaderOnlyHint = () => {
+        return openNewTab ? (
+            <ScreenReaderOnly>
+                <span>{texts.linkOpensInNewTab}</span>
+            </ScreenReaderOnly>
+        ) : openInCurrentPage ? (
+            <ScreenReaderOnly>
+                <span>{texts.linkOpensInCurrentPage}</span>
+            </ScreenReaderOnly>
+        ) : null;
+    };
+
     if (!!props.href || (props.to && props.fullPageOnWebView && isInsideNovumNativeApp(platformOverrides))) {
         return (
             <a
@@ -221,15 +235,7 @@ const RawTouchable = React.forwardRef<TouchableElement, TouchableProps>((props, 
                 ref={ref as React.RefObject<HTMLAnchorElement>}
             >
                 {children}
-                {openNewTab ? (
-                    <ScreenReaderOnly>
-                        <span>{texts.linkOpensInNewTab}</span>
-                    </ScreenReaderOnly>
-                ) : openInCurrentPage ? (
-                    <ScreenReaderOnly>
-                        <span>{texts.linkOpensInCurrentPage}</span>
-                    </ScreenReaderOnly>
-                ) : null}
+                {renderScreenReaderOnlyHint()}
             </a>
         );
     }
@@ -238,6 +244,7 @@ const RawTouchable = React.forwardRef<TouchableElement, TouchableProps>((props, 
         return (
             <Link
                 {...commonProps}
+                target={props.newTab ? '_blank' : undefined}
                 aria-label={props['aria-label']}
                 aria-labelledby={props['aria-labelledby']}
                 innerRef={ref as React.RefObject<HTMLAnchorElement>}
@@ -247,6 +254,7 @@ const RawTouchable = React.forwardRef<TouchableElement, TouchableProps>((props, 
                 onKeyDown={handleKeyDown}
             >
                 {children}
+                {renderScreenReaderOnlyHint()}
             </Link>
         );
     }

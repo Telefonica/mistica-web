@@ -17,6 +17,7 @@ interface HrefProps {
 
 interface ToProps {
     to: string;
+    newTab?: boolean;
     fullPageOnWebView?: boolean;
     replace?: boolean;
 }

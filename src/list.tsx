@@ -282,6 +282,7 @@ interface HrefRowContentProps extends CommonProps {
 interface ToRowContentProps extends CommonProps {
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
     to: string | undefined;
+    newTab?: boolean;
     fullPageOnWebView?: boolean;
     replace?: boolean;
     onNavigate?: () => void | Promise<void>;

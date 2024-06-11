@@ -46,6 +46,7 @@ import {Icon2GRegular, IconButton} from '..';
     trackingEvent={{name: 'something'}}
     to="/somewhere"
 />;
+<IconButton Icon={Icon2GRegular} aria-label="something" to="/somewhere" newTab />;
 
 // @ts-expect-error - onPress doesn't support href
 <IconButton Icon={Icon2GRegular} aria-label="something" onPress={() => {}} href="/somewhere" />;
@@ -55,8 +56,7 @@ import {Icon2GRegular, IconButton} from '..';
 <IconButton Icon={Icon2GRegular} aria-label="something" href="/somewhere" to="/somewhere" />;
 
 <IconButton Icon={Icon2GRegular} aria-label="something" href="/somewhere" newTab />;
-// @ts-expect-error - to doesn't support newTab
-<IconButton Icon={Icon2GRegular} aria-label="something" to="/somewhere" newTab />;
+
 // @ts-expect-error - onPress doesn't support newTab
 <IconButton Icon={Icon2GRegular} aria-label="something" onPress={() => {}} newTab />;
 
