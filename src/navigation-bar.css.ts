@@ -4,6 +4,9 @@ import {NAVBAR_HEIGHT_DESKTOP, NAVBAR_HEIGHT_DESKTOP_LARGE, NAVBAR_HEIGHT_MOBILE
 import * as mq from './media-queries.css';
 import {vars as colorVars} from './skins/skin-contract.css';
 
+const NAVBAR_ZINDEX = 25;
+const BURGER_ZINDEX = 26;
+
 const BURGER_MENU_ANIMATION_DURATION_MS = 300;
 
 export const burgerIconContainer = style([
@@ -68,6 +71,9 @@ export const topFixed = style([
         left: 0,
         right: 0,
     }),
+    {
+        zIndex: NAVBAR_ZINDEX,
+    },
 ]);
 
 const borderWidth = 1;
@@ -264,6 +270,7 @@ export const burgerMenu = style([
         background: colorVars.colors.background,
     }),
     {
+        zIndex: BURGER_ZINDEX,
         height: `calc(100vh - ${NAVBAR_HEIGHT_MOBILE}px)`,
         overflowY: 'auto',
         transition: `transform ${BURGER_MENU_ANIMATION_DURATION_MS}ms ease-out`,
