@@ -1,4 +1,4 @@
-import {openStoryPage} from '../test-utils';
+import {openStoryPage, screen} from '../test-utils';
 
 const cases = [
     [
@@ -210,24 +210,26 @@ const cases = [
 ] as const;
 
 test.each(cases)('CoverHero %s', async (_name, {device, args}) => {
-    const page = await openStoryPage({
+    await openStoryPage({
         id: 'components-hero-coverhero--default',
         device,
         args,
     });
 
-    const image = await page.screenshot();
+    const coverHero = await screen.findByTestId('cover-hero');
+    const image = await coverHero.screenshot();
     expect(image).toMatchImageSnapshot();
 });
 
 test('CoverHero inside a Slideshow', async () => {
-    const page = await openStoryPage({
+    await openStoryPage({
         id: 'components-hero-coverhero--cover-hero-in-slideshow',
         args: {
             background: 'image',
         },
     });
 
-    const image = await page.screenshot();
+    const coverHero = await screen.findByTestId('slideshow');
+    const image = await coverHero.screenshot();
     expect(image).toMatchImageSnapshot();
 });

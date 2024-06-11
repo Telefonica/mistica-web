@@ -88,6 +88,7 @@ export const Default: StoryComponent<Args> = ({
 
     return (
         <CoverHero
+            dataAttributes={{testid: 'cover-hero'}}
             headline={headline ? <Tag type={headlineType}>{headline}</Tag> : undefined}
             pretitle={pretitle}
             title={title}
@@ -192,6 +193,7 @@ Default.argTypes = {
 
 export const CoverHeroInSlideshow: StoryComponent = () => (
     <Slideshow
+        dataAttributes={{testid: 'slideshow'}}
         withBullets
         items={Array.from({length: 3}, (_, idx) => (
             <CoverHero
