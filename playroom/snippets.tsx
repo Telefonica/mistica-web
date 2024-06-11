@@ -1765,6 +1765,571 @@ const exampleScreens: Array<Snippet> = [
 </ButtonFixedFooterLayout>
 `,
     },
+    {
+        group: 'Ξ ✨ Example Screens',
+        name: 'Commercial Screen (only mobile)',
+        code: `
+<MainNavigationBar
+  withBorder={false}
+  sections={["Home", "Shop"].map((title, idx) => ({
+    title,
+    onPress: () => setState("index", idx),
+  }))}
+  selectedIndex={getState("index", 0)}
+  right={
+    <NavigationBarActionGroup>
+      <NavigationBarAction
+        onPress={() => {}}
+        aria-label="shopping cart with 2 items"
+      >
+        <Badge value={2}>
+          <IconBellRegular color="currentColor" />
+        </Badge>
+      </NavigationBarAction>
+      <NavigationBarAction onPress={() => {}} aria-label="Open profile">
+        <Avatar
+          size={isDesktopOrBigger ? 32 : 24}
+          initials="ML"
+          src="https://source.unsplash.com/600x600/?face"
+        />
+        {isDesktopOrBigger && "María López Serrano"}
+      </NavigationBarAction>
+    </NavigationBarActionGroup>
+  }
+/>
+
+<MainSectionHeaderLayout isInverse={false}>
+  <MainSectionHeader title="Hola, Alex" />
+</MainSectionHeaderLayout>
+
+<ResponsiveLayout>
+  <Box paddingTop={0} paddingBottom={40}>
+    <Stack space={56}>
+      <Carousel
+        itemsPerPage={2}
+        items={Array.from({ length: 3 }, (_, idx) => (
+          <SnapCard
+            icon={
+              [
+                <Circle size={40} backgroundColor={colors.brandLow}>
+                  <IconOfferPercentRegular color={colors.brand} />
+                </Circle>,
+                <Circle size={40} backgroundColor={colors.brandLow}>
+                  <IconMobileDeviceRegular color={colors.brand} />
+                </Circle>,
+                <Circle size={40} backgroundColor={colors.brandLow}>
+                  <IconTabletRegular color={colors.brand} />
+                </Circle>,
+              ][idx]
+            }
+            title={["Offers", "Mobiles", "Tablets"][idx]}
+          />
+        ))}
+      />
+      <Carousel
+        itemsPerPage={1}
+        items={Array.from({ length: 3 }, (_, idx) => (
+          <DisplayMediaCard
+            aspectRatio="7:10"
+            backgroundImage={
+              [
+                "https://www.ediiie.com/blog/assets/admin/uploads/apple-vision-pro-features.jpg",
+                "https://images.unsplash.com/photo-1549298620-833e1e37670b?q=80&w=2487&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                "https://images.unsplash.com/photo-1628591459313-a64214c5bfac?q=80&w=2521&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              ][idx]
+            }
+            pretitle={["Apple", "Samsung", "Xiaomi"][idx]}
+            title={
+              ["New Vision Pro", "New Samsung Galaxy", "The surface for all"][
+                idx
+              ]
+            }
+          />
+        ))}
+      />
+      <Stack space={24}>
+        <Title2>Save money in technology</Title2>
+        <Carousel
+          itemsPerPage={1}
+          mobilePageOffset="large"
+          items={Array.from({ length: 3 }, (_, idx) => (
+            <MediaCard
+              media={
+                [
+                  <Image
+                    src="https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/MME73?wid=1144&hei=1144&fmt=jpeg&qlt=90&.v=1632861342000"
+                    aspectRatio="1:1"
+                  />,
+                  <Image
+                    src="https://cdn.alloallo.media/catalog/product/apple/iphone/iphone-xr/iphone-xr-blue.jpg"
+                    aspectRatio="1:1"
+                  />,
+                ][idx % 2]
+              }
+              headline={<Tag type="active">New</Tag>}
+              title={["AirPods Pro", "Mobiles", "Tablets"][idx % 2]}
+              description={["2nd generation", "Mobiles", "Tablets"][idx % 2]}
+              extra={
+                <Box paddingTop={16}>
+                  <Stack space={4}>
+                    <Text2
+                      color={colors.textSecondary}
+                      decoration={["line-through", undefined][idx % 2]}
+                    >
+                      {["180€", "For only"][idx % 2]}
+                    </Text2>
+                    <Text3 color={colors.textPrimary}>
+                      {["180€", "27,90€ al mes"][idx % 2]}
+                    </Text3>
+                  </Stack>
+                </Box>
+              }
+            />
+          ))}
+        />
+        <ButtonLink bleedLeft onPress={() => {}}>
+          See all products
+        </ButtonLink>
+      </Stack>
+
+      <DataCard
+        aspectRatio="16:9"
+        icon={<IconMobileDeviceRegular size={40} color={colors.brand} />}
+        title="Looking for a smartphone?"
+        description="These are some of the products you can you can buy with cryptocurrencies."
+        button={
+          <ButtonPrimary small onPress={() => {}}>
+            Explore
+          </ButtonPrimary>
+        }
+      />
+
+      <Stack space={24}>
+        <Title2>Save money in technology</Title2>
+        <Carousel
+          itemsPerPage={1}
+          mobilePageOffset="large"
+          items={Array.from({ length: 3 }, (_, idx) => (
+            <SmallNakedCard
+              media={
+                [
+                  <Image
+                    circular
+                    src="https://images.ctfassets.net/y2ske730sjqp/5QQ9SVIdc1tmkqrtFnG9U1/de758bba0f65dcc1c6bc1f31f161003d/BrandAssets_Logos_02-NSymbol.jpg?w=940"
+                    aspectRatio="1:1"
+                  />,
+                  <Image
+                    circular
+                    src="https://i.scdn.co/image/ab6761610000e5ebc698d53b77db34027b00f853"
+                    aspectRatio="1:1"
+                  />,
+                ][idx % 2]
+              }
+              title={["Netflix", "Disney", "Tablets"][idx % 2]}
+              description="The best series and films"
+            />
+          ))}
+        />
+        <ButtonLink bleedLeft onPress={() => {}}>
+          View more
+        </ButtonLink>
+      </Stack>
+    </Stack>
+  </Box>
+</ResponsiveLayout>
+`,
+    },
+    {
+        group: 'Ξ ✨ Example Screens',
+        name: 'Funnel Screen',
+        code: `
+<FunnelNavigationBar
+  right={
+    <NavigationBarActionGroup>
+      <NavigationBarAction aria-label="need help?">
+        {isDesktopOrBigger && (
+          <IconShieldCheckedOkRegular color="currentColor" />
+        )}
+        {isDesktopOrBigger ? (
+          <Text2 regular>24-hour delivery and free returns</Text2>
+        ) : undefined}
+      </NavigationBarAction>
+
+      <NavigationBarAction aria-label="exit" onPress={() => {}}>
+        {isDesktopOrBigger && "Exit"}
+        <IconCloseRegular color="currentColor" />
+      </NavigationBarAction>
+    </NavigationBarActionGroup>
+  }
+/>
+
+{isDesktopOrBigger ? (
+  <>
+    <ResponsiveLayout>
+      <Box paddingTop={32}>
+        <Stack space={64}>
+          <Grid columns={12}>
+            <GridItem columnStart={2} columnSpan={10}>
+              <Stepper
+                currentIndex={0}
+                steps={[
+                  "Personal information",
+                  "Shipping information",
+                  "Payment",
+                ]}
+              />
+            </GridItem>
+          </Grid>
+          <GridLayout
+            template="5+4"
+            left={
+              <Stack space={40}>
+                <Text5>Personal information</Text5>
+                <Stack space={16}>
+                  <DoubleField fullWidth layout="50/50">
+                    <TextField
+                      fullWidth
+                      name="name"
+                      label="First name"
+                      autoComplete="off"
+                    />
+                    <TextField
+                      name="name"
+                      label="Last name"
+                      autoComplete="off"
+                    />
+                  </DoubleField>
+                  <TextField
+                    fullWidth
+                    name="name"
+                    label="Email"
+                    autoComplete="off"
+                  />
+
+                  <DoubleField fullWidth autoComplete="off" layout="50/50">
+                    <TextField name="name" label="City" autoComplete="off" />
+                    <TextField
+                      name="name"
+                      label="Postal code"
+                      autoComplete="off"
+                    />
+                  </DoubleField>
+                  <DoubleField fullWidth layout="60/40">
+                    <TextField
+                      name="name"
+                      label="Street name"
+                      autoComplete="off"
+                    />
+                    <TextField
+                      name="name"
+                      label="Number"
+                      autoComplete="off"
+                    />
+                  </DoubleField>
+                </Stack>
+                <ButtonPrimary onPress={() => {}}>Next step</ButtonPrimary>
+              </Stack>
+            }
+            right={
+              <Stack space={24}>
+                <Text4 medium>Summary of your order</Text4>
+                <Boxed>
+                  <Box padding={24} paddingTop={16}>
+                    <Stack space={24}>
+                      <Stack space={8}>
+                        <NegativeBox>
+                          <RowList>
+                            <Row
+                              asset={
+                                <Image
+                                  src="https://source.unsplash.com/900x900/?landscape"
+                                  height={64}
+                                  aspectRatio="1:1"
+                                />
+                              }
+                              title="iPhone 14 Pro"
+                              subtitle="Color: Green"
+                              description="Capacity: 256 GB"
+                              right={
+                                <div
+                                  style={{
+                                    height: "100%",
+                                    display: "flex",
+                                    alignItems: "flex-end",
+                                    justifyContent: "center",
+                                    flexDirection: "column",
+                                  }}
+                                >
+                                  <Text2 color={colors.textSecondary}>
+                                    1.379 €
+                                  </Text2>
+                                  <Text3 medium>1.379 €</Text3>
+                                </div>
+                              }
+                            />
+                            <Row
+                              asset={
+                                <Image
+                                  src="https://source.unsplash.com/900x900/?landscape"
+                                  height={64}
+                                  aspectRatio="1:1"
+                                />
+                              }
+                              title="AirPods 3ª gen."
+                              subtitle="Color: White"
+                              right={
+                                <div
+                                  style={{
+                                    height: "100%",
+                                    display: "flex",
+                                    alignItems: "flex-end",
+                                    justifyContent: "center",
+
+                                    flexDirection: "column",
+                                  }}
+                                >
+                                  <Text3 medium>200 €</Text3>
+                                </div>
+                              }
+                            />
+                          </RowList>
+                        </NegativeBox>
+                        <Divider />
+                      </Stack>
+                      <Stack space={16}>
+                        <Inline space="between">
+                          <Text3>Subtotal</Text3>
+                          <Text3>1.369 €</Text3>
+                        </Inline>
+                        <Inline space={"between"}>
+                          <Tag type="promo">7% descuento</Tag>
+
+                          <Text3 color={colors.promoHigh}>-100 €</Text3>
+                        </Inline>
+                        <Inline space="between">
+                          <Text3>Shipping costs</Text3>
+                          <Text3>0 €</Text3>
+                        </Inline>
+                      </Stack>
+                      <Divider />
+                      <Inline space="between">
+                        <Text4 medium>Total</Text4>
+                        <Text4 medium>1.269 €</Text4>
+                      </Inline>
+
+                      <Callout
+                        icon={<IconTruckRegular color={colors.brand} />}
+                        description="Products may be shipped separately depending on availability."
+                      />
+                    </Stack>
+                  </Box>
+                </Boxed>
+                <Text1>* All taxes included</Text1>
+              </Stack>
+            }
+          />
+        </Stack>
+      </Box>
+    </ResponsiveLayout>
+  </>
+) : (
+  <ResponsiveLayout>
+    <FixedFooterLayout
+      footer={
+        <Box padding={16}>
+          <Inline space="between" alignItems="flex-end">
+            <Stack space={4}>
+              {getState("isSheetOpen", false) ? undefined : (
+                <>
+                  <FadeIn duration={"200ms"} delay={0}>
+                    <Stack space={4}>
+                      <Text1>Total (taxes included)</Text1>
+                      <Text3 medium>1269 €</Text3>
+                    </Stack>
+                  </FadeIn>
+                </>
+              )}
+              <ButtonLink
+                bleedLeft
+                aria-expanded={getState("isSheetOpen", false)}
+                aria-haspopup="dialog"
+                disabled={getState("isSheetOpen")}
+                onPress={() => {
+                  setState("isSheetOpen", true);
+                }}
+              >
+                View summary
+              </ButtonLink>
+            </Stack>
+            <ButtonPrimary onPress={() => {}}>Continue</ButtonPrimary>
+          </Inline>
+        </Box>
+      }
+    >
+      <Box paddingTop={24}>
+        <Stack space={32}>
+          <Stepper
+            currentIndex={0}
+            steps={[
+              "Personal information",
+              "Shipping information",
+              "Payment",
+            ]}
+          />
+
+          <GridLayout
+            template="5+4"
+            left={
+              <Stack space={40}>
+                <Text5>Personal information</Text5>
+                <Stack space={16}>
+                  <TextField
+                    fullWidth
+                    name="name"
+                    label="First name"
+                    autoComplete="off"
+                  />
+                  <TextField
+                    name="name"
+                    label="Last name"
+                    autoComplete="off"
+                  />
+
+                  <TextField
+                    fullWidth
+                    name="name"
+                    label="Email"
+                    autoComplete="off"
+                  />
+
+                  <TextField name="name" label="City" autoComplete="off" />
+                  <TextField
+                    name="name"
+                    label="Postal code"
+                    autoComplete="off"
+                  />
+
+                  <TextField
+                    name="name"
+                    label="Street name"
+                    autoComplete="off"
+                  />
+                  <TextField name="name" label="Number" autoComplete="off" />
+                </Stack>
+              </Stack>
+            }
+          />
+        </Stack>
+      </Box>
+    </FixedFooterLayout>
+  </ResponsiveLayout>
+)}
+
+{getState("isSheetOpen") && (
+  <Sheet
+    onClose={() => {
+      setState("isSheetOpen", false);
+    }}
+  >
+    <ResponsiveLayout>
+      <Box paddingBottom={80} paddingTop={0}>
+        <Stack space={24}>
+          <Text4 medium>Summary of your order</Text4>
+          <Callout
+            icon={<IconTruckRegular color={colors.brand} />}
+            description="Products may be shipped separately depending on availability."
+          />
+
+          <Stack space={24}>
+            <Stack space={8}>
+              <NegativeBox>
+                <RowList>
+                  <Row
+                    asset={
+                      <Image
+                        src="https://source.unsplash.com/900x900/?landscape"
+                        height={64}
+                        aspectRatio="1:1"
+                      />
+                    }
+                    title="iPhone 14 Pro"
+                    subtitle="Color: Green"
+                    description="Capacity: 256 GB"
+                    right={
+                      <div
+                        style={{
+                          height: "100%",
+                          display: "flex",
+                          alignItems: "flex-end",
+                          justifyContent: "center",
+                          flexDirection: "column",
+                        }}
+                      >
+                        <Text2 color={colors.textSecondary}>1.379 €</Text2>
+                        <Text4 medium>1.379 €</Text4>
+                      </div>
+                    }
+                  />
+                  <Row
+                    asset={
+                      <Image
+                        src="https://source.unsplash.com/900x900/?landscape"
+                        height={64}
+                        aspectRatio="1:1"
+                      />
+                    }
+                    title="AirPods 3ª gen."
+                    subtitle="Color: White"
+                    right={
+                      <div
+                        style={{
+                          height: "100%",
+                          display: "flex",
+                          alignItems: "flex-end",
+                          justifyContent: "center",
+
+                          flexDirection: "column",
+                        }}
+                      >
+                        <Text4 medium>200 €</Text4>
+                      </div>
+                    }
+                  />
+                </RowList>
+              </NegativeBox>
+              <Divider />
+            </Stack>
+            <Stack space={16}>
+              <Inline space="between">
+                <Text3>Subtotal</Text3>
+                <Text3>1.369 €</Text3>
+              </Inline>
+              <Inline space="between">
+                <Text3 color={colors.promoHigh}>Promoción 7% descuento</Text3>
+                <Text3 color={colors.promoHigh}>-100 €</Text3>
+              </Inline>
+              <Inline space="between">
+                <Text3>Shipping costs</Text3>
+                <Text3>0 €</Text3>
+              </Inline>
+            </Stack>
+            <Divider />
+            <Stack space={8}>
+              <Inline space="between">
+                <Text4 medium>Total</Text4>
+                <Text4 medium>1.269 €</Text4>
+              </Inline>
+              <Text1 color={colors.textSecondary}>* All taxes included</Text1>
+            </Stack>
+          </Stack>
+        </Stack>
+      </Box>
+    </ResponsiveLayout>
+  </Sheet>
+)}
+
+`,
+    },
 ];
 
 const navigationBarSnippets = [

@@ -61,7 +61,12 @@ type BaseIconButtonAction = {
 type IconButtonAction = BaseIconButtonAction &
     ExclusifyUnion<
         | {href: string; newTab?: boolean}
-        | {to: string; fullPageOnWebView?: boolean; replace?: boolean}
+        | {
+              to: string;
+              newTab?: boolean;
+              fullPageOnWebView?: boolean;
+              replace?: boolean;
+          }
         | {onPress: () => void}
     >;
 
@@ -363,6 +368,7 @@ export const useVideoWithControls = (
 
 type CardContentProps = {
     headline?: string | RendersNullableElement<typeof Tag>;
+    headlineRef?: (instance: HTMLElement | null) => void;
     pretitle?: string;
     pretitleLinesMax?: number;
     title?: string;
@@ -373,12 +379,14 @@ type CardContentProps = {
     description?: string;
     descriptionLinesMax?: number;
     extra?: React.ReactNode;
+    extraRef?: (instance: HTMLElement | null) => void;
     button?: RendersNullableElement<typeof ButtonPrimary>;
     buttonLink?: RendersNullableElement<typeof ButtonLink>;
 };
 
 const CardContent: React.FC<CardContentProps> = ({
     headline,
+    headlineRef,
     pretitle,
     pretitleLinesMax,
     title,
@@ -389,19 +397,11 @@ const CardContent: React.FC<CardContentProps> = ({
     description,
     descriptionLinesMax,
     extra,
+    extraRef,
     button,
     buttonLink,
 }) => {
     const {textPresets} = useTheme();
-    const renderHeadline = () => {
-        if (!headline) {
-            return null;
-        }
-        if (typeof headline === 'string') {
-            return <Tag type="promo">{headline}</Tag>;
-        }
-        return headline;
-    };
     return (
         <div
             className={sprinkles({
@@ -411,39 +411,52 @@ const CardContent: React.FC<CardContentProps> = ({
                 flexDirection: 'column',
             })}
         >
-            <div>
-                <Stack space={8}>
-                    {(headline || pretitle || title || subtitle) && (
-                        <header>
-                            <Stack space={8}>
-                                {renderHeadline()}
-                                <Stack space={4}>
-                                    {pretitle && (
-                                        <Text2 truncate={pretitleLinesMax} as="div" regular hyphens="auto">
-                                            {pretitle}
-                                        </Text2>
-                                    )}
-                                    <Text
-                                        mobileSize={18}
-                                        mobileLineHeight="24px"
-                                        desktopSize={20}
-                                        desktopLineHeight="28px"
-                                        truncate={titleLinesMax}
-                                        weight={textPresets.cardTitle.weight}
-                                        as={titleAs}
-                                        hyphens="auto"
-                                    >
-                                        {title}
-                                    </Text>
-                                    <Text2 truncate={subtitleLinesMax} as="div" regular hyphens="auto">
-                                        {subtitle}
-                                    </Text2>
-                                </Stack>
-                            </Stack>
-                        </header>
-                    )}
-
-                    {description && (
+            {/** using flex instead of nested Stacks, this way we can rearrange texts so the DOM structure makes more sense for screen reader users */}
+            <div className={styles.flexColumn}>
+                {title && (
+                    <div style={{paddingBottom: 4}}>
+                        <Text
+                            mobileSize={18}
+                            mobileLineHeight="24px"
+                            desktopSize={20}
+                            desktopLineHeight="28px"
+                            truncate={titleLinesMax}
+                            weight={textPresets.cardTitle.weight}
+                            as={titleAs}
+                            hyphens="auto"
+                        >
+                            {title}
+                        </Text>
+                    </div>
+                )}
+                {headline && (
+                    // assuming that the headline will always be followed by one of: pretitle, title, subtitle, description
+                    <div ref={headlineRef} style={{order: -2, paddingBottom: 8}}>
+                        {typeof headline === 'string' ? <Tag type="promo">{headline}</Tag> : headline}
+                    </div>
+                )}
+                {pretitle && (
+                    <div style={{order: -1, paddingBottom: 4}}>
+                        <Text2 truncate={pretitleLinesMax} as="div" regular hyphens="auto">
+                            {pretitle}
+                        </Text2>
+                    </div>
+                )}
+                {subtitle && (
+                    <div style={{paddingBottom: 4}}>
+                        <Text2 truncate={subtitleLinesMax} as="div" regular hyphens="auto">
+                            {subtitle}
+                        </Text2>
+                    </div>
+                )}
+                {description && (
+                    // this is tricky, when headline exists, the 8px padding is added by it.
+                    // Otherwise, only 4px are added by title|pretitle|subtitle, so we need to add 4px more
+                    <div
+                        style={{
+                            paddingTop: pretitle || title || subtitle ? 4 : 0,
+                        }}
+                    >
                         <Text2
                             truncate={descriptionLinesMax}
                             as="p"
@@ -453,10 +466,9 @@ const CardContent: React.FC<CardContentProps> = ({
                         >
                             {description}
                         </Text2>
-                    )}
-                </Stack>
-
-                {extra && <div>{extra}</div>}
+                    </div>
+                )}
+                {extra && <div ref={extraRef}>{extra}</div>}
             </div>
 
             {(button || buttonLink) && (
@@ -479,6 +491,7 @@ type TouchableProps = {
       }
     | {
           to: string | undefined;
+          newTab?: boolean;
           fullPageOnWebView?: boolean;
           replace?: boolean;
           onNavigate?: () => void | Promise<void>;
@@ -539,19 +552,25 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
             button,
             buttonLink,
             dataAttributes,
-            'aria-label': ariaLabel,
+            'aria-label': ariaLabelProp,
             onClose,
             ...touchableProps
         },
         ref
     ) => {
-        const isTouchable = touchableProps.href || touchableProps.to || touchableProps.onPress;
+        const isTouchable = !!(touchableProps.href || touchableProps.to || touchableProps.onPress);
+        const {text: headlineText, ref: headlineRef} = useInnerText();
+        const {text: extraText, ref: extraRef} = useInnerText();
+
+        const ariaLabel =
+            ariaLabelProp ||
+            [title, headlineText, pretitle, subtitle, description, extraText].filter(Boolean).join(' ');
 
         return (
             <CardContainer
                 dataAttributes={{'component-name': 'MediaCard', ...dataAttributes}}
                 ref={ref}
-                aria-label={ariaLabel}
+                aria-label={isTouchable ? undefined : ariaLabelProp}
                 className={styles.touchableContainer}
             >
                 <Boxed className={styles.boxed} width="100%" height="100%">
@@ -559,7 +578,7 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
                         maybe
                         {...touchableProps}
                         className={styles.touchable}
-                        aria-label={ariaLabel}
+                        aria-label={isTouchable ? ariaLabel : undefined}
                     >
                         {isTouchable && <div className={styles.touchableMediaCardOverlay} />}
                         <div className={styles.mediaCard}>
@@ -569,6 +588,7 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
                             <div className={styles.mediaCardContent}>
                                 <CardContent
                                     headline={headline}
+                                    headlineRef={headlineRef}
                                     pretitle={pretitle}
                                     pretitleLinesMax={pretitleLinesMax}
                                     title={title}
@@ -579,6 +599,7 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
                                     description={description}
                                     descriptionLinesMax={descriptionLinesMax}
                                     extra={extra}
+                                    extraRef={extraRef}
                                     button={button}
                                     buttonLink={buttonLink}
                                 />
@@ -627,23 +648,34 @@ export const NakedCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
             button,
             buttonLink,
             dataAttributes,
-            'aria-label': ariaLabel,
+            'aria-label': ariaLabelProp,
             onClose,
             ...touchableProps
         },
         ref
     ) => {
-        const isTouchable = touchableProps.href || touchableProps.to || touchableProps.onPress;
+        const isTouchable = !!(touchableProps.href || touchableProps.to || touchableProps.onPress);
         const isCircularMedia = media && media.type === Image && (media.props as any).circular;
+        const {text: headlineText, ref: headlineRef} = useInnerText();
+        const {text: extraText, ref: extraRef} = useInnerText();
+
+        const ariaLabel =
+            ariaLabelProp ||
+            [title, headlineText, pretitle, subtitle, description, extraText].filter(Boolean).join(' ');
 
         return (
             <CardContainer
                 ref={ref}
                 dataAttributes={{'component-name': 'NakedCard', ...dataAttributes}}
-                aria-label={ariaLabel}
+                aria-label={isTouchable ? undefined : ariaLabelProp}
                 className={isTouchable ? styles.touchableContainer : undefined}
             >
-                <BaseTouchable maybe {...touchableProps} className={styles.touchable} aria-label={ariaLabel}>
+                <BaseTouchable
+                    maybe
+                    {...touchableProps}
+                    className={styles.touchable}
+                    aria-label={isTouchable ? ariaLabel : undefined}
+                >
                     <div className={styles.mediaCard}>
                         <div style={{position: 'relative'}}>
                             {isTouchable && (
@@ -658,6 +690,7 @@ export const NakedCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
                         <div className={styles.nakedCardContent}>
                             <CardContent
                                 headline={headline}
+                                headlineRef={headlineRef}
                                 pretitle={pretitle}
                                 pretitleLinesMax={pretitleLinesMax}
                                 title={title}
@@ -668,6 +701,7 @@ export const NakedCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
                                 description={description}
                                 descriptionLinesMax={descriptionLinesMax}
                                 extra={extra}
+                                extraRef={extraRef}
                                 button={button}
                                 buttonLink={buttonLink}
                             />
@@ -722,23 +756,32 @@ export const SmallNakedCard = React.forwardRef<HTMLDivElement, SmallNakedCardPro
             descriptionLinesMax,
             extra,
             dataAttributes,
-            'aria-label': ariaLabel,
+            'aria-label': ariaLabelProp,
             ...touchableProps
         },
         ref
     ) => {
-        const isTouchable = touchableProps.href || touchableProps.to || touchableProps.onPress;
+        const isTouchable = !!(touchableProps.href || touchableProps.to || touchableProps.onPress);
         const isCircularMedia = media && media.type === Image && (media.props as any).circular;
         const {textPresets} = useTheme();
+        const {text: extraText, ref: extraRef} = useInnerText();
+
+        const ariaLabel =
+            ariaLabelProp || [title, subtitle, description, extraText].filter(Boolean).join(' ');
 
         return (
             <CardContainer
                 ref={ref}
                 dataAttributes={{'component-name': 'SmallNakedCard', ...dataAttributes}}
-                aria-label={ariaLabel}
+                aria-label={isTouchable ? undefined : ariaLabelProp}
                 className={isTouchable ? styles.touchableContainer : undefined}
             >
-                <BaseTouchable maybe {...touchableProps} className={styles.touchable} aria-label={ariaLabel}>
+                <BaseTouchable
+                    maybe
+                    {...touchableProps}
+                    className={styles.touchable}
+                    aria-label={isTouchable ? ariaLabel : undefined}
+                >
                     <div className={styles.mediaCard}>
                         <div style={{position: 'relative'}}>
                             {isTouchable && (
@@ -785,7 +828,7 @@ export const SmallNakedCard = React.forwardRef<HTMLDivElement, SmallNakedCardPro
                                     )}
                                 </Stack>
                             </div>
-                            {extra && <div>{extra}</div>}
+                            {extra && <div ref={extraRef}>{extra}</div>}
                         </div>
                     </div>
                 </BaseTouchable>
@@ -847,7 +890,7 @@ export const DataCard = React.forwardRef<HTMLDivElement, DataCardProps>(
             button,
             buttonLink,
             dataAttributes,
-            'aria-label': ariaLabel,
+            'aria-label': ariaLabelProp,
             onClose,
             aspectRatio,
             ...touchableProps
@@ -855,15 +898,21 @@ export const DataCard = React.forwardRef<HTMLDivElement, DataCardProps>(
         ref
     ) => {
         const hasIconOrHeadline = !!icon || !!headline;
-        const isTouchable = touchableProps.href || touchableProps.to || touchableProps.onPress;
+        const isTouchable = !!(touchableProps.href || touchableProps.to || touchableProps.onPress);
+        const {text: headlineText, ref: headlineRef} = useInnerText();
+        const {text: extraText, ref: extraRef} = useInnerText();
 
         const finalActions = useTopActions(actions, onClose);
+
+        const ariaLabel =
+            ariaLabelProp ||
+            [title, headlineText, pretitle, description, extraText].filter(Boolean).join(' ');
 
         return (
             <CardContainer
                 dataAttributes={{'component-name': 'DataCard', ...dataAttributes}}
                 ref={ref}
-                aria-label={ariaLabel}
+                aria-label={isTouchable ? undefined : ariaLabelProp}
                 className={styles.touchableContainer}
                 aspectRatio={aspectRatio}
             >
@@ -872,7 +921,7 @@ export const DataCard = React.forwardRef<HTMLDivElement, DataCardProps>(
                         maybe
                         {...touchableProps}
                         className={styles.touchable}
-                        aria-label={ariaLabel}
+                        aria-label={isTouchable ? ariaLabel : undefined}
                     >
                         {isTouchable && <div className={styles.touchableCardOverlay} />}
                         <div className={styles.dataCard}>
@@ -890,6 +939,7 @@ export const DataCard = React.forwardRef<HTMLDivElement, DataCardProps>(
                                     )}
                                     <CardContent
                                         headline={headline}
+                                        headlineRef={headlineRef}
                                         pretitle={pretitle}
                                         pretitleLinesMax={pretitleLinesMax}
                                         title={title}
@@ -912,7 +962,7 @@ export const DataCard = React.forwardRef<HTMLDivElement, DataCardProps>(
                                 )}
                             </Inline>
 
-                            {extra && <div>{extra}</div>}
+                            {extra && <div ref={extraRef}>{extra}</div>}
 
                             {(button || buttonLink) && (
                                 <div className={styles.actions}>
@@ -958,7 +1008,7 @@ export const SnapCard = React.forwardRef<HTMLDivElement, SnapCardProps>(
             description,
             descriptionLinesMax,
             dataAttributes,
-            'aria-label': ariaLabel,
+            'aria-label': ariaLabelProp,
             extra,
             isInverse = false,
             aspectRatio,
@@ -967,8 +1017,12 @@ export const SnapCard = React.forwardRef<HTMLDivElement, SnapCardProps>(
         ref
     ) => {
         const {textPresets} = useTheme();
-        const isTouchable = touchableProps.href || touchableProps.to || touchableProps.onPress;
+        const isTouchable = !!(touchableProps.href || touchableProps.to || touchableProps.onPress);
         const overlayStyle = isInverse ? styles.touchableCardOverlayInverse : styles.touchableCardOverlay;
+        const {text: extraText, ref: extraRef} = useInnerText();
+
+        const ariaLabel =
+            ariaLabelProp || [title, subtitle, description, extraText].filter(Boolean).join(' ');
 
         return (
             <CardContainer
@@ -976,13 +1030,14 @@ export const SnapCard = React.forwardRef<HTMLDivElement, SnapCardProps>(
                 ref={ref}
                 className={styles.touchableContainer}
                 aspectRatio={aspectRatio}
+                aria-label={isTouchable ? undefined : ariaLabelProp}
             >
                 <Boxed className={styles.boxed} isInverse={isInverse} width="100%" minHeight="100%">
                     <BaseTouchable
                         maybe
                         {...touchableProps}
                         className={styles.touchable}
-                        aria-label={ariaLabel}
+                        aria-label={isTouchable ? ariaLabel : undefined}
                     >
                         {isTouchable && <div className={overlayStyle} />}
                         <section className={styles.snapCard}>
@@ -1035,7 +1090,7 @@ export const SnapCard = React.forwardRef<HTMLDivElement, SnapCardProps>(
                                     )}
                                 </Stack>
                             </div>
-                            {extra && <div>{extra}</div>}
+                            {extra && <div ref={extraRef}>{extra}</div>}
                         </section>
                     </BaseTouchable>
                 </Boxed>
@@ -1043,6 +1098,56 @@ export const SnapCard = React.forwardRef<HTMLDivElement, SnapCardProps>(
         );
     }
 );
+
+interface DisplayCardContentProps {
+    title?: React.ReactNode;
+    headline?: React.ReactNode;
+    pretitle?: React.ReactNode;
+    subtitle?: React.ReactNode;
+    description?: React.ReactNode;
+    extra?: React.ReactNode;
+    headlineRef?: (instance: HTMLElement | null) => void;
+    extraRef?: (instance: HTMLElement | null) => void;
+}
+
+const DisplayCardContent: React.FC<DisplayCardContentProps> = ({
+    title,
+    headline,
+    pretitle,
+    subtitle,
+    description,
+    extra,
+    headlineRef,
+    extraRef,
+}) => {
+    // using flex instead of nested Stacks, this way we can rearrange texts so the DOM structure makes more sense for screen reader users
+    return (
+        <div className={styles.flexColumn}>
+            {title && <div style={{paddingBottom: 4}}>{title}</div>}
+            {headline && (
+                // assuming that the headline will always be followed by one of: pretitle, title, subtitle, description
+                <div ref={headlineRef} style={{order: -2, paddingBottom: 16}}>
+                    {headline}
+                </div>
+            )}
+            {pretitle && <div style={{order: -1, paddingBottom: 4}}>{pretitle}</div>}
+
+            {subtitle && <div style={{paddingBottom: 4}}>{subtitle}</div>}
+            {description && (
+                // this is tricky, the padding between a headline and a description is 16px
+                // but the padding between a title|pretitle|subtitle and a description is 8px (4px + 4px)
+                <div
+                    style={{
+                        paddingTop: pretitle || title || subtitle ? 4 : 0,
+                    }}
+                >
+                    {description}
+                </div>
+            )}
+            {extra && <div ref={extraRef}>{extra}</div>}
+        </div>
+    );
+};
 
 interface CommonDisplayCardProps {
     /**
@@ -1133,7 +1238,7 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
             width,
             height,
             aspectRatio,
-            'aria-label': ariaLabel,
+            'aria-label': ariaLabelProp,
             ...touchableProps
         },
         ref
@@ -1142,6 +1247,8 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
         const hasVideo = backgroundVideo !== undefined;
         const image = renderBackgroundImage(backgroundImage);
         const {video, videoAction} = useVideoWithControls(backgroundVideo, poster, backgroundVideoRef);
+        const {text: headlineText, ref: headlineRef} = useInnerText();
+        const {text: extraText, ref: extraRef} = useInnerText();
 
         if (hasVideo) {
             actions = videoAction ? [videoAction] : [];
@@ -1152,13 +1259,17 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
         const textShadow = withGradient ? '0 0 16px rgba(0,0,0,0.4)' : undefined;
         const hasTopActions = actions?.length || onClose;
 
-        const isTouchable = touchableProps.href || touchableProps.to || touchableProps.onPress;
+        const isTouchable = !!(touchableProps.href || touchableProps.to || touchableProps.onPress);
         const overlayStyle =
             hasImage || hasVideo
                 ? styles.touchableCardOverlayMedia
                 : isInverse
                 ? styles.touchableCardOverlayInverse
                 : styles.touchableCardOverlay;
+
+        const ariaLabel =
+            ariaLabelProp ||
+            [title, headlineText, pretitle, description, extraText].filter(Boolean).join(' ');
 
         return (
             <CardContainer
@@ -1167,7 +1278,7 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
                 width={width}
                 height={height}
                 aspectRatio={aspectRatio}
-                aria-label={ariaLabel}
+                aria-label={isTouchable ? undefined : ariaLabelProp}
                 className={styles.touchableContainer}
             >
                 <InternalBoxed
@@ -1188,7 +1299,7 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
                         maybe
                         {...touchableProps}
                         className={styles.touchable}
-                        aria-label={ariaLabel}
+                        aria-label={isTouchable ? ariaLabel : undefined}
                     >
                         {isTouchable && <div className={overlayStyle} />}
 
@@ -1231,39 +1342,36 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
                                     className={withGradient ? styles.displayCardGradient : undefined}
                                 >
                                     <Stack space={24}>
-                                        <div>
-                                            <Stack space={8}>
-                                                {(headline || pretitle || title) && (
-                                                    <header>
-                                                        <Stack space={16}>
-                                                            {headline}
-                                                            <Stack space={4}>
-                                                                {pretitle && (
-                                                                    <Text2
-                                                                        forceMobileSizes
-                                                                        truncate={pretitleLinesMax}
-                                                                        as="div"
-                                                                        regular
-                                                                        textShadow={textShadow}
-                                                                    >
-                                                                        {pretitle}
-                                                                    </Text2>
-                                                                )}
-                                                                <Text6
-                                                                    forceMobileSizes
-                                                                    truncate={titleLinesMax}
-                                                                    as={titleAs}
-                                                                    textShadow={textShadow}
-                                                                    hyphens="auto"
-                                                                >
-                                                                    {title}
-                                                                </Text6>
-                                                            </Stack>
-                                                        </Stack>
-                                                    </header>
-                                                )}
-
-                                                {description && (
+                                        <DisplayCardContent
+                                            title={
+                                                title ? (
+                                                    <Text6
+                                                        forceMobileSizes
+                                                        truncate={titleLinesMax}
+                                                        as={titleAs}
+                                                        textShadow={textShadow}
+                                                        hyphens="auto"
+                                                    >
+                                                        {title}
+                                                    </Text6>
+                                                ) : undefined
+                                            }
+                                            headline={headline}
+                                            pretitle={
+                                                pretitle ? (
+                                                    <Text2
+                                                        forceMobileSizes
+                                                        truncate={pretitleLinesMax}
+                                                        as="div"
+                                                        regular
+                                                        textShadow={textShadow}
+                                                    >
+                                                        {pretitle}
+                                                    </Text2>
+                                                ) : undefined
+                                            }
+                                            description={
+                                                description ? (
                                                     <Text3
                                                         forceMobileSizes
                                                         truncate={descriptionLinesMax}
@@ -1279,10 +1387,13 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
                                                     >
                                                         {description}
                                                     </Text3>
-                                                )}
-                                            </Stack>
-                                            {extra}
-                                        </div>
+                                                ) : undefined
+                                            }
+                                            extra={extra}
+                                            headlineRef={headlineRef}
+                                            extraRef={extraRef}
+                                        />
+
                                         {(button || secondaryButton || buttonLink) && (
                                             <ButtonGroup
                                                 primaryButton={button}
@@ -1415,6 +1526,7 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
         const image = renderBackgroundImage(backgroundImage);
         const {video, videoAction} = useVideoWithControls(backgroundVideo, poster, backgroundVideoRef);
         const {text: headlineText, ref: headlineRef} = useInnerText();
+        const {text: extraText, ref: extraRef} = useInnerText();
 
         if (hasVideo) {
             actions = videoAction ? [videoAction] : [];
@@ -1451,7 +1563,8 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                 : styles.touchableCardOverlay;
 
         const ariaLabel =
-            ariaLabelProp || [title, headlineText, pretitle, subtitle, description].filter(Boolean).join(' ');
+            ariaLabelProp ||
+            [title, headlineText, pretitle, subtitle, description, extraText].filter(Boolean).join(' ');
 
         return (
             <CardContainer
@@ -1527,10 +1640,9 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                                     paddingBottom={24}
                                     className={withGradient ? styles.displayCardGradient : undefined}
                                 >
-                                    {/* using flex instead of nested Stacks, this way we can rearrange texts so the DOM structure makes more sense for screen reader users */}
-                                    <div className={styles.flexColumn}>
-                                        {title && (
-                                            <div style={{paddingBottom: 4}}>
+                                    <DisplayCardContent
+                                        title={
+                                            title ? (
                                                 <Text
                                                     desktopSize={20}
                                                     mobileSize={18}
@@ -1542,29 +1654,24 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                                                 >
                                                     {title}
                                                 </Text>
-                                            </div>
-                                        )}
-                                        {headline && (
-                                            // assuming that the headline will always be followed by one of: pretitle, title, subtitle, description
-                                            <div ref={headlineRef} style={{order: -2, paddingBottom: 16}}>
-                                                {headline}
-                                            </div>
-                                        )}
-                                        {pretitle && (
-                                            <div style={{order: -1, paddingBottom: 4}}>
+                                            ) : undefined
+                                        }
+                                        headline={headline}
+                                        pretitle={
+                                            pretitle ? (
                                                 <Text2
                                                     forceMobileSizes
                                                     truncate={pretitleLinesMax}
+                                                    as="div"
                                                     regular
                                                     textShadow={textShadow}
                                                 >
                                                     {pretitle}
                                                 </Text2>
-                                            </div>
-                                        )}
-
-                                        {subtitle && (
-                                            <div style={{paddingBottom: 4}}>
+                                            ) : undefined
+                                        }
+                                        subtitle={
+                                            subtitle ? (
                                                 <Text2
                                                     forceMobileSizes
                                                     truncate={subtitleLinesMax}
@@ -1574,16 +1681,10 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                                                 >
                                                     {subtitle}
                                                 </Text2>
-                                            </div>
-                                        )}
-                                        {description && (
-                                            // this is tricky, the padding between a headline and a description is 16px
-                                            // but the padding between a title|pretitle|subtitle and a description is 8px (4px + 4px)
-                                            <div
-                                                style={{
-                                                    paddingTop: pretitle || title || subtitle ? 4 : 0,
-                                                }}
-                                            >
+                                            ) : undefined
+                                        }
+                                        description={
+                                            description ? (
                                                 <Text2
                                                     forceMobileSizes
                                                     truncate={descriptionLinesMax}
@@ -1598,10 +1699,12 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                                                 >
                                                     {description}
                                                 </Text2>
-                                            </div>
-                                        )}
-                                        {extra}
-                                    </div>
+                                            ) : undefined
+                                        }
+                                        headlineRef={headlineRef}
+                                        extra={extra}
+                                        extraRef={extraRef}
+                                    />
                                 </Box>
                             </Box>
                         </div>

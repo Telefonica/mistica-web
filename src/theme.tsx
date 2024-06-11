@@ -288,6 +288,10 @@ export const dimensions = {
     headerDesktopHeight: NAVBAR_HEIGHT_DESKTOP,
 };
 
+/**
+ * https://reactrouter.com/en/main/components/link
+ * https://nextjs.org/docs/app/api-reference/components/link
+ */
 type LinkComponent = React.ComponentType<{
     style?: React.CSSProperties;
     className?: string;
@@ -315,6 +319,7 @@ type LinkComponent = React.ComponentType<{
     onClick?: React.MouseEventHandler<HTMLAnchorElement>;
     onKeyDown?: React.KeyboardEventHandler<HTMLAnchorElement>;
     children: React.ReactNode;
+    target?: string;
 }>;
 
 const AnchorLink: LinkComponent = ({to, innerRef, ...props}) => (

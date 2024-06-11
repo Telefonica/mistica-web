@@ -1,19 +1,16 @@
 import * as React from 'react';
-import {PosterCard} from '../card';
+import {SnapCard} from '../card';
 import {makeTheme} from './test-utils';
 import {render, screen} from '@testing-library/react';
 import ThemeContextProvider from '../theme-context-provider';
 import Stack from '../stack';
 import {Text2} from '../text';
 
-test('PosterCard "href" label', async () => {
+test('SnapCard "href" label', async () => {
     render(
         <ThemeContextProvider theme={makeTheme()}>
-            <PosterCard
+            <SnapCard
                 href="https://example.org"
-                isInverse
-                headline="Headline"
-                pretitle="Pretitle"
                 title="Title"
                 subtitle="Subtitle"
                 description="Description"
@@ -27,19 +24,14 @@ test('PosterCard "href" label', async () => {
         </ThemeContextProvider>
     );
 
-    await screen.findByRole('link', {
-        name: 'Title Headline Pretitle Subtitle Description Extra line 1Extra line 2',
-    });
+    await screen.findByRole('link', {name: 'Title Subtitle Description Extra line 1Extra line 2'});
 });
 
-test('PosterCard "to" label', async () => {
+test('SnapCard "to" label', async () => {
     render(
         <ThemeContextProvider theme={makeTheme()}>
-            <PosterCard
+            <SnapCard
                 to="/foo/bar"
-                isInverse
-                headline="Headline"
-                pretitle="Pretitle"
                 title="Title"
                 subtitle="Subtitle"
                 description="Description"
@@ -53,19 +45,14 @@ test('PosterCard "to" label', async () => {
         </ThemeContextProvider>
     );
 
-    await screen.findByRole('link', {
-        name: 'Title Headline Pretitle Subtitle Description Extra line 1Extra line 2',
-    });
+    await screen.findByRole('link', {name: 'Title Subtitle Description Extra line 1Extra line 2'});
 });
 
-test('PosterCard "onPress" label', async () => {
+test('SnapCard "onPress" label', async () => {
     render(
         <ThemeContextProvider theme={makeTheme()}>
-            <PosterCard
+            <SnapCard
                 onPress={() => {}}
-                isInverse
-                headline="Headline"
-                pretitle="Pretitle"
                 title="Title"
                 subtitle="Subtitle"
                 description="Description"
@@ -79,7 +66,5 @@ test('PosterCard "onPress" label', async () => {
         </ThemeContextProvider>
     );
 
-    await screen.findByRole('button', {
-        name: 'Title Headline Pretitle Subtitle Description Extra line 1Extra line 2',
-    });
+    await screen.findByRole('button', {name: 'Title Subtitle Description Extra line 1Extra line 2'});
 });
