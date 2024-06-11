@@ -47,7 +47,6 @@ type TouchableProps = {
     | {
           to: string | undefined;
           newTab?: boolean;
-          /** @deprecated use newTab */
           fullPageOnWebView?: boolean;
       }
     | {

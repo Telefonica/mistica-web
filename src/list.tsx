@@ -283,7 +283,6 @@ interface ToRowContentProps extends CommonProps {
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
     to: string | undefined;
     newTab?: boolean;
-    /** @deprecated use newTab */
     fullPageOnWebView?: boolean;
     replace?: boolean;
     onNavigate?: () => void | Promise<void>;

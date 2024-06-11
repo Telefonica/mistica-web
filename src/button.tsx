@@ -263,7 +263,6 @@ interface CommonProps {
 export interface ToButtonProps extends CommonProps {
     to: string | Location;
     newTab?: boolean;
-    /** @deprecated use newTab */
     fullPageOnWebView?: boolean;
     onNavigate?: () => void | Promise<void>;
 }
@@ -484,7 +483,6 @@ interface ButtonLinkHrefProps extends ButtonLinkCommonProps {
 interface ButtonLinkToProps extends ButtonLinkCommonProps {
     to: string;
     newTab?: boolean;
-    /** @deprecated use newTab */
     fullPageOnWebView?: boolean;
     onPress?: undefined;
     href?: undefined;
