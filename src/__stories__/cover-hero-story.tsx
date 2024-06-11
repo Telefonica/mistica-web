@@ -35,6 +35,7 @@ type Args = {
     withExtra: boolean;
     withSideExtra: boolean;
     actions:
+        | 'none'
         | 'button'
         | 'link'
         | 'button and link'
@@ -154,6 +155,7 @@ Default.argTypes = {
     },
     actions: {
         options: [
+            'none',
             'button',
             'link',
             'button and link',
