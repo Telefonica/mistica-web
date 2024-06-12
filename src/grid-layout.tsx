@@ -55,6 +55,11 @@ type PropsTemplate10 = {
     children: React.ReactNode;
 };
 
+type PropsTemplate8 = {
+    template: '8';
+    children: React.ReactNode;
+};
+
 type Props = CommonProps &
     ExclusifyUnion<
         | PropsChildren
@@ -64,6 +69,7 @@ type Props = CommonProps &
         | PropsTemplate5_4
         | PropsTemplate3_9
         | PropsTemplate10
+        | PropsTemplate8
     >;
 
 const GridLayout: React.FC<Props> = ({
@@ -169,6 +175,18 @@ const GridLayout: React.FC<Props> = ({
                     <div {...spanStyles(10)}>{children}</div>
                 </DesktopContainerTypeContextProvider>
                 <div {...spanStyles(1)} />
+            </div>
+        );
+    }
+
+    if (template === '8') {
+        return (
+            <div {...gridStyles} {...prefixedDataAttributes}>
+                <div {...spanStyles(2)} />
+                <DesktopContainerTypeContextProvider value="medium">
+                    <div {...spanStyles(8)}>{children}</div>
+                </DesktopContainerTypeContextProvider>
+                <div {...spanStyles(2)} />
             </div>
         );
     }

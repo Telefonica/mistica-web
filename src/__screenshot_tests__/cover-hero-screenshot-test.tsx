@@ -145,6 +145,17 @@ const cases = [
         },
     ],
     [
+        'desktop long text centered',
+        {
+            device: 'DESKTOP',
+            args: {
+                title: 'Long title '.repeat(10),
+                centered: true,
+                description: 'This is a long description with a long text to see how this works'.repeat(10),
+            },
+        },
+    ],
+    [
         'mobile long text',
         {
             device: 'MOBILE_IOS',

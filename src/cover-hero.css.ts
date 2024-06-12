@@ -91,7 +91,7 @@ export const sixColumns = style({
             width: '75%',
             selectors: {
                 [`${centered}:not(${hasSideExtra}) &`]: {
-                    width: '100%',
+                    margin: '0 auto',
                 },
             },
         },

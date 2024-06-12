@@ -161,7 +161,7 @@ const CoverHero = React.forwardRef<HTMLDivElement, CoverHeroProps>(
                     <Box paddingY={noPaddingY ? 0 : {desktop: 56, tablet: 56, mobile: 24}}>
                         <Stack space={24}>
                             {centered && !sideExtra ? (
-                                mainContent
+                                <GridLayout template="8">{mainContent}</GridLayout>
                             ) : (
                                 <GridLayout
                                     template="8+4"
