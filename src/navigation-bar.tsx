@@ -66,7 +66,7 @@ const Header = ({children, topFixed, withBorder, isMenuOpen, isInverse, dataAttr
         return styles.navbarBorderColorVariants.default;
     };
 
-    const headerContent = (
+    return (
         <header
             className={classnames(getBorderClass(), {[styles.topFixed]: topFixed})}
             style={{
@@ -77,8 +77,6 @@ const Header = ({children, topFixed, withBorder, isMenuOpen, isInverse, dataAttr
             {children}
         </header>
     );
-
-    return topFixed ? <Portal className={styles.portal}>{headerContent}</Portal> : headerContent;
 };
 
 type NavigationBarContentContainerProps = {
