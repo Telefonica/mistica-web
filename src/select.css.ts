@@ -29,6 +29,8 @@ export const vars = {
 
 export const chevronSize = pxToRem(20);
 
+export const wrapper = sprinkles({isolation: 'isolate'});
+
 export const optionsContainer = style([
     sprinkles({
         position: 'fixed',

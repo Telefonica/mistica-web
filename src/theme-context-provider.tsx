@@ -91,6 +91,17 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children, as, withoutStyl
     const isDarkModeEnabled = (colorScheme === 'auto' && isOsDarkModeEnabled) || colorScheme === 'dark';
     const colors: Colors = isDarkModeEnabled ? darkColors : lightColors;
 
+    const ref = React.useRef<HTMLDivElement>(null);
+
+    useIsomorphicLayoutEffect(() => {
+        // Set isolation: isolate to the parent of the provider. This way, we avoid content inside portals
+        // from being rendered under content that is inside the provider (in case it has z-index defined).
+        const root = ref.current?.parentElement;
+        if (root) {
+            root.style.isolation = 'isolate';
+        }
+    }, []);
+
     const contextTheme = React.useMemo((): Theme => {
         const platformOverrides = {
             platform: getPlatform(),
@@ -165,44 +176,51 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children, as, withoutStyl
     });
 
     return (
-        <TabFocus disabled={!theme.enableTabFocus}>
-            <ModalContextProvider>
-                <TooltipContextProvider>
-                    <ThemeContext.Provider value={contextTheme}>
-                        <TrackingConfig eventFormat={contextTheme.analytics.eventFormat}>
-                            <AspectRatioSupportProvider>
-                                <DocumentVisibilityProvider>
-                                    <AriaIdGetterContext.Provider value={getAriaId}>
-                                        <ScreenSizeContextProvider>
-                                            <DialogRoot>
-                                                <SnackbarRoot>
-                                                    {as ? (
-                                                        React.createElement(
-                                                            as,
-                                                            {style: withoutStyles ? undefined : themeVars},
-                                                            children
-                                                        )
-                                                    ) : (
-                                                        <>
-                                                            {!withoutStyles &&
-                                                                (process.env.NODE_ENV !== 'test' ||
-                                                                    process.env.SSR_TEST) && (
-                                                                    <style>{`:root {${themeVars}}`}</style>
-                                                                )}
-                                                            {children}
-                                                        </>
-                                                    )}
-                                                </SnackbarRoot>
-                                            </DialogRoot>
-                                        </ScreenSizeContextProvider>
-                                    </AriaIdGetterContext.Provider>
-                                </DocumentVisibilityProvider>
-                            </AspectRatioSupportProvider>
-                        </TrackingConfig>
-                    </ThemeContext.Provider>
-                </TooltipContextProvider>
-            </ModalContextProvider>
-        </TabFocus>
+        <>
+            <TabFocus disabled={!theme.enableTabFocus}>
+                <ModalContextProvider>
+                    <TooltipContextProvider>
+                        <ThemeContext.Provider value={contextTheme}>
+                            <TrackingConfig eventFormat={contextTheme.analytics.eventFormat}>
+                                <AspectRatioSupportProvider>
+                                    <DocumentVisibilityProvider>
+                                        <AriaIdGetterContext.Provider value={getAriaId}>
+                                            <ScreenSizeContextProvider>
+                                                <DialogRoot>
+                                                    <SnackbarRoot>
+                                                        {as ? (
+                                                            React.createElement(
+                                                                as,
+                                                                {
+                                                                    style: withoutStyles
+                                                                        ? undefined
+                                                                        : themeVars,
+                                                                },
+                                                                children
+                                                            )
+                                                        ) : (
+                                                            <>
+                                                                {!withoutStyles &&
+                                                                    (process.env.NODE_ENV !== 'test' ||
+                                                                        process.env.SSR_TEST) && (
+                                                                        <style>{`:root {${themeVars}}`}</style>
+                                                                    )}
+                                                                {children}
+                                                            </>
+                                                        )}
+                                                    </SnackbarRoot>
+                                                </DialogRoot>
+                                            </ScreenSizeContextProvider>
+                                        </AriaIdGetterContext.Provider>
+                                    </DocumentVisibilityProvider>
+                                </AspectRatioSupportProvider>
+                            </TrackingConfig>
+                        </ThemeContext.Provider>
+                    </TooltipContextProvider>
+                </ModalContextProvider>
+            </TabFocus>
+            <div ref={ref} style={{display: 'none'}} />
+        </>
     );
 };
 

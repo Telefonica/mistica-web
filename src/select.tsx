@@ -426,7 +426,7 @@ const Select: React.FC<SelectProps> = ({
                             }}
                             disableScroll
                         >
-                            <Portal>
+                            <Portal className={styles.wrapper}>
                                 <ul
                                     style={applyCssVars({
                                         [styles.vars.top]: optionsComputedProps.top

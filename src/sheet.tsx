@@ -215,7 +215,7 @@ const Sheet = React.forwardRef<HTMLDivElement, SheetProps>(({onClose, children, 
     }
 
     return (
-        <Portal>
+        <Portal className={styles.sheetWrapper}>
             <FocusTrap>
                 {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
                 <div

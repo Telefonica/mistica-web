@@ -66,7 +66,7 @@ const Header = ({children, topFixed, withBorder, isMenuOpen, isInverse, dataAttr
         return styles.navbarBorderColorVariants.default;
     };
 
-    return (
+    const headerContent = (
         <header
             className={classnames(getBorderClass(), {[styles.topFixed]: topFixed})}
             style={{
@@ -77,6 +77,8 @@ const Header = ({children, topFixed, withBorder, isMenuOpen, isInverse, dataAttr
             {children}
         </header>
     );
+
+    return topFixed ? <Portal className={styles.portal}>{headerContent}</Portal> : headerContent;
 };
 
 type NavigationBarContentContainerProps = {
@@ -235,7 +237,7 @@ export const MainNavigationBar: React.FC<MainNavigationBarProps> = ({
                 {mainNavBar}
             </FocusTrap>
             {showBurger && (
-                <Portal>
+                <Portal className={styles.portal}>
                     <FocusTrap disabled={disableFocusTrap} group="burger-menu-lock">
                         <Transition
                             onEntering={() => {

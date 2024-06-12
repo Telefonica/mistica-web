@@ -18,6 +18,8 @@ export const snackbar = style([
     },
 ]);
 
+export const snackbarContainer = sprinkles({isolation: 'isolate'});
+
 export const snackbarOpen = style({
     visibility: 'visible',
 });

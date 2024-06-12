@@ -484,7 +484,7 @@ export const BaseTooltip: React.FC<BaseTooltipProps> = ({
                 {target}
             </div>
 
-            <Portal>
+            <Portal className={styles.tooltipContainer}>
                 <Transition
                     in={isTooltipOpen}
                     nodeRef={tooltipRef}
