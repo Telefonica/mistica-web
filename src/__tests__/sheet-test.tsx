@@ -92,7 +92,7 @@ test('RadioListSheet', async () => {
     expect(item2).toBeChecked();
 
     await userEvent.click(item1);
-    userEvent.click(continueButton);
+    await act(() => userEvent.click(continueButton));
 
     await waitForElementToBeRemoved(sheet, {timeout: 5000});
     expect(selectSpy).toHaveBeenCalledWith('1');
