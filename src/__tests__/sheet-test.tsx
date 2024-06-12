@@ -43,9 +43,10 @@ test('Sheet', async () => {
 
     const closeButton = await within(sheet).findByRole('button', {name: 'Close'});
 
-    await userEvent.click(closeButton);
-    await waitForElementToBeRemoved(sheet);
-}, 30000);
+    await act(() => userEvent.click(closeButton));
+
+    await waitForElementToBeRemoved(sheet, {timeout: 5000});
+});
 
 test('RadioListSheet', async () => {
     const selectSpy = jest.fn();
@@ -91,9 +92,9 @@ test('RadioListSheet', async () => {
     expect(item2).toBeChecked();
 
     await userEvent.click(item1);
-    await userEvent.click(continueButton);
+    userEvent.click(continueButton);
 
-    await waitForElementToBeRemoved(sheet);
+    await waitForElementToBeRemoved(sheet, {timeout: 5000});
     expect(selectSpy).toHaveBeenCalledWith('1');
 }, 30000);
 
@@ -140,11 +141,11 @@ test('ActionsListSheet', async () => {
     expect(action1).toBeInTheDocument();
     expect(action2).toBeInTheDocument();
 
-    await userEvent.click(action1);
+    userEvent.click(action1);
 
-    await waitForElementToBeRemoved(sheet);
+    await waitForElementToBeRemoved(sheet, {timeout: 5000});
     expect(selectSpy).toHaveBeenCalledWith('1');
-}, 30000);
+});
 
 test('InfoSheet', async () => {
     const TestComponent = () => {
@@ -193,7 +194,7 @@ test('InfoSheet', async () => {
 
     const items = await within(itemList).findAllByRole('listitem');
     expect(items).toHaveLength(2);
-}, 30000);
+});
 
 test('ActionsSheet', async () => {
     const onPressButtonSpy = jest.fn();
@@ -245,11 +246,11 @@ test('ActionsSheet', async () => {
     expect(secondary).toBeInTheDocument();
     expect(link).toBeInTheDocument();
 
-    await userEvent.click(secondary);
+    userEvent.click(secondary);
 
-    await waitForElementToBeRemoved(sheet);
+    await waitForElementToBeRemoved(sheet, {timeout: 5000});
     expect(onPressButtonSpy).toHaveBeenCalledWith('SECONDARY');
-}, 30000);
+});
 
 test('showSheet INFO', async () => {
     const resultSpy = jest.fn();
@@ -273,11 +274,11 @@ test('showSheet INFO', async () => {
     expect(sheet).toBeInTheDocument();
 
     const closeButton = await screen.findByRole('button', {name: 'Cerrar'});
-    await userEvent.click(closeButton);
+    userEvent.click(closeButton);
 
-    await waitForElementToBeRemoved(sheet);
+    await waitForElementToBeRemoved(sheet, {timeout: 5000});
     expect(resultSpy).toHaveBeenCalledWith(undefined);
-}, 30000);
+});
 
 test('showSheet ACTIONS_LIST', async () => {
     const resultSpy = jest.fn();
@@ -305,11 +306,11 @@ test('showSheet ACTIONS_LIST', async () => {
 
     const item1 = await screen.findByRole('button', {name: 'Item 2'});
 
-    await userEvent.click(item1);
+    userEvent.click(item1);
 
-    await waitForElementToBeRemoved(sheet);
+    await waitForElementToBeRemoved(sheet, {timeout: 5000});
     expect(resultSpy).toHaveBeenCalledWith({action: 'SUBMIT', selectedId: '2'});
-}, 30000);
+});
 
 test('showSheet ACTIONS_LIST dismiss', async () => {
     const resultSpy = jest.fn();
@@ -336,11 +337,11 @@ test('showSheet ACTIONS_LIST dismiss', async () => {
     expect(sheet).toBeInTheDocument();
 
     const closeButton = await screen.findByRole('button', {name: 'Cerrar'});
-    await userEvent.click(closeButton);
+    userEvent.click(closeButton);
 
-    await waitForElementToBeRemoved(sheet);
+    await waitForElementToBeRemoved(sheet, {timeout: 5000});
     expect(resultSpy).toHaveBeenCalledWith({action: 'DISMISS'});
-}, 30000);
+});
 
 test('showSheet RADIO_LIST', async () => {
     const resultSpy = jest.fn();
@@ -370,11 +371,11 @@ test('showSheet RADIO_LIST', async () => {
     const continueButton = await screen.findByRole('button', {name: 'Continuar'});
 
     await userEvent.click(item1);
-    await userEvent.click(continueButton);
+    userEvent.click(continueButton);
 
-    await waitForElementToBeRemoved(sheet);
+    await waitForElementToBeRemoved(sheet, {timeout: 5000});
     expect(resultSpy).toHaveBeenCalledWith({action: 'SUBMIT', selectedId: '2'});
-}, 30000);
+});
 
 test('showSheet RADIO_LIST dismiss', async () => {
     const resultSpy = jest.fn();
@@ -401,11 +402,11 @@ test('showSheet RADIO_LIST dismiss', async () => {
     expect(sheet).toBeInTheDocument();
 
     const closeButton = await screen.findByRole('button', {name: 'Cerrar'});
-    await userEvent.click(closeButton);
+    userEvent.click(closeButton);
 
-    await waitForElementToBeRemoved(sheet);
+    await waitForElementToBeRemoved(sheet, {timeout: 5000});
     expect(resultSpy).toHaveBeenCalledWith({action: 'DISMISS'});
-}, 30000);
+});
 
 test('showSheet ACTIONS', async () => {
     const resultSpy = jest.fn();
@@ -440,11 +441,11 @@ test('showSheet ACTIONS', async () => {
     expect(secondary).toBeInTheDocument();
     expect(link).toBeInTheDocument();
 
-    await userEvent.click(link);
+    userEvent.click(link);
 
-    await waitForElementToBeRemoved(sheet);
+    await waitForElementToBeRemoved(sheet, {timeout: 5000});
     expect(resultSpy).toHaveBeenCalledWith({action: 'LINK'});
-}, 30000);
+});
 
 test('showSheet ACTIONS dismiss', async () => {
     const resultSpy = jest.fn();
@@ -472,11 +473,11 @@ test('showSheet ACTIONS dismiss', async () => {
     expect(sheet).toBeInTheDocument();
 
     const closeButton = await screen.findByRole('button', {name: 'Cerrar'});
-    await userEvent.click(closeButton);
+    userEvent.click(closeButton);
 
-    await waitForElementToBeRemoved(sheet);
+    await waitForElementToBeRemoved(sheet, {timeout: 5000});
     expect(resultSpy).toHaveBeenCalledWith({action: 'DISMISS'});
-}, 30000);
+});
 
 test('showSheet fails if SheetRoot is not rendered', async () => {
     await expect(
@@ -521,9 +522,9 @@ test('showSheet fails if there is already a sheet open', async () => {
     ).rejects.toThrow('Tried to show a Sheet but there is already one open');
 
     const closeButton = await screen.findByRole('button', {name: 'Cerrar'});
-    await userEvent.click(closeButton);
+    userEvent.click(closeButton);
 
-    await waitForElementToBeRemoved(sheet);
+    await waitForElementToBeRemoved(sheet, {timeout: 5000});
 });
 
 test('showSheet with native implementation INFO', async () => {
@@ -739,8 +740,8 @@ test('showSheet with native implementation fallbacks to web if native fails', as
     expect(sheet).toBeInTheDocument();
 
     const link = await screen.findByRole('button', {name: 'Button link'});
-    await userEvent.click(link);
+    userEvent.click(link);
 
-    await waitForElementToBeRemoved(sheet);
+    await waitForElementToBeRemoved(sheet, {timeout: 5000});
     expect(resultSpy).toHaveBeenCalledWith({action: 'LINK'});
-}, 30000);
+});

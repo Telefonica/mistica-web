@@ -78,9 +78,8 @@
     },
 
     /**
-     * The documented way for importing "@testing-library/jest-dom" type definitions: https://github.com/testing-library/jest-dom?tab=readme-ov-file#with-typescript
-     * isn't working as expected so we need to add them manually.
-     * See: https://github.com/testing-library/jest-dom/issues/546#issuecomment-1800436478
+     * The documented way of importing jest-dom type definitions: https://github.com/testing-library/jest-dom?tab=readme-ov-file#with-typescript
+     * isn't working as expected so we need to add them manually: https://github.com/testing-library/jest-dom/issues/546#issuecomment-1800436478
      */
     "types": ["@testing-library/jest-dom"],
 
