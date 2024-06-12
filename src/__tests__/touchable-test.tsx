@@ -323,7 +323,7 @@ test('<a> component has click-like behaviour on "space" key press', async () => 
         </ThemeContextProvider>
     );
 
-    fireEvent.keyDown(screen.getByRole('button', {name: /Test/}), {key: SPACE});
+    fireEvent.keyDown(screen.getByRole('link', {name: /Test/}), {key: SPACE});
 
     await waitFor(() => {
         expect(redirectSpy).toHaveBeenCalledTimes(1);
