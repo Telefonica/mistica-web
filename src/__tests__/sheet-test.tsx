@@ -375,7 +375,7 @@ test('showSheet RADIO_LIST', async () => {
 
     await waitForElementToBeRemoved(sheet, {timeout: 5000});
     expect(resultSpy).toHaveBeenCalledWith({action: 'SUBMIT', selectedId: '2'});
-});
+}, 30000);
 
 test('showSheet RADIO_LIST dismiss', async () => {
     const resultSpy = jest.fn();

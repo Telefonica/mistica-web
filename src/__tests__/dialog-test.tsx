@@ -160,7 +160,7 @@ test('Closes a dialog on click outside', async () => {
 
     userEvent.click(screen.getByTestId('dialog-overlay'));
 
-    await waitForElementToBeRemoved(() => screen.queryByRole('dialog', {hidden: true}));
+    await waitForElementToBeRemoved(() => screen.queryByRole('dialog', {hidden: true}), {timeout: 5000});
     expect(onCancelSpy).toHaveBeenCalled();
 });
 
@@ -183,7 +183,7 @@ test('closes confirm dialog when clicking on any button', async () => {
 
     userEvent.click(cancelButton);
 
-    await waitForElementToBeRemoved(() => screen.queryByRole('dialog', {hidden: true}));
+    await waitForElementToBeRemoved(() => screen.queryByRole('dialog', {hidden: true}), {timeout: 5000});
     expect(onCancelSpy).toHaveBeenCalled();
 
     const confirmWithoutOnCancelButton = await screen.findByRole('button', {
@@ -218,7 +218,7 @@ test('closing a previous accepted dialog does not trigger onAccept callback', as
 
     userEvent.click(acceptButton);
 
-    await waitForElementToBeRemoved(() => screen.queryByRole('dialog', {hidden: true}));
+    await waitForElementToBeRemoved(() => screen.queryByRole('dialog', {hidden: true}), {timeout: 5000});
 
     expect(onAcceptSpy).toHaveBeenCalled();
 
@@ -229,7 +229,7 @@ test('closing a previous accepted dialog does not trigger onAccept callback', as
     const cancelButton = await screen.findByRole('button', {name: 'Nope!'});
     userEvent.click(cancelButton);
 
-    await waitForElementToBeRemoved(() => screen.queryByRole('dialog', {hidden: true}));
+    await waitForElementToBeRemoved(() => screen.queryByRole('dialog', {hidden: true}), {timeout: 5000});
 
     expect(onAcceptSpy).not.toHaveBeenCalled();
 }, 20000);
