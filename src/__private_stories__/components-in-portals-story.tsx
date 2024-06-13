@@ -127,40 +127,51 @@ export const Default: StoryComponent = () => {
                                     setIsSheetOpen(false);
                                 }}
                             >
-                                <SheetBody title="Title" modalTitleId="title">
-                                    <Stack space={8}>
-                                        <ButtonPrimary
-                                            aria-haspopup="dialog"
-                                            onPress={dialogButtonOnPress}
-                                            aria-label="sheet-dialog-button"
-                                        >
-                                            Open Dialog
-                                        </ButtonPrimary>
+                                {({closeModal, modalTitleId}) => (
+                                    <SheetBody title="Title" modalTitleId={modalTitleId}>
+                                        <Box paddingBottom={{desktop: 0, mobile: 16}}>
+                                            <Stack space={8}>
+                                                <ButtonPrimary
+                                                    aria-haspopup="dialog"
+                                                    onPress={dialogButtonOnPress}
+                                                    aria-label="sheet-dialog-button"
+                                                >
+                                                    Open Dialog
+                                                </ButtonPrimary>
 
-                                        <ButtonPrimary
-                                            aria-haspopup="dialog"
-                                            onPress={() =>
-                                                openSnackbar({
-                                                    message: 'Snackbar',
-                                                    withDismiss: true,
-                                                    duration: Infinity,
-                                                })
-                                            }
-                                            aria-label="sheet-snackbar-button"
-                                        >
-                                            Open snackbar
-                                        </ButtonPrimary>
+                                                <ButtonPrimary
+                                                    onPress={closeModal}
+                                                    aria-label="sheet-close-button"
+                                                >
+                                                    Close sheet
+                                                </ButtonPrimary>
 
-                                        <Select
-                                            options={[
-                                                {value: 'option 1', text: 'option 1'},
-                                                {value: 'option 2', text: 'option 2'},
-                                            ]}
-                                            label="Select"
-                                            name="select"
-                                        />
-                                    </Stack>
-                                </SheetBody>
+                                                <Select
+                                                    options={[
+                                                        {value: 'option 1', text: 'option 1'},
+                                                        {value: 'option 2', text: 'option 2'},
+                                                    ]}
+                                                    label="Select"
+                                                    name="select"
+                                                />
+
+                                                <ButtonPrimary
+                                                    aria-haspopup="dialog"
+                                                    onPress={() =>
+                                                        openSnackbar({
+                                                            message: 'Snackbar',
+                                                            withDismiss: true,
+                                                            duration: Infinity,
+                                                        })
+                                                    }
+                                                    aria-label="sheet-snackbar-button"
+                                                >
+                                                    Open snackbar
+                                                </ButtonPrimary>
+                                            </Stack>
+                                        </Box>
+                                    </SheetBody>
+                                )}
                             </Sheet>
                         )}
 
@@ -170,21 +181,34 @@ export const Default: StoryComponent = () => {
                                     setIsDialogSheetOpen(false);
                                 }}
                             >
-                                <SheetBody title="Title" modalTitleId="title">
-                                    <ButtonPrimary
-                                        aria-haspopup="dialog"
-                                        onPress={() =>
-                                            openSnackbar({
-                                                message: 'Snackbar',
-                                                withDismiss: true,
-                                                duration: Infinity,
-                                            })
-                                        }
-                                        aria-label="sheet-snackbar-button"
-                                    >
-                                        Open snackbar
-                                    </ButtonPrimary>
-                                </SheetBody>
+                                {({closeModal, modalTitleId}) => (
+                                    <SheetBody title="Title" modalTitleId={modalTitleId}>
+                                        <Box paddingBottom={{desktop: 0, mobile: 16}}>
+                                            <Stack space={8}>
+                                                <ButtonPrimary
+                                                    onPress={closeModal}
+                                                    aria-label="sheet-close-button"
+                                                >
+                                                    Close sheet
+                                                </ButtonPrimary>
+
+                                                <ButtonPrimary
+                                                    aria-haspopup="dialog"
+                                                    onPress={() =>
+                                                        openSnackbar({
+                                                            message: 'Snackbar',
+                                                            withDismiss: true,
+                                                            duration: Infinity,
+                                                        })
+                                                    }
+                                                    aria-label="sheet-snackbar-button"
+                                                >
+                                                    Open snackbar
+                                                </ButtonPrimary>
+                                            </Stack>
+                                        </Box>
+                                    </SheetBody>
+                                )}
                             </Sheet>
                         )}
                     </Stack>
