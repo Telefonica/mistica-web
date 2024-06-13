@@ -13,9 +13,9 @@ import {
     useDialog,
     SheetBody,
     useSnackbar,
-    Text4,
     Placeholder,
     LoadingBar,
+    Callout,
 } from '..';
 
 export default {
@@ -110,11 +110,9 @@ export const Default: StoryComponent = () => {
                             style={{
                                 position: 'relative',
                                 zIndex: 5,
-                                border: '1px solid black',
-                                display: 'inline-block',
                             }}
                         >
-                            <Text4 regular>This content has large z-index value</Text4>
+                            <Callout title="This content has large z-index value" description="" />
                         </div>
 
                         <Placeholder />
@@ -161,7 +159,7 @@ export const Default: StoryComponent = () => {
                                             label="Select"
                                             name="select"
                                         />
-                                    </Stack>{' '}
+                                    </Stack>
                                 </SheetBody>
                             </Sheet>
                         )}
@@ -185,7 +183,7 @@ export const Default: StoryComponent = () => {
                                         aria-label="sheet-snackbar-button"
                                     >
                                         Open snackbar
-                                    </ButtonPrimary>{' '}
+                                    </ButtonPrimary>
                                 </SheetBody>
                             </Sheet>
                         )}
