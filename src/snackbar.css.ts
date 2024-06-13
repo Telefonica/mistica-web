@@ -18,7 +18,15 @@ export const snackbar = style([
     },
 ]);
 
-export const snackbarContainer = sprinkles({isolation: 'isolate'});
+export const snackbarContainer = style([
+    sprinkles({
+        isolation: 'isolate',
+        position: 'relative',
+    }),
+    {
+        zIndex: 1, // Render above everything, including other portals
+    },
+]);
 
 export const snackbarOpen = style({
     visibility: 'visible',
