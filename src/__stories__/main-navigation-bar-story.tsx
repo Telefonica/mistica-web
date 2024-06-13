@@ -21,9 +21,21 @@ export default {
 
 const sections = ['Start', 'Account', 'Explore', 'Support'];
 
-type Args = {inverse: boolean; withBorder: boolean; withBurgerMenuExtra: boolean; large: boolean};
+type Args = {
+    inverse: boolean;
+    withBorder: boolean;
+    withBurgerMenuExtra: boolean;
+    large: boolean;
+    withSections: boolean;
+};
 
-export const Default: StoryComponent<Args> = ({inverse, withBorder, withBurgerMenuExtra, large}) => {
+export const Default: StoryComponent<Args> = ({
+    inverse,
+    withBorder,
+    withBurgerMenuExtra,
+    large,
+    withSections,
+}) => {
     const [selectedIndex, setSelectedIndex] = React.useState(0);
     const {isDesktopOrBigger} = useScreenSize();
     return (
@@ -32,7 +44,11 @@ export const Default: StoryComponent<Args> = ({inverse, withBorder, withBurgerMe
             large={large}
             withBorder={withBorder}
             burgerMenuExtra={withBurgerMenuExtra ? <Placeholder /> : undefined}
-            sections={sections.map((title, idx) => ({title, onPress: () => setSelectedIndex(idx)}))}
+            sections={
+                withSections
+                    ? sections.map((title, idx) => ({title, onPress: () => setSelectedIndex(idx)}))
+                    : undefined
+            }
             selectedIndex={selectedIndex}
             right={
                 <NavigationBarActionGroup>
@@ -58,4 +74,5 @@ Default.args = {
     withBorder: true,
     withBurgerMenuExtra: false,
     large: false,
+    withSections: true,
 };
