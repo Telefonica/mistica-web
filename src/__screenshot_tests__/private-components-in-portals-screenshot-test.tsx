@@ -98,6 +98,7 @@ test.each(DEVICES)('Components with portals render properly (%s)', async (device
     await (await screen.findByLabelText('sheet-close-button')).click();
     expect(await page.screenshot()).toMatchImageSnapshot();
 
+    // Burger menu is only rendered in mobile
     if (device === 'MOBILE_IOS') {
         // Open MainNavigationBar's burger menu
         await (await screen.findByLabelText('Abrir menú de navegación')).click();
