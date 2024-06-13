@@ -47,7 +47,7 @@ export const Default: StoryComponent<Args> = ({
             sections={
                 withSections
                     ? sections.map((title, idx) => ({title, onPress: () => setSelectedIndex(idx)}))
-                    : []
+                    : undefined
             }
             selectedIndex={selectedIndex}
             right={
