@@ -250,7 +250,7 @@ type AdvancedDataCardProps = MaybeTouchableCard<{
     description?: string;
     descriptionLinesMax?: number;
     extra?: ReadonlyArray<RendersNullableElement<AllowedExtra>>;
-    extraDividerPadding?: 8 | 24;
+    extraDividerPadding?: 8 | 16 | 24;
     button?: RendersNullableElement<typeof ButtonPrimary>;
     footerImage?: RendersNullableElement<typeof Image>;
     footerText?: string;
@@ -279,7 +279,7 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
             descriptionLinesMax,
 
             extra,
-            extraDividerPadding = 24,
+            extraDividerPadding = 16,
 
             button,
             footerImage,
@@ -365,9 +365,7 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
                                             <div className={styles.paddingX}>{item}</div>
 
                                             {index + 1 !== extra.length && (
-                                                <Box paddingY={extraDividerPadding}>
-                                                    <Divider />
-                                                </Box>
+                                                <Box paddingY={extraDividerPadding} />
                                             )}
                                         </div>
                                     );
