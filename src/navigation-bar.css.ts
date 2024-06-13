@@ -247,13 +247,13 @@ export const logoContainer = style([
         '@media': {
             [mq.tabletOrSmaller]: {
                 marginRight: 0,
-                marginLeft: 24,
             },
         },
     },
 ]);
 
 export const burgerMenuButton = style({
+    marginRight: 24,
     '@media': {
         [mq.desktopOrBigger]: {
             display: 'none',

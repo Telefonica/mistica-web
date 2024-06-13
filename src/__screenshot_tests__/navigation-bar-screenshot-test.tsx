@@ -1,5 +1,7 @@
 import {openStoryPage, screen} from '../test-utils';
 
+const DEVICES = ['MOBILE_IOS', 'DESKTOP'] as const;
+
 test.each`
     inverse  | isDarkMode
     ${false} | ${false}
@@ -132,6 +134,18 @@ test.each`
         id: `components-navigation-bars-${type.toLowerCase()}--default`,
         device,
         args: {withBorder: false},
+    });
+
+    const image = await page.screenshot();
+
+    expect(image).toMatchImageSnapshot();
+});
+
+test.each(DEVICES)('MainNavigationBar without sections (%s)', async (device) => {
+    const page = await openStoryPage({
+        id: 'components-navigation-bars-mainnavigationbar--default',
+        device,
+        args: {withSections: false},
     });
 
     const image = await page.screenshot();
