@@ -9,10 +9,10 @@ test.each(DEVICES)('Components with portals render properly (%s)', async (device
         device,
     });
 
-    const closePopover = async () => {
-        const popover = await screen.findByRole('tooltip');
-        const dismissButton = await within(popover).findByRole('button', {name: 'Cerrar'});
-        await dismissButton.click();
+    const closeMenu = async () => {
+        const menu = await screen.findByRole('menu');
+        const firstOption = await within(menu).findByRole('menuitem', {name: 'Option 1'});
+        await firstOption.click();
     };
 
     const closeSnackbar = async () => {
@@ -32,12 +32,12 @@ test.each(DEVICES)('Components with portals render properly (%s)', async (device
     await (await screen.findByLabelText('dialog-button')).click();
     expect(await page.screenshot()).toMatchImageSnapshot();
 
-    // Open Dialog's popover
-    await (await screen.findByLabelText('popover-button')).click();
+    // Open Dialog's Menu
+    await (await screen.findByLabelText('dialog-menu-button')).click();
     expect(await page.screenshot()).toMatchImageSnapshot();
 
-    // Close Dialog's popover
-    await closePopover();
+    // Close Dialog's Menu
+    await closeMenu();
     expect(await page.screenshot()).toMatchImageSnapshot();
 
     // In mobile, options are displayed with a native select, and it's not visible in screenshots

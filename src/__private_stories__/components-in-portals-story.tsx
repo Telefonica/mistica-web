@@ -5,7 +5,7 @@ import {
     ButtonPrimary,
     Inline,
     MainNavigationBar,
-    Popover,
+    MenuItem,
     ResponsiveLayout,
     Select,
     Sheet,
@@ -16,6 +16,7 @@ import {
     Placeholder,
     LoadingBar,
     Callout,
+    Menu,
 } from '..';
 
 export default {
@@ -36,17 +37,20 @@ export const Default: StoryComponent = () => {
             extra: (
                 <Stack space={8}>
                     <Inline space={8}>
-                        <Popover
-                            target={
-                                <div style={{display: 'inline-block'}}>
-                                    <ButtonPrimary onPress={() => {}} aria-label="popover-button">
-                                        Open Popover
-                                    </ButtonPrimary>
+                        <Menu
+                            renderTarget={({ref, onPress}) => (
+                                <ButtonPrimary onPress={onPress} ref={ref} aria-label="dialog-menu-button">
+                                    Open Menu
+                                </ButtonPrimary>
+                            )}
+                            renderMenu={({ref, className}) => (
+                                <div ref={ref} className={className}>
+                                    <MenuItem key="option 1" label="Option 1" onPress={() => {}} />
+                                    <MenuItem key="option 2" label="Option 2" onPress={() => {}} />
                                 </div>
-                            }
-                            title="title"
-                            description="description"
+                            )}
                         />
+
                         <ButtonPrimary
                             onPress={() => setIsDialogSheetOpen(true)}
                             aria-label="dialog-sheet-button"
