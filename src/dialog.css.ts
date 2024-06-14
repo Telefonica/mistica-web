@@ -25,7 +25,6 @@ const fadeScale = keyframes({
 export const wrapper = style([
     sprinkles({
         position: 'relative',
-        isolation: 'isolate',
     }),
 ]);
 

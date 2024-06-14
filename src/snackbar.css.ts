@@ -20,7 +20,6 @@ export const snackbar = style([
 
 export const snackbarContainer = style([
     sprinkles({
-        isolation: 'isolate',
         position: 'relative',
     }),
     {

@@ -307,5 +307,3 @@ export const lineHeightFix = style({
     // use display inline and other components like Badge use inline-block.
     lineHeight: 0,
 });
-
-export const portal = sprinkles({isolation: 'isolate'});

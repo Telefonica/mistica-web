@@ -235,7 +235,7 @@ export const MainNavigationBar: React.FC<MainNavigationBarProps> = ({
                 {mainNavBar}
             </FocusTrap>
             {showBurger && (
-                <Portal className={styles.portal}>
+                <Portal>
                     <FocusTrap disabled={disableFocusTrap} group="burger-menu-lock">
                         <Transition
                             onEntering={() => {

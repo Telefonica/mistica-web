@@ -20,7 +20,6 @@ export const portal = style([
         top: 0,
         left: 0,
         right: 0,
-        isolation: 'isolate',
     }),
     {
         zIndex: 1, // Render above everything, including other portals

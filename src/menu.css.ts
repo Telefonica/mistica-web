@@ -24,10 +24,6 @@ export const vars = {
     transformOrigin,
 };
 
-export const wrapper = sprinkles({
-    isolation: 'isolate',
-});
-
 export const menuContainer = style([
     sprinkles({
         padding: 8,

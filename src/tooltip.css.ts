@@ -24,8 +24,6 @@ export const tooltipTransitionClasses = {
     unmounted: {},
 };
 
-export const tooltipContainer = sprinkles({isolation: 'isolate'});
-
 export const container = style([
     sprinkles({
         position: 'absolute',

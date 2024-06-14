@@ -394,7 +394,7 @@ export const Menu: React.FC<MenuProps> = ({
         <div {...getPrefixedDataAttributes(dataAttributes, 'Menu')}>
             {renderTarget({...targetProps, isMenuOpen})}
 
-            <Portal className={styles.wrapper}>
+            <Portal>
                 <CSSTransition
                     in={isMenuOpen}
                     nodeRef={menuRef}

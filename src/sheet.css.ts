@@ -234,8 +234,6 @@ export const overlay = style([
     },
 ]);
 
-export const sheetWrapper = sprinkles({isolation: 'isolate'});
-
 export const closingOverlay = style(overlayClosedStyle);
 
 export const stickyTitle = sprinkles({
