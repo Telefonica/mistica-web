@@ -48,6 +48,19 @@ export const container = style({
     },
 });
 
+export const portal = style([
+    sprinkles({
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        position: 'fixed',
+    }),
+    {
+        zIndex: -1,
+    },
+]);
+
 export const fixedBackgroundLayer = style([
     sprinkles({
         top: 0,
