@@ -14,11 +14,6 @@ const enterAnimation = keyframes({
     },
 });
 
-export const portalAnimation = style({
-    animation: `${enterAnimation} ${TRANSITION_DURATION_MS}ms ease-out`,
-    transition: `transform ${TRANSITION_DURATION_MS}ms ease-out`,
-});
-
 export const portal = style([
     sprinkles({
         position: 'fixed',
@@ -29,6 +24,8 @@ export const portal = style([
     }),
     {
         zIndex: 1, // Render above everything, including other portals
+        animation: `${enterAnimation} ${TRANSITION_DURATION_MS}ms ease-out`,
+        transition: `transform ${TRANSITION_DURATION_MS}ms ease-out`,
     },
 ]);
 
@@ -58,11 +55,6 @@ const progressIndicator = keyframes({
     },
 });
 
-export const progressAnimation = style({
-    animation: `${progressIndicator} ${ANIMATION_DURATION_MS}ms infinite`,
-    animationDelay: `${TRANSITION_DURATION_MS}ms`,
-});
-
 export const progress = style([
     sprinkles({
         position: 'absolute',
@@ -71,6 +63,8 @@ export const progress = style([
     }),
     {
         left: '-100%',
+        animation: `${progressIndicator} ${ANIMATION_DURATION_MS}ms infinite`,
+        animationDelay: `${TRANSITION_DURATION_MS}ms`,
         background: vars.colors.loadingBarBackground,
     },
 ]);

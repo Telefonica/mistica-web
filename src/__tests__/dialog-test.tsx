@@ -52,13 +52,7 @@ const TestComponent = () => {
 
 test('does not render anything initially', () => {
     const {asFragment} = render(<ThemeContextProvider theme={makeTheme()} />);
-    expect(asFragment()).toMatchInlineSnapshot(`
-        <DocumentFragment>
-          <div
-            style="display: none;"
-          />
-        </DocumentFragment>
-    `);
+    expect(asFragment()).toMatchInlineSnapshot(`<DocumentFragment />`);
 });
 
 test('throws when we try to stack dialogs', async () => {

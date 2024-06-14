@@ -92,6 +92,7 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children, as, withoutStyl
     const colors: Colors = isDarkModeEnabled ? darkColors : lightColors;
 
     const ref = React.useRef<HTMLDivElement>(null);
+    const [hasContentIsolation, setHasContentIsolation] = React.useState(false);
 
     useIsomorphicLayoutEffect(() => {
         // Set isolation: isolate to the parent of the provider. This way, we avoid content inside portals
@@ -99,6 +100,7 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children, as, withoutStyl
         const root = ref.current?.parentElement;
         if (root) {
             root.style.isolation = 'isolate';
+            setHasContentIsolation(true);
         }
     }, []);
 
@@ -219,7 +221,7 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children, as, withoutStyl
                     </TooltipContextProvider>
                 </ModalContextProvider>
             </TabFocus>
-            <div ref={ref} style={{display: 'none'}} />
+            {!hasContentIsolation && <div ref={ref} style={{display: 'none'}} />}
         </>
     );
 };

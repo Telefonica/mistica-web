@@ -52,9 +52,6 @@ test('"to" uses a Link Component', () => {
     expect(asFragment()).toMatchInlineSnapshot(`
         <DocumentFragment>
           (Link Component)
-          <div
-            style="display: none;"
-          />
         </DocumentFragment>
     `);
 });
