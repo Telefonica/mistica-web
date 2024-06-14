@@ -59,7 +59,7 @@ const ButtonLayout: React.FC<ButtonLayoutProps> = ({
 
     const linkContainer = link ? (
         <div
-            className={classnames(numberOfButtons > 1 ? styles.linkWithTwoButtons : styles.link)}
+            className={classnames(numberOfButtons !== 1 ? styles.linkWithTwoButtons : styles.link)}
             data-link="true"
         >
             {link}
