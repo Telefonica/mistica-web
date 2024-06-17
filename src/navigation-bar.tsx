@@ -104,7 +104,7 @@ type MainNavigationBarSection =
     | {onPress: () => void; to?: undefined; href?: undefined; title: string};
 
 type MainNavigationBarPropsBase = {
-    sections: ReadonlyArray<MainNavigationBarSection>;
+    sections?: ReadonlyArray<MainNavigationBarSection>;
     selectedIndex?: number;
     right?: React.ReactElement;
     logo?: React.ReactElement;
@@ -121,7 +121,7 @@ type MainNavigationBarProps = MainNavigationBarPropsBase;
 type MenuTransitionState = 'closed' | 'opening' | 'open' | 'closing';
 
 export const MainNavigationBar: React.FC<MainNavigationBarProps> = ({
-    sections,
+    sections = [],
     selectedIndex,
     right,
     isInverse = false,
