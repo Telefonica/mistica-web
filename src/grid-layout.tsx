@@ -81,7 +81,7 @@ const GridLayout: React.FC<Props> = ({
     collapseBreakpoint = 'tablet',
     children,
 }) => {
-    const prefixedDataAttributes = getPrefixedDataAttributes(dataAttributes);
+    const prefixedDataAttributes = getPrefixedDataAttributes(dataAttributes, 'GridLayout');
 
     const spanStyles = (n: number) => ({
         className: classnames(styles.span, {
