@@ -52,14 +52,19 @@ type BackgroundProps = {
 
 type CoverHeroProps = BaseProps & ExclusifyUnion<ImageProps | VideoProps | BackgroundProps>;
 
-const aspectRatioToCssString = (aspectRatio?: BaseProps['aspectRatio']) => {
-    if (!aspectRatio) {
-        return 'initial';
+const aspectRatioToNumber = (aspectRatio?: BaseProps['aspectRatio']): number => {
+    if (!aspectRatio || aspectRatio === 'auto') {
+        return 0;
     }
-    if (typeof aspectRatio === 'number' || aspectRatio === 'auto') {
-        return String(aspectRatio);
+    if (typeof aspectRatio === 'number') {
+        return aspectRatio;
     }
-    return aspectRatio.replace(':', ' / ');
+    return {
+        '1:1': 1,
+        '16:9': 16 / 9,
+        '7:10': 7 / 10,
+        '4:3': 9 / 10,
+    }[aspectRatio];
 };
 
 const CoverHero = React.forwardRef<HTMLDivElement, CoverHeroProps>(
@@ -136,53 +141,61 @@ const CoverHero = React.forwardRef<HTMLDivElement, CoverHeroProps>(
             </div>
         );
 
+        const withAspectRatio = aspectRatio && aspectRatio !== 'auto';
+
         return (
             <section
                 {...getPrefixedDataAttributes(dataAttributes, 'CoverHero')}
                 aria-label={ariaLabel}
                 ref={ref}
-                className={classnames(styles.coverHero, {
-                    [styles.centered]: centered,
-                    [styles.hasSideExtra]: sideExtra,
+                className={classnames(styles.coverHeroContainer, {
                     [styles.minHeight]: !noPaddingY,
+                    [styles.withAspectRatio]: withAspectRatio,
                 })}
                 style={{
-                    minHeight: aspectRatio && aspectRatio !== 'auto' ? 'auto' : minHeight,
+                    minHeight: withAspectRatio ? 'auto' : minHeight,
                     boxSizing: 'border-box',
                     background,
-                    aspectRatio: aspectRatioToCssString(aspectRatio),
                     ...applyCssVars({
+                        [styles.vars.aspectRatio]: String(aspectRatioToNumber(aspectRatio)),
                         [mediaStyles.vars.mediaBorderRadius]: '0px',
                     }),
                 }}
             >
-                {hasMedia ? <CoverHeroMedia {...mediaProps} /> : null}
-                <ResponsiveLayout variant={hasMedia ? 'inverse' : variant} backgroundColor="none">
-                    <Box paddingY={noPaddingY ? 0 : {desktop: 56, tablet: 56, mobile: 24}}>
-                        <Stack space={24}>
-                            {centered && !sideExtra ? (
-                                <GridLayout template="8">{mainContent}</GridLayout>
-                            ) : (
-                                <GridLayout
-                                    template="8+4"
-                                    collapseBreakpoint="mobile"
-                                    left={mainContent}
-                                    right={<div className={styles.sideExtra}>{sideExtra}</div>}
+                <div
+                    className={classnames(styles.coverHero, {
+                        [styles.centered]: centered,
+                        [styles.hasSideExtra]: sideExtra,
+                    })}
+                >
+                    {hasMedia ? <CoverHeroMedia {...mediaProps} /> : null}
+                    <ResponsiveLayout variant={hasMedia ? 'inverse' : variant} backgroundColor="none">
+                        <Box paddingY={noPaddingY ? 0 : {desktop: 56, tablet: 56, mobile: 24}}>
+                            <Stack space={24}>
+                                {centered && !sideExtra ? (
+                                    <GridLayout template="8">{mainContent}</GridLayout>
+                                ) : (
+                                    <GridLayout
+                                        template="8+4"
+                                        collapseBreakpoint="mobile"
+                                        left={mainContent}
+                                        right={<div className={styles.sideExtra}>{sideExtra}</div>}
+                                    />
+                                )}
+                                <ButtonGroup
+                                    align={{
+                                        mobile: centered ? 'center' : 'left',
+                                        tablet: centered && !sideExtra ? 'center' : 'left',
+                                        desktop: centered && !sideExtra ? 'center' : 'left',
+                                    }}
+                                    primaryButton={button}
+                                    secondaryButton={secondaryButton}
+                                    link={buttonLink}
                                 />
-                            )}
-                            <ButtonGroup
-                                align={{
-                                    mobile: centered ? 'center' : 'left',
-                                    tablet: centered && !sideExtra ? 'center' : 'left',
-                                    desktop: centered && !sideExtra ? 'center' : 'left',
-                                }}
-                                primaryButton={button}
-                                secondaryButton={secondaryButton}
-                                link={buttonLink}
-                            />
-                        </Stack>
-                    </Box>
-                </ResponsiveLayout>
+                            </Stack>
+                        </Box>
+                    </ResponsiveLayout>
+                </div>
             </section>
         );
     }
