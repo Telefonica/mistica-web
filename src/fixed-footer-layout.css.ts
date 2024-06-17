@@ -57,7 +57,7 @@ export const portal = style([
         position: 'fixed',
     }),
     {
-        zIndex: -1,
+        zIndex: -1, // Render below everything, including other portals
     },
 ]);
 

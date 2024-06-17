@@ -194,9 +194,10 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children, as, withoutStyl
                                                             React.createElement(
                                                                 as,
                                                                 {
-                                                                    style: withoutStyles
-                                                                        ? undefined
-                                                                        : themeVars,
+                                                                    style: {
+                                                                        isolation: 'isolate',
+                                                                        ...(withoutStyles ? {} : themeVars),
+                                                                    },
                                                                 },
                                                                 children
                                                             )
@@ -221,7 +222,7 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children, as, withoutStyl
                     </TooltipContextProvider>
                 </ModalContextProvider>
             </TabFocus>
-            {!hasContentIsolation && <div ref={ref} style={{display: 'none'}} />}
+            {!hasContentIsolation && !as && <div ref={ref} style={{display: 'none'}} />}
         </>
     );
 };
