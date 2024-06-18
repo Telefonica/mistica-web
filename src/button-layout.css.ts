@@ -88,7 +88,7 @@ export const link = style([
     },
 ]);
 
-export const linkWithTwoButtons = style([
+export const linkInNewLine = style([
     linkBase,
     {
         selectors: {

@@ -51,6 +51,9 @@ const Template: React.FC<Props> = ({align = 'full-width'}) => (
                 primaryButton={<ButtonPrimary onPress={() => {}}>Ok</ButtonPrimary>}
                 secondaryButton={<ButtonSecondary onPress={() => {}}>Cancel</ButtonSecondary>}
             />
+
+            <Title1 as="h2">Only link</Title1>
+            <ButtonLayout align={align} link={<ButtonLink href="#">Text link</ButtonLink>} />
         </Stack>
     </StorySection>
 );
