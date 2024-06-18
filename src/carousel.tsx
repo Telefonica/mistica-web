@@ -817,7 +817,9 @@ export const Slideshow = ({
         <SlideshowContext.Provider value={{withBullets: !!withBullets}}>
             <ResetResponsiveLayout skipDesktop>
                 <div
-                    className={styles.slideshowContainer}
+                    className={classNames(styles.slideshowContainer, {
+                        [styles.slideshowWithBullets]: !!withBullets,
+                    })}
                     {...getPrefixedDataAttributes(dataAttributes, 'SlideShow')}
                 >
                     <ThemeVariant isInverse={false}>

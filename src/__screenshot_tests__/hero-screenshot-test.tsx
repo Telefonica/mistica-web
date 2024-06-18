@@ -17,7 +17,7 @@ const getCases = () => {
 
 test.each(getCases())('Hero - %s (%s)', async (background, device) => {
     await openStoryPage({
-        id: 'components-hero--default',
+        id: 'components-hero-hero--default',
         device: device as Device,
         args: {background},
     });
@@ -28,7 +28,7 @@ test.each(getCases())('Hero - %s (%s)', async (background, device) => {
 
 test.each(DEVICES)('Hero - no vertical padding (%s)', async (device) => {
     await openStoryPage({
-        id: 'components-hero--default',
+        id: 'components-hero-hero--default',
         device,
         args: {noPaddingY: true},
     });
@@ -39,7 +39,7 @@ test.each(DEVICES)('Hero - no vertical padding (%s)', async (device) => {
 
 test('Hero - custom height', async () => {
     await openStoryPage({
-        id: 'components-hero--default',
+        id: 'components-hero-hero--default',
         device: 'MOBILE_IOS',
         args: {height: '1000px'},
     });
@@ -50,7 +50,7 @@ test('Hero - custom height', async () => {
 
 test('Hero - background brand in O2-new skin', async () => {
     await openStoryPage({
-        id: 'components-hero--default',
+        id: 'components-hero-hero--default',
         skin: 'O2-new',
         args: {background: 'brand'},
     });

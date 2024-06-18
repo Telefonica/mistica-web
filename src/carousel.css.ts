@@ -84,9 +84,14 @@ export const bulletActiveInverse = style([
 ]);
 
 const arrowButtonSize = 40;
-export const slideshowContainer = sprinkles({
-    position: 'relative',
-});
+export const slideshowContainer = style([
+    sprinkles({
+        position: 'relative',
+    }),
+    {}, // needed to force vanilla extract to generate a class name (not only sprinkles)
+]);
+
+export const slideshowWithBullets = style({});
 
 const hideScrollbar = style({
     scrollbarWidth: 'none', // Hide in FF
