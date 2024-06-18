@@ -151,7 +151,7 @@ Default.argTypes = {
         options: ['default', 'inverse', 'alternative'],
         control: {type: 'select'},
         // This control should only be visible when background is set to 'color from skin' or 'custom color'.
-        // That could look similar to this in a future storybook version (invented syntax):
+        // That could look similar to this in a future storybook version (see https://github.com/ComponentDriven/csf/pull/76):
         // if: {
         //     or: [
         //         {arg: 'background', eq: 'color from skin'},
