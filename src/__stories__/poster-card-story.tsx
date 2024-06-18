@@ -209,8 +209,14 @@ Default.argTypes = {
     variant: {
         options: ['default', 'inverse', 'alternative'],
         control: {type: 'select'},
-        // this control should only be visible when background is set to 'color from skin' or 'custom color'
-        // if: {arg: 'background', eq: 'color'},
+        // This control should only be visible when background is set to 'color from skin' or 'custom color'.
+        // That could look similar to this in a future storybook version (invented syntax):
+        // if: {
+        //     or: [
+        //         {arg: 'background', eq: 'color from skin'},
+        //         {arg: 'background', eq: 'custom color'},
+        //     ],
+        // },
     },
     aspectRatio: {
         options: ['1:1', '16:9', '7:10', '9:10', 'auto'],
