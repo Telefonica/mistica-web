@@ -148,7 +148,7 @@ export const mobileCellHeading = style({
     },
 });
 
-export const collapsedRowTittle = style({
+export const collapsedRowTitle = style({
     '@media': {
         [mq.tabletOrSmaller]: {
             paddingBottom: 8,
