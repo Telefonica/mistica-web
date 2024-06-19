@@ -25,6 +25,7 @@ const DEFAULT_DURATION_WITH_BUTTON = 10000;
 
 export type Props = {
     buttonText?: string;
+    buttonAccessibilityLabel?: string;
     duration?: number;
     message: string;
     onClose?: SnackbarCloseHandler;
@@ -178,7 +179,15 @@ const SnackbarComponent = React.forwardRef<ImperativeHandle, Props>(
 
 const Snackbar = React.forwardRef<ImperativeHandle & HTMLDivElement, Props>(
     (
-        {message, buttonText, duration, onClose: onCloseProp = () => {}, type = 'INFORMATIVE', withDismiss},
+        {
+            message,
+            buttonText,
+            buttonAccessibilityLabel,
+            duration,
+            onClose: onCloseProp = () => {},
+            type = 'INFORMATIVE',
+            withDismiss,
+        },
         ref
     ) => {
         const defaultDuration = buttonText ? DEFAULT_DURATION_WITH_BUTTON : DEFAULT_DURATION_WITHOUT_BUTTON;
@@ -197,8 +206,9 @@ const Snackbar = React.forwardRef<ImperativeHandle & HTMLDivElement, Props>(
                     // @ts-expect-error duration can be 'PERSISTENT' in new webview-bridge lib versions, and old apps will ignore it
                     duration: duration === Infinity ? 'PERSISTENT' : undefined,
                     buttonText,
+                    buttonAccessibilityLabel,
                     type,
-                    ...{withDismiss},
+                    withDismiss,
                 }).then((unknownResult: unknown) => {
                     const result = unknownResult as {action?: CloseAction} | undefined;
                     if (result?.action && CLOSE_ACTIONS.includes(result.action)) {
@@ -208,7 +218,7 @@ const Snackbar = React.forwardRef<ImperativeHandle & HTMLDivElement, Props>(
                     }
                 });
             }
-        }, [buttonText, duration, message, renderNative, type, withDismiss]);
+        }, [buttonAccessibilityLabel, buttonText, duration, message, renderNative, type, withDismiss]);
 
         if (renderNative) {
             return null;
