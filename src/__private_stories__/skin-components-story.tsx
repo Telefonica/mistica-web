@@ -49,6 +49,7 @@ import {
     Header,
     Placeholder,
     NegativeBox,
+    IconInvoicePlanFileRegular,
 } from '..';
 import {InternalIconButton} from '../icon-button';
 import avatarImg from '../__stories__/images/avatar.jpg';
@@ -123,7 +124,7 @@ export const Default: StoryComponent<Args> = ({variant}) => {
                         {/** BoxedAccordion */}
                         <BoxedAccordion index={1}>
                             <BoxedAccordionItem
-                                asset={<Image src={usingVrImg} width={64} height={64} />}
+                                asset={<IconInvoicePlanFileRegular />}
                                 title="Title 1"
                                 content={
                                     <Text2 regular color={skinVars.colors.textSecondary}>
