@@ -18,6 +18,15 @@ export const snackbar = style([
     },
 ]);
 
+export const snackbarContainer = style([
+    sprinkles({
+        position: 'relative',
+    }),
+    {
+        zIndex: 1, // Render above everything, including other portals
+    },
+]);
+
 export const snackbarOpen = style({
     visibility: 'visible',
 });
@@ -33,7 +42,6 @@ export const wrapper = style([
         minHeight: 48,
         padding: `14px 16px`,
         bottom: 40,
-        zIndex: 1000, // above anything
         opacity: 0,
         transform: 'translateY(100px)',
         transition: `transform ${TRANSITION_TIME_IN_MS}ms ease-in-out, opacity ${TRANSITION_TIME_IN_MS}ms ease-in-out`,

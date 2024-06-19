@@ -22,16 +22,10 @@ const fadeScale = keyframes({
     },
 });
 
-/** Must be higher than the fixed footer's z-index */
-const Z_INDEX = 26;
-
 export const wrapper = style([
     sprinkles({
         position: 'relative',
     }),
-    {
-        zIndex: Z_INDEX,
-    },
 ]);
 
 export const modalOpacityLayer = style([
@@ -48,7 +42,6 @@ export const modalOpacityLayer = style([
         background: vars.colors.backgroundOverlay,
     }),
     {
-        zIndex: Z_INDEX,
         minHeight: 0,
         minWidth: 0,
         animation: `${fadeIn} ${ANIMATION_DURATION_MS}ms ease-in-out`,

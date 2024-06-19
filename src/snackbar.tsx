@@ -87,7 +87,7 @@ const SnackbarComponent = React.forwardRef<ImperativeHandle, Props>(
         }, [close, duration]);
 
         return (
-            <Portal>
+            <Portal className={styles.snackbarContainer}>
                 <div
                     ref={elementRef}
                     className={classNames(styles.snackbar, {[styles.snackbarOpen]: isOpen})}
