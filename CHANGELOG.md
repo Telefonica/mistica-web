@@ -1,3 +1,10 @@
+## [15.11.1](https://github.com/Telefonica/mistica-web/compare/v15.11.0...v15.11.1) (2024-06-19)
+
+
+### Bug Fixes
+
+* **Cards:** wrong headline padding in cards without subtitle/description ([#1152](https://github.com/Telefonica/mistica-web/issues/1152)) ([9aa6691](https://github.com/Telefonica/mistica-web/commit/9aa669136114ae37e7a815ad0cfca174aa6a9699))
+
 # [15.11.0](https://github.com/Telefonica/mistica-web/compare/v15.10.0...v15.11.0) (2024-06-19)
 
 
