@@ -40,7 +40,19 @@ export type ImperativeHandle = {
 };
 
 const SnackbarComponent = React.forwardRef<ImperativeHandle, Props>(
-    ({message, buttonText, duration, onClose, type, withDismiss = false, dataAttributes}, ref) => {
+    (
+        {
+            message,
+            buttonText,
+            duration,
+            onClose,
+            type,
+            withDismiss = false,
+            buttonAccessibilityLabel,
+            dataAttributes,
+        },
+        ref
+    ) => {
         const {texts} = useTheme();
         const [isOpen, setIsOpen] = React.useState(false);
         const {width: buttonWidth, ref: buttonRef} = useElementDimensions();
@@ -139,6 +151,7 @@ const SnackbarComponent = React.forwardRef<ImperativeHandle, Props>(
                                         onPress={() => {
                                             close({action: 'BUTTON'});
                                         }}
+                                        aria-label={buttonAccessibilityLabel}
                                     >
                                         <Text3
                                             medium
@@ -233,6 +246,7 @@ const Snackbar = React.forwardRef<ImperativeHandle & HTMLDivElement, Props>(
                 type={type}
                 onClose={onCloseRef.current}
                 withDismiss={withDismiss}
+                buttonAccessibilityLabel={buttonAccessibilityLabel}
             />
         );
     }
