@@ -243,10 +243,10 @@ const Snackbar = React.forwardRef<ImperativeHandle & HTMLDivElement, Props>(
                 message={message}
                 duration={duration}
                 buttonText={buttonText}
+                buttonAccessibilityLabel={buttonAccessibilityLabel}
                 type={type}
                 onClose={onCloseRef.current}
                 withDismiss={withDismiss}
-                buttonAccessibilityLabel={buttonAccessibilityLabel}
             />
         );
     }
