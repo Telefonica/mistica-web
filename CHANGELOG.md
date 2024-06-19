@@ -1,3 +1,38 @@
+## [15.11.1](https://github.com/Telefonica/mistica-web/compare/v15.11.0...v15.11.1) (2024-06-19)
+
+
+### Bug Fixes
+
+* **Cards:** wrong headline padding in cards without subtitle/description ([#1152](https://github.com/Telefonica/mistica-web/issues/1152)) ([9aa6691](https://github.com/Telefonica/mistica-web/commit/9aa669136114ae37e7a815ad0cfca174aa6a9699))
+
+# [15.11.0](https://github.com/Telefonica/mistica-web/compare/v15.10.0...v15.11.0) (2024-06-19)
+
+
+### Bug Fixes
+
+* **ButtonLayout:** add bleed when using only link ([#1150](https://github.com/Telefonica/mistica-web/issues/1150)) ([554f98a](https://github.com/Telefonica/mistica-web/commit/554f98a9aef5218b76a9d3703f42cc0ce527a8d8))
+* **Counter:** add aria-live to value ([#1146](https://github.com/Telefonica/mistica-web/issues/1146)) ([3e2e09b](https://github.com/Telefonica/mistica-web/commit/3e2e09bb2c17ebd39b881a06ec2c5068f8fc95f3))
+* **Header:** bleed not working in o2-new skin ([#1137](https://github.com/Telefonica/mistica-web/issues/1137)) ([00fb632](https://github.com/Telefonica/mistica-web/commit/00fb632a427a65c61c1cb2b39de2a8c22be96bcf))
+* **MainNavigationBar:** remove logo space in mobile when no sections are given ([#1149](https://github.com/Telefonica/mistica-web/issues/1149)) ([e4c03a0](https://github.com/Telefonica/mistica-web/commit/e4c03a05e086f86061379d6c10714feff6b73e1f))
+* **Select:** set text color in native version ([#1141](https://github.com/Telefonica/mistica-web/issues/1141)) ([eedf265](https://github.com/Telefonica/mistica-web/commit/eedf265cb4b1bde7b4a59c8b95a3fbd5438fb523))
+* **Spinner:** use controlActivatedInverse token as default when used inside inverse variant ([#1133](https://github.com/Telefonica/mistica-web/issues/1133)) ([38a192d](https://github.com/Telefonica/mistica-web/commit/38a192df8fd865644d62dfb376abe25123e60944))
+
+
+### Features
+
+* **Cards:** improve accessibility ([#1139](https://github.com/Telefonica/mistica-web/issues/1139)) ([dde9cc5](https://github.com/Telefonica/mistica-web/commit/dde9cc5b850f4ac4e35c9119b11229628803cdd5))
+* **Chip:** allow using badge in selectable chips ([#1134](https://github.com/Telefonica/mistica-web/issues/1134)) ([9ecda7c](https://github.com/Telefonica/mistica-web/commit/9ecda7c401cfab55c8e6081fbb3fc40f58416a44))
+* **Circle:** custom background support ([#1136](https://github.com/Telefonica/mistica-web/issues/1136)) ([bedeaa4](https://github.com/Telefonica/mistica-web/commit/bedeaa4dd567aa8dc844ffb364629698dce3c229))
+* **CoverHero:** new component ([#1144](https://github.com/Telefonica/mistica-web/issues/1144)) ([a655e6e](https://github.com/Telefonica/mistica-web/commit/a655e6e9a982cfabd5fbb47b08f231de2ab6cbd0))
+* **DisplayMediaCard, PosterCard:** add extra ([#1131](https://github.com/Telefonica/mistica-web/issues/1131)) ([501cf73](https://github.com/Telefonica/mistica-web/commit/501cf739e7811ebb22b0729fe52d5c360cccf66b))
+* **EmptyState:** allow using only ButtonLink as action ([#1140](https://github.com/Telefonica/mistica-web/issues/1140)) ([d73c219](https://github.com/Telefonica/mistica-web/commit/d73c21955c2c1ec98ec6af0956d27fdddba127f3))
+* **HighlightedCard:** support for alt for image ([#1135](https://github.com/Telefonica/mistica-web/issues/1135)) ([c9ba728](https://github.com/Telefonica/mistica-web/commit/c9ba728cfd10fa58e7dbb9f875d145b31201a820))
+* **Image:** Custom fallback icon in Vivo New ([#1145](https://github.com/Telefonica/mistica-web/issues/1145)) ([ec600fe](https://github.com/Telefonica/mistica-web/commit/ec600fe86c4e90c8d8b44b2e5528e35fe41ff87f))
+* **Switch:** Improve animation ([#1142](https://github.com/Telefonica/mistica-web/issues/1142)) ([8162eed](https://github.com/Telefonica/mistica-web/commit/8162eed0e14fe6c35af1e88566272b9d894cc96d))
+* **Table:** new component ([#1129](https://github.com/Telefonica/mistica-web/issues/1129)) ([328e013](https://github.com/Telefonica/mistica-web/commit/328e013b7ee060ee926fdeecd9aaf561561045be))
+* **Timer:** create component ([#1130](https://github.com/Telefonica/mistica-web/issues/1130)) ([0b3253e](https://github.com/Telefonica/mistica-web/commit/0b3253eed36a8b166d164702814eda5b8258adf6))
+* **Touchable:** newTab support in to links ([#1143](https://github.com/Telefonica/mistica-web/issues/1143)) ([eff07e3](https://github.com/Telefonica/mistica-web/commit/eff07e3fd42d71d68760cf0d8a46a0f9712a3385))
+
 # [15.10.0](https://github.com/Telefonica/mistica-web/compare/v15.9.0...v15.10.0) (2024-05-30)
 
 

@@ -414,7 +414,7 @@ const CardContent: React.FC<CardContentProps> = ({
             {/** using flex instead of nested Stacks, this way we can rearrange texts so the DOM structure makes more sense for screen reader users */}
             <div className={styles.flexColumn}>
                 {title && (
-                    <div style={{paddingBottom: 4}}>
+                    <div style={{paddingBottom: subtitle || description ? 4 : 0}}>
                         <Text
                             mobileSize={18}
                             mobileLineHeight="24px"
@@ -443,7 +443,7 @@ const CardContent: React.FC<CardContentProps> = ({
                     </div>
                 )}
                 {subtitle && (
-                    <div style={{paddingBottom: 4}}>
+                    <div style={{paddingBottom: description ? 4 : 0}}>
                         <Text2 truncate={subtitleLinesMax} as="div" regular hyphens="auto">
                             {subtitle}
                         </Text2>
@@ -1123,7 +1123,7 @@ const DisplayCardContent: React.FC<DisplayCardContentProps> = ({
     // using flex instead of nested Stacks, this way we can rearrange texts so the DOM structure makes more sense for screen reader users
     return (
         <div className={styles.flexColumn}>
-            {title && <div style={{paddingBottom: 4}}>{title}</div>}
+            {title && <div style={{paddingBottom: subtitle || description ? 4 : 0}}>{title}</div>}
             {headline && (
                 // assuming that the headline will always be followed by one of: pretitle, title, subtitle, description
                 <div ref={headlineRef} style={{order: -2, paddingBottom: 16}}>
@@ -1132,7 +1132,7 @@ const DisplayCardContent: React.FC<DisplayCardContentProps> = ({
             )}
             {pretitle && <div style={{order: -1, paddingBottom: 4}}>{pretitle}</div>}
 
-            {subtitle && <div style={{paddingBottom: 4}}>{subtitle}</div>}
+            {subtitle && <div style={{paddingBottom: subtitle ? 4 : 0}}>{subtitle}</div>}
             {description && (
                 // this is tricky, the padding between a headline and a description is 16px
                 // but the padding between a title|pretitle|subtitle and a description is 8px (4px + 4px)
