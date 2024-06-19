@@ -1,12 +1,7 @@
 'use client';
 import * as React from 'react';
-import {O2_SKIN} from '../skins/constants';
-import {
-    getAnimateDrawLineProps,
-    getAnimateFadeInProps,
-    getAnimateHopInProps,
-    mergeProperties,
-} from '../utils/animation';
+import {O2_SKIN, O2_NEW_SKIN} from '../skins/constants';
+import {getAnimateDrawLineProps, getAnimateHopInProps, mergeProperties} from '../utils/animation';
 import {useTheme} from '../hooks';
 import {useIsInverseVariant} from '../theme-variant-context';
 import {vars} from '../skins/skin-contract.css';
@@ -27,32 +22,25 @@ const IconSuccessO2 = ({size = 48, color, skipAnimation = false}: Props): JSX.El
                 stroke={color ? undefined : isInverse ? vars.colors.inverse : vars.colors.brand}
                 fill={color ? undefined : isInverse ? vars.colors.inverse : vars.colors.brand}
                 strokeLinecap="round"
-                strokeLinejoin="round"
             >
-                <path
+                <circle
+                    strokeWidth="4"
                     fill="none"
-                    strokeWidth="2"
-                    stroke={color ? color : undefined}
-                    d="M48.24,57.99c-4.71,2.95-10.27,4.65-16.24,4.65C15.08,62.64,1.36,48.92,1.36,32S15.08,1.36,32,1.36 S62.64,15.08,62.64,32c0,6.11-1.79,11.8-4.87,16.58"
+                    cx="32"
+                    cy="32"
+                    r="30"
                     {...(!skipAnimation && getAnimateDrawLineProps('202', '0.3s', platformOverrides))}
                 />
                 <polyline
                     fill="none"
-                    strokeWidth="2"
+                    strokeWidth="4"
                     stroke={color ? color : undefined}
-                    points="16.92,30.08 28.68,43.12 50.26,20.22"
+                    points="18,32.67 27.33,42 49.33,20.67"
                     {...(!skipAnimation &&
                         mergeProperties(
                             getAnimateDrawLineProps('50', '0.6s', platformOverrides),
                             getAnimateHopInProps('0.6', platformOverrides)
                         ))}
-                />
-                <circle
-                    stroke={color ? color : undefined}
-                    cx="53.64"
-                    cy="53.54"
-                    r="1.06"
-                    {...(!skipAnimation && getAnimateFadeInProps('0.2s', platformOverrides))}
                 />
             </g>
         </svg>
@@ -101,6 +89,7 @@ const IconSuccess = ({size, color, skipAnimation}: Props): JSX.Element => {
 
     switch (skinName) {
         case O2_SKIN:
+        case O2_NEW_SKIN:
             return <IconSuccessO2 size={size} color={color} skipAnimation={skipAnimation} />;
         default:
             return <IconSuccessDefault size={size} color={color} skipAnimation={skipAnimation} />;

@@ -28,7 +28,7 @@ export const getAnimateCircleScaleInProps = (
                       to={to}
                       keyTimes="0;1"
                       calcMode="spline"
-                      keySplines="0.56 0 0.2 1"
+                      keySplines="0.65 0 0.25 1"
                   />
               ),
           }
@@ -55,7 +55,7 @@ export const getAnimateDrawLineProps = (
                       fill="freeze"
                       keyTimes="0;1"
                       calcMode="spline"
-                      keySplines={keySplines ?? '0.75 0 0.25 1'}
+                      keySplines={keySplines ?? '0.65 0 0.25 1'}
                   />
               ),
           }
@@ -79,7 +79,7 @@ export const getAnimateFadeInProps = (
                       fill="freeze"
                       keyTimes="0;1"
                       calcMode="spline"
-                      keySplines="0.75 0 0.25 1"
+                      keySplines="0.65 0 0.25 1"
                   />
               ),
           }
@@ -101,7 +101,7 @@ export const getAnimateHopInProps = (
                           keyTimes="0;1"
                           calcMode="spline"
                           fill="freeze"
-                          keySplines="0.75 0 0.25 1"
+                          keySplines="0.65 0 0.25 1"
                       />
                       <animateTransform
                           attributeName="transform"
@@ -113,7 +113,7 @@ export const getAnimateHopInProps = (
                           keyTimes="0;1"
                           calcMode="spline"
                           fill="freeze"
-                          keySplines="0.75 0 0.25 1"
+                          keySplines="0.65 0 0.25 1"
                       />
                   </>
               ),
@@ -138,7 +138,7 @@ export const getAnimateSweepInProps = (
                           fill="freeze"
                           keyTimes="0;1"
                           calcMode="spline"
-                          keySplines="0.75 0 0.25 1"
+                          keySplines="0.65 0 0.25 1"
                       />
                       <animateTransform
                           attributeName="transform"
@@ -176,7 +176,7 @@ export const getAnimateSweepInProps = (
                           keyTimes="0;1"
                           calcMode="spline"
                           fill="freeze"
-                          keySplines="0.75 0 0.25 1"
+                          keySplines="0.65 0 0.25 1"
                       />
                   </>
               ),
