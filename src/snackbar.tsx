@@ -44,11 +44,11 @@ const SnackbarComponent = React.forwardRef<ImperativeHandle, Props>(
         {
             message,
             buttonText,
+            buttonAccessibilityLabel,
             duration,
             onClose,
             type,
             withDismiss = false,
-            buttonAccessibilityLabel,
             dataAttributes,
         },
         ref
