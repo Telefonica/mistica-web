@@ -85,7 +85,7 @@ const accordionSnippets: Array<Snippet> = [
             content={
               <Text3 color={colors.textSecondary}>
                 The Movistar Money loan service is aimed at anyone, whether you are a{" "}
-                <TextLink href>Movistar</TextLink> customer or not.
+                <TextLink href="https://example.org" newTab>Movistar</TextLink> customer or not.
               </Text3>
             }
           />
@@ -105,7 +105,7 @@ const accordionSnippets: Array<Snippet> = [
                 <p>
                   Depending on the characteristics of the information you provide us,
                   your application will be sent to one of the institutions{" "}
-                  <TextLink href>with which Movistar has agreements</TextLink>.
+                  <TextLink href="https://example.org" newTab>with which Movistar has agreements</TextLink>.
                 </p>
               </Text3>
             }
@@ -157,7 +157,7 @@ const accordionSnippets: Array<Snippet> = [
           content={
             <Text3 color={colors.textSecondary}>
               The Movistar Money loan service is aimed at anyone, whether you are a{" "}
-              <TextLink href>Movistar</TextLink> customer or not.
+              <TextLink href="https://example.org" newTab>Movistar</TextLink> customer or not.
             </Text3>
           }
         />
@@ -177,7 +177,7 @@ const accordionSnippets: Array<Snippet> = [
               <p>
                 Depending on the characteristics of the information you provide us,
                 your application will be sent to one of the institutions{" "}
-                <TextLink href>with which Movistar has agreements</TextLink>.
+                <TextLink href="https://example.org" newTab>with which Movistar has agreements</TextLink>.
               </p>
             </Text3>
           }
