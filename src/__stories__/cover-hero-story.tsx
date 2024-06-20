@@ -72,14 +72,14 @@ export const Default: StoryComponent<Args> = ({
                   backgroundImage: usingVrImg,
               }
             : background === 'video'
-            ? {
-                  backgroundVideo: beachVideo,
-                  poster: beachImg,
-              }
-            : {
-                  background: backgroundColorFromSkin || backgroundColorCustom,
-                  variant,
-              };
+              ? {
+                    backgroundVideo: beachVideo,
+                    poster: beachImg,
+                }
+              : {
+                    background: backgroundColorFromSkin || backgroundColorCustom,
+                    variant,
+                };
 
     const button = actions.includes('button') ? <ButtonPrimary fake>Action</ButtonPrimary> : undefined;
     const buttonLink = actions.includes('link') ? <ButtonLink href="#">Link</ButtonLink> : undefined;
