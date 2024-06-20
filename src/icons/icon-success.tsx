@@ -72,6 +72,7 @@ const IconSuccessO2New = ({size = 48, color, skipAnimation = false}: Props): JSX
             >
                 <circle
                     strokeWidth="4"
+                    stroke={color ? color : undefined}
                     fill="none"
                     cx="32"
                     cy="32"
