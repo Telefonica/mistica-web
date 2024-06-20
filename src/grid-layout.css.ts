@@ -1,4 +1,4 @@
-import {createVar, fallbackVar, style} from '@vanilla-extract/css';
+import {createVar, fallbackVar, globalStyle, style} from '@vanilla-extract/css';
 import * as mq from './media-queries.css';
 
 export const desktopSmallColumn = style({});
@@ -6,22 +6,35 @@ export const desktopMediumColumn = style({});
 export const desktopLargeColumn = style({});
 
 const verticalSpace = createVar();
+
+const collapsedGrid = {
+    gridTemplateColumns: 'minmax(0, 1fr)',
+    gridColumnGap: 16,
+    gap: fallbackVar(verticalSpace, '0px'),
+};
+
 export const grid = style({
     display: 'grid',
     '@media': {
         [mq.largeDesktop]: {
-            gridColumnGap: 24,
             gridTemplateColumns: 'repeat(12, 1fr)',
+            gridColumnGap: 24,
         },
         [mq.desktop]: {
             gridTemplateColumns: 'repeat(12, 1fr)',
             gridColumnGap: 16,
         },
-        [mq.tabletOrSmaller]: {
-            gridTemplateColumns: 'minmax(0, 1fr)',
+        [mq.tablet]: {
+            gridTemplateColumns: 'repeat(12, 1fr)',
             gridColumnGap: 16,
-            gap: fallbackVar(verticalSpace, '0px'),
         },
+        [mq.mobile]: collapsedGrid,
+    },
+});
+
+export const collapsedInTablet = style({
+    '@media': {
+        [mq.tablet]: collapsedGrid,
     },
 });
 
@@ -31,7 +44,18 @@ export const span = style({
         [mq.desktopOrBigger]: {
             gridColumn: `span ${colSpan}`,
         },
-        [mq.tabletOrSmaller]: {
+        [mq.tablet]: {
+            gridColumn: `span ${colSpan}`,
+        },
+        [mq.mobile]: {
+            gridColumn: 'span 1',
+        },
+    },
+});
+
+globalStyle(`${collapsedInTablet} ${span}`, {
+    '@media': {
+        [mq.tablet]: {
             gridColumn: 'span 1',
         },
     },

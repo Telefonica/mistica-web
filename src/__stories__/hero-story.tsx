@@ -8,7 +8,7 @@ import type {TagType} from '..';
 import type {AspectRatio} from '../video';
 
 export default {
-    title: 'Components/Hero',
+    title: 'Components/Hero/Hero',
     parameters: {
         fullScreen: true,
     },

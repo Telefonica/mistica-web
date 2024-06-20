@@ -108,3 +108,25 @@ test.each(ASPECT_RATIO_VALUES)('DataCard with aspect ratio %s', async (aspectRat
 
     expect(image).toMatchImageSnapshot();
 });
+
+test('DataCard only with headline and title', async () => {
+    await openStoryPage({
+        id: 'components-cards-datacard--default',
+        device: 'MOBILE_IOS',
+        args: {
+            asset: 'none',
+            headline: 'Priority',
+            title: 'Title',
+            pretitle: '',
+            subtitle: '',
+            description: '',
+            actions: 'none',
+        },
+    });
+
+    const dataCard = await screen.findByTestId('data-card');
+
+    const image = await dataCard.screenshot();
+
+    expect(image).toMatchImageSnapshot();
+});

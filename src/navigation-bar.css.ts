@@ -5,7 +5,6 @@ import * as mq from './media-queries.css';
 import {vars as colorVars} from './skins/skin-contract.css';
 
 const NAVBAR_ZINDEX = 25;
-const BURGER_ZINDEX = 26;
 
 const BURGER_MENU_ANIMATION_DURATION_MS = 300;
 
@@ -270,7 +269,6 @@ export const burgerMenu = style([
         background: colorVars.colors.background,
     }),
     {
-        zIndex: BURGER_ZINDEX,
         height: `calc(100vh - ${NAVBAR_HEIGHT_MOBILE}px)`,
         overflowY: 'auto',
         transition: `transform ${BURGER_MENU_ANIMATION_DURATION_MS}ms ease-out`,

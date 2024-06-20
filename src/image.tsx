@@ -286,7 +286,6 @@ export const ImageContent = React.forwardRef<HTMLImageElement, ImageProps>(
                             position: 'absolute',
                             width: '100%',
                             height: '100%',
-                            zIndex: 1,
                         }}
                     >
                         <ImageError border={props.border} className={borderRadiusStyle} />

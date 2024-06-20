@@ -4,22 +4,46 @@ import {getPrefixedDataAttributes} from './utils/dom';
 import * as styles from './button-group.css';
 
 import type {ButtonLink, ButtonPrimary, ButtonSecondary} from './button';
-import type {DataAttributes, RendersNullableElement} from './utils/types';
+import type {ByBreakpoint, DataAttributes, RendersNullableElement} from './utils/types';
 
 export interface ButtonGroupProps {
     primaryButton?: RendersNullableElement<typeof ButtonPrimary>;
     secondaryButton?: RendersNullableElement<typeof ButtonSecondary>;
     link?: RendersNullableElement<typeof ButtonLink>;
     dataAttributes?: DataAttributes;
+    align?: ByBreakpoint<'center' | 'left'>;
 }
 
-const ButtonGroup: React.FC<ButtonGroupProps> = ({primaryButton, secondaryButton, link, dataAttributes}) => {
+const ButtonGroup: React.FC<ButtonGroupProps> = ({
+    primaryButton,
+    secondaryButton,
+    link,
+    align = 'left',
+    dataAttributes,
+}) => {
     const anyAction = !!primaryButton || !!secondaryButton || !!link;
     const bothButtons = !!primaryButton && !!secondaryButton;
 
+    const alignByBreakpoint =
+        typeof align === 'string'
+            ? {
+                  mobile: align,
+                  tablet: align,
+                  desktop: align,
+              }
+            : {
+                  mobile: align.mobile ?? 'left',
+                  tablet: align.tablet ?? align.mobile ?? 'left',
+                  desktop: align.desktop ?? 'left',
+              };
+
     return anyAction ? (
         <div
-            className={classNames(styles.inline, styles.container)}
+            className={classNames(styles.inline, styles.container, {
+                [styles.centerInDesktop]: alignByBreakpoint.desktop === 'center',
+                [styles.centerInTablet]: alignByBreakpoint.tablet === 'center',
+                [styles.centerInMobile]: alignByBreakpoint.mobile === 'center',
+            })}
             {...getPrefixedDataAttributes(dataAttributes, 'ButtonGroup')}
         >
             {(primaryButton || secondaryButton) && (

@@ -1,4 +1,4 @@
-import {createVar, globalStyle, style} from '@vanilla-extract/css';
+import {createVar, style} from '@vanilla-extract/css';
 import {sprinkles} from './sprinkles.css';
 import * as mq from './media-queries.css';
 import {vars as skinVars} from './skins/skin-contract.css';
@@ -394,8 +394,4 @@ export const dataCardTopActionsWithoutIcon = style({
 export const flexColumn = style({
     display: 'flex',
     flexDirection: 'column',
-});
-
-globalStyle(`${flexColumn} > :last-child`, {
-    paddingBottom: '0 !important',
 });

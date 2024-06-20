@@ -3074,7 +3074,66 @@ const heroSnippets = [
               />
             ))}
           />
-
+      `,
+    },
+    {
+        group: 'Hero',
+        name: 'CoverHero',
+        code: `
+        <CoverHero
+          backgroundImage="https://images.unsplash.com/photo-1604869515882-4d10fa4b0492?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80"
+          headline={<Tag type="active">Novedad</Tag>}
+          pretitle="Conecta Max"
+          title="Vuela con la Fibra 1Gb"
+          description="Para teletrabajar, ver series y películas y además, tener varios dispositivos conectados."
+          button={<ButtonPrimary fake>Lo quiero</ButtonPrimary>}
+          extra={<Placeholder />}
+          sideExtra={<Placeholder />}
+        />
+      `,
+    },
+    {
+        group: 'Hero',
+        name: 'CoverHero (video)',
+        code: `
+        <CoverHero
+          backgroundVideo="https://fr-cert1-es.mytelco.io/2O4-xBJqiMlAfLkseq8RkXs_mv2ACV7Hnt20HqXxNl-mK7KLI3M2dAw"
+          headline={<Tag type="active">Novedad</Tag>}
+          pretitle="Conecta Max"poste
+          title="Vuela con la Fibra 1Gb"
+          description="Para teletrabajar, ver series y películas y además, tener varios dispositivos conectados."
+          button={<ButtonPrimary fake>Lo quiero</ButtonPrimary>}
+          extra={<Placeholder />}
+          sideExtra={<Placeholder />}
+        />
+      `,
+    },
+    {
+        group: 'Hero',
+        name: 'CoverHero (carousel)',
+        code: `
+        <Slideshow
+          withBullets
+          items={Array.from({ length: 3 }, (_, idx) => (
+            <CoverHero
+              backgroundImage="https://images.unsplash.com/photo-1604869515882-4d10fa4b0492?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80"
+              headline={<Tag type="active">Headline</Tag>}
+              pretitle="Pretitle"
+              title={["Title", "Title 2", "Title 3"][idx]}
+              description={
+                [
+                  "Description",
+                  "This is a long description with a long text to see how this works",
+                  "",
+                ][idx]
+              }
+              extra={<Placeholder />}
+              sideExtra={<Placeholder />}
+              button={<ButtonPrimary fake>Action</ButtonPrimary>}
+              buttonLink={<ButtonLink href="#">Link</ButtonLink>}
+            />
+          ))}
+        />
       `,
     },
 ];
