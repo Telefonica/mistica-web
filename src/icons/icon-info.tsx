@@ -10,6 +10,28 @@ type Props = {
 
 const IconInfoO2 = ({size = 48}: Props): JSX.Element => {
     return (
+        <svg role="presentation" width={size} height={size} viewBox="0 0 64 64">
+            <g
+                stroke={vars.colors.brand}
+                fill={vars.colors.brand}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+            >
+                <path
+                    fill="none"
+                    strokeWidth="2"
+                    d="M48.24,57.99c-4.71,2.95-10.27,4.65-16.24,4.65C15.08,62.64,1.36,48.92,1.36,32S15.08,1.36,32,1.36 S62.64,15.08,62.64,32c0,6.11-1.79,11.8-4.87,16.58"
+                />
+                <line fill="none" strokeWidth="2" x1="32" y1="47.96" x2="32" y2="23.74" />
+                <circle cx="53.64" cy="53.54" r="1.06" />
+                <circle strokeWidth="0" cx="32" cy="16.58" r="1.72" />
+            </g>
+        </svg>
+    );
+};
+
+const IconInfoO2New = ({size = 48}: Props): JSX.Element => {
+    return (
         <svg role="presentation" width={size} height={size} viewBox="0 0 48 48">
             <g fill={vars.colors.brand}>
                 <path d="M24 36.8544C23.0592 36.8544 22.2816 36.0864 22.2816 35.136V18.8544C22.2816 17.9136 23.0496 17.136 24 17.136C24.9408 17.136 25.7184 17.904 25.7184 18.8544V35.136C25.7184 36.0864 24.9408 36.8544 24 36.8544Z" />
@@ -36,11 +58,15 @@ const IconInfoDefault = ({size = 48}: Props): JSX.Element => {
 
 const IconInfo = (props: Props): JSX.Element => {
     const {skinName} = useTheme();
-    return skinName === O2_SKIN || skinName === O2_NEW_SKIN ? (
-        <IconInfoO2 {...props} />
-    ) : (
-        <IconInfoDefault {...props} />
-    );
+
+    switch (skinName) {
+        case O2_SKIN:
+            return <IconInfoO2 {...props} />;
+        case O2_NEW_SKIN:
+            return <IconInfoO2New {...props} />;
+        default:
+            return <IconInfoDefault {...props} />;
+    }
 };
 
 export default IconInfo;
