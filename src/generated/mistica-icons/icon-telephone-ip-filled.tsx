@@ -16,7 +16,16 @@ const IconTelephoneIpFilled = ({color, size = 24, ...rest}: IconProps): JSX.Elem
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^vivo-new/i)) {
+    if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M10.294 2v20H4.852V2zM3.828 3.787H2.47v16.426h1.358zm16.331 0h-8.842v16.426h8.842c.75 0 1.359-.644 1.359-1.426V5.217c.004-.785-.61-1.43-1.359-1.43m-.51 6.783h-6.12c-.27 0-.51-.252-.51-.535V7.178c0-.283.24-.534.51-.534h6.12c.27 0 .51.25.51.534v2.857c0 .283-.24.534-.51.534"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^vivo-new/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path

@@ -6,6 +6,7 @@
  */
 
 import * as React from 'react';
+import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
 
@@ -14,15 +15,26 @@ import type {IconProps} from '../../utils/types';
 const IconVolumeUpRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
-
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path
-                fill={fillColor}
-                d="M15.451 2.1a.71.71 0 0 0-.726 0L5.44 7.554H2.726c-.4 0-.726.332-.726.74v7.408c0 .408.326.74.726.74H5.44l9.285 5.458a.71.71 0 0 0 .726 0 .74.74 0 0 0 .363-.64V2.74a.73.73 0 0 0-.363-.64m-1.089 17.885-8.364-4.919a.7.7 0 0 0-.363-.1H3.452V9.039h2.183a.7.7 0 0 0 .363-.1l8.364-4.917zm6.912-7.243c.4 0 .726-.332.726-.74a.74.74 0 0 0-.726-.744h-1.27V9.963a.734.734 0 0 0-.727-.74c-.4 0-.726.332-.726.74v1.304h-1.27c-.4 0-.727.332-.727.74s.326.74.726.74h1.271v1.295c0 .408.326.74.726.74s.726-.332.726-.74v-1.3z"
-            />
-        </svg>
-    );
+    const {skinName} = useTheme();
+    if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M15.451 2.1a.71.71 0 0 0-.726 0L5.44 7.554H2.726c-.4 0-.726.332-.726.74v7.408c0 .408.326.74.726.74H5.44l9.285 5.458a.71.71 0 0 0 .726 0 .74.74 0 0 0 .363-.64V2.74a.73.73 0 0 0-.363-.64m-1.089 17.885-8.364-4.919a.7.7 0 0 0-.363-.1H3.452V9.039h2.183a.7.7 0 0 0 .363-.1l8.364-4.917zm6.912-7.243c.4 0 .726-.332.726-.74a.74.74 0 0 0-.726-.744h-1.27V9.963a.734.734 0 0 0-.727-.74c-.4 0-.726.332-.726.74v1.304h-1.27c-.4 0-.727.332-.727.74s.326.74.726.74h1.271v1.295c0 .408.326.74.726.74s.726-.332.726-.74v-1.3z"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M15.451 2.1a.71.71 0 0 0-.726 0L5.44 7.554H2.726c-.4 0-.726.332-.726.74v7.408c0 .408.326.74.726.74H5.44l9.285 5.458a.71.71 0 0 0 .726 0 .74.74 0 0 0 .363-.64V2.74a.73.73 0 0 0-.363-.64m-1.089 17.885-8.364-4.919a.7.7 0 0 0-.363-.1H3.452V9.039h2.183a.7.7 0 0 0 .363-.1l8.364-4.917zm6.912-7.243c.4 0 .726-.332.726-.74a.74.74 0 0 0-.726-.744h-1.27V9.963a.734.734 0 0 0-.727-.74c-.4 0-.726.332-.726.74v1.304h-1.27c-.4 0-.727.332-.727.74s.326.74.726.74h1.271v1.295c0 .408.326.74.726.74s.726-.332.726-.74v-1.3z"
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconVolumeUpRegular;

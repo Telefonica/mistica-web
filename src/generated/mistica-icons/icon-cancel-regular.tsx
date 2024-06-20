@@ -16,7 +16,20 @@ const IconCancelRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element 
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^blau/i)) {
+    if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M15.78 7.208a.72.72 0 0 1 1.012 0 .72.72 0 0 1 0 1.012L13.012 12l3.772 3.78a.72.72 0 0 1 0 1.012.72.72 0 0 1-.504.212.73.73 0 0 1-.504-.212l-3.78-3.78-3.78 3.78a.7.7 0 0 1-1.008 0 .72.72 0 0 1 0-1.012l3.78-3.78-3.78-3.78a.72.72 0 0 1 0-1.012.72.72 0 0 1 1.012 0l3.78 3.78z"
+                />
+                <path
+                    fill={fillColor}
+                    d="M12 2C6.484 2 2 6.484 2 12s4.484 10 10 10 10-4.484 10-10S17.516 2 12 2m0 18.576c-4.728 0-8.576-3.848-8.576-8.576S7.272 3.424 12 3.424 20.576 7.272 20.576 12 16.728 20.576 12 20.576"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^blau/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path

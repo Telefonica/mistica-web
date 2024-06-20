@@ -16,7 +16,16 @@ const IconSearchRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element 
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^blau/i)) {
+    if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="m15.702 14.884 5.619 5.896a.744.744 0 0 1-.004 1.012.66.66 0 0 1-.96 0l-5.62-5.9c-1.299 1.136-2.967 1.82-4.785 1.82-4.126 0-7.482-3.524-7.482-7.856S5.826 2 9.952 2s7.487 3.524 7.483 7.86c0 1.908-.651 3.66-1.733 5.024M9.952 3.428c-3.375 0-6.122 2.884-6.122 6.428s2.747 6.428 6.122 6.428 6.123-2.884 6.123-6.428-2.747-6.428-6.123-6.428"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^blau/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path

@@ -16,7 +16,16 @@ const IconChevronDownRegular = ({color, size = 24, ...rest}: IconProps): JSX.Ele
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^blau/i)) {
+    if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M5.266 8.2a.79.79 0 0 0-1.049 0 .64.64 0 0 0 0 .962l7.238 6.639c.15.137.348.204.545.199a.78.78 0 0 0 .545-.2l7.238-6.638a.642.642 0 0 0 0-.963.79.79 0 0 0-1.05 0L12 14.376z"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^blau/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path

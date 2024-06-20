@@ -6,6 +6,7 @@
  */
 
 import * as React from 'react';
+import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
 
@@ -14,15 +15,26 @@ import type {IconProps} from '../../utils/types';
 const IconVideoCameraFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
-
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path
-                fill={fillColor}
-                d="M22 6.4v11.2c0 .16-.09.308-.228.37a.4.4 0 0 1-.147.03.36.36 0 0 1-.256-.113l-5.313-5.534v5.248c0 .215-.161.389-.36.389H2.36c-.2 0-.361-.174-.361-.39V6.4c0-.215.161-.39.36-.39H15.7c.2 0 .36.175.36.39v5.247l5.314-5.534a.35.35 0 0 1 .403-.082c.138.067.223.21.223.369"
-            />
-        </svg>
-    );
+    const {skinName} = useTheme();
+    if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M22 6.4v11.2c0 .16-.09.308-.228.37a.4.4 0 0 1-.147.03.36.36 0 0 1-.256-.113l-5.313-5.534v5.248c0 .215-.161.389-.36.389H2.36c-.2 0-.361-.174-.361-.39V6.4c0-.215.161-.39.36-.39H15.7c.2 0 .36.175.36.39v5.247l5.314-5.534a.35.35 0 0 1 .403-.082c.138.067.223.21.223.369"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M22 6.4v11.2c0 .16-.09.308-.228.37a.4.4 0 0 1-.147.03.36.36 0 0 1-.256-.113l-5.313-5.534v5.248c0 .215-.161.389-.36.389H2.36c-.2 0-.361-.174-.361-.39V6.4c0-.215.161-.39.36-.39H15.7c.2 0 .36.175.36.39v5.247l5.314-5.534a.35.35 0 0 1 .403-.082c.138.067.223.21.223.369"
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconVideoCameraFilled;

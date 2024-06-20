@@ -16,7 +16,16 @@ const IconShareRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element =
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^vivo-new/i)) {
+    if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M15.235 16.21A3.52 3.52 0 0 1 18 14.852c1.944 0 3.528 1.608 3.528 3.576S19.944 22 18 22s-3.527-1.604-3.527-3.571q.002-.491.122-.94l-5.822-3.275a3.52 3.52 0 0 1-2.766 1.355c-1.943 0-3.527-1.603-3.527-3.571s1.584-3.571 3.527-3.571c1.008 0 1.916.432 2.56 1.12l6.028-3.052a3.6 3.6 0 0 1-.122-.924C14.473 3.604 16.057 2 18 2s3.528 1.596 3.528 3.563S19.944 9.135 18 9.135a3.5 3.5 0 0 1-2.773-1.368l-5.91 2.991c.143.388.218.804.218 1.236 0 .328-.044.64-.123.94zM20.117 5.57c0-1.183-.952-2.143-2.117-2.143-1.17 0-2.117.96-2.117 2.143 0 1.184.948 2.144 2.117 2.144s2.117-.96 2.117-2.144m-14.11 8.57c1.17 0 2.118-.963 2.118-2.143 0-1.184-.948-2.144-2.118-2.144s-2.117.964-2.117 2.144c0 1.184.952 2.144 2.117 2.144m9.876 4.284c0 1.183.952 2.143 2.117 2.143s2.117-.96 2.117-2.143c0-1.184-.948-2.144-2.117-2.144s-2.117.96-2.117 2.144"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^vivo-new/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path

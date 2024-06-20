@@ -16,7 +16,20 @@ const IconPhotoCameraRegular = ({color, size = 24, ...rest}: IconProps): JSX.Ele
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2/i)) {
+    if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M7.002 12.712a5.01 5.01 0 0 0 5.004 5.004 5 5 0 0 0 5.004-4.996 5.01 5.01 0 0 0-5.004-5.008 5.005 5.005 0 0 0-5.004 5m1.432 0a3.573 3.573 0 0 1 7.144 0 3.573 3.573 0 0 1-7.144 0"
+                />
+                <path
+                    fill={fillColor}
+                    d="M4.142 20.576H19.87c1.18 0 2.144-.96 2.132-2.14V8.428a2.147 2.147 0 0 0-2.144-2.144h-2.204l-2.648-2.648a.7.7 0 0 0-.504-.212H9.498a.72.72 0 0 0-.504.212L6.346 6.284H4.142a2.147 2.147 0 0 0-2.144 2.144v10.004c0 1.184.964 2.144 2.144 2.144M3.43 8.424c0-.392.32-.712.712-.712l2.512.004c.188 0 .372-.08.504-.212l2.648-2.648h4.408l2.648 2.648a.7.7 0 0 0 .504.212h2.504c.392 0 .712.32.712.712v10.004c0 .392-.32.712-.712.712H4.142a.714.714 0 0 1-.712-.712z"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path

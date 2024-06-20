@@ -16,7 +16,16 @@ const IconCloudRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element =
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2/i)) {
+    if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M12 5c2.463 0 4.534 1.76 4.963 4.094 2.784 0 5.037 2.224 5.037 4.953S19.751 19 17 19H7c-2.751 0-5-2.224-5-4.953s2.249-4.953 5-4.953h.073A5.03 5.03 0 0 1 12 5m-8.57 9.042c0 1.94 1.605 3.52 3.57 3.52h10c1.96 0 3.565-1.58 3.565-3.52s-1.604-3.52-3.57-3.52a5.5 5.5 0 0 1-.178.828c-.068.285-.356.5-.676.5-.073 0-.142 0-.215-.036-.357-.11-.571-.5-.498-.97a2.7 2.7 0 0 0 .141-.932v-.18c-.068-1.87-1.64-3.34-3.569-3.34-1.746 0-3.213 1.255-3.533 2.872a5.3 5.3 0 0 1 1.284.611c.32.216.43.685.215 1.006-.215.322-.68.432-1 .216A3.7 3.7 0 0 0 7 10.523c-1.96 0-3.57 1.58-3.57 3.52"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path

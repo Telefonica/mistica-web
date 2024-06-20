@@ -16,7 +16,16 @@ const IconHeartFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element =>
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^vivo-new/i)) {
+    if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M17.252 2c-2.02 0-3.372.769-5.256 3.08C10.14 2.824 8.656 2 6.58 2 3.572 2 2 4.354 2 6.685c0 4.764 6.404 11.52 9.48 14.767L12 22l.52-.549c.88-.925 1.904-2.018 2.96-3.21l2.66-3.232C20.736 11.582 22 8.859 22 6.685 22 4.355 20.368 2 17.252 2"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^vivo-new/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path

@@ -6,6 +6,7 @@
  */
 
 import * as React from 'react';
+import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
 
@@ -14,15 +15,26 @@ import type {IconProps} from '../../utils/types';
 const IconDeviceSignalFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
-
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path
-                fill={fillColor}
-                d="M14.338 2c1.882 0 3.42 1.504 3.515 3.388H4.479C4.574 3.504 6.113 2 7.994 2zm6.831 14.906a.7.7 0 0 1-.487-.196.72.72 0 0 1-.027-1.01 5.32 5.32 0 0 0-.09-7.385.72.72 0 0 1 0-1.01.7.7 0 0 1 .997 0 6.745 6.745 0 0 1 .117 9.377.7.7 0 0 1-.51.224m-1.137-1.911a4.38 4.38 0 0 0-.126-6.013.7.7 0 0 0-.997 0 .72.72 0 0 0 0 1.01 2.947 2.947 0 0 1 .085 4.038.726.726 0 0 0 .041 1.01.7.7 0 0 0 .478.188.68.68 0 0 0 .52-.233M4.47 6.458v11.084h13.397V6.458zM7.994 22c-1.881 0-3.42-1.504-3.515-3.388h13.374C17.758 20.496 16.22 22 14.338 22z"
-            />
-        </svg>
-    );
+    const {skinName} = useTheme();
+    if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M14.338 2c1.882 0 3.42 1.504 3.515 3.388H4.479C4.574 3.504 6.113 2 7.994 2zm6.831 14.906a.7.7 0 0 1-.487-.196.72.72 0 0 1-.027-1.01 5.32 5.32 0 0 0-.09-7.385.72.72 0 0 1 0-1.01.7.7 0 0 1 .997 0 6.745 6.745 0 0 1 .117 9.377.7.7 0 0 1-.51.224m-1.137-1.911a4.38 4.38 0 0 0-.126-6.013.7.7 0 0 0-.997 0 .72.72 0 0 0 0 1.01 2.947 2.947 0 0 1 .085 4.038.726.726 0 0 0 .041 1.01.7.7 0 0 0 .478.188.68.68 0 0 0 .52-.233M4.47 6.458v11.084h13.397V6.458zM7.994 22c-1.881 0-3.42-1.504-3.515-3.388h13.374C17.758 20.496 16.22 22 14.338 22z"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M14.338 2c1.882 0 3.42 1.504 3.515 3.388H4.479C4.574 3.504 6.113 2 7.994 2zm6.831 14.906a.7.7 0 0 1-.487-.196.72.72 0 0 1-.027-1.01 5.32 5.32 0 0 0-.09-7.385.72.72 0 0 1 0-1.01.7.7 0 0 1 .997 0 6.745 6.745 0 0 1 .117 9.377.7.7 0 0 1-.51.224m-1.137-1.911a4.38 4.38 0 0 0-.126-6.013.7.7 0 0 0-.997 0 .72.72 0 0 0 0 1.01 2.947 2.947 0 0 1 .085 4.038.726.726 0 0 0 .041 1.01.7.7 0 0 0 .478.188.68.68 0 0 0 .52-.233M4.47 6.458v11.084h13.397V6.458zM7.994 22c-1.881 0-3.42-1.504-3.515-3.388h13.374C17.758 20.496 16.22 22 14.338 22z"
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconDeviceSignalFilled;

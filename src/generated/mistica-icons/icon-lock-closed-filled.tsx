@@ -16,7 +16,16 @@ const IconLockClosedFilled = ({color, size = 24, ...rest}: IconProps): JSX.Eleme
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2/i)) {
+    if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M17.912 9.499V8.07C17.912 4.723 15.26 2 12 2S6.088 4.723 6.088 8.07v1.428c-1.153 0-2.088.96-2.088 2.144v8.214C4 21.04 4.935 22 6.088 22h11.824C19.065 22 20 21.04 20 19.856v-8.214c0-1.184-.939-2.143-2.088-2.143m-2.064 4.307-4.892 5.019L8.85 16.66a.546.546 0 0 1 0-.756.51.51 0 0 1 .736 0l1.371 1.408 4.152-4.263a.505.505 0 0 1 .736 0 .54.54 0 0 1 .004.756m-8.37-4.307V8.07c0-2.56 2.03-4.643 4.522-4.643s4.522 2.083 4.522 4.643v1.428z"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path

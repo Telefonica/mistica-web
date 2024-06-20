@@ -16,7 +16,16 @@ const IconTimeFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => 
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2/i)) {
+    if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M2 12C2 6.488 6.488 2 12 2s10 4.488 10 10-4.488 10-10 10S2 17.512 2 12m10 .756 3.236-3.236a.525.525 0 0 0-.004-.756.53.53 0 0 0-.756 0l-2.488 2.48-4.616-4.616a.53.53 0 0 0-.756 0 .53.53 0 0 0 0 .756z"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path

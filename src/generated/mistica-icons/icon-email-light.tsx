@@ -16,7 +16,16 @@ const IconEmailLight = ({color, size = 24, ...rest}: IconProps): JSX.Element => 
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2/i)) {
+    if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M21.26 5H2.74a.754.754 0 0 0-.74.766v12.468c0 .422.332.766.74.766h18.52c.408 0 .74-.344.74-.766V5.766A.754.754 0 0 0 21.26 5m-2.114 1.532L12 10.824 4.854 6.532zM3.479 7.48l8.146 4.896a.72.72 0 0 0 .74 0l8.156-4.896v9.983H3.479z"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path

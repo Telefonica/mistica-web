@@ -6,6 +6,7 @@
  */
 
 import * as React from 'react';
+import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
 
@@ -14,19 +15,34 @@ import type {IconProps} from '../../utils/types';
 const IconNewsletterFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
-
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path
-                fill={fillColor}
-                d="M5.11 2h13.793v2.039H5.11zM5.11 5.148h13.793v3.334H5.11zM7.832 17.002h2.18v1.854h-2.18zM10.011 11.815H7.832v1.854h2.18z"
-            />
-            <path
-                fill={fillColor}
-                d="M5.11 22V9.591h13.793V22zm1.63-2.034h4.358v-4.078H6.741zm4.358-5.187v-4.073H6.741v4.073zm1.268 3.703h4.358a.55.55 0 0 0 .544-.555.547.547 0 0 0-.544-.555h-4.357a.547.547 0 0 0-.544.555c0 .308.242.555.543.555m4.358-5.187a.55.55 0 0 0 .544-.555.547.547 0 0 0-.544-.555h-4.357a.547.547 0 0 0-.544.555c0 .308.242.554.543.554z"
-            />
-        </svg>
-    );
+    const {skinName} = useTheme();
+    if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M5.11 2h13.793v2.039H5.11zM5.11 5.148h13.793v3.334H5.11zM7.832 17.002h2.18v1.854h-2.18zM10.011 11.815H7.832v1.854h2.18z"
+                />
+                <path
+                    fill={fillColor}
+                    d="M5.11 22V9.591h13.793V22zm1.63-2.034h4.358v-4.078H6.741zm4.358-5.187v-4.073H6.741v4.073zm1.268 3.703h4.358a.55.55 0 0 0 .544-.555.547.547 0 0 0-.544-.555h-4.357a.547.547 0 0 0-.544.555c0 .308.242.555.543.555m4.358-5.187a.55.55 0 0 0 .544-.555.547.547 0 0 0-.544-.555h-4.357a.547.547 0 0 0-.544.555c0 .308.242.554.543.554z"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M5.11 2h13.793v2.039H5.11zM5.11 5.148h13.793v3.334H5.11zM7.832 17.002h2.18v1.854h-2.18zM10.011 11.815H7.832v1.854h2.18z"
+                />
+                <path
+                    fill={fillColor}
+                    d="M5.11 22V9.591h13.793V22zm1.63-2.034h4.358v-4.078H6.741zm4.358-5.187v-4.073H6.741v4.073zm1.268 3.703h4.358a.55.55 0 0 0 .544-.555.547.547 0 0 0-.544-.555h-4.357a.547.547 0 0 0-.544.555c0 .308.242.555.543.555m4.358-5.187a.55.55 0 0 0 .544-.555.547.547 0 0 0-.544-.555h-4.357a.547.547 0 0 0-.544.555c0 .308.242.554.543.554z"
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconNewsletterFilled;

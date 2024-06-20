@@ -16,7 +16,16 @@ const IconPoundSymbolCircleFilled = ({color, size = 24, ...rest}: IconProps): JS
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2/i)) {
+    if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M2 12C2 6.5 6.5 2 12 2s10 4.5 10 10c0 5.536-4.5 10-10 10-5.536 0-10-4.5-10-10m7.608 3.752h4.712a.55.55 0 0 0 .536-.536.55.55 0 0 0-.536-.536h-3.144c.072-.212.108-.392.108-.608V12.36h1.608a.55.55 0 0 0 .536-.536.55.55 0 0 0-.536-.536h-1.608V9.68c0-.644.428-1.072 1.072-1.072.392 0 .572.072.716.216.216.216.536.18.752-.036s.18-.536-.036-.752c-.5-.464-1.032-.5-1.428-.5-1.248 0-2.144.892-2.144 2.144v1.608H9.68a.55.55 0 0 0-.536.536c0 .284.252.536.536.536h.536v1.712a.603.603 0 0 1-.608.608.55.55 0 0 0-.536.536c0 .284.252.536.536.536"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path

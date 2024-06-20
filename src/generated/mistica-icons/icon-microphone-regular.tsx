@@ -16,7 +16,16 @@ const IconMicrophoneRegular = ({color, size = 24, ...rest}: IconProps): JSX.Elem
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2/i)) {
+    if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M8.52 14.039v-8.52C8.52 3.545 10.05 2 12.005 2s3.485 1.546 3.485 3.518v8.52c0 1.973-1.531 3.52-3.485 3.52S8.52 16.01 8.52 14.037m8.257 7.221c0 .408-.33.74-.733.74H7.97a.737.737 0 0 1-.733-.74c0-.408.33-.74.733-.74h3.302v-.796c-2.687-.365-4.772-2.688-4.772-5.5 0-.408.329-.74.733-.74s.732.332.732.74c0 2.247 1.813 4.073 4.035 4.073s4.035-1.83 4.035-4.073c0-.408.328-.74.732-.74s.733.332.733.74c0 2.812-2.08 5.135-4.772 5.5v.797h3.302a.74.74 0 0 1 .747.74m-4.772-5.182c1.15 0 2.02-.877 2.02-2.04v-8.52c0-1.161-.87-2.039-2.02-2.039-1.151 0-2.02.878-2.02 2.04v8.52c0 1.162.869 2.039 2.02 2.039"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path

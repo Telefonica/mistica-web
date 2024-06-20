@@ -16,7 +16,16 @@ const IconPenFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2/i)) {
+    if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="m20.14 8.805.323-.34c1.406-1.477 1.406-3.881 0-5.358a3.493 3.493 0 0 0-5.102 0l-.324.34zm-15.597 5.66 9.762-10.25 5.101 5.355-9.762 10.25zm-2.05 6.627 1.455-5.718 4.832 5.07-5.445 1.532a.67.67 0 0 1-.663-.188.75.75 0 0 1-.18-.696"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path

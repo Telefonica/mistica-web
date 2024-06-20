@@ -16,7 +16,16 @@ const IconFastForwardRegular = ({color, size = 24, ...rest}: IconProps): JSX.Ele
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2/i)) {
+    if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M2 12c0 5.517 4.488 10 10 10s10-4.488 10-10S17.512 2 12 2 2 6.484 2 12m1.43 0c0-4.726 3.844-8.57 8.57-8.57s8.57 3.844 8.57 8.57-3.844 8.57-8.57 8.57S3.43 16.726 3.43 12m4.434 5.146 4.639-4.643a.714.714 0 0 0 0-1.01l-4.64-4.64a.714.714 0 0 0-1.01 1.01L10.99 12l-4.136 4.136a.714.714 0 0 0 1.01 1.01m10.713-4.643-4.644 4.643a.713.713 0 1 1-1.01-1.01L17.06 12l-4.136-4.136a.714.714 0 0 1 1.01-1.01l4.644 4.639a.714.714 0 0 1 0 1.01"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path

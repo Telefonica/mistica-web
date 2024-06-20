@@ -16,7 +16,16 @@ const IconShopRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element =>
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2/i)) {
+    if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M18.477 6.53h-2.654v-.567c0-2.19-1.712-3.963-3.82-3.963S8.186 3.776 8.186 5.963v.567H5.53L4 19.661v.076C4 21.094 4.727 22 5.815 22h12.37C19.277 22 20 21.094 20 19.737zm-8.839-.567c0-1.357 1.054-2.454 2.366-2.454 1.311 0 2.365 1.093 2.365 2.454v.567H9.64zM5.82 20.491c-.327 0-.361-.49-.361-.714L6.842 8.043h10.366l1.346 11.734c-.004.223-.042.714-.37.714z"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path

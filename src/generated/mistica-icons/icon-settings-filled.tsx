@@ -16,7 +16,16 @@ const IconSettingsFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2/i)) {
+    if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M20.3 10.143h1.312c.212 0 .372.168.388.364v2.962a.37.37 0 0 1-.372.373h-1.313a8.4 8.4 0 0 1-1.124 2.718l.932.94a.37.37 0 0 1 0 .525l-2.097 2.098a.37.37 0 0 1-.524 0l-.932-.933a8.4 8.4 0 0 1-2.717 1.125v1.313a.37.37 0 0 1-.372.372h-2.962a.37.37 0 0 1-.372-.372v-1.313A8.4 8.4 0 0 1 7.43 19.19l-.932.932a.37.37 0 0 1-.524 0l-2.097-2.097a.37.37 0 0 1-.104-.26c0-.1.032-.189.104-.26l.932-.933a8.4 8.4 0 0 1-1.124-2.718H2.372A.37.37 0 0 1 2 13.48V10.52c0-.212.168-.373.372-.373h1.313a8.4 8.4 0 0 1 1.124-2.718l-.932-.932a.37.37 0 0 1-.104-.26c0-.1.032-.189.104-.26l2.1-2.098a.37.37 0 0 1 .26-.105c.1 0 .189.032.26.104l.921.933a8.4 8.4 0 0 1 2.717-1.125V2.372c0-.212.168-.372.372-.372h2.962c.212 0 .372.168.372.372v1.305a8.4 8.4 0 0 1 2.717 1.125l.932-.932a.37.37 0 0 1 .26-.105c.1 0 .188.032.26.104l2.097 2.098a.37.37 0 0 1 0 .525l-.932.932c.532.841.912 1.746 1.124 2.718M6.441 11.996a5.551 5.551 0 1 0 11.1 0 5.551 5.551 0 1 0-11.1 0"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path

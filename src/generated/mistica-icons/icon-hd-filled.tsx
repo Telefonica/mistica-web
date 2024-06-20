@@ -6,6 +6,7 @@
  */
 
 import * as React from 'react';
+import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
 
@@ -14,15 +15,26 @@ import type {IconProps} from '../../utils/types';
 const IconHdFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
-
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path
-                fill={fillColor}
-                d="M2 18h20V6H2zm12.779-3.599c1.228 0 2.223-1.08 2.223-2.401s-1-2.401-2.223-2.401h-1.11v4.802zM11.445 9v6c0 .333-.246.599-.555.599-.308 0-.554-.266-.554-.599v-2.6H7.372V15c0 .333-.246.599-.555.599-.308 0-.554-.266-.554-.599V9c0-.333.246-.599.554-.599s.555.266.555.599v2.201h2.964V9c0-.333.246-.599.554-.599s.555.266.555.599m3.334-.599c1.84 0 3.333 1.613 3.333 3.599s-1.494 3.599-3.333 3.599h-2.224V8.401z"
-            />
-        </svg>
-    );
+    const {skinName} = useTheme();
+    if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M2 18h20V6H2zm12.779-3.599c1.228 0 2.223-1.08 2.223-2.401s-1-2.401-2.223-2.401h-1.11v4.802zM11.445 9v6c0 .333-.246.599-.555.599-.308 0-.554-.266-.554-.599v-2.6H7.372V15c0 .333-.246.599-.555.599-.308 0-.554-.266-.554-.599V9c0-.333.246-.599.554-.599s.555.266.555.599v2.201h2.964V9c0-.333.246-.599.554-.599s.555.266.555.599m3.334-.599c1.84 0 3.333 1.613 3.333 3.599s-1.494 3.599-3.333 3.599h-2.224V8.401z"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M2 18h20V6H2zm12.779-3.599c1.228 0 2.223-1.08 2.223-2.401s-1-2.401-2.223-2.401h-1.11v4.802zM11.445 9v6c0 .333-.246.599-.555.599-.308 0-.554-.266-.554-.599v-2.6H7.372V15c0 .333-.246.599-.555.599-.308 0-.554-.266-.554-.599V9c0-.333.246-.599.554-.599s.555.266.555.599v2.201h2.964V9c0-.333.246-.599.554-.599s.555.266.555.599m3.334-.599c1.84 0 3.333 1.613 3.333 3.599s-1.494 3.599-3.333 3.599h-2.224V8.401z"
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconHdFilled;

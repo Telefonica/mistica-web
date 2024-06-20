@@ -16,7 +16,16 @@ const IconArrowUpRightFilled = ({color, size = 24, ...rest}: IconProps): JSX.Ele
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2/i)) {
+    if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M8.624 2c-.884 0-1.648.508-1.984 1.324-.34.816-.16 1.716.464 2.344l2.776 2.78L2 16.328 7.672 22l7.88-7.88 2.78 2.78a2.11 2.11 0 0 0 2.344.464A2.12 2.12 0 0 0 22 15.38V2z"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path

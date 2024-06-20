@@ -16,7 +16,16 @@ const IconParkingFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element 
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2/i)) {
+    if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M21.528 3.853v16.294c0 1.019-.79 1.853-1.766 1.853H4.245c-.97 0-1.765-.83-1.765-1.853V3.853C2.48 2.834 3.27 2 4.245 2h15.522c.97 0 1.76.83 1.76 1.853m-6.172 5.588c0 1.53-1.187 2.777-2.646 2.777H9.713V6.664h2.997c1.459 0 2.646 1.246 2.646 2.777m-2.641-3.887H8.66v12.403a.54.54 0 0 0 .528.555.54.54 0 0 0 .528-.555v-4.63h2.998c2.04 0 3.702-1.744 3.702-3.886s-1.662-3.887-3.702-3.887"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path

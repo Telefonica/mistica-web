@@ -16,7 +16,16 @@ const IconRocketFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element =
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2/i)) {
+    if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="m20.974 3.8.865-.867a.545.545 0 0 0 0-.772.545.545 0 0 0-.772 0l-.866.865a3.42 3.42 0 0 0-2.02-.656c-.922 0-1.787.358-2.439 1.01L9.505 9.618 4.618 8.324 2.212 10.73l3.09 3.091-.726.726 4.878 4.879.726-.726 3.09 3.09 2.407-2.406-1.294-4.888L20.62 8.26a3.45 3.45 0 0 0 .354-4.46M2.934 18.205a.54.54 0 0 1-.773-.004.545.545 0 0 1 0-.773l1.452-1.452a.545.545 0 0 1 .772 0 .545.545 0 0 1 0 .772zm0 3.636 3.271-3.273a.545.545 0 0 0 0-.772.545.545 0 0 0-.772 0L2.16 21.069a.545.545 0 0 0 .386.931c.14 0 .28-.051.386-.158m4.319-2.225L5.8 21.069a.545.545 0 0 0 .387.931c.14 0 .279-.051.386-.158l1.452-1.453a.545.545 0 0 0 0-.772.545.545 0 0 0-.772 0M18.907 7.09a2.004 2.004 0 0 1-2.001 2.002 2.004 2.004 0 0 1-2.002-2.002c0-1.103.899-2.001 2.002-2.001s2.001.898 2.001 2.001m-2.904 0c0-.498.405-.908.907-.908.498 0 .908.41.908.908s-.41.908-.908.908a.91.91 0 0 1-.907-.908"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path

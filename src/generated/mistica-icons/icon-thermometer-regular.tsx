@@ -16,7 +16,20 @@ const IconThermometerRegular = ({color, size = 24, ...rest}: IconProps): JSX.Ele
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^vivo-new/i)) {
+    if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M14.909 4.963V15.15A4.1 4.1 0 0 1 16 17.925C16 20.185 14.218 22 12 22s-4-1.816-4-4.075c0-1.036.4-2.036 1.091-2.776V4.963C9.091 3.336 10.402 2 12 2s2.909 1.336 2.909 2.963M9.452 17.925c0 1.447 1.13 2.595 2.548 2.595 1.417 0 2.544-1.148 2.548-2.595 0-.74-.326-1.44-.837-1.924a.67.67 0 0 1-.255-.556V4.963c0-.82-.651-1.483-1.456-1.483s-1.456.668-1.456 1.483v10.482c0 .22-.11.408-.255.556a2.69 2.69 0 0 0-.837 1.924"
+                />
+                <path
+                    fill={fillColor}
+                    d="M12.546 4.963v11.222a1.835 1.835 0 0 1 1.272 1.744c0 1.036-.801 1.851-1.818 1.851s-1.818-.815-1.818-1.851a1.83 1.83 0 0 1 1.272-1.74V4.963c0-.296.255-.555.546-.555.29 0 .546.26.546.555M11.274 17.93c0 .404.326.74.726.74a.736.736 0 0 0 .726-.74.74.74 0 0 0-.726-.74.74.74 0 0 0-.726.74"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^vivo-new/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
