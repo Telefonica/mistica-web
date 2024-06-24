@@ -16,7 +16,16 @@ const IconTicketsFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element 
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2-new/i)) {
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="m6.372 15.918 4.948 4.947a3.86 3.86 0 0 0 5.456.002l4.091-4.09a3.86 3.86 0 0 0-.002-5.458l-4.947-4.947-3.325.766.767-3.324-.683-.683A3.86 3.86 0 0 0 7.22 3.13L3.13 7.22a3.86 3.86 0 0 0 .001 5.457l.683.683 3.324-.767zm4.636-6.324-1.414 1.414-.884-.884 1.414-1.414z"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2-new/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
@@ -26,15 +35,6 @@ const IconTicketsFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element 
                 <path
                     fill={fillColor}
                     d="m21.893 9.007-2.497-2.498a.356.356 0 0 0-.511 0 .987.987 0 0 1-1.39 0 .99.99 0 0 1 0-1.391.36.36 0 0 0 .107-.256.36.36 0 0 0-.107-.256l-2.496-2.498a.356.356 0 0 0-.512 0L2.108 14.482a.357.357 0 0 0 0 .512l2.496 2.498c.07.07.163.107.256.107s.19-.037.256-.107a.987.987 0 0 1 1.39 0 .99.99 0 0 1 0 1.391.357.357 0 0 0 0 .512l2.496 2.498c.07.07.163.107.256.107a.36.36 0 0 0 .255-.107L21.888 9.509a.34.34 0 0 0 .004-.502m-6.866 1.386-1.084 1.75 1.018 1.893a.54.54 0 0 1-.046.586.54.54 0 0 1-.553.2l-2.05-.46-1.45 1.52a.562.562 0 0 1-.572.14.54.54 0 0 1-.363-.46l-.205-2.14-1.873-.852a.55.55 0 0 1-.32-.502.54.54 0 0 1 .334-.493l1.957-.828.246-2.075a.543.543 0 0 1 .953-.288l1.358 1.59 2.087-.4a.542.542 0 0 1 .563.82"
-                />
-            </svg>
-        );
-    } else if (skinName.match(/^vivo-new/i)) {
-        return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                <path
-                    fill={fillColor}
-                    d="m6.372 15.918 4.948 4.947a3.86 3.86 0 0 0 5.456.002l4.091-4.09a3.86 3.86 0 0 0-.002-5.458l-4.947-4.947-3.325.766.767-3.324-.683-.683A3.86 3.86 0 0 0 7.22 3.13L3.13 7.22a3.86 3.86 0 0 0 .001 5.457l.683.683 3.324-.767zm4.636-6.324-1.414 1.414-.884-.884 1.414-1.414z"
                 />
             </svg>
         );

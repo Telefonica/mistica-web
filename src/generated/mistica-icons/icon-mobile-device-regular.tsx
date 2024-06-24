@@ -16,21 +16,21 @@ const IconMobileDeviceRegular = ({color, size = 24, ...rest}: IconProps): JSX.El
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2-new/i)) {
-        return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                <path
-                    fill={fillColor}
-                    d="M8.784 2h6.432a3.575 3.575 0 0 1 3.568 3.572v12.856A3.58 3.58 0 0 1 15.212 22H8.784a3.58 3.58 0 0 1-3.572-3.572V5.572A3.58 3.58 0 0 1 8.784 2m-2.14 4.644V17.36H17.36V6.644zm2.14-3.216c-1.06 0-1.94.776-2.112 1.784h10.652a2.145 2.145 0 0 0-2.112-1.784zm0 17.144h6.432c1.06 0 1.94-.776 2.108-1.784H6.672a2.145 2.145 0 0 0 2.112 1.784"
-                />
-            </svg>
-        );
-    } else if (skinName.match(/^blau/i)) {
+    if (skinName.match(/^blau/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
                     d="M15 2H8.571A3.58 3.58 0 0 0 5 5.571V18.43A3.58 3.58 0 0 0 8.571 22H15a3.58 3.58 0 0 0 3.571-3.571V5.57A3.58 3.58 0 0 0 15 2M6.429 17.357V6.643h10.714v10.714zM8.57 3.43H15c1.071 0 1.929.785 2.107 1.785H6.464c.179-1 1.036-1.785 2.107-1.785M15 20.57H8.571c-1.071 0-1.928-.785-2.107-1.785h10.643c-.178 1-1.036 1.785-2.107 1.785"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M8.784 2h6.432a3.575 3.575 0 0 1 3.568 3.572v12.856A3.58 3.58 0 0 1 15.212 22H8.784a3.58 3.58 0 0 1-3.572-3.572V5.572A3.58 3.58 0 0 1 8.784 2m-2.14 4.644V17.36H17.36V6.644zm2.14-3.216c-1.06 0-1.94.776-2.112 1.784h10.652a2.145 2.145 0 0 0-2.112-1.784zm0 17.144h6.432c1.06 0 1.94-.776 2.108-1.784H6.672a2.145 2.145 0 0 0 2.112 1.784"
                 />
             </svg>
         );

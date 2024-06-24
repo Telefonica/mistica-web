@@ -16,7 +16,16 @@ const IconInformationUserRegular = ({color, size = 24, ...rest}: IconProps): JSX
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2-new/i)) {
+    if (skinName.match(/^blau/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M12 3.355c-4.606 0-8.645 4.04-8.645 8.645 0 4.606 4.04 8.645 8.645 8.645s8.645-4.04 8.645-8.645S16.605 3.355 12 3.355M12 22C6.673 22 2 17.327 2 12S6.673 2 12 2s10 4.673 10 10-4.673 10-10 10m.007-15.861a1.2 1.2 0 1 1 0 2.4 1.2 1.2 0 0 1 0-2.4m-.685 5.013h1.355v6.78h-1.355z"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2-new/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
@@ -26,15 +35,6 @@ const IconInformationUserRegular = ({color, size = 24, ...rest}: IconProps): JSX
                 <path
                     fill={fillColor}
                     d="M2 12c0 5.5 4.5 10 10 10s10-4.5 10-10S17.5 2 12 2 2 6.5 2 12m1.428 0c0-4.716 3.856-8.572 8.572-8.572S20.572 7.284 20.572 12 16.716 20.572 12 20.572 3.428 16.716 3.428 12"
-                />
-            </svg>
-        );
-    } else if (skinName.match(/^blau/i)) {
-        return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                <path
-                    fill={fillColor}
-                    d="M12 3.355c-4.606 0-8.645 4.04-8.645 8.645 0 4.606 4.04 8.645 8.645 8.645s8.645-4.04 8.645-8.645S16.605 3.355 12 3.355M12 22C6.673 22 2 17.327 2 12S6.673 2 12 2s10 4.673 10 10-4.673 10-10 10m.007-15.861a1.2 1.2 0 1 1 0 2.4 1.2 1.2 0 0 1 0-2.4m-.685 5.013h1.355v6.78h-1.355z"
                 />
             </svg>
         );

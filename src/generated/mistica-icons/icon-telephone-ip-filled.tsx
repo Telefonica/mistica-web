@@ -16,21 +16,21 @@ const IconTelephoneIpFilled = ({color, size = 24, ...rest}: IconProps): JSX.Elem
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2-new/i)) {
-        return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                <path
-                    fill={fillColor}
-                    d="M10.294 2v20H4.852V2zM3.828 3.787H2.47v16.426h1.358zm16.331 0h-8.842v16.426h8.842c.75 0 1.359-.644 1.359-1.426V5.217c.004-.785-.61-1.43-1.359-1.43m-.51 6.783h-6.12c-.27 0-.51-.252-.51-.535V7.178c0-.283.24-.534.51-.534h6.12c.27 0 .51.25.51.534v2.857c0 .283-.24.534-.51.534"
-                />
-            </svg>
-        );
-    } else if (skinName.match(/^vivo-new/i)) {
+    if (skinName.match(/^vivo-new/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
                     d="M8.804 2a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H5.376a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1zM3.355 3.987a.2.2 0 0 0-.2-.2H3a1 1 0 0 0-1 1v14.426a1 1 0 0 0 1 1h.155a.2.2 0 0 0 .2-.2zm16.29-.2h-8.62a.2.2 0 0 0-.2.2v16.026c0 .11.09.2.2.2h8.62c.747 0 1.355-.644 1.355-1.426V5.217c.004-.785-.608-1.43-1.355-1.43m-.508 6.783H13.03c-.27 0-.508-.252-.508-.535V7.178c0-.283.239-.534.508-.534h6.106c.27 0 .508.25.508.534v2.857c0 .283-.239.534-.508.534"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M10.294 2v20H4.852V2zM3.828 3.787H2.47v16.426h1.358zm16.331 0h-8.842v16.426h8.842c.75 0 1.359-.644 1.359-1.426V5.217c.004-.785-.61-1.43-1.359-1.43m-.51 6.783h-6.12c-.27 0-.51-.252-.51-.535V7.178c0-.283.24-.534.51-.534h6.12c.27 0 .51.25.51.534v2.857c0 .283-.24.534-.51.534"
                 />
             </svg>
         );

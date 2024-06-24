@@ -16,20 +16,7 @@ const IconQuestionRegular = ({color, size = 24, ...rest}: IconProps): JSX.Elemen
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2-new/i)) {
-        return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                <path
-                    fill={fillColor}
-                    d="M12 15.216a.72.72 0 0 1-.716-.716c0-1.18.464-2.284 1.284-3.144l1.036-1.036c.392-.392.32-1.284 0-1.716a1.81 1.81 0 0 0-1.428-.716H12c-.572 0-1.108.32-1.392.784-.216.356-.644.464-.964.252-.356-.216-.464-.644-.252-.964A3.02 3.02 0 0 1 12 6.46h.18c1 0 1.928.464 2.536 1.252.716.928.82 2.644-.108 3.608l-1.036 1.036c-.536.608-.856 1.356-.856 2.144a.72.72 0 0 1-.716.716M12.784 16.82a.784.784 0 1 1-1.568 0 .784.784 0 0 1 1.568 0"
-                />
-                <path
-                    fill={fillColor}
-                    d="M12 22C6.5 22 2 17.5 2 12S6.5 2 12 2s10 4.5 10 10-4.5 10-10 10m0-18.572c-4.716 0-8.572 3.856-8.572 8.572S7.284 20.572 12 20.572s8.572-3.856 8.572-8.572S16.716 3.428 12 3.428"
-                />
-            </svg>
-        );
-    } else if (skinName.match(/^blau/i)) {
+    if (skinName.match(/^blau/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
@@ -39,6 +26,19 @@ const IconQuestionRegular = ({color, size = 24, ...rest}: IconProps): JSX.Elemen
                 <path
                     fill={fillColor}
                     d="M2 12c0 5.5 4.5 10 10 10s10-4.5 10-10S17.5 2 12 2 2 6.5 2 12m1.429 0c0-4.714 3.857-8.571 8.571-8.571S20.571 7.286 20.571 12 16.714 20.571 12 20.571 3.429 16.714 3.429 12"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M12 15.216a.72.72 0 0 1-.716-.716c0-1.18.464-2.284 1.284-3.144l1.036-1.036c.392-.392.32-1.284 0-1.716a1.81 1.81 0 0 0-1.428-.716H12c-.572 0-1.108.32-1.392.784-.216.356-.644.464-.964.252-.356-.216-.464-.644-.252-.964A3.02 3.02 0 0 1 12 6.46h.18c1 0 1.928.464 2.536 1.252.716.928.82 2.644-.108 3.608l-1.036 1.036c-.536.608-.856 1.356-.856 2.144a.72.72 0 0 1-.716.716M12.784 16.82a.784.784 0 1 1-1.568 0 .784.784 0 0 1 1.568 0"
+                />
+                <path
+                    fill={fillColor}
+                    d="M12 22C6.5 22 2 17.5 2 12S6.5 2 12 2s10 4.5 10 10-4.5 10-10 10m0-18.572c-4.716 0-8.572 3.856-8.572 8.572S7.284 20.572 12 20.572s8.572-3.856 8.572-8.572S16.716 3.428 12 3.428"
                 />
             </svg>
         );

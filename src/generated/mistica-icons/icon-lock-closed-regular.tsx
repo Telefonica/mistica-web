@@ -16,7 +16,16 @@ const IconLockClosedRegular = ({color, size = 24, ...rest}: IconProps): JSX.Elem
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2-new/i)) {
+    if (skinName.match(/^blau/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M14.058 14.692v3.2h-3.2v-3.2zm.095-11.34a4.415 4.415 0 0 1 4.41 4.41v2.714h-8.82V7.762a4.415 4.415 0 0 1 4.41-4.41m3.39 17.296H7.373a1.02 1.02 0 0 1-1.02-1.02v-7.8h12.21v7.8a1.02 1.02 0 0 1-1.018 1.02M8.392 7.762v2.714H5v9.152A2.374 2.374 0 0 0 7.373 22h10.172a2.374 2.374 0 0 0 2.37-2.371V7.762A5.77 5.77 0 0 0 14.155 2 5.77 5.77 0 0 0 8.39 7.762"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2-new/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
@@ -26,15 +35,6 @@ const IconLockClosedRegular = ({color, size = 24, ...rest}: IconProps): JSX.Elem
                 <path
                     fill={fillColor}
                     d="M17.912 8.07v1.428c1.15 0 2.088.96 2.088 2.144v8.214C20 21.04 19.061 22 17.912 22H6.088C4.935 22 4 21.036 4 19.856v-8.214C4 10.458 4.939 9.5 6.088 9.5V8.07C6.088 4.723 8.74 2 12 2s5.912 2.723 5.912 6.07M12 3.429c-2.493 0-4.522 2.083-4.522 4.643v1.428h9.044V8.07c0-2.56-2.03-4.643-4.522-4.643m6.606 16.424h.003v-8.21a.71.71 0 0 0-.697-.716H6.088a.71.71 0 0 0-.698.716v8.21c0 .396.316.716.698.716h11.82a.71.71 0 0 0 .698-.716"
-                />
-            </svg>
-        );
-    } else if (skinName.match(/^blau/i)) {
-        return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                <path
-                    fill={fillColor}
-                    d="M14.058 14.692v3.2h-3.2v-3.2zm.095-11.34a4.415 4.415 0 0 1 4.41 4.41v2.714h-8.82V7.762a4.415 4.415 0 0 1 4.41-4.41m3.39 17.296H7.373a1.02 1.02 0 0 1-1.02-1.02v-7.8h12.21v7.8a1.02 1.02 0 0 1-1.018 1.02M8.392 7.762v2.714H5v9.152A2.374 2.374 0 0 0 7.373 22h10.172a2.374 2.374 0 0 0 2.37-2.371V7.762A5.77 5.77 0 0 0 14.155 2 5.77 5.77 0 0 0 8.39 7.762"
                 />
             </svg>
         );

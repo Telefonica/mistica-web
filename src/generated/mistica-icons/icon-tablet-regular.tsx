@@ -16,21 +16,21 @@ const IconTabletRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element 
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2-new/i)) {
-        return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                <path
-                    fill={fillColor}
-                    d="M6.087 2h11.826C19.062 2 20 2.964 20 4.143v15.714c0 1.18-.938 2.143-2.087 2.143H6.087C4.938 22 4 21.036 4 19.857V4.143C4 2.963 4.938 2 6.087 2m11.826 1.427H6.087a.71.71 0 0 0-.693.716V4.5H18.61v-.356a.71.71 0 0 0-.697-.716m.693 2.5H5.394V18.07h13.212zM6.087 20.568h11.826c.381 0 .693-.32.693-.716v-.356H5.39v.356c0 .392.312.716.697.716"
-                />
-            </svg>
-        );
-    } else if (skinName.match(/^blau/i)) {
+    if (skinName.match(/^blau/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
                     d="M18.692 20v-2H5.333v2c0 .368.299.667.667.667h12.026a.667.667 0 0 0 .666-.667M5.333 4v12.667h13.359V4a.667.667 0 0 0-.666-.667H6A.667.667 0 0 0 5.333 4m14.692 0v16c0 1.103-.897 2-1.999 2H6c-1.103 0-2-.897-2-2V4c0-1.103.897-2 2-2h12.026c1.102 0 1.999.897 1.999 2m-8.666 16h1.333v-1.334h-1.333z"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M6.087 2h11.826C19.062 2 20 2.964 20 4.143v15.714c0 1.18-.938 2.143-2.087 2.143H6.087C4.938 22 4 21.036 4 19.857V4.143C4 2.963 4.938 2 6.087 2m11.826 1.427H6.087a.71.71 0 0 0-.693.716V4.5H18.61v-.356a.71.71 0 0 0-.697-.716m.693 2.5H5.394V18.07h13.212zM6.087 20.568h11.826c.381 0 .693-.32.693-.716v-.356H5.39v.356c0 .392.312.716.697.716"
                 />
             </svg>
         );

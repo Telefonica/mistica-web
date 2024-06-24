@@ -16,21 +16,21 @@ const IconAddMoreRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2-new/i)) {
-        return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                <path
-                    fill={fillColor}
-                    d="M11.42 2.72a.72.72 0 0 1 .716-.716.72.72 0 0 1 .716.716l.003 8.064 8.426.003a.72.72 0 0 1 .716.716.84.84 0 0 1-.22.552c-.127.127-.3.16-.493.16l-8.432.003v9.073a.703.703 0 0 1-.713.712.72.72 0 0 1-.715-.715v-9.072l-8.712.005a.72.72 0 0 1-.716-.715.72.72 0 0 1 .716-.716l8.712-.006z"
-                />
-            </svg>
-        );
-    } else if (skinName.match(/^blau/i)) {
+    if (skinName.match(/^blau/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
                     d="M21.321 11.321h-8.643V2.68a.679.679 0 1 0-1.357 0v8.642H2.679a.679.679 0 1 0 0 1.357h8.642v8.643a.679.679 0 0 0 1.357 0v-8.643h8.643a.679.679 0 1 0 0-1.357"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M11.42 2.72a.72.72 0 0 1 .716-.716.72.72 0 0 1 .716.716l.003 8.064 8.426.003a.72.72 0 0 1 .716.716.84.84 0 0 1-.22.552c-.127.127-.3.16-.493.16l-8.432.003v9.073a.703.703 0 0 1-.713.712.72.72 0 0 1-.715-.715v-9.072l-8.712.005a.72.72 0 0 1-.716-.715.72.72 0 0 1 .716-.716l8.712-.006z"
                 />
             </svg>
         );

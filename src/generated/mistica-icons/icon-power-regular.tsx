@@ -16,7 +16,16 @@ const IconPowerRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element =
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2-new/i)) {
+    if (skinName.match(/^vivo-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M12 1.375c.345 0 .625.28.625.625v10a.625.625 0 1 1-1.25 0V2c0-.345.28-.625.625-.625M6.072 6.198a.625.625 0 0 1 0 .884 8.375 8.375 0 1 0 11.846 0 .625.625 0 1 1 .884-.884 9.625 9.625 0 1 1-13.614 0 .625.625 0 0 1 .884 0"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2-new/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
@@ -26,15 +35,6 @@ const IconPowerRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element =
                 <path
                     fill={fillColor}
                     d="M2.47 12.668C2.47 17.81 6.749 22 11.992 22c5.247 0 9.522-4.193 9.526-9.332 0-4.037-2.645-7.621-6.57-8.876-.388-.116-.857.112-.973.493-.115.38.116.842.504.954 3.268 1.066 5.482 4.037 5.482 7.429 0 4.305-3.575 7.809-7.97 7.809-4.393 0-7.968-3.504-7.968-7.81 0-3.391 2.218-6.366 5.486-7.428.426-.116.618-.573.503-.954-.115-.417-.584-.605-.972-.493-3.93 1.255-6.57 4.835-6.57 8.876"
-                />
-            </svg>
-        );
-    } else if (skinName.match(/^vivo-new/i)) {
-        return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                <path
-                    fill={fillColor}
-                    d="M12 1.375c.345 0 .625.28.625.625v10a.625.625 0 1 1-1.25 0V2c0-.345.28-.625.625-.625M6.072 6.198a.625.625 0 0 1 0 .884 8.375 8.375 0 1 0 11.846 0 .625.625 0 1 1 .884-.884 9.625 9.625 0 1 1-13.614 0 .625.625 0 0 1 .884 0"
                 />
             </svg>
         );

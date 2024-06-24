@@ -16,16 +16,7 @@ const IconHomeRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element =>
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2-new/i)) {
-        return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                <path
-                    fill={fillColor}
-                    d="m11.99 2 9.321 10.036c.206.18.274.5.13.748-.103.284-.343.464-.614.464h-1.36V22h-5.782v-6.428h-3.403V22H4.5v-8.716H3.14c-.275 0-.51-.212-.614-.464-.103-.284-.068-.568.137-.784zm3.06 12.144v6.424h3.06V11.82h1.193l-7.314-7.856-7.317 7.856h1.193v8.752h3.06v-6.428z"
-                />
-            </svg>
-        );
-    } else if (skinName.match(/^vivo-new/i)) {
+    if (skinName.match(/^vivo-new/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
@@ -41,6 +32,15 @@ const IconHomeRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element =>
                 <path
                     fill={fillColor}
                     d="m11.977 2 10.001 10-.481 1.162h-1.916v5.378c0 1.33-1.082 2.41-2.411 2.41H6.784a2.414 2.414 0 0 1-2.411-2.41v-5.378H2.457L1.976 12zm6.243 9.802h1.635l-7.878-7.879-7.879 7.879h1.635v6.738c0 .58.472 1.05 1.051 1.05H17.17c.579 0 1.05-.47 1.05-1.05z"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="m11.99 2 9.321 10.036c.206.18.274.5.13.748-.103.284-.343.464-.614.464h-1.36V22h-5.782v-6.428h-3.403V22H4.5v-8.716H3.14c-.275 0-.51-.212-.614-.464-.103-.284-.068-.568.137-.784zm3.06 12.144v6.424h3.06V11.82h1.193l-7.314-7.856-7.317 7.856h1.193v8.752h3.06v-6.428z"
                 />
             </svg>
         );

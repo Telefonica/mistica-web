@@ -16,21 +16,21 @@ const IconBriefcaseRegular = ({color, size = 24, ...rest}: IconProps): JSX.Eleme
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2-new/i)) {
-        return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                <path
-                    fill={fillColor}
-                    d="M15.808 5.667h3.885C20.96 5.667 22 6.737 22 8.042v11.083c0 1.305-1.04 2.375-2.307 2.375H4.307C3.04 21.5 2 20.43 2 19.125V8.042c0-1.305 1.04-2.375 2.307-2.375h3.885C8.384 3.887 10.038 2.5 12 2.5s3.575 1.388 3.808 3.167m-1.54.004c-.23-.912-1.152-1.585-2.268-1.585s-2.039.673-2.271 1.585zm5.425 1.578H4.307c-.425 0-.77.36-.77.793v3.167h16.926V8.042a.785.785 0 0 0-.77-.793M3.537 19.126c0 .437.349.792.77.792h15.386c.425 0 .77-.355.766-.797v-6.33H3.537z"
-                />
-            </svg>
-        );
-    } else if (skinName.match(/^blau/i)) {
+    if (skinName.match(/^blau/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
                     d="M16.668 7.332a.7.7 0 0 0 .012-.128V4.68A.68.68 0 0 0 16 4H8a.68.68 0 0 0-.68.68v2.652H2v13.36h20V7.332zm-.012 1.36v10.64H7.344V8.692zM8.68 5.36h6.64v1.844q0 .067.012.128H8.68zM3.36 8.692h2.624v10.64H3.36zm17.28 10.64h-2.624V8.692h2.624z"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M15.808 5.667h3.885C20.96 5.667 22 6.737 22 8.042v11.083c0 1.305-1.04 2.375-2.307 2.375H4.307C3.04 21.5 2 20.43 2 19.125V8.042c0-1.305 1.04-2.375 2.307-2.375h3.885C8.384 3.887 10.038 2.5 12 2.5s3.575 1.388 3.808 3.167m-1.54.004c-.23-.912-1.152-1.585-2.268-1.585s-2.039.673-2.271 1.585zm5.425 1.578H4.307c-.425 0-.77.36-.77.793v3.167h16.926V8.042a.785.785 0 0 0-.77-.793M3.537 19.126c0 .437.349.792.77.792h15.386c.425 0 .77-.355.766-.797v-6.33H3.537z"
                 />
             </svg>
         );

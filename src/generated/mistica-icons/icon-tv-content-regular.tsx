@@ -16,21 +16,21 @@ const IconTvContentRegular = ({color, size = 24, ...rest}: IconProps): JSX.Eleme
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2-new/i)) {
-        return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                <path
-                    fill={fillColor}
-                    d="M22 17.662V4H2v13.662h7.966v1.169H7.557c-.308 0-.555.26-.555.584 0 .325.247.585.555.585h8.89c.309 0 .555-.26.555-.585s-.246-.584-.554-.584h-2.41v-1.17zm-18.52-1.56V5.564h17.04v10.538zm7.59 2.734v-1.17h1.855v1.17z"
-                />
-            </svg>
-        );
-    } else if (skinName.match(/^vivo-new/i)) {
+    if (skinName.match(/^vivo-new/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
                     d="M3.176 5.455c0-.71.58-1.286 1.295-1.286h15.058a1.29 1.29 0 0 1 1.294 1.286v9.35c0 .71-.579 1.286-1.294 1.286H4.471a1.29 1.29 0 0 1-1.295-1.286zm9.412 11.805h6.941A2.463 2.463 0 0 0 22 14.805v-9.35A2.463 2.463 0 0 0 19.53 3H4.47A2.463 2.463 0 0 0 2 5.455v9.35a2.463 2.463 0 0 0 2.47 2.455h6.942v2.571H8.235a.586.586 0 0 0-.588.585c0 .322.263.584.588.584h7.53a.586.586 0 0 0 .588-.584.586.586 0 0 0-.588-.585h-3.177z"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M22 17.662V4H2v13.662h7.966v1.169H7.557c-.308 0-.555.26-.555.584 0 .325.247.585.555.585h8.89c.309 0 .555-.26.555-.585s-.246-.584-.554-.584h-2.41v-1.17zm-18.52-1.56V5.564h17.04v10.538zm7.59 2.734v-1.17h1.855v1.17z"
                 />
             </svg>
         );

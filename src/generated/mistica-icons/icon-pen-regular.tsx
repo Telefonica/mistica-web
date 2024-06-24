@@ -16,21 +16,21 @@ const IconPenRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element => 
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2-new/i)) {
-        return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                <path
-                    fill={fillColor}
-                    d="M15.533 3.107a3.79 3.79 0 0 1 5.364 5.353L9.157 20.205a.73.73 0 0 1-.388.2l-5.856 1.572a.723.723 0 0 1-.888-.884l1.588-5.926a.7.7 0 0 1 .228-.364zM4.681 16.751l-.936 3.505 3.5-.94zm3.964 1.916 9.992-9.994-3.312-3.313-9.992 9.994zM19.657 7.652l.212-.212c.912-.912.912-2.4 0-3.312a2.346 2.346 0 0 0-3.312 0l-.212.212z"
-                />
-            </svg>
-        );
-    } else if (skinName.match(/^blau/i)) {
+    if (skinName.match(/^blau/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
                     d="m20.37 5.633-1.456 1.453-2.033-2.03 1.455-1.453a.84.84 0 0 1 1.154 0l.88.878a.815.815 0 0 1 0 1.152M8.411 17.57l-2.033-2.03 9.535-9.518 2.033 2.03zM4.35 19.624 5.504 16.6l1.865 1.863zm16.988-16.11-.879-.877A2.17 2.17 0 0 0 18.914 2c-.585 0-1.134.226-1.546.637L4.443 15.542 1.976 22l6.435-2.496L21.337 6.599a2.18 2.18 0 0 0 0-3.085"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M15.533 3.107a3.79 3.79 0 0 1 5.364 5.353L9.157 20.205a.73.73 0 0 1-.388.2l-5.856 1.572a.723.723 0 0 1-.888-.884l1.588-5.926a.7.7 0 0 1 .228-.364zM4.681 16.751l-.936 3.505 3.5-.94zm3.964 1.916 9.992-9.994-3.312-3.313-9.992 9.994zM19.657 7.652l.212-.212c.912-.912.912-2.4 0-3.312a2.346 2.346 0 0 0-3.312 0l-.212.212z"
                 />
             </svg>
         );

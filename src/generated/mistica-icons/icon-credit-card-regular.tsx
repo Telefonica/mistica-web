@@ -16,7 +16,17 @@ const IconCreditCardRegular = ({color, size = 24, ...rest}: IconProps): JSX.Elem
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2-new/i)) {
+    if (skinName.match(/^blau/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path fill={fillColor} d="M12 14.32H4.676v1.36H12zM15.996 12.336h3.328v3.328h-3.328z" />
+                <path
+                    fill={fillColor}
+                    d="M2 5v13.344h20V5zm18.64 1.36v2.636H3.36V6.36zM3.36 16.984v-6.632h17.28v6.632z"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2-new/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
@@ -26,16 +36,6 @@ const IconCreditCardRegular = ({color, size = 24, ...rest}: IconProps): JSX.Elem
                 <path
                     fill={fillColor}
                     d="M4.144 5h15.704c1.18 0 2.144 1.017 2.152 2.272v9.456c0 1.25-.964 2.272-2.144 2.272H4.144C2.964 19 2 17.979 2 16.728V7.272C2 6.022 2.964 5 4.144 5m15.712 1.509H4.144c-.396 0-.72.343-.72.763v1.5h17.144V7.263c0-.41-.316-.754-.712-.754m-.008 10.974c.396 0 .72-.344.72-.755v-6.43H3.432v6.43c0 .411.316.755.712.755z"
-                />
-            </svg>
-        );
-    } else if (skinName.match(/^blau/i)) {
-        return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                <path fill={fillColor} d="M12 14.32H4.676v1.36H12zM15.996 12.336h3.328v3.328h-3.328z" />
-                <path
-                    fill={fillColor}
-                    d="M2 5v13.344h20V5zm18.64 1.36v2.636H3.36V6.36zM3.36 16.984v-6.632h17.28v6.632z"
                 />
             </svg>
         );
