@@ -69,6 +69,7 @@ type CardContentProps = MaybeTouchableCard<{
     description?: string;
     descriptionLinesMax?: number;
     ariaLabel?: string;
+    noDivider?: boolean;
 }>;
 
 const CardContent: React.FC<CardContentProps> = ({
@@ -251,6 +252,7 @@ type AdvancedDataCardProps = MaybeTouchableCard<{
     descriptionLinesMax?: number;
     extra?: ReadonlyArray<RendersNullableElement<AllowedExtra>>;
     extraDividerPadding?: 8 | 16 | 24;
+    noDivider?: boolean;
     button?: RendersNullableElement<typeof ButtonPrimary>;
     footerImage?: RendersNullableElement<typeof Image>;
     footerText?: string;
@@ -279,7 +281,8 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
             descriptionLinesMax,
 
             extra,
-            extraDividerPadding = 16,
+            extraDividerPadding = 24,
+            noDivider = false,
 
             button,
             footerImage,
@@ -365,7 +368,9 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
                                             <div className={styles.paddingX}>{item}</div>
 
                                             {index + 1 !== extra.length && (
-                                                <Box paddingY={extraDividerPadding} />
+                                                <Box paddingY={extraDividerPadding}>
+                                                    {!noDivider && <Divider />}
+                                                </Box>
                                             )}
                                         </div>
                                     );
