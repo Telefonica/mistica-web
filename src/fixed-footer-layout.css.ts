@@ -23,7 +23,6 @@ export const fixedFooter = style({
             position: 'fixed',
             left: 0,
             bottom: 0,
-            zIndex: 1,
             boxShadow: '0 -2px 8px 0 rgba(0, 0, 0, 0)', // without this chrome mobile shows strange artifacts in the shadow animation
         },
     },
@@ -48,6 +47,19 @@ export const container = style({
         },
     },
 });
+
+export const portal = style([
+    sprinkles({
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        position: 'fixed',
+    }),
+    {
+        zIndex: -1, // Render below everything, including other portals
+    },
+]);
 
 export const fixedBackgroundLayer = style([
     sprinkles({

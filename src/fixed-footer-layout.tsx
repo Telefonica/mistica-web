@@ -122,7 +122,7 @@ const FixedFooterLayout = ({
      */
     const renderBackground = () => {
         return (
-            <Portal>
+            <Portal className={styles.portal}>
                 <div
                     className={styles.fixedBackgroundLayer}
                     style={{

@@ -253,17 +253,17 @@ const Sheet = React.forwardRef<HTMLDivElement, SheetProps>(({onClose, children, 
                                 {typeof children === 'function'
                                     ? children({closeModal, modalTitleId})
                                     : children}
+                                <div className={styles.modalCloseButton}>
+                                    <InternalIconButton
+                                        onPress={closeModal}
+                                        aria-label={texts.modalClose || texts.closeButtonLabel}
+                                        Icon={IconCloseRegular}
+                                        bleedLeft
+                                        bleedRight
+                                        bleedY
+                                    />
+                                </div>
                             </section>
-                        </div>
-                        <div className={styles.modalCloseButton}>
-                            <InternalIconButton
-                                onPress={closeModal}
-                                aria-label={texts.modalClose}
-                                Icon={IconCloseRegular}
-                                bleedLeft
-                                bleedRight
-                                bleedY
-                            />
                         </div>
                     </div>
                 </div>

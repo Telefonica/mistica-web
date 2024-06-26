@@ -22,6 +22,7 @@ export const Portal: React.FC<Props> = ({children, className}) => {
     React.useEffect(() => {
         if (!container) {
             const newContainer = document.createElement('div');
+            newContainer.style.isolation = 'isolate';
             setContainer(newContainer);
             document.body.appendChild(newContainer);
         }

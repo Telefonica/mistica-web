@@ -12,7 +12,6 @@ const defaultStyle: React.CSSProperties = {
     right: 0,
     bottom: 0,
     left: 0,
-    zIndex: 12,
     outline: 'none',
     WebkitTapHighlightColor: 'transparent',
 };

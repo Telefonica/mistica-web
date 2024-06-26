@@ -22,7 +22,7 @@ export const portal = style([
         right: 0,
     }),
     {
-        zIndex: 9999,
+        zIndex: 1, // Render above everything, including other portals
         animation: `${enterAnimation} ${TRANSITION_DURATION_MS}ms ease-out`,
         transition: `transform ${TRANSITION_DURATION_MS}ms ease-out`,
     },
