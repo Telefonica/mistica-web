@@ -68,6 +68,7 @@ export const SnackbarRoot = ({children}: {children: React.ReactNode}): JSX.Eleme
                         ref={snackbarRef}
                         message={currentSnackbar.message}
                         buttonText={currentSnackbar.buttonText}
+                        buttonAccessibilityLabel={currentSnackbar.buttonAccessibilityLabel}
                         duration={currentSnackbar.duration}
                         type={currentSnackbar.type}
                         withDismiss={currentSnackbar.withDismiss}

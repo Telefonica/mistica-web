@@ -275,3 +275,28 @@ test('useSnackbar: openSnackbar closes already opened one', async () => {
         [{action: 'BUTTON'}],
     ]);
 });
+
+test('Snackbar with button aria-label', async () => {
+    const onCloseSpy = jest.fn();
+
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Snackbar
+                message="Some message"
+                onClose={onCloseSpy}
+                buttonText="Action"
+                buttonAccessibilityLabel="some a11y label"
+                duration={Infinity}
+            />
+        </ThemeContextProvider>
+    );
+    expect(screen.getByText('Some message')).toBeInTheDocument();
+    const actionButton = await screen.findByRole('button', {name: 'some a11y label'});
+    expect(actionButton).toBeInTheDocument();
+
+    await userEvent.click(actionButton);
+
+    await waitFor(() => {
+        expect(onCloseSpy).toHaveBeenCalledWith({action: 'BUTTON'});
+    });
+});
