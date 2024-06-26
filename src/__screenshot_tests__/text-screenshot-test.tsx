@@ -27,3 +27,18 @@ test('Text wrapping', async () => {
     const image = await element.screenshot();
     expect(image).toMatchImageSnapshot();
 });
+
+test('Text wrapping - multiple whitespaces', async () => {
+    await openStoryPage({
+        id: 'components-text--text-wrapping',
+        device: 'DESKTOP',
+        args: {
+            text: '   a text with     spaces    everywhere   Pneumonoultramicroscopicsilicovolcanoconiosis test   ',
+        },
+    });
+
+    const element = await screen.findByTestId('text');
+
+    const image = await element.screenshot();
+    expect(image).toMatchImageSnapshot();
+});

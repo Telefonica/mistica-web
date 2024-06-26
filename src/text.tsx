@@ -175,6 +175,7 @@ export const Text: React.FC<TextProps> = ({
                 color: isInverse ? inverseColorsMap[color] ?? color : color,
                 textAlign,
                 textShadow,
+                whiteSpace: 'pre-wrap',
             },
         },
         skinName === VIVO_NEW_SKIN ? makeVivinhoCharReadableForScreenReaders(children) : children
