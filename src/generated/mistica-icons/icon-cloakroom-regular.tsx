@@ -6,6 +6,7 @@
  */
 
 import * as React from 'react';
+import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
 
@@ -14,15 +15,26 @@ import type {IconProps} from '../../utils/types';
 const IconCloakroomRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
-
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path
-                fill={fillColor}
-                d="m21.378 16.799-8.662-6.587V9.39c1.038-.322 1.79-1.253 1.79-2.398A2.49 2.49 0 0 0 12 4.485a2.49 2.49 0 0 0-2.506 2.506c0 .393.322.716.716.716a.72.72 0 0 0 .716-.716c0-.609.465-1.074 1.074-1.074.608 0 1.074.465 1.074 1.074 0 .608-.466 1.074-1.074 1.074a.72.72 0 0 0-.716.716v1.431L2.62 16.8c-.537.394-.752 1.11-.537 1.754.215.573.716.966 1.325.966H20.59c.608 0 1.11-.393 1.324-.966.215-.645 0-1.36-.537-1.754m-.823 1.288H3.445c0-.035 0-.107.035-.143L12 11.465l8.52 6.48c.035.035.035.107.035.142"
-            />
-        </svg>
-    );
+    const {skinName} = useTheme();
+    if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="m21.378 16.799-8.662-6.587V9.39c1.038-.322 1.79-1.253 1.79-2.398A2.49 2.49 0 0 0 12 4.485a2.49 2.49 0 0 0-2.506 2.506c0 .393.322.716.716.716a.72.72 0 0 0 .716-.716c0-.609.465-1.074 1.074-1.074.608 0 1.074.465 1.074 1.074 0 .608-.466 1.074-1.074 1.074a.72.72 0 0 0-.716.716v1.431L2.62 16.8c-.537.394-.752 1.11-.537 1.754.215.573.716.966 1.325.966H20.59c.608 0 1.11-.393 1.324-.966.215-.645 0-1.36-.537-1.754m-.823 1.288H3.445c0-.035 0-.107.035-.143L12 11.465l8.52 6.48c.035.035.035.107.035.142"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="m21.378 16.799-8.662-6.587V9.39c1.038-.322 1.79-1.253 1.79-2.398A2.49 2.49 0 0 0 12 4.485a2.49 2.49 0 0 0-2.506 2.506c0 .393.322.716.716.716a.72.72 0 0 0 .716-.716c0-.609.465-1.074 1.074-1.074.608 0 1.074.465 1.074 1.074 0 .608-.466 1.074-1.074 1.074a.72.72 0 0 0-.716.716v1.431L2.62 16.8c-.537.394-.752 1.11-.537 1.754.215.573.716.966 1.325.966H20.59c.608 0 1.11-.393 1.324-.966.215-.645 0-1.36-.537-1.754m-.823 1.288H3.445c0-.035 0-.107.035-.143L12 11.465l8.52 6.48c.035.035.035.107.035.142"
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconCloakroomRegular;

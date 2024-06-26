@@ -16,7 +16,16 @@ const IconCloudFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element =>
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2/i)) {
+    if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M17.174 9.342h-.357C16.566 6.902 14.495 5 12.032 5S7.498 6.902 7.247 9.342h-.393C4.176 9.305 2 11.497 2 14.152 2 16.809 4.18 19 6.822 19h10.356C19.82 19 22 16.845 22 14.153c-.005-2.656-2.185-4.811-4.826-4.811"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path

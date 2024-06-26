@@ -16,7 +16,16 @@ const IconCloudDistributionFilled = ({color, size = 24, ...rest}: IconProps): JS
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2/i)) {
+    if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M19.32 15.57c-.692 0-1.282.466-1.561 1.069h-4.19c-.173-.393-.452-.75-.864-.928V14.14h3.462c2.288 0 4.159-1.929 4.159-4.32 0-2.32-1.942-4.286-4.225-4.318C15.72 3.504 14.02 2 11.978 2S8.236 3.5 7.855 5.5c-2.288.037-4.159 1.966-4.159 4.32s1.871 4.319 4.19 4.319h3.431v1.609a1.77 1.77 0 0 0-.864.89H6.294c-.275-.644-.864-1.069-1.56-1.069-.936 0-1.734.823-1.734 1.787 0 .713.452 1.321 1.037 1.61v2.321c0 .393.31.713.692.713s.692-.32.692-.713v-2.322c.38-.178.691-.498.864-.891h4.19c.173.393.483.713.833.891v2.322c0 .393.31.713.692.713s.691-.32.691-.713v-2.322c.382-.178.692-.498.865-.891h4.19c.173.393.483.713.833.891v2.322c0 .393.31.713.692.713.38 0 .691-.32.691-.713v-2.322A1.715 1.715 0 0 0 21 17.357c.017-.965-.745-1.787-1.68-1.787"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path

@@ -29,6 +29,19 @@ const IconWarningRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element
                 />
             </svg>
         );
+    } else if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M12 6.644a.72.72 0 0 0-.716.716v6.784c0 .392.32.716.716.716.392 0 .716-.32.716-.716V7.36A.72.72 0 0 0 12 6.644M12 15.928a.892.892 0 1 1 0 1.784.892.892 0 0 1 0-1.784"
+                />
+                <path
+                    fill={fillColor}
+                    d="M2 12C2 6.5 6.5 2 12 2s10 4.5 10 10-4.5 10-10 10S2 17.5 2 12m1.428 0c0 4.716 3.856 8.572 8.572 8.572s8.572-3.856 8.572-8.572S16.716 3.428 12 3.428 3.428 7.284 3.428 12"
+                />
+            </svg>
+        );
     } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>

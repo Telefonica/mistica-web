@@ -25,6 +25,15 @@ const IconSubtractRegular = ({color, size = 24, ...rest}: IconProps): JSX.Elemen
                 />
             </svg>
         );
+    } else if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M21.285 10.783a.72.72 0 0 1 .715.716.84.84 0 0 1-.219.551c-.127.128-.3.161-.493.161-11.82.004-6.036-.002-18.572.006A.72.72 0 0 1 2 11.5a.72.72 0 0 1 .716-.715c11.312-.008 6.967-.007 18.569-.003"
+                />
+            </svg>
+        );
     } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>

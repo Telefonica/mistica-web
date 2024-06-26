@@ -6,6 +6,7 @@
  */
 
 import * as React from 'react';
+import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
 
@@ -14,15 +15,26 @@ import type {IconProps} from '../../utils/types';
 const IconCloakroomFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
-
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path
-                fill={fillColor}
-                d="M21.938 18.547a.99.99 0 0 1-.968.717H3.04c-.466 0-.825-.287-.968-.717-.18-.503 0-1.04.394-1.363l9-6.562V8.865c0-.287.252-.538.538-.538a1.27 1.27 0 0 0 1.255-1.255 1.27 1.27 0 0 0-1.255-1.255 1.27 1.27 0 0 0-1.255 1.255.55.55 0 0 1-.537.538.55.55 0 0 1-.538-.538c0-1.29 1.04-2.33 2.33-2.33s2.331 1.04 2.331 2.33c0 1.112-.753 2.008-1.793 2.259v1.255l9 6.562c.395.323.574.896.395 1.399"
-            />
-        </svg>
-    );
+    const {skinName} = useTheme();
+    if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M21.938 18.547a.99.99 0 0 1-.968.717H3.04c-.466 0-.825-.287-.968-.717-.18-.503 0-1.04.394-1.363l9-6.562V8.865c0-.287.252-.538.538-.538a1.27 1.27 0 0 0 1.255-1.255 1.27 1.27 0 0 0-1.255-1.255 1.27 1.27 0 0 0-1.255 1.255.55.55 0 0 1-.537.538.55.55 0 0 1-.538-.538c0-1.29 1.04-2.33 2.33-2.33s2.331 1.04 2.331 2.33c0 1.112-.753 2.008-1.793 2.259v1.255l9 6.562c.395.323.574.896.395 1.399"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M21.938 18.547a.99.99 0 0 1-.968.717H3.04c-.466 0-.825-.287-.968-.717-.18-.503 0-1.04.394-1.363l9-6.562V8.865c0-.287.252-.538.538-.538a1.27 1.27 0 0 0 1.255-1.255 1.27 1.27 0 0 0-1.255-1.255 1.27 1.27 0 0 0-1.255 1.255.55.55 0 0 1-.537.538.55.55 0 0 1-.538-.538c0-1.29 1.04-2.33 2.33-2.33s2.331 1.04 2.331 2.33c0 1.112-.753 2.008-1.793 2.259v1.255l9 6.562c.395.323.574.896.395 1.399"
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconCloakroomFilled;

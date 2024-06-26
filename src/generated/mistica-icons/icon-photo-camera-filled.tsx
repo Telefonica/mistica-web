@@ -16,7 +16,20 @@ const IconPhotoCameraFilled = ({color, size = 24, ...rest}: IconProps): JSX.Elem
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2/i)) {
+    if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M8.248 12.712a3.753 3.753 0 0 1 3.748-3.748 3.753 3.753 0 0 1 3.748 3.748 3.75 3.75 0 0 1-3.748 3.748 3.75 3.75 0 0 1-3.748-3.748"
+                />
+                <path
+                    fill={fillColor}
+                    d="M17.648 6.288h2.204c1.18 0 2.144.96 2.144 2.144v10c0 1.184-.96 2.144-2.144 2.144H4.14a2.144 2.144 0 0 1-2.144-2.144v-10c0-1.184.96-2.144 2.144-2.144h2.2L8.992 3.64a.7.7 0 0 1 .504-.212h5c.188 0 .372.076.508.212zM7.176 12.716c0 2.66 2.164 4.82 4.82 4.82s4.82-2.16 4.82-4.82-2.164-4.82-4.82-4.82a4.825 4.825 0 0 0-4.82 4.82"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path

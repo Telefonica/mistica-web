@@ -16,7 +16,20 @@ const IconTimeLight = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2/i)) {
+    if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M6.852 7.864 12 13.012l3.36-3.36a.72.72 0 0 0 0-1.012.72.72 0 0 0-1.012 0L12 10.988 7.864 6.852a.72.72 0 0 0-1.012 0 .72.72 0 0 0 0 1.012"
+                />
+                <path
+                    fill={fillColor}
+                    d="M12 22C6.484 22 2 17.516 2 12S6.484 2 12 2s10 4.484 10 10-4.484 10-10 10m0-18.576c-4.728 0-8.576 3.848-8.576 8.576S7.272 20.576 12 20.576s8.576-3.848 8.576-8.576S16.728 3.424 12 3.424"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path

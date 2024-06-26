@@ -16,7 +16,16 @@ const IconBriefcaseFilled = ({color, size = 24, ...rest}: IconProps): JSX.Elemen
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2/i)) {
+    if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M22 11.407V8.04c0-1.305-1.04-2.375-2.308-2.375h-3.884C15.576 3.883 13.964 2.5 12 2.5S8.384 3.887 8.192 5.665H4.308C3.04 5.665 2 6.735 2 8.04v3.363zM2 12.593v6.532C2 20.43 3.04 21.5 4.308 21.5h15.384C20.96 21.5 22 20.43 22 19.125v-6.532zm12.268-6.924h-4.54C9.96 4.76 10.884 4.085 12 4.085c1.112 0 2.04.675 2.268 1.584"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path

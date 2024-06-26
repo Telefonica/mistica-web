@@ -6,6 +6,7 @@
  */
 
 import * as React from 'react';
+import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
 
@@ -14,15 +15,26 @@ import type {IconProps} from '../../utils/types';
 const IconAddBoltonLight = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
-
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path
-                fill={fillColor}
-                d="M17 3H7l-5 9.021L7 21h9.79a.36.36 0 0 0 .355-.368.36.36 0 0 0-.354-.367H7.409L2.82 12.02l4.59-8.286h9.177l4.591 8.286-2.559 4.605c-.1.174-.04.4.132.504a.347.347 0 0 0 .486-.136L22 12.02zm1.39 16.016a.723.723 0 0 1-.708.735c-.391 0-.71-.33-.71-.735 0-.406.319-.736.71-.736s.709.33.709.736m-6.036-2.946a.36.36 0 0 1-.354.367.36.36 0 0 1-.354-.367v-3.313H8.45a.36.36 0 0 1-.355-.368c0-.203.16-.368.355-.368h3.196V8.708c0-.203.159-.368.354-.368s.354.165.354.368v3.313h3.196c.195 0 .354.165.354.368a.36.36 0 0 1-.354.368h-3.196z"
-            />
-        </svg>
-    );
+    const {skinName} = useTheme();
+    if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M17 3H7l-5 9 5 9h10l5-9zm3.368 9-4.186 7.533H7.818L3.632 12l4.182-7.533h8.368zm-5.014.733c.39 0 .706-.329.706-.733s-.317-.733-.706-.733h-2.649V8.51c0-.404-.316-.734-.705-.734s-.705.33-.705.734v2.756h-2.65c-.388 0-.705.329-.705.733s.317.733.706.733h2.649v2.756c0 .404.316.734.705.734s.705-.33.705-.734v-2.756z"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M17 3H7l-5 9.021L7 21h9.79a.36.36 0 0 0 .355-.368.36.36 0 0 0-.354-.367H7.409L2.82 12.02l4.59-8.286h9.177l4.591 8.286-2.559 4.605c-.1.174-.04.4.132.504a.347.347 0 0 0 .486-.136L22 12.02zm1.39 16.016a.723.723 0 0 1-.708.735c-.391 0-.71-.33-.71-.735 0-.406.319-.736.71-.736s.709.33.709.736m-6.036-2.946a.36.36 0 0 1-.354.367.36.36 0 0 1-.354-.367v-3.313H8.45a.36.36 0 0 1-.355-.368c0-.203.16-.368.355-.368h3.196V8.708c0-.203.159-.368.354-.368s.354.165.354.368v3.313h3.196c.195 0 .354.165.354.368a.36.36 0 0 1-.354.368h-3.196z"
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconAddBoltonLight;

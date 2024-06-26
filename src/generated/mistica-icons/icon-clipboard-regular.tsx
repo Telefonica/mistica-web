@@ -16,7 +16,16 @@ const IconClipboardRegular = ({color, size = 24, ...rest}: IconProps): JSX.Eleme
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2/i)) {
+    if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M15.94 3.074h1.795c1.185 0 2.155.965 2.155 2.144V22H4.1V5.214c0-1.18.969-2.144 2.154-2.144H8.05V2h7.89zM7.87 8.075h8.249c.29 0 .542.252.542.535a.55.55 0 0 1-.538.535H7.871a.55.55 0 0 1-.538-.535c0-.283.253-.535.538-.535m8.249 2.858H7.87a.55.55 0 0 0-.538.534c0 .284.253.535.538.535h8.253a.55.55 0 0 0 .537-.535.553.553 0 0 0-.542-.534m0 2.857H7.87a.55.55 0 0 0-.538.535c0 .283.253.534.538.534h8.253a.55.55 0 0 0 .537-.534.553.553 0 0 0-.542-.535m0 2.857H7.87a.55.55 0 0 0-.538.535c0 .283.253.535.538.535h8.253a.55.55 0 0 0 .537-.535.553.553 0 0 0-.542-.535M9.088 3.074v1.788h5.777V3.074zm-3.55 17.5h12.914V5.214a.716.716 0 0 0-.717-.713h-1.79v1.43H8.05V4.505H6.254a.716.716 0 0 0-.717.713z"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path

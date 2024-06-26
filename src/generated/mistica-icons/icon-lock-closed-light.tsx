@@ -16,7 +16,20 @@ const IconLockClosedLight = ({color, size = 24, ...rest}: IconProps): JSX.Elemen
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2/i)) {
+    if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="m10.956 17.057 4.031-4.135a.68.68 0 0 1 .982 0 .73.73 0 0 1 0 1.012l-5.013 5.147-2.232-2.292a.73.73 0 0 1 0-1.012.683.683 0 0 1 .986 0z"
+                />
+                <path
+                    fill={fillColor}
+                    d="M17.912 8.07v1.428c1.15 0 2.088.96 2.088 2.144v8.214C20 21.04 19.061 22 17.912 22H6.088C4.935 22 4 21.036 4 19.856v-8.214C4 10.458 4.939 9.5 6.088 9.5V8.07C6.088 4.723 8.74 2 12 2s5.912 2.723 5.912 6.07M12 3.429c-2.493 0-4.522 2.083-4.522 4.643v1.428h9.044V8.07c0-2.56-2.03-4.643-4.522-4.643m6.606 16.424h.003v-8.21a.71.71 0 0 0-.697-.716H6.088a.71.71 0 0 0-.698.716v8.21c0 .396.316.716.698.716h11.82a.71.71 0 0 0 .698-.716"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path

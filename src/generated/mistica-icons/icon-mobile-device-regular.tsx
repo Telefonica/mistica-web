@@ -25,6 +25,15 @@ const IconMobileDeviceRegular = ({color, size = 24, ...rest}: IconProps): JSX.El
                 />
             </svg>
         );
+    } else if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M8.784 2h6.432a3.575 3.575 0 0 1 3.568 3.572v12.856A3.58 3.58 0 0 1 15.212 22H8.784a3.58 3.58 0 0 1-3.572-3.572V5.572A3.58 3.58 0 0 1 8.784 2m-2.14 4.644V17.36H17.36V6.644zm2.14-3.216c-1.06 0-1.94.776-2.112 1.784h10.652a2.145 2.145 0 0 0-2.112-1.784zm0 17.144h6.432c1.06 0 1.94-.776 2.108-1.784H6.672a2.145 2.145 0 0 0 2.112 1.784"
+                />
+            </svg>
+        );
     } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>

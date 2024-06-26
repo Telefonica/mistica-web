@@ -16,7 +16,16 @@ const IconWarningFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element 
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2/i)) {
+    if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M12 22C6.5 22 2 17.5 2 12S6.5 2 12 2s10 4.5 10 10-4.5 10-10 10m.536-14.644A.55.55 0 0 0 12 6.82a.55.55 0 0 0-.536.536v6.788c0 .284.252.536.536.536a.55.55 0 0 0 .536-.536zm-1.252 9.468c0 .392.32.716.716.716.392 0 .716-.32.716-.716a.72.72 0 0 0-.716-.716.72.72 0 0 0-.716.716"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path

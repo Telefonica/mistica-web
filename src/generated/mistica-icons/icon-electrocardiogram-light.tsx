@@ -16,7 +16,16 @@ const IconElectrocardiogramLight = ({color, size = 24, ...rest}: IconProps): JSX
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2/i)) {
+    if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M17.007 2c-1.938 0-3.196.786-4.999 3.145C10.24 2.823 8.842 2 6.87 2 4.762 2 2.48 3.5 2.48 6.75c0 4.8 5.951 11.557 8.914 14.921l.1.114a.68.68 0 0 0 .51.215.68.68 0 0 0 .51-.215c.748-.86 2.821-3.287 2.821-3.323l2.517-3.287c2.482-3.465 3.675-6.213 3.675-8.43.01-3.1-2.273-4.745-4.52-4.745m-.235 12.361-2.482 3.25-.338.399c-.695.82-1.354 1.598-1.94 2.244-2.79-3.177-8.165-9.463-8.165-13.5 0-2.285 1.533-3.323 3.027-3.323s2.621.498 4.625 3.287a.688.688 0 0 0 1.088 0c1.973-2.82 2.962-3.287 4.425-3.287 1.533 0 3.166 1.038 3.166 3.323-.005 1.856-1.163 4.425-3.406 7.607m-4.084-2.715h2.381c.375 0 .68.32.68.713s-.305.713-.68.713h-2.382v2.5c0 .394-.304.714-.679.714-.374 0-.68-.32-.68-.713v-2.501H8.948c-.375 0-.68-.32-.68-.713s.305-.713.68-.713h2.382v-2.5c0-.394.305-.714.68-.714.374 0 .678.32.678.713z"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path

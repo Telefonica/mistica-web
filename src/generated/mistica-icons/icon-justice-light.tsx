@@ -16,7 +16,16 @@ const IconJusticeLight = ({color, size = 24, ...rest}: IconProps): JSX.Element =
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2/i)) {
+    if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M13.43 9.345c.036 2.366 1.927 4.292 4.283 4.292 2.355 0 4.251-2.003 4.287-4.365 0-.037 0-.22-.108-.362l-3.571-6.548c-.108-.22-.252-.362-.608-.362H6.283c-.356 0-.5.147-.608.362L2.108 8.91C2 9.056 2 9.24 2 9.272c.036 2.366 1.928 4.36 4.283 4.36s4.251-1.93 4.283-4.29c0 0 0-.184-.108-.436l-2.96-5.452h3.784v17.088h-5.71a.724.724 0 0 0-.717.73c0 .402.324.728.716.728H18.43c.396 0 .716-.33.716-.729a.724.724 0 0 0-.716-.729h-5.715V3.454h3.783l-2.963 5.452c-.104.256-.104.44-.104.44M6.283 12.18a2.85 2.85 0 0 1-2.751-2.182h5.535c-.316 1.238-1.46 2.182-2.784 2.182M3.932 8.543l2.355-4.36 2.36 4.36zm13.785-4.36 2.355 4.36h-4.715zm-.004 7.996a2.85 2.85 0 0 1-2.752-2.182h5.503c-.324 1.238-1.427 2.182-2.751 2.182"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path

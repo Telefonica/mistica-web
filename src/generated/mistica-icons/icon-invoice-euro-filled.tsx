@@ -6,6 +6,7 @@
  */
 
 import * as React from 'react';
+import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
 
@@ -14,15 +15,26 @@ import type {IconProps} from '../../utils/types';
 const IconInvoiceEuroFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
-
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path
-                fill={fillColor}
-                d="M19.695 2v20H4.31V8.254h6.117V2zM9.38 7.18H4.547L9.38 2.241zm1.232 6.24c.25-1.317 1.385-2.314 2.746-2.314.488 0 .971.133 1.396.384a.52.52 0 0 0 .716-.196.543.543 0 0 0-.192-.732 3.8 3.8 0 0 0-1.924-.53c-1.942 0-3.549 1.481-3.804 3.392h-.564a.527.527 0 0 0-.523.535c0 .297.232.535.523.535h.564c.255 1.91 1.862 3.392 3.804 3.392.671 0 1.338-.183 1.924-.53a.543.543 0 0 0 .192-.732.52.52 0 0 0-.716-.197 2.75 2.75 0 0 1-1.396.384c-1.365 0-2.501-1-2.747-2.322h2.922c.29 0 .523-.238.523-.535a.527.527 0 0 0-.523-.535z"
-            />
-        </svg>
-    );
+    const {skinName} = useTheme();
+    if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M19.695 2v20H4.31V8.254h6.117V2zM9.38 7.18H4.547L9.38 2.241zm1.232 6.24c.25-1.317 1.385-2.314 2.746-2.314.488 0 .971.133 1.396.384a.52.52 0 0 0 .716-.196.543.543 0 0 0-.192-.732 3.8 3.8 0 0 0-1.924-.53c-1.942 0-3.549 1.481-3.804 3.392h-.564a.527.527 0 0 0-.523.535c0 .297.232.535.523.535h.564c.255 1.91 1.862 3.392 3.804 3.392.671 0 1.338-.183 1.924-.53a.543.543 0 0 0 .192-.732.52.52 0 0 0-.716-.197 2.75 2.75 0 0 1-1.396.384c-1.365 0-2.501-1-2.747-2.322h2.922c.29 0 .523-.238.523-.535a.527.527 0 0 0-.523-.535z"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M19.695 2v20H4.31V8.254h6.117V2zM9.38 7.18H4.547L9.38 2.241zm1.232 6.24c.25-1.317 1.385-2.314 2.746-2.314.488 0 .971.133 1.396.384a.52.52 0 0 0 .716-.196.543.543 0 0 0-.192-.732 3.8 3.8 0 0 0-1.924-.53c-1.942 0-3.549 1.481-3.804 3.392h-.564a.527.527 0 0 0-.523.535c0 .297.232.535.523.535h.564c.255 1.91 1.862 3.392 3.804 3.392.671 0 1.338-.183 1.924-.53a.543.543 0 0 0 .192-.732.52.52 0 0 0-.716-.197 2.75 2.75 0 0 1-1.396.384c-1.365 0-2.501-1-2.747-2.322h2.922c.29 0 .523-.238.523-.535a.527.527 0 0 0-.523-.535z"
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconInvoiceEuroFilled;

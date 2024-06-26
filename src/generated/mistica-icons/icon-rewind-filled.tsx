@@ -16,7 +16,16 @@ const IconRewindFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element =
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2/i)) {
+    if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M12 2C6.488 2 2 6.488 2 12s4.488 10 10 10 10-4.488 10-10S17.512 2 12 2m-1.051 14.264a.535.535 0 1 1-.759.759l-4.639-4.644a.535.535 0 0 1 0-.758l4.644-4.644a.535.535 0 1 1 .759.759L6.688 12zm6.07.759a.53.53 0 0 1-.38.155.53.53 0 0 1-.38-.155l-4.638-4.644a.535.535 0 0 1 0-.758l4.643-4.644c.21-.21.549-.21.759 0s.21.549 0 .759L12.759 12l4.26 4.264c.21.21.21.549 0 .759"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path

@@ -6,6 +6,7 @@
  */
 
 import * as React from 'react';
+import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
 
@@ -14,15 +15,26 @@ import type {IconProps} from '../../utils/types';
 const IconLaptopLight = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
-
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path
-                fill={fillColor}
-                d="M4.861 6.893c0-.644.466-1.133 1.07-1.133H18.07c.607 0 1.069.494 1.069 1.133v4.92c0 .228.142.378.356.378.215 0 .357-.15.357-.377v-4.92c0-1.061-.786-1.894-1.787-1.894H5.93c-1.001 0-1.787.833-1.787 1.893v9.08H2v.378C2 17.601 2.891 19 4.144 19h15.713C21.104 19 22 17.6 22 16.351v-.378H4.861zm14.996 11.352H4.144c-.713 0-1.248-.756-1.394-1.511h18.496c-.142.75-.676 1.51-1.39 1.51m-.362-3.41c-.393 0-.713-.339-.713-.755 0-.417.32-.755.713-.755s.713.338.713.755c0 .416-.32.755-.713.755"
-            />
-        </svg>
-    );
+    const {skinName} = useTheme();
+    if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M20.217 15.685V7.212c0-1.217-.964-2.212-2.144-2.212H5.931c-1.179 0-2.144.995-2.144 2.212v8.473H2v.552C2 17.746 3.18 19 4.642 19h14.752C20.821 19 22 17.746 22 16.237v-.552zM5.218 7.212c0-.406.32-.736.713-.736h12.142c.393 0 .713.33.713.736v8.473H5.218zm-.571 10.685c-.677 0-1.248-.481-1.463-1.104h17.678c-.252.623-.823 1.104-1.468 1.104z"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M4.861 6.893c0-.644.466-1.133 1.07-1.133H18.07c.607 0 1.069.494 1.069 1.133v4.92c0 .228.142.378.356.378.215 0 .357-.15.357-.377v-4.92c0-1.061-.786-1.894-1.787-1.894H5.93c-1.001 0-1.787.833-1.787 1.893v9.08H2v.378C2 17.601 2.891 19 4.144 19h15.713C21.104 19 22 17.6 22 16.351v-.378H4.861zm14.996 11.352H4.144c-.713 0-1.248-.756-1.394-1.511h18.496c-.142.75-.676 1.51-1.39 1.51m-.362-3.41c-.393 0-.713-.339-.713-.755 0-.417.32-.755.713-.755s.713.338.713.755c0 .416-.32.755-.713.755"
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconLaptopLight;

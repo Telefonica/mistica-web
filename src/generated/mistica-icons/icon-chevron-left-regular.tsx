@@ -25,6 +25,15 @@ const IconChevronLeftRegular = ({color, size = 24, ...rest}: IconProps): JSX.Ele
                 />
             </svg>
         );
+    } else if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M14.8 5.266a.79.79 0 0 0 0-1.049.64.64 0 0 0-.962 0L7.2 11.455A.78.78 0 0 0 7 12a.78.78 0 0 0 .2.545l6.638 7.238c.266.29.697.29.963 0a.79.79 0 0 0 0-1.05L8.624 12z"
+                />
+            </svg>
+        );
     } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>

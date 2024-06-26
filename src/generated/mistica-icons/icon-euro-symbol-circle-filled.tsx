@@ -16,7 +16,16 @@ const IconEuroSymbolCircleFilled = ({color, size = 24, ...rest}: IconProps): JSX
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2/i)) {
+    if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M2 12C2 6.5 6.5 2 12 2s10 4.5 10 10c0 5.536-4.5 10-10 10-5.536 0-10-4.5-10-10m11.072-1.072a.55.55 0 0 0-.536-.536s-3 0-2.996.008a3.41 3.41 0 0 1 3-1.784c.572 0 1.18.18 1.68.464a.527.527 0 0 0 .752-.18.527.527 0 0 0-.18-.752 4.55 4.55 0 0 0-2.252-.608 4.47 4.47 0 0 0-4.18 2.856h-.824a.55.55 0 0 0-.536.536c0 .284.252.536.536.536h.572c-.036.18-.036.36-.036.536s0 .356.036.5h-.572A.55.55 0 0 0 7 13.04c0 .284.252.536.536.536h.824c.68 1.676 2.288 2.856 4.18 2.856.748 0 1.532-.212 2.212-.608a.52.52 0 0 0 .18-.716.52.52 0 0 0-.716-.18c-.5.32-1.072.464-1.68.464a3.4 3.4 0 0 1-3-1.784h3a.55.55 0 0 0 .536-.536.55.55 0 0 0-.536-.536H9.18c-.036-.18-.036-.356-.036-.536s0-.356.036-.536h3.356a.55.55 0 0 0 .536-.536"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path

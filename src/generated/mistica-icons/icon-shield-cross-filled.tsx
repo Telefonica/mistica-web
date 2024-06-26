@@ -16,7 +16,16 @@ const IconShieldCrossFilled = ({color, size = 24, ...rest}: IconProps): JSX.Elem
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2/i)) {
+    if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M4 4.752v5.872h7.45V2c-.907.742-3.676 2.752-7.087 2.752zm16 0v5.872h-7.45V2c.907.742 3.676 2.752 7.087 2.752zm-7.456 6.97V22C15.863 20.877 20 18.919 20 14.659v-2.936zm-8.544 0h7.456v10.273C7.886 20.788 4 18.858 4 14.658z"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path

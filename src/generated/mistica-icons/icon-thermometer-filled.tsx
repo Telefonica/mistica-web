@@ -6,6 +6,7 @@
  */
 
 import * as React from 'react';
+import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
 
@@ -14,19 +15,34 @@ import type {IconProps} from '../../utils/types';
 const IconThermometerFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
-
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path
-                fill={fillColor}
-                d="M14.909 4.963V15.15A4.1 4.1 0 0 1 16 17.925C16 20.185 14.218 22 12 22s-4-1.816-4-4.075c0-1.036.4-2.036 1.091-2.776V4.963C9.091 3.336 10.402 2 12 2s2.909 1.336 2.909 2.963M10.182 17.93c0 1.036.801 1.851 1.818 1.851s1.818-.815 1.818-1.851a1.83 1.83 0 0 0-1.272-1.74V4.963A.565.565 0 0 0 12 4.408c-.29 0-.546.26-.546.555V16.19a1.83 1.83 0 0 0-1.272 1.74"
-            />
-            <path
-                fill={fillColor}
-                d="M12.726 17.925c0 .408-.325.74-.726.74a.733.733 0 0 1-.726-.74c0-.409.325-.74.726-.74s.726.331.726.74"
-            />
-        </svg>
-    );
+    const {skinName} = useTheme();
+    if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M14.909 4.963V15.15A4.1 4.1 0 0 1 16 17.925C16 20.185 14.218 22 12 22s-4-1.816-4-4.075c0-1.036.4-2.036 1.091-2.776V4.963C9.091 3.336 10.402 2 12 2s2.909 1.336 2.909 2.963M10.182 17.93c0 1.036.801 1.851 1.818 1.851s1.818-.815 1.818-1.851a1.83 1.83 0 0 0-1.272-1.74V4.963A.565.565 0 0 0 12 4.408c-.29 0-.546.26-.546.555V16.19a1.83 1.83 0 0 0-1.272 1.74"
+                />
+                <path
+                    fill={fillColor}
+                    d="M12.726 17.925c0 .408-.325.74-.726.74a.733.733 0 0 1-.726-.74c0-.409.325-.74.726-.74s.726.331.726.74"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M14.909 4.963V15.15A4.1 4.1 0 0 1 16 17.925C16 20.185 14.218 22 12 22s-4-1.816-4-4.075c0-1.036.4-2.036 1.091-2.776V4.963C9.091 3.336 10.402 2 12 2s2.909 1.336 2.909 2.963M10.182 17.93c0 1.036.801 1.851 1.818 1.851s1.818-.815 1.818-1.851a1.83 1.83 0 0 0-1.272-1.74V4.963A.565.565 0 0 0 12 4.408c-.29 0-.546.26-.546.555V16.19a1.83 1.83 0 0 0-1.272 1.74"
+                />
+                <path
+                    fill={fillColor}
+                    d="M12.726 17.925c0 .408-.325.74-.726.74a.733.733 0 0 1-.726-.74c0-.409.325-.74.726-.74s.726.331.726.74"
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconThermometerFilled;

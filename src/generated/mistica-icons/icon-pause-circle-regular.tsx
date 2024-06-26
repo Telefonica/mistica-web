@@ -16,7 +16,16 @@ const IconPauseCircleRegular = ({color, size = 24, ...rest}: IconProps): JSX.Ele
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2/i)) {
+    if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M2 12c0 5.517 4.488 10 10 10s10-4.488 10-10S17.512 2 12 2 2 6.484 2 12m1.43 0c0-4.726 3.844-8.57 8.57-8.57s8.57 3.844 8.57 8.57-3.844 8.57-8.57 8.57S3.43 16.726 3.43 12m6.783-4.287a.714.714 0 0 0-1.426 0v8.57a.714.714 0 0 0 1.426.004zM14.5 7c.393 0 .713.32.713.713v8.574a.714.714 0 0 1-1.426-.005V7.713c0-.393.32-.713.713-.713"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path

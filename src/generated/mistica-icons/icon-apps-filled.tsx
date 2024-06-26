@@ -16,7 +16,16 @@ const IconAppsFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => 
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2/i)) {
+    if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M3.925 2H9.31c1.052 0 1.917.864 1.92 1.925v5.374c0 1.06-.864 1.925-1.924 1.925H3.925A1.926 1.926 0 0 1 2 9.307V3.925C2 2.865 2.864 2 3.925 2m10.768 0h5.386c1.053 0 1.917.864 1.921 1.925v5.382c0 1.06-.864 1.925-1.925 1.925h-5.382a1.93 1.93 0 0 1-1.925-1.925V3.925c0-1.06.865-1.925 1.925-1.925M9.311 12.768H3.925c-1.06 0-1.925.865-1.925 1.925v5.382c0 1.053.864 1.917 1.925 1.917h5.382c1.06 0 1.925-.864 1.925-1.925v-5.382a1.93 1.93 0 0 0-1.921-1.917m5.382 0h5.386c1.053 0 1.917.865 1.921 1.925v5.382c0 1.06-.864 1.925-1.925 1.925h-5.382a1.93 1.93 0 0 1-1.925-1.925v-5.382c0-1.06.865-1.925 1.925-1.925"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path

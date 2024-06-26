@@ -16,7 +16,16 @@ const IconUserAccountLight = ({color, size = 24, ...rest}: IconProps): JSX.Eleme
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2/i)) {
+    if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M18.482 8.604a6.63 6.63 0 0 1-2.987 5.55C19.33 15.204 22 17.948 22 21.247a.75.75 0 0 1-.74.754.75.75 0 0 1-.74-.754c0-3.328-3.821-6.038-8.52-6.038s-8.52 2.71-8.52 6.038a.75.75 0 0 1-.74.754.75.75 0 0 1-.74-.754c0-3.3 2.67-6.043 6.505-7.091a6.63 6.63 0 0 1-2.987-5.551C5.518 4.96 8.425 2 12 2s6.482 2.961 6.482 6.604M12 3.507c-2.76 0-5.002 2.285-5.002 5.097 0 2.807 2.242 5.092 5.002 5.092s5.002-2.28 5.002-5.092S14.76 3.507 12 3.507"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path

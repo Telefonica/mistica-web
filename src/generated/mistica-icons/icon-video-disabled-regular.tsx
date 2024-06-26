@@ -6,6 +6,7 @@
  */
 
 import * as React from 'react';
+import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
 
@@ -14,15 +15,26 @@ import type {IconProps} from '../../utils/types';
 const IconVideoDisabledRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
-
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path
-                fill={fillColor}
-                d="M21.554 6.592a.74.74 0 0 0-.806.15l-4.67 4.584V7.664c0-.623-.499-1.13-1.11-1.13H7.495l-4.23-4.313a.73.73 0 0 0-1.048 0 .765.765 0 0 0 0 1.067l12.376 12.607v.444H3.483V8.041h.74c.408 0 .74-.338.74-.753a.75.75 0 0 0-.74-.754h-1.11c-.612 0-1.11.507-1.11 1.13v9.057c0 .623.498 1.13 1.11 1.13h11.855c.417 0 .777-.241.967-.59l4.434 4.517a.72.72 0 0 0 1.043 0 .765.765 0 0 0 0-1.068l-5.335-5.438v-2.217l4.671 4.584a.73.73 0 0 0 .801.154.75.75 0 0 0 .45-.695V7.283a.74.74 0 0 0-.445-.69M8.98 8.042h5.619v5.723zm8.355 4.148 3.191-3.13v6.26z"
-            />
-        </svg>
-    );
+    const {skinName} = useTheme();
+    if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M21.554 6.592a.74.74 0 0 0-.806.15l-4.67 4.584V7.664c0-.623-.499-1.13-1.11-1.13H7.495l-4.23-4.313a.73.73 0 0 0-1.048 0 .765.765 0 0 0 0 1.067l12.376 12.607v.444H3.483V8.041h.74c.408 0 .74-.338.74-.753a.75.75 0 0 0-.74-.754h-1.11c-.612 0-1.11.507-1.11 1.13v9.057c0 .623.498 1.13 1.11 1.13h11.855c.417 0 .777-.241.967-.59l4.434 4.517a.72.72 0 0 0 1.043 0 .765.765 0 0 0 0-1.068l-5.335-5.438v-2.217l4.671 4.584a.73.73 0 0 0 .801.154.75.75 0 0 0 .45-.695V7.283a.74.74 0 0 0-.445-.69M8.98 8.042h5.619v5.723zm8.355 4.148 3.191-3.13v6.26z"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M21.554 6.592a.74.74 0 0 0-.806.15l-4.67 4.584V7.664c0-.623-.499-1.13-1.11-1.13H7.495l-4.23-4.313a.73.73 0 0 0-1.048 0 .765.765 0 0 0 0 1.067l12.376 12.607v.444H3.483V8.041h.74c.408 0 .74-.338.74-.753a.75.75 0 0 0-.74-.754h-1.11c-.612 0-1.11.507-1.11 1.13v9.057c0 .623.498 1.13 1.11 1.13h11.855c.417 0 .777-.241.967-.59l4.434 4.517a.72.72 0 0 0 1.043 0 .765.765 0 0 0 0-1.068l-5.335-5.438v-2.217l4.671 4.584a.73.73 0 0 0 .801.154.75.75 0 0 0 .45-.695V7.283a.74.74 0 0 0-.445-.69M8.98 8.042h5.619v5.723zm8.355 4.148 3.191-3.13v6.26z"
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconVideoDisabledRegular;

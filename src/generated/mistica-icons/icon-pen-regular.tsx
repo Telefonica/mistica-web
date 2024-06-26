@@ -25,6 +25,15 @@ const IconPenRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element => 
                 />
             </svg>
         );
+    } else if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M15.533 3.107a3.79 3.79 0 0 1 5.364 5.353L9.157 20.205a.73.73 0 0 1-.388.2l-5.856 1.572a.723.723 0 0 1-.888-.884l1.588-5.926a.7.7 0 0 1 .228-.364zM4.681 16.751l-.936 3.505 3.5-.94zm3.964 1.916 9.992-9.994-3.312-3.313-9.992 9.994zM19.657 7.652l.212-.212c.912-.912.912-2.4 0-3.312a2.346 2.346 0 0 0-3.312 0l-.212.212z"
+                />
+            </svg>
+        );
     } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>

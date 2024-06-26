@@ -16,7 +16,16 @@ const IconCreditCardVisaFilled = ({color, size = 24, ...rest}: IconProps): JSX.E
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2/i)) {
+    if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M21.992 8.97V6.938c0-1.073-.8-1.938-1.788-1.938H3.788C2.8 5 2 5.865 2 6.938V8.97zM2 10.102v6.96C2 18.135 2.8 19 3.788 19h16.424C21.2 19 22 18.135 22 17.062v-6.96zm2.5 3.406c-.3 0-.536-.259-.536-.569 0-.318.244-.568.536-.568h5.002c.3 0 .536.259.536.568-.008.319-.244.569-.545.569zm9.642 0h-2.504c-.3 0-.536-.259-.536-.569 0-.318.244-.568.536-.568h2.5c.3 0 .537.259.537.568 0 .319-.245.569-.533.569m2.137 0c-.3 0-.536-.259-.536-.569 0-.318.244-.568.536-.568h3.212c.3 0 .537.259.537.568-.004.319-.236.569-.537.569z"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path

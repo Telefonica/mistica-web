@@ -16,7 +16,16 @@ const IconMedicalHistoryFilled = ({color, size = 24, ...rest}: IconProps): JSX.E
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2/i)) {
+    if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M15.635 4.862h-.289v-.005h-6.98V2h7.269zm2.182-1.788h-1.089v2.857H7.272V3.074h-1.09C4.983 3.074 4 4.04 4 5.218v6.071h1.857l1.638-2.784a.56.56 0 0 1 .475-.283c.186 0 .363.105.474.283l2.509 4.252 1.89-3.25a.56.56 0 0 1 .474-.284c.181 0 .363.105.475.283l.982 1.395h1.42c.288 0 .544.251.544.534s-.256.572-.545.572h-1.745a.57.57 0 0 1-.475-.284l-.665-.864-1.89 3.25a.56.56 0 0 1-.474.284.57.57 0 0 1-.475-.283L7.96 9.858l-1.307 2.25a.57.57 0 0 1-.475.25H4V22h16V5.218c0-1.18-.982-2.144-2.183-2.144m-2 14.643H8.183a.556.556 0 0 1-.545-.535c0-.284.256-.535.545-.535h7.632c.289 0 .545.251.545.535a.553.553 0 0 1-.545.535"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
