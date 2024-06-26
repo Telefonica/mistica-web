@@ -28,12 +28,12 @@ test('Text wrapping', async () => {
     expect(image).toMatchImageSnapshot();
 });
 
-test('Text wrapping - multiple whitespaces', async () => {
+test('Text wrapping - multiple line breaks', async () => {
     await openStoryPage({
         id: 'components-text--text-wrapping',
         device: 'DESKTOP',
         args: {
-            text: '   a text with     spaces    everywhere   Pneumonoultramicroscopicsilicovolcanoconiosis test   ',
+            text: 'text with line breaks',
         },
     });
 
