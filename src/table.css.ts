@@ -20,6 +20,9 @@ export const fullWidth = style({minWidth: '100%'});
 // In mobile, we have 2 rendering modes: horizontal scroll, or collapsed rows. In collapsed rows mode, every row is rendered as a card
 export const collapsedRowsInMobile = style({});
 
+export const hiddenHeadersInMobile = style({});
+export const hiddenHeadersInDesktop = style({});
+
 const BOXED_PADDING_Y_DESKTOP = 8;
 
 export const boxed = style({
@@ -231,8 +234,18 @@ globalStyle(`${collapsedRowsInMobile}${boxed} tbody tr:last-child`, {
     },
 });
 
-// hide thead in mobile when collapse-rows responsive mode is active. Dont use display: none for screen readers
-globalStyle(`${collapsedRowsInMobile} thead tr`, {
+// Hide headers from UI. Dont use display: none for screen readers
+globalStyle(`${hiddenHeadersInDesktop} thead tr`, {
+    '@media': {
+        [mq.desktopOrBigger]: {
+            position: 'absolute',
+            top: -9999,
+            left: -9999,
+        },
+    },
+});
+
+globalStyle(`${hiddenHeadersInMobile} thead tr`, {
     '@media': {
         [mq.tabletOrSmaller]: {
             position: 'absolute',

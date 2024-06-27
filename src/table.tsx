@@ -33,7 +33,7 @@ type TableProps = {
     rowVerticalAlign?: VerticalAlign;
     columnWidth?: Array<number | string>;
     /**
-     * by default, the table expands to all the available width, if you want the table to have the minimum width to fit the rows content, set fullWidth to false.
+     * By default, the table expands to all the available width, if you want the table to have the minimum width to fit the rows content, set fullWidth to false.
      * It's ignored in mobile
      */
     fullWidth?: boolean;
@@ -43,9 +43,13 @@ type TableProps = {
      */
     maxHeight?: number | string;
     /**
-     * when rendering the table inside a responsive layout, you can enable this prop to make the table scrollable over the layout paddings
+     * When rendering the table inside a responsive layout, you can enable this prop to make the table scrollable over the layout paddings
      */
     scrollOverResponsiveLayout?: boolean;
+    /**
+     * Used to hide headers from UI. Screen readers will still recognize them when reading an element from the table.
+     */
+    hideHeaders?: boolean | 'desktop' | 'mobile';
     /** "data-" prefix is automatically added. For example, use "testid" instead of "data-testid" */
     dataAttributes?: DataAttributes;
     'aria-label'?: string;
@@ -54,7 +58,7 @@ type TableProps = {
 };
 
 const CellActionIconButton = (props: CardAction) => {
-    // we render IconButton if Icon prop was passed. Otherwise, ToggleIconButton will be used
+    // We render IconButton if Icon prop was passed. Otherwise, ToggleIconButton will be used
     return props.Icon ? (
         <IconButton
             {...props}
@@ -100,6 +104,7 @@ export const Table = React.forwardRef(
             columnTextAlign = defaultTextAlign,
             rowVerticalAlign = 'middle',
             columnWidth,
+            hideHeaders,
             scrollOverResponsiveLayout,
             ...otherProps
         }: TableProps,
@@ -112,16 +117,21 @@ export const Table = React.forwardRef(
             return columnTextAlign;
         };
 
+        const collapsedRowsMode = responsive === 'collapse-rows';
+        const hideHeadersInMobile = hideHeaders === true || hideHeaders === 'mobile';
+        const hideHeadersInDesktop = hideHeaders === true || hideHeaders === 'desktop';
+
         const hasActionsColumn =
             !!content && content.some((row) => !Array.isArray(row) && row.actions.length > 0);
 
-        const collapsedRowsMode = responsive === 'collapse-rows';
         const table = (
             <table
                 className={classNames(styles.table, {
                     [styles.boxed]: boxed,
                     [styles.collapsedRowsInMobile]: collapsedRowsMode,
                     [styles.fullWidth]: fullWidth,
+                    [styles.hiddenHeadersInDesktop]: hideHeadersInDesktop,
+                    [styles.hiddenHeadersInMobile]: hideHeadersInMobile || collapsedRowsMode,
                 })}
                 aria-label={otherProps['aria-label']}
                 aria-labelledby={otherProps['aria-labelledby']}
@@ -167,14 +177,17 @@ export const Table = React.forwardRef(
                                              * In collapsedRowsMode, we render the row heading text before every cell content, except for the first cell
                                              * of every row, which is rendered with a medium weight font, as it's the row title.
                                              * */}
-                                            {idx !== 0 && collapsedRowsMode && heading[idx] && (
-                                                // this is aria-hidden because screen readers already read the column heading from the th
-                                                <div className={styles.mobileCellHeading} aria-hidden>
-                                                    <Text1 medium color={vars.colors.textSecondary}>
-                                                        {heading[idx]}
-                                                    </Text1>
-                                                </div>
-                                            )}
+                                            {idx !== 0 &&
+                                                collapsedRowsMode &&
+                                                heading[idx] &&
+                                                !hideHeadersInMobile && (
+                                                    // this is aria-hidden because screen readers already read the column heading from the th
+                                                    <div className={styles.mobileCellHeading} aria-hidden>
+                                                        <Text1 medium color={vars.colors.textSecondary}>
+                                                            {heading[idx]}
+                                                        </Text1>
+                                                    </div>
+                                                )}
 
                                             <Text
                                                 desktopSize={textValues.text2.desktopSize}
