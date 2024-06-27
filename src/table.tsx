@@ -2,7 +2,7 @@ import * as React from 'react';
 import {getPrefixedDataAttributes} from './utils/dom';
 import * as styles from './table.css';
 import {vars} from './skins/skin-contract.css';
-import {Text1, Text2} from './text';
+import Text, {Text1, Text2, textValues} from './text';
 import {InternalBoxed} from './boxed';
 import classNames from 'classnames';
 import Box from './box';
@@ -176,8 +176,21 @@ export const Table = React.forwardRef(
                                                 </div>
                                             )}
 
-                                            <Text2
+                                            <Text
+                                                desktopSize={textValues.text2.desktopSize}
+                                                desktopLineHeight={textValues.text2.desktopLineHeight}
+                                                // Use Text4 size/lineHeight for row's title when collapsed-row mode is used
+                                                {...(idx === 0 && collapsedRowsMode
+                                                    ? {
+                                                          mobileSize: textValues.text4.mobileSize,
+                                                          mobileLineHeight: textValues.text4.mobileLineHeight,
+                                                      }
+                                                    : {
+                                                          mobileSize: textValues.text2.mobileSize,
+                                                          mobileLineHeight: textValues.text2.mobileLineHeight,
+                                                      })}
                                                 as="div"
+                                                // TODO use textPresets.cardTitle.weight in first value
                                                 weight={idx === 0 && collapsedRowsMode ? 'medium' : 'regular'}
                                                 wordBreak={false}
                                             >
@@ -192,7 +205,7 @@ export const Table = React.forwardRef(
                                                 >
                                                     {cell}
                                                 </div>
-                                            </Text2>
+                                            </Text>
                                         </td>
                                     ))}
 

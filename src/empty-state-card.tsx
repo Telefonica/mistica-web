@@ -4,7 +4,7 @@ import Box from './box';
 import {Boxed} from './boxed';
 import {useTheme} from './hooks';
 import Stack from './stack';
-import {Text2, Text} from './text';
+import {Text2, Text, textValues} from './text';
 import ButtonGroup from './button-group';
 import * as styles from './empty-state-card.css';
 import {vars} from './skins/skin-contract.css';
@@ -67,10 +67,7 @@ const EmptyStateCard: React.FC<Props> = ({
                         <Box>
                             <Stack space={8}>
                                 <Text
-                                    mobileSize={18}
-                                    mobileLineHeight="24px"
-                                    desktopSize={20}
-                                    desktopLineHeight="28px"
+                                    {...textValues.text4}
                                     weight={textPresets.cardTitle.weight}
                                     as={titleAs}
                                 >

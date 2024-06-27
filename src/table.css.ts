@@ -217,7 +217,7 @@ globalStyle(`${collapsedRowsInMobile}${boxed} tbody tr`, {
             border: `1px solid ${skinVars.colors.border}`,
             background: skinVars.colors.backgroundContainer,
             borderRadius: skinVars.borderRadii.container,
-            padding: 16,
+            padding: '24px 16px',
             marginBottom: 16,
         },
     },

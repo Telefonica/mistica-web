@@ -8,7 +8,7 @@ import Stack from '../stack';
 import * as styles from './advanced-data-card.css';
 import * as mediaStyles from '../image.css';
 import Divider from '../divider';
-import {Text2, Text} from '../text';
+import {Text2, Text, textValues} from '../text';
 import {vars} from '../skins/skin-contract.css';
 import Box from '../box';
 import Touchable from '../touchable';
@@ -113,10 +113,7 @@ const CardContent: React.FC<CardContentProps> = ({
             )}
 
             <Text
-                mobileSize={18}
-                mobileLineHeight="24px"
-                desktopSize={20}
-                desktopLineHeight="28px"
+                {...textValues.text4}
                 truncate={titleLinesMax}
                 weight={textPresets.cardTitle.weight}
                 as={titleAs}
