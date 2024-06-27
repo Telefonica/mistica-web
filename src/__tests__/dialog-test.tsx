@@ -158,9 +158,15 @@ test('Closes a dialog on click outside', async () => {
     expect(await screen.findByRole('dialog')).toBeInTheDocument();
     expect(await screen.findByRole('button', {name: 'Nope!'})).toBeInTheDocument();
 
-    userEvent.click(screen.getByTestId('dialog-overlay'));
+    await userEvent.click(screen.getByTestId('dialog-overlay'));
 
-    await waitForElementToBeRemoved(() => screen.queryByRole('dialog', {hidden: true}), {timeout: 5000});
+    await waitFor(
+        () => {
+            expect(screen.queryByRole('dialog', {hidden: true})).not.toBeInTheDocument();
+        },
+        {timeout: 5000}
+    );
+
     expect(onCancelSpy).toHaveBeenCalled();
 });
 
@@ -181,7 +187,7 @@ test('closes confirm dialog when clicking on any button', async () => {
     const cancelButton = await screen.findByRole('button', {name: 'Nope!'});
     expect(cancelButton).toBeInTheDocument();
 
-    userEvent.click(cancelButton);
+    await userEvent.click(cancelButton);
 
     await waitForElementToBeRemoved(() => screen.queryByRole('dialog', {hidden: true}), {timeout: 5000});
     expect(onCancelSpy).toHaveBeenCalled();
@@ -216,7 +222,7 @@ test('closing a previous accepted dialog does not trigger onAccept callback', as
     await screen.findByRole('dialog');
     const acceptButton = await screen.findByRole('button', {name: 'Yay!'});
 
-    userEvent.click(acceptButton);
+    await userEvent.click(acceptButton);
 
     await waitForElementToBeRemoved(() => screen.queryByRole('dialog', {hidden: true}), {timeout: 5000});
 
@@ -227,7 +233,7 @@ test('closing a previous accepted dialog does not trigger onAccept callback', as
     await userEvent.click(confirmButton);
 
     const cancelButton = await screen.findByRole('button', {name: 'Nope!'});
-    userEvent.click(cancelButton);
+    await userEvent.click(cancelButton);
 
     await waitForElementToBeRemoved(() => screen.queryByRole('dialog', {hidden: true}), {timeout: 5000});
 

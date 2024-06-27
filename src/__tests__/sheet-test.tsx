@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Sheet, {ActionsSheet, ActionsListSheet, InfoSheet, RadioListSheet} from '../sheet';
-import {act, render, screen, waitForElementToBeRemoved, within} from '@testing-library/react';
+import {act, render, screen, waitFor, waitForElementToBeRemoved, within} from '@testing-library/react';
 import {SheetRoot, ButtonPrimary, showSheet, ThemeContextProvider, Title1} from '..';
 import {makeTheme} from './test-utils';
 import userEvent from '@testing-library/user-event';
@@ -141,9 +141,15 @@ test('ActionsListSheet', async () => {
     expect(action1).toBeInTheDocument();
     expect(action2).toBeInTheDocument();
 
-    userEvent.click(action1);
+    await userEvent.click(action1);
 
-    await waitForElementToBeRemoved(sheet, {timeout: 5000});
+    await waitFor(
+        () => {
+            expect(sheet).not.toBeInTheDocument();
+        },
+        {timeout: 5000}
+    );
+
     expect(selectSpy).toHaveBeenCalledWith('1');
 });
 
@@ -246,9 +252,15 @@ test('ActionsSheet', async () => {
     expect(secondary).toBeInTheDocument();
     expect(link).toBeInTheDocument();
 
-    userEvent.click(secondary);
+    await userEvent.click(secondary);
 
-    await waitForElementToBeRemoved(sheet, {timeout: 5000});
+    await waitFor(
+        () => {
+            expect(sheet).not.toBeInTheDocument();
+        },
+        {timeout: 5000}
+    );
+
     expect(onPressButtonSpy).toHaveBeenCalledWith('SECONDARY');
 });
 
@@ -274,9 +286,15 @@ test('showSheet INFO', async () => {
     expect(sheet).toBeInTheDocument();
 
     const closeButton = await screen.findByRole('button', {name: 'Cerrar'});
-    userEvent.click(closeButton);
+    await userEvent.click(closeButton);
 
-    await waitForElementToBeRemoved(sheet, {timeout: 5000});
+    await waitFor(
+        () => {
+            expect(sheet).not.toBeInTheDocument();
+        },
+        {timeout: 5000}
+    );
+
     expect(resultSpy).toHaveBeenCalledWith(undefined);
 });
 
@@ -306,9 +324,15 @@ test('showSheet ACTIONS_LIST', async () => {
 
     const item1 = await screen.findByRole('button', {name: 'Item 2'});
 
-    userEvent.click(item1);
+    await userEvent.click(item1);
 
-    await waitForElementToBeRemoved(sheet, {timeout: 5000});
+    await waitFor(
+        () => {
+            expect(sheet).not.toBeInTheDocument();
+        },
+        {timeout: 5000}
+    );
+
     expect(resultSpy).toHaveBeenCalledWith({action: 'SUBMIT', selectedId: '2'});
 });
 
@@ -337,9 +361,15 @@ test('showSheet ACTIONS_LIST dismiss', async () => {
     expect(sheet).toBeInTheDocument();
 
     const closeButton = await screen.findByRole('button', {name: 'Cerrar'});
-    userEvent.click(closeButton);
+    await userEvent.click(closeButton);
 
-    await waitForElementToBeRemoved(sheet, {timeout: 5000});
+    await waitFor(
+        () => {
+            expect(sheet).not.toBeInTheDocument();
+        },
+        {timeout: 5000}
+    );
+
     expect(resultSpy).toHaveBeenCalledWith({action: 'DISMISS'});
 });
 
@@ -371,9 +401,15 @@ test('showSheet RADIO_LIST', async () => {
     const continueButton = await screen.findByRole('button', {name: 'Continuar'});
 
     await userEvent.click(item1);
-    userEvent.click(continueButton);
+    await userEvent.click(continueButton);
 
-    await waitForElementToBeRemoved(sheet, {timeout: 5000});
+    await waitFor(
+        () => {
+            expect(sheet).not.toBeInTheDocument();
+        },
+        {timeout: 5000}
+    );
+
     expect(resultSpy).toHaveBeenCalledWith({action: 'SUBMIT', selectedId: '2'});
 }, 30000);
 
@@ -402,9 +438,15 @@ test('showSheet RADIO_LIST dismiss', async () => {
     expect(sheet).toBeInTheDocument();
 
     const closeButton = await screen.findByRole('button', {name: 'Cerrar'});
-    userEvent.click(closeButton);
+    await userEvent.click(closeButton);
 
-    await waitForElementToBeRemoved(sheet, {timeout: 5000});
+    await waitFor(
+        () => {
+            expect(sheet).not.toBeInTheDocument();
+        },
+        {timeout: 5000}
+    );
+
     expect(resultSpy).toHaveBeenCalledWith({action: 'DISMISS'});
 });
 
@@ -441,9 +483,15 @@ test('showSheet ACTIONS', async () => {
     expect(secondary).toBeInTheDocument();
     expect(link).toBeInTheDocument();
 
-    userEvent.click(link);
+    await userEvent.click(link);
 
-    await waitForElementToBeRemoved(sheet, {timeout: 5000});
+    await waitFor(
+        () => {
+            expect(sheet).not.toBeInTheDocument();
+        },
+        {timeout: 5000}
+    );
+
     expect(resultSpy).toHaveBeenCalledWith({action: 'LINK'});
 });
 
@@ -473,9 +521,15 @@ test('showSheet ACTIONS dismiss', async () => {
     expect(sheet).toBeInTheDocument();
 
     const closeButton = await screen.findByRole('button', {name: 'Cerrar'});
-    userEvent.click(closeButton);
+    await userEvent.click(closeButton);
 
-    await waitForElementToBeRemoved(sheet, {timeout: 5000});
+    await waitFor(
+        () => {
+            expect(sheet).not.toBeInTheDocument();
+        },
+        {timeout: 5000}
+    );
+
     expect(resultSpy).toHaveBeenCalledWith({action: 'DISMISS'});
 });
 
@@ -522,9 +576,14 @@ test('showSheet fails if there is already a sheet open', async () => {
     ).rejects.toThrow('Tried to show a Sheet but there is already one open');
 
     const closeButton = await screen.findByRole('button', {name: 'Cerrar'});
-    userEvent.click(closeButton);
+    await userEvent.click(closeButton);
 
-    await waitForElementToBeRemoved(sheet, {timeout: 5000});
+    await waitFor(
+        () => {
+            expect(sheet).not.toBeInTheDocument();
+        },
+        {timeout: 5000}
+    );
 });
 
 test('showSheet with native implementation INFO', async () => {
@@ -740,8 +799,14 @@ test('showSheet with native implementation fallbacks to web if native fails', as
     expect(sheet).toBeInTheDocument();
 
     const link = await screen.findByRole('button', {name: 'Button link'});
-    userEvent.click(link);
+    await userEvent.click(link);
 
-    await waitForElementToBeRemoved(sheet, {timeout: 5000});
+    await waitFor(
+        () => {
+            expect(sheet).not.toBeInTheDocument();
+        },
+        {timeout: 5000}
+    );
+
     expect(resultSpy).toHaveBeenCalledWith({action: 'LINK'});
 });
