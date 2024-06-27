@@ -16,7 +16,16 @@ const IconTechServiceInternetFilled = ({color, size = 24, ...rest}: IconProps): 
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2/i)) {
+    if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M4.577 6.937c.109-2.395.91-4.275 2.032-4.937A5.57 5.57 0 0 0 2 6.937zM13.052 6.937h-2.577c-.11-2.395-.91-4.275-2.032-4.937a5.57 5.57 0 0 1 4.609 4.937M6.97 3.105c-.626.557-1.185 1.999-1.28 3.832h1.28zM21.735 9.465l-.213-.51-2.07 2.08a.37.37 0 0 1-.517.01l-.54-.514a.37.37 0 0 1-.113-.266q0-.159.108-.267l2.085-2.095-.507-.214a3.32 3.32 0 0 0-3.657.714 3.36 3.36 0 0 0-.91 3.019l-3.931 3.951a3.32 3.32 0 0 0-3.004.914 3.35 3.35 0 0 0-.71 3.675l.213.51 2.07-2.08a.37.37 0 0 1 .516-.01l.54.51a.37.37 0 0 1 .005.532L9.016 21.52l.507.214a3.31 3.31 0 0 0 3.652-.714 3.36 3.36 0 0 0 .91-3.018l3.931-3.952a3.33 3.33 0 0 0 3.004-.914 3.34 3.34 0 0 0 .715-3.67M6.97 8.056v3.832c-.621-.557-1.18-1.995-1.28-3.832zM8.082 8.056v3.832c.626-.562 1.185-2 1.28-3.832zM10.475 8.056c-.11 2.394-.91 4.275-2.032 4.937a5.57 5.57 0 0 0 4.609-4.937zM2.005 8.056h2.572c.109 2.394.91 4.275 2.037 4.937a5.57 5.57 0 0 1-4.61-4.937M8.082 6.937V3.104c.621.558 1.18 1.995 1.28 3.833z"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path

@@ -16,7 +16,16 @@ const IconDataCloudFilled = ({color, size = 24, ...rest}: IconProps): JSX.Elemen
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2/i)) {
+    if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M8.182 9.255a.74.74 0 0 0 1.023.279.77.77 0 0 0 .268-1.047 3.7 3.7 0 0 0-1.224-1.29c.564-2.146 2.486-3.672 4.685-3.672 2.174 0 4.1 1.501 4.679 3.642.11.406.52.646.918.533a.766.766 0 0 0 .52-.938C18.297 3.96 15.783 2 12.935 2c-2.82 0-5.297 1.921-6.085 4.644-.21-.039-.42-.063-.636-.063-2.06 0-3.733 1.71-3.733 3.818s1.673 3.818 3.733 3.818a.755.755 0 0 0 .746-.763.755.755 0 0 0-.746-.762c-1.238 0-2.242-1.027-2.242-2.293S4.98 8.106 6.213 8.106c.817 0 1.568.44 1.97 1.149m6.845.034a.36.36 0 0 1 .301 0l5.588 2.503-5.74 2.938-5.741-2.938zm-6.195 9.514c0 .146.082.278.206.342L14.62 22v-6.282L8.832 12.76zm6.907-3.085 5.789-2.958v6.043a.38.38 0 0 1-.206.342L15.74 22z"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path

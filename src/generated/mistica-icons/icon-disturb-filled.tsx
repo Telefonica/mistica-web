@@ -6,6 +6,7 @@
  */
 
 import * as React from 'react';
+import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
 
@@ -14,15 +15,26 @@ import type {IconProps} from '../../utils/types';
 const IconDisturbFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
-
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path
-                fill={fillColor}
-                d="m18.7 17.692 3.087 3.088a.703.703 0 0 1 0 1.008.7.7 0 0 1-.504.212.74.74 0 0 1-.508-.208L2.21 3.222A.715.715 0 1 1 3.222 2.21l2.375 2.376a9.24 9.24 0 0 1 6.392-2.564c5.115 0 9.274 4.164 9.274 9.277 0 2.476-.98 4.728-2.564 6.393M2.718 11.295c0-1.732.484-3.352 1.316-4.74l12.69 12.697a9.2 9.2 0 0 1-4.74 1.316 9.3 9.3 0 0 1-3.859-.836l-5.683 1.52a.336.336 0 0 1-.408-.412l1.524-5.685a9.2 9.2 0 0 1-.84-3.86"
-            />
-        </svg>
-    );
+    const {skinName} = useTheme();
+    if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="m18.7 17.692 3.087 3.088a.703.703 0 0 1 0 1.008.7.7 0 0 1-.504.212.74.74 0 0 1-.508-.208L2.21 3.222A.715.715 0 1 1 3.222 2.21l2.375 2.376a9.24 9.24 0 0 1 6.392-2.564c5.115 0 9.274 4.164 9.274 9.277 0 2.476-.98 4.728-2.564 6.393M2.718 11.295c0-1.732.484-3.352 1.316-4.74l12.69 12.697a9.2 9.2 0 0 1-4.74 1.316 9.3 9.3 0 0 1-3.859-.836l-5.683 1.52a.336.336 0 0 1-.408-.412l1.524-5.685a9.2 9.2 0 0 1-.84-3.86"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="m18.7 17.692 3.087 3.088a.703.703 0 0 1 0 1.008.7.7 0 0 1-.504.212.74.74 0 0 1-.508-.208L2.21 3.222A.715.715 0 1 1 3.222 2.21l2.375 2.376a9.24 9.24 0 0 1 6.392-2.564c5.115 0 9.274 4.164 9.274 9.277 0 2.476-.98 4.728-2.564 6.393M2.718 11.295c0-1.732.484-3.352 1.316-4.74l12.69 12.697a9.2 9.2 0 0 1-4.74 1.316 9.3 9.3 0 0 1-3.859-.836l-5.683 1.52a.336.336 0 0 1-.408-.412l1.524-5.685a9.2 9.2 0 0 1-.84-3.86"
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconDisturbFilled;

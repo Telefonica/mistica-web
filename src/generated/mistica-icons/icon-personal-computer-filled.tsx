@@ -16,7 +16,16 @@ const IconPersonalComputerFilled = ({color, size = 24, ...rest}: IconProps): JSX
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2/i)) {
+    if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M21.99 2.5H2v10.959h19.99zM2 14.557v2.558h19.995v-2.558zm6.074 3.652h7.852l.676 2.375q.109.386-.105.659a.7.7 0 0 1-.571.257H8.069a.7.7 0 0 1-.57-.257c-.106-.182-.18-.44-.106-.66z"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path

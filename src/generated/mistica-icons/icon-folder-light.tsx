@@ -16,7 +16,16 @@ const IconFolderLight = ({color, size = 24, ...rest}: IconProps): JSX.Element =>
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2/i)) {
+    if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M2 21h20V7.92c0-1.239-1-2.251-2.224-2.251h-8.294a.73.73 0 0 1-.52-.227l-1.74-1.766A2.07 2.07 0 0 0 7.668 3H4.224C3 3 2 4.012 2 5.252zm18.516-1.498H3.48V5.215c0-.413.336-.75.744-.75h3.479c.188 0 .372.078.52.228l1.74 1.761c.407.45.963.676 1.555.676h8.258c.408 0 .74.337.74.75z"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path

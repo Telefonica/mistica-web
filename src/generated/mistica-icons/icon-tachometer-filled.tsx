@@ -16,7 +16,16 @@ const IconTachometerFilled = ({color, size = 24, ...rest}: IconProps): JSX.Eleme
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2/i)) {
+    if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="m7.667 19.352.677.648h-4.79l-.105-.181A10.73 10.73 0 0 1 2 14.419C2 8.676 6.484 4 12 4a9.7 9.7 0 0 1 5.58 1.776l-3.72 2.229a6.2 6.2 0 0 0-1.86-.29c-3.542 0-6.426 3.004-6.426 6.695a6.85 6.85 0 0 0 2.093 4.942M20.291 8.605l-2.14 3.876c.179.614.28 1.267.28 1.938a6.84 6.84 0 0 1-2.094 4.933l-.68.648h4.79l.104-.181a10.73 10.73 0 0 0 1.449-5.4c0-2.152-.63-4.152-1.71-5.814m.013-3.6a.52.52 0 0 1 .645.09c.169.176.205.453.082.667L14.99 16.7a.3.3 0 0 1-.032.052A3.62 3.62 0 0 1 12 18.285c-.95 0-1.901-.375-2.628-1.133-1.449-1.51-1.449-3.966 0-5.476q.184-.193.384-.343a.3.3 0 0 1 .05-.033z"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path

@@ -16,7 +16,16 @@ const IconElectrocardiogramFilled = ({color, size = 24, ...rest}: IconProps): JS
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2/i)) {
+    if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M11.994 5.128C13.759 2.763 15.044 2 16.982 2c2.252 0 4.54 1.634 4.536 4.761 0 2.183-1.215 4.948-3.707 8.439l-2.527 3.272v.037a70 70 0 0 1-2.807 3.272c-.102.145-.31.219-.483.219a.67.67 0 0 1-.483-.219c-2.944-3.309-9.04-10.184-9.04-15.02C2.47 3.49 4.717 2 6.832 2c1.973 0 3.396.833 5.161 3.128m.523 7.051h3.636c.275 0 .519-.256.519-.544s-.244-.545-.52-.545h-3.635V7.273c0-.288-.244-.544-.518-.544-.275 0-.52.256-.52.544v3.817H7.845c-.275 0-.519.256-.519.545 0 .288.244.544.519.544h3.636v3.817c0 .288.244.544.518.544.275 0 .52-.256.52-.544z"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path

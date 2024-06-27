@@ -16,7 +16,16 @@ const IconStatusChartRegular = ({color, size = 24, ...rest}: IconProps): JSX.Ele
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2/i)) {
+    if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M16.063 22H20.5V2h-4.437zm2.957-1.566h-1.476V3.566h1.476zM14.218 22H9.782V8.667h4.436zm-1.48-1.566V10.233h-1.476v10.2zM7.937 22H3.5v-7.646h4.437zm-1.48-1.566v-4.508H4.98v4.508z"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path

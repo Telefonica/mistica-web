@@ -16,7 +16,17 @@ const IconInvoicePlanFileFilled = ({color, size = 24, ...rest}: IconProps): JSX.
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2/i)) {
+    if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M10.752 8.252V2H19.5v20h-15V8.252zm-2.68 9.64h7.856a.547.547 0 0 0 .536-.536.55.55 0 0 0-.536-.536H8.072a.55.55 0 0 0-.536.536c0 .284.252.536.536.536m7.856-3.572a.55.55 0 0 0 .536-.536.55.55 0 0 0-.536-.536H8.072a.55.55 0 0 0-.536.536c0 .284.252.536.536.536z"
+                />
+                <path fill={fillColor} d="M4.752 7.18 9.68 2.248V7.18z" />
+            </svg>
+        );
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path

@@ -6,6 +6,7 @@
  */
 
 import * as React from 'react';
+import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
 
@@ -14,19 +15,34 @@ import type {IconProps} from '../../utils/types';
 const IconClickAndCollectFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
-
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path
-                fill={fillColor}
-                d="M16.994 5.928V7h2.86v12.856c0 1.184-.96 2.144-2.144 2.144H8.426a2.14 2.14 0 0 1-2.14-2.096 1.62 1.62 0 0 0 1.14.268 1.6 1.6 0 0 0 1.32-1.184l2.16-8.22a1.6 1.6 0 0 0-.416-1.548 1.6 1.6 0 0 0-1.54-.42l-2.668.704V7h2.856V5.928A3.93 3.93 0 0 1 13.066 2a3.935 3.935 0 0 1 3.928 3.928M10.566 7h5V5.928a2.5 2.5 0 0 0-5 0z"
-            />
-            <path
-                fill={fillColor}
-                d="M9.734 9.976a.55.55 0 0 0-.384-.152c-.048 0-.088.008-.136.016L.99 12a.53.53 0 0 0-.392.444.54.54 0 0 0 .252.536l2.116 1.272L.15 17.064l2.488 2.488 2.816-2.816 1.272 2.116a.53.53 0 0 0 .536.252.54.54 0 0 0 .444-.392l2.164-8.224a.54.54 0 0 0-.136-.512"
-            />
-        </svg>
-    );
+    const {skinName} = useTheme();
+    if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M16.994 5.928V7h2.86v12.856c0 1.184-.96 2.144-2.144 2.144H8.426a2.14 2.14 0 0 1-2.14-2.096 1.62 1.62 0 0 0 1.14.268 1.6 1.6 0 0 0 1.32-1.184l2.16-8.22a1.6 1.6 0 0 0-.416-1.548 1.6 1.6 0 0 0-1.54-.42l-2.668.704V7h2.856V5.928A3.93 3.93 0 0 1 13.066 2a3.935 3.935 0 0 1 3.928 3.928M10.566 7h5V5.928a2.5 2.5 0 0 0-5 0z"
+                />
+                <path
+                    fill={fillColor}
+                    d="M9.734 9.976a.55.55 0 0 0-.384-.152c-.048 0-.088.008-.136.016L.99 12a.53.53 0 0 0-.392.444.54.54 0 0 0 .252.536l2.116 1.272L.15 17.064l2.488 2.488 2.816-2.816 1.272 2.116a.53.53 0 0 0 .536.252.54.54 0 0 0 .444-.392l2.164-8.224a.54.54 0 0 0-.136-.512"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M16.994 5.928V7h2.86v12.856c0 1.184-.96 2.144-2.144 2.144H8.426a2.14 2.14 0 0 1-2.14-2.096 1.62 1.62 0 0 0 1.14.268 1.6 1.6 0 0 0 1.32-1.184l2.16-8.22a1.6 1.6 0 0 0-.416-1.548 1.6 1.6 0 0 0-1.54-.42l-2.668.704V7h2.856V5.928A3.93 3.93 0 0 1 13.066 2a3.935 3.935 0 0 1 3.928 3.928M10.566 7h5V5.928a2.5 2.5 0 0 0-5 0z"
+                />
+                <path
+                    fill={fillColor}
+                    d="M9.734 9.976a.55.55 0 0 0-.384-.152c-.048 0-.088.008-.136.016L.99 12a.53.53 0 0 0-.392.444.54.54 0 0 0 .252.536l2.116 1.272L.15 17.064l2.488 2.488 2.816-2.816 1.272 2.116a.53.53 0 0 0 .536.252.54.54 0 0 0 .444-.392l2.164-8.224a.54.54 0 0 0-.136-.512"
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconClickAndCollectFilled;

@@ -29,6 +29,15 @@ const IconTelephoneIpLight = ({color, size = 24, ...rest}: IconProps): JSX.Eleme
                 />
             </svg>
         );
+    } else if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M10.304 3.787h9.186c1.123 0 2.042.964 2.038 2.144V18.07c0 1.179-.92 2.143-2.042 2.143h-9.182V22H4.86v-1.787H2.48V3.787h2.381V2h5.443zm-6.461 1.43v13.57H4.86V5.217zm5.442 15.709V3.074h-3.4v17.852zm10.205-2.144c.374 0 .68-.32.68-.712h-.005V5.93c0-.393-.305-.712-.68-.712h-9.181v13.564zm-.853-12.138h-6.8c-.27 0-.51.25-.51.534v3.213c0 .284.24.535.51.535h6.8c.27 0 .51-.251.51-.535V7.178c.003-.283-.236-.534-.51-.534m-6.292 3.212V7.713h5.782v2.143z"
+                />
+            </svg>
+        );
     } else {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>

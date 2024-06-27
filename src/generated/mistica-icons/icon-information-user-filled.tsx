@@ -16,7 +16,16 @@ const IconInformationUserFilled = ({color, size = 24, ...rest}: IconProps): JSX.
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2/i)) {
+    if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2m.536 14.644a.55.55 0 0 1-.536.536.55.55 0 0 1-.536-.536V9.856c0-.284.252-.536.536-.536s.536.252.536.536zm-1.252-9.468c0-.392.32-.716.716-.716.392 0 .716.32.716.716a.72.72 0 0 1-.716.716.72.72 0 0 1-.716-.716"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path

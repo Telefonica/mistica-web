@@ -16,7 +16,16 @@ const IconBatteryChargingFilled = ({color, size = 24, ...rest}: IconProps): JSX.
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2/i)) {
+    if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M14.82 3.783h1.054c1.17 0 2.118.96 2.126 2.143v13.93C18 21.04 17.052 22 15.882 22H8.118C6.948 22 6 21.04 6 19.857V5.93c0-1.183.948-2.143 2.118-2.143h1.055V2h5.646zm-3.035 13.111 2.43-4.274a.53.53 0 0 0-.004-.536.55.55 0 0 0-.463-.268h-2.643l1.98-3.483a.536.536 0 0 0-.194-.731.523.523 0 0 0-.723.196l-2.43 4.286a.54.54 0 0 0 0 .536.54.54 0 0 0 .462.268h2.64l-1.976 3.47a.54.54 0 0 0 .194.732.53.53 0 0 0 .727-.196"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path

@@ -16,7 +16,16 @@ const IconHeadphonesRegular = ({color, size = 24, ...rest}: IconProps): JSX.Elem
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2/i)) {
+    if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M11.998 2C6.746 2 2.47 6.488 2.47 12v6.248c0 2.139 1.463 3.747 3.401 3.747h1.703V14.5H5.87c-.78 0-1.48.265-2.042.713V12c0-4.726 3.662-8.57 8.165-8.57s8.165 3.844 8.165 8.57v3.213a3.22 3.22 0 0 0-2.042-.713h-1.703V22h1.703c1.937 0 3.4-1.613 3.4-3.748V12c.01-5.512-4.267-10-9.519-10M5.875 15.926h.34v4.644h-.34c-1.184 0-2.042-.979-2.042-2.322 0-1.344.858-2.322 2.042-2.322m11.906 4.644v-4.644h.34c1.184 0 2.042.978 2.042 2.322 0 1.343-.858 2.322-2.042 2.322z"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path

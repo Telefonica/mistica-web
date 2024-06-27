@@ -16,7 +16,20 @@ const IconEyeOffFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element =
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2/i)) {
+    if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="m17.649 16.924 3.672 3.856a.72.72 0 0 1 .004 1.004.65.65 0 0 1-.476.216.65.65 0 0 1-.476-.216L2.683 3.213a.717.717 0 0 1 0-1 .64.64 0 0 1 .952 0L7.58 6.317a9.84 9.84 0 0 1 4.423-1.036c4.08 0 7.757 2.536 9.422 6.428a.82.82 0 0 1 0 .572c-.85 1.927-2.141 3.535-3.776 4.643m-2.313-2.464 1.394 1.424a9.15 9.15 0 0 0 3.368-3.892c-1.497-3.211-4.625-5.283-8.062-5.283a8.45 8.45 0 0 0-3.402.716l1.021 1.072a3.82 3.82 0 0 1 2.347-.784c2.244 0 4.08 1.928 4.08 4.283 0 .893-.27 1.748-.746 2.464M12.002 17.28c.781 0 1.532-.104 2.278-.32l1.125 1.144a10.1 10.1 0 0 1-3.403.608c-4.046 0-7.757-2.536-9.422-6.431a.82.82 0 0 1 0-.572c.648-1.608 1.669-2.928 2.926-4l.953 1.036a9.8 9.8 0 0 0-2.519 3.252c1.497 3.211 4.626 5.283 8.062 5.283"
+                />
+                <path
+                    fill={fillColor}
+                    d="M13.397 16.028c-.442.144-.884.252-1.395.252-2.244 0-4.08-1.928-4.084-4.284 0-.536.103-1 .24-1.463z"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path

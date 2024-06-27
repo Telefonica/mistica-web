@@ -16,7 +16,16 @@ const IconPrepaidFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element 
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2/i)) {
+    if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M5.509 5.387H18.49C18.4 3.504 16.906 1.995 15.08 2H8.921C7.094 2 5.6 3.504 5.509 5.387M15.079 22H8.921c-1.827 0-3.32-1.509-3.412-3.387H18.49C18.4 20.496 16.906 22 15.08 22M18.5 6.457v11.081h-13V6.458zm-4.275 8.398H11.4q.087-.255.088-.535v-1.61h1.541a.52.52 0 0 0 .513-.534.52.52 0 0 0-.513-.535h-1.541v-1.426c0-.59.46-1.07 1.024-1.07.237 0 .46.082.644.238a.5.5 0 0 0 .723-.078.553.553 0 0 0-.074-.754 2 2 0 0 0-1.293-.476c-1.13 0-2.054.96-2.054 2.144v1.427h-.17a.52.52 0 0 0-.513.535c0 .297.228.534.512.534h.171v1.61a.516.516 0 0 1-.512.534.52.52 0 0 0-.513.535c0 .297.228.535.513.535h4.28a.53.53 0 0 0 .511-.54.52.52 0 0 0-.512-.534"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path

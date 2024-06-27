@@ -119,12 +119,13 @@ const getIconJsx = (svgFilename) => {
         .replace(/fill="#?\w+"/g, 'fill={fillColor}');
 };
 
-/** lower number means higher priority (more generic) */
+/** Defines the skin check order, higher number means it's checked before */
 const SKIN_PRIORITY = {
     telefonica: 1,
     vivo: 2,
     o2: 3,
-    blau: 4,
+    'o2-new': 4, // o2-new is checked before o2 because O2-new skin name would match with o2 regexp
+    blau: 5,
 };
 
 /**
@@ -160,7 +161,7 @@ const createIconComponentSource = async (name, componentName, svgIconsInfo) => {
         let result = '';
         for (let i = 0; i < availableIcons.length; i++) {
             const [skin, filename] = availableIcons[i];
-            // using a match because we want "o2" to match with "O2" and "O2-classic"
+            // using a match because we want "vivo" to match with "Vivo" and "Vivo-new"
             const ifStr = i < availableIcons.length - 1 ? `if (skinName.match(/^${skin}/i))` : '';
             const elseStr = i > 0 ? 'else' : '';
             result += `${elseStr} ${ifStr} {return ${getIconJsx(filename)}}`;

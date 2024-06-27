@@ -16,7 +16,16 @@ const IconTechServiceLight = ({color, size = 24, ...rest}: IconProps): JSX.Eleme
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2/i)) {
+    if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M6.64 22a.714.714 0 0 1-.508-1.217l5.59-5.626.436.172a6.17 6.17 0 0 0 6.61-1.38 6.17 6.17 0 0 0 1.697-5.511l-3.462 3.461a2.09 2.09 0 0 1-2.956 0l-1.95-1.949a2.1 2.1 0 0 1 0-2.957l3.462-3.457a6.16 6.16 0 0 0-5.51 1.696 6.17 6.17 0 0 0-1.38 6.611l.172.437-5.626 5.586a.714.714 0 0 1-1.004-1.012l4.973-4.935a7.6 7.6 0 0 1 1.86-7.695 7.6 7.6 0 0 1 8.144-1.7l1.02.395-5.098 5.087a.667.667 0 0 0 0 .936l1.949 1.949c.26.256.68.26.936 0l5.086-5.094.396 1.016a7.6 7.6 0 0 1-1.7 8.144 7.61 7.61 0 0 1-7.695 1.86l-4.934 4.975A.71.71 0 0 1 6.64 22"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path

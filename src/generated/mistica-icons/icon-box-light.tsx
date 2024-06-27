@@ -16,7 +16,16 @@ const IconBoxLight = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2/i)) {
+    if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M12 2 3.5 7.097v9.802L12 22l8.5-5.097V7.097zm0 9.177L9.307 9.63l6.392-3.74 2.698 1.615zm-4.125-2.37L5.603 7.507 12 3.67l2.298 1.38zm-2.956-.045 6.374 3.657v7.483L4.919 16.08zm7.788 3.657 6.374-3.657v7.318l-6.374 3.823z"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path

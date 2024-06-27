@@ -6,6 +6,7 @@
  */
 
 import * as React from 'react';
+import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
 
@@ -14,15 +15,26 @@ import type {IconProps} from '../../utils/types';
 const IconFloorplanRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
-
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path
-                fill={fillColor}
-                d="m21.772 14.446-3.48-3.481v-8.59H2v19.254h16.292v-4.444a.743.743 0 0 0-.741-.74.743.743 0 0 0-.74.74v2.963H3.48v-8.516h1.11c.408 0 .741-.334.741-.741a.743.743 0 0 0-.74-.74H3.48V3.855h6.665v6.294H8.665a.743.743 0 0 0-.74.741c0 .407.332.74.74.74h2.962V3.857h5.183v7.553c0 .037 0 .037.038.074 0 .037 0 .037.037.074 0 .037.037.037.037.075 0 .037.037.037.037.074l3.813 3.813a.7.7 0 0 0 .482.185c.185 0 .37-.074.518-.222a.716.716 0 0 0 0-1.037"
-            />
-        </svg>
-    );
+    const {skinName} = useTheme();
+    if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="m21.772 14.446-3.48-3.481v-8.59H2v19.254h16.292v-4.444a.743.743 0 0 0-.741-.74.743.743 0 0 0-.74.74v2.963H3.48v-8.516h1.11c.408 0 .741-.334.741-.741a.743.743 0 0 0-.74-.74H3.48V3.855h6.665v6.294H8.665a.743.743 0 0 0-.74.741c0 .407.332.74.74.74h2.962V3.857h5.183v7.553c0 .037 0 .037.038.074 0 .037 0 .037.037.074 0 .037.037.037.037.075 0 .037.037.037.037.074l3.813 3.813a.7.7 0 0 0 .482.185c.185 0 .37-.074.518-.222a.716.716 0 0 0 0-1.037"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="m21.772 14.446-3.48-3.481v-8.59H2v19.254h16.292v-4.444a.743.743 0 0 0-.741-.74.743.743 0 0 0-.74.74v2.963H3.48v-8.516h1.11c.408 0 .741-.334.741-.741a.743.743 0 0 0-.74-.74H3.48V3.855h6.665v6.294H8.665a.743.743 0 0 0-.74.741c0 .407.332.74.74.74h2.962V3.857h5.183v7.553c0 .037 0 .037.038.074 0 .037 0 .037.037.074 0 .037.037.037.037.075 0 .037.037.037.037.074l3.813 3.813a.7.7 0 0 0 .482.185c.185 0 .37-.074.518-.222a.716.716 0 0 0 0-1.037"
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconFloorplanRegular;

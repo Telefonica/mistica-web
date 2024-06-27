@@ -16,7 +16,16 @@ const IconPayInvoiceRegular = ({color, size = 24, ...rest}: IconProps): JSX.Elem
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2/i)) {
+    if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M17.36 2H6.644C5.464 2 4.5 2.96 4.5 4.144V22h15V4.144A2.143 2.143 0 0 0 17.36 2m.714 18.574H5.93V4.144c0-.393.32-.713.713-.713H17.36c.394 0 .714.32.714.713zm-2.14-2.68a.536.536 0 0 0 0-1.07H8.075a.533.533 0 0 0-.535.536c0 .297.238.535.535.535zm.535-4.104a.533.533 0 0 1-.535.535H8.075a.533.533 0 0 1-.535-.535c0-.297.238-.535.535-.535h7.859a.533.533 0 0 1 .535.535m-5.207-6.967a.533.533 0 0 0-.535.535c0 .297.237.54.535.535h.365a2.68 2.68 0 0 0 2.625 2.144q.638 0 1.22-.302a.534.534 0 0 0 .233-.722.534.534 0 0 0-.722-.234 1.53 1.53 0 0 1-.727.183c-.7 0-1.284-.448-1.508-1.07h1.673a.533.533 0 0 0 .535-.534.533.533 0 0 0-.535-.535h-1.673c.224-.622.809-1.07 1.508-1.07.247 0 .494.064.727.183a.54.54 0 0 0 .722-.233.54.54 0 0 0-.233-.722 2.63 2.63 0 0 0-1.22-.302 2.68 2.68 0 0 0-2.625 2.144z"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path

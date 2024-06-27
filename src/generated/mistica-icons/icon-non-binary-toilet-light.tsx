@@ -6,6 +6,7 @@
  */
 
 import * as React from 'react';
+import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
 
@@ -14,15 +15,26 @@ import type {IconProps} from '../../utils/types';
 const IconNonBinaryToiletLight = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
-
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path
-                fill={fillColor}
-                d="M4.503 9.917c0-.25.166-.417.416-.417h8.334c.25 0 .416.167.416.417s-.166.417-.416.417H4.919c-.25 0-.416-.167-.416-.417M18.253 2h-2.917a.836.836 0 0 0-.833.833v8.334h-10v.417c0 4.541 4.416 5.291 5.833 5.375V22h8.333c.25 0 .417-.166.417-.416s-.167-.417-.417-.417h-7.5V17h4.584c.25 0 .416-.166.416-.416s-.166-.417-.416-.417h-5c-.209 0-5.084-.042-5.417-4.167h10V2.833h2.917v13.75c0 .25.166.417.416.417s.417-.166.417-.416V2.834A.836.836 0 0 0 18.253 2m1.25 17.084a.836.836 0 0 0-.834-.834.836.836 0 0 0-.833.834c0 .458.375.833.833.833a.836.836 0 0 0 .834-.833"
-            />
-        </svg>
-    );
+    const {skinName} = useTheme();
+    if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M4.6 9.205c0-.44.36-.8.8-.8h7.198c.44 0 .8.36.8.8s-.36.8-.8.8H5.4c-.44 0-.8-.36-.8-.8m14.796-5.598v18.394h-9.198v-4.838c-2.279-.24-5.598-1.6-5.598-5.558v-.8h9.597V3.607c0-.88.72-1.6 1.6-1.6h2c.879 0 1.599.72 1.599 1.6m-1.6 0h-2v8.797H6.28c.56 3.16 4.558 3.2 4.718 3.2h4.399c.44 0 .8.36.8.8 0 .439-.36.799-.8.799h-3.6v3.199h6z"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M4.503 9.917c0-.25.166-.417.416-.417h8.334c.25 0 .416.167.416.417s-.166.417-.416.417H4.919c-.25 0-.416-.167-.416-.417M18.253 2h-2.917a.836.836 0 0 0-.833.833v8.334h-10v.417c0 4.541 4.416 5.291 5.833 5.375V22h8.333c.25 0 .417-.166.417-.416s-.167-.417-.417-.417h-7.5V17h4.584c.25 0 .416-.166.416-.416s-.166-.417-.416-.417h-5c-.209 0-5.084-.042-5.417-4.167h10V2.833h2.917v13.75c0 .25.166.417.416.417s.417-.166.417-.416V2.834A.836.836 0 0 0 18.253 2m1.25 17.084a.836.836 0 0 0-.834-.834.836.836 0 0 0-.833.834c0 .458.375.833.833.833a.836.836 0 0 0 .834-.833"
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconNonBinaryToiletLight;

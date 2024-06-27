@@ -16,7 +16,16 @@ const IconAddMoreCircleFilled = ({color, size = 24, ...rest}: IconProps): JSX.El
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2/i)) {
+    if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M2 12C2 6.484 6.484 2 12 2s10 4.484 10 10-4.484 10-10 10S2 17.516 2 12m16.604.005a.534.534 0 0 0-.537-.538l-5.521-.011V5.924a.534.534 0 0 0-.538-.538.534.534 0 0 0-.537.538v5.532H5.938a.534.534 0 0 0-.537.537.534.534 0 0 0 .537.538l5.521.011v5.532a.534.534 0 0 0 .914.377.54.54 0 0 0 .161-.377v-5.532h5.533c.147 0 .28-.065.376-.161a.54.54 0 0 0 .161-.376"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path

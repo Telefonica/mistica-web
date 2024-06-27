@@ -6,6 +6,7 @@
  */
 
 import * as React from 'react';
+import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
 
@@ -14,15 +15,26 @@ import type {IconProps} from '../../utils/types';
 const IconWorkflowFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
-
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path
-                fill={fillColor}
-                d="M18.6 3.638h-6.037V8.58h2.265v6.84h-5.66V8.58h2.265V2.5h8.307v2.923l.565-.496a.543.543 0 0 1 .792.04.55.55 0 0 1-.039.797L19.17 7.437 17.28 5.764c-.227-.19-.227-.57-.038-.798.188-.228.565-.228.792-.039l.565.496zm-6.602 12.925-1.889 1.673a.55.55 0 0 0-.039.798c.112.112.266.19.416.19s.265-.04.377-.151l.565-.497v1.786H5.39V15.42h2.266V8.58H2v6.84h2.265v6.08h8.303v-2.928l.565.496c.227.19.603.19.792-.04.188-.228.188-.607-.039-.797zM16.34 8.58v6.84h2.265v5.166c0 .301.265.569.565.569s.565-.268.565-.57V15.42H22V8.58z"
-            />
-        </svg>
-    );
+    const {skinName} = useTheme();
+    if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M18.6 3.638h-6.037V8.58h2.265v6.84h-5.66V8.58h2.265V2.5h8.307v2.923l.565-.496a.543.543 0 0 1 .792.04.55.55 0 0 1-.039.797L19.17 7.437 17.28 5.764c-.227-.19-.227-.57-.038-.798.188-.228.565-.228.792-.039l.565.496zm-6.602 12.925-1.889 1.673a.55.55 0 0 0-.039.798c.112.112.266.19.416.19s.265-.04.377-.151l.565-.497v1.786H5.39V15.42h2.266V8.58H2v6.84h2.265v6.08h8.303v-2.928l.565.496c.227.19.603.19.792-.04.188-.228.188-.607-.039-.797zM16.34 8.58v6.84h2.265v5.166c0 .301.265.569.565.569s.565-.268.565-.57V15.42H22V8.58z"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M18.6 3.638h-6.037V8.58h2.265v6.84h-5.66V8.58h2.265V2.5h8.307v2.923l.565-.496a.543.543 0 0 1 .792.04.55.55 0 0 1-.039.797L19.17 7.437 17.28 5.764c-.227-.19-.227-.57-.038-.798.188-.228.565-.228.792-.039l.565.496zm-6.602 12.925-1.889 1.673a.55.55 0 0 0-.039.798c.112.112.266.19.416.19s.265-.04.377-.151l.565-.497v1.786H5.39V15.42h2.266V8.58H2v6.84h2.265v6.08h8.303v-2.928l.565.496c.227.19.603.19.792-.04.188-.228.188-.607-.039-.797zM16.34 8.58v6.84h2.265v5.166c0 .301.265.569.565.569s.565-.268.565-.57V15.42H22V8.58z"
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconWorkflowFilled;

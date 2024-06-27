@@ -16,7 +16,17 @@ const IconVideoFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element =>
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2/i)) {
+    if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path fill={fillColor} d="m16.644 12-7.322 4.246V7.754z" />
+                <path
+                    fill={fillColor}
+                    d="M12 2C6.488 2 2 6.488 2 12s4.488 10 10 10 10-4.488 10-10S17.512 2 12 2m5.983 10.462L9.057 17.64a.5.5 0 0 1-.27.073.543.543 0 0 1-.535-.54V6.823c0-.192.1-.37.27-.466a.53.53 0 0 1 .535 0l8.926 5.178a.537.537 0 0 1 0 .928"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path fill={fillColor} d="m16.644 12-7.322 4.246V7.754z" />

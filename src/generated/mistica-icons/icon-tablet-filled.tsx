@@ -16,7 +16,16 @@ const IconTabletFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element =
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2/i)) {
+    if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M20 4.32v-.536c0-1-.764-1.784-1.738-1.784H5.739C4.764 2 4 2.784 4 3.784v.536zM4 5.393h16v13.214H4zm0 14.823v-.537h15.996v.537c0 1-.763 1.784-1.737 1.784H5.738C4.764 22 4 21.216 4 20.216"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path

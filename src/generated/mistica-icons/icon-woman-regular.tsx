@@ -16,7 +16,16 @@ const IconWomanRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element =
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2/i)) {
+    if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="m17.245 16.47-1.747-7.12a3.65 3.65 0 0 0-1.635-2.36c.58-.525.948-1.283.948-2.134C14.81 3.28 13.553 2 12.004 2c-1.55 0-2.807 1.28-2.807 2.856 0 .85.368 1.61.947 2.135a3.6 3.6 0 0 0-1.63 2.335l-1.756 7.14v.013a.4.4 0 0 0-.009.073.4.4 0 0 0-.009.073v.014l.002.025.002.025a.4.4 0 0 0 .027.142.4.4 0 0 0 .023.069.4.4 0 0 0 .031.063l.007.014q.01.024.025.046l.04.055q.02.027.045.055l.014.013q.016.015.031.032l.027.023.027.023q.018.014.04.025l.018.012q.022.015.045.025l.014.006q.016.008.036.014l.08.032h.014q.034.009.067.01.042.008.077.009h1.77V22h5.613v-4.643h1.581q.04-.001.081-.01.048.009.094.01a.6.6 0 0 0 .171-.023.716.716 0 0 0 .503-.864M12.004 3.43c.772 0 1.401.64 1.401 1.426 0 .787-.629 1.426-1.41 1.426a1.42 1.42 0 0 1-1.397-1.426c.004-.786.633-1.425 1.406-1.425m1.401 17.14h-2.807v-4.644h-2.26l1.541-6.28c.22-1.05 1.074-1.755 2.12-1.755s1.9.704 2.125 1.778l1.536 6.252h-2.255z"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path

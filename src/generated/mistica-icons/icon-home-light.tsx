@@ -25,6 +25,15 @@ const IconHomeLight = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
                 />
             </svg>
         );
+    } else if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="m11.99 2 9.321 10.036c.206.18.274.5.13.748-.103.284-.343.464-.614.464h-1.36V22h-5.782v-6.428h-3.403V22H4.5v-8.716H3.14c-.275 0-.51-.212-.614-.464-.103-.284-.068-.568.137-.784zm3.06 12.144v6.424h3.06V11.82h1.193l-7.314-7.856-7.317 7.856h1.193v8.752h3.06v-6.428z"
+                />
+            </svg>
+        );
     } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>

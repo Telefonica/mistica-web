@@ -16,7 +16,16 @@ const IconWalletFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element =
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2/i)) {
+    if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M4.325 10.806a.536.536 0 0 1 .536-.535h2.764L5.704 8.353a1.246 1.246 0 0 1 0-1.768l.214-.218H4.143A2.143 2.143 0 0 0 2 8.51v10.893a2.143 2.143 0 0 0 2.143 2.143h15.714A2.143 2.143 0 0 0 22 19.403v-8.06H4.857a.536.536 0 0 1-.532-.537m15.532-4.439h-2.903l3.907 3.904H22V8.51a2.143 2.143 0 0 0-2.143-2.143M9.143 10.296h1.578a1.807 1.807 0 0 0-2.625-2.479.357.357 0 1 1-.503-.503 2.52 2.52 0 0 1 2.771-.54 1.6 1.6 0 0 1-.035-.357 1.707 1.707 0 0 1 1.71-1.71 1.71 1.71 0 1 1-.357 3.385 2.54 2.54 0 0 1-.103 2.19h1.85l-.093-.09a.364.364 0 0 1 .128-.589.36.36 0 0 1 .393.086l.532.532q.024.03.043.064h1.61l-1.453-1.45a.357.357 0 0 1 .507-.504l1.893 1.893a1 1 0 0 1 .043.065h2.314l-7.782-7.786a.18.18 0 0 0-.253 0l-4.85 4.85a.18.18 0 0 0 0 .253zm3.603-3.157a1 1 0 0 0 0-1.429 1.003 1.003 0 1 0 0 1.429"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path

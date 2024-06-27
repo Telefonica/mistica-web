@@ -6,6 +6,7 @@
  */
 
 import * as React from 'react';
+import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
 
@@ -14,15 +15,26 @@ import type {IconProps} from '../../utils/types';
 const IconVolumeDownFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
-
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path
-                fill={fillColor}
-                d="M15.703 21.63V2.368a.36.36 0 0 0-.185-.318.37.37 0 0 0-.37 0l-10.1 5.875H2.37a.37.37 0 0 0-.37.37v7.407c0 .204.166.37.37.37h2.679l10.1 5.876a.36.36 0 0 0 .37.005.37.37 0 0 0 .184-.323m1.484-10.371h4.073a.74.74 0 0 1 0 1.48h-4.073a.74.74 0 0 1 0-1.48"
-            />
-        </svg>
-    );
+    const {skinName} = useTheme();
+    if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M15.703 21.63V2.368a.36.36 0 0 0-.185-.318.37.37 0 0 0-.37 0l-10.1 5.875H2.37a.37.37 0 0 0-.37.37v7.407c0 .204.166.37.37.37h2.679l10.1 5.876a.36.36 0 0 0 .37.005.37.37 0 0 0 .184-.323m1.484-10.371h4.073a.74.74 0 0 1 0 1.48h-4.073a.74.74 0 0 1 0-1.48"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M15.703 21.63V2.368a.36.36 0 0 0-.185-.318.37.37 0 0 0-.37 0l-10.1 5.875H2.37a.37.37 0 0 0-.37.37v7.407c0 .204.166.37.37.37h2.679l10.1 5.876a.36.36 0 0 0 .37.005.37.37 0 0 0 .184-.323m1.484-10.371h4.073a.74.74 0 0 1 0 1.48h-4.073a.74.74 0 0 1 0-1.48"
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconVolumeDownFilled;
