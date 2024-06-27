@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {useDisableBodyScroll} from '../hooks';
-import {render, screen, waitFor, waitForElementToBeRemoved} from '@testing-library/react';
+import {render, screen, waitFor} from '@testing-library/react';
 import {makeTheme} from './test-utils';
 import ThemeContextProvider from '../theme-context-provider';
 import userEvent from '@testing-library/user-event';

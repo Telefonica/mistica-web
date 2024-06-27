@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {render, waitFor, screen, act, waitForElementToBeRemoved} from '@testing-library/react';
+import {render, waitFor, screen, act} from '@testing-library/react';
 import {ThemeContextProvider, useDialog} from '..';
 import {makeTheme} from './test-utils';
 import * as webviewBridge from '@tef-novum/webview-bridge';
@@ -189,7 +189,10 @@ test('closes confirm dialog when clicking on any button', async () => {
 
     await userEvent.click(cancelButton);
 
-    await waitForElementToBeRemoved(() => screen.queryByRole('dialog', {hidden: true}), {timeout: 5000});
+    await waitFor(() => {
+        expect(screen.queryByRole('dialog', {hidden: true})).not.toBeInTheDocument();
+    });
+
     expect(onCancelSpy).toHaveBeenCalled();
 
     const confirmWithoutOnCancelButton = await screen.findByRole('button', {
@@ -224,7 +227,9 @@ test('closing a previous accepted dialog does not trigger onAccept callback', as
 
     await userEvent.click(acceptButton);
 
-    await waitForElementToBeRemoved(() => screen.queryByRole('dialog', {hidden: true}), {timeout: 5000});
+    await waitFor(() => {
+        expect(screen.queryByRole('dialog', {hidden: true})).not.toBeInTheDocument();
+    });
 
     expect(onAcceptSpy).toHaveBeenCalled();
 
@@ -235,7 +240,9 @@ test('closing a previous accepted dialog does not trigger onAccept callback', as
     const cancelButton = await screen.findByRole('button', {name: 'Nope!'});
     await userEvent.click(cancelButton);
 
-    await waitForElementToBeRemoved(() => screen.queryByRole('dialog', {hidden: true}), {timeout: 5000});
+    await waitFor(() => {
+        expect(screen.queryByRole('dialog', {hidden: true})).not.toBeInTheDocument();
+    });
 
     expect(onAcceptSpy).not.toHaveBeenCalled();
 }, 20000);
