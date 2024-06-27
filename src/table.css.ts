@@ -96,6 +96,14 @@ export const verticalAlign = styleVariants({
     middle: {verticalAlign: 'middle'},
 });
 
+export const actionsHeaderText = style({
+    position: 'absolute',
+    top: -9999,
+    left: -9999,
+});
+
+export const actionsTableCell = style({});
+
 // we can only apply sticky head to boxed tables, because non-boxed tables don't have a background
 globalStyle(`${boxed} thead`, {
     position: 'sticky',
@@ -251,6 +259,15 @@ globalStyle(`${hiddenHeadersInMobile} thead tr`, {
             position: 'absolute',
             top: -9999,
             left: -9999,
+        },
+    },
+});
+
+// In collapsed-rows mode, we don't render actions as a table cell
+globalStyle(`${collapsedRowsInMobile} ${actionsTableCell}`, {
+    '@media': {
+        [mq.tabletOrSmaller]: {
+            display: 'none',
         },
     },
 });

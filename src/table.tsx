@@ -10,6 +10,7 @@ import {applyCssVars} from './utils/css';
 import Inline from './inline';
 import {IconButton, ToggleIconButton} from './icon-button';
 import {iconContainerSize} from './icon-button.css';
+import ScreenReaderOnly from './screen-reader-only';
 
 import type {CardAction} from './card';
 import type {DataAttributes} from './utils/types';
@@ -20,7 +21,8 @@ type VerticalAlign = 'top' | 'middle';
 type TableProps = {
     heading?: Array<React.ReactNode>;
     content?: Array<
-        Array<React.ReactNode> | {cells: Array<React.ReactNode>; actions: ReadonlyArray<CardAction>}
+        | Array<React.ReactNode>
+        | {cells: Array<React.ReactNode>; actions: ReadonlyArray<CardAction | React.ReactElement>}
     >;
     boxed?: boolean;
     emptyCase?: React.ReactNode;
@@ -159,7 +161,14 @@ export const Table = React.forwardRef(
                                     {header}
                                 </th>
                             ))}
-                            {hasActionsColumn && <th />}
+                            {hasActionsColumn && (
+                                <th>
+                                    <ScreenReaderOnly>
+                                        {/** TODO: use translated text for actions */}
+                                        <div className={styles.actionsHeaderText}>Actions</div>
+                                    </ScreenReaderOnly>
+                                </th>
+                            )}
                         </Text1>
                     </thead>
                 )}
@@ -167,7 +176,20 @@ export const Table = React.forwardRef(
                     {content.length > 0 ? (
                         content.map((row, rowIdx) => {
                             const rowCells = !Array.isArray(row) ? row.cells : row;
-                            const rowActions = !Array.isArray(row) ? row.actions ?? [] : [];
+                            const rowActionsList = !Array.isArray(row) ? row.actions ?? [] : [];
+
+                            const actions = (
+                                <Inline space={16}>
+                                    {rowActionsList.map((action, index) => {
+                                        if ('Icon' in action || 'checkedProps' in action) {
+                                            // action is a CellAction object
+                                            return <CellActionIconButton key={index} {...action} />;
+                                        }
+                                        // action is a React.ReactElement
+                                        return action;
+                                    })}
+                                </Inline>
+                            );
 
                             return (
                                 <tr key={rowIdx}>
@@ -203,7 +225,7 @@ export const Table = React.forwardRef(
                                                           mobileLineHeight: textValues.text2.mobileLineHeight,
                                                       })}
                                                 as="div"
-                                                // TODO use textPresets.cardTitle.weight in first value
+                                                // TODO: use textPresets.cardTitle.weight instead of medium
                                                 weight={idx === 0 && collapsedRowsMode ? 'medium' : 'regular'}
                                                 wordBreak={false}
                                             >
@@ -221,28 +243,27 @@ export const Table = React.forwardRef(
                                             </Text>
                                         </td>
                                     ))}
-
-                                    {rowActions.length > 0 ? (
+                                    {rowActionsList.length > 0 ? (
                                         <td
-                                            className={styles.verticalAlign[rowVerticalAlign]}
+                                            className={classNames(
+                                                styles.verticalAlign[rowVerticalAlign],
+                                                styles.actionsTableCell
+                                            )}
                                             align="right"
                                             style={{
                                                 // buttons + inline space + cell left padding
                                                 width: `calc(${iconContainerSize.small} * ${
-                                                    rowActions.length
-                                                } + 16px * ${rowActions.length - 1} + 12px)`,
+                                                    rowActionsList.length
+                                                } + 16px * ${rowActionsList.length - 1} + 12px)`,
                                             }}
                                         >
-                                            <Inline space={16}>
-                                                {rowActions.map((action) => (
-                                                    <CellActionIconButton {...action} />
-                                                ))}
-                                            </Inline>
+                                            {actions}
                                         </td>
                                     ) : (
                                         hasActionsColumn && <td />
                                     )}
                                 </tr>
+                                // TODO: render top actions if mobile+collapsedRowsMode
                             );
                         })
                     ) : (
