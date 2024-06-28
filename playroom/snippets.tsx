@@ -411,6 +411,87 @@ const tableSnippets: Array<Snippet> = [
     },
     {
         group: 'Table',
+        name: 'Table with actions',
+        code: `
+            <Table
+              heading={[
+                  "Type of food",
+                  "Calories",
+                  "Tasty Factor",
+                  "Average Price",
+                  "Rarity",
+                  "Average Rating",
+              ]}
+              columnTextAlign={["left", "right", "right", "right", "center", "right"]}
+              content={[
+                  {
+                      cells: [
+                          "Slice of pizza",
+                          "450",
+                          "95%",
+                          "5,00€",
+                          <Tag>Common</Tag>,
+                          "8/10",
+                      ],
+                      actions: [
+                          { Icon: IconLightningRegular, onPress: () => {}, label: "action" },
+                          { Icon: IconLightningRegular, onPress: () => {}, label: "action" },
+                      ],
+                  },
+                  ["Hamburger", "350", "87%", "3,50€", <Tag>Common</Tag>, "7.5/10"],
+                  {
+                      cells: ["Salad", "150", "70%", "4,00€", <Tag>Common</Tag>, "6/10"],
+                      actions: [
+                          { Icon: IconLightningRegular, onPress: () => {}, label: "action" },
+                      ],
+                  },
+                  ["Ice cream", "350", "95%", "3,00€", <Tag>Common</Tag>, "8/10"],
+              ]}
+            />`,
+    },
+    {
+        group: 'Table',
+        name: 'Table in collapse-rows mode',
+        code: `
+            <Table
+                responsive="collapse-rows"
+                heading={[
+                    "Type of food",
+                    "Calories",
+                    "Tasty Factor",
+                    "Average Price",
+                    "Rarity",
+                    "Average Rating",
+                ]}
+                columnTextAlign={["left", "right", "right", "right", "center", "right"]}
+                content={[
+                    {
+                        cells: [
+                            "Slice of pizza",
+                            "450",
+                            "95%",
+                            "5,00€",
+                            <Tag>Common</Tag>,
+                            "8/10",
+                        ],
+                        actions: [
+                            { Icon: IconLightningRegular, onPress: () => {}, label: "action" },
+                            { Icon: IconLightningRegular, onPress: () => {}, label: "action" },
+                        ],
+                    },
+                    ["Hamburger", "350", "87%", "3,50€", <Tag>Common</Tag>, "7.5/10"],
+                    {
+                        cells: ["Salad", "150", "70%", "4,00€", <Tag>Common</Tag>, "6/10"],
+                        actions: [
+                            { Icon: IconLightningRegular, onPress: () => {}, label: "action" },
+                        ],
+                    },
+                    ["Ice cream", "350", "95%", "3,00€", <Tag>Common</Tag>, "8/10"],
+                ]}
+            />`,
+    },
+    {
+        group: 'Table',
         name: 'boxed Table',
         code: `
             <Table

@@ -252,7 +252,7 @@ globalStyle(`${hiddenHeadersInMobile} thead tr`, {
     },
 });
 
-// In collapsed-rows mode, we don't render actions as a table cell in mobile
+// In collapse-rows mode, we don't render actions as a table cell in mobile
 globalStyle(`${collapsedRowsInMobile} ${actionsTableCell}`, {
     '@media': {
         [mq.tabletOrSmaller]: {
@@ -261,7 +261,7 @@ globalStyle(`${collapsedRowsInMobile} ${actionsTableCell}`, {
     },
 });
 
-// In collapsed-rows mode, we don't render top actions in desktop
+// In collapse-rows mode, we don't render top actions in desktop
 globalStyle(`${collapsedRowsInMobile} ${topActions}`, {
     '@media': {
         [mq.desktopOrBigger]: {

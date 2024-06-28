@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {ResponsiveLayout, Box, Table, Tag} from '..';
+import {ResponsiveLayout, Box, Table, Tag, IconLightningRegular} from '..';
 
 export default {
     title: 'Components/Table',
@@ -45,6 +45,7 @@ type Args = {
     columnTextAlign: Array<'left' | 'right' | 'center'>;
     rowVerticalAlign: 'top' | 'middle';
     columnWidth: Array<number | string>;
+    withActions: boolean;
 };
 
 export const Default: StoryComponent<Args> = ({
@@ -59,6 +60,7 @@ export const Default: StoryComponent<Args> = ({
     columnTextAlign,
     rowVerticalAlign,
     columnWidth,
+    withActions,
 }) => {
     return (
         <ResponsiveLayout isInverse={inverse}>
@@ -79,7 +81,19 @@ export const Default: StoryComponent<Args> = ({
                     columnTextAlign={columnTextAlign}
                     columnWidth={columnWidth}
                     rowVerticalAlign={rowVerticalAlign}
-                    content={foodList.slice(0, numItems)}
+                    content={foodList.slice(0, numItems).map((row, index) => {
+                        const actionsCount = withActions ? (index + 1) % 3 : 0;
+                        return actionsCount === 0
+                            ? row
+                            : {
+                                  cells: row,
+                                  actions: Array.from({length: actionsCount}, (_, id) => ({
+                                      onPress: () => {},
+                                      Icon: IconLightningRegular,
+                                      label: `row-${index}-action-${id}`,
+                                  })),
+                              };
+                    })}
                     emptyCase={emptyCase}
                     scrollOverResponsiveLayout={scrollOverResponsiveLayout}
                 />
@@ -101,6 +115,7 @@ Default.args = {
     columnTextAlign: ['left', 'right', 'right', 'right', 'center', 'right'],
     rowVerticalAlign: 'middle',
     columnWidth: ['auto', 'auto', 'auto', 'auto', 'auto', 'auto'],
+    withActions: false,
 };
 Default.argTypes = {
     responsive: {
