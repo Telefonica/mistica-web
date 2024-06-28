@@ -162,11 +162,8 @@ export const mobileCellHeading = style({
 export const collapsedRowTitle = style({
     '@media': {
         [mq.tabletOrSmaller]: {
+            fontWeight: skinVars.textPresets.cardTitle.weight,
             paddingBottom: 8,
-        },
-        [mq.desktopOrBigger]: {
-            // revert the medium weight to regular in desktop
-            fontWeight: 400,
         },
     },
 });

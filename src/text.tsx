@@ -14,7 +14,7 @@ import type {ExclusifyUnion} from './utils/utility-types';
 import type {FontWeight} from './skins/types';
 import type {DataAttributes} from './utils/types';
 
-const mapToWeight = {
+export const mapToWeight = {
     light: 300,
     regular: 400,
     medium: 500,

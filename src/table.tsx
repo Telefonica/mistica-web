@@ -225,8 +225,6 @@ export const Table = React.forwardRef(
                                                           mobileLineHeight: textValues.text2.mobileLineHeight,
                                                       })}
                                                 as="div"
-                                                // TODO: use textPresets.cardTitle.weight instead of medium
-                                                weight={idx === 0 && collapsedRowsMode ? 'medium' : 'regular'}
                                                 wordBreak={false}
                                             >
                                                 <div
