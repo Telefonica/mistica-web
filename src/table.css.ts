@@ -103,6 +103,7 @@ export const actionsHeaderText = style({
 });
 
 export const actionsTableCell = style({});
+export const topActions = style({});
 
 // we can only apply sticky head to boxed tables, because non-boxed tables don't have a background
 globalStyle(`${boxed} thead`, {
@@ -125,14 +126,6 @@ globalStyle(`${boxed} th`, {
             paddingTop: 16 + BOXED_PADDING_Y_DESKTOP,
         },
     },
-});
-
-globalStyle(`${table} th:first-child, ${table} td:first-child`, {
-    paddingLeft: 0,
-});
-
-globalStyle(`${table} th:last-child, ${table} td:last-child`, {
-    paddingRight: 0,
 });
 
 globalStyle(`${table} tr:last-child td`, {
@@ -176,13 +169,28 @@ globalStyle(`${collapsedRowsInMobile} tbody td`, {
             height: 'auto', // reset min-height
             padding: '0 0 8px 0',
         },
+        [mq.desktopOrBigger]: {
+            marginRight: 0, // remove right space occupied by actions
+        },
     },
 });
 
-globalStyle(`${collapsedRowsInMobile} tbody td:last-child`, {
+export const rowFirstItem = style({});
+export const rowLastItem = style({});
+export const rowLastCollapsedItem = style({});
+
+globalStyle(`${table} ${rowFirstItem}`, {
+    paddingLeft: 0,
+});
+
+globalStyle(`${table} ${rowLastItem}`, {
+    paddingRight: 0,
+});
+
+globalStyle(`${collapsedRowsInMobile} ${rowLastCollapsedItem}`, {
     '@media': {
         [mq.tabletOrSmaller]: {
-            paddingBottom: '0',
+            paddingBottom: 0,
         },
     },
 });
@@ -191,22 +199,6 @@ globalStyle(`${collapsedRowsInMobile} tbody tr`, {
     '@media': {
         [mq.tabletOrSmaller]: {
             padding: '16px 0',
-        },
-    },
-});
-
-globalStyle(`${collapsedRowsInMobile} tbody tr:first-child`, {
-    '@media': {
-        [mq.tabletOrSmaller]: {
-            paddingTop: 0,
-        },
-    },
-});
-
-globalStyle(`${collapsedRowsInMobile} tbody tr:last-child`, {
-    '@media': {
-        [mq.tabletOrSmaller]: {
-            paddingBottom: 0,
         },
     },
 });
@@ -260,10 +252,19 @@ globalStyle(`${hiddenHeadersInMobile} thead tr`, {
     },
 });
 
-// In collapsed-rows mode, we don't render actions as a table cell
+// In collapsed-rows mode, we don't render actions as a table cell in mobile
 globalStyle(`${collapsedRowsInMobile} ${actionsTableCell}`, {
     '@media': {
         [mq.tabletOrSmaller]: {
+            display: 'none',
+        },
+    },
+});
+
+// In collapsed-rows mode, we don't render top actions in desktop
+globalStyle(`${collapsedRowsInMobile} ${topActions}`, {
+    '@media': {
+        [mq.desktopOrBigger]: {
             display: 'none',
         },
     },

@@ -9,11 +9,18 @@ import Box from './box';
 import {applyCssVars} from './utils/css';
 import Inline from './inline';
 import {IconButton, ToggleIconButton} from './icon-button';
-import {iconContainerSize} from './icon-button.css';
+import {iconContainerSize, iconSize} from './icon-button.css';
 import ScreenReaderOnly from './screen-reader-only';
 
 import type {CardAction} from './card';
 import type {DataAttributes} from './utils/types';
+
+const TOP_ACTIONS_PADDING = {
+    default: '8px',
+    boxed: '16px',
+};
+
+const BORDER_SIZE = '1px';
 
 type TextAlign = 'left' | 'right' | 'center';
 type VerticalAlign = 'top' | 'middle';
@@ -154,7 +161,12 @@ export const Table = React.forwardRef(
                                     key={idx}
                                     className={classNames(
                                         styles.cellTextAlign[getColumnTextAlign(idx)],
-                                        styles.verticalAlign[rowVerticalAlign]
+                                        styles.verticalAlign[rowVerticalAlign],
+                                        {
+                                            [styles.rowFirstItem]: idx === 0,
+                                            [styles.rowLastItem]:
+                                                idx === heading.length - 1 && !hasActionsColumn,
+                                        }
                                     )}
                                     style={{minWidth: columnWidth?.[idx], width: columnWidth?.[idx]}}
                                 >
@@ -191,10 +203,33 @@ export const Table = React.forwardRef(
                                 </Inline>
                             );
 
+                            // buttons + inline space
+                            const actionsElementWidth = rowActionsList.length
+                                ? `calc(${iconContainerSize.small} * ${rowActionsList.length} + 16px * ${
+                                      rowActionsList.length - 1
+                                  })`
+                                : '0px';
+
                             return (
-                                <tr key={rowIdx}>
+                                <tr key={rowIdx} style={{position: 'relative'}}>
                                     {rowCells.map((cell, idx) => (
-                                        <td key={idx} className={styles.verticalAlign[rowVerticalAlign]}>
+                                        <td
+                                            key={idx}
+                                            className={classNames(styles.verticalAlign[rowVerticalAlign], {
+                                                [styles.rowFirstItem]: idx === 0,
+                                                [styles.rowLastItem]:
+                                                    idx === rowCells.length - 1 && !hasActionsColumn,
+                                                [styles.rowLastCollapsedItem]:
+                                                    idx === rowCells.length - 1 && collapsedRowsMode,
+                                            })}
+                                            style={{
+                                                // add space between top actions and content
+                                                marginRight:
+                                                    collapsedRowsMode && rowActionsList.length
+                                                        ? `calc(${actionsElementWidth} + 8px)`
+                                                        : undefined,
+                                            }}
+                                        >
                                             {/**
                                              * In collapsedRowsMode, we render the row heading text before every cell content, except for the first cell
                                              * of every row, which is rendered with a medium weight font, as it's the row title.
@@ -241,32 +276,56 @@ export const Table = React.forwardRef(
                                             </Text>
                                         </td>
                                     ))}
+
                                     {rowActionsList.length > 0 ? (
                                         <td
                                             className={classNames(
                                                 styles.verticalAlign[rowVerticalAlign],
-                                                styles.actionsTableCell
+                                                styles.actionsTableCell,
+                                                styles.rowLastItem,
+                                                {
+                                                    [styles.rowFirstItem]: rowCells.length === 0,
+                                                }
                                             )}
                                             align="right"
-                                            style={{
-                                                // buttons + inline space + cell left padding
-                                                width: `calc(${iconContainerSize.small} * ${
-                                                    rowActionsList.length
-                                                } + 16px * ${rowActionsList.length - 1} + 12px)`,
-                                            }}
+                                            // add cell's left padding
+                                            style={{width: `calc(${actionsElementWidth} + 12px)`}}
                                         >
                                             {actions}
                                         </td>
                                     ) : (
-                                        hasActionsColumn && <td />
+                                        hasActionsColumn && <td className={styles.actionsTableCell} />
+                                    )}
+
+                                    {collapsedRowsMode && rowActionsList.length > 0 && (
+                                        <div
+                                            className={styles.topActions}
+                                            style={{
+                                                position: 'absolute',
+                                                top: `calc(${
+                                                    boxed
+                                                        ? TOP_ACTIONS_PADDING.boxed
+                                                        : TOP_ACTIONS_PADDING.default
+                                                } - ${BORDER_SIZE} + (${iconContainerSize.small} - ${
+                                                    iconSize.small
+                                                }) / 2)`,
+                                                right: boxed
+                                                    ? `calc(${TOP_ACTIONS_PADDING.boxed} - ${BORDER_SIZE})`
+                                                    : 0,
+                                            }}
+                                        >
+                                            {actions}
+                                        </div>
                                     )}
                                 </tr>
-                                // TODO: render top actions if mobile+collapsedRowsMode
                             );
                         })
                     ) : (
                         <tr>
-                            <td colSpan={heading.length}>
+                            <td
+                                colSpan={heading.length}
+                                className={classNames({[styles.rowLastCollapsedItem]: collapsedRowsMode})}
+                            >
                                 {typeof emptyCase === 'string' ? (
                                     <Box paddingY={56}>
                                         <Text2 regular textAlign="center" as="div">
