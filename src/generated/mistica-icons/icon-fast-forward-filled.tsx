@@ -16,7 +16,16 @@ const IconFastForwardFilled = ({color, size = 24, ...rest}: IconProps): JSX.Elem
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2/i)) {
+    if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M12 2C6.488 2 2 6.488 2 12s4.488 10 10 10 10-4.488 10-10S17.512 2 12 2m.38 10.38-4.644 4.638a.53.53 0 0 1-.38.156.535.535 0 0 1-.38-.914l4.265-4.265-4.264-4.264a.535.535 0 0 1 0-.758c.21-.21.549-.21.759 0l4.643 4.643a.54.54 0 0 1 0 .763m1.425 4.638a.53.53 0 0 1-.379.156.535.535 0 0 1-.38-.914l4.265-4.265-4.26-4.26a.535.535 0 0 1 0-.758c.21-.21.549-.21.759 0l4.643 4.644a.54.54 0 0 1-.004.758z"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path

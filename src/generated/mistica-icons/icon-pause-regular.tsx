@@ -16,7 +16,16 @@ const IconPauseRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element =
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2/i)) {
+    if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M8.11 4.5c1.465 0 2.61 1.204 2.61 2.63v9.748A2.615 2.615 0 0 1 8.11 19.5c-1.466 0-2.61-1.204-2.61-2.63V7.13c0-1.426 1.144-2.63 2.61-2.63m7.78 0c1.466 0 2.61 1.204 2.61 2.63v9.748a2.615 2.615 0 0 1-2.61 2.622c-1.465 0-2.61-1.204-2.61-2.63V7.13c0-1.426 1.145-2.63 2.61-2.63M8.11 6C7.498 6 7 6.507 7 7.13v9.74c0 .623.498 1.13 1.11 1.13.611 0 1.11-.5 1.11-1.122V7.129C9.22 6.507 8.72 6 8.11 6M17 7.13C17 6.506 16.502 6 15.89 6c-.611 0-1.11.507-1.11 1.13v9.74c0 .623.499 1.13 1.11 1.13S17 17.5 17 16.878z"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path

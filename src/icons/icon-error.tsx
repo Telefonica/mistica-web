@@ -2,7 +2,7 @@
 import * as React from 'react';
 import {getAnimateDrawLineProps, getAnimateFadeInProps} from '../utils/animation';
 import {useTheme} from '../hooks';
-import {O2_SKIN} from '../skins/constants';
+import {O2_SKIN, O2_NEW_SKIN} from '../skins/constants';
 import {vars} from '../skins/skin-contract.css';
 import * as styles from './icon-error.css';
 
@@ -50,6 +50,50 @@ const IconErrorO2 = ({size = 48}: Props): JSX.Element => {
                         cx="32"
                         cy="46.25"
                         r="1.72"
+                        {...getAnimateFadeInProps('0.8s', platformOverrides)}
+                    />
+                </g>
+            </g>
+        </svg>
+    );
+};
+
+const IconErrorO2New = ({size = 48}: Props): JSX.Element => {
+    const {platformOverrides} = useTheme();
+
+    return (
+        <svg role="presentation" width={size} height={size} viewBox="0 0 64 64" overflow="visible">
+            <g
+                stroke={vars.colors.error}
+                fill={vars.colors.error}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+            >
+                <g className={styles.outerAnimation}>
+                    <circle
+                        strokeWidth="4"
+                        fill="none"
+                        cx="32"
+                        cy="32"
+                        r="30"
+                        {...getAnimateDrawLineProps('202', '0.3s', platformOverrides)}
+                    />
+                </g>
+                <g className={styles.innerAnimation}>
+                    <line
+                        strokeWidth="4"
+                        fill="none"
+                        x1="32"
+                        y1="16.5"
+                        x2="32"
+                        y2="39.08"
+                        {...getAnimateDrawLineProps('110', '0.6s', platformOverrides)}
+                    />
+                    <circle
+                        strokeWidth="0"
+                        cx="32"
+                        cy="47.5"
+                        r="3"
                         {...getAnimateFadeInProps('0.8s', platformOverrides)}
                     />
                 </g>
@@ -107,7 +151,14 @@ const IconErrorDefault = ({size = 48}: Props): JSX.Element => {
 const IconError = (props: Props): JSX.Element => {
     const {skinName} = useTheme();
 
-    return skinName === O2_SKIN ? <IconErrorO2 {...props} /> : <IconErrorDefault {...props} />;
+    switch (skinName) {
+        case O2_SKIN:
+            return <IconErrorO2 {...props} />;
+        case O2_NEW_SKIN:
+            return <IconErrorO2New {...props} />;
+        default:
+            return <IconErrorDefault {...props} />;
+    }
 };
 
 export default IconError;

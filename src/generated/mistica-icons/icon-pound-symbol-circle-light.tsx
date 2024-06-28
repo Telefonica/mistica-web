@@ -16,7 +16,20 @@ const IconPoundSymbolCircleLight = ({color, size = 24, ...rest}: IconProps): JSX
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2/i)) {
+    if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M11.428 14.5h2.892a.72.72 0 0 1 .716.716c0 .392-.32.716-.716.716H9.608a.72.72 0 0 1-.716-.716c0-.392.32-.716.716-.716a.434.434 0 0 0 .428-.428v-1.536H9.68a.72.72 0 0 1-.716-.716c0-.392.32-.716.716-.716h.356V9.676c0-1.324 1-2.324 2.324-2.324.392 0 1 .072 1.536.536.324.248.324.716.072 1-.248.324-.716.324-1 .072-.144-.108-.284-.18-.608-.18-.54 0-.896.36-.896.896v1.428h1.428a.72.72 0 0 1 .716.716c0 .392-.32.716-.716.716h-1.428v1.536c0 .144 0 .284-.036.428"
+                />
+                <path
+                    fill={fillColor}
+                    d="M12 2C6.5 2 2 6.5 2 12s4.464 10 10 10c5.5 0 10-4.464 10-10 0-5.5-4.5-10-10-10m0 18.568A8.55 8.55 0 0 1 3.428 12 8.55 8.55 0 0 1 12 3.428c4.752 0 8.572 3.856 8.572 8.572A8.55 8.55 0 0 1 12 20.568"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path

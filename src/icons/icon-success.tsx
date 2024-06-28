@@ -1,6 +1,6 @@
 'use client';
 import * as React from 'react';
-import {O2_SKIN} from '../skins/constants';
+import {O2_SKIN, O2_NEW_SKIN} from '../skins/constants';
 import {
     getAnimateDrawLineProps,
     getAnimateFadeInProps,
@@ -59,6 +59,42 @@ const IconSuccessO2 = ({size = 48, color, skipAnimation = false}: Props): JSX.El
     );
 };
 
+const IconSuccessO2New = ({size = 48, color, skipAnimation = false}: Props): JSX.Element => {
+    const isInverse = useIsInverseVariant();
+    const {platformOverrides} = useTheme();
+
+    return (
+        <svg role="presentation" width={size} height={size} viewBox="0 0 64 64">
+            <g
+                stroke={color ? undefined : isInverse ? vars.colors.inverse : vars.colors.brand}
+                fill={color ? undefined : isInverse ? vars.colors.inverse : vars.colors.brand}
+                strokeLinecap="round"
+            >
+                <circle
+                    strokeWidth="4"
+                    stroke={color ? color : undefined}
+                    fill="none"
+                    cx="32"
+                    cy="32"
+                    r="30"
+                    {...(!skipAnimation && getAnimateDrawLineProps('202', '0.3s', platformOverrides))}
+                />
+                <polyline
+                    fill="none"
+                    strokeWidth="4"
+                    stroke={color ? color : undefined}
+                    points="18,32.67 27.33,42 49.33,20.67"
+                    {...(!skipAnimation &&
+                        mergeProperties(
+                            getAnimateDrawLineProps('50', '0.6s', platformOverrides),
+                            getAnimateHopInProps('0.6', platformOverrides)
+                        ))}
+                />
+            </g>
+        </svg>
+    );
+};
+
 const IconSuccessDefault = ({size = 48, color, skipAnimation = false}: Props): JSX.Element => {
     const isInverse = useIsInverseVariant();
     const {platformOverrides} = useTheme();
@@ -102,6 +138,8 @@ const IconSuccess = ({size, color, skipAnimation}: Props): JSX.Element => {
     switch (skinName) {
         case O2_SKIN:
             return <IconSuccessO2 size={size} color={color} skipAnimation={skipAnimation} />;
+        case O2_NEW_SKIN:
+            return <IconSuccessO2New size={size} color={color} skipAnimation={skipAnimation} />;
         default:
             return <IconSuccessDefault size={size} color={color} skipAnimation={skipAnimation} />;
     }

@@ -16,7 +16,16 @@ const IconShieldCheckedOkFilled = ({color, size = 24, ...rest}: IconProps): JSX.
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2/i)) {
+    if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M12.26 2.114c.181.175 3.105 3.003 6.883 3.003.201 0 .361.164.357.366v9.175c0 3.283-2.418 5.68-7.39 7.323A.3.3 0 0 1 12 22a.3.3 0 0 1-.11-.019c-4.972-1.644-7.39-4.04-7.39-7.323V5.483c0-.202.16-.366.356-.366 3.88 0 6.865-2.983 6.893-3.011a.35.35 0 0 1 .51.008m-2.047 13.864 6.092-6.065a.565.565 0 0 0 .014-.78.525.525 0 0 0-.759-.014l-5.333 5.313-1.947-2.001a.525.525 0 0 0-.759 0 .56.56 0 0 0 0 .78z"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path

@@ -6,6 +6,7 @@
  */
 
 import * as React from 'react';
+import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
 
@@ -14,19 +15,34 @@ import type {IconProps} from '../../utils/types';
 const Icon3DViewFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
-
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path
-                fill={fillColor}
-                d="m12.344 10.035 6.87-4.104-6.53-3.828a.61.61 0 0 0-.68 0L5.439 5.931zM12.854 10.931v8.138l6.633-3.897c.204-.138.34-.344.34-.586V6.724z"
-            />
-            <path
-                fill={fillColor}
-                d="M18.126 17.517c-.374 0-.68.31-.68.69s.306.69.68.69h.987c-1.599 1.069-4.048 1.724-6.77 1.724-4.693 0-8.502-2.104-8.502-4.655 0-.863.442-1.587 1.02-2.173v.793c0 .242.136.483.34.586l6.633 3.863V10.93L4.86 6.793v5.241c-1.565 1.104-2.381 2.449-2.381 3.932C2.48 19.345 6.8 22 12.344 22c3.163 0 5.986-.828 7.823-2.172v1.137c0 .38.306.69.68.69s.68-.31.68-.69v-3.448z"
-            />
-        </svg>
-    );
+    const {skinName} = useTheme();
+    if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="m12.344 10.035 6.87-4.104-6.53-3.828a.61.61 0 0 0-.68 0L5.439 5.931zM12.854 10.931v8.138l6.633-3.897c.204-.138.34-.344.34-.586V6.724z"
+                />
+                <path
+                    fill={fillColor}
+                    d="M18.126 17.517c-.374 0-.68.31-.68.69s.306.69.68.69h.987c-1.599 1.069-4.048 1.724-6.77 1.724-4.693 0-8.502-2.104-8.502-4.655 0-.863.442-1.587 1.02-2.173v.793c0 .242.136.483.34.586l6.633 3.863V10.93L4.86 6.793v5.241c-1.565 1.104-2.381 2.449-2.381 3.932C2.48 19.345 6.8 22 12.344 22c3.163 0 5.986-.828 7.823-2.172v1.137c0 .38.306.69.68.69s.68-.31.68-.69v-3.448z"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="m12.344 10.035 6.87-4.104-6.53-3.828a.61.61 0 0 0-.68 0L5.439 5.931zM12.854 10.931v8.138l6.633-3.897c.204-.138.34-.344.34-.586V6.724z"
+                />
+                <path
+                    fill={fillColor}
+                    d="M18.126 17.517c-.374 0-.68.31-.68.69s.306.69.68.69h.987c-1.599 1.069-4.048 1.724-6.77 1.724-4.693 0-8.502-2.104-8.502-4.655 0-.863.442-1.587 1.02-2.173v.793c0 .242.136.483.34.586l6.633 3.863V10.93L4.86 6.793v5.241c-1.565 1.104-2.381 2.449-2.381 3.932C2.48 19.345 6.8 22 12.344 22c3.163 0 5.986-.828 7.823-2.172v1.137c0 .38.306.69.68.69s.68-.31.68-.69v-3.448z"
+                />
+            </svg>
+        );
+    }
 };
 
 export default Icon3DViewFilled;

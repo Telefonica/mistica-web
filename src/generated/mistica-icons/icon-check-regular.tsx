@@ -25,6 +25,15 @@ const IconCheckRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element =
                 />
             </svg>
         );
+    } else if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="m8.552 19.5-6.284-6.713a.965.965 0 0 1 .048-1.381.937.937 0 0 1 1.364.049l4.92 5.132L20.345 4.795a.937.937 0 0 1 1.364 0 .965.965 0 0 1 0 1.381z"
+                />
+            </svg>
+        );
     } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>

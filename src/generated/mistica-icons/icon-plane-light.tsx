@@ -16,7 +16,16 @@ const IconPlaneLight = ({color, size = 24, ...rest}: IconProps): JSX.Element => 
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2/i)) {
+    if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="m13.379 14.529 3.973 6.971 1.843-1.877c.54-.55.75-1.36.554-2.111l-1.942-7.393 3.513-3.586c.44-.445.68-1.039.68-1.67 0-.633-.244-1.226-.68-1.672a2.284 2.284 0 0 0-3.274 0l-3.513 3.586L7.29 4.795a2.12 2.12 0 0 0-2.069.565L3.38 7.242l6.782 3.993-2.997 3.06-1.75-.48a2.12 2.12 0 0 0-2.068.566L2 15.755l5.099 3.006c.834.494 1.9.35 2.589-.354zm4.278 4.539-3.987-6.995-5.024 5.28a.665.665 0 0 1-.816.11l-3.443-2.03a.68.68 0 0 1 .648-.172l2.565.704 4.944-5.041-6.782-3.998.492-.503a.67.67 0 0 1 .652-.177l8.058 2.202 4.114-4.199a.834.834 0 0 1 1.2 0 .877.877 0 0 1 0 1.226l-4.113 4.199 2.158 8.226a.69.69 0 0 1-.174.665z"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path

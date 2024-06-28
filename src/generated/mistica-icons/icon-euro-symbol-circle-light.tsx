@@ -16,7 +16,20 @@ const IconEuroSymbolCircleLight = ({color, size = 24, ...rest}: IconProps): JSX.
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2/i)) {
+    if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M7.536 13.788a.72.72 0 0 1-.716-.716c0-.396.32-.716.72-.724h.356c-.036-.104-.036-.252-.036-.356 0-.052.009-.113.018-.175.009-.063.018-.127.018-.181H7.54a.72.72 0 0 1-.716-.716c0-.392.32-.716.716-.716h.716c.712-1.676 2.356-2.856 4.284-2.856.824 0 1.608.248 2.324.644a.69.69 0 0 1 .252.964.69.69 0 0 1-.964.252 3.2 3.2 0 0 0-1.608-.428 3.24 3.24 0 0 0-2.68 1.428h2.68c.392 0 .716.32.716.716 0 .392-.32.716-.716.716h-3.18c-.036.104-.036.252-.036.356 0 .051.009.113.018.175.009.063.018.127.018.181h3.176c.392 0 .716.32.716.716 0 .392-.32.716-.716.716H9.86a3.24 3.24 0 0 0 2.68 1.428q.858-.001 1.608-.428c.32-.212.748-.104.964.252.212.32.104.748-.252.964-.716.428-1.5.644-2.324.644-1.928 0-3.568-1.176-4.284-2.856z"
+                />
+                <path
+                    fill={fillColor}
+                    d="M12 2C6.5 2 2 6.5 2 12s4.464 10 10 10c5.5 0 10-4.464 10-10 0-5.5-4.5-10-10-10m0 18.568A8.55 8.55 0 0 1 3.428 12 8.55 8.55 0 0 1 12 3.428c4.752 0 8.572 3.856 8.572 8.572A8.55 8.55 0 0 1 12 20.568"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path

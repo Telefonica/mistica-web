@@ -16,7 +16,24 @@ const IconWifiFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => 
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2/i)) {
+    if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M21.287 12.173a.68.68 0 0 1-.5-.229c-2.392-2.533-5.5-3.931-8.789-3.931s-6.389 1.402-8.785 3.931c-.284.301-.716.301-1 0a.765.765 0 0 1 0-1.059C4.857 8.051 8.322 6.5 12.002 6.5s7.145 1.55 9.785 4.385c.284.301.284.797 0 1.06a.68.68 0 0 1-.5.228"
+                />
+                <path
+                    fill={fillColor}
+                    d="M5.213 14.821a.68.68 0 0 1-.5-.229.765.765 0 0 1 0-1.059c1.928-2.08 4.537-3.254 7.289-3.254s5.356 1.17 7.285 3.254c.284.301.284.797 0 1.06-.284.3-.752.3-1 0-1.68-1.814-3.893-2.801-6.285-2.801s-4.608.983-6.285 2.8c-.108.153-.324.23-.504.23"
+                />
+                <path
+                    fill={fillColor}
+                    d="M7.214 17.274a.82.82 0 0 0 .5.191c.18 0 .396-.072.532-.19.928-1.06 2.288-1.666 3.752-1.666 1.428 0 2.82.606 3.784 1.665.248.301.716.301 1 0 .285-.262.285-.758 0-1.059-1.212-1.36-2.96-2.118-4.784-2.118-1.892 0-3.608.758-4.82 2.118a.804.804 0 0 0 .036 1.06"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path

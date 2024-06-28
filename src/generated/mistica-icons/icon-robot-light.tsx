@@ -16,7 +16,16 @@ const IconRobotLight = ({color, size = 24, ...rest}: IconProps): JSX.Element => 
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2/i)) {
+    if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="m21.302 9.103-1.489-1.588h-1.628a1.8 1.8 0 0 0-.278-.38l-2.831-2.942C14.932 2.953 13.89 2 12.644 2c-.89 0-1.672.468-2.093 1.24l-4.799 8.392a2.97 2.97 0 0 0-1.554 2.607v3.993c-.973.159-1.698.997-1.698 2.043V22h9.158v-1.725c0-1.041-.72-1.88-1.698-2.043v-3.9l3.778-6.702 1.859 1.888c.039.04.086.088.139.128v2.352l1.628 1.24c.29.22.734.154.95-.137a.694.694 0 0 0-.134-.966l-1.085-.83v-1.31a1.66 1.66 0 0 0 1.216-1.103h.916l1.124 1.173a.7.7 0 0 0 .956 0 .69.69 0 0 0-.005-.962M4.537 19.583h5.089c.386 0 .677.295.677.688v.344H3.86v-.344c0-.393.291-.689.678-.689M8.61 18.2H5.557V14.24c0-.843.7-1.553 1.529-1.553s1.524.71 1.524 1.553zm-1.095-6.86 4.234-7.444c.178-.309.539-.516.895-.516.59 0 1.085.503 1.085 1.103a.94.94 0 0 1-.16.52l-4.152 7.528a2.88 2.88 0 0 0-1.902-1.192m9.436-3.235q.105.105.105.239c0 .145-.144.308-.34.308a.32.32 0 0 1-.234-.105l-2.088-2.123.36-.613z"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path

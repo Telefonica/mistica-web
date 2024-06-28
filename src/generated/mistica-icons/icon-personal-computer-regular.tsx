@@ -25,6 +25,15 @@ const IconPersonalComputerRegular = ({color, size = 24, ...rest}: IconProps): JS
                 />
             </svg>
         );
+    } else if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M2 2.5h19.995v14.908h-6.247l.854 3.162a.67.67 0 0 1-.105.634.73.73 0 0 1-.571.296H8.069a.73.73 0 0 1-.57-.296c-.106-.186-.18-.41-.106-.634l.86-3.167H2zm18.57 10.807V3.993H3.43v9.314zm-5.572 6.705-.676-2.609H9.678l-.676 2.609zM3.431 14.428v1.487H20.57v-1.487z"
+                />
+            </svg>
+        );
     } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>

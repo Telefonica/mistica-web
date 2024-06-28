@@ -16,7 +16,24 @@ const IconIntranetFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2/i)) {
+    if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M6.533 10.2a21 21 0 0 0-.072 1.258H2C2.26 6.576 5.98 2.6 10.726 2c-1.433.6-2.649 2.21-3.405 4.414a1.985 1.985 0 0 0-.788 3.786M13.274 22c2.38-1.004 4.137-4.773 4.257-9.462H22c-.26 4.874-3.98 8.85-8.726 9.462M6.46 12.538H2c.26 4.882 3.973 8.85 8.726 9.458C8.337 21 6.589 17.235 6.46 12.538M12.53 11.45V2.879c2.097.548 3.797 4.209 3.925 8.57z"
+                />
+                <path
+                    fill={fillColor}
+                    d="M17.531 11.458h4.461c-.26-4.882-3.973-8.85-8.726-9.458 2.389 1.004 4.137 4.761 4.265 9.458M11.462 12.538v8.58c-2.097-.55-3.797-4.21-3.925-8.58zM12.53 12.538h3.925c-.128 4.37-1.828 8.03-3.925 8.571zM7.537 11.458q.014-.563.064-1.1a1.98 1.98 0 0 0 .768-3.653c.72-2.056 1.837-3.5 3.093-3.826v8.579z"
+                />
+                <path
+                    fill={fillColor}
+                    d="M7.35 9.293a.896.896 0 0 0 .891-.9c0-.496-.4-.898-.892-.898a.896.896 0 0 0-.892.899c0 .496.4.899.892.899"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path

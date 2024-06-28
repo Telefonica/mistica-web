@@ -16,7 +16,20 @@ const IconTruckLight = ({color, size = 24, ...rest}: IconProps): JSX.Element => 
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2/i)) {
+    if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="m22 12.607-6.848-6.971h-2.796v-.362C12.356 3.47 10.916 2 9.14 2H2.716A.727.727 0 0 0 2 2.729c0 .399.32.729.716.729h6.428c.984 0 1.784.814 1.784 1.816V18.36H2.716a.72.72 0 0 0-.716.729c0 .403.32.729.716.729h10.9C14.06 21.088 15.248 22 16.644 22s2.588-.912 3.028-2.182H22zm-5.356 7.935c-.984 0-1.784-.814-1.784-1.816 0-1.001.8-1.816 1.784-1.816s1.784.815 1.784 1.816-.8 1.816-1.784 1.816m3.192-2.182c-.18-1.633-1.544-2.907-3.192-2.907s-3.016 1.274-3.192 2.907H12.36V7.094h2.2l6.012 6.12v5.146z"
+                />
+                <path
+                    fill={fillColor}
+                    d="M2.716 14.362h5.716a.72.72 0 0 0 .716-.73.72.72 0 0 0-.716-.728H2.716a.72.72 0 0 0-.716.729c0 .403.32.729.716.729M5.216 10.726h-2.5A.72.72 0 0 1 2 10c0-.403.32-.729.716-.733h2.5c.396 0 .716.326.716.729s-.32.729-.716.729"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path

@@ -25,6 +25,15 @@ const IconChevronUpRegular = ({color, size = 24, ...rest}: IconProps): JSX.Eleme
                 />
             </svg>
         );
+    } else if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M18.734 15.8a.79.79 0 0 0 1.049 0 .64.64 0 0 0 0-.962L12.545 8.2A.78.78 0 0 0 12 8a.78.78 0 0 0-.545.2l-7.238 6.638a.64.64 0 0 0 0 .963.79.79 0 0 0 1.05 0L12 9.624z"
+                />
+            </svg>
+        );
     } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>

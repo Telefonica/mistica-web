@@ -6,6 +6,7 @@
  */
 
 import * as React from 'react';
+import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
 
@@ -14,15 +15,26 @@ import type {IconProps} from '../../utils/types';
 const IconLaptopFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
-
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path
-                fill={fillColor}
-                d="M18.787 5.5c.782 0 1.426.647 1.426 1.442h.005v7.947H3.792V6.942c0-.79.64-1.442 1.426-1.442zM2 16.332v-.36h20v.36c0 1.192-.964 2.168-2.143 2.168H4.144C2.964 18.5 2 17.524 2 16.332"
-            />
-        </svg>
-    );
+    const {skinName} = useTheme();
+    if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M18.787 5.5c.782 0 1.426.647 1.426 1.442h.005v7.947H3.792V6.942c0-.79.64-1.442 1.426-1.442zM2 16.332v-.36h20v.36c0 1.192-.964 2.168-2.143 2.168H4.144C2.964 18.5 2 17.524 2 16.332"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M18.787 5.5c.782 0 1.426.647 1.426 1.442h.005v7.947H3.792V6.942c0-.79.64-1.442 1.426-1.442zM2 16.332v-.36h20v.36c0 1.192-.964 2.168-2.143 2.168H4.144C2.964 18.5 2 17.524 2 16.332"
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconLaptopFilled;

@@ -16,7 +16,16 @@ const IconFunnelLight = ({color, size = 24, ...rest}: IconProps): JSX.Element =>
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2/i)) {
+    if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M9.87 19.776c0 1.228.957 2.224 2.126 2.224s2.126-.996 2.126-2.224v-4.443l6.295-12.242a.77.77 0 0 0-.018-.73.7.7 0 0 0-.607-.361H4.21c-.25 0-.48.138-.607.36a.76.76 0 0 0-.018.73L9.87 15.334zm1.333-4.978L5.393 3.478H18.6l-5.81 11.319a.73.73 0 0 0-.087.35v4.633c0 .408-.317.74-.707.74s-.707-.332-.707-.74v-4.633a.8.8 0 0 0-.086-.35"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path

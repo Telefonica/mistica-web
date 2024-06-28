@@ -6,6 +6,7 @@
  */
 
 import * as React from 'react';
+import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
 
@@ -14,15 +15,26 @@ import type {IconProps} from '../../utils/types';
 const IconEmailSendFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
-
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path
-                fill={fillColor}
-                d="M12.96 11.575a.57.57 0 0 0 .4.418l8.268 2.29L15.023 21 4.107 9.9 10.89 3zm-.875-8.467 1.899 7.862L22 13.192zm-.648 15.813a.76.76 0 0 0-.754-.766H5.02a.76.76 0 0 0-.754.766c0 .423.338.767.754.767h5.663a.76.76 0 0 0 .754-.767m-4.532-3.837c.415 0 .753.344.753.766a.76.76 0 0 1-.753.767H2.754A.76.76 0 0 1 2 15.85c0-.422.338-.766.754-.766z"
-            />
-        </svg>
-    );
+    const {skinName} = useTheme();
+    if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M12.96 11.575a.57.57 0 0 0 .4.418l8.268 2.29L15.023 21 4.107 9.9 10.89 3zm-.875-8.467 1.899 7.862L22 13.192zm-.648 15.813a.76.76 0 0 0-.754-.766H5.02a.76.76 0 0 0-.754.766c0 .423.338.767.754.767h5.663a.76.76 0 0 0 .754-.767m-4.532-3.837c.415 0 .753.344.753.766a.76.76 0 0 1-.753.767H2.754A.76.76 0 0 1 2 15.85c0-.422.338-.766.754-.766z"
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M12.96 11.575a.57.57 0 0 0 .4.418l8.268 2.29L15.023 21 4.107 9.9 10.89 3zm-.875-8.467 1.899 7.862L22 13.192zm-.648 15.813a.76.76 0 0 0-.754-.766H5.02a.76.76 0 0 0-.754.766c0 .423.338.767.754.767h5.663a.76.76 0 0 0 .754-.767m-4.532-3.837c.415 0 .753.344.753.766a.76.76 0 0 1-.753.767H2.754A.76.76 0 0 1 2 15.85c0-.422.338-.766.754-.766z"
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconEmailSendFilled;

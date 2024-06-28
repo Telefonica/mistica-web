@@ -16,7 +16,16 @@ const IconDataShieldFilled = ({color, size = 24, ...rest}: IconProps): JSX.Eleme
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2/i)) {
+    if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M20.119 10.93a.71.71 0 0 0 .704.713c.388 0 .709-.32.704-.713C21.528 6 17.578 2 12.708 2a.71.71 0 0 0-.704.713.71.71 0 0 0 .704.714c4.096 0 7.41 3.36 7.41 7.503m-3.527 0a.71.71 0 0 0 .704.713c.389 0 .705-.32.71-.708 0-2.968-2.367-5.36-5.293-5.36a.71.71 0 0 0-.705.714.71.71 0 0 0 .705.713c2.15 0 3.879 1.747 3.879 3.928m-3.423-1.788c-2.102 0-3.789-1.329-4.16-1.621a1 1 0 0 0-.076-.057l-.668-.608-.46.393-.177.179q-.007 0-.075.057c-.37.299-2.055 1.657-4.16 1.657H2.48v7.216c0 3.324 3.035 4.75 5.329 5.5L8.3 22l.492-.142c2.294-.713 5.329-2.144 5.329-5.464V9.142zm-6.458 8.61-2.15-2.18a.52.52 0 0 1 0-.75.506.506 0 0 1 .741 0l1.378 1.394 4.2-4.253a.506.506 0 0 1 .74 0 .574.574 0 0 1 .068.787z"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path

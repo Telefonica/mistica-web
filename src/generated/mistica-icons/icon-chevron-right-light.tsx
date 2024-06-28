@@ -16,7 +16,16 @@ const IconChevronRightLight = ({color, size = 24, ...rest}: IconProps): JSX.Elem
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
-    if (skinName.match(/^o2/i)) {
+    if (skinName.match(/^o2-new/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M9.2 18.734a.79.79 0 0 0 0 1.049c.265.29.696.29.962 0l6.639-7.238A.78.78 0 0 0 17 12a.78.78 0 0 0-.2-.545l-6.638-7.238a.64.64 0 0 0-.963 0 .79.79 0 0 0 0 1.05L15.376 12z"
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
