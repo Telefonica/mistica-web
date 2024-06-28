@@ -46,6 +46,7 @@ type Args = {
     rowVerticalAlign: 'top' | 'middle';
     columnWidth: Array<number | string>;
     withActions: boolean;
+    hideHeaders: 'true' | 'false' | 'mobile' | 'desktop';
 };
 
 export const Default: StoryComponent<Args> = ({
@@ -61,6 +62,7 @@ export const Default: StoryComponent<Args> = ({
     rowVerticalAlign,
     columnWidth,
     withActions,
+    hideHeaders,
 }) => {
     return (
         <ResponsiveLayout isInverse={inverse}>
@@ -96,6 +98,11 @@ export const Default: StoryComponent<Args> = ({
                     })}
                     emptyCase={emptyCase}
                     scrollOverResponsiveLayout={scrollOverResponsiveLayout}
+                    hideHeaders={
+                        hideHeaders === 'true' || hideHeaders === 'false'
+                            ? hideHeaders === 'true'
+                            : hideHeaders
+                    }
                 />
             </Box>
         </ResponsiveLayout>
@@ -116,6 +123,7 @@ Default.args = {
     rowVerticalAlign: 'middle',
     columnWidth: ['auto', 'auto', 'auto', 'auto', 'auto', 'auto'],
     withActions: false,
+    hideHeaders: 'false',
 };
 Default.argTypes = {
     responsive: {
@@ -130,6 +138,10 @@ Default.argTypes = {
     },
     rowVerticalAlign: {
         options: ['top', 'middle'],
+        control: {type: 'select'},
+    },
+    hideHeaders: {
+        options: ['false', 'true', 'mobile', 'desktop'],
         control: {type: 'select'},
     },
 };

@@ -90,6 +90,30 @@ const cases = [
         },
     ],
     [
+        'desktop hideHeaders = true',
+        {
+            device: 'DESKTOP',
+            args: {hideHeaders: true},
+            fullPageScreenshot: false,
+        },
+    ],
+    [
+        'desktop hideHeaders = "desktop"',
+        {
+            device: 'DESKTOP',
+            args: {hideHeaders: 'desktop'},
+            fullPageScreenshot: false,
+        },
+    ],
+    [
+        'desktop hideHeaders = "mobile"',
+        {
+            device: 'DESKTOP',
+            args: {hideHeaders: 'mobile'},
+            fullPageScreenshot: false,
+        },
+    ],
+    [
         'desktop collapse-rows with actions',
         {
             device: 'DESKTOP',
@@ -158,6 +182,30 @@ const cases = [
         {
             device: 'MOBILE_IOS',
             args: {responsive: 'collapse-rows', boxed: true, inverse: true},
+            fullPageScreenshot: false,
+        },
+    ],
+    [
+        'mobile hideHeaders = true',
+        {
+            device: 'MOBILE_IOS',
+            args: {hideHeaders: true},
+            fullPageScreenshot: false,
+        },
+    ],
+    [
+        'mobile hideHeaders = "desktop"',
+        {
+            device: 'MOBILE_IOS',
+            args: {hideHeaders: 'desktop'},
+            fullPageScreenshot: false,
+        },
+    ],
+    [
+        'mobile hideHeaders = "mobile"',
+        {
+            device: 'MOBILE_IOS',
+            args: {hideHeaders: 'mobile'},
             fullPageScreenshot: false,
         },
     ],

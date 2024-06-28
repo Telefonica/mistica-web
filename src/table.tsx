@@ -130,6 +130,8 @@ export const Table = React.forwardRef(
         const hideHeadersInMobile = hideHeaders === true || hideHeaders === 'mobile';
         const hideHeadersInDesktop = hideHeaders === true || hideHeaders === 'desktop';
 
+        console.log(hideHeadersInDesktop, hideHeaders);
+
         const hasActionsColumn =
             !!content && content.some((row) => !Array.isArray(row) && row.actions.length > 0);
 
