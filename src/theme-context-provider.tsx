@@ -112,10 +112,12 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children, as, withoutStyl
             ...theme.platformOverrides,
         };
 
-        const textTokens = Object.keys(defaultTextPresetsConfig) as Array<keyof TextPresetsConfig>;
-        const textTokenValues = textTokens.map((token) => {
-            return {[token]: {...defaultTextPresetsConfig[token], ...theme.skin.textPresets?.[token]}};
+        const textTokenValues = Object.entries(defaultTextPresetsConfig).map(([token, defaultConfig]) => {
+            return {
+                [token]: {...defaultConfig, ...theme.skin.textPresets?.[token as keyof TextPresetsConfig]},
+            };
         });
+
         const textPresets = Object.assign({}, ...textTokenValues) as TextPresetsConfig;
 
         return {
@@ -165,10 +167,9 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children, as, withoutStyl
     const textPresetsVars = React.useMemo(() => {
         // Get an object mapping textPresets tokens to objects containing the token's weight
         // For example, {title1: {weight: '700'}}
-        const textTokens = Object.keys(contextTheme.textPresets) as Array<keyof TextPresetsConfig>;
-        const tokenValues = textTokens.map((token) => {
+        const tokenValues = Object.entries(contextTheme.textPresets).map(([token, config]) => {
             // Map light/regular/medium/bold to valid css fontWeight values
-            return {[token]: {weight: String(mapToWeight[contextTheme.textPresets[token].weight])}};
+            return {[token]: {weight: String(mapToWeight[config.weight])}};
         });
 
         const textPresetsVars = Object.assign({}, ...tokenValues) as {

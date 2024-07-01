@@ -130,8 +130,6 @@ export const Table = React.forwardRef(
         const hideHeadersInMobile = hideHeaders === true || hideHeaders === 'mobile';
         const hideHeadersInDesktop = hideHeaders === true || hideHeaders === 'desktop';
 
-        console.log(hideHeadersInDesktop, hideHeaders);
-
         const hasActionsColumn =
             !!content && content.some((row) => !Array.isArray(row) && row.actions.length > 0);
 
@@ -300,7 +298,7 @@ export const Table = React.forwardRef(
                                     )}
 
                                     {collapsedRowsMode && rowActionsList.length > 0 && (
-                                        <div
+                                        <td
                                             className={styles.topActions}
                                             style={{
                                                 position: 'absolute',
@@ -314,10 +312,11 @@ export const Table = React.forwardRef(
                                                 right: boxed
                                                     ? `calc(${TOP_ACTIONS_PADDING.boxed} - ${BORDER_SIZE})`
                                                     : 0,
+                                                width: actionsElementWidth,
                                             }}
                                         >
                                             {actions}
-                                        </div>
+                                        </td>
                                     )}
                                 </tr>
                             );

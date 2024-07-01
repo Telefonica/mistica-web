@@ -241,6 +241,14 @@ const cases = [
             fullPageScreenshot: true,
         },
     ],
+    [
+        'tablet collapse-rows boxed with hideHeaders = true',
+        {
+            device: 'TABLET',
+            args: {numItems: 6, boxed: true, responsive: 'collapse-rows', hideHeaders: true},
+            fullPageScreenshot: true,
+        },
+    ],
 ] as const;
 
 test.each(cases)('Table %s', async (_name, {device, args, fullPageScreenshot}) => {
