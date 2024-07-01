@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Mistica CSS Example</title>
+        <link rel="stylesheet" href="/style.css" />
+    </head>
+    <body data-mistica-skin="o2-new">
+        <div id="app" class="mistica-responsive-layout">
+            <h1 class="mistica-text-6">Hello mistica css</h1>
+
+            <div class="controls">
+                <div>
+                    <label for="skin-select">Skin:</label>
+                    <select id="skin-select">
+                        <option value="o2-new">o2-new</option>
+                        <option value="movistar">movistar</option>
+                        <option value="vivo-new">vivo-new</option>
+                        <option value="blau">blau</option>
+                        <option value="telefonica">telefonica</option>
+                        <option value="tu">tu</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="color-scheme-select">Color scheme:</label>
+                    <select id="color-scheme-select">
+                        <option value="system">system</option>
+                        <option value="light">light</option>
+                        <option value="dark">dark</option>
+                    </select>
+                </div>
+            </div>
+
+            <section class="card">
+                <div class="tag">Headline</div>
+                <h2 class="mistica-text-cardTitle">Title</h2>
+                <p class="mistica-text-2">Subtitle</p>
+                <p class="description mistica-text-2">Description</p>
+                <button class="button small">Action</button>
+            </section>
+        </div>
+        <script type="module" src="/main.js"></script>
+    </body>
+</html>

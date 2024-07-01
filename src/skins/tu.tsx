@@ -260,7 +260,7 @@ export const getTuSkin: GetKnownSkin = () => {
             divider: applyAlpha(palette.white, 0.05),
             dividerInverse: applyAlpha(palette.white, 0.05),
             navigationBarDivider: palette.darkModeBlack,
-            badge: palette.red70,
+            badge: palette.blue30,
             feedbackErrorBackground: palette.red,
             feedbackInfoBackground: palette.darkModeGrey,
             brand: palette.blue30,
