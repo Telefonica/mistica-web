@@ -4,7 +4,7 @@ import Box from './box';
 import {Boxed} from './boxed';
 import {useTheme} from './hooks';
 import Stack from './stack';
-import {Text2, Text, textValues} from './text';
+import {Text2, Text, textProps} from './text';
 import ButtonGroup from './button-group';
 import * as styles from './empty-state-card.css';
 import {vars} from './skins/skin-contract.css';
@@ -66,11 +66,7 @@ const EmptyStateCard: React.FC<Props> = ({
                         {image ?? (icon && <div className={styles.iconContainer}>{icon}</div>)}
                         <Box>
                             <Stack space={8}>
-                                <Text
-                                    {...textValues.text4}
-                                    weight={textPresets.cardTitle.weight}
-                                    as={titleAs}
-                                >
+                                <Text {...textProps.text4} weight={textPresets.cardTitle.weight} as={titleAs}>
                                     {title}
                                 </Text>
                                 <Text2 regular color={vars.colors.textSecondary}>

@@ -248,7 +248,7 @@ const getTextSizes = ({
     }
 };
 
-export const textValues = {
+export const textProps = {
     text1: {
         mobileSize: 12,
         mobileLineHeight: '16px',
@@ -315,7 +315,7 @@ export const Text10: React.FC<TextPresetProps> = ({dataAttributes, forceMobileSi
     const {textPresets} = useTheme();
     return (
         <Text
-            {...getTextSizes({forceMobileSizes, ...textValues.text10})}
+            {...getTextSizes({forceMobileSizes, ...textProps.text10})}
             weight={textPresets.text10.weight}
             dataAttributes={{'component-name': 'Text10', ...dataAttributes}}
             {...props}
@@ -327,7 +327,7 @@ export const Text9: React.FC<TextPresetProps> = ({dataAttributes, forceMobileSiz
     const {textPresets} = useTheme();
     return (
         <Text
-            {...getTextSizes({forceMobileSizes, ...textValues.text9})}
+            {...getTextSizes({forceMobileSizes, ...textProps.text9})}
             weight={textPresets.text9.weight}
             dataAttributes={{'component-name': 'Text9', ...dataAttributes}}
             {...props}
@@ -339,7 +339,7 @@ export const Text8: React.FC<TextPresetProps> = ({dataAttributes, forceMobileSiz
     const {textPresets} = useTheme();
     return (
         <Text
-            {...getTextSizes({forceMobileSizes, ...textValues.text8})}
+            {...getTextSizes({forceMobileSizes, ...textProps.text8})}
             weight={textPresets.text8.weight}
             dataAttributes={{'component-name': 'Text8', ...dataAttributes}}
             {...props}
@@ -351,7 +351,7 @@ export const Text7: React.FC<TextPresetProps> = ({dataAttributes, forceMobileSiz
     const {textPresets} = useTheme();
     return (
         <Text
-            {...getTextSizes({forceMobileSizes, ...textValues.text7})}
+            {...getTextSizes({forceMobileSizes, ...textProps.text7})}
             weight={textPresets.text7.weight}
             dataAttributes={{'component-name': 'Text7', ...dataAttributes}}
             {...props}
@@ -363,7 +363,7 @@ export const Text6: React.FC<TextPresetProps> = ({dataAttributes, forceMobileSiz
     const {textPresets} = useTheme();
     return (
         <Text
-            {...getTextSizes({forceMobileSizes, ...textValues.text6})}
+            {...getTextSizes({forceMobileSizes, ...textProps.text6})}
             weight={textPresets.text6.weight}
             dataAttributes={{'component-name': 'Text6', ...dataAttributes}}
             {...props}
@@ -375,7 +375,7 @@ export const Text5: React.FC<TextPresetProps> = ({dataAttributes, forceMobileSiz
     const {textPresets} = useTheme();
     return (
         <Text
-            {...getTextSizes({forceMobileSizes, ...textValues.text5})}
+            {...getTextSizes({forceMobileSizes, ...textProps.text5})}
             weight={textPresets.text5.weight}
             dataAttributes={{'component-name': 'Text5', ...dataAttributes}}
             {...props}
@@ -385,7 +385,7 @@ export const Text5: React.FC<TextPresetProps> = ({dataAttributes, forceMobileSiz
 
 export const Text4: React.FC<LightRegularMediumProps> = ({dataAttributes, forceMobileSizes, ...props}) => (
     <Text
-        {...getTextSizes({forceMobileSizes, ...textValues.text4})}
+        {...getTextSizes({forceMobileSizes, ...textProps.text4})}
         weight={getWeight(props)}
         dataAttributes={{'component-name': 'Text4', ...dataAttributes}}
         {...props}
@@ -394,7 +394,7 @@ export const Text4: React.FC<LightRegularMediumProps> = ({dataAttributes, forceM
 
 export const Text3: React.FC<LightRegularMediumProps> = ({dataAttributes, forceMobileSizes, ...props}) => (
     <Text
-        {...getTextSizes({forceMobileSizes, ...textValues.text3})}
+        {...getTextSizes({forceMobileSizes, ...textProps.text3})}
         weight={getWeight(props)}
         dataAttributes={{'component-name': 'Text3', ...dataAttributes}}
         {...props}
@@ -403,7 +403,7 @@ export const Text3: React.FC<LightRegularMediumProps> = ({dataAttributes, forceM
 
 export const Text2: React.FC<RegularMediumProps> = ({dataAttributes, forceMobileSizes, ...props}) => (
     <Text
-        {...getTextSizes({forceMobileSizes, ...textValues.text2})}
+        {...getTextSizes({forceMobileSizes, ...textProps.text2})}
         weight={getWeight(props)}
         dataAttributes={{'component-name': 'Text2', ...dataAttributes}}
         {...props}
@@ -412,7 +412,7 @@ export const Text2: React.FC<RegularMediumProps> = ({dataAttributes, forceMobile
 
 export const Text1: React.FC<RegularMediumProps> = ({dataAttributes, forceMobileSizes, ...props}) => (
     <Text
-        {...getTextSizes({forceMobileSizes, ...textValues.text1})}
+        {...getTextSizes({forceMobileSizes, ...textProps.text1})}
         weight={getWeight(props)}
         dataAttributes={{'component-name': 'Text1', ...dataAttributes}}
         {...props}

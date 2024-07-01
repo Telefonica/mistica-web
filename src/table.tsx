@@ -2,7 +2,7 @@ import * as React from 'react';
 import {getPrefixedDataAttributes} from './utils/dom';
 import * as styles from './table.css';
 import {vars} from './skins/skin-contract.css';
-import Text, {Text1, Text2, textValues} from './text';
+import Text, {Text1, Text2, textProps} from './text';
 import {InternalBoxed} from './boxed';
 import classNames from 'classnames';
 import Box from './box';
@@ -130,8 +130,7 @@ export const Table = React.forwardRef(
         const hideHeadersInMobile = hideHeaders === true || hideHeaders === 'mobile';
         const hideHeadersInDesktop = hideHeaders === true || hideHeaders === 'desktop';
 
-        const hasActionsColumn =
-            !!content && content.some((row) => !Array.isArray(row) && row.actions.length > 0);
+        const hasActionsColumn = content.some((row) => !Array.isArray(row) && row.actions.length > 0);
 
         const table = (
             <table
@@ -211,6 +210,7 @@ export const Table = React.forwardRef(
                                 : '0px';
 
                             return (
+                                // Add position relative because in collapse-rows mode, actions are positioned absolutely in the row
                                 <tr key={rowIdx} style={{position: 'relative'}}>
                                     {rowCells.map((cell, idx) => (
                                         <td
@@ -247,17 +247,17 @@ export const Table = React.forwardRef(
                                                 )}
 
                                             <Text
-                                                desktopSize={textValues.text2.desktopSize}
-                                                desktopLineHeight={textValues.text2.desktopLineHeight}
+                                                desktopSize={textProps.text2.desktopSize}
+                                                desktopLineHeight={textProps.text2.desktopLineHeight}
                                                 // Use Text4 size/lineHeight for row's title when collapsed-row mode is used
                                                 {...(idx === 0 && collapsedRowsMode
                                                     ? {
-                                                          mobileSize: textValues.text4.mobileSize,
-                                                          mobileLineHeight: textValues.text4.mobileLineHeight,
+                                                          mobileSize: textProps.text4.mobileSize,
+                                                          mobileLineHeight: textProps.text4.mobileLineHeight,
                                                       }
                                                     : {
-                                                          mobileSize: textValues.text2.mobileSize,
-                                                          mobileLineHeight: textValues.text2.mobileLineHeight,
+                                                          mobileSize: textProps.text2.mobileSize,
+                                                          mobileLineHeight: textProps.text2.mobileLineHeight,
                                                       })}
                                                 as="div"
                                                 wordBreak={false}

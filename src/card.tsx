@@ -3,7 +3,7 @@ import * as React from 'react';
 import Tag from './tag';
 import Stack from './stack';
 import Box from './box';
-import {Text2, Text, Text6, Text3, textValues} from './text';
+import {Text2, Text, Text6, Text3, textProps} from './text';
 import {Boxed, InternalBoxed} from './boxed';
 import ButtonGroup from './button-group';
 import Image from './image';
@@ -416,7 +416,7 @@ const CardContent: React.FC<CardContentProps> = ({
                 {title && (
                     <div style={{paddingBottom: subtitle || description ? 4 : 0}}>
                         <Text
-                            {...textValues.text4}
+                            {...textProps.text4}
                             truncate={titleLinesMax}
                             weight={textPresets.cardTitle.weight}
                             as={titleAs}
@@ -795,7 +795,7 @@ export const SmallNakedCard = React.forwardRef<HTMLDivElement, SmallNakedCardPro
                                 <Stack space={4}>
                                     {title && (
                                         <Text
-                                            {...textValues.text2}
+                                            {...textProps.text2}
                                             truncate={titleLinesMax}
                                             weight={textPresets.cardTitle.weight}
                                             as={titleAs}
@@ -1048,7 +1048,7 @@ export const SnapCard = React.forwardRef<HTMLDivElement, SnapCardProps>(
                                 <Stack space={4}>
                                     {title && (
                                         <Text
-                                            {...textValues.text2}
+                                            {...textProps.text2}
                                             truncate={titleLinesMax}
                                             weight={textPresets.cardTitle.weight}
                                             as={titleAs}
@@ -1635,7 +1635,7 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                                         title={
                                             title ? (
                                                 <Text
-                                                    {...textValues.text4}
+                                                    {...textProps.text4}
                                                     truncate={titleLinesMax}
                                                     weight={textPresets.cardTitle.weight}
                                                     as={titleAs}
