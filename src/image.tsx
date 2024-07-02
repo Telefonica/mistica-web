@@ -128,15 +128,13 @@ type CommonImageProps = {
 };
 
 type RectangularImageProps = {
-    /** defaults to 1:1, if both width and height are given, aspectRatio is ignored. To use original image proportions, set aspectRatio to 0  */
+    /** defaults to 0 (original image proportions). If both width and height are given, aspectRatio is ignored.  */
     aspectRatio?: AspectRatio | number;
     /** defaults to 100% when no width and no height are given */
     width?: string | number;
     height?: string | number;
     noBorderRadius?: boolean;
 };
-
-const DEFAULT_ASPECT_RATIO = '1:1';
 
 type CircularImageProps = {
     circular?: boolean;
@@ -154,7 +152,7 @@ type ImageProps = CommonImageProps & ExclusifyUnion<RectangularImageProps | Circ
 export const ImageContent = React.forwardRef<HTMLImageElement, ImageProps>(
     (
         {
-            aspectRatio = DEFAULT_ASPECT_RATIO,
+            aspectRatio = 0,
             alt = '',
             dataAttributes,
             noBorderRadius,
@@ -303,9 +301,9 @@ const Image = React.forwardRef<HTMLImageElement, ImageProps>((props, ref) => {
             ? undefined
             : props.circular
             ? 1
-            : typeof props.aspectRatio === 'number'
-            ? props.aspectRatio
-            : RATIO[props.aspectRatio ?? DEFAULT_ASPECT_RATIO];
+            : typeof props.aspectRatio === 'number' || !props.aspectRatio
+            ? props.aspectRatio ?? 0
+            : RATIO[props.aspectRatio];
 
     return (
         <AspectRatioContainer
