@@ -26,6 +26,7 @@ type Args = {
     actions: string;
     onClose: boolean;
     extra: number;
+    noDivider: boolean;
 };
 
 export const Default: StoryComponent<Args> = ({
@@ -41,6 +42,7 @@ export const Default: StoryComponent<Args> = ({
     actions,
     onClose,
     extra,
+    noDivider,
 }) => {
     const button = actions.includes('button') ? (
         <ButtonPrimary
@@ -96,6 +98,7 @@ export const Default: StoryComponent<Args> = ({
             extra={Array.from({length: extra}, (_, i) => (
                 <Placeholder key={i} height={56} />
             ))}
+            noDivider={noDivider}
         />
     );
 };
@@ -114,6 +117,7 @@ Default.args = {
     actions: 'button and link',
     onClose: true,
     extra: 0,
+    noDivider: false,
 };
 Default.argTypes = {
     headlineType: {

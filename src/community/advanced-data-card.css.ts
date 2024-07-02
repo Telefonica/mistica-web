@@ -84,7 +84,7 @@ export const touchableCardOverlay = style({
                 [`${touchableContainer}:hover &`]: {
                     backgroundColor: skinVars.colors.backgroundContainerHover,
                 },
-                [`${touchable}:active &`]: {
+                [`${touchableContainer}:active &`]: {
                     backgroundColor: skinVars.colors.backgroundContainerPressed,
                 },
             },
