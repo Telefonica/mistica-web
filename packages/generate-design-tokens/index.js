@@ -1,5 +1,8 @@
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
+import url from 'url';
+// eslint-disable-next-line import/extensions
+import {generateSkinCssSrc, buildRadius, generateCommonCssSrc} from './css-generator.js';
 
 /*
 By default, this script will look for the design tokens inside .github folder but you may want to clone the mistica-design repo elsewhere.
@@ -13,11 +16,14 @@ To run this script locally using a custom path for the tokens, you can do the fo
     DESIGN_TOKENS_FOLDER="/path/to/mistica-design/tokens" node index.js
 */
 
-const DESIGN_TOKENS_FOLDER =
-    process.env.DESIGN_TOKENS_FOLDER ||
-    path.join(__dirname, '..', '..', '.github', 'mistica-design', 'tokens');
+const DESIGN_TOKENS_FOLDER = process.env.DESIGN_TOKENS_FOLDER || '../../../mistica-design/tokens/';
 
-const SKINS_FOLDER = path.join(__dirname, '..', '..', 'src', 'skins');
+// in node >= 20 we could use import.meta.dirname instead
+// @ts-ignore
+const currentDir = url.fileURLToPath(new URL('.', import.meta.url));
+
+const SKINS_FOLDER = path.join(currentDir, '..', '..', 'src', 'skins');
+const CSS_FOLDER = path.join(currentDir, '..', '..', 'css');
 
 const KNOWN_SKINS = ['blau', 'movistar', 'o2', 'o2-new', 'telefonica', 'vivo', 'vivo-new', 'tu'];
 
@@ -66,23 +72,6 @@ const buildColor = (colorDescription) => {
     }
 
     throw new Error(`Unknown color format: ${colorDescription.value}`);
-};
-
-const buildRadius = (radiusDescription) => {
-    if (radiusDescription.value.endsWith('%')) {
-        return radiusDescription.value;
-    }
-    if (radiusDescription.value === 'circle') {
-        return '50%';
-    }
-    if (radiusDescription.value.endsWith('px')) {
-        return radiusDescription.value;
-    }
-    if (/\d+/.test(radiusDescription.value)) {
-        return `${radiusDescription.value}px`;
-    }
-
-    throw new Error(`Unknown radius format: ${radiusDescription.value}`);
 };
 
 const generateSkinSrc = (skinName) => {
@@ -166,12 +155,19 @@ const generateSkinFiles = () => {
 
         const skinSrc = generateSkinSrc(skinName);
         fs.writeFileSync(path.join(SKINS_FOLDER, `${skinName}.tsx`), skinSrc);
+
+        const skinCssSrc = generateSkinCssSrc(skinName, DESIGN_TOKENS_FOLDER);
+        fs.writeFileSync(path.join(CSS_FOLDER, `${skinName}.css`), skinCssSrc);
+
         anyGeneratedSkin = skinName;
     });
 
     if (anyGeneratedSkin) {
         const typesSrc = generateColorTypesSrc(anyGeneratedSkin);
         fs.writeFileSync(path.join(SKINS_FOLDER, 'types', 'colors.tsx'), typesSrc);
+
+        const commonCssSrc = generateCommonCssSrc(DESIGN_TOKENS_FOLDER);
+        fs.writeFileSync(path.join(CSS_FOLDER, `mistica-common.css`), commonCssSrc);
     }
 };
 

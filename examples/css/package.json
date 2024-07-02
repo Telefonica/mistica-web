@@ -1,0 +1,15 @@
+{
+    "name": "mistica-example-css",
+    "private": true,
+    "version": "0.0.0",
+    "type": "module",
+    "scripts": {
+        "dev": "vite",
+        "build": " build",
+        "preview": "vite preview"
+    },
+    "devDependencies": {
+        "vite": "^5.3.1"
+    },
+    "packageManager": "yarn@4.2.2"
+}

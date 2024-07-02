@@ -1,0 +1,120 @@
+@import url('../../css/roboto.css');
+@import url('../../css/reset.css');
+
+/* Mistica common tyles */
+@import url('../../css/mistica-common.css');
+
+/* Different skins */
+@import url('../../css/o2-new.css');
+@import url('../../css/blau.css');
+@import url('../../css/vivo-new.css');
+@import url('../../css/movistar.css');
+@import url('../../css/telefonica.css');
+@import url('../../css/tu.css');
+
+html {
+    font-size: 100%;
+}
+
+/**
+ * To enable Dynamic Type in apple devices:
+ * See: https://dev.to/colingourlay/how-to-support-apple-s-dynamic-text-in-your-web-content-with-css-40c0
+ */
+@supports (font: -apple-system-body) {
+    html {
+        font: -apple-system-body !important;
+    }
+}
+
+#app {
+    margin-top: 24px;
+    margin-bottom: 24px;
+}
+
+h1 {
+    margin-bottom: 16px;
+}
+
+.controls {
+    margin-bottom: 32px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px;
+}
+
+.controls label {
+    margin-right: 8px;
+}
+
+select {
+    color: var(--mistica-color-textPrimary);
+    background: var(--mistica-color-backgroundContainer);
+    border: 1px solid var(--mistica-color-border);
+    border-radius: var(--mistica-border-radius-input);
+    padding: 8px 16px;
+    outline: none;
+}
+
+.card {
+    padding: 24px 16px;
+}
+
+.card h2 {
+    margin-bottom: 4px;
+}
+
+.card .description {
+    color: var(--mistica-color-textSecondary);
+    margin-top: 4px;
+}
+
+.card .tag {
+    margin-bottom: 8px;
+}
+
+.card button {
+    margin-top: 16px;
+}
+
+.tag {
+    background: var(--mistica-color-tagBackgroundPromo);
+    color: var(--mistica-color-tagTextPromo);
+    font-weight: var(--mistica-font-weight-indicator);
+    border-radius: var(--mistica-border-radius-indicator);
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 56px;
+    padding: 4px 12px;
+    vertical-align: middle;
+}
+
+button {
+    color: var(--mistica-color-textButtonPrimary);
+    background: var(--mistica-color-buttonPrimaryBackground);
+    border-radius: var(--mistica-border-radius-button);
+    font-size: var(--mistica-font-size-2);
+    line-height: var(--mistica-line-height-2);
+    font-weight: var(--mistica-font-weight-button);
+    border: 1.5px solid transparent;
+    min-width: 104px;
+    padding: 12px 16px;
+    cursor: pointer;
+    outline: none;
+}
+
+button.small {
+    padding: 6px 12px;
+    min-width: 80px;
+}
+
+button:hover {
+    background: var(--mistica-color-buttonPrimaryBackgroundHover);
+}
+
+button:active {
+    background: var(--mistica-color-buttonPrimaryBackgroundSelected);
+}
