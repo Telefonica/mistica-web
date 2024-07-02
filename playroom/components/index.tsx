@@ -145,6 +145,7 @@ type PreviewToolsControlsProps = {
     onColorSchemeChange: (newColorScheme: ColorScheme) => void;
     onEditStoryPress: () => void;
     showPlatformSelector: boolean;
+    forceTabs?: boolean;
 };
 
 const PreviewToolsControls = React.forwardRef<HTMLDivElement, PreviewToolsControlsProps>(
@@ -158,6 +159,7 @@ const PreviewToolsControls = React.forwardRef<HTMLDivElement, PreviewToolsContro
             colorScheme,
             onColorSchemeChange,
             onEditStoryPress,
+            forceTabs,
         },
         ref
     ) => {
@@ -165,7 +167,7 @@ const PreviewToolsControls = React.forwardRef<HTMLDivElement, PreviewToolsContro
         const systemColorScheme = 'light';
         const alternativeColorScheme = 'dark';
 
-        if (isMobile) {
+        if (isMobile && !forceTabs) {
             return (
                 <div className={styles.controls} ref={ref}>
                     <Select
@@ -286,6 +288,7 @@ type PreviewToolsProps = {
     showColorSchemeSelector?: boolean;
     forceMobile?: boolean;
     forceDesktop?: boolean;
+    forceTabs?: boolean;
     hide?: boolean;
     children: React.ReactNode;
 };
@@ -299,6 +302,7 @@ export const PreviewTools = ({
     showPlatformSelector = false,
     forceMobile = false,
     forceDesktop = false,
+    forceTabs = false,
     hide,
 }: PreviewToolsProps): JSX.Element => {
     const {
@@ -372,6 +376,7 @@ export const PreviewTools = ({
                 onEditStoryPress={editStory}
                 onColorSchemeChange={setColorScheme}
                 colorScheme={colorScheme}
+                forceTabs={forceTabs}
             />
         </ThemeContextProvider>
     );
