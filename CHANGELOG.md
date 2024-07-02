@@ -1,3 +1,18 @@
+# [15.12.0](https://github.com/Telefonica/mistica-web/compare/v15.11.1...v15.12.0) (2024-07-02)
+
+
+### Bug Fixes
+
+* **Carousel:** when using renderBullets, don't hide the bullets automatically when there is only one page ([#1158](https://github.com/Telefonica/mistica-web/issues/1158)) ([ea446a6](https://github.com/Telefonica/mistica-web/commit/ea446a6d13cffa3e0bb053263ba1e1d91df18028))
+* **Dialog, FixedFooterLayout, LoadingBar, NavigationBar, Overlay, Portal, Select, Sheet, Snackbar:** avoid z-index issues ([#1148](https://github.com/Telefonica/mistica-web/issues/1148)) ([0412448](https://github.com/Telefonica/mistica-web/commit/04124480911f66defd24e3e8283d4e3edd7441a5))
+
+
+### Features
+
+* **Icons:** Add O2-new icon set ([#1155](https://github.com/Telefonica/mistica-web/issues/1155)) ([af2055b](https://github.com/Telefonica/mistica-web/commit/af2055b2861c7d20ce8238ac2358438ce3202905))
+* **Snackbar:** buttonAccesibilityLabel ([#1153](https://github.com/Telefonica/mistica-web/issues/1153)) ([3f5ab2c](https://github.com/Telefonica/mistica-web/commit/3f5ab2cd208c68fffd54248aead026146c58b8e4))
+* **Text:** avoid ignoring line breaks ([#1157](https://github.com/Telefonica/mistica-web/issues/1157)) ([69c78aa](https://github.com/Telefonica/mistica-web/commit/69c78aa3409fc6d7b471e587d7143ba8d37709e5))
+
 ## [15.11.1](https://github.com/Telefonica/mistica-web/compare/v15.11.0...v15.11.1) (2024-06-19)
 
 
