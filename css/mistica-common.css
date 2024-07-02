@@ -131,6 +131,13 @@
     font-weight: var(--mistica-font-weight-navigationBar);
 }
 
+/* Boxed */
+.mistica-boxed {
+    border: 1px solid var(--mistica-color-border);
+    border-radius: var(--mistica-border-radius-container);
+    background: var(--mistica-color-backgroundContainer);
+}
+
 /* Responsive layout */
 .mistica-responsive-layout {
     padding-left: env(safe-area-inset-left);

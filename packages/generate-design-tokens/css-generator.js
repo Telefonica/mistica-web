@@ -328,6 +328,13 @@ ${borderRadiiClasses}
 /* text utility classes */
 ${textClasses}
 
+/* Boxed */
+.${prefix}boxed {
+    border: 1px solid var(${buildColorVarName('border')});
+    border-radius: var(${buildBorderRadiusVarName('container')});
+    background: var(${buildColorVarName('backgroundContainer')});
+}
+
 /* Responsive layout */
 .${prefix}responsive-layout {
     padding-left: env(safe-area-inset-left);

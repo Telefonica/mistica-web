@@ -57,9 +57,6 @@ select {
 }
 
 .card {
-    border: 1px solid var(--mistica-color-border);
-    border-radius: var(--mistica-border-radius-container);
-    background: var(--mistica-color-backgroundContainer);
     padding: 24px 16px;
 }
 
@@ -85,8 +82,8 @@ select {
     color: var(--mistica-color-tagTextPromo);
     font-weight: var(--mistica-font-weight-indicator);
     border-radius: var(--mistica-border-radius-indicator);
-    font-size: 14px;
-    line-height: 20px;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
     display: inline-flex;
     align-items: center;
     justify-content: center;
