@@ -96,7 +96,7 @@ const Template: StoryComponent<Args & {type?: 'boxed'}> = ({title, subtitle, sin
                         title={title}
                         subtitle={subtitle}
                         content={content}
-                        asset={<Image src={touchImg} width={80} />}
+                        asset={<Image src={touchImg} width={80} aspectRatio="1:1" />}
                         {...(type === 'boxed' && {isInverse: inverse})}
                         dataAttributes={{testid: 'accordion-item-7'}}
                     />

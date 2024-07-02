@@ -336,7 +336,7 @@ const Template: StoryComponent<Args & {boxed?: boolean; isInverse?: boolean}> = 
                 {...getControlProps(row++)}
             />
             <RowComponent
-                asset={<Image src={touchImg} width={80} />}
+                asset={<Image src={touchImg} width={80} aspectRatio="1:1" />}
                 headline={headline}
                 title={title}
                 subtitle={subtitle}
