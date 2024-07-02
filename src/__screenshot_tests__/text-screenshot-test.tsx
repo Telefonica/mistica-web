@@ -27,3 +27,18 @@ test('Text wrapping', async () => {
     const image = await element.screenshot();
     expect(image).toMatchImageSnapshot();
 });
+
+test('Text wrapping - multiple line breaks', async () => {
+    await openStoryPage({
+        id: 'components-text--text-wrapping',
+        device: 'DESKTOP',
+        args: {
+            text: 'text with line breaks',
+        },
+    });
+
+    const element = await screen.findByTestId('text');
+
+    const image = await element.screenshot();
+    expect(image).toMatchImageSnapshot();
+});

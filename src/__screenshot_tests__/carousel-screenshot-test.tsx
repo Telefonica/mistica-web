@@ -148,6 +148,16 @@ test('CenteredCarousel mobile', async () => {
     expect(await page.screenshot()).toMatchImageSnapshot();
 });
 
+test('CenteredCarousel with only one item', async () => {
+    const page = await openStoryPage({
+        id: 'components-carousels-centeredcarousel--default',
+        device: 'MOBILE_IOS',
+        args: {numItems: 1},
+    });
+
+    expect(await page.screenshot()).toMatchImageSnapshot();
+});
+
 test('CenteredCarousel mobile with initialActiveItem=1', async () => {
     const page = await openStoryPage({
         id: 'components-carousels-centeredcarousel--default',

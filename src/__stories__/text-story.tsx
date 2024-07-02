@@ -60,35 +60,36 @@ const Wrapper = ({children}: any) => (
 );
 
 type TextWrappingArgs = {
-    text: string;
+    text: 'custom' | 'text with line breaks';
+    customText: string;
 };
 
-export const TextWrapping: StoryComponent<TextWrappingArgs> = ({text}) => {
+export const TextWrapping: StoryComponent<TextWrappingArgs> = ({text, customText}) => {
     return (
         <Stack space={16} dataAttributes={{testid: 'text'}}>
             <Wrapper>
                 <Title1>Default (with wordBreak)</Title1>
-                <Text2 regular>{text}</Text2>
+                <Text2 regular>{customText ?? text}</Text2>
             </Wrapper>
 
             <Wrapper>
                 <Title1>Without wordBreak</Title1>
                 <Text2 regular wordBreak={false}>
-                    {text}
+                    {customText ?? text}
                 </Text2>
             </Wrapper>
 
             <Wrapper>
                 <Title1>truncate=1</Title1>
                 <Text2 regular truncate>
-                    {text}
+                    {customText ?? text}
                 </Text2>
             </Wrapper>
 
             <Wrapper>
                 <Title1>truncate=3</Title1>
                 <Text2 regular truncate={3}>
-                    {text}
+                    {customText ?? text}
                 </Text2>
             </Wrapper>
         </Stack>
@@ -97,5 +98,21 @@ export const TextWrapping: StoryComponent<TextWrappingArgs> = ({text}) => {
 
 TextWrapping.storyName = 'Text wrapping';
 TextWrapping.args = {
-    text: 'Strawberry Friendship Everything Pneumonoultramicroscopicsilicovolcanoconiosis Appreciate Motivation',
+    text: 'custom',
+    customText:
+        'Strawberry Friendship Everything Pneumonoultramicroscopicsilicovolcanoconiosis Appreciate Motivation',
+};
+
+TextWrapping.argTypes = {
+    text: {
+        control: {type: 'select'},
+        options: ['text with line breaks', 'custom'],
+        mapping: {
+            'text with line breaks': '\nan example text\n\n\nwith\n\nsome line\n breaks\n',
+        },
+    },
+    customText: {
+        control: {type: 'text'},
+        if: {arg: 'text', eq: 'custom'},
+    },
 };

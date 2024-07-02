@@ -175,6 +175,8 @@ export const Text: React.FC<TextProps> = ({
                 color: isInverse ? inverseColorsMap[color] ?? color : color,
                 textAlign,
                 textShadow,
+                // When rendering as <pre/>, spaces are preserved and we don't want to remove them
+                whiteSpace: as === 'pre' ? undefined : 'pre-line',
             },
         },
         skinName === VIVO_NEW_SKIN ? makeVivinhoCharReadableForScreenReaders(children) : children
