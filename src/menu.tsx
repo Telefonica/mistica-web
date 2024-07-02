@@ -430,8 +430,8 @@ export const Menu: React.FC<MenuProps> = ({
                                               }),
 
                                               ...(itemsComputedProps.maxHeight !== undefined && {
-                                                  [styles.vars
-                                                      .maxHeight]: `${itemsComputedProps.maxHeight}px`,
+                                                  [styles.vars.maxHeight]:
+                                                      `${itemsComputedProps.maxHeight}px`,
                                               }),
 
                                               ...(width !== undefined && {

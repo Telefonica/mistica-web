@@ -229,9 +229,7 @@ const Slider = React.forwardRef<HTMLInputElement, SliderProps>(
         };
 
         const progress = getSliderValueAsPercentage(finalValue, min, max);
-        const thumbPosition = `calc(${progress} * (100% - ${thumbSize}px) - ${
-            (touchableArea - thumbSize) / 2
-        }px)`;
+        const thumbPosition = `calc(${progress} * (100% - ${thumbSize}px) - ${(touchableArea - thumbSize) / 2}px)`;
         const trackProgressPosition = `calc(${thumbPosition} + ${touchableArea / 2}px)`;
 
         const thumb = (

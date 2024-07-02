@@ -167,8 +167,8 @@ const AccordionItemContent = React.forwardRef<TouchableElement, AccordionItemCon
                                             isInverse
                                                 ? skinVars.colors.inverse
                                                 : isOpen
-                                                ? skinVars.colors.neutralHigh
-                                                : skinVars.colors.neutralMedium
+                                                  ? skinVars.colors.neutralHigh
+                                                  : skinVars.colors.neutralMedium
                                         }
                                     />
                                 </div>

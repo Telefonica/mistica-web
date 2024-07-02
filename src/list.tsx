@@ -120,8 +120,8 @@ export const Content: React.FC<ContentProps> = ({
                                     ? vars.colors.textErrorInverse
                                     : vars.colors.textError
                                 : isInverse
-                                ? vars.colors.textPrimaryInverse
-                                : vars.colors.textPrimary,
+                                  ? vars.colors.textPrimaryInverse
+                                  : vars.colors.textPrimary,
                             [mediaStyles.vars.mediaBorderRadius]: vars.borderRadii.mediaSmall,
                         })}
                     >

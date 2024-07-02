@@ -511,8 +511,8 @@ const BaseCarousel = ({
                             ...(mobilePageOffset === 'large'
                                 ? {[styles.vars.mobilePageOffset]: largePageOffset}
                                 : skinName === VIVO_NEW_SKIN
-                                ? {[styles.vars.mobilePageOffset]: vivoNewMobilePageOffset}
-                                : {}),
+                                  ? {[styles.vars.mobilePageOffset]: vivoNewMobilePageOffset}
+                                  : {}),
                             ...(gap !== undefined ? {[styles.vars.gap]: String(gap)} : {}),
                         }),
                         scrollSnapType: free ? 'initial' : 'x mandatory',

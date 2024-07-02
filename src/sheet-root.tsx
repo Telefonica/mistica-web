@@ -85,7 +85,7 @@ type SheetTypeWithPropsUnion = {
     [T in SheetType]: SheetTypeWithProps<T>;
 }[SheetType];
 
-export type NativeSheetImplementation = typeof import('@tef-novum/webview-bridge')['bottomSheet'];
+export type NativeSheetImplementation = (typeof import('@tef-novum/webview-bridge'))['bottomSheet'];
 
 type SheetPropsListener = (sheetProps: SheetTypeWithPropsUnion) => void;
 type SheetPromiseResolve = <T>(

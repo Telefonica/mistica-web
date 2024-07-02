@@ -173,8 +173,8 @@ export const ImageContent = React.forwardRef<HTMLImageElement, ImageProps>(
         const borderRadiusStyle = props.circular
             ? styles.circularBorderRadius
             : noBorderRadius
-            ? styles.noBorderRadius
-            : styles.defaultBorderRadius;
+              ? styles.noBorderRadius
+              : styles.defaultBorderRadius;
 
         const [isError, setIsError] = React.useState(!src);
         const [hideLoadingFallback, setHideLoadingFallback] = React.useState(false);
@@ -183,10 +183,10 @@ export const ImageContent = React.forwardRef<HTMLImageElement, ImageProps>(
             props.width && props.height
                 ? undefined
                 : props.circular
-                ? 1
-                : typeof aspectRatio === 'number'
-                ? aspectRatio
-                : RATIO[aspectRatio];
+                  ? 1
+                  : typeof aspectRatio === 'number'
+                    ? aspectRatio
+                    : RATIO[aspectRatio];
 
         const withLoadingFallback = loadingFallback && !!(ratio !== 0 || (props.width && props.height));
         const withErrorFallback = errorFallback && !!(ratio !== 0 || (props.width && props.height));
@@ -302,10 +302,10 @@ const Image = React.forwardRef<HTMLImageElement, ImageProps>((props, ref) => {
         props.width && props.height
             ? undefined
             : props.circular
-            ? 1
-            : typeof props.aspectRatio === 'number'
-            ? props.aspectRatio
-            : RATIO[props.aspectRatio ?? DEFAULT_ASPECT_RATIO];
+              ? 1
+              : typeof props.aspectRatio === 'number'
+                ? props.aspectRatio
+                : RATIO[props.aspectRatio ?? DEFAULT_ASPECT_RATIO];
 
     return (
         <AspectRatioContainer

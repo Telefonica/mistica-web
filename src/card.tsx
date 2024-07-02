@@ -1264,8 +1264,8 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
             hasImage || hasVideo
                 ? styles.touchableCardOverlayMedia
                 : isInverse
-                ? styles.touchableCardOverlayInverse
-                : styles.touchableCardOverlay;
+                  ? styles.touchableCardOverlayInverse
+                  : styles.touchableCardOverlay;
 
         const ariaLabel =
             ariaLabelProp ||
@@ -1559,8 +1559,8 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
             hasImage || hasVideo
                 ? styles.touchableCardOverlayMedia
                 : normalizedVariant === 'inverse'
-                ? styles.touchableCardOverlayInverse
-                : styles.touchableCardOverlay;
+                  ? styles.touchableCardOverlayInverse
+                  : styles.touchableCardOverlay;
 
         const ariaLabel =
             ariaLabelProp ||
@@ -1717,8 +1717,8 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                         hasImage || hasVideo
                             ? 'media'
                             : normalizedVariant === 'inverse'
-                            ? 'inverse'
-                            : 'default'
+                              ? 'inverse'
+                              : 'default'
                     }
                 />
             </CardContainer>

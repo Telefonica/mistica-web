@@ -196,13 +196,13 @@ test('Radio custom render', () => {
     expect(screen.getByText('banana')).toBeInTheDocument();
     expect(screen.getByText('apple')).toBeInTheDocument();
 
-    expect(screen.getByText('banana').parentElement).toBeChecked();
-    expect(screen.getByText('apple').parentElement).not.toBeChecked();
+    expect(screen.getByRole('radio', {name: 'banana'})).toBeChecked();
+    expect(screen.getByRole('radio', {name: 'apple'})).not.toBeChecked();
 
     fireEvent.click(screen.getByRole('radio', {name: 'apple'}));
 
-    expect(screen.getByText('banana').parentElement).not.toBeChecked();
-    expect(screen.getByText('apple').parentElement).toBeChecked();
+    expect(screen.getByRole('radio', {name: 'banana'})).not.toBeChecked();
+    expect(screen.getByRole('radio', {name: 'apple'})).toBeChecked();
 });
 
 test('form controlled mode', async () => {
@@ -226,13 +226,13 @@ test('form controlled mode', async () => {
         </ThemeContextProvider>
     );
 
-    expect(screen.getByText('banana').parentElement).not.toBeChecked();
-    expect(screen.getByText('apple').parentElement).toBeChecked();
+    expect(screen.getByRole('radio', {name: 'banana'})).not.toBeChecked();
+    expect(screen.getByRole('radio', {name: 'apple'})).toBeChecked();
 
     fireEvent.click(screen.getByRole('radio', {name: 'banana'}));
 
-    expect(screen.getByText('banana').parentElement).toBeChecked();
-    expect(screen.getByText('apple').parentElement).not.toBeChecked();
+    expect(screen.getByRole('radio', {name: 'banana'})).toBeChecked();
+    expect(screen.getByRole('radio', {name: 'apple'})).not.toBeChecked();
 
     await userEvent.click(screen.getByRole('button'));
 
@@ -247,18 +247,13 @@ test('form uncontrolled mode', async () => {
     const ControlledRadioGroup = () => {
         const [value, setValue] = React.useState('banana');
         return (
-            <ThemeContextProvider theme={makeTheme()}>
-                <RadioGroup value={value} onChange={setValue} name="radio-group" aria-labelledby="label">
-                    <RadioButton
-                        value="banana"
-                        render={({controlElement}) => <div>banana {controlElement}</div>}
-                    />
-                    <RadioButton
-                        value="apple"
-                        render={({controlElement}) => <div>apple {controlElement}</div>}
-                    />
-                </RadioGroup>
-            </ThemeContextProvider>
+            <RadioGroup value={value} onChange={setValue} name="radio-group" aria-labelledby="label">
+                <RadioButton
+                    value="banana"
+                    render={({controlElement}) => <div>banana {controlElement}</div>}
+                />
+                <RadioButton value="apple" render={({controlElement}) => <div>apple {controlElement}</div>} />
+            </RadioGroup>
         );
     };
 
@@ -271,13 +266,13 @@ test('form uncontrolled mode', async () => {
         </ThemeContextProvider>
     );
 
-    expect(screen.getByText('banana').parentElement).toBeChecked();
-    expect(screen.getByText('apple').parentElement).not.toBeChecked();
+    expect(screen.getByRole('radio', {name: 'banana'})).toBeChecked();
+    expect(screen.getByRole('radio', {name: 'apple'})).not.toBeChecked();
 
     fireEvent.click(screen.getByRole('radio', {name: 'apple'}));
 
-    expect(screen.getByText('banana').parentElement).not.toBeChecked();
-    expect(screen.getByText('apple').parentElement).toBeChecked();
+    expect(screen.getByRole('radio', {name: 'banana'})).not.toBeChecked();
+    expect(screen.getByRole('radio', {name: 'apple'})).toBeChecked();
 
     await userEvent.click(screen.getByRole('button'));
 

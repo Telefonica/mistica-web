@@ -7,8 +7,8 @@ import Chip from '../chip';
 <Chip id="someid">hello</Chip>;
 <Chip onClose={() => {}}>hello</Chip>;
 
+// @ts-expect-error Chip only accepts string children
 <Chip>
-    {/* @ts-expect-error Chip only accepts string children */}
     <div>hello</div>
 </Chip>;
 
