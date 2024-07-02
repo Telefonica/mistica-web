@@ -176,6 +176,23 @@ const borderRadii: BorderRadiiConfig = {
     mediaSmall: '',
 };
 
+const textPresets = {
+    cardTitle: {weight: ''},
+    button: {weight: ''},
+    link: {weight: ''},
+    title1: {weight: ''},
+    title2: {weight: ''},
+    indicator: {weight: ''},
+    tabsLabel: {weight: ''},
+    navigationBar: {weight: ''},
+    text5: {weight: ''},
+    text6: {weight: ''},
+    text7: {weight: ''},
+    text8: {weight: ''},
+    text9: {weight: ''},
+    text10: {weight: ''},
+};
+
 export const vars = createThemeContract({
     colors,
     /**
@@ -185,4 +202,5 @@ export const vars = createThemeContract({
      */
     rawColors: colors,
     borderRadii,
+    textPresets,
 });

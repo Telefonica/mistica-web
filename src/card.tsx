@@ -3,7 +3,7 @@ import * as React from 'react';
 import Tag from './tag';
 import Stack from './stack';
 import Box from './box';
-import {Text2, Text, Text6, Text3} from './text';
+import {Text2, Text, Text6, Text3, textProps} from './text';
 import {Boxed, InternalBoxed} from './boxed';
 import ButtonGroup from './button-group';
 import Image from './image';
@@ -416,10 +416,7 @@ const CardContent: React.FC<CardContentProps> = ({
                 {title && (
                     <div style={{paddingBottom: subtitle || description ? 4 : 0}}>
                         <Text
-                            mobileSize={18}
-                            mobileLineHeight="24px"
-                            desktopSize={20}
-                            desktopLineHeight="28px"
+                            {...textProps.text4}
                             truncate={titleLinesMax}
                             weight={textPresets.cardTitle.weight}
                             as={titleAs}
@@ -798,10 +795,7 @@ export const SmallNakedCard = React.forwardRef<HTMLDivElement, SmallNakedCardPro
                                 <Stack space={4}>
                                     {title && (
                                         <Text
-                                            desktopSize={16}
-                                            mobileSize={14}
-                                            mobileLineHeight="20px"
-                                            desktopLineHeight="24px"
+                                            {...textProps.text2}
                                             truncate={titleLinesMax}
                                             weight={textPresets.cardTitle.weight}
                                             as={titleAs}
@@ -1054,10 +1048,7 @@ export const SnapCard = React.forwardRef<HTMLDivElement, SnapCardProps>(
                                 <Stack space={4}>
                                     {title && (
                                         <Text
-                                            desktopSize={16}
-                                            mobileSize={14}
-                                            mobileLineHeight="20px"
-                                            desktopLineHeight="24px"
+                                            {...textProps.text2}
                                             truncate={titleLinesMax}
                                             weight={textPresets.cardTitle.weight}
                                             as={titleAs}
@@ -1644,10 +1635,7 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                                         title={
                                             title ? (
                                                 <Text
-                                                    desktopSize={20}
-                                                    mobileSize={18}
-                                                    mobileLineHeight="24px"
-                                                    desktopLineHeight="28px"
+                                                    {...textProps.text4}
                                                     truncate={titleLinesMax}
                                                     weight={textPresets.cardTitle.weight}
                                                     as={titleAs}

@@ -20,6 +20,9 @@ export const fullWidth = style({minWidth: '100%'});
 // In mobile, we have 2 rendering modes: horizontal scroll, or collapsed rows. In collapsed rows mode, every row is rendered as a card
 export const collapsedRowsInMobile = style({});
 
+export const hiddenHeadersInMobile = style({});
+export const hiddenHeadersInDesktop = style({});
+
 const BOXED_PADDING_Y_DESKTOP = 8;
 
 export const boxed = style({
@@ -93,11 +96,22 @@ export const verticalAlign = styleVariants({
     middle: {verticalAlign: 'middle'},
 });
 
+export const actionsHeaderText = style({
+    position: 'absolute',
+    top: -9999,
+    left: -9999,
+});
+
+export const actionsTableCell = style({});
+export const topActions = style({});
+
 // we can only apply sticky head to boxed tables, because non-boxed tables don't have a background
 globalStyle(`${boxed} thead`, {
     position: 'sticky',
     top: 0,
     background: skinVars.colors.backgroundContainer,
+    // render on top of the table rows
+    zIndex: 1,
 });
 
 const ROW_MIN_HEIGHT = 56;
@@ -114,14 +128,6 @@ globalStyle(`${boxed} th`, {
             paddingTop: 16 + BOXED_PADDING_Y_DESKTOP,
         },
     },
-});
-
-globalStyle(`${table} th:first-child, ${table} td:first-child`, {
-    paddingLeft: 0,
-});
-
-globalStyle(`${table} th:last-child, ${table} td:last-child`, {
-    paddingRight: 0,
 });
 
 globalStyle(`${table} tr:last-child td`, {
@@ -148,14 +154,11 @@ export const mobileCellHeading = style({
     },
 });
 
-export const collapsedRowTittle = style({
+export const collapsedRowTitle = style({
     '@media': {
         [mq.tabletOrSmaller]: {
+            fontWeight: skinVars.textPresets.cardTitle.weight,
             paddingBottom: 8,
-        },
-        [mq.desktopOrBigger]: {
-            // revert the medium weight to regular in desktop
-            fontWeight: 400,
         },
     },
 });
@@ -168,13 +171,28 @@ globalStyle(`${collapsedRowsInMobile} tbody td`, {
             height: 'auto', // reset min-height
             padding: '0 0 8px 0',
         },
+        [mq.desktopOrBigger]: {
+            marginRight: 0, // remove right space occupied by actions
+        },
     },
 });
 
-globalStyle(`${collapsedRowsInMobile} tbody td:last-child`, {
+export const rowFirstItem = style({});
+export const rowLastItem = style({});
+export const rowLastCollapsedItem = style({});
+
+globalStyle(`${table} ${rowFirstItem}`, {
+    paddingLeft: 0,
+});
+
+globalStyle(`${table} ${rowLastItem}`, {
+    paddingRight: 0,
+});
+
+globalStyle(`${collapsedRowsInMobile} ${rowLastCollapsedItem}`, {
     '@media': {
         [mq.tabletOrSmaller]: {
-            paddingBottom: '0',
+            paddingBottom: 0,
         },
     },
 });
@@ -183,22 +201,6 @@ globalStyle(`${collapsedRowsInMobile} tbody tr`, {
     '@media': {
         [mq.tabletOrSmaller]: {
             padding: '16px 0',
-        },
-    },
-});
-
-globalStyle(`${collapsedRowsInMobile} tbody tr:first-child`, {
-    '@media': {
-        [mq.tabletOrSmaller]: {
-            paddingTop: 0,
-        },
-    },
-});
-
-globalStyle(`${collapsedRowsInMobile} tbody tr:last-child`, {
-    '@media': {
-        [mq.tabletOrSmaller]: {
-            paddingBottom: 0,
         },
     },
 });
@@ -217,7 +219,7 @@ globalStyle(`${collapsedRowsInMobile}${boxed} tbody tr`, {
             border: `1px solid ${skinVars.colors.border}`,
             background: skinVars.colors.backgroundContainer,
             borderRadius: skinVars.borderRadii.container,
-            padding: 16,
+            padding: '24px 16px',
             marginBottom: 16,
         },
     },
@@ -231,13 +233,41 @@ globalStyle(`${collapsedRowsInMobile}${boxed} tbody tr:last-child`, {
     },
 });
 
-// hide thead in mobile when collapse-rows responsive mode is active. Dont use display: none for screen readers
-globalStyle(`${collapsedRowsInMobile} thead tr`, {
+// Hide headers from UI. Dont use display: none for screen readers
+globalStyle(`${hiddenHeadersInDesktop} thead tr`, {
+    '@media': {
+        [mq.desktopOrBigger]: {
+            position: 'absolute',
+            top: -9999,
+            left: -9999,
+        },
+    },
+});
+
+globalStyle(`${hiddenHeadersInMobile} thead tr`, {
     '@media': {
         [mq.tabletOrSmaller]: {
             position: 'absolute',
             top: -9999,
             left: -9999,
+        },
+    },
+});
+
+// In collapse-rows mode, we don't render actions as a table cell in mobile
+globalStyle(`${collapsedRowsInMobile} ${actionsTableCell}`, {
+    '@media': {
+        [mq.tabletOrSmaller]: {
+            display: 'none',
+        },
+    },
+});
+
+// In collapse-rows mode, we don't render top actions in desktop
+globalStyle(`${collapsedRowsInMobile} ${topActions}`, {
+    '@media': {
+        [mq.desktopOrBigger]: {
+            display: 'none',
         },
     },
 });

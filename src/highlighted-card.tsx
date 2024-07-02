@@ -3,7 +3,7 @@ import * as React from 'react';
 import {useIsInverseVariant} from './theme-variant-context';
 import Stack from './stack';
 import {BaseTouchable} from './touchable';
-import {Text, Text2} from './text';
+import {Text, Text2, textProps} from './text';
 import {Boxed} from './boxed';
 import MaybeDismissable, {useIsDismissable} from './maybe-dismissable';
 import * as styles from './highlighted-card.css';
@@ -88,10 +88,7 @@ const Content = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
                 <Stack space={8}>
                     {!!title && (
                         <Text
-                            mobileSize={18}
-                            mobileLineHeight="24px"
-                            desktopSize={20}
-                            desktopLineHeight="28px"
+                            {...textProps.text4}
                             truncate={titleLinesMax}
                             weight={textPresets.cardTitle.weight}
                             as={titleAs}
