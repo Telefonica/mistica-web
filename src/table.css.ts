@@ -110,6 +110,8 @@ globalStyle(`${boxed} thead`, {
     position: 'sticky',
     top: 0,
     background: skinVars.colors.backgroundContainer,
+    // render on top of the table rows
+    zIndex: 1,
 });
 
 const ROW_MIN_HEIGHT = 56;
