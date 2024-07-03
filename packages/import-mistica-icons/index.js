@@ -220,9 +220,9 @@ const createAllIconKeywordsSource = () => {
      *
      * To update, execute "yarn start" inside "import-mistica-icons"
      */
-    
+
     const iconKeywords: {[key: string]: Array<string>} = ${JSON.stringify(result)};
-    
+
     export default iconKeywords;
     `;
 

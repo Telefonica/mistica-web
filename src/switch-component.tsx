@@ -108,11 +108,11 @@ const Switch: React.FC<PropsRender | PropsChildren> = (props) => {
                                     ? isChecked
                                         ? 'checkedIos'
                                         : isDarkMode
-                                        ? 'iosDark'
-                                        : 'ios'
+                                          ? 'iosDark'
+                                          : 'ios'
                                     : isChecked
-                                    ? 'checked'
-                                    : 'default'
+                                      ? 'checked'
+                                      : 'default'
                             ]
                         }
                     />

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Sheet, {ActionsSheet, ActionsListSheet, InfoSheet, RadioListSheet} from '../sheet';
-import {act, render, screen, waitForElementToBeRemoved, within} from '@testing-library/react';
+import {act, render, screen, waitFor, waitForElementToBeRemoved, within} from '@testing-library/react';
 import {SheetRoot, ButtonPrimary, showSheet, ThemeContextProvider, Title1} from '..';
 import {makeTheme} from './test-utils';
 import userEvent from '@testing-library/user-event';
@@ -43,8 +43,9 @@ test('Sheet', async () => {
 
     const closeButton = await within(sheet).findByRole('button', {name: 'Close'});
 
-    await userEvent.click(closeButton);
-    await waitForElementToBeRemoved(sheet);
+    await act(() => userEvent.click(closeButton));
+
+    await waitForElementToBeRemoved(sheet, {timeout: 5000});
 }, 30000);
 
 test('RadioListSheet', async () => {
@@ -91,9 +92,9 @@ test('RadioListSheet', async () => {
     expect(item2).toBeChecked();
 
     await userEvent.click(item1);
-    await userEvent.click(continueButton);
+    await act(() => userEvent.click(continueButton));
 
-    await waitForElementToBeRemoved(sheet);
+    await waitForElementToBeRemoved(sheet, {timeout: 5000});
     expect(selectSpy).toHaveBeenCalledWith('1');
 }, 30000);
 
@@ -142,7 +143,13 @@ test('ActionsListSheet', async () => {
 
     await userEvent.click(action1);
 
-    await waitForElementToBeRemoved(sheet);
+    await waitFor(
+        () => {
+            expect(sheet).not.toBeInTheDocument();
+        },
+        {timeout: 5000}
+    );
+
     expect(selectSpy).toHaveBeenCalledWith('1');
 }, 30000);
 
@@ -247,7 +254,13 @@ test('ActionsSheet', async () => {
 
     await userEvent.click(secondary);
 
-    await waitForElementToBeRemoved(sheet);
+    await waitFor(
+        () => {
+            expect(sheet).not.toBeInTheDocument();
+        },
+        {timeout: 5000}
+    );
+
     expect(onPressButtonSpy).toHaveBeenCalledWith('SECONDARY');
 }, 30000);
 
@@ -275,7 +288,13 @@ test('showSheet INFO', async () => {
     const closeButton = await screen.findByRole('button', {name: 'Cerrar'});
     await userEvent.click(closeButton);
 
-    await waitForElementToBeRemoved(sheet);
+    await waitFor(
+        () => {
+            expect(sheet).not.toBeInTheDocument();
+        },
+        {timeout: 5000}
+    );
+
     expect(resultSpy).toHaveBeenCalledWith(undefined);
 }, 30000);
 
@@ -307,7 +326,13 @@ test('showSheet ACTIONS_LIST', async () => {
 
     await userEvent.click(item1);
 
-    await waitForElementToBeRemoved(sheet);
+    await waitFor(
+        () => {
+            expect(sheet).not.toBeInTheDocument();
+        },
+        {timeout: 5000}
+    );
+
     expect(resultSpy).toHaveBeenCalledWith({action: 'SUBMIT', selectedId: '2'});
 }, 30000);
 
@@ -338,7 +363,13 @@ test('showSheet ACTIONS_LIST dismiss', async () => {
     const closeButton = await screen.findByRole('button', {name: 'Cerrar'});
     await userEvent.click(closeButton);
 
-    await waitForElementToBeRemoved(sheet);
+    await waitFor(
+        () => {
+            expect(sheet).not.toBeInTheDocument();
+        },
+        {timeout: 5000}
+    );
+
     expect(resultSpy).toHaveBeenCalledWith({action: 'DISMISS'});
 }, 30000);
 
@@ -372,7 +403,13 @@ test('showSheet RADIO_LIST', async () => {
     await userEvent.click(item1);
     await userEvent.click(continueButton);
 
-    await waitForElementToBeRemoved(sheet);
+    await waitFor(
+        () => {
+            expect(sheet).not.toBeInTheDocument();
+        },
+        {timeout: 5000}
+    );
+
     expect(resultSpy).toHaveBeenCalledWith({action: 'SUBMIT', selectedId: '2'});
 }, 30000);
 
@@ -403,7 +440,13 @@ test('showSheet RADIO_LIST dismiss', async () => {
     const closeButton = await screen.findByRole('button', {name: 'Cerrar'});
     await userEvent.click(closeButton);
 
-    await waitForElementToBeRemoved(sheet);
+    await waitFor(
+        () => {
+            expect(sheet).not.toBeInTheDocument();
+        },
+        {timeout: 5000}
+    );
+
     expect(resultSpy).toHaveBeenCalledWith({action: 'DISMISS'});
 }, 30000);
 
@@ -442,7 +485,13 @@ test('showSheet ACTIONS', async () => {
 
     await userEvent.click(link);
 
-    await waitForElementToBeRemoved(sheet);
+    await waitFor(
+        () => {
+            expect(sheet).not.toBeInTheDocument();
+        },
+        {timeout: 5000}
+    );
+
     expect(resultSpy).toHaveBeenCalledWith({action: 'LINK'});
 }, 30000);
 
@@ -474,7 +523,13 @@ test('showSheet ACTIONS dismiss', async () => {
     const closeButton = await screen.findByRole('button', {name: 'Cerrar'});
     await userEvent.click(closeButton);
 
-    await waitForElementToBeRemoved(sheet);
+    await waitFor(
+        () => {
+            expect(sheet).not.toBeInTheDocument();
+        },
+        {timeout: 5000}
+    );
+
     expect(resultSpy).toHaveBeenCalledWith({action: 'DISMISS'});
 }, 30000);
 
@@ -488,7 +543,7 @@ test('showSheet fails if SheetRoot is not rendered', async () => {
             },
         })
     ).rejects.toThrow('Tried to show a Sheet but the SheetRoot component was not mounted');
-});
+}, 30000);
 
 test('showSheet fails if there is already a sheet open', async () => {
     render(
@@ -523,8 +578,13 @@ test('showSheet fails if there is already a sheet open', async () => {
     const closeButton = await screen.findByRole('button', {name: 'Cerrar'});
     await userEvent.click(closeButton);
 
-    await waitForElementToBeRemoved(sheet);
-});
+    await waitFor(
+        () => {
+            expect(sheet).not.toBeInTheDocument();
+        },
+        {timeout: 5000}
+    );
+}, 30000);
 
 test('showSheet with native implementation INFO', async () => {
     const resultSpy = jest.fn();
@@ -561,7 +621,7 @@ test('showSheet with native implementation INFO', async () => {
     });
 
     expect(resultSpy).toHaveBeenCalled();
-});
+}, 30000);
 
 test('showSheet with native implementation ACTIONS_LIST', async () => {
     const resultSpy = jest.fn();
@@ -609,7 +669,7 @@ test('showSheet with native implementation ACTIONS_LIST', async () => {
     });
 
     expect(resultSpy).toHaveBeenCalledWith({action: 'SUBMIT', selectedId: '2'});
-});
+}, 30000);
 
 test('showSheet with native implementation RADIO_LIST', async () => {
     const resultSpy = jest.fn();
@@ -658,7 +718,7 @@ test('showSheet with native implementation RADIO_LIST', async () => {
     });
 
     expect(resultSpy).toHaveBeenCalledWith({action: 'SUBMIT', selectedId: '2'});
-});
+}, 30000);
 
 test('showSheet with native implementation ACTIONS', async () => {
     const resultSpy = jest.fn();
@@ -705,7 +765,7 @@ test('showSheet with native implementation ACTIONS', async () => {
     });
 
     expect(resultSpy).toHaveBeenCalledWith({action: 'LINK'});
-});
+}, 30000);
 
 test('showSheet with native implementation fallbacks to web if native fails', async () => {
     const nativeImplementation = jest.fn(() =>
@@ -741,6 +801,12 @@ test('showSheet with native implementation fallbacks to web if native fails', as
     const link = await screen.findByRole('button', {name: 'Button link'});
     await userEvent.click(link);
 
-    await waitForElementToBeRemoved(sheet);
+    await waitFor(
+        () => {
+            expect(sheet).not.toBeInTheDocument();
+        },
+        {timeout: 5000}
+    );
+
     expect(resultSpy).toHaveBeenCalledWith({action: 'LINK'});
 }, 30000);

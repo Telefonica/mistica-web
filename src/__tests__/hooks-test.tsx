@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {useDisableBodyScroll} from '../hooks';
-import {render, screen, waitFor, waitForElementToBeRemoved} from '@testing-library/react';
+import {render, screen, waitFor} from '@testing-library/react';
 import {makeTheme} from './test-utils';
 import ThemeContextProvider from '../theme-context-provider';
 import userEvent from '@testing-library/user-event';
@@ -16,6 +16,11 @@ const DISABLED_BODY_STYLES =
 const DisableScroll = () => {
     useDisableBodyScroll(true);
     return <span>scroll is disabled</span>;
+};
+
+const getBodyElement = () => {
+    // eslint-disable-next-line testing-library/no-node-access
+    return document?.querySelector('body');
 };
 
 const ToggleComponent = ({children, toggleText}: any) => {
@@ -43,15 +48,17 @@ test('useDisableScroll: happy case', async () => {
     expect(screen.queryByText('scroll is disabled')).not.toBeInTheDocument();
 
     const toggleButton = screen.getByRole('button', {name: 'toggle'});
-    const body = toggleButton.parentElement?.parentElement;
+    const body = getBodyElement();
 
-    userEvent.click(toggleButton);
+    await userEvent.click(toggleButton);
     expect(await screen.findByText('scroll is disabled')).toBeInTheDocument();
 
     expect(body?.getAttribute('style')).toBe(DISABLED_BODY_STYLES);
 
-    userEvent.click(toggleButton);
-    await waitForElementToBeRemoved(() => screen.queryByText('scroll is disabled'));
+    await userEvent.click(toggleButton);
+    await waitFor(() => {
+        expect(screen.queryByText('scroll is disabled')).not.toBeInTheDocument();
+    });
 
     expect(body?.getAttribute('style')).toBe(INITIAL_BODY_STYLES);
 });
@@ -69,21 +76,21 @@ test('useDisableScroll: nested instances - closing all at once', async () => {
     );
 
     const toggleButton1 = screen.getByRole('button', {name: 'toggle1'});
-    const body = toggleButton1.parentElement?.parentElement;
+    const body = getBodyElement();
 
-    userEvent.click(toggleButton1);
+    await userEvent.click(toggleButton1);
     expect(await screen.findByText('scroll is disabled')).toBeInTheDocument();
     expect(body?.getAttribute('style')).toBe(DISABLED_BODY_STYLES);
 
     const toggleButton2 = screen.getByRole('button', {name: 'toggle2'});
-    userEvent.click(toggleButton2);
+    await userEvent.click(toggleButton2);
     await waitFor(async () => {
         expect(screen.getAllByText('scroll is disabled')).toHaveLength(2);
     });
     expect(body?.getAttribute('style')).toBe(DISABLED_BODY_STYLES);
 
     // Close the first instance and both `useDisableScroll` hooks should call the cleanup function
-    userEvent.click(toggleButton1);
+    await userEvent.click(toggleButton1);
     await waitFor(async () => {
         expect(screen.queryAllByText('scroll is disabled')).toHaveLength(0);
     });
@@ -103,26 +110,28 @@ test('useDisableScroll: nested instances - closing ony by one', async () => {
     );
 
     const toggleButton1 = screen.getByRole('button', {name: 'toggle1'});
-    const body = toggleButton1.parentElement?.parentElement;
+    const body = getBodyElement();
 
-    userEvent.click(toggleButton1);
-    expect(await screen.findByText('scroll is disabled')).toBeInTheDocument();
+    await userEvent.click(toggleButton1);
+    await waitFor(() => {
+        expect(screen.getByText('scroll is disabled')).toBeInTheDocument();
+    });
     expect(body?.getAttribute('style')).toBe(DISABLED_BODY_STYLES);
 
     const toggleButton2 = screen.getByRole('button', {name: 'toggle2'});
-    userEvent.click(toggleButton2);
+    await userEvent.click(toggleButton2);
     await waitFor(async () => {
         expect(screen.getAllByText('scroll is disabled')).toHaveLength(2);
     });
     expect(body?.getAttribute('style')).toBe(DISABLED_BODY_STYLES);
 
-    userEvent.click(toggleButton2);
+    await userEvent.click(toggleButton2);
     await waitFor(async () => {
         expect(screen.getAllByText('scroll is disabled')).toHaveLength(1);
     });
     expect(body?.getAttribute('style')).toBe(DISABLED_BODY_STYLES);
 
-    userEvent.click(toggleButton1);
+    await userEvent.click(toggleButton1);
     await waitFor(async () => {
         expect(screen.queryAllByText('scroll is disabled')).toHaveLength(0);
     });

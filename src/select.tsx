@@ -318,8 +318,8 @@ const Select: React.FC<SelectProps> = ({
                                 isFocused
                                     ? 'focused'
                                     : value ?? valueState ?? inputRef.current?.value
-                                    ? 'filled'
-                                    : 'default'
+                                      ? 'filled'
+                                      : 'default'
                             }
                             optional={optional}
                         >

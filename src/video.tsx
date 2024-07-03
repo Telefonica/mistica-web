@@ -147,8 +147,8 @@ const Video = React.forwardRef<VideoElement, VideoProps>(
             props.width && props.height
                 ? undefined
                 : typeof aspectRatio === 'number'
-                ? aspectRatio
-                : RATIO[aspectRatio];
+                  ? aspectRatio
+                  : RATIO[aspectRatio];
 
         const handleError = React.useCallback(() => {
             if (videoStatus === 'loading') {

@@ -1,3 +1,4 @@
+import '@testing-library/jest-dom';
 import './src/test-utils/fail-test-on-console-error';
 
 const getMediaQuerySize = (mediaFeature: string, mediaQuery: string, defaultSize: number): number => {

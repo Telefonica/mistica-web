@@ -62,13 +62,13 @@ const getButtonActionProps = (action: string, newTab: boolean) => {
               },
           }
         : action === 'href'
-        ? {
-              href: 'https://www.google.com',
-              newTab,
-          }
-        : {
-              to: '#',
-          };
+          ? {
+                href: 'https://www.google.com',
+                newTab,
+            }
+          : {
+                to: '#',
+            };
 };
 
 type Props = {

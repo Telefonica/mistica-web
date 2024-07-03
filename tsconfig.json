@@ -5,7 +5,7 @@
         // Basic Options
 
         // "incremental": true, // Enable incremental compilation
-        "target": "es2019", // Specify ECMAScript target version: 'ES3' (default), 'ES5', 'ES2015', 'ES2016', 'ES2017', 'ES2018', 'ES2019', 'ES2020', or 'ESNEXT'. ,
+        "target": "es2021", // Specify ECMAScript target version: 'ES3' (default), 'ES5', 'ES2015', 'ES2016', 'ES2017', 'ES2018', 'ES2019', 'ES2020', or 'ESNEXT'. ,
         "module": "commonjs", // Specify module code generation: 'none', 'commonjs', 'amd', 'system', 'umd', 'es2015', 'es2020', or 'ESNext'. ,
         "lib": ["ESNext", "DOM"], // Specify library files to be included in the compilation.
         "allowJs": false, // Allow javascript files to be compiled. ,
@@ -76,6 +76,13 @@
         "resolveJsonModule": true,
         "noEmit": true
     },
+
+    /**
+     * The documented way of importing jest-dom type definitions: https://github.com/testing-library/jest-dom?tab=readme-ov-file#with-typescript
+     * isn't working as expected so we need to add them manually: https://github.com/testing-library/jest-dom/issues/546#issuecomment-1800436478
+     */
+    "types": ["@testing-library/jest-dom"],
+
     // this also excludes paths from VSCode auto import feature
     "exclude": ["dist", "dist-ts", "dist-es", "node_modules", "examples"]
 }

@@ -16,6 +16,7 @@ beforeEach(() => {
 
 afterEach(() => {
     if (errorOrWarnCalled) {
+        errorOrWarnCalled = false;
         throw new Error('Console warnings and errors are not allowed in tests.');
     }
 });
