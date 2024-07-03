@@ -159,7 +159,7 @@ export const getVivoNewSkin: GetKnownSkin = () => {
             textNavigationBarSecondary: palette.vivoPurpleLight50,
             textNavigationSearchBarHint: palette.vivoPurpleLight50,
             textNavigationSearchBarText: palette.white,
-            textAppBar: palette.grey4,
+            textAppBar: palette.grey5,
             textAppBarSelected: palette.vivoPurple,
             customTabsBackground: palette.white,
             tagTextPromo: palette.vivoPurple,
@@ -174,10 +174,7 @@ export const getVivoNewSkin: GetKnownSkin = () => {
             tagBackgroundSuccess: palette.vivoGreenLight10,
             tagBackgroundWarning: palette.orangeLight10,
             tagBackgroundError: palette.pepperLight10,
-            cardContentOverlay: `linear-gradient(180deg, ${applyAlpha(palette.grey6, 0)} 0%, ${applyAlpha(
-                palette.grey6,
-                0.4
-            )} 30%, ${applyAlpha(palette.grey6, 0.7)} 100%)`,
+            cardContentOverlay: `linear-gradient(180deg, ${applyAlpha(palette.grey6, 0)} 0%, ${applyAlpha(palette.grey6, 0.4)} 30%, ${applyAlpha(palette.grey6, 0.7)} 100%)`,
         },
         darkModeColors: {
             background: palette.darkModeBlack,
@@ -309,10 +306,7 @@ export const getVivoNewSkin: GetKnownSkin = () => {
             tagBackgroundSuccess: palette.darkModeGrey6,
             tagBackgroundWarning: palette.darkModeGrey6,
             tagBackgroundError: palette.darkModeGrey6,
-            cardContentOverlay: `linear-gradient(180deg, ${applyAlpha(palette.grey6, 0)} 0%, ${applyAlpha(
-                palette.grey6,
-                0.4
-            )} 30%, ${applyAlpha(palette.grey6, 0.7)} 100%)`,
+            cardContentOverlay: `linear-gradient(180deg, ${applyAlpha(palette.grey6, 0)} 0%, ${applyAlpha(palette.grey6, 0.4)} 30%, ${applyAlpha(palette.grey6, 0.7)} 100%)`,
         },
         borderRadii: {
             avatar: '50%',

@@ -151,7 +151,7 @@ export const getO2NewSkin: GetKnownSkin = () => {
             textError: palette.o2Red65,
             textErrorInverse: palette.white,
             promo: palette.o2Pink,
-            highlight: palette.o2Pink,
+            highlight: palette.o2Pink80,
             successLow: palette.o2Green10,
             warningLow: palette.o2Orange10,
             errorLow: palette.o2Red10,
@@ -184,10 +184,7 @@ export const getO2NewSkin: GetKnownSkin = () => {
             tagBackgroundSuccess: palette.o2Green10,
             tagBackgroundWarning: palette.o2Orange10,
             tagBackgroundError: palette.o2Red10,
-            cardContentOverlay: `linear-gradient(180deg, ${applyAlpha(
-                palette.beyondBlue,
-                0
-            )} 0%, ${applyAlpha(palette.beyondBlue, 0.4)} 30%, ${applyAlpha(palette.beyondBlue, 1)} 100%)`,
+            cardContentOverlay: `linear-gradient(180deg, ${applyAlpha(palette.beyondBlue, 0)} 0%, ${applyAlpha(palette.beyondBlue, 0.4)} 30%, ${applyAlpha(palette.beyondBlue, 1)} 100%)`,
         },
         darkModeColors: {
             background: palette.darkModeBlack,
@@ -252,9 +249,9 @@ export const getO2NewSkin: GetKnownSkin = () => {
             textActivated: palette.beyondBlue30,
             textBrand: palette.beyondBlue30,
             control: palette.grey45,
-            controlActivated: palette.beyondBlue30,
+            controlActivated: palette.darkModeBeyondBlue,
             controlInverse: palette.grey45,
-            controlActivatedInverse: palette.beyondBlue30,
+            controlActivatedInverse: palette.darkModeBeyondBlue,
             controlError: palette.o2Red45,
             barTrack: palette.darkModeGrey6,
             loadingBar: palette.darkModeBeyondBlue,
@@ -319,10 +316,7 @@ export const getO2NewSkin: GetKnownSkin = () => {
             tagBackgroundSuccess: palette.darkModeGrey6,
             tagBackgroundWarning: palette.darkModeGrey6,
             tagBackgroundError: palette.darkModeGrey6,
-            cardContentOverlay: `linear-gradient(180deg, ${applyAlpha(palette.black, 0)} 0%, ${applyAlpha(
-                palette.black,
-                0.4
-            )} 30%, ${applyAlpha(palette.black, 0.7)} 100%)`,
+            cardContentOverlay: `linear-gradient(180deg, ${applyAlpha(palette.black, 0)} 0%, ${applyAlpha(palette.black, 0.4)} 30%, ${applyAlpha(palette.black, 0.7)} 100%)`,
         },
         borderRadii: {
             avatar: '50%',
