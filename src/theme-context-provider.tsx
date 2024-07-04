@@ -79,18 +79,7 @@ const sanitizeDimensions = (dimensions: ThemeConfig['dimensions']): Partial<Them
     };
 };
 
-const ThemeContextProvider: React.FC<Props> = ({theme, children, as, withoutStyles = false}) => {
-    const nextAriaId = React.useRef(1);
-    const getAriaId = React.useCallback((): string => `aria-id-hook-${nextAriaId.current++}`, []);
-
-    const isOsDarkModeEnabled = useIsOsDarkModeEnabled();
-
-    const colorScheme = theme.colorScheme ?? 'auto';
-    const lightColors: Colors = theme.skin.colors;
-    const darkColors: Colors = {...theme.skin.colors, ...theme.skin.darkModeColors};
-    const isDarkModeEnabled = (colorScheme === 'auto' && isOsDarkModeEnabled) || colorScheme === 'dark';
-    const colors: Colors = isDarkModeEnabled ? darkColors : lightColors;
-
+const SetupStackingContext = () => {
     const ref = React.useRef<HTMLDivElement>(null);
     const [hasContentIsolation, setHasContentIsolation] = React.useState(false);
     const [isFirstRender, setIsFirstRender] = React.useState(true);
@@ -112,7 +101,23 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children, as, withoutStyl
     }, [isFirstRender]);
 
     // Don't render the div in server side, because effects are not executed in there and it makes the div useless
-    const shouldRenderIsolationExtraDiv = !hasContentIsolation && !as && isClientSide() && !isFirstRender;
+    if (hasContentIsolation || !isClientSide() || isFirstRender) {
+        return null;
+    }
+    return <div ref={ref} style={{display: 'none'}} />;
+};
+
+const ThemeContextProvider: React.FC<Props> = ({theme, children, as, withoutStyles = false}) => {
+    const nextAriaId = React.useRef(1);
+    const getAriaId = React.useCallback((): string => `aria-id-hook-${nextAriaId.current++}`, []);
+
+    const isOsDarkModeEnabled = useIsOsDarkModeEnabled();
+
+    const colorScheme = theme.colorScheme ?? 'auto';
+    const lightColors: Colors = theme.skin.colors;
+    const darkColors: Colors = {...theme.skin.colors, ...theme.skin.darkModeColors};
+    const isDarkModeEnabled = (colorScheme === 'auto' && isOsDarkModeEnabled) || colorScheme === 'dark';
+    const colors: Colors = isDarkModeEnabled ? darkColors : lightColors;
 
     const contextTheme = React.useMemo((): Theme => {
         const platformOverrides = {
@@ -232,7 +237,7 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children, as, withoutStyl
                     </TooltipContextProvider>
                 </ModalContextProvider>
             </TabFocus>
-            {shouldRenderIsolationExtraDiv && <div ref={ref} style={{display: 'none'}} />}
+            {!as && <SetupStackingContext />}
         </>
     );
 };
