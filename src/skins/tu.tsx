@@ -179,10 +179,7 @@ export const getTuSkin: GetKnownSkin = () => {
             tagBackgroundSuccess: palette.green10,
             tagBackgroundWarning: palette.orange20,
             tagBackgroundError: palette.red10,
-            cardContentOverlay: `linear-gradient(180deg, ${applyAlpha(palette.black, 0)} 0%, ${applyAlpha(
-                palette.black,
-                0.4
-            )} 30%, ${applyAlpha(palette.black, 0.7)} 100%)`,
+            cardContentOverlay: `linear-gradient(180deg, ${applyAlpha(palette.black, 0)} 0%, ${applyAlpha(palette.black, 0.4)} 30%, ${applyAlpha(palette.black, 0.7)} 100%)`,
         },
         darkModeColors: {
             background: palette.darkModeBlack,
@@ -260,7 +257,7 @@ export const getTuSkin: GetKnownSkin = () => {
             divider: applyAlpha(palette.white, 0.05),
             dividerInverse: applyAlpha(palette.white, 0.05),
             navigationBarDivider: palette.darkModeBlack,
-            badge: palette.red70,
+            badge: palette.blue30,
             feedbackErrorBackground: palette.red,
             feedbackInfoBackground: palette.darkModeGrey,
             brand: palette.blue30,
@@ -314,10 +311,7 @@ export const getTuSkin: GetKnownSkin = () => {
             tagBackgroundSuccess: palette.darkModeGrey6,
             tagBackgroundWarning: palette.darkModeGrey6,
             tagBackgroundError: palette.darkModeGrey6,
-            cardContentOverlay: `linear-gradient(180deg, ${applyAlpha(palette.black, 0)} 0%, ${applyAlpha(
-                palette.black,
-                0.4
-            )} 30%, ${applyAlpha(palette.black, 0.7)} 100%)`,
+            cardContentOverlay: `linear-gradient(180deg, ${applyAlpha(palette.black, 0)} 0%, ${applyAlpha(palette.black, 0.4)} 30%, ${applyAlpha(palette.black, 0.7)} 100%)`,
         },
         borderRadii: {
             avatar: '50%',
