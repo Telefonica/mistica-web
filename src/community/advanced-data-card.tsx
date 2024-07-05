@@ -56,7 +56,7 @@ type TouchableProps = {
 type TouchableCard<T> = T & TouchableProps;
 type MaybeTouchableCard<T> = ExclusifyUnion<TouchableCard<T> | T>;
 
-type CardContentProps = MaybeTouchableCard<{
+type CardContentProps = {
     headline?: string | RendersNullableElement<typeof Tag>;
     pretitle?: string;
     pretitleAs?: string;
@@ -68,8 +68,7 @@ type CardContentProps = MaybeTouchableCard<{
     subtitleLinesMax?: number;
     description?: string;
     descriptionLinesMax?: number;
-    ariaLabel?: string;
-}>;
+};
 
 const CardContent: React.FC<CardContentProps> = ({
     headline,
@@ -83,23 +82,12 @@ const CardContent: React.FC<CardContentProps> = ({
     subtitleLinesMax,
     description,
     descriptionLinesMax,
-    ariaLabel,
-    ...touchableProps
 }) => {
     const {textPresets} = useTheme();
 
     return (
         <Stack space={4}>
             {headline}
-            <Touchable
-                tabIndex={0}
-                maybe
-                className={classNames(styles.touchableArea)}
-                {...touchableProps}
-                aria-label={ariaLabel}
-            >
-                <></>
-            </Touchable>
             {pretitle && (
                 <Text2
                     color={vars.colors.textPrimary}
@@ -312,11 +300,16 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
                 })}
                 {...getPrefixedDataAttributes(dataAttributes, 'AdvancedDataCard')}
                 ref={ref}
-                aria-label={ariaLabel}
+                aria-label={isTouchable ? undefined : ariaLabel}
             >
                 <Boxed className={styles.dataCard} width="100%" height="100%" minHeight={styles.MIN_HEIGHT}>
-                    <div className={styles.touchableContainer}>
-                        {isTouchable && <div className={styles.touchableCardOverlay} />}
+                    <Touchable
+                        maybe
+                        {...touchableProps}
+                        aria-label={isTouchable ? ariaLabel : undefined}
+                        className={styles.touchable}
+                    >
+                        {isTouchable && <div className={styles.touchableCardHoverOverlay} />}
 
                         <div
                             className={classNames(
@@ -340,8 +333,6 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
                                             subtitleLinesMax={subtitleLinesMax}
                                             description={description}
                                             descriptionLinesMax={descriptionLinesMax}
-                                            ariaLabel={ariaLabel}
-                                            {...touchableProps}
                                         />
                                     </Stack>
                                     {/** Hack to avoid content from rendering on top of the top action buttons */}
@@ -374,15 +365,10 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
                                 })}
                             </Box>
                         )}
-                        {/**
-                         * Given that the actions are inside the card content, there is a 1px padding that affects their position in the card.
-                         * By default, all the other cards use padding of 8px for the actions, so we use 7px in here to compensate for
-                         * that extra pixel that was added by the <Boxed/> component.
-                         */}
-                        <CardActionsGroup actions={actions} onClose={onClose} padding={15} />
-                    </div>
+                    </Touchable>
                     {hasFooter && <CardFooter {...footerProps} />}
                 </Boxed>
+                <CardActionsGroup actions={actions} onClose={onClose} />
             </section>
         );
     }
