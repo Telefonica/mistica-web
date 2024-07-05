@@ -79,6 +79,34 @@ const sanitizeDimensions = (dimensions: ThemeConfig['dimensions']): Partial<Them
     };
 };
 
+const SetupStackingContext = () => {
+    const ref = React.useRef<HTMLDivElement>(null);
+    const [hasContentIsolation, setHasContentIsolation] = React.useState(false);
+    const [isFirstRender, setIsFirstRender] = React.useState(true);
+
+    useIsomorphicLayoutEffect(() => {
+        if (isFirstRender) {
+            // Given that we don't render the extra div in server side, we skip creating it in the first client
+            // render in order to avoid hydration issues
+            setIsFirstRender(false);
+        } else {
+            // Set isolation: isolate to the parent of the provider. This way, we avoid content inside portals
+            // from being rendered under content that is inside the provider (in case it has z-index defined).
+            const root = ref.current?.parentElement;
+            if (root) {
+                root.style.isolation = 'isolate';
+                setHasContentIsolation(true);
+            }
+        }
+    }, [isFirstRender]);
+
+    // Don't render the div in server side, because effects are not executed in there and it makes the div useless
+    if (hasContentIsolation || !isClientSide() || isFirstRender) {
+        return null;
+    }
+    return <div ref={ref} style={{display: 'none'}} />;
+};
+
 const ThemeContextProvider: React.FC<Props> = ({theme, children, as, withoutStyles = false}) => {
     const nextAriaId = React.useRef(1);
     const getAriaId = React.useCallback((): string => `aria-id-hook-${nextAriaId.current++}`, []);
@@ -90,19 +118,6 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children, as, withoutStyl
     const darkColors: Colors = {...theme.skin.colors, ...theme.skin.darkModeColors};
     const isDarkModeEnabled = (colorScheme === 'auto' && isOsDarkModeEnabled) || colorScheme === 'dark';
     const colors: Colors = isDarkModeEnabled ? darkColors : lightColors;
-
-    const ref = React.useRef<HTMLDivElement>(null);
-    const [hasContentIsolation, setHasContentIsolation] = React.useState(false);
-
-    useIsomorphicLayoutEffect(() => {
-        // Set isolation: isolate to the parent of the provider. This way, we avoid content inside portals
-        // from being rendered under content that is inside the provider (in case it has z-index defined).
-        const root = ref.current?.parentElement;
-        if (root) {
-            root.style.isolation = 'isolate';
-            setHasContentIsolation(true);
-        }
-    }, []);
 
     const contextTheme = React.useMemo((): Theme => {
         const platformOverrides = {
@@ -222,7 +237,7 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children, as, withoutStyl
                     </TooltipContextProvider>
                 </ModalContextProvider>
             </TabFocus>
-            {!hasContentIsolation && !as && <div ref={ref} style={{display: 'none'}} />}
+            {!as && <SetupStackingContext />}
         </>
     );
 };
