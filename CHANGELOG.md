@@ -1,3 +1,17 @@
+# [15.13.0](https://github.com/Telefonica/mistica-web/compare/v15.12.0...v15.13.0) (2024-07-05)
+
+
+### Bug Fixes
+
+* **Image:** set aspectRatio value equal to 0 by default ([#1163](https://github.com/Telefonica/mistica-web/issues/1163)) ([a8dff39](https://github.com/Telefonica/mistica-web/commit/a8dff391b09db6e91edcc855948c7b94e0d43670))
+* **ThemeContextProvider:** avoid rendering isolation extra div in server and first client render ([#1165](https://github.com/Telefonica/mistica-web/issues/1165)) ([d05098d](https://github.com/Telefonica/mistica-web/commit/d05098da03fd0567ad576636b278833c933ad444))
+
+
+### Features
+
+* **PreviewTools:** add forceTabs prop ([#1162](https://github.com/Telefonica/mistica-web/issues/1162)) ([d6413fa](https://github.com/Telefonica/mistica-web/commit/d6413faa2520a252a15abf4a30e9062421a81a96))
+* **skin:** update design tokens ([#1164](https://github.com/Telefonica/mistica-web/issues/1164)) ([c8d6e60](https://github.com/Telefonica/mistica-web/commit/c8d6e6034da89fe144fc697b58d1ecc4aceebf95))
+
 # [15.12.0](https://github.com/Telefonica/mistica-web/compare/v15.11.1...v15.12.0) (2024-07-02)
 
 
