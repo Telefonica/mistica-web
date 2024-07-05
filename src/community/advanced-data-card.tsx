@@ -39,6 +39,7 @@ import type {
 
 type TouchableProps = {
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
+    role?: string;
 } & ExclusifyUnion<
     | {
           href: string | undefined;
