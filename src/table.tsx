@@ -2,20 +2,35 @@ import * as React from 'react';
 import {getPrefixedDataAttributes} from './utils/dom';
 import * as styles from './table.css';
 import {vars} from './skins/skin-contract.css';
-import {Text1, Text2} from './text';
+import Text, {Text1, Text2, textProps} from './text';
 import {InternalBoxed} from './boxed';
 import classNames from 'classnames';
 import Box from './box';
 import {applyCssVars} from './utils/css';
+import Inline from './inline';
+import {IconButton, ToggleIconButton} from './icon-button';
+import {iconContainerSize, iconSize} from './icon-button.css';
+import {TableActionsHeader} from './table-actions-header';
 
+import type {CardAction} from './card';
 import type {DataAttributes} from './utils/types';
+
+const TOP_ACTIONS_PADDING = {
+    default: '8px',
+    boxed: '16px',
+};
+
+const BORDER_SIZE = '1px';
 
 type TextAlign = 'left' | 'right' | 'center';
 type VerticalAlign = 'top' | 'middle';
 
 type TableProps = {
-    heading: Array<React.ReactNode>;
-    content?: Array<Array<React.ReactNode>>;
+    heading?: Array<React.ReactNode>;
+    content?: Array<
+        | Array<React.ReactNode>
+        | {cells: Array<React.ReactNode>; actions: ReadonlyArray<CardAction | React.ReactElement>}
+    >;
     boxed?: boolean;
     emptyCase?: React.ReactNode;
     /**
@@ -27,7 +42,7 @@ type TableProps = {
     rowVerticalAlign?: VerticalAlign;
     columnWidth?: Array<number | string>;
     /**
-     * by default, the table expands to all the available width, if you want the table to have the minimum width to fit the rows content, set fullWidth to false.
+     * By default, the table expands to all the available width, if you want the table to have the minimum width to fit the rows content, set fullWidth to false.
      * It's ignored in mobile
      */
     fullWidth?: boolean;
@@ -37,9 +52,13 @@ type TableProps = {
      */
     maxHeight?: number | string;
     /**
-     * when rendering the table inside a responsive layout, you can enable this prop to make the table scrollable over the layout paddings
+     * When rendering the table inside a responsive layout, you can enable this prop to make the table scrollable over the layout paddings
      */
     scrollOverResponsiveLayout?: boolean;
+    /**
+     * Used to hide headers from UI. Screen readers will still recognize them when reading an element from the table.
+     */
+    hideHeaders?: boolean | 'desktop' | 'mobile';
     /** "data-" prefix is automatically added. For example, use "testid" instead of "data-testid" */
     dataAttributes?: DataAttributes;
     'aria-label'?: string;
@@ -47,13 +66,45 @@ type TableProps = {
     'aria-describedby'?: string;
 };
 
+const CellActionIconButton = (props: CardAction) => {
+    // We render IconButton if Icon prop was passed. Otherwise, ToggleIconButton will be used
+    return props.Icon ? (
+        <IconButton
+            {...props}
+            aria-label={props.label}
+            small
+            type="neutral"
+            backgroundType="transparent"
+            bleedY
+        />
+    ) : (
+        <ToggleIconButton
+            {...props}
+            checkedProps={{
+                ...props.checkedProps,
+                'aria-label': props.checkedProps.label,
+                type: 'brand',
+                backgroundType: 'solid',
+            }}
+            uncheckedProps={{
+                ...props.uncheckedProps,
+                'aria-label': props.uncheckedProps.label,
+                type: 'neutral',
+                backgroundType: 'transparent',
+            }}
+            small
+            bleedY
+        />
+    );
+};
+
 const defaultTextAlign = 'left';
 export const Table = React.forwardRef(
     (
         {
             dataAttributes,
-            heading,
-            content,
+            heading = [],
+            content = [],
             boxed,
             responsive,
             fullWidth = true,
@@ -62,6 +113,7 @@ export const Table = React.forwardRef(
             columnTextAlign = defaultTextAlign,
             rowVerticalAlign = 'middle',
             columnWidth,
+            hideHeaders,
             scrollOverResponsiveLayout,
             ...otherProps
         }: TableProps,
@@ -75,83 +127,199 @@ export const Table = React.forwardRef(
         };
 
         const collapsedRowsMode = responsive === 'collapse-rows';
+        const hideHeadersInMobile = hideHeaders === true || hideHeaders === 'mobile';
+        const hideHeadersInDesktop = hideHeaders === true || hideHeaders === 'desktop';
+
+        const hasActionsColumn = content.some((row) => !Array.isArray(row) && row.actions.length > 0);
+
         const table = (
             <table
                 className={classNames(styles.table, {
                     [styles.boxed]: boxed,
                     [styles.collapsedRowsInMobile]: collapsedRowsMode,
                     [styles.fullWidth]: fullWidth,
+                    [styles.hiddenHeadersInDesktop]: hideHeadersInDesktop,
+                    [styles.hiddenHeadersInMobile]: hideHeadersInMobile || collapsedRowsMode,
                 })}
                 aria-label={otherProps['aria-label']}
                 aria-labelledby={otherProps['aria-labelledby']}
                 aria-describedby={otherProps['aria-describedby']}
             >
-                <thead>
-                    <Text1
-                        as="tr"
-                        medium
-                        transform="uppercase"
-                        color={vars.colors.textSecondary}
-                        wordBreak={false}
-                    >
-                        {heading.map((header, idx) => (
-                            <th
-                                scope="col"
-                                key={idx}
-                                className={classNames(
-                                    styles.cellTextAlign[getColumnTextAlign(idx)],
-                                    styles.verticalAlign[rowVerticalAlign]
-                                )}
-                                style={{minWidth: columnWidth?.[idx], width: columnWidth?.[idx]}}
-                            >
-                                {header}
-                            </th>
-                        ))}
-                    </Text1>
-                </thead>
+                {heading.length > 0 && (
+                    <thead>
+                        <Text1
+                            as="tr"
+                            medium
+                            transform="uppercase"
+                            color={vars.colors.textSecondary}
+                            wordBreak={false}
+                        >
+                            {heading.map((header, idx) => (
+                                <th
+                                    scope="col"
+                                    key={idx}
+                                    className={classNames(
+                                        styles.cellTextAlign[getColumnTextAlign(idx)],
+                                        styles.verticalAlign[rowVerticalAlign],
+                                        {
+                                            [styles.rowFirstItem]: idx === 0,
+                                            [styles.rowLastItem]:
+                                                idx === heading.length - 1 && !hasActionsColumn,
+                                        }
+                                    )}
+                                    style={{minWidth: columnWidth?.[idx], width: columnWidth?.[idx]}}
+                                >
+                                    {header}
+                                </th>
+                            ))}
+                            {hasActionsColumn && <TableActionsHeader />}
+                        </Text1>
+                    </thead>
+                )}
                 <tbody>
-                    {content && content.length ? (
-                        content.map((row, rowIdx) => (
-                            <tr key={rowIdx}>
-                                {row.map((cell, idx) => (
-                                    <td key={idx} className={styles.verticalAlign[rowVerticalAlign]}>
-                                        {/**
-                                         * In collapsedRowsMode, we render the row heading text before every cell content, except for the first cell
-                                         * of every row, which is rendered with a medium weight font, as it's the row title.
-                                         * */}
-                                        {idx !== 0 && collapsedRowsMode && (
-                                            // this is aria-hidden because screen readers already read the column heading from the th
-                                            <div className={styles.mobileCellHeading} aria-hidden>
-                                                <Text1 medium color={vars.colors.textSecondary}>
-                                                    {heading[idx]}
-                                                </Text1>
-                                            </div>
-                                        )}
+                    {content.length > 0 ? (
+                        content.map((row, rowIdx) => {
+                            const rowCells = !Array.isArray(row) ? row.cells : row;
+                            const rowActionsList = !Array.isArray(row) ? row.actions ?? [] : [];
 
-                                        <Text2
-                                            as="div"
-                                            weight={idx === 0 && collapsedRowsMode ? 'medium' : 'regular'}
-                                            wordBreak={false}
+                            const actions = (
+                                <Inline space={16}>
+                                    {rowActionsList.map((action, index) => {
+                                        if ('Icon' in action || 'checkedProps' in action) {
+                                            // action is a CellAction object
+                                            return <CellActionIconButton key={index} {...action} />;
+                                        }
+                                        // action is a React.ReactElement
+                                        return action;
+                                    })}
+                                </Inline>
+                            );
+
+                            // buttons + inline space
+                            const actionsElementWidth = rowActionsList.length
+                                ? `calc(${iconContainerSize.small} * ${rowActionsList.length} + 16px * ${
+                                      rowActionsList.length - 1
+                                  })`
+                                : '0px';
+
+                            return (
+                                // Add position relative because in collapse-rows mode, actions are positioned absolutely in the row
+                                <tr key={rowIdx} style={{position: 'relative'}}>
+                                    {rowCells.map((cell, idx) => (
+                                        <td
+                                            key={idx}
+                                            className={classNames(styles.verticalAlign[rowVerticalAlign], {
+                                                [styles.rowFirstItem]: idx === 0,
+                                                [styles.rowLastItem]:
+                                                    idx === rowCells.length - 1 && !hasActionsColumn,
+                                                [styles.rowLastCollapsedItem]:
+                                                    idx === rowCells.length - 1 && collapsedRowsMode,
+                                            })}
+                                            style={{
+                                                // add space between top actions and content
+                                                marginRight:
+                                                    collapsedRowsMode && rowActionsList.length
+                                                        ? `calc(${actionsElementWidth} + 8px)`
+                                                        : undefined,
+                                            }}
                                         >
-                                            <div
-                                                className={classNames(
-                                                    styles.cellTextAlign[getColumnTextAlign(idx)],
-                                                    {
-                                                        [styles.collapsedRowTittle]:
-                                                            idx === 0 && collapsedRowsMode,
-                                                    }
+                                            {/**
+                                             * In collapsedRowsMode, we render the row heading text before every cell content, except for the first cell
+                                             * of every row, which is rendered with a medium weight font, as it's the row title.
+                                             * */}
+                                            {idx !== 0 &&
+                                                collapsedRowsMode &&
+                                                heading[idx] &&
+                                                !hideHeadersInMobile && (
+                                                    // this is aria-hidden because screen readers already read the column heading from the th
+                                                    <div className={styles.mobileCellHeading} aria-hidden>
+                                                        <Text1 medium color={vars.colors.textSecondary}>
+                                                            {heading[idx]}
+                                                        </Text1>
+                                                    </div>
                                                 )}
+
+                                            <Text
+                                                desktopSize={textProps.text2.desktopSize}
+                                                desktopLineHeight={textProps.text2.desktopLineHeight}
+                                                // Use Text4 size/lineHeight for row's title when collapsed-row mode is used
+                                                {...(idx === 0 && collapsedRowsMode
+                                                    ? {
+                                                          mobileSize: textProps.text4.mobileSize,
+                                                          mobileLineHeight: textProps.text4.mobileLineHeight,
+                                                      }
+                                                    : {
+                                                          mobileSize: textProps.text2.mobileSize,
+                                                          mobileLineHeight: textProps.text2.mobileLineHeight,
+                                                      })}
+                                                as="div"
+                                                wordBreak={false}
                                             >
-                                                {cell}
-                                            </div>
-                                        </Text2>
-                                    </td>
-                                ))}
-                            </tr>
-                        ))
+                                                <div
+                                                    className={classNames(
+                                                        styles.cellTextAlign[getColumnTextAlign(idx)],
+                                                        {
+                                                            [styles.collapsedRowTitle]:
+                                                                idx === 0 && collapsedRowsMode,
+                                                        }
+                                                    )}
+                                                >
+                                                    {cell}
+                                                </div>
+                                            </Text>
+                                        </td>
+                                    ))}
+
+                                    {rowActionsList.length > 0 ? (
+                                        <td
+                                            className={classNames(
+                                                styles.verticalAlign[rowVerticalAlign],
+                                                styles.actionsTableCell,
+                                                styles.rowLastItem,
+                                                {
+                                                    [styles.rowFirstItem]: rowCells.length === 0,
+                                                }
+                                            )}
+                                            align="right"
+                                            // add cell's left padding
+                                            style={{width: `calc(${actionsElementWidth} + 12px)`}}
+                                        >
+                                            {actions}
+                                        </td>
+                                    ) : (
+                                        hasActionsColumn && <td className={styles.actionsTableCell} />
+                                    )}
+
+                                    {collapsedRowsMode && rowActionsList.length > 0 && (
+                                        <td
+                                            className={styles.topActions}
+                                            style={{
+                                                position: 'absolute',
+                                                top: `calc(${
+                                                    boxed
+                                                        ? TOP_ACTIONS_PADDING.boxed
+                                                        : TOP_ACTIONS_PADDING.default
+                                                } - ${BORDER_SIZE} + (${iconContainerSize.small} - ${
+                                                    iconSize.small
+                                                }) / 2)`,
+                                                right: boxed
+                                                    ? `calc(${TOP_ACTIONS_PADDING.boxed} - ${BORDER_SIZE})`
+                                                    : 0,
+                                                width: actionsElementWidth,
+                                            }}
+                                        >
+                                            {actions}
+                                        </td>
+                                    )}
+                                </tr>
+                            );
+                        })
                     ) : (
                         <tr>
-                            <td colSpan={heading.length}>
+                            <td
+                                colSpan={heading.length}
+                                className={classNames({[styles.rowLastCollapsedItem]: collapsedRowsMode})}
+                            >
                                 {typeof emptyCase === 'string' ? (
                                     <Box paddingY={56}>
                                         <Text2 regular textAlign="center" as="div">
