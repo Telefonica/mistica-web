@@ -10,7 +10,7 @@ import {applyCssVars} from './utils/css';
 import Inline from './inline';
 import {IconButton, ToggleIconButton} from './icon-button';
 import {iconContainerSize, iconSize} from './icon-button.css';
-import ScreenReaderOnly from './screen-reader-only';
+import {TableActionsHeader} from './table-actions-header';
 
 import type {CardAction} from './card';
 import type {DataAttributes} from './utils/types';
@@ -172,14 +172,7 @@ export const Table = React.forwardRef(
                                     {header}
                                 </th>
                             ))}
-                            {hasActionsColumn && (
-                                <th>
-                                    <ScreenReaderOnly>
-                                        {/** TODO: use translated text for actions */}
-                                        <div className={styles.actionsHeaderText}>Actions</div>
-                                    </ScreenReaderOnly>
-                                </th>
-                            )}
+                            {hasActionsColumn && <TableActionsHeader />}
                         </Text1>
                     </thead>
                 )}
