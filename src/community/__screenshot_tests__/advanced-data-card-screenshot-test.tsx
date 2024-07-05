@@ -41,6 +41,22 @@ test.each`
     expect(image).toMatchImageSnapshot();
 });
 
+test.each`
+    extra
+    ${3}
+`('Advanced Data Card extras: $extra no divider', async ({extra}) => {
+    await openStoryPage({
+        id: 'community-advanceddatacard--default',
+        device: 'MOBILE_IOS',
+        args: {extra, noExtraDivider: true},
+    });
+
+    const element = await screen.findByTestId('advanced-data-card');
+    const image = await element.screenshot();
+
+    expect(image).toMatchImageSnapshot();
+});
+
 test('Advanced Data Card inside Carousel', async () => {
     await openStoryPage({
         id: 'community-advanceddatacards-in-carousel--default',
