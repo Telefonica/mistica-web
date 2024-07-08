@@ -10,6 +10,8 @@ import {
     IconInformationUserLight,
 } from '..';
 
+import type {HeadingType} from '../utils/types';
+
 export default {
     title: 'Components/Headers/Header',
     parameters: {
@@ -20,8 +22,10 @@ export default {
 type Args = {
     withHeader: boolean;
     pretitle: string;
+    pretitleAs: HeadingType;
     truncatePretitle: boolean;
     title: string;
+    titleAs: HeadingType;
     description: string;
     small: boolean;
     inverse: boolean;
@@ -39,8 +43,10 @@ export const Default: StoryComponent<Args> = ({
     sideBySideExtraOnDesktop,
     withBreadcrumbs,
     pretitle,
+    pretitleAs,
     truncatePretitle,
     title,
+    titleAs,
     description,
     small,
     withExtraContent,
@@ -65,8 +71,10 @@ export const Default: StoryComponent<Args> = ({
                 header={
                     withHeader ? (
                         <Header
+                            pretitleAs={pretitleAs}
                             pretitle={truncatePretitle ? {text: pretitle, truncate: true} : pretitle}
                             title={title}
+                            titleAs={titleAs}
                             description={description}
                             small={small}
                         />
@@ -91,7 +99,9 @@ Default.storyName = 'Header';
 Default.args = {
     withHeader: true,
     pretitle: 'Your last bill',
+    pretitleAs: 'span',
     title: 'December bill is now available',
+    titleAs: 'h2',
     description: 'This is a description',
     small: false,
     truncatePretitle: false,
@@ -105,7 +115,17 @@ Default.args = {
 
 Default.argTypes = {
     pretitle: {if: {arg: 'withHeader'}},
+    pretitleAs: {
+        if: {arg: 'withHeader'},
+        options: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'span'],
+        control: {type: 'select'},
+    },
     title: {if: {arg: 'withHeader'}},
+    titleAs: {
+        if: {arg: 'withHeader'},
+        options: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'span'],
+        control: {type: 'select'},
+    },
     description: {if: {arg: 'withHeader'}},
     small: {if: {arg: 'withHeader'}},
     sideBySideExtraOnDesktop: {if: {arg: 'withExtraContent'}},

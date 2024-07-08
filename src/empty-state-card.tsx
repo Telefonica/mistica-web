@@ -14,7 +14,7 @@ import type {DataAttributes, RendersNullableElement} from './utils/types';
 
 interface CommonProps {
     title: string;
-    titleAs?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+    titleAs?: HeadingType;
     button?: RendersNullableElement<typeof ButtonPrimary>;
     secondaryButton?: RendersNullableElement<typeof ButtonSecondary>;
     buttonLink?: RendersNullableElement<typeof ButtonLink>;

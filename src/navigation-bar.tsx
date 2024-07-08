@@ -28,7 +28,7 @@ import Box from './box';
 import {isRunningAcceptanceTest} from './utils/platform';
 
 import type {TouchableProps} from './touchable';
-import type {DataAttributes} from './utils/types';
+import type {DataAttributes, HeadingType} from './utils/types';
 
 const BurgerMenuIcon = ({isOpen}: {isOpen: boolean}) => {
     return (
@@ -303,7 +303,7 @@ interface NavigationBarCommonProps {
     isInverse?: boolean;
     onBack?: () => void;
     title?: string;
-    titleAs?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+    titleAs?: HeadingType;
     right?: React.ReactElement;
     withBorder?: boolean;
     children?: undefined;

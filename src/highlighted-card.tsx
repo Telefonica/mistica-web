@@ -13,7 +13,7 @@ import {useTheme} from './hooks';
 import type {ExclusifyUnion} from './utils/utility-types';
 import type {TouchableComponentProps} from './touchable';
 import type {ButtonLink, NullableButtonElement} from './button';
-import type {DataAttributes, RendersNullableElement, TrackingEvent} from './utils/types';
+import type {DataAttributes, HeadingType, RendersNullableElement, TrackingEvent} from './utils/types';
 
 // At least one of title or description is required
 type TextProps =
@@ -27,7 +27,7 @@ type TextProps =
       };
 
 type CommonProps = TextProps & {
-    titleAs?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+    titleAs?: HeadingType;
     titleLinesMax?: number;
     descriptionLinesMax?: number;
     imageUrl?: string;

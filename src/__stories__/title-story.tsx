@@ -2,6 +2,7 @@ import * as React from 'react';
 import {Title1, Title2, Title3, ButtonLink, IconInformationRegular, skinVars} from '..';
 
 import type {TitleProps} from '../title';
+import type {HeadingType} from '../utils/types';
 
 export default {
     title: 'Components/Titles',
@@ -24,7 +25,7 @@ type renderTitleComponentProps = {
     linkText: string;
     right: 'link' | 'icon' | 'undefined';
     defaultTitle: string;
-    as: 'h1' | 'h2' | 'h3';
+    as: HeadingType;
     TitleComponent: React.ComponentType<TitleProps>;
 };
 

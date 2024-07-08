@@ -13,7 +13,7 @@ import GridLayout from './grid-layout';
 import {CoverHeroMedia} from './cover-hero-media';
 import {getPrefixedDataAttributes} from './utils/dom';
 
-import type {DataAttributes} from './utils/types';
+import type {DataAttributes, HeadingType} from './utils/types';
 import type {ImageProps, VideoProps} from './cover-hero-media';
 import type {AspectRatio} from './image';
 import type {ExclusifyUnion} from './utils/utility-types';
@@ -28,7 +28,7 @@ type BaseProps = {
     pretitleLinesMax?: number;
     title: string;
     titleLinesMax?: number;
-    titleAs?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+    titleAs?: HeadingType;
     description?: string;
     descriptionLinesMax?: number;
     extra?: React.ReactNode;
