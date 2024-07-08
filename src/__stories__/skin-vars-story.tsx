@@ -53,9 +53,7 @@ const ColorsTable = () => {
                                 title={`${name}: ${cssVar}`}
                                 style={{
                                     backgroundColor: cssVar,
-                                    border: `1px dashed ${
-                                        isInverse ? skinVars.colors.borderLow : skinVars.colors.borderHigh
-                                    }`,
+                                    border: `1px dashed ${isInverse ? skinVars.colors.borderLow : skinVars.colors.borderHigh}`,
                                 }}
                             ></td>
                         </tr>

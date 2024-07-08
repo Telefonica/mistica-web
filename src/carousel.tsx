@@ -511,8 +511,8 @@ const BaseCarousel = ({
                             ...(mobilePageOffset === 'large'
                                 ? {[styles.vars.mobilePageOffset]: largePageOffset}
                                 : skinName === VIVO_NEW_SKIN
-                                ? {[styles.vars.mobilePageOffset]: vivoNewMobilePageOffset}
-                                : {}),
+                                  ? {[styles.vars.mobilePageOffset]: vivoNewMobilePageOffset}
+                                  : {}),
                             ...(gap !== undefined ? {[styles.vars.gap]: String(gap)} : {}),
                         }),
                         scrollSnapType: free ? 'initial' : 'x mandatory',
@@ -556,11 +556,15 @@ const BaseCarousel = ({
             </div>
             {bullets && (
                 <div
-                    className={classNames(styles.carouselBullets, {
-                        [styles.noCarouselBulletsDesktop]: pagesCountDesktop <= 1,
-                        [styles.noCarouselBulletsTablet]: pagesCountTablet <= 1,
-                        [styles.noCarouselBulletsMobile]: pagesCountMobile <= 1,
-                    })}
+                    className={classNames(
+                        styles.carouselBullets,
+                        // when renderBullets is provided, we let the consumer decide if the bullets should be hidden
+                        !renderBullets && {
+                            [styles.noCarouselBulletsDesktop]: pagesCountDesktop <= 1,
+                            [styles.noCarouselBulletsTablet]: pagesCountTablet <= 1,
+                            [styles.noCarouselBulletsMobile]: pagesCountMobile <= 1,
+                        }
+                    )}
                 >
                     {bullets}
                 </div>

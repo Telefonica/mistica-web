@@ -159,8 +159,8 @@ const PinInput = ({
                         readOnly
                             ? styles.readOnlyField
                             : index === focusIndex
-                            ? styles.focusedField
-                            : styles.field
+                              ? styles.focusedField
+                              : styles.field
                     }
                 >
                     <IntegerInput

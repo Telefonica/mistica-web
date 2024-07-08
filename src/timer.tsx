@@ -140,10 +140,10 @@ const useTimerState = ({
     const maximumRenderedUnit = shouldRenderDays
         ? 'days'
         : shouldRenderHours
-        ? 'hours'
-        : shouldRenderMinutes
-        ? 'minutes'
-        : 'seconds';
+          ? 'hours'
+          : shouldRenderMinutes
+            ? 'minutes'
+            : 'seconds';
 
     const currentHours = Math.floor(remainingTime / HOUR_IN_MS) % 24;
     const currentMinutes = Math.floor(remainingTime / MINUTE_IN_MS) % 60;
@@ -278,8 +278,8 @@ export const TextTimer: React.FC<TextTimerProps> = ({
                     index === timerValue.length - 1
                         ? ''
                         : index === timerValue.length - 2
-                        ? ` ${texts.timerAnd} `
-                        : ', '
+                          ? ` ${texts.timerAnd} `
+                          : ', '
                 }`
         )
         .join('');
@@ -369,8 +369,8 @@ export const Timer: React.FC<TimerProps> = ({
                     index === timerValue.length - 1
                         ? ''
                         : index === timerValue.length - 2
-                        ? ` ${texts.timerAnd} `
-                        : ', '
+                          ? ` ${texts.timerAnd} `
+                          : ', '
                 }`
         )
         .join('');

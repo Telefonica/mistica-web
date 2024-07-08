@@ -1,3 +1,32 @@
+# [15.13.0](https://github.com/Telefonica/mistica-web/compare/v15.12.0...v15.13.0) (2024-07-05)
+
+
+### Bug Fixes
+
+* **Image:** set aspectRatio value equal to 0 by default ([#1163](https://github.com/Telefonica/mistica-web/issues/1163)) ([a8dff39](https://github.com/Telefonica/mistica-web/commit/a8dff391b09db6e91edcc855948c7b94e0d43670))
+* **ThemeContextProvider:** avoid rendering isolation extra div in server and first client render ([#1165](https://github.com/Telefonica/mistica-web/issues/1165)) ([d05098d](https://github.com/Telefonica/mistica-web/commit/d05098da03fd0567ad576636b278833c933ad444))
+
+
+### Features
+
+* **PreviewTools:** add forceTabs prop ([#1162](https://github.com/Telefonica/mistica-web/issues/1162)) ([d6413fa](https://github.com/Telefonica/mistica-web/commit/d6413faa2520a252a15abf4a30e9062421a81a96))
+* **skin:** update design tokens ([#1164](https://github.com/Telefonica/mistica-web/issues/1164)) ([c8d6e60](https://github.com/Telefonica/mistica-web/commit/c8d6e6034da89fe144fc697b58d1ecc4aceebf95))
+
+# [15.12.0](https://github.com/Telefonica/mistica-web/compare/v15.11.1...v15.12.0) (2024-07-02)
+
+
+### Bug Fixes
+
+* **Carousel:** when using renderBullets, don't hide the bullets automatically when there is only one page ([#1158](https://github.com/Telefonica/mistica-web/issues/1158)) ([ea446a6](https://github.com/Telefonica/mistica-web/commit/ea446a6d13cffa3e0bb053263ba1e1d91df18028))
+* **Dialog, FixedFooterLayout, LoadingBar, NavigationBar, Overlay, Portal, Select, Sheet, Snackbar:** avoid z-index issues ([#1148](https://github.com/Telefonica/mistica-web/issues/1148)) ([0412448](https://github.com/Telefonica/mistica-web/commit/04124480911f66defd24e3e8283d4e3edd7441a5))
+
+
+### Features
+
+* **Icons:** Add O2-new icon set ([#1155](https://github.com/Telefonica/mistica-web/issues/1155)) ([af2055b](https://github.com/Telefonica/mistica-web/commit/af2055b2861c7d20ce8238ac2358438ce3202905))
+* **Snackbar:** buttonAccesibilityLabel ([#1153](https://github.com/Telefonica/mistica-web/issues/1153)) ([3f5ab2c](https://github.com/Telefonica/mistica-web/commit/3f5ab2cd208c68fffd54248aead026146c58b8e4))
+* **Text:** avoid ignoring line breaks ([#1157](https://github.com/Telefonica/mistica-web/issues/1157)) ([69c78aa](https://github.com/Telefonica/mistica-web/commit/69c78aa3409fc6d7b471e587d7143ba8d37709e5))
+
 ## [15.11.1](https://github.com/Telefonica/mistica-web/compare/v15.11.0...v15.11.1) (2024-06-19)
 
 

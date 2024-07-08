@@ -77,13 +77,9 @@ const SnackbarComponent = React.forwardRef<ImperativeHandle, Props>(
             );
         }, []);
 
-        React.useImperativeHandle(
-            ref,
-            () => {
-                return {...elementRef, close};
-            },
-            [close]
-        );
+        React.useImperativeHandle(ref, () => {
+            return {...elementRef, close};
+        }, [close]);
 
         React.useEffect(() => {
             const openTimeout = setTimeout(() => {

@@ -122,9 +122,7 @@ const Counter: React.FC<Props> = ({
             className={classNames(styles.counter, {[styles.disabled]: disabled})}
             {...getPrefixedDataAttributes(dataAttributes, 'Counter')}
             style={{
-                border: `1px solid ${
-                    variant === 'inverse' ? vars.colors.backgroundContainer : vars.colors.border
-                }`,
+                border: `1px solid ${variant === 'inverse' ? vars.colors.backgroundContainer : vars.colors.border}`,
             }}
         >
             <Inline space={8} alignItems="center">

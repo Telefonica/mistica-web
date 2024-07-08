@@ -175,10 +175,7 @@ export const getTelefonicaSkin: GetKnownSkin = () => {
             tagBackgroundSuccess: palette.turquoise10,
             tagBackgroundWarning: palette.ambar10,
             tagBackgroundError: palette.coral10,
-            cardContentOverlay: `linear-gradient(180deg, ${applyAlpha(palette.black, 0)} 0%, ${applyAlpha(
-                palette.black,
-                0.4
-            )} 30%, ${applyAlpha(palette.black, 0.7)} 100%)`,
+            cardContentOverlay: `linear-gradient(180deg, ${applyAlpha(palette.black, 0)} 0%, ${applyAlpha(palette.black, 0.4)} 30%, ${applyAlpha(palette.black, 0.7)} 100%)`,
         },
         darkModeColors: {
             background: palette.darkModeBlack,
@@ -310,10 +307,7 @@ export const getTelefonicaSkin: GetKnownSkin = () => {
             tagBackgroundSuccess: palette.darkModeGrey6,
             tagBackgroundWarning: palette.darkModeGrey6,
             tagBackgroundError: palette.darkModeGrey6,
-            cardContentOverlay: `linear-gradient(180deg, ${applyAlpha(palette.black, 0)} 0%, ${applyAlpha(
-                palette.black,
-                0.4
-            )} 30%, ${applyAlpha(palette.black, 0.7)} 100%)`,
+            cardContentOverlay: `linear-gradient(180deg, ${applyAlpha(palette.black, 0)} 0%, ${applyAlpha(palette.black, 0.4)} 30%, ${applyAlpha(palette.black, 0.7)} 100%)`,
         },
         borderRadii: {
             avatar: '50%',

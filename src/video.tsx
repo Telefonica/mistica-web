@@ -86,7 +86,7 @@ export type VideoProps = {
     /** defaults to 100% when no width and no height are given */
     width?: string | number;
     height?: string | number;
-    /** defaults to 1:1, if both width and height are given, aspectRatio is ignored. To use original video proportions, set aspectRatio to 0 */
+    /** defaults to 0 (original video proportions). If both width and height are given, aspectRatio is ignored.  */
     aspectRatio?: AspectRatio | number;
     /** accepts multiple sources */
     src: VideoSource;
@@ -132,7 +132,7 @@ const Video = React.forwardRef<VideoElement, VideoProps>(
             onError,
             onPause,
             onPlay,
-            aspectRatio = '1:1',
+            aspectRatio = 0,
             dataAttributes,
             ...props
         },
@@ -147,8 +147,8 @@ const Video = React.forwardRef<VideoElement, VideoProps>(
             props.width && props.height
                 ? undefined
                 : typeof aspectRatio === 'number'
-                ? aspectRatio
-                : RATIO[aspectRatio];
+                  ? aspectRatio
+                  : RATIO[aspectRatio];
 
         const handleError = React.useCallback(() => {
             if (videoStatus === 'loading') {

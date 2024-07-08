@@ -70,9 +70,7 @@ export const Controlled: StoryComponent<MonthFieldControlledArgs> = ({
                         dataAttributes={{testid: 'month-field'}}
                         min={min ? minDate : undefined}
                         max={max ? maxDate : undefined}
-                        helperText={`min: ${min ? getLocalYearMonthString(minDate) : '-'} / max: ${
-                            max ? getLocalYearMonthString(maxDate) : '-'
-                        }`}
+                        helperText={`min: ${min ? getLocalYearMonthString(minDate) : '-'} / max: ${max ? getLocalYearMonthString(maxDate) : '-'}`}
                         {...rest}
                     />
                     <Stack space={8}>
@@ -136,9 +134,7 @@ export const Uncontrolled: StoryComponent<MonthFieldUncontrolledArgs> = ({
                         dataAttributes={{testid: 'month-field'}}
                         min={min ? minDate : undefined}
                         max={max ? maxDate : undefined}
-                        helperText={`min: ${min ? getLocalYearMonthString(minDate) : '-'} / max: ${
-                            max ? getLocalYearMonthString(maxDate) : '-'
-                        }`}
+                        helperText={`min: ${min ? getLocalYearMonthString(minDate) : '-'} / max: ${max ? getLocalYearMonthString(maxDate) : '-'}`}
                         {...rest}
                     />
                     <Stack space={8}>

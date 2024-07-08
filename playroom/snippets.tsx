@@ -85,7 +85,7 @@ const accordionSnippets: Array<Snippet> = [
             content={
               <Text3 color={colors.textSecondary}>
                 The Movistar Money loan service is aimed at anyone, whether you are a{" "}
-                <TextLink href>Movistar</TextLink> customer or not.
+                <TextLink href="https://example.org" newTab>Movistar</TextLink> customer or not.
               </Text3>
             }
           />
@@ -105,7 +105,7 @@ const accordionSnippets: Array<Snippet> = [
                 <p>
                   Depending on the characteristics of the information you provide us,
                   your application will be sent to one of the institutions{" "}
-                  <TextLink href>with which Movistar has agreements</TextLink>.
+                  <TextLink href="https://example.org" newTab>with which Movistar has agreements</TextLink>.
                 </p>
               </Text3>
             }
@@ -157,7 +157,7 @@ const accordionSnippets: Array<Snippet> = [
           content={
             <Text3 color={colors.textSecondary}>
               The Movistar Money loan service is aimed at anyone, whether you are a{" "}
-              <TextLink href>Movistar</TextLink> customer or not.
+              <TextLink href="https://example.org" newTab>Movistar</TextLink> customer or not.
             </Text3>
           }
         />
@@ -177,7 +177,7 @@ const accordionSnippets: Array<Snippet> = [
               <p>
                 Depending on the characteristics of the information you provide us,
                 your application will be sent to one of the institutions{" "}
-                <TextLink href>with which Movistar has agreements</TextLink>.
+                <TextLink href="https://example.org" newTab>with which Movistar has agreements</TextLink>.
               </p>
             </Text3>
           }
@@ -401,11 +401,70 @@ const tableSnippets: Array<Snippet> = [
                 ]}
                 columnTextAlign={["left", "right", "right", "right", "center", "right"]}
                 content={[
-                    ['Slice of pizza', '450', '95%', '5,00€', <Tag>Common</Tag>, '8/10'],
-                    ['Hamburger', '350', '87%', '3,50€', <Tag>Common</Tag>, '7.5/10'],
-                    ['Salad', '150', '70%', '4,00€', <Tag>Common</Tag>, '6/10'],
-                    ['Sushi', '200', '90%', '12,00€', <Tag type="warning">Rare</Tag>, '9/10'],
-                    ['Ice cream', '350', '95%', '3,00€', <Tag>Common</Tag>, '8/10'],
+                    {
+                        cells: [
+                            "Slice of pizza",
+                            "450",
+                            "95%",
+                            "5,00€",
+                            <Tag>Common</Tag>,
+                            "8/10",
+                        ],
+                        actions: [
+                            { Icon: IconLightningRegular, onPress: () => {}, label: "action" },
+                            { Icon: IconLightningRegular, onPress: () => {}, label: "action" },
+                        ],
+                    },
+                    ["Hamburger", "350", "87%", "3,50€", <Tag>Common</Tag>, "7.5/10"],
+                    {
+                        cells: ["Salad", "150", "70%", "4,00€", <Tag>Common</Tag>, "6/10"],
+                        actions: [
+                            { Icon: IconLightningRegular, onPress: () => {}, label: "action" },
+                        ],
+                    },
+                    ["Sushi", "200", "90%", "12,00€", <Tag type="warning">Rare</Tag>, "9/10"],
+                    ["Ice cream", "350", "95%", "3,00€", <Tag>Common</Tag>, "8/10"],
+                ]}
+            />`,
+    },
+    {
+        group: 'Table',
+        name: 'Table in collapse-rows mode',
+        code: `
+            <Table
+                responsive="collapse-rows"
+                heading={[
+                    "Type of food",
+                    "Calories",
+                    "Tasty Factor",
+                    "Average Price",
+                    "Rarity",
+                    "Average Rating",
+                ]}
+                columnTextAlign={["left", "right", "right", "right", "center", "right"]}
+                content={[
+                    {
+                        cells: [
+                            "Slice of pizza",
+                            "450",
+                            "95%",
+                            "5,00€",
+                            <Tag>Common</Tag>,
+                            "8/10",
+                        ],
+                        actions: [
+                            { Icon: IconLightningRegular, onPress: () => {}, label: "action" },
+                            { Icon: IconLightningRegular, onPress: () => {}, label: "action" },
+                        ],
+                    },
+                    ["Hamburger", "350", "87%", "3,50€", <Tag>Common</Tag>, "7.5/10"],
+                    {
+                        cells: ["Salad", "150", "70%", "4,00€", <Tag>Common</Tag>, "6/10"],
+                        actions: [
+                            { Icon: IconLightningRegular, onPress: () => {}, label: "action" },
+                        ],
+                    },
+                    ["Ice cream", "350", "95%", "3,00€", <Tag>Common</Tag>, "8/10"],
                 ]}
             />`,
     },

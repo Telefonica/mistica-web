@@ -21,6 +21,13 @@ export const controls = style([
         paddingRight: 16,
     }),
     {
+        overflowX: 'auto',
+        overflowY: 'hidden',
+        scrollbarWidth: 'none', // Hide in FF
+        '::-webkit-scrollbar': {
+            display: 'none', // Hide in Chrome/Safari
+        },
+
         gap: 8,
         zIndex: 2,
         background: 'white',

@@ -20,8 +20,9 @@ import {defaultBorderRadiiConfig, defaultTextPresetsConfig} from './skins/defaul
 import {isClientSide} from './utils/environment';
 import {PACKAGE_VERSION} from './package-version';
 import {SnackbarRoot} from './snackbar-context';
+import {mapToWeight} from './text';
 
-import type {Colors} from './skins/types';
+import type {Colors, TextPresetsConfig} from './skins/types';
 import type {Theme, ThemeConfig} from './theme';
 
 // Check there is only one version of mistica installed in the page.
@@ -79,6 +80,34 @@ const sanitizeDimensions = (dimensions: ThemeConfig['dimensions']): Partial<Them
     };
 };
 
+const SetupStackingContext = () => {
+    const ref = React.useRef<HTMLDivElement>(null);
+    const [hasContentIsolation, setHasContentIsolation] = React.useState(false);
+    const [isFirstRender, setIsFirstRender] = React.useState(true);
+
+    useIsomorphicLayoutEffect(() => {
+        if (isFirstRender) {
+            // Given that we don't render the extra div in server side, we skip creating it in the first client
+            // render in order to avoid hydration issues
+            setIsFirstRender(false);
+        } else {
+            // Set isolation: isolate to the parent of the provider. This way, we avoid content inside portals
+            // from being rendered under content that is inside the provider (in case it has z-index defined).
+            const root = ref.current?.parentElement;
+            if (root) {
+                root.style.isolation = 'isolate';
+                setHasContentIsolation(true);
+            }
+        }
+    }, [isFirstRender]);
+
+    // Don't render the div in server side, because effects are not executed in there and it makes the div useless
+    if (hasContentIsolation || !isClientSide() || isFirstRender) {
+        return null;
+    }
+    return <div ref={ref} style={{display: 'none'}} />;
+};
+
 const ThemeContextProvider: React.FC<Props> = ({theme, children, as, withoutStyles = false}) => {
     const nextAriaId = React.useRef(1);
     const getAriaId = React.useCallback((): string => `aria-id-hook-${nextAriaId.current++}`, []);
@@ -91,25 +120,21 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children, as, withoutStyl
     const isDarkModeEnabled = (colorScheme === 'auto' && isOsDarkModeEnabled) || colorScheme === 'dark';
     const colors: Colors = isDarkModeEnabled ? darkColors : lightColors;
 
-    const ref = React.useRef<HTMLDivElement>(null);
-    const [hasContentIsolation, setHasContentIsolation] = React.useState(false);
-
-    useIsomorphicLayoutEffect(() => {
-        // Set isolation: isolate to the parent of the provider. This way, we avoid content inside portals
-        // from being rendered under content that is inside the provider (in case it has z-index defined).
-        const root = ref.current?.parentElement;
-        if (root) {
-            root.style.isolation = 'isolate';
-            setHasContentIsolation(true);
-        }
-    }, []);
-
     const contextTheme = React.useMemo((): Theme => {
         const platformOverrides = {
             platform: getPlatform(),
             insideNovumNativeApp: isInsideNovumNativeApp(),
             ...theme.platformOverrides,
         };
+
+        const textTokenValues = Object.entries(defaultTextPresetsConfig).map(([token, defaultConfig]) => {
+            return {
+                [token]: {...defaultConfig, ...theme.skin.textPresets?.[token as keyof TextPresetsConfig]},
+            };
+        });
+
+        const textPresets = Object.assign({}, ...textTokenValues) as TextPresetsConfig;
+
         return {
             skinName: theme.skin.name,
             i18n: theme.i18n,
@@ -128,25 +153,7 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children, as, withoutStyl
                 ...dimensions,
                 ...sanitizeDimensions(theme.dimensions),
             },
-            textPresets: {
-                text5: {...defaultTextPresetsConfig.text5, ...theme.skin.textPresets?.text5},
-                text6: {...defaultTextPresetsConfig.text6, ...theme.skin.textPresets?.text6},
-                text7: {...defaultTextPresetsConfig.text7, ...theme.skin.textPresets?.text7},
-                text8: {...defaultTextPresetsConfig.text8, ...theme.skin.textPresets?.text8},
-                text9: {...defaultTextPresetsConfig.text9, ...theme.skin.textPresets?.text9},
-                text10: {...defaultTextPresetsConfig.text10, ...theme.skin.textPresets?.text10},
-                cardTitle: {...defaultTextPresetsConfig.cardTitle, ...theme.skin.textPresets?.cardTitle},
-                button: {...defaultTextPresetsConfig.button, ...theme.skin.textPresets?.button},
-                link: {...defaultTextPresetsConfig.link, ...theme.skin.textPresets?.link},
-                title1: {...defaultTextPresetsConfig.title1, ...theme.skin.textPresets?.title1},
-                title2: {...defaultTextPresetsConfig.title2, ...theme.skin.textPresets?.title2},
-                navigationBar: {
-                    ...defaultTextPresetsConfig.navigationBar,
-                    ...theme.skin.textPresets?.navigationBar,
-                },
-                indicator: {...defaultTextPresetsConfig.indicator, ...theme.skin.textPresets?.indicator},
-                tabsLabel: {...defaultTextPresetsConfig.tabsLabel, ...theme.skin.textPresets?.tabsLabel},
-            },
+            textPresets,
             Link: getMisticaLinkComponent(theme.Link),
             isDarkMode: isDarkModeEnabled,
             isIos: getPlatform(platformOverrides) === 'ios',
@@ -171,7 +178,24 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children, as, withoutStyl
         [colors]
     );
 
+    // TODO: create CSS vars for size and lineHeight (https://jira.tid.es/browse/WEB-1929)
+    const textPresetsVars = React.useMemo(() => {
+        // Get an object mapping textPresets tokens to objects containing the token's weight
+        // For example, {title1: {weight: '700'}}
+        const tokenValues = Object.entries(contextTheme.textPresets).map(([token, config]) => {
+            // Map light/regular/medium/bold to valid css fontWeight values
+            return {[token]: {weight: String(mapToWeight[config.weight])}};
+        });
+
+        const textPresetsVars = Object.assign({}, ...tokenValues) as {
+            [key in keyof TextPresetsConfig]: {weight: string};
+        };
+
+        return textPresetsVars;
+    }, [contextTheme]);
+
     const themeVars = assignInlineVars(vars, {
+        textPresets: textPresetsVars,
         colors,
         rawColors,
         borderRadii: theme.skin.borderRadii ?? defaultBorderRadiiConfig,
@@ -222,7 +246,7 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children, as, withoutStyl
                     </TooltipContextProvider>
                 </ModalContextProvider>
             </TabFocus>
-            {!hasContentIsolation && !as && <div ref={ref} style={{display: 'none'}} />}
+            {!as && <SetupStackingContext />}
         </>
     );
 };
