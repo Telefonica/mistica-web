@@ -4,41 +4,6 @@
     background: var(--mistica-color-background);
 }
 
-/* border-radius utility classes */
-.mistica-border-radius-avatar {
-    border-radius: var(--mistica-border-radius-avatar);
-}
-.mistica-border-radius-bar {
-    border-radius: var(--mistica-border-radius-bar);
-}
-.mistica-border-radius-button {
-    border-radius: var(--mistica-border-radius-button);
-}
-.mistica-border-radius-checkbox {
-    border-radius: var(--mistica-border-radius-checkbox);
-}
-.mistica-border-radius-container {
-    border-radius: var(--mistica-border-radius-container);
-}
-.mistica-border-radius-indicator {
-    border-radius: var(--mistica-border-radius-indicator);
-}
-.mistica-border-radius-input {
-    border-radius: var(--mistica-border-radius-input);
-}
-.mistica-border-radius-legacyDisplay {
-    border-radius: var(--mistica-border-radius-legacyDisplay);
-}
-.mistica-border-radius-popup {
-    border-radius: var(--mistica-border-radius-popup);
-}
-.mistica-border-radius-sheet {
-    border-radius: var(--mistica-border-radius-sheet);
-}
-.mistica-border-radius-mediaSmall {
-    border-radius: var(--mistica-border-radius-mediaSmall);
-}
-
 /* text utility classes */
 .mistica-text-1 {
     font-size: var(--mistica-font-size-1);

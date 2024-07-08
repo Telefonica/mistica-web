@@ -156,12 +156,12 @@ export const generateSkinCssSrc = (skinName, DESIGN_TOKENS_FOLDER) => {
             lineHeight: {mobile: 20, desktop: 24},
         },
         3: {
-            size: {mobile: 18, desktop: 20},
-            lineHeight: {mobile: 24, desktop: 28},
+            size: {mobile: 16, desktop: 18},
+            lineHeight: {mobile: 24, desktop: 24},
         },
         4: {
-            size: {mobile: 20, desktop: 28},
-            lineHeight: {mobile: 24, desktop: 32},
+            size: {mobile: 18, desktop: 20},
+            lineHeight: {mobile: 24, desktop: 28},
         },
         5: {
             size: {mobile: 20, desktop: 28},
@@ -282,15 +282,6 @@ export const generateCommonCssSrc = (DESIGN_TOKENS_FOLDER) => {
     const designTokensFile = fs.readFileSync(path.join(DESIGN_TOKENS_FOLDER, `movistar.json`), 'utf8');
     const designTokens = JSON.parse(designTokensFile);
 
-    const borderRadiiClasses = Object.keys(designTokens.radius)
-        .map(
-            (radiusName) =>
-                `.${prefix}border-radius-${radiusName} {border-radius: var(${buildBorderRadiusVarName(
-                    radiusName
-                )})}`
-        )
-        .join('\n');
-
     const textPresets = new Set([
         'text1',
         'text2',
@@ -321,9 +312,6 @@ export const generateCommonCssSrc = (DESIGN_TOKENS_FOLDER) => {
     color: var(${buildColorVarName('textPrimary')});
     background: var(${buildColorVarName('background')});
 }
-
-/* border-radius utility classes */
-${borderRadiiClasses}
 
 /* text utility classes */
 ${textClasses}

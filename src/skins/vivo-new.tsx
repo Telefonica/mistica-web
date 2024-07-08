@@ -159,7 +159,7 @@ export const getVivoNewSkin: GetKnownSkin = () => {
             textNavigationBarSecondary: palette.vivoPurpleLight50,
             textNavigationSearchBarHint: palette.vivoPurpleLight50,
             textNavigationSearchBarText: palette.white,
-            textAppBar: palette.grey5,
+            textAppBar: palette.grey4,
             textAppBarSelected: palette.vivoPurple,
             customTabsBackground: palette.white,
             tagTextPromo: palette.vivoPurple,
