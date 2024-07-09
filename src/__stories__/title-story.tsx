@@ -19,7 +19,7 @@ export default {
     },
 };
 
-type renderTitleComponentProps = {
+type RenderTitleComponentProps = {
     title: string;
     linkText: string;
     right: 'link' | 'icon' | 'undefined';
@@ -35,7 +35,7 @@ const TitleComponent = ({
     defaultTitle,
     as,
     TitleComponent,
-}: renderTitleComponentProps): JSX.Element => (
+}: RenderTitleComponentProps): JSX.Element => (
     <TitleComponent
         as={as}
         dataAttributes={{testid: defaultTitle}}
