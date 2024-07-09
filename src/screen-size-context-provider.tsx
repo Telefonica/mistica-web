@@ -55,9 +55,11 @@ const ScreenSizeContextProvider: React.FC<Props> = ({children}) => {
             const listener = () => {
                 setState(mq.matches);
             };
-            mq.addListener(listener);
+            mq.addEventListener('change', listener);
             listener();
-            return () => mq.removeListener(listener);
+            return () => {
+                mq.removeEventListener('change', listener);
+            };
         });
 
         return () => cleanupFunctions.forEach((fn) => fn());

@@ -51,10 +51,12 @@ export const useIsOsDarkModeEnabled = (): boolean => {
             setIsDarkMode(mq.matches);
         };
 
-        mq.addListener(listener);
+        mq.addEventListener('change', listener);
         listener();
 
-        return () => mq.removeListener(listener);
+        return () => {
+            mq.removeEventListener('change', listener);
+        };
     }, []);
 
     return isDarkMode;
