@@ -231,6 +231,7 @@ export {
     ValueBlock as CommunityValueBlock,
     ProgressBlock as CommunityProgressBlock,
 } from './community/blocks';
+export {default as iconKeywords} from './generated/mistica-icons/icons-keywords';
 
 // Exported this way to facilitate tree-shaking
 export {default as Icon2GFilled} from './generated/mistica-icons/icon-2-g-filled';
