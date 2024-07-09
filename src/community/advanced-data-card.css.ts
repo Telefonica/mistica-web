@@ -38,15 +38,7 @@ export const actions = style([
     },
 ]);
 
-export const touchableArea = style({
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    height: '100%',
-    width: '100%',
-});
-
-export const touchableContainer = style({
+export const touchable = style({
     display: 'flex',
     flex: 1,
     position: 'relative',
@@ -55,18 +47,7 @@ export const touchableContainer = style({
     height: '100%',
 });
 
-export const touchable = style({
-    display: 'flex',
-    flexDirection: 'column',
-    minHeight: '100%',
-    width: '100%',
-    position: 'relative',
-    padding: 0,
-    border: 'none',
-    background: 'transparent',
-});
-
-export const touchableCardOverlay = style({
+export const touchableCardHoverOverlay = style({
     height: '100%',
     width: '100%',
     pointerEvents: 'none',
@@ -81,7 +62,7 @@ export const touchableCardOverlay = style({
     '@media': {
         [mq.supportsHover]: {
             selectors: {
-                [`${touchableContainer}:hover &`]: {
+                [`${touchable}:hover &`]: {
                     backgroundColor: skinVars.colors.backgroundContainerHover,
                 },
                 [`${touchable}:active &`]: {
