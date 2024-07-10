@@ -10,7 +10,7 @@ import * as styles from './empty-state-card.css';
 import {vars} from './skins/skin-contract.css';
 
 import type {ButtonLink, ButtonPrimary, ButtonSecondary} from './button';
-import type {DataAttributes, RendersNullableElement} from './utils/types';
+import type {DataAttributes, HeadingType, RendersNullableElement} from './utils/types';
 
 interface CommonProps {
     title: string;
