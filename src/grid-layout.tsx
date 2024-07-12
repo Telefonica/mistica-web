@@ -20,31 +20,31 @@ type PropsChildren = {
     children: React.ReactNode;
 };
 
-type PropsTemplate6_6 = {
+type PropsTemplate6plus6 = {
     template: '6+6';
     left: React.ReactNode;
     right: React.ReactNode;
 };
 
-type PropsTemplate8_4 = {
+type PropsTemplate8plus4 = {
     template: '8+4';
     left: React.ReactNode;
     right: React.ReactNode;
 };
 
-type PropsTemplate4_6 = {
+type PropsTemplate4plus6 = {
     template: '4+6';
     left: React.ReactNode;
     right: React.ReactNode;
 };
 
-type PropsTemplate5_4 = {
+type PropsTemplate5plus4 = {
     template: '5+4';
     left: React.ReactNode;
     right: React.ReactNode;
 };
 
-type PropsTemplate3_9 = {
+type PropsTemplate3plus9 = {
     template: '3+9';
     left: React.ReactNode;
     right: React.ReactNode;
@@ -63,11 +63,11 @@ type PropsTemplate8 = {
 type Props = CommonProps &
     ExclusifyUnion<
         | PropsChildren
-        | PropsTemplate6_6
-        | PropsTemplate8_4
-        | PropsTemplate4_6
-        | PropsTemplate5_4
-        | PropsTemplate3_9
+        | PropsTemplate6plus6
+        | PropsTemplate8plus4
+        | PropsTemplate4plus6
+        | PropsTemplate5plus4
+        | PropsTemplate3plus9
         | PropsTemplate10
         | PropsTemplate8
     >;
