@@ -25,7 +25,7 @@ import type {CardAction} from '../card';
 import type StackingGroup from '../stacking-group';
 import type Image from '../image';
 import type {ButtonPrimary, ButtonLink} from '../button';
-import type {DataAttributes, TrackingEvent} from '../utils/types';
+import type {DataAttributes, HeadingType, TrackingEvent} from '../utils/types';
 import type {RendersNullableElement} from '../utils/renders-element';
 import type Tag from '../tag';
 import type {
@@ -220,17 +220,15 @@ type AllowedExtra =
     | typeof SimpleBlock
     | typeof ValueBlock;
 
-type TextAs = 'h1' | 'h2' | 'h3' | 'h4';
-
 type AdvancedDataCardProps = MaybeTouchableCard<{
     stackingGroup?: RendersNullableElement<typeof StackingGroup>;
     headline?: RendersNullableElement<typeof Tag>;
     pretitle?: string;
     pretitleLinesMax?: number;
-    pretitleAs?: TextAs;
+    pretitleAs?: HeadingType;
     title?: string;
     titleLinesMax?: number;
-    titleAs?: TextAs;
+    titleAs?: HeadingType;
     subtitle?: string;
     subtitleLinesMax?: number;
     description?: string;

@@ -18,11 +18,11 @@ import {getPrefixedDataAttributes} from './utils/dom';
 import {applyCssVars} from './utils/css';
 
 import type {ButtonLink, ButtonPrimary, ButtonSecondary} from './button';
-import type {DataAttributes, RendersNullableElement} from './utils/types';
+import type {DataAttributes, HeadingType, RendersNullableElement} from './utils/types';
 
 type Props = {
     title?: string;
-    titleAs?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+    titleAs?: HeadingType;
     description: string;
     onClose?: () => void;
     icon?: React.ReactElement;

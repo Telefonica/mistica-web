@@ -15,7 +15,7 @@ import {Title2, Title3} from './title';
 
 import type NavigationBreadcrumbs from './navigation-breadcrumbs';
 import type {ButtonPrimary, ButtonSecondary} from './button';
-import type {DataAttributes, RendersElement, RendersNullableElement} from './utils/types';
+import type {DataAttributes, HeadingType, RendersElement, RendersNullableElement} from './utils/types';
 import type {TextPresetProps} from './text';
 
 type OverridableTextProps = {
@@ -29,8 +29,9 @@ type RichText = string | ({text: string} & OverridableTextProps);
 type HeaderProps = {
     headline?: React.ReactNode;
     pretitle?: RichText;
+    pretitleAs?: HeadingType;
     title?: string;
-    titleAs?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+    titleAs?: HeadingType;
     description?: string;
     small?: boolean;
     dataAttributes?: DataAttributes;
@@ -63,6 +64,7 @@ type HeaderProps = {
 export const Header: React.FC<HeaderProps> = ({
     headline,
     pretitle,
+    pretitleAs,
     title,
     titleAs = 'h2',
     description,
@@ -99,7 +101,8 @@ export const Header: React.FC<HeaderProps> = ({
                 <Box paddingRight={16}>
                     <Stack space={8}>
                         {headline}
-                        {pretitle && renderRichText(pretitle, {color: vars.colors.textPrimary})}
+                        {pretitle &&
+                            renderRichText(pretitle, {color: vars.colors.textPrimary, as: pretitleAs})}
                         {title &&
                             (small ? (
                                 <Title2 as={titleAs}>{title}</Title2>
@@ -147,7 +150,7 @@ export const Header: React.FC<HeaderProps> = ({
 
 type MainSectionHeaderProps = {
     title: string;
-    titleAs?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+    titleAs?: HeadingType;
     description?: string;
     button?: RendersNullableElement<typeof ButtonPrimary> | RendersNullableElement<typeof ButtonSecondary>;
 };

@@ -34,6 +34,7 @@ import type {ButtonLink, ButtonPrimary, ButtonSecondary} from './button';
 import type {ExclusifyUnion} from './utils/utility-types';
 import type {
     DataAttributes,
+    HeadingType,
     IconProps,
     RendersElement,
     RendersNullableElement,
@@ -372,7 +373,7 @@ type CardContentProps = {
     pretitle?: string;
     pretitleLinesMax?: number;
     title?: string;
-    titleAs?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+    titleAs?: HeadingType;
     titleLinesMax?: number;
     subtitle?: string;
     subtitleLinesMax?: number;
@@ -507,7 +508,7 @@ interface MediaCardBaseProps {
     pretitle?: string;
     pretitleLinesMax?: number;
     title?: string;
-    titleAs?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+    titleAs?: HeadingType;
     titleLinesMax?: number;
     subtitle?: string;
     subtitleLinesMax?: number;
@@ -730,7 +731,7 @@ export const NakedCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
 type SmallNakedCardProps = MaybeTouchableCard<{
     media: RendersElement<typeof Image> | RendersElement<typeof Video>;
     title?: string;
-    titleAs?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+    titleAs?: HeadingType;
     titleLinesMax?: number;
     subtitle?: string;
     subtitleLinesMax?: number;
@@ -841,7 +842,7 @@ interface DataCardBaseProps {
     pretitle?: string;
     pretitleLinesMax?: number;
     title?: string;
-    titleAs?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+    titleAs?: HeadingType;
     titleLinesMax?: number;
     subtitle?: string;
     subtitleLinesMax?: number;
@@ -976,7 +977,7 @@ export const DataCard = React.forwardRef<HTMLDivElement, DataCardProps>(
 type SnapCardProps = MaybeTouchableCard<{
     icon?: React.ReactElement;
     title?: string;
-    titleAs?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+    titleAs?: HeadingType;
     titleLinesMax?: number;
     subtitle?: string;
     subtitleLinesMax?: number;
@@ -1153,7 +1154,7 @@ interface CommonDisplayCardProps {
     pretitle?: string;
     pretitleLinesMax?: number;
     title: string;
-    titleAs?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+    titleAs?: HeadingType;
     titleLinesMax?: number;
     description?: string;
     descriptionLinesMax?: number;
@@ -1445,7 +1446,7 @@ interface PosterCardBaseProps {
     pretitle?: string;
     pretitleLinesMax?: number;
     title?: string;
-    titleAs?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+    titleAs?: HeadingType;
     titleLinesMax?: number;
     subtitle?: string;
     subtitleLinesMax?: number;

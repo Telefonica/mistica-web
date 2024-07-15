@@ -7,7 +7,7 @@ import {vars} from './skins/skin-contract.css';
 import {useTheme} from './hooks';
 import {getPrefixedDataAttributes} from './utils/dom';
 
-import type {DataAttributes} from './utils/types';
+import type {DataAttributes, HeadingType} from './utils/types';
 
 type TitleLayoutProps = {
     title: React.ReactElement;
@@ -35,7 +35,7 @@ export type TitleProps = {
     children: React.ReactNode;
     id?: string;
     right?: React.ReactNode;
-    as?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+    as?: HeadingType;
     /** "data-" prefix is automatically added. For example, use "testid" instead of "data-testid" */
     dataAttributes?: DataAttributes;
 };

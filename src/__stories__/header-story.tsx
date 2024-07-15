@@ -11,6 +11,7 @@ import {
     Tag,
 } from '..';
 
+import type {HeadingType} from '../utils/types';
 import type {TagType} from '..';
 
 export default {
@@ -25,8 +26,10 @@ type Args = {
     headlineType: TagType;
     headline: string;
     pretitle: string;
+    pretitleAs: HeadingType;
     truncatePretitle: boolean;
     title: string;
+    titleAs: HeadingType;
     description: string;
     small: boolean;
     inverse: boolean;
@@ -46,8 +49,10 @@ export const Default: StoryComponent<Args> = ({
     headlineType,
     headline,
     pretitle,
+    pretitleAs,
     truncatePretitle,
     title,
+    titleAs,
     description,
     small,
     withExtraContent,
@@ -72,9 +77,11 @@ export const Default: StoryComponent<Args> = ({
                 header={
                     withHeader ? (
                         <Header
+                            pretitleAs={pretitleAs}
                             headline={<Tag type={headlineType}>{headline}</Tag>}
                             pretitle={truncatePretitle ? {text: pretitle, truncate: true} : pretitle}
                             title={title}
+                            titleAs={titleAs}
                             description={description}
                             small={small}
                         />
@@ -101,7 +108,9 @@ Default.args = {
     headlineType: 'promo',
     headline: 'Priority',
     pretitle: 'Your last bill',
+    pretitleAs: 'span',
     title: 'December bill is now available',
+    titleAs: 'h2',
     description: 'This is a description',
     small: false,
     truncatePretitle: false,
@@ -121,7 +130,17 @@ Default.argTypes = {
     },
     headline: {if: {arg: 'withHeader'}},
     pretitle: {if: {arg: 'withHeader'}},
+    pretitleAs: {
+        if: {arg: 'withHeader'},
+        options: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'span'],
+        control: {type: 'select'},
+    },
     title: {if: {arg: 'withHeader'}},
+    titleAs: {
+        if: {arg: 'withHeader'},
+        options: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'span'],
+        control: {type: 'select'},
+    },
     description: {if: {arg: 'withHeader'}},
     small: {if: {arg: 'withHeader'}},
     sideBySideExtraOnDesktop: {if: {arg: 'withExtraContent'}},

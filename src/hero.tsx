@@ -21,7 +21,7 @@ import type Image from './image';
 import type Video from './video';
 import type {ButtonLink, ButtonPrimary, ButtonSecondary} from './button';
 import type Tag from './tag';
-import type {DataAttributes, RendersElement, RendersNullableElement} from './utils/types';
+import type {DataAttributes, HeadingType, RendersElement, RendersNullableElement} from './utils/types';
 
 const CONTENT_BACKGROUND_COLOR = {
     default: skinVars.colors.background,
@@ -51,7 +51,7 @@ type HeroContentProps = {
     headline?: RendersNullableElement<typeof Tag>;
     pretitle?: string;
     title?: string;
-    titleAs?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+    titleAs?: HeadingType;
     description?: string;
     descriptionLinesMax?: number;
     extra?: React.ReactNode;
@@ -122,7 +122,7 @@ type HeroProps = {
     headline?: RendersNullableElement<typeof Tag>;
     pretitle?: string;
     title?: string;
-    titleAs?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+    titleAs?: HeadingType;
     description?: string;
     descriptionLinesMax?: number;
     extra?: React.ReactNode;
