@@ -8,9 +8,11 @@ import {
     Placeholder,
     Callout,
     IconInformationUserLight,
+    Tag,
 } from '..';
 
 import type {HeadingType} from '../utils/types';
+import type {TagType} from '..';
 
 export default {
     title: 'Components/Headers/Header',
@@ -21,6 +23,8 @@ export default {
 
 type Args = {
     withHeader: boolean;
+    headlineType: TagType;
+    headline: string;
     pretitle: string;
     pretitleAs: HeadingType;
     truncatePretitle: boolean;
@@ -42,6 +46,8 @@ export const Default: StoryComponent<Args> = ({
     bleed,
     sideBySideExtraOnDesktop,
     withBreadcrumbs,
+    headlineType,
+    headline,
     pretitle,
     pretitleAs,
     truncatePretitle,
@@ -72,6 +78,7 @@ export const Default: StoryComponent<Args> = ({
                     withHeader ? (
                         <Header
                             pretitleAs={pretitleAs}
+                            headline={<Tag type={headlineType}>{headline}</Tag>}
                             pretitle={truncatePretitle ? {text: pretitle, truncate: true} : pretitle}
                             title={title}
                             titleAs={titleAs}
@@ -98,6 +105,8 @@ export const Default: StoryComponent<Args> = ({
 Default.storyName = 'Header';
 Default.args = {
     withHeader: true,
+    headlineType: 'promo',
+    headline: 'Priority',
     pretitle: 'Your last bill',
     pretitleAs: 'span',
     title: 'December bill is now available',
@@ -114,6 +123,12 @@ Default.args = {
 };
 
 Default.argTypes = {
+    headlineType: {
+        options: ['promo', 'active', 'inactive', 'success', 'warning', 'error'],
+        control: {type: 'select'},
+        if: {arg: 'withHeader'},
+    },
+    headline: {if: {arg: 'withHeader'}},
     pretitle: {if: {arg: 'withHeader'}},
     pretitleAs: {
         if: {arg: 'withHeader'},

@@ -1,6 +1,6 @@
 {
     "name": "@telefonica/mistica",
-    "version": "15.13.0",
+    "version": "15.14.0",
     "license": "MIT",
     "repository": {
         "type": "git",
@@ -44,8 +44,8 @@
     "browserslist": [
         "chrome >= 51",
         "firefox >= 78",
-        "safari >= 13",
-        "ios_saf >= 13"
+        "safari >= 14",
+        "ios_saf >= 14"
     ],
     "prettier": "@telefonica/prettier-config",
     "acceptanceTests": {
@@ -81,7 +81,7 @@
         "@swc/core": "^1.3.95",
         "@swc/jest": "^0.2.29",
         "@telefonica/acceptance-testing": "4.0.0",
-        "@telefonica/eslint-config": "^2.0.1",
+        "@telefonica/eslint-config": "^2.1.1",
         "@telefonica/prettier-config": "^2.0.0",
         "@testing-library/dom": "^10.2.0",
         "@testing-library/jest-dom": "^6.4.6",

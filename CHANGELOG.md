@@ -1,3 +1,17 @@
+# [15.14.0](https://github.com/Telefonica/mistica-web/compare/v15.13.0...v15.14.0) (2024-07-11)
+
+
+### Bug Fixes
+
+* **AdvancedDataCard:** a11y of touchable area ([#1168](https://github.com/Telefonica/mistica-web/issues/1168)) ([2dc7f2d](https://github.com/Telefonica/mistica-web/commit/2dc7f2dda2d7f6298a04466caa324ad4cbf2f185))
+
+
+### Features
+
+* **browser support:** set min Safari version to 14 ([#1171](https://github.com/Telefonica/mistica-web/issues/1171)) ([e36fd73](https://github.com/Telefonica/mistica-web/commit/e36fd738efc9170be72eff1e6e5e63b16abfec22))
+* **icon keywords:** exported a list of keywords associsated with every mistica icon ([#1166](https://github.com/Telefonica/mistica-web/issues/1166)) ([754a64e](https://github.com/Telefonica/mistica-web/commit/754a64e7f86d07eb5c5c74c103457bbdace76cd1))
+* **Table:** allow optional header, add row actions and other fixes ([#1154](https://github.com/Telefonica/mistica-web/issues/1154)) ([38aa747](https://github.com/Telefonica/mistica-web/commit/38aa747136a249e00488d06adfe8531d1687d7e8))
+
 # [15.13.0](https://github.com/Telefonica/mistica-web/compare/v15.12.0...v15.13.0) (2024-07-05)
 
 

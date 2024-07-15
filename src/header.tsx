@@ -27,6 +27,7 @@ type OverridableTextProps = {
 type RichText = string | ({text: string} & OverridableTextProps);
 
 type HeaderProps = {
+    headline?: React.ReactNode;
     pretitle?: RichText;
     pretitleAs?: HeadingType;
     title?: string;
@@ -61,6 +62,7 @@ type HeaderProps = {
 };
 
 export const Header: React.FC<HeaderProps> = ({
+    headline,
     pretitle,
     pretitleAs,
     title,
@@ -98,6 +100,7 @@ export const Header: React.FC<HeaderProps> = ({
             {(title || pretitle || description) && (
                 <Box paddingRight={16}>
                     <Stack space={8}>
+                        {headline}
                         {pretitle &&
                             renderRichText(pretitle, {color: vars.colors.textPrimary, as: pretitleAs})}
                         {title &&

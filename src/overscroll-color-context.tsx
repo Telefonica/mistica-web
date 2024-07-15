@@ -51,15 +51,44 @@ const TopOverscrollColor = () => {
     return null;
 };
 
+const useBodyBackgroundColor = () => {
+    const [bodyBackgroundColor, setBodyBackgroundColor] = React.useState<string>('transparent');
+
+    // When dark/light mode changes, body background color may change, so we need to listen to this event
+    React.useEffect(() => {
+        const mq = window.matchMedia('(prefers-color-scheme: dark)');
+
+        let rafId: number;
+        const listener = () => {
+            // We need to wait for the next frame (requestAnimationFrame) to get the updated body background color
+            rafId = requestAnimationFrame(() => {
+                const bodyBackgroundColor = getComputedStyle(document.body).backgroundColor;
+                setBodyBackgroundColor(bodyBackgroundColor);
+            });
+        };
+
+        mq.addListener(listener);
+        listener();
+
+        return () => {
+            mq.removeListener(listener);
+            cancelAnimationFrame(rafId);
+        };
+    }, []);
+
+    return bodyBackgroundColor;
+};
+
 const BottomOverscrollColor = () => {
     const {topColor, bottomColor} = useValue();
+    const defaultBottomColor = useBodyBackgroundColor();
+
     // if not specified a bottom color, dont render it, except if there is a top color defined,
     // in that case we need to render the bottom color to avoid theme-color affecting the bottom overscroll
     if (!bottomColor && !topColor) {
         return null;
     }
 
-    const defaultBottomColor = getComputedStyle(document.body).backgroundColor;
     const bottomColorToApply = bottomColor ?? defaultBottomColor;
 
     // if top and bottom color are the same, theme-color set for top color will work for bottom too, so this is not needed
