@@ -1,0 +1,130 @@
+/* Default text color */
+[data-mistica-skin] {
+    color: var(--mistica-color-textPrimary);
+    background: var(--mistica-color-background);
+}
+
+/* text utility classes */
+.mistica-text-1 {
+    font-size: var(--mistica-font-size-1);
+    line-height: var(--mistica-line-height-1);
+    font-weight: var(--mistica-font-weight-1);
+}
+.mistica-text-2 {
+    font-size: var(--mistica-font-size-2);
+    line-height: var(--mistica-line-height-2);
+    font-weight: var(--mistica-font-weight-2);
+}
+.mistica-text-3 {
+    font-size: var(--mistica-font-size-3);
+    line-height: var(--mistica-line-height-3);
+    font-weight: var(--mistica-font-weight-3);
+}
+.mistica-text-4 {
+    font-size: var(--mistica-font-size-4);
+    line-height: var(--mistica-line-height-4);
+    font-weight: var(--mistica-font-weight-4);
+}
+.mistica-text-5 {
+    font-size: var(--mistica-font-size-5);
+    line-height: var(--mistica-line-height-5);
+    font-weight: var(--mistica-font-weight-5);
+}
+.mistica-text-6 {
+    font-size: var(--mistica-font-size-6);
+    line-height: var(--mistica-line-height-6);
+    font-weight: var(--mistica-font-weight-6);
+}
+.mistica-text-7 {
+    font-size: var(--mistica-font-size-7);
+    line-height: var(--mistica-line-height-7);
+    font-weight: var(--mistica-font-weight-7);
+}
+.mistica-text-8 {
+    font-size: var(--mistica-font-size-8);
+    line-height: var(--mistica-line-height-8);
+    font-weight: var(--mistica-font-weight-8);
+}
+.mistica-text-9 {
+    font-size: var(--mistica-font-size-9);
+    line-height: var(--mistica-line-height-9);
+    font-weight: var(--mistica-font-weight-9);
+}
+.mistica-text-10 {
+    font-size: var(--mistica-font-size-10);
+    line-height: var(--mistica-line-height-10);
+    font-weight: var(--mistica-font-weight-10);
+}
+.mistica-text-cardTitle {
+    font-size: var(--mistica-font-size-cardTitle);
+    line-height: var(--mistica-line-height-cardTitle);
+    font-weight: var(--mistica-font-weight-cardTitle);
+}
+.mistica-text-button {
+    font-size: var(--mistica-font-size-button);
+    line-height: var(--mistica-line-height-button);
+    font-weight: var(--mistica-font-weight-button);
+}
+.mistica-text-tabsLabel {
+    font-size: var(--mistica-font-size-tabsLabel);
+    line-height: var(--mistica-line-height-tabsLabel);
+    font-weight: var(--mistica-font-weight-tabsLabel);
+}
+.mistica-text-link {
+    font-size: var(--mistica-font-size-link);
+    line-height: var(--mistica-line-height-link);
+    font-weight: var(--mistica-font-weight-link);
+}
+.mistica-text-title1 {
+    font-size: var(--mistica-font-size-title1);
+    line-height: var(--mistica-line-height-title1);
+    font-weight: var(--mistica-font-weight-title1);
+}
+.mistica-text-title2 {
+    font-size: var(--mistica-font-size-title2);
+    line-height: var(--mistica-line-height-title2);
+    font-weight: var(--mistica-font-weight-title2);
+}
+.mistica-text-indicator {
+    font-size: var(--mistica-font-size-indicator);
+    line-height: var(--mistica-line-height-indicator);
+    font-weight: var(--mistica-font-weight-indicator);
+}
+.mistica-text-navigationBar {
+    font-size: var(--mistica-font-size-navigationBar);
+    line-height: var(--mistica-line-height-navigationBar);
+    font-weight: var(--mistica-font-weight-navigationBar);
+}
+
+/* Boxed */
+.mistica-boxed {
+    border: 1px solid var(--mistica-color-border);
+    border-radius: var(--mistica-border-radius-container);
+    background: var(--mistica-color-backgroundContainer);
+}
+
+/* Responsive layout */
+.mistica-responsive-layout {
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+    margin: 0 var(--mistica-responsive-layout-margin);
+    --mistica-responsive-layout-margin: 16px;
+}
+
+@media (min-width: 768px) {
+    .mistica-responsive-layout {
+        --mistica-responsive-layout-margin: 24px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .mistica-responsive-layout {
+        --mistica-responsive-layout-margin: 40px;
+    }
+}
+
+@media (min-width: 1368px) {
+    .mistica-responsive-layout {
+        --mistica-responsive-layout-margin: calc((100vw - 1224px) / 2);
+    }
+}
