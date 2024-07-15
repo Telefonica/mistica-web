@@ -8,7 +8,7 @@ import Image from '../image';
 <SnapCard title="title" href="/" />;
 <SnapCard title="title" to="/" />;
 <SnapCard title="title" onPress={() => {}} />;
-<SnapCard title="title" onPress={() => {}} trackingEvent={{name: 'do-something'}} />;
+<SnapCard title="title" onPress={() => {}} trackingEvent={{name: 'do-something'}} role="link" />;
 // @ts-expect-error onPress and href can't be used together
 <SnapCard title="title" onPress={() => {}} href="/" />;
 // @ts-expect-error onPress and to can't be used together
@@ -31,6 +31,7 @@ import Image from '../image';
     title="title"
     onPress={() => {}}
     trackingEvent={{name: 'do-something'}}
+    role="link"
 />;
 <PosterCard title="title" isInverse />;
 <PosterCard title="title" variant="inverse" />;
@@ -75,6 +76,7 @@ import Image from '../image';
     title="title"
     onPress={() => {}}
     trackingEvent={{name: 'do-something'}}
+    role="link"
 />;
 // @ts-expect-error onPress and href can't be used together
 <NakedCard media={<Image src="/something.png" />} title="title" onPress={() => {}} href="/" />;
@@ -94,6 +96,7 @@ import Image from '../image';
     title="title"
     onPress={() => {}}
     trackingEvent={{name: 'do-something'}}
+    role="link"
 />;
 // @ts-expect-error onPress and href can't be used together
 <SmallNakedCard media={<Image src="/something.png" />} title="title" onPress={() => {}} href="/" />;

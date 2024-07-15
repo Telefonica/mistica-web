@@ -479,6 +479,7 @@ const CardContent: React.FC<CardContentProps> = ({
 
 type TouchableProps = {
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
+    role?: string;
 } & ExclusifyUnion<
     | {
           href: string | undefined;
