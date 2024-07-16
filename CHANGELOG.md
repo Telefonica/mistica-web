@@ -1,3 +1,18 @@
+# [15.15.0](https://github.com/Telefonica/mistica-web/compare/v15.14.0...v15.15.0) (2024-07-16)
+
+
+### Bug Fixes
+
+* **overscroll color:** background color not changing when switching dark/light mode ([#1172](https://github.com/Telefonica/mistica-web/issues/1172)) ([9b74fe6](https://github.com/Telefonica/mistica-web/commit/9b74fe63178d54e56505974be56d235611da2360))
+
+
+### Features
+
+* **Cards:** add role prop for touchable cards ([#1169](https://github.com/Telefonica/mistica-web/issues/1169)) ([a2a7cbf](https://github.com/Telefonica/mistica-web/commit/a2a7cbf72158d37efe89466ff0d1dab91dbf5f15))
+* **css:** export mistica tokens as public css custom properties ([#1161](https://github.com/Telefonica/mistica-web/issues/1161)) ([c5f74bc](https://github.com/Telefonica/mistica-web/commit/c5f74bc624ddd1f890537342b384b9d579fd22cc))
+* **Header:** support headline (Tag) ([#1174](https://github.com/Telefonica/mistica-web/issues/1174)) ([07d8fae](https://github.com/Telefonica/mistica-web/commit/07d8fae820d810b7140f348825729d2c231f60ea))
+* **Text:** support setting heading level to span and header pretitleAs ([#1170](https://github.com/Telefonica/mistica-web/issues/1170)) ([8abf43e](https://github.com/Telefonica/mistica-web/commit/8abf43e75d139049dea7857a5953e8c0f2d83045))
+
 # [15.14.0](https://github.com/Telefonica/mistica-web/compare/v15.13.0...v15.14.0) (2024-07-11)
 
 
