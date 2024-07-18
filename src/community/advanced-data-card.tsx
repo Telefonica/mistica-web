@@ -234,7 +234,8 @@ type AdvancedDataCardProps = MaybeTouchableCard<{
     description?: string;
     descriptionLinesMax?: number;
     extra?: ReadonlyArray<RendersNullableElement<AllowedExtra>>;
-    extraDividerPadding?: 8 | 24;
+    extraDividerPadding?: 8 | 16 | 24;
+    noExtraDivider?: boolean;
     button?: RendersNullableElement<typeof ButtonPrimary>;
     footerImage?: RendersNullableElement<typeof Image>;
     footerText?: string;
@@ -264,6 +265,7 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
 
             extra,
             extraDividerPadding = 24,
+            noExtraDivider = false,
 
             button,
             footerImage,
@@ -353,7 +355,7 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
 
                                             {index + 1 !== extra.length && (
                                                 <Box paddingY={extraDividerPadding}>
-                                                    <Divider />
+                                                    {!noExtraDivider && <Divider />}
                                                 </Box>
                                             )}
                                         </div>
