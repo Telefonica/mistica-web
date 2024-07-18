@@ -14,4 +14,4 @@ export const container = style([
     },
 ]);
 
-export const content = style([sprinkles({flex: 1}), {alignSelf: 'center'}]);
+export const content = style([sprinkles({flex: 1, position: 'relative'}), {alignSelf: 'center'}]);
