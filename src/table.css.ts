@@ -122,7 +122,7 @@ globalStyle(`${table} th, ${table} td`, {
     height: ROW_MIN_HEIGHT, // height behaves like a min-height in table layout
 });
 
-globalStyle(`${boxed} th`, {
+globalStyle(`${boxed} thead th`, {
     '@media': {
         [mq.desktopOrBigger]: {
             paddingTop: 16 + BOXED_PADDING_Y_DESKTOP,
@@ -130,7 +130,7 @@ globalStyle(`${boxed} th`, {
     },
 });
 
-globalStyle(`${table} tr:last-child td`, {
+globalStyle(`${table} tbody tr:last-child td, ${table} tbody tr:last-child th`, {
     borderBottom: 'none',
 });
 
@@ -181,7 +181,7 @@ export const collapsedRowTitle = style({
     },
 });
 
-globalStyle(`${collapsedRowsInMobile} tbody td`, {
+globalStyle(`${collapsedRowsInMobile} tbody td, ${collapsedRowsInMobile} tbody th`, {
     '@media': {
         [mq.tabletOrSmaller]: {
             verticalAlign: 'initial',
@@ -193,6 +193,11 @@ globalStyle(`${collapsedRowsInMobile} tbody td`, {
             marginRight: 0, // remove right space occupied by actions
         },
     },
+});
+
+globalStyle(`${table} tbody th`, {
+    // Weight in th is bold if not specified, and we don't want this in the table's body
+    fontWeight: 'inherit',
 });
 
 export const rowFirstItem = style({});

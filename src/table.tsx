@@ -207,72 +207,87 @@ export const Table = React.forwardRef(
                             return (
                                 // Add position relative because in collapse-rows mode, actions are positioned absolutely in the row
                                 <tr key={rowIdx} style={{position: 'relative'}}>
-                                    {rowCells.map((cell, idx) => (
-                                        <td
-                                            key={idx}
-                                            className={classNames(styles.verticalAlign[rowVerticalAlign], {
-                                                [styles.rowFirstItem]: idx === 0,
-                                                [styles.rowLastItem]:
-                                                    idx === rowCells.length - 1 && !hasActionsColumn,
-                                                [styles.rowLastCollapsedItem]:
-                                                    idx === rowCells.length - 1 && collapsedRowsMode,
-                                                [styles.collapsedRowHeaderItem]:
-                                                    idx === rowHeaderIndex && collapsedRowsMode,
-                                            })}
-                                            style={{
-                                                // add space between top actions and content
-                                                marginRight:
-                                                    collapsedRowsMode && rowActionsList.length
-                                                        ? `calc(${actionsElementWidth} + 8px)`
-                                                        : undefined,
-                                            }}
-                                        >
-                                            {/**
-                                             * In collapsedRowsMode, we render the row heading text before every cell content, except for the first cell
-                                             * of every row, which is rendered with a medium weight font, as it's the row title.
-                                             * */}
-                                            {idx !== rowHeaderIndex &&
-                                                collapsedRowsMode &&
-                                                heading[idx] &&
-                                                !hideHeadersInMobile && (
-                                                    // this is aria-hidden because screen readers already read the column heading from the th
-                                                    <div className={styles.mobileCellHeading} aria-hidden>
-                                                        <Text1 medium color={vars.colors.textSecondary}>
-                                                            {heading[idx]}
-                                                        </Text1>
-                                                    </div>
-                                                )}
+                                    {rowCells.map((cell, idx) => {
+                                        const isCollapsedRowsLastItem =
+                                            rowHeaderIndex === rowCells.length - 1
+                                                ? idx === rowCells.length - 2 || rowCells.length === 1
+                                                : idx === rowCells.length - 1;
 
-                                            <Text
-                                                desktopSize={textProps.text2.desktopSize}
-                                                desktopLineHeight={textProps.text2.desktopLineHeight}
-                                                // Use Text4 size/lineHeight for row's title when collapsed-row mode is used
-                                                {...(idx === rowHeaderIndex && collapsedRowsMode
-                                                    ? {
-                                                          mobileSize: textProps.text4.mobileSize,
-                                                          mobileLineHeight: textProps.text4.mobileLineHeight,
-                                                      }
-                                                    : {
-                                                          mobileSize: textProps.text2.mobileSize,
-                                                          mobileLineHeight: textProps.text2.mobileLineHeight,
-                                                      })}
-                                                as="div"
-                                                wordBreak={false}
+                                        const CellComponent = idx === rowHeaderIndex ? 'th' : 'td';
+
+                                        return (
+                                            <CellComponent
+                                                className={classNames(
+                                                    styles.verticalAlign[rowVerticalAlign],
+                                                    {
+                                                        [styles.rowFirstItem]: idx === 0,
+                                                        [styles.rowLastItem]:
+                                                            idx === rowCells.length - 1 && !hasActionsColumn,
+                                                        [styles.rowLastCollapsedItem]:
+                                                            isCollapsedRowsLastItem && collapsedRowsMode,
+                                                        [styles.collapsedRowHeaderItem]:
+                                                            idx === rowHeaderIndex && collapsedRowsMode,
+                                                    }
+                                                )}
+                                                style={{
+                                                    // add space between top actions and content
+                                                    marginRight:
+                                                        collapsedRowsMode && rowActionsList.length
+                                                            ? `calc(${actionsElementWidth} + 8px)`
+                                                            : undefined,
+                                                }}
+                                                scope={idx === rowHeaderIndex ? 'row' : undefined}
                                             >
-                                                <div
-                                                    className={classNames(
-                                                        styles.cellTextAlign[getColumnTextAlign(idx)],
-                                                        {
-                                                            [styles.collapsedRowTitle]:
-                                                                idx === rowHeaderIndex && collapsedRowsMode,
-                                                        }
+                                                {/**
+                                                 * In collapsedRowsMode, we render the row heading text before every cell content, except for the first cell
+                                                 * of every row, which is rendered with a medium weight font, as it's the row title.
+                                                 * */}
+                                                {idx !== rowHeaderIndex &&
+                                                    collapsedRowsMode &&
+                                                    heading[idx] &&
+                                                    !hideHeadersInMobile && (
+                                                        // this is aria-hidden because screen readers already read the column heading from the th
+                                                        <div className={styles.mobileCellHeading} aria-hidden>
+                                                            <Text1 medium color={vars.colors.textSecondary}>
+                                                                {heading[idx]}
+                                                            </Text1>
+                                                        </div>
                                                     )}
+
+                                                <Text
+                                                    desktopSize={textProps.text2.desktopSize}
+                                                    desktopLineHeight={textProps.text2.desktopLineHeight}
+                                                    // Use Text4 size/lineHeight for row's title when collapsed-row mode is used
+                                                    {...(idx === rowHeaderIndex && collapsedRowsMode
+                                                        ? {
+                                                              mobileSize: textProps.text4.mobileSize,
+                                                              mobileLineHeight:
+                                                                  textProps.text4.mobileLineHeight,
+                                                          }
+                                                        : {
+                                                              mobileSize: textProps.text2.mobileSize,
+                                                              mobileLineHeight:
+                                                                  textProps.text2.mobileLineHeight,
+                                                          })}
+                                                    as="div"
+                                                    wordBreak={false}
                                                 >
-                                                    {cell}
-                                                </div>
-                                            </Text>
-                                        </td>
-                                    ))}
+                                                    <div
+                                                        className={classNames(
+                                                            styles.cellTextAlign[getColumnTextAlign(idx)],
+                                                            {
+                                                                [styles.collapsedRowTitle]:
+                                                                    idx === rowHeaderIndex &&
+                                                                    collapsedRowsMode,
+                                                            }
+                                                        )}
+                                                    >
+                                                        {cell}
+                                                    </div>
+                                                </Text>
+                                            </CellComponent>
+                                        );
+                                    })}
 
                                     {rowActionsList.length > 0 ? (
                                         <td
