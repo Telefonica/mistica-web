@@ -41,14 +41,11 @@ test.each`
     expect(image).toMatchImageSnapshot();
 });
 
-test.each`
-    extra
-    ${3}
-`('Advanced Data Card extras: $extra no divider', async ({extra}) => {
+test('Advanced Data Card extras: 3 no divider', async () => {
     await openStoryPage({
         id: 'community-advanceddatacard--default',
         device: 'MOBILE_IOS',
-        args: {extra, noExtraDivider: true},
+        args: {extra: 3, noExtraDivider: true},
     });
 
     const element = await screen.findByTestId('advanced-data-card');
