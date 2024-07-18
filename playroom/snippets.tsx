@@ -3432,8 +3432,11 @@ const advancedDataCardSnippets = [
                   Promo
                 </Tag>
               }
-              mainHeading={{ text: "text", value: "20" }}
-              secondHeading={{ text: "text", value: "20" }}
+              headings={[
+                { text: "text", value: "20" },
+                { text: "text", value: "20" },
+                { text: "text", value: "20" },
+              ]}
               title="HighlightedValueBlock"
               description="description"
             />,
@@ -3528,8 +3531,10 @@ const HighlightedValueBlockSnippets = [
               Promo
             </Tag>
           }
-          mainHeading={{ text: "text", value: "value" }}
-          secondHeading={{ text: "text", value: "value" }}
+          headings={[
+            { text: "text", value: "value" },
+            { text: "text", value: "value" }
+          ]}
           title="title"
           description="description"
         />
