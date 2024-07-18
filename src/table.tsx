@@ -61,6 +61,7 @@ type TableProps = {
     hideHeaders?: boolean | 'desktop' | 'mobile';
     /** "data-" prefix is automatically added. For example, use "testid" instead of "data-testid" */
     dataAttributes?: DataAttributes;
+    rowHeaderIndex?: number;
     'aria-label'?: string;
     'aria-labelledby'?: string;
     'aria-describedby'?: string;
@@ -115,6 +116,7 @@ export const Table = React.forwardRef(
             columnWidth,
             hideHeaders,
             scrollOverResponsiveLayout,
+            rowHeaderIndex = 0,
             ...otherProps
         }: TableProps,
         ref: React.Ref<HTMLDivElement>
@@ -214,6 +216,8 @@ export const Table = React.forwardRef(
                                                     idx === rowCells.length - 1 && !hasActionsColumn,
                                                 [styles.rowLastCollapsedItem]:
                                                     idx === rowCells.length - 1 && collapsedRowsMode,
+                                                [styles.collapsedRowHeaderItem]:
+                                                    idx === rowHeaderIndex && collapsedRowsMode,
                                             })}
                                             style={{
                                                 // add space between top actions and content
@@ -227,7 +231,7 @@ export const Table = React.forwardRef(
                                              * In collapsedRowsMode, we render the row heading text before every cell content, except for the first cell
                                              * of every row, which is rendered with a medium weight font, as it's the row title.
                                              * */}
-                                            {idx !== 0 &&
+                                            {idx !== rowHeaderIndex &&
                                                 collapsedRowsMode &&
                                                 heading[idx] &&
                                                 !hideHeadersInMobile && (
@@ -243,7 +247,7 @@ export const Table = React.forwardRef(
                                                 desktopSize={textProps.text2.desktopSize}
                                                 desktopLineHeight={textProps.text2.desktopLineHeight}
                                                 // Use Text4 size/lineHeight for row's title when collapsed-row mode is used
-                                                {...(idx === 0 && collapsedRowsMode
+                                                {...(idx === rowHeaderIndex && collapsedRowsMode
                                                     ? {
                                                           mobileSize: textProps.text4.mobileSize,
                                                           mobileLineHeight: textProps.text4.mobileLineHeight,
@@ -260,7 +264,7 @@ export const Table = React.forwardRef(
                                                         styles.cellTextAlign[getColumnTextAlign(idx)],
                                                         {
                                                             [styles.collapsedRowTitle]:
-                                                                idx === 0 && collapsedRowsMode,
+                                                                idx === rowHeaderIndex && collapsedRowsMode,
                                                         }
                                                     )}
                                                 >

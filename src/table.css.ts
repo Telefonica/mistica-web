@@ -145,6 +145,24 @@ globalStyle(
     }
 );
 
+globalStyle(`${collapsedRowsInMobile} tr`, {
+    '@media': {
+        [mq.tabletOrSmaller]: {
+            // Using flexbox so we can move the row's header to the top of the row
+            display: 'flex',
+            flexDirection: 'column',
+        },
+    },
+});
+
+export const collapsedRowHeaderItem = style({
+    '@media': {
+        [mq.tabletOrSmaller]: {
+            order: -1,
+        },
+    },
+});
+
 export const mobileCellHeading = style({
     paddingBottom: 4,
     '@media': {

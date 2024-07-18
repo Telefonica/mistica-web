@@ -47,6 +47,7 @@ type Args = {
     columnWidth: Array<number | string>;
     withActions: boolean;
     hideHeaders: 'true' | 'false' | 'mobile' | 'desktop';
+    rowHeaderIndex: number;
 };
 
 export const Default: StoryComponent<Args> = ({
@@ -63,6 +64,7 @@ export const Default: StoryComponent<Args> = ({
     columnWidth,
     withActions,
     hideHeaders,
+    rowHeaderIndex,
 }) => {
     return (
         <ResponsiveLayout isInverse={inverse}>
@@ -83,6 +85,7 @@ export const Default: StoryComponent<Args> = ({
                     columnTextAlign={columnTextAlign}
                     columnWidth={columnWidth}
                     rowVerticalAlign={rowVerticalAlign}
+                    rowHeaderIndex={rowHeaderIndex}
                     content={foodList.slice(0, numItems).map((row, index) => {
                         const actionsCount = withActions ? (index + 1) % 3 : 0;
                         return actionsCount === 0
@@ -124,6 +127,7 @@ Default.args = {
     columnWidth: ['auto', 'auto', 'auto', 'auto', 'auto', 'auto'],
     withActions: false,
     hideHeaders: 'false',
+    rowHeaderIndex: 0,
 };
 Default.argTypes = {
     responsive: {

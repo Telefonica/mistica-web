@@ -122,6 +122,14 @@ const cases = [
         },
     ],
     [
+        'desktop collapse-rows with rowHeaderIndex = 2',
+        {
+            device: 'DESKTOP',
+            args: {numItems: 6, responsive: 'collapse-rows', rowHeaderIndex: 2},
+            fullPageScreenshot: true,
+        },
+    ],
+    [
         'desktop boxed with actions',
         {
             device: 'DESKTOP',
@@ -222,6 +230,14 @@ const cases = [
         {
             device: 'TABLET',
             args: {numItems: 6, responsive: 'collapse-rows', withActions: true},
+            fullPageScreenshot: true,
+        },
+    ],
+    [
+        'tablet collapse-rows with rowHeaderIndex = 2',
+        {
+            device: 'TABLET',
+            args: {numItems: 6, responsive: 'collapse-rows', rowHeaderIndex: 2},
             fullPageScreenshot: true,
         },
     ],
