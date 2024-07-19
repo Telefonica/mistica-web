@@ -21,6 +21,7 @@ import {isClientSide} from './utils/environment';
 import {PACKAGE_VERSION} from './package-version';
 import {SnackbarRoot} from './snackbar-context';
 import {mapToWeight} from './text';
+import * as mq from './media-queries.css';
 
 import type {Colors, TextPresetsConfig} from './skins/types';
 import type {Theme, ThemeConfig} from './theme';
@@ -110,6 +111,14 @@ const SetupStackingContext = () => {
     return <div ref={ref} style={{display: 'none'}} />;
 };
 
+type TextPresetsVars = {
+    [key in keyof TextPresetsConfig]: {
+        weight: string;
+        size: string;
+        lineHeight: string;
+    };
+};
+
 const ThemeContextProvider: React.FC<Props> = ({theme, children, as, withoutStyles = false}) => {
     const nextAriaId = React.useRef(1);
     const getAriaId = React.useCallback((): string => `aria-id-hook-${nextAriaId.current++}`, []);
@@ -180,20 +189,36 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children, as, withoutStyl
         [colors]
     );
 
-    // TODO: create CSS vars for size and lineHeight (https://jira.tid.es/browse/WEB-1929)
     const textPresetsVars = React.useMemo(() => {
         // Get an object mapping textPresets tokens to objects containing the token's weight
         // For example, {title1: {weight: '700'}}
         const tokenValues = Object.entries(contextTheme.textPresets).map(([token, config]) => {
             // Map light/regular/medium/bold to valid css fontWeight values
-            return {[token]: {weight: String(mapToWeight[config.weight])}};
+            return {
+                [token]: {
+                    weight: String(mapToWeight[config.weight]),
+                    ...(config.size && {size: `${config.size.desktop}px`}),
+                    ...(config.lineHeight && {lineHeight: `${config.lineHeight.desktop}px`}),
+                },
+            };
         });
 
-        const textPresetsVars = Object.assign({}, ...tokenValues) as {
-            [key in keyof TextPresetsConfig]: {weight: string};
-        };
+        return Object.assign({}, ...tokenValues) as TextPresetsVars;
+    }, [contextTheme]);
 
-        return textPresetsVars;
+    const textPresetsResponsiveVars = React.useMemo(() => {
+        const tokenValues = Object.entries(contextTheme.textPresets)
+            .filter(([, config]) => !!config.size)
+            .map(([token, config]) => {
+                return {
+                    [token]: {
+                        ...(config.size && {size: `${config.size.mobile}px`}),
+                        ...(config.lineHeight && {lineHeight: `${config.lineHeight.mobile}px`}),
+                    },
+                };
+            });
+
+        return Object.assign({}, ...tokenValues) as TextPresetsVars;
     }, [contextTheme]);
 
     const themeVars = assignInlineVars(vars, {
@@ -202,6 +227,11 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children, as, withoutStyl
         rawColors,
         borderRadii: theme.skin.borderRadii ?? defaultBorderRadiiConfig,
     });
+
+    const responsiveThemeVars = assignInlineVars(
+        {textPresets: vars.textPresets},
+        {textPresets: textPresetsResponsiveVars}
+    );
 
     return (
         <>
@@ -232,7 +262,16 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children, as, withoutStyl
                                                                 {!withoutStyles &&
                                                                     (process.env.NODE_ENV !== 'test' ||
                                                                         process.env.SSR_TEST) && (
-                                                                        <style>{`:root {${themeVars}}`}</style>
+                                                                        <>
+                                                                            <style>
+                                                                                {`
+                                                                                    :root {${themeVars}}
+                                                                                    @media ${mq.tabletOrSmaller} {
+                                                                                        :root {${responsiveThemeVars}}
+                                                                                    }
+                                                                                `}
+                                                                            </style>
+                                                                        </>
                                                                     )}
                                                                 {children}
                                                             </>
