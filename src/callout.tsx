@@ -16,7 +16,6 @@ import {sprinkles} from './sprinkles.css';
 import {vars} from './skins/skin-contract.css';
 import {getPrefixedDataAttributes} from './utils/dom';
 import {applyCssVars} from './utils/css';
-import {iconContainerSize, iconSize} from './icon-button.css';
 
 import type {ButtonLink, ButtonPrimary, ButtonSecondary} from './button';
 import type {DataAttributes, HeadingType, RendersNullableElement} from './utils/types';
@@ -86,14 +85,7 @@ const Callout: React.FC<Props> = ({
                             {onClose && (
                                 // Create empty div in order to fill space that iconButton occupies.
                                 // Without this, the content's vertical alignment can be affected
-                                <div
-                                    style={{
-                                        // IconButton's width and left padding
-                                        width: `calc((${iconContainerSize.small} + ${iconSize.small}) / 2)`,
-                                        // IconButton's height + extra space required to align the X with the text content
-                                        height: `calc(${iconSize.small} + 0.125rem)`,
-                                    }}
-                                />
+                                <div className={styles.closeButtonContainerSize} />
                             )}
                         </Inline>
                         {(button || secondaryButton || buttonLink) && (
@@ -106,14 +98,7 @@ const Callout: React.FC<Props> = ({
                     </Stack>
                     {/** Put the close button after the content so that the Callout's content goes first in the reading order */}
                     {onClose && (
-                        <div
-                            style={{
-                                position: 'absolute',
-                                right: 0,
-                                // Align the X with the text content
-                                top: '0.125rem',
-                            }}
-                        >
+                        <div className={styles.closeButtonContainer}>
                             <IconButton
                                 small
                                 bleedY
