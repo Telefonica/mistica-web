@@ -47,6 +47,7 @@ type Args = {
     columnWidth: Array<number | string>;
     withActions: boolean;
     hideHeaders: 'true' | 'false' | 'mobile' | 'desktop';
+    withRowHeader: boolean;
     rowHeaderIndex: number;
 };
 
@@ -64,6 +65,7 @@ export const Default: StoryComponent<Args> = ({
     columnWidth,
     withActions,
     hideHeaders,
+    withRowHeader,
     rowHeaderIndex,
 }) => {
     return (
@@ -85,7 +87,7 @@ export const Default: StoryComponent<Args> = ({
                     columnTextAlign={columnTextAlign}
                     columnWidth={columnWidth}
                     rowVerticalAlign={rowVerticalAlign}
-                    rowHeaderIndex={rowHeaderIndex}
+                    rowHeaderIndex={withRowHeader ? rowHeaderIndex : undefined}
                     content={foodList.slice(0, numItems).map((row, index) => {
                         const actionsCount = withActions ? (index + 1) % 3 : 0;
                         return actionsCount === 0
@@ -127,6 +129,7 @@ Default.args = {
     columnWidth: ['auto', 'auto', 'auto', 'auto', 'auto', 'auto'],
     withActions: false,
     hideHeaders: 'false',
+    withRowHeader: false,
     rowHeaderIndex: 0,
 };
 Default.argTypes = {
@@ -148,4 +151,5 @@ Default.argTypes = {
         options: ['false', 'true', 'mobile', 'desktop'],
         control: {type: 'select'},
     },
+    rowHeaderIndex: {if: {arg: 'withRowHeader'}},
 };

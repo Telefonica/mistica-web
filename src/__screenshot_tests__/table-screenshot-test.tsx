@@ -234,10 +234,18 @@ const cases = [
         },
     ],
     [
+        'tablet collapse-rows with rowHeaderIndex = 0',
+        {
+            device: 'TABLET',
+            args: {numItems: 6, responsive: 'collapse-rows', withRowHeader: true, rowHeaderIndex: 0},
+            fullPageScreenshot: true,
+        },
+    ],
+    [
         'tablet collapse-rows with rowHeaderIndex = 2',
         {
             device: 'TABLET',
-            args: {numItems: 6, responsive: 'collapse-rows', rowHeaderIndex: 2},
+            args: {numItems: 6, responsive: 'collapse-rows', withRowHeader: true, rowHeaderIndex: 2},
             fullPageScreenshot: true,
         },
     ],
@@ -262,6 +270,20 @@ const cases = [
         {
             device: 'TABLET',
             args: {numItems: 6, boxed: true, responsive: 'collapse-rows', hideHeaders: true},
+            fullPageScreenshot: true,
+        },
+    ],
+    [
+        'tablet collapse-rows boxed with rowHeaderIndex = 0',
+        {
+            device: 'TABLET',
+            args: {
+                numItems: 6,
+                boxed: true,
+                responsive: 'collapse-rows',
+                withRowHeader: true,
+                rowHeaderIndex: 0,
+            },
             fullPageScreenshot: true,
         },
     ],

@@ -116,7 +116,7 @@ export const Table = React.forwardRef(
             columnWidth,
             hideHeaders,
             scrollOverResponsiveLayout,
-            rowHeaderIndex = 0,
+            rowHeaderIndex,
             ...otherProps
         }: TableProps,
         ref: React.Ref<HTMLDivElement>
