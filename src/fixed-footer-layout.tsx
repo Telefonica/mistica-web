@@ -60,7 +60,8 @@ const FixedFooterLayout = ({
     const {height: contentHeight} = useBoundingRect(containerRef) || {height: 0};
     const {isTabletOrSmaller} = useScreenSize();
     const {platformOverrides} = useTheme();
-    const {height: domFooterHeight, ref} = useElementDimensions();
+    // include margins to take into account marginBottom: safe-area-inset-bottom
+    const {height: domFooterHeight, ref} = useElementDimensions({includeMargins: true});
     const {visualHeight} = useWindowSize();
     const topDistance = useFixedToTopHeight();
     const availableHeight = visualHeight - topDistance - domFooterHeight;
@@ -71,8 +72,6 @@ const FixedFooterLayout = ({
     useIsomorphicLayoutEffect(() => {
         onChangeFooterHeight?.(domFooterHeight);
     }, [onChangeFooterHeight, domFooterHeight]);
-
-    const footerHeightStyle = `calc(${safeAreaInsetBottom} + ${domFooterHeight}px)`;
 
     React.useEffect(() => {
         /**
@@ -135,7 +134,7 @@ const FixedFooterLayout = ({
                     style={{
                         background: containerBgColor, // this color could be a gradient
                         top: topDistance - 1, // -1 because the navigationbar could have a 1px transparent background
-                        bottom: isFooterFixed ? footerHeightStyle : 'unset',
+                        bottom: isFooterFixed ? domFooterHeight : 'unset',
                         height: isFooterFixed ? 'unset' : contentHeight,
                     }}
                 />
@@ -158,9 +157,7 @@ const FixedFooterLayout = ({
                 ref={containerRef}
                 className={styles.container}
                 style={applyCssVars({
-                    [styles.vars.footerHeight]: isFooterFixed
-                        ? `calc(${safeAreaInsetBottom} + ${domFooterHeight}px)`
-                        : '0px',
+                    [styles.vars.footerHeight]: isFooterFixed ? `${domFooterHeight}px` : '0px',
                 })}
             >
                 {renderBackground()}

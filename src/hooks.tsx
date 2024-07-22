@@ -80,7 +80,7 @@ export const useDisableBodyScroll = (disable: boolean): void => {
 
 export const useScreenSize = (): ScreenSizeContextType => React.useContext(ScreenSizeContext);
 
-export const useElementDimensions = (): {
+export const useElementDimensions = ({includeMargins = false}: {includeMargins?: boolean} = {}): {
     width: number;
     height: number;
     ref: (node: HTMLElement | null) => void;
@@ -89,17 +89,30 @@ export const useElementDimensions = (): {
     const [height, setHeight] = React.useState(0);
     const [element, setElement] = React.useState<HTMLElement | null>(null);
 
-    const updateSize = React.useCallback((entries: Array<ResizeObserverEntry>) => {
-        if (!entries) {
-            setWidth(0);
-            setHeight(0);
-            return;
-        }
+    const updateSize = React.useCallback(
+        (entries: Array<ResizeObserverEntry>) => {
+            if (!entries) {
+                setWidth(0);
+                setHeight(0);
+                return;
+            }
 
-        const {width, height} = entries[0].contentRect;
-        setWidth(width);
-        setHeight(height);
-    }, []);
+            const {width, height} = entries[0].contentRect;
+            if (includeMargins) {
+                const style = window.getComputedStyle(entries[0].target);
+                const marginTop = parseInt(style.marginTop, 10);
+                const marginBottom = parseInt(style.marginBottom, 10);
+                const marginLeft = parseInt(style.marginLeft, 10);
+                const marginRight = parseInt(style.marginRight, 10);
+                setWidth(width + marginLeft + marginRight);
+                setHeight(height + marginTop + marginBottom);
+            } else {
+                setWidth(width);
+                setHeight(height);
+            }
+        },
+        [includeMargins]
+    );
 
     const ref = React.useCallback((node: HTMLElement | null) => {
         setElement(node);

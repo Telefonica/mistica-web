@@ -16,7 +16,7 @@ import {
 } from '..';
 
 export default {
-    title: 'Private/Fixed Footer',
+    title: 'Private/FixedFooter',
     parameters: {
         fullScreen: true,
     },
