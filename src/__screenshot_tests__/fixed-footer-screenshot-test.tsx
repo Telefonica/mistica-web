@@ -81,3 +81,27 @@ test('Fixed footer with safe inset at the bottom', async () => {
     const imageOverflowLinesInsetHorizontal = await page.screenshot({fullPage: false});
     expect(imageOverflowLinesInsetHorizontal).toMatchImageSnapshot();
 });
+
+test('Fixed footer onChangeFooterHeight takes into account safe-area-inset-bottom', async () => {
+    const page = await openStoryPage({
+        id: 'private-fixedfooter--fixed-footer-layout-height',
+        device: 'MOBILE_IOS_INSET',
+    });
+
+    expect(await page.screenshot()).toMatchImageSnapshot();
+
+    const changeFooterHeightButton = await screen.findByRole('button', {name: 'Change footer height'});
+
+    await changeFooterHeightButton.click();
+
+    expect(await page.screenshot()).toMatchImageSnapshot();
+
+    const addPlaceholderButton = await screen.findByRole('button', {name: 'Add placeholder'});
+
+    await addPlaceholderButton.click();
+    await addPlaceholderButton.click();
+    await addPlaceholderButton.click();
+    await addPlaceholderButton.click();
+
+    expect(await page.screenshot()).toMatchImageSnapshot();
+});
