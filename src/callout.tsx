@@ -32,6 +32,7 @@ type Props = {
     children?: void;
     'aria-label'?: string;
     dataAttributes?: DataAttributes;
+    role?: string;
 };
 
 const Callout: React.FC<Props> = ({
@@ -45,6 +46,7 @@ const Callout: React.FC<Props> = ({
     buttonLink,
     'aria-label': ariaLabel,
     dataAttributes,
+    role,
 }) => {
     const variant = useThemeVariant();
     const {texts} = useTheme();
@@ -64,6 +66,7 @@ const Callout: React.FC<Props> = ({
                 [mediaStyles.vars.mediaBorderRadius]: vars.borderRadii.mediaSmall,
             })}
             aria-label={ariaLabel ?? title}
+            role={role}
             {...getPrefixedDataAttributes(dataAttributes, 'Callout')}
         >
             <ThemeVariant isInverse={false}>
@@ -80,21 +83,9 @@ const Callout: React.FC<Props> = ({
                                 </Text2>
                             </Stack>
                             {onClose && (
-                                <div
-                                    style={{
-                                        // Align the X with the text content
-                                        marginTop: '0.125rem',
-                                    }}
-                                >
-                                    <IconButton
-                                        small
-                                        bleedY
-                                        bleedRight
-                                        Icon={IconCloseRegular}
-                                        onPress={onClose}
-                                        aria-label={texts.closeButtonLabel}
-                                    />
-                                </div>
+                                // Create empty div in order to fill space that iconButton occupies.
+                                // Without this, the content's vertical alignment can be affected
+                                <div className={styles.closeButtonContainerSize} />
                             )}
                         </Inline>
                         {(button || secondaryButton || buttonLink) && (
@@ -105,6 +96,19 @@ const Callout: React.FC<Props> = ({
                             />
                         )}
                     </Stack>
+                    {/** Put the close button after the content so that the Callout's content goes first in the reading order */}
+                    {onClose && (
+                        <div className={styles.closeButtonContainer}>
+                            <IconButton
+                                small
+                                bleedY
+                                bleedRight
+                                Icon={IconCloseRegular}
+                                onPress={onClose}
+                                aria-label={texts.closeButtonLabel}
+                            />
+                        </div>
+                    )}
                 </div>
             </ThemeVariant>
         </section>
