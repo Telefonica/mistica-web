@@ -366,22 +366,20 @@ export const PreviewTools = ({
     }, [os, skinName]);
 
     const controls = (
-        <Portal className={styles.controlsWrapper}>
-            <ThemeContextProvider theme={theme} as="div">
-                <PreviewToolsControls
-                    ref={controlsRef}
-                    skinName={skinName}
-                    onSkinNameChange={setSkinName}
-                    os={os}
-                    onOsChange={setOs}
-                    showPlatformSelector={showPlatformSelector}
-                    onEditStoryPress={editStory}
-                    onColorSchemeChange={setColorScheme}
-                    colorScheme={colorScheme}
-                    forceTabs={forceTabs}
-                />
-            </ThemeContextProvider>
-        </Portal>
+        <ThemeContextProvider theme={theme} as="div">
+            <PreviewToolsControls
+                ref={controlsRef}
+                skinName={skinName}
+                onSkinNameChange={setSkinName}
+                os={os}
+                onOsChange={setOs}
+                showPlatformSelector={showPlatformSelector}
+                onEditStoryPress={editStory}
+                onColorSchemeChange={setColorScheme}
+                colorScheme={colorScheme}
+                forceTabs={forceTabs}
+            />
+        </ThemeContextProvider>
     );
     if (hide) {
         return <>{children}</>;
@@ -390,83 +388,84 @@ export const PreviewTools = ({
         return (
             <>
                 {children}
-
-                <CSSTransition
-                    in={showControls}
-                    nodeRef={controlsRef}
-                    timeout={FLOATING_CONTROLS_ENTER_DURATION}
-                    classNames={styles.controlsTransitionClasses}
-                    mountOnEnter
-                    unmountOnExit
-                >
-                    {(state) => (
-                        <Overlay
-                            onPress={() => {
-                                if (state === 'entered') {
-                                    setShowControls(false);
-                                }
-                            }}
-                        >
-                            {controls}
-                        </Overlay>
-                    )}
-                </CSSTransition>
-
-                <CSSTransition
-                    in={!showControls}
-                    nodeRef={floatingButtonRef}
-                    timeout={FLOATING_CONTROLS_ENTER_DURATION}
-                    classNames={
-                        position.startsWith('bottom')
-                            ? styles.floatingButtonBottomTransitionClasses
-                            : styles.floatingButtonTopTransitionClasses
-                    }
-                    mountOnEnter
-                    unmountOnExit
-                >
-                    {(state) => (
-                        <div
-                            className={styles.floattingButton}
-                            ref={floatingButtonRef}
-                            style={{
-                                top: position.startsWith('top') ? 0 : undefined,
-                                bottom: position.startsWith('bottom') ? 0 : undefined,
-                                right: position.endsWith('right') ? 0 : undefined,
-                                left: position.endsWith('left') ? 0 : undefined,
-                            }}
-                        >
-                            <Touchable
-                                style={{width: 56, height: 56}}
-                                aria-label="settings"
+                <Portal>
+                    <CSSTransition
+                        in={showControls}
+                        nodeRef={controlsRef}
+                        timeout={FLOATING_CONTROLS_ENTER_DURATION}
+                        classNames={styles.controlsTransitionClasses}
+                        mountOnEnter
+                        unmountOnExit
+                    >
+                        {(state) => (
+                            <Overlay
                                 onPress={() => {
                                     if (state === 'entered') {
-                                        setShowControls(true);
+                                        setShowControls(false);
                                     }
                                 }}
                             >
-                                <div className={styles.floattingButtonBackground}>
-                                    <Circle
-                                        backgroundColor={skinVars.colors.backgroundContainer}
-                                        size={40}
-                                        border
-                                    >
-                                        <IconSettingsRegular
-                                            className={styles.floatingButtonIcon}
-                                            size={24}
-                                            color={skinVars.colors.neutralHigh}
-                                        />
-                                    </Circle>
-                                </div>
-                            </Touchable>
-                        </div>
-                    )}
-                </CSSTransition>
+                                {controls}
+                            </Overlay>
+                        )}
+                    </CSSTransition>
+
+                    <CSSTransition
+                        in={!showControls}
+                        nodeRef={floatingButtonRef}
+                        timeout={FLOATING_CONTROLS_ENTER_DURATION}
+                        classNames={
+                            position.startsWith('bottom')
+                                ? styles.floatingButtonBottomTransitionClasses
+                                : styles.floatingButtonTopTransitionClasses
+                        }
+                        mountOnEnter
+                        unmountOnExit
+                    >
+                        {(state) => (
+                            <div
+                                className={styles.floattingButton}
+                                ref={floatingButtonRef}
+                                style={{
+                                    top: position.startsWith('top') ? 0 : undefined,
+                                    bottom: position.startsWith('bottom') ? 0 : undefined,
+                                    right: position.endsWith('right') ? 0 : undefined,
+                                    left: position.endsWith('left') ? 0 : undefined,
+                                }}
+                            >
+                                <Touchable
+                                    style={{width: 56, height: 56}}
+                                    aria-label="settings"
+                                    onPress={() => {
+                                        if (state === 'entered') {
+                                            setShowControls(true);
+                                        }
+                                    }}
+                                >
+                                    <div className={styles.floattingButtonBackground}>
+                                        <Circle
+                                            backgroundColor={skinVars.colors.backgroundContainer}
+                                            size={40}
+                                            border
+                                        >
+                                            <IconSettingsRegular
+                                                className={styles.floatingButtonIcon}
+                                                size={24}
+                                                color={skinVars.colors.neutralHigh}
+                                            />
+                                        </Circle>
+                                    </div>
+                                </Touchable>
+                            </div>
+                        )}
+                    </CSSTransition>
+                </Portal>
             </>
         );
     } else {
         return (
             <>
-                {controls}
+                <Portal>{controls}</Portal>
                 <div className={styles.controlsHeight} />
                 {children}
             </>
