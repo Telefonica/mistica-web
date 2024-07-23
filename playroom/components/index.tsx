@@ -19,6 +19,7 @@ import {
     Touchable,
     IconButton,
     ToggleIconButton,
+    Portal,
 } from '../../src';
 import {Movistar, Vivo, O2, Telefonica, Blau, Vivo_New, Tu, O2_New} from '../themes';
 import {useOverrideTheme} from '../frame-component';
@@ -365,20 +366,22 @@ export const PreviewTools = ({
     }, [os, skinName]);
 
     const controls = (
-        <ThemeContextProvider theme={theme} as="div">
-            <PreviewToolsControls
-                ref={controlsRef}
-                skinName={skinName}
-                onSkinNameChange={setSkinName}
-                os={os}
-                onOsChange={setOs}
-                showPlatformSelector={showPlatformSelector}
-                onEditStoryPress={editStory}
-                onColorSchemeChange={setColorScheme}
-                colorScheme={colorScheme}
-                forceTabs={forceTabs}
-            />
-        </ThemeContextProvider>
+        <Portal className={styles.controlsWrapper}>
+            <ThemeContextProvider theme={theme} as="div">
+                <PreviewToolsControls
+                    ref={controlsRef}
+                    skinName={skinName}
+                    onSkinNameChange={setSkinName}
+                    os={os}
+                    onOsChange={setOs}
+                    showPlatformSelector={showPlatformSelector}
+                    onEditStoryPress={editStory}
+                    onColorSchemeChange={setColorScheme}
+                    colorScheme={colorScheme}
+                    forceTabs={forceTabs}
+                />
+            </ThemeContextProvider>
+        </Portal>
     );
     if (hide) {
         return <>{children}</>;

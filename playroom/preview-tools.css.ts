@@ -11,6 +11,12 @@ export const controlsHeight = style({
     },
 });
 
+export const controlsWrapper = style({
+    position: 'relative',
+    // Render above everything, including other portals
+    zIndex: 2,
+});
+
 export const controls = style([
     sprinkles({
         position: 'fixed',
