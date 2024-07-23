@@ -273,16 +273,14 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children, as, withoutStyl
                                                                 {!withoutStyles &&
                                                                     (process.env.NODE_ENV !== 'test' ||
                                                                         process.env.SSR_TEST) && (
-                                                                        <>
-                                                                            <style>
-                                                                                {`
-                                                                                    :root {${assignInlineVars(vars, themeVarsValues)}}
-                                                                                    @media ${mq.tabletOrSmaller} {
-                                                                                        :root {${assignInlineVars(vars, responsiveThemeVarsValues)}}
-                                                                                    }
-                                                                                `}
-                                                                            </style>
-                                                                        </>
+                                                                        <style>
+                                                                            {`
+                                                                                :root {${assignInlineVars(vars, themeVarsValues)}}
+                                                                                @media ${mq.tabletOrSmaller} {
+                                                                                    :root {${assignInlineVars(vars, responsiveThemeVarsValues)}}
+                                                                                }
+                                                                            `}
+                                                                        </style>
                                                                     )}
                                                                 {children}
                                                             </>
