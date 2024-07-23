@@ -19,6 +19,7 @@ import {
     Touchable,
     IconButton,
     ToggleIconButton,
+    Portal,
 } from '../../src';
 import {Movistar, Vivo, O2, Telefonica, Blau, Vivo_New, Tu, O2_New} from '../themes';
 import {useOverrideTheme} from '../frame-component';
@@ -387,83 +388,84 @@ export const PreviewTools = ({
         return (
             <>
                 {children}
-
-                <CSSTransition
-                    in={showControls}
-                    nodeRef={controlsRef}
-                    timeout={FLOATING_CONTROLS_ENTER_DURATION}
-                    classNames={styles.controlsTransitionClasses}
-                    mountOnEnter
-                    unmountOnExit
-                >
-                    {(state) => (
-                        <Overlay
-                            onPress={() => {
-                                if (state === 'entered') {
-                                    setShowControls(false);
-                                }
-                            }}
-                        >
-                            {controls}
-                        </Overlay>
-                    )}
-                </CSSTransition>
-
-                <CSSTransition
-                    in={!showControls}
-                    nodeRef={floatingButtonRef}
-                    timeout={FLOATING_CONTROLS_ENTER_DURATION}
-                    classNames={
-                        position.startsWith('bottom')
-                            ? styles.floatingButtonBottomTransitionClasses
-                            : styles.floatingButtonTopTransitionClasses
-                    }
-                    mountOnEnter
-                    unmountOnExit
-                >
-                    {(state) => (
-                        <div
-                            className={styles.floattingButton}
-                            ref={floatingButtonRef}
-                            style={{
-                                top: position.startsWith('top') ? 0 : undefined,
-                                bottom: position.startsWith('bottom') ? 0 : undefined,
-                                right: position.endsWith('right') ? 0 : undefined,
-                                left: position.endsWith('left') ? 0 : undefined,
-                            }}
-                        >
-                            <Touchable
-                                style={{width: 56, height: 56}}
-                                aria-label="settings"
+                <Portal>
+                    <CSSTransition
+                        in={showControls}
+                        nodeRef={controlsRef}
+                        timeout={FLOATING_CONTROLS_ENTER_DURATION}
+                        classNames={styles.controlsTransitionClasses}
+                        mountOnEnter
+                        unmountOnExit
+                    >
+                        {(state) => (
+                            <Overlay
                                 onPress={() => {
                                     if (state === 'entered') {
-                                        setShowControls(true);
+                                        setShowControls(false);
                                     }
                                 }}
                             >
-                                <div className={styles.floattingButtonBackground}>
-                                    <Circle
-                                        backgroundColor={skinVars.colors.backgroundContainer}
-                                        size={40}
-                                        border
-                                    >
-                                        <IconSettingsRegular
-                                            className={styles.floatingButtonIcon}
-                                            size={24}
-                                            color={skinVars.colors.neutralHigh}
-                                        />
-                                    </Circle>
-                                </div>
-                            </Touchable>
-                        </div>
-                    )}
-                </CSSTransition>
+                                {controls}
+                            </Overlay>
+                        )}
+                    </CSSTransition>
+
+                    <CSSTransition
+                        in={!showControls}
+                        nodeRef={floatingButtonRef}
+                        timeout={FLOATING_CONTROLS_ENTER_DURATION}
+                        classNames={
+                            position.startsWith('bottom')
+                                ? styles.floatingButtonBottomTransitionClasses
+                                : styles.floatingButtonTopTransitionClasses
+                        }
+                        mountOnEnter
+                        unmountOnExit
+                    >
+                        {(state) => (
+                            <div
+                                className={styles.floattingButton}
+                                ref={floatingButtonRef}
+                                style={{
+                                    top: position.startsWith('top') ? 0 : undefined,
+                                    bottom: position.startsWith('bottom') ? 0 : undefined,
+                                    right: position.endsWith('right') ? 0 : undefined,
+                                    left: position.endsWith('left') ? 0 : undefined,
+                                }}
+                            >
+                                <Touchable
+                                    style={{width: 56, height: 56}}
+                                    aria-label="settings"
+                                    onPress={() => {
+                                        if (state === 'entered') {
+                                            setShowControls(true);
+                                        }
+                                    }}
+                                >
+                                    <div className={styles.floattingButtonBackground}>
+                                        <Circle
+                                            backgroundColor={skinVars.colors.backgroundContainer}
+                                            size={40}
+                                            border
+                                        >
+                                            <IconSettingsRegular
+                                                className={styles.floatingButtonIcon}
+                                                size={24}
+                                                color={skinVars.colors.neutralHigh}
+                                            />
+                                        </Circle>
+                                    </div>
+                                </Touchable>
+                            </div>
+                        )}
+                    </CSSTransition>
+                </Portal>
             </>
         );
     } else {
         return (
             <>
-                {controls}
+                <Portal>{controls}</Portal>
                 <div className={styles.controlsHeight} />
                 {children}
             </>
