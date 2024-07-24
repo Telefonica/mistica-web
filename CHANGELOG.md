@@ -1,3 +1,17 @@
+# [15.16.0](https://github.com/Telefonica/mistica-web/compare/v15.15.0...v15.16.0) (2024-07-24)
+
+
+### Bug Fixes
+
+* **AdvancedDataCard:** Removed divider in extra, added 32px spacing and modified HighlightedValueBlock ([#1156](https://github.com/Telefonica/mistica-web/issues/1156)) ([af47b80](https://github.com/Telefonica/mistica-web/commit/af47b8004a9685639208a9e781384c513cce62f8))
+* **FixedFooterLayout:** take into accout safe-area-inset-bottom in onChangeFooterHeight ([#1177](https://github.com/Telefonica/mistica-web/issues/1177)) ([cb4be80](https://github.com/Telefonica/mistica-web/commit/cb4be808fc3a9baf51f8903bf7e69d3d663246b6))
+
+
+### Features
+
+* **Callout:** fix elements reading order and add role prop ([#1176](https://github.com/Telefonica/mistica-web/issues/1176)) ([35edede](https://github.com/Telefonica/mistica-web/commit/35edededc12d127aca4b2f9b0595b6d96650bc3a))
+* **Table:** allow setting any column as row header ([#1175](https://github.com/Telefonica/mistica-web/issues/1175)) ([938b275](https://github.com/Telefonica/mistica-web/commit/938b2759f5dcb7ba470253a5183a0a9f884899ba))
+
 # [15.15.0](https://github.com/Telefonica/mistica-web/compare/v15.14.0...v15.15.0) (2024-07-16)
 
 
