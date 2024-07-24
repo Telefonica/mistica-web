@@ -192,7 +192,7 @@ export const Table = React.forwardRef(
                                             return <CellActionIconButton key={index} {...action} />;
                                         }
                                         // action is a React.ReactElement
-                                        return action;
+                                        return <React.Fragment key={index}>{action}</React.Fragment>;
                                     })}
                                 </Inline>
                             );
@@ -217,6 +217,7 @@ export const Table = React.forwardRef(
 
                                         return (
                                             <CellComponent
+                                                key={idx}
                                                 className={classNames(
                                                     styles.verticalAlign[rowVerticalAlign],
                                                     {
