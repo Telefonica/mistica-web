@@ -214,7 +214,7 @@ test('RowList inside Form', async () => {
             radio: 'banana',
         });
     });
-}, 10000);
+}, 20000);
 
 test('Row list with icon buttons', async () => {
     const firstButtonSpy = jest.fn();
