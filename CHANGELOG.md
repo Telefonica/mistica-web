@@ -1,3 +1,10 @@
+## [15.16.1](https://github.com/Telefonica/mistica-web/compare/v15.16.0...v15.16.1) (2024-07-24)
+
+
+### Bug Fixes
+
+* **Table:** add missing keys to table cells ([#1181](https://github.com/Telefonica/mistica-web/issues/1181)) ([e32239d](https://github.com/Telefonica/mistica-web/commit/e32239d9fe133547f409d9034d66bf1fd334c99e))
+
 # [15.16.0](https://github.com/Telefonica/mistica-web/compare/v15.15.0...v15.16.0) (2024-07-24)
 
 
