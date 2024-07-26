@@ -1,3 +1,10 @@
+## [15.16.2](https://github.com/Telefonica/mistica-web/compare/v15.16.1...v15.16.2) (2024-07-26)
+
+
+### Bug Fixes
+
+* **Table:** avoid rendering row actions twice in jsdom ([#1182](https://github.com/Telefonica/mistica-web/issues/1182)) ([8e364f6](https://github.com/Telefonica/mistica-web/commit/8e364f6588276b79047a1abd9b09608fbe1d0e4b))
+
 ## [15.16.1](https://github.com/Telefonica/mistica-web/compare/v15.16.0...v15.16.1) (2024-07-24)
 
 
