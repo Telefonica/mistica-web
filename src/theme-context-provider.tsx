@@ -21,6 +21,8 @@ import {isClientSide} from './utils/environment';
 import {PACKAGE_VERSION} from './package-version';
 import {SnackbarRoot} from './snackbar-context';
 import {mapToWeight} from './text';
+import path from 'path';
+import fs from 'fs';
 
 import type {Colors, TextPresetsConfig} from './skins/types';
 import type {Theme, ThemeConfig} from './theme';
@@ -113,6 +115,9 @@ const SetupStackingContext = () => {
 const ThemeContextProvider: React.FC<Props> = ({theme, children, as, withoutStyles = false}) => {
     const nextAriaId = React.useRef(1);
     const getAriaId = React.useCallback((): string => `aria-id-hook-${nextAriaId.current++}`, []);
+
+    const misticaCssPath = path.resolve(__dirname, '../css/mistica.css');
+    const misticaCss = fs.readFileSync(misticaCssPath, 'utf-8');
 
     const isOsDarkModeEnabled = useIsOsDarkModeEnabled();
 
@@ -216,6 +221,10 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children, as, withoutStyl
                                             <ScreenSizeContextProvider>
                                                 <DialogRoot>
                                                     <SnackbarRoot>
+                                                        {process.env.NODE_ENV === 'test' && (
+                                                            // Include mistica.css classes in unit tests
+                                                            <style>{misticaCss}</style>
+                                                        )}
                                                         {as ? (
                                                             React.createElement(
                                                                 as,
