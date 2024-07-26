@@ -279,6 +279,7 @@ globalStyle(`${hiddenHeadersInMobile} thead tr`, {
 
 // In collapse-rows mode, we don't render actions as a table cell in mobile
 globalStyle(`${collapsedRowsInMobile} ${actionsTableCell}`, {
+    display: 'block',
     '@media': {
         [mq.tabletOrSmaller]: {
             display: 'none',
@@ -288,9 +289,10 @@ globalStyle(`${collapsedRowsInMobile} ${actionsTableCell}`, {
 
 // In collapse-rows mode, we don't render top actions in desktop
 globalStyle(`${collapsedRowsInMobile} ${topActions}`, {
+    display: 'none',
     '@media': {
-        [mq.desktopOrBigger]: {
-            display: 'none',
+        [mq.tabletOrSmaller]: {
+            display: 'block',
         },
     },
 });
