@@ -221,10 +221,6 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children, as, withoutStyl
                                             <ScreenSizeContextProvider>
                                                 <DialogRoot>
                                                     <SnackbarRoot>
-                                                        {process.env.NODE_ENV === 'test' && (
-                                                            // Include mistica.css classes in unit tests
-                                                            <style>{misticaCss}</style>
-                                                        )}
                                                         {as ? (
                                                             React.createElement(
                                                                 as,
@@ -234,7 +230,13 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children, as, withoutStyl
                                                                         ...(withoutStyles ? {} : themeVars),
                                                                     },
                                                                 },
-                                                                children
+                                                                <>
+                                                                    {process.env.NODE_ENV === 'test' && (
+                                                                        // Include mistica.css classes in unit tests
+                                                                        <style>{misticaCss}</style>
+                                                                    )}
+                                                                    children
+                                                                </>
                                                             )
                                                         ) : (
                                                             <>
@@ -243,6 +245,10 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children, as, withoutStyl
                                                                         process.env.SSR_TEST) && (
                                                                         <style>{`:root {${themeVars}}`}</style>
                                                                     )}
+                                                                {process.env.NODE_ENV === 'test' && (
+                                                                    // Include mistica.css classes in unit tests
+                                                                    <style>{misticaCss}</style>
+                                                                )}
                                                                 {children}
                                                             </>
                                                         )}
