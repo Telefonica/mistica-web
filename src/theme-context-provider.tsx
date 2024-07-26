@@ -222,16 +222,11 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children, as, withoutStyl
         return Object.assign({}, ...tokenValues) as TextPresetsVars;
     }, [contextTheme]);
 
-    const themeVarsValues = {
+    const themeVars = {
         textPresets: textPresetsVars,
         colors,
         rawColors,
         borderRadii: theme.skin.borderRadii ?? defaultBorderRadiiConfig,
-    };
-
-    const responsiveThemeVarsValues = {
-        ...themeVarsValues,
-        textPresets: textPresetsResponsiveVars,
     };
 
     return (
@@ -255,11 +250,11 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children, as, withoutStyl
                                                                         isolation: 'isolate',
                                                                         ...assignInlineVars(
                                                                             styles.themeVarsContract,
-                                                                            themeVarsValues
+                                                                            themeVars
                                                                         ),
                                                                         ...assignInlineVars(
-                                                                            styles.responsiveThemeVarsContract,
-                                                                            responsiveThemeVarsValues
+                                                                            styles.textPresetResponsiveVarsContract,
+                                                                            textPresetsResponsiveVars
                                                                         ),
                                                                     },
                                                                     className: withoutStyles
@@ -275,9 +270,9 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children, as, withoutStyl
                                                                         process.env.SSR_TEST) && (
                                                                         <style>
                                                                             {`
-                                                                                :root {${assignInlineVars(vars, themeVarsValues)}}
+                                                                                :root {${assignInlineVars(vars, themeVars)}}
                                                                                 @media ${mq.tabletOrSmaller} {
-                                                                                    :root {${assignInlineVars(vars, responsiveThemeVarsValues)}}
+                                                                                    :root {${assignInlineVars(vars.textPresets, textPresetsResponsiveVars)}}
                                                                                 }
                                                                             `}
                                                                         </style>
