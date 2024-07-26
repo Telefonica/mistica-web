@@ -116,8 +116,9 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children, as, withoutStyl
     const nextAriaId = React.useRef(1);
     const getAriaId = React.useCallback((): string => `aria-id-hook-${nextAriaId.current++}`, []);
 
+    const isRunningUnitTests = process.env.NODE_ENV === 'test';
     const misticaCssPath = path.resolve(__dirname, '../css/mistica.css');
-    const misticaCss = fs.readFileSync(misticaCssPath, 'utf-8');
+    const misticaCss = isRunningUnitTests ? fs.readFileSync(misticaCssPath, 'utf-8') : '';
 
     const isOsDarkModeEnabled = useIsOsDarkModeEnabled();
 
@@ -231,8 +232,8 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children, as, withoutStyl
                                                                     },
                                                                 },
                                                                 <>
-                                                                    {process.env.NODE_ENV === 'test' && (
-                                                                        // Include mistica.css classes in unit tests
+                                                                    {isRunningUnitTests && (
+                                                                        // Include mistica.css classes for unit tests
                                                                         <style>{misticaCss}</style>
                                                                     )}
                                                                     {children}
@@ -245,8 +246,8 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children, as, withoutStyl
                                                                         process.env.SSR_TEST) && (
                                                                         <style>{`:root {${themeVars}}`}</style>
                                                                     )}
-                                                                {process.env.NODE_ENV === 'test' && (
-                                                                    // Include mistica.css classes in unit tests
+                                                                {isRunningUnitTests && (
+                                                                    // Include mistica.css classes for unit tests
                                                                     <style>{misticaCss}</style>
                                                                 )}
                                                                 {children}
