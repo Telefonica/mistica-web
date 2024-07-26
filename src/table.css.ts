@@ -279,7 +279,6 @@ globalStyle(`${hiddenHeadersInMobile} thead tr`, {
 
 // In collapse-rows mode, we don't render actions as a table cell in mobile
 globalStyle(`${collapsedRowsInMobile} ${actionsTableCell}`, {
-    display: 'block',
     '@media': {
         [mq.tabletOrSmaller]: {
             display: 'none',
