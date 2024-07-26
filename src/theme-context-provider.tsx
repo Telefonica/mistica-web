@@ -235,7 +235,7 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children, as, withoutStyl
                                                                         // Include mistica.css classes in unit tests
                                                                         <style>{misticaCss}</style>
                                                                     )}
-                                                                    children
+                                                                    {children}
                                                                 </>
                                                             )
                                                         ) : (
