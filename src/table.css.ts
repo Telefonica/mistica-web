@@ -288,9 +288,10 @@ globalStyle(`${collapsedRowsInMobile} ${actionsTableCell}`, {
 
 // In collapse-rows mode, we don't render top actions in desktop
 globalStyle(`${collapsedRowsInMobile} ${topActions}`, {
+    display: 'none',
     '@media': {
-        [mq.desktopOrBigger]: {
-            display: 'none',
+        [mq.tabletOrSmaller]: {
+            display: 'block',
         },
     },
 });
