@@ -213,9 +213,16 @@ const NativeModalDialog = ({
         message,
         title,
     });
+    const isOpenRef = React.useRef(false);
 
     React.useEffect(() => {
-        showNativeDialog(paramsRef.current);
+        if (isOpenRef.current) {
+            return;
+        }
+        isOpenRef.current = true;
+        showNativeDialog(paramsRef.current).finally(() => {
+            isOpenRef.current = false;
+        });
     }, []);
 
     return <></>;

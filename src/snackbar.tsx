@@ -203,13 +203,15 @@ const Snackbar = React.forwardRef<ImperativeHandle & HTMLDivElement, Props>(
         duration = Math.max(duration ?? defaultDuration, defaultDuration);
         const renderNative = isWebViewBridgeAvailable();
         const onCloseRef = React.useRef(onCloseProp);
+        const isOpenRef = React.useRef(false);
 
         React.useEffect(() => {
             onCloseRef.current = onCloseProp;
         }, [onCloseProp]);
 
         React.useEffect(() => {
-            if (renderNative) {
+            if (renderNative && !isOpenRef.current) {
+                isOpenRef.current = true;
                 nativeMessage({
                     message,
                     // @ts-expect-error duration can be 'PERSISTENT' in new webview-bridge lib versions, and old apps will ignore it
@@ -218,14 +220,18 @@ const Snackbar = React.forwardRef<ImperativeHandle & HTMLDivElement, Props>(
                     buttonAccessibilityLabel,
                     type,
                     withDismiss,
-                }).then((unknownResult: unknown) => {
-                    const result = unknownResult as {action?: CloseAction} | undefined;
-                    if (result?.action && CLOSE_ACTIONS.includes(result.action)) {
-                        onCloseRef.current({action: result.action});
-                    } else {
-                        onCloseRef.current({action: 'DISMISS'});
-                    }
-                });
+                })
+                    .then((unknownResult: unknown) => {
+                        const result = unknownResult as {action?: CloseAction} | undefined;
+                        if (result?.action && CLOSE_ACTIONS.includes(result.action)) {
+                            onCloseRef.current({action: result.action});
+                        } else {
+                            onCloseRef.current({action: 'DISMISS'});
+                        }
+                    })
+                    .finally(() => {
+                        isOpenRef.current = false;
+                    });
             }
         }, [buttonAccessibilityLabel, buttonText, duration, message, renderNative, type, withDismiss]);
 
