@@ -1,3 +1,10 @@
+## [15.16.3](https://github.com/Telefonica/mistica-web/compare/v15.16.2...v15.16.3) (2024-07-29)
+
+
+### Bug Fixes
+
+* **SheetRoot:** Reduce transition duration to 0ms in test envs ([#1186](https://github.com/Telefonica/mistica-web/issues/1186)) ([8d1dec3](https://github.com/Telefonica/mistica-web/commit/8d1dec329e2dc737390f9fef166583a3221fdfef))
+
 ## [15.16.2](https://github.com/Telefonica/mistica-web/compare/v15.16.1...v15.16.2) (2024-07-26)
 
 
