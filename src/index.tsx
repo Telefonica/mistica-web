@@ -448,6 +448,9 @@ export {default as IconBoxLocationFilled} from './generated/mistica-icons/icon-b
 export {default as IconBoxLocationLight} from './generated/mistica-icons/icon-box-location-light';
 export {default as IconBoxLocationRegular} from './generated/mistica-icons/icon-box-location-regular';
 export {default as IconBoxRegular} from './generated/mistica-icons/icon-box-regular';
+export {default as IconBoxStarFilled} from './generated/mistica-icons/icon-box-star-filled';
+export {default as IconBoxStarLight} from './generated/mistica-icons/icon-box-star-light';
+export {default as IconBoxStarRegular} from './generated/mistica-icons/icon-box-star-regular';
 export {default as IconBrainFilled} from './generated/mistica-icons/icon-brain-filled';
 export {default as IconBrainLight} from './generated/mistica-icons/icon-brain-light';
 export {default as IconBrainRegular} from './generated/mistica-icons/icon-brain-regular';
@@ -1064,6 +1067,9 @@ export {default as IconHeartBubbleRegular} from './generated/mistica-icons/icon-
 export {default as IconHeartFilled} from './generated/mistica-icons/icon-heart-filled';
 export {default as IconHeartLight} from './generated/mistica-icons/icon-heart-light';
 export {default as IconHeartRegular} from './generated/mistica-icons/icon-heart-regular';
+export {default as IconHighPriorityFilled} from './generated/mistica-icons/icon-high-priority-filled';
+export {default as IconHighPriorityLight} from './generated/mistica-icons/icon-high-priority-light';
+export {default as IconHighPriorityRegular} from './generated/mistica-icons/icon-high-priority-regular';
 export {default as IconHockeyFilled} from './generated/mistica-icons/icon-hockey-filled';
 export {default as IconHockeyLight} from './generated/mistica-icons/icon-hockey-light';
 export {default as IconHockeyRegular} from './generated/mistica-icons/icon-hockey-regular';
@@ -1256,6 +1262,9 @@ export {default as IconMicrophoneRegular} from './generated/mistica-icons/icon-m
 export {default as IconMillenialsFilled} from './generated/mistica-icons/icon-millenials-filled';
 export {default as IconMillenialsLight} from './generated/mistica-icons/icon-millenials-light';
 export {default as IconMillenialsRegular} from './generated/mistica-icons/icon-millenials-regular';
+export {default as IconMmsFilled} from './generated/mistica-icons/icon-mms-filled';
+export {default as IconMmsLight} from './generated/mistica-icons/icon-mms-light';
+export {default as IconMmsRegular} from './generated/mistica-icons/icon-mms-regular';
 export {default as IconMobileAddUserFilled} from './generated/mistica-icons/icon-mobile-add-user-filled';
 export {default as IconMobileAddUserLight} from './generated/mistica-icons/icon-mobile-add-user-light';
 export {default as IconMobileAddUserRegular} from './generated/mistica-icons/icon-mobile-add-user-regular';
@@ -1892,6 +1901,9 @@ export {default as IconVirusRegular} from './generated/mistica-icons/icon-virus-
 export {default as IconVirusScanFilled} from './generated/mistica-icons/icon-virus-scan-filled';
 export {default as IconVirusScanLight} from './generated/mistica-icons/icon-virus-scan-light';
 export {default as IconVirusScanRegular} from './generated/mistica-icons/icon-virus-scan-regular';
+export {default as IconVivoValorizaFilled} from './generated/mistica-icons/icon-vivo-valoriza-filled';
+export {default as IconVivoValorizaLight} from './generated/mistica-icons/icon-vivo-valoriza-light';
+export {default as IconVivoValorizaRegular} from './generated/mistica-icons/icon-vivo-valoriza-regular';
 export {default as IconVodFilled} from './generated/mistica-icons/icon-vod-filled';
 export {default as IconVodLight} from './generated/mistica-icons/icon-vod-light';
 export {default as IconVodRegular} from './generated/mistica-icons/icon-vod-regular';
