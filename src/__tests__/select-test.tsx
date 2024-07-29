@@ -6,6 +6,8 @@ import ThemeContextProvider from '../theme-context-provider';
 import {makeTheme} from './test-utils';
 
 test('select happy case', async () => {
+    const onChangeSpy = jest.fn();
+
     render(
         <ThemeContextProvider theme={makeTheme()}>
             <Select
@@ -16,6 +18,7 @@ test('select happy case', async () => {
                     {value: 'value2', text: 'text2'},
                     {value: 'value3', text: 'text3'},
                 ]}
+                onChangeValue={onChangeSpy}
             />
         </ThemeContextProvider>
     );
@@ -25,6 +28,9 @@ test('select happy case', async () => {
     expect((screen.getByRole('option', {name: 'text1'}) as HTMLOptionElement).selected).toBe(false);
     expect((screen.getByRole('option', {name: 'text2'}) as HTMLOptionElement).selected).toBe(true);
     expect((screen.getByRole('option', {name: 'text3'}) as HTMLOptionElement).selected).toBe(false);
+
+    expect(onChangeSpy).toHaveBeenCalledTimes(1);
+    expect(onChangeSpy).toHaveBeenCalledWith('value2');
 });
 
 test('select with controlled value', async () => {

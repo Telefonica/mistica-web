@@ -301,6 +301,8 @@ const Select: React.FC<SelectProps> = ({
 
     const iconSize = pxToRem(20);
 
+    const selectedValue = valueState ?? value;
+
     return (
         <ThemeVariant isInverse={false}>
             {shouldUseNative || isServerSide ? (
@@ -317,7 +319,7 @@ const Select: React.FC<SelectProps> = ({
                             inputState={
                                 isFocused
                                     ? 'focused'
-                                    : value ?? valueState ?? inputRef.current?.value
+                                    : selectedValue ?? inputRef.current?.value
                                       ? 'filled'
                                       : 'default'
                             }
@@ -333,14 +335,11 @@ const Select: React.FC<SelectProps> = ({
                         )}
                         id={inputId}
                         aria-invalid={!!error}
-                        value={value ?? valueState}
+                        value={selectedValue}
                         required={!optional}
                         disabled={disabled}
                         onChange={(e) => {
                             setValue(e.target.value);
-                            if (onChangeValue) {
-                                onChangeValue(e.target.value);
-                            }
                         }}
                         onFocus={() => setIsFocused(true)}
                         onBlur={(e) => {
@@ -357,12 +356,20 @@ const Select: React.FC<SelectProps> = ({
                             // Override default browser opacity when disabled. This opacity also affects the label.
                             // Without this fix, the label is invisible when disabled
                             opacity: 1,
+                            // Use transparent color for the empty option (show below) to avoid showing it when the menu is closed
+                            color: selectedValue ? undefined : 'transparent',
                         }}
                     >
-                        {options.every(({value}) => !!value) && (
-                            // if no "empty" option exists, insert a dummy empty option
-                            // this is needed to allow a native select with no selected option
-                            <option value="" style={{display: 'none'}} />
+                        {!selectedValue && options.every(({value}) => !!value) && (
+                            // If no "empty" option exists, insert a dummy empty option. Once an option is selected,
+                            // this empty option is removed. This is needed to allow a native select without a selected
+                            // default option.
+                            // Chrome doesn't show this option when the select menu is open (because of display: none),
+                            // but Safari does. So we use the select's label for this option, otherwise it would be shown
+                            // as an empty option, which is weirder.
+                            <option value="" style={{display: 'none'}} aria-label="">
+                                {label}
+                            </option>
                         )}
                         {options.map(({value: val, text}) => (
                             // Set color: 'initial' to avoid wrong text color in some browsers when using dark mode.
@@ -397,7 +404,7 @@ const Select: React.FC<SelectProps> = ({
                             }
                             focus={isFocused}
                             label={label}
-                            value={value ?? valueState}
+                            value={selectedValue}
                             shrinkLabel={!!(value || valueState)}
                             name={name}
                             helperText={helperText}
@@ -415,7 +422,7 @@ const Select: React.FC<SelectProps> = ({
                                 label ? textStyles.inputWithLabel : textStyles.inputWithoutLabel
                             )}
                         >
-                            {getOptionText(value ?? valueState)}
+                            {getOptionText(selectedValue)}
                         </div>
                     </div>
                     {optionsShown && (
