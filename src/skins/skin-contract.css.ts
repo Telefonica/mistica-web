@@ -185,12 +185,16 @@ const textPresets = {
     indicator: {weight: ''},
     tabsLabel: {weight: '', size: '', lineHeight: ''},
     navigationBar: {weight: ''},
-    text5: {weight: ''},
-    text6: {weight: ''},
-    text7: {weight: ''},
-    text8: {weight: ''},
-    text9: {weight: ''},
-    text10: {weight: ''},
+    text1: {size: '', lineHeight: ''},
+    text2: {size: '', lineHeight: ''},
+    text3: {size: '', lineHeight: ''},
+    text4: {size: '', lineHeight: ''},
+    text5: {weight: '', size: '', lineHeight: ''},
+    text6: {weight: '', size: '', lineHeight: ''},
+    text7: {weight: '', size: '', lineHeight: ''},
+    text8: {weight: '', size: '', lineHeight: ''},
+    text9: {weight: '', size: '', lineHeight: ''},
+    text10: {weight: '', size: '', lineHeight: ''},
 };
 
 export const vars = createThemeContract({

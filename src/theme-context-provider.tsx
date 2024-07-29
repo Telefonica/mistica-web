@@ -197,7 +197,7 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children, as, withoutStyl
             // Map light/regular/medium/bold to valid css fontWeight values
             return {
                 [token]: {
-                    weight: String(mapToWeight[config.weight]),
+                    ...(config.weight && {weight: String(mapToWeight[config.weight])}),
                     ...(config.size && {size: `${config.size.desktop}px`}),
                     ...(config.lineHeight && {lineHeight: `${config.lineHeight.desktop}px`}),
                 },
@@ -211,7 +211,7 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children, as, withoutStyl
         const tokenValues = Object.entries(contextTheme.textPresets).map(([token, config]) => {
             return {
                 [token]: {
-                    weight: String(mapToWeight[config.weight]),
+                    ...(config.weight && {weight: String(mapToWeight[config.weight])}),
                     // Use mobile values for size/lineHeight
                     ...(config.size && {size: `${config.size.mobile}px`}),
                     ...(config.lineHeight && {lineHeight: `${config.lineHeight.mobile}px`}),

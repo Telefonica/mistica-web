@@ -17,6 +17,12 @@ type TextWeightTokenConfig<PossibleFontWeights = FontWeight> = {
     lineHeight?: never;
 };
 
+type TextSizeTokenConfig = {
+    weight?: never;
+    size: {mobile: number; desktop: number};
+    lineHeight: {mobile: number; desktop: number};
+};
+
 type TextTokenConfig<PossibleFontWeights = FontWeight> = {
     weight: PossibleFontWeights;
     size: {mobile: number; desktop: number};
@@ -32,12 +38,16 @@ export type TextPresetsConfig = {
     indicator: TextWeightTokenConfig<'regular' | 'medium'>;
     tabsLabel: TextTokenConfig;
     navigationBar: TextWeightTokenConfig;
-    text5: TextWeightTokenConfig;
-    text6: TextWeightTokenConfig;
-    text7: TextWeightTokenConfig;
-    text8: TextWeightTokenConfig;
-    text9: TextWeightTokenConfig;
-    text10: TextWeightTokenConfig;
+    text1: TextSizeTokenConfig;
+    text2: TextSizeTokenConfig;
+    text3: TextSizeTokenConfig;
+    text4: TextSizeTokenConfig;
+    text5: TextTokenConfig;
+    text6: TextTokenConfig;
+    text7: TextTokenConfig;
+    text8: TextTokenConfig;
+    text9: TextTokenConfig;
+    text10: TextTokenConfig;
 };
 
 type PartialTextPresetsConfig = Partial<TextPresetsConfig>;

@@ -47,12 +47,60 @@ export const Default: StoryComponent = () => {
                 tabsLabel
             </TextWrapper>
             <TextWrapper weight={vars.textPresets.navigationBar.weight}>navigationBar</TextWrapper>
-            <TextWrapper weight={vars.textPresets.text5.weight}>text5</TextWrapper>
-            <TextWrapper weight={vars.textPresets.text6.weight}>text6</TextWrapper>
-            <TextWrapper weight={vars.textPresets.text7.weight}>text7</TextWrapper>
-            <TextWrapper weight={vars.textPresets.text8.weight}>text8</TextWrapper>
-            <TextWrapper weight={vars.textPresets.text9.weight}>text9</TextWrapper>
-            <TextWrapper weight={vars.textPresets.text10.weight}>text10</TextWrapper>
+            <TextWrapper size={vars.textPresets.text1.size} lineHeight={vars.textPresets.text1.lineHeight}>
+                text1
+            </TextWrapper>
+            <TextWrapper size={vars.textPresets.text2.size} lineHeight={vars.textPresets.text2.lineHeight}>
+                text2
+            </TextWrapper>
+            <TextWrapper size={vars.textPresets.text3.size} lineHeight={vars.textPresets.text3.lineHeight}>
+                text3
+            </TextWrapper>
+            <TextWrapper size={vars.textPresets.text4.size} lineHeight={vars.textPresets.text4.lineHeight}>
+                text4
+            </TextWrapper>
+            <TextWrapper
+                size={vars.textPresets.text5.size}
+                lineHeight={vars.textPresets.text5.lineHeight}
+                weight={vars.textPresets.text5.weight}
+            >
+                text5
+            </TextWrapper>
+            <TextWrapper
+                size={vars.textPresets.text6.size}
+                lineHeight={vars.textPresets.text6.lineHeight}
+                weight={vars.textPresets.text6.weight}
+            >
+                text6
+            </TextWrapper>
+            <TextWrapper
+                size={vars.textPresets.text7.size}
+                lineHeight={vars.textPresets.text7.lineHeight}
+                weight={vars.textPresets.text7.weight}
+            >
+                text7
+            </TextWrapper>
+            <TextWrapper
+                size={vars.textPresets.text8.size}
+                lineHeight={vars.textPresets.text8.lineHeight}
+                weight={vars.textPresets.text8.weight}
+            >
+                text8
+            </TextWrapper>
+            <TextWrapper
+                size={vars.textPresets.text9.size}
+                lineHeight={vars.textPresets.text9.lineHeight}
+                weight={vars.textPresets.text9.weight}
+            >
+                text9
+            </TextWrapper>
+            <TextWrapper
+                size={vars.textPresets.text10.size}
+                lineHeight={vars.textPresets.text10.lineHeight}
+                weight={vars.textPresets.text10.weight}
+            >
+                text10
+            </TextWrapper>
         </Stack>
     );
 };
