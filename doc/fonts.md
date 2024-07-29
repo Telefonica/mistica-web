@@ -33,28 +33,36 @@ And additionaly declare a Roboto font family for desktop browsers. For example:
   font-family: 'Roboto';
   font-style: normal;
   font-weight: 300;
-  src: local('Roboto Light'), local('Roboto-Light'),
+  src:
+    local('Roboto Light'),
+    local('Roboto-Light'),
     url('/static/fonts/roboto-v18-latin_latin-ext-300.woff2') format('woff2');
 }
 @font-face {
   font-family: 'Roboto';
   font-style: normal;
   font-weight: 400;
-  src: local('Roboto'), local('Roboto-Regular'),
+  src:
+    local('Roboto'),
+    local('Roboto-Regular'),
     url('/static/fonts/roboto-v18-latin_latin-ext-regular.woff2') format('woff2');
 }
 @font-face {
   font-family: 'Roboto';
   font-style: normal;
   font-weight: 500;
-  src: local('Roboto Medium'), local('Roboto-Medium'),
+  src:
+    local('Roboto Medium'),
+    local('Roboto-Medium'),
     url('/static/fonts/roboto-v18-latin_latin-ext-500.woff2') format('woff2');
 }
 @font-face {
   font-family: 'Roboto';
   font-style: normal;
   font-weight: 700;
-  src: local('Roboto Bold'), local('Roboto-Bold'),
+  src:
+    local('Roboto Bold'),
+    local('Roboto-Bold'),
     url('/static/fonts/roboto-v18-latin_latin-ext-700.woff2') format('woff2');
 }
 ```
