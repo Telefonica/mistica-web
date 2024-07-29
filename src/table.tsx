@@ -310,27 +310,36 @@ export const Table = React.forwardRef(
                                         hasActionsColumn && <td className={styles.actionsTableCell} />
                                     )}
 
-                                    {collapsedRowsMode && rowActionsList.length > 0 && (
-                                        <td
-                                            className={styles.topActions}
-                                            style={{
-                                                position: 'absolute',
-                                                top: `calc(${
-                                                    boxed
-                                                        ? TOP_ACTIONS_PADDING.boxed
-                                                        : TOP_ACTIONS_PADDING.default
-                                                } - ${BORDER_SIZE} + (${iconContainerSize.small} - ${
-                                                    iconSize.small
-                                                }) / 2)`,
-                                                right: boxed
-                                                    ? `calc(${TOP_ACTIONS_PADDING.boxed} - ${BORDER_SIZE})`
-                                                    : 0,
-                                                width: actionsElementWidth,
-                                            }}
-                                        >
-                                            {actions}
-                                        </td>
-                                    )}
+                                    {/**
+                                     * mistica.css styles are usually not loaded for unit tests in projects that use Mistica.
+                                     * The row's top actions are hidden by using display: none, but if mistica.css is not used,
+                                     * the buttons will be rendered twice. This can cause issues when using functions like
+                                     * queryBy/findBy, because of finding multiple buttons with the same name.
+                                     * In order to avoid this issue, we don't render the copy of actions in test environment.
+                                     */}
+                                    {process.env.NODE_ENV !== 'test' &&
+                                        collapsedRowsMode &&
+                                        rowActionsList.length > 0 && (
+                                            <td
+                                                className={styles.topActions}
+                                                style={{
+                                                    position: 'absolute',
+                                                    top: `calc(${
+                                                        boxed
+                                                            ? TOP_ACTIONS_PADDING.boxed
+                                                            : TOP_ACTIONS_PADDING.default
+                                                    } - ${BORDER_SIZE} + (${iconContainerSize.small} - ${
+                                                        iconSize.small
+                                                    }) / 2)`,
+                                                    right: boxed
+                                                        ? `calc(${TOP_ACTIONS_PADDING.boxed} - ${BORDER_SIZE})`
+                                                        : 0,
+                                                    width: actionsElementWidth,
+                                                }}
+                                            >
+                                                {actions}
+                                            </td>
+                                        )}
                                 </tr>
                             );
                         })
