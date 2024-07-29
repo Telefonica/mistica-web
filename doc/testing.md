@@ -16,6 +16,13 @@ if (process.env.NODE_ENV !== 'test') {
 Make sure your bundler (webpack, rollup, parcel, etc) makes the correct substitutions and the minifier
 effectively removes unused code.
 
+## Unit tests
+
+Unit tests usually don't require CSS because they test component functionality. Some Mistica components have
+different layouts in mobile and desktop, and there are cases in which we use CSS styles to achieve this
+result. If you are trying to test something that depends on these styles, you can either import `mistica.css`
+classes in the HTML content you render in the test or write acceptance/screenshot tests instead.
+
 ## Acceptance tests
 
 To change some behaviors to facilitate acceptance tests (tests that run in a browser), a helper function is
