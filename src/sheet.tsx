@@ -29,6 +29,8 @@ import {MOBILE_SIDE_MARGIN, SMALL_DESKTOP_SIDE_MARGIN, TABLET_SIDE_MARGIN} from 
 import type {ExclusifyUnion} from './utils/utility-types';
 import type {DataAttributes, IconProps, RendersNullableElement, TrackingEvent} from './utils/types';
 
+const transitionDuration = process.env.NODE_ENV === 'test' ? 0 : styles.transitionDuration;
+
 const getClientY = (ev: TouchEvent | MouseEvent | React.TouchEvent | React.MouseEvent) => {
     if ('touches' in ev) {
         return ev.touches[0].clientY;
@@ -187,7 +189,7 @@ const Sheet = React.forwardRef<HTMLDivElement, SheetProps>(({onClose, children, 
         if (modalState === 'opening' || modalState === 'closing') {
             const tid = setTimeout(() => {
                 dispatch('transitionEnd');
-            }, styles.transitionDuration);
+            }, transitionDuration);
 
             return () => clearTimeout(tid);
         }

@@ -6,7 +6,7 @@ import {sprinkles} from './sprinkles.css';
 const insideSheetDialog = createVar();
 export const vars = {insideSheetDialog};
 
-export const transitionDuration = process.env.NODE_ENV === 'test' ? 0 : 400;
+export const transitionDuration = 400;
 
 const sheetClosedStyle = {
     transform: 'translateY(100%)',
