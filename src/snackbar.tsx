@@ -210,6 +210,7 @@ const Snackbar = React.forwardRef<ImperativeHandle & HTMLDivElement, Props>(
         }, [onCloseProp]);
 
         React.useEffect(() => {
+            /** the isOpenRef check is to avoid a double call to nativeMessage in development with StrictMode */
             if (renderNative && !isOpenRef.current) {
                 isOpenRef.current = true;
                 nativeMessage({

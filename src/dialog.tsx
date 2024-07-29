@@ -216,6 +216,7 @@ const NativeModalDialog = ({
     const isOpenRef = React.useRef(false);
 
     React.useEffect(() => {
+        /** to avoid a double call to showNativeDialog in development with StrictMode */
         if (isOpenRef.current) {
             return;
         }
