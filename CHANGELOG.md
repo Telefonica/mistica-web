@@ -1,3 +1,10 @@
+## [15.16.4](https://github.com/Telefonica/mistica-web/compare/v15.16.3...v15.16.4) (2024-07-29)
+
+
+### Bug Fixes
+
+* **Table:** avoid rendering action buttons copy in test env ([#1187](https://github.com/Telefonica/mistica-web/issues/1187)) ([530905e](https://github.com/Telefonica/mistica-web/commit/530905e743dd09352ac4aa62c15e93c0021f9ea8))
+
 ## [15.16.3](https://github.com/Telefonica/mistica-web/compare/v15.16.2...v15.16.3) (2024-07-29)
 
 
