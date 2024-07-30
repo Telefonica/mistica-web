@@ -78,8 +78,8 @@ const themesMap: {
 type PreviewToolsControlsProps = {
     os: 'android' | 'ios' | 'desktop';
     onOsChange: (newOs: 'android' | 'ios' | 'desktop') => void;
-    skinName: KnownSkinName;
-    onSkinNameChange: (newSkinName: KnownSkinName) => void;
+    skinName: ValidSkinName;
+    onSkinNameChange: (newSkinName: ValidSkinName) => void;
     colorScheme: ColorScheme;
     onColorSchemeChange: (newColorScheme: ColorScheme) => void;
     onEditStoryPress: () => void;
@@ -169,7 +169,7 @@ const PreviewToolsControls = React.forwardRef<HTMLDivElement, PreviewToolsContro
                             tabs={Object.values(themesMap).map(({icon}) => ({text: '', icon}))}
                             selectedIndex={Object.keys(themesMap).indexOf(skinName)}
                             onChange={(index) => {
-                                onSkinNameChange((Object.keys(themesMap) as Array<KnownSkinName>)[index]);
+                                onSkinNameChange((Object.keys(themesMap) as Array<ValidSkinName>)[index]);
                             }}
                         />
                     </div>
@@ -248,7 +248,7 @@ export const PreviewTools = ({
         skinName: initialSkinName,
         platformOverrides: {platform: initialOs = 'android'},
     } = useTheme();
-    const [skinName, setSkinName] = React.useState<KnownSkinName>(initialSkinName as KnownSkinName);
+    const [skinName, setSkinName] = React.useState<ValidSkinName>(initialSkinName as ValidSkinName);
     const [os, setOs] = React.useState<'android' | 'ios' | 'desktop'>(initialOs);
     const [colorScheme, setColorScheme] = React.useState<ColorScheme>('light');
     const overrideTheme = useOverrideTheme();
