@@ -12,6 +12,7 @@ echo "Running SonarQube analysis for mistica-web..."
 docker run \
     --rm \
     -e SONAR_TOKEN="${SONAR_TOKEN}" \
+    -e ACCEPTANCE_TESTING_COLLECT_COVERAGE="1" \
     -e SONAR_PROJECT_VERSION="${SONAR_PROJECT_VERSION}" \
     -v "${PWD}:/usr/src" \
     sonarsource/sonar-scanner-cli

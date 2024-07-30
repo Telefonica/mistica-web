@@ -23,6 +23,7 @@ type Props = {
     dataAttributes?: DataAttributes;
     'aria-label'?: string;
     'aria-hidden'?: React.HTMLAttributes<HTMLAnchorElement>['aria-hidden'];
+    id?: string;
 };
 
 const Box = React.forwardRef<HTMLDivElement, Props>(
@@ -39,6 +40,7 @@ const Box = React.forwardRef<HTMLDivElement, Props>(
             paddingLeft = paddingX,
             paddingRight = paddingX,
             role,
+            id,
             dataAttributes,
             'aria-label': ariaLabel,
             'aria-hidden': ariaHidden,
@@ -73,6 +75,7 @@ const Box = React.forwardRef<HTMLDivElement, Props>(
                     ...(width !== undefined ? {width, boxSizing: 'border-box'} : {}),
                     ...(!paddingClasses ? paddingStyles : {}),
                 }}
+                id={id}
             >
                 {children}
             </div>
