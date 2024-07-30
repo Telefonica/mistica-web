@@ -11,27 +11,37 @@ export type GetKnownSkin = (variant?: SkinVariant) => KnownSkin;
 
 export type FontWeight = 'light' | 'regular' | 'medium' | 'bold';
 
+type TextWeightTokenConfig<PossibleFontWeights = FontWeight> = {
+    weight: PossibleFontWeights;
+    size?: never;
+    lineHeight?: never;
+};
+
+type TextSizeTokenConfig = {
+    weight?: never;
+    size: {mobile: number; desktop: number};
+    lineHeight: {mobile: number; desktop: number};
+};
+
 type TextTokenConfig<PossibleFontWeights = FontWeight> = {
     weight: PossibleFontWeights;
+    size: {mobile: number; desktop: number};
+    lineHeight: {mobile: number; desktop: number};
 };
 
 export type TextPresetsConfig = {
-    cardTitle: TextTokenConfig;
-    button: TextTokenConfig<'regular' | 'medium'>;
-    link: TextTokenConfig<'regular' | 'medium'>;
-    title1: TextTokenConfig<'regular' | 'medium'>;
-    title2: {
-        weight: FontWeight;
-        size: {mobile: number; desktop: number};
-        lineHeight: {mobile: number; desktop: number};
-    };
-    indicator: TextTokenConfig<'regular' | 'medium'>;
-    tabsLabel: {
-        weight: FontWeight;
-        size: {mobile: number; desktop: number};
-        lineHeight: {mobile: number; desktop: number};
-    };
-    navigationBar: TextTokenConfig;
+    cardTitle: TextWeightTokenConfig;
+    button: TextWeightTokenConfig<'regular' | 'medium'>;
+    link: TextWeightTokenConfig<'regular' | 'medium'>;
+    title1: TextWeightTokenConfig<'regular' | 'medium'>;
+    title2: TextTokenConfig;
+    indicator: TextWeightTokenConfig<'regular' | 'medium'>;
+    tabsLabel: TextTokenConfig;
+    navigationBar: TextWeightTokenConfig;
+    text1: TextSizeTokenConfig;
+    text2: TextSizeTokenConfig;
+    text3: TextSizeTokenConfig;
+    text4: TextSizeTokenConfig;
     text5: TextTokenConfig;
     text6: TextTokenConfig;
     text7: TextTokenConfig;
