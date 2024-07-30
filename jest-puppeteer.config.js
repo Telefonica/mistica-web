@@ -1,2 +1,2 @@
-const config = require('@telefonica/acceptance-testing/jest-puppeteer-config');
+const config = require('@telefonica/acceptance-testing/jest-puppeteer.config');
 module.exports = config;
