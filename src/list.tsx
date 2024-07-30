@@ -73,6 +73,7 @@ const renderRight = (right: Right, centerY: boolean) => {
 
 interface ContentProps extends CommonProps {
     headlineRef?: React.Ref<HTMLDivElement>;
+    rightRef?: React.Ref<HTMLDivElement>;
     extraRef?: React.Ref<HTMLDivElement>;
     control?: React.ReactNode;
     /** This id is to link the title with the related control */
@@ -96,6 +97,7 @@ export const Content: React.FC<ContentProps> = ({
     danger,
     badge,
     right,
+    rightRef,
     extra,
     labelId,
     disabled,
@@ -106,11 +108,13 @@ export const Content: React.FC<ContentProps> = ({
     const centerY = numTextLines === 1;
 
     return (
-        <Box paddingY={16} className={styles.content}>
+        <Box paddingY={16} className={styles.content} id={labelId}>
             {asset && (
                 <Box
                     paddingRight={16}
                     className={classNames({[styles.center]: centerY, [styles.disabled]: disabled})}
+                    // We don't want asset to be readable by screen readers
+                    aria-hidden
                 >
                     <div
                         className={styles.asset}
@@ -133,7 +137,6 @@ export const Content: React.FC<ContentProps> = ({
             <div
                 className={classNames(styles.rowBody, {[styles.disabled]: disabled})}
                 style={{justifyContent: centerY ? 'center' : 'flex-start'}}
-                id={labelId}
             >
                 <Text3
                     regular
@@ -206,6 +209,7 @@ export const Content: React.FC<ContentProps> = ({
                                 [styles.detailRight]: !!detail,
                                 [styles.disabled]: disabled,
                             })}
+                            ref={rightRef}
                         >
                             {renderRight(right, centerY)}
                         </div>
@@ -362,9 +366,18 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
 
     const [headlineText, setHeadlineText] = React.useState<string>('');
     const [extraText, setExtraText] = React.useState<string>('');
+    const [rightText, setRightText] = React.useState<string>('');
 
     // iOS voiceover reads links with multiple lines as separate links. By setting aria-label and marking content as aria-hidden, we can make it read the whole row as one link.
-    const computedAriaLabelForLink = [title, headlineText, subtitle, description, extraText, detail]
+    const computedAriaLabelForLink = [
+        title,
+        headlineText,
+        subtitle,
+        description,
+        extraText,
+        detail,
+        rightText,
+    ]
         .filter(Boolean)
         .join(' ');
 
@@ -414,11 +427,16 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
             detail={detail}
             danger={danger}
             right={right}
+            rightRef={(node) => {
+                if (node) {
+                    // jsdom doesn't support innerText so we fallback to textContent https://github.com/jsdom/jsdom/issues/1245
+                    setRightText(node.innerText || node.textContent || '');
+                }
+            }}
             control={contentProps?.control}
             extra={extra}
             extraRef={(node) => {
                 if (node) {
-                    // jsdom doesn't support innerText so we fallback to textContent https://github.com/jsdom/jsdom/issues/1245
                     setExtraText(node.innerText || node.textContent || '');
                 }
             }}

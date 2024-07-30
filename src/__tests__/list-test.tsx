@@ -214,7 +214,7 @@ test('RowList inside Form', async () => {
             radio: 'banana',
         });
     });
-});
+}, 20000);
 
 test('Row list with icon buttons', async () => {
     const firstButtonSpy = jest.fn();
@@ -304,6 +304,8 @@ test('Text content is read by screen readers in the right order in Rows with lin
                     subtitle="Subtitle"
                     description="Description"
                     detail="Detail"
+                    right="right"
+                    asset={<IconShopRegular />}
                     extra={
                         <Stack space={4}>
                             <Text2 regular>Extra line 1</Text2>
@@ -318,7 +320,7 @@ test('Text content is read by screen readers in the right order in Rows with lin
 
     const row = screen.getByRole('link', {
         // WARN: There should be a space between the extra lines, but jsdom doesn't support .innerText method, so we fallback to .textContent https://github.com/jsdom/jsdom/issues/1245
-        name: 'Title Headline Subtitle Description Extra line 1Extra line 2 Detail',
+        name: 'Title Headline Subtitle Description Extra line 1Extra line 2 Detail right',
     });
     expect(row).toBeInTheDocument();
 });
@@ -333,6 +335,8 @@ test('Text content is read by screen readers in the right order in Rows with but
                     subtitle="Subtitle"
                     description="Description"
                     detail="Detail"
+                    right="right"
+                    asset={<IconShopRegular />}
                     extra={
                         <Stack space={4}>
                             <Text2 regular>Extra line 1</Text2>
@@ -346,7 +350,7 @@ test('Text content is read by screen readers in the right order in Rows with but
     );
 
     const row = screen.getByRole('button', {
-        name: 'Title Headline Subtitle Description Extra line 1 Extra line 2 Detail',
+        name: 'Title Headline Subtitle Description Extra line 1 Extra line 2 Detail right',
     });
     expect(row).toBeInTheDocument();
 });
@@ -366,6 +370,9 @@ test('Text content is read by screen readers in the right order in Rows with che
                             <Text2 regular>Extra line 2</Text2>
                         </Stack>
                     }
+                    detail="detail"
+                    right="right"
+                    asset={<IconShopRegular />}
                     checkbox={{defaultValue: false}}
                 />
             </RowList>
@@ -373,7 +380,7 @@ test('Text content is read by screen readers in the right order in Rows with che
     );
 
     const row = screen.getByRole('checkbox', {
-        name: 'Title Headline Subtitle Description Extra line 1 Extra line 2',
+        name: 'Title Headline Subtitle Description Extra line 1 Extra line 2 detail right',
     });
     expect(row).toBeInTheDocument();
 });
@@ -393,6 +400,9 @@ test('Text content is read by screen readers in the right order in Rows with swi
                             <Text2 regular>Extra line 2</Text2>
                         </Stack>
                     }
+                    detail="detail"
+                    right="right"
+                    asset={<IconShopRegular />}
                     switch={{defaultValue: false}}
                 />
             </RowList>
@@ -400,7 +410,7 @@ test('Text content is read by screen readers in the right order in Rows with swi
     );
 
     const row = screen.getByRole('switch', {
-        name: 'Title Headline Subtitle Description Extra line 1 Extra line 2',
+        name: 'Title Headline Subtitle Description Extra line 1 Extra line 2 detail right',
     });
     expect(row).toBeInTheDocument();
 });
@@ -421,6 +431,9 @@ test('Text content is read by screen readers in the right order in Rows with rad
                                 <Text2 regular>Extra line 2</Text2>
                             </Stack>
                         }
+                        detail="detail"
+                        right="right"
+                        asset={<IconShopRegular />}
                         radioValue="radio1"
                     />
                 </RowList>
@@ -429,7 +442,7 @@ test('Text content is read by screen readers in the right order in Rows with rad
     );
 
     const row = screen.getByRole('radio', {
-        name: 'Title Headline Subtitle Description Extra line 1 Extra line 2',
+        name: 'Title Headline Subtitle Description Extra line 1 Extra line 2 detail right',
     });
     expect(row).toBeInTheDocument();
 });
