@@ -514,6 +514,14 @@ const iconKeywords: {[key: string]: Array<string>} = {
         'localização da caixa',
         'Kistenposition',
     ],
+    'box-star': [
+        'benefícios resgatados',
+        'benefícios',
+        'benefits redeemed',
+        'benefits',
+        'beneficios',
+        'Vortaile',
+    ],
     brain: ['mind', 'intellect', 'cognition', 'cerebro', 'cérebro', 'Gehirn'],
     briefcase: ['portfolio', 'case', 'attache', 'maletín', 'portfólio', 'Aktentasche'],
     'briefcase-business': [
@@ -1711,6 +1719,14 @@ const iconKeywords: {[key: string]: Array<string>} = {
         'bolha romântica',
         'Herzblase',
     ],
+    'high-priority': [
+        'urgent',
+        'important',
+        'critical',
+        'alta prioridad',
+        'alta prioridade',
+        'Hohe Priorität',
+    ],
     hockey: ['ice hockey', 'hockey sport', 'puck game', 'hockey sobre hielo', 'hóquei no gelo', 'Eishockey'],
     home: ['house', 'residence', 'dwelling', 'hogar', 'casa', 'Zuhause'],
     'home-wifi': [
@@ -2038,6 +2054,13 @@ const iconKeywords: {[key: string]: Array<string>} = {
     ],
     microphone: ['mic', 'audio input', 'sound sensor', 'micrófono', 'microfone', 'Mikrofon'],
     millenials: ['generation y', 'gen y', 'digital natives', 'millennials', 'millennials', 'Millennials'],
+    mms: [
+        'multimedia message service',
+        'mms',
+        'servicio de mensajes multimedia',
+        'serviço de mensagens multimídia',
+        'Multimedia-Nachrichtendienst',
+    ],
     'mobile-add-user': [
         'add user on mobile',
         'mobile user addition',
@@ -3131,6 +3154,14 @@ const iconKeywords: {[key: string]: Array<string>} = {
         'escaneo de virus',
         'detecção de vírus',
         'Virenscan',
+    ],
+    'vivo-valoriza': [
+        'vivo valoriza',
+        'vivo rewards',
+        'vivo loyalty program',
+        'vivo valoriza',
+        'vivo recompensas',
+        'vivo Treueprogramm',
     ],
     vod: [
         'video on demand',
