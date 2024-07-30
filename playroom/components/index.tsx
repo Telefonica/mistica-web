@@ -38,8 +38,10 @@ export * from '../../src/community';
 export {default as Loader} from './loader';
 export {default as ButtonGroup} from '../../src/button-group';
 
+type ValidSkinName = Exclude<KnownSkinName, 'O2-new' | 'Vivo-new'>;
+
 const themesMap: {
-    [skinName in KnownSkinName]: {themeConfig: ThemeConfig; text: string; icon: React.ReactNode};
+    [skinName in ValidSkinName]: {themeConfig: ThemeConfig; text: string; icon: React.ReactNode};
 } = {
     Movistar: {
         text: 'Movistar',
