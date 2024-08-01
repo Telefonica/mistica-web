@@ -9,7 +9,6 @@ import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
 import {pxToRem} from './utils/css';
 import * as styles from './chip.css';
 import {vars} from './skins/skin-contract.css';
-import {getPrefixedDataAttributes} from './utils/dom';
 import {useThemeVariant} from './theme-variant-context';
 import Touchable, {BaseTouchable} from './touchable';
 
@@ -62,6 +61,8 @@ const Chip: React.FC<ChipProps> = (props: ChipProps) => {
         </>
     );
 
+    const chipDataAttributes = {'component-name': 'Chip', ...dataAttributes};
+
     if (onClose) {
         return (
             <Box
@@ -71,7 +72,7 @@ const Chip: React.FC<ChipProps> = (props: ChipProps) => {
                 )}
                 paddingLeft={paddingLeft}
                 paddingRight={paddingIcon}
-                {...getPrefixedDataAttributes(dataAttributes, 'Chip')}
+                dataAttributes={chipDataAttributes}
             >
                 {body}
                 <Touchable
@@ -92,8 +93,6 @@ const Chip: React.FC<ChipProps> = (props: ChipProps) => {
     }
     const isTouchable = props.href || props.onPress || props.to;
     const isInteractive = active !== undefined || isTouchable;
-
-    const chipDataAttributes = {'component-name': 'Chip', ...dataAttributes};
 
     const renderBadge = () => {
         if (!badge) {
