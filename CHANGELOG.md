@@ -1,3 +1,19 @@
+# [15.17.0](https://github.com/Telefonica/mistica-web/compare/v15.16.4...v15.17.0) (2024-08-01)
+
+
+### Bug Fixes
+
+* **Chip:** missing data-component-name when closable  ([#1191](https://github.com/Telefonica/mistica-web/issues/1191)) ([e4e284f](https://github.com/Telefonica/mistica-web/commit/e4e284fa806f79e2c6c348652504b3e820f4dc18))
+* **Dialogs:** avoid double execution of native dialogs ([#1183](https://github.com/Telefonica/mistica-web/issues/1183)) ([68c8db7](https://github.com/Telefonica/mistica-web/commit/68c8db768f574faf51262c69759a64d225df7ee8))
+* **Select:** onChange was called twice and there was an empty option in iOS ([#1185](https://github.com/Telefonica/mistica-web/issues/1185)) ([c44b25b](https://github.com/Telefonica/mistica-web/commit/c44b25b321924a6ec19eb35863028bb62de8de3d))
+
+
+### Features
+
+* **icons:** New box, High-priority and MMS icons ([#1188](https://github.com/Telefonica/mistica-web/issues/1188)) ([edff352](https://github.com/Telefonica/mistica-web/commit/edff35262c31302a2f3a0dea7332f2f010fbe171))
+* **Rows:** a11y update ([#1180](https://github.com/Telefonica/mistica-web/issues/1180)) ([5f995ad](https://github.com/Telefonica/mistica-web/commit/5f995ad9201b65c577e675c0ccdbff4041563346))
+* **ThemeContextProvider:** expose TextPreset size/lineHeight tokens as css vars ([#1178](https://github.com/Telefonica/mistica-web/issues/1178)) ([921eacf](https://github.com/Telefonica/mistica-web/commit/921eacfbbae4a0f8b74d534d193bd4b1696762d6))
+
 ## [15.16.4](https://github.com/Telefonica/mistica-web/compare/v15.16.3...v15.16.4) (2024-07-29)
 
 
