@@ -22,6 +22,7 @@ const confirmProps = {
     cancelText: 'Nope!',
     onAccept: onAcceptSpy,
     onCancel: onCancelSpy,
+    closeButtonAccessibilityLabel: 'custom close label',
 };
 
 let savedAlert: (params: any) => void | null = () => {
@@ -290,4 +291,17 @@ test('when webview bridge is available nativeConfirm is shown', async () => {
             cancelText: 'Nope!',
         });
     });
+});
+
+test('dialog close button is accessible', async () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <TestComponent />
+        </ThemeContextProvider>
+    );
+
+    const dialogButton = await screen.findByRole('button', {name: 'Dialog'});
+    await userEvent.click(dialogButton);
+
+    await screen.findByRole('button', {name: 'custom close label'});
 });

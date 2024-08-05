@@ -25,6 +25,7 @@ type Props = {
     titleAs?: HeadingType;
     description: string;
     onClose?: () => void;
+    closeButtonAccessibilityLabel?: string;
     icon?: React.ReactElement;
     button?: RendersNullableElement<typeof ButtonPrimary>;
     secondaryButton?: RendersNullableElement<typeof ButtonSecondary>;
@@ -41,6 +42,7 @@ const Callout: React.FC<Props> = ({
     description,
     icon,
     onClose,
+    closeButtonAccessibilityLabel,
     button,
     secondaryButton,
     buttonLink,
@@ -105,7 +107,7 @@ const Callout: React.FC<Props> = ({
                                 bleedRight
                                 Icon={IconCloseRegular}
                                 onPress={onClose}
-                                aria-label={texts.closeButtonLabel}
+                                aria-label={closeButtonAccessibilityLabel ?? texts.closeButtonLabel}
                             />
                         </div>
                     )}

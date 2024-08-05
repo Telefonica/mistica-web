@@ -77,6 +77,32 @@ test('Snackbar with dismiss button', async () => {
     });
 });
 
+test('Snackbar with dismiss button and custom label', async () => {
+    const onCloseSpy = jest.fn();
+
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Snackbar
+                message="Some message"
+                onClose={onCloseSpy}
+                buttonText="Action"
+                dismissButtonAccessibilityLabel="custom close label"
+                duration={Infinity}
+                withDismiss
+            />
+        </ThemeContextProvider>
+    );
+    expect(screen.getByText('Some message')).toBeInTheDocument();
+    const dismissButton = await screen.findByRole('button', {name: 'custom close label'});
+    expect(dismissButton).toBeInTheDocument();
+
+    await userEvent.click(dismissButton);
+
+    await waitFor(() => {
+        expect(onCloseSpy).toHaveBeenCalledWith({action: 'DISMISS'});
+    });
+});
+
 test('Snackbar does not have dismiss button by default', async () => {
     render(
         <ThemeContextProvider theme={makeTheme()}>
