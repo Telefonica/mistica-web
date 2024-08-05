@@ -196,6 +196,7 @@ const Snackbar = React.forwardRef<ImperativeHandle & HTMLDivElement, Props>(
             onClose: onCloseProp = () => {},
             type = 'INFORMATIVE',
             withDismiss,
+            dataAttributes,
         },
         ref
     ) => {
@@ -250,6 +251,7 @@ const Snackbar = React.forwardRef<ImperativeHandle & HTMLDivElement, Props>(
                 type={type}
                 onClose={onCloseRef.current}
                 withDismiss={withDismiss}
+                dataAttributes={dataAttributes}
             />
         );
     }
