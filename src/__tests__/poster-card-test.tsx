@@ -5,6 +5,7 @@ import {render, screen} from '@testing-library/react';
 import ThemeContextProvider from '../theme-context-provider';
 import Stack from '../stack';
 import {Text2} from '../text';
+import userEvent from '@testing-library/user-event';
 
 test('PosterCard "href" label', async () => {
     render(
@@ -82,4 +83,25 @@ test('PosterCard "onPress" label', async () => {
     await screen.findByRole('button', {
         name: 'Title Headline Pretitle Subtitle Description Extra line 1Extra line 2',
     });
+});
+
+test('PosterCard onClose custom label', async () => {
+    const closeSpy = jest.fn();
+
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <PosterCard
+                onClose={closeSpy}
+                closeButtonAccessibilityLabel="custom close label"
+                onPress={() => {}}
+                isInverse
+                title="Title"
+                description="Description"
+            />
+        </ThemeContextProvider>
+    );
+
+    const closeButton = await screen.findByRole('button', {name: 'custom close label'});
+    await userEvent.click(closeButton);
+    expect(closeSpy).toHaveBeenCalledTimes(1);
 });

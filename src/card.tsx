@@ -84,13 +84,17 @@ export type CardAction = {
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
 } & ExclusifyUnion<IconButtonAction | ToggleIconButtonAction>;
 
-const useTopActions = (actions?: ReadonlyArray<CardAction | React.ReactElement>, onClose?: () => void) => {
+const useTopActions = (
+    actions?: ReadonlyArray<CardAction | React.ReactElement>,
+    onClose?: () => void,
+    closeButtonAccessibilityLabel?: string
+) => {
     const {texts} = useTheme();
     const finalActions = actions ? [...actions] : [];
 
     if (onClose) {
         finalActions.push({
-            label: texts.closeButtonLabel,
+            label: closeButtonAccessibilityLabel ?? texts.closeButtonLabel,
             onPress: onClose,
             Icon: IconCloseRegular,
         });
@@ -104,6 +108,7 @@ const CardActionTypeContext = React.createContext<'default' | 'inverse' | 'media
 type CardActionsGroupProps = {
     actions?: ReadonlyArray<CardAction | React.ReactElement>;
     onClose?: () => void;
+    closeButtonAccessibilityLabel?: string;
     padding?: number;
     type?: 'default' | 'inverse' | 'media';
 };
@@ -151,8 +156,9 @@ export const CardActionsGroup = ({
     padding = 16,
     onClose,
     type = 'default',
+    closeButtonAccessibilityLabel,
 }: CardActionsGroupProps): JSX.Element => {
-    const finalActions = useTopActions(actions, onClose);
+    const finalActions = useTopActions(actions, onClose, closeButtonAccessibilityLabel);
     const hasActions = finalActions.length > 0;
 
     return hasActions ? (
@@ -520,6 +526,7 @@ interface MediaCardBaseProps {
     dataAttributes?: DataAttributes;
     'aria-label'?: string;
     onClose?: () => void;
+    closeButtonAccessibilityLabel?: string;
 }
 
 type MediaCardProps = MediaCardBaseProps &
@@ -553,6 +560,7 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
             dataAttributes,
             'aria-label': ariaLabelProp,
             onClose,
+            closeButtonAccessibilityLabel,
             ...touchableProps
         },
         ref
@@ -621,7 +629,12 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
                         </div>
                     </BaseTouchable>
                 </Boxed>
-                <CardActionsGroup onClose={onClose} actions={actions} type="media" />
+                <CardActionsGroup
+                    onClose={onClose}
+                    closeButtonAccessibilityLabel={closeButtonAccessibilityLabel}
+                    actions={actions}
+                    type="media"
+                />
             </CardContainer>
         );
     }
@@ -649,6 +662,7 @@ export const NakedCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
             dataAttributes,
             'aria-label': ariaLabelProp,
             onClose,
+            closeButtonAccessibilityLabel,
             ...touchableProps
         },
         ref
@@ -722,7 +736,12 @@ export const NakedCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
                         )}
                     </div>
                 </BaseTouchable>
-                <CardActionsGroup onClose={onClose} actions={actions} type="media" />
+                <CardActionsGroup
+                    onClose={onClose}
+                    closeButtonAccessibilityLabel={closeButtonAccessibilityLabel}
+                    actions={actions}
+                    type="media"
+                />
             </CardContainer>
         );
     }
@@ -856,6 +875,7 @@ interface DataCardBaseProps {
     dataAttributes?: DataAttributes;
     'aria-label'?: string;
     onClose?: () => void;
+    closeButtonAccessibilityLabel?: string;
 }
 
 type DataCardProps = DataCardBaseProps &
@@ -888,6 +908,7 @@ export const DataCard = React.forwardRef<HTMLDivElement, DataCardProps>(
             dataAttributes,
             'aria-label': ariaLabelProp,
             onClose,
+            closeButtonAccessibilityLabel,
             aspectRatio,
             ...touchableProps
         },
@@ -968,7 +989,12 @@ export const DataCard = React.forwardRef<HTMLDivElement, DataCardProps>(
                         </div>
                     </BaseTouchable>
                 </Boxed>
-                <CardActionsGroup onClose={onClose} actions={actions} type="default" />
+                <CardActionsGroup
+                    onClose={onClose}
+                    closeButtonAccessibilityLabel={closeButtonAccessibilityLabel}
+                    actions={actions}
+                    type="default"
+                />
             </CardContainer>
         );
     }
@@ -1149,6 +1175,7 @@ interface CommonDisplayCardProps {
     icon?: React.ReactElement;
     actions?: ReadonlyArray<CardAction | React.ReactElement>;
     onClose?: () => void;
+    closeButtonAccessibilityLabel?: string;
     dataAttributes?: DataAttributes;
     headline?: React.ReactComponentElement<typeof Tag>;
     pretitle?: string;
@@ -1225,6 +1252,7 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
             button,
             secondaryButton,
             onClose,
+            closeButtonAccessibilityLabel,
             actions,
             buttonLink,
             dataAttributes,
@@ -1402,6 +1430,7 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
                 </InternalBoxed>
                 <CardActionsGroup
                     onClose={onClose}
+                    closeButtonAccessibilityLabel={closeButtonAccessibilityLabel}
                     actions={actions}
                     type={hasImage || hasVideo ? 'media' : isInverse ? 'inverse' : 'default'}
                 />
@@ -1441,6 +1470,7 @@ interface PosterCardBaseProps {
     icon?: React.ReactElement;
     actions?: ReadonlyArray<CardAction | React.ReactElement>;
     onClose?: () => void;
+    closeButtonAccessibilityLabel?: string;
     dataAttributes?: DataAttributes;
     headline?: string | RendersNullableElement<typeof Tag>;
     pretitle?: string;
@@ -1495,6 +1525,7 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
             ['aria-label']: ariaLabelProp = deprecatedAriaLabel,
             actions,
             onClose,
+            closeButtonAccessibilityLabel,
             icon,
             headline,
             pretitle,
@@ -1702,6 +1733,7 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                 </InternalBoxed>
                 <CardActionsGroup
                     onClose={onClose}
+                    closeButtonAccessibilityLabel={closeButtonAccessibilityLabel}
                     actions={actions}
                     type={
                         hasImage || hasVideo
