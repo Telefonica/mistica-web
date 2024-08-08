@@ -16,7 +16,7 @@ import {isRunningAcceptanceTest} from './utils/platform';
 import {Text6, Text2, Text3} from './text';
 import Box from './box';
 import {InternalBoxed} from './boxed';
-import ResponsiveLayout from './responsive-layout';
+import ResponsiveLayout, {ResetResponsiveLayout} from './responsive-layout';
 import Stack from './stack';
 import classnames from 'classnames';
 import ButtonGroup from './button-group';
@@ -238,29 +238,37 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
                     {renderFeedback({
                         isInverse,
                         body: (
-                            <ButtonFixedFooterLayout
-                                isFooterVisible={hasButtons}
-                                button={primaryButton}
-                                secondaryButton={secondaryButton}
-                                link={link}
-                                footerBgColor={
-                                    isInverse && !isDarkMode ? vars.colors.backgroundBrandBottom : undefined
-                                }
-                                containerBgColor={
-                                    isInverse ? vars.colors.backgroundBrand : vars.colors.background
-                                }
-                            >
-                                <div className={styles.container}>
-                                    <div
-                                        className={classnames(styles.innerContainer, {
-                                            [styles.innerContainerWithButtons]:
-                                                primaryButton || secondaryButton || link,
-                                        })}
-                                    >
-                                        {feedbackBody}
-                                    </div>
-                                </div>
-                            </ButtonFixedFooterLayout>
+                            // We need this reset because the ButtonFixedFooterLayout adds a ResponsiveLayout that
+                            // doesn't expand when nested in mobile. This can cause double margin when footer is not fixed
+                            <ResetResponsiveLayout skipDesktop>
+                                <ButtonFixedFooterLayout
+                                    isFooterVisible={hasButtons}
+                                    button={primaryButton}
+                                    secondaryButton={secondaryButton}
+                                    link={link}
+                                    footerBgColor={
+                                        isInverse && !isDarkMode
+                                            ? vars.colors.backgroundBrandBottom
+                                            : undefined
+                                    }
+                                    containerBgColor={
+                                        isInverse ? vars.colors.backgroundBrand : vars.colors.background
+                                    }
+                                >
+                                    <ResponsiveLayout>
+                                        <div className={styles.container}>
+                                            <div
+                                                className={classnames(styles.innerContainer, {
+                                                    [styles.innerContainerWithButtons]:
+                                                        primaryButton || secondaryButton || link,
+                                                })}
+                                            >
+                                                {feedbackBody}
+                                            </div>
+                                        </div>
+                                    </ResponsiveLayout>
+                                </ButtonFixedFooterLayout>
+                            </ResetResponsiveLayout>
                         ),
                         imageFit,
                         imageUrl,
