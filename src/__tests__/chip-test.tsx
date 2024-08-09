@@ -20,6 +20,23 @@ test('Chip can be closed', async () => {
     expect(closeSpy).toHaveBeenCalledTimes(1);
 });
 
+test('Chip can be closed when using custom close label', async () => {
+    const closeSpy = jest.fn();
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Chip onClose={closeSpy} closeButtonLabel="custom close label">
+                some text
+            </Chip>
+        </ThemeContextProvider>
+    );
+
+    const closeButton = screen.getByRole('button', {name: 'custom close label'});
+
+    await userEvent.click(closeButton);
+
+    expect(closeSpy).toHaveBeenCalledTimes(1);
+});
+
 test('Chip can be clicked', async () => {
     const clickSpy = jest.fn();
     render(

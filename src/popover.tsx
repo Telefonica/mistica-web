@@ -19,6 +19,7 @@ type Props = {
     title?: string;
     asset?: React.ReactNode;
     onClose?: () => void;
+    closeButtonLabel?: string;
     position?: Position;
     width?: number;
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
@@ -33,6 +34,7 @@ const Popover: React.FC<Props> = ({
     extra,
     children,
     onClose = () => {},
+    closeButtonLabel,
     dataAttributes,
     trackingEvent,
     title,
@@ -72,6 +74,7 @@ const Popover: React.FC<Props> = ({
             hasPointerInteractionOnly
             delay={false}
             onClose={onClose}
+            closeButtonLabel={closeButtonLabel}
             trackingEvent={trackingEvent}
             dataAttributes={{'component-name': 'Popover', ...dataAttributes}}
             {...props}

@@ -7,6 +7,7 @@ import Tag from '../tag';
 import Stack from '../stack';
 import Image from '../image';
 import {Text2} from '../text';
+import userEvent from '@testing-library/user-event';
 
 test('MediaCard "href" label', async () => {
     render(
@@ -84,4 +85,24 @@ test('MediaCard "onPress" label', async () => {
     await screen.findByRole('button', {
         name: 'Title Headline Pretitle Subtitle Description Extra line 1Extra line 2',
     });
+});
+
+test('MediaCard onClose custom label', async () => {
+    const closeSpy = jest.fn();
+
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <MediaCard
+                onClose={closeSpy}
+                closeButtonLabel="custom close label"
+                title="Title"
+                description="Description"
+                media={<Image src="https://source.unsplash.com/900x900/" />}
+            />
+        </ThemeContextProvider>
+    );
+
+    const closeButton = await screen.findByRole('button', {name: 'custom close label'});
+    await userEvent.click(closeButton);
+    expect(closeSpy).toHaveBeenCalledTimes(1);
 });

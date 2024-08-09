@@ -6,6 +6,7 @@ import ThemeContextProvider from '../theme-context-provider';
 import Tag from '../tag';
 import Stack from '../stack';
 import {Text2} from '../text';
+import userEvent from '@testing-library/user-event';
 
 test('DataCard "href" label', async () => {
     render(
@@ -71,4 +72,23 @@ test('DataCard "onPress" label', async () => {
     );
 
     await screen.findByRole('button', {name: 'Title Headline Pretitle Description Extra line 1Extra line 2'});
+});
+
+test('DataCard onClose custom label', async () => {
+    const closeSpy = jest.fn();
+
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <DataCard
+                onClose={closeSpy}
+                closeButtonLabel="custom close label"
+                title="Title"
+                description="Description"
+            />
+        </ThemeContextProvider>
+    );
+
+    const closeButton = await screen.findByRole('button', {name: 'custom close label'});
+    await userEvent.click(closeButton);
+    expect(closeSpy).toHaveBeenCalledTimes(1);
 });
