@@ -140,3 +140,16 @@ test('popover - uncontrolled', async () => {
         expect(screen.queryByText('Content')).not.toBeInTheDocument();
     });
 });
+
+test('popover- close button label is customizable', async () => {
+    render(<TestPopover title="Title" closeButtonLabel="custom close label" />);
+
+    const target = screen.getByText('Press me!');
+
+    // Initially closed, the button is not visible
+    expect(screen.queryByLabelText('custom close label')).not.toBeInTheDocument();
+
+    // Opened after click on target, the button is visible
+    fireEvent.click(target);
+    expect(screen.getByLabelText('custom close label')).toBeInTheDocument();
+});

@@ -154,6 +154,7 @@ type BaseTooltipProps = {
     open?: boolean;
     hasPointerInteractionOnly?: boolean;
     onClose?: () => void;
+    closeButtonLabel?: string;
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
 };
 
@@ -167,6 +168,7 @@ export const BaseTooltip: React.FC<BaseTooltipProps> = ({
     centerContent,
     open,
     onClose,
+    closeButtonLabel,
     hasPointerInteractionOnly = false,
     trackingEvent,
 }) => {
@@ -575,7 +577,9 @@ export const BaseTooltip: React.FC<BaseTooltipProps> = ({
                                                                 onClose();
                                                             }}
                                                             trackingEvent={trackingEvent}
-                                                            aria-label={texts.modalClose}
+                                                            aria-label={
+                                                                closeButtonLabel ?? texts.closeButtonLabel
+                                                            }
                                                             Icon={IconCloseRegular}
                                                             small
                                                         />
