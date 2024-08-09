@@ -1,7 +1,8 @@
 'use client';
 import * as React from 'react';
 import Inline from './inline';
-import {IconStarFilled, IconStarRegular} from '../playroom/components';
+import IconStarFilled from './generated/mistica-icons/icon-star-filled';
+import IconStarRegular from './generated/mistica-icons/icon-star-regular';
 import {vars} from './skins/skin-contract.css';
 import Touchable from './touchable';
 import {useThemeVariant} from './theme-variant-context';
