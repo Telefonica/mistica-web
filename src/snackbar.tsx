@@ -26,7 +26,7 @@ const DEFAULT_DURATION_WITH_BUTTON = 10000;
 export type Props = {
     buttonText?: string;
     buttonAccessibilityLabel?: string;
-    dismissButtonAccessibilityLabel?: string;
+    closeButtonLabel?: string;
     duration?: number;
     message: string;
     onClose?: SnackbarCloseHandler;
@@ -46,7 +46,7 @@ const SnackbarComponent = React.forwardRef<ImperativeHandle, Props>(
             message,
             buttonText,
             buttonAccessibilityLabel,
-            dismissButtonAccessibilityLabel,
+            closeButtonLabel,
             duration,
             onClose,
             type,
@@ -172,7 +172,7 @@ const SnackbarComponent = React.forwardRef<ImperativeHandle, Props>(
                                 onPress={() => {
                                     close({action: 'DISMISS'});
                                 }}
-                                aria-label={dismissButtonAccessibilityLabel ?? texts.closeButtonLabel}
+                                aria-label={closeButtonLabel ?? texts.closeButtonLabel}
                                 className={styles.dismissButton[hasLongButton ? 'topRight' : 'centered']}
                                 style={{display: 'flex', width: 32, height: 32}}
                             >
@@ -194,7 +194,7 @@ const Snackbar = React.forwardRef<ImperativeHandle & HTMLDivElement, Props>(
             message,
             buttonText,
             buttonAccessibilityLabel,
-            dismissButtonAccessibilityLabel,
+            closeButtonLabel,
             duration,
             onClose: onCloseProp = () => {},
             type = 'INFORMATIVE',
@@ -222,7 +222,7 @@ const Snackbar = React.forwardRef<ImperativeHandle & HTMLDivElement, Props>(
                     duration: duration === Infinity ? 'PERSISTENT' : undefined,
                     buttonText,
                     buttonAccessibilityLabel,
-                    dismissButtonAccessibilityLabel,
+                    closeButtonLabel,
                     type,
                     withDismiss,
                 })
@@ -240,7 +240,7 @@ const Snackbar = React.forwardRef<ImperativeHandle & HTMLDivElement, Props>(
             }
         }, [
             buttonAccessibilityLabel,
-            dismissButtonAccessibilityLabel,
+            closeButtonLabel,
             buttonText,
             duration,
             message,
@@ -260,7 +260,7 @@ const Snackbar = React.forwardRef<ImperativeHandle & HTMLDivElement, Props>(
                 duration={duration}
                 buttonText={buttonText}
                 buttonAccessibilityLabel={buttonAccessibilityLabel}
-                dismissButtonAccessibilityLabel={dismissButtonAccessibilityLabel}
+                closeButtonLabel={closeButtonLabel}
                 type={type}
                 onClose={onCloseRef.current}
                 withDismiss={withDismiss}

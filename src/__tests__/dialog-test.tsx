@@ -22,7 +22,7 @@ const confirmProps = {
     cancelText: 'Nope!',
     onAccept: onAcceptSpy,
     onCancel: onCancelSpy,
-    closeButtonAccessibilityLabel: 'custom close label',
+    closeButtonLabel: 'custom close label',
 };
 
 let savedAlert: (params: any) => void | null = () => {

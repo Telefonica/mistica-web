@@ -94,7 +94,7 @@ test('NakedCard onClose custom label', async () => {
         <ThemeContextProvider theme={makeTheme()}>
             <NakedCard
                 onClose={closeSpy}
-                closeButtonAccessibilityLabel="custom close label"
+                closeButtonLabel="custom close label"
                 title="Title"
                 description="Description"
                 media={<Image src="https://source.unsplash.com/900x900/" />}

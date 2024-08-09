@@ -154,7 +154,7 @@ type BaseTooltipProps = {
     open?: boolean;
     hasPointerInteractionOnly?: boolean;
     onClose?: () => void;
-    closeButtonAccessibilityLabel?: string;
+    closeButtonLabel?: string;
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
 };
 
@@ -168,7 +168,7 @@ export const BaseTooltip: React.FC<BaseTooltipProps> = ({
     centerContent,
     open,
     onClose,
-    closeButtonAccessibilityLabel,
+    closeButtonLabel,
     hasPointerInteractionOnly = false,
     trackingEvent,
 }) => {
@@ -578,8 +578,7 @@ export const BaseTooltip: React.FC<BaseTooltipProps> = ({
                                                             }}
                                                             trackingEvent={trackingEvent}
                                                             aria-label={
-                                                                closeButtonAccessibilityLabel ??
-                                                                texts.closeButtonLabel
+                                                                closeButtonLabel ?? texts.closeButtonLabel
                                                             }
                                                             Icon={IconCloseRegular}
                                                             small

@@ -92,7 +92,7 @@ test('PosterCard onClose custom label', async () => {
         <ThemeContextProvider theme={makeTheme()}>
             <PosterCard
                 onClose={closeSpy}
-                closeButtonAccessibilityLabel="custom close label"
+                closeButtonLabel="custom close label"
                 onPress={() => {}}
                 isInverse
                 title="Title"

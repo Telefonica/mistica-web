@@ -31,7 +31,7 @@ test('renders an accesible and closable Callout with custom close button label',
                 title="some title"
                 description="some description"
                 onClose={handleCloseSpy}
-                closeButtonAccessibilityLabel="custom close label"
+                closeButtonLabel="custom close label"
             />
         </ThemeContextProvider>
     );

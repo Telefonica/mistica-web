@@ -86,7 +86,7 @@ test('Snackbar with dismiss button and custom label', async () => {
                 message="Some message"
                 onClose={onCloseSpy}
                 buttonText="Action"
-                dismissButtonAccessibilityLabel="custom close label"
+                closeButtonLabel="custom close label"
                 duration={Infinity}
                 withDismiss
             />

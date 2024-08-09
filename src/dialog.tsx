@@ -32,7 +32,7 @@ interface BaseDialogProps {
     acceptText?: string;
     onAccept?: () => void;
     destructive?: boolean;
-    closeButtonAccessibilityLabel?: string;
+    closeButtonLabel?: string;
     /** @deprecated this does nothing */
     forceWeb?: boolean;
     /** @deprecated this does nothing */
@@ -394,7 +394,7 @@ const ModalDialog = (props: ModalDialogProps): JSX.Element => {
                                     <InternalIconButton
                                         onPress={dismiss}
                                         aria-label={
-                                            props.closeButtonAccessibilityLabel ??
+                                            props.closeButtonLabel ??
                                             (texts.modalClose || texts.closeButtonLabel)
                                         }
                                         bleedLeft

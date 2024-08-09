@@ -24,7 +24,7 @@ test('Chip can be closed when using custom close label', async () => {
     const closeSpy = jest.fn();
     render(
         <ThemeContextProvider theme={makeTheme()}>
-            <Chip onClose={closeSpy} closeButtonAccessibilityLabel="custom close label">
+            <Chip onClose={closeSpy} closeButtonLabel="custom close label">
                 some text
             </Chip>
         </ThemeContextProvider>

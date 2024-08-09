@@ -94,7 +94,7 @@ test('MediaCard onClose custom label', async () => {
         <ThemeContextProvider theme={makeTheme()}>
             <MediaCard
                 onClose={closeSpy}
-                closeButtonAccessibilityLabel="custom close label"
+                closeButtonLabel="custom close label"
                 title="Title"
                 description="Description"
                 media={<Image src="https://source.unsplash.com/900x900/" />}

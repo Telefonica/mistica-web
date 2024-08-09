@@ -26,7 +26,7 @@ interface SimpleChipProps {
 
 interface ClosableChipProps extends SimpleChipProps {
     onClose: () => void;
-    closeButtonAccessibilityLabel?: string;
+    closeButtonLabel?: string;
 }
 
 interface ToggleChipProps extends SimpleChipProps {
@@ -38,7 +38,7 @@ type ClickableChipProps = TouchableComponentProps<SimpleChipProps & {active?: bo
 type ChipProps = ExclusifyUnion<ClosableChipProps | ToggleChipProps | ClickableChipProps>;
 
 const Chip: React.FC<ChipProps> = (props: ChipProps) => {
-    const {Icon, children, id, dataAttributes, active, badge, onClose, closeButtonAccessibilityLabel} = props;
+    const {Icon, children, id, dataAttributes, active, badge, onClose, closeButtonLabel} = props;
     const {texts, isDarkMode, textPresets} = useTheme();
 
     const overAlternative = useThemeVariant() === 'alternative';
@@ -84,7 +84,7 @@ const Chip: React.FC<ChipProps> = (props: ChipProps) => {
                         width: pxToRem(24),
                         height: pxToRem(24),
                     }}
-                    aria-label={closeButtonAccessibilityLabel ?? texts.closeButtonLabel}
+                    aria-label={closeButtonLabel ?? texts.closeButtonLabel}
                     onPress={() => onClose()}
                 >
                     <IconCloseRegular size={pxToRem(16)} color={vars.colors.neutralMedium} />

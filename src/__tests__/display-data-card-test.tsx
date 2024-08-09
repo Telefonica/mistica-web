@@ -81,7 +81,7 @@ test('DisplayDataCard onClose custom label', async () => {
         <ThemeContextProvider theme={makeTheme()}>
             <DisplayDataCard
                 onClose={closeSpy}
-                closeButtonAccessibilityLabel="custom close label"
+                closeButtonLabel="custom close label"
                 title="Title"
                 description="Description"
             />

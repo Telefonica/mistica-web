@@ -142,7 +142,7 @@ test('popover - uncontrolled', async () => {
 });
 
 test('popover- close button label is customizable', async () => {
-    render(<TestPopover title="Title" closeButtonAccessibilityLabel="custom close label" />);
+    render(<TestPopover title="Title" closeButtonLabel="custom close label" />);
 
     const target = screen.getByText('Press me!');
 
