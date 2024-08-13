@@ -8,6 +8,7 @@ import Touchable from './touchable';
 import {useThemeVariant} from './theme-variant-context';
 import * as styles from './rating.css';
 import classNames from 'classnames';
+import {applyCssVars} from './utils/css';
 
 import type {ExclusifyUnion} from './utils/utility-types';
 import type {DataAttributes, IconProps} from './utils/types';
@@ -152,7 +153,7 @@ const InternalRating: React.FC<InternalRatingProps> = ({
     };
 
     const getIconElement = (icon: RatingIconProps, index: number) => {
-        const activeColor = variant === 'inverse' ? vars.colors.inverse : iconList[0].color;
+        const activeColor = variant === 'inverse' ? vars.colors.inverse : iconList[index].color;
         const inactiveColor =
             variant === 'inverse'
                 ? vars.colors.inverse
@@ -160,7 +161,7 @@ const InternalRating: React.FC<InternalRatingProps> = ({
                   ? vars.colors.control
                   : iconList[0].color;
 
-        switch (getIconType(index)) {
+        switch (getIconType(index + 1)) {
             case 'active':
                 return <icon.ActiveIcon size={size} color={activeColor} />;
 
@@ -191,18 +192,26 @@ const InternalRating: React.FC<InternalRatingProps> = ({
 
         return (
             <Touchable
-                onPress={() => setCurrentValue(index)}
+                key={index}
+                onPress={() => setCurrentValue(index + 1)}
                 disabled={disabled}
-                className={classNames(styles.touchable, {[styles.disabled]: disabled})}
+                style={applyCssVars({
+                    [styles.vars.iconSize]: `${size}px`,
+                })}
+                className={classNames(styles.touchable, {
+                    [styles.disabled]: disabled,
+                    [styles.firstIcon]: index === 0,
+                    [styles.lastIcon]: index === iconList.length - 1,
+                })}
             >
-                {iconElement}
+                <div className={styles.IconWrapper}>{iconElement}</div>
             </Touchable>
         );
     };
 
     return (
         <Inline space={iconSpacing} dataAttributes={dataAttributes}>
-            {iconList.map((icon, index) => renderIcon(icon, index + 1))}
+            {iconList.map(renderIcon)}
         </Inline>
     );
 };
