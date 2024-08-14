@@ -3632,12 +3632,90 @@ const timerSnippets: Array<Snippet> = [
     },
 ];
 
+const ratingSnippets: Array<Snippet> = [
+    {
+        group: 'Rating',
+        name: 'InfoRating',
+        code: `
+          <InfoRating
+            aria-label="info rating"
+            size={24}
+            value={3}
+            count={6}
+            icon={{
+              ActiveIcon: IconStarFilled,
+              InactiveIcon: IconStarRegular,
+              color: skinVars.colors.warning,
+            }}
+          />
+        `,
+    },
+    {
+        group: 'Rating',
+        name: 'Rating quantitative',
+        code: `
+          <Rating
+            aria-label="quantitative rating"
+            type="quantitative"
+            size={32}
+            defaultValue={3}
+            count={5}
+            icon={{
+              ActiveIcon: IconStarFilled,
+              InactiveIcon: IconStarRegular,
+              color: skinVars.colors.controlActivated,
+            }}
+          />
+        `,
+    },
+    {
+        group: 'Rating',
+        name: 'Rating qualitative',
+        code: `
+          <Rating
+            aria-label="info rating"
+            type="qualitative"
+            size={32}
+            valueLabels={["muy malo", "malo", "regular", "bueno", "muy bueno"]}
+            icons={[
+              {
+                ActiveIcon: IconStarFilled,
+                InactiveIcon: IconStarRegular,
+                color: skinVars.colors.controlActivated,
+              },
+              {
+                ActiveIcon: IconStarFilled,
+                InactiveIcon: IconStarRegular,
+                color: skinVars.colors.controlActivated,
+              },
+              {
+                ActiveIcon: IconStarFilled,
+                InactiveIcon: IconStarRegular,
+                color: skinVars.colors.controlActivated,
+              },
+              {
+                ActiveIcon: IconStarFilled,
+                InactiveIcon: IconStarRegular,
+                color: skinVars.colors.controlActivated,
+              },
+              {
+                ActiveIcon: IconStarFilled,
+                InactiveIcon: IconStarRegular,
+                color: skinVars.colors.controlActivated,
+              },
+            ]}
+          />
+        `,
+    },
+];
+
 export default [
     ...buttonSnippets,
     ...formSnippets,
     ...feedbackSnippets,
     ...skeletonSnippets,
     ...timerSnippets,
+    ...ratingSnippets,
     {group: 'Feedbacks', name: 'Snackbar', code: '<Snackbar message="Some message here" />'},
     ...layoutSnippets,
     {

@@ -60,8 +60,8 @@ export const halfIconActive = style([
         position: 'relative',
     }),
     {
-        clipPath: 'rect(0 50% 100% 0)',
-        WebkitClipPath: 'rect(0 50% 100% 0)',
+        clipPath: 'polygon(0 0, 50% 0, 50% 100%, 0 100%)',
+        WebkitClipPath: 'polygon(0 0, 50% 0, 50% 100%, 0 100%)',
     },
 ]);
 

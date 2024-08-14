@@ -52,6 +52,7 @@ interface BaseRatingProps {
     dataAttributes?: DataAttributes;
     valueLabels?: Array<string>;
     'aria-label'?: string;
+    'aria-labelledby'?: string;
 }
 
 interface QuantitativeRatingProps extends BaseRatingProps {
@@ -130,6 +131,7 @@ const InternalRating: React.FC<InternalRatingProps> = ({
     role,
     valueLabels,
     'aria-label': ariaLabel,
+    'aria-labelledby': ariaLabelledBy,
 }) => {
     const iconList = type === 'qualitative' ? icons : Array.from({length: count}, () => icon);
     const labelList =
@@ -250,13 +252,20 @@ const InternalRating: React.FC<InternalRatingProps> = ({
     };
 
     return role === 'img' ? (
-        <Inline space={iconSpacing} dataAttributes={dataAttributes} role={role} aria-label={ariaLabel}>
+        <Inline
+            space={iconSpacing}
+            dataAttributes={dataAttributes}
+            role={role}
+            aria-label={ariaLabel ?? (ariaLabelledBy ? undefined : `${currentValue} de ${count}`)}
+            aria-labelledby={ariaLabel ? undefined : ariaLabelledBy}
+        >
             {iconList.map(renderIcon)}
         </Inline>
     ) : (
         <RadioGroup
             name="info-rating"
             aria-label={ariaLabel}
+            aria-labelledby={ariaLabel ? undefined : ariaLabelledBy}
             disabled={disabled}
             onChange={(label) => {
                 setCurrentValue(labelList.findIndex((value) => value === label) + 1);

@@ -17,14 +17,19 @@ type RatingArgs = {
 export const RatingStory: StoryComponent<RatingArgs> = ({inverse, count, size, type, disabled}) => {
     return (
         <ResponsiveLayout fullWidth isInverse={inverse}>
-            <Box padding={16} dataAttributes={{testid: 'tags'}}>
-                <Rating
-                    size={size}
-                    disabled={disabled}
-                    {...(type === 'qualitative'
-                        ? {type}
-                        : {type, count, onChangeValue: (value) => console.log('new rating value:', value)})}
-                />
+            <Box padding={16}>
+                <div data-testid="rating-wrapper" style={{maxWidth: 'fit-content'}}>
+                    <Rating
+                        size={size}
+                        disabled={disabled}
+                        {...(type === 'qualitative'
+                            ? {type}
+                            : {
+                                  type,
+                                  count,
+                              })}
+                    />
+                </div>
             </Box>
         </ResponsiveLayout>
     );
@@ -64,8 +69,13 @@ type InfoRatingArgs = {
 export const InfoRatingStory: StoryComponent<InfoRatingArgs> = ({inverse, count, value, size}) => {
     return (
         <ResponsiveLayout fullWidth isInverse={inverse}>
-            <Box padding={16} dataAttributes={{testid: 'tags'}}>
-                <InfoRating value={value} count={count} size={size} />
+            <Box padding={16}>
+                <InfoRating
+                    value={value}
+                    count={count}
+                    size={size}
+                    dataAttributes={{testid: 'info-rating'}}
+                />
             </Box>
         </ResponsiveLayout>
     );

@@ -9,8 +9,19 @@ import IconStarFilled from '../generated/mistica-icons/icon-star-filled';
 import IconLightningRegular from '../generated/mistica-icons/icon-lightning-regular';
 import IconLightningFilled from '../generated/mistica-icons/icon-lightning-filled';
 import {vars} from '../skins/skin-contract.css';
+import {Text2} from '../text';
 
 test('InfoRating is accessible', async () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <InfoRating value={3} />
+        </ThemeContextProvider>
+    );
+
+    await screen.findByRole('img', {name: '3 de 5'});
+});
+
+test('InfoRating is accessible with custom label', async () => {
     render(
         <ThemeContextProvider theme={makeTheme()}>
             <InfoRating aria-label="info rating" />
@@ -18,6 +29,19 @@ test('InfoRating is accessible', async () => {
     );
 
     await screen.findByRole('img', {name: 'info rating'});
+});
+
+test('InfoRating is accessible with aria-labelledby', async () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Text2 regular id="label">
+                This is a label
+            </Text2>
+            <InfoRating value={3} aria-labelledby="label" />
+        </ThemeContextProvider>
+    );
+
+    await screen.findByRole('img', {name: 'This is a label'});
 });
 
 test('Rating quantitative is accessible', async () => {
@@ -70,6 +94,19 @@ test('Rating qualitative is accessible', async () => {
     await userEvent.click(thirdIcon);
     expect(icons[0]).not.toBeChecked();
     expect(icons[2]).toBeChecked();
+});
+
+test('Rating is accessible with aria-labelledby', async () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Text2 regular id="label">
+                This is a label
+            </Text2>
+            <Rating value={3} aria-labelledby="label" />
+        </ThemeContextProvider>
+    );
+
+    await screen.findByRole('radiogroup', {name: 'This is a label'});
 });
 
 test('Rating with uncontrolled value', async () => {
