@@ -4,6 +4,11 @@ import {Rating, InfoRating} from '../rating';
 import userEvent from '@testing-library/user-event';
 import ThemeContextProvider from '../theme-context-provider';
 import {makeTheme} from './test-utils';
+import IconStarRegular from '../generated/mistica-icons/icon-star-regular';
+import IconStarFilled from '../generated/mistica-icons/icon-star-filled';
+import IconLightningRegular from '../generated/mistica-icons/icon-lightning-regular';
+import IconLightningFilled from '../generated/mistica-icons/icon-lightning-filled';
+import {vars} from '../skins/skin-contract.css';
 
 test('InfoRating is accessible', async () => {
     render(
@@ -104,7 +109,7 @@ test('Rating with controlled value', async () => {
     expect(thirdIcon).toBeChecked();
 });
 
-test('Rating with 3 icons and custom labels', async () => {
+test('Rating quantitative with 3 icons and custom labels', async () => {
     render(
         <ThemeContextProvider theme={makeTheme()}>
             <Rating aria-label="rating" count={3} valueLabels={['first', 'second', 'third']} />
@@ -129,4 +134,47 @@ test('Rating with 3 icons and custom labels', async () => {
 
     expect(icons[1]).not.toBeChecked();
     expect(icons[2]).toBeChecked();
+});
+
+test('Rating qualitative with 2 icons and custom labels', async () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Rating
+                aria-label="rating"
+                type="qualitative"
+                icons={[
+                    {
+                        ActiveIcon: IconStarFilled,
+                        InactiveIcon: IconStarRegular,
+                        color: vars.colors.controlActivated,
+                    },
+                    {
+                        ActiveIcon: IconLightningFilled,
+                        InactiveIcon: IconLightningRegular,
+                        color: vars.colors.controlActivated,
+                    },
+                ]}
+                valueLabels={['first', 'second']}
+            />
+        </ThemeContextProvider>
+    );
+
+    const rating = await screen.findByRole('radiogroup', {name: 'rating'});
+    const icons = within(rating).getAllByRole('radio');
+
+    expect(icons).toHaveLength(2);
+
+    // Initially no value is defined
+    icons.forEach((icon) => expect(icon).not.toBeChecked());
+
+    const secondIcon = await screen.findByRole('radio', {name: 'second'});
+    await userEvent.click(secondIcon);
+
+    expect(icons[1]).toBeChecked();
+
+    const firstIcon = await screen.findByRole('radio', {name: 'first'});
+    await userEvent.click(firstIcon);
+
+    expect(icons[1]).not.toBeChecked();
+    expect(icons[0]).toBeChecked();
 });
