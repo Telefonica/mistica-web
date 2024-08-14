@@ -1,8 +1,6 @@
 'use client';
 import * as React from 'react';
 import Inline from './inline';
-import IconStarFilled from './generated/mistica-icons/icon-star-filled';
-import IconStarRegular from './generated/mistica-icons/icon-star-regular';
 import {vars} from './skins/skin-contract.css';
 import {useThemeVariant} from './theme-variant-context';
 import * as styles from './rating.css';
@@ -11,18 +9,18 @@ import {applyCssVars} from './utils/css';
 import {isTouchableDevice} from './utils/environment';
 import RadioButton, {RadioGroup} from './radio-button';
 import {isEqual} from './utils/helpers';
-import {
-    IconFaceHappyFilled,
-    IconFaceHappyRegular,
-    IconFaceNeutralFilled,
-    IconFaceNeutralRegular,
-    IconFaceSadFilled,
-    IconFaceSadRegular,
-    IconFaceSlightlySadFilled,
-    IconFaceSlightlySadRegular,
-    IconFaceSuperHappyFilled,
-    IconFaceSuperHappyRegular,
-} from '../playroom/components';
+import IconStarFilled from './generated/mistica-icons/icon-star-filled';
+import IconStarRegular from './generated/mistica-icons/icon-star-regular';
+import IconFaceSadFilled from './generated/mistica-icons/icon-face-sad-filled';
+import IconFaceSadRegular from './generated/mistica-icons/icon-face-sad-regular';
+import IconFaceSlightlySadFilled from './generated/mistica-icons/icon-face-slightly-sad-filled';
+import IconFaceSlightlySadRegular from './generated/mistica-icons/icon-face-slightly-sad-regular';
+import IconFaceNeutralFilled from './generated/mistica-icons/icon-face-neutral-filled';
+import IconFaceNeutralRegular from './generated/mistica-icons/icon-face-neutral-regular';
+import IconFaceHappyFilled from './generated/mistica-icons/icon-face-happy-filled';
+import IconFaceHappyRegular from './generated/mistica-icons/icon-face-happy-regular';
+import IconFaceSuperHappyFilled from './generated/mistica-icons/icon-face-super-happy-filled';
+import IconFaceSuperHappyRegular from './generated/mistica-icons/icon-face-super-happy-regular';
 
 import type {ExclusifyUnion} from './utils/utility-types';
 import type {DataAttributes, IconProps} from './utils/types';
