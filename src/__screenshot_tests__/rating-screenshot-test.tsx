@@ -64,6 +64,26 @@ test('Rating - qualitative', async () => {
 
     expect(await ratingWrapper.screenshot()).toMatchImageSnapshot();
 
+    const labels = ['muy malo', 'malo', 'regular', 'bueno', 'muy bueno'];
+
+    for (const label of labels) {
+        const currentIcon = await screen.findByRole('radio', {name: label});
+        await page.click(currentIcon);
+        expect(await ratingWrapper.screenshot()).toMatchImageSnapshot();
+    }
+});
+
+test('Rating - qualitative inverse', async () => {
+    const page = await openStoryPage({
+        id: 'components-rating--rating-story',
+        device: 'MOBILE_IOS',
+        args: {type: 'qualitative', inverse: true},
+    });
+
+    const ratingWrapper = await screen.findByTestId('rating-wrapper');
+
+    expect(await ratingWrapper.screenshot()).toMatchImageSnapshot();
+
     const thirdIcon = await screen.findByRole('radio', {name: 'regular'});
     await page.click(thirdIcon);
 

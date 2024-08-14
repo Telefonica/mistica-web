@@ -3679,29 +3679,29 @@ const ratingSnippets: Array<Snippet> = [
             valueLabels={["muy malo", "malo", "regular", "bueno", "muy bueno"]}
             icons={[
               {
-                ActiveIcon: IconStarFilled,
-                InactiveIcon: IconStarRegular,
-                color: skinVars.colors.controlActivated,
+                  ActiveIcon: IconFaceSadFilled,
+                  InactiveIcon: IconFaceSadRegular,
+                  color: skinVars.colors.errorHigh,
               },
               {
-                ActiveIcon: IconStarFilled,
-                InactiveIcon: IconStarRegular,
-                color: skinVars.colors.controlActivated,
+                  ActiveIcon: IconFaceSlightlySadFilled,
+                  InactiveIcon: IconFaceSlightlySadRegular,
+                  color: skinVars.colors.error,
               },
               {
-                ActiveIcon: IconStarFilled,
-                InactiveIcon: IconStarRegular,
-                color: skinVars.colors.controlActivated,
+                  ActiveIcon: IconFaceNeutralFilled,
+                  InactiveIcon: IconFaceNeutralRegular,
+                  color: skinVars.colors.warning,
               },
               {
-                ActiveIcon: IconStarFilled,
-                InactiveIcon: IconStarRegular,
-                color: skinVars.colors.controlActivated,
+                  ActiveIcon: IconFaceHappyFilled,
+                  InactiveIcon: IconFaceHappyRegular,
+                  color: skinVars.colors.success,
               },
               {
-                ActiveIcon: IconStarFilled,
-                InactiveIcon: IconStarRegular,
-                color: skinVars.colors.controlActivated,
+                  ActiveIcon: IconFaceSuperHappyFilled,
+                  InactiveIcon: IconFaceSuperHappyRegular,
+                  color: skinVars.colors.successHigh,
               },
             ]}
           />

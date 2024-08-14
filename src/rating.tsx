@@ -11,6 +11,18 @@ import {applyCssVars} from './utils/css';
 import {isTouchableDevice} from './utils/environment';
 import RadioButton, {RadioGroup} from './radio-button';
 import {isEqual} from './utils/helpers';
+import {
+    IconFaceHappyFilled,
+    IconFaceHappyRegular,
+    IconFaceNeutralFilled,
+    IconFaceNeutralRegular,
+    IconFaceSadFilled,
+    IconFaceSadRegular,
+    IconFaceSlightlySadFilled,
+    IconFaceSlightlySadRegular,
+    IconFaceSuperHappyFilled,
+    IconFaceSuperHappyRegular,
+} from '../playroom/components';
 
 import type {ExclusifyUnion} from './utils/utility-types';
 import type {DataAttributes, IconProps} from './utils/types';
@@ -37,15 +49,33 @@ const DEFAULT_INFO_RATING_ICON: RatingIconProps = {
     color: vars.colors.warning,
 };
 
-// TODO: get real icons
-const DEFAULT_QUALITATIVE_ICONS: Array<RatingIconProps> = Array.from({length: 5}, () => ({
-    ActiveIcon: IconStarFilled,
-    InactiveIcon: IconStarRegular,
-    color: vars.colors.controlActivated,
-}));
-
-// TODO: get translations
-const DEFAULT_QUALITATIVE_LABELS = ['muy malo', 'malo', 'regular', 'bueno', 'muy bueno'];
+const DEFAULT_QUALITATIVE_ICONS: Array<RatingIconProps> = [
+    {
+        ActiveIcon: IconFaceSadFilled,
+        InactiveIcon: IconFaceSadRegular,
+        color: vars.colors.errorHigh,
+    },
+    {
+        ActiveIcon: IconFaceSlightlySadFilled,
+        InactiveIcon: IconFaceSlightlySadRegular,
+        color: vars.colors.error,
+    },
+    {
+        ActiveIcon: IconFaceNeutralFilled,
+        InactiveIcon: IconFaceNeutralRegular,
+        color: vars.colors.warning,
+    },
+    {
+        ActiveIcon: IconFaceHappyFilled,
+        InactiveIcon: IconFaceHappyRegular,
+        color: vars.colors.success,
+    },
+    {
+        ActiveIcon: IconFaceSuperHappyFilled,
+        InactiveIcon: IconFaceSuperHappyRegular,
+        color: vars.colors.successHigh,
+    },
+];
 
 interface BaseRatingProps {
     size?: number;
@@ -133,13 +163,16 @@ const InternalRating: React.FC<InternalRatingProps> = ({
     'aria-label': ariaLabel,
     'aria-labelledby': ariaLabelledBy,
 }) => {
+    // TODO: get translations
+    const defaultQualitativeLabels = ['muy malo', 'malo', 'regular', 'bueno', 'muy bueno'];
+    const defaultQuantitativeLabels = Array.from({length: count}, (_, index) => `${index + 1} de ${count}`);
+
     const iconList = type === 'qualitative' ? icons : Array.from({length: count}, () => icon);
     const labelList =
         valueLabels ??
         (type === 'qualitative' && isEqual(iconList, DEFAULT_QUALITATIVE_ICONS)
-            ? DEFAULT_QUALITATIVE_LABELS
-            : // TODO: get translations
-              Array.from({length: count}, (_, index) => `${index + 1} de ${count}`));
+            ? defaultQualitativeLabels
+            : defaultQuantitativeLabels);
 
     const isInteractive = role === 'radiogroup';
 
