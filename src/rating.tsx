@@ -106,6 +106,7 @@ type RatingProps = ExclusifyUnion<QualitativeRatingProps | QuantitativeRatingPro
 
 type InfoRatingProps = Omit<QuantitativeRatingProps, 'type' | 'valueLabels'> & {
     value?: number;
+    withHalfValue?: boolean;
 };
 
 type InternalRatingProps = ExclusifyUnion<RatingProps | InfoRatingProps> & {
@@ -158,6 +159,7 @@ const InternalRating: React.FC<InternalRatingProps> = ({
     disabled,
     role,
     valueLabels,
+    withHalfValue,
     'aria-label': ariaLabel,
     'aria-labelledby': ariaLabelledBy,
 }) => {
@@ -201,7 +203,13 @@ const InternalRating: React.FC<InternalRatingProps> = ({
             return index <= currentValue ? 'active' : 'inactive';
         }
 
-        if (index - 0.75 <= currentValue && currentValue <= index - 0.25) {
+        // Round the value to the closest integer (.5 is rounded down)
+        if (!withHalfValue) {
+            return index - 0.5 < currentValue ? 'active' : 'inactive';
+        }
+
+        // Fractional part of the value is in range [0.25, 0.75)
+        if (index - 0.75 <= currentValue && currentValue < index - 0.25) {
             return 'half';
         }
 

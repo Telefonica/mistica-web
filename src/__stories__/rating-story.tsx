@@ -64,9 +64,16 @@ type InfoRatingArgs = {
     count: number;
     value: number;
     size: number;
+    withHalfValue: boolean;
 };
 
-export const InfoRatingStory: StoryComponent<InfoRatingArgs> = ({inverse, count, value, size}) => {
+export const InfoRatingStory: StoryComponent<InfoRatingArgs> = ({
+    inverse,
+    count,
+    value,
+    size,
+    withHalfValue,
+}) => {
     return (
         <ResponsiveLayout fullWidth isInverse={inverse}>
             <Box padding={16}>
@@ -74,6 +81,7 @@ export const InfoRatingStory: StoryComponent<InfoRatingArgs> = ({inverse, count,
                     value={value}
                     count={count}
                     size={size}
+                    withHalfValue={withHalfValue}
                     dataAttributes={{testid: 'info-rating'}}
                 />
             </Box>
@@ -85,6 +93,7 @@ InfoRatingStory.storyName = 'InfoRating';
 
 InfoRatingStory.args = {
     inverse: false,
+    withHalfValue: false,
     count: 5,
     size: 16,
     value: 0,
@@ -93,7 +102,6 @@ InfoRatingStory.args = {
 InfoRatingStory.argTypes = {
     count: {
         control: {type: 'range', min: 1, max: 5},
-        if: {arg: 'type', eq: 'quantitative'},
     },
     size: {
         control: {type: 'range', min: 16, max: 64, step: 4},

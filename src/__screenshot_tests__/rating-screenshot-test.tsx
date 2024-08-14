@@ -1,10 +1,22 @@
 import {openStoryPage, screen} from '../test-utils';
 
-test.each([0, 1, 2, 3, 4, 5, 1.5, 0.75, 1.24, 4.25])('InfoRating - value %s', async (value) => {
+test.each([0, 1, 2, 3, 4, 5, 4.5, 4.51])('InfoRating - value = %s', async (value) => {
     await openStoryPage({
         id: 'components-rating--info-rating-story',
         device: 'MOBILE_IOS',
         args: {value},
+    });
+
+    const rating = await screen.findByTestId('info-rating');
+
+    expect(await rating.screenshot()).toMatchImageSnapshot();
+});
+
+test.each([4.5, 0.74, 0.75, 1.24, 4.25])('InfoRating - with half value and value = %s', async (value) => {
+    await openStoryPage({
+        id: 'components-rating--info-rating-story',
+        device: 'MOBILE_IOS',
+        args: {value, withHalfValue: true},
     });
 
     const rating = await screen.findByTestId('info-rating');
