@@ -4,11 +4,13 @@ import Inline from './inline';
 import IconStarFilled from './generated/mistica-icons/icon-star-filled';
 import IconStarRegular from './generated/mistica-icons/icon-star-regular';
 import {vars} from './skins/skin-contract.css';
-import Touchable from './touchable';
 import {useThemeVariant} from './theme-variant-context';
 import * as styles from './rating.css';
 import classNames from 'classnames';
 import {applyCssVars} from './utils/css';
+import {isTouchableDevice} from './utils/environment';
+import RadioButton, {RadioGroup} from './radio-button';
+import {isEqual} from './utils/helpers';
 
 import type {ExclusifyUnion} from './utils/utility-types';
 import type {DataAttributes, IconProps} from './utils/types';
@@ -42,9 +44,14 @@ const DEFAULT_QUALITATIVE_ICONS: Array<RatingIconProps> = Array.from({length: 5}
     color: vars.colors.controlActivated,
 }));
 
+// TODO: get translations
+const DEFAULT_QUALITATIVE_LABELS = ['muy malo', 'malo', 'regular', 'bueno', 'muy bueno'];
+
 interface BaseRatingProps {
     size?: number;
     dataAttributes?: DataAttributes;
+    valueLabels?: Array<string>;
+    'aria-label'?: string;
 }
 
 interface QuantitativeRatingProps extends BaseRatingProps {
@@ -74,6 +81,7 @@ type InfoRatingProps = Omit<QuantitativeRatingProps, 'type'> & {
 
 type InternalRatingProps = ExclusifyUnion<RatingProps | InfoRatingProps> & {
     isInteractive: boolean;
+    role: 'radiogroup' | 'img';
 };
 
 const useRatingState = ({
@@ -118,12 +126,24 @@ const InternalRating: React.FC<InternalRatingProps> = ({
     onChangeValue,
     defaultValue,
     value,
-    isInteractive = false,
     disabled,
+    role,
+    valueLabels,
+    'aria-label': ariaLabel,
 }) => {
     const iconList = type === 'qualitative' ? icons : Array.from({length: count}, () => icon);
+    const labelList =
+        valueLabels ?? isEqual(iconList, DEFAULT_QUALITATIVE_ICONS)
+            ? DEFAULT_QUALITATIVE_LABELS
+            : // TODO: get translations
+              Array.from({length: count}, (_, index) => `${index + 1} de ${count}`);
+
+    const isInteractive = role === 'radiogroup';
+
     const iconSpacing = isInteractive ? 16 : size <= 16 ? 2 : size <= 24 ? 4 : 8;
     const variant = useThemeVariant();
+    const [hoveredIndex, setHoveredIndex] = React.useState<number | undefined>(undefined);
+    const isTouchable = isTouchableDevice();
 
     const [currentValue, setCurrentValue] = useRatingState({
         value,
@@ -133,6 +153,12 @@ const InternalRating: React.FC<InternalRatingProps> = ({
     });
 
     const getIconType = (index: number) => {
+        if (hoveredIndex !== undefined && !disabled) {
+            return (type === 'qualitative' && index === hoveredIndex) ||
+                (type === 'quantitative' && index <= hoveredIndex)
+                ? 'active'
+                : 'inactive';
+        }
         if (type === 'qualitative') {
             return index === currentValue ? 'active' : 'inactive';
         }
@@ -163,15 +189,15 @@ const InternalRating: React.FC<InternalRatingProps> = ({
 
         switch (getIconType(index + 1)) {
             case 'active':
-                return <icon.ActiveIcon size={size} color={activeColor} />;
+                return <icon.ActiveIcon size={size} color={activeColor} key={index} />;
 
             case 'inactive':
-                return <icon.InactiveIcon size={size} color={inactiveColor} />;
+                return <icon.InactiveIcon size={size} color={inactiveColor} key={index} />;
 
             case 'half':
             default:
                 return (
-                    <div className={styles.halfIconContainer}>
+                    <div className={styles.halfIconContainer} key={index}>
                         <div className={styles.halfIconInactive}>
                             <icon.InactiveIcon size={size} color={inactiveColor} />
                         </div>
@@ -186,39 +212,64 @@ const InternalRating: React.FC<InternalRatingProps> = ({
     const renderIcon = (icon: RatingIconProps, index: number) => {
         const iconElement = getIconElement(icon, index);
 
-        if (!isInteractive) {
-            return iconElement;
-        }
-
-        return (
-            <Touchable
+        return !isInteractive ? (
+            iconElement
+        ) : (
+            <RadioButton
                 key={index}
-                onPress={() => setCurrentValue(index + 1)}
-                disabled={disabled}
-                style={applyCssVars({
-                    [styles.vars.iconSize]: `${size}px`,
-                })}
-                className={classNames(styles.touchable, {
-                    [styles.disabled]: disabled,
-                    [styles.firstIcon]: index === 0,
-                    [styles.lastIcon]: index === iconList.length - 1,
-                })}
-            >
-                <div className={styles.IconWrapper}>{iconElement}</div>
-            </Touchable>
+                value={labelList[index]}
+                render={({labelId, disabled}) => (
+                    <div
+                        id={labelId}
+                        onMouseEnter={() => {
+                            if (!isTouchable) {
+                                setHoveredIndex(index + 1);
+                            }
+                        }}
+                        onMouseLeave={() => {
+                            if (!isTouchable) {
+                                setHoveredIndex(undefined);
+                            }
+                        }}
+                        style={applyCssVars({
+                            [styles.vars.iconSize]: `${size}px`,
+                        })}
+                        className={classNames(styles.touchable, {
+                            [styles.disabled]: disabled,
+                            [styles.firstIcon]: index === 0,
+                            [styles.lastIcon]: index === iconList.length - 1,
+                        })}
+                    >
+                        <div className={styles.IconWrapper}>{iconElement}</div>
+                    </div>
+                )}
+            />
         );
     };
 
-    return (
-        <Inline space={iconSpacing} dataAttributes={dataAttributes}>
+    return role === 'img' ? (
+        <Inline space={iconSpacing} dataAttributes={dataAttributes} role={role}>
             {iconList.map(renderIcon)}
         </Inline>
+    ) : (
+        <RadioGroup
+            name={ariaLabel || ''}
+            disabled={disabled}
+            onChange={(label) => {
+                setCurrentValue(labelList.findIndex((value) => value === label) + 1);
+            }}
+            value={labelList[currentValue - 1]}
+            dataAttributes={dataAttributes}
+        >
+            <Inline space={iconSpacing}>{iconList.map(renderIcon)}</Inline>
+        </RadioGroup>
     );
 };
 
 export const Rating: React.FC<RatingProps> = ({dataAttributes, ...props}) => (
     <InternalRating
         isInteractive
+        role="radiogroup"
         dataAttributes={{'component-name': 'Rating', ...dataAttributes}}
         {...props}
     />
@@ -229,6 +280,7 @@ export const InfoRating: React.FC<InfoRatingProps> = ({dataAttributes, icon, siz
         isInteractive={false}
         size={size ?? DEFAULT_INFO_RATING_SIZE}
         icon={icon ?? DEFAULT_INFO_RATING_ICON}
+        role="img"
         dataAttributes={{'component-name': 'InfoRating', ...dataAttributes}}
         {...props}
     />

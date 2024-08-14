@@ -101,7 +101,7 @@ export const touchable = style({
     },
 
     selectors: {
-        '&:not([disabled]):active': {
+        [`&:not(${disabled}):active`]: {
             transform: 'scale(1.2)',
         },
 
