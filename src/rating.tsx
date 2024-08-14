@@ -75,7 +75,7 @@ type RatingProps = ExclusifyUnion<QualitativeRatingProps | QuantitativeRatingPro
     disabled?: boolean;
 };
 
-type InfoRatingProps = Omit<QuantitativeRatingProps, 'type'> & {
+type InfoRatingProps = Omit<QuantitativeRatingProps, 'type' | 'valueLabels'> & {
     value?: number;
 };
 
@@ -133,10 +133,11 @@ const InternalRating: React.FC<InternalRatingProps> = ({
 }) => {
     const iconList = type === 'qualitative' ? icons : Array.from({length: count}, () => icon);
     const labelList =
-        valueLabels ?? isEqual(iconList, DEFAULT_QUALITATIVE_ICONS)
+        valueLabels ??
+        (type === 'qualitative' && isEqual(iconList, DEFAULT_QUALITATIVE_ICONS)
             ? DEFAULT_QUALITATIVE_LABELS
             : // TODO: get translations
-              Array.from({length: count}, (_, index) => `${index + 1} de ${count}`);
+              Array.from({length: count}, (_, index) => `${index + 1} de ${count}`));
 
     const isInteractive = role === 'radiogroup';
 
@@ -217,6 +218,7 @@ const InternalRating: React.FC<InternalRatingProps> = ({
         ) : (
             <RadioButton
                 key={index}
+                aria-label={labelList[index]}
                 value={labelList[index]}
                 render={({labelId, disabled}) => (
                     <div
@@ -248,12 +250,13 @@ const InternalRating: React.FC<InternalRatingProps> = ({
     };
 
     return role === 'img' ? (
-        <Inline space={iconSpacing} dataAttributes={dataAttributes} role={role}>
+        <Inline space={iconSpacing} dataAttributes={dataAttributes} role={role} aria-label={ariaLabel}>
             {iconList.map(renderIcon)}
         </Inline>
     ) : (
         <RadioGroup
-            name={ariaLabel || ''}
+            name="info-rating"
+            aria-label={ariaLabel}
             disabled={disabled}
             onChange={(label) => {
                 setCurrentValue(labelList.findIndex((value) => value === label) + 1);

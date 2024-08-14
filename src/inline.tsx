@@ -43,6 +43,7 @@ type Props = {
     children: React.ReactNode;
     className?: string;
     role?: string;
+    'aria-label'?: string;
     'aria-labelledby'?: string;
     fullWidth?: boolean;
     dataAttributes?: DataAttributes;
@@ -55,6 +56,7 @@ const Inline: React.FC<Props> = ({
     children,
     role,
     alignItems = 'stretch',
+    'aria-label': ariaLabel,
     'aria-labelledby': ariaLabelledBy,
     fullWidth,
     wrap,
@@ -74,7 +76,8 @@ const Inline: React.FC<Props> = ({
             )}
             style={applyCssVars(calcInlineVars(space))}
             role={role}
-            aria-labelledby={ariaLabelledBy}
+            aria-label={ariaLabel}
+            aria-labelledby={ariaLabel ? undefined : ariaLabelledBy}
             {...getPrefixedDataAttributes(dataAttributes, 'Inline')}
         >
             {React.Children.map(children, (child) =>

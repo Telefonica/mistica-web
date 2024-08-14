@@ -152,6 +152,7 @@ const RadioButton: React.FC<PropsRender | PropsChildren> = ({
 type RadioGroupProps = {
     name: string;
     disabled?: boolean;
+    'aria-label'?: string;
     'aria-labelledby'?: string;
     children: React.ReactNode;
     value?: string;
@@ -252,7 +253,8 @@ export const RadioGroup: React.FC<RadioGroupProps> = (props) => {
         <div
             ref={combineRefs(ref, focusableRef)}
             role="radiogroup"
-            aria-labelledby={props['aria-labelledby']}
+            aria-label={props['aria-label']}
+            aria-labelledby={props['aria-label'] ? undefined : props['aria-labelledby']}
             {...getPrefixedDataAttributes(props.dataAttributes, 'RadioGroup')}
         >
             <RadioContext.Provider
