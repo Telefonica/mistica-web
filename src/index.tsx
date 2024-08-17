@@ -1200,9 +1200,6 @@ export {default as IconLightningFilled} from './generated/mistica-icons/icon-lig
 export {default as IconLightningLight} from './generated/mistica-icons/icon-lightning-light';
 export {default as IconLightningRegular} from './generated/mistica-icons/icon-lightning-regular';
 export {default as IconLightSwitchRegular} from './generated/mistica-icons/icon-light-switch-regular';
-export {default as IconLikeFilled} from './generated/mistica-icons/icon-like-filled';
-export {default as IconLikeLight} from './generated/mistica-icons/icon-like-light';
-export {default as IconLikeRegular} from './generated/mistica-icons/icon-like-regular';
 export {default as IconLinkFilled} from './generated/mistica-icons/icon-link-filled';
 export {default as IconLinkRegular} from './generated/mistica-icons/icon-link-regular';
 export {default as IconListDocumentFilled} from './generated/mistica-icons/icon-list-document-filled';
@@ -1805,6 +1802,9 @@ export {default as IconThrowLightRegular} from './generated/mistica-icons/icon-t
 export {default as IconThumbDownFilled} from './generated/mistica-icons/icon-thumb-down-filled';
 export {default as IconThumbDownLight} from './generated/mistica-icons/icon-thumb-down-light';
 export {default as IconThumbDownRegular} from './generated/mistica-icons/icon-thumb-down-regular';
+export {default as IconThumbUpFilled} from './generated/mistica-icons/icon-thumb-up-filled';
+export {default as IconThumbUpLight} from './generated/mistica-icons/icon-thumb-up-light';
+export {default as IconThumbUpRegular} from './generated/mistica-icons/icon-thumb-up-regular';
 export {default as IconTicketsFilled} from './generated/mistica-icons/icon-tickets-filled';
 export {default as IconTicketsLight} from './generated/mistica-icons/icon-tickets-light';
 export {default as IconTicketsRegular} from './generated/mistica-icons/icon-tickets-regular';

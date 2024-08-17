@@ -1969,7 +1969,6 @@ const iconKeywords: {[key: string]: Array<string>} = {
     ],
     lightbulb: ['light bulb', 'lamp', 'illuminator', 'bombilla', 'lâmpada', 'Glühbirne'],
     lightning: ['thunderbolt', 'electrical discharge', 'lightning bolt', 'relámpago', 'raio', 'Blitz'],
-    like: ['favor', 'approval', 'thumbs-up', 'gustar', 'gostar', 'gefällt mir'],
     link: ['connection', 'hyperlink', 'url', 'enlace', 'ligação', 'Verknüpfung'],
     list: ['listing', 'catalog', 'roster', 'lista', 'lista', 'Liste'],
     'list-document': [
@@ -3010,6 +3009,7 @@ const iconKeywords: {[key: string]: Array<string>} = {
     ],
     'throw-light': ['cast light', 'emit light', 'shine', 'arrojar luz', 'emitir luz', 'Licht werfen'],
     'thumb-down': ['disapproval', 'negative', 'thumbs down', 'desaprobación', 'negativo', 'Daumen runter'],
+    'thumb-up': ['approval', 'positive', 'thumbs up', 'aprobación', 'positivo', 'Daumen hoch'],
     tickets: ['passes', 'admission', 'entry tickets', 'entradas', 'ingressos', 'Tickets'],
     time: ['clock', 'duration', 'period', 'tiempo', 'tempo', 'Zeit'],
     'tips-and-tricks': [

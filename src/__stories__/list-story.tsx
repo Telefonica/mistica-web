@@ -9,7 +9,7 @@ import {
     skinVars,
     Placeholder,
     Tag,
-    IconLikeFilled,
+    IconThumbUpFilled,
     IconMobileDeviceRegular,
     Image,
     Text3,
@@ -247,7 +247,7 @@ const Template: StoryComponent<Args & {boxed?: boolean; isInverse?: boolean}> = 
                 {...getControlProps(row++)}
             />
             <RowComponent
-                asset={<IconLikeFilled size={24} color="currentColor" />}
+                asset={<IconThumbUpFilled size={24} color="currentColor" />}
                 headline={headline && <Tag type="promo">{headline}</Tag>}
                 title={title}
                 subtitle={subtitle}
