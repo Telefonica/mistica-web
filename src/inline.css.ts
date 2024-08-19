@@ -74,6 +74,11 @@ export const stringSpace = style({
     justifyContent: space,
 });
 
+export const stringSpaceWithWrap = style({
+    display: 'flex',
+    justifyContent: space,
+});
+
 globalStyle(`${marginInline} > div`, {
     marginLeft: space,
     marginTop: space,
