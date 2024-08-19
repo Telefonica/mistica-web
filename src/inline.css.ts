@@ -75,6 +75,7 @@ export const stringSpace = style({
 });
 
 export const stringSpaceWithWrap = style({
+    // if we use display: grid, the content doesn't wrap
     display: 'flex',
     justifyContent: space,
 });
