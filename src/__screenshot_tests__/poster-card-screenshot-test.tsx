@@ -60,7 +60,7 @@ test('PosterCard with top actions', async () => {
     await openStoryPage({
         id: 'components-cards-postercard--default',
         device: 'MOBILE_IOS',
-        args: {withTopAction: true},
+        args: {topAction: true},
     });
 
     const dataCard = await screen.findByTestId('poster-card');
@@ -75,7 +75,7 @@ test('PosterCard without icon, with top actions and too long title', async () =>
         id: 'components-cards-postercard--default',
         device: 'MOBILE_IOS',
         args: {
-            withTopAction: true,
+            topAction: true,
             asset: 'none',
             title: 'Too long title too long title too long titltoo long title too long title',
         },
@@ -157,7 +157,7 @@ test('PosterCard with custom background color inverse', async () => {
 test('PosterCard with extra content', async () => {
     await openStoryPage({
         id: 'components-cards-postercard--default',
-        args: {withExtra: true},
+        args: {extra: true},
     });
 
     const posterCard = await screen.findByTestId('poster-card');

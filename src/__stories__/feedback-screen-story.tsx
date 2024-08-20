@@ -70,8 +70,8 @@ type FeedbackScreenArgs = {
     description: string;
     animateText: boolean;
     showIcon: boolean;
-    withNavbar: boolean;
-    isInverse: boolean;
+    navbar: boolean;
+    inverse: boolean;
     imageUrl: string | null;
     imageFit: 'fit' | 'fill';
     multipleParagraphs: boolean;
@@ -86,18 +86,18 @@ export const FeedbackScreenStory: StoryComponent<FeedbackScreenArgs> = ({
     multipleParagraphs,
     animateText,
     showIcon,
-    withNavbar,
-    isInverse,
+    navbar,
+    inverse,
     imageUrl,
     imageFit,
 }) => (
-    <FixedToTop height={withNavbar ? 56 : 0}>
+    <FixedToTop height={navbar ? 56 : 0}>
         {(top) => (
             <>
-                {withNavbar && <Navbar top={top} />}
-                <Box paddingTop={withNavbar ? 56 : 0}>
+                {navbar && <Navbar top={top} />}
+                <Box paddingTop={navbar ? 56 : 0}>
                     <FeedbackScreen
-                        isInverse={isInverse}
+                        isInverse={inverse}
                         title={title}
                         description={
                             multipleParagraphs ? [description, 'paragraph 2', 'paragraph 3'] : description
@@ -145,8 +145,8 @@ FeedbackScreenStory.args = {
     multipleParagraphs: false,
     animateText: true,
     showIcon: true,
-    withNavbar: true,
-    isInverse: false,
+    navbar: true,
+    inverse: false,
     imageUrl: '',
     imageFit: 'fit',
 };

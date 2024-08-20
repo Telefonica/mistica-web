@@ -17,7 +17,7 @@ test('DisplayDataCard', async () => {
 test('DisplayDataCard with top actions', async () => {
     await openStoryPage({
         id: 'components-cards-displaydatacard--default',
-        args: {withTopAction: true, closable: true},
+        args: {topAction: true, closable: true},
     });
 
     const displayDataCard = await screen.findByTestId('display-data-card');
@@ -30,7 +30,7 @@ test('DisplayDataCard with top actions', async () => {
 test('DisplayDataCard with top actions without asset', async () => {
     await openStoryPage({
         id: 'components-cards-displaydatacard--default',
-        args: {withTopAction: true, closable: true, asset: 'none'},
+        args: {topAction: true, closable: true, asset: 'none'},
     });
 
     const displayDataCard = await screen.findByTestId('display-data-card');
@@ -43,7 +43,7 @@ test('DisplayDataCard with top actions without asset', async () => {
 test('DisplayDataCard with top actions inverse', async () => {
     await openStoryPage({
         id: 'components-cards-displaydatacard--default',
-        args: {withTopAction: true, closable: true, isInverse: true},
+        args: {topAction: true, closable: true, isInverse: true},
     });
 
     const displayDataCard = await screen.findByTestId('display-data-card');

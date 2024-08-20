@@ -15,13 +15,13 @@ export default {
     },
 };
 
-type Args = {isInverse: boolean; withBorder: boolean};
+type Args = {isInverse: boolean; border: boolean};
 
-export const Default: StoryComponent<Args> = ({isInverse, withBorder}) => {
+export const Default: StoryComponent<Args> = ({isInverse, border}) => {
     const {isDesktopOrBigger} = useScreenSize();
     return (
         <NavigationBar
-            withBorder={withBorder}
+            withBorder={border}
             isInverse={isInverse}
             onBack={() => {}}
             title="Settings"
@@ -41,5 +41,5 @@ Default.storyName = 'NavigationBar';
 
 Default.args = {
     isInverse: false,
-    withBorder: true,
+    border: true,
 };

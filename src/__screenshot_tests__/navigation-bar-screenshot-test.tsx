@@ -48,7 +48,7 @@ test('MainNavigationBar mobile with burger menu extra', async () => {
     const page = await openStoryPage({
         id: 'components-navigation-bars-mainnavigationbar--default',
         device: 'MOBILE_IOS',
-        args: {withBurgerMenuExtra: true},
+        args: {burgerMenuExtra: true},
     });
 
     await page.click(await screen.findByRole('button', {name: 'Abrir menú de navegación'}));
@@ -133,7 +133,7 @@ test.each`
     const page = await openStoryPage({
         id: `components-navigation-bars-${type.toLowerCase()}--default`,
         device,
-        args: {withBorder: false},
+        args: {border: false},
     });
 
     const image = await page.screenshot();
@@ -145,7 +145,7 @@ test.each(DEVICES)('MainNavigationBar without sections (%s)', async (device) => 
     const page = await openStoryPage({
         id: 'components-navigation-bars-mainnavigationbar--default',
         device,
-        args: {withSections: false},
+        args: {sections: false},
     });
 
     const image = await page.screenshot();

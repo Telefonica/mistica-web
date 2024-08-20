@@ -38,7 +38,7 @@ test.each(ASPECT_RATIO)('Video - full width with aspect ratio %s', async (aspect
 test.each(ASPECT_RATIO.slice(0, 3))('Video - no poster with aspect ratio %s', async (aspectRatio) => {
     await openStoryPage({
         id: 'components-primitives-video--default',
-        args: {type: 'width and aspect ratio', aspectRatio: aspectRatio.replace(':', ' '), withPoster: false},
+        args: {type: 'width and aspect ratio', aspectRatio: aspectRatio.replace(':', ' '), poster: false},
     });
 
     const story = await screen.findByTestId('video');
@@ -52,7 +52,7 @@ test.each(ASPECT_RATIO.slice(0, 3))('Video - error fallback with aspect ratio %s
         args: {
             type: 'width and aspect ratio',
             aspectRatio: aspectRatio.replace(':', ' '),
-            withPoster: false,
+            poster: false,
             isEmptySource: true,
         },
     });

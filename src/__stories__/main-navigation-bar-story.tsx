@@ -19,34 +19,28 @@ export default {
     },
 };
 
-const sections = ['Start', 'Account', 'Explore', 'Support'];
+const sectionTitles = ['Start', 'Account', 'Explore', 'Support'];
 
 type Args = {
     inverse: boolean;
-    withBorder: boolean;
-    withBurgerMenuExtra: boolean;
+    border: boolean;
+    burgerMenuExtra: boolean;
     large: boolean;
-    withSections: boolean;
+    sections: boolean;
 };
 
-export const Default: StoryComponent<Args> = ({
-    inverse,
-    withBorder,
-    withBurgerMenuExtra,
-    large,
-    withSections,
-}) => {
+export const Default: StoryComponent<Args> = ({inverse, border, burgerMenuExtra, large, sections}) => {
     const [selectedIndex, setSelectedIndex] = React.useState(0);
     const {isDesktopOrBigger} = useScreenSize();
     return (
         <MainNavigationBar
             isInverse={inverse}
             large={large}
-            withBorder={withBorder}
-            burgerMenuExtra={withBurgerMenuExtra ? <Placeholder /> : undefined}
+            withBorder={border}
+            burgerMenuExtra={burgerMenuExtra ? <Placeholder /> : undefined}
             sections={
-                withSections
-                    ? sections.map((title, idx) => ({title, onPress: () => setSelectedIndex(idx)}))
+                sections
+                    ? sectionTitles.map((title, idx) => ({title, onPress: () => setSelectedIndex(idx)}))
                     : undefined
             }
             selectedIndex={selectedIndex}
@@ -71,8 +65,8 @@ Default.storyName = 'MainNavigationBar';
 
 Default.args = {
     inverse: false,
-    withBorder: true,
-    withBurgerMenuExtra: false,
+    border: true,
+    burgerMenuExtra: false,
     large: false,
-    withSections: true,
+    sections: true,
 };

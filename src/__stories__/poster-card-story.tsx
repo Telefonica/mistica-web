@@ -42,15 +42,15 @@ type PosterCardArgs = {
     title: string;
     subtitle: string;
     description: string;
-    withExtra: boolean;
+    extra: boolean;
     ariaLabel: string;
     closable: boolean;
     actions: 'onPress' | 'href' | 'to' | 'none';
-    withTopAction: boolean;
+    topAction: boolean;
     width: string;
     height: string;
     aspectRatio: '1:1' | '16:9' | '7:10' | '9:10' | 'auto';
-    isEmptySource: boolean;
+    emptySource: boolean;
     inverse: boolean;
 };
 
@@ -66,15 +66,15 @@ export const Default: StoryComponent<PosterCardArgs> = ({
     title,
     subtitle,
     description,
-    withExtra,
+    extra,
     ariaLabel,
     closable,
     actions,
-    withTopAction,
+    topAction,
     width,
     height,
     aspectRatio,
-    isEmptySource,
+    emptySource,
     inverse,
 }) => {
     let icon;
@@ -90,7 +90,7 @@ export const Default: StoryComponent<PosterCardArgs> = ({
 
     const topActionsProps = {
         onClose: closable ? () => {} : undefined,
-        actions: withTopAction
+        actions: topAction
             ? [
                   {
                       Icon: IconLightningRegular,
@@ -116,12 +116,12 @@ export const Default: StoryComponent<PosterCardArgs> = ({
         background === 'image'
             ? {
                   ...topActionsProps,
-                  backgroundImage: isEmptySource ? '' : BACKGROUND_IMAGE_SRC,
+                  backgroundImage: emptySource ? '' : BACKGROUND_IMAGE_SRC,
               }
             : background === 'video'
               ? {
-                    backgroundVideo: isEmptySource ? '' : BACKGROUND_VIDEO_SRC,
-                    poster: isEmptySource ? '' : BACKGROUND_VIDEO_POSTER_SRC,
+                    backgroundVideo: emptySource ? '' : BACKGROUND_VIDEO_SRC,
+                    poster: emptySource ? '' : BACKGROUND_VIDEO_POSTER_SRC,
                 }
               : {
                     ...topActionsProps,
@@ -147,7 +147,7 @@ export const Default: StoryComponent<PosterCardArgs> = ({
                     title={title}
                     subtitle={subtitle}
                     description={description}
-                    extra={withExtra ? <Placeholder /> : undefined}
+                    extra={extra ? <Placeholder /> : undefined}
                     aria-label={ariaLabel}
                     width={width}
                     height={height}
@@ -172,15 +172,15 @@ Default.args = {
     title: 'Title',
     subtitle: 'Subtitle',
     description: 'This is a description for the card',
-    withExtra: false,
+    extra: false,
     ariaLabel: '',
     closable: false,
     actions: 'none',
-    withTopAction: false,
+    topAction: false,
     width: 'auto',
     height: 'auto',
     aspectRatio: 'auto',
-    isEmptySource: false,
+    emptySource: false,
     inverse: false,
 };
 

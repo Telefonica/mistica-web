@@ -16,19 +16,12 @@ type Args = {
     title: string;
     description: string;
     actions: string;
-    withIcon: boolean;
-    isClosable: boolean;
+    icon: boolean;
+    closable: boolean;
     inverse: boolean;
 };
 
-export const Default: StoryComponent<Args> = ({
-    title,
-    description,
-    withIcon,
-    actions,
-    isClosable,
-    inverse,
-}) => {
+export const Default: StoryComponent<Args> = ({title, description, icon, actions, closable, inverse}) => {
     const button = actions.includes('button') ? (
         <ButtonPrimary small onPress={() => {}}>
             Action
@@ -49,8 +42,8 @@ export const Default: StoryComponent<Args> = ({
         <ResponsiveLayout isInverse={inverse}>
             <Box paddingY={24}>
                 <Callout
-                    icon={withIcon ? <IconBoxLight /> : undefined}
-                    onClose={isClosable ? () => {} : undefined}
+                    icon={icon ? <IconBoxLight /> : undefined}
+                    onClose={closable ? () => {} : undefined}
                     title={title}
                     description={description}
                     button={button}
@@ -69,7 +62,7 @@ Default.args = {
     title: 'Some title',
     description: 'This is a description for the callout',
     actions: 'button and link',
-    withIcon: true,
-    isClosable: true,
+    icon: true,
+    closable: true,
     inverse: false,
 };
