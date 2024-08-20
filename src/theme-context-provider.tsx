@@ -4,7 +4,7 @@ import {assignInlineVars} from '@vanilla-extract/dynamic';
 import {DialogRoot} from './dialog-context';
 import ScreenSizeContextProvider from './screen-size-context-provider';
 import AriaIdGetterContext from './aria-id-getter-context';
-import {dimensions, getTexts, getMisticaLinkComponent, NAVBAR_HEIGHT_MOBILE} from './theme';
+import {dimensions, getMisticaLinkComponent, NAVBAR_HEIGHT_MOBILE} from './theme';
 import {getPlatform, isInsideNovumNativeApp} from './utils/platform';
 import ThemeContext from './theme-context';
 import {useIsomorphicLayoutEffect} from './hooks';
@@ -152,7 +152,6 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children, as, withoutStyl
             i18n: theme.i18n,
             platformOverrides,
             texts: {
-                ...getTexts(theme.i18n.locale),
                 ...theme.texts,
             },
             analytics: {

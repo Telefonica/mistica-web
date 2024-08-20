@@ -1,11 +1,11 @@
 import {getMovistarSkin} from '..';
-import {getTexts} from '../theme';
 
-import type {EventFormat, ThemeConfig, ThemeTexts} from '../theme';
+import type {EventFormat, ThemeConfig} from '../theme';
 import type {Locale} from '../utils/locale';
 import type {RegionCode} from '../utils/region-code';
 import type {TrackingEvent} from '../utils/types';
 import type {Skin} from '..';
+import type {TextToken} from '../tokens';
 
 if (process.env.NODE_ENV !== 'test') {
     throw Error('Using test-utils outside test environment');
@@ -21,7 +21,7 @@ type ThemeOverrides = {
         platform?: 'ios' | 'android';
         insideNovumNativeApp?: boolean;
     };
-    texts?: Partial<ThemeTexts>;
+    texts?: Partial<TextToken>;
     analytics?: {logEvent: (trackingEvent: TrackingEvent) => Promise<void>; eventFormat?: EventFormat};
     dimensions?: {headerMobileHeight: number};
     useHrefDecorator?: () => (href: string) => string;
@@ -38,7 +38,6 @@ export const makeTheme = (overrides: ThemeOverrides = {}): ThemeConfig => ({
         phoneNumberFormattingRegionCode: 'ES',
     },
     texts: {
-        ...getTexts(overrides?.i18n?.locale ?? 'es-ES'),
         ...overrides.texts,
     },
 });
