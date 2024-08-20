@@ -176,7 +176,7 @@ test.each`
 `('PosterCard with $background, empty source and inverse=$inverse', async ({background, inverse}) => {
     await openStoryPage({
         id: 'components-cards-postercard--default',
-        args: {background, isEmptySource: true, inverse},
+        args: {background, emptySource: true, inverse},
     });
 
     const posterCard = await screen.findByTestId('poster-card');
