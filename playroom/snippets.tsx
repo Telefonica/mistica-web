@@ -2892,8 +2892,8 @@ const alertSnippets = [
       title: fruit,
       description: "Description",
       asset: (
-        <Circle backgroundColor={skinVars.colors.brandLow} size={40}>
-          <IconMobileDeviceRegular color={skinVars.colors.brand} />
+        <Circle backgroundColor={colors.brandLow} size={40}>
+          <IconMobileDeviceRegular color={colors.brand} />
         </Circle>
       ),
     }))}
@@ -3318,8 +3318,8 @@ const gridSnippets = [
   <GridItem>
     <SnapCard
       icon={
-        <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
-          <IconAcademicRegular color={skinVars.colors.brand} />
+        <Circle size={40} backgroundColor={colors.brandLow}>
+          <IconAcademicRegular color={colors.brand} />
         </Circle>
       }
       title="Title 1"
@@ -3329,8 +3329,8 @@ const gridSnippets = [
   <GridItem rowSpan={2}>
     <SnapCard
       icon={
-        <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
-          <IconAcademicRegular color={skinVars.colors.brand} />
+        <Circle size={40} backgroundColor={colors.brandLow}>
+          <IconAcademicRegular color={colors.brand} />
         </Circle>
       }
       title="Title 2"
@@ -3340,8 +3340,8 @@ const gridSnippets = [
   <GridItem>
     <SnapCard
       icon={
-        <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
-          <IconAcademicRegular color={skinVars.colors.brand} />
+        <Circle size={40} backgroundColor={colors.brandLow}>
+          <IconAcademicRegular color={colors.brand} />
         </Circle>
       }
       title="Title 3"
@@ -3351,8 +3351,8 @@ const gridSnippets = [
   <GridItem columnSpan={2}>
     <SnapCard
       icon={
-        <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
-          <IconAcademicRegular color={skinVars.colors.brand} />
+        <Circle size={40} backgroundColor={colors.brandLow}>
+          <IconAcademicRegular color={colors.brand} />
         </Circle>
       }
       title="Title 4"
@@ -3645,7 +3645,7 @@ const ratingSnippets: Array<Snippet> = [
             icon={{
               ActiveIcon: IconStarFilled,
               InactiveIcon: IconStarRegular,
-              color: skinVars.colors.warning,
+              color: colors.warning,
             }}
           />
         `,
@@ -3663,7 +3663,7 @@ const ratingSnippets: Array<Snippet> = [
             icon={{
               ActiveIcon: IconStarFilled,
               InactiveIcon: IconStarRegular,
-              color: skinVars.colors.controlActivated,
+              color: colors.controlActivated,
             }}
           />
         `,
@@ -3673,35 +3673,35 @@ const ratingSnippets: Array<Snippet> = [
         name: 'Rating qualitative',
         code: `
           <Rating
-            aria-label="info rating"
+            aria-label="qualitative rating"
             type="qualitative"
             size={32}
-            valueLabels={["muy malo", "malo", "regular", "bueno", "muy bueno"]}
+            valueLabels={["very bad", "bad", "regular", "good", "very good"]}
             icons={[
               {
                   ActiveIcon: IconFaceSadFilled,
                   InactiveIcon: IconFaceSadRegular,
-                  color: skinVars.colors.errorHigh,
+                  color: colors.errorHigh,
               },
               {
                   ActiveIcon: IconFaceSlightlySadFilled,
                   InactiveIcon: IconFaceSlightlySadRegular,
-                  color: skinVars.colors.error,
+                  color: colors.error,
               },
               {
                   ActiveIcon: IconFaceNeutralFilled,
                   InactiveIcon: IconFaceNeutralRegular,
-                  color: skinVars.colors.warning,
+                  color: colors.warning,
               },
               {
                   ActiveIcon: IconFaceHappyFilled,
                   InactiveIcon: IconFaceHappyRegular,
-                  color: skinVars.colors.success,
+                  color: colors.success,
               },
               {
                   ActiveIcon: IconFaceSuperHappyFilled,
                   InactiveIcon: IconFaceSuperHappyRegular,
-                  color: skinVars.colors.successHigh,
+                  color: colors.successHigh,
               },
             ]}
           />

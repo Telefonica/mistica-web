@@ -21,6 +21,7 @@ import IconFaceHappyFilled from './generated/mistica-icons/icon-face-happy-fille
 import IconFaceHappyRegular from './generated/mistica-icons/icon-face-happy-regular';
 import IconFaceSuperHappyFilled from './generated/mistica-icons/icon-face-super-happy-filled';
 import IconFaceSuperHappyRegular from './generated/mistica-icons/icon-face-super-happy-regular';
+import {useTheme} from './hooks';
 
 import type {ExclusifyUnion} from './utils/utility-types';
 import type {DataAttributes, IconProps} from './utils/types';
@@ -163,9 +164,19 @@ const InternalRating: React.FC<InternalRatingProps> = ({
     'aria-label': ariaLabel,
     'aria-labelledby': ariaLabelledBy,
 }) => {
-    // TODO: get translations
-    const defaultQualitativeLabels = ['muy malo', 'malo', 'regular', 'bueno', 'muy bueno'];
-    const defaultQuantitativeLabels = Array.from({length: count}, (_, index) => `${index + 1} de ${count}`);
+    const {texts} = useTheme();
+
+    const defaultQualitativeLabels = [
+        texts.ratingVeryBadLabel,
+        texts.ratingBadLabel,
+        texts.ratingRegularLabel,
+        texts.ratingGoodLabel,
+        texts.ratingVeryGoodLabel,
+    ];
+
+    const defaultQuantitativeLabels = Array.from({length: count}, (_, index) =>
+        texts.ratingQuantitativeLabel.replace('1$s', String(index + 1)).replace('2$s', String(count))
+    );
 
     const iconList = type === 'qualitative' ? icons : Array.from({length: count}, () => icon);
     const labelList =

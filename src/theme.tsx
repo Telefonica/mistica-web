@@ -69,6 +69,12 @@ const TEXTS_ES = {
     timerDisplayMinutesLabel: 'min',
     timerDisplaySecondsLabel: 'seg',
     tableActionsHeaderLabel: 'Acciones',
+    ratingVeryBadLabel: 'muy malo',
+    ratingBadLabel: 'malo',
+    ratingRegularLabel: 'regular',
+    ratingGoodLabel: 'bueno',
+    ratingVeryGoodLabel: 'muy bueno',
+    ratingQuantitativeLabel: '1$s de 2$s',
 };
 
 const TEXTS_EN: ThemeTexts = {
@@ -133,6 +139,12 @@ const TEXTS_EN: ThemeTexts = {
     timerDisplayMinutesLabel: 'min',
     timerDisplaySecondsLabel: 'sec',
     tableActionsHeaderLabel: 'Actions',
+    ratingVeryBadLabel: 'very bad',
+    ratingBadLabel: 'bad',
+    ratingRegularLabel: 'regular',
+    ratingGoodLabel: 'good',
+    ratingVeryGoodLabel: 'very good',
+    ratingQuantitativeLabel: '1$s out of 2%s',
 };
 
 const TEXTS_DE: ThemeTexts = {
@@ -197,6 +209,12 @@ const TEXTS_DE: ThemeTexts = {
     timerDisplayMinutesLabel: 'Min.',
     timerDisplaySecondsLabel: 'Sek.',
     tableActionsHeaderLabel: 'Aktionen',
+    ratingVeryBadLabel: 'sehr schlecht',
+    ratingBadLabel: 'schlecht',
+    ratingRegularLabel: 'regulär',
+    ratingGoodLabel: 'gut',
+    ratingVeryGoodLabel: 'sehr gut',
+    ratingQuantitativeLabel: '1$s von 2%s',
 };
 
 const TEXTS_PT: ThemeTexts = {
@@ -261,6 +279,12 @@ const TEXTS_PT: ThemeTexts = {
     timerDisplayMinutesLabel: 'min',
     timerDisplaySecondsLabel: 'seg',
     tableActionsHeaderLabel: 'Ações',
+    ratingVeryBadLabel: 'muito ruim',
+    ratingBadLabel: 'ruim',
+    ratingRegularLabel: 'regular',
+    ratingGoodLabel: 'bom',
+    ratingVeryGoodLabel: 'muito bom',
+    ratingQuantitativeLabel: '1$s de 2%s',
 };
 
 export const getTexts = (locale: Locale): typeof TEXTS_ES => {
