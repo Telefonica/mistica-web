@@ -3,7 +3,12 @@ import * as React from 'react';
 import {useForm, useFieldProps} from './form-context';
 import {useTheme} from './hooks';
 import {TextFieldBaseAutosuggest} from './text-field-base';
-import {expirationDatePlaceholder, formFieldErrorIsMandatory, translate} from './text-tokens';
+import {
+    expirationDatePlaceholder,
+    formCreditCardExpirationError,
+    formFieldErrorIsMandatory,
+    translate,
+} from './text-tokens';
 
 import type {CommonFormFieldProps} from './text-field-base';
 
@@ -125,16 +130,16 @@ const CreditCardExpirationField: React.FC<CreditCardExpirationFieldProps> = ({
         }
         const {month, year} = value;
         if (!month || !year) {
-            return texts.formCreditCardExpirationError || translate(formFieldErrorIsMandatory, locale);
+            return texts.formCreditCardExpirationError || translate(formCreditCardExpirationError, locale);
         }
         const currentDate = new Date();
         const currentMonth = currentDate.getMonth() + 1;
         const currentYear = currentDate.getFullYear();
         if (year < currentYear) {
-            return texts.formCreditCardExpirationError || translate(formFieldErrorIsMandatory, locale);
+            return texts.formCreditCardExpirationError || translate(formCreditCardExpirationError, locale);
         }
         if (year === currentYear && month < currentMonth) {
-            return texts.formCreditCardExpirationError || translate(formFieldErrorIsMandatory, locale);
+            return texts.formCreditCardExpirationError || translate(formCreditCardExpirationError, locale);
         }
         return validateProp?.(value, rawValue);
     };
