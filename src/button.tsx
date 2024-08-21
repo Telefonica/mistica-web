@@ -263,7 +263,6 @@ interface CommonProps {
 export interface ToButtonProps extends CommonProps {
     to: string | Location;
     newTab?: boolean;
-    fullPageOnWebView?: boolean;
     onNavigate?: () => void | Promise<void>;
 }
 export interface OnPressButtonProps extends CommonProps {
@@ -415,7 +414,6 @@ const Button = React.forwardRef<TouchableElement, ButtonProps & {type: ButtonTyp
                 {...commonProps}
                 to={props.to}
                 newTab={props.newTab}
-                fullPageOnWebView={props.fullPageOnWebView}
                 onNavigate={props.onNavigate}
             />
         );
@@ -483,7 +481,6 @@ interface ButtonLinkHrefProps extends ButtonLinkCommonProps {
 interface ButtonLinkToProps extends ButtonLinkCommonProps {
     to: string;
     newTab?: boolean;
-    fullPageOnWebView?: boolean;
     onPress?: undefined;
     href?: undefined;
     onNavigate?: () => void | Promise<void>;
@@ -614,7 +611,6 @@ const BaseButtonLink = React.forwardRef<
                 {...commonProps}
                 to={props.to}
                 newTab={props.newTab}
-                fullPageOnWebView={props.fullPageOnWebView}
                 onNavigate={props.onNavigate}
             />
         );

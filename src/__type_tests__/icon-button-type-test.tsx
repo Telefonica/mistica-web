@@ -60,12 +60,6 @@ import {Icon2GRegular, IconButton} from '..';
 // @ts-expect-error - onPress doesn't support newTab
 <IconButton Icon={Icon2GRegular} aria-label="something" onPress={() => {}} newTab />;
 
-<IconButton Icon={Icon2GRegular} aria-label="something" to="/somewhere" fullPageOnWebView />;
-// @ts-expect-error - href doesn't support fullPageOnWebView
-<IconButton Icon={Icon2GRegular} aria-label="something" href="/somewhere" fullPageOnWebView />;
-// @ts-expect-error - onPress doesn't support fullPageOnWebView
-<IconButton Icon={Icon2GRegular} aria-label="something" onPress={() => {}} fullPageOnWebView />;
-
 <IconButton Icon={Icon2GRegular} aria-label="something" to="/somewhere" replace />;
 // @ts-expect-error - href doesn't support replace
 <IconButton Icon={Icon2GRegular} aria-label="something" href="/somewhere" replace />;

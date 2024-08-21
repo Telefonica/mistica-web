@@ -2,12 +2,10 @@
 import * as React from 'react';
 import Box from './box';
 import Stack from './stack';
-import {useIsInverseVariant} from './theme-variant-context';
 import ResponsiveLayout from './responsive-layout';
 import GridLayout from './grid-layout';
 import {useSetOverscrollColor} from './overscroll-color-context';
-import {Text8, Text7, Text6, Text3, Text2} from './text';
-import ButtonGroup from './button-group';
+import {Text7, Text6, Text3, Text2} from './text';
 import {vars} from './skins/skin-contract.css';
 import * as styles from './header.css';
 import {getPrefixedDataAttributes} from './utils/dom';
@@ -35,29 +33,6 @@ type HeaderProps = {
     description?: string;
     small?: boolean;
     dataAttributes?: DataAttributes;
-    /**
-     * @deprecated This field is deprecated, please use the extra slot in the HeaderLayout component instead.
-     */
-    preamount?: RichText;
-    /**
-     * @deprecated This field is deprecated, please use the extra slot in the HeaderLayout component instead.
-     */
-    amount?: string;
-    /**
-     * @deprecated This field is deprecated, please use the extra slot in the HeaderLayout component instead.
-     */
-    button?: RendersNullableElement<typeof ButtonPrimary>;
-    /**
-     * @deprecated This field is deprecated, please use the extra slot in the HeaderLayout component instead.
-     */
-    secondaryButton?: RendersNullableElement<typeof ButtonSecondary>;
-    /**
-     * @deprecated This field is deprecated, please use the extra slot in the HeaderLayout component instead.
-     */
-    subtitle?: RichText;
-    /**
-     * @deprecated This field is deprecated, please use the extra slot in the HeaderLayout component instead.
-     */
     isErrorAmount?: boolean;
 };
 
@@ -70,15 +45,7 @@ export const Header: React.FC<HeaderProps> = ({
     description,
     dataAttributes,
     small = false,
-    preamount,
-    amount,
-    button,
-    subtitle,
-    isErrorAmount,
-    secondaryButton,
 }) => {
-    const isInverse = useIsInverseVariant();
-
     const renderRichText = (richText: RichText, baseProps: Omit<TextPresetProps, 'children'>) => {
         if (typeof richText === 'string') {
             return (
@@ -121,28 +88,6 @@ export const Header: React.FC<HeaderProps> = ({
                             ))}
                     </Stack>
                 </Box>
-            )}
-            {(preamount || amount || button || subtitle) && (
-                <Stack space={16}>
-                    {(preamount || amount) && (
-                        <Stack space={8}>
-                            {preamount && renderRichText(preamount, {color: vars.colors.textPrimary})}
-                            <Text8
-                                color={
-                                    isErrorAmount && !isInverse
-                                        ? vars.colors.highlight
-                                        : vars.colors.textPrimary
-                                }
-                            >
-                                {amount}
-                            </Text8>
-                        </Stack>
-                    )}
-                    {(button || secondaryButton) && (
-                        <ButtonGroup primaryButton={button} secondaryButton={secondaryButton} />
-                    )}
-                    {subtitle && renderRichText(subtitle, {})}
-                </Stack>
             )}
         </Stack>
     );

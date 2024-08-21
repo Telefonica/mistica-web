@@ -173,10 +173,6 @@ type FeedbackButtonsProps = ButtonGroupProps;
 interface FeedbackProps extends FeedbackButtonsProps {
     title: string;
     description?: string | ReadonlyArray<string>;
-    /**
-     * @deprecated This field is deprecated, please use extra instead.
-     */
-    children?: React.ReactNode;
     extra?: React.ReactNode;
     unstable_inlineInDesktop?: boolean;
     dataAttributes?: DataAttributes;
@@ -197,7 +193,6 @@ interface FeedbackScreenProps extends AssetFeedbackProps {
 export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
     title,
     description,
-    children,
     extra,
     primaryButton,
     secondaryButton,
@@ -218,7 +213,7 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
     const hasButtons = checkHasButtons({primaryButton, secondaryButton, link});
 
     const feedbackBody = renderFeedbackBody(
-        {icon, title, description, extra: extra ?? children},
+        {icon, title, description, extra},
         animateText && areAnimationsSupported(platformOverrides)
     );
 
@@ -311,7 +306,6 @@ interface ErrorFeedbackScreenProps extends Omit<FeedbackProps, 'extra'> {
 }
 
 export const ErrorFeedbackScreen: React.FC<ErrorFeedbackScreenProps> = ({
-    children,
     errorReference,
     dataAttributes,
     ...otherProps
@@ -325,7 +319,6 @@ export const ErrorFeedbackScreen: React.FC<ErrorFeedbackScreenProps> = ({
             dataAttributes={{'component-name': 'ErrorFeedbackScreen', ...dataAttributes}}
             extra={
                 <Stack space={16}>
-                    {children}
                     {errorReference && (
                         <Text2 color={vars.colors.textSecondary} regular>
                             {errorReference}
@@ -358,7 +351,6 @@ export const InfoFeedbackScreen: React.FC<InfoFeedbackScreenProps> = ({
 export const SuccessFeedback: React.FC<AssetFeedbackProps> = ({
     title,
     description,
-    children,
     extra,
     primaryButton,
     secondaryButton,
@@ -379,7 +371,7 @@ export const SuccessFeedback: React.FC<AssetFeedbackProps> = ({
             <IconSuccess size="100%" />
         );
     const feedbackBody = renderFeedbackBody(
-        {icon, title, description, extra: extra ?? children},
+        {icon, title, description, extra},
         areAnimationsSupported(platformOverrides)
     );
     const inlineFeedbackBody = renderInlineFeedbackBody(feedbackBody, {

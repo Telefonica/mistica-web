@@ -123,46 +123,6 @@ test('<Link> element is rendered when "to" prop is passed with multiple tracking
     expect(screen.getByText('Target route')).toBeInTheDocument();
 });
 
-test('<a> element is rendered when "fullPageOnWebView" and "to" props are passed, inside App', () => {
-    const href = 'href';
-
-    render(
-        <ThemeContextProvider theme={makeTheme({platformOverrides: {insideNovumNativeApp: true}})}>
-            <Touchable to={href} fullPageOnWebView>
-                Test
-            </Touchable>
-        </ThemeContextProvider>
-    );
-
-    const anchor = screen.getByRole('link', {name: 'Test'});
-    expect(anchor).toHaveAttribute('href', href);
-});
-
-test('<Link> element is rendered when "fullPageOnWebView" and "to" props are passed, outside App', () => {
-    const href = 'href';
-
-    render(
-        <ThemeContextProvider theme={makeTheme({platformOverrides: {insideNovumNativeApp: false}, Link})}>
-            <MemoryRouter initialEntries={['/']} initialIndex={0}>
-                <Routes>
-                    <Route
-                        path="/"
-                        element={
-                            <Touchable to={href} fullPageOnWebView>
-                                Test
-                            </Touchable>
-                        }
-                    />
-                </Routes>
-            </MemoryRouter>
-        </ThemeContextProvider>
-    );
-
-    const anchor = screen.getByRole('link', {name: 'Test'});
-
-    expect(anchor).toHaveAttribute('href', `/${href}`);
-});
-
 test('<a> element is rendered when "href" prop is passed', () => {
     const href = 'href';
     render(
@@ -387,11 +347,11 @@ test('"to" paths are not decorated', () => {
     expect(anchor).toHaveAttribute('href', '/foo/bar/?param=123#hash');
 });
 
-test('"to" paths with "fullPageOnWebView" are not decorated', () => {
+test('"to" paths with "newTab" are not decorated', () => {
     const to = '/foo/bar/?param=123#hash';
     render(
         <ThemeContextProvider theme={makeTheme({useHrefDecorator})}>
-            <Touchable to={to} fullPageOnWebView>
+            <Touchable to={to} newTab>
                 Test
             </Touchable>
         </ThemeContextProvider>

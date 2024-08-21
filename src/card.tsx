@@ -65,7 +65,6 @@ type IconButtonAction = BaseIconButtonAction &
         | {
               to: string;
               newTab?: boolean;
-              fullPageOnWebView?: boolean;
               replace?: boolean;
           }
         | {onPress: () => void}
@@ -497,7 +496,6 @@ type TouchableProps = {
     | {
           to: string | undefined;
           newTab?: boolean;
-          fullPageOnWebView?: boolean;
           replace?: boolean;
           onNavigate?: () => void | Promise<void>;
       }
@@ -1461,8 +1459,6 @@ export const DisplayDataCard = React.forwardRef<HTMLDivElement, DisplayDataCardP
 );
 
 interface PosterCardBaseProps {
-    /** @deprecated use aria-label */
-    ariaLabel?: string;
     'aria-label'?: string;
     aspectRatio?: AspectRatio | number;
     width?: number | string;
@@ -1521,8 +1517,7 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
             width,
             height,
             aspectRatio = '7:10',
-            ariaLabel: deprecatedAriaLabel,
-            ['aria-label']: ariaLabelProp = deprecatedAriaLabel,
+            'aria-label': ariaLabelProp,
             actions,
             onClose,
             closeButtonLabel,
