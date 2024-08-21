@@ -8,9 +8,9 @@ import * as styles from './text-field-components.css';
 import {sprinkles} from './sprinkles.css';
 import {vars} from './skins/skin-contract.css';
 import {getPrefixedDataAttributes} from './utils/dom';
+import {formFieldOptionalLabelSuffix, translate} from './text-tokens';
 
 import type {DataAttributes} from './utils/types';
-import {formFieldOptionalLabelSuffix, translate} from './text-tokens';
 
 export type InputState = 'focused' | 'filled' | 'default';
 

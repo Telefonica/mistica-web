@@ -404,8 +404,8 @@ const ModalDialog = (props: ModalDialogProps): JSX.Element => {
                                     <InternalIconButton
                                         onPress={dismiss}
                                         aria-label={
-                                            props.closeButtonLabel ??
-                                            texts.modalClose ??
+                                            props.closeButtonLabel ||
+                                            texts.modalClose ||
                                             translate(modalClose, locale)
                                         }
                                         bleedLeft
