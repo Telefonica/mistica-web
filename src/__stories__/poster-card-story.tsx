@@ -77,15 +77,15 @@ export const Default: StoryComponent<PosterCardArgs> = ({
     isEmptySource,
     inverse,
 }) => {
-    let icon;
+    let assetElement;
     if (asset === 'circle with icon') {
-        icon = (
+        assetElement = (
             <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
                 <IconInvoicePlanFileRegular color={skinVars.colors.brand} />
             </Circle>
         );
     } else if (asset === 'circle with image') {
-        icon = <Circle size={40} backgroundImage={avatarImg} />;
+        assetElement = <Circle size={40} backgroundImage={avatarImg} />;
     }
 
     const topActionsProps = {
@@ -141,7 +141,7 @@ export const Default: StoryComponent<PosterCardArgs> = ({
                 <PosterCard
                     dataAttributes={{testid: 'poster-card'}}
                     {...backgroundProps}
-                    icon={icon}
+                    asset={assetElement}
                     headline={headline ? <Tag type={headlineType}>{headline}</Tag> : undefined}
                     pretitle={pretitle}
                     title={title}

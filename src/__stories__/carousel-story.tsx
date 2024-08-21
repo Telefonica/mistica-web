@@ -62,7 +62,7 @@ export const Default: StoryComponent<Args> = ({
                 <Stack space={16}>
                     <Callout
                         description="Arrow controls disappear in touch devices"
-                        icon={<IconInformationRegular />}
+                        asset={<IconInformationRegular />}
                     />
                     <Carousel
                         dataAttributes={{testid: 'carousel-story'}}

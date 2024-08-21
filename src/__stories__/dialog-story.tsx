@@ -120,7 +120,7 @@ export const Dialog: StoryComponent<DialogArgs> = ({
                                 </Stack>
                             ) : undefined,
                             link: link ? <ButtonLink href="https://google.com">Link</ButtonLink> : undefined,
-                            icon: icon ? (
+                            asset: icon ? (
                                 <IconInformationUserLight color={skinVars.colors.brand} />
                             ) : undefined,
                             onAccept: onAccept ? () => console.log('Accepted') : undefined,

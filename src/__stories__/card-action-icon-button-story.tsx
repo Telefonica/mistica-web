@@ -66,7 +66,7 @@ export const Default: StoryComponent = () => {
                     <MyCustomCardActionComponent key="2" />,
                     <MyCustomCardActionToggleComponent key="3" />,
                 ]}
-                icon={
+                asset={
                     <Circle backgroundColor={skinVars.colors.brandLow} size={40}>
                         <IconShopRegular color={skinVars.colors.brand} />
                     </Circle>

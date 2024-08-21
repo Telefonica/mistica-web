@@ -60,7 +60,12 @@ const useHapticFeedback = (type?: HapticFeedback) => {
 };
 
 const renderFeedbackBody = (
-    {icon, title, description, extra}: Pick<FeedbackScreenProps, 'icon' | 'title' | 'description' | 'extra'>,
+    {
+        asset,
+        title,
+        description,
+        extra,
+    }: Pick<FeedbackScreenProps, 'asset' | 'title' | 'description' | 'extra'>,
     animateText: boolean
 ) => {
     const normalizedDescription =
@@ -75,7 +80,7 @@ const renderFeedbackBody = (
         );
     return (
         <Stack space={24}>
-            <div className={styles.iconContainer}>{icon}</div>
+            <div className={styles.assetContainer}>{asset}</div>
             <Stack space={16} className={classnames(styles.feedbackData)}>
                 <div className={classnames(animateText && styles.feedbackTextAppearFast)}>
                     <Text6 as="h1">{title}</Text6>
@@ -189,7 +194,7 @@ interface AssetFeedbackProps extends FeedbackProps {
 
 interface FeedbackScreenProps extends AssetFeedbackProps {
     hapticFeedback?: HapticFeedback;
-    icon?: React.ReactNode;
+    asset?: React.ReactNode;
     animateText?: boolean;
     isInverse?: boolean;
 }
@@ -203,7 +208,7 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
     secondaryButton,
     link,
     hapticFeedback,
-    icon,
+    asset,
     animateText = false,
     isInverse = false,
     unstable_inlineInDesktop,
@@ -218,7 +223,7 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
     const hasButtons = checkHasButtons({primaryButton, secondaryButton, link});
 
     const feedbackBody = renderFeedbackBody(
-        {icon, title, description, extra: extra ?? children},
+        {asset, title, description, extra: extra ?? children},
         animateText && areAnimationsSupported(platformOverrides)
     );
 
@@ -289,7 +294,7 @@ export const SuccessFeedbackScreen: React.FC<AssetFeedbackProps> = ({dataAttribu
             {...props}
             isInverse={!props.unstable_inlineInDesktop || isTabletOrSmaller}
             hapticFeedback="success"
-            icon={
+            asset={
                 skinName === VIVO_SKIN ? (
                     <IconSuccessVivo size="100%" />
                 ) : skinName === VIVO_NEW_SKIN ? (
@@ -320,7 +325,7 @@ export const ErrorFeedbackScreen: React.FC<ErrorFeedbackScreenProps> = ({
         <FeedbackScreen
             {...otherProps}
             hapticFeedback="error"
-            icon={<IconError size="100%" />}
+            asset={<IconError size="100%" />}
             animateText
             dataAttributes={{'component-name': 'ErrorFeedbackScreen', ...dataAttributes}}
             extra={
@@ -349,7 +354,7 @@ export const InfoFeedbackScreen: React.FC<InfoFeedbackScreenProps> = ({
     return (
         <FeedbackScreen
             dataAttributes={{'component-name': 'InfoFeedbackScreen', ...dataAttributes}}
-            icon={<Icon size="100%" />}
+            asset={<Icon size="100%" />}
             {...props}
         />
     );
@@ -370,7 +375,7 @@ export const SuccessFeedback: React.FC<AssetFeedbackProps> = ({
     useHapticFeedback('success');
     const {skinName, platformOverrides} = useTheme();
 
-    const icon =
+    const asset =
         skinName === VIVO_SKIN ? (
             <IconSuccessVivo size="100%" />
         ) : skinName === VIVO_NEW_SKIN ? (
@@ -379,7 +384,7 @@ export const SuccessFeedback: React.FC<AssetFeedbackProps> = ({
             <IconSuccess size="100%" />
         );
     const feedbackBody = renderFeedbackBody(
-        {icon, title, description, extra: extra ?? children},
+        {asset, title, description, extra: extra ?? children},
         areAnimationsSupported(platformOverrides)
     );
     const inlineFeedbackBody = renderInlineFeedbackBody(feedbackBody, {

@@ -73,7 +73,7 @@ export const Default: StoryComponent<Args> = ({
 
     return (
         <SnapCard
-            icon={assetToIcon[asset]}
+            asset={assetToIcon[asset]}
             title={title}
             subtitle={subtitle}
             description={description}
@@ -133,7 +133,7 @@ export const Group: StoryComponent = () => {
                             <SnapCard
                                 title="Title 1"
                                 subtitle="Subtitle"
-                                icon={
+                                asset={
                                     <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
                                         <IconMobileDeviceRegular color={skinVars.colors.brand} />
                                     </Circle>
@@ -141,7 +141,7 @@ export const Group: StoryComponent = () => {
                             />,
                             <SnapCard
                                 title="Title 2"
-                                icon={
+                                asset={
                                     <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
                                         <IconMobileDeviceRegular color={skinVars.colors.brand} />
                                     </Circle>

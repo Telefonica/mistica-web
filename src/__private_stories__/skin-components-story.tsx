@@ -160,7 +160,7 @@ export const Default: StoryComponent<Args> = ({variant}) => {
 
                         {/** Callout */}
                         <Callout
-                            icon={<IconBoxLight />}
+                            asset={<IconBoxLight />}
                             onClose={() => {}}
                             title="Title"
                             description="Description"

@@ -32,7 +32,7 @@ export const Default: StoryComponent<Args> = ({numItems, autoplay, loop, withBul
                 <Stack space={16}>
                     <Callout
                         description="Arrow controls disappear in touch devices."
-                        icon={<IconInformationRegular />}
+                        asset={<IconInformationRegular />}
                     />
                     <Slideshow
                         withBullets={withBullets}

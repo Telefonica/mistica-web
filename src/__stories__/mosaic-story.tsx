@@ -54,7 +54,7 @@ export const HorizontalMosaicStory: StoryComponent<HorizontalMosaicProps> = ({it
                 <Stack space={16}>
                     <Callout
                         description="Arrow controls disappear in touch devices"
-                        icon={<IconInformationRegular />}
+                        asset={<IconInformationRegular />}
                     />
                     <HorizontalMosaic
                         items={Array.from({length: items}, (_, index) => renderItem(index + 1))}
