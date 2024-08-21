@@ -28,6 +28,7 @@ import Box from './box';
 import {isRunningAcceptanceTest} from './utils/platform';
 import {backNavigationBar, closeNavigationMenu, openNavigationMenu, translate} from './text-tokens';
 
+import type {Variant} from './theme-variant-context';
 import type {TouchableProps} from './touchable';
 import type {DataAttributes, HeadingType} from './utils/types';
 
@@ -49,6 +50,8 @@ const BURGER_MENU_ANIMATION_DURATION_MS = 300;
 type HeaderProps = {
     children: React.ReactNode;
     topFixed?: boolean;
+    variant?: Variant;
+    /** @deprecated Use variant instead */
     isInverse?: boolean;
     withBorder?: boolean;
     isMenuOpen?: boolean;
@@ -56,22 +59,38 @@ type HeaderProps = {
     isBottomRow?: boolean;
 };
 
-const Header = ({children, topFixed, withBorder, isMenuOpen, isInverse, dataAttributes}: HeaderProps) => {
+const Header = ({
+    children,
+    topFixed,
+    withBorder,
+    isMenuOpen,
+    variant,
+    isInverse,
+    dataAttributes,
+}: HeaderProps) => {
     const {isDarkMode} = useTheme();
 
+    const headerVariant = variant ?? (isInverse ? 'inverse' : 'default');
+
     const getBorderClass = () => {
-        const inverse = isInverse && !isDarkMode;
+        const inverse = headerVariant === 'inverse' && !isDarkMode;
         if (inverse || !withBorder) return styles.navbarBorderColorVariants.noBorder;
         if (isMenuOpen) return styles.navbarBorderColorVariants.menuOpen;
 
         return styles.navbarBorderColorVariants.default;
     };
 
+    const backgroundColor: {[key in Variant]: string} = {
+        default: vars.colors.background,
+        inverse: vars.colors.navigationBarBackground,
+        alternative: vars.colors.backgroundAlternative,
+    };
+
     return (
         <header
             className={classnames(getBorderClass(), {[styles.topFixed]: topFixed})}
             style={{
-                background: isInverse ? vars.colors.navigationBarBackground : vars.colors.background,
+                background: backgroundColor[headerVariant],
             }}
             {...getPrefixedDataAttributes(dataAttributes)}
         >
@@ -109,6 +128,8 @@ type MainNavigationBarPropsBase = {
     selectedIndex?: number;
     right?: React.ReactElement;
     logo?: React.ReactElement;
+    variant?: Variant;
+    /** @deprecated Use variant instead */
     isInverse?: boolean;
     children?: undefined;
     topFixed?: boolean;
@@ -125,6 +146,7 @@ export const MainNavigationBar: React.FC<MainNavigationBarProps> = ({
     sections = [],
     selectedIndex,
     right,
+    variant,
     isInverse = false,
     topFixed = true,
     withBorder = true,
@@ -157,10 +179,13 @@ export const MainNavigationBar: React.FC<MainNavigationBarProps> = ({
                             className={classnames(
                                 styles.section,
                                 {
-                                    [styles.selectedSectionVariantes[isInverse ? 'inverse' : 'default']]:
-                                        idx === selectedIndex,
+                                    [styles.selectedSectionVariantes[
+                                        variant === 'inverse' || isInverse ? 'inverse' : 'default'
+                                    ]]: idx === selectedIndex,
                                 },
-                                styles.textWrapperVariants[isInverse ? 'inverse' : 'default']
+                                styles.textWrapperVariants[
+                                    variant === 'inverse' || isInverse ? 'inverse' : 'default'
+                                ]
                             )}
                         >
                             <Text3 regular color="inherit">
@@ -190,11 +215,12 @@ export const MainNavigationBar: React.FC<MainNavigationBarProps> = ({
     const showBurger = sections.length > 1;
 
     const mainNavBar = (
-        <ThemeVariant isInverse={isInverse}>
+        <ThemeVariant variant={variant} isInverse={isInverse}>
             <Header
                 topFixed={topFixed}
                 withBorder={withBorder}
                 isMenuOpen={isMenuOpen}
+                variant={variant}
                 isInverse={isInverse}
                 dataAttributes={{'component-name': 'MainNavigationBar'}}
             >
@@ -309,7 +335,9 @@ export const MainNavigationBar: React.FC<MainNavigationBarProps> = ({
 };
 
 interface NavigationBarCommonProps {
+    /** @deprecated Use variant instead */
     isInverse?: boolean;
+    variant?: Variant;
     onBack?: () => void;
     title?: string;
     titleAs?: HeadingType;
@@ -335,6 +363,7 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
     title,
     titleAs,
     right,
+    variant,
     isInverse = false,
     topFixed = true,
     paddingX = 0,
@@ -363,10 +392,11 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
         </NavigationBarContentContainer>
     );
     return (
-        <ThemeVariant isInverse={isInverse}>
+        <ThemeVariant variant={variant} isInverse={isInverse}>
             <Header
                 topFixed={topFixed}
                 withBorder={withBorder}
+                variant={variant}
                 isInverse={isInverse}
                 dataAttributes={{'component-name': 'NavigationBar'}}
             >
@@ -391,6 +421,8 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
 };
 
 type FunnelNavigationBarProps = {
+    variant?: Variant;
+    /** @deprecated Use variant instead */
     isInverse?: boolean;
     logo?: React.ReactElement;
     right?: React.ReactElement;
@@ -402,6 +434,7 @@ type FunnelNavigationBarProps = {
 export const FunnelNavigationBar: React.FC<FunnelNavigationBarProps> = ({
     logo,
     right,
+    variant,
     isInverse = false,
     topFixed = true,
     withBorder = true,
@@ -409,10 +442,11 @@ export const FunnelNavigationBar: React.FC<FunnelNavigationBarProps> = ({
     logo = logo ?? <Logo size={{mobile: 40, desktop: 48}} />;
 
     return (
-        <ThemeVariant isInverse={isInverse}>
+        <ThemeVariant variant={variant} isInverse={isInverse}>
             <Header
                 topFixed={topFixed}
                 withBorder={withBorder}
+                variant={variant}
                 isInverse={isInverse}
                 dataAttributes={{'component-name': 'FunnelNavigationBar'}}
             >

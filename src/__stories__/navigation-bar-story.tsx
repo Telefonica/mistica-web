@@ -7,6 +7,8 @@ import {
     IconSearchRegular,
 } from '..';
 
+import type {Variant} from '../theme-variant-context';
+
 export default {
     title: 'Components/Navigation bars/NavigationBar',
     component: NavigationBar,
@@ -15,14 +17,14 @@ export default {
     },
 };
 
-type Args = {isInverse: boolean; withBorder: boolean};
+type Args = {variant: Variant; withBorder: boolean};
 
-export const Default: StoryComponent<Args> = ({isInverse, withBorder}) => {
+export const Default: StoryComponent<Args> = ({variant, withBorder}) => {
     const {isDesktopOrBigger} = useScreenSize();
     return (
         <NavigationBar
             withBorder={withBorder}
-            isInverse={isInverse}
+            variant={variant}
             onBack={() => {}}
             title="Settings"
             right={
@@ -40,6 +42,13 @@ export const Default: StoryComponent<Args> = ({isInverse, withBorder}) => {
 Default.storyName = 'NavigationBar';
 
 Default.args = {
-    isInverse: false,
+    variant: 'default',
     withBorder: true,
+};
+
+Default.argTypes = {
+    variant: {
+        options: ['default', 'inverse', 'alternative'],
+        control: {type: 'select'},
+    },
 };

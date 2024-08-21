@@ -70,7 +70,7 @@ const Inline: React.FC<Props> = ({
                 styles.inline,
                 sprinkles({alignItems}),
                 wrap ? styles.wrap : fullWidth ? styles.fullWidth : styles.noFullWidth,
-                isStringSpace ? styles.stringSpace : styles.marginInline
+                isStringSpace ? (wrap ? styles.stringSpaceWithWrap : styles.stringSpace) : styles.marginInline
             )}
             style={applyCssVars(calcInlineVars(space))}
             role={role}
