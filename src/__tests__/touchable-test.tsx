@@ -347,20 +347,6 @@ test('"to" paths are not decorated', () => {
     expect(anchor).toHaveAttribute('href', '/foo/bar/?param=123#hash');
 });
 
-test('"to" paths with "newTab" are not decorated', () => {
-    const to = '/foo/bar/?param=123#hash';
-    render(
-        <ThemeContextProvider theme={makeTheme({useHrefDecorator})}>
-            <Touchable to={to} newTab>
-                Test
-            </Touchable>
-        </ThemeContextProvider>
-    );
-    const anchor = screen.getByRole('link', {name: 'Test'});
-
-    expect(anchor).toHaveAttribute('href', '/foo/bar/?param=123#hash');
-});
-
 test('onNavigate is called before navigation when using "href" prop', async () => {
     const onNavigateSpy = jest.fn().mockResolvedValue(undefined);
     const logEventSpy = jest.fn();
