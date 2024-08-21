@@ -41,6 +41,7 @@ import {
     Title1,
     Title2,
     Title3,
+    Title4,
     IconButton,
     Hero,
     Table,
@@ -54,7 +55,6 @@ import {
 import {InternalIconButton} from '../icon-button';
 import avatarImg from '../__stories__/images/avatar.jpg';
 import usingVrImg from '../__stories__/images/using-vr.jpg';
-import {Title4} from '../title';
 
 export default {
     title: 'Private/Components in different skins',
