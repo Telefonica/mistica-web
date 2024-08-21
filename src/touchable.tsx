@@ -8,11 +8,11 @@ import {isInsideNovumNativeApp} from './utils/platform';
 import {ENTER, SPACE} from './utils/keys';
 import {getPrefixedDataAttributes} from './utils/dom';
 import {redirect} from './utils/browser';
+import {linkOpensInCurrentPage, linkOpensInNewTab, translate} from './text-tokens';
 
 import type {ExclusifyUnion} from './utils/utility-types';
 import type {DataAttributes, TrackingEvent} from './utils/types';
 import type {Location} from 'history';
-import {linkOpensInCurrentPage, linkOpensInNewTab, translate} from './text-tokens';
 
 export type PressHandler = (event: React.MouseEvent<HTMLElement>) => void | undefined | Promise<void>;
 
