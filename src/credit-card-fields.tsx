@@ -13,7 +13,7 @@ import {
     formCreditCardExpirationLabel,
     formCreditCardNumberLabel,
     translate,
-} from './tokens';
+} from './text-tokens';
 
 import type {CardOptions} from './utils/credit-card';
 
@@ -43,20 +43,20 @@ const CreditCardFields: React.FC<CreditCardFieldsProps> = ({
             <CreditCardNumberField
                 acceptedCards={acceptedCards}
                 name={numberFieldName}
-                label={texts.formCreditCardNumberLabel ?? translate(formCreditCardNumberLabel, locale)}
+                label={texts.formCreditCardNumberLabel || translate(formCreditCardNumberLabel, locale)}
             />
             <DoubleField layout="60/40">
                 <CreditCardExpirationField
                     name={expirationFieldName}
                     label={
-                        texts.formCreditCardExpirationLabel ??
+                        texts.formCreditCardExpirationLabel ||
                         translate(formCreditCardExpirationLabel, locale)
                     }
                 />
                 <CvvField
                     acceptedCards={acceptedCards}
                     name={cvvFieldName}
-                    label={texts.formCreditCardCvvLabel ?? translate(formCreditCardCvvLabel, locale)}
+                    label={texts.formCreditCardCvvLabel || translate(formCreditCardCvvLabel, locale)}
                     maxLength={cvvLength}
                 />
             </DoubleField>

@@ -4,7 +4,7 @@ import type {RegionCode} from './utils/region-code';
 import type {Locale} from './utils/locale';
 import type {Colors, Skin, SkinName, TextPresetsConfig} from './skins/types';
 import type {TrackingEvent} from './utils/types';
-import type {TextTokens} from './tokens';
+import type {TextTokens} from './text-tokens';
 
 export const NAVBAR_HEIGHT_MOBILE = 56;
 export const NAVBAR_HEIGHT_DESKTOP = 80;

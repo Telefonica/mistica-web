@@ -10,6 +10,7 @@ import {isFirefox} from './utils/platform';
 import {useTheme} from './hooks';
 import * as dateStyles from './date-field.css';
 import {iconSize} from './icon-button.css';
+import {formDateOutOfRangeError, translate} from './text-tokens';
 
 import type {CommonFormFieldProps} from './text-field-base';
 
@@ -53,7 +54,10 @@ const FormDateField: React.FC<DateFieldProps> = ({
         return isInputTypeSupported('datetime-local');
     }, []);
     const processValue = (value: string) => (hasNativePicker ? value : value.replace(/\s/, 'T'));
-    const {texts} = useTheme();
+    const {
+        texts,
+        i18n: {locale},
+    } = useTheme();
 
     const isInRange = (value: string): boolean => {
         const isoValue = processValue(value);
@@ -68,7 +72,7 @@ const FormDateField: React.FC<DateFieldProps> = ({
 
     const validate = (value: string, rawValue: string) => {
         if (!isInRange(value)) {
-            return texts.formDateOutOfRangeError;
+            return texts.formDateOutOfRangeError || translate(formDateOutOfRangeError, locale);
         }
         return validateProp?.(value, rawValue);
     };

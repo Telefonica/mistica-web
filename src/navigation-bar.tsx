@@ -26,6 +26,7 @@ import {getPrefixedDataAttributes} from './utils/dom';
 import Stack from './stack';
 import Box from './box';
 import {isRunningAcceptanceTest} from './utils/platform';
+import {backNavigationBar, closeNavigationMenu, openNavigationMenu, translate} from './text-tokens';
 
 import type {TouchableProps} from './touchable';
 import type {DataAttributes, HeadingType} from './utils/types';
@@ -131,7 +132,11 @@ export const MainNavigationBar: React.FC<MainNavigationBarProps> = ({
     logo,
     large = false,
 }) => {
-    const {texts, isDarkMode} = useTheme();
+    const {
+        texts,
+        isDarkMode,
+        i18n: {locale},
+    } = useTheme();
     const [isMenuOpen, setIsMenuOpen] = React.useState(false);
     const [menuTransitionState, setMenuTransitionState] = React.useState<MenuTransitionState>('closed');
     const menuId = useAriaId();
@@ -201,7 +206,11 @@ export const MainNavigationBar: React.FC<MainNavigationBarProps> = ({
                                     className={styles.burgerMenuButton}
                                     aria-live="polite"
                                     aria-label={
-                                        isMenuOpen ? texts.closeNavigationMenu : texts.openNavigationMenu
+                                        isMenuOpen
+                                            ? texts.closeNavigationMenu ||
+                                              translate(closeNavigationMenu, locale)
+                                            : texts.openNavigationMenu ||
+                                              translate(openNavigationMenu, locale)
                                     }
                                     aria-expanded={isMenuOpen}
                                     aria-controls={menuId}
@@ -331,13 +340,16 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
     paddingX = 0,
     withBorder = true,
 }) => {
-    const {texts} = useTheme();
+    const {
+        texts,
+        i18n: {locale},
+    } = useTheme();
     const content = (
         <NavigationBarContentContainer right={right}>
             <Inline space={24} alignItems="center">
                 {onBack && (
                     <IconButton
-                        aria-label={texts.backNavigationBar}
+                        aria-label={texts.backNavigationBar || translate(backNavigationBar, locale)}
                         onPress={onBack}
                         Icon={IconChevronLeftRegular}
                         bleedLeft

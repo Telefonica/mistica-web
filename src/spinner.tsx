@@ -6,6 +6,7 @@ import {useAriaId, useTheme} from './hooks';
 import * as styles from './spinner.css';
 import {vars} from './skins/skin-contract.css';
 import {useIsInverseVariant} from './theme-variant-context';
+import {loading, translate} from './text-tokens';
 
 type Props = {
     color?: string;
@@ -17,12 +18,16 @@ type Props = {
 };
 
 const Spinner: React.FC<Props> = ({color, delay = '500ms', size = 24, style, rolePresentation}) => {
-    const {texts, platformOverrides} = useTheme();
+    const {
+        texts,
+        platformOverrides,
+        i18n: {locale},
+    } = useTheme();
     const isInverse = useIsInverseVariant();
     color = color || (isInverse ? vars.colors.controlActivatedInverse : vars.colors.controlActivated);
     const spinnerId = useAriaId();
     const withTitle = !rolePresentation;
-    const title = texts.loading;
+    const title = texts.loading || translate(loading, locale);
     const content =
         getPlatform(platformOverrides) === 'ios' ? (
             <svg

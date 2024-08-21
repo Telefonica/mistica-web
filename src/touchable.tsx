@@ -12,6 +12,7 @@ import {redirect} from './utils/browser';
 import type {ExclusifyUnion} from './utils/utility-types';
 import type {DataAttributes, TrackingEvent} from './utils/types';
 import type {Location} from 'history';
+import {linkOpensInCurrentPage, linkOpensInNewTab, translate} from './text-tokens';
 
 export type PressHandler = (event: React.MouseEvent<HTMLElement>) => void | undefined | Promise<void>;
 
@@ -90,7 +91,14 @@ export type TouchableProps = ExclusifyUnion<
 export type TouchableElement = HTMLDivElement | HTMLAnchorElement | HTMLButtonElement;
 
 const RawTouchable = React.forwardRef<TouchableElement, TouchableProps>((props, ref) => {
-    const {texts, analytics, platformOverrides, Link, useHrefDecorator} = useTheme();
+    const {
+        texts,
+        analytics,
+        platformOverrides,
+        Link,
+        useHrefDecorator,
+        i18n: {locale},
+    } = useTheme();
     const hrefDecorator = useHrefDecorator();
     const isClicked = React.useRef(false);
     let trackingEvents: ReadonlyArray<TrackingEvent> = [];
@@ -208,11 +216,11 @@ const RawTouchable = React.forwardRef<TouchableElement, TouchableProps>((props, 
     const renderScreenReaderOnlyHint = () => {
         return openNewTab ? (
             <ScreenReaderOnly>
-                <span>{texts.linkOpensInNewTab}</span>
+                <span>{texts.linkOpensInNewTab || translate(linkOpensInNewTab, locale)}</span>
             </ScreenReaderOnly>
         ) : openInCurrentPage ? (
             <ScreenReaderOnly>
-                <span>{texts.linkOpensInCurrentPage}</span>
+                <span>{texts.linkOpensInCurrentPage || translate(linkOpensInCurrentPage, locale)}</span>
             </ScreenReaderOnly>
         ) : null;
     };

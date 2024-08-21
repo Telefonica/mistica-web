@@ -3,6 +3,7 @@ import * as React from 'react';
 import {useFieldProps} from './form-context';
 import {useTheme} from './hooks';
 import {TextFieldBaseAutosuggest} from './text-field-base';
+import {formFieldErrorIsMandatory, translate} from './text-tokens';
 
 import type {CommonFormFieldProps} from './text-field-base';
 
@@ -60,11 +61,16 @@ const IntegerField: React.FC<IntegerFieldProps> = ({
     dataAttributes,
     ...rest
 }) => {
-    const {texts} = useTheme();
+    const {
+        texts,
+        i18n: {locale},
+    } = useTheme();
 
     const validate = (value: string | undefined, rawValue: string) => {
         if (!value) {
-            return optional ? '' : texts.formFieldErrorIsMandatory;
+            return optional
+                ? ''
+                : texts.formFieldErrorIsMandatory || translate(formFieldErrorIsMandatory, locale);
         }
         return validateProp?.(value, rawValue);
     };

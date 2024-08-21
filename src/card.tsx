@@ -31,7 +31,7 @@ import {
     closeButtonLabel as closeButtonLabelText,
     pauseIconButtonLabel,
     playIconButtonLabel,
-} from './tokens';
+} from './text-tokens';
 
 import type {Variant} from './theme-variant-context';
 import type {PressHandler} from './touchable';
@@ -103,7 +103,7 @@ const useTopActions = (
 
     if (onClose) {
         finalActions.push({
-            label: closeButtonLabel ?? texts.closeButtonLabel ?? translate(closeButtonLabelText, locale),
+            label: closeButtonLabel || texts.closeButtonLabel || translate(closeButtonLabelText, locale),
             onPress: onClose,
             Icon: IconCloseRegular,
         });
@@ -370,11 +370,11 @@ export const useVideoWithControls = (
                   label:
                       videoStatus === 'loadingTimeout'
                           ? ''
-                          : texts.pauseIconButtonLabel ?? translate(pauseIconButtonLabel, locale),
+                          : texts.pauseIconButtonLabel || translate(pauseIconButtonLabel, locale),
               },
               checkedProps: {
                   Icon: CardActionPlayIcon,
-                  label: texts.playIconButtonLabel ?? translate(playIconButtonLabel, locale),
+                  label: texts.playIconButtonLabel || translate(playIconButtonLabel, locale),
               },
               onChange: onVideoControlPress,
               disabled: videoStatus === 'loadingTimeout',

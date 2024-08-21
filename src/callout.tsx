@@ -16,7 +16,7 @@ import {sprinkles} from './sprinkles.css';
 import {vars} from './skins/skin-contract.css';
 import {getPrefixedDataAttributes} from './utils/dom';
 import {applyCssVars} from './utils/css';
-import {translate, closeButtonLabel as closeButtonLabelText} from './tokens';
+import {translate, closeButtonLabel as closeButtonLabelText} from './text-tokens';
 
 import type {ButtonLink, ButtonPrimary, ButtonSecondary} from './button';
 import type {DataAttributes, HeadingType, RendersNullableElement} from './utils/types';
@@ -112,8 +112,8 @@ const Callout: React.FC<Props> = ({
                                 Icon={IconCloseRegular}
                                 onPress={onClose}
                                 aria-label={
-                                    closeButtonLabel ??
-                                    texts.closeButtonLabel ??
+                                    closeButtonLabel ||
+                                    texts.closeButtonLabel ||
                                     translate(closeButtonLabelText, locale)
                                 }
                             />

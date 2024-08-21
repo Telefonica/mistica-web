@@ -3,6 +3,7 @@ import * as React from 'react';
 import {useFieldProps} from './form-context';
 import {useTheme} from './hooks';
 import {TextFieldBaseAutosuggest} from './text-field-base';
+import {formEmailError, formFieldErrorIsMandatory, translate} from './text-tokens';
 
 import type {CommonFormFieldProps} from './text-field-base';
 
@@ -30,14 +31,19 @@ const EmailField: React.FC<EmailFieldProps> = ({
     dataAttributes,
     ...rest
 }) => {
-    const {texts} = useTheme();
+    const {
+        texts,
+        i18n: {locale},
+    } = useTheme();
 
     const validate = (value: string | undefined, rawValue: string) => {
         if (!value) {
-            return optional ? '' : texts.formFieldErrorIsMandatory;
+            return optional
+                ? ''
+                : texts.formFieldErrorIsMandatory || translate(formFieldErrorIsMandatory, locale);
         }
         if (!RE_EMAIL.test(value)) {
-            return texts.formEmailError;
+            return texts.formEmailError || translate(formEmailError, locale);
         }
         return validateProp?.(value, rawValue);
     };

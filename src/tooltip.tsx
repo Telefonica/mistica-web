@@ -19,7 +19,7 @@ import {isRunningAcceptanceTest} from './utils/platform';
 import {IconButton} from './icon-button';
 import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
 import Box from './box';
-import {translate, closeButtonLabel as closeButtonLabelText} from './tokens';
+import {translate, closeButtonLabel as closeButtonLabelText} from './text-tokens';
 
 import type {BoundingRect} from './hooks';
 import type {DataAttributes, TrackingEvent} from './utils/types';
@@ -582,8 +582,8 @@ export const BaseTooltip: React.FC<BaseTooltipProps> = ({
                                                             }}
                                                             trackingEvent={trackingEvent}
                                                             aria-label={
-                                                                closeButtonLabel ??
-                                                                texts.closeButtonLabel ??
+                                                                closeButtonLabel ||
+                                                                texts.closeButtonLabel ||
                                                                 translate(closeButtonLabelText, locale)
                                                             }
                                                             Icon={IconCloseRegular}
