@@ -10,6 +10,8 @@ import {
 } from '..';
 import {vars} from '../skins/skin-contract.css';
 
+import type {Variant} from '../theme-variant-context';
+
 export default {
     title: 'Components/Navigation bars/FunnelNavigationBar',
     component: FunnelNavigationBar,
@@ -18,14 +20,14 @@ export default {
     },
 };
 
-type Args = {inverse: boolean; border: boolean};
+type Args = {variant: Variant; border: boolean};
 
-export const Default: StoryComponent<Args> = ({inverse, border}) => {
+export const Default: StoryComponent<Args> = ({variant, border}) => {
     const {isDesktopOrBigger} = useScreenSize();
     return (
         <FunnelNavigationBar
             withBorder={border}
-            isInverse={inverse}
+            variant={variant}
             right={
                 <NavigationBarActionGroup>
                     <NavigationBarAction aria-label="need help?" href="/help">
@@ -49,6 +51,13 @@ export const Default: StoryComponent<Args> = ({inverse, border}) => {
 Default.storyName = 'FunnelNavigationBar';
 
 Default.args = {
-    inverse: false,
+    variant: 'default',
     border: true,
+};
+
+Default.argTypes = {
+    variant: {
+        options: ['default', 'inverse', 'alternative'],
+        control: {type: 'select'},
+    },
 };

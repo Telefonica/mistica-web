@@ -11,6 +11,8 @@ import {
 } from '..';
 import avatarImg from './images/avatar.jpg';
 
+import type {Variant} from '../theme-variant-context';
+
 export default {
     title: 'Components/Navigation bars/MainNavigationBar',
     component: MainNavigationBar,
@@ -22,19 +24,19 @@ export default {
 const sectionTitles = ['Start', 'Account', 'Explore', 'Support'];
 
 type Args = {
-    inverse: boolean;
+    variant: Variant;
     border: boolean;
     burgerMenuExtra: boolean;
     large: boolean;
     sections: boolean;
 };
 
-export const Default: StoryComponent<Args> = ({inverse, border, burgerMenuExtra, large, sections}) => {
+export const Default: StoryComponent<Args> = ({variant, border, burgerMenuExtra, large, sections}) => {
     const [selectedIndex, setSelectedIndex] = React.useState(0);
     const {isDesktopOrBigger} = useScreenSize();
     return (
         <MainNavigationBar
-            isInverse={inverse}
+            variant={variant}
             large={large}
             withBorder={border}
             burgerMenuExtra={burgerMenuExtra ? <Placeholder /> : undefined}
@@ -64,9 +66,16 @@ export const Default: StoryComponent<Args> = ({inverse, border, burgerMenuExtra,
 Default.storyName = 'MainNavigationBar';
 
 Default.args = {
-    inverse: false,
+    variant: 'default',
     border: true,
     burgerMenuExtra: false,
     large: false,
     sections: true,
+};
+
+Default.argTypes = {
+    variant: {
+        options: ['default', 'inverse', 'alternative'],
+        control: {type: 'select'},
+    },
 };
