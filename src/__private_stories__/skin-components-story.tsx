@@ -54,6 +54,7 @@ import {
 import {InternalIconButton} from '../icon-button';
 import avatarImg from '../__stories__/images/avatar.jpg';
 import usingVrImg from '../__stories__/images/using-vr.jpg';
+import {Title4} from '../title';
 
 export default {
     title: 'Private/Components in different skins',
@@ -328,6 +329,7 @@ export const Default: StoryComponent<Args> = ({variant}) => {
                             <Title1>Title 1</Title1>
                             <Title2>Title 2</Title2>
                             <Title3>Title 3</Title3>
+                            <Title4>Title 4</Title4>
                         </Inline>
 
                         {/** Tag */}

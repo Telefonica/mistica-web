@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Stack, ButtonPrimary, Inline, Title2, Video, Text3} from '..';
+import {Stack, ButtonPrimary, Inline, Video, Text3, Title3} from '..';
 import beachVideo from './videos/beach.mp4';
 import beachImg from './images/beach.jpg';
 
@@ -82,7 +82,7 @@ export const Default: StoryComponent<Args> = ({
     return (
         <Stack space={32}>
             <Stack space={8}>
-                <Title2>Video component issues/limitations</Title2>
+                <Title3>Video component issues/limitations</Title3>
                 <Text3 regular as="p">
                     1. Using automatic aspect ratio (`aspectRatio={0}`), if the poster and video have
                     different aspect ratios, the video size will resize when playing/stopping the video. This

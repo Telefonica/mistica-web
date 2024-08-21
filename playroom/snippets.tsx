@@ -1915,7 +1915,7 @@ const exampleScreens: Array<Snippet> = [
         ))}
       />
       <Stack space={24}>
-        <Title2>Save money in technology</Title2>
+        <Title3>Save money in technology</Title3>
         <Carousel
           itemsPerPage={1}
           mobilePageOffset="large"
@@ -1972,7 +1972,7 @@ const exampleScreens: Array<Snippet> = [
       />
 
       <Stack space={24}>
-        <Title2>Save money in technology</Title2>
+        <Title3>Save money in technology</Title3>
         <Carousel
           itemsPerPage={1}
           mobilePageOffset="large"
