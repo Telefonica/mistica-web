@@ -1350,6 +1350,14 @@ const titlesSnippets: Array<Snippet> = [
         name: 'Title3 (with link)',
         code: '<Title3 right={<ButtonLink onPress={() => {}} withChevron bleedRight bleedY>Link</ButtonLink>}>Some title</Title3>',
     },
+    {
+        name: 'Title4',
+        code: '<Title4>Some title</Title4>',
+    },
+    {
+        name: 'Title4 (with link)',
+        code: '<Title4 right={<ButtonLink onPress={() => {}} withChevron bleedRight bleedY>Link</ButtonLink>}>Some title</Title4>',
+    },
 ].map((snippet) => ({...snippet, group: 'Titles'}));
 
 const tagSnippets: Array<Snippet> = ['promo', 'active', 'inactive', 'success', 'warning', 'error'].map(
