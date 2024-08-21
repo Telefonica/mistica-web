@@ -91,8 +91,7 @@ const Chip: React.FC<ChipProps> = (props: ChipProps) => {
                         height: pxToRem(24),
                     }}
                     aria-label={
-                        closeButtonLabel ??
-                        (texts.closeButtonLabel || translate(closeButtonLabelText, locale))
+                        closeButtonLabel || texts.closeButtonLabel || translate(closeButtonLabelText, locale)
                     }
                     onPress={() => onClose()}
                 >
