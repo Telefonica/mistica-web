@@ -1,7 +1,7 @@
 import * as React from 'react';
-import {Title1, Title2, Title3, ButtonLink, IconInformationRegular, skinVars} from '..';
-import {Title4, type TitleProps} from '../title';
+import {Title1, Title2, Title3, Title4, ButtonLink, IconInformationRegular, skinVars} from '..';
 
+import type {TitleProps} from '../title';
 import type {HeadingType} from '../utils/types';
 
 export default {
