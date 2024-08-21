@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {Title1, Title2, Title3, ButtonLink, IconInformationRegular, skinVars} from '..';
+import {Title4, type TitleProps} from '../title';
 
-import type {TitleProps} from '../title';
 import type {HeadingType} from '../utils/types';
 
 export default {
@@ -89,6 +89,18 @@ export const Title3Story: StoryComponent<Args> = ({title, right, linkText}) => (
     />
 );
 
+export const Title4Story: StoryComponent<Args> = ({title, right, linkText}) => (
+    <TitleComponent
+        as="h4"
+        title={title}
+        right={right}
+        linkText={linkText}
+        defaultTitle="Title4"
+        TitleComponent={Title4}
+    />
+);
+
 Title1Story.storyName = 'Title1';
 Title2Story.storyName = 'Title2';
 Title3Story.storyName = 'Title3';
+Title4Story.storyName = 'Title4';
