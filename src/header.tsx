@@ -33,7 +33,6 @@ type HeaderProps = {
     description?: string;
     small?: boolean;
     dataAttributes?: DataAttributes;
-    isErrorAmount?: boolean;
 };
 
 export const Header: React.FC<HeaderProps> = ({
