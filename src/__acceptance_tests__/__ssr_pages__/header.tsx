@@ -10,7 +10,6 @@ import {
     Text8,
     skinVars,
 } from '../../..';
-import ButtonGroup from '../../button-group';
 
 const HeaderTest = (): JSX.Element => (
     <Stack space={8}>
@@ -25,9 +24,7 @@ const HeaderTest = (): JSX.Element => (
                         <Text8 color={skinVars.colors.textPrimary}>60,44 €</Text8>
                     </Stack>
 
-                    <ButtonGroup
-                        primaryButton={<ButtonPrimary href="asdf">Descargar factura</ButtonPrimary>}
-                    />
+                    <ButtonPrimary href="asdf">Descargar factura</ButtonPrimary>
                     <Text3 regular>Y esto es un subtitulo</Text3>
                 </Stack>
             }
