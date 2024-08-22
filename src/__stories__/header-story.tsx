@@ -114,7 +114,7 @@ Default.args = {
     description: 'This is a description',
     small: false,
     truncatePretitle: false,
-    inverse: true,
+    inverse: false,
     withBreadcrumbs: true,
     noPaddingY: false,
     withExtraContent: true,

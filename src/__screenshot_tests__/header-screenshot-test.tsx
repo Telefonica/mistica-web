@@ -69,17 +69,27 @@ test.each`
     }
 );
 
-test.each(DEVICES)('MainSectionHeader', async (device) => {
-    await openStoryPage({
-        id: 'components-headers-mainsectionheader--default',
-        device,
-    });
+test.each`
+    device          | inverse
+    ${'MOBILE_IOS'} | ${true}
+    ${'MOBILE_IOS'} | ${false}
+    ${'DESKTOP'}    | ${true}
+    ${'DESKTOP'}    | ${false}
+`(
+    'MainSectionHeader in $device inverse=$inverse',
+    async ({device, inverse}: {device: Device; inverse: boolean}) => {
+        await openStoryPage({
+            id: 'components-headers-mainsectionheader--default',
+            device,
+            args: {inverse},
+        });
 
-    const story = await screen.findByTestId('header-layout');
+        const story = await screen.findByTestId('header-layout');
 
-    const image = await story.screenshot();
-    expect(image).toMatchImageSnapshot();
-});
+        const image = await story.screenshot();
+        expect(image).toMatchImageSnapshot();
+    }
+);
 
 test.each(DEVICES)('Header with large text', async (device) => {
     await openStoryPage({
