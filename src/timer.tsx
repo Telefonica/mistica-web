@@ -11,24 +11,7 @@ import * as styles from './timer.css';
 import {getPrefixedDataAttributes} from './utils/dom';
 import {isEqual} from './utils/helpers';
 import {isRunningAcceptanceTest} from './utils/platform';
-import {
-    translate,
-    timerDaysShortLabel,
-    timerHoursShortLabel,
-    timerMinutesShortLabel,
-    timerSecondsShortLabel,
-    timerDayLongLabel,
-    timerHourLongLabel,
-    timerMinuteLongLabel,
-    timerSecondLongLabel,
-    timerDaysLongLabel,
-    timerHoursLongLabel,
-    timerMinutesLongLabel,
-    timerSecondsLongLabel,
-    timerDisplayMinutesLabel,
-    timerDisplaySecondsLabel,
-    timerAnd,
-} from './text-tokens';
+import * as tokens from './text-tokens';
 
 import type {DataAttributes} from './utils/types';
 
@@ -217,33 +200,30 @@ export const TextTimer: React.FC<TextTimerProps> = ({
     dataAttributes,
     'aria-label': ariaLabel,
 }) => {
-    const {
-        texts,
-        i18n: {locale},
-    } = useTheme();
+    const {texts, t} = useTheme();
     const labelId = useAriaId();
 
     const timerValue = useTimerState({endTimestamp, labelType, minTimeUnit, maxTimeUnit, onProgress});
 
     const unitShortLabel: {[key in TimeUnit]: string} = {
-        days: texts.timerDaysShortLabel || translate(timerDaysShortLabel, locale),
-        hours: texts.timerHoursShortLabel || translate(timerHoursShortLabel, locale),
-        minutes: texts.timerMinutesShortLabel || translate(timerMinutesShortLabel, locale),
-        seconds: texts.timerSecondsShortLabel || translate(timerSecondsShortLabel, locale),
+        days: texts.timerDaysShortLabel || t(tokens.timerDaysShortLabel),
+        hours: texts.timerHoursShortLabel || t(tokens.timerHoursShortLabel),
+        minutes: texts.timerMinutesShortLabel || t(tokens.timerMinutesShortLabel),
+        seconds: texts.timerSecondsShortLabel || t(tokens.timerSecondsShortLabel),
     };
 
     const unitLabel: {[key in TimeUnit]: string} = {
-        days: texts.timerDayLongLabel || translate(timerDayLongLabel, locale),
-        hours: texts.timerHourLongLabel || translate(timerHourLongLabel, locale),
-        minutes: texts.timerMinuteLongLabel || translate(timerMinuteLongLabel, locale),
-        seconds: texts.timerSecondLongLabel || translate(timerSecondLongLabel, locale),
+        days: texts.timerDayLongLabel || t(tokens.timerDayLongLabel),
+        hours: texts.timerHourLongLabel || t(tokens.timerHourLongLabel),
+        minutes: texts.timerMinuteLongLabel || t(tokens.timerMinuteLongLabel),
+        seconds: texts.timerSecondLongLabel || t(tokens.timerSecondLongLabel),
     };
 
     const unitLabelPlural: {[key in TimeUnit]: string} = {
-        days: texts.timerDaysLongLabel || translate(timerDaysLongLabel, locale),
-        hours: texts.timerHoursLongLabel || translate(timerHoursLongLabel, locale),
-        minutes: texts.timerMinutesLongLabel || translate(timerMinutesLongLabel, locale),
-        seconds: texts.timerSecondsLongLabel || translate(timerSecondsLongLabel, locale),
+        days: texts.timerDaysLongLabel || t(tokens.timerDaysLongLabel),
+        hours: texts.timerHoursLongLabel || t(tokens.timerHoursLongLabel),
+        minutes: texts.timerMinutesLongLabel || t(tokens.timerMinutesLongLabel),
+        seconds: texts.timerSecondsLongLabel || t(tokens.timerSecondsLongLabel),
     };
 
     const renderFormattedNumber = (value: number) => {
@@ -285,8 +265,7 @@ export const TextTimer: React.FC<TextTimerProps> = ({
                         {index > 0 && ' '}
                         {renderFormattedNumber(item.value)}
                         {` ${item.value === 1 ? unitLabel[item.unit] : unitLabelPlural[item.unit]}`}
-                        {index === timerValue.length - 2 &&
-                            ` ${texts.timerAnd || translate(timerAnd, locale)}`}
+                        {index === timerValue.length - 2 && ` ${texts.timerAnd || t(tokens.timerAnd)}`}
                         {index < timerValue.length - 2 && ','}
                     </React.Fragment>
                 ));
@@ -300,7 +279,7 @@ export const TextTimer: React.FC<TextTimerProps> = ({
                     index === timerValue.length - 1
                         ? ''
                         : index === timerValue.length - 2
-                          ? ` ${texts.timerAnd || translate(timerAnd, locale)} `
+                          ? ` ${texts.timerAnd || t(tokens.timerAnd)} `
                           : ', '
                 }`
         )
@@ -337,41 +316,38 @@ export const Timer: React.FC<TimerProps> = ({
     dataAttributes,
     'aria-label': ariaLabel,
 }) => {
-    const {
-        texts,
-        i18n: {locale},
-    } = useTheme();
+    const {texts, t} = useTheme();
     const labelId = useAriaId();
     const themeVariant = useThemeVariant();
 
     const timerValue = useTimerState({endTimestamp, minTimeUnit, maxTimeUnit, onProgress});
 
     const displayLabel: {[key in TimeUnit]: string} = {
-        days: texts.timerDayLongLabel || translate(timerDayLongLabel, locale),
-        hours: texts.timerHourLongLabel || translate(timerHourLongLabel, locale),
-        minutes: texts.timerDisplayMinutesLabel || translate(timerDisplayMinutesLabel, locale),
-        seconds: texts.timerDisplaySecondsLabel || translate(timerDisplaySecondsLabel, locale),
+        days: texts.timerDayLongLabel || t(tokens.timerDayLongLabel),
+        hours: texts.timerHourLongLabel || t(tokens.timerHourLongLabel),
+        minutes: texts.timerDisplayMinutesLabel || t(tokens.timerDisplayMinutesLabel),
+        seconds: texts.timerDisplaySecondsLabel || t(tokens.timerDisplaySecondsLabel),
     };
 
     const displayLabelPlural: {[key in TimeUnit]: string} = {
-        days: texts.timerDaysLongLabel || translate(timerDaysLongLabel, locale),
-        hours: texts.timerHoursLongLabel || translate(timerHoursLongLabel, locale),
-        minutes: texts.timerDisplayMinutesLabel || translate(timerDisplayMinutesLabel, locale),
-        seconds: texts.timerDisplaySecondsLabel || translate(timerDisplaySecondsLabel, locale),
+        days: texts.timerDaysLongLabel || t(tokens.timerDaysLongLabel),
+        hours: texts.timerHoursLongLabel || t(tokens.timerHoursLongLabel),
+        minutes: texts.timerDisplayMinutesLabel || t(tokens.timerDisplayMinutesLabel),
+        seconds: texts.timerDisplaySecondsLabel || t(tokens.timerDisplaySecondsLabel),
     };
 
     const unitLabel: {[key in TimeUnit]: string} = {
-        days: texts.timerDayLongLabel || translate(timerDayLongLabel, locale),
-        hours: texts.timerHourLongLabel || translate(timerHourLongLabel, locale),
-        minutes: texts.timerMinuteLongLabel || translate(timerMinuteLongLabel, locale),
-        seconds: texts.timerSecondLongLabel || translate(timerSecondLongLabel, locale),
+        days: texts.timerDayLongLabel || t(tokens.timerDayLongLabel),
+        hours: texts.timerHourLongLabel || t(tokens.timerHourLongLabel),
+        minutes: texts.timerMinuteLongLabel || t(tokens.timerMinuteLongLabel),
+        seconds: texts.timerSecondLongLabel || t(tokens.timerSecondLongLabel),
     };
 
     const unitLabelPlural: {[key in TimeUnit]: string} = {
-        days: texts.timerDaysLongLabel || translate(timerDaysLongLabel, locale),
-        hours: texts.timerHoursLongLabel || translate(timerHoursLongLabel, locale),
-        minutes: texts.timerMinutesLongLabel || translate(timerMinutesLongLabel, locale),
-        seconds: texts.timerSecondsLongLabel || translate(timerSecondsLongLabel, locale),
+        days: texts.timerDaysLongLabel || t(tokens.timerDaysLongLabel),
+        hours: texts.timerHoursLongLabel || t(tokens.timerHoursLongLabel),
+        minutes: texts.timerMinutesLongLabel || t(tokens.timerMinutesLongLabel),
+        seconds: texts.timerSecondsLongLabel || t(tokens.timerSecondsLongLabel),
     };
 
     const renderFormattedNumber = (value: number) => {
@@ -394,7 +370,7 @@ export const Timer: React.FC<TimerProps> = ({
                     index === timerValue.length - 1
                         ? ''
                         : index === timerValue.length - 2
-                          ? ` ${texts.timerAnd || translate(timerAnd, locale)} `
+                          ? ` ${texts.timerAnd || t(tokens.timerAnd)} `
                           : ', '
                 }`
         )

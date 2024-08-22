@@ -8,7 +8,7 @@ import {isInsideNovumNativeApp} from './utils/platform';
 import {ENTER, SPACE} from './utils/keys';
 import {getPrefixedDataAttributes} from './utils/dom';
 import {redirect} from './utils/browser';
-import {linkOpensInCurrentPage, linkOpensInNewTab, translate} from './text-tokens';
+import * as tokens from './text-tokens';
 
 import type {ExclusifyUnion} from './utils/utility-types';
 import type {DataAttributes, TrackingEvent} from './utils/types';
@@ -91,14 +91,7 @@ export type TouchableProps = ExclusifyUnion<
 export type TouchableElement = HTMLDivElement | HTMLAnchorElement | HTMLButtonElement;
 
 const RawTouchable = React.forwardRef<TouchableElement, TouchableProps>((props, ref) => {
-    const {
-        texts,
-        analytics,
-        platformOverrides,
-        Link,
-        useHrefDecorator,
-        i18n: {locale},
-    } = useTheme();
+    const {texts, analytics, platformOverrides, Link, useHrefDecorator, t} = useTheme();
     const hrefDecorator = useHrefDecorator();
     const isClicked = React.useRef(false);
     let trackingEvents: ReadonlyArray<TrackingEvent> = [];
@@ -216,11 +209,11 @@ const RawTouchable = React.forwardRef<TouchableElement, TouchableProps>((props, 
     const renderScreenReaderOnlyHint = () => {
         return openNewTab ? (
             <ScreenReaderOnly>
-                <span>{texts.linkOpensInNewTab || translate(linkOpensInNewTab, locale)}</span>
+                <span>{texts.linkOpensInNewTab || t(tokens.linkOpensInNewTab)}</span>
             </ScreenReaderOnly>
         ) : openInCurrentPage ? (
             <ScreenReaderOnly>
-                <span>{texts.linkOpensInCurrentPage || translate(linkOpensInCurrentPage, locale)}</span>
+                <span>{texts.linkOpensInCurrentPage || t(tokens.linkOpensInCurrentPage)}</span>
             </ScreenReaderOnly>
         ) : null;
     };

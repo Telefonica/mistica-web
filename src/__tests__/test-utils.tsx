@@ -5,7 +5,7 @@ import type {Locale} from '../utils/locale';
 import type {RegionCode} from '../utils/region-code';
 import type {TrackingEvent} from '../utils/types';
 import type {Skin} from '..';
-import type {TextTokens} from '../text-tokens';
+import type {Dictionary} from '../text-tokens';
 
 if (process.env.NODE_ENV !== 'test') {
     throw Error('Using test-utils outside test environment');
@@ -21,7 +21,7 @@ type ThemeOverrides = {
         platform?: 'ios' | 'android';
         insideNovumNativeApp?: boolean;
     };
-    texts?: Partial<TextTokens>;
+    texts?: Partial<Dictionary>;
     analytics?: {logEvent: (trackingEvent: TrackingEvent) => Promise<void>; eventFormat?: EventFormat};
     dimensions?: {headerMobileHeight: number};
     useHrefDecorator?: () => (href: string) => string;

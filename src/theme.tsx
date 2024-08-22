@@ -4,7 +4,7 @@ import type {RegionCode} from './utils/region-code';
 import type {Locale} from './utils/locale';
 import type {Colors, Skin, SkinName, TextPresetsConfig} from './skins/types';
 import type {TrackingEvent} from './utils/types';
-import type {TextTokens} from './text-tokens';
+import type {Dictionary, TextToken} from './text-tokens';
 
 export const NAVBAR_HEIGHT_MOBILE = 56;
 export const NAVBAR_HEIGHT_DESKTOP = 80;
@@ -125,7 +125,7 @@ export type ThemeConfig = Readonly<{
         insideNovumNativeApp?: boolean;
         userAgent?: string;
     }>;
-    texts?: Partial<TextTokens>;
+    texts?: Partial<Dictionary>;
     analytics?: Readonly<{
         logEvent: (trackingEvent: TrackingEvent) => Promise<void>;
         eventFormat?: EventFormat;
@@ -154,7 +154,7 @@ export type Theme = {
         insideNovumNativeApp?: boolean;
         userAgent?: string;
     };
-    texts: Partial<TextTokens>;
+    texts: Partial<Dictionary>;
     analytics: {
         logEvent: (trackingEvent: TrackingEvent) => Promise<void>;
         eventFormat: EventFormat;
@@ -168,4 +168,5 @@ export type Theme = {
     isIos: boolean;
     useHrefDecorator: () => (href: string) => string;
     useId?: () => string;
+    t: (token: TextToken) => string;
 };

@@ -8,7 +8,7 @@ import {useTheme} from './hooks';
 import {createChangeEvent} from './utils/dom';
 import {combineRefs} from './utils/common';
 import {iconSize} from './icon-button.css';
-import {formSearchClear, translate} from './text-tokens';
+import * as tokens from './text-tokens';
 
 import type {CommonFormFieldProps} from './text-field-base';
 
@@ -36,10 +36,7 @@ const SearchField = React.forwardRef<any, SearchFieldProps>(
         },
         ref
     ) => {
-        const {
-            texts,
-            i18n: {locale},
-        } = useTheme();
+        const {texts, t} = useTheme();
         const inputRef = React.useRef<HTMLInputElement>();
         const [searchValue, setSearchValue] = React.useState(defaultValue || '');
 
@@ -88,7 +85,7 @@ const SearchField = React.forwardRef<any, SearchFieldProps>(
                     controlledValue ? (
                         <FieldEndIcon
                             Icon={IconCloseRegular}
-                            aria-label={texts.formSearchClear || translate(formSearchClear, locale)}
+                            aria-label={texts.formSearchClear || t(tokens.formSearchClear)}
                             onPress={clearInput}
                         />
                     ) : undefined

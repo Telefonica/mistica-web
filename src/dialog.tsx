@@ -18,7 +18,7 @@ import {useSetModalStateEffect} from './modal-context-provider';
 import Stack from './stack';
 import * as styles from './dialog.css';
 import {vars} from './skins/skin-contract.css';
-import {dialogAcceptButton, dialogCancelButton, modalClose, translate} from './text-tokens';
+import * as tokens from './text-tokens';
 
 import type {ButtonLink} from './button';
 import type {RendersNullableElement} from './utils/types';
@@ -63,10 +63,7 @@ export type DialogProps = ExclusifyUnion<AlertProps | ConfirmProps | ExtendedDia
 type InternalDialogProps = DialogProps & {showCancelButton: boolean; showAcceptButton: boolean};
 
 const InternalDialog: React.FC<InternalDialogProps> = (props) => {
-    const {
-        texts,
-        i18n: {locale},
-    } = useTheme();
+    const {texts, t} = useTheme();
     const {
         className,
         title,
@@ -75,8 +72,8 @@ const InternalDialog: React.FC<InternalDialogProps> = (props) => {
         extra,
         showCancelButton,
         showAcceptButton,
-        cancelText = texts.dialogCancelButton || translate(dialogCancelButton, locale),
-        acceptText = texts.dialogAcceptButton || translate(dialogAcceptButton, locale),
+        cancelText = texts.dialogCancelButton || t(tokens.dialogCancelButton),
+        acceptText = texts.dialogAcceptButton || t(tokens.dialogAcceptButton),
         onCancel: handleCancel,
         onAccept: handleAccept,
         destructive = false,
@@ -207,17 +204,14 @@ const NativeModalDialog = ({
     message,
     title,
 }: ModalDialogProps): JSX.Element => {
-    const {
-        texts,
-        i18n: {locale},
-    } = useTheme();
+    const {texts, t} = useTheme();
     const paramsRef = React.useRef({
         type,
         onAccept,
         onCancel,
         onDestroy,
-        acceptText: acceptText || texts.dialogAcceptButton || translate(dialogAcceptButton, locale),
-        cancelText: cancelText || texts.dialogCancelButton || translate(dialogCancelButton, locale),
+        acceptText: acceptText || texts.dialogAcceptButton || t(tokens.dialogAcceptButton),
+        cancelText: cancelText || texts.dialogCancelButton || t(tokens.dialogCancelButton),
         message,
         title,
     });
@@ -240,10 +234,7 @@ const NativeModalDialog = ({
 const ModalDialog = (props: ModalDialogProps): JSX.Element => {
     useSetModalStateEffect();
     const dialogContentRef = React.useRef<HTMLDivElement>(null);
-    const {
-        texts,
-        i18n: {locale},
-    } = useTheme();
+    const {texts, t} = useTheme();
     const [isClosing, setIsClosing] = React.useState<boolean>(false);
     /** this ref has the same value as the isClosing state but we want it to be immediately accessible to avoid possible race conditions */
     const isClosingRef = React.useRef<boolean>(false);
@@ -404,9 +395,7 @@ const ModalDialog = (props: ModalDialogProps): JSX.Element => {
                                     <InternalIconButton
                                         onPress={dismiss}
                                         aria-label={
-                                            props.closeButtonLabel ||
-                                            texts.modalClose ||
-                                            translate(modalClose, locale)
+                                            props.closeButtonLabel || texts.modalClose || t(tokens.modalClose)
                                         }
                                         bleedLeft
                                         bleedRight

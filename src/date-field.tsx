@@ -10,7 +10,7 @@ import {useTheme} from './hooks';
 import {isFirefox} from './utils/platform';
 import * as styles from './date-field.css';
 import {iconSize} from './icon-button.css';
-import {formDateOutOfRangeError, translate} from './text-tokens';
+import * as tokens from './text-tokens';
 
 import type {CommonFormFieldProps} from './text-field-base';
 
@@ -49,10 +49,7 @@ const DateField: React.FC<DateFieldProps> = ({
         }
         return isInputTypeSupported('date');
     }, []);
-    const {
-        texts,
-        i18n: {locale},
-    } = useTheme();
+    const {texts, t} = useTheme();
 
     const isInRange = (value: string): boolean => {
         if (min && value && value < getLocalDateString(min)) {
@@ -66,7 +63,7 @@ const DateField: React.FC<DateFieldProps> = ({
 
     const validate = (value: string, rawValue: string) => {
         if (!isInRange(value)) {
-            return texts.formDateOutOfRangeError || translate(formDateOutOfRangeError, locale);
+            return texts.formDateOutOfRangeError || t(tokens.formDateOutOfRangeError);
         }
         return validateProp?.(value, rawValue);
     };

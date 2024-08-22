@@ -20,7 +20,7 @@ import {combineRefs} from './utils/common';
 import * as styles from './credit-card-number-field.css';
 import {vars} from './skins/skin-contract.css';
 import {iconSize} from './icon-button.css';
-import {formCreditCardNumberError, formFieldErrorIsMandatory, translate} from './text-tokens';
+import * as tokens from './text-tokens';
 
 import type {CardOptions} from './utils/credit-card';
 import type {CommonFormFieldProps} from './text-field-base';
@@ -169,18 +169,13 @@ const CreditCardNumberField: React.FC<CreditCardNumberFieldProps> = ({
     dataAttributes,
     ...rest
 }) => {
-    const {
-        texts,
-        i18n: {locale},
-    } = useTheme();
+    const {texts, t} = useTheme();
     const {jumpToNext, rawValues, setFormError} = useForm();
 
     const validate = (value: string | undefined, rawValue: string) => {
-        const error = texts.formCreditCardNumberError || translate(formCreditCardNumberError, locale);
+        const error = texts.formCreditCardNumberError || t(tokens.formCreditCardNumberError);
         if (!value) {
-            return optional
-                ? ''
-                : texts.formFieldErrorIsMandatory || translate(formFieldErrorIsMandatory, locale);
+            return optional ? '' : texts.formFieldErrorIsMandatory || t(tokens.formFieldErrorIsMandatory);
         }
         if (isAmericanExpress(value) && !acceptedCards.americanExpress) {
             return error;

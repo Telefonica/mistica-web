@@ -13,15 +13,7 @@ import IconTrashCanRegular from './generated/mistica-icons/icon-trash-can-regula
 import {useAriaId, useTheme} from './hooks';
 import classNames from 'classnames';
 import ScreenReaderOnly from './screen-reader-only';
-import {
-    counterDecreaseLabel,
-    counterIncreaseLabel,
-    counterMaxValue,
-    counterMinValue,
-    counterQuantity,
-    counterRemoveLabel,
-    translate,
-} from './text-tokens';
+import * as tokens from './text-tokens';
 
 import type {DataAttributes} from './utils/types';
 
@@ -93,10 +85,7 @@ const Counter: React.FC<Props> = ({
 }) => {
     const variant = useThemeVariant();
     const counterId = useAriaId();
-    const {
-        texts,
-        i18n: {locale},
-    } = useTheme();
+    const {texts, t} = useTheme();
 
     const minValue = min === undefined ? 0 : min;
     const maxValue = Math.max(minValue, max === undefined ? 999 : max);
@@ -112,21 +101,21 @@ const Counter: React.FC<Props> = ({
     const hasTrashIcon = !!onRemove && currentValue === minValue;
 
     const getRemoveLabel = () => {
-        return removeLabel ?? (texts.counterRemoveLabel || translate(counterRemoveLabel, locale));
+        return removeLabel ?? (texts.counterRemoveLabel || t(tokens.counterRemoveLabel));
     };
 
     const getIncreaseLabel = () => {
-        return increaseLabel ?? (texts.counterIncreaseLabel || translate(counterIncreaseLabel, locale));
+        return increaseLabel ?? (texts.counterIncreaseLabel || t(tokens.counterIncreaseLabel));
     };
 
     const getDecreaseLabel = () => {
-        return decreaseLabel ?? (texts.counterDecreaseLabel || translate(counterDecreaseLabel, locale));
+        return decreaseLabel ?? (texts.counterDecreaseLabel || t(tokens.counterDecreaseLabel));
     };
 
     const getValueLabel = () => {
-        return `${currentValue}, ${valueLabel ?? (texts.counterQuantity || translate(counterQuantity, locale))}${
-            min !== undefined ? `, ${texts.counterMinValue || translate(counterMinValue, locale)} ${min}` : ''
-        }${max !== undefined ? `, ${texts.counterMaxValue || translate(counterMaxValue, locale)} ${max}` : ''}`;
+        return `${currentValue}, ${valueLabel ?? (texts.counterQuantity || t(tokens.counterQuantity))}${
+            min !== undefined ? `, ${texts.counterMinValue || t(tokens.counterMinValue)} ${min}` : ''
+        }${max !== undefined ? `, ${texts.counterMaxValue || t(tokens.counterMaxValue)} ${max}` : ''}`;
     };
 
     return (

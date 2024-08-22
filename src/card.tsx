@@ -26,12 +26,7 @@ import Inline from './inline';
 import {getPrefixedDataAttributes} from './utils/dom';
 import {isRunningAcceptanceTest} from './utils/platform';
 import {applyCssVars} from './utils/css';
-import {
-    translate,
-    closeButtonLabel as closeButtonLabelText,
-    pauseIconButtonLabel,
-    playIconButtonLabel,
-} from './text-tokens';
+import * as tokens from './text-tokens';
 
 import type {Variant} from './theme-variant-context';
 import type {PressHandler} from './touchable';
@@ -95,15 +90,12 @@ const useTopActions = (
     onClose?: () => void,
     closeButtonLabel?: string
 ) => {
-    const {
-        texts,
-        i18n: {locale},
-    } = useTheme();
+    const {texts, t} = useTheme();
     const finalActions = actions ? [...actions] : [];
 
     if (onClose) {
         finalActions.push({
-            label: closeButtonLabel || texts.closeButtonLabel || translate(closeButtonLabelText, locale),
+            label: closeButtonLabel || texts.closeButtonLabel || t(tokens.closeButtonLabelText),
             onPress: onClose,
             Icon: IconCloseRegular,
         });
@@ -311,10 +303,7 @@ export const useVideoWithControls = (
     video?: React.ReactNode;
     videoAction?: CardAction;
 } => {
-    const {
-        texts,
-        i18n: {locale},
-    } = useTheme();
+    const {texts, t} = useTheme();
     const videoController = React.useRef<VideoElement>(null);
     const [videoStatus, dispatch] = React.useReducer(videoReducer, 'loading');
 
@@ -370,11 +359,11 @@ export const useVideoWithControls = (
                   label:
                       videoStatus === 'loadingTimeout'
                           ? ''
-                          : texts.pauseIconButtonLabel || translate(pauseIconButtonLabel, locale),
+                          : texts.pauseIconButtonLabel || t(tokens.pauseIconButtonLabel),
               },
               checkedProps: {
                   Icon: CardActionPlayIcon,
-                  label: texts.playIconButtonLabel || translate(playIconButtonLabel, locale),
+                  label: texts.playIconButtonLabel || t(tokens.playIconButtonLabel),
               },
               onChange: onVideoControlPress,
               disabled: videoStatus === 'loadingTimeout',

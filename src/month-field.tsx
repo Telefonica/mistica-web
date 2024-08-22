@@ -9,7 +9,7 @@ import {getLocalYearMonthString} from './utils/time';
 import {useTheme} from './hooks';
 import * as dateStyles from './date-field.css';
 import {iconSize} from './icon-button.css';
-import {formDateOutOfRangeError, translate} from './text-tokens';
+import * as tokens from './text-tokens';
 
 import type {CommonFormFieldProps} from './text-field-base';
 
@@ -42,10 +42,7 @@ const DateField: React.FC<DateFieldProps> = ({
 }) => {
     const processValue = (value: string) => value;
     const hasNativePicker = React.useMemo(() => isInputTypeSupported('month'), []);
-    const {
-        texts,
-        i18n: {locale},
-    } = useTheme();
+    const {texts, t} = useTheme();
 
     const isInRange = (value: string): boolean => {
         if (min && value && value < getLocalYearMonthString(min)) {
@@ -59,7 +56,7 @@ const DateField: React.FC<DateFieldProps> = ({
 
     const validate = (value: string, rawValue: string) => {
         if (!isInRange(value)) {
-            return texts.formDateOutOfRangeError || translate(formDateOutOfRangeError, locale);
+            return texts.formDateOutOfRangeError || t(tokens.formDateOutOfRangeError);
         }
         return validateProp?.(value, rawValue);
     };

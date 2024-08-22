@@ -1,6 +1,6 @@
-import type {Locale} from './utils/locale';
+import type {Language} from './utils/locale';
 
-export type TextTokens = {
+export type Dictionary = {
     expirationDatePlaceholder: string;
     enablePasswordVisibility: string;
     disablePasswordVisibility: string;
@@ -64,12 +64,7 @@ export type TextTokens = {
     tableActionsHeaderLabel: string;
 };
 
-export type TextToken = {es: string; en: string; de: string; pt: string};
-
-export const translate = (token: TextToken, locale: Locale): string => {
-    const lang = locale.split('-')[0]; // we could precalculate this and store in the context
-    return (token as any)[lang] ?? token.en;
-};
+export type TextToken = Record<Language, string>;
 
 export const expirationDatePlaceholder: TextToken = {
     es: 'MM/AA',

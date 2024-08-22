@@ -8,12 +8,7 @@ import Stack from './stack';
 import CreditCardExpirationField from './credit-card-expiration-field';
 import CreditCardNumberField from './credit-card-number-field';
 import CvvField from './cvv-field';
-import {
-    formCreditCardCvvLabel,
-    formCreditCardExpirationLabel,
-    formCreditCardNumberLabel,
-    translate,
-} from './text-tokens';
+import * as tokens from './text-tokens';
 
 import type {CardOptions} from './utils/credit-card';
 
@@ -32,10 +27,7 @@ const CreditCardFields: React.FC<CreditCardFieldsProps> = ({
     acceptedCards,
 }) => {
     const {values} = useForm();
-    const {
-        texts,
-        i18n: {locale},
-    } = useTheme();
+    const {texts, t} = useTheme();
     const cvvLength = getCvvLength(String(values[numberFieldName]));
 
     return (
@@ -43,20 +35,17 @@ const CreditCardFields: React.FC<CreditCardFieldsProps> = ({
             <CreditCardNumberField
                 acceptedCards={acceptedCards}
                 name={numberFieldName}
-                label={texts.formCreditCardNumberLabel || translate(formCreditCardNumberLabel, locale)}
+                label={texts.formCreditCardNumberLabel || t(tokens.formCreditCardNumberLabel)}
             />
             <DoubleField layout="60/40">
                 <CreditCardExpirationField
                     name={expirationFieldName}
-                    label={
-                        texts.formCreditCardExpirationLabel ||
-                        translate(formCreditCardExpirationLabel, locale)
-                    }
+                    label={texts.formCreditCardExpirationLabel || t(tokens.formCreditCardExpirationLabel)}
                 />
                 <CvvField
                     acceptedCards={acceptedCards}
                     name={cvvFieldName}
-                    label={texts.formCreditCardCvvLabel || translate(formCreditCardCvvLabel, locale)}
+                    label={texts.formCreditCardCvvLabel || t(tokens.formCreditCardCvvLabel)}
                     maxLength={cvvLength}
                 />
             </DoubleField>

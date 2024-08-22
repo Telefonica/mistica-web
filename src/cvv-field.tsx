@@ -17,24 +17,13 @@ import {vars} from './skins/skin-contract.css';
 import {pxToRem} from './utils/css';
 import {iconButtonSize} from './text-field-base.css';
 import Touchable from './touchable';
-import {
-    formCreditCardCvvError,
-    formCreditCardCvvTooltipAmex,
-    formCreditCardCvvTooltipVisaMc,
-    formCreditCardCvvTooltipVisaMcButtonClose,
-    formCreditCardCvvTooltipVisaMcButtonOpen,
-    formFieldErrorIsMandatory,
-    translate,
-} from './text-tokens';
+import * as tokens from './text-tokens';
 
 import type {CommonFormFieldProps} from './text-field-base';
 import type {CardOptions} from './utils/credit-card';
 
 const TooltipContent = ({acceptedCards}: {acceptedCards: CardOptions}) => {
-    const {
-        texts,
-        i18n: {locale},
-    } = useTheme();
+    const {texts, t} = useTheme();
 
     return (
         <>
@@ -43,8 +32,7 @@ const TooltipContent = ({acceptedCards}: {acceptedCards: CardOptions}) => {
                     <Inline space={16} alignItems="center">
                         <IconCvvVisaMc size={48} role="img" />
                         <Text2>
-                            {texts.formCreditCardCvvTooltipVisaMc ||
-                                translate(formCreditCardCvvTooltipVisaMc, locale)}
+                            {texts.formCreditCardCvvTooltipVisaMc || t(tokens.formCreditCardCvvTooltipVisaMc)}
                         </Text2>
                     </Inline>
                     <Divider />
@@ -52,9 +40,9 @@ const TooltipContent = ({acceptedCards}: {acceptedCards: CardOptions}) => {
                         <Inline space={16} alignItems="center">
                             <IconCvvAmex size={48} role="img" />
                             <Text2>
-                                {texts.formCreditCardCvvTooltipAmex ||
-                                    translate(formCreditCardCvvTooltipAmex, locale)}
+                                {texts.formCreditCardCvvTooltipAmex || t(tokens.formCreditCardCvvTooltipAmex)}
                             </Text2>
+                            )
                         </Inline>
                     )}
                 </Stack>
@@ -86,21 +74,16 @@ const CvvField: React.FC<CvvFieldProps> = ({
     dataAttributes,
     ...rest
 }) => {
-    const {
-        texts,
-        i18n: {locale},
-    } = useTheme();
+    const {texts, t} = useTheme();
     const {setFormError, jumpToNext} = useForm();
     const [isCvvHelpOpen, setIsCvvHelpOpen] = React.useState(false);
 
     const validate = (value: string, rawValue: string) => {
         if (!value) {
-            return optional
-                ? ''
-                : texts.formFieldErrorIsMandatory || translate(formFieldErrorIsMandatory, locale);
+            return optional ? '' : texts.formFieldErrorIsMandatory || t(tokens.formFieldErrorIsMandatory);
         }
         if (value.length !== maxLength) {
-            return texts.formCreditCardCvvError || translate(formCreditCardCvvError, locale);
+            return texts.formCreditCardCvvError || t(tokens.formCreditCardCvvError);
         }
         return validateProp?.(value, rawValue);
     };
@@ -165,9 +148,9 @@ const CvvField: React.FC<CvvFieldProps> = ({
                                 aria-label={
                                     isCvvHelpOpen
                                         ? texts.formCreditCardCvvTooltipVisaMcButtonClose ||
-                                          translate(formCreditCardCvvTooltipVisaMcButtonClose, locale)
+                                          t(tokens.formCreditCardCvvTooltipVisaMcButtonClose)
                                         : texts.formCreditCardCvvTooltipVisaMcButtonOpen ||
-                                          translate(formCreditCardCvvTooltipVisaMcButtonOpen, locale)
+                                          t(tokens.formCreditCardCvvTooltipVisaMcButtonOpen)
                                 }
                             >
                                 <IconInformationRegular size={iconSize} color={vars.colors.neutralMedium} />

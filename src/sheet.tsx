@@ -25,7 +25,7 @@ import ButtonLayout from './button-layout';
 import Image from './image';
 import {safeAreaInsetBottom} from './utils/css';
 import {MOBILE_SIDE_MARGIN, SMALL_DESKTOP_SIDE_MARGIN, TABLET_SIDE_MARGIN} from './responsive-layout.css';
-import {modalClose, sheetConfirmButton, translate} from './text-tokens';
+import * as tokens from './text-tokens';
 
 import type {ExclusifyUnion} from './utils/utility-types';
 import type {DataAttributes, IconProps, RendersNullableElement, TrackingEvent} from './utils/types';
@@ -167,10 +167,7 @@ type SheetProps = {
 };
 
 const Sheet = React.forwardRef<HTMLDivElement, SheetProps>(({onClose, children, dataAttributes}, ref) => {
-    const {
-        texts,
-        i18n: {locale},
-    } = useTheme();
+    const {texts, t} = useTheme();
     const [modalState, dispatch] = React.useReducer(modalReducer, 'closed');
     const initRef = React.useRef(false);
     const modalTitleId = useAriaId();
@@ -262,7 +259,7 @@ const Sheet = React.forwardRef<HTMLDivElement, SheetProps>(({onClose, children, 
                                 <div className={styles.modalCloseButton}>
                                     <InternalIconButton
                                         onPress={closeModal}
-                                        aria-label={texts.modalClose || translate(modalClose, locale)}
+                                        aria-label={texts.modalClose || t(tokens.modalClose)}
                                         Icon={IconCloseRegular}
                                         bleedLeft
                                         bleedRight
@@ -420,10 +417,7 @@ export const RadioListSheet = React.forwardRef<HTMLDivElement, RadioListSheetPro
         const [selectedItemId, setSelectedItemId] = React.useState(selectedId);
         const hasSelectedRef = React.useRef(false);
         const {isDesktopOrBigger} = useScreenSize();
-        const {
-            texts,
-            i18n: {locale},
-        } = useTheme();
+        const {texts, t} = useTheme();
 
         return (
             <Sheet
@@ -447,9 +441,7 @@ export const RadioListSheet = React.forwardRef<HTMLDivElement, RadioListSheetPro
                                         closeModal();
                                     }}
                                 >
-                                    {button?.text ||
-                                        texts.sheetConfirmButton ||
-                                        translate(sheetConfirmButton, locale)}
+                                    {button?.text || texts.sheetConfirmButton || t(tokens.sheetConfirmButton)}
                                 </ButtonPrimary>
                             ) : undefined
                         }

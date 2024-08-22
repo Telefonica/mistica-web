@@ -15,7 +15,7 @@ import ScreenReaderOnly from './screen-reader-only';
 import {useTheme} from './hooks';
 import {VIVO_NEW_SKIN} from './skins/constants';
 import {getPrefixedDataAttributes} from './utils/dom';
-import {loading, translate} from './text-tokens';
+import * as tokens from './text-tokens';
 
 import type {ExclusifyUnion} from './utils/utility-types';
 import type {DataAttributes} from './utils/types';
@@ -268,10 +268,7 @@ type BrandLoadingAnimationProps = {
 };
 
 const PulseBrandLogoAnimation = ({isLoading, onCloseStart, onCloseEnd}: BrandLoadingAnimationProps) => {
-    const {
-        texts,
-        i18n: {locale},
-    } = useTheme();
+    const {texts, t} = useTheme();
     const [pulse, setPulse] = React.useState(true);
 
     const handleAnimationIteration = () => {
@@ -288,7 +285,7 @@ const PulseBrandLogoAnimation = ({isLoading, onCloseStart, onCloseEnd}: BrandLoa
             onAnimationIteration={handleAnimationIteration}
         >
             <ScreenReaderOnly>
-                <div>{texts.loading || translate(loading, locale)}</div>
+                <div>{texts.loading || t(tokens.loading)}</div>
             </ScreenReaderOnly>
             <Logo size={128} />
         </div>
