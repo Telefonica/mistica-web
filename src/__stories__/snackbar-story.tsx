@@ -15,7 +15,7 @@ type Args = {
 };
 
 export const Default: StoryComponent<Args> = ({buttonText, message, duration, type, withDismiss}) => {
-    const snackbarDuration = duration === 'undefined' ? undefined : duration;
+    const snackbarDuration = duration === 'PERSISTENT' ? duration : undefined;
     const {openSnackbar} = useSnackbar();
     return (
         <ButtonPrimary
