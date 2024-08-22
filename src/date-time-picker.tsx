@@ -51,7 +51,11 @@ const getLocaleForMoment = (locale: Locale) => {
 
 const DateTimePicker: React.FC<DateTimePickerProps> = ({withTime, mode, isValidDate, optional, ...rest}) => {
     const [showPicker, realSetShowPicker] = React.useState(false);
-    const {texts, t} = useTheme();
+    const {
+        texts,
+        i18n: {locale},
+        t,
+    } = useTheme();
     const fieldRef = React.useRef<HTMLInputElement | null>(null);
     const {height: pickerContainerHeight, ref: pickerContainerRef} = useElementDimensions();
 

@@ -174,9 +174,7 @@ const SnackbarComponent = React.forwardRef<ImperativeHandle, Props>(
                                     close({action: 'DISMISS'});
                                 }}
                                 aria-label={
-                                    closeButtonLabel ||
-                                    texts.closeButtonLabel ||
-                                    t(tokens.closeButtonLabelText)
+                                    closeButtonLabel || texts.closeButtonLabel || t(tokens.closeButtonLabel)
                                 }
                                 className={styles.dismissButton[hasLongButton ? 'topRight' : 'centered']}
                                 style={{display: 'flex', width: 32, height: 32}}

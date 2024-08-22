@@ -95,7 +95,7 @@ const useTopActions = (
 
     if (onClose) {
         finalActions.push({
-            label: closeButtonLabel || texts.closeButtonLabel || t(tokens.closeButtonLabelText),
+            label: closeButtonLabel || texts.closeButtonLabel || t(tokens.closeButtonLabel),
             onPress: onClose,
             Icon: IconCloseRegular,
         });

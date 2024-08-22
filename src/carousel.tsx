@@ -16,7 +16,7 @@ import {useDesktopContainerType} from './desktop-container-type-context';
 import {VIVO_NEW_SKIN} from './skins/constants';
 import {applyCssVars} from './utils/css';
 import {ResetResponsiveLayout} from './responsive-layout';
-import {carouselNextButton, carouselPrevButton, t} from './text-tokens';
+import * as tokens from './text-tokens';
 
 import type {DesktopContainerType} from './desktop-container-type-context';
 import type {ByBreakpoint, DataAttributes} from './utils/types';

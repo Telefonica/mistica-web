@@ -109,9 +109,7 @@ const Callout: React.FC<Props> = ({
                                 Icon={IconCloseRegular}
                                 onPress={onClose}
                                 aria-label={
-                                    closeButtonLabel ||
-                                    texts.closeButtonLabel ||
-                                    t(tokens.tokens.closeButtonLabel)
+                                    closeButtonLabel || texts.closeButtonLabel || t(tokens.closeButtonLabel)
                                 }
                             />
                         </div>
