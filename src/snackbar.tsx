@@ -27,7 +27,7 @@ export type Props = {
     buttonText?: string;
     buttonAccessibilityLabel?: string;
     closeButtonLabel?: string;
-    duration?: number;
+    duration?: 'PERSISTENT';
     message: string;
     onClose?: SnackbarCloseHandler;
     type?: SnackbarType;
@@ -40,7 +40,7 @@ export type ImperativeHandle = {
     close: SnackbarCloseHandler;
 };
 
-const SnackbarComponent = React.forwardRef<ImperativeHandle, Props>(
+const SnackbarComponent = React.forwardRef<ImperativeHandle, Omit<Props, 'duration'> & {duration: number}>(
     (
         {
             message,
@@ -204,7 +204,7 @@ const Snackbar = React.forwardRef<ImperativeHandle & HTMLDivElement, Props>(
         ref
     ) => {
         const defaultDuration = buttonText ? DEFAULT_DURATION_WITH_BUTTON : DEFAULT_DURATION_WITHOUT_BUTTON;
-        duration = Math.max(duration ?? defaultDuration, defaultDuration);
+        const durationInMs = duration === 'PERSISTENT' ? Infinity : defaultDuration;
         const renderNative = isWebViewBridgeAvailable();
         const onCloseRef = React.useRef(onCloseProp);
         const isOpenRef = React.useRef(false);
@@ -220,7 +220,7 @@ const Snackbar = React.forwardRef<ImperativeHandle & HTMLDivElement, Props>(
                 nativeMessage({
                     message,
                     // @ts-expect-error duration can be 'PERSISTENT' in new webview-bridge lib versions, and old apps will ignore it
-                    duration: duration === Infinity ? 'PERSISTENT' : undefined,
+                    duration,
                     buttonText,
                     buttonAccessibilityLabel,
                     closeButtonLabel,
@@ -258,7 +258,7 @@ const Snackbar = React.forwardRef<ImperativeHandle & HTMLDivElement, Props>(
             <SnackbarComponent
                 ref={ref}
                 message={message}
-                duration={duration}
+                duration={durationInMs}
                 buttonText={buttonText}
                 buttonAccessibilityLabel={buttonAccessibilityLabel}
                 closeButtonLabel={closeButtonLabel}

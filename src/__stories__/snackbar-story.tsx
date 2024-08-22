@@ -9,13 +9,13 @@ export default {
 type Args = {
     buttonText: string;
     message: string;
-    duration: string;
+    duration: 'PERSISTENT' | 'undefined';
     type: React.ComponentProps<typeof Snackbar>['type'];
     withDismiss: boolean;
 };
 
 export const Default: StoryComponent<Args> = ({buttonText, message, duration, type, withDismiss}) => {
-    const snackbarDuration = duration !== 'Default' ? +duration : undefined;
+    const snackbarDuration = duration === 'undefined' ? undefined : duration;
     const {openSnackbar} = useSnackbar();
     return (
         <ButtonPrimary
@@ -35,12 +35,12 @@ Default.args = {
     message: 'Some message',
     buttonText: 'Action',
     withDismiss: false,
-    duration: 'Default',
+    duration: 'undefined',
 };
 
 Default.argTypes = {
     duration: {
-        options: ['Default', 'Infinity'],
+        options: ['PERSISTENT', 'undefined'],
         control: {type: 'select'},
     },
     type: {
