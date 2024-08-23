@@ -22,9 +22,9 @@ export default {
     title: 'Components/Carousels/Slideshow',
 };
 
-type Args = {numItems: number; autoplay: boolean; loop: boolean; withBullets: boolean};
+type Args = {numItems: number; autoplay: boolean; loop: boolean; bullets: boolean};
 
-export const Default: StoryComponent<Args> = ({numItems, autoplay, loop, withBullets}) => {
+export const Default: StoryComponent<Args> = ({numItems, autoplay, loop, bullets}) => {
     const [currentPage, setCurrentPage] = React.useState<number>(0);
     return (
         <Box paddingY={24}>
@@ -35,7 +35,7 @@ export const Default: StoryComponent<Args> = ({numItems, autoplay, loop, withBul
                         asset={<IconInformationRegular />}
                     />
                     <Slideshow
-                        withBullets={withBullets}
+                        withBullets={bullets}
                         autoplay={autoplay ? {time: 5000, loop} : false}
                         onPageChange={setCurrentPage}
                         items={Array.from({length: numItems}, (_, idx) => (
@@ -58,7 +58,7 @@ Default.args = {
     numItems: 6,
     autoplay: false,
     loop: false,
-    withBullets: true,
+    bullets: true,
 };
 
 type WithCarouselContextArgs = {numItems: number};

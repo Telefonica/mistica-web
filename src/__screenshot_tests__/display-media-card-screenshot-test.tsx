@@ -15,7 +15,7 @@ test('DisplayMediaCard', async () => {
 test('DisplayMediaCard with top actions', async () => {
     await openStoryPage({
         id: 'components-cards-displaymediacard--default',
-        args: {withTopAction: true, closable: true},
+        args: {topAction: true, closable: true},
     });
 
     const displayMediaCard = await screen.findByTestId('display-media-card');
@@ -64,7 +64,7 @@ test('DisplayMediaCard with asset', async () => {
 test('DisplayMediaCard with extra content', async () => {
     await openStoryPage({
         id: 'components-cards-displaymediacard--default',
-        args: {withExtra: true},
+        args: {extra: true},
     });
 
     const displayMediaCard = await screen.findByTestId('display-media-card');
@@ -83,7 +83,7 @@ test.each`
 `('DisplayMediaCard with $background, empty source and inverse=$inverse', async ({background, inverse}) => {
     await openStoryPage({
         id: 'components-cards-displaymediacard--default',
-        args: {background, isEmptySource: true, inverse},
+        args: {background, emptySource: true, inverse},
     });
 
     const displayMediaCard = await screen.findByTestId('display-media-card');

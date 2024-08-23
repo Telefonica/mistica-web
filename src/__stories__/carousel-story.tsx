@@ -30,7 +30,7 @@ type Args = {
     itemsPerPageMobile: number;
     itemsPerPageTablet: number;
     itemsPerPageDesktop: number;
-    withBullets: boolean;
+    bullets: boolean;
     free: boolean;
     itemsToScroll: number;
     mobilePageOffset: (typeof mobilePageOffsetOptions)[number];
@@ -41,7 +41,7 @@ type Args = {
 
 export const Default: StoryComponent<Args> = ({
     numItems,
-    withBullets,
+    bullets,
     itemsPerPageMobile,
     itemsPerPageTablet,
     itemsPerPageDesktop,
@@ -66,7 +66,7 @@ export const Default: StoryComponent<Args> = ({
                     />
                     <Carousel
                         dataAttributes={{testid: 'carousel-story'}}
-                        withBullets={withBullets}
+                        withBullets={bullets}
                         free={free}
                         itemsPerPage={{
                             mobile: itemsPerPageMobile,
@@ -106,7 +106,7 @@ export const Default: StoryComponent<Args> = ({
 Default.storyName = 'Carousel';
 Default.parameters = {fullScreen: true};
 Default.args = {
-    withBullets: true,
+    bullets: true,
     numItems: 6,
     itemsPerPageDesktop: 3,
     itemsPerPageTablet: 2,

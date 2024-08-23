@@ -39,11 +39,11 @@ type Args = {
     title: string;
     subtitle: string;
     description: string;
-    withExtra: boolean;
+    extra: boolean;
     actions: 'button' | 'link' | 'button and link' | 'onPress' | 'href' | 'to' | 'none';
     closable: boolean;
-    withTopAction: boolean;
-    isEmptySource: boolean;
+    topAction: boolean;
+    emptySource: boolean;
 };
 
 export const Default: StoryComponent<Args> = ({
@@ -54,12 +54,12 @@ export const Default: StoryComponent<Args> = ({
     subtitle,
     description,
     actions = 'button',
-    withExtra,
+    extra,
     closable,
-    withTopAction,
+    topAction,
     media,
     asset,
-    isEmptySource,
+    emptySource,
 }) => {
     let assetElement;
     if (asset === 'circle with icon') {
@@ -102,19 +102,19 @@ export const Default: StoryComponent<Args> = ({
             media={
                 media === 'video' ? (
                     <Video
-                        src={isEmptySource ? '' : VIDEO_SRC}
+                        src={emptySource ? '' : VIDEO_SRC}
                         aspectRatio="16:9"
                         dataAttributes={{qsysid: 'video'}}
                     />
                 ) : (
-                    <Image aspectRatio="16:9" src={isEmptySource ? '' : IMAGE_SRC} />
+                    <Image aspectRatio="16:9" src={emptySource ? '' : IMAGE_SRC} />
                 )
             }
             {...interactiveActions}
-            extra={withExtra ? <Placeholder /> : undefined}
+            extra={extra ? <Placeholder /> : undefined}
             onClose={closable ? () => {} : undefined}
             actions={
-                withTopAction
+                topAction
                     ? [
                           {
                               Icon: IconMobileDeviceRegular,
@@ -152,11 +152,11 @@ Default.args = {
     title: 'Title',
     subtitle: 'Subtitle',
     description: 'This is a description for the card',
-    withExtra: false,
+    extra: false,
     actions: 'button',
     closable: false,
-    withTopAction: false,
-    isEmptySource: false,
+    topAction: false,
+    emptySource: false,
 };
 Default.argTypes = {
     asset: {

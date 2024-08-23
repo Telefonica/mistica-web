@@ -25,23 +25,23 @@ type Args = {
     itemsPerPageDesktopSmall: number;
     itemsPerPageDesktopMedium: number;
     itemsPerPageDesktopLarge: number;
-    withBullets: boolean;
+    bullets: boolean;
 };
 
 const ExampleCarousel = ({
     numItems,
-    withBullets,
+    bullets,
     cardsTitlePrefix,
     itemsPerPage,
 }: {
     numItems: number;
-    withBullets: boolean;
+    bullets: boolean;
     cardsTitlePrefix: number;
     itemsPerPage: {mobile: number; tablet: number; desktop: {small: number; medium: number; large: number}};
 }) => (
     <Carousel
         dataAttributes={{testid: 'carousel-story'}}
-        withBullets={withBullets}
+        withBullets={bullets}
         itemsPerPage={itemsPerPage}
         items={Array.from({length: numItems}, (_, idx) => (
             <MediaCard
@@ -63,7 +63,7 @@ export const Default: StoryComponent<Args> = ({
     itemsPerPageDesktopSmall,
     itemsPerPageDesktopMedium,
     itemsPerPageDesktopLarge,
-    withBullets,
+    bullets,
 }) => {
     const itemsPerPage = {
         mobile: itemsPerPageMobile,
@@ -87,7 +87,7 @@ export const Default: StoryComponent<Args> = ({
                         left={
                             <ExampleCarousel
                                 numItems={numItems}
-                                withBullets={withBullets}
+                                bullets={bullets}
                                 itemsPerPage={itemsPerPage}
                                 cardsTitlePrefix={1}
                             />
@@ -100,7 +100,7 @@ export const Default: StoryComponent<Args> = ({
                         right={
                             <ExampleCarousel
                                 numItems={numItems}
-                                withBullets={withBullets}
+                                bullets={bullets}
                                 itemsPerPage={itemsPerPage}
                                 cardsTitlePrefix={2}
                             />
@@ -108,7 +108,7 @@ export const Default: StoryComponent<Args> = ({
                     ></GridLayout>
                     <ExampleCarousel
                         numItems={numItems}
-                        withBullets={withBullets}
+                        bullets={bullets}
                         itemsPerPage={itemsPerPage}
                         cardsTitlePrefix={3}
                     />
@@ -127,5 +127,5 @@ Default.args = {
     itemsPerPageDesktopSmall: 1,
     itemsPerPageDesktopMedium: 2,
     itemsPerPageDesktopLarge: 3,
-    withBullets: true,
+    bullets: true,
 };

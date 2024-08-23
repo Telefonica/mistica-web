@@ -22,7 +22,7 @@ export default {
 };
 
 type Args = {
-    withHeader: boolean;
+    header: boolean;
     headlineType: TagType;
     headline: string;
     pretitle: string;
@@ -33,19 +33,19 @@ type Args = {
     description: string;
     small: boolean;
     inverse: boolean;
-    withExtraContent: boolean;
+    extra: boolean;
     sideBySideExtraOnDesktop: boolean;
-    withBreadcrumbs: boolean;
+    breadcrumbs: boolean;
     bleed: boolean;
     noPaddingY: boolean;
 };
 
 export const Default: StoryComponent<Args> = ({
-    withHeader,
+    header,
     inverse,
     bleed,
     sideBySideExtraOnDesktop,
-    withBreadcrumbs,
+    breadcrumbs,
     headlineType,
     headline,
     pretitle,
@@ -55,7 +55,7 @@ export const Default: StoryComponent<Args> = ({
     titleAs,
     description,
     small,
-    withExtraContent,
+    extra,
     noPaddingY,
 }) => {
     return (
@@ -67,7 +67,7 @@ export const Default: StoryComponent<Args> = ({
                 sideBySideExtraOnDesktop={sideBySideExtraOnDesktop}
                 noPaddingY={noPaddingY}
                 breadcrumbs={
-                    withBreadcrumbs ? (
+                    breadcrumbs ? (
                         <NavigationBreadcrumbs
                             title="Bills"
                             breadcrumbs={[{title: 'Account', url: '/consumptions'}]}
@@ -75,7 +75,7 @@ export const Default: StoryComponent<Args> = ({
                     ) : undefined
                 }
                 header={
-                    withHeader ? (
+                    header ? (
                         <Header
                             pretitleAs={pretitleAs}
                             headline={<Tag type={headlineType}>{headline}</Tag>}
@@ -87,7 +87,7 @@ export const Default: StoryComponent<Args> = ({
                         />
                     ) : undefined
                 }
-                extra={withExtraContent ? <Placeholder /> : undefined}
+                extra={extra ? <Placeholder /> : undefined}
             />
             <ResponsiveLayout>
                 <Callout
@@ -104,7 +104,7 @@ export const Default: StoryComponent<Args> = ({
 
 Default.storyName = 'Header';
 Default.args = {
-    withHeader: true,
+    header: true,
     headlineType: 'promo',
     headline: 'Priority',
     pretitle: 'Your last bill',
@@ -115,9 +115,9 @@ Default.args = {
     small: false,
     truncatePretitle: false,
     inverse: true,
-    withBreadcrumbs: true,
+    breadcrumbs: true,
     noPaddingY: false,
-    withExtraContent: true,
+    extra: true,
     sideBySideExtraOnDesktop: true,
     bleed: false,
 };
@@ -126,23 +126,23 @@ Default.argTypes = {
     headlineType: {
         options: ['promo', 'active', 'inactive', 'success', 'warning', 'error'],
         control: {type: 'select'},
-        if: {arg: 'withHeader'},
+        if: {arg: 'header'},
     },
-    headline: {if: {arg: 'withHeader'}},
-    pretitle: {if: {arg: 'withHeader'}},
+    headline: {if: {arg: 'header'}},
+    pretitle: {if: {arg: 'header'}},
     pretitleAs: {
-        if: {arg: 'withHeader'},
+        if: {arg: 'header'},
         options: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'span'],
         control: {type: 'select'},
     },
-    title: {if: {arg: 'withHeader'}},
+    title: {if: {arg: 'header'}},
     titleAs: {
-        if: {arg: 'withHeader'},
+        if: {arg: 'header'},
         options: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'span'],
         control: {type: 'select'},
     },
-    description: {if: {arg: 'withHeader'}},
-    small: {if: {arg: 'withHeader'}},
-    sideBySideExtraOnDesktop: {if: {arg: 'withExtraContent'}},
-    bleed: {if: {arg: 'withExtraContent'}},
+    description: {if: {arg: 'header'}},
+    small: {if: {arg: 'header'}},
+    sideBySideExtraOnDesktop: {if: {arg: 'extra'}},
+    bleed: {if: {arg: 'extra'}},
 };

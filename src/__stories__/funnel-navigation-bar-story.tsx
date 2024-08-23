@@ -20,13 +20,13 @@ export default {
     },
 };
 
-type Args = {variant: Variant; withBorder: boolean};
+type Args = {variant: Variant; border: boolean};
 
-export const Default: StoryComponent<Args> = ({variant, withBorder}) => {
+export const Default: StoryComponent<Args> = ({variant, border}) => {
     const {isDesktopOrBigger} = useScreenSize();
     return (
         <FunnelNavigationBar
-            withBorder={withBorder}
+            withBorder={border}
             variant={variant}
             right={
                 <NavigationBarActionGroup>
@@ -52,7 +52,7 @@ Default.storyName = 'FunnelNavigationBar';
 
 Default.args = {
     variant: 'default',
-    withBorder: true,
+    border: true,
 };
 
 Default.argTypes = {
