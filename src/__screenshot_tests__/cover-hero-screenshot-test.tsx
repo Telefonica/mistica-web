@@ -40,21 +40,21 @@ const cases = [
         'desktop with extra and sideExtra',
         {
             device: 'DESKTOP',
-            args: {withExtra: true, withSideExtra: true},
+            args: {extra: true, sideExtra: true},
         },
     ],
     [
         'mobile with extra and sideExtra',
         {
             device: 'MOBILE_IOS',
-            args: {withExtra: true, withSideExtra: true},
+            args: {extra: true, sideExtra: true},
         },
     ],
     [
         'tablet with extra and sideExtra',
         {
             device: 'TABLET',
-            args: {withExtra: true, withSideExtra: true},
+            args: {extra: true, sideExtra: true},
         },
     ],
     [
@@ -77,8 +77,8 @@ const cases = [
             device: 'DESKTOP',
             args: {
                 centered: true,
-                withExtra: true,
-                withSideExtra: true,
+                extra: true,
+                sideExtra: true,
                 actions: 'button secondaryButton and link',
             },
         },
@@ -89,8 +89,8 @@ const cases = [
             device: 'MOBILE_IOS',
             args: {
                 centered: true,
-                withExtra: true,
-                withSideExtra: true,
+                extra: true,
+                sideExtra: true,
                 actions: 'button secondaryButton and link',
             },
         },
@@ -140,7 +140,7 @@ const cases = [
             args: {
                 title: 'Long title '.repeat(10),
                 description: 'This is a long description with a long text to see how this works'.repeat(10),
-                withSideExtra: true,
+                sideExtra: true,
             },
         },
     ],

@@ -1,3 +1,17 @@
+# [15.18.0](https://github.com/Telefonica/mistica-web/compare/v15.17.0...v15.18.0) (2024-08-20)
+
+
+### Bug Fixes
+
+* **FeedbackScreen:** avoid double responsive margins in buttons when they are not fixed ([#1195](https://github.com/Telefonica/mistica-web/issues/1195)) ([41c10ad](https://github.com/Telefonica/mistica-web/commit/41c10ad0a60fe3bfd7e191eca4583da37f2cf84e))
+* **Inline:** wrap content if required when space equals between/around/evenly ([#1199](https://github.com/Telefonica/mistica-web/issues/1199)) ([b121227](https://github.com/Telefonica/mistica-web/commit/b121227d6de61f2dbc2e6e60a4f0b2b9ecc8a646))
+* **Snackbar:** allow dataAttributes passed to openSnackbar ([#1192](https://github.com/Telefonica/mistica-web/issues/1192)) ([c5c65bd](https://github.com/Telefonica/mistica-web/commit/c5c65bdf486554e466fa325b3dbcef06eaccfecb))
+
+
+### Features
+
+* **Popover, Snackbar, Callout, Chip, Dialog, Cards:** allow customizable close button label ([#1193](https://github.com/Telefonica/mistica-web/issues/1193)) ([63de33a](https://github.com/Telefonica/mistica-web/commit/63de33a8fc9960f32c121db8e81f45e0ba32bdb6))
+
 # [15.17.0](https://github.com/Telefonica/mistica-web/compare/v15.16.4...v15.17.0) (2024-08-01)
 
 

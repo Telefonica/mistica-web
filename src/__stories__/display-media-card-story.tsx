@@ -41,9 +41,9 @@ type DisplayMediaCardArgs = {
     pretitle: string;
     title: string;
     description: string;
-    withExtra: boolean;
+    extra: boolean;
     closable: boolean;
-    withTopAction: boolean;
+    topAction: boolean;
     actions:
         | 'button'
         | 'link'
@@ -55,7 +55,7 @@ type DisplayMediaCardArgs = {
         | 'none';
     width: string;
     aspectRatio: '1:1' | '16:9' | '7:10' | '9:10' | 'auto';
-    isEmptySource: boolean;
+    emptySource: boolean;
     inverse: boolean;
 };
 
@@ -67,13 +67,13 @@ export const Default: StoryComponent<DisplayMediaCardArgs> = ({
     pretitle,
     title,
     description,
-    withExtra,
+    extra,
     actions = 'button',
     closable,
-    withTopAction,
+    topAction,
     width,
     aspectRatio,
-    isEmptySource,
+    emptySource,
     inverse,
 }) => {
     let icon;
@@ -113,7 +113,7 @@ export const Default: StoryComponent<DisplayMediaCardArgs> = ({
         background === 'image'
             ? {
                   onClose: closable ? () => {} : undefined,
-                  actions: withTopAction
+                  actions: topAction
                       ? [
                             {
                                 Icon: IconLightningRegular,
@@ -134,11 +134,11 @@ export const Default: StoryComponent<DisplayMediaCardArgs> = ({
                             },
                         ]
                       : undefined,
-                  backgroundImage: isEmptySource ? '' : BACKGROUND_IMAGE_SRC,
+                  backgroundImage: emptySource ? '' : BACKGROUND_IMAGE_SRC,
               }
             : {
-                  backgroundVideo: isEmptySource ? '' : BACKGROUND_VIDEO_SRC,
-                  poster: isEmptySource ? '' : BACKGROUND_VIDEO_POSTER_SRC,
+                  backgroundVideo: emptySource ? '' : BACKGROUND_VIDEO_SRC,
+                  poster: emptySource ? '' : BACKGROUND_VIDEO_POSTER_SRC,
               };
 
     return (
@@ -155,7 +155,7 @@ export const Default: StoryComponent<DisplayMediaCardArgs> = ({
                     aria-label="Display media card label"
                     width={width}
                     aspectRatio={aspectRatio}
-                    extra={withExtra ? <Placeholder /> : undefined}
+                    extra={extra ? <Placeholder /> : undefined}
                     dataAttributes={{testid: 'display-media-card'}}
                 />
             </Box>
@@ -172,13 +172,13 @@ Default.args = {
     pretitle: 'Pretitle',
     title: 'Title',
     description: 'This is a description for the card',
-    withExtra: false,
+    extra: false,
     actions: 'button',
     closable: false,
-    withTopAction: false,
+    topAction: false,
     width: 'auto',
     aspectRatio: 'auto',
-    isEmptySource: false,
+    emptySource: false,
     inverse: false,
 };
 Default.argTypes = {

@@ -11,16 +11,16 @@ type Args = {
     message: string;
     duration: string;
     type: React.ComponentProps<typeof Snackbar>['type'];
-    withDismiss: boolean;
+    dismiss: boolean;
 };
 
-export const Default: StoryComponent<Args> = ({buttonText, message, duration, type, withDismiss}) => {
+export const Default: StoryComponent<Args> = ({buttonText, message, duration, type, dismiss}) => {
     const snackbarDuration = duration !== 'Default' ? +duration : undefined;
     const {openSnackbar} = useSnackbar();
     return (
         <ButtonPrimary
             onPress={() => {
-                openSnackbar({message, type, buttonText, duration: snackbarDuration, withDismiss});
+                openSnackbar({message, type, buttonText, duration: snackbarDuration, withDismiss: dismiss});
             }}
         >
             Open Snackbar
@@ -34,7 +34,7 @@ Default.args = {
     type: 'INFORMATIVE',
     message: 'Some message',
     buttonText: 'Action',
-    withDismiss: false,
+    dismiss: false,
     duration: 'Default',
 };
 

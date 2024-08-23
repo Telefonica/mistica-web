@@ -33,10 +33,10 @@ type DataCardArgs = {
     subtitle: string;
     description: string;
     ariaLabel: string;
-    withExtra: boolean;
+    extra: boolean;
     actions: 'button' | 'link' | 'button and link' | 'onPress' | 'href' | 'to' | 'none';
     closable: boolean;
-    withTopAction: boolean;
+    topAction: boolean;
     aspectRatio: AspectRatio;
 };
 
@@ -51,10 +51,10 @@ export const Default: StoryComponent<DataCardArgs> = ({
     subtitle,
     description,
     ariaLabel,
-    withExtra,
+    extra,
     actions = 'button',
     closable,
-    withTopAction,
+    topAction,
     aspectRatio,
 }) => {
     let icon;
@@ -98,13 +98,13 @@ export const Default: StoryComponent<DataCardArgs> = ({
             title={title}
             subtitle={subtitle}
             description={description}
-            extra={withExtra ? <Placeholder /> : undefined}
+            extra={extra ? <Placeholder /> : undefined}
             {...interactiveActions}
             aspectRatio={aspectRatioValue as AspectRatio}
             dataAttributes={{testid: 'data-card'}}
             aria-label={ariaLabel}
             actions={
-                withTopAction
+                topAction
                     ? [
                           {
                               Icon: IconMobileDeviceRegular,
@@ -141,11 +141,11 @@ Default.args = {
     title: 'Title',
     subtitle: 'Subtitle',
     description: 'This is a description for the card',
-    withExtra: false,
+    extra: false,
     actions: 'button',
     ariaLabel: '',
     closable: false,
-    withTopAction: false,
+    topAction: false,
     aspectRatio: 'auto',
 };
 Default.argTypes = {

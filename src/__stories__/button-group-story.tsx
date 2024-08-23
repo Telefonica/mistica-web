@@ -11,9 +11,9 @@ const handleOnPress = () => window.alert('pressed!');
 
 type Args = {
     small: boolean;
-    showButtonPrimary: boolean;
-    showButtonSecondary: boolean;
-    showButtonLink: boolean;
+    buttonPrimary: boolean;
+    buttonSecondary: boolean;
+    buttonLink: boolean;
     buttonPrimaryText: string;
     buttonSecondaryText: string;
     buttonLinkText: string;
@@ -21,43 +21,43 @@ type Args = {
 
 export const Default: StoryComponent<Args> = ({
     small,
-    showButtonPrimary,
-    showButtonSecondary,
-    showButtonLink,
+    buttonPrimary,
+    buttonSecondary,
+    buttonLink,
     buttonPrimaryText,
     buttonSecondaryText,
     buttonLinkText,
 }) => {
-    const primaryButton = showButtonPrimary ? (
+    const primaryButton = buttonPrimary ? (
         <ButtonPrimary small={small} onPress={handleOnPress}>
             {buttonPrimaryText}
         </ButtonPrimary>
     ) : undefined;
 
-    const secondaryButton = showButtonSecondary ? (
+    const secondaryButton = buttonSecondary ? (
         <ButtonSecondary small={small} onPress={handleOnPress}>
             {buttonSecondaryText}
         </ButtonSecondary>
     ) : undefined;
 
-    const buttonLink = showButtonLink ? (
+    const linkButton = buttonLink ? (
         <ButtonLink onPress={handleOnPress}>{buttonLinkText}</ButtonLink>
     ) : undefined;
 
-    return <ButtonGroup primaryButton={primaryButton} secondaryButton={secondaryButton} link={buttonLink} />;
+    return <ButtonGroup primaryButton={primaryButton} secondaryButton={secondaryButton} link={linkButton} />;
 };
 
 Default.storyName = 'ButtonGroup';
 Default.argTypes = {
-    buttonPrimaryText: {if: {arg: 'showButtonPrimary'}},
-    buttonSecondaryText: {if: {arg: 'showButtonSecondary'}},
-    buttonLinkText: {if: {arg: 'showButtonLink'}},
+    buttonPrimaryText: {if: {arg: 'buttonPrimary'}},
+    buttonSecondaryText: {if: {arg: 'buttonSecondary'}},
+    buttonLinkText: {if: {arg: 'buttonLink'}},
 };
 Default.args = {
     small: false,
-    showButtonPrimary: true,
-    showButtonSecondary: true,
-    showButtonLink: true,
+    buttonPrimary: true,
+    buttonSecondary: true,
+    buttonLink: true,
     buttonPrimaryText: 'Action1',
     buttonSecondaryText: 'Action2',
     buttonLinkText: 'link',

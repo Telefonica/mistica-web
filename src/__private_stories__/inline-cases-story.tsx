@@ -32,6 +32,16 @@ export const Default: StoryComponent = () => {
                 </Stack>
 
                 <Stack space={16}>
+                    <Title1>
+                        In this case (space between + wrap), the short button should drop to a new line
+                    </Title1>
+                    <Inline space="between" wrap>
+                        <ButtonPrimary fake>{longText}</ButtonPrimary>
+                        <ButtonPrimary fake>{shortText}</ButtonPrimary>
+                    </Inline>
+                </Stack>
+
+                <Stack space={16}>
                     <Title1>space-between should be full width</Title1>
                     <Inline space="between">
                         <ButtonPrimary fake>{shortText}</ButtonPrimary>

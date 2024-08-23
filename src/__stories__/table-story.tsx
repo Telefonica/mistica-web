@@ -45,9 +45,9 @@ type Args = {
     columnTextAlign: Array<'left' | 'right' | 'center'>;
     rowVerticalAlign: 'top' | 'middle';
     columnWidth: Array<number | string>;
-    withActions: boolean;
+    actions: boolean;
     hideHeaders: 'true' | 'false' | 'mobile' | 'desktop';
-    withRowHeader: boolean;
+    rowHeader: boolean;
     rowHeaderIndex: number;
 };
 
@@ -63,9 +63,9 @@ export const Default: StoryComponent<Args> = ({
     columnTextAlign,
     rowVerticalAlign,
     columnWidth,
-    withActions,
+    actions,
     hideHeaders,
-    withRowHeader,
+    rowHeader,
     rowHeaderIndex,
 }) => {
     return (
@@ -87,9 +87,9 @@ export const Default: StoryComponent<Args> = ({
                     columnTextAlign={columnTextAlign}
                     columnWidth={columnWidth}
                     rowVerticalAlign={rowVerticalAlign}
-                    rowHeaderIndex={withRowHeader ? rowHeaderIndex : undefined}
+                    rowHeaderIndex={rowHeader ? rowHeaderIndex : undefined}
                     content={foodList.slice(0, numItems).map((row, index) => {
-                        const actionsCount = withActions ? (index + 1) % 3 : 0;
+                        const actionsCount = actions ? (index + 1) % 3 : 0;
                         return actionsCount === 0
                             ? row
                             : {
@@ -127,9 +127,9 @@ Default.args = {
     columnTextAlign: ['left', 'right', 'right', 'right', 'center', 'right'],
     rowVerticalAlign: 'middle',
     columnWidth: ['auto', 'auto', 'auto', 'auto', 'auto', 'auto'],
-    withActions: false,
+    actions: false,
     hideHeaders: 'false',
-    withRowHeader: false,
+    rowHeader: false,
     rowHeaderIndex: 0,
 };
 Default.argTypes = {
@@ -151,5 +151,5 @@ Default.argTypes = {
         options: ['false', 'true', 'mobile', 'desktop'],
         control: {type: 'select'},
     },
-    rowHeaderIndex: {if: {arg: 'withRowHeader'}},
+    rowHeaderIndex: {if: {arg: 'rowHeader'}},
 };
