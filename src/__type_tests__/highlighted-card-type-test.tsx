@@ -16,6 +16,7 @@ const s = 'maybe string' as string | undefined;
 <HighlightedCard title={s} description={s} />;
 
 <HighlightedCard title="title" onPress={() => {}} />;
+<HighlightedCard title="title" to="#" fullPageOnWebView />;
 <HighlightedCard title="title" to="#" newTab />;
 <HighlightedCard title="title" href="#" newTab />;
 <HighlightedCard title="title" button={<ButtonPrimary onPress={() => {}}>button</ButtonPrimary>} />;
@@ -28,3 +29,9 @@ const s = 'maybe string' as string | undefined;
 
 // @ts-expect-error incompatible touchable props
 <HighlightedCard title="title" onPress={() => {}} newTab />;
+
+// @ts-expect-error incompatible touchable props
+<HighlightedCard title="title" onPress={() => {}} fullPageOnWebView />;
+
+// @ts-expect-error incompatible touchable props
+<HighlightedCard title="title" href="#" fullPageOnWebView />;

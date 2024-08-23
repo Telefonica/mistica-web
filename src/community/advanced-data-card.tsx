@@ -48,6 +48,7 @@ type TouchableProps = {
     | {
           to: string | undefined;
           newTab?: boolean;
+          fullPageOnWebView?: boolean;
       }
     | {
           onPress: PressHandler | undefined;

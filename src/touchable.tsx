@@ -4,6 +4,7 @@ import classnames from 'classnames';
 import ScreenReaderOnly from './screen-reader-only';
 import * as classes from './touchable.css';
 import {useTheme} from './hooks';
+import {isInsideNovumNativeApp} from './utils/platform';
 import {ENTER, SPACE} from './utils/keys';
 import {getPrefixedDataAttributes} from './utils/dom';
 import {redirect} from './utils/browser';
@@ -53,6 +54,7 @@ type HrefProps = {
 type ToProps = {
     to: string | Location;
     newTab?: boolean;
+    fullPageOnWebView?: boolean;
     replace?: boolean;
     onNavigate?: () => void | Promise<void>;
 };
@@ -87,7 +89,7 @@ export type TouchableProps = ExclusifyUnion<
 export type TouchableElement = HTMLDivElement | HTMLAnchorElement | HTMLButtonElement;
 
 const RawTouchable = React.forwardRef<TouchableElement, TouchableProps>((props, ref) => {
-    const {texts, analytics, Link, useHrefDecorator} = useTheme();
+    const {texts, analytics, platformOverrides, Link, useHrefDecorator} = useTheme();
     const hrefDecorator = useHrefDecorator();
     const isClicked = React.useRef(false);
     let trackingEvents: ReadonlyArray<TrackingEvent> = [];
@@ -139,6 +141,12 @@ const RawTouchable = React.forwardRef<TouchableElement, TouchableProps>((props, 
     const getHref = (): string => {
         if (props.href) {
             return hrefDecorator(props.href);
+        }
+        if (props.to && props.fullPageOnWebView) {
+            if (typeof props.to === 'string') {
+                return props.to;
+            }
+            return props.to.pathname ?? '';
         }
         return '';
     };
@@ -208,7 +216,7 @@ const RawTouchable = React.forwardRef<TouchableElement, TouchableProps>((props, 
         ) : null;
     };
 
-    if (props.href) {
+    if (!!props.href || (props.to && props.fullPageOnWebView && isInsideNovumNativeApp(platformOverrides))) {
         return (
             <a
                 {...commonProps}

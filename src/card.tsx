@@ -65,6 +65,7 @@ type IconButtonAction = BaseIconButtonAction &
         | {
               to: string;
               newTab?: boolean;
+              fullPageOnWebView?: boolean;
               replace?: boolean;
           }
         | {onPress: () => void}
@@ -496,6 +497,7 @@ type TouchableProps = {
     | {
           to: string | undefined;
           newTab?: boolean;
+          fullPageOnWebView?: boolean;
           replace?: boolean;
           onNavigate?: () => void | Promise<void>;
       }

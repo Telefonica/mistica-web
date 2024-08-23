@@ -19,6 +19,11 @@ import {ButtonPrimary} from '..';
 </ButtonPrimary>;
 
 // @ts-expect-error - bad combination
+<ButtonPrimary href="/foo" fullPageOnWebView>
+    Text
+</ButtonPrimary>;
+
+// @ts-expect-error - bad combination
 <ButtonPrimary fake onPress={() => {}}>
     Text
 </ButtonPrimary>;
@@ -37,7 +42,7 @@ import {ButtonPrimary} from '..';
 
 <ButtonPrimary to="/foo">Text</ButtonPrimary>;
 
-<ButtonPrimary to="/foo" newTab>
+<ButtonPrimary to="/foo" fullPageOnWebView>
     Text
 </ButtonPrimary>;
 

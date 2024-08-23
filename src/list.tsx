@@ -287,6 +287,7 @@ interface ToRowContentProps extends CommonProps {
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
     to: string | undefined;
     newTab?: boolean;
+    fullPageOnWebView?: boolean;
     replace?: boolean;
     onNavigate?: () => void | Promise<void>;
 }
@@ -396,6 +397,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
         loadOnTop: props.loadOnTop,
 
         to: props.to,
+        fullPageOnWebView: props.fullPageOnWebView,
         replace: props.replace,
 
         onNavigate: props.onNavigate,
