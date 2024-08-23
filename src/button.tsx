@@ -32,7 +32,7 @@ const renderButtonElement = ({
     renderText,
 }: {
     content: React.ReactNode;
-    defaultIconSize: number;
+    defaultIconSize: string;
     renderText: (text: React.ReactNode) => React.ReactNode;
 }): React.ReactNode => {
     const childrenArr = flattenChildren(content);
@@ -56,19 +56,19 @@ const renderButtonElement = ({
             if (accText.length) {
                 flushAccText();
             }
-            const sizeInPx = element.props.size ?? defaultIconSize;
+            const sizeInPx = element.props.size !== undefined ? pxToRem(element.props.size) : defaultIconSize;
             resultChildrenArr.push(
                 <div
                     key={resultChildrenArr.length}
                     style={{
                         display: 'flex',
                         alignItems: 'center',
-                        marginLeft: isFirstChild ? 0 : styles.ICON_MARGIN_PX,
-                        marginRight: isLastChild ? 0 : styles.ICON_MARGIN_PX,
+                        marginLeft: isFirstChild ? 0 : styles.iconMargin,
+                        marginRight: isLastChild ? 0 : styles.iconMargin,
                     }}
                 >
                     {React.cloneElement(element as React.ReactElement<IconProps>, {
-                        size: pxToRem(sizeInPx),
+                        size: sizeInPx,
                     })}
                 </div>
             );
@@ -115,7 +115,6 @@ const renderButtonContent = ({
     shouldRenderSpinner,
     setShouldRenderSpinner,
     renderText,
-    textContentStyle,
     StartIcon,
     EndIcon,
     withChevron,
@@ -127,27 +126,26 @@ const renderButtonContent = ({
     shouldRenderSpinner: boolean;
     setShouldRenderSpinner: (value: boolean) => void;
     renderText: (text: React.ReactNode) => React.ReactNode;
-    textContentStyle?: string;
     StartIcon?: React.FC<IconProps>;
     EndIcon?: React.FC<IconProps>;
     withChevron?: boolean;
 }): React.ReactNode => {
-    const defaultIconSize = small ? styles.SMALL_ICON_SIZE : styles.ICON_SIZE;
-    const spinnerSizeRem = pxToRem(small ? styles.SMALL_SPINNER_SIZE : styles.SPINNER_SIZE);
+    const defaultIconSize = small ? styles.iconSize.small : styles.iconSize.default;
+    const spinnerSizeRem = small ? styles.spinnerSize.small : styles.spinnerSize.default;
 
     return (
         <>
             {/* text content */}
-            <div aria-hidden={showSpinner ? true : undefined} className={textContentStyle}>
+            <div aria-hidden={showSpinner ? true : undefined} className={styles.textContent}>
                 {StartIcon && (
                     <div
                         style={{
                             display: 'flex',
                             alignItems: 'center',
-                            marginRight: styles.ICON_MARGIN_PX,
+                            marginRight: styles.iconMargin,
                         }}
                     >
-                        <StartIcon size={pxToRem(defaultIconSize)} color="currentColor" />
+                        <StartIcon size={defaultIconSize} color="currentColor" />
                     </div>
                 )}
                 <div style={{display: 'flex', alignItems: 'baseline'}}>
@@ -161,7 +159,7 @@ const renderButtonContent = ({
                             style={{
                                 display: 'flex',
                                 alignItems: 'center',
-                                marginLeft: styles.CHEVRON_MARGIN_LEFT_LINK,
+                                marginLeft: styles.chevronMarginLeft,
                             }}
                         >
                             <ButtonLinkChevron />
@@ -173,10 +171,10 @@ const renderButtonContent = ({
                         style={{
                             display: 'flex',
                             alignItems: 'center',
-                            marginLeft: styles.ICON_MARGIN_PX,
+                            marginLeft: styles.iconMargin,
                         }}
                     >
-                        <EndIcon size={pxToRem(defaultIconSize)} color="currentColor" />
+                        <EndIcon size={defaultIconSize} color="currentColor" />
                     </div>
                 )}
             </div>
@@ -189,9 +187,7 @@ const renderButtonContent = ({
                     loadingText
                         ? {
                               paddingLeft: spinnerSizeRem,
-                              paddingRight:
-                                  styles.ICON_MARGIN_PX +
-                                  2 * (small ? styles.X_SMALL_PADDING_PX : styles.X_PADDING_PX),
+                              paddingRight: `calc(${styles.iconMargin} + 2 * ${small ? styles.buttonPaddingX.small : styles.buttonPaddingX.default})`,
                           }
                         : undefined
                 }
@@ -355,7 +351,11 @@ const Button = React.forwardRef<TouchableElement, ButtonProps & {type: ButtonTyp
                 [styles.isLoading]: showSpinner,
             }
         ),
-        style: {cursor: props.fake ? 'pointer' : undefined, ...props.style},
+        style: {
+            minWidth: props.small ? styles.buttonMinWidth.small : styles.buttonMinWidth.default,
+            cursor: props.fake ? 'pointer' : undefined,
+            ...props.style,
+        },
         trackingEvent: props.trackingEvent ?? (props.trackEvent ? createDefaultTrackingEvent() : undefined),
         dataAttributes: props.dataAttributes,
         'aria-label': props['aria-label'],
@@ -371,7 +371,6 @@ const Button = React.forwardRef<TouchableElement, ButtonProps & {type: ButtonTyp
             loadingText,
             small: props.small,
             renderText,
-            textContentStyle: styles.textContent,
             StartIcon: props.StartIcon,
             EndIcon: props.EndIcon,
         }),
@@ -553,7 +552,7 @@ const BaseButtonLink = React.forwardRef<
             isInverse ? styles.inverseLinkVariants[finalType] : styles.linkVariants[finalType],
             {
                 [styles.isLoading]: showSpinner,
-                [styles.smallLink]: props.small,
+                [styles.small]: props.small,
             }
         ),
         /**
@@ -561,28 +560,21 @@ const BaseButtonLink = React.forwardRef<
          * If we set it using className, it may not work depending on the order in which the styles are applied.
          */
         style: {
+            minWidth: props.small ? styles.linkMinWidth.small : styles.linkMinWidth.default,
             ...(props.bleedLeft
                 ? {
-                      marginLeft: -(
-                          styles.BORDER_PX + (props.small ? styles.X_SMALL_PADDING_PX : styles.X_PADDING_PX)
-                      ),
+                      marginLeft: `calc(-1 * (${styles.borderSize} + ${props.small ? styles.buttonPaddingX.small : styles.buttonPaddingX.default}))`,
                   }
                 : undefined),
             ...(props.bleedRight
                 ? {
-                      marginRight: -(
-                          styles.BORDER_PX + (props.small ? styles.X_SMALL_PADDING_PX : styles.X_PADDING_PX)
-                      ),
+                      marginRight: `calc(-1 * (${styles.borderSize} + ${props.small ? styles.buttonPaddingX.small : styles.buttonPaddingX.default}))`,
                   }
                 : undefined),
             ...(props.bleedY
                 ? {
-                      marginTop: -(
-                          styles.BORDER_PX + (props.small ? styles.Y_SMALL_PADDING_PX : styles.Y_PADDING_PX)
-                      ),
-                      marginBottom: -(
-                          styles.BORDER_PX + (props.small ? styles.Y_SMALL_PADDING_PX : styles.Y_PADDING_PX)
-                      ),
+                      marginTop: `calc(-1 * (${styles.borderSize} + ${props.small ? styles.buttonPaddingY.small : styles.buttonPaddingY.default}))`,
+                      marginBottom: `calc(-1 * (${styles.borderSize} + ${props.small ? styles.buttonPaddingY.small : styles.buttonPaddingY.default}))`,
                   }
                 : undefined),
         },
@@ -600,7 +592,6 @@ const BaseButtonLink = React.forwardRef<
             loadingText,
             small: props.small,
             renderText,
-            textContentStyle: styles.textContentLink,
             StartIcon: props.StartIcon,
             EndIcon: props.EndIcon,
             withChevron: showChevron,
