@@ -1,7 +1,7 @@
 import {style, globalStyle, styleVariants} from '@vanilla-extract/css';
 import {sprinkles} from './sprinkles.css';
 import * as mq from './media-queries.css';
-import {PADDING_X_LINK} from './button.css';
+import {X_PADDING_PX, BORDER_PX} from './button.css';
 
 const buttonLayoutSpacing = 16;
 
@@ -78,8 +78,9 @@ globalStyle(`${alignVariant['full-width']} > *:not(${linkBase})`, {
     },
 });
 
-const bleedLeft = {marginLeft: buttonLayoutSpacing / 2 - PADDING_X_LINK};
-const bleedRight = {marginRight: buttonLayoutSpacing / 2 - PADDING_X_LINK};
+// TODO: review this
+const bleedLeft = {marginLeft: buttonLayoutSpacing / 2 - (X_PADDING_PX + BORDER_PX)};
+const bleedRight = {marginRight: buttonLayoutSpacing / 2 - (X_PADDING_PX + BORDER_PX)};
 
 export const link = style([
     linkBase,

@@ -127,7 +127,7 @@ export const DangerButton: StoryComponent<Args> = ({inverse, text, icon, action,
     );
 };
 
-export const LinkButton: StoryComponent<Omit<Args, 'small'> & {withChevron: string}> = ({
+export const LinkButton: StoryComponent<Args & {withChevron: string}> = ({
     inverse,
     text,
     icon,
@@ -151,14 +151,7 @@ export const LinkButton: StoryComponent<Omit<Args, 'small'> & {withChevron: stri
     );
 };
 
-export const LinkButtonDanger: StoryComponent<Omit<Args, 'small'>> = ({
-    inverse,
-    text,
-    icon,
-    action,
-    newTab,
-    ...props
-}) => {
+export const LinkButtonDanger: StoryComponent<Args> = ({inverse, text, icon, action, newTab, ...props}) => {
     return (
         <ButtonBackgroundContainer inverse={inverse}>
             <ButtonLinkDanger
@@ -201,12 +194,10 @@ primaryButton.args = defaultArgs;
 SecondaryButton.args = defaultArgs;
 DangerButton.args = defaultArgs;
 LinkButton.args = {
-    ...(({small, ...o}) => o)(defaultArgs),
+    ...defaultArgs,
     withChevron: 'default',
 };
-LinkButtonDanger.args = {
-    ...(({small, ...o}) => o)(defaultArgs),
-};
+LinkButtonDanger.args = defaultArgs;
 
 primaryButton.argTypes = defaultArgTypes;
 SecondaryButton.argTypes = defaultArgTypes;

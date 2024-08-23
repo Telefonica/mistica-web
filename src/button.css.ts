@@ -8,19 +8,20 @@ import type {ComplexStyleRule} from '@vanilla-extract/css';
 const colorTransitionTiming = '0.1s ease-in-out';
 const contentTransitionTiming = '0.3s cubic-bezier(0.77, 0, 0.175, 1)';
 
-export const BUTTON_MIN_WIDTH = 104;
-const BORDER_PX = 1.5;
+const BUTTON_MIN_WIDTH = 104;
+const BUTTON_SMALL_MIN_WIDTH = 80;
+const LINK_MIN_WIDTH = 40;
+const LINK_SMALL_MIN_WIDTH = 40;
+export const BORDER_PX = 1.5;
 export const ICON_MARGIN_PX = 8;
 export const X_PADDING_PX = 16 - BORDER_PX;
-const Y_PADDING_PX = 12 - BORDER_PX;
+export const Y_PADDING_PX = 12 - BORDER_PX;
 export const X_SMALL_PADDING_PX = 12 - BORDER_PX;
-const Y_SMALL_PADDING_PX = 6 - BORDER_PX;
+export const Y_SMALL_PADDING_PX = 6 - BORDER_PX;
 export const ICON_SIZE = 24;
 export const SMALL_ICON_SIZE = 20;
 export const SPINNER_SIZE = 20;
 export const SMALL_SPINNER_SIZE = 16;
-export const PADDING_Y_LINK = 6;
-export const PADDING_X_LINK = 12;
 export const CHEVRON_MARGIN_LEFT_LINK = 2;
 
 const disabledStyle = {opacity: 0.5};
@@ -64,7 +65,11 @@ export const loadingFiller = style([
 ]);
 
 export const small = style({
-    minWidth: 80,
+    minWidth: BUTTON_SMALL_MIN_WIDTH,
+});
+
+export const smallLink = style({
+    minWidth: LINK_SMALL_MIN_WIDTH,
 });
 
 export const loadingContent = style([
@@ -85,6 +90,10 @@ export const loadingContent = style([
 
         selectors: {
             [`${small} &`]: {
+                left: X_SMALL_PADDING_PX,
+                right: X_SMALL_PADDING_PX,
+            },
+            [`${smallLink} &`]: {
                 left: X_SMALL_PADDING_PX,
                 right: X_SMALL_PADDING_PX,
             },
@@ -288,14 +297,12 @@ const link = style([
         width: 'auto',
         position: 'relative',
         borderRadius: vars.borderRadii.button,
-        paddingX: PADDING_X_LINK,
-        border: 'none',
+        padding: 0,
         overflow: 'hidden',
-        minWidth: 40,
+        minWidth: LINK_MIN_WIDTH,
     }),
     {
-        paddingTop: PADDING_Y_LINK,
-        paddingBottom: PADDING_Y_LINK,
+        border: `${BORDER_PX}px solid transparent`,
         fontWeight: 500,
         transition: `background-color ${colorTransitionTiming}`,
 
@@ -318,10 +325,14 @@ export const textContentLink = style([
         justifyContent: 'center',
     }),
     {
+        padding: `${Y_PADDING_PX}px ${X_PADDING_PX}px`, // height 48
         opacity: 1,
         transition: `opacity ${contentTransitionTiming}, transform ${contentTransitionTiming}`,
 
         selectors: {
+            [`${smallLink} &`]: {
+                padding: `${Y_SMALL_PADDING_PX}px ${X_SMALL_PADDING_PX}px`, // height 32
+            },
             [`${isLoading} &`]: {
                 transform: 'translateY(-2rem)',
                 opacity: 0,

@@ -451,6 +451,7 @@ interface ButtonLinkCommonProps {
     /** "data-" prefix is automatically added. For example, use "testid" instead of "data-testid" */
     dataAttributes?: DataAttributes;
     showSpinner?: boolean;
+    small?: boolean;
     loadingText?: string;
     StartIcon?: React.FC<IconProps>;
     EndIcon?: React.FC<IconProps>;
@@ -536,11 +537,14 @@ const BaseButtonLink = React.forwardRef<
         }
     };
 
-    const renderText = (element: React.ReactNode) => (
-        <Text2 weight={textPresets.button.weight} truncate={1} color="inherit">
-            {element}
-        </Text2>
-    );
+    const renderText = (element: React.ReactNode) => {
+        const TextComponent = props.small ? Text2 : Text3;
+        return (
+            <TextComponent weight={textPresets.button.weight} truncate={1} color="inherit">
+                {element}
+            </TextComponent>
+        );
+    };
 
     const finalType = type === 'danger' && isDarkMode && isInverse ? 'dangerDark' : type;
 
@@ -549,6 +553,7 @@ const BaseButtonLink = React.forwardRef<
             isInverse ? styles.inverseLinkVariants[finalType] : styles.linkVariants[finalType],
             {
                 [styles.isLoading]: showSpinner,
+                [styles.smallLink]: props.small,
             }
         ),
         /**
@@ -556,10 +561,29 @@ const BaseButtonLink = React.forwardRef<
          * If we set it using className, it may not work depending on the order in which the styles are applied.
          */
         style: {
-            ...(props.bleedLeft ? {marginLeft: -styles.PADDING_X_LINK} : undefined),
-            ...(props.bleedRight ? {marginRight: -styles.PADDING_X_LINK} : undefined),
+            ...(props.bleedLeft
+                ? {
+                      marginLeft: -(
+                          styles.BORDER_PX + (props.small ? styles.X_SMALL_PADDING_PX : styles.X_PADDING_PX)
+                      ),
+                  }
+                : undefined),
+            ...(props.bleedRight
+                ? {
+                      marginRight: -(
+                          styles.BORDER_PX + (props.small ? styles.X_SMALL_PADDING_PX : styles.X_PADDING_PX)
+                      ),
+                  }
+                : undefined),
             ...(props.bleedY
-                ? {marginTop: -styles.PADDING_Y_LINK, marginBottom: -styles.PADDING_Y_LINK}
+                ? {
+                      marginTop: -(
+                          styles.BORDER_PX + (props.small ? styles.Y_SMALL_PADDING_PX : styles.Y_PADDING_PX)
+                      ),
+                      marginBottom: -(
+                          styles.BORDER_PX + (props.small ? styles.Y_SMALL_PADDING_PX : styles.Y_PADDING_PX)
+                      ),
+                  }
                 : undefined),
         },
         trackingEvent: props.trackingEvent ?? (props.trackEvent ? createDefaultTrackingEvent() : undefined),
@@ -574,7 +598,7 @@ const BaseButtonLink = React.forwardRef<
             setShouldRenderSpinner,
             children: props.children,
             loadingText,
-            small: true,
+            small: props.small,
             renderText,
             textContentStyle: styles.textContentLink,
             StartIcon: props.StartIcon,
