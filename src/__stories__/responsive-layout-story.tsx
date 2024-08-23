@@ -7,22 +7,17 @@ export default {
     parameters: {
         fullScreen: true,
     },
-    argTypes: {
-        withBackgroundColor: {
-            name: 'backgroundColor={colors.backgroundAlternative}',
-        },
-    },
 };
 
 type Args = {
-    isInverse: boolean;
-    withBackgroundColor: boolean;
+    inverse: boolean;
+    backgroundColor: 'undefined' | 'backgroundAlternative';
 };
 
-export const Default: StoryComponent<Args> = ({isInverse, withBackgroundColor}) => (
+export const Default: StoryComponent<Args> = ({inverse, backgroundColor}) => (
     <ResponsiveLayout
-        isInverse={isInverse}
-        backgroundColor={withBackgroundColor ? skinVars.colors.backgroundAlternative : undefined}
+        isInverse={inverse}
+        backgroundColor={backgroundColor === 'undefined' ? undefined : skinVars.colors[backgroundColor]}
     >
         <Placeholder />
     </ResponsiveLayout>
@@ -31,8 +26,15 @@ export const Default: StoryComponent<Args> = ({isInverse, withBackgroundColor}) 
 Default.storyName = 'Responsive layout';
 
 Default.args = {
-    isInverse: false,
-    withBackgroundColor: false,
+    inverse: false,
+    backgroundColor: 'undefined',
+};
+
+Default.argTypes = {
+    backgroundColor: {
+        options: ['undefined', 'backgroundAlternative'],
+        control: {type: 'select'},
+    },
 };
 
 export const Nested: StoryComponent = () => (

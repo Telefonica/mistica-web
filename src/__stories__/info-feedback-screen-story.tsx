@@ -10,7 +10,7 @@ export default {
         fullScreen: true,
     },
     argTypes: {
-        icon: {
+        asset: {
             options: ['default', 'custom'],
             control: {type: 'select'},
         },
@@ -18,22 +18,22 @@ export default {
 };
 
 type Args = {
-    icon: string;
+    asset: string;
     extra: boolean;
 };
 
-export const Info: StoryComponent<Args> = ({icon, extra}) => (
+export const Info: StoryComponent<Args> = ({asset, extra}) => (
     <InfoFeedbackScreen
         title="I'm the title"
         description="I'm the description"
         primaryButton={<ButtonPrimary onPress={() => {}}>Action1</ButtonPrimary>}
-        Icon={icon === 'custom' ? IconError : undefined}
+        Icon={asset === 'custom' ? IconError : undefined}
         extra={extra ? <Placeholder /> : undefined}
     />
 );
 
 Info.storyName = 'InfoFeedbackScreen';
 Info.args = {
-    icon: 'default',
+    asset: 'default',
     extra: false,
 };

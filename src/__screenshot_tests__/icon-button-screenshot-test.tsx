@@ -49,7 +49,7 @@ test.each(MOBILE_DEVICES)('IconButton - spinner in %s', async (device) => {
     await openStoryPage({
         id: 'components-buttons--icon-button-story',
         device,
-        args: {backgroundType: 'solid', showSpinner: true},
+        args: {backgroundType: 'solid', spinner: true},
     });
 
     const story = await screen.findByTestId('icon-button');
