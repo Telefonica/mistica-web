@@ -58,7 +58,7 @@ type Args = {title: string; right: 'link' | 'icon' | 'undefined'; linkText: stri
 
 export const Title1Story: StoryComponent<Args> = ({title, right, linkText}) => (
     <TitleComponent
-        as="h1"
+        as="h4"
         title={title}
         right={right}
         linkText={linkText}
@@ -69,7 +69,7 @@ export const Title1Story: StoryComponent<Args> = ({title, right, linkText}) => (
 
 export const Title2Story: StoryComponent<Args> = ({title, right, linkText}) => (
     <TitleComponent
-        as="h2"
+        as="h3"
         title={title}
         right={right}
         linkText={linkText}
@@ -80,7 +80,7 @@ export const Title2Story: StoryComponent<Args> = ({title, right, linkText}) => (
 
 export const Title3Story: StoryComponent<Args> = ({title, right, linkText}) => (
     <TitleComponent
-        as="h3"
+        as="h2"
         title={title}
         right={right}
         linkText={linkText}
@@ -91,7 +91,7 @@ export const Title3Story: StoryComponent<Args> = ({title, right, linkText}) => (
 
 export const Title4Story: StoryComponent<Args> = ({title, right, linkText}) => (
     <TitleComponent
-        as="h4"
+        as="h1"
         title={title}
         right={right}
         linkText={linkText}
