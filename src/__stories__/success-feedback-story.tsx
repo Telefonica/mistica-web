@@ -24,7 +24,7 @@ type SuccessArgs = {
     imageUrl: string | null;
     imageFit: 'fit' | 'fill';
     multipleParagraphs: boolean;
-    withButtons: boolean;
+    buttons: boolean;
     extra?: boolean;
 };
 
@@ -39,7 +39,7 @@ export const Success: StoryComponent<SuccessArgs> = ({
     imageUrl,
     imageFit,
     multipleParagraphs,
-    withButtons,
+    buttons,
     extra,
 }) => (
     <SuccessFeedback
@@ -47,8 +47,8 @@ export const Success: StoryComponent<SuccessArgs> = ({
         description={
             multipleParagraphs ? [defaultDescription, 'paragraph 2', 'paragraph 3'] : defaultDescription
         }
-        primaryButton={withButtons ? primaryButton : undefined}
-        secondaryButton={withButtons ? secondaryButton : undefined}
+        primaryButton={buttons ? primaryButton : undefined}
+        secondaryButton={buttons ? secondaryButton : undefined}
         imageUrl={imageUrl ?? undefined}
         imageFit={imageFit}
         extra={extra ? <Placeholder /> : undefined}
@@ -59,7 +59,7 @@ Success.args = {
     imageUrl: emptyStateImg,
     imageFit: 'fit',
     multipleParagraphs: false,
-    withButtons: true,
+    buttons: true,
     extra: false,
 };
 
@@ -67,7 +67,7 @@ export const SuccessAsHeader: StoryComponent<SuccessArgs> = ({
     imageUrl,
     imageFit,
     multipleParagraphs,
-    withButtons,
+    buttons,
     extra,
 }) => {
     const {isTabletOrSmaller} = useScreenSize();
@@ -77,8 +77,8 @@ export const SuccessAsHeader: StoryComponent<SuccessArgs> = ({
             description={
                 multipleParagraphs ? [defaultDescription, 'paragraph 2', 'paragraph 3'] : defaultDescription
             }
-            primaryButton={withButtons ? primaryButton : undefined}
-            secondaryButton={withButtons ? secondaryButton : undefined}
+            primaryButton={buttons ? primaryButton : undefined}
+            secondaryButton={buttons ? secondaryButton : undefined}
             imageUrl={imageUrl ?? undefined}
             imageFit={imageFit}
             extra={extra ? <Placeholder /> : undefined}
@@ -101,6 +101,6 @@ SuccessAsHeader.args = {
     imageUrl: emptyStateImg,
     imageFit: 'fit',
     multipleParagraphs: false,
-    withButtons: true,
+    buttons: true,
     extra: false,
 };

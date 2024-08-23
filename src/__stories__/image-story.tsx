@@ -43,7 +43,7 @@ type Args = {
     height: number;
     aspectRatio: string;
     borderRadius: boolean;
-    isEmptySource: boolean;
+    emptySource: boolean;
 };
 
 export const Default: StoryComponent<Args> = ({
@@ -52,7 +52,7 @@ export const Default: StoryComponent<Args> = ({
     height,
     aspectRatio,
     borderRadius,
-    isEmptySource,
+    emptySource,
 }) => {
     const props = {
         width: type !== 'full width' ? width : undefined,
@@ -67,7 +67,7 @@ export const Default: StoryComponent<Args> = ({
         dataAttributes: {testid: 'image'},
     };
 
-    return <Image src={isEmptySource ? '' : usingVrImg} {...props} />;
+    return <Image src={emptySource ? '' : usingVrImg} {...props} />;
 };
 
 Default.storyName = 'Image';
@@ -77,5 +77,5 @@ Default.args = {
     height: 240,
     aspectRatio: '1 1',
     borderRadius: true,
-    isEmptySource: false,
+    emptySource: false,
 };
