@@ -301,7 +301,6 @@ type ButtonLinkProps = ExclusifyUnion<ToButtonProps | OnPressButtonProps | HrefB
     bleedLeft?: boolean;
     bleedRight?: boolean;
     bleedY?: boolean;
-    small?: true;
 };
 
 const BaseButton = React.forwardRef<
@@ -534,12 +533,11 @@ export const ButtonLink = React.forwardRef<
     ButtonLinkProps & {
         withChevron?: boolean;
     }
->(({dataAttributes, small, ...props}, ref) => {
+>(({dataAttributes, ...props}, ref) => {
     return (
         <BaseButton
             dataAttributes={{'component-name': 'ButtonLink', ...dataAttributes}}
             {...props}
-            small
             ref={ref}
             buttonType="link"
             TextContentRenderer={LinkTextRenderer}
@@ -548,13 +546,12 @@ export const ButtonLink = React.forwardRef<
 });
 
 export const ButtonLinkDanger = React.forwardRef<TouchableElement, ButtonLinkProps>(
-    ({dataAttributes, small, ...props}, ref) => {
+    ({dataAttributes, ...props}, ref) => {
         return (
             <BaseButton
                 dataAttributes={{'component-name': 'ButtonLinkDanger', ...dataAttributes}}
                 {...props}
                 withChevron={false}
-                small
                 ref={ref}
                 buttonType="linkDanger"
                 TextContentRenderer={LinkTextRenderer}
