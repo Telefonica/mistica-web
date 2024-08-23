@@ -69,7 +69,7 @@ type FeedbackScreenArgs = {
     linkText: string;
     description: string;
     animateText: boolean;
-    showIcon: boolean;
+    icon: boolean;
     navbar: boolean;
     inverse: boolean;
     imageUrl: string | null;
@@ -85,7 +85,7 @@ export const FeedbackScreenStory: StoryComponent<FeedbackScreenArgs> = ({
     description,
     multipleParagraphs,
     animateText,
-    showIcon,
+    icon,
     navbar,
     inverse,
     imageUrl,
@@ -103,7 +103,7 @@ export const FeedbackScreenStory: StoryComponent<FeedbackScreenArgs> = ({
                             multipleParagraphs ? [description, 'paragraph 2', 'paragraph 3'] : description
                         }
                         animateText={animateText}
-                        icon={showIcon ? <IconOrders /> : undefined}
+                        icon={icon ? <IconOrders /> : undefined}
                         imageUrl={imageUrl ?? undefined}
                         imageFit={imageFit}
                         primaryButton={
@@ -144,7 +144,7 @@ FeedbackScreenStory.args = {
     description: 'Description',
     multipleParagraphs: false,
     animateText: true,
-    showIcon: true,
+    icon: true,
     navbar: true,
     inverse: false,
     imageUrl: '',
