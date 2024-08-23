@@ -51,9 +51,15 @@ export const halfIconContainer = sprinkles({
     position: 'relative',
 });
 
-export const halfIconInactive = sprinkles({
-    position: 'absolute',
-});
+export const halfIconInactive = style([
+    sprinkles({
+        position: 'absolute',
+    }),
+    {
+        clipPath: 'polygon(50% 0, 100% 0, 100% 100%, 50% 100%)',
+        WebkitClipPath: 'polygon(50% 0, 100% 0, 100% 100%, 50% 100%)',
+    },
+]);
 
 export const halfIconActive = style([
     sprinkles({

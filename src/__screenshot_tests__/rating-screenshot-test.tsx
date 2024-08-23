@@ -48,11 +48,40 @@ test('InfoRating - inverse', async () => {
     expect(await rating.screenshot()).toMatchImageSnapshot();
 });
 
+test('InfoRating - custom icons', async () => {
+    await openStoryPage({
+        id: 'components-rating--info-rating-story',
+        device: 'MOBILE_IOS',
+        args: {value: 3.5, customIcons: true, withHalfValue: true},
+    });
+
+    const rating = await screen.findByTestId('info-rating');
+
+    expect(await rating.screenshot()).toMatchImageSnapshot();
+});
+
 test('Rating - quantitative', async () => {
     const page = await openStoryPage({
         id: 'components-rating--rating-story',
         device: 'MOBILE_IOS',
         args: {type: 'quantitative'},
+    });
+
+    const ratingWrapper = await screen.findByTestId('rating-wrapper');
+
+    expect(await ratingWrapper.screenshot()).toMatchImageSnapshot();
+
+    const thirdIcon = await screen.findByRole('radio', {name: '3 de 5'});
+    await page.click(thirdIcon);
+
+    expect(await ratingWrapper.screenshot()).toMatchImageSnapshot();
+});
+
+test('Rating - quantitative with custom icons', async () => {
+    const page = await openStoryPage({
+        id: 'components-rating--rating-story',
+        device: 'MOBILE_IOS',
+        args: {type: 'quantitative', customIcons: true},
     });
 
     const ratingWrapper = await screen.findByTestId('rating-wrapper');
@@ -77,6 +106,26 @@ test('Rating - qualitative', async () => {
     expect(await ratingWrapper.screenshot()).toMatchImageSnapshot();
 
     const labels = ['muy malo', 'malo', 'regular', 'bueno', 'muy bueno'];
+
+    for (const label of labels) {
+        const currentIcon = await screen.findByRole('radio', {name: label});
+        await page.click(currentIcon);
+        expect(await ratingWrapper.screenshot()).toMatchImageSnapshot();
+    }
+});
+
+test('Rating - qualitative with custom icons', async () => {
+    const page = await openStoryPage({
+        id: 'components-rating--rating-story',
+        device: 'MOBILE_IOS',
+        args: {type: 'qualitative', customIcons: true},
+    });
+
+    const ratingWrapper = await screen.findByTestId('rating-wrapper');
+
+    expect(await ratingWrapper.screenshot()).toMatchImageSnapshot();
+
+    const labels = ['no battery', 'low battery', 'mid battery', 'full battery'];
 
     for (const label of labels) {
         const currentIcon = await screen.findByRole('radio', {name: label});

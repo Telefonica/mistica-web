@@ -88,14 +88,11 @@ interface QuantitativeRatingProps extends BaseRatingProps {
     type?: 'quantitative';
     icon?: RatingIconProps;
     count?: number;
-    icons?: never;
 }
 
 interface QualitativeRatingProps extends BaseRatingProps {
     type: 'qualitative';
     icons?: Array<RatingIconProps>;
-    icon?: never;
-    count?: never;
 }
 
 type RatingProps = ExclusifyUnion<QualitativeRatingProps | QuantitativeRatingProps> & {
@@ -111,7 +108,6 @@ type InfoRatingProps = Omit<QuantitativeRatingProps, 'type' | 'valueLabels'> & {
 };
 
 type InternalRatingProps = ExclusifyUnion<RatingProps | InfoRatingProps> & {
-    isInteractive: boolean;
     role: 'radiogroup' | 'img';
 };
 
@@ -330,7 +326,6 @@ const InternalRating: React.FC<InternalRatingProps> = ({
 
 export const Rating: React.FC<RatingProps> = ({dataAttributes, ...props}) => (
     <InternalRating
-        isInteractive
         role="radiogroup"
         dataAttributes={{'component-name': 'Rating', ...dataAttributes}}
         {...props}
@@ -339,7 +334,6 @@ export const Rating: React.FC<RatingProps> = ({dataAttributes, ...props}) => (
 
 export const InfoRating: React.FC<InfoRatingProps> = ({dataAttributes, icon, size, ...props}) => (
     <InternalRating
-        isInteractive={false}
         size={size ?? DEFAULT_INFO_RATING_SIZE}
         icon={icon ?? DEFAULT_INFO_RATING_ICON}
         role="img"

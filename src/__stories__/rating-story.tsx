@@ -1,5 +1,21 @@
 import * as React from 'react';
-import {Box, InfoRating, Rating, ResponsiveLayout} from '..';
+import {
+    Box,
+    IconBatteryChargingFilled,
+    IconBatteryChargingRegular,
+    IconBatteryFullFilled,
+    IconBatteryFullRegular,
+    IconBatteryLowFilled,
+    IconBatteryLowRegular,
+    IconBatteryMediumFilled,
+    IconBatteryMediumRegular,
+    IconCheckedFilled,
+    IconCheckedRegular,
+    InfoRating,
+    Rating,
+    ResponsiveLayout,
+} from '..';
+import {vars} from '../skins/skin-contract.css';
 
 export default {
     title: 'Components/Rating',
@@ -12,9 +28,17 @@ type RatingArgs = {
     size: number;
     type: 'quantitative' | 'qualitative';
     disabled: boolean;
+    customIcons: boolean;
 };
 
-export const RatingStory: StoryComponent<RatingArgs> = ({inverse, count, size, type, disabled}) => {
+export const RatingStory: StoryComponent<RatingArgs> = ({
+    inverse,
+    count,
+    size,
+    type,
+    disabled,
+    customIcons,
+}) => {
     return (
         <ResponsiveLayout fullWidth isInverse={inverse}>
             <Box padding={16}>
@@ -23,10 +47,47 @@ export const RatingStory: StoryComponent<RatingArgs> = ({inverse, count, size, t
                         size={size}
                         disabled={disabled}
                         {...(type === 'qualitative'
-                            ? {type}
+                            ? {
+                                  type,
+                                  valueLabels: customIcons
+                                      ? ['no battery', 'low battery', 'mid battery', 'full battery']
+                                      : undefined,
+                                  icons: customIcons
+                                      ? [
+                                            {
+                                                ActiveIcon: IconBatteryChargingFilled,
+                                                InactiveIcon: IconBatteryChargingRegular,
+                                                color: vars.colors.controlActivated,
+                                            },
+                                            {
+                                                ActiveIcon: IconBatteryLowFilled,
+                                                InactiveIcon: IconBatteryLowRegular,
+                                                color: vars.colors.error,
+                                            },
+                                            {
+                                                ActiveIcon: IconBatteryMediumFilled,
+                                                InactiveIcon: IconBatteryMediumRegular,
+                                                color: vars.colors.warning,
+                                            },
+
+                                            {
+                                                ActiveIcon: IconBatteryFullFilled,
+                                                InactiveIcon: IconBatteryFullRegular,
+                                                color: vars.colors.success,
+                                            },
+                                        ]
+                                      : undefined,
+                              }
                             : {
                                   type,
                                   count,
+                                  icon: customIcons
+                                      ? {
+                                            ActiveIcon: IconCheckedFilled,
+                                            InactiveIcon: IconCheckedRegular,
+                                            color: vars.colors.success,
+                                        }
+                                      : undefined,
                               })}
                     />
                 </div>
@@ -43,6 +104,7 @@ RatingStory.args = {
     size: 32,
     disabled: false,
     inverse: false,
+    customIcons: false,
 };
 
 RatingStory.argTypes = {
@@ -65,6 +127,7 @@ type InfoRatingArgs = {
     value: number;
     size: number;
     withHalfValue: boolean;
+    customIcons: boolean;
 };
 
 export const InfoRatingStory: StoryComponent<InfoRatingArgs> = ({
@@ -73,6 +136,7 @@ export const InfoRatingStory: StoryComponent<InfoRatingArgs> = ({
     value,
     size,
     withHalfValue,
+    customIcons,
 }) => {
     return (
         <ResponsiveLayout fullWidth isInverse={inverse}>
@@ -82,6 +146,15 @@ export const InfoRatingStory: StoryComponent<InfoRatingArgs> = ({
                     count={count}
                     size={size}
                     withHalfValue={withHalfValue}
+                    icon={
+                        customIcons
+                            ? {
+                                  ActiveIcon: IconCheckedFilled,
+                                  InactiveIcon: IconCheckedRegular,
+                                  color: vars.colors.success,
+                              }
+                            : undefined
+                    }
                     dataAttributes={{testid: 'info-rating'}}
                 />
             </Box>
@@ -97,6 +170,7 @@ InfoRatingStory.args = {
     count: 5,
     size: 16,
     value: 0,
+    customIcons: false,
 };
 
 InfoRatingStory.argTypes = {
