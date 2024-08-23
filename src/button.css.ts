@@ -458,22 +458,16 @@ export const buttonVariants = styleVariants({
     primary: lightPrimary,
     secondary: lightSecondary,
     danger,
+    link: defaultLink,
+    linkDanger: dangerLink,
+    linkDangerDark: dangerLink,
 });
 
 export const inverseButtonVariants = styleVariants({
     primary: lightPrimaryInverse,
     secondary: lightSecondaryInverse,
     danger,
-});
-
-export const linkVariants = styleVariants({
-    default: defaultLink,
-    danger: dangerLink,
-    dangerDark: dangerLink,
-});
-
-export const inverseLinkVariants = styleVariants({
-    default: defaultLinkInverse,
-    danger: dangerLinkInverse,
-    dangerDark: dangerLinkInverseDark,
+    link: defaultLinkInverse,
+    linkDanger: dangerLinkInverse,
+    linkDangerDark: dangerLinkInverseDark,
 });

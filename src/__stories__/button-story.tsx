@@ -127,20 +127,20 @@ export const DangerButton: StoryComponent<Args> = ({inverse, text, icon, action,
     );
 };
 
-export const LinkButton: StoryComponent<Args & {withChevron: string}> = ({
+export const LinkButton: StoryComponent<Omit<Args, 'small'> & {chevron: string}> = ({
     inverse,
     text,
     icon,
     action,
     newTab,
-    withChevron,
+    chevron,
     ...props
 }) => {
     return (
         <ButtonBackgroundContainer inverse={inverse}>
             <ButtonLink
                 {...props}
-                withChevron={withChevron === 'default' ? undefined : withChevron === 'true'}
+                withChevron={chevron === 'default' ? undefined : chevron === 'true'}
                 {...getButtonActionProps(action, newTab)}
                 StartIcon={icon === 'left' ? IconPhotoCameraRegular : undefined}
                 EndIcon={icon === 'right' ? IconPhotoCameraRegular : undefined}
@@ -151,7 +151,14 @@ export const LinkButton: StoryComponent<Args & {withChevron: string}> = ({
     );
 };
 
-export const LinkButtonDanger: StoryComponent<Args> = ({inverse, text, icon, action, newTab, ...props}) => {
+export const LinkButtonDanger: StoryComponent<Omit<Args, 'small'>> = ({
+    inverse,
+    text,
+    icon,
+    action,
+    newTab,
+    ...props
+}) => {
     return (
         <ButtonBackgroundContainer inverse={inverse}>
             <ButtonLinkDanger
@@ -194,17 +201,19 @@ primaryButton.args = defaultArgs;
 SecondaryButton.args = defaultArgs;
 DangerButton.args = defaultArgs;
 LinkButton.args = {
-    ...defaultArgs,
-    withChevron: 'default',
+    ...(({small, ...o}) => o)(defaultArgs),
+    chevron: 'default',
 };
-LinkButtonDanger.args = defaultArgs;
+LinkButtonDanger.args = {
+    ...(({small, ...o}) => o)(defaultArgs),
+};
 
 primaryButton.argTypes = defaultArgTypes;
 SecondaryButton.argTypes = defaultArgTypes;
 DangerButton.argTypes = defaultArgTypes;
 LinkButton.argTypes = {
     ...defaultArgTypes,
-    withChevron: {
+    chevron: {
         options: ['default', 'true', 'false'],
         control: {type: 'select'},
     },

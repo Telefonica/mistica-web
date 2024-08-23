@@ -78,12 +78,11 @@ globalStyle(`${alignVariant['full-width']} > *:not(${linkBase})`, {
     },
 });
 
-// TODO: review this
 const bleedLeft = {
-    marginLeft: `calc(${buttonLayoutSpacing}px / 2 - (${buttonPaddingX.default} + ${borderSize}))`,
+    marginLeft: `calc(${buttonLayoutSpacing}px / 2 - (${buttonPaddingX.small} + ${borderSize}))`,
 };
 const bleedRight = {
-    marginRight: `calc(${buttonLayoutSpacing}px / 2 - (${buttonPaddingX.default} + ${borderSize}))`,
+    marginRight: `calc(${buttonLayoutSpacing}px / 2 - (${buttonPaddingX.small} + ${borderSize}))`,
 };
 
 export const link = style([
