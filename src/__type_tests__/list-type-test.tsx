@@ -46,8 +46,6 @@ const v = true as boolean;
     <Row title="onPress" onPress={() => {}} trackingEvent={{name: 'something'}} />
     {/* @ts-expect-error - fullPageOnWebView not allowed in onPress */}
     <Row title="onPress" onPress={() => {}} fullPageOnWebView />
-    {/* @ts-expect-error - newTab not allowed in onPress */}
-    <Row title="onPress" onPress={() => {}} newTab />
     {/* OK - switch */}
     <Row title="switch" trackingEvent={{name: 'something'}} switch={{name: 'switch', value: true}} />
     <Row
@@ -114,20 +112,19 @@ const v = true as boolean;
     {/* OK - basic */}
     <BoxedRow title="basic" />
 
-    <BoxedRow title="to" to="/to" fullPageOnWebView />
     {/* OK - to */}
     <BoxedRow title="to" to="/to" />
-    <BoxedRow title="to" to="/to" newTab />
-    {/* @ts-expect-error - fullPageOnWebView not allowed in href */}
-    <BoxedRow title="href" href="/href" fullPageOnWebView />
+    <BoxedRow title="to" to="/to" fullPageOnWebView />
 
     {/* OK - href */}
     <BoxedRow title="href" href="/href" />
-    {/* @ts-expect-error - fullPageOnWebView not allowed in onPress */}
-    <BoxedRow title="onPress" onPress={() => {}} fullPageOnWebView />
+    {/* @ts-expect-error - fullPageOnWebView not allowed in href */}
+    <BoxedRow title="href" href="/href" fullPageOnWebView />
 
     {/* OK - onPress */}
     <BoxedRow title="onPress" onPress={() => {}} />
+    {/* @ts-expect-error - fullPageOnWebView not allowed in onPress */}
+    <BoxedRow title="onPress" onPress={() => {}} fullPageOnWebView />
 
     {/* OK - switch */}
     <BoxedRow title="switch" switch={{name: 'switch', value: true}} />
