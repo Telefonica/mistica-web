@@ -8,16 +8,16 @@ export default {
 };
 
 type Args = {
-    showScrollbar: boolean;
+    scrollbar: boolean;
 };
 
-export const Default: StoryComponent<Args> = ({showScrollbar}) => {
+export const Default: StoryComponent<Args> = ({scrollbar}) => {
     return (
         <ResponsiveLayout>
             <Box paddingY={24}>
                 <Stack space={16}>
                     <Placeholder />
-                    <HorizontalScroll noScrollbar={!showScrollbar}>
+                    <HorizontalScroll noScrollbar={!scrollbar}>
                         <Inline space={16}>
                             <Placeholder width={200} height={200} />
                             <Placeholder width={200} height={200} />
@@ -35,5 +35,5 @@ export const Default: StoryComponent<Args> = ({showScrollbar}) => {
 Default.storyName = 'HorizontalScroll';
 
 Default.args = {
-    showScrollbar: true,
+    scrollbar: true,
 };

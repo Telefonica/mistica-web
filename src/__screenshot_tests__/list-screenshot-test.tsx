@@ -25,61 +25,55 @@ const getCases = () => {
     const cases = [];
     for (const device of devices) {
         for (const control of controls) {
-            const extraContent = false;
-            const withBadge = true;
-            cases.push([device, control, extraContent, withBadge]);
+            const extra = false;
+            const badge = true;
+            cases.push([device, control, extra, badge]);
         }
-        for (const extraContent of [true, false]) {
-            const withBadge = false;
-            cases.push([device, 'none', extraContent, withBadge]);
+        for (const extra of [true, false]) {
+            const badge = false;
+            cases.push([device, 'none', extra, badge]);
         }
     }
     return cases;
 };
 
-test.each(getCases())(
-    'Row list - %s %s extra %s badge %s',
-    async (device, control, extraContent, withBadge) => {
-        await openStoryPage({
-            id: 'components-lists--row-list-story',
-            device: device as Device,
-            args: {
-                control,
-                extraContent,
-                withBadge,
-                headline: 'Headline',
-                detail: 'Detail',
-                subtitle: 'Subtitle',
-            },
-        });
+test.each(getCases())('Row list - %s %s extra %s badge %s', async (device, control, extra, badge) => {
+    await openStoryPage({
+        id: 'components-lists--row-list-story',
+        device: device as Device,
+        args: {
+            control,
+            extra,
+            badge,
+            headline: 'Headline',
+            detail: 'Detail',
+            subtitle: 'Subtitle',
+        },
+    });
 
-        const list = await screen.findByTestId('list');
-        const image = await list.screenshot();
-        expect(image).toMatchImageSnapshot();
-    }
-);
+    const list = await screen.findByTestId('list');
+    const image = await list.screenshot();
+    expect(image).toMatchImageSnapshot();
+});
 
-test.each(getCases())(
-    'Boxed row list - %s %s extra %s badge %s',
-    async (device, control, extraContent, withBadge) => {
-        await openStoryPage({
-            id: 'components-lists--boxed-row-list-story',
-            device: device as Device,
-            args: {
-                control,
-                extraContent,
-                withBadge,
-                headline: 'Headline',
-                detail: 'Detail',
-                subtitle: 'Subtitle',
-            },
-        });
+test.each(getCases())('Boxed row list - %s %s extra %s badge %s', async (device, control, extra, badge) => {
+    await openStoryPage({
+        id: 'components-lists--boxed-row-list-story',
+        device: device as Device,
+        args: {
+            control,
+            extra,
+            badge,
+            headline: 'Headline',
+            detail: 'Detail',
+            subtitle: 'Subtitle',
+        },
+    });
 
-        const list = await screen.findByTestId('list');
-        const image = await list.screenshot();
-        expect(image).toMatchImageSnapshot();
-    }
-);
+    const list = await screen.findByTestId('list');
+    const image = await list.screenshot();
+    expect(image).toMatchImageSnapshot();
+});
 
 test.each(controls)('Row list disabled - %s', async (control) => {
     await openStoryPage({
@@ -88,7 +82,7 @@ test.each(controls)('Row list disabled - %s', async (control) => {
         args: {
             control,
             headline: 'Headline',
-            withBadge: true,
+            badge: true,
             disabled: true,
             detail: 'Detail',
             subtitle: 'Subtitle',
@@ -107,7 +101,7 @@ test.each(controls)('Boxed row list disabled - %s', async (control) => {
         args: {
             control,
             headline: 'Headline',
-            withBadge: true,
+            badge: true,
             disabled: true,
             detail: 'Detail',
             subtitle: 'Subtitle',
@@ -221,7 +215,7 @@ test('BoxedRows inverse', async () => {
         id: 'components-lists--boxed-row-list-story',
         device: 'MOBILE_IOS',
         args: {
-            isInverse: true,
+            inverse: true,
         },
     });
 
@@ -235,7 +229,7 @@ test('BoxedRows inverse over inverse', async () => {
         id: 'components-lists--boxed-row-list-story',
         device: 'MOBILE_IOS',
         args: {
-            isInverse: true,
+            inverse: true,
             overInverse: true,
         },
     });
