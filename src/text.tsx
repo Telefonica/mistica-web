@@ -60,7 +60,7 @@ const makeVivinhoCharReadableForScreenReaders = ({
         children.includes(VIVINHO_CHAR)
     ) {
         return {
-            ariaLabel: children.replaceAll(VIVINHO_CHAR, 'Vivo'),
+            ariaLabel: children.replace(new RegExp(VIVINHO_CHAR, 'g'), 'Vivo'),
             children: <span aria-hidden>{children}</span>,
         };
     }
