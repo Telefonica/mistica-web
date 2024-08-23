@@ -5,7 +5,7 @@ import Spinner from './spinner';
 import {BaseTouchable} from './touchable';
 import {useIsInverseVariant} from './theme-variant-context';
 import {useForm} from './form-context';
-import {pxToRem} from './utils/css';
+import {applyCssVars, pxToRem} from './utils/css';
 import {Text, Text2, Text3} from './text';
 import Box from './box';
 import {getTextFromChildren} from './utils/common';
@@ -386,7 +386,9 @@ const BaseButton = React.forwardRef<
             }
         ),
         style: {
-            minWidth: props.small ? minWidthProps.small : minWidthProps.default,
+            ...applyCssVars({
+                [styles.buttonVars.minWidth]: props.small ? minWidthProps.small : minWidthProps.default,
+            }),
 
             /**
              * Setting bleed classes with style to override the margin:0 set by the Touchable component.

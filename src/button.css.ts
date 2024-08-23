@@ -1,10 +1,13 @@
-import {style, globalStyle, styleVariants} from '@vanilla-extract/css';
+import {style, globalStyle, styleVariants, createVar} from '@vanilla-extract/css';
 import {sprinkles} from './sprinkles.css';
 import {vars} from './skins/skin-contract.css';
 import * as mq from './media-queries.css';
 import {pxToRem} from './utils/css';
 
 import type {ComplexStyleRule} from '@vanilla-extract/css';
+
+const minWidth = createVar();
+export const buttonVars = {minWidth};
 
 const colorTransitionTiming = '0.1s ease-in-out';
 const contentTransitionTiming = '0.3s cubic-bezier(0.77, 0, 0.175, 1)';
@@ -47,7 +50,7 @@ const disabledStyle = {opacity: 0.5};
 
 export const isLoading = style({});
 
-const baseButton = style([
+const button = style([
     sprinkles({
         display: 'inline-block',
         position: 'relative',
@@ -57,6 +60,7 @@ const baseButton = style([
         padding: 0,
     }),
     {
+        minWidth: buttonVars.minWidth,
         border: `${borderSize} solid transparent`,
         transition: `background-color ${colorTransitionTiming}, color ${colorTransitionTiming}, border-color ${colorTransitionTiming}`,
 
@@ -71,17 +75,9 @@ const baseButton = style([
     },
 ]);
 
-const button = style([
-    baseButton,
-    {
-        minWidth: buttonMinWidth.default,
-    },
-]);
-
 const link = style([
-    baseButton,
+    button,
     {
-        minWidth: linkMinWidth.default,
         fontWeight: 500,
     },
 ]);
