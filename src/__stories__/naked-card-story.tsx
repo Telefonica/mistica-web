@@ -44,11 +44,11 @@ type Args = {
     title: string;
     subtitle: string;
     description: string;
-    withExtra: boolean;
+    extra: boolean;
     actions: 'button' | 'link' | 'button and link' | 'onPress' | 'href' | 'to' | 'none';
     closable: boolean;
-    withTopAction: boolean;
-    isEmptySource: boolean;
+    topAction: boolean;
+    emptySource: boolean;
 };
 
 export const Default: StoryComponent<Args> = ({
@@ -59,12 +59,12 @@ export const Default: StoryComponent<Args> = ({
     subtitle,
     description,
     actions = 'button',
-    withExtra,
+    extra,
     closable,
-    withTopAction,
+    topAction,
     media,
     asset,
-    isEmptySource,
+    emptySource,
 }) => {
     let icon;
     if (asset === 'circle with icon') {
@@ -107,19 +107,19 @@ export const Default: StoryComponent<Args> = ({
                     description={description}
                     media={
                         media === 'video' ? (
-                            <Video src={isEmptySource ? '' : VIDEO_SRC} aspectRatio="16:9" />
+                            <Video src={emptySource ? '' : VIDEO_SRC} aspectRatio="16:9" />
                         ) : media === 'image' ? (
-                            <Image aspectRatio="16:9" src={isEmptySource ? '' : IMAGE_SRC} />
+                            <Image aspectRatio="16:9" src={emptySource ? '' : IMAGE_SRC} />
                         ) : (
-                            <Image circular src={isEmptySource ? '' : IMAGE_SRC} />
+                            <Image circular src={emptySource ? '' : IMAGE_SRC} />
                         )
                     }
                     icon={icon}
                     {...interactiveActions}
-                    extra={withExtra ? <Placeholder /> : undefined}
+                    extra={extra ? <Placeholder /> : undefined}
                     onClose={closable ? () => {} : undefined}
                     actions={
-                        withTopAction
+                        topAction
                             ? [
                                   {
                                       Icon: IconMobileDeviceRegular,
@@ -159,11 +159,11 @@ Default.args = {
     title: 'Title',
     subtitle: 'Subtitle',
     description: 'This is a description for the card',
-    withExtra: false,
+    extra: false,
     actions: 'button',
     closable: false,
-    withTopAction: false,
-    isEmptySource: false,
+    topAction: false,
+    emptySource: false,
 };
 Default.argTypes = {
     asset: {
@@ -189,9 +189,9 @@ type SmallArgs = {
     title: string;
     subtitle: string;
     description: string;
-    withExtra: boolean;
+    extra: boolean;
     touchable: boolean;
-    isEmptySource: boolean;
+    emptySource: boolean;
 };
 
 export const Small: StoryComponent<SmallArgs> = ({
@@ -199,9 +199,9 @@ export const Small: StoryComponent<SmallArgs> = ({
     title,
     subtitle,
     description,
-    withExtra,
+    extra,
     touchable,
-    isEmptySource,
+    emptySource,
 }) => {
     return (
         <ResponsiveLayout>
@@ -210,16 +210,16 @@ export const Small: StoryComponent<SmallArgs> = ({
                     dataAttributes={{testid: 'small-naked-card'}}
                     media={
                         media === 'image' ? (
-                            <Image aspectRatio="16:9" src={isEmptySource ? '' : IMAGE_SRC} />
+                            <Image aspectRatio="16:9" src={emptySource ? '' : IMAGE_SRC} />
                         ) : (
-                            <Image circular src={isEmptySource ? '' : IMAGE_SRC} />
+                            <Image circular src={emptySource ? '' : IMAGE_SRC} />
                         )
                     }
                     title={title}
                     subtitle={subtitle}
                     description={description}
                     onPress={touchable ? () => {} : undefined}
-                    extra={withExtra ? <Placeholder /> : undefined}
+                    extra={extra ? <Placeholder /> : undefined}
                 />
             </Box>
         </ResponsiveLayout>
@@ -232,9 +232,9 @@ Small.args = {
     title: 'Title',
     subtitle: 'Subtitle',
     description: 'This is a description for the card',
-    withExtra: false,
+    extra: false,
     touchable: true,
-    isEmptySource: false,
+    emptySource: false,
 };
 Small.argTypes = {
     media: {

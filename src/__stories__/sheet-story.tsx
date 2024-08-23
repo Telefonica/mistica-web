@@ -349,7 +349,7 @@ type ActionsSheetArgs = SheetArgs & {
     buttonText: string;
     secondaryButtonText: string;
     buttonLinkText: string;
-    withChevron: boolean;
+    chevron: boolean;
 };
 
 export const Actions: StoryComponent<ActionsSheetArgs> = ({
@@ -360,7 +360,7 @@ export const Actions: StoryComponent<ActionsSheetArgs> = ({
     buttonText,
     secondaryButtonText,
     buttonLinkText,
-    withChevron,
+    chevron,
 }) => {
     const [open, setOpen] = React.useState(false);
     const [pressedButton, setPressedButton] = React.useState<string | null>(null);
@@ -411,7 +411,7 @@ export const Actions: StoryComponent<ActionsSheetArgs> = ({
                         buttonLinkText
                             ? {
                                   text: buttonLinkText,
-                                  withChevron,
+                                  withChevron: chevron,
                               }
                             : undefined
                     }
@@ -430,10 +430,10 @@ Actions.args = {
     buttonText: 'Button',
     secondaryButtonText: 'Secondary button',
     buttonLinkText: 'Link',
-    withChevron: false,
+    chevron: false,
 };
 Actions.argTypes = {
-    withChevron: {
+    chevron: {
         control: {type: 'boolean'},
         if: {arg: 'buttonLinkText'},
     },

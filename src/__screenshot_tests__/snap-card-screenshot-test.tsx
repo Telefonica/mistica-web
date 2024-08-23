@@ -27,7 +27,7 @@ test('SnapCard', async () => {
 
     const snapCardInverse = await renderSnapCard({
         device: 'MOBILE_IOS',
-        args: {isInverse: true, asset: 'icon in circle'},
+        args: {inverse: true, asset: 'icon in circle'},
     });
     expect(await snapCardInverse.screenshot()).toMatchImageSnapshot({
         customSnapshotIdentifier: 'snapcard-screenshot-test-inverse',
@@ -35,7 +35,7 @@ test('SnapCard', async () => {
 
     const snapCardWithExtra = await renderSnapCard({
         device: 'MOBILE_IOS',
-        args: {withExtra: true, asset: 'icon in circle'},
+        args: {extra: true, asset: 'icon in circle'},
     });
     expect(await snapCardWithExtra.screenshot()).toMatchImageSnapshot({
         customSnapshotIdentifier: 'snapcard-screenshot-test-with-extra',

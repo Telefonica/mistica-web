@@ -22,7 +22,7 @@ test('Carousel mobile without bullets', async () => {
     const page = await openStoryPage({
         id: 'components-carousels-carousel--default',
         device: 'MOBILE_IOS',
-        args: {withBullets: false},
+        args: {bullets: false},
     });
 
     expect(await page.screenshot()).toMatchImageSnapshot();

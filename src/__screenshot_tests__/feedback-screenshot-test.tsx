@@ -81,7 +81,7 @@ test('Info feedback screen with custom icon', async () => {
         id: 'patterns-feedback-infofeedbackscreen--info',
         skin: MOVISTAR_SKIN,
         device: 'MOBILE_IOS',
-        args: {icon: 'custom'},
+        args: {asset: 'custom'},
     });
 
     const image = await page.screenshot();
