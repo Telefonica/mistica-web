@@ -31,7 +31,7 @@ const lineClamp = (truncate?: boolean | number) => {
     return 'initial';
 };
 
-const VIVINHO_CHAR = 'Ħ'; // vivo-type font replaces this char with a vivinho icon
+export const VIVINHO_CHAR = 'Ħ'; // vivo-type font replaces this char with a vivinho icon
 const vivinhoForScreenReaders = (
     <>
         <span aria-hidden>{VIVINHO_CHAR}</span>
@@ -41,25 +41,51 @@ const vivinhoForScreenReaders = (
     </>
 );
 
-const makeVivinhoCharReadableForScreenReaders = (children: React.ReactNode): React.ReactNode => {
-    return React.Children.map(children, (child) => {
-        if (typeof child !== 'string') {
-            return child;
-        }
-        if (!child.includes(VIVINHO_CHAR)) {
-            return child;
-        }
-        return (
-            <>
-                {child.split(VIVINHO_CHAR).map((segment, idx) => (
-                    <React.Fragment key={idx}>
-                        {idx > 0 && vivinhoForScreenReaders}
-                        {segment}
-                    </React.Fragment>
-                ))}
-            </>
-        );
-    });
+const makeVivinhoCharReadableForScreenReaders = ({
+    children,
+    ariaLabel,
+    as,
+}: {
+    children: React.ReactNode;
+    ariaLabel?: string;
+    as?: React.ComponentType<any> | string;
+}) => {
+    // When the Text is a heading (<hx>), we set an aria-label replacing the vivinho char with "Vivo" for
+    // screen readers and hide the original text.
+    // If we used the generic solution, Safari/iOS VoiceOver would read "Vivo" as a separated heading
+    if (
+        typeof as === 'string' &&
+        ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'].includes(as) &&
+        typeof children === 'string' &&
+        children.includes(VIVINHO_CHAR)
+    ) {
+        return {
+            ariaLabel: children.replaceAll(VIVINHO_CHAR, 'Vivo'),
+            children: <span aria-hidden>{children}</span>,
+        };
+    }
+
+    return {
+        children: React.Children.map(children, (child) => {
+            if (typeof child !== 'string') {
+                return child;
+            }
+            if (!child.includes(VIVINHO_CHAR)) {
+                return child;
+            }
+            return (
+                <>
+                    {child.split(VIVINHO_CHAR).map((segment, idx) => (
+                        <React.Fragment key={idx}>
+                            {idx > 0 && vivinhoForScreenReaders}
+                            {segment}
+                        </React.Fragment>
+                    ))}
+                </>
+            );
+        }),
+        ariaLabel,
+    };
 };
 
 export interface TextPresetProps {
@@ -75,6 +101,7 @@ export interface TextPresetProps {
     as?: React.ComponentType<any> | string;
     role?: string;
     'aria-level'?: number;
+    'aria-label'?: string;
     dataAttributes?: DataAttributes;
     forceMobileSizes?: boolean;
     textShadow?: string;
@@ -121,6 +148,7 @@ export const Text: React.FC<TextProps> = ({
     id,
     role,
     'aria-level': ariaLevel,
+    'aria-label': ariaLabel,
     dataAttributes,
 }) => {
     const {skinName} = useTheme();
@@ -154,6 +182,10 @@ export const Text: React.FC<TextProps> = ({
           })
         : {};
 
+    if (skinName === VIVO_NEW_SKIN) {
+        ({ariaLabel, children} = makeVivinhoCharReadableForScreenReaders({children, ariaLabel, as}));
+    }
+
     return React.createElement(
         as,
         {
@@ -161,6 +193,7 @@ export const Text: React.FC<TextProps> = ({
             id,
             role,
             'aria-level': ariaLevel,
+            'aria-label': ariaLabel,
             ...getPrefixedDataAttributes(dataAttributes, 'Text'),
             style: {
                 ...sizeVars,
@@ -179,7 +212,7 @@ export const Text: React.FC<TextProps> = ({
                 whiteSpace: as === 'pre' ? undefined : 'pre-line',
             },
         },
-        skinName === VIVO_NEW_SKIN ? makeVivinhoCharReadableForScreenReaders(children) : children
+        children
     );
 };
 
