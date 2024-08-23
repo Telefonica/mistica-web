@@ -31,7 +31,7 @@ const lineClamp = (truncate?: boolean | number) => {
     return 'initial';
 };
 
-export const VIVINHO_CHAR = 'Ħ'; // vivo-type font replaces this char with a vivinho icon
+const VIVINHO_CHAR = 'Ħ'; // vivo-type font replaces this char with a vivinho icon
 const vivinhoForScreenReaders = (
     <>
         <span aria-hidden>{VIVINHO_CHAR}</span>
