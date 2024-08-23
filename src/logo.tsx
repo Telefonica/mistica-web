@@ -13,6 +13,8 @@ import type {TouchableComponentProps} from './touchable';
 import type {KnownSkinName} from './skins/types';
 import type {ByBreakpoint, DataAttributes} from './utils/types';
 
+const DEFAULT_HEIGHT_PX = 48;
+
 const MovistarLogoImage = React.lazy(
     () =>
         import(
@@ -142,7 +144,7 @@ const MaybeTouchableLogo = (
     );
 };
 
-export const Logo: React.FC<LogoProps> = ({size = 48, type = 'isotype', ...props}) => {
+export const Logo = ({size = DEFAULT_HEIGHT_PX, type = 'isotype', ...props}: LogoProps): JSX.Element => {
     const {skinName} = useTheme();
 
     return (
@@ -152,38 +154,46 @@ export const Logo: React.FC<LogoProps> = ({size = 48, type = 'isotype', ...props
     );
 };
 
-export const MovistarLogo: React.FC<LogoProps> = ({size = 48, type = 'isotype', ...props}) => (
+export const MovistarLogo = ({
+    size = DEFAULT_HEIGHT_PX,
+    type = 'isotype',
+    ...props
+}: LogoProps): JSX.Element => (
     <MaybeTouchableLogo size={size} {...props}>
         <LogoBase skinName="Movistar" type={type} size={size} />
     </MaybeTouchableLogo>
 );
 
-export const VivoLogo: React.FC<LogoProps> = ({size = 48, type = 'isotype', ...props}) => (
+export const VivoLogo = ({size = DEFAULT_HEIGHT_PX, type = 'isotype', ...props}: LogoProps): JSX.Element => (
     <MaybeTouchableLogo size={size} {...props}>
         <LogoBase skinName="Vivo" type={type} size={size} />
     </MaybeTouchableLogo>
 );
-export const O2Logo: React.FC<LogoProps> = ({size = 48, type = 'isotype', ...props}) => (
+export const O2Logo = ({size = DEFAULT_HEIGHT_PX, type = 'isotype', ...props}: LogoProps): JSX.Element => (
     <MaybeTouchableLogo size={size} {...props}>
         <LogoBase skinName="O2" type={type} size={size} />
     </MaybeTouchableLogo>
 );
-export const O2NewLogo: React.FC<LogoProps> = ({size = 48, type = 'isotype', ...props}) => (
+export const O2NewLogo = ({size = DEFAULT_HEIGHT_PX, type = 'isotype', ...props}: LogoProps): JSX.Element => (
     <MaybeTouchableLogo size={size} {...props}>
         <LogoBase skinName="O2-new" type={type} size={size} />
     </MaybeTouchableLogo>
 );
-export const TelefonicaLogo: React.FC<LogoProps> = ({size = 48, type = 'isotype', ...props}) => (
+export const TelefonicaLogo = ({
+    size = DEFAULT_HEIGHT_PX,
+    type = 'isotype',
+    ...props
+}: LogoProps): JSX.Element => (
     <MaybeTouchableLogo size={size} {...props}>
         <LogoBase skinName="Telefonica" type={type} size={size} />
     </MaybeTouchableLogo>
 );
-export const BlauLogo: React.FC<LogoProps> = ({size = 48, type = 'isotype', ...props}) => (
+export const BlauLogo = ({size = DEFAULT_HEIGHT_PX, type = 'isotype', ...props}: LogoProps): JSX.Element => (
     <MaybeTouchableLogo size={size} {...props}>
         <LogoBase skinName="Blau" type={type} size={size} />
     </MaybeTouchableLogo>
 );
-export const TuLogo: React.FC<LogoProps> = ({size = 48, type = 'isotype', ...props}) => (
+export const TuLogo = ({size = DEFAULT_HEIGHT_PX, type = 'isotype', ...props}: LogoProps): JSX.Element => (
     <MaybeTouchableLogo size={size} {...props}>
         <LogoBase skinName="Tu" type={type} size={size} />
     </MaybeTouchableLogo>
