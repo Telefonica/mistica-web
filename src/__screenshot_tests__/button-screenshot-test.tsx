@@ -98,31 +98,28 @@ const BUTTON_LINK_CHEVRON_OPTIONS = ['default', 'true', 'false'];
 const getLinkWithChevronCases = () => {
     const cases = [];
     for (const action of BUTTON_LINK_ACTIONS) {
-        for (const withChevron of BUTTON_LINK_CHEVRON_OPTIONS) {
-            cases.push([action, withChevron]);
+        for (const chevron of BUTTON_LINK_CHEVRON_OPTIONS) {
+            cases.push([action, chevron]);
         }
     }
     return cases;
 };
 
-test.each(getLinkWithChevronCases())(
-    'Buttons - Link button - %s (chevron = %s)',
-    async (action, withChevron) => {
-        await openStoryPage({
-            id: 'components-buttons--link-button',
-            device: 'MOBILE_IOS',
-            args: {
-                action,
-                withChevron,
-            },
-        });
+test.each(getLinkWithChevronCases())('Buttons - Link button - %s (chevron = %s)', async (action, chevron) => {
+    await openStoryPage({
+        id: 'components-buttons--link-button',
+        device: 'MOBILE_IOS',
+        args: {
+            action,
+            chevron,
+        },
+    });
 
-        const story = await screen.findByTestId('content');
+    const story = await screen.findByTestId('content');
 
-        const image = await story.screenshot();
-        expect(image).toMatchImageSnapshot();
-    }
-);
+    const image = await story.screenshot();
+    expect(image).toMatchImageSnapshot();
+});
 
 test('Buttons - Link button - with chevron in Vivo', async () => {
     await openStoryPage({
@@ -130,7 +127,7 @@ test('Buttons - Link button - with chevron in Vivo', async () => {
         device: 'MOBILE_IOS',
         skin: 'Vivo-new',
         args: {
-            withChevron: true,
+            chevron: true,
         },
     });
 
@@ -145,7 +142,7 @@ test('Buttons - Link button with chevron and big font size', async () => {
         id: 'components-buttons--link-button',
         device: 'MOBILE_IOS',
         args: {
-            withChevron: true,
+            chevron: true,
         },
     });
 
@@ -163,7 +160,7 @@ test('Buttons - Link button with chevron and big font size in Vivo', async () =>
         device: 'MOBILE_IOS',
         skin: 'Vivo-new',
         args: {
-            withChevron: true,
+            chevron: true,
         },
     });
 

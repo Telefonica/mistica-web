@@ -23,11 +23,11 @@ export default {
 };
 
 type Args = {
-    showLargeContent: boolean;
-    showInput: boolean;
+    largeContent: boolean;
+    input: boolean;
 };
 
-export const Default: StoryComponent<Args> = ({showLargeContent, showInput}) => {
+export const Default: StoryComponent<Args> = ({largeContent, input}) => {
     const {isDesktopOrBigger} = useScreenSize();
     const [index, setIndex] = React.useState(0);
     const {dimensions} = useTheme();
@@ -71,8 +71,8 @@ export const Default: StoryComponent<Args> = ({showLargeContent, showInput}) => 
                         primaryButton={<ButtonPrimary onPress={() => {}}>Action</ButtonPrimary>}
                         extra={
                             <>
-                                {showInput ? <TextField name="text" label="Text" /> : undefined}
-                                {showLargeContent ? <Placeholder height={1000} /> : undefined}
+                                {input ? <TextField name="text" label="Text" /> : undefined}
+                                {largeContent ? <Placeholder height={1000} /> : undefined}
                             </>
                         }
                     />
@@ -83,8 +83,8 @@ export const Default: StoryComponent<Args> = ({showLargeContent, showInput}) => 
 };
 
 Default.args = {
-    showLargeContent: false,
-    showInput: false,
+    largeContent: false,
+    input: false,
 };
 
 Default.storyName = 'SuccessFeedbackScreen with Navigation Bar';
