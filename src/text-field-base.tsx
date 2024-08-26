@@ -211,7 +211,7 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
         ref
     ) => {
         const reactId = React.useId();
-        const id = idProp ?? reactId;
+        const id = idProp || reactId;
         const helperTextid = React.useId();
 
         const [inputState, setInputState] = React.useState<InputState>(
@@ -438,7 +438,7 @@ export const TextFieldBaseAutosuggest = React.forwardRef<any, TextFieldBaseProps
         const inputRef = React.useRef<HTMLInputElement>(null);
         const {platformOverrides, texts, t} = useTheme();
         const reactId = React.useId();
-        const id = idProp ?? reactId;
+        const id = idProp || reactId;
         const autoSuggestId = React.useId();
 
         if (getSuggestions && (props.value === undefined || props.defaultValue !== undefined)) {

@@ -65,7 +65,7 @@ const RadioButton: React.FC<PropsRender | PropsChildren> = ({
 }) => {
     const {disabled, selectedValue, focusableValue, select, selectNext, selectPrev} = useRadioContext();
     const reactId = React.useId();
-    const labelId = ariaLabelledby ?? reactId;
+    const labelId = ariaLabelledby || reactId;
     const ref = React.useRef<HTMLDivElement>(null);
     const checked = value === selectedValue;
     const tabIndex = focusableValue === value ? 0 : -1;

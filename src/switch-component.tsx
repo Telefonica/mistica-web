@@ -53,7 +53,7 @@ type PropsChildren = {
 const Switch: React.FC<PropsRender | PropsChildren> = (props) => {
     const {isIos, isDarkMode} = useTheme();
     const reactId = React.useId();
-    const labelId = props['aria-labelledby'] ?? reactId;
+    const labelId = props['aria-labelledby'] || reactId;
     const {defaultValue, value, onChange, focusableRef, disabled} = useControlProps({
         name: props.name,
         value: props.checked,

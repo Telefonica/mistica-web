@@ -48,7 +48,7 @@ const Form: React.FC<FormProps> = ({
     const formRef = React.useRef<HTMLFormElement | null>(null);
     const {texts, t} = useTheme();
     const reactId = React.useId();
-    const id = idProp ?? reactId;
+    const id = idProp || reactId;
 
     React.useEffect(() => {
         /**

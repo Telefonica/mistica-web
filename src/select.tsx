@@ -77,7 +77,7 @@ const Select: React.FC<SelectProps> = ({
     const [tentativeValueState, setTentativeValueState] = React.useState<string>();
     const lastElementSelectionScrollTop = React.useRef<number>(null);
     const reactId = React.useId();
-    const inputId = id ?? reactId;
+    const inputId = id || reactId;
     const {
         rawValues,
         setRawValue,

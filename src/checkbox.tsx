@@ -87,7 +87,7 @@ type ChildrenProps = {
 
 const Checkbox = React.forwardRef<HTMLDivElement, RenderProps | ChildrenProps>((props, ref) => {
     const reactId = React.useId();
-    const labelId = props['aria-labelledby'] ?? reactId;
+    const labelId = props['aria-labelledby'] || reactId;
     const ariaLabel = props['aria-label'];
     const hasExternalLabel = ariaLabel || props['aria-labelledby'];
 
