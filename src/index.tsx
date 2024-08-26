@@ -165,7 +165,6 @@ export {
     useTheme,
     useScreenSize,
     useElementDimensions,
-    useId,
     useWindowSize,
     useWindowHeight,
     useWindowWidth,

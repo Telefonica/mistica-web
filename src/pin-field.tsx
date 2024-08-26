@@ -4,7 +4,7 @@ import * as React from 'react';
 import Inline from './inline';
 import * as textFieldStyles from './text-field-base.css';
 import * as styles from './pin-field.css';
-import {useId, useTheme} from './hooks';
+import {useTheme} from './hooks';
 import ScreenReaderOnly from './screen-reader-only';
 import {IntegerInput} from './integer-field';
 import {useFieldProps} from './form-context';
@@ -310,7 +310,7 @@ const PinField = ({
         onChange,
     });
 
-    const otpLabelId = useId();
+    const otpLabelId = React.useId();
 
     return (
         <div

@@ -2,7 +2,7 @@
 import * as React from 'react';
 import {getPlatform} from './utils/platform';
 import FadeIn from './fade-in';
-import {useId, useTheme} from './hooks';
+import {useTheme} from './hooks';
 import * as styles from './spinner.css';
 import {vars} from './skins/skin-contract.css';
 import {useIsInverseVariant} from './theme-variant-context';
@@ -21,7 +21,7 @@ const Spinner: React.FC<Props> = ({color, delay = '500ms', size = 24, style, rol
     const {texts, platformOverrides, t} = useTheme();
     const isInverse = useIsInverseVariant();
     color = color || (isInverse ? vars.colors.controlActivatedInverse : vars.colors.controlActivated);
-    const spinnerId = useId();
+    const spinnerId = React.useId();
     const withTitle = !rolePresentation;
     const title = texts.loading || t(tokens.loading);
     const content =

@@ -1,6 +1,6 @@
 'use client';
 import * as React from 'react';
-import {useId, useTheme} from '../hooks';
+import {useTheme} from '../hooks';
 import {getAnimateCircleScaleInProps, getAnimateDrawLineProps} from '../utils/animation';
 
 type Props = {
@@ -9,7 +9,7 @@ type Props = {
 
 const IconSuccessVivoNew = ({size = 48}: Props): JSX.Element => {
     const {platformOverrides} = useTheme();
-    const gradientId = useId();
+    const gradientId = React.useId();
 
     return (
         <svg role="presentation" width={size} height={size} viewBox="0 0 64 64" fill="none">

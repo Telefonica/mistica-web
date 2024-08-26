@@ -130,12 +130,6 @@ export const useElementDimensions = ({includeMargins = false}: {includeMargins?:
     return {width, height, ref};
 };
 
-export const useId = (id?: string): string => {
-    const {useId: themeUseId} = useTheme();
-    const reactId = React.useId();
-    return React.useRef(id || themeUseId?.() || reactId).current;
-};
-
 export const useWindowSize = (): {
     height: number;
     width: number;

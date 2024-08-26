@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useId, useIsInverseVariant, Select, TextField, Checkbox, skinVars} from '..';
+import {useIsInverseVariant, Select, TextField, Checkbox, skinVars} from '..';
 import {isRunningAcceptanceTest} from '../utils/platform';
 
 type Props = {
@@ -104,7 +104,7 @@ export const useCheckbox = (
     defaultValue = false
 ): [boolean, React.ReactElement<any, typeof Checkbox>] => {
     const [isEnabled, setIsEnabled] = React.useState(defaultValue);
-    const id = useId();
+    const id = React.useId();
     const checkbox = (
         <Checkbox name={'checkbox-' + id} checked={isEnabled} onChange={setIsEnabled}>
             {label}
@@ -131,7 +131,7 @@ export const useSelect = (
     values: Array<string>
 ): [string, React.ReactNode] => {
     const [value, setValue] = React.useState(defaultValue);
-    const id = useId();
+    const id = React.useId();
     const select = (
         <Select
             name={id}
