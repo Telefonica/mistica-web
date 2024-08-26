@@ -42,7 +42,7 @@ const TitleComponent = ({
         dataAttributes={{testid: defaultTitle}}
         right={
             right === 'link' ? (
-                <ButtonLink href="https://google.com" bleedRight bleedY>
+                <ButtonLink small href="https://google.com" bleedRight bleedY>
                     {linkText || 'link'}
                 </ButtonLink>
             ) : right === 'icon' ? (

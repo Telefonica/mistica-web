@@ -1,9 +1,11 @@
-import {style, globalStyle, styleVariants} from '@vanilla-extract/css';
+import {style, globalStyle, styleVariants, createVar} from '@vanilla-extract/css';
 import {sprinkles} from './sprinkles.css';
 import * as mq from './media-queries.css';
-import {buttonPaddingX, borderSize} from './button.css';
 
-const buttonLayoutSpacing = 16;
+const buttonLayoutSpacing = '16px';
+const buttonLinkPadding = createVar();
+
+export const vars = {buttonLinkPadding};
 
 export const margins = style({
     margin: '16px 0',
@@ -20,7 +22,7 @@ export const margins = style({
 export const container = style([
     sprinkles({display: 'flex', alignItems: 'center'}),
     {
-        margin: -buttonLayoutSpacing / 2, // compensates the buttons margin
+        margin: `calc(-1 * ${buttonLayoutSpacing} / 2)`, // compensates the buttons margin
         flexWrap: 'wrap',
 
         ':empty': {
@@ -53,19 +55,19 @@ export const alignVariant = styleVariants({
 const linkBase = style([
     sprinkles({display: 'flex', width: '100%'}),
     {
-        margin: buttonLayoutSpacing / 2,
+        margin: `calc(${buttonLayoutSpacing} / 2)`,
         justifyContent: 'inherit',
     },
 ]);
 
 globalStyle(`${container} > *:not(${linkBase})`, {
-    margin: buttonLayoutSpacing / 2,
+    margin: `calc(${buttonLayoutSpacing} / 2)`,
 });
 
 globalStyle(`${containerWithTwoButtons} > *:not(${linkBase})`, {
     '@media': {
         [mq.tabletOrSmaller]: {
-            minWidth: `calc(50% - ${buttonLayoutSpacing}px)`,
+            minWidth: `calc(50% - ${buttonLayoutSpacing})`,
         },
     },
 });
@@ -79,10 +81,10 @@ globalStyle(`${alignVariant['full-width']} > *:not(${linkBase})`, {
 });
 
 const bleedLeft = {
-    marginLeft: `calc(${buttonLayoutSpacing}px / 2 - (${buttonPaddingX.small} + ${borderSize}))`,
+    marginLeft: `calc(${buttonLayoutSpacing} / 2 - ${buttonLinkPadding})`,
 };
 const bleedRight = {
-    marginRight: `calc(${buttonLayoutSpacing}px / 2 - (${buttonPaddingX.small} + ${borderSize}))`,
+    marginRight: `calc(${buttonLayoutSpacing} / 2 - ${buttonLinkPadding})`,
 };
 
 export const link = style([

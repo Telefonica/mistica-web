@@ -84,7 +84,11 @@ export const Default: StoryComponent<Args> = ({
             </ButtonPrimary>
         ) : undefined,
 
-        buttonLink: actions.includes('link') ? <ButtonLink href="#">Link</ButtonLink> : undefined,
+        buttonLink: actions.includes('link') ? (
+            <ButtonLink small href="#">
+                Link
+            </ButtonLink>
+        ) : undefined,
         onPress: actions === 'onPress' ? () => {} : undefined,
         to: actions === 'to' ? '#' : undefined,
         href: actions === 'href' ? 'https://example.org' : undefined,
@@ -266,7 +270,11 @@ export const Group: StoryComponent = () => {
                                         Action
                                     </ButtonPrimary>
                                 }
-                                buttonLink={<ButtonLink href="https://google.com">Link</ButtonLink>}
+                                buttonLink={
+                                    <ButtonLink small href="https://google.com">
+                                        Link
+                                    </ButtonLink>
+                                }
                             />,
                             <NakedCard
                                 title="Title"
@@ -277,7 +285,11 @@ export const Group: StoryComponent = () => {
                                         Action
                                     </ButtonPrimary>
                                 }
-                                buttonLink={<ButtonLink href="https://google.com">Link</ButtonLink>}
+                                buttonLink={
+                                    <ButtonLink small href="https://google.com">
+                                        Link
+                                    </ButtonLink>
+                                }
                             />,
                         ]}
                     />

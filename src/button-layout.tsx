@@ -4,6 +4,8 @@ import {ButtonPrimary, ButtonSecondary, ButtonDanger} from './button';
 import classnames from 'classnames';
 import {getPrefixedDataAttributes} from './utils/dom';
 import * as styles from './button-layout.css';
+import {borderSize, buttonPaddingX} from './button.css';
+import {applyCssVars} from './utils/css';
 
 import type {DataAttributes, RendersNullableElement} from './utils/types';
 import type {NullableButtonElement, ButtonLink} from './button';
@@ -38,6 +40,7 @@ const ButtonLayout: React.FC<ButtonLayoutProps> = ({
         const range2 = buttonsRange.indexOf(b2.type);
         return align === 'right' ? range2 - range1 : range1 - range2;
     });
+    const hasSmallLink = !!link?.props.small;
 
     const numberOfButtons = children
         ? sortedButtons.length
@@ -71,6 +74,13 @@ const ButtonLayout: React.FC<ButtonLayoutProps> = ({
             className={classnames(styles.container, styles.alignVariant[align], {
                 [styles.containerWithTwoButtons]: numberOfButtons > 1,
             })}
+            style={{
+                ...applyCssVars({
+                    [styles.vars.buttonLinkPadding]: `calc(${borderSize} + ${
+                        hasSmallLink ? buttonPaddingX.small : buttonPaddingX.default
+                    })`,
+                }),
+            }}
             {...getPrefixedDataAttributes(dataAttributes, 'ButtonLayout')}
         >
             {align !== 'right' || numberOfButtons > 1 ? (

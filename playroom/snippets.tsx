@@ -989,7 +989,7 @@ const cardSnippets: Array<Snippet> = [
                     Action
                 </ButtonPrimary>
             }
-            buttonLink={<ButtonLink onPress={() => {}}>Link</ButtonLink>}
+            buttonLink={<ButtonLink small onPress={() => {}}>Link</ButtonLink>}
         />`,
     },
     {
@@ -1010,7 +1010,7 @@ const cardSnippets: Array<Snippet> = [
                     Action
                 </ButtonPrimary>
             }
-            buttonLink={<ButtonLink onPress={() => {}}>Link</ButtonLink>}
+            buttonLink={<ButtonLink small onPress={() => {}}>Link</ButtonLink>}
         />`,
     },
     {
@@ -1033,7 +1033,7 @@ const cardSnippets: Array<Snippet> = [
                     Action
                 </ButtonPrimary>
             }
-            buttonLink={<ButtonLink onPress={() => {}}>Link</ButtonLink>}
+            buttonLink={<ButtonLink small onPress={() => {}}>Link</ButtonLink>}
         />`,
     },
     {
@@ -1288,7 +1288,7 @@ const cardSnippets: Array<Snippet> = [
                     Action
                 </ButtonPrimary>
             }
-            buttonLink={<ButtonLink onPress={() => {}}>Link</ButtonLink>}
+            buttonLink={<ButtonLink small onPress={() => {}}>Link</ButtonLink>}
         />`,
     },
     {
@@ -1308,7 +1308,7 @@ const cardSnippets: Array<Snippet> = [
                     Action
                 </ButtonPrimary>
             }
-            buttonLink={<ButtonLink onPress={() => {}}>Link</ButtonLink>}
+            buttonLink={<ButtonLink small onPress={() => {}}>Link</ButtonLink>}
         />`,
     },
 
@@ -1332,7 +1332,7 @@ const titlesSnippets: Array<Snippet> = [
     },
     {
         name: 'Title1 (with link)',
-        code: '<Title1 right={<ButtonLink onPress={() => {}} withChevron bleedRight bleedY>Link</ButtonLink>}>Some title</Title1>',
+        code: '<Title1 right={<ButtonLink small onPress={() => {}} withChevron bleedRight bleedY>Link</ButtonLink>}>Some title</Title1>',
     },
     {
         name: 'Title2',
@@ -1340,7 +1340,7 @@ const titlesSnippets: Array<Snippet> = [
     },
     {
         name: 'Title2 (with link)',
-        code: '<Title2 right={<ButtonLink onPress={() => {}} withChevron bleedRight bleedY>Link</ButtonLink>}>Some title</Title2>',
+        code: '<Title2 right={<ButtonLink small onPress={() => {}} withChevron bleedRight bleedY>Link</ButtonLink>}>Some title</Title2>',
     },
     {
         name: 'Title3',
@@ -1348,7 +1348,7 @@ const titlesSnippets: Array<Snippet> = [
     },
     {
         name: 'Title3 (with link)',
-        code: '<Title3 right={<ButtonLink onPress={() => {}} withChevron bleedRight bleedY>Link</ButtonLink>}>Some title</Title3>',
+        code: '<Title3 right={<ButtonLink small onPress={() => {}} withChevron bleedRight bleedY>Link</ButtonLink>}>Some title</Title3>',
     },
 ].map((snippet) => ({...snippet, group: 'Titles'}));
 
@@ -1548,7 +1548,7 @@ const emptyStatesGroup: Array<Snippet> = [
             title="Your cart is empty"
             description="Check our marketplaces and find something for you"
             button={<ButtonPrimary small onPress={() => {}}>Explore marketplace</ButtonPrimary>}
-            buttonLink={<ButtonLink onPress={() => {}}>More info</ButtonLink>}
+            buttonLink={<ButtonLink small onPress={() => {}}>More info</ButtonLink>}
         />`,
     },
 ].map((snippet) => ({...snippet, group: 'Empty states'}));
@@ -1744,7 +1744,7 @@ const exampleScreens: Array<Snippet> = [
                     label="Password"
                     helperText="Helper text"
                   />
-                  <ButtonLink bleedLeft onPress>
+                  <ButtonLink small bleedLeft onPress>
                     I’m having problems with my password
                   </ButtonLink>
                 </Stack>
@@ -1757,7 +1757,7 @@ const exampleScreens: Array<Snippet> = [
                   </Text3>
                   <TextField name="phone" label="Phone number" prefix="+34" />
 
-                  <ButtonLink bleedLeft onPress>
+                  <ButtonLink small bleedLeft onPress>
                     I’m having access problems
                   </ButtonLink>
                 </Stack>
@@ -1946,7 +1946,7 @@ const exampleScreens: Array<Snippet> = [
             />
           ))}
         />
-        <ButtonLink bleedLeft onPress={() => {}}>
+        <ButtonLink small bleedLeft onPress={() => {}}>
           See all products
         </ButtonLink>
       </Stack>
@@ -1989,7 +1989,7 @@ const exampleScreens: Array<Snippet> = [
             />
           ))}
         />
-        <ButtonLink bleedLeft onPress={() => {}}>
+        <ButtonLink small bleedLeft onPress={() => {}}>
           View more
         </ButtonLink>
       </Stack>
@@ -2498,7 +2498,7 @@ const carouselSnippets = [
           Action
         </ButtonPrimary>
       }
-      buttonLink={<ButtonLink onPress={() => {}}>Link</ButtonLink>}
+      buttonLink={<ButtonLink small onPress={() => {}}>Link</ButtonLink>}
     />
   ))}
 />`,
@@ -3708,7 +3708,7 @@ export default [
                     Action
                 </ButtonPrimary>
                 }
-                buttonLink={<ButtonLink onPress={() => {}}>Link</ButtonLink>}
+                buttonLink={<ButtonLink small onPress={() => {}}>Link</ButtonLink>}
             />`,
     },
     ...navigationBarSnippets,
