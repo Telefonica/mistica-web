@@ -18,7 +18,7 @@ const DEFAULT_HEIGHT_PX = 48;
 const MovistarLogoImage = React.lazy(
     () =>
         import(
-            /* webpackChunkName: logo-movistar */
+            /* webpackChunkName: "logo-movistar" */
             './logo-movistar'
         )
 );
@@ -26,7 +26,7 @@ const MovistarLogoImage = React.lazy(
 const VivoLogoImage = React.lazy(
     () =>
         import(
-            /* webpackChunkName: logo-vivo */
+            /* webpackChunkName: "logo-vivo" */
             './logo-vivo'
         )
 );
@@ -34,7 +34,7 @@ const VivoLogoImage = React.lazy(
 const O2LogoImage = React.lazy(
     () =>
         import(
-            /* webpackChunkName: logo-o2 */
+            /* webpackChunkName: "logo-o2" */
             './logo-o2'
         )
 );
@@ -42,7 +42,7 @@ const O2LogoImage = React.lazy(
 const O2NewLogoImage = React.lazy(
     () =>
         import(
-            /* webpackChunkName: logo-o2-new */
+            /* webpackChunkName: "logo-o2-new" */
             './logo-o2-new'
         )
 );
@@ -50,7 +50,7 @@ const O2NewLogoImage = React.lazy(
 const TelefonicaLogoImage = React.lazy(
     () =>
         import(
-            /* webpackChunkName: logo-telefonica */
+            /* webpackChunkName: "logo-telefonica" */
             './logo-telefonica'
         )
 );
@@ -58,7 +58,7 @@ const TelefonicaLogoImage = React.lazy(
 const BlauLogoImage = React.lazy(
     () =>
         import(
-            /* webpackChunkName: logo-blau */
+            /* webpackChunkName: "logo-blau" */
             './logo-blau'
         )
 );
@@ -66,7 +66,7 @@ const BlauLogoImage = React.lazy(
 const TuLogoImage = React.lazy(
     () =>
         import(
-            /* webpackChunkName: logo-tu */
+            /* webpackChunkName: "logo-tu" */
             './logo-tu'
         )
 );
