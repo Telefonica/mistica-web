@@ -35,7 +35,7 @@ const renderButtonElement = ({
     small?: boolean;
     content: React.ReactNode;
     defaultIconSize: string;
-    TextContentRenderer: React.FC<{element: React.ReactNode; small?: boolean}>;
+    TextContentRenderer: (element: React.ReactNode, small?: boolean) => JSX.Element;
 }): React.ReactNode => {
     const childrenArr = flattenChildren(content);
     const length = childrenArr.length;
@@ -44,7 +44,7 @@ const renderButtonElement = ({
     const flushAccText = () => {
         resultChildrenArr.push(
             <React.Fragment key={resultChildrenArr.length}>
-                <TextContentRenderer element={accText} small={small} />
+                {TextContentRenderer(accText, small)}
             </React.Fragment>
         );
         accText = [];
@@ -129,7 +129,7 @@ const renderButtonContent = ({
     loadingText?: string;
     shouldRenderSpinner: boolean;
     setShouldRenderSpinner: (value: boolean) => void;
-    TextContentRenderer: React.FC<{element: React.ReactNode; small?: boolean}>;
+    TextContentRenderer: (element: React.ReactNode, small?: boolean) => JSX.Element;
     StartIcon?: React.FC<IconProps>;
     EndIcon?: React.FC<IconProps>;
     withChevron?: boolean;
@@ -308,7 +308,7 @@ const BaseButton = React.forwardRef<
     ExclusifyUnion<ButtonProps | ButtonLinkProps> & {
         buttonType: ButtonType;
         withChevron?: boolean;
-        TextContentRenderer: React.FC<{element: React.ReactNode; small?: boolean}>;
+        TextContentRenderer: (element: React.ReactNode, small?: boolean) => JSX.Element;
     }
 >((props, ref) => {
     const {eventFormat} = useTrackingConfig();
@@ -498,7 +498,7 @@ const BaseButton = React.forwardRef<
     return null;
 });
 
-const ButtonTextRenderer: React.FC<{element: React.ReactNode; small?: boolean}> = ({element, small}) => {
+const ButtonTextRenderer = (element: React.ReactNode, small?: boolean): JSX.Element => {
     const {textPresets} = useTheme();
     return small ? (
         <Text
@@ -518,7 +518,7 @@ const ButtonTextRenderer: React.FC<{element: React.ReactNode; small?: boolean}> 
     );
 };
 
-const LinkTextRenderer: React.FC<{element: React.ReactNode; small?: boolean}> = ({element, small}) => {
+const LinkTextRenderer = (element: React.ReactNode, small?: boolean): JSX.Element => {
     const {textPresets} = useTheme();
     const TextComponent = small ? Text2 : Text3;
     return (
