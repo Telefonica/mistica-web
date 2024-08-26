@@ -47,7 +47,7 @@ test('MediaCard with body ', async () => {
         id: 'components-cards-mediacard--default',
         device: 'MOBILE_IOS',
         args: {
-            withExtra: true,
+            extra: true,
             actions: 'button and link',
         },
     });
@@ -62,7 +62,7 @@ test('MediaCard with body closeable', async () => {
         id: 'components-cards-mediacard--default',
         device: 'MOBILE_IOS',
         args: {
-            withExtra: true,
+            extra: true,
             actions: 'button and link',
             closable: true,
         },
@@ -78,9 +78,9 @@ test('MediaCard with top actions', async () => {
         id: 'components-cards-mediacard--default',
         device: 'MOBILE_IOS',
         args: {
-            withExtra: true,
+            extra: true,
             actions: 'button and link',
-            withTopAction: true,
+            topAction: true,
         },
     });
 

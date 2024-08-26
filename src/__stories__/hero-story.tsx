@@ -21,7 +21,7 @@ type HeroArgs = {
     pretitle: string;
     title: string;
     description: string;
-    withExtra: boolean;
+    extra: boolean;
     actions: 'button' | 'link' | 'button and link';
     background: 'default' | 'alternative' | 'brand' | 'brand-secondary' | 'none';
     desktopMediaPosition: 'left' | 'right';
@@ -41,7 +41,7 @@ export const Default: StoryComponent<HeroArgs> = ({
     actions,
     desktopMediaPosition,
     height,
-    withExtra,
+    extra,
     aspectRatio,
     noPaddingY,
 }) => {
@@ -67,7 +67,7 @@ export const Default: StoryComponent<HeroArgs> = ({
             pretitle={pretitle}
             title={title}
             description={description}
-            extra={withExtra ? <Placeholder /> : undefined}
+            extra={extra ? <Placeholder /> : undefined}
             button={button}
             buttonLink={buttonLink}
             dataAttributes={{testid: 'hero'}}
@@ -87,7 +87,7 @@ Default.args = {
     pretitle: 'Pretitle',
     title: 'Title',
     description: 'This is a long description with a long text to see how this works',
-    withExtra: false,
+    extra: false,
     actions: 'button and link',
     background: 'default',
     desktopMediaPosition: 'right',

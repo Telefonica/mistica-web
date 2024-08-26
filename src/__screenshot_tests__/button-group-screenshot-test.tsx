@@ -18,7 +18,7 @@ test.each(DEVICES)('ButtonGroup - Long text (%s)', async (device) => {
     const page = await openStoryPage({
         id: 'components-buttons-buttongroup--default',
         device,
-        args: {buttonPrimaryText: 'A very long action text in this button', showButtonLink: false},
+        args: {buttonPrimaryText: 'A very long action text in this button', buttonLink: false},
     });
 
     const image = await page.screenshot({fullPage: true});

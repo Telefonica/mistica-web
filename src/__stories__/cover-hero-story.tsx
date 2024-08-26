@@ -32,8 +32,8 @@ type Args = {
     pretitle: string;
     title: string;
     description: string;
-    withExtra: boolean;
-    withSideExtra: boolean;
+    extra: boolean;
+    sideExtra: boolean;
     actions:
         | 'none'
         | 'button'
@@ -58,8 +58,8 @@ export const Default: StoryComponent<Args> = ({
     pretitle,
     title,
     description,
-    withExtra,
-    withSideExtra,
+    extra,
+    sideExtra,
     actions,
     minHeight,
     aspectRatio,
@@ -94,8 +94,8 @@ export const Default: StoryComponent<Args> = ({
             pretitle={pretitle}
             title={title}
             description={description}
-            extra={withExtra ? <Placeholder /> : undefined}
-            sideExtra={withSideExtra ? <Placeholder /> : undefined}
+            extra={extra ? <Placeholder /> : undefined}
+            sideExtra={sideExtra ? <Placeholder /> : undefined}
             button={button}
             secondaryButton={secondaryButton}
             buttonLink={buttonLink}
@@ -120,8 +120,8 @@ Default.args = {
     pretitle: 'Pretitle',
     title: 'Title',
     description: 'This is a long description with a long text to see how this works',
-    withExtra: false,
-    withSideExtra: false,
+    extra: false,
+    sideExtra: false,
     actions: 'button and link',
     minHeight: undefined,
     aspectRatio: 'auto',

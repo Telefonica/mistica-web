@@ -16,8 +16,8 @@ export default {
 type LoadingSreenArgs = {
     title: string;
     description: string;
-    isInverse: boolean;
-    isLoading: boolean;
+    inverse: boolean;
+    loading: boolean;
     multipleTexts: boolean;
     textDuration: number;
 };
@@ -25,8 +25,8 @@ type LoadingSreenArgs = {
 export const LoadingScreenStory: StoryComponent<LoadingSreenArgs> = ({
     title,
     description,
-    isInverse,
-    isLoading,
+    inverse,
+    loading,
     multipleTexts,
     textDuration,
 }) => {
@@ -66,8 +66,8 @@ export const LoadingScreenStory: StoryComponent<LoadingSreenArgs> = ({
     return (
         <LoadingScreen
             {...textProps}
-            isInverse={isInverse}
-            isLoading={isLoading}
+            isInverse={inverse}
+            isLoading={loading}
             onClose={() => {
                 setShowLoadingScreen(false);
             }}
@@ -78,8 +78,8 @@ LoadingScreenStory.storyName = 'LoadingScreen';
 LoadingScreenStory.args = {
     title: 'Title',
     description: 'Description',
-    isInverse: false,
-    isLoading: true,
+    inverse: false,
+    loading: true,
     multipleTexts: false,
     textDuration: 5000,
 };
@@ -90,7 +90,7 @@ LoadingScreenStory.argTypes = {
 type BrandLoadingSreenArgs = {
     title: string;
     description: string;
-    isLoading: boolean;
+    loading: boolean;
     multipleTexts: boolean;
     textDuration: number;
 };
@@ -100,7 +100,7 @@ export const BrandLoadingScreenStory: StoryComponent<BrandLoadingSreenArgs> = ({
     description,
     multipleTexts,
     textDuration,
-    isLoading,
+    loading,
 }) => {
     const [showLoadingScreen, setShowLoadingScreen] = React.useState(true);
     if (!showLoadingScreen) {
@@ -135,7 +135,7 @@ export const BrandLoadingScreenStory: StoryComponent<BrandLoadingSreenArgs> = ({
     return (
         <BrandLoadingScreen
             {...textProps}
-            isLoading={isLoading}
+            isLoading={loading}
             onClose={() => {
                 setShowLoadingScreen(false);
             }}
@@ -146,7 +146,7 @@ BrandLoadingScreenStory.storyName = 'BrandLoadingScreen';
 BrandLoadingScreenStory.args = {
     title: 'Title',
     description: 'Description',
-    isLoading: true,
+    loading: true,
     multipleTexts: false,
     textDuration: 5000,
 };

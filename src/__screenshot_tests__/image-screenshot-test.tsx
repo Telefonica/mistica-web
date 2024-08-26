@@ -49,7 +49,7 @@ test.each(ASPECT_RATIO.slice(0, 4))('Image - error fallback with aspect ratio %s
         args: {
             type: 'width and aspect ratio',
             aspectRatio: aspectRatio.replace(':', ' '),
-            isEmptySource: true,
+            emptySource: true,
         },
     });
 
