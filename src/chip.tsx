@@ -11,6 +11,7 @@ import * as styles from './chip.css';
 import {vars} from './skins/skin-contract.css';
 import {useThemeVariant} from './theme-variant-context';
 import Touchable, {BaseTouchable} from './touchable';
+import * as tokens from './text-tokens';
 
 import type {TouchableComponentProps} from './touchable';
 import type {ExclusifyUnion} from './utils/utility-types';
@@ -39,7 +40,7 @@ type ChipProps = ExclusifyUnion<ClosableChipProps | ToggleChipProps | ClickableC
 
 const Chip: React.FC<ChipProps> = (props: ChipProps) => {
     const {Icon, children, id, dataAttributes, active, badge, onClose, closeButtonLabel} = props;
-    const {texts, isDarkMode, textPresets} = useTheme();
+    const {texts, isDarkMode, textPresets, t} = useTheme();
 
     const overAlternative = useThemeVariant() === 'alternative';
 
@@ -84,7 +85,7 @@ const Chip: React.FC<ChipProps> = (props: ChipProps) => {
                         width: pxToRem(24),
                         height: pxToRem(24),
                     }}
-                    aria-label={closeButtonLabel ?? texts.closeButtonLabel}
+                    aria-label={closeButtonLabel || texts.closeButtonLabel || t(tokens.closeButtonLabel)}
                     onPress={() => onClose()}
                 >
                     <IconCloseRegular size={pxToRem(16)} color={vars.colors.neutralMedium} />
