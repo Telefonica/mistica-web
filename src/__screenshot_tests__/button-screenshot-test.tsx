@@ -4,7 +4,6 @@ import type {Device} from '../test-utils';
 
 const DEVICES: Array<Device> = ['MOBILE_IOS', 'MOBILE_ANDROID'];
 const BUTTONS = ['Primary button', 'Secondary button', 'Danger button', 'Link button', 'Link button danger'];
-const SMALL_BUTTONS = ['Primary button', 'Secondary button', 'Danger button'];
 
 const getCases = () => {
     const cases = [];
@@ -54,7 +53,7 @@ test.each(BUTTONS)('Buttons - %s - disabled', async (button) => {
     expect(image).toMatchImageSnapshot();
 });
 
-test.each(SMALL_BUTTONS)('Buttons - %s - small', async (button) => {
+test.each(BUTTONS)('Buttons - %s - small', async (button) => {
     await openStoryPage({
         id: `components-buttons--${button.toLowerCase().replaceAll(' ', '-')}`,
         device: 'MOBILE_IOS',
@@ -80,17 +79,31 @@ test.each(getCases())('Buttons - %s - spinner (%s)', async (button, device) => {
     expect(image).toMatchImageSnapshot();
 });
 
-test.each(DEVICES)('Buttons - ellipsis (%s)', async (device) => {
-    await openStoryPage({
-        id: 'private-ellipsis-in-buttons--default',
-        device,
-    });
+test.each`
+    device              | small    | showSpinner
+    ${'MOBILE_IOS'}     | ${true}  | ${true}
+    ${'MOBILE_IOS'}     | ${true}  | ${false}
+    ${'MOBILE_IOS'}     | ${false} | ${true}
+    ${'MOBILE_IOS'}     | ${false} | ${false}
+    ${'MOBILE_ANDROID'} | ${true}  | ${true}
+    ${'MOBILE_ANDROID'} | ${true}  | ${false}
+    ${'MOBILE_ANDROID'} | ${false} | ${true}
+    ${'MOBILE_ANDROID'} | ${false} | ${false}
+`(
+    'Buttons - ellipsis with small = $small and showSpinner = $showSpinner ($device)',
+    async ({device, small, showSpinner}) => {
+        await openStoryPage({
+            id: 'private-ellipsis-in-buttons--default',
+            device,
+            args: {small, showSpinner},
+        });
 
-    const story = await screen.findByTestId('content');
+        const story = await screen.findByTestId('content');
 
-    const image = await story.screenshot();
-    expect(image).toMatchImageSnapshot();
-});
+        const image = await story.screenshot();
+        expect(image).toMatchImageSnapshot();
+    }
+);
 
 const BUTTON_LINK_ACTIONS = ['href', 'to', 'onPress'];
 const BUTTON_LINK_CHEVRON_OPTIONS = ['default', 'true', 'false'];
