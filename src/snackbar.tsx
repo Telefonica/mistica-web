@@ -11,6 +11,7 @@ import {vars} from './skins/skin-contract.css';
 import {getPrefixedDataAttributes} from './utils/dom';
 import {Portal} from './portal';
 import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
+import * as tokens from './text-tokens';
 
 import type {DataAttributes} from './utils/types';
 
@@ -55,7 +56,7 @@ const SnackbarComponent = React.forwardRef<ImperativeHandle, Props>(
         },
         ref
     ) => {
-        const {texts} = useTheme();
+        const {texts, t} = useTheme();
         const [isOpen, setIsOpen] = React.useState(false);
         const {width: buttonWidth, ref: buttonRef} = useElementDimensions();
         const {isDesktopOrBigger} = useScreenSize();
@@ -172,7 +173,9 @@ const SnackbarComponent = React.forwardRef<ImperativeHandle, Props>(
                                 onPress={() => {
                                     close({action: 'DISMISS'});
                                 }}
-                                aria-label={closeButtonLabel ?? texts.closeButtonLabel}
+                                aria-label={
+                                    closeButtonLabel || texts.closeButtonLabel || t(tokens.closeButtonLabel)
+                                }
                                 className={styles.dismissButton[hasLongButton ? 'topRight' : 'centered']}
                                 style={{display: 'flex', width: 32, height: 32}}
                             >
