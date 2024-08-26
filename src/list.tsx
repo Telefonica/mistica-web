@@ -13,7 +13,7 @@ import {Text3, Text2, Text1} from './text';
 import Box from './box';
 import Stack from './stack';
 import Badge from './badge';
-import {useAriaId} from './hooks';
+import {useId} from './hooks';
 import {useIsInverseVariant} from './theme-variant-context';
 import IconChevron from './icons/icon-chevron';
 import Switch from './switch-component';
@@ -341,7 +341,7 @@ const hasControlProps = (
 };
 
 const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, ref) => {
-    const titleId = useAriaId();
+    const titleId = useId();
     const isInverse = useIsInverseVariant();
     const {
         asset,

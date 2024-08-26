@@ -6,7 +6,7 @@ import ResponsiveLayout from './responsive-layout';
 import Inline from './inline';
 import Touchable, {BaseTouchable} from './touchable';
 import {Text2, Text3} from './text';
-import {useScreenSize, useTheme, useAriaId} from './hooks';
+import {useScreenSize, useTheme, useId} from './hooks';
 import IconMenuRegular from './generated/mistica-icons/icon-menu-regular';
 import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
 import IconChevronLeftRegular from './generated/mistica-icons/icon-chevron-left-regular';
@@ -156,7 +156,7 @@ export const MainNavigationBar: React.FC<MainNavigationBarProps> = ({
     const {texts, isDarkMode} = useTheme();
     const [isMenuOpen, setIsMenuOpen] = React.useState(false);
     const [menuTransitionState, setMenuTransitionState] = React.useState<MenuTransitionState>('closed');
-    const menuId = useAriaId();
+    const menuId = useId();
     const shadowAlpha = isDarkMode ? 1 : 0.2;
     const {isTabletOrSmaller} = useScreenSize();
     const setModalState = useSetModalState();

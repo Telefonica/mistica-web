@@ -3,7 +3,6 @@ import * as React from 'react';
 import {assignInlineVars} from '@vanilla-extract/dynamic';
 import {DialogRoot} from './dialog-context';
 import ScreenSizeContextProvider from './screen-size-context-provider';
-import AriaIdGetterContext from './aria-id-getter-context';
 import {dimensions, getTexts, getMisticaLinkComponent, NAVBAR_HEIGHT_MOBILE} from './theme';
 import {getPlatform, isInsideNovumNativeApp} from './utils/platform';
 import ThemeContext from './theme-context';
@@ -121,9 +120,6 @@ type TextPresetsVars = {
 };
 
 const ThemeContextProvider: React.FC<Props> = ({theme, children, as, withoutStyles = false}) => {
-    const nextAriaId = React.useRef(1);
-    const getAriaId = React.useCallback((): string => `aria-id-hook-${nextAriaId.current++}`, []);
-
     const isOsDarkModeEnabled = useIsOsDarkModeEnabled();
 
     const colorScheme = theme.colorScheme ?? 'auto';
@@ -238,52 +234,50 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children, as, withoutStyl
                             <TrackingConfig eventFormat={contextTheme.analytics.eventFormat}>
                                 <AspectRatioSupportProvider>
                                     <DocumentVisibilityProvider>
-                                        <AriaIdGetterContext.Provider value={getAriaId}>
-                                            <ScreenSizeContextProvider>
-                                                <DialogRoot>
-                                                    <SnackbarRoot>
-                                                        {as ? (
-                                                            React.createElement(
-                                                                as,
-                                                                {
-                                                                    style: {
-                                                                        isolation: 'isolate',
-                                                                        ...assignInlineVars(
-                                                                            styles.themeVarsContract,
-                                                                            themeVars
-                                                                        ),
-                                                                        ...assignInlineVars(
-                                                                            styles.textPresetResponsiveVarsContract,
-                                                                            textPresetsResponsiveVars
-                                                                        ),
-                                                                    },
-                                                                    className: withoutStyles
-                                                                        ? undefined
-                                                                        : styles.themeVars,
+                                        <ScreenSizeContextProvider>
+                                            <DialogRoot>
+                                                <SnackbarRoot>
+                                                    {as ? (
+                                                        React.createElement(
+                                                            as,
+                                                            {
+                                                                style: {
+                                                                    isolation: 'isolate',
+                                                                    ...assignInlineVars(
+                                                                        styles.themeVarsContract,
+                                                                        themeVars
+                                                                    ),
+                                                                    ...assignInlineVars(
+                                                                        styles.textPresetResponsiveVarsContract,
+                                                                        textPresetsResponsiveVars
+                                                                    ),
                                                                 },
-                                                                children
-                                                            )
-                                                        ) : (
-                                                            <>
-                                                                {!withoutStyles &&
-                                                                    (process.env.NODE_ENV !== 'test' ||
-                                                                        process.env.SSR_TEST) && (
-                                                                        <style>
-                                                                            {`
+                                                                className: withoutStyles
+                                                                    ? undefined
+                                                                    : styles.themeVars,
+                                                            },
+                                                            children
+                                                        )
+                                                    ) : (
+                                                        <>
+                                                            {!withoutStyles &&
+                                                                (process.env.NODE_ENV !== 'test' ||
+                                                                    process.env.SSR_TEST) && (
+                                                                    <style>
+                                                                        {`
                                                                                 :root {${assignInlineVars(vars, themeVars)}}
                                                                                 @media ${mq.tabletOrSmaller} {
                                                                                     :root {${assignInlineVars(vars.textPresets, textPresetsResponsiveVars)}}
                                                                                 }
                                                                             `}
-                                                                        </style>
-                                                                    )}
-                                                                {children}
-                                                            </>
-                                                        )}
-                                                    </SnackbarRoot>
-                                                </DialogRoot>
-                                            </ScreenSizeContextProvider>
-                                        </AriaIdGetterContext.Provider>
+                                                                    </style>
+                                                                )}
+                                                            {children}
+                                                        </>
+                                                    )}
+                                                </SnackbarRoot>
+                                            </DialogRoot>
+                                        </ScreenSizeContextProvider>
                                     </DocumentVisibilityProvider>
                                 </AspectRatioSupportProvider>
                             </TrackingConfig>

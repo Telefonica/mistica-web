@@ -1,12 +1,12 @@
 import * as React from 'react';
-import {useAriaId, skinVars, Stack, Text2} from '..';
+import {useId, skinVars, Stack, Text2} from '..';
 
 export default {
-    title: 'Hooks/useAriaId',
+    title: 'Hooks/useId',
 };
 
-export const UseAriaId: StoryComponent = () => {
-    const id = useAriaId();
+export const useIdStory: StoryComponent = () => {
+    const id = useId();
     return (
         <Stack space={16}>
             <Text2 regular color={skinVars.colors.textSecondary}>
@@ -23,4 +23,4 @@ export const UseAriaId: StoryComponent = () => {
     );
 };
 
-UseAriaId.storyName = 'useAriaId';
+useIdStory.storyName = 'useId';

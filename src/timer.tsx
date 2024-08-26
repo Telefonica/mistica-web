@@ -2,7 +2,7 @@
 import classNames from 'classnames';
 import * as React from 'react';
 import Box from './box';
-import {useAriaId, useIsomorphicLayoutEffect, useTheme} from './hooks';
+import {useId, useIsomorphicLayoutEffect, useTheme} from './hooks';
 import Inline from './inline';
 import ScreenReaderOnly from './screen-reader-only';
 import {Text2, Text6} from './text';
@@ -200,7 +200,7 @@ export const TextTimer: React.FC<TextTimerProps> = ({
     'aria-label': ariaLabel,
 }) => {
     const {texts} = useTheme();
-    const labelId = useAriaId();
+    const labelId = useId();
 
     const timerValue = useTimerState({endTimestamp, labelType, minTimeUnit, maxTimeUnit, onProgress});
 
@@ -316,7 +316,7 @@ export const Timer: React.FC<TimerProps> = ({
     'aria-label': ariaLabel,
 }) => {
     const {texts} = useTheme();
-    const labelId = useAriaId();
+    const labelId = useId();
     const themeVariant = useThemeVariant();
 
     const timerValue = useTimerState({endTimestamp, minTimeUnit, maxTimeUnit, onProgress});

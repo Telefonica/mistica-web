@@ -3,7 +3,7 @@ import * as React from 'react';
 import classnames from 'classnames';
 import {BaseTouchable} from './touchable';
 import ResponsiveLayout from './responsive-layout';
-import {useAriaId, useElementDimensions, useTheme} from './hooks';
+import {useId, useElementDimensions, useTheme} from './hooks';
 import {Text} from './text';
 import {isRunningAcceptanceTest} from './utils/platform';
 import {getPrefixedDataAttributes} from './utils/dom';
@@ -42,7 +42,7 @@ export type TabsProps = {
 
 const Tabs: React.FC<TabsProps> = ({selectedIndex, onChange, tabs, dataAttributes}: TabsProps) => {
     const {textPresets} = useTheme();
-    const id = useAriaId();
+    const id = useId();
     const {ref} = useElementDimensions();
     const animatedLineRef = React.useRef<HTMLDivElement>(null);
     const scrollableContainerRef = React.useRef<HTMLDivElement>(null);

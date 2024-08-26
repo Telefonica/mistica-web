@@ -4,7 +4,7 @@ import {Label, HelperText, FieldContainer} from './text-field-components';
 import {LABEL_SCALE_MOBILE, LABEL_SCALE_DESKTOP} from './text-field-components.css';
 import {Text3} from './text';
 import {isRunningAcceptanceTest, isFirefox} from './utils/platform';
-import {useAriaId, useTheme, useScreenSize, useIsomorphicLayoutEffect} from './hooks';
+import {useId, useTheme, useScreenSize, useIsomorphicLayoutEffect} from './hooks';
 import classNames from 'classnames';
 import {combineRefs} from './utils/common';
 import * as styles from './text-field-base.css';
@@ -209,8 +209,8 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
         },
         ref
     ) => {
-        const id = useAriaId(idProp);
-        const helperTextid = useAriaId();
+        const id = useId(idProp);
+        const helperTextid = useId();
 
         const [inputState, setInputState] = React.useState<InputState>(
             defaultValue?.length || value?.length ? 'filled' : 'default'
@@ -435,8 +435,8 @@ export const TextFieldBaseAutosuggest = React.forwardRef<any, TextFieldBaseProps
         const [suggestions, setSuggestions] = React.useState<ReadonlyArray<string>>([]);
         const inputRef = React.useRef<HTMLInputElement>(null);
         const {platformOverrides, texts} = useTheme();
-        const id = useAriaId(idProp);
-        const autoSuggestId = useAriaId();
+        const id = useId(idProp);
+        const autoSuggestId = useId();
 
         if (getSuggestions && (props.value === undefined || props.defaultValue !== undefined)) {
             throw Error('Fields with suggestions must be used in controlled mode');

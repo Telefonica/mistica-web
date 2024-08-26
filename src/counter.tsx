@@ -10,7 +10,7 @@ import {BaseTouchable} from './touchable';
 import IconSubtractRegular from './generated/mistica-icons/icon-subtract-regular';
 import IconAddMoreRegular from './generated/mistica-icons/icon-add-more-regular';
 import IconTrashCanRegular from './generated/mistica-icons/icon-trash-can-regular';
-import {useAriaId, useTheme} from './hooks';
+import {useId, useTheme} from './hooks';
 import classNames from 'classnames';
 import ScreenReaderOnly from './screen-reader-only';
 
@@ -83,7 +83,7 @@ const Counter: React.FC<Props> = ({
     valueLabel,
 }) => {
     const variant = useThemeVariant();
-    const counterId = useAriaId();
+    const counterId = useId();
     const {texts} = useTheme();
 
     const minValue = min === undefined ? 0 : min;

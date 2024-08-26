@@ -4,7 +4,7 @@ import * as React from 'react';
 import Inline from './inline';
 import * as textFieldStyles from './text-field-base.css';
 import * as styles from './pin-field.css';
-import {useAriaId, useTheme} from './hooks';
+import {useId, useTheme} from './hooks';
 import ScreenReaderOnly from './screen-reader-only';
 import {IntegerInput} from './integer-field';
 import {useFieldProps} from './form-context';
@@ -309,7 +309,7 @@ const PinField = ({
         onChange,
     });
 
-    const otpLabelId = useAriaId();
+    const otpLabelId = useId();
 
     return (
         <div
