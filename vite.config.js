@@ -3,6 +3,7 @@ import react from '@vitejs/plugin-react';
 import {vanillaExtractPlugin} from '@vanilla-extract/vite-plugin';
 import noBundlePlugin from 'vite-plugin-no-bundle';
 import preserveDirectivesPlugin from 'rollup-plugin-preserve-directives';
+import packageJson from './package.json';
 
 export default defineConfig({
     plugins: [
@@ -40,8 +41,18 @@ export default defineConfig({
                 }
                 handler(level, log);
             },
-            // otherwise, all external dependencies are included in the "./dist" folder
-            external: [/\/node_modules\//],
+            // otherwise, all dependencies are included in a "node_modules" folder inside "./dist"
+            external: [
+                ...Object.keys(packageJson.dependencies),
+                ...Object.keys(packageJson.peerDependencies),
+                'react/jsx-runtime',
+                'moment/locale/de.js',
+                'moment/locale/es.js',
+                'moment/locale/en-gb.js',
+                'moment/locale/pt-br.js',
+                'moment/moment.js',
+                '@vanilla-extract/sprinkles/createRuntimeSprinkles',
+            ],
         },
     },
 });
