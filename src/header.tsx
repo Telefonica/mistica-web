@@ -133,7 +133,7 @@ type HeaderLayoutProps = {
 };
 
 export const HeaderLayout: React.FC<HeaderLayoutProps> = ({
-    isInverse = true,
+    isInverse = false,
     breadcrumbs,
     header,
     extra,
@@ -207,7 +207,7 @@ type MainSectionHeaderLayoutProps = {
 };
 
 export const MainSectionHeaderLayout: React.FC<MainSectionHeaderLayoutProps> = ({
-    isInverse = true,
+    isInverse = false,
     children,
     dataAttributes,
 }) => {
