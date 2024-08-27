@@ -44,7 +44,7 @@ export interface ConfirmProps extends BaseDialogProps {
 }
 
 export interface ExtendedDialogProps extends BaseDialogProps {
-    icon?: React.ReactElement;
+    asset?: React.ReactElement;
     subtitle?: string;
     extra?: React.ReactNode;
     cancelText?: string;
@@ -64,7 +64,7 @@ const InternalDialog: React.FC<InternalDialogProps> = (props) => {
         className,
         title,
         message,
-        icon,
+        asset,
         extra,
         showCancelButton,
         showAcceptButton,
@@ -86,9 +86,9 @@ const InternalDialog: React.FC<InternalDialogProps> = (props) => {
 
     return (
         <div className={classnames(styles.variants[isDialog ? 'dialog' : 'default'], className)}>
-            {icon && (
+            {asset && (
                 <Box paddingBottom={24}>
-                    <div className={styles.iconContainer}>{React.cloneElement(icon, {size: '100%'})}</div>
+                    <div className={styles.iconContainer}>{React.cloneElement(asset, {size: '100%'})}</div>
                 </Box>
             )}
             {title && (

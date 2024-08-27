@@ -76,7 +76,7 @@ export const largeImage = style([
     },
 ]);
 
-export const iconContainer = style([
+export const assetContainer = style([
     sprinkles({
         width: 64,
         height: 64,
