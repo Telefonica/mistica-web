@@ -40,6 +40,8 @@ export default defineConfig({
                 }
                 handler(level, log);
             },
+            // otherwise, all external dependencies are included in the "./dist" folder
+            external: [/\/node_modules\//],
         },
     },
 });
