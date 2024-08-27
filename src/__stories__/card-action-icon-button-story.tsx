@@ -80,7 +80,11 @@ export const Default: StoryComponent = () => {
                         Action
                     </ButtonPrimary>
                 }
-                buttonLink={<ButtonLink onPress={() => {}}>Link</ButtonLink>}
+                buttonLink={
+                    <ButtonLink small onPress={() => {}}>
+                        Link
+                    </ButtonLink>
+                }
             />
         </Stack>
     );

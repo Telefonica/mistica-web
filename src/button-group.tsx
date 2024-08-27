@@ -2,6 +2,8 @@ import * as React from 'react';
 import classNames from 'classnames';
 import {getPrefixedDataAttributes} from './utils/dom';
 import * as styles from './button-group.css';
+import {applyCssVars} from './utils/css';
+import {borderSize, buttonPaddingX} from './button.css';
 
 import type {ButtonLink, ButtonPrimary, ButtonSecondary} from './button';
 import type {ByBreakpoint, DataAttributes, RendersNullableElement} from './utils/types';
@@ -23,6 +25,7 @@ const ButtonGroup: React.FC<ButtonGroupProps> = ({
 }) => {
     const anyAction = !!primaryButton || !!secondaryButton || !!link;
     const bothButtons = !!primaryButton && !!secondaryButton;
+    const hasSmallLink = !!link?.props.small;
 
     const alignByBreakpoint =
         typeof align === 'string'
@@ -44,6 +47,13 @@ const ButtonGroup: React.FC<ButtonGroupProps> = ({
                 [styles.centerInTablet]: alignByBreakpoint.tablet === 'center',
                 [styles.centerInMobile]: alignByBreakpoint.mobile === 'center',
             })}
+            style={{
+                ...applyCssVars({
+                    [styles.vars.buttonLinkPadding]: `calc(${borderSize} + ${
+                        hasSmallLink ? buttonPaddingX.small : buttonPaddingX.default
+                    })`,
+                }),
+            }}
             {...getPrefixedDataAttributes(dataAttributes, 'ButtonGroup')}
         >
             {(primaryButton || secondaryButton) && (

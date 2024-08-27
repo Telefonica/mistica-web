@@ -3,6 +3,8 @@ import * as React from 'react';
 import classnames from 'classnames';
 import {getPrefixedDataAttributes} from './utils/dom';
 import * as styles from './button-layout.css';
+import {borderSize, buttonPaddingX} from './button.css';
+import {applyCssVars} from './utils/css';
 
 import type {ButtonPrimary, ButtonSecondary, ButtonDanger, ButtonLink} from './button';
 import type {DataAttributes, RendersNullableElement} from './utils/types';
@@ -23,6 +25,7 @@ const ButtonLayout: React.FC<ButtonLayoutProps> = ({
     dataAttributes,
 }) => {
     const numberOfButtons = (primaryButton ? 1 : 0) + (secondaryButton ? 1 : 0);
+    const hasSmallLink = !!link?.props.small;
 
     const buttons =
         align === 'right' ? (
@@ -51,6 +54,13 @@ const ButtonLayout: React.FC<ButtonLayoutProps> = ({
             className={classnames(styles.container, styles.alignVariant[align], {
                 [styles.containerWithTwoButtons]: numberOfButtons > 1,
             })}
+            style={{
+                ...applyCssVars({
+                    [styles.vars.buttonLinkPadding]: `calc(${borderSize} + ${
+                        hasSmallLink ? buttonPaddingX.small : buttonPaddingX.default
+                    })`,
+                }),
+            }}
             {...getPrefixedDataAttributes(dataAttributes, 'ButtonLayout')}
         >
             {align !== 'right' || numberOfButtons > 1 ? (
