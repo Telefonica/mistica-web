@@ -34,10 +34,6 @@ interface BaseDialogProps {
     onAccept?: () => void;
     destructive?: boolean;
     closeButtonLabel?: string;
-    /** @deprecated this does nothing */
-    forceWeb?: boolean;
-    /** @deprecated this does nothing */
-    showCancel?: boolean;
 }
 
 export type AlertProps = BaseDialogProps;

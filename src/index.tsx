@@ -21,11 +21,7 @@ export {default as LoadingBar} from './loading-bar';
 export {default as FixedToTop, TopDistanceContext} from './fixed-to-top';
 export {createNestableContext} from './nestable-context';
 export type {NestableContext} from './nestable-context';
-export {
-    default as OverscrollColor,
-    useSetOverscrollColor,
-    OverscrollColorProvider,
-} from './overscroll-color-context';
+export {useSetOverscrollColor, OverscrollColorProvider} from './overscroll-color-context';
 export {
     FeedbackScreen,
     ErrorFeedbackScreen,
@@ -37,7 +33,7 @@ export {LoadingScreen, BrandLoadingScreen} from './loading-screen';
 export {IconButton, ToggleIconButton} from './icon-button';
 export {default as Popover} from './popover';
 export {default as FocusTrap} from './focus-trap';
-export {confirm, alert, dialog, useDialog} from './dialog-context';
+export {useDialog} from './dialog-context';
 export {default as Badge} from './badge';
 export {default as TextLink} from './text-link';
 export {default as Overlay} from './overlay';

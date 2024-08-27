@@ -143,49 +143,26 @@ interface Heading {
 
 interface HighlightedValueBlockProps {
     headline?: RendersNullableElement<typeof Tag>;
-
     headings?: ReadonlyArray<Heading>;
-
-    /** @deprecated Use headings instead */
-    mainHeading?: {
-        value: string;
-        text: string;
-    };
-
-    /** @deprecated Use headings instead */
-    secondHeading?: {
-        value: string;
-        text: string;
-    };
-
-    /** @deprecated Use headings instead */
-    secondaryValue?: string;
-
     title?: string;
     description?: ReadonlyArray<string> | string;
-    /** @deprecated Use headings instead */
-    valueColor?: string;
     'aria-label'?: string;
 }
 
 export const HighlightedValueBlock: React.FC<HighlightedValueBlockProps> = ({
     headline,
     headings,
-    mainHeading,
-    secondHeading,
-    secondaryValue,
     title,
     description,
-    valueColor = vars.colors.textPrimary,
     'aria-label': ariaLabel,
 }) => {
     return (
         <div aria-label={ariaLabel}>
             {headline && <Box paddingBottom={24}>{headline}</Box>}
 
-            <Stack space={2}>
-                {headings &&
-                    headings.map((heading, index) => (
+            {headings && (
+                <Stack space={2}>
+                    {headings.map((heading, index) => (
                         <Inline key={index} space={8} alignItems="baseline">
                             <Text8 color={heading.valueColor ?? vars.colors.textPrimary}>
                                 {heading.value}
@@ -195,24 +172,8 @@ export const HighlightedValueBlock: React.FC<HighlightedValueBlockProps> = ({
                             </Text2>
                         </Inline>
                     ))}
-                {mainHeading && (
-                    <Inline space={8} alignItems="baseline">
-                        <Text8 color={valueColor}>{mainHeading.value}</Text8>
-                        <Text2 regular color={vars.colors.textSecondary}>
-                            {mainHeading.text}
-                        </Text2>
-                    </Inline>
-                )}
-                {secondHeading && (
-                    <Inline space={8} alignItems="baseline">
-                        <Text8 color={valueColor}>{secondHeading.value}</Text8>
-                        <Text2 regular color={vars.colors.textSecondary}>
-                            {secondHeading.text}
-                        </Text2>
-                    </Inline>
-                )}
-                {secondaryValue && <Text8 color={vars.colors.textSecondary}>{secondaryValue}</Text8>}
-            </Stack>
+                </Stack>
+            )}
             {title || description ? (
                 <Box paddingTop={8}>
                     <BlockContent title={title} description={description} />

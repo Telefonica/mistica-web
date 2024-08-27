@@ -55,7 +55,6 @@ type HrefProps = {
 type ToProps = {
     to: string | Location;
     newTab?: boolean;
-    /** @deprecated set the newTab */
     fullPageOnWebView?: boolean;
     replace?: boolean;
     onNavigate?: () => void | Promise<void>;
