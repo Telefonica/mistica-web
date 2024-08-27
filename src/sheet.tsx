@@ -3,7 +3,7 @@ import classnames from 'classnames';
 import * as React from 'react';
 import * as styles from './sheet.css';
 import FocusTrap from './focus-trap';
-import {useAriaId, useDisableBodyScroll, useIsInViewport, useScreenSize, useTheme} from './hooks';
+import {useDisableBodyScroll, useIsInViewport, useScreenSize, useTheme} from './hooks';
 import {useSetModalStateEffect} from './modal-context-provider';
 import {Portal} from './portal';
 import {Text2, Text3, Text5} from './text';
@@ -170,7 +170,7 @@ const Sheet = React.forwardRef<HTMLDivElement, SheetProps>(({onClose, children, 
     const {texts, t} = useTheme();
     const [modalState, dispatch] = React.useReducer(modalReducer, 'closed');
     const initRef = React.useRef(false);
-    const modalTitleId = useAriaId();
+    const modalTitleId = React.useId();
 
     const handleTransitionEnd = React.useCallback((ev: React.AnimationEvent | React.TransitionEvent) => {
         // Don't trigger transitionEnd if the event is not triggered by the sheet element.
