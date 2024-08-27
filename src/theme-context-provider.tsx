@@ -178,7 +178,6 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children, as, withoutStyl
             isDarkMode: isDarkModeEnabled,
             isIos: getPlatform(platformOverrides) === 'ios',
             useHrefDecorator: theme.useHrefDecorator ?? useDefaultHrefDecorator,
-            useId: theme.useId,
             t: translate,
         };
     }, [colors, theme, isDarkModeEnabled, translate]);
