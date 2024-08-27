@@ -1,5 +1,5 @@
 const core = require('@actions/core');
-const calcSizeStats = require('../../../scripts/size-stats');
+const calcSizeStats = require('../../../scripts/size-stats/index.cjs');
 
 const main = async () => {
     const sizeStats = calcSizeStats();

@@ -7,6 +7,8 @@ const run = (command, {stdio = 'inherit'} = {}) => {
 };
 
 const checkBuild = () => {
+    // verify that no "node_modules" folder was created inside the "dist" folder
+    // this would mean that some dependencies were not marked as "external" and were included in the build result
     if (existsSync('./dist/node_modules')) {
         console.log('ERROR: "dist/node_modules" exists. Check "vite.config.js" external config.');
         process.exit(1);
