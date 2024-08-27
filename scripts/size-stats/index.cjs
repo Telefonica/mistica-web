@@ -6,7 +6,7 @@ const {execSync} = require('child_process');
 const gzipSize = require('gzip-size');
 
 const PATH_REPO_ROOT = join(__dirname, '../..');
-const PATH_DIST_ES = join(PATH_REPO_ROOT, 'dist-es');
+const PATH_DIST = join(PATH_REPO_ROOT, 'dist');
 const PATH_APP = join(__dirname, 'app-test-lib-overhead');
 const PATH_APP_BUILD = join(PATH_APP, 'dist');
 
@@ -36,11 +36,11 @@ const calcStats = () => {
     const appWithMistica = getTotalSize([join(PATH_APP_BUILD, 'main.js')]);
     const appWithMisticaGzip = getTotalSize([join(PATH_APP_BUILD, 'main.js')], {gzip: true});
 
-    const distEsJsFilenames = glob.sync(join(PATH_DIST_ES, '**/*.js'));
+    const distJsFilenames = glob.sync(join(PATH_DIST, '**/*.js'));
 
     return {
-        totalJs: getTotalSize(distEsJsFilenames),
-        jsWithoutIcons: getTotalSize(distEsJsFilenames, {
+        totalJs: getTotalSize(distJsFilenames),
+        jsWithoutIcons: getTotalSize(distJsFilenames, {
             exclude: [/\/generated\/mistica-icons\/.*/, /\/dist-es\/index.js$/],
         }),
         libOverhead: appWithMistica - appInitial,

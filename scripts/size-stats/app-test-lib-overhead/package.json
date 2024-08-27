@@ -5,9 +5,9 @@
         "build": "rimraf dist && webpack --mode production"
     },
     "devDependencies": {
-        "rimraf": "^3.0.2",
-        "webpack": "^5.75.0",
-        "webpack-bundle-analyzer": "^4.10.1",
-        "webpack-cli": "^5.0.1"
+        "rimraf": "^6.0.1",
+        "webpack": "^5.94.0",
+        "webpack-bundle-analyzer": "^4.10.2",
+        "webpack-cli": "^5.1.4"
     }
 }

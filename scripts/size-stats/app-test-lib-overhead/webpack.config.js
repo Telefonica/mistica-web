@@ -15,7 +15,7 @@ const config = {
     plugins: [process.env.BUNDLE_ANALYZER ? new BundleAnalyzerPlugin() : null].filter(Boolean),
 
     resolve: {
-        alias: {'@telefonica/mistica': path.resolve(__dirname, '../../..')},
+        alias: {'@telefonica/mistica': path.resolve(__dirname, '../../../dist')},
     },
 };
 

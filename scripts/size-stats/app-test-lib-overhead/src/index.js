@@ -1,4 +1,5 @@
 import * as React from 'react';
+// eslint-disable-next-line import/extensions
 import {createRoot} from 'react-dom/client';
 import {ThemeContextProvider, IconTruckFilled, getMovistarSkin} from '@telefonica/mistica';
 
