@@ -12,7 +12,7 @@ import Inline from './inline';
 import {useIsInverseVariant} from './theme-variant-context';
 import {vars} from './skins/skin-contract.css';
 
-import type {DataAttributes, TrackingEvent} from './utils/types';
+import type {DataAttributes, IconProps, TrackingEvent} from './utils/types';
 
 const LINE_ANIMATION_DURATION_MS = isRunningAcceptanceTest() ? 0 : 300;
 
@@ -33,7 +33,7 @@ export type TabsProps = {
     tabs: ReadonlyArray<{
         readonly text: string;
         readonly trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
-        readonly icon?: React.ReactNode;
+        readonly Icon?: React.FC<IconProps>;
         readonly 'aria-controls'?: string;
     }>;
     children?: void;
@@ -87,7 +87,7 @@ const Tabs: React.FC<TabsProps> = ({selectedIndex, onChange, tabs, dataAttribute
                 <div className={styles.outer}>
                     <div ref={scrollableContainerRef} className={styles.inner}>
                         <div className={styles.tabsContainer}>
-                            {tabs.map(({text, trackingEvent, icon, 'aria-controls': ariaControls}, index) => {
+                            {tabs.map(({text, trackingEvent, Icon, 'aria-controls': ariaControls}, index) => {
                                 const isSelected = index === selectedIndex;
                                 return (
                                     <BaseTouchable
@@ -119,8 +119,12 @@ const Tabs: React.FC<TabsProps> = ({selectedIndex, onChange, tabs, dataAttribute
                                         aria-controls={ariaControls}
                                         aria-selected={isSelected ? 'true' : 'false'}
                                     >
-                                        <Inline space={!!icon && !!text ? 8 : 0} alignItems="center">
-                                            {icon && <div className={styles.icon}>{icon}</div>}
+                                        <Inline space={!!Icon && !!text ? 8 : 0} alignItems="center">
+                                            {Icon && (
+                                                <div className={styles.icon}>
+                                                    <Icon size="100%" color="currentColor" />
+                                                </div>
+                                            )}
                                             <Text
                                                 as="div"
                                                 desktopSize={textPresets.tabsLabel.size.desktop}

@@ -27,7 +27,7 @@ type Props = {
     description: string;
     onClose?: () => void;
     closeButtonLabel?: string;
-    icon?: React.ReactElement;
+    asset?: React.ReactElement;
     button?: RendersNullableElement<typeof ButtonPrimary>;
     secondaryButton?: RendersNullableElement<typeof ButtonSecondary>;
     buttonLink?: RendersNullableElement<typeof ButtonLink>;
@@ -41,7 +41,7 @@ const Callout: React.FC<Props> = ({
     title,
     titleAs = 'h2',
     description,
-    icon,
+    asset,
     onClose,
     closeButtonLabel,
     button,
@@ -73,7 +73,7 @@ const Callout: React.FC<Props> = ({
             {...getPrefixedDataAttributes(dataAttributes, 'Callout')}
         >
             <ThemeVariant isInverse={false}>
-                {icon && <Box paddingRight={16}>{icon}</Box>}
+                {asset && <Box paddingRight={16}>{asset}</Box>}
                 <div className={styles.content}>
                     <Stack space={16}>
                         <Inline fullWidth alignItems="flex-start" space="between">

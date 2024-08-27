@@ -39,7 +39,7 @@ export const Default: StoryComponent<Args> = ({gap}) => (
                     <Grid columns={3} rows={3} gap={gap}>
                         <GridItem>
                             <SnapCard
-                                icon={
+                                asset={
                                     <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
                                         <IconAcademicRegular color={skinVars.colors.brand} />
                                     </Circle>
@@ -50,7 +50,7 @@ export const Default: StoryComponent<Args> = ({gap}) => (
                         </GridItem>
                         <GridItem>
                             <SnapCard
-                                icon={
+                                asset={
                                     <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
                                         <IconAcademicRegular color={skinVars.colors.brand} />
                                     </Circle>
@@ -61,7 +61,7 @@ export const Default: StoryComponent<Args> = ({gap}) => (
                         </GridItem>
                         <GridItem>
                             <SnapCard
-                                icon={
+                                asset={
                                     <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
                                         <IconAcademicRegular color={skinVars.colors.brand} />
                                     </Circle>
@@ -72,7 +72,7 @@ export const Default: StoryComponent<Args> = ({gap}) => (
                         </GridItem>
                         <GridItem columnSpan={2}>
                             <SnapCard
-                                icon={
+                                asset={
                                     <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
                                         <IconAcademicRegular color={skinVars.colors.brand} />
                                     </Circle>
@@ -83,7 +83,7 @@ export const Default: StoryComponent<Args> = ({gap}) => (
                         </GridItem>
                         <GridItem>
                             <SnapCard
-                                icon={
+                                asset={
                                     <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
                                         <IconAcademicRegular color={skinVars.colors.brand} />
                                     </Circle>
@@ -94,7 +94,7 @@ export const Default: StoryComponent<Args> = ({gap}) => (
                         </GridItem>
                         <GridItem columnSpan="full">
                             <SnapCard
-                                icon={
+                                asset={
                                     <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
                                         <IconAcademicRegular color={skinVars.colors.brand} />
                                     </Circle>
@@ -111,7 +111,7 @@ export const Default: StoryComponent<Args> = ({gap}) => (
                     <Grid columns={3} rows={3} gap={gap}>
                         <GridItem>
                             <SnapCard
-                                icon={
+                                asset={
                                     <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
                                         <IconAcademicRegular color={skinVars.colors.brand} />
                                     </Circle>
@@ -122,7 +122,7 @@ export const Default: StoryComponent<Args> = ({gap}) => (
                         </GridItem>
                         <GridItem rowSpan={2}>
                             <SnapCard
-                                icon={
+                                asset={
                                     <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
                                         <IconAcademicRegular color={skinVars.colors.brand} />
                                     </Circle>
@@ -133,7 +133,7 @@ export const Default: StoryComponent<Args> = ({gap}) => (
                         </GridItem>
                         <GridItem rowSpan={3}>
                             <SnapCard
-                                icon={
+                                asset={
                                     <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
                                         <IconAcademicRegular color={skinVars.colors.brand} />
                                     </Circle>
@@ -144,7 +144,7 @@ export const Default: StoryComponent<Args> = ({gap}) => (
                         </GridItem>
                         <GridItem>
                             <SnapCard
-                                icon={
+                                asset={
                                     <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
                                         <IconAcademicRegular color={skinVars.colors.brand} />
                                     </Circle>
@@ -155,7 +155,7 @@ export const Default: StoryComponent<Args> = ({gap}) => (
                         </GridItem>
                         <GridItem>
                             <SnapCard
-                                icon={
+                                asset={
                                     <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
                                         <IconAcademicRegular color={skinVars.colors.brand} />
                                     </Circle>
@@ -166,7 +166,7 @@ export const Default: StoryComponent<Args> = ({gap}) => (
                         </GridItem>
                         <GridItem>
                             <SnapCard
-                                icon={
+                                asset={
                                     <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
                                         <IconAcademicRegular color={skinVars.colors.brand} />
                                     </Circle>
@@ -183,7 +183,7 @@ export const Default: StoryComponent<Args> = ({gap}) => (
                     <Grid columns={3} rows={3} gap={gap}>
                         <GridItem columnSpan={2}>
                             <SnapCard
-                                icon={
+                                asset={
                                     <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
                                         <IconAcademicRegular color={skinVars.colors.brand} />
                                     </Circle>
@@ -194,7 +194,7 @@ export const Default: StoryComponent<Args> = ({gap}) => (
                         </GridItem>
                         <GridItem rowSpan={3}>
                             <SnapCard
-                                icon={
+                                asset={
                                     <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
                                         <IconAcademicRegular color={skinVars.colors.brand} />
                                     </Circle>
@@ -205,7 +205,7 @@ export const Default: StoryComponent<Args> = ({gap}) => (
                         </GridItem>
                         <GridItem rowSpan={2} columnSpan={2}>
                             <SnapCard
-                                icon={
+                                asset={
                                     <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
                                         <IconAcademicRegular color={skinVars.colors.brand} />
                                     </Circle>
@@ -240,7 +240,7 @@ export const AutoColumns: StoryComponent<AutoColumnsArgs> = ({gap, columnsMinSiz
                 {Array.from({length: numItems}, (_, idx) => (
                     <SnapCard
                         key={idx}
-                        icon={
+                        asset={
                             <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
                                 <IconAcademicRegular color={skinVars.colors.brand} />
                             </Circle>

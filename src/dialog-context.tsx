@@ -47,43 +47,6 @@ export const useDialog = (): {
     );
 };
 
-const missingDialogFunctions: ReturnType<typeof useDialog> = {
-    alert: throwMissingDialogRootError,
-    confirm: throwMissingDialogRootError,
-    dialog: throwMissingDialogRootError,
-};
-
-let currentDialogFunctions = missingDialogFunctions;
-
-/**
- * @deprecated Created for backwards compatibility
- */
-const ExposeDialogFunctions = (): JSX.Element => {
-    const dialogFunctions = useDialog();
-    React.useEffect(() => {
-        currentDialogFunctions = dialogFunctions;
-        return () => {
-            currentDialogFunctions = missingDialogFunctions;
-        };
-    }, [dialogFunctions]);
-    return <></>;
-};
-
-/**
- * @deprecated Use useDialog to get this function
- */
-export const alert = (params: AlertProps): void => currentDialogFunctions.alert(params);
-
-/**
- * @deprecated Use useDialog to get this function
- */
-export const confirm = (params: ConfirmProps): void => currentDialogFunctions.confirm(params);
-
-/**
- * @deprecated Use useDialog to get this function
- */
-export const dialog = (params: ExtendedDialogProps): void => currentDialogFunctions.dialog(params);
-
 type DialogRootProps = {children?: React.ReactNode};
 
 export const DialogRoot = ({children}: DialogRootProps): JSX.Element => {
@@ -98,7 +61,6 @@ export const DialogRoot = ({children}: DialogRootProps): JSX.Element => {
 
     return (
         <DialogContext.Provider value={value}>
-            <ExposeDialogFunctions />
             {children}
             {dialog && (
                 <React.Suspense fallback={null}>

@@ -49,7 +49,7 @@ export const innerContainerWithButtons = style({
     },
 });
 
-export const iconContainer = sprinkles({
+export const assetContainer = sprinkles({
     width: 48,
     height: 48,
 });

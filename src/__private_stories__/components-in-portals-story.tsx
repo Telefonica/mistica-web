@@ -76,7 +76,9 @@ export const Default: StoryComponent = () => {
             button={
                 <ButtonPrimary
                     aria-haspopup="dialog"
-                    onPress={() => openSnackbar({message: 'Snackbar', withDismiss: true, duration: Infinity})}
+                    onPress={() =>
+                        openSnackbar({message: 'Snackbar', withDismiss: true, duration: 'PERSISTENT'})
+                    }
                     aria-label="snackbar-button"
                 >
                     Open snackbar
@@ -165,7 +167,7 @@ export const Default: StoryComponent = () => {
                                                         openSnackbar({
                                                             message: 'Snackbar',
                                                             withDismiss: true,
-                                                            duration: Infinity,
+                                                            duration: 'PERSISTENT',
                                                         })
                                                     }
                                                     aria-label="sheet-snackbar-button"
@@ -202,7 +204,7 @@ export const Default: StoryComponent = () => {
                                                         openSnackbar({
                                                             message: 'Snackbar',
                                                             withDismiss: true,
-                                                            duration: Infinity,
+                                                            duration: 'PERSISTENT',
                                                         })
                                                     }
                                                     aria-label="sheet-snackbar-button"

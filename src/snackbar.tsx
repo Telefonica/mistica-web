@@ -28,7 +28,7 @@ export type Props = {
     buttonText?: string;
     buttonAccessibilityLabel?: string;
     closeButtonLabel?: string;
-    duration?: number;
+    duration?: 'PERSISTENT';
     message: string;
     onClose?: SnackbarCloseHandler;
     type?: SnackbarType;
@@ -63,7 +63,8 @@ const SnackbarComponent = React.forwardRef<ImperativeHandle, Props>(
         const longButtonWidth = isDesktopOrBigger ? 160 : 128;
         const hasLongButton = buttonWidth > longButtonWidth;
         const elementRef = React.useRef<HTMLDivElement>(null);
-        const shouldShowDismissButton = (duration === Infinity && !buttonText) || withDismiss;
+        const shouldShowDismissButton = (duration === 'PERSISTENT' && !buttonText) || withDismiss;
+        const defaultDuration = buttonText ? DEFAULT_DURATION_WITH_BUTTON : DEFAULT_DURATION_WITHOUT_BUTTON;
 
         const onCloseRef = React.useRef(onClose);
         React.useEffect(() => {
@@ -90,13 +91,15 @@ const SnackbarComponent = React.forwardRef<ImperativeHandle, Props>(
             }, 50);
 
             const closeTimeout =
-                duration !== Infinity ? setTimeout(() => close({action: 'TIMEOUT'}), duration) : undefined;
+                duration !== 'PERSISTENT'
+                    ? setTimeout(() => close({action: 'TIMEOUT'}), defaultDuration)
+                    : undefined;
 
             return () => {
                 clearTimeout(openTimeout);
                 clearTimeout(closeTimeout);
             };
-        }, [close, duration]);
+        }, [close, duration, defaultDuration]);
 
         return (
             <Portal className={styles.snackbarContainer}>
@@ -206,8 +209,6 @@ const Snackbar = React.forwardRef<ImperativeHandle & HTMLDivElement, Props>(
         },
         ref
     ) => {
-        const defaultDuration = buttonText ? DEFAULT_DURATION_WITH_BUTTON : DEFAULT_DURATION_WITHOUT_BUTTON;
-        duration = Math.max(duration ?? defaultDuration, defaultDuration);
         const renderNative = isWebViewBridgeAvailable();
         const onCloseRef = React.useRef(onCloseProp);
         const isOpenRef = React.useRef(false);
@@ -223,7 +224,7 @@ const Snackbar = React.forwardRef<ImperativeHandle & HTMLDivElement, Props>(
                 nativeMessage({
                     message,
                     // @ts-expect-error duration can be 'PERSISTENT' in new webview-bridge lib versions, and old apps will ignore it
-                    duration: duration === Infinity ? 'PERSISTENT' : undefined,
+                    duration,
                     buttonText,
                     buttonAccessibilityLabel,
                     closeButtonLabel,

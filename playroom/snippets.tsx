@@ -945,9 +945,9 @@ const tabsSnippets: Array<Snippet> = [
             selectedIndex={getState('tabIndex', 0)}
             onChange={setState('tabIndex')}
             tabs={[
-                {text: 'Tab 1', icon: <IconAppointmentRegular color="currentColor" />},
-                {text: 'Tab 2', icon: <IconBrainRegular color="currentColor" />},
-                {text: 'Tab 3', icon: <IconBusRegular color="currentColor" />},
+                {text: 'Tab 1', Icon: IconAppointmentRegular},
+                {text: 'Tab 2', Icon: IconBrainRegular},
+                {text: 'Tab 3', Icon: IconBusRegular},
             ]}
         />`,
     },
@@ -1350,6 +1350,14 @@ const titlesSnippets: Array<Snippet> = [
         name: 'Title3 (with link)',
         code: '<Title3 right={<ButtonLink small onPress={() => {}} withChevron bleedRight bleedY>Link</ButtonLink>}>Some title</Title3>',
     },
+    {
+        name: 'Title4',
+        code: '<Title4>Some title</Title4>',
+    },
+    {
+        name: 'Title4 (with link)',
+        code: '<Title4 right={<ButtonLink onPress={() => {}} withChevron bleedRight bleedY>Link</ButtonLink>}>Some title</Title4>',
+    },
 ].map((snippet) => ({...snippet, group: 'Titles'}));
 
 const tagSnippets: Array<Snippet> = ['promo', 'active', 'inactive', 'success', 'warning', 'error'].map(
@@ -1432,20 +1440,20 @@ const layoutSnippets: Array<Snippet> = [
                 {
                     categoryName: "Personal information",
                     settings: [
-                    { title: "Personal details", icon: <IconUserAccountRegular /> },
-                    { title: "Security", icon: <IconLockClosedRegular /> },
+                    { title: "Personal details", asset: <IconUserAccountRegular /> },
+                    { title: "Security", asset: <IconLockClosedRegular /> },
                     {
                         title: "Payment methods",
-                        icon: <IconCreditCardVisaRegular />,
+                        asset: <IconCreditCardVisaRegular />,
                     },
                     ],
                 },
                 {
                     categoryName: "Configuration",
                     settings: [
-                    { title: "Notifications", icon: <IconBellRegular /> },
-                    { title: "FAQs", icon: <IconSupportAgentRegular /> },
-                    { title: "About", icon: <IconInformationUserRegular /> },
+                    { title: "Notifications", asset: <IconBellRegular /> },
+                    { title: "FAQs", asset: <IconSupportAgentRegular /> },
+                    { title: "About", asset: <IconInformationUserRegular /> },
                     ],
                 },
                 ].map((category) => (
@@ -1611,21 +1619,21 @@ const exampleScreens: Array<Snippet> = [
                     settings: [
                       {
                         title: "Personal details",
-                        icon: <IconUserAccountRegular />,
+                        asset: <IconUserAccountRegular />,
                       },
-                      { title: "Security", icon: <IconLockClosedRegular /> },
+                      { title: "Security", asset: <IconLockClosedRegular /> },
                       {
                         title: "Payment methods",
-                        icon: <IconCreditCardVisaRegular />,
+                        asset: <IconCreditCardVisaRegular />,
                       },
                     ],
                   },
                   {
                     categoryName: "Configuration",
                     settings: [
-                      { title: "Notifications", icon: <IconBellRegular /> },
-                      { title: "FAQs", icon: <IconSupportAgentRegular /> },
-                      { title: "About", icon: <IconInformationUserRegular /> },
+                      { title: "Notifications", asset: <IconBellRegular /> },
+                      { title: "FAQs", asset: <IconSupportAgentRegular /> },
+                      { title: "About", asset: <IconInformationUserRegular /> },
                     ],
                   },
                 ].map((category) => (
@@ -1907,7 +1915,7 @@ const exampleScreens: Array<Snippet> = [
         ))}
       />
       <Stack space={24}>
-        <Title2>Save money in technology</Title2>
+        <Title3>Save money in technology</Title3>
         <Carousel
           itemsPerPage={1}
           mobilePageOffset="large"
@@ -1964,7 +1972,7 @@ const exampleScreens: Array<Snippet> = [
       />
 
       <Stack space={24}>
-        <Title2>Save money in technology</Title2>
+        <Title3>Save money in technology</Title3>
         <Carousel
           itemsPerPage={1}
           mobilePageOffset="large"
@@ -2639,7 +2647,7 @@ const alertSnippets = [
             forceWeb: true,
             showCancel: true,
             link: <ButtonLink href="https://google.com">Link</ButtonLink>,
-            icon: <IconInformationUserLight color={colors.brand} />,
+            asset: <IconInformationUserLight color={colors.brand} />,
         })
     }
 >
