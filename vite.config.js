@@ -35,7 +35,7 @@ export default defineConfig({
             ],
             formats: ['es'],
         },
-        outDir: 'dist-es',
+        outDir: 'dist',
         // https://github.com/vitejs/vite/issues/15012#issuecomment-1815854072
         rollupOptions: {
             onLog(level, log, handler) {

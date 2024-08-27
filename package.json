@@ -7,15 +7,30 @@
         "url": "https://github.com/Telefonica/mistica-web"
     },
     "homepage": "https://github.com/Telefonica/mistica-web",
-    "main": "dist/index.js",
-    "module": "dist-es/index.js",
     "files": [
         "dist/**",
-        "dist-es/**",
-        "css/**",
-        "community.d.ts",
-        "community.js"
+        "css/**"
     ],
+    "type": "module",
+    "exports": {
+        "./dist/*": {
+            "default": null
+        },
+        ".": {
+            "types": "./dist/index.d.ts",
+            "import": "./dist/index.js",
+            "default": "./dist/index.js"
+        },
+        "./community": {
+            "types": "./dist/community/index.d.ts",
+            "import": "./dist/community/index.js",
+            "default": "./dist/community/index.js"
+        },
+        "./css/*.css": {
+            "import": "./dist/css/*.css",
+            "default": "./dist/css/*.css"
+        }
+    },
     "scripts": {
         "test": "jest --config jest.unit.config.js",
         "test-acceptance": "test-acceptance",
@@ -25,13 +40,13 @@
         "ts-check": "tsc --project tsconfig.json --noEmit",
         "build": "yarn clean && node scripts/build.js",
         "compile": "node scripts/compile.js",
-        "clean": "rimraf dist && rimraf dist-es && rimraf dist-ts && rimraf css/mistica.css && rimraf community.d.ts && rimraf community.js && rimraf node_modules/.cache",
+        "clean": "rimraf dist dist-dts css/mistica.css node_modules/.cache",
         "prepublishOnly": "node scripts/prepublish-only.js",
         "prepack": "yarn build",
         "storybook": "storybook dev -p 6006",
         "storybook-for-acceptance-tests": "cross-env NODE_ENV=production yarn storybook --ci 2>&1",
         "playroom": "playroom start",
-        "gen-ts-defs": "rimraf dist-ts && tsc --project tsconfig.production.json --emitDeclarationOnly && cp -r dist-ts/src/* dist && rimraf dist-ts",
+        "gen-ts-defs": "rimraf dist-dts && tsc --project tsconfig.production.json --emitDeclarationOnly && cp -r dist-dts/src/* dist && rimraf dist-dts",
         "vercel-build": "VERCEL_PROD_BUILD=1 yarn storybook-static && ./node_modules/.bin/playroom build && FORCE_MOBILE=1 ./node_modules/.bin/playroom build && FORCE_DESKTOP=1 ./node_modules/.bin/playroom build && cp img/favicon.ico public/ && cp img/favicon.svg public/",
         "vercel-preview-build": "yarn storybook-static && ./node_modules/.bin/playroom build && cp img/favicon.ico public/ && cp img/favicon.svg public/",
         "storybook-static": "rimraf public && storybook build -s ./.storybook/css/fonts -o public --quiet",

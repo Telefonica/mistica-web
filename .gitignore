@@ -1,6 +1,5 @@
 dist/
-dist-es/
-dist-ts/
+dist-dts/
 coverage/
 .directory
 .DS_Store
