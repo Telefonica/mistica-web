@@ -26,6 +26,7 @@ import Inline from './inline';
 import {getPrefixedDataAttributes} from './utils/dom';
 import {isRunningAcceptanceTest} from './utils/platform';
 import {applyCssVars} from './utils/css';
+import * as tokens from './text-tokens';
 
 import type {Variant} from './theme-variant-context';
 import type {PressHandler} from './touchable';
@@ -89,12 +90,12 @@ const useTopActions = (
     onClose?: () => void,
     closeButtonLabel?: string
 ) => {
-    const {texts} = useTheme();
+    const {texts, t} = useTheme();
     const finalActions = actions ? [...actions] : [];
 
     if (onClose) {
         finalActions.push({
-            label: closeButtonLabel ?? texts.closeButtonLabel,
+            label: closeButtonLabel || texts.closeButtonLabel || t(tokens.closeButtonLabel),
             onPress: onClose,
             Icon: IconCloseRegular,
         });
@@ -302,7 +303,7 @@ export const useVideoWithControls = (
     video?: React.ReactNode;
     videoAction?: CardAction;
 } => {
-    const {texts} = useTheme();
+    const {texts, t} = useTheme();
     const videoController = React.useRef<VideoElement>(null);
     const [videoStatus, dispatch] = React.useReducer(videoReducer, 'loading');
 
@@ -355,11 +356,14 @@ export const useVideoWithControls = (
                       videoStatus === 'loadingTimeout' && !isRunningAcceptanceTest()
                           ? CardActionSpinner
                           : CardActionPauseIcon,
-                  label: videoStatus === 'loadingTimeout' ? '' : texts.pauseIconButtonLabel,
+                  label:
+                      videoStatus === 'loadingTimeout'
+                          ? ''
+                          : texts.pauseIconButtonLabel || t(tokens.pauseIconButtonLabel),
               },
               checkedProps: {
                   Icon: CardActionPlayIcon,
-                  label: texts.playIconButtonLabel,
+                  label: texts.playIconButtonLabel || t(tokens.playIconButtonLabel),
               },
               onChange: onVideoControlPress,
               disabled: videoStatus === 'loadingTimeout',
@@ -1462,8 +1466,6 @@ export const DisplayDataCard = React.forwardRef<HTMLDivElement, DisplayDataCardP
 );
 
 interface PosterCardBaseProps {
-    /** @deprecated use aria-label */
-    ariaLabel?: string;
     'aria-label'?: string;
     aspectRatio?: AspectRatio | number;
     width?: number | string;
@@ -1522,8 +1524,7 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
             width,
             height,
             aspectRatio = '7:10',
-            ariaLabel: deprecatedAriaLabel,
-            ['aria-label']: ariaLabelProp = deprecatedAriaLabel,
+            'aria-label': ariaLabelProp,
             actions,
             onClose,
             closeButtonLabel,

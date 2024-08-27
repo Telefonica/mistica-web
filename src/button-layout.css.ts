@@ -1,21 +1,9 @@
 import {style, globalStyle, styleVariants} from '@vanilla-extract/css';
 import {sprinkles} from './sprinkles.css';
 import * as mq from './media-queries.css';
-import {PADDING_X_LINK} from './button.css';
+import {buttonPaddingX, borderSize} from './button.css';
 
 const buttonLayoutSpacing = 16;
-
-export const margins = style({
-    margin: '16px 0',
-    padding: '0 16px',
-
-    '@media': {
-        [mq.tabletOrSmaller]: {
-            padding: 0,
-            margin: 16,
-        },
-    },
-});
 
 export const container = style([
     sprinkles({display: 'flex', alignItems: 'center'}),
@@ -78,8 +66,12 @@ globalStyle(`${alignVariant['full-width']} > *:not(${linkBase})`, {
     },
 });
 
-const bleedLeft = {marginLeft: buttonLayoutSpacing / 2 - PADDING_X_LINK};
-const bleedRight = {marginRight: buttonLayoutSpacing / 2 - PADDING_X_LINK};
+const bleedLeft = {
+    marginLeft: `calc(${buttonLayoutSpacing}px / 2 - (${buttonPaddingX.small} + ${borderSize}))`,
+};
+const bleedRight = {
+    marginRight: `calc(${buttonLayoutSpacing}px / 2 - (${buttonPaddingX.small} + ${borderSize}))`,
+};
 
 export const link = style([
     linkBase,
