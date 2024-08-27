@@ -1,4 +1,3 @@
-import path from 'path';
 import {defineConfig} from 'vite';
 import react from '@vitejs/plugin-react';
 import {vanillaExtractPlugin} from '@vanilla-extract/vite-plugin';
@@ -29,10 +28,7 @@ export default defineConfig({
     publicDir: false,
     build: {
         lib: {
-            entry: [
-                path.resolve(__dirname, 'src', 'index.tsx'),
-                path.resolve(__dirname, 'src', 'community', 'index.tsx'),
-            ],
+            entry: ['./src/index.tsx', './src/community/index.tsx'],
             formats: ['es'],
         },
         outDir: 'dist',

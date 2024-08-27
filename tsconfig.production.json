@@ -76,6 +76,7 @@
         "resolveJsonModule": true
     },
     "exclude": [
+        "node_modules",
         "dist",
         "**/__*__/**",
         ".storybook",
