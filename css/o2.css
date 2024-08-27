@@ -228,9 +228,10 @@
     --mistica-font-weight-tabsLabel: 500;
     --mistica-font-weight-link: 500;
     --mistica-font-weight-title1: 500;
-    --mistica-font-size-title2: 1.25rem;
-    --mistica-line-height-title2: 1.5rem;
     --mistica-font-weight-title2: 300;
+    --mistica-font-size-title3: 1.25rem;
+    --mistica-line-height-title3: 1.5rem;
+    --mistica-font-weight-title3: 300;
     --mistica-font-weight-indicator: 500;
     --mistica-font-weight-navigationBar: 500;
 }
@@ -680,7 +681,7 @@
         --mistica-font-size-tabsLabel: 1.125rem;
         --mistica-line-height-tabsLabel: 1.5rem;
 
-        --mistica-font-size-title2: 1.75rem;
-        --mistica-line-height-title2: 2rem;
+        --mistica-font-size-title3: 1.75rem;
+        --mistica-line-height-title3: 2rem;
     }
 }
