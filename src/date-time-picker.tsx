@@ -17,10 +17,10 @@ import {useElementDimensions, useTheme} from './hooks';
 import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
 import * as styles from './date-time-picker.css';
 import {vars} from './skins/skin-contract.css';
-import 'moment/locale/es';
-import 'moment/locale/de';
-import 'moment/locale/pt-br';
-import 'moment/locale/en-gb';
+import 'moment/locale/es.js';
+import 'moment/locale/de.js';
+import 'moment/locale/pt-br.js';
+import 'moment/locale/en-gb.js';
 import * as tokens from './text-tokens';
 
 import type {CommonFormFieldProps} from './text-field-base';

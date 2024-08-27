@@ -8,8 +8,7 @@
     },
     "homepage": "https://github.com/Telefonica/mistica-web",
     "files": [
-        "dist/**",
-        "css/**"
+        "dist/**"
     ],
     "type": "module",
     "exports": {
@@ -40,13 +39,13 @@
         "ts-check": "tsc --project tsconfig.json --noEmit",
         "build": "yarn clean && node scripts/build.js",
         "compile": "node scripts/compile.js",
-        "clean": "rimraf dist dist-dts css/mistica.css node_modules/.cache",
+        "clean": "rimraf dist node_modules/.cache",
         "prepublishOnly": "node scripts/prepublish-only.js",
         "prepack": "yarn build",
         "storybook": "storybook dev -p 6006",
         "storybook-for-acceptance-tests": "cross-env NODE_ENV=production yarn storybook --ci 2>&1",
         "playroom": "playroom start",
-        "gen-ts-defs": "rimraf dist-dts && tsc --project tsconfig.production.json --emitDeclarationOnly && cp -r dist-dts/src/* dist && rimraf dist-dts",
+        "gen-ts-defs": "rimraf dist-dts && tsc --project tsconfig.production.json --emitDeclarationOnly",
         "vercel-build": "VERCEL_PROD_BUILD=1 yarn storybook-static && ./node_modules/.bin/playroom build && FORCE_MOBILE=1 ./node_modules/.bin/playroom build && FORCE_DESKTOP=1 ./node_modules/.bin/playroom build && cp img/favicon.ico public/ && cp img/favicon.svg public/",
         "vercel-preview-build": "yarn storybook-static && ./node_modules/.bin/playroom build && cp img/favicon.ico public/ && cp img/favicon.svg public/",
         "storybook-static": "rimraf public && storybook build -s ./.storybook/css/fonts -o public --quiet",
@@ -167,7 +166,7 @@
         "@vanilla-extract/sprinkles": "^1.6.2",
         "classnames": "^2.3.1",
         "lottie-react": "^2.4.0",
-        "moment": "^2.29.1",
+        "moment": "^2.30.1",
         "react-autosuggest": "^10.1.0",
         "react-datetime": "^3.1.1",
         "react-focus-lock": "^2.8.1",

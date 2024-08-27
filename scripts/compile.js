@@ -1,13 +1,15 @@
-const childProcess = require('child_process');
-const execSync = childProcess.execSync;
+import {execSync} from 'node:child_process';
+import {fileURLToPath} from 'node:url';
 
 const run = (command) => {
     execSync(command, {stdio: 'inherit'});
 };
 
-const compile = () => {
+export const compile = () => {
     run(`yarn vite build`);
-    run(`cp dist/style.css css/mistica.css`);
+    run(`mkdir -p ./dist/css`);
+    run(`cp ./css/*.css ./dist/css`);
+    run(`mv dist/style.css ./dist/css/mistica.css`);
 
     // transpile to es5 (see .swcrc targets and package.json browserslist)
     // Copy/paste from package.json "browserslist" as SWC has a bug and cannot read that config
@@ -16,8 +18,7 @@ const compile = () => {
     run(`yarn swc dist --out-dir dist`);
 };
 
-if (require.main === module) {
+if (process.argv[1] === fileURLToPath(import.meta.url)) {
+    // The script was run from cli
     compile();
 }
-
-module.exports = compile;

@@ -1,6 +1,5 @@
-const childProcess = require('child_process');
-const compile = require('./compile');
-const execSync = childProcess.execSync;
+import {execSync} from 'node:child_process';
+import {compile} from './compile.js';
 
 const run = (command) => {
     execSync(command, {stdio: 'inherit'});

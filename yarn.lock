@@ -5560,7 +5560,7 @@ __metadata:
     lodash: ^4.17.21
     lottie-react: ^2.4.0
     mini-css-extract-plugin: ^1.6.2
-    moment: ^2.29.1
+    moment: ^2.30.1
     node-fetch: ^2.6.7
     playroom: ^0.38.0
     postcss: ^8.4.18
@@ -16332,10 +16332,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"moment@npm:^2.29.1":
-  version: 2.29.1
-  resolution: "moment@npm:2.29.1"
-  checksum: 1e14d5f422a2687996be11dd2d50c8de3bd577c4a4ca79ba5d02c397242a933e5b941655de6c8cb90ac18f01cc4127e55b4a12ae3c527a6c0a274e455979345e
+"moment@npm:^2.30.1":
+  version: 2.30.1
+  resolution: "moment@npm:2.30.1"
+  checksum: 859236bab1e88c3e5802afcf797fc801acdbd0ee509d34ea3df6eea21eb6bcc2abd4ae4e4e64aa7c986aa6cba563c6e62806218e6412a765010712e5fa121ba6
   languageName: node
   linkType: hard
 
