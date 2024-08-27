@@ -76,7 +76,7 @@ test('with dismiss button', async () => {
         id: 'components-snackbar--default',
         device: 'MOBILE_ANDROID',
         args: {
-            withDismiss: true,
+            dismiss: true,
         },
     });
 
@@ -92,7 +92,7 @@ test('with dismiss button and long message', async () => {
         device: 'MOBILE_ANDROID',
         args: {
             message: 'The quick brown fox jumps over the lazy dog - Pack my box with five dozen liquor jugs',
-            withDismiss: true,
+            dismiss: true,
         },
     });
 
@@ -108,7 +108,7 @@ test('with dismiss button and long action', async () => {
         device: 'MOBILE_ANDROID',
         args: {
             buttonText: 'This action is long enough',
-            withDismiss: true,
+            dismiss: true,
         },
     });
 
@@ -125,7 +125,7 @@ test('with dismiss button and long action and message', async () => {
         args: {
             message: 'The quick brown fox jumps over the lazy dog - Pack my box with five dozen liquor jugs',
             buttonText: 'This action is long enough',
-            withDismiss: true,
+            dismiss: true,
         },
     });
 

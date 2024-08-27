@@ -5,7 +5,7 @@ import Spinner from './spinner';
 import {BaseTouchable} from './touchable';
 import {useIsInverseVariant} from './theme-variant-context';
 import {useForm} from './form-context';
-import {pxToRem} from './utils/css';
+import {applyCssVars, pxToRem} from './utils/css';
 import {Text, Text2, Text3} from './text';
 import Box from './box';
 import {getTextFromChildren} from './utils/common';
@@ -27,13 +27,15 @@ import type {Location} from 'history';
 import type {ExclusifyUnion} from './utils/utility-types';
 
 const renderButtonElement = ({
+    small,
     content,
     defaultIconSize,
-    renderText,
+    TextContentRenderer,
 }: {
+    small?: boolean;
     content: React.ReactNode;
-    defaultIconSize: number;
-    renderText: (text: React.ReactNode) => React.ReactNode;
+    defaultIconSize: string;
+    TextContentRenderer: (element: React.ReactNode, small?: boolean) => JSX.Element;
 }): React.ReactNode => {
     const childrenArr = flattenChildren(content);
     const length = childrenArr.length;
@@ -41,7 +43,9 @@ const renderButtonElement = ({
     let accText: Array<React.ReactNode> = [];
     const flushAccText = () => {
         resultChildrenArr.push(
-            <React.Fragment key={resultChildrenArr.length}>{renderText(accText)}</React.Fragment>
+            <React.Fragment key={resultChildrenArr.length}>
+                {TextContentRenderer(accText, small)}
+            </React.Fragment>
         );
         accText = [];
     };
@@ -56,19 +60,19 @@ const renderButtonElement = ({
             if (accText.length) {
                 flushAccText();
             }
-            const sizeInPx = element.props.size ?? defaultIconSize;
+            const sizeInPx = element.props.size !== undefined ? pxToRem(element.props.size) : defaultIconSize;
             resultChildrenArr.push(
                 <div
                     key={resultChildrenArr.length}
                     style={{
                         display: 'flex',
                         alignItems: 'center',
-                        marginLeft: isFirstChild ? 0 : styles.ICON_MARGIN_PX,
-                        marginRight: isLastChild ? 0 : styles.ICON_MARGIN_PX,
+                        marginLeft: isFirstChild ? 0 : styles.iconMargin,
+                        marginRight: isLastChild ? 0 : styles.iconMargin,
                     }}
                 >
                     {React.cloneElement(element as React.ReactElement<IconProps>, {
-                        size: pxToRem(sizeInPx),
+                        size: sizeInPx,
                     })}
                 </div>
             );
@@ -114,8 +118,7 @@ const renderButtonContent = ({
     loadingText,
     shouldRenderSpinner,
     setShouldRenderSpinner,
-    renderText,
-    textContentStyle,
+    TextContentRenderer,
     StartIcon,
     EndIcon,
     withChevron,
@@ -126,42 +129,42 @@ const renderButtonContent = ({
     loadingText?: string;
     shouldRenderSpinner: boolean;
     setShouldRenderSpinner: (value: boolean) => void;
-    renderText: (text: React.ReactNode) => React.ReactNode;
-    textContentStyle?: string;
+    TextContentRenderer: (element: React.ReactNode, small?: boolean) => JSX.Element;
     StartIcon?: React.FC<IconProps>;
     EndIcon?: React.FC<IconProps>;
     withChevron?: boolean;
 }): React.ReactNode => {
-    const defaultIconSize = small ? styles.SMALL_ICON_SIZE : styles.ICON_SIZE;
-    const spinnerSizeRem = pxToRem(small ? styles.SMALL_SPINNER_SIZE : styles.SPINNER_SIZE);
+    const defaultIconSize = small ? styles.iconSize.small : styles.iconSize.default;
+    const spinnerSizeRem = small ? styles.spinnerSize.small : styles.spinnerSize.default;
 
     return (
         <>
             {/* text content */}
-            <div aria-hidden={showSpinner ? true : undefined} className={textContentStyle}>
+            <div aria-hidden={showSpinner ? true : undefined} className={styles.textContent}>
                 {StartIcon && (
                     <div
                         style={{
                             display: 'flex',
                             alignItems: 'center',
-                            marginRight: styles.ICON_MARGIN_PX,
+                            marginRight: styles.iconMargin,
                         }}
                     >
-                        <StartIcon size={pxToRem(defaultIconSize)} color="currentColor" />
+                        <StartIcon size={defaultIconSize} color="currentColor" />
                     </div>
                 )}
                 <div style={{display: 'flex', alignItems: 'baseline'}}>
                     {renderButtonElement({
+                        small,
                         content: children,
                         defaultIconSize,
-                        renderText,
+                        TextContentRenderer,
                     })}
                     {withChevron && (
                         <div
                             style={{
                                 display: 'flex',
                                 alignItems: 'center',
-                                marginLeft: styles.CHEVRON_MARGIN_LEFT_LINK,
+                                marginLeft: styles.chevronMarginLeft,
                             }}
                         >
                             <ButtonLinkChevron />
@@ -173,10 +176,10 @@ const renderButtonContent = ({
                         style={{
                             display: 'flex',
                             alignItems: 'center',
-                            marginLeft: styles.ICON_MARGIN_PX,
+                            marginLeft: styles.iconMargin,
                         }}
                     >
-                        <EndIcon size={pxToRem(defaultIconSize)} color="currentColor" />
+                        <EndIcon size={defaultIconSize} color="currentColor" />
                     </div>
                 )}
             </div>
@@ -189,14 +192,17 @@ const renderButtonContent = ({
                     loadingText
                         ? {
                               paddingLeft: spinnerSizeRem,
-                              paddingRight:
-                                  styles.ICON_MARGIN_PX +
-                                  2 * (small ? styles.X_SMALL_PADDING_PX : styles.X_PADDING_PX),
+                              paddingRight: `calc(${styles.iconMargin} + 2 * ${small ? styles.buttonPaddingX.small : styles.buttonPaddingX.default})`,
                           }
                         : undefined
                 }
             >
-                {renderButtonElement({content: loadingText, defaultIconSize, renderText})}
+                {renderButtonElement({
+                    small,
+                    content: loadingText,
+                    defaultIconSize,
+                    TextContentRenderer,
+                })}
             </div>
 
             {/* loading content */}
@@ -227,7 +233,12 @@ const renderButtonContent = ({
                 )}
                 {loadingText ? (
                     <Box paddingLeft={8}>
-                        {renderButtonElement({content: loadingText, defaultIconSize, renderText})}
+                        {renderButtonElement({
+                            small,
+                            content: loadingText,
+                            defaultIconSize,
+                            TextContentRenderer,
+                        })}
                     </Box>
                 ) : null}
             </div>
@@ -235,7 +246,7 @@ const renderButtonContent = ({
     );
 };
 
-type ButtonType = 'primary' | 'secondary' | 'danger';
+type ButtonType = 'primary' | 'secondary' | 'danger' | 'link' | 'linkDanger';
 
 interface CommonProps {
     children: React.ReactNode;
@@ -260,44 +271,59 @@ interface CommonProps {
     role?: string;
 }
 
-export interface ToButtonProps extends CommonProps {
+interface ToButtonProps extends CommonProps {
     to: string | Location;
     newTab?: boolean;
     fullPageOnWebView?: boolean;
     onNavigate?: () => void | Promise<void>;
 }
-export interface OnPressButtonProps extends CommonProps {
+interface OnPressButtonProps extends CommonProps {
     onPress: (event: React.MouseEvent<HTMLElement>) => void | undefined | Promise<void>;
 }
-export interface HrefButtonProps extends CommonProps {
+interface HrefButtonProps extends CommonProps {
     href: string;
     newTab?: boolean;
     loadOnTop?: boolean;
-
     onNavigate?: () => void | Promise<void>;
 }
-export interface FakeButtonProps extends CommonProps {
+interface FakeButtonProps extends CommonProps {
     fake: true;
 }
-export interface SubmitButtonProps extends CommonProps {
+interface SubmitButtonProps extends CommonProps {
     submit: true;
 }
 
-export type ButtonProps = ExclusifyUnion<
+type ButtonProps = ExclusifyUnion<
     FakeButtonProps | SubmitButtonProps | ToButtonProps | OnPressButtonProps | HrefButtonProps
 >;
 
-const Button = React.forwardRef<TouchableElement, ButtonProps & {type: ButtonType}>((props, ref) => {
-    const {textPresets} = useTheme();
+type ButtonLinkProps = ExclusifyUnion<ToButtonProps | OnPressButtonProps | HrefButtonProps> & {
+    bleedLeft?: boolean;
+    bleedRight?: boolean;
+    bleedY?: boolean;
+    small?: true;
+};
+
+const BaseButton = React.forwardRef<
+    TouchableElement,
+    ExclusifyUnion<ButtonProps | ButtonLinkProps> & {
+        buttonType: ButtonType;
+        withChevron?: boolean;
+        TextContentRenderer: (element: React.ReactNode, small?: boolean) => JSX.Element;
+    }
+>((props, ref) => {
     const {eventFormat} = useTrackingConfig();
     const {formStatus, formId} = useForm();
     const isInverse = useIsInverseVariant();
     const {loadingText} = props;
     const isSubmitButton = !!props.submit;
     const isFormSending = formStatus === 'sending';
+    const {isDarkMode} = useTheme();
     const [isOnPressPromiseResolving, setIsOnPressPromiseResolving] = React.useState(false);
 
     const showSpinner = props.showSpinner || (isFormSending && isSubmitButton) || isOnPressPromiseResolving;
+    const showChevron =
+        props.withChevron ?? (props.buttonType.startsWith('link') && (!!props.href || !!props.to));
 
     // This state is needed to not render the spinner when hidden (because it causes high CPU usage
     // specially in iPhone). But we want the spinner to be visible during the show/hide animation.
@@ -312,50 +338,82 @@ const Button = React.forwardRef<TouchableElement, ButtonProps & {type: ButtonTyp
     }, [showSpinner, shouldRenderSpinner, formStatus]);
 
     const createDefaultTrackingEvent = (): TrackingEvent => {
+        let component_type;
+        let action;
+
+        switch (props.buttonType) {
+            case 'link':
+                component_type = 'link';
+                action = eventActions.linkTapped;
+                break;
+            case 'linkDanger':
+                component_type = 'danger_link';
+                action = eventActions.linkTapped;
+                break;
+            default:
+                component_type = `${props.buttonType}_button`;
+                action = `${props.buttonType}_button_tapped`;
+                break;
+        }
+
         if (eventFormat === 'google-analytics-4') {
             return {
                 name: eventNames.userInteraction,
-                component_type: `${props.type}_button`,
+                component_type,
                 component_copy: getTextFromChildren(props.children),
             };
         } else {
             return {
                 category: eventCategories.userInteraction,
-                action: `${props.type}_button_tapped`,
+                action,
                 label: getTextFromChildren(props.children),
             };
         }
     };
 
-    const renderText = (element: React.ReactNode) =>
-        props.small ? (
-            <Text
-                size={14}
-                lineHeight={20}
-                weight={textPresets.button.weight}
-                truncate={1}
-                color="inherit"
-                as="div"
-            >
-                {element}
-            </Text>
-        ) : (
-            <Text3 weight={textPresets.button.weight} truncate={1} color="inherit" as="div">
-                {element}
-            </Text3>
-        );
+    const minWidthProps = props.buttonType.startsWith('link') ? styles.linkMinWidth : styles.buttonMinWidth;
+    const finalType =
+        props.buttonType === 'linkDanger' && isDarkMode && isInverse ? 'linkDangerDark' : props.buttonType;
 
     const commonProps = {
         ref,
         className: classnames(
-            isInverse ? styles.inverseButtonVariants[props.type] : styles.buttonVariants[props.type],
+            isInverse ? styles.inverseButtonVariants[finalType] : styles.buttonVariants[finalType],
             props.className,
             {
                 [styles.small]: props.small,
                 [styles.isLoading]: showSpinner,
             }
         ),
-        style: {cursor: props.fake ? 'pointer' : undefined, ...props.style},
+        style: {
+            ...applyCssVars({
+                [styles.buttonVars.minWidth]: props.small ? minWidthProps.small : minWidthProps.default,
+            }),
+
+            /**
+             * Setting bleed classes with style to override the margin:0 set by the Touchable component.
+             * If we set it using className, it may not work depending on the order in which the styles are applied.
+             */
+            ...(props.bleedLeft
+                ? {
+                      marginLeft: `calc(-1 * (${styles.borderSize} + ${props.small ? styles.buttonPaddingX.small : styles.buttonPaddingX.default}))`,
+                  }
+                : undefined),
+            ...(props.bleedRight
+                ? {
+                      marginRight: `calc(-1 * (${styles.borderSize} + ${props.small ? styles.buttonPaddingX.small : styles.buttonPaddingX.default}))`,
+                  }
+                : undefined),
+            ...(props.bleedY
+                ? {
+                      marginTop: `calc(-1 * (${styles.borderSize} + ${props.small ? styles.buttonPaddingY.small : styles.buttonPaddingY.default}))`,
+                      marginBottom: `calc(-1 * (${styles.borderSize} + ${props.small ? styles.buttonPaddingY.small : styles.buttonPaddingY.default}))`,
+                  }
+                : undefined),
+
+            cursor: props.fake ? 'pointer' : undefined,
+            ...props.style,
+        },
         trackingEvent: props.trackingEvent ?? (props.trackEvent ? createDefaultTrackingEvent() : undefined),
         dataAttributes: props.dataAttributes,
         'aria-label': props['aria-label'],
@@ -370,10 +428,10 @@ const Button = React.forwardRef<TouchableElement, ButtonProps & {type: ButtonTyp
             children: props.children,
             loadingText,
             small: props.small,
-            renderText,
-            textContentStyle: styles.textContent,
+            TextContentRenderer: props.TextContentRenderer,
             StartIcon: props.StartIcon,
             EndIcon: props.EndIcon,
+            withChevron: showChevron,
         }),
         disabled: props.disabled || showSpinner || isFormSending,
         role: props.role,
@@ -441,230 +499,65 @@ const Button = React.forwardRef<TouchableElement, ButtonProps & {type: ButtonTyp
     return null;
 });
 
-type ButtonLinkType = 'default' | 'danger';
-
-interface ButtonLinkCommonProps {
-    children: React.ReactNode;
-    disabled?: boolean;
-    trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
-    trackEvent?: boolean;
-    /** "data-" prefix is automatically added. For example, use "testid" instead of "data-testid" */
-    dataAttributes?: DataAttributes;
-    showSpinner?: boolean;
-    loadingText?: string;
-    StartIcon?: React.FC<IconProps>;
-    EndIcon?: React.FC<IconProps>;
-    bleedLeft?: boolean;
-    bleedRight?: boolean;
-    bleedY?: boolean;
-    'aria-label'?: string;
-    'aria-controls'?: string;
-    'aria-expanded'?: 'true' | 'false' | boolean;
-    'aria-haspopup'?: 'true' | 'false' | 'menu' | 'dialog' | boolean;
-    /** IMPORTANT: try to avoid using role="link" with onPress and first consider other alternatives like to/href + onNavigate */
-    role?: string;
-}
-
-interface ButtonLinkOnPressProps extends ButtonLinkCommonProps {
-    onPress: (event: React.MouseEvent<HTMLElement>) => void | undefined | Promise<void>;
-    to?: undefined;
-    href?: undefined;
-    onNavigate?: undefined;
-}
-
-interface ButtonLinkHrefProps extends ButtonLinkCommonProps {
-    href: string;
-    newTab?: boolean;
-    onPress?: undefined;
-    to?: undefined;
-    onNavigate?: () => void | Promise<void>;
-}
-
-interface ButtonLinkToProps extends ButtonLinkCommonProps {
-    to: string;
-    newTab?: boolean;
-    fullPageOnWebView?: boolean;
-    onPress?: undefined;
-    href?: undefined;
-    onNavigate?: () => void | Promise<void>;
-}
-
-export type ButtonLinkProps = ButtonLinkOnPressProps | ButtonLinkHrefProps | ButtonLinkToProps;
-
-const BaseButtonLink = React.forwardRef<
-    TouchableElement,
-    ButtonLinkProps & {type: ButtonLinkType; withChevron?: boolean}
->(({type, ...props}, ref) => {
-    const {formStatus} = useForm();
-    const isInverse = useIsInverseVariant();
+const ButtonTextRenderer = (element: React.ReactNode, small?: boolean): JSX.Element => {
     const {textPresets} = useTheme();
-    const {eventFormat} = useTrackingConfig();
-    const {isDarkMode} = useTheme();
-
-    const {loadingText} = props;
-    const isFormSending = formStatus === 'sending';
-    const [isOnPressPromiseResolving, setIsOnPressPromiseResolving] = React.useState(false);
-
-    const showSpinner = props.showSpinner || isOnPressPromiseResolving;
-    const showChevron = props.withChevron ?? (!!props.href || !!props.to);
-
-    // This state is needed to not render the spinner when hidden (because it causes high CPU usage
-    // specially in iPhone). But we want the spinner to be visible during the show/hide animation.
-    // * When showSpinner prop is true, state is changed immediately.
-    // * When the transition ends this state is updated again if needed
-    const [shouldRenderSpinner, setShouldRenderSpinner] = React.useState(!!showSpinner);
-
-    React.useEffect(() => {
-        if (showSpinner && !shouldRenderSpinner) {
-            setShouldRenderSpinner(true);
-        }
-    }, [showSpinner, shouldRenderSpinner, formStatus]);
-
-    const createDefaultTrackingEvent = (): TrackingEvent => {
-        if (eventFormat === 'google-analytics-4') {
-            return {
-                name: eventNames.userInteraction,
-                component_type: type === 'danger' ? 'danger_link' : 'link',
-                component_copy: getTextFromChildren(props.children),
-            };
-        } else {
-            return {
-                category: eventCategories.userInteraction,
-                action: eventActions.linkTapped,
-                label: getTextFromChildren(props.children),
-            };
-        }
-    };
-
-    const renderText = (element: React.ReactNode) => (
-        <Text2 weight={textPresets.button.weight} truncate={1} color="inherit">
+    return small ? (
+        <Text
+            size={14}
+            lineHeight={20}
+            weight={textPresets.button.weight}
+            truncate={1}
+            color="inherit"
+            as="div"
+        >
             {element}
-        </Text2>
+        </Text>
+    ) : (
+        <Text3 weight={textPresets.button.weight} truncate={1} color="inherit" as="div">
+            {element}
+        </Text3>
     );
+};
 
-    const finalType = type === 'danger' && isDarkMode && isInverse ? 'dangerDark' : type;
-
-    const commonProps = {
-        className: classnames(
-            isInverse ? styles.inverseLinkVariants[finalType] : styles.linkVariants[finalType],
-            {
-                [styles.isLoading]: showSpinner,
-            }
-        ),
-        /**
-         * Setting bleed classes with style to override the margin:0 set by the Touchable component.
-         * If we set it using className, it may not work depending on the order in which the styles are applied.
-         */
-        style: {
-            ...(props.bleedLeft ? {marginLeft: -styles.PADDING_X_LINK} : undefined),
-            ...(props.bleedRight ? {marginRight: -styles.PADDING_X_LINK} : undefined),
-            ...(props.bleedY
-                ? {marginTop: -styles.PADDING_Y_LINK, marginBottom: -styles.PADDING_Y_LINK}
-                : undefined),
-        },
-        trackingEvent: props.trackingEvent ?? (props.trackEvent ? createDefaultTrackingEvent() : undefined),
-        dataAttributes: props.dataAttributes,
-        'aria-label': props['aria-label'],
-        'aria-controls': props['aria-controls'],
-        'aria-expanded': props['aria-expanded'],
-        'aria-haspopup': props['aria-haspopup'],
-        children: renderButtonContent({
-            showSpinner,
-            shouldRenderSpinner,
-            setShouldRenderSpinner,
-            children: props.children,
-            loadingText,
-            small: true,
-            renderText,
-            textContentStyle: styles.textContentLink,
-            StartIcon: props.StartIcon,
-            EndIcon: props.EndIcon,
-            withChevron: showChevron,
-        }),
-        disabled: props.disabled || showSpinner || isFormSending,
-        role: props.role,
-    };
-
-    if (process.env.NODE_ENV !== 'production') {
-        if (props.to === '' || props.href === '') {
-            throw Error('to or href props are empty strings');
-        }
-    }
-
-    if (props.onPress) {
-        return (
-            <BaseTouchable
-                ref={ref}
-                {...commonProps}
-                onPress={(e) => {
-                    const result = props.onPress(e);
-                    if (result) {
-                        setIsOnPressPromiseResolving(true);
-                        result.finally(() => setIsOnPressPromiseResolving(false));
-                    }
-                }}
-            />
-        );
-    }
-
-    if (props.to || props.to === '') {
-        return (
-            <BaseTouchable
-                ref={ref}
-                {...commonProps}
-                to={props.to}
-                newTab={props.newTab}
-                fullPageOnWebView={props.fullPageOnWebView}
-                onNavigate={props.onNavigate}
-            />
-        );
-    }
-
-    if (props.href || props.href === '') {
-        return (
-            <BaseTouchable
-                ref={ref}
-                {...commonProps}
-                href={props.href}
-                newTab={props.newTab}
-                onNavigate={props.onNavigate}
-            />
-        );
-    }
-
-    if (process.env.NODE_ENV !== 'production') {
-        // this cannot happen
-        throw Error('Bad button props');
-    }
-
-    return null;
-});
+const LinkTextRenderer = (element: React.ReactNode, small?: boolean): JSX.Element => {
+    const {textPresets} = useTheme();
+    const TextComponent = small ? Text2 : Text3;
+    return (
+        <TextComponent weight={textPresets.button.weight} truncate={1} color="inherit">
+            {element}
+        </TextComponent>
+    );
+};
 
 export const ButtonLink = React.forwardRef<
     TouchableElement,
     ButtonLinkProps & {
         withChevron?: boolean;
     }
->(({dataAttributes, ...props}, ref) => {
+>(({dataAttributes, small, ...props}, ref) => {
     return (
-        <BaseButtonLink
+        <BaseButton
             dataAttributes={{'component-name': 'ButtonLink', ...dataAttributes}}
             {...props}
+            small
             ref={ref}
-            type="default"
+            buttonType="link"
+            TextContentRenderer={LinkTextRenderer}
         />
     );
 });
 
 export const ButtonLinkDanger = React.forwardRef<TouchableElement, ButtonLinkProps>(
-    ({dataAttributes, ...props}, ref) => {
+    ({dataAttributes, small, ...props}, ref) => {
         return (
-            <BaseButtonLink
+            <BaseButton
                 dataAttributes={{'component-name': 'ButtonLinkDanger', ...dataAttributes}}
                 {...props}
                 withChevron={false}
+                small
                 ref={ref}
-                type="danger"
+                buttonType="linkDanger"
+                TextContentRenderer={LinkTextRenderer}
             />
         );
     }
@@ -673,11 +566,12 @@ export const ButtonLinkDanger = React.forwardRef<TouchableElement, ButtonLinkPro
 export const ButtonPrimary = React.forwardRef<TouchableElement, ButtonProps>(
     ({dataAttributes, ...props}, ref) => {
         return (
-            <Button
+            <BaseButton
                 dataAttributes={{'component-name': 'ButtonPrimary', ...dataAttributes}}
                 {...props}
                 ref={ref}
-                type="primary"
+                buttonType="primary"
+                TextContentRenderer={ButtonTextRenderer}
             />
         );
     }
@@ -686,11 +580,12 @@ export const ButtonPrimary = React.forwardRef<TouchableElement, ButtonProps>(
 export const ButtonSecondary = React.forwardRef<TouchableElement, ButtonProps>(
     ({dataAttributes, ...props}, ref) => {
         return (
-            <Button
+            <BaseButton
                 dataAttributes={{'component-name': 'ButtonSecondary', ...dataAttributes}}
                 {...props}
                 ref={ref}
-                type="secondary"
+                buttonType="secondary"
+                TextContentRenderer={ButtonTextRenderer}
             />
         );
     }
@@ -699,11 +594,12 @@ export const ButtonSecondary = React.forwardRef<TouchableElement, ButtonProps>(
 export const ButtonDanger = React.forwardRef<TouchableElement, ButtonProps>(
     ({dataAttributes, ...props}, ref) => {
         return (
-            <Button
+            <BaseButton
                 dataAttributes={{'component-name': 'ButtonDanger', ...dataAttributes}}
                 {...props}
                 ref={ref}
-                type="danger"
+                buttonType="danger"
+                TextContentRenderer={ButtonTextRenderer}
             />
         );
     }

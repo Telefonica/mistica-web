@@ -14,6 +14,7 @@ const NavigationBarTest = (): JSX.Element => (
             title,
             to: `/${title}`,
         }))}
+        logo={<span>LOGO</span>}
         right={
             <NavigationBarActionGroup>
                 <NavigationBarAction onPress={() => {}} aria-label="shopping cart with 2 items">

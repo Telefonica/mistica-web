@@ -9,7 +9,7 @@ import {
     skinVars,
     Placeholder,
     Tag,
-    IconLikeFilled,
+    IconThumbUpFilled,
     IconMobileDeviceRegular,
     Image,
     Text3,
@@ -64,17 +64,17 @@ type Args = {
     description: string;
     detail: string;
     control: string;
-    withBadge: boolean;
+    badge: boolean;
     oneLineTitle: boolean;
     oneLineSubtitle: boolean;
     oneLineDescription: boolean;
-    extraContent: boolean;
+    extra: boolean;
     disabled: boolean;
     danger: boolean;
     overInverse: boolean;
 };
 
-const Template: StoryComponent<Args & {boxed?: boolean; isInverse?: boolean}> = ({
+const Template: StoryComponent<Args & {boxed?: boolean; inverse?: boolean}> = ({
     boxed,
     headline,
     title,
@@ -82,17 +82,17 @@ const Template: StoryComponent<Args & {boxed?: boolean; isInverse?: boolean}> = 
     description,
     detail,
     control,
-    withBadge,
+    badge,
     oneLineTitle,
     oneLineSubtitle,
     oneLineDescription,
-    extraContent,
+    extra,
     disabled,
     overInverse,
-    isInverse,
+    inverse,
     danger,
 }) => {
-    const extra = extraContent ? <Placeholder height={56} /> : undefined;
+    const extraContent = extra ? <Placeholder height={56} /> : undefined;
 
     const getControlProps = (index: number) => {
         let controlProps: any = {};
@@ -236,31 +236,31 @@ const Template: StoryComponent<Args & {boxed?: boolean; isInverse?: boolean}> = 
                 subtitle={subtitle}
                 description={description}
                 detail={detail}
-                badge={withBadge}
+                badge={badge}
                 titleLinesMax={oneLineTitle ? 1 : 2}
                 subtitleLinesMax={oneLineSubtitle ? 1 : 2}
                 descriptionLinesMax={oneLineDescription ? 1 : 2}
-                extra={extra}
+                extra={extraContent}
                 disabled={disabled}
                 danger={danger}
-                isInverse={isInverse}
+                isInverse={inverse}
                 {...getControlProps(row++)}
             />
             <RowComponent
-                asset={<IconLikeFilled size={24} color="currentColor" />}
+                asset={<IconThumbUpFilled size={24} color="currentColor" />}
                 headline={headline && <Tag type="promo">{headline}</Tag>}
                 title={title}
                 subtitle={subtitle}
                 description={description}
                 detail={detail}
-                badge={withBadge ? 2 : undefined}
+                badge={badge ? 2 : undefined}
                 titleLinesMax={oneLineTitle ? 1 : 2}
                 subtitleLinesMax={oneLineSubtitle ? 1 : 2}
                 descriptionLinesMax={oneLineDescription ? 1 : 2}
-                extra={extra}
+                extra={extraContent}
                 disabled={disabled}
                 danger={danger}
-                isInverse={isInverse}
+                isInverse={inverse}
                 {...getControlProps(row++)}
             />
             <RowComponent
@@ -274,14 +274,14 @@ const Template: StoryComponent<Args & {boxed?: boolean; isInverse?: boolean}> = 
                 subtitle={subtitle}
                 description={description}
                 detail={detail}
-                badge={withBadge ? 22 : undefined}
+                badge={badge ? 22 : undefined}
                 titleLinesMax={oneLineTitle ? 1 : 2}
                 subtitleLinesMax={oneLineSubtitle ? 1 : 2}
                 descriptionLinesMax={oneLineDescription ? 1 : 2}
-                extra={extra}
+                extra={extraContent}
                 disabled={disabled}
                 danger={danger}
-                isInverse={isInverse}
+                isInverse={inverse}
                 {...getControlProps(row++)}
             />
             <RowComponent
@@ -291,14 +291,14 @@ const Template: StoryComponent<Args & {boxed?: boolean; isInverse?: boolean}> = 
                 subtitle={subtitle}
                 description={description}
                 detail={detail}
-                badge={withBadge ? 22 : undefined}
+                badge={badge ? 22 : undefined}
                 titleLinesMax={oneLineTitle ? 1 : 2}
                 subtitleLinesMax={oneLineSubtitle ? 1 : 2}
                 descriptionLinesMax={oneLineDescription ? 1 : 2}
-                extra={extra}
+                extra={extraContent}
                 disabled={disabled}
                 danger={danger}
-                isInverse={isInverse}
+                isInverse={inverse}
                 {...getControlProps(row++)}
             />
             <RowComponent
@@ -308,14 +308,14 @@ const Template: StoryComponent<Args & {boxed?: boolean; isInverse?: boolean}> = 
                 subtitle={subtitle}
                 description={description}
                 detail={detail}
-                badge={withBadge ? 22 : undefined}
+                badge={badge ? 22 : undefined}
                 titleLinesMax={oneLineTitle ? 1 : 2}
                 subtitleLinesMax={oneLineSubtitle ? 1 : 2}
                 descriptionLinesMax={oneLineDescription ? 1 : 2}
-                extra={extra}
+                extra={extraContent}
                 disabled={disabled}
                 danger={danger}
-                isInverse={isInverse}
+                isInverse={inverse}
                 {...getControlProps(row++)}
             />
             <RowComponent
@@ -325,14 +325,14 @@ const Template: StoryComponent<Args & {boxed?: boolean; isInverse?: boolean}> = 
                 subtitle={subtitle}
                 description={description}
                 detail={detail}
-                badge={withBadge ? 22 : undefined}
+                badge={badge ? 22 : undefined}
                 titleLinesMax={oneLineTitle ? 1 : 2}
                 subtitleLinesMax={oneLineSubtitle ? 1 : 2}
                 descriptionLinesMax={oneLineDescription ? 1 : 2}
-                extra={extra}
+                extra={extraContent}
                 disabled={disabled}
                 danger={danger}
-                isInverse={isInverse}
+                isInverse={inverse}
                 {...getControlProps(row++)}
             />
             <RowComponent
@@ -342,14 +342,14 @@ const Template: StoryComponent<Args & {boxed?: boolean; isInverse?: boolean}> = 
                 subtitle={subtitle}
                 description={description}
                 detail={detail}
-                badge={withBadge ? 22 : undefined}
+                badge={badge ? 22 : undefined}
                 titleLinesMax={oneLineTitle ? 1 : 2}
                 subtitleLinesMax={oneLineSubtitle ? 1 : 2}
                 descriptionLinesMax={oneLineDescription ? 1 : 2}
-                extra={extra}
+                extra={extraContent}
                 disabled={disabled}
                 danger={danger}
-                isInverse={isInverse}
+                isInverse={inverse}
                 {...getControlProps(row++)}
             />
             <RowComponent
@@ -359,14 +359,14 @@ const Template: StoryComponent<Args & {boxed?: boolean; isInverse?: boolean}> = 
                 subtitle={subtitle}
                 description={description}
                 detail={detail}
-                badge={withBadge ? 22 : undefined}
+                badge={badge ? 22 : undefined}
                 titleLinesMax={oneLineTitle ? 1 : 2}
                 subtitleLinesMax={oneLineSubtitle ? 1 : 2}
                 descriptionLinesMax={oneLineDescription ? 1 : 2}
-                extra={extra}
+                extra={extraContent}
                 disabled={disabled}
                 danger={danger}
-                isInverse={isInverse}
+                isInverse={inverse}
                 {...getControlProps(row++)}
             />
             <RowComponent
@@ -376,14 +376,14 @@ const Template: StoryComponent<Args & {boxed?: boolean; isInverse?: boolean}> = 
                 subtitle={subtitle}
                 description={description}
                 detail={detail}
-                badge={withBadge ? 22 : undefined}
+                badge={badge ? 22 : undefined}
                 titleLinesMax={oneLineTitle ? 1 : 2}
                 subtitleLinesMax={oneLineSubtitle ? 1 : 2}
                 descriptionLinesMax={oneLineDescription ? 1 : 2}
-                extra={extra}
+                extra={extraContent}
                 disabled={disabled}
                 danger={danger}
-                isInverse={isInverse}
+                isInverse={inverse}
                 {...getControlProps(row++)}
             />
         </ListComponent>
@@ -411,11 +411,11 @@ const defaultArgs = {
     description: 'Description',
     detail: '',
     control: 'chevron',
-    withBadge: false,
+    badge: false,
     oneLineTitle: false,
     oneLineSubtitle: false,
     oneLineDescription: false,
-    extraContent: false,
+    extra: false,
     disabled: false,
     danger: false,
     overInverse: false,
@@ -425,9 +425,9 @@ export const RowListStory: StoryComponent<Args> = (args) => <Template {...args} 
 RowListStory.storyName = 'RowList';
 RowListStory.args = defaultArgs;
 
-export const BoxedRowListStory: StoryComponent<Args & {isInverse: boolean}> = (args) => (
+export const BoxedRowListStory: StoryComponent<Args & {inverse: boolean}> = (args) => (
     <Template boxed {...args} />
 );
 BoxedRowListStory.storyName = 'BoxedRowList';
-BoxedRowListStory.args = {...defaultArgs, isInverse: false};
-BoxedRowListStory.argTypes = {danger: {if: {arg: 'isInverse', eq: false}}};
+BoxedRowListStory.args = {...defaultArgs, inverse: false};
+BoxedRowListStory.argTypes = {danger: {if: {arg: 'inverse', eq: false}}};

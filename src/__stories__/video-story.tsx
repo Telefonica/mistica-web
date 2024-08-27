@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Stack, ButtonPrimary, Inline, Title2, Video, Text3} from '..';
+import {Stack, ButtonPrimary, Inline, Video, Text3, Title3} from '..';
 import beachVideo from './videos/beach.mp4';
 import beachImg from './images/beach.jpg';
 
@@ -48,8 +48,8 @@ type Args = {
     height: number;
     aspectRatio: string;
     autoPlay: boolean;
-    withPoster: boolean;
-    isEmptySource: boolean;
+    poster: boolean;
+    emptySource: boolean;
 };
 
 export const Default: StoryComponent<Args> = ({
@@ -58,8 +58,8 @@ export const Default: StoryComponent<Args> = ({
     height,
     aspectRatio,
     autoPlay,
-    withPoster,
-    isEmptySource,
+    poster,
+    emptySource,
 }) => {
     const videoRef = React.useRef<VideoElement>(null);
 
@@ -72,17 +72,17 @@ export const Default: StoryComponent<Args> = ({
                     ? 0
                     : (aspectRatio.replace(' ', ':') as AspectRatio)
                 : undefined,
-        poster: withPoster ? POSTER_SRC : undefined,
+        poster: poster ? POSTER_SRC : undefined,
         autoPlay,
         dataAttributes: {testid: 'video'},
     };
 
-    const video = <Video src={!isEmptySource ? VIDEO_SRC : ''} {...props} ref={videoRef} />;
+    const video = <Video src={!emptySource ? VIDEO_SRC : ''} {...props} ref={videoRef} />;
 
     return (
         <Stack space={32}>
             <Stack space={8}>
-                <Title2>Video component issues/limitations</Title2>
+                <Title3>Video component issues/limitations</Title3>
                 <Text3 regular as="p">
                     1. Using automatic aspect ratio (`aspectRatio={0}`), if the poster and video have
                     different aspect ratios, the video size will resize when playing/stopping the video. This
@@ -139,6 +139,6 @@ Default.args = {
     height: 420,
     aspectRatio: '1 1',
     autoPlay: true,
-    withPoster: true,
-    isEmptySource: false,
+    poster: true,
+    emptySource: false,
 };
