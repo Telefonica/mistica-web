@@ -251,17 +251,10 @@ const main = async () => {
         fs.writeFileSync(join(PATH_OUTPUT, filename), source);
     }
 
-    const index =
-        components
-            .sort((a, b) => (a[0].toLowerCase() > b[0].toLowerCase() ? 1 : -1))
-            .map(
-                ([componentName, importName]) =>
-                    `export {default as ${componentName}} from './${importName}';`
-            )
-            .join('\n') +
-        '\n' +
-        `export {default as keywords} from './keywords';` +
-        '\n';
+    const index = components
+        .sort((a, b) => (a[0].toLowerCase() > b[0].toLowerCase() ? 1 : -1))
+        .map(([componentName, importName]) => `export {default as ${componentName}} from './${importName}';`)
+        .join('\n');
 
     fs.writeFileSync(PATH_OUTPUT_INDEX_FILENAME, index, 'utf8');
 

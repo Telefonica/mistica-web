@@ -1739,4 +1739,3 @@ export {default as IconWorkshopMeetingRegular} from './icon-workshop-meeting-reg
 export {default as IconWorldDeviceFilled} from './icon-world-device-filled';
 export {default as IconWorldDeviceLight} from './icon-world-device-light';
 export {default as IconWorldDeviceRegular} from './icon-world-device-regular';
-export {default as keywords} from './keywords';
