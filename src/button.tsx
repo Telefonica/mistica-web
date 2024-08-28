@@ -6,7 +6,7 @@ import {BaseTouchable} from './touchable';
 import {useIsInverseVariant} from './theme-variant-context';
 import {useForm} from './form-context';
 import {applyCssVars, pxToRem} from './utils/css';
-import {Text, Text2, Text3} from './text';
+import {Text, Text3} from './text';
 import Box from './box';
 import {getTextFromChildren} from './utils/common';
 import {eventActions, eventCategories, eventNames, useTrackingConfig} from './utils/analytics';
@@ -26,16 +26,34 @@ import type {
 import type {Location} from 'history';
 import type {ExclusifyUnion} from './utils/utility-types';
 
+const ButtonTextRenderer = (element: React.ReactNode, small?: boolean): JSX.Element => {
+    const {textPresets} = useTheme();
+    return small ? (
+        <Text
+            size={14}
+            lineHeight={20}
+            weight={textPresets.button.weight}
+            truncate={1}
+            color="inherit"
+            as="div"
+        >
+            {element}
+        </Text>
+    ) : (
+        <Text3 weight={textPresets.button.weight} truncate={1} color="inherit" as="div">
+            {element}
+        </Text3>
+    );
+};
+
 const renderButtonElement = ({
     small,
     content,
     defaultIconSize,
-    TextContentRenderer,
 }: {
     small?: boolean;
     content: React.ReactNode;
     defaultIconSize: string;
-    TextContentRenderer: (element: React.ReactNode, small?: boolean) => JSX.Element;
 }): React.ReactNode => {
     const childrenArr = flattenChildren(content);
     const length = childrenArr.length;
@@ -44,7 +62,7 @@ const renderButtonElement = ({
     const flushAccText = () => {
         resultChildrenArr.push(
             <React.Fragment key={resultChildrenArr.length}>
-                {TextContentRenderer(accText, small)}
+                {ButtonTextRenderer(accText, small)}
             </React.Fragment>
         );
         accText = [];
@@ -118,7 +136,6 @@ const renderButtonContent = ({
     loadingText,
     shouldRenderSpinner,
     setShouldRenderSpinner,
-    TextContentRenderer,
     StartIcon,
     EndIcon,
     withChevron,
@@ -129,7 +146,6 @@ const renderButtonContent = ({
     loadingText?: string;
     shouldRenderSpinner: boolean;
     setShouldRenderSpinner: (value: boolean) => void;
-    TextContentRenderer: (element: React.ReactNode, small?: boolean) => JSX.Element;
     StartIcon?: React.FC<IconProps>;
     EndIcon?: React.FC<IconProps>;
     withChevron?: boolean;
@@ -157,7 +173,6 @@ const renderButtonContent = ({
                         small,
                         content: children,
                         defaultIconSize,
-                        TextContentRenderer,
                     })}
                     {withChevron && (
                         <div
@@ -201,7 +216,6 @@ const renderButtonContent = ({
                     small,
                     content: loadingText,
                     defaultIconSize,
-                    TextContentRenderer,
                 })}
             </div>
 
@@ -237,7 +251,6 @@ const renderButtonContent = ({
                             small,
                             content: loadingText,
                             defaultIconSize,
-                            TextContentRenderer,
                         })}
                     </Box>
                 ) : null}
@@ -308,7 +321,6 @@ const BaseButton = React.forwardRef<
     ExclusifyUnion<ButtonProps | ButtonLinkProps> & {
         buttonType: ButtonType;
         withChevron?: boolean;
-        TextContentRenderer: (element: React.ReactNode, small?: boolean) => JSX.Element;
     }
 >((props, ref) => {
     const {eventFormat} = useTrackingConfig();
@@ -427,7 +439,6 @@ const BaseButton = React.forwardRef<
             children: props.children,
             loadingText,
             small: props.small,
-            TextContentRenderer: props.TextContentRenderer,
             StartIcon: props.StartIcon,
             EndIcon: props.EndIcon,
             withChevron: showChevron,
@@ -498,36 +509,6 @@ const BaseButton = React.forwardRef<
     return null;
 });
 
-const ButtonTextRenderer = (element: React.ReactNode, small?: boolean): JSX.Element => {
-    const {textPresets} = useTheme();
-    return small ? (
-        <Text
-            size={14}
-            lineHeight={20}
-            weight={textPresets.button.weight}
-            truncate={1}
-            color="inherit"
-            as="div"
-        >
-            {element}
-        </Text>
-    ) : (
-        <Text3 weight={textPresets.button.weight} truncate={1} color="inherit" as="div">
-            {element}
-        </Text3>
-    );
-};
-
-const LinkTextRenderer = (element: React.ReactNode, small?: boolean): JSX.Element => {
-    const {textPresets} = useTheme();
-    const TextComponent = small ? Text2 : Text3;
-    return (
-        <TextComponent weight={textPresets.button.weight} truncate={1} color="inherit">
-            {element}
-        </TextComponent>
-    );
-};
-
 export const ButtonLink = React.forwardRef<
     TouchableElement,
     ButtonLinkProps & {
@@ -540,7 +521,6 @@ export const ButtonLink = React.forwardRef<
             {...props}
             ref={ref}
             buttonType="link"
-            TextContentRenderer={LinkTextRenderer}
         />
     );
 });
@@ -554,7 +534,6 @@ export const ButtonLinkDanger = React.forwardRef<TouchableElement, ButtonLinkPro
                 withChevron={false}
                 ref={ref}
                 buttonType="linkDanger"
-                TextContentRenderer={LinkTextRenderer}
             />
         );
     }
@@ -568,7 +547,6 @@ export const ButtonPrimary = React.forwardRef<TouchableElement, ButtonProps>(
                 {...props}
                 ref={ref}
                 buttonType="primary"
-                TextContentRenderer={ButtonTextRenderer}
             />
         );
     }
@@ -582,7 +560,6 @@ export const ButtonSecondary = React.forwardRef<TouchableElement, ButtonProps>(
                 {...props}
                 ref={ref}
                 buttonType="secondary"
-                TextContentRenderer={ButtonTextRenderer}
             />
         );
     }
@@ -596,7 +573,6 @@ export const ButtonDanger = React.forwardRef<TouchableElement, ButtonProps>(
                 {...props}
                 ref={ref}
                 buttonType="danger"
-                TextContentRenderer={ButtonTextRenderer}
             />
         );
     }
