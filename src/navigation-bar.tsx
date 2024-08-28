@@ -160,8 +160,7 @@ export const MainNavigationBar: React.FC<MainNavigationBarProps> = ({
     const shadowAlpha = isDarkMode ? 1 : 0.2;
     const {isTabletOrSmaller} = useScreenSize();
     const setModalState = useSetModalState();
-
-    logo = logo ?? <Logo size={{mobile: 40, desktop: 48}} />;
+    const logoElement = logo || <Logo size={{mobile: 40, desktop: 48}} />;
 
     const renderDesktopSections = () => {
         return (
@@ -236,7 +235,7 @@ export const MainNavigationBar: React.FC<MainNavigationBarProps> = ({
                                     <BurgerMenuIcon isOpen={isMenuOpen} />
                                 </Touchable>
                             )}
-                            <div className={styles.logoContainer}>{logo}</div>
+                            <div className={styles.logoContainer}>{logoElement}</div>
                             {!hasBottomSections && renderDesktopSections()}
                         </div>
                     </NavigationBarContentContainer>
