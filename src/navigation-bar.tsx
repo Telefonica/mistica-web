@@ -26,7 +26,6 @@ import {getPrefixedDataAttributes} from './utils/dom';
 import Stack from './stack';
 import Box from './box';
 import {isRunningAcceptanceTest} from './utils/platform';
-import * as tokens from './text-tokens';
 
 import type {Variant} from './theme-variant-context';
 import type {TouchableProps} from './touchable';
@@ -146,7 +145,7 @@ export const MainNavigationBar: React.FC<MainNavigationBarProps> = ({
     logo,
     large = false,
 }) => {
-    const {texts, isDarkMode, t} = useTheme();
+    const {texts, isDarkMode} = useTheme();
     const [isMenuOpen, setIsMenuOpen] = React.useState(false);
     const [menuTransitionState, setMenuTransitionState] = React.useState<MenuTransitionState>('closed');
     const menuId = React.useId();
@@ -216,9 +215,7 @@ export const MainNavigationBar: React.FC<MainNavigationBarProps> = ({
                                     className={styles.burgerMenuButton}
                                     aria-live="polite"
                                     aria-label={
-                                        isMenuOpen
-                                            ? texts.closeNavigationMenu || t(tokens.closeNavigationMenu)
-                                            : texts.openNavigationMenu || t(tokens.openNavigationMenu)
+                                        isMenuOpen ? texts.closeNavigationMenu : texts.openNavigationMenu
                                     }
                                     aria-expanded={isMenuOpen}
                                     aria-controls={menuId}
@@ -348,13 +345,13 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
     paddingX = 0,
     withBorder = true,
 }) => {
-    const {texts, t} = useTheme();
+    const {texts} = useTheme();
     const content = (
         <NavigationBarContentContainer right={right}>
             <Inline space={24} alignItems="center">
                 {onBack && (
                     <IconButton
-                        aria-label={texts.backNavigationBar || t(tokens.backNavigationBar)}
+                        aria-label={texts.backNavigationBar}
                         onPress={onBack}
                         Icon={IconChevronLeftRegular}
                         bleedLeft

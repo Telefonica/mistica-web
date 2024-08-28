@@ -6,7 +6,6 @@ import {TextFieldBaseAutosuggest} from './text-field-base';
 import {createChangeEvent} from './utils/dom';
 import {combineRefs} from './utils/common';
 import {useTheme} from './hooks';
-import * as tokens from './text-tokens';
 
 import type {CommonFormFieldProps} from './text-field-base';
 
@@ -175,14 +174,14 @@ const IbanField: React.FC<IbanFieldProps> = ({
     dataAttributes,
     ...rest
 }) => {
-    const {texts, t} = useTheme();
+    const {texts} = useTheme();
 
     const validate = (value: string | undefined, rawValue: string) => {
         if (!value) {
-            return optional ? '' : texts.formFieldErrorIsMandatory || t(tokens.formFieldErrorIsMandatory);
+            return optional ? '' : texts.formFieldErrorIsMandatory;
         }
         if (!isValidIban(value)) {
-            return texts.formIbanError || t(tokens.formIbanError);
+            return texts.formIbanError;
         }
         return customValidate?.(value, rawValue);
     };

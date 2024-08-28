@@ -18,7 +18,6 @@ import {useSetModalStateEffect} from './modal-context-provider';
 import Stack from './stack';
 import * as styles from './dialog.css';
 import {vars} from './skins/skin-contract.css';
-import * as tokens from './text-tokens';
 
 import type {ButtonLink} from './button';
 import type {RendersNullableElement} from './utils/types';
@@ -59,7 +58,7 @@ export type DialogProps = ExclusifyUnion<AlertProps | ConfirmProps | ExtendedDia
 type InternalDialogProps = DialogProps & {showCancelButton: boolean; showAcceptButton: boolean};
 
 const InternalDialog: React.FC<InternalDialogProps> = (props) => {
-    const {texts, t} = useTheme();
+    const {texts} = useTheme();
     const {
         className,
         title,
@@ -68,8 +67,8 @@ const InternalDialog: React.FC<InternalDialogProps> = (props) => {
         extra,
         showCancelButton,
         showAcceptButton,
-        cancelText = texts.dialogCancelButton || t(tokens.dialogCancelButton),
-        acceptText = texts.dialogAcceptButton || t(tokens.dialogAcceptButton),
+        cancelText = texts.dialogCancelButton,
+        acceptText = texts.dialogAcceptButton,
         onCancel: handleCancel,
         onAccept: handleAccept,
         destructive = false,
@@ -200,14 +199,14 @@ const NativeModalDialog = ({
     message,
     title,
 }: ModalDialogProps): JSX.Element => {
-    const {texts, t} = useTheme();
+    const {texts} = useTheme();
     const paramsRef = React.useRef({
         type,
         onAccept,
         onCancel,
         onDestroy,
-        acceptText: acceptText || texts.dialogAcceptButton || t(tokens.dialogAcceptButton),
-        cancelText: cancelText || texts.dialogCancelButton || t(tokens.dialogCancelButton),
+        acceptText: acceptText || texts.dialogAcceptButton,
+        cancelText: cancelText || texts.dialogCancelButton,
         message,
         title,
     });
@@ -230,7 +229,7 @@ const NativeModalDialog = ({
 const ModalDialog = (props: ModalDialogProps): JSX.Element => {
     useSetModalStateEffect();
     const dialogContentRef = React.useRef<HTMLDivElement>(null);
-    const {texts, t} = useTheme();
+    const {texts} = useTheme();
     const [isClosing, setIsClosing] = React.useState<boolean>(false);
     /** this ref has the same value as the isClosing state but we want it to be immediately accessible to avoid possible race conditions */
     const isClosingRef = React.useRef<boolean>(false);
@@ -391,7 +390,8 @@ const ModalDialog = (props: ModalDialogProps): JSX.Element => {
                                     <InternalIconButton
                                         onPress={dismiss}
                                         aria-label={
-                                            props.closeButtonLabel || texts.modalClose || t(tokens.modalClose)
+                                            props.closeButtonLabel ??
+                                            (texts.modalClose || texts.closeButtonLabel)
                                         }
                                         bleedLeft
                                         bleedRight
