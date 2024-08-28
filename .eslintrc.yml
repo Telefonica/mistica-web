@@ -28,7 +28,7 @@ overrides:
 rules:
     import/extensions:
         - error
-        - js: always
+        - js: ignorePackages
           json: always
           css: always
     mistica-local-rules/use-client: error

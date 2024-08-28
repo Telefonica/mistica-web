@@ -6,7 +6,7 @@
     "license": "UNLICENSED",
     "private": true,
     "scripts": {
-        "start": "yarn && node index.js"
+        "start": "yarn && node index.cjs"
     },
     "dependencies": {
         "@svgr/core": "^5.4.0",

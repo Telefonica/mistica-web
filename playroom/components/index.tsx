@@ -1,7 +1,6 @@
 import * as React from 'react';
 import {
     Select,
-    IconSettingsRegular,
     Overlay,
     useTheme,
     useScreenSize,
@@ -21,6 +20,7 @@ import {
     Portal,
     O2NewLogo,
 } from '../../src';
+import {IconSettingsRegular} from '../../src/generated/mistica-icons';
 import {Movistar, Telefonica, Blau, Vivo_New, Tu, O2_New} from '../themes';
 import {useOverrideTheme} from '../frame-component';
 import IconSun from '../icons/icon-sun';
