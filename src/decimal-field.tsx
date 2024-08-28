@@ -6,7 +6,6 @@ import {TextFieldBaseAutosuggest} from './text-field-base';
 import {createChangeEvent} from './utils/dom';
 import {useRifm} from 'rifm';
 import {combineRefs} from './utils/common';
-import * as tokens from './text-tokens';
 
 import type {Locale} from './utils/locale';
 import type {CommonFormFieldProps} from './text-field-base';
@@ -126,11 +125,11 @@ const DecimalField: React.FC<DecimalFieldProps> = ({
     dataAttributes,
     ...rest
 }) => {
-    const {texts, t} = useTheme();
+    const {texts} = useTheme();
 
     const validate = (value: string | undefined, rawValue: string) => {
         if (!value) {
-            return optional ? '' : texts.formFieldErrorIsMandatory || t(tokens.formFieldErrorIsMandatory);
+            return optional ? '' : texts.formFieldErrorIsMandatory;
         }
         return validateProp?.(value, rawValue);
     };

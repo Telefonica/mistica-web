@@ -6,7 +6,6 @@ import * as styles from './progress-bar.css';
 import {getPrefixedDataAttributes} from './utils/dom';
 import classNames from 'classnames';
 import Inline from './inline';
-import * as tokens from './text-tokens';
 
 import type {DataAttributes} from './utils/types';
 
@@ -30,14 +29,11 @@ export const ProgressBar: React.FC<ProgressBarProps> = ({
     dataAttributes,
     reverse = false,
 }) => {
-    const {texts, t} = useTheme();
+    const {texts} = useTheme();
     const progressValue = Math.max(0, Math.min(100, progressPercent));
 
     const getFormattedLabel = () => {
-        const ariaLabelText = ariaLabel || texts.loading || t(tokens.loading);
-        const completedLabelText = texts.progressBarCompletedLabel || t(tokens.progressBarCompletedLabel);
-
-        return `${ariaLabelText}, ${progressValue}% ${completedLabelText}`;
+        return `${ariaLabel || texts.loading}, ${progressValue}% ${texts.progressBarCompletedLabel}`;
     };
 
     const a11yProps =
@@ -88,7 +84,7 @@ export const ProgressBarStepped: React.FC<ProgressBarSteppedProps> = ({
     'aria-labelledby': ariaLabelledBy,
     'aria-hidden': ariaHidden,
 }) => {
-    const {texts, t} = useTheme();
+    const {texts} = useTheme();
 
     const [step, setStep] = React.useState(Math.ceil(currentStep));
     const [isBack, setIsBack] = React.useState(false);
@@ -102,9 +98,7 @@ export const ProgressBarStepped: React.FC<ProgressBarSteppedProps> = ({
     }, [currentStep, steps, step]);
 
     const getFormattedLabel = () => {
-        const label = (texts.progressBarStepLabel || t(tokens.progressBarStepLabel))
-            .replace('1$s', String(step))
-            .replace('2$s', String(steps));
+        const label = texts.progressBarStepLabel.replace('1$s', String(step)).replace('2$s', String(steps));
         return ariaLabel ? `${ariaLabel}, ${label.toLowerCase()}` : label;
     };
 
