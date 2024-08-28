@@ -6,20 +6,14 @@ import {
     MainSectionHeader,
     ButtonPrimary,
     Stack,
+    Placeholder,
 } from '../../..';
 
 const HeaderTest = (): JSX.Element => (
     <Stack space={8}>
         <HeaderLayout
-            header={
-                <Header
-                    title="La última factura de diciembre ya esta disponible"
-                    preamount="Cuota mensual (IVA incluido)"
-                    amount="60,44 €"
-                    button={<ButtonPrimary href="asdf">Descargar factura</ButtonPrimary>}
-                    subtitle="Y esto es un subtitulo"
-                />
-            }
+            header={<Header title="La última factura de diciembre ya esta disponible" />}
+            extra={<Placeholder />}
         />
         <MainSectionHeaderLayout>
             <MainSectionHeader

@@ -34,7 +34,8 @@ export type TextPresetsConfig = {
     button: TextWeightTokenConfig<'regular' | 'medium'>;
     link: TextWeightTokenConfig<'regular' | 'medium'>;
     title1: TextWeightTokenConfig<'regular' | 'medium'>;
-    title2: TextTokenConfig;
+    title2: TextWeightTokenConfig;
+    title3: TextTokenConfig;
     indicator: TextWeightTokenConfig<'regular' | 'medium'>;
     tabsLabel: TextTokenConfig;
     navigationBar: TextWeightTokenConfig;

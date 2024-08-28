@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Box, IconCloseRegular, pxToRem, ResponsiveLayout, Tabs} from '..';
+import {Box, IconCloseRegular, ResponsiveLayout, Tabs} from '..';
 
 import type {Variant} from '../theme-variant-context';
 
@@ -35,7 +35,7 @@ export const Default: StoryComponent<Args> = ({tabCount, text, theme, icon}) => 
                     onChange={setSelectedIndex}
                     tabs={Array.from({length: tabCount}).map((_, index) => ({
                         text: `${text} ${index + 1}`,
-                        icon: icon ? <IconCloseRegular size={pxToRem(24)} color="currentColor" /> : undefined,
+                        Icon: icon ? IconCloseRegular : undefined,
                     }))}
                 />
             </Box>

@@ -61,15 +61,15 @@ export const Default: StoryComponent<Args> = ({
     asset,
     emptySource,
 }) => {
-    let icon;
+    let assetElement;
     if (asset === 'circle with icon') {
-        icon = (
+        assetElement = (
             <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
                 <IconMobileDeviceRegular color={skinVars.colors.brand} />
             </Circle>
         );
     } else if (asset === 'circle with image') {
-        icon = <Circle size={40} backgroundImage={avatarImg} />;
+        assetElement = <Circle size={40} backgroundImage={avatarImg} />;
     }
 
     const interactiveActions = {
@@ -102,7 +102,7 @@ export const Default: StoryComponent<Args> = ({
             title={title}
             subtitle={subtitle}
             description={description}
-            icon={icon}
+            asset={assetElement}
             media={
                 media === 'video' ? (
                     <Video

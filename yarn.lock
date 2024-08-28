@@ -5589,8 +5589,8 @@ __metadata:
     vite: ^4.5.0
     vite-plugin-no-bundle: ^2.0.3
   peerDependencies:
-    react: 17.x || 18.x
-    react-dom: 17.x || 18.x
+    react: 18.x
+    react-dom: 18.x
   languageName: unknown
   linkType: soft
 
