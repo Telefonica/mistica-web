@@ -217,4 +217,4 @@ export type {TrackingEvent, IconProps, DataAttributes} from './utils/types';
 export type {RegionCode} from './utils/region-code';
 
 export * from './generated/mistica-icons';
-export {keywords as iconKeywords} from './generated/mistica-icons';
+export {default as iconKeywords} from './generated/mistica-icons/keywords';
