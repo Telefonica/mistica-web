@@ -10,7 +10,7 @@ const puppeteer = require('puppeteer');
 const fs = require('fs');
 const mkdirp = require('mkdirp');
 const rimraf = require('rimraf');
-const {uploadFile} = require('../utils/azure-storage');
+const {uploadFile} = require('../utils/azure-storage.cjs');
 const core = require('@actions/core');
 /** @type any */
 const PromisePool = require('es6-promise-pool');
@@ -30,6 +30,7 @@ process.on('unhandledRejection', (error) => {
 
 const getStories = () => {
     console.log('Extracting stories information');
+    // @ts-ignore
     return Object.keys(require('../../../public/stories.json').stories);
 };
 
@@ -180,7 +181,7 @@ const generateReportForGithub = async (results) => {
     }
 
     lines.push('\nℹ️ You can run this locally by executing `yarn audit-accessibility`.');
-    require('../utils/github').commentPullRequest(lines.join('\n'));
+    require('../utils/github.cjs').commentPullRequest(lines.join('\n'));
 };
 
 const disabledRules = {

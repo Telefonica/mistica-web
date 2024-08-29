@@ -12,5 +12,5 @@ inputs:
         description: 'Azure Account Key'
         required: true
 runs:
-    using: 'node16'
-    main: 'main.js'
+    using: 'node20'
+    main: 'main.cjs'
