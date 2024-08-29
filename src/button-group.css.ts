@@ -1,9 +1,11 @@
-import {style} from '@vanilla-extract/css';
+import {createVar, style} from '@vanilla-extract/css';
 import {sprinkles} from './sprinkles.css';
 import * as mq from './media-queries.css';
 
-const buttonLayoutSpacing = 16;
-const buttonLinkPadding = 12;
+const buttonLayoutSpacing = '16px';
+const buttonLinkPadding = createVar();
+
+export const vars = {buttonLinkPadding};
 
 export const inline = style([
     sprinkles({display: 'inline-flex', alignItems: 'center', flexDirection: 'row'}),
@@ -37,8 +39,8 @@ export const centerInDesktop = style({
 });
 
 export const container = style({
-    marginTop: -buttonLayoutSpacing,
-    marginLeft: -buttonLayoutSpacing - buttonLinkPadding,
+    marginTop: `-${buttonLayoutSpacing}`,
+    marginLeft: `calc(-1 * (${buttonLayoutSpacing} + ${buttonLinkPadding}))`,
 });
 
 export const buttons = style({

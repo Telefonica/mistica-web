@@ -1,6 +1,6 @@
 'use client';
 import * as React from 'react';
-import {useAriaId, useBoundingRect, useTheme, useWindowSize} from './hooks';
+import {useBoundingRect, useTheme, useWindowSize} from './hooks';
 import {Portal} from './portal';
 import {Transition} from 'react-transition-group';
 import * as styles from './tooltip.css';
@@ -174,7 +174,7 @@ export const BaseTooltip: React.FC<BaseTooltipProps> = ({
     trackingEvent,
 }) => {
     const {texts, t} = useTheme();
-    const tooltipId = useAriaId();
+    const tooltipId = React.useId();
     const {openTooltipId} = useTooltipState();
     const {openTooltip, closeTooltip} = useSetTooltipState();
 

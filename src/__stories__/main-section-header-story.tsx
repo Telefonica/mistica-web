@@ -33,5 +33,5 @@ Default.args = {
     title: 'Support',
     description: 'How can I help you?',
     buttonLabel: 'Action',
-    inverse: true,
+    inverse: false,
 };

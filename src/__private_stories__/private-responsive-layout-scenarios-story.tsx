@@ -48,7 +48,9 @@ export const Default: StoryComponent = () => {
                                         description="Some description"
                                         media={<Image src={tennisUrl} aspectRatio="16:9" />}
                                         buttonLink={
-                                            <ButtonLink href="https://google.com">Link {idx}</ButtonLink>
+                                            <ButtonLink small href="https://google.com">
+                                                Link {idx}
+                                            </ButtonLink>
                                         }
                                     />
                                 ))}
@@ -73,7 +75,11 @@ export const Default: StoryComponent = () => {
                                             Action
                                         </ButtonPrimary>
                                     }
-                                    buttonLink={<ButtonLink onPress={() => {}}>Link</ButtonLink>}
+                                    buttonLink={
+                                        <ButtonLink small onPress={() => {}}>
+                                            Link
+                                        </ButtonLink>
+                                    }
                                 />
                             </ResponsiveLayout>
                         </ResponsiveLayout>
@@ -100,7 +106,11 @@ export const Default: StoryComponent = () => {
                                             Action
                                         </ButtonPrimary>
                                     }
-                                    buttonLink={<ButtonLink onPress={() => {}}>Link</ButtonLink>}
+                                    buttonLink={
+                                        <ButtonLink small onPress={() => {}}>
+                                            Link
+                                        </ButtonLink>
+                                    }
                                 />
                             ))}
                         />
