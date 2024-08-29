@@ -31,9 +31,9 @@
         }
     },
     "scripts": {
-        "test": "jest --config jest.unit.config.js",
+        "test": "jest --config jest.unit.config.cjs",
         "test-acceptance": "test-acceptance",
-        "test-ssr": "test-acceptance --config jest.ssr.config.js",
+        "test-ssr": "test-acceptance --config jest.ssr.config.cjs",
         "prettier-check": "prettier --check \"**/*.js\" \"**/*.tsx\" \"**/*.ts\" \"**/*.json\"",
         "lint": "eslint --report-unused-disable-directives .",
         "ts-check": "tsc --project tsconfig.json --noEmit",
@@ -49,9 +49,9 @@
         "vercel-build": "VERCEL_PROD_BUILD=1 yarn storybook-static && ./node_modules/.bin/playroom build && FORCE_MOBILE=1 ./node_modules/.bin/playroom build && FORCE_DESKTOP=1 ./node_modules/.bin/playroom build && cp img/favicon.ico public/ && cp img/favicon.svg public/",
         "vercel-preview-build": "yarn storybook-static && ./node_modules/.bin/playroom build && cp img/favicon.ico public/ && cp img/favicon.svg public/",
         "storybook-static": "rimraf public && storybook build -s ./.storybook/css/fonts -o public --quiet",
-        "serve-static-storybook": "node ./scripts/serve-static-storybook.js",
+        "serve-static-storybook": "node ./scripts/serve-static-storybook.cjs",
         "detect-circular-dependencies": "npx dpdm --circular src/index.tsx",
-        "audit-accessibility": "node .github/actions/audit-accessibility/main.js",
+        "audit-accessibility": "node .github/actions/audit-accessibility/main.cjs",
         "circular-dependencies": "yarn dpdm src/index.tsx --tree=false --warning=false --exit-code circular:1",
         "prepare": "husky install"
     },

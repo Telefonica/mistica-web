@@ -12,16 +12,20 @@ const getMaxWorkers = () => {
 };
 
 module.exports = {
-    ...require('./jest.base.config'),
-    displayName: 'ssr',
+    ...require('./jest.base.config.cjs'),
+    displayName: 'acceptance',
     maxConcurrency: 1,
     testTimeout: 60000,
     maxWorkers: getMaxWorkers(),
 
-    testMatch: ['**/__acceptance_tests__/*-ssr-acceptance-test.tsx'],
+    testMatch: [
+        '**/__acceptance_tests__/*-acceptance-test.tsx',
+        '**/__screenshot_tests__/*-screenshot-test.tsx',
+        '!**/__acceptance_tests__/*-ssr-acceptance-test.tsx', // these are handled in jest.ssr.config.js
+    ],
 
-    globalSetup: require.resolve('./src/test-utils/environment/setup-ssr.tsx'),
+    globalSetup: 'jest-environment-puppeteer/setup',
     globalTeardown: 'jest-environment-puppeteer/teardown',
     testEnvironment: 'jest-environment-puppeteer',
-    setupFilesAfterEnv: [require.resolve('./src/test-utils/setup-ssr-test-env.tsx')],
+    setupFilesAfterEnv: [require.resolve('./src/test-utils/fail-test-on-console-error.tsx')],
 };

@@ -1,5 +1,5 @@
 module.exports = {
-    ...require('./jest.base.config'),
+    ...require('./jest.base.config.cjs'),
     testTimeout: 15000,
     displayName: 'unit',
 
