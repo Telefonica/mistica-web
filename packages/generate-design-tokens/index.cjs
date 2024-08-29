@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import url from 'url';
 // eslint-disable-next-line import/extensions
-import {generateSkinCssSrc, buildRadius, generateCommonCssSrc} from './css-generator.js';
+import {generateSkinCssSrc, buildRadius, generateCommonCssSrc} from './css-generator.cjs';
 
 /*
 By default, this script will look for the design tokens inside .github folder but you may want to clone the mistica-design repo elsewhere.
