@@ -25,8 +25,8 @@ const getTotalSize = (filenames, {exclude = [], gzip = false} = {}) => {
 };
 
 const buildApp = () => {
-    execSync('yarn', {cwd: PATH_APP});
-    execSync('yarn build', {cwd: PATH_APP});
+    execSync('yarn', {cwd: PATH_APP, stdio: 'inherit'});
+    execSync('yarn build', {cwd: PATH_APP, stdio: 'inherit'});
 };
 
 const calcStats = () => {

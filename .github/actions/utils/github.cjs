@@ -13,12 +13,12 @@ const fetchPullRequestComments = async () => {
             issue_number: context.issue.number,
         });
     }
-    return null;
+    return {data: []};
 };
 
 const findPullRequestComment = async (firstLine) => {
     const {data} = await fetchPullRequestComments();
-    const comment = data.find((comment) => comment.body.startsWith(firstLine));
+    const comment = data.find((comment) => comment?.body?.startsWith(firstLine));
     return comment ? comment.id : null;
 };
 
