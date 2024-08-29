@@ -3,7 +3,6 @@ import * as React from 'react';
 import {useForm, useFieldProps} from './form-context';
 import {useTheme} from './hooks';
 import {TextFieldBaseAutosuggest} from './text-field-base';
-import * as tokens from './text-tokens';
 
 import type {CommonFormFieldProps} from './text-field-base';
 
@@ -14,7 +13,7 @@ type ExpirationDateValue = {
 };
 
 const MonthYearDateInput: React.FC<any> = ({inputRef, defaultValue, value, ...rest}) => {
-    const {texts, t} = useTheme();
+    const {texts} = useTheme();
     const keyDownRef = React.useRef('');
 
     /**
@@ -71,7 +70,7 @@ const MonthYearDateInput: React.FC<any> = ({inputRef, defaultValue, value, ...re
     return (
         <input
             {...rest}
-            placeholder={texts.expirationDatePlaceholder || t(tokens.expirationDatePlaceholder)}
+            placeholder={texts.expirationDatePlaceholder}
             type="text"
             inputMode="decimal"
             maxLength="5" // MM/YY
@@ -108,25 +107,25 @@ const CreditCardExpirationField: React.FC<CreditCardExpirationFieldProps> = ({
     dataAttributes,
     ...rest
 }) => {
-    const {texts, t} = useTheme();
+    const {texts} = useTheme();
     const {setFormError, jumpToNext} = useForm();
 
     const validate = (value: ExpirationDateValue, rawValue: string): string | undefined => {
         if (!rawValue) {
-            return optional ? '' : texts.formFieldErrorIsMandatory || t(tokens.formFieldErrorIsMandatory);
+            return optional ? '' : texts.formFieldErrorIsMandatory;
         }
         const {month, year} = value;
         if (!month || !year) {
-            return texts.formCreditCardExpirationError || t(tokens.formCreditCardExpirationError);
+            return texts.formCreditCardExpirationError;
         }
         const currentDate = new Date();
         const currentMonth = currentDate.getMonth() + 1;
         const currentYear = currentDate.getFullYear();
         if (year < currentYear) {
-            return texts.formCreditCardExpirationError || t(tokens.formCreditCardExpirationError);
+            return texts.formCreditCardExpirationError;
         }
         if (year === currentYear && month < currentMonth) {
-            return texts.formCreditCardExpirationError || t(tokens.formCreditCardExpirationError);
+            return texts.formCreditCardExpirationError;
         }
         return validateProp?.(value, rawValue);
     };

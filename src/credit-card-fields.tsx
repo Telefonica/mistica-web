@@ -8,7 +8,6 @@ import Stack from './stack';
 import CreditCardExpirationField from './credit-card-expiration-field';
 import CreditCardNumberField from './credit-card-number-field';
 import CvvField from './cvv-field';
-import * as tokens from './text-tokens';
 
 import type {CardOptions} from './utils/credit-card';
 
@@ -27,7 +26,7 @@ const CreditCardFields: React.FC<CreditCardFieldsProps> = ({
     acceptedCards,
 }) => {
     const {values} = useForm();
-    const {texts, t} = useTheme();
+    const {texts} = useTheme();
     const cvvLength = getCvvLength(String(values[numberFieldName]));
 
     return (
@@ -35,17 +34,17 @@ const CreditCardFields: React.FC<CreditCardFieldsProps> = ({
             <CreditCardNumberField
                 acceptedCards={acceptedCards}
                 name={numberFieldName}
-                label={texts.formCreditCardNumberLabel || t(tokens.formCreditCardNumberLabel)}
+                label={texts.formCreditCardNumberLabel}
             />
             <DoubleField layout="60/40">
                 <CreditCardExpirationField
                     name={expirationFieldName}
-                    label={texts.formCreditCardExpirationLabel || t(tokens.formCreditCardExpirationLabel)}
+                    label={texts.formCreditCardExpirationLabel}
                 />
                 <CvvField
                     acceptedCards={acceptedCards}
                     name={cvvFieldName}
-                    label={texts.formCreditCardCvvLabel || t(tokens.formCreditCardCvvLabel)}
+                    label={texts.formCreditCardCvvLabel}
                     maxLength={cvvLength}
                 />
             </DoubleField>

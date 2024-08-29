@@ -12,7 +12,6 @@ import {vars} from './skins/skin-contract.css';
 import {InternalIconButton, InternalToggleIconButton} from './icon-button';
 import {ThemeVariant} from './theme-variant-context';
 import {iconSize} from './icon-button.css';
-import * as tokens from './text-tokens';
 
 import type {DataAttributes, IconProps} from './utils/types';
 import type {InputState} from './text-field-components';
@@ -435,7 +434,7 @@ export const TextFieldBaseAutosuggest = React.forwardRef<any, TextFieldBaseProps
     ({getSuggestions, id: idProp, ...props}, ref) => {
         const [suggestions, setSuggestions] = React.useState<ReadonlyArray<string>>([]);
         const inputRef = React.useRef<HTMLInputElement>(null);
-        const {platformOverrides, texts, t} = useTheme();
+        const {platformOverrides, texts} = useTheme();
         const id = useAriaId(idProp);
         const autoSuggestId = useAriaId();
 
@@ -499,7 +498,7 @@ export const TextFieldBaseAutosuggest = React.forwardRef<any, TextFieldBaseProps
                                 width: inputRef.current ? inputRef.current.clientWidth + 2 : 0, // +2 due to borders (input)
                             }}
                             className={styles.suggestionsContainer}
-                            aria-label={`${props.label} ${texts.menuLabelSuffix || t(tokens.menuLabelSuffix)}`}
+                            aria-label={`${props.label} ${texts.menuLabelSuffix}`}
                         >
                             {options.children}
                         </div>
