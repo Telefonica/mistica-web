@@ -1,13 +1,13 @@
 // https://docs.github.com/en/actions/creating-actions/creating-a-javascript-action
 // @ts-check
 const core = require('@actions/core');
-const storage = require('../utils/azure-storage');
+const storage = require('../utils/azure-storage.cjs');
 const {basename} = require('path');
 const glob = require('glob');
-const {commentPullRequest} = require('../utils/github');
+const {commentPullRequest} = require('../utils/github.cjs');
 
 const main = async () => {
-    const filenames = glob.sync(core.getInput('glob') || process.env.INPUT_GLOB);
+    const filenames = glob.sync(core.getInput('glob') || process.env.INPUT_GLOB || '');
 
     core.info('Upload failed screenshot test diffs');
 

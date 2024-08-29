@@ -22,8 +22,8 @@ outputs:
         description: 'List of uploaded images: Array<{filename: string, url: string}>'
 
 runs:
-    using: 'node16'
-    main: 'main.js'
+    using: 'node20'
+    main: 'main.cjs'
 
 branding:
     # https://haya14busa.github.io/github-action-brandings/

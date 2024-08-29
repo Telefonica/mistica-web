@@ -1,7 +1,6 @@
 import * as React from 'react';
-import {Box, ResponsiveLayout, Text} from '../..';
+import {Box, ResponsiveLayout, Text, iconKeywords} from '../..';
 import {kebabCase, camelCase, upperFirst} from 'lodash';
-import {keywords as iconKeywords} from '../../generated/mistica-icons';
 
 /**
  * './path/icon-name-filled.tsx' => 'IconNameFilled'

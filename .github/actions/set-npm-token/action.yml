@@ -6,5 +6,5 @@ inputs:
         description: 'npm publish token'
         required: true
 runs:
-    using: 'node16'
-    main: 'main.js'
+    using: 'node20'
+    main: 'main.cjs'
