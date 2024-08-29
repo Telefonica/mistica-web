@@ -153,6 +153,18 @@ const renderButtonContent = ({
     const defaultIconSize = small ? styles.iconSize.small : styles.iconSize.default;
     const spinnerSizeRem = small ? styles.spinnerSize.small : styles.spinnerSize.default;
 
+    const buttonElement = renderButtonElement({
+        small,
+        content: children,
+        defaultIconSize,
+    });
+
+    const loadingButtonElement = renderButtonElement({
+        small,
+        content: loadingText,
+        defaultIconSize,
+    });
+
     return (
         <>
             {/* text content */}
@@ -169,11 +181,7 @@ const renderButtonContent = ({
                     </div>
                 )}
                 <div style={{display: 'flex', alignItems: 'baseline'}}>
-                    {renderButtonElement({
-                        small,
-                        content: children,
-                        defaultIconSize,
-                    })}
+                    {buttonElement}
                     {withChevron && (
                         <div
                             style={{
@@ -212,11 +220,7 @@ const renderButtonContent = ({
                         : undefined
                 }
             >
-                {renderButtonElement({
-                    small,
-                    content: loadingText,
-                    defaultIconSize,
-                })}
+                {loadingButtonElement}
             </div>
 
             {/* loading content */}
@@ -245,15 +249,7 @@ const renderButtonContent = ({
                         }}
                     />
                 )}
-                {loadingText ? (
-                    <Box paddingLeft={8}>
-                        {renderButtonElement({
-                            small,
-                            content: loadingText,
-                            defaultIconSize,
-                        })}
-                    </Box>
-                ) : null}
+                {loadingText ? <Box paddingLeft={8}>{loadingButtonElement}</Box> : null}
             </div>
         </>
     );
