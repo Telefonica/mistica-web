@@ -32,8 +32,8 @@
     },
     "scripts": {
         "test": "jest --config jest.unit.config.cjs",
-        "test-acceptance": "test-acceptance --config jest.acceptance.config.cjs",
-        "test-ssr": "test-acceptance --config jest.ssr.config.cjs",
+        "test-acceptance": "JEST_PUPPETEER_CONFIG=jest-puppeteer.config.cjs test-acceptance --config jest.acceptance.config.cjs",
+        "test-ssr": "JEST_PUPPETEER_CONFIG=jest-puppeteer.config.cjs test-acceptance --config jest.ssr.config.cjs",
         "prettier-check": "prettier --check \"**/*.js\" \"**/*.tsx\" \"**/*.ts\" \"**/*.json\"",
         "lint": "eslint --report-unused-disable-directives .",
         "ts-check": "tsc --project tsconfig.json --noEmit",
