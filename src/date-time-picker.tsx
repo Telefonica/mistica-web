@@ -17,11 +17,10 @@ import {useElementDimensions, useTheme} from './hooks';
 import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
 import * as styles from './date-time-picker.css';
 import {vars} from './skins/skin-contract.css';
-import 'moment/locale/es.js';
-import 'moment/locale/de.js';
-import 'moment/locale/pt-br.js';
-import 'moment/locale/en-gb.js';
-import * as tokens from './text-tokens';
+import 'moment/locale/es';
+import 'moment/locale/de';
+import 'moment/locale/pt-br';
+import 'moment/locale/en-gb';
 
 import type {CommonFormFieldProps} from './text-field-base';
 import type Moment from 'moment';
@@ -54,7 +53,6 @@ const DateTimePicker: React.FC<DateTimePickerProps> = ({withTime, mode, isValidD
     const {
         texts,
         i18n: {locale},
-        t,
     } = useTheme();
     const fieldRef = React.useRef<HTMLInputElement | null>(null);
     const {height: pickerContainerHeight, ref: pickerContainerRef} = useElementDimensions();
@@ -112,7 +110,7 @@ const DateTimePicker: React.FC<DateTimePickerProps> = ({withTime, mode, isValidD
             return (
                 <FieldEndIcon
                     Icon={IconCloseRegular}
-                    aria-label={texts.clearButton || t(tokens.clearButton)}
+                    aria-label={texts.clearButton}
                     hasBackgroundColor={false}
                     onPress={() => setValue('')}
                 />
