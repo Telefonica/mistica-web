@@ -17,7 +17,14 @@ const misticaIcons = ((requireContext) => {
         component.componentName = fileNameToComponentName(id);
         return component;
     });
-})(require.context('../../generated/mistica-icons/', true, /^(?!\.\/icons\-keywords\.tsx$).+\.(?:tsx)$/));
+})(
+    require.context(
+        '../../generated/mistica-icons/',
+        /* use subdirectories */ false,
+        // matches strings like: './icon-whatever-filled.tsx'
+        /\.\/icon\-(.+)\-(filled|regular|light)\.tsx$/
+    )
+);
 
 export default {
     title: 'Icons/Catalog',
