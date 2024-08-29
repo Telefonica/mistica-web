@@ -13,6 +13,7 @@ const checkBuild = () => {
         console.log('ERROR: "dist/node_modules" exists. Check "vite.config.js" external config.');
         process.exit(1);
     }
+    console.log('Build OK');
 };
 
 (async () => {
@@ -22,6 +23,6 @@ const checkBuild = () => {
     console.log('Generating TS defs...');
     run('yarn gen-ts-defs');
 
-    console.log('Check build');
+    console.log('Checking build...');
     checkBuild();
 })();
