@@ -41,7 +41,7 @@ const calcStats = () => {
     return {
         totalJs: getTotalSize(distJsFilenames),
         jsWithoutIcons: getTotalSize(distJsFilenames, {
-            exclude: [/\/generated\/mistica-icons\/.*/, /\/dist-es\/index.js$/],
+            exclude: [/\/generated\/mistica-icons\/.*/],
         }),
         libOverhead: appWithMistica - appInitial,
         libOverheadGzip: appWithMisticaGzip - appInitialGzip,
