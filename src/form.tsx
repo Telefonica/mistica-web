@@ -4,6 +4,7 @@ import {useTheme} from './hooks';
 import {FormContext} from './form-context';
 import classnames from 'classnames';
 import {sprinkles} from './sprinkles.css';
+import * as tokens from './text-tokens';
 
 import type {FormStatus, FormErrors, FieldRegistration} from './form-context';
 
@@ -45,7 +46,7 @@ const Form: React.FC<FormProps> = ({
     const [formErrors, setFormErrors] = React.useState<FormErrors>({});
     const fieldRegistrations = React.useRef(new Map<string, FieldRegistration>());
     const formRef = React.useRef<HTMLFormElement | null>(null);
-    const {texts} = useTheme();
+    const {texts, t} = useTheme();
     const reactId = React.useId();
     const id = idProp || reactId;
 
@@ -94,7 +95,7 @@ const Form: React.FC<FormProps> = ({
                     continue;
                 }
                 if (input.required && !rawValues[name]?.trim()) {
-                    errors[name] = texts.formFieldErrorIsMandatory;
+                    errors[name] = texts.formFieldErrorIsMandatory || t(tokens.formFieldErrorIsMandatory);
                 } else {
                     const error = validator?.(values[name], rawValues[name]);
                     if (error) {
@@ -130,7 +131,7 @@ const Form: React.FC<FormProps> = ({
             onValidationErrors(errors);
         }
         return errors;
-    }, [onValidationErrors, rawValues, texts, values]);
+    }, [onValidationErrors, rawValues, texts, values, t]);
 
     const jumpToNext = React.useCallback(
         (currentName: string) => {
