@@ -6,6 +6,8 @@ import {
     MainNavigationBar,
     NavigationBarAction,
     NavigationBarActionGroup,
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
 } from '../../..';
 
 const NavigationBarTest = (): JSX.Element => (
