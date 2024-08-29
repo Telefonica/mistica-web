@@ -212,9 +212,14 @@ export {palette as telefonicaPalette} from './skins/telefonica';
 export {palette as blauPalette} from './skins/blau';
 export {palette as tuPalette} from './skins/tu';
 
-export type {Locale} from './utils/locale';
 export type {TrackingEvent, IconProps, DataAttributes} from './utils/types';
 export type {RegionCode} from './utils/region-code';
+
+export {localeToLanguage} from './utils/locale';
+export type {Locale, Language} from './utils/locale';
+
+export * as textTokens from './text-tokens';
+export type {TextToken, Dictionary} from './text-tokens';
 
 /*
  * Temporary solution to export Community components until Mistica gets migrated to ESModules
