@@ -32,7 +32,7 @@
     },
     "scripts": {
         "test": "jest --config jest.unit.config.cjs",
-        "test-acceptance": "test-acceptance",
+        "test-acceptance": "test-acceptance --config jest.acceptance.config.cjs",
         "test-ssr": "test-acceptance --config jest.ssr.config.cjs",
         "prettier-check": "prettier --check \"**/*.js\" \"**/*.tsx\" \"**/*.ts\" \"**/*.json\"",
         "lint": "eslint --report-unused-disable-directives .",
