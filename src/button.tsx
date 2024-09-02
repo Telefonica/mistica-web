@@ -26,7 +26,7 @@ import type {
 import type {Location} from 'history';
 import type {ExclusifyUnion} from './utils/utility-types';
 
-const ButtonTextRenderer = (element: React.ReactNode, small?: boolean): JSX.Element => {
+const ButtonTextRenderer = ({element, small}: {element: React.ReactNode; small?: boolean}) => {
     const {textPresets} = useTheme();
     return small ? (
         <Text
@@ -62,7 +62,7 @@ const renderButtonElement = ({
     const flushAccText = () => {
         resultChildrenArr.push(
             <React.Fragment key={resultChildrenArr.length}>
-                {ButtonTextRenderer(accText, small)}
+                <ButtonTextRenderer element={accText} small={small} />
             </React.Fragment>
         );
         accText = [];
@@ -513,7 +513,7 @@ export const ButtonLink = React.forwardRef<
 >(({dataAttributes, ...props}, ref) => {
     return (
         <BaseButton
-            dataAttributes={{'component-name': 'ButtonLink', ...dataAttributes}}
+            dataAttributes={{'component-name': 'ButtonLink', 'small-link': !!props.small, ...dataAttributes}}
             {...props}
             ref={ref}
             buttonType="link"
@@ -525,7 +525,11 @@ export const ButtonLinkDanger = React.forwardRef<TouchableElement, ButtonLinkPro
     ({dataAttributes, ...props}, ref) => {
         return (
             <BaseButton
-                dataAttributes={{'component-name': 'ButtonLinkDanger', ...dataAttributes}}
+                dataAttributes={{
+                    'component-name': 'ButtonLinkDanger',
+                    'small-link': !!props.small,
+                    ...dataAttributes,
+                }}
                 {...props}
                 withChevron={false}
                 ref={ref}

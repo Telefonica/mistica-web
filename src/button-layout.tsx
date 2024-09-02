@@ -24,8 +24,16 @@ const ButtonLayout: React.FC<ButtonLayoutProps> = ({
     link,
     dataAttributes,
 }) => {
+    const linkContainerRef = React.useRef<HTMLDivElement>(null);
+    const [hasSmallLink, setHasSmallLink] = React.useState(false);
+
+    React.useLayoutEffect(() => {
+        if (linkContainerRef.current?.querySelector('[data-small-link=true]')) {
+            setHasSmallLink(true);
+        }
+    }, []);
+
     const numberOfButtons = (primaryButton ? 1 : 0) + (secondaryButton ? 1 : 0);
-    const hasSmallLink = !!link?.props.small;
 
     const buttons =
         align === 'right' ? (
@@ -42,6 +50,7 @@ const ButtonLayout: React.FC<ButtonLayoutProps> = ({
 
     const linkContainer = link ? (
         <div
+            ref={linkContainerRef}
             className={classnames(numberOfButtons !== 1 ? styles.linkInNewLine : styles.link)}
             data-link="true"
         >

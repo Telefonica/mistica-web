@@ -1,3 +1,4 @@
+'use client';
 import * as React from 'react';
 import classNames from 'classnames';
 import {getPrefixedDataAttributes} from './utils/dom';
@@ -23,9 +24,17 @@ const ButtonGroup: React.FC<ButtonGroupProps> = ({
     align = 'left',
     dataAttributes,
 }) => {
+    const linkContainerRef = React.useRef<HTMLDivElement>(null);
+    const [hasSmallLink, setHasSmallLink] = React.useState(false);
+
+    React.useLayoutEffect(() => {
+        if (linkContainerRef.current?.querySelector('[data-small-link=true]')) {
+            setHasSmallLink(true);
+        }
+    }, []);
+
     const anyAction = !!primaryButton || !!secondaryButton || !!link;
     const bothButtons = !!primaryButton && !!secondaryButton;
-    const hasSmallLink = !!link?.props.small;
 
     const alignByBreakpoint =
         typeof align === 'string'
@@ -63,7 +72,11 @@ const ButtonGroup: React.FC<ButtonGroupProps> = ({
                 </div>
             )}
             {link && (
-                <div className={styles.buttonChild} style={{width: bothButtons ? '100%' : 'auto'}}>
+                <div
+                    ref={linkContainerRef}
+                    className={styles.buttonChild}
+                    style={{width: bothButtons ? '100%' : 'auto'}}
+                >
                     {link}
                 </div>
             )}
