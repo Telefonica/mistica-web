@@ -35,12 +35,20 @@ const ButtonLayout: React.FC<ButtonLayoutProps> = ({
     withMargins = false,
     dataAttributes,
 }) => {
+    const linkContainerRef = React.useRef<HTMLDivElement>(null);
+    const [hasSmallLink, setHasSmallLink] = React.useState(false);
+
+    React.useLayoutEffect(() => {
+        if (linkContainerRef.current?.querySelector('[data-small-link=true]')) {
+            setHasSmallLink(true);
+        }
+    }, []);
+
     const sortedButtons = React.Children.toArray(children as any).sort((b1: any, b2: any) => {
         const range1 = buttonsRange.indexOf(b1.type);
         const range2 = buttonsRange.indexOf(b2.type);
         return align === 'right' ? range2 - range1 : range1 - range2;
     });
-    const hasSmallLink = !!link?.props.small;
 
     const numberOfButtons = children
         ? sortedButtons.length
@@ -62,6 +70,7 @@ const ButtonLayout: React.FC<ButtonLayoutProps> = ({
 
     const linkContainer = link ? (
         <div
+            ref={linkContainerRef}
             className={classnames(numberOfButtons !== 1 ? styles.linkInNewLine : styles.link)}
             data-link="true"
         >
