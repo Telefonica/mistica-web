@@ -1,6 +1,8 @@
 import * as React from 'react';
 import Chip from '../chip';
 
+import type {PressHandler} from '../touchable';
+
 <Chip>hello</Chip>;
 <Chip badge={3}>hello</Chip>;
 <Chip badge>hello</Chip>;
@@ -62,3 +64,9 @@ import Chip from '../chip';
 <Chip to="/" onClose={() => {}}>
     hello
 </Chip>;
+
+const ChipMaybeOnPress = ({text, onPress}: {text: string; onPress?: PressHandler}): JSX.Element => (
+    <Chip maybe onPress={onPress}>
+        {text}
+    </Chip>
+);

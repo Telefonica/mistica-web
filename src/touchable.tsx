@@ -69,12 +69,18 @@ type SubmitProps = {
 export type AlwaysTouchableComponentProps = ExclusifyUnion<OnPressProps | HrefProps | ToProps> &
     Pick<CommonProps, 'trackingEvent' | 'dataAttributes' | 'role' | 'aria-label'>;
 
+type Maybe<T, K extends keyof T> = Pick<Partial<T>, K> & Omit<T, K> & {maybe: true};
+
 export type TouchableComponentProps<Props> = ExclusifyUnion<
-    Props | (OnPressProps & Props) | (HrefProps & Props) | (ToProps & Props)
+    | Props
+    | (OnPressProps & Props)
+    | (HrefProps & Props)
+    | (ToProps & Props)
+    | (Maybe<OnPressProps, 'onPress'> & Props)
+    | (Maybe<HrefProps, 'href'> & Props)
+    | (Maybe<ToProps, 'to'> & Props)
 > &
     Pick<CommonProps, 'trackingEvent' | 'dataAttributes' | 'role' | 'aria-label'>;
-
-type Maybe<T, K extends keyof T> = Pick<Partial<T>, K> & Omit<T, K> & {maybe: true};
 
 export type TouchableProps = ExclusifyUnion<
     | OnPressProps
