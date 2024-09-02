@@ -5,6 +5,7 @@ import {getPrefixedDataAttributes} from './utils/dom';
 import * as styles from './button-group.css';
 import {applyCssVars} from './utils/css';
 import {borderSize, buttonPaddingX} from './button.css';
+import {useIsomorphicLayoutEffect} from './hooks';
 
 import type {ButtonLink, ButtonPrimary, ButtonSecondary} from './button';
 import type {ByBreakpoint, DataAttributes, RendersNullableElement} from './utils/types';
