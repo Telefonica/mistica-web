@@ -27,7 +27,7 @@ const ButtonGroup: React.FC<ButtonGroupProps> = ({
     const linkContainerRef = React.useRef<HTMLDivElement>(null);
     const [hasSmallLink, setHasSmallLink] = React.useState(false);
 
-    React.useLayoutEffect(() => {
+    useIsomorphicLayoutEffect(() => {
         if (linkContainerRef.current?.querySelector('[data-small-link=true]')) {
             setHasSmallLink(true);
         }

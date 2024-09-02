@@ -6,6 +6,7 @@ import {getPrefixedDataAttributes} from './utils/dom';
 import * as styles from './button-layout.css';
 import {borderSize, buttonPaddingX} from './button.css';
 import {applyCssVars} from './utils/css';
+import {useIsomorphicLayoutEffect} from './hooks';
 
 import type {DataAttributes, RendersNullableElement} from './utils/types';
 import type {NullableButtonElement, ButtonLink} from './button';
@@ -38,7 +39,7 @@ const ButtonLayout: React.FC<ButtonLayoutProps> = ({
     const linkContainerRef = React.useRef<HTMLDivElement>(null);
     const [hasSmallLink, setHasSmallLink] = React.useState(false);
 
-    React.useLayoutEffect(() => {
+    useIsomorphicLayoutEffect(() => {
         if (linkContainerRef.current?.querySelector('[data-small-link=true]')) {
             setHasSmallLink(true);
         }
