@@ -21,7 +21,7 @@ const CardsTest = (): JSX.Element => (
             title="title"
             subtitle="subtitle"
             description="description"
-            asset={<IconAcademicLight />}
+            icon={<IconAcademicLight />}
             button={
                 <ButtonPrimary small href="https://google.com">
                     Action

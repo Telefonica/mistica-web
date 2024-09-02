@@ -13,9 +13,11 @@ const HeaderTest = (): JSX.Element => (
         <HeaderLayout
             header={
                 <Header
-                    title="This is a title"
-                    pretitle="This is the pretitle"
-                    description="This is a nice description"
+                    title="La última factura de diciembre ya esta disponible"
+                    preamount="Cuota mensual (IVA incluido)"
+                    amount="60,44 €"
+                    button={<ButtonPrimary href="asdf">Descargar factura</ButtonPrimary>}
+                    subtitle="Y esto es un subtitulo"
                 />
             }
         />
