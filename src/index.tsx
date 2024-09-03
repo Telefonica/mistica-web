@@ -26,7 +26,6 @@ export {
     useSetOverscrollColor,
     OverscrollColorProvider,
 } from './overscroll-color-context';
-export {default as OverMediaContextProvider, useOverMediaContext} from './over-media-context';
 export {
     FeedbackScreen,
     ErrorFeedbackScreen,
