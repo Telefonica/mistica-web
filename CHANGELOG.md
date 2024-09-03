@@ -4,7 +4,7 @@
 ### Bug Fixes
 
 * **Buttons:** avoid warnings related to change in order of react hooks ([#1229](https://github.com/Telefonica/mistica-web/issues/1229)) ([2dbc411](https://github.com/Telefonica/mistica-web/commit/2dbc411616f7276d832bb5007f41a37c9c93f69e))
-* **i18n): Revert "feat(i18n:** improve texts sizes" because it is breaking ([#1226](https://github.com/Telefonica/mistica-web/issues/1226)) ([79eb4a4](https://github.com/Telefonica/mistica-web/commit/79eb4a427ef9f8d5a91bf56c8434ca1417a77df3))
+* **i18n:** revert text sizes improvement because it is breaking ([#1226](https://github.com/Telefonica/mistica-web/issues/1226)) ([79eb4a4](https://github.com/Telefonica/mistica-web/commit/79eb4a427ef9f8d5a91bf56c8434ca1417a77df3))
 * **Logo:** fix webpackChunkName magic comments ([#1214](https://github.com/Telefonica/mistica-web/issues/1214)) ([3d1f098](https://github.com/Telefonica/mistica-web/commit/3d1f098c6cbaf179b29de666ba824f1ae63dea9e))
 * **Vivinho char:** vivinho char in headings being read as a separated heading ([#1209](https://github.com/Telefonica/mistica-web/issues/1209)) ([f0f5fb0](https://github.com/Telefonica/mistica-web/commit/f0f5fb05b99fc594479a19c3037cc9dfc7446bab))
 
