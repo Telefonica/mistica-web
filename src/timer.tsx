@@ -11,6 +11,7 @@ import * as styles from './timer.css';
 import {getPrefixedDataAttributes} from './utils/dom';
 import {isEqual} from './utils/helpers';
 import {isRunningAcceptanceTest} from './utils/platform';
+import {useOverMediaContext} from './over-media-context';
 
 import type {DataAttributes} from './utils/types';
 
@@ -318,6 +319,7 @@ export const Timer: React.FC<TimerProps> = ({
     const {texts} = useTheme();
     const labelId = useAriaId();
     const themeVariant = useThemeVariant();
+    const {isOverMedia} = useOverMediaContext();
 
     const timerValue = useTimerState({endTimestamp, minTimeUnit, maxTimeUnit, onProgress});
 
@@ -379,15 +381,18 @@ export const Timer: React.FC<TimerProps> = ({
         return timerValue.map((item, index) => (
             <Box
                 className={classNames({
-                    [styles.boxedTimerValueContainer]: themeVariant === 'default' && boxed,
-                    [styles.boxedTimerValueContainerInverse]: themeVariant !== 'default' && boxed,
+                    [styles.boxedTimerValueContainer]: themeVariant === 'default' && boxed && !isOverMedia,
+                    [styles.boxedTimerValueContainerInverse]:
+                        themeVariant !== 'default' && boxed && !isOverMedia,
+                    [styles.boxedTimerValueContainerOverMedia]: isOverMedia && boxed,
                 })}
                 key={index}
             >
-                <ThemeVariant variant={boxed ? 'default' : themeVariant}>
+                <ThemeVariant variant={boxed ? 'default' : isOverMedia ? 'inverse' : themeVariant}>
                     <div
                         className={classNames(styles.timerDisplayValue, {
                             [styles.boxedTimerDisplayValue]: boxed,
+                            [styles.nonBoxedOverMediaDisplayValue]: !boxed && isOverMedia,
                         })}
                     >
                         {renderFormattedNumber(item.value)}

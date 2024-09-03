@@ -26,6 +26,7 @@ import Inline from './inline';
 import {getPrefixedDataAttributes} from './utils/dom';
 import {isRunningAcceptanceTest} from './utils/platform';
 import {applyCssVars} from './utils/css';
+import OverMediaContextProvider from './over-media-context';
 
 import type {Variant} from './theme-variant-context';
 import type {PressHandler} from './touchable';
@@ -214,31 +215,43 @@ type CardContainerProps = {
     dataAttributes?: DataAttributes;
     className?: string;
     'aria-label'?: string;
+    hasMediaBackground?: boolean;
 };
 
 const CardContainer = React.forwardRef<HTMLDivElement, CardContainerProps>(
     (
-        {children, width, height, aspectRatio, dataAttributes, className, 'aria-label': ariaLabel},
+        {
+            children,
+            width,
+            height,
+            aspectRatio,
+            dataAttributes,
+            className,
+            'aria-label': ariaLabel,
+            hasMediaBackground = false,
+        },
         ref
     ): JSX.Element => {
         const cssAspectRatio = width && height ? undefined : aspectRatioToNumber(aspectRatio);
 
         return (
-            <section
-                {...getPrefixedDataAttributes(dataAttributes)}
-                ref={ref}
-                aria-label={ariaLabel}
-                className={classNames(className, styles.cardContainer)}
-                style={{
-                    width: width || '100%',
-                    height: height || '100%',
-                    ...(cssAspectRatio
-                        ? applyCssVars({[styles.vars.aspectRatio]: String(cssAspectRatio)})
-                        : {}),
-                }}
-            >
-                {children}
-            </section>
+            <OverMediaContextProvider isOverMedia={hasMediaBackground}>
+                <section
+                    {...getPrefixedDataAttributes(dataAttributes)}
+                    ref={ref}
+                    aria-label={ariaLabel}
+                    className={classNames(className, styles.cardContainer)}
+                    style={{
+                        width: width || '100%',
+                        height: height || '100%',
+                        ...(cssAspectRatio
+                            ? applyCssVars({[styles.vars.aspectRatio]: String(cssAspectRatio)})
+                            : {}),
+                    }}
+                >
+                    {children}
+                </section>
+            </OverMediaContextProvider>
         );
     }
 );
@@ -1301,6 +1314,7 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
                 aspectRatio={aspectRatio}
                 aria-label={isTouchable ? undefined : ariaLabelProp}
                 className={styles.touchableContainer}
+                hasMediaBackground={hasImage || hasVideo}
             >
                 <InternalBoxed
                     borderRadius={vars.borderRadii.legacyDisplay}
@@ -1599,6 +1613,7 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                 aspectRatio={aspectRatio}
                 className={styles.touchableContainer}
                 aria-label={isTouchable ? undefined : ariaLabelProp}
+                hasMediaBackground
             >
                 <InternalBoxed
                     borderRadius={vars.borderRadii.legacyDisplay}

@@ -3,6 +3,7 @@ import {sprinkles} from './sprinkles.css';
 import * as mq from './media-queries.css';
 import {pxToRem} from './utils/css';
 import {vars} from './skins/skin-contract.css';
+import {applyAlpha} from './utils/color';
 
 export const timerWrapper = sprinkles({display: 'inline-block'});
 
@@ -44,6 +45,10 @@ export const boxedTimerDisplayValue = style([
     },
 ]);
 
+export const nonBoxedOverMediaDisplayValue = style({
+    textShadow: '0px 0px 15px rgba(0,0,0,0.4)',
+});
+
 const baseBoxedTimerValueContainer = style([
     sprinkles({
         paddingX: 4,
@@ -72,4 +77,11 @@ export const boxedTimerValueContainerInverse = style([
     sprinkles({
         background: vars.colors.backgroundContainer,
     }),
+]);
+
+export const boxedTimerValueContainerOverMedia = style([
+    baseBoxedTimerValueContainer,
+    {
+        background: applyAlpha(vars.rawColors.backgroundContainer, 0.7),
+    },
 ]);
