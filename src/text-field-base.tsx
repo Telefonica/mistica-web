@@ -35,13 +35,13 @@ type FieldEndIconProps = {
     disabled?: boolean;
 } & ExclusifyUnion<
     | {
-          Icon: React.FC<IconProps>;
+          Icon: (props: IconProps) => JSX.Element;
           'aria-label'?: string;
           onPress: (event: React.MouseEvent<HTMLElement>) => void;
       }
     | {
-          checkedProps: {Icon: React.FC<IconProps>; 'aria-label'?: string};
-          uncheckedProps: {Icon: React.FC<IconProps>; 'aria-label'?: string};
+          checkedProps: {Icon: (props: IconProps) => JSX.Element; 'aria-label'?: string};
+          uncheckedProps: {Icon: (props: IconProps) => JSX.Element; 'aria-label'?: string};
           onChange?: (checked: boolean) => void | undefined | Promise<void>;
           checked?: boolean;
       }

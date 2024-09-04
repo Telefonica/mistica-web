@@ -8,7 +8,7 @@ type PlaceholderProps = {
     children?: void;
 };
 
-export const Placeholder: React.FC<PlaceholderProps> = ({width = 'auto', height = 120}) => {
+export const Placeholder = ({width = 'auto', height = 120}: PlaceholderProps): JSX.Element => {
     return (
         <div
             style={{

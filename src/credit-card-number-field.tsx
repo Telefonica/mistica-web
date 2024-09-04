@@ -36,7 +36,7 @@ type Props = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'value' | 'onInpu
     onInput?: (event: React.FormEvent<HTMLInputElement>) => void;
 };
 
-const CreditCardInput: React.FC<Props> = ({inputRef, value, defaultValue, onChange, ...other}) => {
+const CreditCardInput = ({inputRef, value, defaultValue, onChange, ...other}: Props) => {
     const [selfValue, setSelfValue] = React.useState(defaultValue ?? '');
     const ref = React.useRef<HTMLInputElement | null>(null);
 
@@ -151,7 +151,7 @@ interface CreditCardNumberFieldProps extends CommonFormFieldProps {
     onChangeValue?: (value: string, rawValue: string) => void;
 }
 
-const CreditCardNumberField: React.FC<CreditCardNumberFieldProps> = ({
+const CreditCardNumberField = ({
     disabled,
     error,
     helperText,
@@ -167,7 +167,7 @@ const CreditCardNumberField: React.FC<CreditCardNumberFieldProps> = ({
     defaultValue,
     dataAttributes,
     ...rest
-}) => {
+}: CreditCardNumberFieldProps): JSX.Element => {
     const {texts} = useTheme();
     const {jumpToNext, rawValues, setFormError} = useForm();
 

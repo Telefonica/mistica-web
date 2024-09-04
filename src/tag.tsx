@@ -21,7 +21,7 @@ export type TagProps = {
     // not using "TagType" and repeating the union to make these props playroom autocomplete friendly
     type?: 'promo' | 'active' | 'inactive' | 'success' | 'warning' | 'error';
     children: string;
-    Icon?: React.FC<IconProps>;
+    Icon?: (props: IconProps) => JSX.Element;
     dataAttributes?: DataAttributes;
     badge?: boolean | number;
 };

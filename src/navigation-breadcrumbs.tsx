@@ -27,12 +27,12 @@ export type NavigationBreadcrumbsProps = {
     'aria-label'?: string;
 };
 
-const NavigationBreadcrumbs: React.FC<NavigationBreadcrumbsProps> = ({
+const NavigationBreadcrumbs = ({
     title,
     breadcrumbs,
     dataAttributes,
     'aria-label': ariaLabel = 'Breadcrumb',
-}) => {
+}: NavigationBreadcrumbsProps): JSX.Element => {
     const isInverse = useIsInverseVariant();
     return (
         <nav aria-label={ariaLabel} {...getPrefixedDataAttributes(dataAttributes, 'NavigationBreadcrumbs')}>

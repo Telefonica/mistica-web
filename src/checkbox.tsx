@@ -13,7 +13,7 @@ import {combineRefs} from './utils/common';
 
 import type {DataAttributes} from './utils/types';
 
-const IconCheckbox: React.FC<{isChecked: boolean; disabled?: boolean}> = ({isChecked, disabled}) => {
+const IconCheckbox = ({isChecked, disabled}: {isChecked: boolean; disabled?: boolean}) => {
     const {isIos} = useTheme();
 
     const icon = isIos ? (
@@ -61,7 +61,7 @@ type RenderProps = {
         labelId: string;
         disabled: boolean;
         checked: boolean;
-    }) => React.ReactElement<any, any>; // Seems like this is the type returned by React.FC
+    }) => React.ReactElement;
     children?: undefined;
     disabled?: boolean;
     'aria-labelledby'?: string;

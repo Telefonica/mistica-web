@@ -72,7 +72,7 @@ type Props = CommonProps &
         | PropsTemplate8
     >;
 
-const GridLayout: React.FC<Props> = ({
+const GridLayout = ({
     dataAttributes,
     template,
     left,
@@ -80,7 +80,7 @@ const GridLayout: React.FC<Props> = ({
     verticalSpace,
     collapseBreakpoint = 'tablet',
     children,
-}) => {
+}: Props): JSX.Element => {
     const prefixedDataAttributes = getPrefixedDataAttributes(dataAttributes, 'GridLayout');
 
     const spanStyles = (n: number) => ({
