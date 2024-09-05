@@ -47,7 +47,7 @@ type FieldEndIconProps = {
       }
 >;
 
-export const FieldEndIcon: React.FC<FieldEndIconProps> = ({
+export const FieldEndIcon = ({
     hasBackgroundColor = true,
     onPress,
     onChange,
@@ -56,7 +56,7 @@ export const FieldEndIcon: React.FC<FieldEndIconProps> = ({
     checkedProps,
     uncheckedProps,
     'aria-label': ariaLabel,
-}) => {
+}: FieldEndIconProps): JSX.Element => {
     return (
         <div className={styles.fieldEndIconContainer}>
             {checkedProps ? (

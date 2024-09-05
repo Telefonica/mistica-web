@@ -71,7 +71,7 @@ type CardContentProps = {
     descriptionLinesMax?: number;
 };
 
-const CardContent: React.FC<CardContentProps> = ({
+const CardContent = ({
     headline,
     pretitle,
     pretitleAs = 'p',
@@ -83,7 +83,7 @@ const CardContent: React.FC<CardContentProps> = ({
     subtitleLinesMax,
     description,
     descriptionLinesMax,
-}) => {
+}: CardContentProps) => {
     const {textPresets} = useTheme();
 
     return (
@@ -136,13 +136,7 @@ type CardFooterProps = {
     buttonLink?: RendersNullableElement<typeof ButtonLink>;
 };
 
-const CardFooter: React.FC<CardFooterProps> = ({
-    button,
-    footerImage,
-    footerText,
-    footerTextLinesMax,
-    buttonLink,
-}) => {
+const CardFooter = ({button, footerImage, footerText, footerTextLinesMax, buttonLink}: CardFooterProps) => {
     const hasButton = !!button;
     const hasFooterImage = !!footerImage;
     const hasFooterText = !!footerText;

@@ -1,4 +1,4 @@
-declare type StoryComponent<T = {children?: ReactNode}> = React.FC<T> & {
+declare type StoryComponent<T = {children?: ReactNode}> = {(props: T): JSX.Element} & {
     storyName?: string;
     decorators?: Array<any>;
     parameters?: {[name: string]: any};

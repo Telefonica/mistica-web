@@ -28,7 +28,7 @@ export type TagProps = {
 
 const {colors} = vars;
 
-const Tag: React.FC<TagProps> = ({Icon, children, dataAttributes, type = 'promo', badge}) => {
+const Tag = ({Icon, children, dataAttributes, type = 'promo', badge}: TagProps): JSX.Element | null => {
     const {textPresets} = useTheme();
     const themeVariant = useThemeVariant();
     const badgeValue = badge === true ? undefined : badge || 0;
