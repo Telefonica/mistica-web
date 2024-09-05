@@ -21,6 +21,7 @@ export type NavigationBreadcrumbsProps = {
     breadcrumbs: ReadonlyArray<{
         readonly title: string;
         readonly url: string;
+        onNavigate?: () => void;
     }>;
     children?: void;
     dataAttributes?: DataAttributes;
@@ -37,7 +38,7 @@ const NavigationBreadcrumbs = ({
     return (
         <nav aria-label={ariaLabel} {...getPrefixedDataAttributes(dataAttributes, 'NavigationBreadcrumbs')}>
             <ol className={styles.list}>
-                {breadcrumbs.map(({title, url}, index) => (
+                {breadcrumbs.map(({title, url, onNavigate}, index) => (
                     <li key={index} className={styles.listItem}>
                         <Text1 regular>
                             <TextLink
@@ -48,6 +49,7 @@ const NavigationBreadcrumbs = ({
                                         : vars.colors.textPrimary,
                                 }}
                                 className={styles.link}
+                                onNavigate={onNavigate}
                             >
                                 {title}
                             </TextLink>
