@@ -267,27 +267,22 @@ const useLottie = <T extends RendererType = 'svg'>(
             return;
         }
 
-        const animationEvents: Array<AnimationEventName> = ['complete', 'loopComplete'];
+        const deregisterList = listeners.map((listener: Listener) => {
+            // In Mistica we only use these two events. If we try to add the event listener for all the other
+            // events from the listeners array, some runtime errors appear (and TS complains about wrong types).
+            const misticaAnimationEvents: Array<AnimationEventName> = ['complete', 'loopComplete'];
 
-        const deregisterList = listeners.map(
-            /**
-             * Handle the process of adding an event listener
-             * @param {Listener} listener
-             * @return {Function} Function that deregister the listener
-             */
-            (listener) => {
-                if (animationEvents.some((value) => listener.name === value)) {
-                    animationInstanceRef.current?.addEventListener(listener.name, listener.handler);
-                }
-
-                // Return a function to deregister this listener
-                return () => {
-                    if (animationEvents.some((value) => listener.name === value)) {
-                        animationInstanceRef.current?.removeEventListener(listener.name, listener.handler);
-                    }
-                };
+            if (misticaAnimationEvents.some((value) => listener.name === value)) {
+                animationInstanceRef.current?.addEventListener(listener.name, listener.handler);
             }
-        );
+
+            // Return a function to deregister this listener
+            return () => {
+                if (misticaAnimationEvents.some((value) => listener.name === value)) {
+                    animationInstanceRef.current?.removeEventListener(listener.name, listener.handler);
+                }
+            };
+        });
 
         // Deregister listeners on unmount
         return () => {
