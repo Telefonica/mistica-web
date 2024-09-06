@@ -1,3 +1,10 @@
+# [15.20.0](https://github.com/Telefonica/mistica-web/compare/v15.19.0...v15.20.0) (2024-09-06)
+
+
+### Features
+
+* **NavigationBreadcrumbs:** allow executing onNavigate when pressing a link ([#1233](https://github.com/Telefonica/mistica-web/issues/1233)) ([ec7ed8b](https://github.com/Telefonica/mistica-web/commit/ec7ed8b93d0b6892827263d35373896a8cf291b6))
+
 # [15.19.0](https://github.com/Telefonica/mistica-web/compare/v15.18.0...v15.19.0) (2024-09-03)
 
 
