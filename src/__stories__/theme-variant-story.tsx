@@ -45,6 +45,7 @@ export const Default: StoryComponent<Args> = ({themeVariant}) => {
     const background = {
         default: 'transparent',
         inverse: skinVars.colors.backgroundBrand,
+        overMedia: skinVars.colors.backgroundBrand,
         alternative: skinVars.colors.backgroundAlternative,
     }[themeVariant];
     return (

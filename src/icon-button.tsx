@@ -138,7 +138,6 @@ interface IconButtonBaseProps {
 }
 
 interface InternalIconButtonBaseProps {
-    isOverMedia?: boolean;
     hasOverlay?: boolean;
 }
 
@@ -156,7 +155,6 @@ export const RawIconButton = React.forwardRef<
             dataAttributes,
             type = 'neutral',
             backgroundType = 'transparent',
-            isOverMedia,
             hasOverlay = true,
             'aria-label': ariaLabel,
             'aria-labelledby': ariaLabelledby,
@@ -188,9 +186,8 @@ export const RawIconButton = React.forwardRef<
         }, [showSpinner, shouldRenderSpinner]);
 
         const buttonSize = small ? 'small' : 'default';
-        const buttonTokensKey: keyof typeof styles.iconButtonTokens = isOverMedia
-            ? `${type}-media`
-            : `${type}-${backgroundType}-${themeVariant}`;
+        const buttonTokensKey: keyof typeof styles.iconButtonTokens =
+            themeVariant === 'overMedia' ? `${type}-media` : `${type}-${backgroundType}-${themeVariant}`;
 
         const commonProps = {
             disabled: disabled || showSpinner,

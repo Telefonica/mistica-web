@@ -83,6 +83,7 @@ const Header = ({
         default: vars.colors.background,
         inverse: vars.colors.navigationBarBackground,
         alternative: vars.colors.backgroundAlternative,
+        overMedia: vars.colors.navigationBarBackground,
     };
 
     return (

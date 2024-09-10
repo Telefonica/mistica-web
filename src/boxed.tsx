@@ -8,6 +8,7 @@ import * as styles from './boxed.css';
 import {sprinkles} from './sprinkles.css';
 import {applyCssVars} from './utils/css';
 
+import type {Variant} from './theme-variant-context';
 import type {ByBreakpoint, DataAttributes} from './utils/types';
 
 type Props = {
@@ -30,6 +31,7 @@ type InternalProps = {
     borderRadius?: typeof vars.borderRadii.container | typeof vars.borderRadii.legacyDisplay;
     desktopOnly?: boolean;
     background?: string;
+    variant?: Variant;
 };
 
 const getBorderStyle = (isInverseOutside: boolean, isInverseInside: boolean) => {
@@ -83,6 +85,7 @@ export const InternalBoxed = React.forwardRef<HTMLDivElement, Props & InternalPr
             borderRadius = vars.borderRadii.container,
             background,
             desktopOnly,
+            variant,
         },
         ref
     ) => {
@@ -122,7 +125,9 @@ export const InternalBoxed = React.forwardRef<HTMLDivElement, Props & InternalPr
                 aria-labelledby={ariaLabelledby}
                 {...getPrefixedDataAttributes(dataAttributes)}
             >
-                <ThemeVariant isInverse={isInverseInside}>{children}</ThemeVariant>
+                <ThemeVariant variant={variant} isInverse={isInverseInside}>
+                    {children}
+                </ThemeVariant>
             </div>
         );
     }

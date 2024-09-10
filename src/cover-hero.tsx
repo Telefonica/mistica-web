@@ -103,6 +103,7 @@ const CoverHero = React.forwardRef<HTMLDivElement, CoverHeroProps>(
                   default: vars.colors.background,
                   inverse: vars.colors.backgroundBrand,
                   alternative: vars.colors.backgroundAlternative,
+                  overMedia: 'none',
               }[variant ?? 'default'];
 
         const textShadow = hasMedia ? '0 0 15px rgba(0, 0, 0, 0.4)' : undefined;

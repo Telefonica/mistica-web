@@ -1,7 +1,7 @@
 'use client';
 import * as React from 'react';
 
-export type Variant = 'default' | 'inverse' | 'alternative';
+export type Variant = 'default' | 'inverse' | 'alternative' | 'overMedia';
 
 const ThemeVariantContext = React.createContext<Variant>('default');
 

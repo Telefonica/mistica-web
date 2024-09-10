@@ -13,14 +13,14 @@ import * as styles from './card.css';
 import * as mediaStyles from './image.css';
 import {useTheme} from './hooks';
 import {sprinkles} from './sprinkles.css';
-import {InternalIconButton, InternalToggleIconButton} from './icon-button';
+import {IconButton, ToggleIconButton} from './icon-button';
 import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
 import IconPauseFilled from './generated/mistica-icons/icon-pause-filled';
 import IconPlayFilled from './generated/mistica-icons/icon-play-filled';
 import {combineRefs} from './utils/common';
 import Spinner from './spinner';
 import Video from './video';
-import {ThemeVariant, useIsInverseVariant} from './theme-variant-context';
+import {ThemeVariant, useIsInverseVariant, useThemeVariant} from './theme-variant-context';
 import classNames from 'classnames';
 import Inline from './inline';
 import {getPrefixedDataAttributes} from './utils/dom';
@@ -103,51 +103,37 @@ const useTopActions = (
     return finalActions;
 };
 
-const CardActionTypeContext = React.createContext<'default' | 'inverse' | 'media'>('default');
-
 type CardActionsGroupProps = {
     actions?: ReadonlyArray<CardAction | React.ReactElement>;
     onClose?: () => void;
     closeButtonLabel?: string;
     padding?: number;
-    type?: 'default' | 'inverse' | 'media';
+    variant?: 'default' | 'inverse' | 'overMedia';
 };
 
 export const CardActionIconButton = (props: CardAction): JSX.Element => {
-    const type = React.useContext(CardActionTypeContext);
+    const variant = useThemeVariant();
 
-    return (
-        <ThemeVariant isInverse={type === 'inverse'}>
-            {/** we render IconButton if Icon prop was passed. Otherwise, ToggleIconButton will be used */}
-            {props.Icon ? (
-                <InternalIconButton
-                    {...props}
-                    aria-label={props.label}
-                    small
-                    isOverMedia={type === 'media'}
-                    type="neutral"
-                    backgroundType="transparent"
-                />
-            ) : (
-                <InternalToggleIconButton
-                    {...props}
-                    checkedProps={{
-                        ...props.checkedProps,
-                        'aria-label': props.checkedProps.label,
-                        type: type === 'media' ? 'neutral' : 'brand',
-                        backgroundType: 'solid',
-                    }}
-                    uncheckedProps={{
-                        ...props.uncheckedProps,
-                        'aria-label': props.uncheckedProps.label,
-                        type: 'neutral',
-                        backgroundType: 'transparent',
-                    }}
-                    small
-                    isOverMedia={type === 'media'}
-                />
-            )}
-        </ThemeVariant>
+    // we render IconButton if Icon prop was passed. Otherwise, ToggleIconButton will be used
+    return props.Icon ? (
+        <IconButton {...props} aria-label={props.label} small type="neutral" backgroundType="transparent" />
+    ) : (
+        <ToggleIconButton
+            {...props}
+            checkedProps={{
+                ...props.checkedProps,
+                'aria-label': props.checkedProps.label,
+                type: variant === 'overMedia' ? 'neutral' : 'brand',
+                backgroundType: 'solid',
+            }}
+            uncheckedProps={{
+                ...props.uncheckedProps,
+                'aria-label': props.uncheckedProps.label,
+                type: 'neutral',
+                backgroundType: 'transparent',
+            }}
+            small
+        />
     );
 };
 
@@ -155,14 +141,14 @@ export const CardActionsGroup = ({
     actions,
     padding = 16,
     onClose,
-    type = 'default',
+    variant = 'default',
     closeButtonLabel,
 }: CardActionsGroupProps): JSX.Element => {
     const finalActions = useTopActions(actions, onClose, closeButtonLabel);
     const hasActions = finalActions.length > 0;
 
     return hasActions ? (
-        <CardActionTypeContext.Provider value={type}>
+        <ThemeVariant variant={variant}>
             <div
                 style={{
                     position: 'absolute',
@@ -182,7 +168,7 @@ export const CardActionsGroup = ({
                     })}
                 </Inline>
             </div>
-        </CardActionTypeContext.Provider>
+        </ThemeVariant>
     ) : (
         <></>
     );
@@ -633,7 +619,7 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
                     onClose={onClose}
                     closeButtonLabel={closeButtonLabel}
                     actions={actions}
-                    type="media"
+                    variant="overMedia"
                 />
             </CardContainer>
         );
@@ -740,7 +726,7 @@ export const NakedCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
                     onClose={onClose}
                     closeButtonLabel={closeButtonLabel}
                     actions={actions}
-                    type="media"
+                    variant="overMedia"
                 />
             </CardContainer>
         );
@@ -993,7 +979,7 @@ export const DataCard = React.forwardRef<HTMLDivElement, DataCardProps>(
                     onClose={onClose}
                     closeButtonLabel={closeButtonLabel}
                     actions={actions}
-                    type="default"
+                    variant="default"
                 />
             </CardContainer>
         );
@@ -1315,6 +1301,7 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
                                 : vars.colors.backgroundContainer
                             : undefined
                     }
+                    variant={hasImage || hasVideo ? 'overMedia' : undefined}
                 >
                     <BaseTouchable
                         maybe
@@ -1432,7 +1419,7 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
                     onClose={onClose}
                     closeButtonLabel={closeButtonLabel}
                     actions={actions}
-                    type={hasImage || hasVideo ? 'media' : isInverse ? 'inverse' : 'default'}
+                    variant={hasImage || hasVideo ? 'overMedia' : isInverse ? 'inverse' : 'default'}
                 />
             </CardContainer>
         );
@@ -1566,6 +1553,12 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
         const normalizedVariant = variant || (isInverse ? 'inverse' : 'default');
 
         const calcBackgroundColor = () => {
+            if (normalizedVariant === 'overMedia' || hasImage || hasVideo) {
+                return isExternalInverse
+                    ? vars.colors.backgroundContainerBrandOverInverse
+                    : vars.colors.backgroundContainer;
+            }
+
             if (backgroundColor) {
                 return backgroundColor;
             }
@@ -1606,13 +1599,8 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                     width="100%"
                     minHeight="100%"
                     isInverse={hasImage || hasVideo || normalizedVariant === 'inverse'}
-                    background={
-                        hasImage || hasVideo
-                            ? isExternalInverse
-                                ? vars.colors.backgroundContainerBrandOverInverse
-                                : vars.colors.backgroundContainer
-                            : calcBackgroundColor()
-                    }
+                    background={calcBackgroundColor()}
+                    variant={hasImage || hasVideo ? 'overMedia' : undefined}
                 >
                     <BaseTouchable
                         maybe
@@ -1735,9 +1723,9 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                     onClose={onClose}
                     closeButtonLabel={closeButtonLabel}
                     actions={actions}
-                    type={
+                    variant={
                         hasImage || hasVideo
-                            ? 'media'
+                            ? 'overMedia'
                             : normalizedVariant === 'inverse'
                               ? 'inverse'
                               : 'default'
