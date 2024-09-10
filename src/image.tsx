@@ -4,7 +4,7 @@ import classnames from 'classnames';
 import {SkeletonAnimation} from './skeletons';
 import {AspectRatioContainer} from './utils/aspect-ratio-support';
 import {getPrefixedDataAttributes} from './utils/dom';
-import {useIsInverseOrOverMediaVariant} from './theme-variant-context';
+import {useIsInverseVariant} from './theme-variant-context';
 import {useAriaId, useTheme} from './hooks';
 import {VIVO_SKIN, VIVO_NEW_SKIN} from './skins/constants';
 import {sprinkles} from './sprinkles.css';
@@ -42,7 +42,7 @@ type ImageErrorProps = {
 
 export const ImageError = React.forwardRef<HTMLDivElement, ImageErrorProps>(
     ({borderRadius, withIcon = true, border, className}, ref) => {
-        const isInverse = useIsInverseOrOverMediaVariant();
+        const isInverse = useIsInverseVariant();
         const {skinName} = useTheme();
         return (
             <div
