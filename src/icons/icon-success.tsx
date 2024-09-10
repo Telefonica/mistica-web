@@ -8,7 +8,7 @@ import {
     mergeProperties,
 } from '../utils/animation';
 import {useTheme} from '../hooks';
-import {useIsInverseVariant} from '../theme-variant-context';
+import {useIsInverseOrOverMediaVariant} from '../theme-variant-context';
 import {vars} from '../skins/skin-contract.css';
 
 type Props = {
@@ -18,7 +18,7 @@ type Props = {
 };
 
 const IconSuccessO2 = ({size = 48, color, skipAnimation = false}: Props): JSX.Element => {
-    const isInverse = useIsInverseVariant();
+    const isInverse = useIsInverseOrOverMediaVariant();
     const {platformOverrides} = useTheme();
 
     return (
@@ -60,7 +60,7 @@ const IconSuccessO2 = ({size = 48, color, skipAnimation = false}: Props): JSX.El
 };
 
 const IconSuccessO2New = ({size = 48, color, skipAnimation = false}: Props): JSX.Element => {
-    const isInverse = useIsInverseVariant();
+    const isInverse = useIsInverseOrOverMediaVariant();
     const {platformOverrides} = useTheme();
 
     return (
@@ -96,7 +96,7 @@ const IconSuccessO2New = ({size = 48, color, skipAnimation = false}: Props): JSX
 };
 
 const IconSuccessDefault = ({size = 48, color, skipAnimation = false}: Props): JSX.Element => {
-    const isInverse = useIsInverseVariant();
+    const isInverse = useIsInverseOrOverMediaVariant();
     const {platformOverrides} = useTheme();
 
     return (

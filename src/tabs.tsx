@@ -9,7 +9,7 @@ import {isRunningAcceptanceTest} from './utils/platform';
 import {getPrefixedDataAttributes} from './utils/dom';
 import * as styles from './tabs.css';
 import Inline from './inline';
-import {useIsInverseVariant} from './theme-variant-context';
+import {useIsInverseOrOverMediaVariant} from './theme-variant-context';
 import {vars} from './skins/skin-contract.css';
 
 import type {DataAttributes, TrackingEvent} from './utils/types';
@@ -47,7 +47,7 @@ const Tabs: React.FC<TabsProps> = ({selectedIndex, onChange, tabs, dataAttribute
     const animatedLineRef = React.useRef<HTMLDivElement>(null);
     const scrollableContainerRef = React.useRef<HTMLDivElement>(null);
     const [isAnimating, setIsAnimating] = React.useState(false);
-    const isInverse = useIsInverseVariant();
+    const isInverse = useIsInverseOrOverMediaVariant();
 
     const animateLine = (fromIndex: number, toIndex: number) => {
         const tabFrom = document.querySelector<HTMLElement>(`[id='${id}'] [data-tabindex="${fromIndex}"]`);

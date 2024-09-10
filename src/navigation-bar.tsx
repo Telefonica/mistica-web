@@ -13,7 +13,7 @@ import IconChevronLeftRegular from './generated/mistica-icons/icon-chevron-left-
 import {IconButton} from './icon-button';
 import NegativeBox from './negative-box';
 import {Row, RowList} from './list';
-import {ThemeVariant, useIsInverseVariant} from './theme-variant-context';
+import {ThemeVariant, useIsInverseOrOverMediaVariant} from './theme-variant-context';
 import FocusTrap from './focus-trap';
 import {Portal} from './portal';
 import GridLayout from './grid-layout';
@@ -466,7 +466,7 @@ export const NavigationBarActionGroup: React.FC<NavigationBarActionGroupProps> =
 type NavigationBarActionProps = TouchableProps;
 
 export const NavigationBarAction: React.FC<NavigationBarActionProps> = ({children, ...touchableProps}) => {
-    const isInverse = useIsInverseVariant();
+    const isInverse = useIsInverseOrOverMediaVariant();
     return (
         <BaseTouchable
             {...touchableProps}

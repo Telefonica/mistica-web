@@ -7,15 +7,14 @@
 
 import * as React from 'react';
 import {useTheme} from '../../hooks';
-import {useThemeVariant} from '../../theme-variant-context';
+import {useIsInverseOrOverMediaVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
 
 import type {IconProps} from '../../utils/types';
 
 const IconMobileUserRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
-    const variant = useThemeVariant();
-    const isInverseIcon = variant === 'inverse' || variant === 'overMedia';
-    const fillColor = color ?? (isInverseIcon ? vars.colors.inverse : vars.colors.neutralHigh);
+    const isInverse = useIsInverseOrOverMediaVariant();
+    const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
     if (skinName.match(/^o2-new/i)) {
         return (

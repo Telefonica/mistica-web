@@ -1,7 +1,7 @@
 'use client';
 import * as React from 'react';
 import classnames from 'classnames';
-import {ThemeVariant, useIsInverseVariant} from './theme-variant-context';
+import {ThemeVariant, useIsInverseOrOverMediaVariant} from './theme-variant-context';
 import {getPrefixedDataAttributes} from './utils/dom';
 import {vars} from './skins/skin-contract.css';
 import * as styles from './boxed.css';
@@ -89,7 +89,7 @@ export const InternalBoxed = React.forwardRef<HTMLDivElement, Props & InternalPr
         },
         ref
     ) => {
-        const isInverseOutside = useIsInverseVariant();
+        const isInverseOutside = useIsInverseOrOverMediaVariant();
 
         return (
             <div

@@ -3,7 +3,7 @@ import * as React from 'react';
 import classnames from 'classnames';
 import Spinner from './spinner';
 import {BaseTouchable} from './touchable';
-import {useIsInverseVariant} from './theme-variant-context';
+import {useIsInverseOrOverMediaVariant} from './theme-variant-context';
 import {useForm} from './form-context';
 import {applyCssVars, pxToRem} from './utils/css';
 import {Text, Text2, Text3} from './text';
@@ -309,7 +309,7 @@ const BaseButton = React.forwardRef<
 >((props, ref) => {
     const {eventFormat} = useTrackingConfig();
     const {formStatus, formId} = useForm();
-    const isInverse = useIsInverseVariant();
+    const isInverse = useIsInverseOrOverMediaVariant();
     const {loadingText} = props;
     const isSubmitButton = !!props.submit;
     const isFormSending = formStatus === 'sending';

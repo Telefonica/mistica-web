@@ -19,3 +19,7 @@ export const ThemeVariant: React.FC<ThemeVariantProps> = ({isInverse, variant, c
 
 export const useThemeVariant = (): Variant => React.useContext(ThemeVariantContext);
 export const useIsInverseVariant = (): boolean => useThemeVariant() === 'inverse';
+export const useIsInverseOrOverMediaVariant = (): boolean => {
+    const variant = useThemeVariant();
+    return variant === 'inverse' || variant === 'overMedia';
+};

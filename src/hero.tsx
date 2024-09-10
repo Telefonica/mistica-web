@@ -13,7 +13,7 @@ import * as mediaStyles from './image.css';
 import {useSlideshowContext} from './carousel';
 import {getPrefixedDataAttributes} from './utils/dom';
 import {sprinkles} from './sprinkles.css';
-import {useIsInverseVariant} from './theme-variant-context';
+import {useIsInverseOrOverMediaVariant} from './theme-variant-context';
 import {applyCssVars} from './utils/css';
 import {InternalResponsiveLayout, ResetResponsiveLayout} from './responsive-layout';
 
@@ -148,7 +148,7 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
         const {isTabletOrSmaller} = useScreenSize();
         const slideshowContext = useSlideshowContext();
         const hasSlideshowBullets = !!slideshowContext?.withBullets;
-        const isInverseOutside = useIsInverseVariant();
+        const isInverseOutside = useIsInverseOrOverMediaVariant();
         const isInverse =
             background === 'none'
                 ? isInverseOutside

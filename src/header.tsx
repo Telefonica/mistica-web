@@ -2,7 +2,7 @@
 import * as React from 'react';
 import Box from './box';
 import Stack from './stack';
-import {useIsInverseVariant} from './theme-variant-context';
+import {useIsInverseOrOverMediaVariant} from './theme-variant-context';
 import ResponsiveLayout from './responsive-layout';
 import GridLayout from './grid-layout';
 import {useSetOverscrollColor} from './overscroll-color-context';
@@ -77,7 +77,7 @@ export const Header: React.FC<HeaderProps> = ({
     isErrorAmount,
     secondaryButton,
 }) => {
-    const isInverse = useIsInverseVariant();
+    const isInverse = useIsInverseOrOverMediaVariant();
 
     const renderRichText = (richText: RichText, baseProps: Omit<TextPresetProps, 'children'>) => {
         if (typeof richText === 'string') {

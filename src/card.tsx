@@ -20,7 +20,7 @@ import IconPlayFilled from './generated/mistica-icons/icon-play-filled';
 import {combineRefs} from './utils/common';
 import Spinner from './spinner';
 import Video from './video';
-import {ThemeVariant, useIsInverseVariant, useThemeVariant} from './theme-variant-context';
+import {ThemeVariant, useIsInverseOrOverMediaVariant, useThemeVariant} from './theme-variant-context';
 import classNames from 'classnames';
 import Inline from './inline';
 import {getPrefixedDataAttributes} from './utils/dom';
@@ -1261,7 +1261,7 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
             actions = videoAction ? [videoAction] : [];
         }
 
-        const isExternalInverse = useIsInverseVariant();
+        const isExternalInverse = useIsInverseOrOverMediaVariant();
         const withGradient = hasImage || hasVideo;
         const textShadow = withGradient ? '0 0 16px rgba(0,0,0,0.4)' : undefined;
         const hasTopActions = actions?.length || onClose;
@@ -1543,7 +1543,7 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
             actions = videoAction ? [videoAction] : [];
         }
 
-        const isExternalInverse = useIsInverseVariant();
+        const isExternalInverse = useIsInverseOrOverMediaVariant();
         const withGradient = hasImage || hasVideo;
         const textShadow = withGradient ? '0 0 16px rgba(0,0,0,0.4)' : undefined;
         const hasTopActions = actions?.length || onClose;
