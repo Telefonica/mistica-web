@@ -6,14 +6,15 @@
  */
 
 import * as React from 'react';
-import {useIsInverseVariant} from '../../theme-variant-context';
+import {useThemeVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
 
 import type {IconProps} from '../../utils/types';
 
 const IconDocumentsFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
-    const isInverse = useIsInverseVariant();
-    const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
+    const variant = useThemeVariant();
+    const isInverseIcon = variant === 'inverse' || variant === 'overMedia';
+    const fillColor = color ?? (isInverseIcon ? vars.colors.inverse : vars.colors.neutralHigh);
 
     return (
         <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>

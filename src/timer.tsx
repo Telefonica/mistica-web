@@ -319,8 +319,6 @@ export const Timer: React.FC<TimerProps> = ({
     const labelId = useAriaId();
     const themeVariant = useThemeVariant();
 
-    console.log('variant', themeVariant);
-
     const timerValue = useTimerState({endTimestamp, minTimeUnit, maxTimeUnit, onProgress});
 
     const displayLabel: {[key in TimeUnit]: string} = {
