@@ -3,16 +3,18 @@ import {openStoryPage, screen} from '../test-utils';
 const DEVICES = ['MOBILE_IOS', 'DESKTOP'] as const;
 
 test.each`
-    inverse  | isDarkMode
-    ${false} | ${false}
-    ${false} | ${true}
-    ${true}  | ${false}
-    ${true}  | ${true}
-`('MainNavigationBar desktop. inverse={$inverse} isDarkMode={$isDarkMode}', async ({inverse, isDarkMode}) => {
+    variant          | isDarkMode
+    ${'default'}     | ${false}
+    ${'default'}     | ${true}
+    ${'inverse'}     | ${false}
+    ${'inverse'}     | ${true}
+    ${'alternative'} | ${false}
+    ${'alternative'} | ${true}
+`('MainNavigationBar desktop. variant={$variant} isDarkMode={$isDarkMode}', async ({variant, isDarkMode}) => {
     const page = await openStoryPage({
         id: 'components-navigation-bars-mainnavigationbar--default',
         device: 'DESKTOP',
-        args: {inverse},
+        args: {variant},
         isDarkMode,
     });
 
@@ -22,16 +24,18 @@ test.each`
 });
 
 test.each`
-    inverse  | isDarkMode
-    ${false} | ${false}
-    ${false} | ${true}
-    ${true}  | ${false}
-    ${true}  | ${true}
-`('MainNavigationBar mobile. inverse={$inverse} isDarkMode={$isDarkMode}', async ({inverse, isDarkMode}) => {
+    variant          | isDarkMode
+    ${'default'}     | ${false}
+    ${'default'}     | ${true}
+    ${'inverse'}     | ${false}
+    ${'inverse'}     | ${true}
+    ${'alternative'} | ${false}
+    ${'alternative'} | ${true}
+`('MainNavigationBar mobile. variant={$variant} isDarkMode={$isDarkMode}', async ({variant, isDarkMode}) => {
     const page = await openStoryPage({
         id: 'components-navigation-bars-mainnavigationbar--default',
         device: 'MOBILE_IOS',
-        args: {inverse},
+        args: {variant},
         isDarkMode,
     });
 
@@ -48,7 +52,7 @@ test('MainNavigationBar mobile with burger menu extra', async () => {
     const page = await openStoryPage({
         id: 'components-navigation-bars-mainnavigationbar--default',
         device: 'MOBILE_IOS',
-        args: {withBurgerMenuExtra: true},
+        args: {burgerMenuExtra: true},
     });
 
     await page.click(await screen.findByRole('button', {name: 'Abrir menú de navegación'}));
@@ -70,22 +74,26 @@ test('MainNavigationBar large', async () => {
 });
 
 test.each`
-    inverse  | isDarkMode | device
-    ${false} | ${false}   | ${'DESKTOP'}
-    ${false} | ${true}    | ${'DESKTOP'}
-    ${true}  | ${false}   | ${'DESKTOP'}
-    ${true}  | ${true}    | ${'DESKTOP'}
-    ${false} | ${false}   | ${'MOBILE_IOS'}
-    ${false} | ${true}    | ${'MOBILE_IOS'}
-    ${true}  | ${false}   | ${'MOBILE_IOS'}
-    ${true}  | ${true}    | ${'MOBILE_IOS'}
+    variant          | isDarkMode | device
+    ${'default'}     | ${false}   | ${'DESKTOP'}
+    ${'default'}     | ${true}    | ${'DESKTOP'}
+    ${'inverse'}     | ${false}   | ${'DESKTOP'}
+    ${'inverse'}     | ${true}    | ${'DESKTOP'}
+    ${'alternative'} | ${false}   | ${'DESKTOP'}
+    ${'alternative'} | ${true}    | ${'DESKTOP'}
+    ${'default'}     | ${false}   | ${'MOBILE_IOS'}
+    ${'default'}     | ${true}    | ${'MOBILE_IOS'}
+    ${'inverse'}     | ${false}   | ${'MOBILE_IOS'}
+    ${'inverse'}     | ${true}    | ${'MOBILE_IOS'}
+    ${'alternative'} | ${false}   | ${'MOBILE_IOS'}
+    ${'alternative'} | ${true}    | ${'MOBILE_IOS'}
 `(
-    'NavigationBar. inverse={$inverse} isDarkMode={$isDarkMode} device={$device}',
-    async ({inverse, isDarkMode, device}) => {
+    'NavigationBar. variant={$variant} isDarkMode={$isDarkMode} device={$device}',
+    async ({variant, isDarkMode, device}) => {
         const page = await openStoryPage({
             id: 'components-navigation-bars-navigationbar--default',
             device,
-            args: {inverse},
+            args: {variant},
             isDarkMode,
         });
 
@@ -96,22 +104,26 @@ test.each`
 );
 
 test.each`
-    inverse  | isDarkMode | device
-    ${false} | ${false}   | ${'DESKTOP'}
-    ${false} | ${true}    | ${'DESKTOP'}
-    ${true}  | ${false}   | ${'DESKTOP'}
-    ${true}  | ${true}    | ${'DESKTOP'}
-    ${false} | ${false}   | ${'MOBILE_IOS'}
-    ${false} | ${true}    | ${'MOBILE_IOS'}
-    ${true}  | ${false}   | ${'MOBILE_IOS'}
-    ${true}  | ${true}    | ${'MOBILE_IOS'}
+    variant          | isDarkMode | device
+    ${'default'}     | ${false}   | ${'DESKTOP'}
+    ${'default'}     | ${true}    | ${'DESKTOP'}
+    ${'inverse'}     | ${false}   | ${'DESKTOP'}
+    ${'inverse'}     | ${true}    | ${'DESKTOP'}
+    ${'alternative'} | ${false}   | ${'DESKTOP'}
+    ${'alternative'} | ${true}    | ${'DESKTOP'}
+    ${'default'}     | ${false}   | ${'MOBILE_IOS'}
+    ${'default'}     | ${true}    | ${'MOBILE_IOS'}
+    ${'inverse'}     | ${false}   | ${'MOBILE_IOS'}
+    ${'inverse'}     | ${true}    | ${'MOBILE_IOS'}
+    ${'alternative'} | ${false}   | ${'MOBILE_IOS'}
+    ${'alternative'} | ${true}    | ${'MOBILE_IOS'}
 `(
-    'FunnelNavigationBar. inverse={$inverse} isDarkMode={$isDarkMode} device={$device}',
-    async ({inverse, isDarkMode, device}) => {
+    'FunnelNavigationBar. variant={$variant} isDarkMode={$isDarkMode} device={$device}',
+    async ({variant, isDarkMode, device}) => {
         const page = await openStoryPage({
             id: 'components-navigation-bars-funnelnavigationbar--default',
             device,
-            args: {inverse},
+            args: {variant},
             isDarkMode,
         });
 
@@ -133,7 +145,7 @@ test.each`
     const page = await openStoryPage({
         id: `components-navigation-bars-${type.toLowerCase()}--default`,
         device,
-        args: {withBorder: false},
+        args: {border: false},
     });
 
     const image = await page.screenshot();
@@ -145,7 +157,7 @@ test.each(DEVICES)('MainNavigationBar without sections (%s)', async (device) => 
     const page = await openStoryPage({
         id: 'components-navigation-bars-mainnavigationbar--default',
         device,
-        args: {withSections: false},
+        args: {sections: false},
     });
 
     const image = await page.screenshot();

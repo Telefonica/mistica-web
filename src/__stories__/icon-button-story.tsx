@@ -22,7 +22,7 @@ type IconButtonArgs = {
     themeVariant: Variant;
     small: boolean;
     disabled: boolean;
-    showSpinner: boolean;
+    spinner: boolean;
     bleedLeft: boolean;
     bleedRight: boolean;
     bleedY: boolean;
@@ -34,7 +34,7 @@ export const IconButtonStory: StoryComponent<IconButtonArgs> = ({
     themeVariant,
     small,
     disabled,
-    showSpinner,
+    spinner,
     bleedLeft,
     bleedRight,
     bleedY,
@@ -47,7 +47,7 @@ export const IconButtonStory: StoryComponent<IconButtonArgs> = ({
                 Icon={IconCloseRegular}
                 type={type}
                 backgroundType={backgroundType}
-                showSpinner={showSpinner}
+                showSpinner={spinner}
                 small={small}
                 disabled={disabled}
                 bleedLeft={bleedLeft}
@@ -80,7 +80,7 @@ IconButtonStory.args = {
     themeVariant: 'default',
     small: false,
     disabled: false,
-    showSpinner: false,
+    spinner: false,
     bleedLeft: false,
     bleedRight: false,
     bleedY: false,
@@ -94,7 +94,7 @@ type ToggleIconButtonArgs = {
     themeVariant: Variant;
     small: boolean;
     disabled: boolean;
-    showSpinner: boolean;
+    spinner: boolean;
     bleedLeft: boolean;
     bleedRight: boolean;
     bleedY: boolean;
@@ -108,7 +108,7 @@ export const ToggleIconButtonStory: StoryComponent<ToggleIconButtonArgs> = ({
     themeVariant,
     small,
     disabled,
-    showSpinner,
+    spinner,
     bleedLeft,
     bleedRight,
     bleedY,
@@ -117,7 +117,7 @@ export const ToggleIconButtonStory: StoryComponent<ToggleIconButtonArgs> = ({
         <Box padding={16}>
             <ToggleIconButton
                 onChange={(checked) => console.log(checked ? 'checked' : 'unchecked')}
-                showSpinner={showSpinner}
+                showSpinner={spinner}
                 small={small}
                 disabled={disabled}
                 bleedLeft={bleedLeft}
@@ -172,7 +172,7 @@ ToggleIconButtonStory.args = {
     themeVariant: 'default',
     small: false,
     disabled: false,
-    showSpinner: false,
+    spinner: false,
     bleedLeft: false,
     bleedRight: false,
     bleedY: false,

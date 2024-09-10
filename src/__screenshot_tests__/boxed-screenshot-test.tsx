@@ -1,24 +1,21 @@
 import {openStoryPage, screen} from '../test-utils';
 
 test.each`
-    inverseOutside | inverseInside
-    ${false}       | ${false}
-    ${false}       | ${true}
-    ${true}        | ${false}
-    ${true}        | ${true}
-`(
-    'Boxed inverseOutside($inverseOutside) inverseInside($inverseInside)',
-    async ({inverseOutside, inverseInside}) => {
-        await openStoryPage({
-            id: 'components-primitives-boxed--default',
-            device: 'MOBILE_IOS',
-            args: {
-                inverseInside,
-                inverseOutside,
-            },
-        });
+    overInverse | inverse
+    ${false}    | ${false}
+    ${false}    | ${true}
+    ${true}     | ${false}
+    ${true}     | ${true}
+`('Boxed inverseOutside($overInverse) inverseInside($inverse)', async ({overInverse, inverse}) => {
+    await openStoryPage({
+        id: 'components-primitives-boxed--default',
+        device: 'MOBILE_IOS',
+        args: {
+            overInverse,
+            inverse,
+        },
+    });
 
-        const image = await (await screen.findByTestId('boxed')).screenshot();
-        expect(image).toMatchImageSnapshot();
-    }
-);
+    const image = await (await screen.findByTestId('boxed')).screenshot();
+    expect(image).toMatchImageSnapshot();
+});

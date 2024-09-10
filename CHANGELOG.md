@@ -1,3 +1,42 @@
+# [15.20.0](https://github.com/Telefonica/mistica-web/compare/v15.19.0...v15.20.0) (2024-09-06)
+
+
+### Features
+
+* **NavigationBreadcrumbs:** allow executing onNavigate when pressing a link ([#1233](https://github.com/Telefonica/mistica-web/issues/1233)) ([ec7ed8b](https://github.com/Telefonica/mistica-web/commit/ec7ed8b93d0b6892827263d35373896a8cf291b6))
+
+# [15.19.0](https://github.com/Telefonica/mistica-web/compare/v15.18.0...v15.19.0) (2024-09-03)
+
+
+### Bug Fixes
+
+* **Buttons:** avoid warnings related to change in order of react hooks ([#1229](https://github.com/Telefonica/mistica-web/issues/1229)) ([2dbc411](https://github.com/Telefonica/mistica-web/commit/2dbc411616f7276d832bb5007f41a37c9c93f69e))
+* **i18n:** revert text sizes improvement because it is breaking ([#1226](https://github.com/Telefonica/mistica-web/issues/1226)) ([79eb4a4](https://github.com/Telefonica/mistica-web/commit/79eb4a427ef9f8d5a91bf56c8434ca1417a77df3))
+* **Logo:** fix webpackChunkName magic comments ([#1214](https://github.com/Telefonica/mistica-web/issues/1214)) ([3d1f098](https://github.com/Telefonica/mistica-web/commit/3d1f098c6cbaf179b29de666ba824f1ae63dea9e))
+* **Vivinho char:** vivinho char in headings being read as a separated heading ([#1209](https://github.com/Telefonica/mistica-web/issues/1209)) ([f0f5fb0](https://github.com/Telefonica/mistica-web/commit/f0f5fb05b99fc594479a19c3037cc9dfc7446bab))
+
+
+### Features
+
+* **Buttons:** refactor code and fix spacing bug in loading buttonLink ([#1212](https://github.com/Telefonica/mistica-web/issues/1212)) ([640e429](https://github.com/Telefonica/mistica-web/commit/640e429c8ab4493c5da1f39bad5fccf90eacc373))
+* **i18n:** improve texts sizes ([#1204](https://github.com/Telefonica/mistica-web/issues/1204)) ([0345e7c](https://github.com/Telefonica/mistica-web/commit/0345e7cefd06b911377278b5928409cbed23f921))
+* **Logo:** Refactor logo to improve bundle size and loading times ([#1210](https://github.com/Telefonica/mistica-web/issues/1210)) ([15b77cb](https://github.com/Telefonica/mistica-web/commit/15b77cb8ab932f68fb124d66887b8d49169b0095))
+* **NavigationBar, FunnelNavigationBar, MainNavigationBar:** add alternative variant ([#1200](https://github.com/Telefonica/mistica-web/issues/1200)) ([eef87ec](https://github.com/Telefonica/mistica-web/commit/eef87ecdd32053f80f349aaf1598d8e61251b6eb))
+
+# [15.18.0](https://github.com/Telefonica/mistica-web/compare/v15.17.0...v15.18.0) (2024-08-20)
+
+
+### Bug Fixes
+
+* **FeedbackScreen:** avoid double responsive margins in buttons when they are not fixed ([#1195](https://github.com/Telefonica/mistica-web/issues/1195)) ([41c10ad](https://github.com/Telefonica/mistica-web/commit/41c10ad0a60fe3bfd7e191eca4583da37f2cf84e))
+* **Inline:** wrap content if required when space equals between/around/evenly ([#1199](https://github.com/Telefonica/mistica-web/issues/1199)) ([b121227](https://github.com/Telefonica/mistica-web/commit/b121227d6de61f2dbc2e6e60a4f0b2b9ecc8a646))
+* **Snackbar:** allow dataAttributes passed to openSnackbar ([#1192](https://github.com/Telefonica/mistica-web/issues/1192)) ([c5c65bd](https://github.com/Telefonica/mistica-web/commit/c5c65bdf486554e466fa325b3dbcef06eaccfecb))
+
+
+### Features
+
+* **Popover, Snackbar, Callout, Chip, Dialog, Cards:** allow customizable close button label ([#1193](https://github.com/Telefonica/mistica-web/issues/1193)) ([63de33a](https://github.com/Telefonica/mistica-web/commit/63de33a8fc9960f32c121db8e81f45e0ba32bdb6))
+
 # [15.17.0](https://github.com/Telefonica/mistica-web/compare/v15.16.4...v15.17.0) (2024-08-01)
 
 

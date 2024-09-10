@@ -15,7 +15,7 @@ test.each(CHIP_OPTIONS)('Chip - %s', async (option) => {
         device: 'DESKTOP',
         args: {
             badge: option.includes('badge') ? '2' : 'undefined',
-            withIcon: option.includes('icon'),
+            icon: option.includes('icon'),
             closable: option.includes('closable'),
         },
     });
@@ -39,7 +39,7 @@ test.each`
     const page = await openStoryPage({
         id: `components-chip--${selection}-selection`,
         device: 'DESKTOP',
-        args: {inverse, withIcon: true, badge},
+        args: {inverse, icon: true, badge},
     });
 
     const story = await screen.findByTestId(`chip-${selection}-selection`);

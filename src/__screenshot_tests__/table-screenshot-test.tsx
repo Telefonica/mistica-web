@@ -85,7 +85,7 @@ const cases = [
         'desktop with actions',
         {
             device: 'DESKTOP',
-            args: {numItems: 6, withActions: true},
+            args: {numItems: 6, actions: true},
             fullPageScreenshot: false,
         },
     ],
@@ -117,7 +117,7 @@ const cases = [
         'desktop collapse-rows with actions',
         {
             device: 'DESKTOP',
-            args: {numItems: 6, responsive: 'collapse-rows', withActions: true},
+            args: {numItems: 6, responsive: 'collapse-rows', actions: true},
             fullPageScreenshot: false,
         },
     ],
@@ -133,7 +133,7 @@ const cases = [
         'desktop boxed with actions',
         {
             device: 'DESKTOP',
-            args: {numItems: 6, boxed: true, withActions: true},
+            args: {numItems: 6, boxed: true, actions: true},
             fullPageScreenshot: false,
         },
     ],
@@ -141,7 +141,7 @@ const cases = [
         'desktop collapse-rows boxed with actions',
         {
             device: 'DESKTOP',
-            args: {numItems: 6, boxed: true, responsive: 'collapse-rows', withActions: true},
+            args: {numItems: 6, boxed: true, responsive: 'collapse-rows', actions: true},
             fullPageScreenshot: false,
         },
     ],
@@ -221,7 +221,7 @@ const cases = [
         'tablet with actions',
         {
             device: 'TABLET',
-            args: {numItems: 6, withActions: true},
+            args: {numItems: 6, actions: true},
             fullPageScreenshot: true,
         },
     ],
@@ -229,7 +229,7 @@ const cases = [
         'tablet collapse-rows with actions',
         {
             device: 'TABLET',
-            args: {numItems: 6, responsive: 'collapse-rows', withActions: true},
+            args: {numItems: 6, responsive: 'collapse-rows', actions: true},
             fullPageScreenshot: true,
         },
     ],
@@ -237,7 +237,7 @@ const cases = [
         'tablet collapse-rows with rowHeaderIndex = 0',
         {
             device: 'TABLET',
-            args: {numItems: 6, responsive: 'collapse-rows', withRowHeader: true, rowHeaderIndex: 0},
+            args: {numItems: 6, responsive: 'collapse-rows', rowHeader: true, rowHeaderIndex: 0},
             fullPageScreenshot: true,
         },
     ],
@@ -245,7 +245,7 @@ const cases = [
         'tablet collapse-rows with rowHeaderIndex = 2',
         {
             device: 'TABLET',
-            args: {numItems: 6, responsive: 'collapse-rows', withRowHeader: true, rowHeaderIndex: 2},
+            args: {numItems: 6, responsive: 'collapse-rows', rowHeader: true, rowHeaderIndex: 2},
             fullPageScreenshot: true,
         },
     ],
@@ -253,7 +253,7 @@ const cases = [
         'tablet boxed with actions',
         {
             device: 'TABLET',
-            args: {numItems: 6, boxed: true, withActions: true},
+            args: {numItems: 6, boxed: true, actions: true},
             fullPageScreenshot: true,
         },
     ],
@@ -261,7 +261,7 @@ const cases = [
         'tablet collapse-rows boxed with actions',
         {
             device: 'TABLET',
-            args: {numItems: 6, boxed: true, responsive: 'collapse-rows', withActions: true},
+            args: {numItems: 6, boxed: true, responsive: 'collapse-rows', actions: true},
             fullPageScreenshot: true,
         },
     ],
@@ -281,7 +281,7 @@ const cases = [
                 numItems: 6,
                 boxed: true,
                 responsive: 'collapse-rows',
-                withRowHeader: true,
+                rowHeader: true,
                 rowHeaderIndex: 0,
             },
             fullPageScreenshot: true,
