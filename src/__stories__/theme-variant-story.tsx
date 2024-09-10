@@ -13,8 +13,11 @@ import {
     Chip,
     ButtonPrimary,
     useThemeVariant,
+    Image,
+    Timer,
 } from '..';
 import personPortraitImg from './images/person-portrait.jpg';
+import beachImg from './images/beach.jpg';
 
 import type {Variant} from '../theme-variant-context';
 
@@ -68,59 +71,73 @@ Default.args = {
 };
 Default.argTypes = {
     themeVariant: {
-        options: ['default', 'inverse', 'alternative'],
+        options: ['default', 'inverse', 'alternative', 'overMedia'],
         control: {type: 'select'},
     },
 };
 
 export const ComponentsOverDifferentThemeVariants: StoryComponent<Args> = ({themeVariant}) => {
     return (
-        <ResponsiveLayout variant={themeVariant}>
-            <Box paddingY={24}>
-                <Stack space={16}>
-                    <Callout
-                        onClose={() => {}}
-                        title="Callout title"
-                        description="Calloout description"
-                        button={
-                            <ButtonPrimary small onPress={() => {}}>
-                                Action
-                            </ButtonPrimary>
-                        }
-                    />
-                    <Inline space={16}>
-                        <HighlightedCard
-                            isInverse={false}
-                            title="Card title"
-                            description="Card description"
-                            imageUrl={personPortraitImg}
-                            imageFit="fill"
-                            onClose={() => {}}
-                            button={
-                                <ButtonPrimary href="#" small>
-                                    Action
-                                </ButtonPrimary>
-                            }
-                        />
-                        <HighlightedCard
-                            isInverse
-                            title="Inverse card title"
-                            description="Card description"
-                            imageUrl={personPortraitImg}
-                            imageFit="fill"
-                            onClose={() => {}}
-                            button={
-                                <ButtonPrimary href="#" small>
-                                    Action
-                                </ButtonPrimary>
-                            }
-                        />
-                    </Inline>
-                    <Tag type="inactive">Inactive tag</Tag>
-                    <Chip>A chip</Chip>
-                </Stack>
-            </Box>
-        </ResponsiveLayout>
+        <div style={{position: 'relative'}}>
+            {themeVariant === 'overMedia' && (
+                <div style={{position: 'absolute', height: '100%'}}>
+                    <Image src={beachImg} height="100%" />
+                </div>
+            )}
+            <div style={{position: 'relative'}}>
+                <ResponsiveLayout
+                    variant={themeVariant}
+                    backgroundColor={themeVariant === 'overMedia' ? 'transparent' : undefined}
+                >
+                    <Box paddingY={24}>
+                        <Stack space={16}>
+                            <Callout
+                                onClose={() => {}}
+                                title="Callout title"
+                                description="Calloout description"
+                                button={
+                                    <ButtonPrimary small onPress={() => {}}>
+                                        Action
+                                    </ButtonPrimary>
+                                }
+                            />
+                            <Inline space={16}>
+                                <HighlightedCard
+                                    isInverse={false}
+                                    title="Card title"
+                                    description="Card description"
+                                    imageUrl={personPortraitImg}
+                                    imageFit="fill"
+                                    onClose={() => {}}
+                                    button={
+                                        <ButtonPrimary href="#" small>
+                                            Action
+                                        </ButtonPrimary>
+                                    }
+                                />
+                                <HighlightedCard
+                                    isInverse
+                                    title="Inverse card title"
+                                    description="Card description"
+                                    imageUrl={personPortraitImg}
+                                    imageFit="fill"
+                                    onClose={() => {}}
+                                    button={
+                                        <ButtonPrimary href="#" small>
+                                            Action
+                                        </ButtonPrimary>
+                                    }
+                                />
+                            </Inline>
+                            <Tag type="inactive">Inactive tag</Tag>
+                            <Chip>A chip</Chip>
+
+                            <Timer minTimeUnit="seconds" maxTimeUnit="days" endTimestamp={0} boxed />
+                        </Stack>
+                    </Box>
+                </ResponsiveLayout>
+            </div>
+        </div>
     );
 };
 
@@ -131,7 +148,7 @@ ComponentsOverDifferentThemeVariants.args = {
 ComponentsOverDifferentThemeVariants.parameters = {fullScreen: true};
 ComponentsOverDifferentThemeVariants.argTypes = {
     themeVariant: {
-        options: ['default', 'inverse', 'alternative'],
+        options: ['default', 'inverse', 'alternative', 'overMedia'],
         control: {type: 'select'},
     },
 };
