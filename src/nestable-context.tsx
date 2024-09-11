@@ -38,9 +38,9 @@ const isObject = (object: any): object is Record<string, unknown> =>
     object !== null && typeof object === 'object' && !Array.isArray(object);
 
 export type NestableContext<Value> = {
-    Getter: React.FC<{children: (value: Value) => React.ReactNode}>;
-    Provider: React.FC<ProviderProps>;
-    Setter: React.FC<{value: Value}>;
+    Getter: (props: {children: (value: Value) => React.ReactNode}) => JSX.Element;
+    Provider: (props: ProviderProps) => JSX.Element;
+    Setter: (props: {value: Value}) => null;
     useValue: () => Value;
     useSetValue: (value: Value) => void;
 };
@@ -81,7 +81,7 @@ export const createNestableContext = <Value,>(
         }
     };
 
-    const Provider: React.FC<ProviderProps> = ({children}) => {
+    const Provider = ({children}: ProviderProps) => {
         React.useEffect(() => {
             providerInstances++;
 
@@ -128,14 +128,12 @@ export const createNestableContext = <Value,>(
 
     const useValue = () => React.useContext(ValueContext);
 
-    const Setter: React.FC<{value: Value}> = ({value}) => {
+    const Setter = ({value}: {value: Value}) => {
         useSetValue(value);
         return null;
     };
 
-    const Getter: React.FC<{children: (value: Value) => React.ReactNode}> = ({children}) => (
-        <>{children(useValue())}</>
-    );
+    const Getter = ({children}: {children: (value: Value) => React.ReactNode}) => <>{children(useValue())}</>;
 
     return {Setter, Provider, Getter, useSetValue, useValue};
 };

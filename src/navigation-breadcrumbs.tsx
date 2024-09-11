@@ -21,23 +21,24 @@ export type NavigationBreadcrumbsProps = {
     breadcrumbs: ReadonlyArray<{
         readonly title: string;
         readonly url: string;
+        onNavigate?: () => void;
     }>;
     children?: void;
     dataAttributes?: DataAttributes;
     'aria-label'?: string;
 };
 
-const NavigationBreadcrumbs: React.FC<NavigationBreadcrumbsProps> = ({
+const NavigationBreadcrumbs = ({
     title,
     breadcrumbs,
     dataAttributes,
     'aria-label': ariaLabel = 'Breadcrumb',
-}) => {
+}: NavigationBreadcrumbsProps): JSX.Element => {
     const isInverse = useIsInverseVariant();
     return (
         <nav aria-label={ariaLabel} {...getPrefixedDataAttributes(dataAttributes, 'NavigationBreadcrumbs')}>
             <ol className={styles.list}>
-                {breadcrumbs.map(({title, url}, index) => (
+                {breadcrumbs.map(({title, url, onNavigate}, index) => (
                     <li key={index} className={styles.listItem}>
                         <Text1 regular>
                             <TextLink
@@ -48,6 +49,7 @@ const NavigationBreadcrumbs: React.FC<NavigationBreadcrumbsProps> = ({
                                         : vars.colors.textPrimary,
                                 }}
                                 className={styles.link}
+                                onNavigate={onNavigate}
                             >
                                 {title}
                             </TextLink>

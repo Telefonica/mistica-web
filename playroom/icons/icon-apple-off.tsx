@@ -6,7 +6,7 @@ type Props = {
     color?: string;
 };
 
-const IconSun: React.FC<Props> = ({size = 24, color}) => {
+const IconSun = ({size = 24, color}: Props): JSX.Element => {
     return (
         <svg width={size} height={size} viewBox="0 0 24 24">
             <g fill={color || skinVars.colors.neutralHigh} opacity="0.3">

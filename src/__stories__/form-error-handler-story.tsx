@@ -7,7 +7,7 @@ export default {
 
 type CardProps = {show: boolean; children: React.ReactNode; onPress: any};
 
-const Card: React.FC<CardProps> = ({show, children, onPress}) => {
+const Card = ({show, children, onPress}: CardProps) => {
     return (
         <>
             <Touchable onPress={onPress} style={{background: 'lightgray', padding: 8}}>
@@ -18,7 +18,7 @@ const Card: React.FC<CardProps> = ({show, children, onPress}) => {
     );
 };
 
-const Cards: React.FC<any> = ({activeCard, setActiveCard}) => {
+const Cards = ({activeCard, setActiveCard}: any) => {
     const {formErrors} = useForm();
 
     return (

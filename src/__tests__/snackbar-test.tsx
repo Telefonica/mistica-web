@@ -190,7 +190,7 @@ test('nativeMessage should be called once, even if the component re-renders', as
     const onCloseMock = jest.fn();
     const nativeMessageMock = jest.spyOn(bridge, 'nativeMessage').mockResolvedValue();
 
-    const ComponentWithSnackbar: React.FC<{onClose: () => unknown}> = ({onClose}) => {
+    const ComponentWithSnackbar = ({onClose}: {onClose: () => unknown}) => {
         const [count, setCount] = React.useState(0);
         return (
             <>
