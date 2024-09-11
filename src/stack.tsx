@@ -42,14 +42,14 @@ type Props = {
     dataAttributes?: DataAttributes;
 };
 
-const Stack: React.FC<Props> = ({
+const Stack = ({
     space,
     className,
     children,
     role,
     'aria-labelledby': ariaLabelledby,
     dataAttributes,
-}) => {
+}: Props): JSX.Element => {
     const isFlexStack = typeof space === 'string';
 
     return (

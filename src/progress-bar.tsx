@@ -21,7 +21,7 @@ type ProgressBarProps = {
     reverse?: boolean;
 };
 
-export const ProgressBar: React.FC<ProgressBarProps> = ({
+export const ProgressBar = ({
     progressPercent,
     color,
     'aria-label': ariaLabel,
@@ -29,7 +29,7 @@ export const ProgressBar: React.FC<ProgressBarProps> = ({
     'aria-hidden': ariaHidden,
     dataAttributes,
     reverse = false,
-}) => {
+}: ProgressBarProps): JSX.Element => {
     const {texts, t} = useTheme();
     const progressValue = Math.max(0, Math.min(100, progressPercent));
 
@@ -79,7 +79,7 @@ type ProgressBarSteppedProps = {
     'aria-hidden'?: React.HTMLAttributes<HTMLDivElement>['aria-hidden'];
 };
 
-export const ProgressBarStepped: React.FC<ProgressBarSteppedProps> = ({
+export const ProgressBarStepped = ({
     steps,
     currentStep = 0,
     color,
@@ -87,7 +87,7 @@ export const ProgressBarStepped: React.FC<ProgressBarSteppedProps> = ({
     'aria-label': ariaLabel,
     'aria-labelledby': ariaLabelledBy,
     'aria-hidden': ariaHidden,
-}) => {
+}: ProgressBarSteppedProps): JSX.Element => {
     const {texts, t} = useTheme();
 
     const [step, setStep] = React.useState(Math.ceil(currentStep));

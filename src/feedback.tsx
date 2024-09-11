@@ -195,7 +195,7 @@ interface FeedbackScreenProps extends AssetFeedbackProps {
     isInverse?: boolean;
 }
 
-export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
+export const FeedbackScreen = ({
     title,
     description,
     extra,
@@ -210,7 +210,7 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
     imageUrl,
     imageFit,
     dataAttributes,
-}) => {
+}: FeedbackScreenProps): JSX.Element => {
     useHapticFeedback(hapticFeedback);
     const {platformOverrides, isDarkMode} = useTheme();
     const {isTabletOrSmaller} = useScreenSize();
@@ -280,7 +280,7 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
     );
 };
 
-export const SuccessFeedbackScreen: React.FC<AssetFeedbackProps> = ({dataAttributes, ...props}) => {
+export const SuccessFeedbackScreen = ({dataAttributes, ...props}: AssetFeedbackProps): JSX.Element => {
     const {isTabletOrSmaller} = useScreenSize();
     const {skinName} = useTheme();
 
@@ -310,11 +310,11 @@ interface ErrorFeedbackScreenProps extends Omit<FeedbackProps, 'extra'> {
     errorReference?: string;
 }
 
-export const ErrorFeedbackScreen: React.FC<ErrorFeedbackScreenProps> = ({
+export const ErrorFeedbackScreen = ({
     errorReference,
     dataAttributes,
     ...otherProps
-}) => {
+}: ErrorFeedbackScreenProps): JSX.Element => {
     return (
         <FeedbackScreen
             {...otherProps}
@@ -336,14 +336,14 @@ export const ErrorFeedbackScreen: React.FC<ErrorFeedbackScreenProps> = ({
 };
 
 interface InfoFeedbackScreenProps extends FeedbackProps {
-    Icon?: React.FC<IconProps>;
+    Icon?: (props: IconProps) => JSX.Element;
 }
 
-export const InfoFeedbackScreen: React.FC<InfoFeedbackScreenProps> = ({
+export const InfoFeedbackScreen = ({
     dataAttributes,
     Icon = IconInfo,
     ...props
-}) => {
+}: InfoFeedbackScreenProps): JSX.Element => {
     return (
         <FeedbackScreen
             dataAttributes={{'component-name': 'InfoFeedbackScreen', ...dataAttributes}}
@@ -353,7 +353,7 @@ export const InfoFeedbackScreen: React.FC<InfoFeedbackScreenProps> = ({
     );
 };
 
-export const SuccessFeedback: React.FC<AssetFeedbackProps> = ({
+export const SuccessFeedback = ({
     title,
     description,
     extra,
@@ -363,7 +363,7 @@ export const SuccessFeedback: React.FC<AssetFeedbackProps> = ({
     imageUrl,
     imageFit,
     dataAttributes,
-}) => {
+}: AssetFeedbackProps): JSX.Element => {
     useHapticFeedback('success');
     const {skinName, platformOverrides} = useTheme();
 

@@ -46,7 +46,7 @@ export interface IntegerFieldProps extends CommonFormFieldProps {
     onChangeValue?: (value: string, rawValue: string) => void;
 }
 
-const IntegerField: React.FC<IntegerFieldProps> = ({
+const IntegerField = ({
     disabled,
     error,
     helperText,
@@ -60,7 +60,7 @@ const IntegerField: React.FC<IntegerFieldProps> = ({
     defaultValue,
     dataAttributes,
     ...rest
-}) => {
+}: IntegerFieldProps): JSX.Element => {
     const {texts, t} = useTheme();
 
     const validate = (value: string | undefined, rawValue: string) => {

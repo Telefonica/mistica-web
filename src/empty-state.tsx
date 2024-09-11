@@ -53,7 +53,7 @@ interface IconProps extends BaseProps {
 
 type Props = IconProps | ImageProps | LargeImageProps;
 
-const EmptyState: React.FC<Props> = ({
+const EmptyState = ({
     title,
     titleAs = 'h1',
     description,
@@ -64,7 +64,7 @@ const EmptyState: React.FC<Props> = ({
     asset,
     'aria-label': ariaLabel,
     dataAttributes,
-}) => {
+}: Props): JSX.Element => {
     const {isDarkMode} = useTheme();
     const isInverse = useIsInverseVariant();
 

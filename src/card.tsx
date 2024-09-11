@@ -56,7 +56,7 @@ const useInnerText = () => {
 };
 
 type BaseIconButtonAction = {
-    Icon: React.FC<IconProps>;
+    Icon: (props: IconProps) => JSX.Element;
     label: string;
 };
 
@@ -395,7 +395,7 @@ type CardContentProps = {
     buttonLink?: RendersNullableElement<typeof ButtonLink>;
 };
 
-const CardContent: React.FC<CardContentProps> = ({
+const CardContent = ({
     headline,
     headlineRef,
     pretitle,
@@ -411,7 +411,7 @@ const CardContent: React.FC<CardContentProps> = ({
     extraRef,
     button,
     buttonLink,
-}) => {
+}: CardContentProps) => {
     const {textPresets} = useTheme();
     return (
         <div
@@ -1133,7 +1133,7 @@ interface DisplayCardContentProps {
     extraRef?: (instance: HTMLElement | null) => void;
 }
 
-const DisplayCardContent: React.FC<DisplayCardContentProps> = ({
+const DisplayCardContent = ({
     title,
     headline,
     pretitle,
@@ -1142,7 +1142,7 @@ const DisplayCardContent: React.FC<DisplayCardContentProps> = ({
     extra,
     headlineRef,
     extraRef,
-}) => {
+}: DisplayCardContentProps) => {
     // using flex instead of nested Stacks, this way we can rearrange texts so the DOM structure makes more sense for screen reader users
     return (
         <div className={styles.flexColumn}>

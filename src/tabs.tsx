@@ -40,7 +40,7 @@ export type TabsProps = {
     dataAttributes?: DataAttributes;
 };
 
-const Tabs: React.FC<TabsProps> = ({selectedIndex, onChange, tabs, dataAttributes}: TabsProps) => {
+const Tabs = ({selectedIndex, onChange, tabs, dataAttributes}: TabsProps): JSX.Element => {
     const {textPresets} = useTheme();
     const id = React.useId();
     const {ref} = useElementDimensions();

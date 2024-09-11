@@ -121,7 +121,7 @@ type TextPresetsVars = {
     };
 };
 
-const ThemeContextProvider: React.FC<Props> = ({theme, children, as, withoutStyles = false}) => {
+const ThemeContextProvider = ({theme, children, as, withoutStyles = false}: Props): JSX.Element => {
     const isOsDarkModeEnabled = useIsOsDarkModeEnabled();
 
     const colorScheme = theme.colorScheme ?? 'auto';

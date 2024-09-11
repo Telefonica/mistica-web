@@ -100,11 +100,11 @@ type NavigationBarContentContainerProps = {
     desktopOnly?: boolean;
 };
 
-const NavigationBarContentContainer: React.FC<NavigationBarContentContainerProps> = ({
+const NavigationBarContentContainer = ({
     right,
     children,
     desktopOnly,
-}) => {
+}: NavigationBarContentContainerProps) => {
     return (
         <div className={classnames(styles.navigationBarContent, {[styles.desktopOnly]: desktopOnly})}>
             {children}
@@ -135,7 +135,7 @@ type MainNavigationBarProps = MainNavigationBarPropsBase;
 
 type MenuTransitionState = 'closed' | 'opening' | 'open' | 'closing';
 
-export const MainNavigationBar: React.FC<MainNavigationBarProps> = ({
+export const MainNavigationBar = ({
     sections = [],
     selectedIndex,
     right,
@@ -145,7 +145,7 @@ export const MainNavigationBar: React.FC<MainNavigationBarProps> = ({
     burgerMenuExtra,
     logo,
     large = false,
-}) => {
+}: MainNavigationBarProps): JSX.Element => {
     const {texts, isDarkMode, t} = useTheme();
     const [isMenuOpen, setIsMenuOpen] = React.useState(false);
     const [menuTransitionState, setMenuTransitionState] = React.useState<MenuTransitionState>('closed');
@@ -338,7 +338,7 @@ interface NavigationBarNotFixedProps extends NavigationBarCommonProps {
 
 type NavigationBarProps = NavigationBarTopFixedProps | NavigationBarNotFixedProps;
 
-export const NavigationBar: React.FC<NavigationBarProps> = ({
+export const NavigationBar = ({
     onBack,
     title,
     titleAs,
@@ -347,7 +347,7 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
     topFixed = true,
     paddingX = 0,
     withBorder = true,
-}) => {
+}: NavigationBarProps): JSX.Element => {
     const {texts, t} = useTheme();
     const content = (
         <NavigationBarContentContainer right={right}>
@@ -404,13 +404,13 @@ type FunnelNavigationBarProps = {
     withBorder?: boolean;
 };
 
-export const FunnelNavigationBar: React.FC<FunnelNavigationBarProps> = ({
+export const FunnelNavigationBar = ({
     logo,
     right,
     variant = 'default',
     topFixed = true,
     withBorder = true,
-}) => {
+}: FunnelNavigationBarProps): JSX.Element => {
     logo = logo ?? <Logo size={{mobile: 40, desktop: 48}} />;
 
     return (
@@ -436,7 +436,7 @@ type NavigationBarActionGroupProps = {
     children: React.ReactNode;
 };
 
-export const NavigationBarActionGroup: React.FC<NavigationBarActionGroupProps> = ({children}) => {
+export const NavigationBarActionGroup = ({children}: NavigationBarActionGroupProps): JSX.Element => {
     return (
         <div className={styles.lineHeightFix} data-component-name="NavigationBarActionGroup">
             <Inline space={24} alignItems="center">
@@ -448,7 +448,7 @@ export const NavigationBarActionGroup: React.FC<NavigationBarActionGroupProps> =
 
 type NavigationBarActionProps = TouchableProps;
 
-export const NavigationBarAction: React.FC<NavigationBarActionProps> = ({children, ...touchableProps}) => {
+export const NavigationBarAction = ({children, ...touchableProps}: NavigationBarActionProps): JSX.Element => {
     const isInverse = useIsInverseVariant();
     return (
         <BaseTouchable

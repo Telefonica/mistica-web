@@ -19,7 +19,7 @@ type Props = {
 
 let isMounted = false;
 
-const TabFocus: React.FC<Props> = ({children, disabled}) => {
+const TabFocus = ({children, disabled}: Props): JSX.Element => {
     React.useEffect(() => {
         if (disabled) {
             return;

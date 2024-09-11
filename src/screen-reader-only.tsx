@@ -9,7 +9,7 @@ type Props = {
     dataAttributes?: DataAttributes;
 };
 
-const ScreenReaderOnly: React.FC<Props> = ({children, dataAttributes}) => {
+const ScreenReaderOnly = ({children, dataAttributes}: Props): JSX.Element => {
     const prefixedDataAttributes = getPrefixedDataAttributes(dataAttributes, 'ScreenReaderOnly');
 
     if (React.Children.count(children) === 1) {

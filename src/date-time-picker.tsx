@@ -49,7 +49,13 @@ const getLocaleForMoment = (locale: Locale) => {
     return langToLocale[lang] || 'en-gb';
 };
 
-const DateTimePicker: React.FC<DateTimePickerProps> = ({withTime, mode, isValidDate, optional, ...rest}) => {
+const DateTimePicker = ({
+    withTime,
+    mode,
+    isValidDate,
+    optional,
+    ...rest
+}: DateTimePickerProps): JSX.Element => {
     const [showPicker, realSetShowPicker] = React.useState(false);
     const {
         texts,

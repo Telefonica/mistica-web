@@ -24,7 +24,7 @@ const ButtonLayout: React.FC<ButtonLayoutProps> = ({
     align = 'full-width',
     link,
     dataAttributes,
-}) => {
+}: ButtonLayoutProps): JSX.Element => {
     const linkContainerRef = React.useRef<HTMLDivElement>(null);
     const [hasSmallLink, setHasSmallLink] = React.useState(false);
 

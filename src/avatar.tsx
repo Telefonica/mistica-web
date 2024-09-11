@@ -33,7 +33,7 @@ type AvatarProps = {
     initials?: string;
     textColor?: string;
     backgroundColor?: string;
-    Icon?: React.FC<IconProps>;
+    Icon?: (props: IconProps) => JSX.Element;
     badge?: boolean | number;
     'aria-label'?: string;
     dataAttributes?: DataAttributes;

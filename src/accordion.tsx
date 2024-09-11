@@ -227,7 +227,7 @@ type MultipleOpenProps = {
 
 type AccordionProps = AccordionBaseProps & ExclusifyUnion<SingleOpenProps | MultipleOpenProps>;
 
-export const Accordion: React.FC<AccordionProps> = ({
+export const Accordion = ({
     children,
     dataAttributes,
     index,
@@ -235,7 +235,7 @@ export const Accordion: React.FC<AccordionProps> = ({
     onChange,
     singleOpen,
     role,
-}) => {
+}: AccordionProps): JSX.Element => {
     const [indexList, toggle] = useAccordionState({
         value: index,
         defaultValue: defaultIndex,
@@ -282,7 +282,7 @@ export const BoxedAccordionItem = React.forwardRef<HTMLDivElement, BoxedAccordio
     )
 );
 
-export const BoxedAccordion: React.FC<AccordionProps> = ({
+export const BoxedAccordion = ({
     children,
     dataAttributes,
     index,
@@ -290,7 +290,7 @@ export const BoxedAccordion: React.FC<AccordionProps> = ({
     onChange,
     singleOpen,
     role,
-}) => {
+}: AccordionProps): JSX.Element => {
     const [indexList, toggle] = useAccordionState({
         value: index,
         defaultValue: defaultIndex,

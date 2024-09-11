@@ -50,7 +50,7 @@ type PropsChildren = {
     dataAttributes?: DataAttributes;
 };
 
-const Switch: React.FC<PropsRender | PropsChildren> = (props) => {
+const Switch = (props: PropsRender | PropsChildren): JSX.Element => {
     const {isIos, isDarkMode} = useTheme();
     const reactId = React.useId();
     const labelId = props['aria-labelledby'] || reactId;

@@ -104,7 +104,7 @@ const renderButtonElement = ({
     return resultChildrenArr;
 };
 
-const ButtonLinkChevron: React.FC = () => {
+const ButtonLinkChevron = () => {
     const {skinName} = useTheme();
 
     // vivo new skin has a different chevron
@@ -274,8 +274,8 @@ interface CommonProps {
     'aria-expanded'?: 'true' | 'false' | boolean;
     'aria-haspopup'?: 'true' | 'false' | 'menu' | 'dialog' | boolean;
     tabIndex?: number;
-    StartIcon?: React.FC<IconProps>;
-    EndIcon?: React.FC<IconProps>;
+    StartIcon?: (props: IconProps) => JSX.Element;
+    EndIcon?: (props: IconProps) => JSX.Element;
     /** IMPORTANT: try to avoid using role="link" with onPress and first consider other alternatives like to/href + onNavigate */
     role?: string;
 }
