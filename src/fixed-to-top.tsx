@@ -9,7 +9,7 @@ type Props = {
     height: number;
 };
 
-const FixedToTop: React.FC<Props> = ({children, height}) => {
+const FixedToTop = ({children, height}: Props): JSX.Element => {
     const top = React.useContext(TopDistanceContext);
     return <TopDistanceContext.Provider value={top + height}>{children(top)}</TopDistanceContext.Provider>;
 };

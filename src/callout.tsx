@@ -16,7 +16,6 @@ import {sprinkles} from './sprinkles.css';
 import {vars} from './skins/skin-contract.css';
 import {getPrefixedDataAttributes} from './utils/dom';
 import {applyCssVars} from './utils/css';
-import * as tokens from './text-tokens';
 
 import type {ButtonLink, ButtonPrimary, ButtonSecondary} from './button';
 import type {DataAttributes, HeadingType, RendersNullableElement} from './utils/types';
@@ -37,7 +36,7 @@ type Props = {
     role?: string;
 };
 
-const Callout: React.FC<Props> = ({
+const Callout = ({
     title,
     titleAs = 'h2',
     description,
@@ -50,9 +49,9 @@ const Callout: React.FC<Props> = ({
     'aria-label': ariaLabel,
     dataAttributes,
     role,
-}) => {
+}: Props): JSX.Element => {
     const variant = useThemeVariant();
-    const {texts, t} = useTheme();
+    const {texts} = useTheme();
     return (
         <section
             className={classNames(
@@ -108,9 +107,7 @@ const Callout: React.FC<Props> = ({
                                 bleedRight
                                 Icon={IconCloseRegular}
                                 onPress={onClose}
-                                aria-label={
-                                    closeButtonLabel || texts.closeButtonLabel || t(tokens.closeButtonLabel)
-                                }
+                                aria-label={closeButtonLabel ?? texts.closeButtonLabel}
                             />
                         </div>
                     )}

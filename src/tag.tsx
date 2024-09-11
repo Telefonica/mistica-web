@@ -21,14 +21,14 @@ export type TagProps = {
     // not using "TagType" and repeating the union to make these props playroom autocomplete friendly
     type?: 'promo' | 'active' | 'inactive' | 'success' | 'warning' | 'error';
     children: string;
-    Icon?: React.FC<IconProps>;
+    Icon?: (props: IconProps) => JSX.Element;
     dataAttributes?: DataAttributes;
     badge?: boolean | number;
 };
 
 const {colors} = vars;
 
-const Tag: React.FC<TagProps> = ({Icon, children, dataAttributes, type = 'promo', badge}) => {
+const Tag = ({Icon, children, dataAttributes, type = 'promo', badge}: TagProps): JSX.Element | null => {
     const {textPresets} = useTheme();
     const themeVariant = useThemeVariant();
     const badgeValue = badge === true ? undefined : badge || 0;

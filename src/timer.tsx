@@ -11,7 +11,6 @@ import * as styles from './timer.css';
 import {getPrefixedDataAttributes} from './utils/dom';
 import {isEqual} from './utils/helpers';
 import {isRunningAcceptanceTest} from './utils/platform';
-import * as tokens from './text-tokens';
 
 import type {DataAttributes} from './utils/types';
 
@@ -191,7 +190,7 @@ const useTimerState = ({
     return timerValue;
 };
 
-export const TextTimer: React.FC<TextTimerProps> = ({
+export const TextTimer = ({
     endTimestamp,
     labelType = 'none',
     minTimeUnit,
@@ -199,31 +198,31 @@ export const TextTimer: React.FC<TextTimerProps> = ({
     onProgress,
     dataAttributes,
     'aria-label': ariaLabel,
-}) => {
-    const {texts, t} = useTheme();
+}: TextTimerProps): JSX.Element => {
+    const {texts} = useTheme();
     const labelId = React.useId();
 
     const timerValue = useTimerState({endTimestamp, labelType, minTimeUnit, maxTimeUnit, onProgress});
 
     const unitShortLabel: {[key in TimeUnit]: string} = {
-        days: texts.timerDaysShortLabel || t(tokens.timerDaysShortLabel),
-        hours: texts.timerHoursShortLabel || t(tokens.timerHoursShortLabel),
-        minutes: texts.timerMinutesShortLabel || t(tokens.timerMinutesShortLabel),
-        seconds: texts.timerSecondsShortLabel || t(tokens.timerSecondsShortLabel),
+        days: texts.timerDaysShortLabel,
+        hours: texts.timerHoursShortLabel,
+        minutes: texts.timerMinutesShortLabel,
+        seconds: texts.timerSecondsShortLabel,
     };
 
     const unitLabel: {[key in TimeUnit]: string} = {
-        days: texts.timerDayLongLabel || t(tokens.timerDayLongLabel),
-        hours: texts.timerHourLongLabel || t(tokens.timerHourLongLabel),
-        minutes: texts.timerMinuteLongLabel || t(tokens.timerMinuteLongLabel),
-        seconds: texts.timerSecondLongLabel || t(tokens.timerSecondLongLabel),
+        days: texts.timerDayLongLabel,
+        hours: texts.timerHourLongLabel,
+        minutes: texts.timerMinuteLongLabel,
+        seconds: texts.timerSecondLongLabel,
     };
 
     const unitLabelPlural: {[key in TimeUnit]: string} = {
-        days: texts.timerDaysLongLabel || t(tokens.timerDaysLongLabel),
-        hours: texts.timerHoursLongLabel || t(tokens.timerHoursLongLabel),
-        minutes: texts.timerMinutesLongLabel || t(tokens.timerMinutesLongLabel),
-        seconds: texts.timerSecondsLongLabel || t(tokens.timerSecondsLongLabel),
+        days: texts.timerDaysLongLabel,
+        hours: texts.timerHoursLongLabel,
+        minutes: texts.timerMinutesLongLabel,
+        seconds: texts.timerSecondsLongLabel,
     };
 
     const renderFormattedNumber = (value: number) => {
@@ -265,7 +264,7 @@ export const TextTimer: React.FC<TextTimerProps> = ({
                         {index > 0 && ' '}
                         {renderFormattedNumber(item.value)}
                         {` ${item.value === 1 ? unitLabel[item.unit] : unitLabelPlural[item.unit]}`}
-                        {index === timerValue.length - 2 && ` ${texts.timerAnd || t(tokens.timerAnd)}`}
+                        {index === timerValue.length - 2 && ` ${texts.timerAnd}`}
                         {index < timerValue.length - 2 && ','}
                     </React.Fragment>
                 ));
@@ -279,7 +278,7 @@ export const TextTimer: React.FC<TextTimerProps> = ({
                     index === timerValue.length - 1
                         ? ''
                         : index === timerValue.length - 2
-                          ? ` ${texts.timerAnd || t(tokens.timerAnd)} `
+                          ? ` ${texts.timerAnd} `
                           : ', '
                 }`
         )
@@ -307,7 +306,7 @@ export const TextTimer: React.FC<TextTimerProps> = ({
     );
 };
 
-export const Timer: React.FC<TimerProps> = ({
+export const Timer = ({
     boxed,
     endTimestamp,
     minTimeUnit,
@@ -315,39 +314,39 @@ export const Timer: React.FC<TimerProps> = ({
     onProgress,
     dataAttributes,
     'aria-label': ariaLabel,
-}) => {
-    const {texts, t} = useTheme();
+}: TimerProps): JSX.Element => {
+    const {texts} = useTheme();
     const labelId = React.useId();
     const themeVariant = useThemeVariant();
 
     const timerValue = useTimerState({endTimestamp, minTimeUnit, maxTimeUnit, onProgress});
 
     const displayLabel: {[key in TimeUnit]: string} = {
-        days: texts.timerDayLongLabel || t(tokens.timerDayLongLabel),
-        hours: texts.timerHourLongLabel || t(tokens.timerHourLongLabel),
-        minutes: texts.timerDisplayMinutesLabel || t(tokens.timerDisplayMinutesLabel),
-        seconds: texts.timerDisplaySecondsLabel || t(tokens.timerDisplaySecondsLabel),
+        days: texts.timerDayLongLabel,
+        hours: texts.timerHourLongLabel,
+        minutes: texts.timerDisplayMinutesLabel,
+        seconds: texts.timerDisplaySecondsLabel,
     };
 
     const displayLabelPlural: {[key in TimeUnit]: string} = {
-        days: texts.timerDaysLongLabel || t(tokens.timerDaysLongLabel),
-        hours: texts.timerHoursLongLabel || t(tokens.timerHoursLongLabel),
-        minutes: texts.timerDisplayMinutesLabel || t(tokens.timerDisplayMinutesLabel),
-        seconds: texts.timerDisplaySecondsLabel || t(tokens.timerDisplaySecondsLabel),
+        days: texts.timerDaysLongLabel,
+        hours: texts.timerHoursLongLabel,
+        minutes: texts.timerDisplayMinutesLabel,
+        seconds: texts.timerDisplaySecondsLabel,
     };
 
     const unitLabel: {[key in TimeUnit]: string} = {
-        days: texts.timerDayLongLabel || t(tokens.timerDayLongLabel),
-        hours: texts.timerHourLongLabel || t(tokens.timerHourLongLabel),
-        minutes: texts.timerMinuteLongLabel || t(tokens.timerMinuteLongLabel),
-        seconds: texts.timerSecondLongLabel || t(tokens.timerSecondLongLabel),
+        days: texts.timerDayLongLabel,
+        hours: texts.timerHourLongLabel,
+        minutes: texts.timerMinuteLongLabel,
+        seconds: texts.timerSecondLongLabel,
     };
 
     const unitLabelPlural: {[key in TimeUnit]: string} = {
-        days: texts.timerDaysLongLabel || t(tokens.timerDaysLongLabel),
-        hours: texts.timerHoursLongLabel || t(tokens.timerHoursLongLabel),
-        minutes: texts.timerMinutesLongLabel || t(tokens.timerMinutesLongLabel),
-        seconds: texts.timerSecondsLongLabel || t(tokens.timerSecondsLongLabel),
+        days: texts.timerDaysLongLabel,
+        hours: texts.timerHoursLongLabel,
+        minutes: texts.timerMinutesLongLabel,
+        seconds: texts.timerSecondsLongLabel,
     };
 
     const renderFormattedNumber = (value: number) => {
@@ -370,7 +369,7 @@ export const Timer: React.FC<TimerProps> = ({
                     index === timerValue.length - 1
                         ? ''
                         : index === timerValue.length - 2
-                          ? ` ${texts.timerAnd || t(tokens.timerAnd)} `
+                          ? ` ${texts.timerAnd} `
                           : ', '
                 }`
         )

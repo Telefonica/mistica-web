@@ -11,7 +11,6 @@ import {useFieldProps} from './form-context';
 import {createChangeEvent, getPrefixedDataAttributes} from './utils/dom';
 import {HelperText} from './text-field-components';
 import {flushSync} from 'react-dom';
-import * as tokens from './text-tokens';
 
 import type {DataAttributes} from './utils/types';
 
@@ -43,7 +42,7 @@ const PinInput = ({
     onChange,
     inputRef,
 }: PinInputProps): React.ReactElement => {
-    const {texts, t} = useTheme();
+    const {texts} = useTheme();
     const [selfValue, setSelfValue] = React.useState<string>(defaultValue?.slice(0, length) ?? '');
     const [focusIndex, setFocusIndex] = React.useState<number | undefined>(undefined);
 
@@ -165,7 +164,7 @@ const PinInput = ({
                     }
                 >
                     <IntegerInput
-                        aria-label={(texts.pinFieldInputLabel || t(tokens.pinFieldInputLabel))
+                        aria-label={texts.pinFieldInputLabel
                             .replace('1$s', String(index + 1))
                             .replace('2$s', String(length))}
                         type={hideCode ? 'password' : 'text'}

@@ -3,7 +3,6 @@ import * as React from 'react';
 import {useFieldProps} from './form-context';
 import {useTheme} from './hooks';
 import {TextFieldBaseAutosuggest} from './text-field-base';
-import * as tokens from './text-tokens';
 
 import type {CommonFormFieldProps} from './text-field-base';
 
@@ -15,7 +14,7 @@ export interface EmailFieldProps extends CommonFormFieldProps {
     getSuggestions?: (value: string) => Array<string>;
 }
 
-const EmailField: React.FC<EmailFieldProps> = ({
+const EmailField = ({
     disabled,
     error,
     helperText,
@@ -30,15 +29,15 @@ const EmailField: React.FC<EmailFieldProps> = ({
     defaultValue,
     dataAttributes,
     ...rest
-}) => {
-    const {texts, t} = useTheme();
+}: EmailFieldProps): JSX.Element => {
+    const {texts} = useTheme();
 
     const validate = (value: string | undefined, rawValue: string) => {
         if (!value) {
-            return optional ? '' : texts.formFieldErrorIsMandatory || t(tokens.formFieldErrorIsMandatory);
+            return optional ? '' : texts.formFieldErrorIsMandatory;
         }
         if (!RE_EMAIL.test(value)) {
-            return texts.formEmailError || t(tokens.formEmailError);
+            return texts.formEmailError;
         }
         return validateProp?.(value, rawValue);
     };

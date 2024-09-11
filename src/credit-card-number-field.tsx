@@ -20,7 +20,6 @@ import {combineRefs} from './utils/common';
 import * as styles from './credit-card-number-field.css';
 import {vars} from './skins/skin-contract.css';
 import {iconSize} from './icon-button.css';
-import * as tokens from './text-tokens';
 
 import type {CardOptions} from './utils/credit-card';
 import type {CommonFormFieldProps} from './text-field-base';
@@ -37,7 +36,7 @@ type Props = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'value' | 'onInpu
     onInput?: (event: React.FormEvent<HTMLInputElement>) => void;
 };
 
-const CreditCardInput: React.FC<Props> = ({inputRef, value, defaultValue, onChange, ...other}) => {
+const CreditCardInput = ({inputRef, value, defaultValue, onChange, ...other}: Props) => {
     const [selfValue, setSelfValue] = React.useState(defaultValue ?? '');
     const ref = React.useRef<HTMLInputElement | null>(null);
 
@@ -152,7 +151,7 @@ interface CreditCardNumberFieldProps extends CommonFormFieldProps {
     onChangeValue?: (value: string, rawValue: string) => void;
 }
 
-const CreditCardNumberField: React.FC<CreditCardNumberFieldProps> = ({
+const CreditCardNumberField = ({
     disabled,
     error,
     helperText,
@@ -168,14 +167,14 @@ const CreditCardNumberField: React.FC<CreditCardNumberFieldProps> = ({
     defaultValue,
     dataAttributes,
     ...rest
-}) => {
-    const {texts, t} = useTheme();
+}: CreditCardNumberFieldProps): JSX.Element => {
+    const {texts} = useTheme();
     const {jumpToNext, rawValues, setFormError} = useForm();
 
     const validate = (value: string | undefined, rawValue: string) => {
-        const error = texts.formCreditCardNumberError || t(tokens.formCreditCardNumberError);
+        const error = texts.formCreditCardNumberError;
         if (!value) {
-            return optional ? '' : texts.formFieldErrorIsMandatory || t(tokens.formFieldErrorIsMandatory);
+            return optional ? '' : texts.formFieldErrorIsMandatory;
         }
         if (isAmericanExpress(value) && !acceptedCards.americanExpress) {
             return error;

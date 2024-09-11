@@ -5,7 +5,6 @@ import {useTheme} from './hooks';
 import {InternalIconButton} from './icon-button';
 import * as styles from './maybe-dismissable.css';
 import {ThemeVariant} from './theme-variant-context';
-import * as tokens from './text-tokens';
 
 const DismissableContext = React.createContext<boolean>(false);
 export const useIsDismissable = (): boolean => React.useContext(DismissableContext);
@@ -27,7 +26,7 @@ const MaybeDismissable = ({
     isOverMedia,
     isInverse,
 }: MaybeDismissableProps): JSX.Element => {
-    const {texts, t} = useTheme();
+    const {texts} = useTheme();
 
     if (!onClose) {
         return <>{children}</>;
@@ -44,7 +43,7 @@ const MaybeDismissable = ({
                 <div className={styles.dismissableButton}>
                     <InternalIconButton
                         onPress={onClose}
-                        aria-label={texts.closeButtonLabel || t(tokens.closeButtonLabel)}
+                        aria-label={texts.closeButtonLabel}
                         small
                         isOverMedia={isOverMedia}
                         Icon={IconCloseRegular}

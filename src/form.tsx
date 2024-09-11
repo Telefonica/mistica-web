@@ -4,7 +4,6 @@ import {useTheme} from './hooks';
 import {FormContext} from './form-context';
 import classnames from 'classnames';
 import {sprinkles} from './sprinkles.css';
-import * as tokens from './text-tokens';
 
 import type {FormStatus, FormErrors, FieldRegistration} from './form-context';
 
@@ -30,7 +29,7 @@ type FormProps = {
     className?: string;
 };
 
-const Form: React.FC<FormProps> = ({
+const Form = ({
     children,
     className,
     onSubmit,
@@ -38,7 +37,7 @@ const Form: React.FC<FormProps> = ({
     autoJump = false,
     onValidationErrors,
     id: idProp,
-}) => {
+}: FormProps): JSX.Element => {
     const isMountedRef = React.useRef(true); // https://github.com/facebook/react/issues/14369#issuecomment-468305796
     const [values, setValues] = React.useState(initialValues);
     const [rawValues, setRawValues] = React.useState(initialValues);
@@ -46,7 +45,7 @@ const Form: React.FC<FormProps> = ({
     const [formErrors, setFormErrors] = React.useState<FormErrors>({});
     const fieldRegistrations = React.useRef(new Map<string, FieldRegistration>());
     const formRef = React.useRef<HTMLFormElement | null>(null);
-    const {texts, t} = useTheme();
+    const {texts} = useTheme();
     const reactId = React.useId();
     const id = idProp || reactId;
 
@@ -95,7 +94,7 @@ const Form: React.FC<FormProps> = ({
                     continue;
                 }
                 if (input.required && !rawValues[name]?.trim()) {
-                    errors[name] = texts.formFieldErrorIsMandatory || t(tokens.formFieldErrorIsMandatory);
+                    errors[name] = texts.formFieldErrorIsMandatory;
                 } else {
                     const error = validator?.(values[name], rawValues[name]);
                     if (error) {
@@ -131,7 +130,7 @@ const Form: React.FC<FormProps> = ({
             onValidationErrors(errors);
         }
         return errors;
-    }, [onValidationErrors, rawValues, texts, values, t]);
+    }, [onValidationErrors, rawValues, texts, values]);
 
     const jumpToNext = React.useCallback(
         (currentName: string) => {

@@ -26,7 +26,6 @@ import Inline from './inline';
 import {getPrefixedDataAttributes} from './utils/dom';
 import {isRunningAcceptanceTest} from './utils/platform';
 import {applyCssVars} from './utils/css';
-import * as tokens from './text-tokens';
 
 import type {Variant} from './theme-variant-context';
 import type {PressHandler} from './touchable';
@@ -56,7 +55,7 @@ const useInnerText = () => {
 };
 
 type BaseIconButtonAction = {
-    Icon: React.FC<IconProps>;
+    Icon: (props: IconProps) => JSX.Element;
     label: string;
 };
 
@@ -90,12 +89,12 @@ const useTopActions = (
     onClose?: () => void,
     closeButtonLabel?: string
 ) => {
-    const {texts, t} = useTheme();
+    const {texts} = useTheme();
     const finalActions = actions ? [...actions] : [];
 
     if (onClose) {
         finalActions.push({
-            label: closeButtonLabel || texts.closeButtonLabel || t(tokens.closeButtonLabel),
+            label: closeButtonLabel ?? texts.closeButtonLabel,
             onPress: onClose,
             Icon: IconCloseRegular,
         });
@@ -303,7 +302,7 @@ export const useVideoWithControls = (
     video?: React.ReactNode;
     videoAction?: CardAction;
 } => {
-    const {texts, t} = useTheme();
+    const {texts} = useTheme();
     const videoController = React.useRef<VideoElement>(null);
     const [videoStatus, dispatch] = React.useReducer(videoReducer, 'loading');
 
@@ -356,14 +355,11 @@ export const useVideoWithControls = (
                       videoStatus === 'loadingTimeout' && !isRunningAcceptanceTest()
                           ? CardActionSpinner
                           : CardActionPauseIcon,
-                  label:
-                      videoStatus === 'loadingTimeout'
-                          ? ''
-                          : texts.pauseIconButtonLabel || t(tokens.pauseIconButtonLabel),
+                  label: videoStatus === 'loadingTimeout' ? '' : texts.pauseIconButtonLabel,
               },
               checkedProps: {
                   Icon: CardActionPlayIcon,
-                  label: texts.playIconButtonLabel || t(tokens.playIconButtonLabel),
+                  label: texts.playIconButtonLabel,
               },
               onChange: onVideoControlPress,
               disabled: videoStatus === 'loadingTimeout',
@@ -395,7 +391,7 @@ type CardContentProps = {
     buttonLink?: RendersNullableElement<typeof ButtonLink>;
 };
 
-const CardContent: React.FC<CardContentProps> = ({
+const CardContent = ({
     headline,
     headlineRef,
     pretitle,
@@ -411,7 +407,7 @@ const CardContent: React.FC<CardContentProps> = ({
     extraRef,
     button,
     buttonLink,
-}) => {
+}: CardContentProps) => {
     const {textPresets} = useTheme();
     return (
         <div
@@ -1133,7 +1129,7 @@ interface DisplayCardContentProps {
     extraRef?: (instance: HTMLElement | null) => void;
 }
 
-const DisplayCardContent: React.FC<DisplayCardContentProps> = ({
+const DisplayCardContent = ({
     title,
     headline,
     pretitle,
@@ -1142,7 +1138,7 @@ const DisplayCardContent: React.FC<DisplayCardContentProps> = ({
     extra,
     headlineRef,
     extraRef,
-}) => {
+}: DisplayCardContentProps) => {
     // using flex instead of nested Stacks, this way we can rearrange texts so the DOM structure makes more sense for screen reader users
     return (
         <div className={styles.flexColumn}>

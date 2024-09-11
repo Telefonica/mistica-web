@@ -79,7 +79,7 @@ interface ContentProps extends CommonProps {
     labelId?: string;
 }
 
-export const Content: React.FC<ContentProps> = ({
+export const Content = ({
     withChevron,
     headline,
     headlineRef,
@@ -101,7 +101,7 @@ export const Content: React.FC<ContentProps> = ({
     labelId,
     disabled,
     control,
-}) => {
+}: ContentProps): JSX.Element => {
     const isInverse = useIsInverseVariant();
     const numTextLines = [headline, title, subtitle, description, extra].filter(Boolean).length;
     const centerY = numTextLines === 1;
@@ -644,12 +644,12 @@ type RowListProps = {
     dataAttributes?: DataAttributes;
 };
 
-export const RowList: React.FC<RowListProps> = ({
+export const RowList = ({
     children,
     ariaLabelledby,
     role = 'list',
     dataAttributes,
-}) => {
+}: RowListProps): JSX.Element => {
     const childrenContent = React.Children.toArray(children).filter(Boolean);
     const lastIndex = childrenContent.length - 1;
     return (
@@ -716,12 +716,12 @@ type BoxedRowListProps = {
     dataAttributes?: DataAttributes;
 };
 
-export const BoxedRowList: React.FC<BoxedRowListProps> = ({
+export const BoxedRowList = ({
     children,
     ariaLabelledby,
     role = 'list',
     dataAttributes,
-}) => (
+}: BoxedRowListProps): JSX.Element => (
     <Stack
         space={16}
         role={role}

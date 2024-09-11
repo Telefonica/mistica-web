@@ -40,7 +40,7 @@ export type SelectProps = {
     children?: void;
 };
 
-const Select: React.FC<SelectProps> = ({
+const Select = ({
     id,
     label,
     helperText: helperTextProp,
@@ -56,7 +56,7 @@ const Select: React.FC<SelectProps> = ({
     onBlur,
     autoFocus = false,
     native,
-}) => {
+}: SelectProps): JSX.Element => {
     const inputRef = React.useRef<HTMLSelectElement | HTMLInputElement>(null);
     const focusableRef = React.useRef<HTMLSelectElement | HTMLDivElement>(null);
     const fieldRef = React.useRef<HTMLDivElement>(null);

@@ -12,7 +12,6 @@ import {vars} from './skins/skin-contract.css';
 import {InternalIconButton, InternalToggleIconButton} from './icon-button';
 import {ThemeVariant} from './theme-variant-context';
 import {iconSize} from './icon-button.css';
-import * as tokens from './text-tokens';
 
 import type {DataAttributes, IconProps} from './utils/types';
 import type {InputState} from './text-field-components';
@@ -36,19 +35,19 @@ type FieldEndIconProps = {
     disabled?: boolean;
 } & ExclusifyUnion<
     | {
-          Icon: React.FC<IconProps>;
+          Icon: (props: IconProps) => JSX.Element;
           'aria-label'?: string;
           onPress: (event: React.MouseEvent<HTMLElement>) => void;
       }
     | {
-          checkedProps: {Icon: React.FC<IconProps>; 'aria-label'?: string};
-          uncheckedProps: {Icon: React.FC<IconProps>; 'aria-label'?: string};
+          checkedProps: {Icon: (props: IconProps) => JSX.Element; 'aria-label'?: string};
+          uncheckedProps: {Icon: (props: IconProps) => JSX.Element; 'aria-label'?: string};
           onChange?: (checked: boolean) => void | undefined | Promise<void>;
           checked?: boolean;
       }
 >;
 
-export const FieldEndIcon: React.FC<FieldEndIconProps> = ({
+export const FieldEndIcon = ({
     hasBackgroundColor = true,
     onPress,
     onChange,
@@ -57,7 +56,7 @@ export const FieldEndIcon: React.FC<FieldEndIconProps> = ({
     checkedProps,
     uncheckedProps,
     'aria-label': ariaLabel,
-}) => {
+}: FieldEndIconProps): JSX.Element => {
     return (
         <div className={styles.fieldEndIconContainer}>
             {checkedProps ? (
@@ -436,7 +435,7 @@ export const TextFieldBaseAutosuggest = React.forwardRef<any, TextFieldBaseProps
     ({getSuggestions, id: idProp, ...props}, ref) => {
         const [suggestions, setSuggestions] = React.useState<ReadonlyArray<string>>([]);
         const inputRef = React.useRef<HTMLInputElement>(null);
-        const {platformOverrides, texts, t} = useTheme();
+        const {platformOverrides, texts} = useTheme();
         const reactId = React.useId();
         const id = idProp || reactId;
         const autoSuggestId = React.useId();
@@ -501,7 +500,7 @@ export const TextFieldBaseAutosuggest = React.forwardRef<any, TextFieldBaseProps
                                 width: inputRef.current ? inputRef.current.clientWidth + 2 : 0, // +2 due to borders (input)
                             }}
                             className={styles.suggestionsContainer}
-                            aria-label={`${props.label} ${texts.menuLabelSuffix || t(tokens.menuLabelSuffix)}`}
+                            aria-label={`${props.label} ${texts.menuLabelSuffix}`}
                         >
                             {options.children}
                         </div>

@@ -132,7 +132,7 @@ interface BaseProps {
 }
 
 interface IconButtonBaseProps {
-    Icon: React.FC<IconProps>;
+    Icon: (props: IconProps) => JSX.Element;
     type?: IconButtonType;
     backgroundType?: IconButtonBackgroundType;
 }
@@ -289,7 +289,7 @@ export const IconButton = React.forwardRef<
 });
 
 type ToggleStateProps = {
-    Icon: React.FC<IconProps>;
+    Icon: (props: IconProps) => JSX.Element;
     type?: IconButtonType;
     backgroundType?: IconButtonBackgroundType;
 } & AriaProps;

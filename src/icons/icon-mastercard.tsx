@@ -5,7 +5,7 @@ type Props = {
     size?: number | string;
 };
 
-const IconMastercard: React.FC<Props> = ({role = 'presentation', size = 24}) => (
+const IconMastercard = ({role = 'presentation', size = 24}: Props): JSX.Element => (
     <svg role={role} width={size} height={size} viewBox="0 0 32 32">
         <g fill="none" fillRule="evenodd">
             <rect width="32" height="32" fill="#FFF" fillRule="nonzero" rx="4" />
