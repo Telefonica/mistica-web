@@ -5435,9 +5435,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@telefonica/eslint-config@npm:^2.1.1":
-  version: 2.1.1
-  resolution: "@telefonica/eslint-config@npm:2.1.1"
+"@telefonica/eslint-config@npm:^2.2.0":
+  version: 2.2.0
+  resolution: "@telefonica/eslint-config@npm:2.2.0"
   dependencies:
     "@babel/core": ^7.0.0
     "@babel/eslint-parser": ^7.23.9
@@ -5456,7 +5456,7 @@ __metadata:
     eslint-plugin-testing-library: ^6.2.0
   peerDependencies:
     eslint: ^8.0.0
-  checksum: 8f5d1e71897613af0854ff3e5556b2d1fb94a77fd344bf75bc9d75673eca936652369f6ebcb162a48ada2d133bc1eeaa9772c2ebf467db9b3737b8f65cfa991b
+  checksum: 7e82d56454126df6e9c140ca3ac7528db9ea51ebdcb38b3311efaea63fa0a87f9026f7d4330c5f0ca1a31d21434abc8169dde0b48a20542c93a62ad9aa83269e
   languageName: node
   linkType: hard
 
@@ -5512,7 +5512,7 @@ __metadata:
     "@swc/jest": ^0.2.29
     "@tef-novum/webview-bridge": ^3.27.0
     "@telefonica/acceptance-testing": 5.0.0
-    "@telefonica/eslint-config": ^2.1.1
+    "@telefonica/eslint-config": ^2.2.0
     "@telefonica/libphonenumber": ^2.9.0
     "@telefonica/prettier-config": ^2.0.0
     "@testing-library/dom": ^10.2.0

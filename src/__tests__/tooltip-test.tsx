@@ -7,7 +7,7 @@ import userEvent from '@testing-library/user-event';
 
 type Props = Omit<React.ComponentProps<typeof Tooltip>, 'children' | 'target'>;
 
-const TestTooltip: React.FC<Props> = (props) => (
+const TestTooltip = (props: Props) => (
     <ThemeContextProvider theme={makeTheme()}>
         <Tooltip
             {...props}

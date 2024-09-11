@@ -126,7 +126,7 @@ interface TextProps extends TextPresetProps {
     forzeMobileSize?: never;
 }
 
-export const Text: React.FC<TextProps> = ({
+export const Text = ({
     weight,
     color = vars.colors.textPrimary,
     decoration,
@@ -150,7 +150,7 @@ export const Text: React.FC<TextProps> = ({
     'aria-level': ariaLevel,
     'aria-label': ariaLabel,
     dataAttributes,
-}) => {
+}: TextProps): JSX.Element | null => {
     const {skinName} = useTheme();
     const isInverse = useIsInverseOrOverMediaVariant();
     const lineClampValue = lineClamp(truncate);
@@ -346,7 +346,7 @@ export const textProps = {
     },
 };
 
-export const Text10: React.FC<TextPresetProps> = ({dataAttributes, forceMobileSizes, ...props}) => {
+export const Text10 = ({dataAttributes, forceMobileSizes, ...props}: TextPresetProps): JSX.Element => {
     const {textPresets} = useTheme();
     return (
         <Text
@@ -358,7 +358,7 @@ export const Text10: React.FC<TextPresetProps> = ({dataAttributes, forceMobileSi
     );
 };
 
-export const Text9: React.FC<TextPresetProps> = ({dataAttributes, forceMobileSizes, ...props}) => {
+export const Text9 = ({dataAttributes, forceMobileSizes, ...props}: TextPresetProps): JSX.Element => {
     const {textPresets} = useTheme();
     return (
         <Text
@@ -370,7 +370,7 @@ export const Text9: React.FC<TextPresetProps> = ({dataAttributes, forceMobileSiz
     );
 };
 
-export const Text8: React.FC<TextPresetProps> = ({dataAttributes, forceMobileSizes, ...props}) => {
+export const Text8 = ({dataAttributes, forceMobileSizes, ...props}: TextPresetProps): JSX.Element => {
     const {textPresets} = useTheme();
     return (
         <Text
@@ -382,7 +382,7 @@ export const Text8: React.FC<TextPresetProps> = ({dataAttributes, forceMobileSiz
     );
 };
 
-export const Text7: React.FC<TextPresetProps> = ({dataAttributes, forceMobileSizes, ...props}) => {
+export const Text7 = ({dataAttributes, forceMobileSizes, ...props}: TextPresetProps): JSX.Element => {
     const {textPresets} = useTheme();
     return (
         <Text
@@ -394,7 +394,7 @@ export const Text7: React.FC<TextPresetProps> = ({dataAttributes, forceMobileSiz
     );
 };
 
-export const Text6: React.FC<TextPresetProps> = ({dataAttributes, forceMobileSizes, ...props}) => {
+export const Text6 = ({dataAttributes, forceMobileSizes, ...props}: TextPresetProps): JSX.Element => {
     const {textPresets} = useTheme();
     return (
         <Text
@@ -406,7 +406,7 @@ export const Text6: React.FC<TextPresetProps> = ({dataAttributes, forceMobileSiz
     );
 };
 
-export const Text5: React.FC<TextPresetProps> = ({dataAttributes, forceMobileSizes, ...props}) => {
+export const Text5 = ({dataAttributes, forceMobileSizes, ...props}: TextPresetProps): JSX.Element => {
     const {textPresets} = useTheme();
     return (
         <Text
@@ -418,7 +418,7 @@ export const Text5: React.FC<TextPresetProps> = ({dataAttributes, forceMobileSiz
     );
 };
 
-export const Text4: React.FC<LightRegularMediumProps> = ({dataAttributes, forceMobileSizes, ...props}) => (
+export const Text4 = ({dataAttributes, forceMobileSizes, ...props}: LightRegularMediumProps): JSX.Element => (
     <Text
         {...getTextSizes({forceMobileSizes, ...textProps.text4})}
         weight={getWeight(props)}
@@ -427,7 +427,7 @@ export const Text4: React.FC<LightRegularMediumProps> = ({dataAttributes, forceM
     />
 );
 
-export const Text3: React.FC<LightRegularMediumProps> = ({dataAttributes, forceMobileSizes, ...props}) => (
+export const Text3 = ({dataAttributes, forceMobileSizes, ...props}: LightRegularMediumProps): JSX.Element => (
     <Text
         {...getTextSizes({forceMobileSizes, ...textProps.text3})}
         weight={getWeight(props)}
@@ -436,7 +436,7 @@ export const Text3: React.FC<LightRegularMediumProps> = ({dataAttributes, forceM
     />
 );
 
-export const Text2: React.FC<RegularMediumProps> = ({dataAttributes, forceMobileSizes, ...props}) => (
+export const Text2 = ({dataAttributes, forceMobileSizes, ...props}: RegularMediumProps): JSX.Element => (
     <Text
         {...getTextSizes({forceMobileSizes, ...textProps.text2})}
         weight={getWeight(props)}
@@ -445,7 +445,7 @@ export const Text2: React.FC<RegularMediumProps> = ({dataAttributes, forceMobile
     />
 );
 
-export const Text1: React.FC<RegularMediumProps> = ({dataAttributes, forceMobileSizes, ...props}) => (
+export const Text1 = ({dataAttributes, forceMobileSizes, ...props}: RegularMediumProps): JSX.Element => (
     <Text
         {...getTextSizes({forceMobileSizes, ...textProps.text1})}
         weight={getWeight(props)}

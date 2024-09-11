@@ -26,7 +26,7 @@ type Props = {
  *   <IconButton aria-label="Shopping Cart with 2 items" Icon={IconShoppingCartFilled}/>
  * </Badge>
  */
-const Badge: React.FC<Props> = ({children, value, right, top, dataAttributes}) => {
+const Badge = ({children, value, right, top, dataAttributes}: Props): JSX.Element | null => {
     const isInverse = useIsInverseOrOverMediaVariant();
     const {textPresets} = useTheme();
     if (children && value === 0) {

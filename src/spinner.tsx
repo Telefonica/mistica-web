@@ -16,7 +16,7 @@ type Props = {
     children?: void;
 };
 
-const Spinner: React.FC<Props> = ({color, delay = '500ms', size = 24, style, rolePresentation}) => {
+const Spinner = ({color, delay = '500ms', size = 24, style, rolePresentation}: Props): JSX.Element => {
     const {texts, platformOverrides} = useTheme();
     const isInverse = useIsInverseOrOverMediaVariant();
     color = color || (isInverse ? vars.colors.controlActivatedInverse : vars.colors.controlActivated);

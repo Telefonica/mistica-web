@@ -12,7 +12,7 @@ type ThemeVariantProps = {
     children: React.ReactNode;
 };
 
-export const ThemeVariant: React.FC<ThemeVariantProps> = ({isInverse, variant, children}) => (
+export const ThemeVariant = ({isInverse, variant, children}: ThemeVariantProps): JSX.Element => (
     <ThemeVariantContext.Provider value={variant ?? (isInverse ? 'inverse' : 'default')}>
         {children}
     </ThemeVariantContext.Provider>

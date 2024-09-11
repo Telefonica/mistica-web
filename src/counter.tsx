@@ -68,7 +68,7 @@ type Props = {
     valueLabel?: string;
 };
 
-const Counter: React.FC<Props> = ({
+const Counter = ({
     value,
     defaultValue,
     onChangeValue,
@@ -81,7 +81,7 @@ const Counter: React.FC<Props> = ({
     increaseLabel,
     decreaseLabel,
     valueLabel,
-}) => {
+}: Props): JSX.Element => {
     const variant = useThemeVariant();
     const counterId = useAriaId();
     const {texts} = useTheme();

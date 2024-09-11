@@ -18,7 +18,12 @@ type Props = {
     children: React.ReactNode;
 };
 
-const StackingGroup: React.FC<Props> = ({moreItemsStyle, stacked = true, maxItems = Infinity, children}) => {
+const StackingGroup = ({
+    moreItemsStyle,
+    stacked = true,
+    maxItems = Infinity,
+    children,
+}: Props): JSX.Element => {
     const isInverse = useIsInverseOrOverMediaVariant();
     const countChildren = React.Children.count(children);
     const moreItemsCount = countChildren - maxItems + 1;

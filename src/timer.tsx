@@ -190,7 +190,7 @@ const useTimerState = ({
     return timerValue;
 };
 
-export const TextTimer: React.FC<TextTimerProps> = ({
+export const TextTimer = ({
     endTimestamp,
     labelType = 'none',
     minTimeUnit,
@@ -198,7 +198,7 @@ export const TextTimer: React.FC<TextTimerProps> = ({
     onProgress,
     dataAttributes,
     'aria-label': ariaLabel,
-}) => {
+}: TextTimerProps): JSX.Element => {
     const {texts} = useTheme();
     const labelId = useAriaId();
 
@@ -306,7 +306,7 @@ export const TextTimer: React.FC<TextTimerProps> = ({
     );
 };
 
-export const Timer: React.FC<TimerProps> = ({
+export const Timer = ({
     boxed,
     endTimestamp,
     minTimeUnit,
@@ -314,7 +314,7 @@ export const Timer: React.FC<TimerProps> = ({
     onProgress,
     dataAttributes,
     'aria-label': ariaLabel,
-}) => {
+}: TimerProps): JSX.Element => {
     const {texts} = useTheme();
     const labelId = useAriaId();
     const themeVariant = useThemeVariant();
