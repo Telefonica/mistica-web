@@ -1,6 +1,5 @@
 import * as React from 'react';
 import {
-    ThemeVariant,
     skinVars,
     Text2,
     Stack,
@@ -45,21 +44,20 @@ type Args = {
 };
 
 export const Default: StoryComponent<Args> = ({themeVariant}) => {
-    const background = {
-        default: 'transparent',
-        inverse: skinVars.colors.backgroundBrand,
-        overMedia: skinVars.colors.backgroundBrand,
-        alternative: skinVars.colors.backgroundAlternative,
-    }[themeVariant];
     return (
-        <div style={{background}}>
-            <ResponsiveLayout>
-                <Box paddingY={24}>
-                    <ThemeVariant variant={themeVariant}>
+        <div style={{position: 'relative'}}>
+            {themeVariant === 'overMedia' && (
+                <div style={{position: 'absolute', width: '100%', height: '100%'}}>
+                    <Image src={beachImg} width="100%" height="100%" noBorderRadius />
+                </div>
+            )}
+            <div style={{position: 'relative'}}>
+                <ResponsiveLayout variant={themeVariant}>
+                    <Box paddingY={24}>
                         <OtherComponent />
-                    </ThemeVariant>
-                </Box>
-            </ResponsiveLayout>
+                    </Box>
+                </ResponsiveLayout>
+            </div>
         </div>
     );
 };
@@ -80,21 +78,18 @@ export const ComponentsOverDifferentThemeVariants: StoryComponent<Args> = ({them
     return (
         <div style={{position: 'relative'}}>
             {themeVariant === 'overMedia' && (
-                <div style={{position: 'absolute', height: '100%'}}>
-                    <Image src={beachImg} height="100%" />
+                <div style={{position: 'absolute', width: '100%', height: '100%'}}>
+                    <Image src={beachImg} width="100%" height="100%" noBorderRadius />
                 </div>
             )}
             <div style={{position: 'relative'}}>
-                <ResponsiveLayout
-                    variant={themeVariant}
-                    backgroundColor={themeVariant === 'overMedia' ? 'transparent' : undefined}
-                >
+                <ResponsiveLayout variant={themeVariant}>
                     <Box paddingY={24}>
                         <Stack space={16}>
                             <Callout
                                 onClose={() => {}}
                                 title="Callout title"
-                                description="Calloout description"
+                                description="Callout description"
                                 button={
                                     <ButtonPrimary small onPress={() => {}}>
                                         Action
