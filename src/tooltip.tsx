@@ -1,6 +1,6 @@
 'use client';
 import * as React from 'react';
-import {useAriaId, useBoundingRect, useTheme, useWindowSize} from './hooks';
+import {useBoundingRect, useTheme, useWindowSize} from './hooks';
 import {Portal} from './portal';
 import {Transition} from 'react-transition-group';
 import * as styles from './tooltip.css';
@@ -19,6 +19,7 @@ import {isRunningAcceptanceTest} from './utils/platform';
 import {IconButton} from './icon-button';
 import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
 import Box from './box';
+import * as tokens from './text-tokens';
 
 import type {BoundingRect} from './hooks';
 import type {DataAttributes, TrackingEvent} from './utils/types';
@@ -172,8 +173,8 @@ export const BaseTooltip = ({
     hasPointerInteractionOnly = false,
     trackingEvent,
 }: BaseTooltipProps): JSX.Element => {
-    const {texts} = useTheme();
-    const tooltipId = useAriaId();
+    const {texts, t} = useTheme();
+    const tooltipId = React.useId();
     const {openTooltipId} = useTooltipState();
     const {openTooltip, closeTooltip} = useSetTooltipState();
 
@@ -578,7 +579,9 @@ export const BaseTooltip = ({
                                                             }}
                                                             trackingEvent={trackingEvent}
                                                             aria-label={
-                                                                closeButtonLabel ?? texts.closeButtonLabel
+                                                                closeButtonLabel ||
+                                                                texts.closeButtonLabel ||
+                                                                t(tokens.closeButtonLabel)
                                                             }
                                                             Icon={IconCloseRegular}
                                                             small

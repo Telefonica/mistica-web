@@ -6,7 +6,7 @@ import ResponsiveLayout from './responsive-layout';
 import Inline from './inline';
 import Touchable, {BaseTouchable} from './touchable';
 import {Text2, Text3} from './text';
-import {useScreenSize, useTheme, useAriaId} from './hooks';
+import {useScreenSize, useTheme} from './hooks';
 import IconMenuRegular from './generated/mistica-icons/icon-menu-regular';
 import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
 import IconChevronLeftRegular from './generated/mistica-icons/icon-chevron-left-regular';
@@ -26,6 +26,7 @@ import {getPrefixedDataAttributes} from './utils/dom';
 import Stack from './stack';
 import Box from './box';
 import {isRunningAcceptanceTest} from './utils/platform';
+import * as tokens from './text-tokens';
 
 import type {Variant} from './theme-variant-context';
 import type {TouchableProps} from './touchable';
@@ -50,8 +51,6 @@ type HeaderProps = {
     children: React.ReactNode;
     topFixed?: boolean;
     variant?: Variant;
-    /** @deprecated Use variant instead */
-    isInverse?: boolean;
     withBorder?: boolean;
     isMenuOpen?: boolean;
     dataAttributes?: DataAttributes;
@@ -63,16 +62,13 @@ const Header = ({
     topFixed,
     withBorder,
     isMenuOpen,
-    variant,
-    isInverse,
+    variant = 'default',
     dataAttributes,
 }: HeaderProps) => {
     const {isDarkMode} = useTheme();
 
-    const headerVariant = variant ?? (isInverse ? 'inverse' : 'default');
-
     const getBorderClass = () => {
-        const inverse = headerVariant === 'inverse' && !isDarkMode;
+        const inverse = variant === 'inverse' && !isDarkMode;
         if (inverse || !withBorder) return styles.navbarBorderColorVariants.noBorder;
         if (isMenuOpen) return styles.navbarBorderColorVariants.menuOpen;
 
@@ -89,7 +85,7 @@ const Header = ({
         <header
             className={classnames(getBorderClass(), {[styles.topFixed]: topFixed})}
             style={{
-                background: backgroundColor[headerVariant],
+                background: backgroundColor[variant],
             }}
             {...getPrefixedDataAttributes(dataAttributes)}
         >
@@ -128,8 +124,6 @@ type MainNavigationBarPropsBase = {
     right?: React.ReactElement;
     logo?: React.ReactElement;
     variant?: Variant;
-    /** @deprecated Use variant instead */
-    isInverse?: boolean;
     children?: undefined;
     topFixed?: boolean;
     withBorder?: boolean;
@@ -145,18 +139,17 @@ export const MainNavigationBar = ({
     sections = [],
     selectedIndex,
     right,
-    variant,
-    isInverse = false,
+    variant = 'default',
     topFixed = true,
     withBorder = true,
     burgerMenuExtra,
     logo,
     large = false,
 }: MainNavigationBarProps): JSX.Element => {
-    const {texts, isDarkMode} = useTheme();
+    const {texts, isDarkMode, t} = useTheme();
     const [isMenuOpen, setIsMenuOpen] = React.useState(false);
     const [menuTransitionState, setMenuTransitionState] = React.useState<MenuTransitionState>('closed');
-    const menuId = useAriaId();
+    const menuId = React.useId();
     const shadowAlpha = isDarkMode ? 1 : 0.2;
     const {isTabletOrSmaller} = useScreenSize();
     const setModalState = useSetModalState();
@@ -174,12 +167,10 @@ export const MainNavigationBar = ({
                                 styles.section,
                                 {
                                     [styles.selectedSectionVariantes[
-                                        variant === 'inverse' || isInverse ? 'inverse' : 'default'
+                                        variant === 'inverse' ? 'inverse' : 'default'
                                     ]]: idx === selectedIndex,
                                 },
-                                styles.textWrapperVariants[
-                                    variant === 'inverse' || isInverse ? 'inverse' : 'default'
-                                ]
+                                styles.textWrapperVariants[variant === 'inverse' ? 'inverse' : 'default']
                             )}
                         >
                             <Text3 regular color="inherit">
@@ -209,13 +200,12 @@ export const MainNavigationBar = ({
     const showBurger = sections.length > 1;
 
     const mainNavBar = (
-        <ThemeVariant variant={variant} isInverse={isInverse}>
+        <ThemeVariant variant={variant}>
             <Header
                 topFixed={topFixed}
                 withBorder={withBorder}
                 isMenuOpen={isMenuOpen}
                 variant={variant}
-                isInverse={isInverse}
                 dataAttributes={{'component-name': 'MainNavigationBar'}}
             >
                 <ResponsiveLayout>
@@ -226,7 +216,9 @@ export const MainNavigationBar = ({
                                     className={styles.burgerMenuButton}
                                     aria-live="polite"
                                     aria-label={
-                                        isMenuOpen ? texts.closeNavigationMenu : texts.openNavigationMenu
+                                        isMenuOpen
+                                            ? texts.closeNavigationMenu || t(tokens.closeNavigationMenu)
+                                            : texts.openNavigationMenu || t(tokens.openNavigationMenu)
                                     }
                                     aria-expanded={isMenuOpen}
                                     aria-controls={menuId}
@@ -325,8 +317,6 @@ export const MainNavigationBar = ({
 };
 
 interface NavigationBarCommonProps {
-    /** @deprecated Use variant instead */
-    isInverse?: boolean;
     variant?: Variant;
     onBack?: () => void;
     title?: string;
@@ -353,19 +343,18 @@ export const NavigationBar = ({
     title,
     titleAs,
     right,
-    variant,
-    isInverse = false,
+    variant = 'default',
     topFixed = true,
     paddingX = 0,
     withBorder = true,
 }: NavigationBarProps): JSX.Element => {
-    const {texts} = useTheme();
+    const {texts, t} = useTheme();
     const content = (
         <NavigationBarContentContainer right={right}>
             <Inline space={24} alignItems="center">
                 {onBack && (
                     <IconButton
-                        aria-label={texts.backNavigationBar}
+                        aria-label={texts.backNavigationBar || t(tokens.backNavigationBar)}
                         onPress={onBack}
                         Icon={IconChevronLeftRegular}
                         bleedLeft
@@ -379,12 +368,11 @@ export const NavigationBar = ({
         </NavigationBarContentContainer>
     );
     return (
-        <ThemeVariant variant={variant} isInverse={isInverse}>
+        <ThemeVariant variant={variant}>
             <Header
                 topFixed={topFixed}
                 withBorder={withBorder}
                 variant={variant}
-                isInverse={isInverse}
                 dataAttributes={{'component-name': 'NavigationBar'}}
             >
                 {topFixed ? (
@@ -409,8 +397,6 @@ export const NavigationBar = ({
 
 type FunnelNavigationBarProps = {
     variant?: Variant;
-    /** @deprecated Use variant instead */
-    isInverse?: boolean;
     logo?: React.ReactElement;
     right?: React.ReactElement;
     topFixed?: boolean;
@@ -421,20 +407,18 @@ type FunnelNavigationBarProps = {
 export const FunnelNavigationBar = ({
     logo,
     right,
-    variant,
-    isInverse = false,
+    variant = 'default',
     topFixed = true,
     withBorder = true,
 }: FunnelNavigationBarProps): JSX.Element => {
     logo = logo ?? <Logo size={{mobile: 40, desktop: 48}} />;
 
     return (
-        <ThemeVariant variant={variant} isInverse={isInverse}>
+        <ThemeVariant variant={variant}>
             <Header
                 topFixed={topFixed}
                 withBorder={withBorder}
                 variant={variant}
-                isInverse={isInverse}
                 dataAttributes={{'component-name': 'FunnelNavigationBar'}}
             >
                 <ResponsiveLayout>

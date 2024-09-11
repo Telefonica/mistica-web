@@ -162,8 +162,8 @@
         "semver-compare": "^1.0.0"
     },
     "peerDependencies": {
-        "react": "17.x || 18.x",
-        "react-dom": "17.x || 18.x"
+        "react": "18.x",
+        "react-dom": "18.x"
     },
     "publishConfig": {
         "registry": "https://registry.npmjs.org",

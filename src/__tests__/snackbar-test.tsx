@@ -12,7 +12,7 @@ test('Snackbar', async () => {
 
     render(
         <ThemeContextProvider theme={makeTheme()}>
-            <Snackbar message="Some message" onClose={onCloseSpy} buttonText="Action" duration={Infinity} />
+            <Snackbar message="Some message" onClose={onCloseSpy} buttonText="Action" duration="PERSISTENT" />
         </ThemeContextProvider>
     );
     expect(screen.getByText('Some message')).toBeInTheDocument();
@@ -61,7 +61,7 @@ test('Snackbar with dismiss button', async () => {
                 message="Some message"
                 onClose={onCloseSpy}
                 buttonText="Action"
-                duration={Infinity}
+                duration="PERSISTENT"
                 withDismiss
             />
         </ThemeContextProvider>
@@ -87,7 +87,7 @@ test('Snackbar with dismiss button and custom label', async () => {
                 onClose={onCloseSpy}
                 buttonText="Action"
                 closeButtonLabel="custom close label"
-                duration={Infinity}
+                duration="PERSISTENT"
                 withDismiss
             />
         </ThemeContextProvider>
@@ -106,7 +106,7 @@ test('Snackbar with dismiss button and custom label', async () => {
 test('Snackbar does not have dismiss button by default', async () => {
     render(
         <ThemeContextProvider theme={makeTheme()}>
-            <Snackbar message="Some message" buttonText="Action" duration={Infinity} />
+            <Snackbar message="Some message" buttonText="Action" duration="PERSISTENT" />
         </ThemeContextProvider>
     );
     const actionButton = await screen.findByRole('button', {name: 'Action'});
@@ -119,7 +119,7 @@ test('Snackbar always has dismiss button if it does not have action button and d
         <ThemeContextProvider theme={makeTheme()}>
             <Snackbar
                 message="Some message"
-                duration={Infinity}
+                duration="PERSISTENT"
                 withDismiss={false} // even when setting this to false explicitly
             />
         </ThemeContextProvider>
@@ -165,7 +165,7 @@ test('nativeMessage is called with duration PERSISTENT when duration is Infinity
                 message="any-message"
                 onClose={onCloseSpy}
                 buttonText="any-button-text"
-                duration={Infinity}
+                duration="PERSISTENT"
             />
         </ThemeContextProvider>
     );
@@ -312,7 +312,7 @@ test('Snackbar with button aria-label', async () => {
                 onClose={onCloseSpy}
                 buttonText="Action"
                 buttonAccessibilityLabel="some a11y label"
-                duration={Infinity}
+                duration="PERSISTENT"
             />
         </ThemeContextProvider>
     );
