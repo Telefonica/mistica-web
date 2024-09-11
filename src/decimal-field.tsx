@@ -49,14 +49,14 @@ const format = (value: any, maxDecimals: number) => {
  */
 type DecimalInputProps = any;
 
-export const DecimalInput: React.FC<DecimalInputProps> = ({
+export const DecimalInput = ({
     inputRef,
     value,
     defaultValue,
     onChange,
     maxDecimals,
     ...rest
-}) => {
+}: DecimalInputProps): JSX.Element => {
     const {i18n} = useTheme();
     const localDecimalChar = getLocalDecimalChar(i18n.locale);
 
@@ -109,7 +109,7 @@ export interface DecimalFieldProps extends CommonFormFieldProps {
     maxDecimals?: number;
 }
 
-const DecimalField: React.FC<DecimalFieldProps> = ({
+const DecimalField = ({
     disabled,
     error,
     helperText,
@@ -124,7 +124,7 @@ const DecimalField: React.FC<DecimalFieldProps> = ({
     maxDecimals = Infinity,
     dataAttributes,
     ...rest
-}) => {
+}: DecimalFieldProps): JSX.Element => {
     const {texts} = useTheme();
 
     const validate = (value: string | undefined, rawValue: string) => {

@@ -29,7 +29,7 @@ type FormProps = {
     className?: string;
 };
 
-const Form: React.FC<FormProps> = ({
+const Form = ({
     children,
     className,
     onSubmit,
@@ -37,7 +37,7 @@ const Form: React.FC<FormProps> = ({
     autoJump = false,
     onValidationErrors,
     id: idProp,
-}) => {
+}: FormProps): JSX.Element => {
     const isMountedRef = React.useRef(true); // https://github.com/facebook/react/issues/14369#issuecomment-468305796
     const [values, setValues] = React.useState(initialValues);
     const [rawValues, setRawValues] = React.useState(initialValues);

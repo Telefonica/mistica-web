@@ -7,15 +7,15 @@ export default {
 };
 
 type Args = {
-    inverseInside: boolean;
-    inverseOutside: boolean;
+    inverse: boolean;
+    overInverse: boolean;
 };
 
-export const Default: StoryComponent<Args> = ({inverseInside, inverseOutside}) => {
+export const Default: StoryComponent<Args> = ({inverse, overInverse}) => {
     return (
-        <ResponsiveLayout dataAttributes={{testid: 'boxed'}} fullWidth isInverse={inverseOutside}>
+        <ResponsiveLayout dataAttributes={{testid: 'boxed'}} fullWidth isInverse={overInverse}>
             <Box padding={16}>
-                <Boxed isInverse={inverseInside}>
+                <Boxed isInverse={inverse}>
                     <Box padding={16}>
                         <Text8>Text</Text8>
                     </Box>
@@ -27,6 +27,6 @@ export const Default: StoryComponent<Args> = ({inverseInside, inverseOutside}) =
 
 Default.storyName = 'Boxed';
 Default.args = {
-    inverseInside: false,
-    inverseOutside: false,
+    inverse: false,
+    overInverse: false,
 };

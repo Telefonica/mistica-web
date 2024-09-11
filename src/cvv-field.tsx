@@ -50,7 +50,7 @@ export interface CvvFieldProps extends CommonFormFieldProps {
     onChangeValue?: (value: string, rawValue: string) => void;
 }
 
-const CvvField: React.FC<CvvFieldProps> = ({
+const CvvField = ({
     disabled,
     error,
     helperText,
@@ -67,7 +67,7 @@ const CvvField: React.FC<CvvFieldProps> = ({
     defaultValue,
     dataAttributes,
     ...rest
-}) => {
+}: CvvFieldProps): JSX.Element => {
     const {texts} = useTheme();
     const {setFormError, jumpToNext} = useForm();
     const [isCvvHelpOpen, setIsCvvHelpOpen] = React.useState(false);

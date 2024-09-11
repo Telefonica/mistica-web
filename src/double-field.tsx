@@ -32,7 +32,7 @@ type Props = {
     layout?: '50/50' | '40/60' | '60/40';
 };
 
-const DoubleField: React.FC<Props> = ({children, fullWidth, layout}) => {
+const DoubleField = ({children, fullWidth, layout}: Props): JSX.Element => {
     let rightWidth: string;
     let leftWidth: string;
     if (layout === '40/60') {
