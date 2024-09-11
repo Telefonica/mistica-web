@@ -24,7 +24,7 @@ type ButtonLayoutProps = {
 
 const buttonsRange = [ButtonPrimary, ButtonDanger, ButtonSecondary];
 
-const ButtonLayout: React.FC<ButtonLayoutProps> = ({
+const ButtonLayout = ({
     children,
     primaryButton,
     secondaryButton,
@@ -32,7 +32,7 @@ const ButtonLayout: React.FC<ButtonLayoutProps> = ({
     link,
     withMargins = false,
     dataAttributes,
-}) => {
+}: ButtonLayoutProps): JSX.Element => {
     const sortedButtons = React.Children.toArray(children as any).sort((b1: any, b2: any) => {
         const range1 = buttonsRange.indexOf(b1.type);
         const range2 = buttonsRange.indexOf(b2.type);

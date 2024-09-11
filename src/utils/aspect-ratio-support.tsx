@@ -13,7 +13,7 @@ type Props = {
     children: React.ReactNode;
 };
 
-export const AspectRatioSupportProvider: React.FC<Props> = ({children}) => {
+export const AspectRatioSupportProvider = ({children}: Props): JSX.Element => {
     // In SSR (and in first client side render) we assume the browser will support it
     const [isSupported, setIsSupported] = React.useState(true);
 

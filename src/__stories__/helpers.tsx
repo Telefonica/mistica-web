@@ -7,7 +7,7 @@ type Props = {
     children: React.ReactNode;
 };
 
-export const StorySection: React.FC<Props> = ({title, children}) => {
+export const StorySection = ({title, children}: Props): JSX.Element => {
     const isInverse = useIsInverseVariant();
     return (
         <div style={{marginBottom: 32}}>
