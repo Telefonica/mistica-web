@@ -1,11 +1,9 @@
-import {style, globalStyle, styleVariants, createVar} from '@vanilla-extract/css';
+import {style, globalStyle, styleVariants} from '@vanilla-extract/css';
 import {sprinkles} from './sprinkles.css';
 import * as mq from './media-queries.css';
+import * as buttonStyles from './button.css';
 
 const buttonLayoutSpacing = '16px';
-const buttonLinkPadding = createVar();
-
-export const vars = {buttonLinkPadding};
 
 export const margins = style({
     margin: '16px 0',
@@ -80,13 +78,6 @@ globalStyle(`${alignVariant['full-width']} > *:not(${linkBase})`, {
     },
 });
 
-const bleedLeft = {
-    marginLeft: `calc(${buttonLayoutSpacing} / 2 - ${buttonLinkPadding})`,
-};
-const bleedRight = {
-    marginRight: `calc(${buttonLayoutSpacing} / 2 - ${buttonLinkPadding})`,
-};
-
 export const link = style([
     linkBase,
     {
@@ -94,19 +85,9 @@ export const link = style([
     },
 ]);
 
-export const linkInNewLine = style([
-    linkBase,
-    {
-        selectors: {
-            [`${alignVariant.right} &`]: bleedRight,
-
-            [`${alignVariant.left} &`]: bleedLeft,
-            // in desktop, full-width is equivalent to left
-            [`${alignVariant['full-width']} &`]: {
-                '@media': {
-                    [mq.desktopOrBigger]: bleedLeft,
-                },
-            },
-        },
-    },
-]);
+export const linkInNewLine = styleVariants({
+    center: [linkBase],
+    left: [linkBase, buttonStyles.forceLinkBleedLeft],
+    right: [linkBase, buttonStyles.forceLinkBleedRight],
+    'full-width': [linkBase, buttonStyles.forceLinkBleedLeftOnlyDesktop],
+});

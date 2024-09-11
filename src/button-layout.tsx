@@ -59,7 +59,7 @@ const ButtonLayout = ({
 
     const linkContainer = link ? (
         <div
-            className={classnames(numberOfButtons !== 1 ? styles.linkInNewLine : styles.link)}
+            className={classnames(numberOfButtons !== 1 ? styles.linkInNewLine[align] : styles.link)}
             data-link="true"
         >
             {link}
