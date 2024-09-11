@@ -34,9 +34,9 @@ type DisplayDataCardArgs = {
     pretitle: string;
     title: string;
     description: string;
-    withExtra: boolean;
+    extra: boolean;
     closable: boolean;
-    withTopAction: boolean;
+    topAction: boolean;
     actions:
         | 'button'
         | 'link'
@@ -59,10 +59,10 @@ export const Default: StoryComponent<DisplayDataCardArgs> = ({
     pretitle,
     title,
     description,
-    withExtra,
+    extra,
     actions = 'button',
     closable,
-    withTopAction,
+    topAction,
     isInverse,
     aspectRatio,
 }) => {
@@ -112,7 +112,7 @@ export const Default: StoryComponent<DisplayDataCardArgs> = ({
             isInverse={isInverse}
             onClose={closable ? () => {} : undefined}
             actions={
-                withTopAction
+                topAction
                     ? [
                           {
                               Icon: IconLightningRegular,
@@ -140,7 +140,7 @@ export const Default: StoryComponent<DisplayDataCardArgs> = ({
             title={title}
             description={description}
             aspectRatio={aspectRatioValue as AspectRatio}
-            extra={withExtra ? <Placeholder /> : undefined}
+            extra={extra ? <Placeholder /> : undefined}
             {...interactiveActions}
             dataAttributes={{testid: 'display-data-card'}}
             aria-label="Display data card label"
@@ -156,10 +156,10 @@ Default.args = {
     pretitle: 'Pretitle',
     title: 'Title',
     description: 'This is a description for the card',
-    withExtra: false,
+    extra: false,
     actions: 'button',
     closable: false,
-    withTopAction: false,
+    topAction: false,
     isInverse: false,
     aspectRatio: 'auto',
 };

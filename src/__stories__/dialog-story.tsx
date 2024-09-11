@@ -76,7 +76,7 @@ type DialogArgs = {
     onAccept: boolean;
     onCancel: boolean;
     link: boolean;
-    icon: boolean;
+    asset: boolean;
     extra: boolean;
 };
 
@@ -84,7 +84,7 @@ export const Dialog: StoryComponent<DialogArgs> = ({
     onAccept,
     onCancel,
     link,
-    icon,
+    asset,
     extra,
     title,
     subtitle,
@@ -120,7 +120,7 @@ export const Dialog: StoryComponent<DialogArgs> = ({
                                 </Stack>
                             ) : undefined,
                             link: link ? <ButtonLink href="https://google.com">Link</ButtonLink> : undefined,
-                            icon: icon ? (
+                            icon: asset ? (
                                 <IconInformationUserLight color={skinVars.colors.brand} />
                             ) : undefined,
                             onAccept: onAccept ? () => console.log('Accepted') : undefined,
@@ -144,6 +144,6 @@ Dialog.args = {
     onAccept: true,
     onCancel: true,
     link: true,
-    icon: true,
+    asset: true,
     extra: true,
 };

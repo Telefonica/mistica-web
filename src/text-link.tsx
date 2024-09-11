@@ -31,14 +31,14 @@ interface CommonProps {
 
 export type TextLinkProps = AlwaysTouchableComponentProps & CommonProps;
 
-const TextLink: React.FC<TextLinkProps> = ({
+const TextLink = ({
     children,
     className = '',
     disabled,
     style,
     trackEvent,
     ...props
-}) => {
+}: TextLinkProps): JSX.Element => {
     const isInverse = useIsInverseVariant();
     const {isDarkMode} = useTheme();
     const {formStatus} = useForm();

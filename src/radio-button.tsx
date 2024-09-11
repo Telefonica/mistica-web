@@ -55,14 +55,14 @@ type PropsChildren = {
     'aria-labelledby'?: string;
 };
 
-const RadioButton: React.FC<PropsRender | PropsChildren> = ({
+const RadioButton = ({
     value,
     id,
     dataAttributes,
     'aria-labelledby': ariaLabelledby,
     'aria-label': ariaLabel,
     ...rest
-}) => {
+}: PropsRender | PropsChildren): JSX.Element => {
     const {disabled, selectedValue, focusableValue, select, selectNext, selectPrev} = useRadioContext();
     const labelId = useAriaId(ariaLabelledby);
     const ref = React.useRef<HTMLDivElement>(null);
@@ -160,7 +160,7 @@ type RadioGroupProps = {
     dataAttributes?: DataAttributes;
 };
 
-export const RadioGroup: React.FC<RadioGroupProps> = (props) => {
+export const RadioGroup = (props: RadioGroupProps): JSX.Element => {
     const {
         value: valueContext,
         defaultValue,

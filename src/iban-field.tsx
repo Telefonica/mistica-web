@@ -101,7 +101,7 @@ type Props = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'value' | 'onInpu
     onInput?: (event: React.FormEvent<HTMLInputElement>) => void;
 };
 
-const IbanInput: React.FC<Props> = ({inputRef, value, defaultValue, onChange, ...other}) => {
+const IbanInput = ({inputRef, value, defaultValue, onChange, ...other}: Props): JSX.Element => {
     const [selfValue, setSelfValue] = React.useState(defaultValue ?? '');
     const ref = React.useRef<HTMLInputElement | null>(null);
 
@@ -159,7 +159,7 @@ export interface IbanFieldProps extends CommonFormFieldProps {
     getSuggestions?: (value: string) => Array<string>;
 }
 
-const IbanField: React.FC<IbanFieldProps> = ({
+const IbanField = ({
     disabled,
     error,
     helperText,
@@ -173,7 +173,7 @@ const IbanField: React.FC<IbanFieldProps> = ({
     defaultValue,
     dataAttributes,
     ...rest
-}) => {
+}: IbanFieldProps): JSX.Element => {
     const {texts} = useTheme();
 
     const validate = (value: string | undefined, rawValue: string) => {

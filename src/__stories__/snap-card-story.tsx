@@ -26,8 +26,8 @@ type Args = {
     subtitle: string;
     description: string;
     actions: 'onPress' | 'href' | 'to' | 'none';
-    isInverse: boolean;
-    withExtra: boolean;
+    inverse: boolean;
+    extra: boolean;
     aspectRatio: AspectRatio;
 };
 
@@ -39,8 +39,8 @@ export const Default: StoryComponent<Args> = ({
     subtitle,
     description,
     actions,
-    isInverse,
-    withExtra,
+    inverse,
+    extra,
     aspectRatio,
 }) => {
     const assetToIcon: {
@@ -51,11 +51,9 @@ export const Default: StoryComponent<Args> = ({
         'icon in circle': (
             <Circle
                 size={40}
-                backgroundColor={isInverse ? skinVars.colors.brandHigh : skinVars.colors.brandLow}
+                backgroundColor={inverse ? skinVars.colors.brandHigh : skinVars.colors.brandLow}
             >
-                <IconMobileDeviceRegular
-                    color={isInverse ? skinVars.colors.inverse : skinVars.colors.brand}
-                />
+                <IconMobileDeviceRegular color={inverse ? skinVars.colors.inverse : skinVars.colors.brand} />
             </Circle>
         ),
         none: undefined,
@@ -79,8 +77,8 @@ export const Default: StoryComponent<Args> = ({
             description={description}
             dataAttributes={{testid: 'snap-card'}}
             aria-label="SnapCard card label"
-            isInverse={isInverse}
-            extra={withExtra ? <Placeholder /> : undefined}
+            isInverse={inverse}
+            extra={extra ? <Placeholder /> : undefined}
             aspectRatio={aspectRatioValue as AspectRatio}
             {...interactiveProps}
         />
@@ -94,8 +92,8 @@ Default.args = {
     subtitle: 'Some subtitle',
     description: 'Description',
     actions: 'none',
-    isInverse: false,
-    withExtra: false,
+    inverse: false,
+    extra: false,
     aspectRatio: 'auto',
 };
 Default.argTypes = {

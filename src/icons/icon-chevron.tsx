@@ -4,7 +4,7 @@ import {vars} from '../skins/skin-contract.css';
 import {applyCssVars} from '../utils/css';
 import * as styles from './icon-chevron.css';
 
-type IcnChevronRightSvgProps = {
+type IconChevronRightSvgProps = {
     size: number | string;
     color: string;
     transform: string;
@@ -13,14 +13,14 @@ type IcnChevronRightSvgProps = {
     style?: React.CSSProperties;
 };
 
-const IconChevronRightSvg: React.FC<IcnChevronRightSvgProps> = ({
+const IconChevronRightSvg = ({
     size,
     color,
     transform,
     transitionDuration,
     className,
     style,
-}) => (
+}: IconChevronRightSvgProps) => (
     <svg
         role="presentation"
         width={size}
@@ -60,14 +60,14 @@ type Props = {
     transitionDuration?: number;
 };
 
-const IconChevron: React.FC<Props> = ({
+const IconChevron = ({
     size = 24,
     color,
     className,
     style,
     transitionDuration = 300,
     direction = 'right',
-}) => {
+}: Props): JSX.Element => {
     const fillColor = color || vars.colors.neutralHigh;
     const props = {
         size,
