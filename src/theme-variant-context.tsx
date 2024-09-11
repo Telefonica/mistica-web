@@ -6,6 +6,7 @@ export type Variant = 'default' | 'inverse' | 'alternative' | 'overMedia';
 const ThemeVariantContext = React.createContext<Variant>('default');
 
 type ThemeVariantProps = {
+    /** @deprecated Use variant = 'inverse' instead */
     isInverse?: boolean;
     variant?: Variant;
     children: React.ReactNode;
