@@ -15,7 +15,7 @@ type ButtonLayoutProps = {
     dataAttributes?: DataAttributes;
 };
 
-const ButtonLayout: React.FC<ButtonLayoutProps> = ({
+const ButtonLayout = ({
     primaryButton,
     secondaryButton,
     align = 'full-width',

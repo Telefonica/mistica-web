@@ -206,7 +206,7 @@ type MainSectionHeaderLayoutProps = {
     dataAttributes?: DataAttributes;
 };
 
-export const MainSectionHeaderLayout: React.FC<MainSectionHeaderLayoutProps> = ({
+export const MainSectionHeaderLayout = ({
     isInverse = false,
     children,
     dataAttributes,
