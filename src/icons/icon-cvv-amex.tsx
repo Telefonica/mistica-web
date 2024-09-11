@@ -7,7 +7,7 @@ type Props = {
     color?: string;
 };
 
-const IconCvvAmex: React.FC<Props> = ({role = 'presentation', size = 48, color}) => {
+const IconCvvAmex = ({role = 'presentation', size = 48, color}: Props): JSX.Element => {
     return (
         <svg width={size} height={size} viewBox="0 0 48 48" role={role} style={{flexShrink: 0}}>
             <g fill={color || vars.colors.brand}>

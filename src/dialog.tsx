@@ -62,7 +62,7 @@ export type DialogProps = ExclusifyUnion<AlertProps | ConfirmProps | ExtendedDia
 
 type InternalDialogProps = DialogProps & {showCancelButton: boolean; showAcceptButton: boolean};
 
-const InternalDialog: React.FC<InternalDialogProps> = (props) => {
+const InternalDialog = (props: InternalDialogProps) => {
     const {texts, t} = useTheme();
     const {
         className,

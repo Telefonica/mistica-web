@@ -24,7 +24,7 @@ const ReactDateTimePicker = React.lazy(
     () => import(/* webpackChunkName: "date-time-picker" */ './date-time-picker')
 );
 
-const FormDateField: React.FC<DateFieldProps> = ({
+const FormDateField = ({
     disabled,
     error,
     helperText,
@@ -45,7 +45,7 @@ const FormDateField: React.FC<DateFieldProps> = ({
     max = new Date('9999-12-31T23:59'),
     dataAttributes,
     ...rest
-}) => {
+}: DateFieldProps): JSX.Element => {
     const hasNativePicker = React.useMemo(() => {
         if (isFirefox()) {
             // disabled for firefox because the picker has no option to select time

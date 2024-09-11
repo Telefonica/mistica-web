@@ -24,7 +24,7 @@ type LabelProps = {
     optional?: boolean;
 };
 
-export const Label: React.FC<LabelProps> = ({
+export const Label = ({
     shrinkLabel,
     forId,
     inputState,
@@ -32,7 +32,7 @@ export const Label: React.FC<LabelProps> = ({
     children,
     style,
     optional,
-}) => {
+}: LabelProps): JSX.Element => {
     const isShrinked = shrinkLabel || inputState === 'focused' || inputState === 'filled';
     const [transitionStyle, setTransitionStyle] = React.useState('initial');
     const {texts, t} = useTheme();
@@ -82,7 +82,7 @@ type HelperTextProps = {
     children?: void;
 };
 
-export const HelperText: React.FC<HelperTextProps> = ({leftText, rightText, error, id}) => {
+export const HelperText = ({leftText, rightText, error, id}: HelperTextProps): JSX.Element => {
     const isInverse = useIsInverseVariant();
     const leftColor = isInverse
         ? vars.colors.textPrimaryInverse
@@ -123,7 +123,7 @@ type FieldContainerProps = {
     dataAttributes?: DataAttributes;
 };
 
-export const FieldContainer: React.FC<FieldContainerProps> = ({
+export const FieldContainer = ({
     multiline,
     disabled,
     children,
@@ -133,7 +133,7 @@ export const FieldContainer: React.FC<FieldContainerProps> = ({
     fullWidth,
     readOnly,
     dataAttributes,
-}) => {
+}: FieldContainerProps): JSX.Element => {
     return (
         // eslint-disable-next-line jsx-a11y/no-static-element-interactions
         <div

@@ -123,11 +123,11 @@ const PreviewToolsControls = React.forwardRef<HTMLDivElement, PreviewToolsContro
                         {showPlatformSelector && (
                             <ToggleIconButton
                                 checkedProps={{
-                                    Icon: IconAppleOn as React.FC<IconProps>,
+                                    Icon: IconAppleOn as (props: IconProps) => JSX.Element,
                                     'aria-label': 'Change platform to android',
                                 }}
                                 uncheckedProps={{
-                                    Icon: IconAppleOff as React.FC<IconProps>,
+                                    Icon: IconAppleOff as (props: IconProps) => JSX.Element,
                                     'aria-label': 'Change platform to iOS',
                                 }}
                                 checked={os === 'ios'}
@@ -136,11 +136,11 @@ const PreviewToolsControls = React.forwardRef<HTMLDivElement, PreviewToolsContro
                         )}
                         <ToggleIconButton
                             checkedProps={{
-                                Icon: IconSun as React.FC<IconProps>,
+                                Icon: IconSun as (props: IconProps) => JSX.Element,
                                 'aria-label': 'Switch to light mode',
                             }}
                             uncheckedProps={{
-                                Icon: IconMoon as React.FC<IconProps>,
+                                Icon: IconMoon as (props: IconProps) => JSX.Element,
                                 'aria-label': 'Switch to dark mode',
                             }}
                             checked={colorScheme === alternativeColorScheme}
@@ -155,7 +155,7 @@ const PreviewToolsControls = React.forwardRef<HTMLDivElement, PreviewToolsContro
                         <IconButton
                             bleedRight
                             aria-label="Edit in Playroom"
-                            Icon={IconCode as React.FC<IconProps>}
+                            Icon={IconCode as (props: IconProps) => JSX.Element}
                             onPress={onEditStoryPress}
                         />
                     </Inline>
@@ -178,11 +178,11 @@ const PreviewToolsControls = React.forwardRef<HTMLDivElement, PreviewToolsContro
                         {showPlatformSelector && (
                             <ToggleIconButton
                                 checkedProps={{
-                                    Icon: IconAppleOn as React.FC<IconProps>,
+                                    Icon: IconAppleOn as (props: IconProps) => JSX.Element,
                                     'aria-label': 'Change platform to android',
                                 }}
                                 uncheckedProps={{
-                                    Icon: IconAppleOff as React.FC<IconProps>,
+                                    Icon: IconAppleOff as (props: IconProps) => JSX.Element,
                                     'aria-label': 'Change platform to iOS',
                                 }}
                                 checked={os === 'ios'}
@@ -191,11 +191,11 @@ const PreviewToolsControls = React.forwardRef<HTMLDivElement, PreviewToolsContro
                         )}
                         <ToggleIconButton
                             checkedProps={{
-                                Icon: IconSun as React.FC<IconProps>,
+                                Icon: IconSun as (props: IconProps) => JSX.Element,
                                 'aria-label': 'Change color scheme',
                             }}
                             uncheckedProps={{
-                                Icon: IconMoon as React.FC<IconProps>,
+                                Icon: IconMoon as (props: IconProps) => JSX.Element,
                                 'aria-label': 'Change color scheme',
                             }}
                             checked={colorScheme === alternativeColorScheme}
@@ -210,7 +210,7 @@ const PreviewToolsControls = React.forwardRef<HTMLDivElement, PreviewToolsContro
                         <IconButton
                             bleedRight
                             aria-label="Edit in Playroom"
-                            Icon={IconCode as React.FC<IconProps>}
+                            Icon={IconCode as (props: IconProps) => JSX.Element}
                             onPress={onEditStoryPress}
                         />
                     </Inline>

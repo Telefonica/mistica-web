@@ -9,7 +9,7 @@ import type {DataAttributes} from './utils/types';
 
 type Props = {visible: boolean; children?: void; dataAttributes?: DataAttributes};
 
-const LoadingBar: React.FC<Props> = ({visible, dataAttributes}) => {
+const LoadingBar = ({visible, dataAttributes}: Props): JSX.Element => {
     return (
         <Portal className={classnames(styles.portal, {[styles.hidden]: !visible})}>
             <div

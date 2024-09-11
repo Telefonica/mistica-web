@@ -23,7 +23,7 @@ const ReactDateTimePicker = React.lazy(
     () => import(/* webpackChunkName: "date-time-picker" */ './date-time-picker')
 );
 
-const DateField: React.FC<DateFieldProps> = ({
+const DateField = ({
     disabled,
     error,
     helperText,
@@ -39,7 +39,7 @@ const DateField: React.FC<DateFieldProps> = ({
     max,
     dataAttributes,
     ...rest
-}) => {
+}: DateFieldProps): JSX.Element => {
     const processValue = (value: string) => value;
     const hasNativePicker = React.useMemo(() => isInputTypeSupported('month'), []);
     const {texts, t} = useTheme();

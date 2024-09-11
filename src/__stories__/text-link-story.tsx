@@ -27,7 +27,7 @@ interface TextStyleWrapperProps {
     children: React.ReactNode;
 }
 
-const TextStyleWrapper: React.FC<TextStyleWrapperProps> = ({children, textStyle}) => {
+const TextStyleWrapper = ({children, textStyle}: TextStyleWrapperProps) => {
     if (textStyle === 'Text1') {
         return <Text1 regular>{children}</Text1>;
     }

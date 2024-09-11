@@ -37,7 +37,7 @@ type Props = {
     role?: string;
 };
 
-const Callout: React.FC<Props> = ({
+const Callout = ({
     title,
     titleAs = 'h2',
     description,
@@ -50,7 +50,7 @@ const Callout: React.FC<Props> = ({
     'aria-label': ariaLabel,
     dataAttributes,
     role,
-}) => {
+}: Props): JSX.Element => {
     const variant = useThemeVariant();
     const {texts, t} = useTheme();
     return (

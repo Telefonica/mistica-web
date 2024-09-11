@@ -32,7 +32,7 @@ type Props = {
     dataAttributes: DataAttributes;
 };
 
-const ChipBackgroundContainer: React.FC<Props> = ({inverse, dataAttributes, children}) => (
+const ChipBackgroundContainer = ({inverse, dataAttributes, children}: Props) => (
     <ResponsiveLayout isInverse={inverse} fullWidth>
         <Box padding={16} width="fit-content" dataAttributes={dataAttributes}>
             <div

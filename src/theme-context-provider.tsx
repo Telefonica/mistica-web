@@ -122,7 +122,7 @@ type TextPresetsVars = {
     };
 };
 
-const ThemeContextProvider: React.FC<Props> = ({theme, children, as, withoutStyles = false}) => {
+const ThemeContextProvider = ({theme, children, as, withoutStyles = false}: Props): JSX.Element => {
     const nextAriaId = React.useRef(1);
     const getAriaId = React.useCallback((): string => `aria-id-hook-${nextAriaId.current++}`, []);
 
