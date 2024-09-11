@@ -33,7 +33,7 @@ export type TabsProps = {
     tabs: ReadonlyArray<{
         readonly text: string;
         readonly trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
-        readonly Icon?: React.FC<IconProps>;
+        readonly Icon?: (props: IconProps) => JSX.Element;
         readonly 'aria-controls'?: string;
     }>;
     children?: void;
