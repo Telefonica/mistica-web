@@ -18,7 +18,7 @@ type Props = {
     onChangeFooterHeight?: (heightInPx: number) => void;
 };
 
-const ButtonFixedFooterLayout: React.FC<Props> = ({
+const ButtonFixedFooterLayout = ({
     isFooterVisible = true,
     button,
     secondaryButton,
@@ -27,7 +27,7 @@ const ButtonFixedFooterLayout: React.FC<Props> = ({
     footerBgColor,
     containerBgColor,
     onChangeFooterHeight,
-}) => {
+}: Props): JSX.Element => {
     const hasButton = !!button || !!secondaryButton;
     return (
         <FixedFooterLayout

@@ -15,13 +15,13 @@ type ButtonLayoutProps = {
     dataAttributes?: DataAttributes;
 };
 
-const ButtonLayout: React.FC<ButtonLayoutProps> = ({
+const ButtonLayout = ({
     primaryButton,
     secondaryButton,
     align = 'full-width',
     link,
     dataAttributes,
-}) => {
+}: ButtonLayoutProps): JSX.Element => {
     const numberOfButtons = (primaryButton ? 1 : 0) + (secondaryButton ? 1 : 0);
 
     const buttons =

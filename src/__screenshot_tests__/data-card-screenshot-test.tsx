@@ -47,7 +47,7 @@ test('DataCard with extra content', async () => {
     const page = await openStoryPage({
         id: 'components-cards-datacard--default',
         device: 'MOBILE_IOS',
-        args: {withExtra: true},
+        args: {extra: true},
     });
 
     const image = await page.screenshot({fullPage: true});
@@ -71,7 +71,7 @@ test('DataCard with top actions', async () => {
     const page = await openStoryPage({
         id: 'components-cards-datacard--default',
         device: 'MOBILE_IOS',
-        args: {withTopAction: true},
+        args: {topAction: true},
     });
 
     const image = await page.screenshot({fullPage: true});
@@ -84,7 +84,7 @@ test('DataCard without icon, with top actions and too long title', async () => {
         id: 'components-cards-datacard--default',
         device: 'MOBILE_IOS',
         args: {
-            withTopAction: true,
+            topAction: true,
             asset: 'none',
             title: 'Too long title too long title too long titltoo long title too long title',
         },

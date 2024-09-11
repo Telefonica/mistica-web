@@ -76,7 +76,7 @@ type Props = {
     children: React.ReactNode;
 };
 
-const ButtonBackgroundContainer: React.FC<Props> = ({inverse, children}) => (
+const ButtonBackgroundContainer = ({inverse, children}: Props) => (
     <ResponsiveLayout fullWidth dataAttributes={{testid: 'content'}} isInverse={inverse}>
         <Box padding={16}>{children}</Box>
     </ResponsiveLayout>
@@ -127,20 +127,20 @@ export const DangerButton: StoryComponent<Args> = ({inverse, text, icon, action,
     );
 };
 
-export const LinkButton: StoryComponent<Omit<Args, 'small'> & {withChevron: string}> = ({
+export const LinkButton: StoryComponent<Omit<Args, 'small'> & {chevron: string}> = ({
     inverse,
     text,
     icon,
     action,
     newTab,
-    withChevron,
+    chevron,
     ...props
 }) => {
     return (
         <ButtonBackgroundContainer inverse={inverse}>
             <ButtonLink
                 {...props}
-                withChevron={withChevron === 'default' ? undefined : withChevron === 'true'}
+                withChevron={chevron === 'default' ? undefined : chevron === 'true'}
                 {...getButtonActionProps(action, newTab)}
                 StartIcon={icon === 'left' ? IconPhotoCameraRegular : undefined}
                 EndIcon={icon === 'right' ? IconPhotoCameraRegular : undefined}
@@ -202,7 +202,7 @@ SecondaryButton.args = defaultArgs;
 DangerButton.args = defaultArgs;
 LinkButton.args = {
     ...(({small, ...o}) => o)(defaultArgs),
-    withChevron: 'default',
+    chevron: 'default',
 };
 LinkButtonDanger.args = {
     ...(({small, ...o}) => o)(defaultArgs),
@@ -213,7 +213,7 @@ SecondaryButton.argTypes = defaultArgTypes;
 DangerButton.argTypes = defaultArgTypes;
 LinkButton.argTypes = {
     ...defaultArgTypes,
-    withChevron: {
+    chevron: {
         options: ['default', 'true', 'false'],
         control: {type: 'select'},
     },

@@ -41,25 +41,51 @@ const vivinhoForScreenReaders = (
     </>
 );
 
-const makeVivinhoCharReadableForScreenReaders = (children: React.ReactNode): React.ReactNode => {
-    return React.Children.map(children, (child) => {
-        if (typeof child !== 'string') {
-            return child;
-        }
-        if (!child.includes(VIVINHO_CHAR)) {
-            return child;
-        }
-        return (
-            <>
-                {child.split(VIVINHO_CHAR).map((segment, idx) => (
-                    <React.Fragment key={idx}>
-                        {idx > 0 && vivinhoForScreenReaders}
-                        {segment}
-                    </React.Fragment>
-                ))}
-            </>
-        );
-    });
+const makeVivinhoCharReadableForScreenReaders = ({
+    children,
+    ariaLabel,
+    as,
+}: {
+    children: React.ReactNode;
+    ariaLabel?: string;
+    as?: React.ComponentType<any> | string;
+}) => {
+    // When the Text is a heading (<hx>), we set an aria-label replacing the vivinho char with "Vivo" for
+    // screen readers and hide the original text.
+    // If we used the generic solution, Safari/iOS VoiceOver would read "Vivo" as a separated heading
+    if (
+        typeof as === 'string' &&
+        ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'].includes(as) &&
+        typeof children === 'string' &&
+        children.includes(VIVINHO_CHAR)
+    ) {
+        return {
+            ariaLabel: children.replace(new RegExp(VIVINHO_CHAR, 'g'), 'Vivo'),
+            children: <span aria-hidden>{children}</span>,
+        };
+    }
+
+    return {
+        children: React.Children.map(children, (child) => {
+            if (typeof child !== 'string') {
+                return child;
+            }
+            if (!child.includes(VIVINHO_CHAR)) {
+                return child;
+            }
+            return (
+                <>
+                    {child.split(VIVINHO_CHAR).map((segment, idx) => (
+                        <React.Fragment key={idx}>
+                            {idx > 0 && vivinhoForScreenReaders}
+                            {segment}
+                        </React.Fragment>
+                    ))}
+                </>
+            );
+        }),
+        ariaLabel,
+    };
 };
 
 export interface TextPresetProps {
@@ -75,6 +101,7 @@ export interface TextPresetProps {
     as?: React.ComponentType<any> | string;
     role?: string;
     'aria-level'?: number;
+    'aria-label'?: string;
     dataAttributes?: DataAttributes;
     forceMobileSizes?: boolean;
     textShadow?: string;
@@ -99,7 +126,7 @@ interface TextProps extends TextPresetProps {
     forzeMobileSize?: never;
 }
 
-export const Text: React.FC<TextProps> = ({
+export const Text = ({
     weight,
     color = vars.colors.textPrimary,
     decoration,
@@ -121,8 +148,9 @@ export const Text: React.FC<TextProps> = ({
     id,
     role,
     'aria-level': ariaLevel,
+    'aria-label': ariaLabel,
     dataAttributes,
-}) => {
+}: TextProps): JSX.Element | null => {
     const {skinName} = useTheme();
     const isInverse = useIsInverseVariant();
     const lineClampValue = lineClamp(truncate);
@@ -154,6 +182,10 @@ export const Text: React.FC<TextProps> = ({
           })
         : {};
 
+    if (skinName === VIVO_NEW_SKIN) {
+        ({ariaLabel, children} = makeVivinhoCharReadableForScreenReaders({children, ariaLabel, as}));
+    }
+
     return React.createElement(
         as,
         {
@@ -161,6 +193,7 @@ export const Text: React.FC<TextProps> = ({
             id,
             role,
             'aria-level': ariaLevel,
+            'aria-label': ariaLabel,
             ...getPrefixedDataAttributes(dataAttributes, 'Text'),
             style: {
                 ...sizeVars,
@@ -179,7 +212,7 @@ export const Text: React.FC<TextProps> = ({
                 whiteSpace: as === 'pre' ? undefined : 'pre-line',
             },
         },
-        skinName === VIVO_NEW_SKIN ? makeVivinhoCharReadableForScreenReaders(children) : children
+        children
     );
 };
 
@@ -313,7 +346,7 @@ export const textProps = {
     },
 };
 
-export const Text10: React.FC<TextPresetProps> = ({dataAttributes, forceMobileSizes, ...props}) => {
+export const Text10 = ({dataAttributes, forceMobileSizes, ...props}: TextPresetProps): JSX.Element => {
     const {textPresets} = useTheme();
     return (
         <Text
@@ -325,7 +358,7 @@ export const Text10: React.FC<TextPresetProps> = ({dataAttributes, forceMobileSi
     );
 };
 
-export const Text9: React.FC<TextPresetProps> = ({dataAttributes, forceMobileSizes, ...props}) => {
+export const Text9 = ({dataAttributes, forceMobileSizes, ...props}: TextPresetProps): JSX.Element => {
     const {textPresets} = useTheme();
     return (
         <Text
@@ -337,7 +370,7 @@ export const Text9: React.FC<TextPresetProps> = ({dataAttributes, forceMobileSiz
     );
 };
 
-export const Text8: React.FC<TextPresetProps> = ({dataAttributes, forceMobileSizes, ...props}) => {
+export const Text8 = ({dataAttributes, forceMobileSizes, ...props}: TextPresetProps): JSX.Element => {
     const {textPresets} = useTheme();
     return (
         <Text
@@ -349,7 +382,7 @@ export const Text8: React.FC<TextPresetProps> = ({dataAttributes, forceMobileSiz
     );
 };
 
-export const Text7: React.FC<TextPresetProps> = ({dataAttributes, forceMobileSizes, ...props}) => {
+export const Text7 = ({dataAttributes, forceMobileSizes, ...props}: TextPresetProps): JSX.Element => {
     const {textPresets} = useTheme();
     return (
         <Text
@@ -361,7 +394,7 @@ export const Text7: React.FC<TextPresetProps> = ({dataAttributes, forceMobileSiz
     );
 };
 
-export const Text6: React.FC<TextPresetProps> = ({dataAttributes, forceMobileSizes, ...props}) => {
+export const Text6 = ({dataAttributes, forceMobileSizes, ...props}: TextPresetProps): JSX.Element => {
     const {textPresets} = useTheme();
     return (
         <Text
@@ -373,7 +406,7 @@ export const Text6: React.FC<TextPresetProps> = ({dataAttributes, forceMobileSiz
     );
 };
 
-export const Text5: React.FC<TextPresetProps> = ({dataAttributes, forceMobileSizes, ...props}) => {
+export const Text5 = ({dataAttributes, forceMobileSizes, ...props}: TextPresetProps): JSX.Element => {
     const {textPresets} = useTheme();
     return (
         <Text
@@ -385,7 +418,7 @@ export const Text5: React.FC<TextPresetProps> = ({dataAttributes, forceMobileSiz
     );
 };
 
-export const Text4: React.FC<LightRegularMediumProps> = ({dataAttributes, forceMobileSizes, ...props}) => (
+export const Text4 = ({dataAttributes, forceMobileSizes, ...props}: LightRegularMediumProps): JSX.Element => (
     <Text
         {...getTextSizes({forceMobileSizes, ...textProps.text4})}
         weight={getWeight(props)}
@@ -394,7 +427,7 @@ export const Text4: React.FC<LightRegularMediumProps> = ({dataAttributes, forceM
     />
 );
 
-export const Text3: React.FC<LightRegularMediumProps> = ({dataAttributes, forceMobileSizes, ...props}) => (
+export const Text3 = ({dataAttributes, forceMobileSizes, ...props}: LightRegularMediumProps): JSX.Element => (
     <Text
         {...getTextSizes({forceMobileSizes, ...textProps.text3})}
         weight={getWeight(props)}
@@ -403,7 +436,7 @@ export const Text3: React.FC<LightRegularMediumProps> = ({dataAttributes, forceM
     />
 );
 
-export const Text2: React.FC<RegularMediumProps> = ({dataAttributes, forceMobileSizes, ...props}) => (
+export const Text2 = ({dataAttributes, forceMobileSizes, ...props}: RegularMediumProps): JSX.Element => (
     <Text
         {...getTextSizes({forceMobileSizes, ...textProps.text2})}
         weight={getWeight(props)}
@@ -412,7 +445,7 @@ export const Text2: React.FC<RegularMediumProps> = ({dataAttributes, forceMobile
     />
 );
 
-export const Text1: React.FC<RegularMediumProps> = ({dataAttributes, forceMobileSizes, ...props}) => (
+export const Text1 = ({dataAttributes, forceMobileSizes, ...props}: RegularMediumProps): JSX.Element => (
     <Text
         {...getTextSizes({forceMobileSizes, ...textProps.text1})}
         weight={getWeight(props)}

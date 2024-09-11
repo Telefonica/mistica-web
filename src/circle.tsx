@@ -18,7 +18,7 @@ type BackgroundShorthandProps = {backgroundColor?: string; backgroundImage?: str
 
 type Props = CommonProps & ExclusifyUnion<BackgroundProps | BackgroundShorthandProps>;
 
-const Circle: React.FC<Props> = ({
+const Circle = ({
     children,
     background,
     backgroundColor,
@@ -26,7 +26,7 @@ const Circle: React.FC<Props> = ({
     size,
     border,
     dataAttributes,
-}) => {
+}: Props): JSX.Element => {
     const borderColor = border === true ? vars.colors.border : border;
     const borderProp = border ? `1px solid ${borderColor}` : undefined;
     const imageStyle = backgroundImage ? `url(${backgroundImage})` : '';

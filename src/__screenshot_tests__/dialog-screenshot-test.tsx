@@ -52,7 +52,7 @@ test('Dialog optional elements are not displayed if not provided', async () => {
             onAccept: false,
             onCancel: false,
             link: false,
-            icon: false,
+            asset: false,
             extra: false,
         },
     });

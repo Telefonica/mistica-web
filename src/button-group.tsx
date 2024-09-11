@@ -14,13 +14,13 @@ export interface ButtonGroupProps {
     align?: ByBreakpoint<'center' | 'left'>;
 }
 
-const ButtonGroup: React.FC<ButtonGroupProps> = ({
+const ButtonGroup = ({
     primaryButton,
     secondaryButton,
     link,
     align = 'left',
     dataAttributes,
-}) => {
+}: ButtonGroupProps): JSX.Element | null => {
     const anyAction = !!primaryButton || !!secondaryButton || !!link;
     const bothButtons = !!primaryButton && !!secondaryButton;
 

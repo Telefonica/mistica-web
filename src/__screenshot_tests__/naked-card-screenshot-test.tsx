@@ -45,7 +45,7 @@ test('NakedCard with extra ', async () => {
         id: 'components-cards-nakedcard--default',
         device: 'MOBILE_IOS',
         args: {
-            withExtra: true,
+            extra: true,
             actions: 'button and link',
         },
     });
@@ -93,7 +93,7 @@ test('NakedCard with top actions', async () => {
         device: 'MOBILE_IOS',
         args: {
             actions: 'button and link',
-            withTopAction: true,
+            topAction: true,
         },
     });
 
@@ -149,7 +149,7 @@ test('SmallNakedCard with extra ', async () => {
         id: 'components-cards-nakedcard--small',
         device: 'MOBILE_IOS',
         args: {
-            withExtra: true,
+            extra: true,
             actions: 'button and link',
         },
     });

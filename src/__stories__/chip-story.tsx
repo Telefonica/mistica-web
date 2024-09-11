@@ -21,7 +21,7 @@ export default {
 
 type Args = {
     inverse: boolean;
-    withIcon: boolean;
+    icon: boolean;
     closable: boolean;
     badge: string;
 };
@@ -32,7 +32,7 @@ type Props = {
     dataAttributes: DataAttributes;
 };
 
-const ChipBackgroundContainer: React.FC<Props> = ({inverse, dataAttributes, children}) => (
+const ChipBackgroundContainer = ({inverse, dataAttributes, children}: Props) => (
     <ResponsiveLayout isInverse={inverse} fullWidth>
         <Box padding={16} width="fit-content" dataAttributes={dataAttributes}>
             <div
@@ -48,9 +48,9 @@ const ChipBackgroundContainer: React.FC<Props> = ({inverse, dataAttributes, chil
     </ResponsiveLayout>
 );
 
-export const Default: StoryComponent<Args> = ({inverse, withIcon, closable, badge}) => {
+export const Default: StoryComponent<Args> = ({inverse, icon, closable, badge}) => {
     const props = {
-        Icon: withIcon ? IconLightningFilled : undefined,
+        Icon: icon ? IconLightningFilled : undefined,
         badge: badge !== 'undefined' ? +badge : undefined,
     };
 
@@ -67,9 +67,9 @@ export const Default: StoryComponent<Args> = ({inverse, withIcon, closable, badg
     );
 };
 
-export const SingleSelection: StoryComponent<Omit<Args, 'closable'>> = ({inverse, badge, withIcon}) => {
+export const SingleSelection: StoryComponent<Omit<Args, 'closable'>> = ({inverse, badge, icon}) => {
     const props = {
-        Icon: withIcon ? IconLightningFilled : undefined,
+        Icon: icon ? IconLightningFilled : undefined,
         badge: badge !== 'undefined' ? +badge : undefined,
     };
 
@@ -107,9 +107,9 @@ export const SingleSelection: StoryComponent<Omit<Args, 'closable'>> = ({inverse
     );
 };
 
-export const MultipleSelection: StoryComponent<Omit<Args, 'closable'>> = ({inverse, badge, withIcon}) => {
+export const MultipleSelection: StoryComponent<Omit<Args, 'closable'>> = ({inverse, badge, icon}) => {
     const props = {
-        Icon: withIcon ? IconLightningFilled : undefined,
+        Icon: icon ? IconLightningFilled : undefined,
         badge: badge !== 'undefined' ? +badge : undefined,
     };
 
@@ -148,7 +148,7 @@ export const MultipleSelection: StoryComponent<Omit<Args, 'closable'>> = ({inver
 const defaultArgs = {
     inverse: false,
     badge: '0',
-    withIcon: false,
+    icon: false,
     closable: false,
 };
 

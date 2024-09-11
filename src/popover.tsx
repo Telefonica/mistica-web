@@ -29,7 +29,7 @@ type Props = {
     dataAttributes?: DataAttributes;
 };
 
-const Popover: React.FC<Props> = ({
+const Popover = ({
     open,
     extra,
     children,
@@ -41,7 +41,7 @@ const Popover: React.FC<Props> = ({
     description,
     asset,
     ...props
-}) => {
+}: Props): JSX.Element => {
     return (
         <BaseTooltip
             content={
