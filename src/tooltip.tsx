@@ -158,7 +158,7 @@ type BaseTooltipProps = {
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
 };
 
-export const BaseTooltip: React.FC<BaseTooltipProps> = ({
+export const BaseTooltip = ({
     content,
     target,
     width,
@@ -171,7 +171,7 @@ export const BaseTooltip: React.FC<BaseTooltipProps> = ({
     closeButtonLabel,
     hasPointerInteractionOnly = false,
     trackingEvent,
-}) => {
+}: BaseTooltipProps): JSX.Element => {
     const {texts} = useTheme();
     const tooltipId = useAriaId();
     const {openTooltipId} = useTooltipState();
@@ -604,7 +604,7 @@ export const BaseTooltip: React.FC<BaseTooltipProps> = ({
     );
 };
 
-const Tooltip: React.FC<Props> = ({
+const Tooltip = ({
     centerContent,
     extra,
     children,
@@ -612,7 +612,7 @@ const Tooltip: React.FC<Props> = ({
     title,
     description,
     ...props
-}) => {
+}: Props): JSX.Element => {
     return (
         <BaseTooltip
             content={

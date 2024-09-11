@@ -4,9 +4,6 @@ import {ButtonPrimary, ButtonSecondary, ButtonDanger} from './button';
 import classnames from 'classnames';
 import {getPrefixedDataAttributes} from './utils/dom';
 import * as styles from './button-layout.css';
-import {borderSize, buttonPaddingX} from './button.css';
-import {applyCssVars} from './utils/css';
-import {useIsomorphicLayoutEffect} from './hooks';
 
 import type {DataAttributes, RendersNullableElement} from './utils/types';
 import type {NullableButtonElement, ButtonLink} from './button';
@@ -27,7 +24,7 @@ type ButtonLayoutProps = {
 
 const buttonsRange = [ButtonPrimary, ButtonDanger, ButtonSecondary];
 
-const ButtonLayout: React.FC<ButtonLayoutProps> = ({
+const ButtonLayout = ({
     children,
     primaryButton,
     secondaryButton,
@@ -35,16 +32,7 @@ const ButtonLayout: React.FC<ButtonLayoutProps> = ({
     link,
     withMargins = false,
     dataAttributes,
-}) => {
-    const linkContainerRef = React.useRef<HTMLDivElement>(null);
-    const [hasSmallLink, setHasSmallLink] = React.useState(false);
-
-    useIsomorphicLayoutEffect(() => {
-        if (linkContainerRef.current?.querySelector('[data-small-link=true]')) {
-            setHasSmallLink(true);
-        }
-    }, []);
-
+}: ButtonLayoutProps): JSX.Element => {
     const sortedButtons = React.Children.toArray(children as any).sort((b1: any, b2: any) => {
         const range1 = buttonsRange.indexOf(b1.type);
         const range2 = buttonsRange.indexOf(b2.type);
@@ -71,7 +59,6 @@ const ButtonLayout: React.FC<ButtonLayoutProps> = ({
 
     const linkContainer = link ? (
         <div
-            ref={linkContainerRef}
             className={classnames(numberOfButtons !== 1 ? styles.linkInNewLine : styles.link)}
             data-link="true"
         >
@@ -84,13 +71,6 @@ const ButtonLayout: React.FC<ButtonLayoutProps> = ({
             className={classnames(styles.container, styles.alignVariant[align], {
                 [styles.containerWithTwoButtons]: numberOfButtons > 1,
             })}
-            style={{
-                ...applyCssVars({
-                    [styles.vars.buttonLinkPadding]: `calc(${borderSize} + ${
-                        hasSmallLink ? buttonPaddingX.small : buttonPaddingX.default
-                    })`,
-                }),
-            }}
             {...getPrefixedDataAttributes(dataAttributes, 'ButtonLayout')}
         >
             {align !== 'right' || numberOfButtons > 1 ? (

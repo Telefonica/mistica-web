@@ -12,7 +12,7 @@ type ExpirationDateValue = {
     raw: string;
 };
 
-const MonthYearDateInput: React.FC<any> = ({inputRef, defaultValue, value, ...rest}) => {
+const MonthYearDateInput = ({inputRef, defaultValue, value, ...rest}: any) => {
     const {texts} = useTheme();
     const keyDownRef = React.useRef('');
 
@@ -91,7 +91,7 @@ export interface CreditCardExpirationFieldProps extends CommonFormFieldProps {
     onChangeValue?: (value: ExpirationDateValue) => void;
 }
 
-const CreditCardExpirationField: React.FC<CreditCardExpirationFieldProps> = ({
+const CreditCardExpirationField = ({
     disabled,
     error,
     helperText,
@@ -106,7 +106,7 @@ const CreditCardExpirationField: React.FC<CreditCardExpirationFieldProps> = ({
     defaultValue,
     dataAttributes,
     ...rest
-}) => {
+}: CreditCardExpirationFieldProps): JSX.Element => {
     const {texts} = useTheme();
     const {setFormError, jumpToNext} = useForm();
 

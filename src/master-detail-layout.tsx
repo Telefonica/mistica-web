@@ -11,7 +11,7 @@ type Props = {
     children?: void;
 };
 
-const MasterDetailLayout: React.FC<Props> = ({isOpen, master, detail}) => {
+const MasterDetailLayout = ({isOpen, master, detail}: Props): JSX.Element => {
     const {isTabletOrSmaller} = useScreenSize();
 
     if (isTabletOrSmaller) {

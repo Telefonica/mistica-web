@@ -21,7 +21,7 @@ export default {
     parameters: {fullScreen: true},
 };
 
-const WithTitle: React.FC<{title: string; children: React.ReactNode}> = ({title, children}) => (
+const WithTitle = ({title, children}: {title: string; children: React.ReactNode}) => (
     <Stack space={24} dataAttributes={{testid: title}}>
         <Text5 as="div" textAlign="center">
             {title}

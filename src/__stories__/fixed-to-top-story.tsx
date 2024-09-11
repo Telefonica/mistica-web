@@ -7,7 +7,7 @@ export default {
 
 type Props = {background: string; height: number; top: number};
 
-const FixedDiv: React.FC<Props> = ({background, height, top}) => (
+const FixedDiv = ({background, height, top}: Props) => (
     <div style={{position: 'fixed', top, height, width: 300, background}}>
         top: {top}, height: {height}
     </div>
