@@ -25,14 +25,14 @@ type Props = {
     dataAttributes?: DataAttributes;
 };
 
-const Overlay: React.FC<Props> = ({
+const Overlay = ({
     onPress,
     children,
     className,
     style,
     disableScroll = false,
     dataAttributes,
-}) => {
+}: Props): JSX.Element => {
     useDisableBodyScroll(disableScroll);
     const {platformOverrides} = useTheme();
 

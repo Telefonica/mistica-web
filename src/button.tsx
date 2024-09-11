@@ -86,7 +86,7 @@ const renderButtonElement = ({
     return resultChildrenArr;
 };
 
-const ButtonLinkChevron: React.FC = () => {
+const ButtonLinkChevron = () => {
     const {skinName} = useTheme();
 
     // vivo new skin has a different chevron
@@ -130,12 +130,26 @@ const renderButtonContent = ({
     shouldRenderSpinner: boolean;
     setShouldRenderSpinner: (value: boolean) => void;
     TextContentRenderer: (element: React.ReactNode, small?: boolean) => JSX.Element;
-    StartIcon?: React.FC<IconProps>;
-    EndIcon?: React.FC<IconProps>;
+    StartIcon?: (props: IconProps) => JSX.Element;
+    EndIcon?: (props: IconProps) => JSX.Element;
     withChevron?: boolean;
 }): React.ReactNode => {
     const defaultIconSize = small ? styles.iconSize.small : styles.iconSize.default;
     const spinnerSizeRem = small ? styles.spinnerSize.small : styles.spinnerSize.default;
+
+    const buttonElement = renderButtonElement({
+        small,
+        content: children,
+        defaultIconSize,
+        TextContentRenderer,
+    });
+
+    const loadingButtonElement = renderButtonElement({
+        small,
+        content: loadingText,
+        defaultIconSize,
+        TextContentRenderer,
+    });
 
     return (
         <>
@@ -153,12 +167,7 @@ const renderButtonContent = ({
                     </div>
                 )}
                 <div style={{display: 'flex', alignItems: 'baseline'}}>
-                    {renderButtonElement({
-                        small,
-                        content: children,
-                        defaultIconSize,
-                        TextContentRenderer,
-                    })}
+                    {buttonElement}
                     {withChevron && (
                         <div
                             style={{
@@ -197,12 +206,7 @@ const renderButtonContent = ({
                         : undefined
                 }
             >
-                {renderButtonElement({
-                    small,
-                    content: loadingText,
-                    defaultIconSize,
-                    TextContentRenderer,
-                })}
+                {loadingButtonElement}
             </div>
 
             {/* loading content */}
@@ -231,16 +235,7 @@ const renderButtonContent = ({
                         }}
                     />
                 )}
-                {loadingText ? (
-                    <Box paddingLeft={8}>
-                        {renderButtonElement({
-                            small,
-                            content: loadingText,
-                            defaultIconSize,
-                            TextContentRenderer,
-                        })}
-                    </Box>
-                ) : null}
+                {loadingText ? <Box paddingLeft={8}>{loadingButtonElement}</Box> : null}
             </div>
         </>
     );
@@ -265,8 +260,8 @@ interface CommonProps {
     'aria-expanded'?: 'true' | 'false' | boolean;
     'aria-haspopup'?: 'true' | 'false' | 'menu' | 'dialog' | boolean;
     tabIndex?: number;
-    StartIcon?: React.FC<IconProps>;
-    EndIcon?: React.FC<IconProps>;
+    StartIcon?: (props: IconProps) => JSX.Element;
+    EndIcon?: (props: IconProps) => JSX.Element;
     /** IMPORTANT: try to avoid using role="link" with onPress and first consider other alternatives like to/href + onNavigate */
     role?: string;
 }

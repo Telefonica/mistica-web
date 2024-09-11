@@ -37,7 +37,7 @@ interface ImageProps extends CommonProps {
 
 type Props = IconProps | ImageProps;
 
-const EmptyStateCard: React.FC<Props> = ({
+const EmptyStateCard = ({
     title,
     titleAs = 'h3',
     description,
@@ -48,7 +48,7 @@ const EmptyStateCard: React.FC<Props> = ({
     imageUrl,
     'aria-label': ariaLabel,
     dataAttributes,
-}) => {
+}: Props): JSX.Element => {
     const {textPresets} = useTheme();
 
     let image;

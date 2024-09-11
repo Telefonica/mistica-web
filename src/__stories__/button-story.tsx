@@ -76,7 +76,7 @@ type Props = {
     children: React.ReactNode;
 };
 
-const ButtonBackgroundContainer: React.FC<Props> = ({inverse, children}) => (
+const ButtonBackgroundContainer = ({inverse, children}: Props) => (
     <ResponsiveLayout fullWidth dataAttributes={{testid: 'content'}} isInverse={inverse}>
         <Box padding={16}>{children}</Box>
     </ResponsiveLayout>
