@@ -151,6 +151,7 @@
         "@vanilla-extract/dynamic": "^2.1.1",
         "@vanilla-extract/sprinkles": "^1.6.2",
         "classnames": "^2.3.1",
+        "lottie-react": "^2.4.0",
         "lottie-web": "^5.12.2",
         "moment": "^2.29.1",
         "react-autosuggest": "^10.1.0",
@@ -200,7 +201,8 @@
         "react-dom": "18.2.0",
         "@types/react": "^18.0.26",
         "@types/react-dom": "^18.0.10",
-        "@testing-library/dom": "^8.19.1"
+        "@testing-library/dom": "^8.19.1",
+        "lottie-react@^2.4.0": "patch:lottie-react@npm%3A2.4.0#./.yarn/patches/lottie-react-npm-2.4.0-d4d95c55aa.patch"
     },
     "packageManager": "yarn@3.6.1",
     "workspaces": [

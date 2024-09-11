@@ -1,0 +1,51 @@
+diff --git a/build/index.d.ts b/build/index.d.ts
+index d7bcde667d3db9510ee67e27ca4e6ecdd0641e14..9b28fd02c458e524107ed3f61cd945fecc0eeeed 100644
+--- a/build/index.d.ts
++++ b/build/index.d.ts
+@@ -1,6 +1,6 @@
+ /// <reference types="react" />
+-import { AnimationDirection, AnimationSegment, AnimationItem, RendererType, AnimationConfigWithData, AnimationEventName } from 'lottie-web';
+-export { default as LottiePlayer } from 'lottie-web';
++import { AnimationDirection, AnimationSegment, AnimationItem, RendererType, AnimationConfigWithData, AnimationEventName } from 'lottie-web/build/player/lottie_light';
++export { default as LottiePlayer } from 'lottie-web/build/player/lottie_light';
+ import * as react from 'react';
+ import react__default, { RefObject, MutableRefObject, AnimationEventHandler, ReactElement, CSSProperties } from 'react';
+ 
+diff --git a/build/index.es.js b/build/index.es.js
+index a2d9d48661a41bfb5c44df246eec19935d8a1162..1394d1116bd5a4b86ee2fdbbb9f096ad3824207f 100644
+--- a/build/index.es.js
++++ b/build/index.es.js
+@@ -1,5 +1,5 @@
+-import lottie from 'lottie-web';
+-export { default as LottiePlayer } from 'lottie-web';
++import lottie from 'lottie-web/build/player/lottie_light';
++export { default as LottiePlayer } from 'lottie-web/build/player/lottie_light';
+ import React, { useState, useRef, useEffect } from 'react';
+ 
+ function _iterableToArrayLimit(arr, i) {
+diff --git a/build/index.js b/build/index.js
+index ad6dbb0947b4a342383436808f2be3ab7161eaf3..3111e99f9e55e85786d971b931aedfaca419a617 100644
+--- a/build/index.js
++++ b/build/index.js
+@@ -2,7 +2,7 @@
+ 
+ Object.defineProperty(exports, '__esModule', { value: true });
+ 
+-var lottie = require('lottie-web');
++var lottie = require('lottie-web/build/player/lottie_light');
+ var React = require('react');
+ 
+ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+diff --git a/build/index.umd.js b/build/index.umd.js
+index 05a46ac14be5f01ef400c7dda874f4d4646d8f82..077e99122143581e0154794d8ca2419881e1bd84 100644
+--- a/build/index.umd.js
++++ b/build/index.umd.js
+@@ -1,6 +1,6 @@
+ (function (global, factory) {
+-  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('lottie-web'), require('react')) :
+-  typeof define === 'function' && define.amd ? define(['exports', 'lottie-web', 'react'], factory) :
++  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('lottie-web/build/player/lottie_light'), require('react')) :
++  typeof define === 'function' && define.amd ? define(['exports', 'lottie-web/build/player/lottie_light', 'react'], factory) :
+   (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global["lottie-react"] = {}, global.Lottie, global.React));
+ })(this, (function (exports, lottie, React) { 'use strict';
+ 

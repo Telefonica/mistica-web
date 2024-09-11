@@ -1,5 +1,5 @@
 'use client';
-import Lottie from '../lottie';
+import Lottie from 'lottie-react';
 import * as React from 'react';
 import vivinhoInLottie from './in-lottie.json';
 import vivinhoPulseLottie from './pulse-lottie.json';
