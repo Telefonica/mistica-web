@@ -53,7 +53,7 @@ const getItemIndexInMenu = (menu: HTMLElement | null, item: HTMLElement | null):
 
 interface MenuItemBaseProps {
     label: string;
-    Icon?: React.FC<IconProps>;
+    Icon?: (props: IconProps) => JSX.Element;
     destructive?: boolean;
     disabled?: boolean;
     onPress: (item: number) => void;
@@ -71,7 +71,7 @@ interface MenuItemWithControlProps extends MenuItemBaseProps {
 
 type MenuItemProps = ExclusifyUnion<MenuItemWithControlProps | MenuItemWithoutControlProps>;
 
-export const MenuItem: React.FC<MenuItemProps> = ({
+export const MenuItem = ({
     label,
     Icon,
     destructive,
@@ -79,7 +79,7 @@ export const MenuItem: React.FC<MenuItemProps> = ({
     onPress,
     controlType,
     checked,
-}) => {
+}: MenuItemProps): JSX.Element => {
     const {focusedItem, setFocusedItem, closeMenu, isMenuOpen} = useMenuContext();
     const itemRef = React.useRef<HTMLDivElement | null>(null);
 
@@ -167,7 +167,7 @@ type MenuSectionProps = {
     children?: React.ReactNode;
 };
 
-export const MenuSection: React.FC<MenuSectionProps> = ({children}) => {
+export const MenuSection = ({children}: MenuSectionProps): JSX.Element => {
     return children ? (
         <>
             {children}
@@ -204,13 +204,13 @@ export type MenuProps = {
     dataAttributes?: DataAttributes;
 };
 
-export const Menu: React.FC<MenuProps> = ({
+export const Menu = ({
     renderTarget,
     renderMenu,
     width,
     position = 'left',
     dataAttributes,
-}) => {
+}: MenuProps): JSX.Element => {
     const [isMenuOpen, setIsMenuOpen] = React.useState(false);
     const [target, setTarget] = React.useState<HTMLElement | null>(null);
     const [menu, setMenu] = React.useState<HTMLElement | null>(null);

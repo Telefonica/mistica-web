@@ -61,7 +61,7 @@ type HeaderProps = {
     isErrorAmount?: boolean;
 };
 
-export const Header: React.FC<HeaderProps> = ({
+export const Header = ({
     headline,
     pretitle,
     pretitleAs,
@@ -76,7 +76,7 @@ export const Header: React.FC<HeaderProps> = ({
     subtitle,
     isErrorAmount,
     secondaryButton,
-}) => {
+}: HeaderProps): JSX.Element => {
     const isInverse = useIsInverseVariant();
 
     const renderRichText = (richText: RichText, baseProps: Omit<TextPresetProps, 'children'>) => {
@@ -155,12 +155,12 @@ type MainSectionHeaderProps = {
     button?: RendersNullableElement<typeof ButtonPrimary> | RendersNullableElement<typeof ButtonSecondary>;
 };
 
-export const MainSectionHeader: React.FC<MainSectionHeaderProps> = ({
+export const MainSectionHeader = ({
     title,
     titleAs = 'h1',
     description,
     button,
-}) => {
+}: MainSectionHeaderProps): JSX.Element => {
     return (
         <Stack space={32}>
             <Stack space={{mobile: 12, desktop: 16}}>
@@ -188,7 +188,7 @@ type HeaderLayoutProps = {
     noPaddingY?: boolean;
 };
 
-export const HeaderLayout: React.FC<HeaderLayoutProps> = ({
+export const HeaderLayout = ({
     isInverse = false,
     breadcrumbs,
     header,
@@ -197,7 +197,7 @@ export const HeaderLayout: React.FC<HeaderLayoutProps> = ({
     dataAttributes,
     bleed = false,
     noPaddingY = false,
-}) => {
+}: HeaderLayoutProps): JSX.Element => {
     const isBleedActivated = bleed && isInverse && extra;
 
     const mainContent = (
@@ -262,11 +262,11 @@ type MainSectionHeaderLayoutProps = {
     dataAttributes?: DataAttributes;
 };
 
-export const MainSectionHeaderLayout: React.FC<MainSectionHeaderLayoutProps> = ({
+export const MainSectionHeaderLayout = ({
     isInverse = false,
     children,
     dataAttributes,
-}) => {
+}: MainSectionHeaderLayoutProps): JSX.Element => {
     useSetOverscrollColor(isInverse ? {topColor: vars.colors.backgroundBrandTop} : {});
     return (
         <ResponsiveLayout

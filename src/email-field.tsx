@@ -14,7 +14,7 @@ export interface EmailFieldProps extends CommonFormFieldProps {
     getSuggestions?: (value: string) => Array<string>;
 }
 
-const EmailField: React.FC<EmailFieldProps> = ({
+const EmailField = ({
     disabled,
     error,
     helperText,
@@ -29,7 +29,7 @@ const EmailField: React.FC<EmailFieldProps> = ({
     defaultValue,
     dataAttributes,
     ...rest
-}) => {
+}: EmailFieldProps): JSX.Element => {
     const {texts} = useTheme();
 
     const validate = (value: string | undefined, rawValue: string) => {
