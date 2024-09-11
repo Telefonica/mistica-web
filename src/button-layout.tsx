@@ -3,9 +3,6 @@ import * as React from 'react';
 import classnames from 'classnames';
 import {getPrefixedDataAttributes} from './utils/dom';
 import * as styles from './button-layout.css';
-import {borderSize, buttonPaddingX} from './button.css';
-import {applyCssVars} from './utils/css';
-import {useIsomorphicLayoutEffect} from './hooks';
 
 import type {ButtonPrimary, ButtonSecondary, ButtonDanger, ButtonLink} from './button';
 import type {DataAttributes, RendersNullableElement} from './utils/types';
@@ -25,15 +22,6 @@ const ButtonLayout: React.FC<ButtonLayoutProps> = ({
     link,
     dataAttributes,
 }: ButtonLayoutProps): JSX.Element => {
-    const linkContainerRef = React.useRef<HTMLDivElement>(null);
-    const [hasSmallLink, setHasSmallLink] = React.useState(false);
-
-    useIsomorphicLayoutEffect(() => {
-        if (linkContainerRef.current?.querySelector('[data-small-link=true]')) {
-            setHasSmallLink(true);
-        }
-    }, []);
-
     const numberOfButtons = (primaryButton ? 1 : 0) + (secondaryButton ? 1 : 0);
 
     const buttons =
@@ -51,8 +39,7 @@ const ButtonLayout: React.FC<ButtonLayoutProps> = ({
 
     const linkContainer = link ? (
         <div
-            ref={linkContainerRef}
-            className={classnames(numberOfButtons !== 1 ? styles.linkInNewLine : styles.link)}
+            className={classnames(numberOfButtons !== 1 ? styles.linkInNewLine[align] : styles.link)}
             data-link="true"
         >
             {link}
@@ -64,13 +51,6 @@ const ButtonLayout: React.FC<ButtonLayoutProps> = ({
             className={classnames(styles.container, styles.alignVariant[align], {
                 [styles.containerWithTwoButtons]: numberOfButtons > 1,
             })}
-            style={{
-                ...applyCssVars({
-                    [styles.vars.buttonLinkPadding]: `calc(${borderSize} + ${
-                        hasSmallLink ? buttonPaddingX.small : buttonPaddingX.default
-                    })`,
-                }),
-            }}
             {...getPrefixedDataAttributes(dataAttributes, 'ButtonLayout')}
         >
             {align !== 'right' || numberOfButtons > 1 ? (

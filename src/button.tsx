@@ -146,8 +146,8 @@ const renderButtonContent = ({
     loadingText?: string;
     shouldRenderSpinner: boolean;
     setShouldRenderSpinner: (value: boolean) => void;
-    StartIcon?: React.FC<IconProps>;
-    EndIcon?: React.FC<IconProps>;
+    StartIcon?: (props: IconProps) => JSX.Element;
+    EndIcon?: (props: IconProps) => JSX.Element;
     withChevron?: boolean;
 }): React.ReactNode => {
     const defaultIconSize = small ? styles.iconSize.small : styles.iconSize.default;
@@ -513,7 +513,7 @@ export const ButtonLink = React.forwardRef<
 >(({dataAttributes, ...props}, ref) => {
     return (
         <BaseButton
-            dataAttributes={{'component-name': 'ButtonLink', 'small-link': !!props.small, ...dataAttributes}}
+            dataAttributes={{'component-name': 'ButtonLink', ...dataAttributes}}
             {...props}
             ref={ref}
             buttonType="link"
@@ -527,7 +527,6 @@ export const ButtonLinkDanger = React.forwardRef<TouchableElement, ButtonLinkPro
             <BaseButton
                 dataAttributes={{
                     'component-name': 'ButtonLinkDanger',
-                    'small-link': !!props.small,
                     ...dataAttributes,
                 }}
                 {...props}

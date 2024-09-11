@@ -3,6 +3,7 @@ import * as React from 'react';
 import classNames from 'classnames';
 import {getPrefixedDataAttributes} from './utils/dom';
 import * as styles from './button-group.css';
+import * as buttonStyles from './button.css';
 
 import type {ButtonLink, ButtonPrimary, ButtonSecondary} from './button';
 import type {ByBreakpoint, DataAttributes, RendersNullableElement} from './utils/types';
@@ -24,6 +25,7 @@ const ButtonGroup = ({
 }: ButtonGroupProps): JSX.Element | null => {
     const anyAction = !!primaryButton || !!secondaryButton || !!link;
     const bothButtons = !!primaryButton && !!secondaryButton;
+    const noButtons = !primaryButton && !secondaryButton;
 
     const alignByBreakpoint =
         typeof align === 'string'
@@ -48,13 +50,18 @@ const ButtonGroup = ({
             {...getPrefixedDataAttributes(dataAttributes, 'ButtonGroup')}
         >
             {(primaryButton || secondaryButton) && (
-                <div className={classNames(styles.inline, styles.buttons)}>
+                <div className={classNames(styles.inline)}>
                     {primaryButton && <div className={styles.buttonChild}>{primaryButton}</div>}
                     {secondaryButton && <div className={styles.buttonChild}>{secondaryButton}</div>}
                 </div>
             )}
             {link && (
-                <div className={styles.buttonChild} style={{width: bothButtons ? '100%' : 'auto'}}>
+                <div
+                    className={classNames(styles.buttonChild, {
+                        [buttonStyles.forceLinkBleedLeft]: noButtons || bothButtons,
+                    })}
+                    style={{width: bothButtons ? '100%' : 'auto'}}
+                >
                     {link}
                 </div>
             )}

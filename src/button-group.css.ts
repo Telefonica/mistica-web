@@ -40,11 +40,7 @@ export const centerInDesktop = style({
 
 export const container = style({
     marginTop: `-${buttonLayoutSpacing}`,
-    marginLeft: `calc(-1 * (${buttonLayoutSpacing} + ${buttonLinkPadding}))`,
-});
-
-export const buttons = style({
-    marginLeft: buttonLinkPadding,
+    marginLeft: `calc(-1 * ${buttonLayoutSpacing})`,
 });
 
 export const buttonChild = style({
