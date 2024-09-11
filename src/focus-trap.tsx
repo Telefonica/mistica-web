@@ -8,7 +8,7 @@ type Props = {
     group?: string;
 };
 
-const FocusTrap: React.FC<Props> = ({children, disabled, className, group}) => (
+const FocusTrap = ({children, disabled, className, group}: Props): JSX.Element => (
     <ReactFocusLock noFocusGuards disabled={disabled} className={className} group={group}>
         {children}
     </ReactFocusLock>

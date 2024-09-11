@@ -12,7 +12,7 @@ type HorizontalMosaicPageProps = {
     isEven: boolean;
 };
 
-const HorizontalMosaicPage: React.FC<HorizontalMosaicPageProps> = ({items, isEven}) => {
+const HorizontalMosaicPage = ({items, isEven}: HorizontalMosaicPageProps) => {
     return (
         <div className={items.length === 1 ? styles.singleItemRowContainer : styles.squareContainer}>
             <Grid gap={GRID_GAP} rows={2} columns={2} height="100%">
@@ -45,12 +45,12 @@ type HorizontalMosaicProps = {
     dataAttributes?: DataAttributes;
 };
 
-export const HorizontalMosaic: React.FC<HorizontalMosaicProps> = ({
+export const HorizontalMosaic = ({
     items,
     withBullets,
     free,
     dataAttributes,
-}) => {
+}: HorizontalMosaicProps): JSX.Element => {
     const itemsCount = items.length;
 
     const pagesCount = itemsCount < 5 ? Math.min(itemsCount, 1) : Math.floor((itemsCount + 1) / 3);
@@ -79,7 +79,7 @@ type VerticalMosaicPageProps = {
     items: ReadonlyArray<React.ReactElement>;
 };
 
-const VerticalMosaicPage: React.FC<VerticalMosaicPageProps> = ({items}) => {
+const VerticalMosaicPage = ({items}: VerticalMosaicPageProps) => {
     switch (items.length) {
         case 1:
         case 2:
@@ -123,12 +123,12 @@ const VerticalMosaicPage: React.FC<VerticalMosaicPageProps> = ({items}) => {
     }
 };
 
-type Props = {
+type VerticalMosaicProps = {
     items: ReadonlyArray<React.ReactElement>;
     dataAttributes?: DataAttributes;
 };
 
-export const VerticalMosaic: React.FC<Props> = ({items, dataAttributes}) => {
+export const VerticalMosaic = ({items, dataAttributes}: VerticalMosaicProps): JSX.Element => {
     const itemsCount = items.length;
 
     const pagesCount = Math.ceil(itemsCount / 4);

@@ -54,12 +54,12 @@ interface RowBlockWithStackingGroup extends RowBlockBaseProps {
 
 type RowBlockProps = ExclusifyUnion<RowBlockWithDescription | RowBlockWithStackingGroup>;
 
-export const RowBlock: React.FC<RowBlockProps> = ({
+export const RowBlock = ({
     title,
     stackingGroup,
     description,
     'aria-label': ariaLabel,
-}) => {
+}: RowBlockProps): JSX.Element => {
     return (
         <div aria-label={ariaLabel}>
             <Inline space="between" alignItems="center">
@@ -86,7 +86,7 @@ interface SimpleBlockProps {
     'aria-label'?: string;
 }
 
-export const SimpleBlock: React.FC<SimpleBlockProps> = ({image, description, 'aria-label': ariaLabel}) => {
+export const SimpleBlock = ({image, description, 'aria-label': ariaLabel}: SimpleBlockProps): JSX.Element => {
     return (
         <div aria-label={ariaLabel}>
             <Inline space={16} alignItems="center">
@@ -114,14 +114,14 @@ interface InformationBlockProps {
     'aria-label'?: string;
 }
 
-export const InformationBlock: React.FC<InformationBlockProps> = ({
+export const InformationBlock = ({
     title,
     description,
     secondaryValue,
     value,
     valueColor = vars.colors.textPrimary,
     'aria-label': ariaLabel,
-}) => {
+}: InformationBlockProps): JSX.Element => {
     return (
         <Inline space="between" alignItems="flex-end" aria-label={ariaLabel}>
             <BlockContent title={title} description={description} />
@@ -168,7 +168,7 @@ interface HighlightedValueBlockProps {
     'aria-label'?: string;
 }
 
-export const HighlightedValueBlock: React.FC<HighlightedValueBlockProps> = ({
+export const HighlightedValueBlock = ({
     headline,
     headings,
     mainHeading,
@@ -178,7 +178,7 @@ export const HighlightedValueBlock: React.FC<HighlightedValueBlockProps> = ({
     description,
     valueColor = vars.colors.textPrimary,
     'aria-label': ariaLabel,
-}) => {
+}: HighlightedValueBlockProps): JSX.Element => {
     return (
         <div aria-label={ariaLabel}>
             {headline && <Box paddingBottom={24}>{headline}</Box>}
@@ -230,13 +230,13 @@ interface ValueBlockProps {
     'aria-label'?: string;
 }
 
-export const ValueBlock: React.FC<ValueBlockProps> = ({
+export const ValueBlock = ({
     title,
     value,
     description,
     valueColor = vars.colors.textPrimary,
     'aria-label': ariaLabel,
-}) => {
+}: ValueBlockProps): JSX.Element => {
     return (
         <div aria-label={ariaLabel} className={styles.column}>
             <Text2 regular color={vars.colors.textPrimary}>
@@ -265,7 +265,7 @@ interface ProgressBlockProps {
     'aria-label'?: string;
 }
 
-export const ProgressBlock: React.FC<ProgressBlockProps> = ({
+export const ProgressBlock = ({
     title,
     stackingGroup,
     progressPercent,
@@ -273,7 +273,7 @@ export const ProgressBlock: React.FC<ProgressBlockProps> = ({
     heading,
     description,
     'aria-label': ariaLabel,
-}) => {
+}: ProgressBlockProps): JSX.Element => {
     return (
         <div aria-label={ariaLabel}>
             <Stack space={8}>
