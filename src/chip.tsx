@@ -18,7 +18,7 @@ import type {DataAttributes, IconProps} from './utils/types';
 
 interface SimpleChipProps {
     children: string;
-    Icon?: React.FC<IconProps>;
+    Icon?: (props: IconProps) => JSX.Element;
     id?: string;
     dataAttributes?: DataAttributes;
     badge?: boolean | number;
@@ -37,7 +37,7 @@ type ClickableChipProps = TouchableComponentProps<SimpleChipProps & {active?: bo
 
 type ChipProps = ExclusifyUnion<ClosableChipProps | ToggleChipProps | ClickableChipProps>;
 
-const Chip: React.FC<ChipProps> = (props: ChipProps) => {
+const Chip = (props: ChipProps): JSX.Element => {
     const {Icon, children, id, dataAttributes, active, badge, onClose, closeButtonLabel} = props;
     const {texts, isDarkMode, textPresets} = useTheme();
 

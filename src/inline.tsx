@@ -50,7 +50,7 @@ type Props = {
     wrap?: boolean;
 };
 
-const Inline: React.FC<Props> = ({
+const Inline = ({
     space,
     className,
     children,
@@ -61,7 +61,7 @@ const Inline: React.FC<Props> = ({
     fullWidth,
     wrap,
     dataAttributes,
-}) => {
+}: Props): JSX.Element => {
     const {platformOverrides} = useTheme();
     const isStringSpace = typeof space === 'string';
 

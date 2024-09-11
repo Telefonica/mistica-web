@@ -12,7 +12,7 @@ type Props = {
     children: React.ReactNode;
 };
 
-export const DocumentVisibilityProvider: React.FC<Props> = ({hidden, children}) => {
+export const DocumentVisibilityProvider = ({hidden, children}: Props): JSX.Element => {
     const {platformOverrides} = useTheme();
     const [visible, setVisible] = React.useState(!hidden);
     React.useEffect(() => {

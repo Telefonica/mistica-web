@@ -3,13 +3,18 @@ import * as React from 'react';
 type Props = {
     load: string | (() => Promise<any>);
     render: (data: any) => React.ReactElement;
-    renderLoading?: () => React.ReactElement;
-    renderError?: () => React.ReactElement;
+    renderLoading?: () => React.ReactElement | null;
+    renderError?: () => React.ReactElement | null;
 };
 
 type LoaderState = 'loading' | 'error' | 'success';
 
-const Loader: React.FC<Props> = ({load, render, renderLoading = () => null, renderError = () => null}) => {
+const Loader = ({
+    load,
+    render,
+    renderLoading = () => null,
+    renderError = () => null,
+}: Props): JSX.Element | null => {
     const [loaderData, setLoaderData] = React.useState(null);
     const [loaderStatus, setLoaderStatus] = React.useState<LoaderState>('loading');
 

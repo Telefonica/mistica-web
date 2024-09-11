@@ -19,12 +19,12 @@ type CreditCardFieldsProps = {
     children?: void;
 };
 
-const CreditCardFields: React.FC<CreditCardFieldsProps> = ({
+const CreditCardFields = ({
     numberFieldName = 'ccNum',
     expirationFieldName = 'ccExp',
     cvvFieldName = 'ccCvv',
     acceptedCards,
-}) => {
+}: CreditCardFieldsProps): JSX.Element => {
     const {values} = useForm();
     const {texts} = useTheme();
     const cvvLength = getCvvLength(String(values[numberFieldName]));

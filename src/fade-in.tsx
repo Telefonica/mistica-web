@@ -14,13 +14,13 @@ type Props = {
     dataAttributes?: DataAttributes;
 };
 
-const FadeIn: React.FC<Props> = ({
+const FadeIn = ({
     children,
     className = '',
     duration = defaultDuration,
     delay = '0',
     dataAttributes,
-}) => {
+}: Props): JSX.Element => {
     return (
         <div
             {...getPrefixedDataAttributes(dataAttributes, 'FadeIn')}

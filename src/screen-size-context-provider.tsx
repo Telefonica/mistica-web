@@ -8,7 +8,7 @@ type Props = {
     children: React.ReactNode;
 };
 
-const ScreenSizeContextProvider: React.FC<Props> = ({children}) => {
+const ScreenSizeContextProvider = ({children}: Props): JSX.Element => {
     /**
      * To avoid problems with react hydrate, the server rendered content and the first client render should
      * be equal. To achieve that, we always do a first render in client with isServerSide state at true, and

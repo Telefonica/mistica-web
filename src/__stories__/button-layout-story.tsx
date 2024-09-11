@@ -12,7 +12,7 @@ type Props = {
     align?: 'center' | 'left' | 'right' | 'full-width';
 };
 
-const Template: React.FC<Props> = ({align = 'full-width'}) => (
+const Template = ({align = 'full-width'}: Props) => (
     <StorySection title={`ButtonLayout (align = ${align})`}>
         <Stack space={16}>
             <Title1 as="h2">One button</Title1>

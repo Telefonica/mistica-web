@@ -12,11 +12,15 @@ export interface PasswordFieldProps extends CommonFormFieldProps {
     onChangeValue?: (value: string, rawValue: string) => void;
 }
 
-const PasswordAdornment: React.FC<{
+const PasswordAdornment = ({
+    isVisible,
+    setVisibility,
+    focus,
+}: {
     isVisible: boolean;
     setVisibility: (isVisible: boolean) => void;
     focus: () => void;
-}> = ({isVisible, setVisibility, focus}) => {
+}) => {
     const {texts} = useTheme();
     return (
         <FieldEndIcon
@@ -31,7 +35,7 @@ const PasswordAdornment: React.FC<{
     );
 };
 
-const PasswordField: React.FC<PasswordFieldProps> = ({
+const PasswordField = ({
     disabled,
     error,
     helperText,
@@ -46,7 +50,7 @@ const PasswordField: React.FC<PasswordFieldProps> = ({
     defaultValue,
     dataAttributes,
     ...rest
-}) => {
+}: PasswordFieldProps): JSX.Element => {
     const [isVisible, setIsVisible] = React.useState(false);
     const caretPositionRef = React.useRef<number>(0);
     const inputRef = React.useRef<HTMLInputElement | null>(null);
