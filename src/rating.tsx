@@ -27,8 +27,8 @@ import type {ExclusifyUnion} from './utils/utility-types';
 import type {DataAttributes, IconProps} from './utils/types';
 
 type RatingIconProps = {
-    ActiveIcon: React.FC<IconProps>;
-    InactiveIcon: React.FC<IconProps>;
+    ActiveIcon: (props: IconProps) => JSX.Element;
+    InactiveIcon: (props: IconProps) => JSX.Element;
     color: string;
 };
 
@@ -143,7 +143,7 @@ const useRatingState = ({
     return [isControlledByParent ? getValueInRange(value) : currentValue, updateValue];
 };
 
-const InternalRating: React.FC<InternalRatingProps> = ({
+const InternalRating = ({
     icons = DEFAULT_QUALITATIVE_ICONS,
     count = DEFAULT_RATING_ICON_COUNT,
     icon = DEFAULT_RATING_ICON,
@@ -159,7 +159,7 @@ const InternalRating: React.FC<InternalRatingProps> = ({
     withHalfValue,
     'aria-label': ariaLabel,
     'aria-labelledby': ariaLabelledBy,
-}) => {
+}: InternalRatingProps) => {
     const {texts} = useTheme();
 
     const defaultQualitativeLabels = [
@@ -324,7 +324,7 @@ const InternalRating: React.FC<InternalRatingProps> = ({
     );
 };
 
-export const Rating: React.FC<RatingProps> = ({dataAttributes, ...props}) => (
+export const Rating = ({dataAttributes, ...props}: RatingProps): JSX.Element => (
     <InternalRating
         role="radiogroup"
         dataAttributes={{'component-name': 'Rating', ...dataAttributes}}
@@ -332,7 +332,7 @@ export const Rating: React.FC<RatingProps> = ({dataAttributes, ...props}) => (
     />
 );
 
-export const InfoRating: React.FC<InfoRatingProps> = ({dataAttributes, icon, size, ...props}) => (
+export const InfoRating = ({dataAttributes, icon, size, ...props}: InfoRatingProps): JSX.Element => (
     <InternalRating
         size={size ?? DEFAULT_INFO_RATING_SIZE}
         icon={icon ?? DEFAULT_INFO_RATING_ICON}
