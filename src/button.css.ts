@@ -76,6 +76,7 @@ const button = style([
 ]);
 
 export const small = style({});
+export const smallLink = style({});
 
 export const loadingFiller = style([
     sprinkles({
@@ -142,43 +143,6 @@ export const textContent = style([
 
 globalStyle(`${textContent} svg`, {
     display: 'block',
-});
-
-// These classes are used to force the bleed conditionally in ButtonGroup and ButtonLayout components
-export const forceLinkBleedLeft = style({});
-export const forceLinkBleedRight = style({});
-export const forceLinkBleedLeftOnlyDesktop = style({});
-
-globalStyle(`${forceLinkBleedLeft} button, ${forceLinkBleedLeft} a`, {
-    marginLeft: `calc(-1 * (${borderSize} + ${buttonPaddingX.default}))`,
-});
-
-globalStyle(`${forceLinkBleedLeft} button.${small}, ${forceLinkBleedLeft} a.${small}`, {
-    marginLeft: `calc(-1 * (${borderSize} + ${buttonPaddingX.small}))`,
-});
-
-globalStyle(`${forceLinkBleedRight} button, ${forceLinkBleedRight} a`, {
-    marginRight: `calc(-1 * (${borderSize} + ${buttonPaddingX.default}))`,
-});
-
-globalStyle(`${forceLinkBleedRight} button.${small}, ${forceLinkBleedRight} a.${small}`, {
-    marginRight: `calc(-1 * (${borderSize} + ${buttonPaddingX.small}))`,
-});
-
-globalStyle(`${forceLinkBleedLeftOnlyDesktop} button, ${forceLinkBleedLeftOnlyDesktop} a`, {
-    '@media': {
-        [mq.desktopOrBigger]: {
-            marginLeft: `calc(-1 * (${borderSize} + ${buttonPaddingX.default}))`,
-        },
-    },
-});
-
-globalStyle(`${forceLinkBleedLeftOnlyDesktop} button.${small}, ${forceLinkBleedLeftOnlyDesktop} a.${small}`, {
-    '@media': {
-        [mq.desktopOrBigger]: {
-            marginLeft: `calc(-1 * (${borderSize} + ${buttonPaddingX.small}))`,
-        },
-    },
 });
 
 const lightPrimary: ComplexStyleRule = [
