@@ -4,7 +4,7 @@ import beachImg from '../__stories__/images/beach.jpg';
 import Video from '../video';
 import {useIsInViewport} from '../hooks';
 import Stack from '../stack';
-import {Title2} from '../title';
+import {Title3} from '../title';
 import {Text3} from '../text';
 import {vars} from '../skins/skin-contract.css';
 
@@ -29,7 +29,7 @@ export const Default: StoryComponent = () => {
     return (
         <Stack space={16}>
             <Stack space={8}>
-                <Title2>Video component with intersection observer</Title2>
+                <Title3>Video component with intersection observer</Title3>
                 <Text3 regular as="p">
                     As you scroll down, the video should start playing automatically as soon as 50% of its
                     height becomes visible in the viewport. When 50% of the video leaves the viewport, the

@@ -11,7 +11,7 @@ import ButtonGroup from './button-group';
 import {vars} from './skins/skin-contract.css';
 import * as styles from './header.css';
 import {getPrefixedDataAttributes} from './utils/dom';
-import {Title2, Title3} from './title';
+import {Title3, Title4} from './title';
 
 import type NavigationBreadcrumbs from './navigation-breadcrumbs';
 import type {ButtonPrimary, ButtonSecondary} from './button';
@@ -105,9 +105,9 @@ export const Header = ({
                             renderRichText(pretitle, {color: vars.colors.textPrimary, as: pretitleAs})}
                         {title &&
                             (small ? (
-                                <Title2 as={titleAs}>{title}</Title2>
-                            ) : (
                                 <Title3 as={titleAs}>{title}</Title3>
+                            ) : (
+                                <Title4 as={titleAs}>{title}</Title4>
                             ))}
                         {description &&
                             (small ? (

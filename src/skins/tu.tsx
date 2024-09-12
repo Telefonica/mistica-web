@@ -336,7 +336,8 @@ export const getTuSkin: GetKnownSkin = () => {
             },
             link: {weight: 'medium'},
             title1: {weight: 'medium'},
-            title2: {
+            title2: {weight: 'medium'},
+            title3: {
                 weight: 'medium',
                 size: {mobile: 20, desktop: 28},
                 lineHeight: {mobile: 24, desktop: 32},
