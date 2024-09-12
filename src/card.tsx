@@ -509,7 +509,7 @@ type MaybeTouchableCard<T> = ExclusifyUnion<TouchableCard<T> | T>;
 
 interface MediaCardBaseProps {
     media: RendersElement<typeof Image> | RendersElement<typeof Video>;
-    icon?: React.ReactElement;
+    asset?: React.ReactElement;
     headline?: string | RendersNullableElement<typeof Tag>;
     pretitle?: string;
     pretitleLinesMax?: number;
@@ -542,7 +542,7 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
     (
         {
             media,
-            icon,
+            asset,
             headline,
             pretitle,
             pretitleLinesMax,
@@ -611,9 +611,9 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
                                     buttonLink={buttonLink}
                                 />
                             </div>
-                            {icon && (
+                            {asset && (
                                 <Box
-                                    className={styles.mediaCardIcon}
+                                    className={styles.mediaCardAsset}
                                     paddingLeft={{mobile: 16, desktop: 24}}
                                     paddingTop={{mobile: 16, desktop: 24}}
                                 >
@@ -622,7 +622,7 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
                                             [mediaStyles.vars.mediaBorderRadius]: vars.borderRadii.mediaSmall,
                                         })}
                                     >
-                                        {icon}
+                                        {asset}
                                     </div>
                                 </Box>
                             )}
@@ -644,7 +644,7 @@ export const NakedCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
     (
         {
             media,
-            icon,
+            asset,
             headline,
             pretitle,
             pretitleLinesMax,
@@ -719,9 +719,9 @@ export const NakedCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
                                 buttonLink={buttonLink}
                             />
                         </div>
-                        {icon && (
+                        {asset && (
                             <Box
-                                className={styles.mediaCardIcon}
+                                className={styles.mediaCardAsset}
                                 paddingLeft={{mobile: 16, desktop: 24}}
                                 paddingTop={{mobile: 16, desktop: 24}}
                             >
@@ -730,7 +730,7 @@ export const NakedCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
                                         [mediaStyles.vars.mediaBorderRadius]: vars.borderRadii.mediaSmall,
                                     })}
                                 >
-                                    {icon}
+                                    {asset}
                                 </div>
                             </Box>
                         )}
@@ -856,7 +856,7 @@ interface DataCardBaseProps {
     /**
      * Typically a mistica-icons component element
      */
-    icon?: React.ReactElement;
+    asset?: React.ReactElement;
     headline?: string | RendersNullableElement<typeof Tag>;
     pretitle?: string;
     pretitleLinesMax?: number;
@@ -890,7 +890,7 @@ type DataCardProps = DataCardBaseProps &
 export const DataCard = React.forwardRef<HTMLDivElement, DataCardProps>(
     (
         {
-            icon,
+            asset,
             headline,
             pretitle,
             pretitleLinesMax,
@@ -914,7 +914,7 @@ export const DataCard = React.forwardRef<HTMLDivElement, DataCardProps>(
         },
         ref
     ) => {
-        const hasIconOrHeadline = !!icon || !!headline;
+        const hasIconOrHeadline = !!asset || !!headline;
         const isTouchable = !!(touchableProps.href || touchableProps.to || touchableProps.onPress);
         const {text: headlineText, ref: headlineRef} = useInnerText();
         const {text: extraText, ref: extraRef} = useInnerText();
@@ -944,14 +944,14 @@ export const DataCard = React.forwardRef<HTMLDivElement, DataCardProps>(
                         <div className={styles.dataCard}>
                             <Inline space={0}>
                                 <Stack space={16}>
-                                    {icon && (
+                                    {asset && (
                                         <div
                                             style={applyCssVars({
                                                 [mediaStyles.vars.mediaBorderRadius]:
                                                     vars.borderRadii.mediaSmall,
                                             })}
                                         >
-                                            {icon}
+                                            {asset}
                                         </div>
                                     )}
                                     <CardContent
@@ -1001,7 +1001,7 @@ export const DataCard = React.forwardRef<HTMLDivElement, DataCardProps>(
 );
 
 type SnapCardProps = MaybeTouchableCard<{
-    icon?: React.ReactElement;
+    asset?: React.ReactElement;
     title?: string;
     titleAs?: HeadingType;
     titleLinesMax?: number;
@@ -1021,7 +1021,7 @@ type SnapCardProps = MaybeTouchableCard<{
 export const SnapCard = React.forwardRef<HTMLDivElement, SnapCardProps>(
     (
         {
-            icon,
+            asset,
             title,
             titleAs = 'h3',
             titleLinesMax,
@@ -1064,13 +1064,13 @@ export const SnapCard = React.forwardRef<HTMLDivElement, SnapCardProps>(
                         {isTouchable && <div className={overlayStyle} />}
                         <section className={styles.snapCard}>
                             <div>
-                                {icon && (
+                                {asset && (
                                     <div
                                         style={applyCssVars({
                                             [mediaStyles.vars.mediaBorderRadius]: vars.borderRadii.mediaSmall,
                                         })}
                                     >
-                                        <Box paddingBottom={16}>{icon}</Box>
+                                        <Box paddingBottom={16}>{asset}</Box>
                                     </div>
                                 )}
                                 <Stack space={4}>
@@ -1172,7 +1172,7 @@ interface CommonDisplayCardProps {
     /**
      * Typically a mistica-icons component element
      */
-    icon?: React.ReactElement;
+    asset?: React.ReactElement;
     actions?: ReadonlyArray<CardAction | React.ReactElement>;
     onClose?: () => void;
     closeButtonLabel?: string;
@@ -1239,7 +1239,7 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
             backgroundVideo,
             backgroundVideoRef,
             poster,
-            icon,
+            asset,
             headline,
             pretitle,
             pretitleLinesMax,
@@ -1336,17 +1336,18 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
                             <div
                                 className={styles.displayCardContent}
                                 style={{
-                                    paddingTop: withGradient && !icon && !hasTopActions && !hasVideo ? 0 : 24,
+                                    paddingTop:
+                                        withGradient && !asset && !hasTopActions && !hasVideo ? 0 : 24,
                                 }}
                             >
-                                {icon ? (
+                                {asset ? (
                                     <div
                                         style={applyCssVars({
                                             [mediaStyles.vars.mediaBorderRadius]: vars.borderRadii.mediaSmall,
                                         })}
                                     >
                                         <Box paddingBottom={withGradient ? 0 : 40} paddingX={24}>
-                                            {icon}
+                                            {asset}
                                         </Box>
                                     </div>
                                 ) : (
@@ -1465,7 +1466,7 @@ interface PosterCardBaseProps {
     aspectRatio?: AspectRatio | number;
     width?: number | string;
     height?: number | string;
-    icon?: React.ReactElement;
+    asset?: React.ReactElement;
     actions?: ReadonlyArray<CardAction | React.ReactElement>;
     onClose?: () => void;
     closeButtonLabel?: string;
@@ -1523,7 +1524,7 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
             actions,
             onClose,
             closeButtonLabel,
-            icon,
+            asset,
             headline,
             pretitle,
             pretitleLinesMax,
@@ -1630,12 +1631,12 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                             <Box
                                 className={styles.displayCardContent}
                                 paddingTop={
-                                    withGradient && !icon && !hasTopActions && !hasVideo
+                                    withGradient && !asset && !hasTopActions && !hasVideo
                                         ? 0
-                                        : {mobile: icon ? 16 : 24, desktop: 24}
+                                        : {mobile: asset ? 16 : 24, desktop: 24}
                                 }
                             >
-                                {icon ? (
+                                {asset ? (
                                     <div
                                         style={applyCssVars({
                                             [mediaStyles.vars.mediaBorderRadius]: vars.borderRadii.mediaSmall,
@@ -1645,7 +1646,7 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                                             paddingBottom={withGradient ? 0 : 40}
                                             paddingX={{mobile: 16, desktop: 24}}
                                         >
-                                            {icon}
+                                            {asset}
                                         </Box>
                                     </div>
                                 ) : (
