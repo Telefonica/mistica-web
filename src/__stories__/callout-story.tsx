@@ -42,7 +42,7 @@ export const Default: StoryComponent<Args> = ({title, description, asset, action
         <ResponsiveLayout isInverse={inverse}>
             <Box paddingY={24}>
                 <Callout
-                    icon={asset ? <IconBoxLight /> : undefined}
+                    asset={asset ? <IconBoxLight /> : undefined}
                     onClose={closable ? () => {} : undefined}
                     title={title}
                     description={description}

@@ -52,7 +52,7 @@ export const Default: StoryComponent = () => {
                 </ButtonPrimary>
                 <Callout
                     description="Check Sheet component docs for more info."
-                    icon={<IconInformationRegular />}
+                    asset={<IconInformationRegular />}
                     buttonLink={
                         <ButtonLink href="https://github.com/Telefonica/mistica-web/blob/master/doc/sheet.md">
                             See docs
