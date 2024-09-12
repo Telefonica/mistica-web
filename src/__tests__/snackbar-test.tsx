@@ -130,7 +130,7 @@ test('Snackbar always has dismiss button if it does not have action button and d
 
 test('nativeMessage is called when webview bridge is available', async () => {
     jest.spyOn(bridge, 'isWebViewBridgeAvailable').mockReturnValue(true);
-    const nativeMessageMock = jest.spyOn(bridge, 'nativeMessage').mockResolvedValue();
+    const nativeMessageMock = jest.spyOn(bridge, 'nativeMessage').mockResolvedValue({action: 'DISMISS'});
 
     const onCloseSpy = jest.fn();
 
@@ -155,7 +155,7 @@ test('nativeMessage is called when webview bridge is available', async () => {
 
 test('nativeMessage is called with duration PERSISTENT when duration is Infinity', async () => {
     jest.spyOn(bridge, 'isWebViewBridgeAvailable').mockReturnValue(true);
-    const nativeMessageMock = jest.spyOn(bridge, 'nativeMessage').mockResolvedValue();
+    const nativeMessageMock = jest.spyOn(bridge, 'nativeMessage').mockResolvedValue({action: 'DISMISS'});
 
     const onCloseSpy = jest.fn();
 
@@ -188,7 +188,7 @@ test('nativeMessage should be called once, even if the component re-renders', as
     jest.spyOn(bridge, 'isWebViewBridgeAvailable').mockReturnValue(true);
 
     const onCloseMock = jest.fn();
-    const nativeMessageMock = jest.spyOn(bridge, 'nativeMessage').mockResolvedValue();
+    const nativeMessageMock = jest.spyOn(bridge, 'nativeMessage').mockResolvedValue({action: 'DISMISS'});
 
     const ComponentWithSnackbar = ({onClose}: {onClose: () => unknown}) => {
         const [count, setCount] = React.useState(0);

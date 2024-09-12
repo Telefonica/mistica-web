@@ -138,7 +138,6 @@ export type ThemeConfig = Readonly<{
               Component: React.ComponentType<any>;
           };
     useHrefDecorator?: () => (href: string) => string;
-    useId?: () => string;
     enableTabFocus?: boolean;
 }>;
 
@@ -167,6 +166,5 @@ export type Theme = {
     isDarkMode: boolean;
     isIos: boolean;
     useHrefDecorator: () => (href: string) => string;
-    useId?: () => string;
     t: (token: TextToken) => string;
 };
