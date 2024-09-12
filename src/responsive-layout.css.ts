@@ -127,6 +127,7 @@ export const forcedMarginMobileContainer = style({
 
 export const backgroundVariant = {
     inverse: sprinkles({background: skinVars.colors.backgroundBrand}),
+    media: sprinkles({background: 'transparent'}),
     alternative: sprinkles({background: skinVars.colors.backgroundAlternative}),
 };
 

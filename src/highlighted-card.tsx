@@ -1,6 +1,6 @@
 'use client';
 import * as React from 'react';
-import {useIsInverseVariant} from './theme-variant-context';
+import {useIsInverseOrMediaVariant} from './theme-variant-context';
 import Stack from './stack';
 import {BaseTouchable} from './touchable';
 import {Text, Text2, textProps} from './text';
@@ -64,7 +64,7 @@ const Content = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
         descriptionLinesMax,
         ...restProps
     } = props;
-    const isInverseOutside = useIsInverseVariant();
+    const isInverseOutside = useIsInverseOrMediaVariant();
     const isInverse = props.isInverse ?? isInverseOutside;
     const isDismissable = useIsDismissable();
     const {textPresets} = useTheme();
@@ -158,15 +158,14 @@ const HighlightedCard = React.forwardRef<HTMLDivElement, Props>(
     ({'aria-label': ariaLabel, ...props}, ref) => {
         const label = ariaLabel || props.title || props.description;
 
-        const isInverseOutside = useIsInverseVariant();
+        const isInverseOutside = useIsInverseOrMediaVariant();
         const isInverse = props.isInverse ?? isInverseOutside;
         return (
             <MaybeDismissable
                 onClose={props.onClose}
                 aria-label={label}
                 width={props.width}
-                isOverMedia={!!props.imageUrl}
-                isInverse={isInverse}
+                variant={props.imageUrl ? 'media' : isInverse ? 'inverse' : undefined}
             >
                 <Content {...props} aria-label={label} ref={ref} />
             </MaybeDismissable>

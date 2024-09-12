@@ -1,8 +1,9 @@
-import {style} from '@vanilla-extract/css';
+import {style, styleVariants} from '@vanilla-extract/css';
 import {sprinkles} from './sprinkles.css';
 import * as mq from './media-queries.css';
 import {pxToRem} from './utils/css';
 import {vars} from './skins/skin-contract.css';
+import {applyAlpha} from './utils/color';
 
 export const timerWrapper = sprinkles({display: 'inline-block'});
 
@@ -60,16 +61,32 @@ const baseBoxedTimerValueContainer = style([
     },
 ]);
 
-export const boxedTimerValueContainer = style([
-    baseBoxedTimerValueContainer,
-    sprinkles({
-        background: vars.colors.brandLow,
-    }),
-]);
+export const boxedTimerValueContainer = styleVariants({
+    default: [
+        baseBoxedTimerValueContainer,
+        sprinkles({
+            background: vars.colors.brandLow,
+        }),
+    ],
 
-export const boxedTimerValueContainerInverse = style([
-    baseBoxedTimerValueContainer,
-    sprinkles({
-        background: vars.colors.backgroundContainer,
-    }),
-]);
+    inverse: [
+        baseBoxedTimerValueContainer,
+        sprinkles({
+            background: vars.colors.backgroundContainer,
+        }),
+    ],
+
+    alternative: [
+        baseBoxedTimerValueContainer,
+        sprinkles({
+            background: vars.colors.backgroundContainer,
+        }),
+    ],
+
+    media: [
+        baseBoxedTimerValueContainer,
+        style({
+            background: applyAlpha(vars.rawColors.backgroundContainer, 0.7),
+        }),
+    ],
+});

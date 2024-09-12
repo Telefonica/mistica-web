@@ -12,6 +12,7 @@ type Props = {
     children: React.ReactNode;
     fullWidth?: boolean;
     className?: string;
+    /** @deprecated Use variant = 'inverse' instead */
     isInverse?: boolean;
     variant?: Variant;
     backgroundColor?: string;

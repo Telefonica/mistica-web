@@ -380,8 +380,7 @@ export const Timer = ({
         return timerValue.map((item, index) => (
             <Box
                 className={classNames({
-                    [styles.boxedTimerValueContainer]: themeVariant === 'default' && boxed,
-                    [styles.boxedTimerValueContainerInverse]: themeVariant !== 'default' && boxed,
+                    [styles.boxedTimerValueContainer[themeVariant]]: boxed,
                 })}
                 key={index}
             >

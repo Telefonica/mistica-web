@@ -52,7 +52,6 @@ import {
     NegativeBox,
     IconInvoicePlanFileRegular,
 } from '..';
-import {InternalIconButton} from '../icon-button';
 import avatarImg from '../__stories__/images/avatar.jpg';
 import usingVrImg from '../__stories__/images/using-vr.jpg';
 
@@ -400,31 +399,6 @@ export const Default: StoryComponent<Args> = ({variant}) => {
                                 type="danger"
                                 backgroundType="solid"
                             />
-
-                            <div style={{background: 'black'}}>
-                                <InternalIconButton
-                                    Icon={IconLightningRegular}
-                                    aria-label="icon button 10"
-                                    type="neutral"
-                                    isOverMedia
-                                />
-                            </div>
-                            <div style={{background: 'black'}}>
-                                <InternalIconButton
-                                    Icon={IconLightningRegular}
-                                    aria-label="icon button 11"
-                                    type="brand"
-                                    isOverMedia
-                                />
-                            </div>
-                            <div style={{background: 'black'}}>
-                                <InternalIconButton
-                                    Icon={IconLightningRegular}
-                                    aria-label="icon button 12"
-                                    type="danger"
-                                    isOverMedia
-                                />
-                            </div>
                         </Inline>
 
                         {/** Hero */}

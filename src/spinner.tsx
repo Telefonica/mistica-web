@@ -5,7 +5,7 @@ import FadeIn from './fade-in';
 import {useTheme} from './hooks';
 import * as styles from './spinner.css';
 import {vars} from './skins/skin-contract.css';
-import {useIsInverseVariant} from './theme-variant-context';
+import {useIsInverseOrMediaVariant} from './theme-variant-context';
 import * as tokens from './text-tokens';
 
 type Props = {
@@ -19,7 +19,7 @@ type Props = {
 
 const Spinner = ({color, delay = '500ms', size = 24, style, rolePresentation}: Props): JSX.Element => {
     const {texts, platformOverrides, t} = useTheme();
-    const isInverse = useIsInverseVariant();
+    const isInverse = useIsInverseOrMediaVariant();
     color = color || (isInverse ? vars.colors.controlActivatedInverse : vars.colors.controlActivated);
     const spinnerId = React.useId();
     const withTitle = !rolePresentation;
