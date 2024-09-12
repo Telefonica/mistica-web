@@ -52,7 +52,7 @@
     --mistica-color-backgroundContainerBrandOverInverse: var(--mistica-vivo-new-vivoPurpleDark);
     --mistica-color-backgroundContainerAlternative: var(--mistica-vivo-new-grey1);
     --mistica-color-backgroundOverlay: rgba(var(--mistica-vivo-new-raw-grey6), 0.6);
-    --mistica-color-backgroundSkeleton: var(--mistica-vivo-new-grey4);
+    --mistica-color-backgroundSkeleton: var(--mistica-vivo-new-grey3);
     --mistica-color-backgroundSkeletonInverse: var(--mistica-vivo-new-vivoPurpleDark);
     --mistica-color-backgroundBrandTop: var(--mistica-vivo-new-vivoPurple);
     --mistica-color-backgroundBrandBottom: var(--mistica-vivo-new-vivoPurple);
@@ -152,7 +152,7 @@
     --mistica-color-textNavigationBarSecondary: var(--mistica-vivo-new-vivoPurpleLight50);
     --mistica-color-textNavigationSearchBarHint: var(--mistica-vivo-new-vivoPurpleLight50);
     --mistica-color-textNavigationSearchBarText: var(--mistica-vivo-new-white);
-    --mistica-color-textAppBar: var(--mistica-vivo-new-grey4);
+    --mistica-color-textAppBar: var(--mistica-vivo-new-grey5);
     --mistica-color-textAppBarSelected: var(--mistica-vivo-new-vivoPurple);
     --mistica-color-customTabsBackground: var(--mistica-vivo-new-white);
     --mistica-color-tagTextPromo: var(--mistica-vivo-new-vivoPurple);
@@ -223,9 +223,10 @@
     --mistica-font-weight-tabsLabel: 400;
     --mistica-font-weight-link: 400;
     --mistica-font-weight-title1: 400;
-    --mistica-font-size-title2: 1.125rem;
-    --mistica-line-height-title2: 1.5rem;
     --mistica-font-weight-title2: 400;
+    --mistica-font-size-title3: 1.125rem;
+    --mistica-line-height-title3: 1.5rem;
+    --mistica-font-weight-title3: 400;
     --mistica-font-weight-indicator: 400;
     --mistica-font-weight-navigationBar: 400;
 }
@@ -528,7 +529,7 @@
         --mistica-color-backgroundContainerBrandOverInverse: var(--mistica-vivo-new-vivoPurpleDark);
         --mistica-color-backgroundContainerAlternative: var(--mistica-vivo-new-grey1);
         --mistica-color-backgroundOverlay: rgba(var(--mistica-vivo-new-raw-grey6), 0.6);
-        --mistica-color-backgroundSkeleton: var(--mistica-vivo-new-grey4);
+        --mistica-color-backgroundSkeleton: var(--mistica-vivo-new-grey3);
         --mistica-color-backgroundSkeletonInverse: var(--mistica-vivo-new-vivoPurpleDark);
         --mistica-color-backgroundBrandTop: var(--mistica-vivo-new-vivoPurple);
         --mistica-color-backgroundBrandBottom: var(--mistica-vivo-new-vivoPurple);
@@ -631,7 +632,7 @@
         --mistica-color-textNavigationBarSecondary: var(--mistica-vivo-new-vivoPurpleLight50);
         --mistica-color-textNavigationSearchBarHint: var(--mistica-vivo-new-vivoPurpleLight50);
         --mistica-color-textNavigationSearchBarText: var(--mistica-vivo-new-white);
-        --mistica-color-textAppBar: var(--mistica-vivo-new-grey4);
+        --mistica-color-textAppBar: var(--mistica-vivo-new-grey5);
         --mistica-color-textAppBarSelected: var(--mistica-vivo-new-vivoPurple);
         --mistica-color-customTabsBackground: var(--mistica-vivo-new-white);
         --mistica-color-tagTextPromo: var(--mistica-vivo-new-vivoPurple);
@@ -684,7 +685,7 @@
         --mistica-font-size-tabsLabel: 1.125rem;
         --mistica-line-height-tabsLabel: 1.5rem;
 
-        --mistica-font-size-title2: 1.25rem;
-        --mistica-line-height-title2: 1.75rem;
+        --mistica-font-size-title3: 1.25rem;
+        --mistica-line-height-title3: 1.75rem;
     }
 }
