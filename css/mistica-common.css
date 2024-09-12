@@ -85,6 +85,11 @@
     line-height: var(--mistica-line-height-title2);
     font-weight: var(--mistica-font-weight-title2);
 }
+.mistica-text-title3 {
+    font-size: var(--mistica-font-size-title3);
+    line-height: var(--mistica-line-height-title3);
+    font-weight: var(--mistica-font-weight-title3);
+}
 .mistica-text-indicator {
     font-size: var(--mistica-font-size-indicator);
     line-height: var(--mistica-line-height-indicator);

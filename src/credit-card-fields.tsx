@@ -8,6 +8,7 @@ import Stack from './stack';
 import CreditCardExpirationField from './credit-card-expiration-field';
 import CreditCardNumberField from './credit-card-number-field';
 import CvvField from './cvv-field';
+import * as tokens from './text-tokens';
 
 import type {CardOptions} from './utils/credit-card';
 
@@ -26,7 +27,7 @@ const CreditCardFields = ({
     acceptedCards,
 }: CreditCardFieldsProps): JSX.Element => {
     const {values} = useForm();
-    const {texts} = useTheme();
+    const {texts, t} = useTheme();
     const cvvLength = getCvvLength(String(values[numberFieldName]));
 
     return (
@@ -34,17 +35,17 @@ const CreditCardFields = ({
             <CreditCardNumberField
                 acceptedCards={acceptedCards}
                 name={numberFieldName}
-                label={texts.formCreditCardNumberLabel}
+                label={texts.formCreditCardNumberLabel || t(tokens.formCreditCardNumberLabel)}
             />
             <DoubleField layout="60/40">
                 <CreditCardExpirationField
                     name={expirationFieldName}
-                    label={texts.formCreditCardExpirationLabel}
+                    label={texts.formCreditCardExpirationLabel || t(tokens.formCreditCardExpirationLabel)}
                 />
                 <CvvField
                     acceptedCards={acceptedCards}
                     name={cvvFieldName}
-                    label={texts.formCreditCardCvvLabel}
+                    label={texts.formCreditCardCvvLabel || t(tokens.formCreditCardCvvLabel)}
                     maxLength={cvvLength}
                 />
             </DoubleField>

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {ResponsiveLayout, Stack, Title2, Text2, Box} from '..';
+import {ResponsiveLayout, Stack, Text2, Box, Title3} from '..';
 
 export default {
     title: 'Private/Example',
@@ -13,7 +13,7 @@ export const Default: StoryComponent = () => {
         <Box paddingY={24}>
             <ResponsiveLayout>
                 <Stack space={16}>
-                    <Title2 as="h1">This is an example of private story</Title2>
+                    <Title3 as="h1">This is an example of private story</Title3>
                     <Stack space={8}>
                         <Text2 regular as="p">
                             Private stories are only available in dev and CI builds, not in production.

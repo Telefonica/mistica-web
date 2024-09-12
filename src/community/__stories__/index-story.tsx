@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {ResponsiveLayout, Box, Title2, Stack, Text2} from '../..';
+import {ResponsiveLayout, Box, Stack, Text2, Title3} from '../..';
 
 export default {
     title: 'Community/Welcome',
@@ -19,7 +19,7 @@ export const Default: StoryComponent = () => {
         <ResponsiveLayout>
             <Box paddingY={32}>
                 <Stack space={24}>
-                    <Title2 as="h1">Welcome to Mística Community</Title2>
+                    <Title3 as="h1">Welcome to Mística Community</Title3>
                     <Stack space={16}>
                         <Paragraph>
                             Mística Community is a place to share components which are built with Mística

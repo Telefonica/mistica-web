@@ -4,7 +4,7 @@ import {SPACE} from './utils/keys';
 import {useControlProps} from './form-context';
 import Inline from './inline';
 import {Text3} from './text';
-import {useAriaId, useTheme} from './hooks';
+import {useTheme} from './hooks';
 import classnames from 'classnames';
 import {getPrefixedDataAttributes} from './utils/dom';
 import * as styles from './checkbox.css';
@@ -86,7 +86,8 @@ type ChildrenProps = {
 };
 
 const Checkbox = React.forwardRef<HTMLDivElement, RenderProps | ChildrenProps>((props, ref) => {
-    const labelId = useAriaId(props['aria-labelledby']);
+    const reactId = React.useId();
+    const labelId = props['aria-labelledby'] || reactId;
     const ariaLabel = props['aria-label'];
     const hasExternalLabel = ariaLabel || props['aria-labelledby'];
 

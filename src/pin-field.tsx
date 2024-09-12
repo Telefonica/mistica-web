@@ -4,13 +4,14 @@ import * as React from 'react';
 import Inline from './inline';
 import * as textFieldStyles from './text-field-base.css';
 import * as styles from './pin-field.css';
-import {useAriaId, useTheme} from './hooks';
+import {useTheme} from './hooks';
 import ScreenReaderOnly from './screen-reader-only';
 import {IntegerInput} from './integer-field';
 import {useFieldProps} from './form-context';
 import {createChangeEvent, getPrefixedDataAttributes} from './utils/dom';
 import {HelperText} from './text-field-components';
 import {flushSync} from 'react-dom';
+import * as tokens from './text-tokens';
 
 import type {DataAttributes} from './utils/types';
 
@@ -42,7 +43,7 @@ const PinInput = ({
     onChange,
     inputRef,
 }: PinInputProps): React.ReactElement => {
-    const {texts} = useTheme();
+    const {texts, t} = useTheme();
     const [selfValue, setSelfValue] = React.useState<string>(defaultValue?.slice(0, length) ?? '');
     const [focusIndex, setFocusIndex] = React.useState<number | undefined>(undefined);
 
@@ -164,7 +165,7 @@ const PinInput = ({
                     }
                 >
                     <IntegerInput
-                        aria-label={texts.pinFieldInputLabel
+                        aria-label={(texts.pinFieldInputLabel || t(tokens.pinFieldInputLabel))
                             .replace('1$s', String(index + 1))
                             .replace('2$s', String(length))}
                         type={hideCode ? 'password' : 'text'}
@@ -309,7 +310,7 @@ const PinField = ({
         onChange,
     });
 
-    const otpLabelId = useAriaId();
+    const otpLabelId = React.useId();
 
     return (
         <div

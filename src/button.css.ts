@@ -75,14 +75,8 @@ const button = style([
     },
 ]);
 
-const link = style([
-    button,
-    {
-        fontWeight: 500,
-    },
-]);
-
 export const small = style({});
+export const smallLink = style({});
 
 export const loadingFiller = style([
     sprinkles({
@@ -160,7 +154,7 @@ const lightPrimary: ComplexStyleRule = [
     {
         selectors: {
             '&:not([disabled]):active': {
-                backgroundColor: vars.colors.buttonPrimaryBackgroundSelected,
+                backgroundColor: vars.colors.buttonPrimaryBackgroundPressed,
             },
         },
 
@@ -171,7 +165,7 @@ const lightPrimary: ComplexStyleRule = [
                         backgroundColor: vars.colors.buttonPrimaryBackgroundHover,
                     },
                     '&:not([disabled]):active': {
-                        backgroundColor: vars.colors.buttonPrimaryBackgroundSelected,
+                        backgroundColor: vars.colors.buttonPrimaryBackgroundPressed,
                     },
                 },
             },
@@ -188,8 +182,8 @@ const lightPrimaryInverse: ComplexStyleRule = [
     {
         selectors: {
             '&:not([disabled]):active': {
-                backgroundColor: vars.colors.buttonPrimaryBackgroundInverseSelected,
-                color: vars.colors.textButtonPrimaryInverseSelected,
+                backgroundColor: vars.colors.buttonPrimaryBackgroundInversePressed,
+                color: vars.colors.textButtonPrimaryInversePressed,
             },
         },
 
@@ -197,12 +191,12 @@ const lightPrimaryInverse: ComplexStyleRule = [
             [mq.supportsHover]: {
                 selectors: {
                     '&:hover:not([disabled])': {
-                        color: vars.colors.textButtonPrimaryInverseSelected,
-                        backgroundColor: vars.colors.buttonPrimaryBackgroundInverseSelected,
+                        color: vars.colors.textButtonPrimaryInversePressed,
+                        backgroundColor: vars.colors.buttonPrimaryBackgroundInversePressed,
                     },
                     '&:not([disabled]):active': {
-                        backgroundColor: vars.colors.buttonPrimaryBackgroundInverseSelected,
-                        color: vars.colors.textButtonPrimaryInverseSelected,
+                        backgroundColor: vars.colors.buttonPrimaryBackgroundInversePressed,
+                        color: vars.colors.textButtonPrimaryInversePressed,
                     },
                 },
             },
@@ -221,9 +215,9 @@ const lightSecondary: ComplexStyleRule = [
 
         selectors: {
             '&:not([disabled]):active': {
-                color: vars.colors.textButtonSecondarySelected,
-                borderColor: vars.colors.buttonSecondaryBorderSelected,
-                backgroundColor: vars.colors.buttonSecondaryBackgroundSelected,
+                color: vars.colors.textButtonSecondaryPressed,
+                borderColor: vars.colors.buttonSecondaryBorderPressed,
+                backgroundColor: vars.colors.buttonSecondaryBackgroundPressed,
             },
         },
 
@@ -231,14 +225,14 @@ const lightSecondary: ComplexStyleRule = [
             [mq.supportsHover]: {
                 selectors: {
                     '&:hover:not([disabled])': {
-                        color: vars.colors.textButtonSecondarySelected,
-                        borderColor: vars.colors.buttonSecondaryBorderSelected,
+                        color: vars.colors.textButtonSecondaryPressed,
+                        borderColor: vars.colors.buttonSecondaryBorderPressed,
                         backgroundColor: vars.colors.buttonSecondaryBackgroundHover,
                     },
                     '&:not([disabled]):active': {
-                        color: vars.colors.textButtonSecondarySelected,
-                        borderColor: vars.colors.buttonSecondaryBorderSelected,
-                        backgroundColor: vars.colors.buttonSecondaryBackgroundSelected,
+                        color: vars.colors.textButtonSecondaryPressed,
+                        borderColor: vars.colors.buttonSecondaryBorderPressed,
+                        backgroundColor: vars.colors.buttonSecondaryBackgroundPressed,
                     },
                 },
             },
@@ -257,9 +251,9 @@ const lightSecondaryInverse: ComplexStyleRule = [
 
         selectors: {
             '&:not([disabled]):active': {
-                borderColor: vars.colors.buttonSecondaryBorderInverseSelected,
-                color: vars.colors.textButtonSecondaryInverseSelected,
-                backgroundColor: vars.colors.buttonSecondaryBackgroundInverseSelected,
+                borderColor: vars.colors.buttonSecondaryBorderInversePressed,
+                color: vars.colors.textButtonSecondaryInversePressed,
+                backgroundColor: vars.colors.buttonSecondaryBackgroundInversePressed,
             },
         },
 
@@ -267,14 +261,14 @@ const lightSecondaryInverse: ComplexStyleRule = [
             [mq.supportsHover]: {
                 selectors: {
                     '&:hover:not([disabled])': {
-                        borderColor: vars.colors.buttonSecondaryBorderInverseSelected,
-                        color: vars.colors.textButtonSecondaryInverseSelected,
+                        borderColor: vars.colors.buttonSecondaryBorderInversePressed,
+                        color: vars.colors.textButtonSecondaryInversePressed,
                         backgroundColor: vars.colors.buttonSecondaryBackgroundInverseHover,
                     },
                     '&:not([disabled]):active': {
-                        borderColor: vars.colors.buttonSecondaryBorderInverseSelected,
-                        color: vars.colors.textButtonSecondaryInverseSelected,
-                        backgroundColor: vars.colors.buttonSecondaryBackgroundInverseSelected,
+                        borderColor: vars.colors.buttonSecondaryBorderInversePressed,
+                        color: vars.colors.textButtonSecondaryInversePressed,
+                        backgroundColor: vars.colors.buttonSecondaryBackgroundInversePressed,
                     },
                 },
             },
@@ -291,7 +285,7 @@ const danger: ComplexStyleRule = [
     {
         selectors: {
             '&:not([disabled]):active': {
-                backgroundColor: vars.colors.buttonDangerBackgroundSelected,
+                backgroundColor: vars.colors.buttonDangerBackgroundPressed,
             },
         },
 
@@ -302,7 +296,7 @@ const danger: ComplexStyleRule = [
                         backgroundColor: vars.colors.buttonDangerBackgroundHover,
                     },
                     '&:not([disabled]):active': {
-                        backgroundColor: vars.colors.buttonDangerBackgroundSelected,
+                        backgroundColor: vars.colors.buttonDangerBackgroundPressed,
                     },
                 },
             },
@@ -311,7 +305,7 @@ const danger: ComplexStyleRule = [
 ];
 
 export const defaultLink: ComplexStyleRule = [
-    link,
+    button,
     sprinkles({
         color: vars.colors.textLink,
         background: 'transparent',
@@ -319,7 +313,7 @@ export const defaultLink: ComplexStyleRule = [
     {
         selectors: {
             '&:not([disabled]):active': {
-                backgroundColor: vars.colors.buttonLinkBackgroundSelected,
+                backgroundColor: vars.colors.buttonLinkBackgroundPressed,
             },
         },
 
@@ -327,10 +321,10 @@ export const defaultLink: ComplexStyleRule = [
             [mq.supportsHover]: {
                 selectors: {
                     '&:hover:not([disabled])': {
-                        backgroundColor: vars.colors.buttonLinkBackgroundSelected,
+                        backgroundColor: vars.colors.buttonLinkBackgroundPressed,
                     },
                     '&:not([disabled]):active': {
-                        backgroundColor: vars.colors.buttonLinkBackgroundSelected,
+                        backgroundColor: vars.colors.buttonLinkBackgroundPressed,
                     },
                 },
             },
@@ -339,7 +333,7 @@ export const defaultLink: ComplexStyleRule = [
 ];
 
 export const defaultLinkInverse: ComplexStyleRule = [
-    link,
+    button,
     sprinkles({
         color: vars.colors.textLinkInverse,
         background: 'transparent',
@@ -347,7 +341,7 @@ export const defaultLinkInverse: ComplexStyleRule = [
     {
         selectors: {
             '&:not([disabled]):active': {
-                backgroundColor: vars.colors.buttonLinkBackgroundInverseSelected,
+                backgroundColor: vars.colors.buttonLinkBackgroundInversePressed,
             },
         },
 
@@ -355,10 +349,10 @@ export const defaultLinkInverse: ComplexStyleRule = [
             [mq.supportsHover]: {
                 selectors: {
                     '&:hover:not([disabled])': {
-                        backgroundColor: vars.colors.buttonLinkBackgroundInverseSelected,
+                        backgroundColor: vars.colors.buttonLinkBackgroundInversePressed,
                     },
                     '&:not([disabled]):active': {
-                        backgroundColor: vars.colors.buttonLinkBackgroundInverseSelected,
+                        backgroundColor: vars.colors.buttonLinkBackgroundInversePressed,
                     },
                 },
             },
@@ -367,7 +361,7 @@ export const defaultLinkInverse: ComplexStyleRule = [
 ];
 
 const dangerLink: ComplexStyleRule = [
-    link,
+    button,
     sprinkles({
         color: vars.colors.textLinkDanger,
         background: 'transparent',
@@ -375,7 +369,7 @@ const dangerLink: ComplexStyleRule = [
     {
         selectors: {
             '&:not([disabled]):active': {
-                backgroundColor: vars.colors.buttonLinkDangerBackgroundSelected,
+                backgroundColor: vars.colors.buttonLinkDangerBackgroundPressed,
             },
         },
 
@@ -383,10 +377,10 @@ const dangerLink: ComplexStyleRule = [
             [mq.supportsHover]: {
                 selectors: {
                     '&:hover:not([disabled])': {
-                        backgroundColor: vars.colors.buttonLinkDangerBackgroundSelected,
+                        backgroundColor: vars.colors.buttonLinkDangerBackgroundPressed,
                     },
                     '&:not([disabled]):active': {
-                        backgroundColor: vars.colors.buttonLinkDangerBackgroundSelected,
+                        backgroundColor: vars.colors.buttonLinkDangerBackgroundPressed,
                     },
                 },
             },
@@ -395,7 +389,7 @@ const dangerLink: ComplexStyleRule = [
 ];
 
 const dangerLinkInverse: ComplexStyleRule = [
-    link,
+    button,
     sprinkles({
         color: vars.colors.textLinkDanger,
         background: vars.colors.buttonLinkDangerBackgroundInverse,
@@ -403,7 +397,7 @@ const dangerLinkInverse: ComplexStyleRule = [
     {
         selectors: {
             '&:not([disabled]):active': {
-                backgroundColor: vars.colors.buttonLinkDangerBackgroundInverseSelected,
+                backgroundColor: vars.colors.buttonLinkDangerBackgroundInversePressed,
             },
         },
 
@@ -411,10 +405,10 @@ const dangerLinkInverse: ComplexStyleRule = [
             [mq.supportsHover]: {
                 selectors: {
                     '&:hover:not([disabled])': {
-                        backgroundColor: vars.colors.buttonLinkDangerBackgroundInverseSelected,
+                        backgroundColor: vars.colors.buttonLinkDangerBackgroundInversePressed,
                     },
                     '&:not([disabled]):active': {
-                        backgroundColor: vars.colors.buttonLinkDangerBackgroundInverseSelected,
+                        backgroundColor: vars.colors.buttonLinkDangerBackgroundInversePressed,
                     },
                 },
             },
@@ -423,7 +417,7 @@ const dangerLinkInverse: ComplexStyleRule = [
 ];
 
 const dangerLinkInverseDark: ComplexStyleRule = [
-    link,
+    button,
     sprinkles({
         color: vars.colors.textLinkDanger,
         background: 'transparent',
@@ -431,7 +425,7 @@ const dangerLinkInverseDark: ComplexStyleRule = [
     {
         selectors: {
             '&:not([disabled]):active': {
-                backgroundColor: vars.colors.buttonLinkDangerBackgroundInverseSelected,
+                backgroundColor: vars.colors.buttonLinkDangerBackgroundInversePressed,
             },
         },
 
@@ -439,10 +433,10 @@ const dangerLinkInverseDark: ComplexStyleRule = [
             [mq.supportsHover]: {
                 selectors: {
                     '&:hover:not([disabled])': {
-                        backgroundColor: vars.colors.buttonLinkDangerBackgroundInverseSelected,
+                        backgroundColor: vars.colors.buttonLinkDangerBackgroundInversePressed,
                     },
                     '&:not([disabled]):active': {
-                        backgroundColor: vars.colors.buttonLinkDangerBackgroundInverseSelected,
+                        backgroundColor: vars.colors.buttonLinkDangerBackgroundInversePressed,
                     },
                 },
             },

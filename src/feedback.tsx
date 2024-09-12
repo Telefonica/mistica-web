@@ -60,7 +60,12 @@ const useHapticFeedback = (type?: HapticFeedback) => {
 };
 
 const renderFeedbackBody = (
-    {icon, title, description, extra}: Pick<FeedbackScreenProps, 'icon' | 'title' | 'description' | 'extra'>,
+    {
+        asset,
+        title,
+        description,
+        extra,
+    }: Pick<FeedbackScreenProps, 'asset' | 'title' | 'description' | 'extra'>,
     animateText: boolean
 ) => {
     const normalizedDescription =
@@ -75,7 +80,7 @@ const renderFeedbackBody = (
         );
     return (
         <Stack space={24}>
-            <div className={styles.iconContainer}>{icon}</div>
+            <div className={styles.assetContainer}>{asset}</div>
             <Stack space={16} className={classnames(styles.feedbackData)}>
                 <div className={classnames(animateText && styles.feedbackTextAppearFast)}>
                     <Text6 as="h1">{title}</Text6>
@@ -173,10 +178,6 @@ type FeedbackButtonsProps = ButtonGroupProps;
 interface FeedbackProps extends FeedbackButtonsProps {
     title: string;
     description?: string | ReadonlyArray<string>;
-    /**
-     * @deprecated This field is deprecated, please use extra instead.
-     */
-    children?: React.ReactNode;
     extra?: React.ReactNode;
     unstable_inlineInDesktop?: boolean;
     dataAttributes?: DataAttributes;
@@ -189,7 +190,7 @@ interface AssetFeedbackProps extends FeedbackProps {
 
 interface FeedbackScreenProps extends AssetFeedbackProps {
     hapticFeedback?: HapticFeedback;
-    icon?: React.ReactNode;
+    asset?: React.ReactNode;
     animateText?: boolean;
     isInverse?: boolean;
 }
@@ -197,13 +198,12 @@ interface FeedbackScreenProps extends AssetFeedbackProps {
 export const FeedbackScreen = ({
     title,
     description,
-    children,
     extra,
     primaryButton,
     secondaryButton,
     link,
     hapticFeedback,
-    icon,
+    asset,
     animateText = false,
     isInverse = false,
     unstable_inlineInDesktop,
@@ -218,7 +218,7 @@ export const FeedbackScreen = ({
     const hasButtons = checkHasButtons({primaryButton, secondaryButton, link});
 
     const feedbackBody = renderFeedbackBody(
-        {icon, title, description, extra: extra ?? children},
+        {asset, title, description, extra},
         animateText && areAnimationsSupported(platformOverrides)
     );
 
@@ -289,7 +289,7 @@ export const SuccessFeedbackScreen = ({dataAttributes, ...props}: AssetFeedbackP
             {...props}
             isInverse={!props.unstable_inlineInDesktop || isTabletOrSmaller}
             hapticFeedback="success"
-            icon={
+            asset={
                 skinName === VIVO_SKIN ? (
                     <IconSuccessVivo size="100%" />
                 ) : skinName === VIVO_NEW_SKIN ? (
@@ -311,7 +311,6 @@ interface ErrorFeedbackScreenProps extends Omit<FeedbackProps, 'extra'> {
 }
 
 export const ErrorFeedbackScreen = ({
-    children,
     errorReference,
     dataAttributes,
     ...otherProps
@@ -320,12 +319,11 @@ export const ErrorFeedbackScreen = ({
         <FeedbackScreen
             {...otherProps}
             hapticFeedback="error"
-            icon={<IconError size="100%" />}
+            asset={<IconError size="100%" />}
             animateText
             dataAttributes={{'component-name': 'ErrorFeedbackScreen', ...dataAttributes}}
             extra={
                 <Stack space={16}>
-                    {children}
                     {errorReference && (
                         <Text2 color={vars.colors.textSecondary} regular>
                             {errorReference}
@@ -349,7 +347,7 @@ export const InfoFeedbackScreen = ({
     return (
         <FeedbackScreen
             dataAttributes={{'component-name': 'InfoFeedbackScreen', ...dataAttributes}}
-            icon={<Icon size="100%" />}
+            asset={<Icon size="100%" />}
             {...props}
         />
     );
@@ -358,7 +356,6 @@ export const InfoFeedbackScreen = ({
 export const SuccessFeedback = ({
     title,
     description,
-    children,
     extra,
     primaryButton,
     secondaryButton,
@@ -370,7 +367,7 @@ export const SuccessFeedback = ({
     useHapticFeedback('success');
     const {skinName, platformOverrides} = useTheme();
 
-    const icon =
+    const asset =
         skinName === VIVO_SKIN ? (
             <IconSuccessVivo size="100%" />
         ) : skinName === VIVO_NEW_SKIN ? (
@@ -379,7 +376,7 @@ export const SuccessFeedback = ({
             <IconSuccess size="100%" />
         );
     const feedbackBody = renderFeedbackBody(
-        {icon, title, description, extra: extra ?? children},
+        {asset, title, description, extra},
         areAnimationsSupported(platformOverrides)
     );
     const inlineFeedbackBody = renderInlineFeedbackBody(feedbackBody, {

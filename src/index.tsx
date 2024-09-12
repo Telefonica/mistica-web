@@ -10,6 +10,7 @@ export {default as FadeIn} from './fade-in';
 
 export {AccordionItem, BoxedAccordionItem, Accordion, BoxedAccordion} from './accordion';
 export {ButtonPrimary, ButtonSecondary, ButtonDanger, ButtonLink, ButtonLinkDanger} from './button';
+export {default as ButtonGroup} from './button-group';
 export {default as ButtonLayout} from './button-layout';
 export {default as Counter} from './counter';
 export {default as FixedFooterLayout} from './fixed-footer-layout';
@@ -21,11 +22,7 @@ export {default as LoadingBar} from './loading-bar';
 export {default as FixedToTop, TopDistanceContext} from './fixed-to-top';
 export {createNestableContext} from './nestable-context';
 export type {NestableContext} from './nestable-context';
-export {
-    default as OverscrollColor,
-    useSetOverscrollColor,
-    OverscrollColorProvider,
-} from './overscroll-color-context';
+export {useSetOverscrollColor, OverscrollColorProvider} from './overscroll-color-context';
 export {
     FeedbackScreen,
     ErrorFeedbackScreen,
@@ -37,7 +34,7 @@ export {LoadingScreen, BrandLoadingScreen} from './loading-screen';
 export {IconButton, ToggleIconButton} from './icon-button';
 export {default as Popover} from './popover';
 export {default as FocusTrap} from './focus-trap';
-export {confirm, alert, dialog, useDialog} from './dialog-context';
+export {useDialog} from './dialog-context';
 export {default as Badge} from './badge';
 export {default as TextLink} from './text-link';
 export {default as Overlay} from './overlay';
@@ -54,7 +51,7 @@ export {default as Text, Text1, Text2, Text3, Text4, Text5, Text6, Text7, Text8,
 export {default as Tag} from './tag';
 export type {TagType} from './tag';
 export {Placeholder} from './placeholder';
-export {Title1, Title2, Title3} from './title';
+export {Title1, Title2, Title3, Title4} from './title';
 export {RowList, Row, BoxedRowList, BoxedRow} from './list';
 export {default as Switch} from './switch-component';
 export {default as Checkbox} from './checkbox';
@@ -165,7 +162,6 @@ export {
     useTheme,
     useScreenSize,
     useElementDimensions,
-    useAriaId,
     useWindowSize,
     useWindowHeight,
     useWindowWidth,
@@ -217,9 +213,14 @@ export {palette as telefonicaPalette} from './skins/telefonica';
 export {palette as blauPalette} from './skins/blau';
 export {palette as tuPalette} from './skins/tu';
 
-export type {Locale} from './utils/locale';
 export type {TrackingEvent, IconProps, DataAttributes} from './utils/types';
 export type {RegionCode} from './utils/region-code';
+
+export {localeToLanguage} from './utils/locale';
+export type {Locale, Language} from './utils/locale';
+
+export * as textTokens from './text-tokens';
+export type {TextToken, Dictionary} from './text-tokens';
 
 /*
  * Temporary solution to export Community components until Mistica gets migrated to ESModules

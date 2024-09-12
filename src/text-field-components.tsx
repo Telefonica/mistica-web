@@ -8,6 +8,7 @@ import * as styles from './text-field-components.css';
 import {sprinkles} from './sprinkles.css';
 import {vars} from './skins/skin-contract.css';
 import {getPrefixedDataAttributes} from './utils/dom';
+import * as tokens from './text-tokens';
 
 import type {DataAttributes} from './utils/types';
 
@@ -34,7 +35,7 @@ export const Label = ({
 }: LabelProps): JSX.Element => {
     const isShrinked = shrinkLabel || inputState === 'focused' || inputState === 'filled';
     const [transitionStyle, setTransitionStyle] = React.useState('initial');
-    const {texts} = useTheme();
+    const {texts, t} = useTheme();
 
     // This way we prevent animation when field is filled as initial state
     React.useEffect(() => {
@@ -63,7 +64,12 @@ export const Label = ({
             style={{...style, transition: transitionStyle}}
         >
             <span className={styles.labelText}>{children}</span>
-            {optional ? <span>&nbsp;({texts.formFieldOptionalLabelSuffix})</span> : null}
+            {optional ? (
+                <span>
+                    &nbsp;(
+                    {texts.formFieldOptionalLabelSuffix || t(tokens.formFieldOptionalLabelSuffix)})
+                </span>
+            ) : null}
         </label>
     );
 };

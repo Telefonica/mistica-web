@@ -66,7 +66,7 @@ export const Default: StoryComponent = () => {
                     <MyCustomCardActionComponent key="2" />,
                     <MyCustomCardActionToggleComponent key="3" />,
                 ]}
-                icon={
+                asset={
                     <Circle backgroundColor={skinVars.colors.brandLow} size={40}>
                         <IconShopRegular color={skinVars.colors.brand} />
                     </Circle>
@@ -80,7 +80,11 @@ export const Default: StoryComponent = () => {
                         Action
                     </ButtonPrimary>
                 }
-                buttonLink={<ButtonLink onPress={() => {}}>Link</ButtonLink>}
+                buttonLink={
+                    <ButtonLink small onPress={() => {}}>
+                        Link
+                    </ButtonLink>
+                }
             />
         </Stack>
     );

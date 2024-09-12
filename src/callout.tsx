@@ -16,6 +16,7 @@ import {sprinkles} from './sprinkles.css';
 import {vars} from './skins/skin-contract.css';
 import {getPrefixedDataAttributes} from './utils/dom';
 import {applyCssVars} from './utils/css';
+import * as tokens from './text-tokens';
 
 import type {ButtonLink, ButtonPrimary, ButtonSecondary} from './button';
 import type {DataAttributes, HeadingType, RendersNullableElement} from './utils/types';
@@ -26,7 +27,7 @@ type Props = {
     description: string;
     onClose?: () => void;
     closeButtonLabel?: string;
-    icon?: React.ReactElement;
+    asset?: React.ReactElement;
     button?: RendersNullableElement<typeof ButtonPrimary>;
     secondaryButton?: RendersNullableElement<typeof ButtonSecondary>;
     buttonLink?: RendersNullableElement<typeof ButtonLink>;
@@ -40,7 +41,7 @@ const Callout = ({
     title,
     titleAs = 'h2',
     description,
-    icon,
+    asset,
     onClose,
     closeButtonLabel,
     button,
@@ -51,7 +52,7 @@ const Callout = ({
     role,
 }: Props): JSX.Element => {
     const variant = useThemeVariant();
-    const {texts} = useTheme();
+    const {texts, t} = useTheme();
     return (
         <section
             className={classNames(
@@ -73,7 +74,7 @@ const Callout = ({
             {...getPrefixedDataAttributes(dataAttributes, 'Callout')}
         >
             <ThemeVariant isInverse={false}>
-                {icon && <Box paddingRight={16}>{icon}</Box>}
+                {asset && <Box paddingRight={16}>{asset}</Box>}
                 <div className={styles.content}>
                     <Stack space={16}>
                         <Inline fullWidth alignItems="flex-start" space="between">
@@ -108,7 +109,9 @@ const Callout = ({
                                 bleedRight
                                 Icon={IconCloseRegular}
                                 onPress={onClose}
-                                aria-label={closeButtonLabel ?? texts.closeButtonLabel}
+                                aria-label={
+                                    closeButtonLabel || texts.closeButtonLabel || t(tokens.closeButtonLabel)
+                                }
                             />
                         </div>
                     )}

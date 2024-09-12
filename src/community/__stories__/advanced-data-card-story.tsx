@@ -57,6 +57,7 @@ export const Default: StoryComponent<Args> = ({
 
     const buttonLink = actions.includes('link') ? (
         <ButtonLink
+            small
             onPress={() => {
                 window.alert('click!');
             }}

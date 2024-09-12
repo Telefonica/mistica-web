@@ -57,15 +57,15 @@ export const Default: StoryComponent<DataCardArgs> = ({
     topAction,
     aspectRatio,
 }) => {
-    let icon;
+    let assetElement;
     if (asset === 'icon') {
-        icon = (
+        assetElement = (
             <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
                 <IconMobileDeviceRegular color={skinVars.colors.brand} />
             </Circle>
         );
     } else if (asset === 'image') {
-        icon = <Circle size={40} backgroundImage={avatarImg} />;
+        assetElement = <Circle size={40} backgroundImage={avatarImg} />;
     }
 
     const interactiveActions = {
@@ -74,7 +74,11 @@ export const Default: StoryComponent<DataCardArgs> = ({
                 Action
             </ButtonPrimary>
         ) : undefined,
-        buttonLink: actions.includes('link') ? <ButtonLink href="#">Link</ButtonLink> : undefined,
+        buttonLink: actions.includes('link') ? (
+            <ButtonLink small href="#">
+                Link
+            </ButtonLink>
+        ) : undefined,
         onPress: actions === 'onPress' ? () => {} : undefined,
         to: actions === 'to' ? '#' : undefined,
         href: actions === 'href' ? 'https://example.org' : undefined,
@@ -92,7 +96,7 @@ export const Default: StoryComponent<DataCardArgs> = ({
     return (
         <DataCard
             onClose={closable ? () => {} : undefined}
-            icon={icon}
+            asset={assetElement}
             headline={headline && <Tag type={headlineType}>{headline}</Tag>}
             pretitle={pretitle}
             title={title}
@@ -191,22 +195,30 @@ export const Group: StoryComponent = () => {
                             title="Title"
                             subtitle="Subtitle"
                             description="Description"
-                            icon={
+                            asset={
                                 <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
                                     <IconMobileDeviceRegular color={skinVars.colors.brand} />
                                 </Circle>
                             }
-                            buttonLink={<ButtonLink href="https://google.com">Link</ButtonLink>}
+                            buttonLink={
+                                <ButtonLink small href="https://google.com">
+                                    Link
+                                </ButtonLink>
+                            }
                         />,
                         <DataCard
                             title="Title"
                             description="Description"
-                            icon={
+                            asset={
                                 <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
                                     <IconMobileDeviceRegular color={skinVars.colors.brand} />
                                 </Circle>
                             }
-                            buttonLink={<ButtonLink href="https://google.com">Link</ButtonLink>}
+                            buttonLink={
+                                <ButtonLink small href="https://google.com">
+                                    Link
+                                </ButtonLink>
+                            }
                         />,
                     ]}
                 />

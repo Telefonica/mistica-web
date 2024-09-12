@@ -14,6 +14,17 @@ test.each(DEVICES)('ButtonGroup (%s)', async (device) => {
     expect(image).toMatchImageSnapshot();
 });
 
+test.each(DEVICES)('ButtonGroup (%s) - small', async (device) => {
+    const page = await openStoryPage({
+        id: 'components-buttons-buttongroup--default',
+        device,
+        args: {small: true},
+    });
+
+    const image = await page.screenshot({fullPage: true});
+    expect(image).toMatchImageSnapshot();
+});
+
 test.each(DEVICES)('ButtonGroup - Long text (%s)', async (device) => {
     const page = await openStoryPage({
         id: 'components-buttons-buttongroup--default',
