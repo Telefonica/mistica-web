@@ -1,9 +1,19 @@
-const childProcess = require('child_process');
-const compile = require('./compile');
-const execSync = childProcess.execSync;
+import {execSync} from 'node:child_process';
+import {compile} from './compile.js';
+import {existsSync} from 'node:fs';
 
-const run = (command) => {
-    execSync(command, {stdio: 'inherit'});
+const run = (command, {stdio = 'inherit'} = {}) => {
+    execSync(command, {stdio});
+};
+
+const checkBuild = () => {
+    // verify that no "node_modules" folder was created inside the "dist" folder
+    // this would mean that some dependencies were not marked as "external" and were included in the build result
+    if (existsSync('./dist/node_modules')) {
+        console.log('ERROR: "dist/node_modules" exists. Check "vite.config.js" external config.');
+        process.exit(1);
+    }
+    console.log('Build OK');
 };
 
 (async () => {
@@ -12,4 +22,7 @@ const run = (command) => {
 
     console.log('Generating TS defs...');
     run('yarn gen-ts-defs');
+
+    console.log('Checking build...');
+    checkBuild();
 })();

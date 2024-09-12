@@ -5,6 +5,8 @@ import path from 'path';
 import webpack from 'webpack';
 import http from 'http';
 import fs from 'fs';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 import {ThemeContextProvider, MOVISTAR_SKIN, getSkinByName, type KnownSkinName} from '../..';
 import {execSync} from 'child_process';
 

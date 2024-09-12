@@ -1,9 +1,9 @@
-import path from 'path';
 import {defineConfig} from 'vite';
 import react from '@vitejs/plugin-react';
 import {vanillaExtractPlugin} from '@vanilla-extract/vite-plugin';
 import noBundlePlugin from 'vite-plugin-no-bundle';
 import preserveDirectivesPlugin from 'rollup-plugin-preserve-directives';
+import packageJson from './package.json';
 
 export default defineConfig({
     plugins: [
@@ -29,13 +29,10 @@ export default defineConfig({
     publicDir: false,
     build: {
         lib: {
-            entry: [
-                path.resolve(__dirname, 'src', 'index.tsx'),
-                path.resolve(__dirname, 'src', 'community', 'index.tsx'),
-            ],
+            entry: ['./src/index.tsx', './src/community/index.tsx'],
             formats: ['es'],
         },
-        outDir: 'dist-es',
+        outDir: 'dist',
         // https://github.com/vitejs/vite/issues/15012#issuecomment-1815854072
         rollupOptions: {
             onLog(level, log, handler) {
@@ -44,6 +41,18 @@ export default defineConfig({
                 }
                 handler(level, log);
             },
+            // otherwise, all dependencies are included in a "node_modules" folder inside "./dist"
+            external: [
+                ...Object.keys(packageJson.dependencies),
+                ...Object.keys(packageJson.peerDependencies),
+                'react/jsx-runtime',
+                'moment/locale/de.js',
+                'moment/locale/es.js',
+                'moment/locale/en-gb.js',
+                'moment/locale/pt-br.js',
+                'moment/moment.js',
+                '@vanilla-extract/sprinkles/createRuntimeSprinkles',
+            ],
         },
     },
 });

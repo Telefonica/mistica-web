@@ -1,4 +1,6 @@
 import * as React from 'react';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 import {ButtonPrimary, Carousel, MediaCard, Image, Tag, ButtonLink, ResponsiveLayout} from '../../..';
 
 const CarouselTest = (): JSX.Element => (

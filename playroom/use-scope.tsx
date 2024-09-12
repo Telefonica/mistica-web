@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {useScreenSize, useTheme, skinVars} from '../src';
 import curry from 'lodash/curry';
-import iconKeywords from '../src/generated/mistica-icons/icons-keywords';
+import iconKeywords from '../src/generated/mistica-icons/keywords';
 
 import type {Colors} from '../src/skins/types';
 import type {Theme} from '../src/theme';

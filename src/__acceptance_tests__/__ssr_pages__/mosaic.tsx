@@ -1,4 +1,6 @@
 import * as React from 'react';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 import {HorizontalMosaic, SnapCard, Stack, VerticalMosaic} from '../../..';
 
 const MosaicTest = (): JSX.Element => (

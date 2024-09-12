@@ -1,11 +1,8 @@
 dist/
-dist-es/
-dist-ts/
 coverage/
 .directory
 .DS_Store
 .idea/
-*.js.map
 *.orig
 *.rej
 **/node_modules/
@@ -15,11 +12,7 @@ __diff_output__
 storybook-static/
 /public
 .vercel
-src/generated/mistica-icons/index.tsx.txt
 reports
-css/mistica.css
-community.js
-community.d.ts
 
 .yarn/*
 !.yarn/cache

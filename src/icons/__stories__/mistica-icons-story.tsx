@@ -1,7 +1,6 @@
 import * as React from 'react';
-import {Box, ResponsiveLayout, Text} from '../..';
+import {Box, ResponsiveLayout, Text, iconKeywords} from '../..';
 import {kebabCase, camelCase, upperFirst} from 'lodash';
-import iconKeywords from '../../generated/mistica-icons/icons-keywords';
 
 /**
  * './path/icon-name-filled.tsx' => 'IconNameFilled'
@@ -18,7 +17,14 @@ const misticaIcons = ((requireContext) => {
         component.componentName = fileNameToComponentName(id);
         return component;
     });
-})(require.context('../../generated/mistica-icons/', true, /^(?!\.\/icons\-keywords\.tsx$).+\.(?:tsx)$/));
+})(
+    require.context(
+        '../../generated/mistica-icons/',
+        /* use subdirectories */ false,
+        // matches strings like: './icon-whatever-filled.tsx'
+        /\.\/icon\-(.+)\-(filled|regular|light)\.tsx$/
+    )
+);
 
 export default {
     title: 'Icons/Catalog',

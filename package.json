@@ -7,37 +7,51 @@
         "url": "https://github.com/Telefonica/mistica-web"
     },
     "homepage": "https://github.com/Telefonica/mistica-web",
-    "main": "dist/index.js",
-    "module": "dist-es/index.js",
     "files": [
-        "dist/**",
-        "dist-es/**",
-        "css/**",
-        "community.d.ts",
-        "community.js"
+        "dist/**"
     ],
+    "type": "module",
+    "exports": {
+        "./dist/*": {
+            "default": null
+        },
+        ".": {
+            "types": "./dist/index.d.ts",
+            "import": "./dist/index.js",
+            "default": "./dist/index.js"
+        },
+        "./community": {
+            "types": "./dist/community/index.d.ts",
+            "import": "./dist/community/index.js",
+            "default": "./dist/community/index.js"
+        },
+        "./css/*.css": {
+            "import": "./dist/css/*.css",
+            "default": "./dist/css/*.css"
+        }
+    },
     "scripts": {
-        "test": "jest --config jest.unit.config.js",
-        "test-acceptance": "test-acceptance",
-        "test-ssr": "test-acceptance --config jest.ssr.config.js",
+        "test": "jest --config jest.unit.config.cjs",
+        "test-acceptance": "JEST_PUPPETEER_CONFIG=jest-puppeteer.config.cjs test-acceptance --config jest.acceptance.config.cjs",
+        "test-ssr": "JEST_PUPPETEER_CONFIG=jest-puppeteer.config.cjs test-acceptance --config jest.ssr.config.cjs",
         "prettier-check": "prettier --check \"**/*.js\" \"**/*.tsx\" \"**/*.ts\" \"**/*.json\"",
         "lint": "eslint --report-unused-disable-directives .",
         "ts-check": "tsc --project tsconfig.json --noEmit",
         "build": "yarn clean && node scripts/build.js",
         "compile": "node scripts/compile.js",
-        "clean": "rimraf dist && rimraf dist-es && rimraf dist-ts && rimraf css/mistica.css && rimraf community.d.ts && rimraf community.js && rimraf node_modules/.cache",
+        "clean": "rimraf dist node_modules/.cache",
         "prepublishOnly": "node scripts/prepublish-only.js",
         "prepack": "yarn build",
         "storybook": "storybook dev -p 6006",
         "storybook-for-acceptance-tests": "cross-env NODE_ENV=production yarn storybook --ci 2>&1",
         "playroom": "playroom start",
-        "gen-ts-defs": "rimraf dist-ts && tsc --project tsconfig.production.json --emitDeclarationOnly && cp -r dist-ts/src/* dist && rimraf dist-ts",
+        "gen-ts-defs": "tsc --project tsconfig.production.json --emitDeclarationOnly",
         "vercel-build": "VERCEL_PROD_BUILD=1 yarn storybook-static && ./node_modules/.bin/playroom build && FORCE_MOBILE=1 ./node_modules/.bin/playroom build && FORCE_DESKTOP=1 ./node_modules/.bin/playroom build && cp img/favicon.ico public/ && cp img/favicon.svg public/",
         "vercel-preview-build": "yarn storybook-static && ./node_modules/.bin/playroom build && cp img/favicon.ico public/ && cp img/favicon.svg public/",
         "storybook-static": "rimraf public && storybook build -s ./.storybook/css/fonts -o public --quiet",
-        "serve-static-storybook": "node ./scripts/serve-static-storybook.js",
+        "serve-static-storybook": "node ./scripts/serve-static-storybook.cjs",
         "detect-circular-dependencies": "npx dpdm --circular src/index.tsx",
-        "audit-accessibility": "node .github/actions/audit-accessibility/main.js",
+        "audit-accessibility": "node .github/actions/audit-accessibility/main.cjs",
         "circular-dependencies": "yarn dpdm src/index.tsx --tree=false --warning=false --exit-code circular:1",
         "prepare": "husky install"
     },
@@ -98,9 +112,9 @@
         "@types/rimraf": "^3.0.2",
         "@types/semver-compare": "^1.0.1",
         "@types/webpack-env": "^1.18.4",
-        "@vanilla-extract/jest-transform": "^1.1.5",
-        "@vanilla-extract/vite-plugin": "^3.9.5",
-        "@vanilla-extract/webpack-plugin": "^2.3.9",
+        "@vanilla-extract/jest-transform": "^1.1.9",
+        "@vanilla-extract/vite-plugin": "^4.0.15",
+        "@vanilla-extract/webpack-plugin": "^2.3.13",
         "@vitejs/plugin-react": "^4.3.1",
         "autoprefixer": "^10.4.12",
         "axe-html-reporter": "^2.2.3",
@@ -147,12 +161,12 @@
         "@juggle/resize-observer": "^3.3.1",
         "@tef-novum/webview-bridge": "^3.39.0",
         "@telefonica/libphonenumber": "^2.9.0",
-        "@vanilla-extract/css": "^1.15.2",
-        "@vanilla-extract/dynamic": "^2.1.1",
-        "@vanilla-extract/sprinkles": "^1.6.2",
+        "@vanilla-extract/css": "^1.15.5",
+        "@vanilla-extract/dynamic": "^2.1.2",
+        "@vanilla-extract/sprinkles": "^1.6.3",
         "classnames": "^2.3.1",
         "lottie-react": "^2.4.0",
-        "moment": "^2.29.1",
+        "moment": "^2.30.1",
         "react-autosuggest": "^10.1.0",
         "react-datetime": "^3.1.1",
         "react-focus-lock": "^2.8.1",
@@ -162,8 +176,8 @@
         "semver-compare": "^1.0.0"
     },
     "peerDependencies": {
-        "react": "17.x || 18.x",
-        "react-dom": "17.x || 18.x"
+        "react": "18.x",
+        "react-dom": "18.x"
     },
     "publishConfig": {
         "registry": "https://registry.npmjs.org",
