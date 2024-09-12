@@ -6,13 +6,13 @@
  */
 
 import * as React from 'react';
-import {useIsInverseVariant} from '../../theme-variant-context';
+import {useIsInverseOrMediaVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
 
 import type {IconProps} from '../../utils/types';
 
 const IconFileZipLight = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
-    const isInverse = useIsInverseVariant();
+    const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
 
     return (

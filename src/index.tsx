@@ -178,7 +178,12 @@ export {TrackingConfig, useTrackingConfig} from './utils/analytics';
 
 export {useDocumentVisibility} from './utils/document-visibility';
 
-export {ThemeVariant, useIsInverseVariant, useThemeVariant} from './theme-variant-context';
+export {
+    ThemeVariant,
+    useIsInverseVariant,
+    useIsInverseOrMediaVariant,
+    useThemeVariant,
+} from './theme-variant-context';
 
 export type {Skin, KnownSkinName, SkinName} from './skins/types';
 export {
