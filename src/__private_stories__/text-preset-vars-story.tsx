@@ -31,12 +31,13 @@ export const Default: StoryComponent = () => {
             <TextWrapper weight={vars.textPresets.button.weight}>button</TextWrapper>
             <TextWrapper weight={vars.textPresets.link.weight}>link</TextWrapper>
             <TextWrapper weight={vars.textPresets.title1.weight}>title1</TextWrapper>
+            <TextWrapper weight={vars.textPresets.title2.weight}>title2</TextWrapper>
             <TextWrapper
-                weight={vars.textPresets.title2.weight}
-                size={vars.textPresets.title2.size}
-                lineHeight={vars.textPresets.title2.lineHeight}
+                weight={vars.textPresets.title3.weight}
+                size={vars.textPresets.title3.size}
+                lineHeight={vars.textPresets.title3.lineHeight}
             >
-                title2
+                title3
             </TextWrapper>
             <TextWrapper weight={vars.textPresets.indicator.weight}>indicator</TextWrapper>
             <TextWrapper

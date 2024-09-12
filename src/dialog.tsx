@@ -18,6 +18,7 @@ import {useSetModalStateEffect} from './modal-context-provider';
 import Stack from './stack';
 import * as styles from './dialog.css';
 import {vars} from './skins/skin-contract.css';
+import * as tokens from './text-tokens';
 
 import type {ButtonLink} from './button';
 import type {RendersNullableElement} from './utils/types';
@@ -33,10 +34,6 @@ interface BaseDialogProps {
     onAccept?: () => void;
     destructive?: boolean;
     closeButtonLabel?: string;
-    /** @deprecated this does nothing */
-    forceWeb?: boolean;
-    /** @deprecated this does nothing */
-    showCancel?: boolean;
 }
 
 export type AlertProps = BaseDialogProps;
@@ -47,7 +44,7 @@ export interface ConfirmProps extends BaseDialogProps {
 }
 
 export interface ExtendedDialogProps extends BaseDialogProps {
-    icon?: React.ReactElement;
+    asset?: React.ReactElement;
     subtitle?: string;
     extra?: React.ReactNode;
     cancelText?: string;
@@ -62,17 +59,17 @@ export type DialogProps = ExclusifyUnion<AlertProps | ConfirmProps | ExtendedDia
 type InternalDialogProps = DialogProps & {showCancelButton: boolean; showAcceptButton: boolean};
 
 const InternalDialog = (props: InternalDialogProps) => {
-    const {texts} = useTheme();
+    const {texts, t} = useTheme();
     const {
         className,
         title,
         message,
-        icon,
+        asset,
         extra,
         showCancelButton,
         showAcceptButton,
-        cancelText = texts.dialogCancelButton,
-        acceptText = texts.dialogAcceptButton,
+        cancelText = texts.dialogCancelButton || t(tokens.dialogCancelButton),
+        acceptText = texts.dialogAcceptButton || t(tokens.dialogAcceptButton),
         onCancel: handleCancel,
         onAccept: handleAccept,
         destructive = false,
@@ -89,9 +86,9 @@ const InternalDialog = (props: InternalDialogProps) => {
 
     return (
         <div className={classnames(styles.variants[isDialog ? 'dialog' : 'default'], className)}>
-            {icon && (
+            {asset && (
                 <Box paddingBottom={24}>
-                    <div className={styles.iconContainer}>{React.cloneElement(icon, {size: '100%'})}</div>
+                    <div className={styles.iconContainer}>{React.cloneElement(asset, {size: '100%'})}</div>
                 </Box>
             )}
             {title && (
@@ -203,14 +200,14 @@ const NativeModalDialog = ({
     message,
     title,
 }: ModalDialogProps): JSX.Element => {
-    const {texts} = useTheme();
+    const {texts, t} = useTheme();
     const paramsRef = React.useRef({
         type,
         onAccept,
         onCancel,
         onDestroy,
-        acceptText: acceptText || texts.dialogAcceptButton,
-        cancelText: cancelText || texts.dialogCancelButton,
+        acceptText: acceptText || texts.dialogAcceptButton || t(tokens.dialogAcceptButton),
+        cancelText: cancelText || texts.dialogCancelButton || t(tokens.dialogCancelButton),
         message,
         title,
     });
@@ -233,7 +230,7 @@ const NativeModalDialog = ({
 const ModalDialog = (props: ModalDialogProps): JSX.Element => {
     useSetModalStateEffect();
     const dialogContentRef = React.useRef<HTMLDivElement>(null);
-    const {texts} = useTheme();
+    const {texts, t} = useTheme();
     const [isClosing, setIsClosing] = React.useState<boolean>(false);
     /** this ref has the same value as the isClosing state but we want it to be immediately accessible to avoid possible race conditions */
     const isClosingRef = React.useRef<boolean>(false);
@@ -394,8 +391,7 @@ const ModalDialog = (props: ModalDialogProps): JSX.Element => {
                                     <InternalIconButton
                                         onPress={dismiss}
                                         aria-label={
-                                            props.closeButtonLabel ??
-                                            (texts.modalClose || texts.closeButtonLabel)
+                                            props.closeButtonLabel || texts.modalClose || t(tokens.modalClose)
                                         }
                                         bleedLeft
                                         bleedRight

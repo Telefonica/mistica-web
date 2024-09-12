@@ -26,13 +26,13 @@ interface CommonProps {
 }
 
 interface IconProps extends CommonProps {
-    icon: React.ReactElement;
+    asset: React.ReactElement;
     imageUrl?: undefined;
 }
 
 interface ImageProps extends CommonProps {
     imageUrl: string;
-    icon?: undefined;
+    asset?: undefined;
 }
 
 type Props = IconProps | ImageProps;
@@ -44,7 +44,7 @@ const EmptyStateCard = ({
     button,
     secondaryButton,
     buttonLink,
-    icon,
+    asset,
     imageUrl,
     'aria-label': ariaLabel,
     dataAttributes,
@@ -63,7 +63,7 @@ const EmptyStateCard = ({
             <Box paddingY={{mobile: 24, desktop: 40}} paddingX={{mobile: 16, desktop: 40}}>
                 <section className={styles.container} aria-label={ariaLabel}>
                     <Stack space={16}>
-                        {image ?? (icon && <div className={styles.iconContainer}>{icon}</div>)}
+                        {image ?? (asset && <div className={styles.assetContainer}>{asset}</div>)}
                         <Box>
                             <Stack space={8}>
                                 <Text {...textProps.text4} weight={textPresets.cardTitle.weight} as={titleAs}>

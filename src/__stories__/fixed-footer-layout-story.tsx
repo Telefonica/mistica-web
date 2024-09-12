@@ -10,7 +10,7 @@ import {
     ResponsiveLayout,
     Box,
     Inline,
-    alert,
+    useDialog,
 } from '..';
 import {useCheckbox} from './helpers';
 
@@ -100,6 +100,7 @@ MoreComplexFooter.storyName = 'Fixed footer layout';
 MoreComplexFooter.parameters = {fullScreen: true};
 
 export const DialogOverFixedFooter: StoryComponent = () => {
+    const {alert} = useDialog();
     return (
         <ButtonFixedFooterLayout
             button={<ButtonPrimary onPress={() => alert({message: 'Message'})}>Open dialog</ButtonPrimary>}

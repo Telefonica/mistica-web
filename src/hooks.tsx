@@ -3,7 +3,6 @@
 import * as React from 'react';
 import ThemeContext from './theme-context';
 import ScreenSizeContext from './screen-size-context';
-import AriaIdGetterContext from './aria-id-getter-context';
 import {listenResize} from './utils/dom';
 import {isClientSide} from './utils/environment';
 import {isEqual} from './utils/helpers';
@@ -129,21 +128,6 @@ export const useElementDimensions = ({includeMargins = false}: {includeMargins?:
     }, [element, updateSize]);
 
     return {width, height, ref};
-};
-
-export const useAriaId = (id?: string): string => {
-    const {useId} = useTheme();
-    // This useId should be stable, so the rules-of-hooks still apply
-    if (useId) {
-        // eslint-disable-next-line react-hooks/rules-of-hooks
-        const generatedId = useId();
-        return id || generatedId;
-    } else {
-        // eslint-disable-next-line react-hooks/rules-of-hooks
-        const getAriaId = React.useContext(AriaIdGetterContext);
-        // eslint-disable-next-line react-hooks/rules-of-hooks
-        return React.useRef(id || getAriaId()).current;
-    }
 };
 
 export const useWindowSize = (): {
