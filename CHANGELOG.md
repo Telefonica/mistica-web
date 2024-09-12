@@ -1,3 +1,10 @@
+## [15.20.1](https://github.com/Telefonica/mistica-web/compare/v15.20.0...v15.20.1) (2024-09-12)
+
+
+### Bug Fixes
+
+* **confirm:** make destructive mode work with webview bridge ([#1237](https://github.com/Telefonica/mistica-web/issues/1237)) ([0dc1787](https://github.com/Telefonica/mistica-web/commit/0dc1787d627fd3cf370769366719d87cdf03d3e9))
+
 # [15.20.0](https://github.com/Telefonica/mistica-web/compare/v15.19.0...v15.20.0) (2024-09-06)
 
 
