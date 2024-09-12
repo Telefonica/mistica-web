@@ -181,7 +181,7 @@ export {useDocumentVisibility} from './utils/document-visibility';
 export {
     ThemeVariant,
     useIsInverseVariant,
-    useIsInverseOrOverMediaVariant,
+    useIsInverseOrMediaVariant,
     useThemeVariant,
 } from './theme-variant-context';
 

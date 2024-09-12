@@ -62,7 +62,7 @@ const Callout = ({
                         inverse: vars.colors.backgroundContainer,
                         alternative: vars.colors.backgroundContainer,
                         default: vars.colors.backgroundContainerAlternative,
-                        overMedia: vars.colors.backgroundContainer,
+                        media: vars.colors.backgroundContainer,
                     }[variant],
                 })
             )}

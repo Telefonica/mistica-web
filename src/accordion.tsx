@@ -11,7 +11,7 @@ import {vars as skinVars} from './skins/skin-contract.css';
 import {getPrefixedDataAttributes} from './utils/dom';
 import Divider from './divider';
 import {Boxed} from './boxed';
-import {useIsInverseOrOverMediaVariant} from './theme-variant-context';
+import {useIsInverseOrMediaVariant} from './theme-variant-context';
 import {CSSTransition} from 'react-transition-group';
 import {isRunningAcceptanceTest} from './utils/platform';
 import {sprinkles} from './sprinkles.css';
@@ -124,7 +124,7 @@ const AccordionItemContent = React.forwardRef<TouchableElement, AccordionItemCon
         const panelContainerRef = React.useRef<HTMLDivElement | null>(null);
         const itemRef = React.useRef<HTMLDivElement | null>(null);
         const {index, toggle} = useAccordionContext();
-        const isInverse = useIsInverseOrOverMediaVariant();
+        const isInverse = useIsInverseOrMediaVariant();
         const labelId = React.useId();
         const panelId = React.useId();
 

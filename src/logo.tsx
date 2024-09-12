@@ -1,7 +1,7 @@
 'use client';
 import * as React from 'react';
 import {useTheme} from './hooks';
-import {useIsInverseOrOverMediaVariant} from './theme-variant-context';
+import {useIsInverseOrMediaVariant} from './theme-variant-context';
 import Touchable from './touchable';
 import {getPrefixedDataAttributes} from './utils/dom';
 import * as styles from './logo.css';
@@ -78,7 +78,7 @@ type LogoBaseProps = {
 };
 
 const LogoBase = ({size, skinName, type = 'isotype'}: LogoBaseProps): JSX.Element => {
-    const isInverse = useIsInverseOrOverMediaVariant();
+    const isInverse = useIsInverseOrMediaVariant();
     const {isDarkMode} = useTheme();
     switch (skinName) {
         case 'Movistar':

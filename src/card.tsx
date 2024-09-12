@@ -109,7 +109,7 @@ type CardActionsGroupProps = {
     onClose?: () => void;
     closeButtonLabel?: string;
     padding?: number;
-    variant?: 'default' | 'inverse' | 'overMedia';
+    variant?: 'default' | 'inverse' | 'media';
 };
 
 export const CardActionIconButton = (props: CardAction): JSX.Element => {
@@ -124,7 +124,7 @@ export const CardActionIconButton = (props: CardAction): JSX.Element => {
             checkedProps={{
                 ...props.checkedProps,
                 'aria-label': props.checkedProps.label,
-                type: variant === 'overMedia' ? 'neutral' : 'brand',
+                type: variant === 'media' ? 'neutral' : 'brand',
                 backgroundType: 'solid',
             }}
             uncheckedProps={{
@@ -623,7 +623,7 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
                     onClose={onClose}
                     closeButtonLabel={closeButtonLabel}
                     actions={actions}
-                    variant="overMedia"
+                    variant="media"
                 />
             </CardContainer>
         );
@@ -730,7 +730,7 @@ export const NakedCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
                     onClose={onClose}
                     closeButtonLabel={closeButtonLabel}
                     actions={actions}
-                    variant="overMedia"
+                    variant="media"
                 />
             </CardContainer>
         );
@@ -1305,7 +1305,7 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
                                 : vars.colors.backgroundContainer
                             : undefined
                     }
-                    variant={hasImage || hasVideo ? 'overMedia' : undefined}
+                    variant={hasImage || hasVideo ? 'media' : undefined}
                 >
                     <BaseTouchable
                         maybe
@@ -1424,7 +1424,7 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
                     onClose={onClose}
                     closeButtonLabel={closeButtonLabel}
                     actions={actions}
-                    variant={hasImage || hasVideo ? 'overMedia' : isInverse ? 'inverse' : 'default'}
+                    variant={hasImage || hasVideo ? 'media' : isInverse ? 'inverse' : 'default'}
                 />
             </CardContainer>
         );
@@ -1555,7 +1555,7 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
         const normalizedVariant = variant || (isInverse ? 'inverse' : 'default');
 
         const calcBackgroundColor = () => {
-            if (normalizedVariant === 'overMedia' || hasImage || hasVideo) {
+            if (normalizedVariant === 'media' || hasImage || hasVideo) {
                 return isExternalInverse
                     ? vars.colors.backgroundContainerBrandOverInverse
                     : vars.colors.backgroundContainer;
@@ -1602,7 +1602,7 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                     minHeight="100%"
                     isInverse={hasImage || hasVideo || normalizedVariant === 'inverse'}
                     background={calcBackgroundColor()}
-                    variant={hasImage || hasVideo ? 'overMedia' : undefined}
+                    variant={hasImage || hasVideo ? 'media' : undefined}
                 >
                     <BaseTouchable
                         maybe
@@ -1727,7 +1727,7 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                     actions={actions}
                     variant={
                         hasImage || hasVideo
-                            ? 'overMedia'
+                            ? 'media'
                             : normalizedVariant === 'inverse'
                               ? 'inverse'
                               : 'default'

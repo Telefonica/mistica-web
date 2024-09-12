@@ -5,7 +5,7 @@ import * as React from 'react';
 import {BaseTouchable} from './touchable';
 import classnames from 'classnames';
 import {useTheme} from './hooks';
-import {useIsInverseOrOverMediaVariant} from './theme-variant-context';
+import {useIsInverseOrMediaVariant} from './theme-variant-context';
 import {useForm} from './form-context';
 import {getTextFromChildren} from './utils/common';
 import {eventActions, eventCategories, eventNames, useTrackingConfig} from './utils/analytics';
@@ -39,7 +39,7 @@ const TextLink = ({
     trackEvent,
     ...props
 }: TextLinkProps): JSX.Element => {
-    const isInverse = useIsInverseOrOverMediaVariant();
+    const isInverse = useIsInverseOrMediaVariant();
     const {isDarkMode} = useTheme();
     const {formStatus} = useForm();
     const {eventFormat} = useTrackingConfig();

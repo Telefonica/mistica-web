@@ -1,6 +1,6 @@
 'use client';
 import * as React from 'react';
-import {useIsInverseOrOverMediaVariant} from './theme-variant-context';
+import {useIsInverseOrMediaVariant} from './theme-variant-context';
 import {vars} from './skins/skin-contract.css';
 import Inline from './inline';
 import {Text4} from './text';
@@ -24,7 +24,7 @@ const StackingGroup = ({
     maxItems = Infinity,
     children,
 }: Props): JSX.Element => {
-    const isInverse = useIsInverseOrOverMediaVariant();
+    const isInverse = useIsInverseOrMediaVariant();
     const countChildren = React.Children.count(children);
     const moreItemsCount = countChildren - maxItems + 1;
     const space = stacked ? -8 : 8;
