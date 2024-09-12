@@ -50,7 +50,11 @@ const ExampleCarousel = ({
                 title={`Title ${idx} carousel ${cardsTitlePrefix}`}
                 description="Some description"
                 media={<Image src={tennisUrl} aspectRatio="16:9" />}
-                buttonLink={<ButtonLink href="https://google.com">Link {idx}</ButtonLink>}
+                buttonLink={
+                    <ButtonLink small href="https://google.com">
+                        Link {idx}
+                    </ButtonLink>
+                }
             />
         ))}
     />
@@ -80,7 +84,7 @@ export const Default: StoryComponent<Args> = ({
                 <Stack space={16}>
                     <Callout
                         description="Arrow controls disappear in touch devices"
-                        icon={<IconInformationRegular />}
+                        asset={<IconInformationRegular />}
                     />
                     <GridLayout
                         template="8+4"

@@ -47,13 +47,18 @@ export const Welcome = () => {
                     </Stack>
                     <nav style={{margin: '0 -8px'}}>
                         <Inline space={8}>
-                            <ButtonLink href="https://github.com/Telefonica/mistica">
+                            <ButtonLink small href="https://github.com/Telefonica/mistica">
                                 About Mistica
                             </ButtonLink>
-                            <ButtonLink href="https://github.com/Telefonica/mistica-web#getting-started">
+                            <ButtonLink
+                                small
+                                href="https://github.com/Telefonica/mistica-web#getting-started"
+                            >
                                 Getting started
                             </ButtonLink>
-                            <ButtonLink href="/playroom">Go to playroom</ButtonLink>
+                            <ButtonLink small href="/playroom">
+                                Go to playroom
+                            </ButtonLink>
                         </Inline>
                     </nav>
                 </Stack>

@@ -17,12 +17,13 @@ import {vars} from './skins/skin-contract.css';
 import {pxToRem} from './utils/css';
 import {iconButtonSize} from './text-field-base.css';
 import Touchable from './touchable';
+import * as tokens from './text-tokens';
 
 import type {CommonFormFieldProps} from './text-field-base';
 import type {CardOptions} from './utils/credit-card';
 
 const TooltipContent = ({acceptedCards}: {acceptedCards: CardOptions}) => {
-    const {texts} = useTheme();
+    const {texts, t} = useTheme();
 
     return (
         <>
@@ -30,13 +31,18 @@ const TooltipContent = ({acceptedCards}: {acceptedCards: CardOptions}) => {
                 <Stack space={8}>
                     <Inline space={16} alignItems="center">
                         <IconCvvVisaMc size={48} role="img" />
-                        <Text2>{texts.formCreditCardCvvTooltipVisaMc}</Text2>
+                        <Text2>
+                            {texts.formCreditCardCvvTooltipVisaMc || t(tokens.formCreditCardCvvTooltipVisaMc)}
+                        </Text2>
                     </Inline>
                     <Divider />
                     {acceptedCards?.americanExpress && (
                         <Inline space={16} alignItems="center">
                             <IconCvvAmex size={48} role="img" />
-                            <Text2>{texts.formCreditCardCvvTooltipAmex}</Text2>
+                            <Text2>
+                                {texts.formCreditCardCvvTooltipAmex || t(tokens.formCreditCardCvvTooltipAmex)}
+                            </Text2>
+                            )
                         </Inline>
                     )}
                 </Stack>
@@ -68,16 +74,16 @@ const CvvField = ({
     dataAttributes,
     ...rest
 }: CvvFieldProps): JSX.Element => {
-    const {texts} = useTheme();
+    const {texts, t} = useTheme();
     const {setFormError, jumpToNext} = useForm();
     const [isCvvHelpOpen, setIsCvvHelpOpen] = React.useState(false);
 
     const validate = (value: string, rawValue: string) => {
         if (!value) {
-            return optional ? '' : texts.formFieldErrorIsMandatory;
+            return optional ? '' : texts.formFieldErrorIsMandatory || t(tokens.formFieldErrorIsMandatory);
         }
         if (value.length !== maxLength) {
-            return texts.formCreditCardCvvError;
+            return texts.formCreditCardCvvError || t(tokens.formCreditCardCvvError);
         }
         return validateProp?.(value, rawValue);
     };
@@ -141,8 +147,10 @@ const CvvField = ({
                                 onPress={() => setIsCvvHelpOpen(!isCvvHelpOpen)}
                                 aria-label={
                                     isCvvHelpOpen
-                                        ? texts.formCreditCardCvvTooltipVisaMcButtonClose
-                                        : texts.formCreditCardCvvTooltipVisaMcButtonOpen
+                                        ? texts.formCreditCardCvvTooltipVisaMcButtonClose ||
+                                          t(tokens.formCreditCardCvvTooltipVisaMcButtonClose)
+                                        : texts.formCreditCardCvvTooltipVisaMcButtonOpen ||
+                                          t(tokens.formCreditCardCvvTooltipVisaMcButtonOpen)
                                 }
                             >
                                 <IconInformationRegular size={iconSize} color={vars.colors.neutralMedium} />
