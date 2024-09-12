@@ -1,3 +1,20 @@
+# [15.21.0](https://github.com/Telefonica/mistica-web/compare/v15.20.1...v15.21.0) (2024-09-12)
+
+
+### Features
+
+* **ButtonLink:** add default variant ([#1211](https://github.com/Telefonica/mistica-web/issues/1211)) ([047e058](https://github.com/Telefonica/mistica-web/commit/047e0585be019130b038a0fea9fa8e08a2d8ea59))
+* **Callout, Cards, Dialog, EmptyState, EmptyStateCard, FeedbackScreen, Tabs:** remove icon prop and use only Icon/asset ([#1206](https://github.com/Telefonica/mistica-web/issues/1206)) ([afc4604](https://github.com/Telefonica/mistica-web/commit/afc4604f45bd338e674c38f63c81c54eb41ce78a))
+* **Feedback, FixedFooterLayout, Dialog, Accordion, Touchable, Header, IconButton, NavigationBar, OverscrollColor:** remove deprecated props ([#1205](https://github.com/Telefonica/mistica-web/issues/1205)) ([3808b4f](https://github.com/Telefonica/mistica-web/commit/3808b4fd1bbdeea2906d6574ce51cb6d1a8605b2))
+* **Header, MainSectionHeader:** use "default" as component's default variant ([#1207](https://github.com/Telefonica/mistica-web/issues/1207)) ([8efe655](https://github.com/Telefonica/mistica-web/commit/8efe655aaac352ae232d85de5d91d22f8dbd3d4b))
+* **i18n:** refactor texts to improve bundle size ([#1228](https://github.com/Telefonica/mistica-web/issues/1228)) ([02e3ee1](https://github.com/Telefonica/mistica-web/commit/02e3ee1c84d76eafcc581ddaecc44c7bd281dac6))
+* **Icons:** add new icons and rename others ([#1197](https://github.com/Telefonica/mistica-web/issues/1197)) ([0ff767c](https://github.com/Telefonica/mistica-web/commit/0ff767c00546d51ff1b74d39b0b6f4ac02a7422c))
+* **React:** require react18 and replace useAriaId with React.useId ([#1213](https://github.com/Telefonica/mistica-web/issues/1213)) ([672b873](https://github.com/Telefonica/mistica-web/commit/672b8733b3791d309000c324e204a6f55bcc0eb7))
+* **skin:** rename some design tokens ([#1203](https://github.com/Telefonica/mistica-web/issues/1203)) ([fcf15d0](https://github.com/Telefonica/mistica-web/commit/fcf15d043ccea03b4f01d56097ec215f50f22121))
+* **Snackbar:** update snackbar duration logic ([#1208](https://github.com/Telefonica/mistica-web/issues/1208)) ([7df20eb](https://github.com/Telefonica/mistica-web/commit/7df20eb7a6b8045ef110e4332a6fb24b91a44617))
+* **ThemeVariant:** add media theme variant and update components in order to adapt to it ([#1236](https://github.com/Telefonica/mistica-web/issues/1236)) ([f14e82e](https://github.com/Telefonica/mistica-web/commit/f14e82edbfd0895f02e1fb92e61efcf583a55755))
+* **Titles:** add new Title2, replace Title2 and Title3 with Title3 and Title4 respectively ([#1202](https://github.com/Telefonica/mistica-web/issues/1202)) ([7e405bb](https://github.com/Telefonica/mistica-web/commit/7e405bb467ddb2f69e0d6e0886e08eb58896bcf1))
+
 ## [15.20.1](https://github.com/Telefonica/mistica-web/compare/v15.20.0...v15.20.1) (2024-09-12)
 
 
