@@ -510,10 +510,11 @@ export const ButtonLink = React.forwardRef<
     ButtonLinkProps & {
         withChevron?: boolean;
     }
->(({dataAttributes, ...props}, ref) => {
+>(({dataAttributes, className, ...props}, ref) => {
     return (
         <BaseButton
             dataAttributes={{'component-name': 'ButtonLink', ...dataAttributes}}
+            className={classnames(className, {[styles.smallLink]: props.small})}
             {...props}
             ref={ref}
             buttonType="link"
@@ -522,10 +523,11 @@ export const ButtonLink = React.forwardRef<
 });
 
 export const ButtonLinkDanger = React.forwardRef<TouchableElement, ButtonLinkProps>(
-    ({dataAttributes, ...props}, ref) => {
+    ({dataAttributes, className, ...props}, ref) => {
         return (
             <BaseButton
                 dataAttributes={{'component-name': 'ButtonLinkDanger', ...dataAttributes}}
+                className={classnames(className, {[styles.smallLink]: props.small})}
                 {...props}
                 withChevron={false}
                 ref={ref}

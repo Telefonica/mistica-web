@@ -4,6 +4,10 @@ import * as mq from './media-queries.css';
 import * as buttonStyles from './button.css';
 
 const buttonLayoutSpacing = '16px';
+const buttonLinkPadding = {
+    default: `calc(${buttonStyles.buttonPaddingX.default} + ${buttonStyles.borderSize})`,
+    small: `calc(${buttonStyles.buttonPaddingX.small} + ${buttonStyles.borderSize})`,
+};
 
 export const margins = style({
     margin: '16px 0',
@@ -87,7 +91,80 @@ export const link = style([
 
 export const linkInNewLine = styleVariants({
     center: [linkBase],
-    left: [linkBase, buttonStyles.forceLinkBleedLeft],
-    right: [linkBase, buttonStyles.forceLinkBleedRight],
-    'full-width': [linkBase, buttonStyles.forceLinkBleedLeftOnlyDesktop],
+    left: [
+        linkBase,
+        style({
+            marginLeft: `calc(${buttonLayoutSpacing} / 2 - ${buttonLinkPadding.default})`,
+            selectors: {
+                [`&:has(${buttonStyles.smallLink})`]: {
+                    marginLeft: `calc(${buttonLayoutSpacing} / 2 - ${buttonLinkPadding.small})`,
+                },
+            },
+        }),
+    ],
+    right: [
+        linkBase,
+        style({
+            marginRight: `calc(${buttonLayoutSpacing} / 2 - ${buttonLinkPadding.default})`,
+            selectors: {
+                [`&:has(${buttonStyles.smallLink})`]: {
+                    marginRight: `calc(${buttonLayoutSpacing} / 2 - ${buttonLinkPadding.small})`,
+                },
+            },
+        }),
+    ],
+    'full-width': [
+        linkBase,
+        style({
+            selectors: {
+                // in desktop, full-width is equivalent to left
+                [`${alignVariant['full-width']} &`]: {
+                    '@media': {
+                        [mq.desktopOrBigger]: {
+                            marginLeft: `calc(${buttonLayoutSpacing} / 2 - ${buttonLinkPadding.default})`,
+                        },
+                    },
+                },
+
+                [`${alignVariant['full-width']}:has(${buttonStyles.smallLink}) &`]: {
+                    '@media': {
+                        [mq.desktopOrBigger]: {
+                            marginLeft: `calc(${buttonLayoutSpacing} / 2 - ${buttonLinkPadding.small})`,
+                        },
+                    },
+                },
+            },
+        }),
+    ],
+});
+
+export const smallLinkInNewLine = styleVariants({
+    center: [linkBase],
+    left: [
+        linkBase,
+        style({
+            marginLeft: `calc(${buttonLayoutSpacing} / 2 - ${buttonLinkPadding.small})`,
+        }),
+    ],
+    right: [
+        linkBase,
+        style({
+            marginRight: `calc(${buttonLayoutSpacing} / 2 - ${buttonLinkPadding.small})`,
+        }),
+    ],
+    'full-width': [
+        linkBase,
+        style({
+            selectors: {
+                // in desktop, full-width is equivalent to left
+                [`${alignVariant['full-width']} &`]: {
+                    '@media': {
+                        [mq.desktopOrBigger]: {
+                            marginLeft: `calc(${buttonLayoutSpacing} / 2 - ${buttonLinkPadding.small})`,
+                        },
+                    },
+                },
+            },
+        }),
+    ],
 });
