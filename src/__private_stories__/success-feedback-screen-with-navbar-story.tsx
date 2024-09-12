@@ -39,7 +39,7 @@ export const Default: StoryComponent<Args> = ({largeContent, input}) => {
             {() => (
                 <>
                     <MainNavigationBar
-                        isInverse
+                        variant="inverse"
                         sections={['Start', 'Account', 'Explore', 'Support'].map((title, index) => ({
                             title,
                             onPress: () => {

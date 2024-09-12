@@ -45,8 +45,6 @@ interface AccordionItemContentProps {
     dataAttributes?: DataAttributes;
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
     role?: string;
-    /** @deprecated Use onChange Accordion's onChange callback instead */
-    onToogle?: (value: boolean) => void;
 }
 
 const useAccordionState = ({
