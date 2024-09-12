@@ -3,7 +3,7 @@ import * as React from 'react';
 import {assignInlineVars} from '@vanilla-extract/dynamic';
 import {DialogRoot} from './dialog-context';
 import ScreenSizeContextProvider from './screen-size-context-provider';
-import {dimensions, getTexts, getMisticaLinkComponent, NAVBAR_HEIGHT_MOBILE} from './theme';
+import {dimensions, getMisticaLinkComponent, NAVBAR_HEIGHT_MOBILE} from './theme';
 import {getPlatform, isInsideNovumNativeApp} from './utils/platform';
 import ThemeContext from './theme-context';
 import {useIsomorphicLayoutEffect} from './hooks';
@@ -22,9 +22,11 @@ import {SnackbarRoot} from './snackbar-context';
 import {mapToWeight} from './text';
 import * as mq from './media-queries.css';
 import * as styles from './theme-context.css';
+import {localeToLanguage} from './utils/locale';
 
 import type {Colors, TextPresetsConfig} from './skins/types';
 import type {Theme, ThemeConfig} from './theme';
+import type {TextToken} from './text-tokens';
 
 // Check there is only one version of mistica installed in the page.
 if (process.env.NODE_ENV !== 'production' && isClientSide()) {
@@ -128,6 +130,15 @@ const ThemeContextProvider = ({theme, children, as, withoutStyles = false}: Prop
     const isDarkModeEnabled = (colorScheme === 'auto' && isOsDarkModeEnabled) || colorScheme === 'dark';
     const colors: Colors = isDarkModeEnabled ? darkColors : lightColors;
 
+    const language = localeToLanguage(theme.i18n.locale);
+
+    const translate = React.useCallback(
+        (token: TextToken): string => {
+            return token[language] || token.en;
+        },
+        [language]
+    );
+
     const contextTheme = React.useMemo((): Theme => {
         const platformOverrides = {
             platform: getPlatform(),
@@ -145,10 +156,11 @@ const ThemeContextProvider = ({theme, children, as, withoutStyles = false}: Prop
 
         return {
             skinName: theme.skin.name,
-            i18n: theme.i18n,
+            i18n: {
+                ...theme.i18n,
+            },
             platformOverrides,
             texts: {
-                ...getTexts(theme.i18n.locale),
                 ...theme.texts,
             },
             analytics: {
@@ -166,8 +178,9 @@ const ThemeContextProvider = ({theme, children, as, withoutStyles = false}: Prop
             isDarkMode: isDarkModeEnabled,
             isIos: getPlatform(platformOverrides) === 'ios',
             useHrefDecorator: theme.useHrefDecorator ?? useDefaultHrefDecorator,
+            t: translate,
         };
-    }, [colors, theme, isDarkModeEnabled]);
+    }, [colors, theme, isDarkModeEnabled, translate]);
 
     // Define the same colors in css variables as rgb components, to allow applying alpha aftherwards. See utils/color.tsx
     const rawColors = React.useMemo(
