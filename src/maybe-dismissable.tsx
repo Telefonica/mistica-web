@@ -6,6 +6,8 @@ import {IconButton} from './icon-button';
 import * as styles from './maybe-dismissable.css';
 import {ThemeVariant} from './theme-variant-context';
 
+import type {Variant} from './theme-variant-context';
+
 const DismissableContext = React.createContext<boolean>(false);
 export const useIsDismissable = (): boolean => React.useContext(DismissableContext);
 
@@ -14,8 +16,7 @@ type MaybeDismissableProps = {
     onClose?: () => void;
     width?: string | number;
     'aria-label'?: string;
-    isOverMedia?: boolean;
-    isInverse?: boolean;
+    variant?: Variant;
 };
 
 const MaybeDismissable = ({
@@ -23,8 +24,7 @@ const MaybeDismissable = ({
     width,
     onClose,
     'aria-label': ariaLabel,
-    isOverMedia,
-    isInverse,
+    variant,
 }: MaybeDismissableProps): JSX.Element => {
     const {texts} = useTheme();
 
@@ -39,7 +39,7 @@ const MaybeDismissable = ({
             style={{width: width || '100%', minHeight: '100%'}}
         >
             <DismissableContext.Provider value>{children}</DismissableContext.Provider>
-            <ThemeVariant variant={isOverMedia ? 'overMedia' : undefined} isInverse={isInverse}>
+            <ThemeVariant variant={variant}>
                 <div className={styles.dismissableButton}>
                     <IconButton
                         onPress={onClose}

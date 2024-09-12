@@ -5,7 +5,7 @@ import FadeIn from './fade-in';
 import {useAriaId, useTheme} from './hooks';
 import * as styles from './spinner.css';
 import {vars} from './skins/skin-contract.css';
-import {useIsInverseOrOverMediaVariant} from './theme-variant-context';
+import {useIsInverseOrMediaVariant} from './theme-variant-context';
 
 type Props = {
     color?: string;
@@ -18,7 +18,7 @@ type Props = {
 
 const Spinner = ({color, delay = '500ms', size = 24, style, rolePresentation}: Props): JSX.Element => {
     const {texts, platformOverrides} = useTheme();
-    const isInverse = useIsInverseOrOverMediaVariant();
+    const isInverse = useIsInverseOrMediaVariant();
     color = color || (isInverse ? vars.colors.controlActivatedInverse : vars.colors.controlActivated);
     const spinnerId = useAriaId();
     const withTitle = !rolePresentation;

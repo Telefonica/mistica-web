@@ -146,7 +146,7 @@ const getColorFromVariant = (themeVariant: Variant) => {
         case 'alternative':
             return vars.colors.backgroundAlternative;
         case 'inverse':
-        case 'overMedia':
+        case 'media':
             return vars.colors.backgroundBrand;
         default:
             const exhaustiveCheck: never = themeVariant;

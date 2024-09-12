@@ -46,7 +46,7 @@ type Args = {
 export const Default: StoryComponent<Args> = ({themeVariant}) => {
     return (
         <div style={{position: 'relative'}}>
-            {themeVariant === 'overMedia' && (
+            {themeVariant === 'media' && (
                 <div style={{position: 'absolute', width: '100%', height: '100%'}}>
                     <Image src={beachImg} width="100%" height="100%" noBorderRadius />
                 </div>
@@ -69,7 +69,7 @@ Default.args = {
 };
 Default.argTypes = {
     themeVariant: {
-        options: ['default', 'inverse', 'alternative', 'overMedia'],
+        options: ['default', 'inverse', 'alternative', 'media'],
         control: {type: 'select'},
     },
 };
@@ -77,7 +77,7 @@ Default.argTypes = {
 export const ComponentsOverDifferentThemeVariants: StoryComponent<Args> = ({themeVariant}) => {
     return (
         <div style={{position: 'relative'}}>
-            {themeVariant === 'overMedia' && (
+            {themeVariant === 'media' && (
                 <div style={{position: 'absolute', width: '100%', height: '100%'}}>
                     <Image src={beachImg} width="100%" height="100%" noBorderRadius />
                 </div>
@@ -143,7 +143,7 @@ ComponentsOverDifferentThemeVariants.args = {
 ComponentsOverDifferentThemeVariants.parameters = {fullScreen: true};
 ComponentsOverDifferentThemeVariants.argTypes = {
     themeVariant: {
-        options: ['default', 'inverse', 'alternative', 'overMedia'],
+        options: ['default', 'inverse', 'alternative', 'media'],
         control: {type: 'select'},
     },
 };

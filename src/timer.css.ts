@@ -83,7 +83,7 @@ export const boxedTimerValueContainer = styleVariants({
         }),
     ],
 
-    overMedia: [
+    media: [
         baseBoxedTimerValueContainer,
         style({
             background: applyAlpha(vars.rawColors.backgroundContainer, 0.7),

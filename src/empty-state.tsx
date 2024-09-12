@@ -1,7 +1,7 @@
 'use client';
 import * as React from 'react';
 import classnames from 'classnames';
-import {useIsInverseOrOverMediaVariant} from './theme-variant-context';
+import {useIsInverseOrMediaVariant} from './theme-variant-context';
 import {ButtonPrimary} from './button';
 import {useTheme} from './hooks';
 import Stack from './stack';
@@ -66,7 +66,7 @@ const EmptyState = ({
     dataAttributes,
 }: Props): JSX.Element => {
     const {isDarkMode} = useTheme();
-    const isInverse = useIsInverseOrOverMediaVariant();
+    const isInverse = useIsInverseOrMediaVariant();
 
     const image = imageUrl ? <img className={styles.smallImage} alt="" src={imageUrl} /> : undefined;
 

@@ -14,7 +14,7 @@ import Box from './box';
 import Stack from './stack';
 import Badge from './badge';
 import {useAriaId} from './hooks';
-import {useIsInverseOrOverMediaVariant} from './theme-variant-context';
+import {useIsInverseOrMediaVariant} from './theme-variant-context';
 import IconChevron from './icons/icon-chevron';
 import Switch from './switch-component';
 import RadioButton, {useRadioContext} from './radio-button';
@@ -103,7 +103,7 @@ export const Content = ({
     disabled,
     control,
 }: ContentProps): JSX.Element => {
-    const isInverse = useIsInverseOrOverMediaVariant();
+    const isInverse = useIsInverseOrMediaVariant();
     const numTextLines = [headline, title, subtitle, description, extra].filter(Boolean).length;
     const centerY = numTextLines === 1;
 
@@ -342,7 +342,7 @@ const hasControlProps = (
 
 const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, ref) => {
     const titleId = useAriaId();
-    const isInverse = useIsInverseOrOverMediaVariant();
+    const isInverse = useIsInverseOrMediaVariant();
     const {
         asset,
         headline,

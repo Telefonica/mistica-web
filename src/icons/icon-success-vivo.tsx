@@ -2,7 +2,7 @@
 import * as React from 'react';
 import {useTheme} from '../hooks';
 import {getAnimateSweepInProps} from '../utils/animation';
-import {useIsInverseOrOverMediaVariant} from '../theme-variant-context';
+import {useIsInverseOrMediaVariant} from '../theme-variant-context';
 import {vars} from '../skins/skin-contract.css';
 
 type Props = {
@@ -10,7 +10,7 @@ type Props = {
 };
 
 const IconSuccessVivo = ({size = 48}: Props): JSX.Element => {
-    const isInverse = useIsInverseOrOverMediaVariant();
+    const isInverse = useIsInverseOrMediaVariant();
     const {platformOverrides} = useTheme();
 
     return (

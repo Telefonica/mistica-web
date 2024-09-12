@@ -1,7 +1,7 @@
 'use client';
 import * as React from 'react';
 import classnames from 'classnames';
-import {useIsInverseOrOverMediaVariant} from './theme-variant-context';
+import {useIsInverseOrMediaVariant} from './theme-variant-context';
 import {useTheme} from './hooks';
 import {Text1} from './text';
 import * as styles from './text-field-components.css';
@@ -77,7 +77,7 @@ type HelperTextProps = {
 };
 
 export const HelperText = ({leftText, rightText, error, id}: HelperTextProps): JSX.Element => {
-    const isInverse = useIsInverseOrOverMediaVariant();
+    const isInverse = useIsInverseOrMediaVariant();
     const leftColor = isInverse
         ? vars.colors.textPrimaryInverse
         : error

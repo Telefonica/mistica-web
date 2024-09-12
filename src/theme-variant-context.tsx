@@ -1,7 +1,7 @@
 'use client';
 import * as React from 'react';
 
-export type Variant = 'default' | 'inverse' | 'alternative' | 'overMedia';
+export type Variant = 'default' | 'inverse' | 'alternative' | 'media';
 
 const ThemeVariantContext = React.createContext<Variant>('default');
 
@@ -20,7 +20,7 @@ export const ThemeVariant = ({isInverse, variant, children}: ThemeVariantProps):
 
 export const useThemeVariant = (): Variant => React.useContext(ThemeVariantContext);
 export const useIsInverseVariant = (): boolean => useThemeVariant() === 'inverse';
-export const useIsInverseOrOverMediaVariant = (): boolean => {
+export const useIsInverseOrMediaVariant = (): boolean => {
     const variant = useThemeVariant();
-    return variant === 'inverse' || variant === 'overMedia';
+    return variant === 'inverse' || variant === 'media';
 };

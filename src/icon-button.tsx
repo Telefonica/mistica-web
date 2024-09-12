@@ -187,7 +187,7 @@ export const RawIconButton = React.forwardRef<
 
         const buttonSize = small ? 'small' : 'default';
         const buttonTokensKey: keyof typeof styles.iconButtonTokens =
-            themeVariant === 'overMedia' ? `${type}-media` : `${type}-${backgroundType}-${themeVariant}`;
+            themeVariant === 'media' ? `${type}-media` : `${type}-${backgroundType}-${themeVariant}`;
 
         const commonProps = {
             disabled: disabled || showSpinner,

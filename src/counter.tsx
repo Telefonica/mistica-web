@@ -122,7 +122,7 @@ const Counter = ({
             className={classNames(styles.counter, {[styles.disabled]: disabled})}
             {...getPrefixedDataAttributes(dataAttributes, 'Counter')}
             style={{
-                border: `1px solid ${variant === 'inverse' || variant === 'overMedia' ? vars.colors.backgroundContainer : vars.colors.border}`,
+                border: `1px solid ${variant === 'inverse' || variant === 'media' ? vars.colors.backgroundContainer : vars.colors.border}`,
             }}
         >
             <Inline space={8} alignItems="center">

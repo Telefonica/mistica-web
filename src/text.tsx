@@ -1,7 +1,7 @@
 'use client';
 import * as React from 'react';
 import classnames from 'classnames';
-import {useIsInverseOrOverMediaVariant} from './theme-variant-context';
+import {useIsInverseOrMediaVariant} from './theme-variant-context';
 import {pxToRem, applyCssVars} from './utils/css';
 import {getPrefixedDataAttributes} from './utils/dom';
 import {useTheme} from './hooks';
@@ -152,7 +152,7 @@ export const Text = ({
     dataAttributes,
 }: TextProps): JSX.Element | null => {
     const {skinName} = useTheme();
-    const isInverse = useIsInverseOrOverMediaVariant();
+    const isInverse = useIsInverseOrMediaVariant();
     const lineClampValue = lineClamp(truncate);
 
     const inverseColorsMap = {

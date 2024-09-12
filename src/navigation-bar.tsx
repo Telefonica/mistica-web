@@ -13,7 +13,7 @@ import IconChevronLeftRegular from './generated/mistica-icons/icon-chevron-left-
 import {IconButton} from './icon-button';
 import NegativeBox from './negative-box';
 import {Row, RowList} from './list';
-import {ThemeVariant, useIsInverseOrOverMediaVariant} from './theme-variant-context';
+import {ThemeVariant, useIsInverseOrMediaVariant} from './theme-variant-context';
 import FocusTrap from './focus-trap';
 import {Portal} from './portal';
 import GridLayout from './grid-layout';
@@ -83,7 +83,7 @@ const Header = ({
         default: vars.colors.background,
         inverse: vars.colors.navigationBarBackground,
         alternative: vars.colors.backgroundAlternative,
-        overMedia: vars.colors.navigationBarBackground,
+        media: vars.colors.navigationBarBackground,
     };
 
     return (
@@ -466,7 +466,7 @@ export const NavigationBarActionGroup = ({children}: NavigationBarActionGroupPro
 type NavigationBarActionProps = TouchableProps;
 
 export const NavigationBarAction = ({children, ...touchableProps}: NavigationBarActionProps): JSX.Element => {
-    const isInverse = useIsInverseOrOverMediaVariant();
+    const isInverse = useIsInverseOrMediaVariant();
     return (
         <BaseTouchable
             {...touchableProps}

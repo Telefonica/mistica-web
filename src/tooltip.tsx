@@ -12,7 +12,7 @@ import {isTouchableDevice} from './utils/environment';
 import {isEqual} from './utils/helpers';
 import classNames from 'classnames';
 import {vars} from './skins/skin-contract.css';
-import {ThemeVariant, useIsInverseOrOverMediaVariant} from './theme-variant-context';
+import {ThemeVariant, useIsInverseOrMediaVariant} from './theme-variant-context';
 import {combineRefs} from './utils/common';
 import {useSetTooltipState, useTooltipState} from './tooltip-context-provider';
 import {isRunningAcceptanceTest} from './utils/platform';
@@ -193,7 +193,7 @@ export const BaseTooltip = ({
     const hasControlledValue = open !== undefined;
     const [isFocused, setIsFocused] = React.useState(false);
     const isTooltipOpen = hasControlledValue ? open : tooltipId === openTooltipId;
-    const isInverse = useIsInverseOrOverMediaVariant();
+    const isInverse = useIsInverseOrMediaVariant();
 
     const targetRect = useBoundingRect(targetRef, isTooltipOpen);
     const tooltipRect = useBoundingRect(tooltipRef, isTooltipOpen, true);
