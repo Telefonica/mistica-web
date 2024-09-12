@@ -159,6 +159,7 @@ const showNativeDialog = ({
     title,
     acceptText,
     cancelText,
+    destructive,
     onAccept,
     onCancel,
     onDestroy,
@@ -168,12 +169,13 @@ const showNativeDialog = ({
     title?: string;
     acceptText: string;
     cancelText: string;
+    destructive?: boolean;
     onAccept?: () => void;
     onCancel?: () => void;
     onDestroy: () => void;
 }) =>
     type === 'confirm'
-        ? nativeConfirm({message, title, cancelText, acceptText}).then((accepted) => {
+        ? nativeConfirm({message, title, cancelText, acceptText, destructive}).then((accepted) => {
               if (accepted) {
                   onAccept?.();
               } else {
@@ -199,6 +201,7 @@ const NativeModalDialog = ({
     cancelText,
     message,
     title,
+    destructive,
 }: ModalDialogProps): JSX.Element => {
     const {texts, t} = useTheme();
     const paramsRef = React.useRef({
@@ -210,6 +213,7 @@ const NativeModalDialog = ({
         cancelText: cancelText || texts.dialogCancelButton || t(tokens.dialogCancelButton),
         message,
         title,
+        destructive,
     });
     const isOpenRef = React.useRef(false);
 
