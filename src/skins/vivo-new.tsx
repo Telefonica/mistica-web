@@ -59,7 +59,7 @@ export const getVivoNewSkin: GetKnownSkin = () => {
             backgroundContainerBrandOverInverse: palette.vivoPurpleDark,
             backgroundContainerAlternative: palette.grey1,
             backgroundOverlay: applyAlpha(palette.grey6, 0.6),
-            backgroundSkeleton: palette.grey4,
+            backgroundSkeleton: palette.grey3,
             backgroundSkeletonInverse: palette.vivoPurpleDark,
             backgroundBrandTop: palette.vivoPurple,
             backgroundBrandBottom: palette.vivoPurple,
@@ -331,7 +331,8 @@ export const getVivoNewSkin: GetKnownSkin = () => {
             },
             link: {weight: 'regular'},
             title1: {weight: 'regular'},
-            title2: {
+            title2: {weight: 'regular'},
+            title3: {
                 weight: 'regular',
                 size: {mobile: 18, desktop: 20},
                 lineHeight: {mobile: 24, desktop: 28},

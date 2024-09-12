@@ -2,7 +2,7 @@
 import * as React from 'react';
 import classnames from 'classnames';
 import {useForm} from './form-context';
-import {useAriaId, useTheme} from './hooks';
+import {useTheme} from './hooks';
 import {DOWN, ENTER, ESC, SPACE, TAB, UP} from './utils/keys';
 import {FieldContainer, HelperText, Label} from './text-field-components';
 import ChevronDownRegular from './generated/mistica-icons/icon-chevron-down-regular';
@@ -76,7 +76,8 @@ const Select = ({
     }>({});
     const [tentativeValueState, setTentativeValueState] = React.useState<string>();
     const lastElementSelectionScrollTop = React.useRef<number>(null);
-    const inputId = useAriaId(id);
+    const reactId = React.useId();
+    const inputId = id || reactId;
     const {
         rawValues,
         setRawValue,
