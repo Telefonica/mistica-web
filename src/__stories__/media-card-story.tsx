@@ -61,15 +61,15 @@ export const Default: StoryComponent<Args> = ({
     asset,
     emptySource,
 }) => {
-    let icon;
+    let assetElement;
     if (asset === 'circle with icon') {
-        icon = (
+        assetElement = (
             <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
                 <IconMobileDeviceRegular color={skinVars.colors.brand} />
             </Circle>
         );
     } else if (asset === 'circle with image') {
-        icon = <Circle size={40} backgroundImage={avatarImg} />;
+        assetElement = <Circle size={40} backgroundImage={avatarImg} />;
     }
 
     const interactiveActions = {
@@ -79,7 +79,11 @@ export const Default: StoryComponent<Args> = ({
             </ButtonPrimary>
         ) : undefined,
 
-        buttonLink: actions.includes('link') ? <ButtonLink href="#">Link</ButtonLink> : undefined,
+        buttonLink: actions.includes('link') ? (
+            <ButtonLink small href="#">
+                Link
+            </ButtonLink>
+        ) : undefined,
         onPress: actions === 'onPress' ? () => {} : undefined,
         to: actions === 'to' ? '#' : undefined,
         href: actions === 'href' ? 'https://example.org' : undefined,
@@ -98,7 +102,7 @@ export const Default: StoryComponent<Args> = ({
             title={title}
             subtitle={subtitle}
             description={description}
-            icon={icon}
+            asset={assetElement}
             media={
                 media === 'video' ? (
                     <Video
@@ -194,13 +198,21 @@ export const Group: StoryComponent = () => {
                             subtitle="Subtitle"
                             description="Description"
                             media={<Image aspectRatio="16:9" src={IMAGE_SRC} />}
-                            buttonLink={<ButtonLink href="https://google.com">Link</ButtonLink>}
+                            buttonLink={
+                                <ButtonLink small href="https://google.com">
+                                    Link
+                                </ButtonLink>
+                            }
                         />,
                         <MediaCard
                             title="Title"
                             description="Description"
                             media={<Image aspectRatio="16:9" src={IMAGE_SRC} />}
-                            buttonLink={<ButtonLink href="https://google.com">Link</ButtonLink>}
+                            buttonLink={
+                                <ButtonLink small href="https://google.com">
+                                    Link
+                                </ButtonLink>
+                            }
                         />,
                     ]}
                 />

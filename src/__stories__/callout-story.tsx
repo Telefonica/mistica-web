@@ -29,7 +29,9 @@ export const Default: StoryComponent<Args> = ({title, description, asset, action
     ) : undefined;
 
     const buttonLink = actions.includes('link') ? (
-        <ButtonLink onPress={() => {}}>Link</ButtonLink>
+        <ButtonLink small onPress={() => {}}>
+            Link
+        </ButtonLink>
     ) : undefined;
 
     const secondaryButton = actions.includes('secondary') ? (
@@ -42,7 +44,7 @@ export const Default: StoryComponent<Args> = ({title, description, asset, action
         <ResponsiveLayout isInverse={inverse}>
             <Box paddingY={24}>
                 <Callout
-                    icon={asset ? <IconBoxLight /> : undefined}
+                    asset={asset ? <IconBoxLight /> : undefined}
                     onClose={closable ? () => {} : undefined}
                     title={title}
                     description={description}

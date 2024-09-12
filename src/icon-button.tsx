@@ -10,109 +10,6 @@ import type {TouchableElement, TouchableComponentProps} from './touchable';
 import type {ExclusifyUnion} from './utils/utility-types';
 import type {DataAttributes, IconProps, TrackingEvent} from './utils/types';
 
-interface HrefProps {
-    href: string;
-    newTab?: boolean;
-}
-
-interface ToProps {
-    to: string;
-    newTab?: boolean;
-    fullPageOnWebView?: boolean;
-    replace?: boolean;
-}
-
-interface OnPressProps {
-    onPress: (event: React.MouseEvent<HTMLElement>) => void | undefined | Promise<void>;
-}
-
-interface MaybeProps {
-    onPress?: undefined;
-    href?: undefined;
-    to?: undefined;
-}
-
-interface BaseDeprecatedProps {
-    /** @deprecated */
-    children?: React.ReactNode;
-    /** @deprecated */
-    className?: string;
-    disabled?: boolean;
-    /** @deprecated */
-    icon?: string;
-    /** @deprecated */
-    iconSize?: number;
-    /** @deprecated */
-    backgroundColor?: string;
-    /** @deprecated */
-    size?: number | string;
-    /** @deprecated */
-    style?: React.CSSProperties;
-    /** @deprecated */
-    'aria-live'?: 'polite' | 'off' | 'assertive';
-
-    trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
-    /** "data-" prefix is automatically added. For example, use "testid" instead of "data-testid" */
-    dataAttributes?: DataAttributes;
-    newTab?: boolean;
-    'aria-label'?: string;
-}
-
-type DeprecatedProps = BaseDeprecatedProps & ExclusifyUnion<HrefProps | ToProps | OnPressProps | MaybeProps>;
-
-const ICON_SIZE_1 = 24;
-
-const getButtonStyle = (
-    backgroundUrl: string | undefined,
-    size: string | number,
-    backgroundColor: string,
-    iconSize: number | undefined,
-    disabled: boolean | undefined
-): React.CSSProperties => {
-    const normalizedIconSize = iconSize ? `${iconSize}px ${iconSize}px` : '100% 100%';
-    return {
-        padding: 0,
-        backgroundColor,
-        backgroundImage: backgroundUrl ? `url(${backgroundUrl})` : 'initial',
-        backgroundSize: normalizedIconSize,
-        cursor: disabled ? 'default' : 'pointer',
-        height: size,
-        width: size,
-        verticalAlign: 'middle',
-        textAlign: 'center',
-    };
-};
-
-/**
- * @deprecated these usages of IconButton will be removed
- *
- * IconButton with image url:
- *
- *     <IconButton icon="http://my.image.jpg" aria-label="label" />
- *
- * IconButton with SVG component as icon. Child ignored if `icon` prop is set. Only one child is accepted!
- *
- *     <IconButton aria-label="label">
- *         <MySvgIconComponent />
- *     </IconButton />
- *
- */
-export const RawDeprecatedIconButton = React.forwardRef<TouchableElement, DeprecatedProps>((props, ref) => {
-    const {icon, children, ...rest} = props;
-
-    return (
-        <BaseTouchable
-            ref={ref}
-            {...rest}
-            maybe
-            stopPropagation
-            dataAttributes={{'component-name': 'IconButton', ...props.dataAttributes}}
-        >
-            {!icon && React.Children.only(children)}
-        </BaseTouchable>
-    );
-});
-
 export type IconButtonType = 'neutral' | 'brand' | 'danger';
 export type IconButtonBackgroundType = 'transparent' | 'solid' | 'soft';
 
@@ -257,33 +154,12 @@ export const RawIconButton = React.forwardRef<
 
 export const InternalIconButton = React.forwardRef<
     TouchableElement,
-    ExclusifyUnion<DeprecatedProps | (IconButtonProps & InternalIconButtonBaseProps)>
->((props, ref) => {
-    /**
-     * The new IconButton requires Icon prop, so if it it's used we render the new version.
-     * Otherwise, we render the deprecated one (to avoid breaking changes).
-     */
-    if (props.Icon) {
-        return <RawIconButton ref={ref} {...props} />;
-    }
+    ExclusifyUnion<IconButtonProps & InternalIconButtonBaseProps>
+>((props, ref) => <RawIconButton ref={ref} {...props} />);
 
-    const {icon, backgroundColor = 'transparent', iconSize, size = ICON_SIZE_1} = props;
-    return (
-        <RawDeprecatedIconButton
-            ref={ref}
-            {...props}
-            className={classNames(styles.deprecatedIconButtonBase, props.className)}
-            style={{...getButtonStyle(icon, size, backgroundColor, iconSize, props.disabled), ...props.style}}
-        />
-    );
-});
-
-export const IconButton = React.forwardRef<
-    TouchableElement,
-    ExclusifyUnion<DeprecatedProps | IconButtonProps>
->((props, ref) => {
-    return <InternalIconButton ref={ref} {...props} />;
-});
+export const IconButton = React.forwardRef<TouchableElement, ExclusifyUnion<IconButtonProps>>(
+    (props, ref) => <InternalIconButton ref={ref} {...props} />
+);
 
 type ToggleStateProps = {
     Icon: (props: IconProps) => JSX.Element;

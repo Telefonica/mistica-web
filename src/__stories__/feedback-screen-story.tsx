@@ -103,7 +103,7 @@ export const FeedbackScreenStory: StoryComponent<FeedbackScreenArgs> = ({
                             multipleParagraphs ? [description, 'paragraph 2', 'paragraph 3'] : description
                         }
                         animateText={animateText}
-                        icon={icon ? <IconOrders /> : undefined}
+                        asset={icon ? <IconOrders /> : undefined}
                         imageUrl={imageUrl ?? undefined}
                         imageFit={imageFit}
                         primaryButton={

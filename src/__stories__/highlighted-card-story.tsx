@@ -48,7 +48,7 @@ export const Default: StoryComponent<Args> = ({
                 );
             case 'ButtonLink':
                 return (
-                    <ButtonLink href="#" bleedLeft>
+                    <ButtonLink small href="#" bleedLeft>
                         TextLink
                     </ButtonLink>
                 );

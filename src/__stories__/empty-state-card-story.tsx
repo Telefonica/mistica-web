@@ -28,15 +28,15 @@ export const Default: StoryComponent<Args> = ({actions, title, description, asse
 
     if (asset === 'Icon') {
         assetProps = {
-            icon: <IconBoxLight size="100%" color={skinVars.colors.brand} />,
+            asset: <IconBoxLight size="100%" color={skinVars.colors.brand} />,
         };
     } else if (asset === 'icon as Image') {
         assetProps = {
-            icon: <Image src={avatars4Img} />,
+            asset: <Image src={avatars4Img} />,
         };
     } else if (asset === 'icon as img') {
         assetProps = {
-            icon: <img src={avatars4Img} width="100%" />,
+            asset: <img src={avatars4Img} width="100%" />,
         };
     } else {
         assetProps = {
@@ -51,7 +51,9 @@ export const Default: StoryComponent<Args> = ({actions, title, description, asse
     ) : undefined;
 
     const buttonLink = actions.includes('link') ? (
-        <ButtonLink onPress={() => {}}>Link</ButtonLink>
+        <ButtonLink small onPress={() => {}}>
+            Link
+        </ButtonLink>
     ) : undefined;
 
     const secondaryButton = actions.includes('secondary') ? (

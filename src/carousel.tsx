@@ -16,6 +16,7 @@ import {useDesktopContainerType} from './desktop-container-type-context';
 import {VIVO_NEW_SKIN} from './skins/constants';
 import {applyCssVars} from './utils/css';
 import {ResetResponsiveLayout} from './responsive-layout';
+import * as tokens from './text-tokens';
 
 import type {DesktopContainerType} from './desktop-container-type-context';
 import type {ByBreakpoint, DataAttributes} from './utils/types';
@@ -279,7 +280,7 @@ const BaseCarousel = ({
     onPageChange,
     dataAttributes,
 }: BaseCarouselProps): JSX.Element => {
-    const {texts, platformOverrides, skinName} = useTheme();
+    const {texts, platformOverrides, skinName, t} = useTheme();
 
     const desktopContainerType = useDesktopContainerType();
     const itemsPerPageConfig = normalizeItemsPerPage(desktopContainerType || 'large', itemsPerPage);
@@ -490,7 +491,7 @@ const BaseCarousel = ({
                 <ThemeVariant isInverse={false}>
                     <BaseTouchable
                         className={styles.carouselPrevArrowButton}
-                        aria-label={texts.carouselPrevButton}
+                        aria-label={texts.carouselPrevButton || t(tokens.carouselPrevButton)}
                         onPress={goPrev}
                         disabled={!showPrevArrow}
                     >
@@ -546,7 +547,7 @@ const BaseCarousel = ({
                 <ThemeVariant isInverse={false}>
                     <BaseTouchable
                         className={styles.carouselNextArrowButton}
-                        aria-label={texts.carouselNextButton}
+                        aria-label={texts.carouselNextButton || t(tokens.carouselNextButton)}
                         onPress={goNext}
                         disabled={!showNextArrow}
                     >
@@ -699,7 +700,7 @@ export const Slideshow = ({
     dataAttributes,
     inverseBullets = true,
 }: SlideshowProps): JSX.Element => {
-    const {texts, platformOverrides} = useTheme();
+    const {texts, platformOverrides, t} = useTheme();
     const controlsSetter = React.useContext(CarouselControlsSetterContext);
 
     const carouselRef = React.useRef<HTMLDivElement>(null);
@@ -829,7 +830,7 @@ export const Slideshow = ({
                     <ThemeVariant isInverse={false}>
                         <BaseTouchable
                             className={styles.slideshowPrevArrowButton}
-                            aria-label={texts.carouselPrevButton}
+                            aria-label={texts.carouselPrevButton || t(tokens.carouselPrevButton)}
                             onPress={goPrev}
                             disabled={!showPrevArrow}
                         >
@@ -854,7 +855,7 @@ export const Slideshow = ({
                     <ThemeVariant isInverse={false}>
                         <BaseTouchable
                             className={styles.slideshowNextArrowButton}
-                            aria-label={texts.carouselNextButton}
+                            aria-label={texts.carouselNextButton || t(tokens.carouselNextButton)}
                             onPress={goNext}
                             disabled={!showNextArrow}
                         >

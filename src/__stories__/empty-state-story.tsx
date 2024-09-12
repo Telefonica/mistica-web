@@ -50,15 +50,15 @@ export const WithIcon: StoryComponent<WithIconArgs> = ({actions, asset}) => {
     let assetProps;
     if (asset === 'Icon') {
         assetProps = {
-            icon: <IconBoxLight size="100%" color={skinVars.colors.brand} />,
+            asset: <IconBoxLight size="100%" color={skinVars.colors.brand} />,
         };
     } else if (asset === 'Image') {
         assetProps = {
-            icon: <Image src={avatars4Img} />,
+            asset: <Image src={avatars4Img} />,
         };
     } else {
         assetProps = {
-            icon: <img src={avatars4Img} width="100%" />,
+            asset: <img src={avatars4Img} width="100%" />,
         };
     }
 

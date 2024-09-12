@@ -145,7 +145,7 @@
     },
     "dependencies": {
         "@juggle/resize-observer": "^3.3.1",
-        "@tef-novum/webview-bridge": "^3.27.0",
+        "@tef-novum/webview-bridge": "^3.39.0",
         "@telefonica/libphonenumber": "^2.9.0",
         "@vanilla-extract/css": "^1.15.2",
         "@vanilla-extract/dynamic": "^2.1.1",
@@ -162,8 +162,8 @@
         "semver-compare": "^1.0.0"
     },
     "peerDependencies": {
-        "react": "17.x || 18.x",
-        "react-dom": "17.x || 18.x"
+        "react": "18.x",
+        "react-dom": "18.x"
     },
     "publishConfig": {
         "registry": "https://registry.npmjs.org",

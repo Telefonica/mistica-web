@@ -33,6 +33,7 @@ type InternalProps = {
     borderRadius?: typeof vars.borderRadii.container | typeof vars.borderRadii.legacyDisplay;
     desktopOnly?: boolean;
     background?: string;
+    variant?: Variant;
 };
 
 const getBorderStyle = (isInverseOutside: boolean, isInverseInside: boolean) => {

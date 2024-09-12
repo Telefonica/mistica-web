@@ -91,7 +91,7 @@ export const Default: StoryComponent<Args> = ({
             />
             <ResponsiveLayout>
                 <Callout
-                    icon={<IconInformationUserLight />}
+                    asset={<IconInformationUserLight />}
                     title="Note:"
                     description="A HeaderLayout can be rendered without a Header (in webviews) to allow delegating the
                         header visualization to the native app. For example, in Novum App (Mi Movistar, Meu
@@ -114,7 +114,7 @@ Default.args = {
     description: 'This is a description',
     small: false,
     truncatePretitle: false,
-    inverse: true,
+    inverse: false,
     breadcrumbs: true,
     noPaddingY: false,
     extra: true,

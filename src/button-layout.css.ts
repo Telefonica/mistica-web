@@ -1,9 +1,13 @@
 import {style, globalStyle, styleVariants} from '@vanilla-extract/css';
 import {sprinkles} from './sprinkles.css';
 import * as mq from './media-queries.css';
-import {buttonPaddingX, borderSize} from './button.css';
+import * as buttonStyles from './button.css';
 
-const buttonLayoutSpacing = 16;
+const buttonLayoutSpacing = '16px';
+const buttonLinkPadding = {
+    default: `calc(${buttonStyles.buttonPaddingX.default} + ${buttonStyles.borderSize})`,
+    small: `calc(${buttonStyles.buttonPaddingX.small} + ${buttonStyles.borderSize})`,
+};
 
 export const margins = style({
     margin: '16px 0',
@@ -20,7 +24,7 @@ export const margins = style({
 export const container = style([
     sprinkles({display: 'flex', alignItems: 'center'}),
     {
-        margin: -buttonLayoutSpacing / 2, // compensates the buttons margin
+        margin: `calc(-1 * ${buttonLayoutSpacing} / 2)`, // compensates the buttons margin
         flexWrap: 'wrap',
 
         ':empty': {
@@ -53,19 +57,19 @@ export const alignVariant = styleVariants({
 const linkBase = style([
     sprinkles({display: 'flex', width: '100%'}),
     {
-        margin: buttonLayoutSpacing / 2,
+        margin: `calc(${buttonLayoutSpacing} / 2)`,
         justifyContent: 'inherit',
     },
 ]);
 
 globalStyle(`${container} > *:not(${linkBase})`, {
-    margin: buttonLayoutSpacing / 2,
+    margin: `calc(${buttonLayoutSpacing} / 2)`,
 });
 
 globalStyle(`${containerWithTwoButtons} > *:not(${linkBase})`, {
     '@media': {
         [mq.tabletOrSmaller]: {
-            minWidth: `calc(50% - ${buttonLayoutSpacing}px)`,
+            minWidth: `calc(50% - ${buttonLayoutSpacing})`,
         },
     },
 });
@@ -78,13 +82,6 @@ globalStyle(`${alignVariant['full-width']} > *:not(${linkBase})`, {
     },
 });
 
-const bleedLeft = {
-    marginLeft: `calc(${buttonLayoutSpacing}px / 2 - (${buttonPaddingX.small} + ${borderSize}))`,
-};
-const bleedRight = {
-    marginRight: `calc(${buttonLayoutSpacing}px / 2 - (${buttonPaddingX.small} + ${borderSize}))`,
-};
-
 export const link = style([
     linkBase,
     {
@@ -92,19 +89,82 @@ export const link = style([
     },
 ]);
 
-export const linkInNewLine = style([
-    linkBase,
-    {
-        selectors: {
-            [`${alignVariant.right} &`]: bleedRight,
-
-            [`${alignVariant.left} &`]: bleedLeft,
-            // in desktop, full-width is equivalent to left
-            [`${alignVariant['full-width']} &`]: {
-                '@media': {
-                    [mq.desktopOrBigger]: bleedLeft,
+export const linkInNewLine = styleVariants({
+    center: [linkBase],
+    left: [
+        linkBase,
+        style({
+            marginLeft: `calc(${buttonLayoutSpacing} / 2 - ${buttonLinkPadding.default})`,
+            selectors: {
+                [`&:has(${buttonStyles.smallLink})`]: {
+                    marginLeft: `calc(${buttonLayoutSpacing} / 2 - ${buttonLinkPadding.small})`,
                 },
             },
-        },
-    },
-]);
+        }),
+    ],
+    right: [
+        linkBase,
+        style({
+            marginRight: `calc(${buttonLayoutSpacing} / 2 - ${buttonLinkPadding.default})`,
+            selectors: {
+                [`&:has(${buttonStyles.smallLink})`]: {
+                    marginRight: `calc(${buttonLayoutSpacing} / 2 - ${buttonLinkPadding.small})`,
+                },
+            },
+        }),
+    ],
+    'full-width': [
+        linkBase,
+        style({
+            selectors: {
+                // in desktop, full-width is equivalent to left
+                [`${alignVariant['full-width']} &`]: {
+                    '@media': {
+                        [mq.desktopOrBigger]: {
+                            marginLeft: `calc(${buttonLayoutSpacing} / 2 - ${buttonLinkPadding.default})`,
+                        },
+                    },
+                },
+
+                [`${alignVariant['full-width']}:has(${buttonStyles.smallLink}) &`]: {
+                    '@media': {
+                        [mq.desktopOrBigger]: {
+                            marginLeft: `calc(${buttonLayoutSpacing} / 2 - ${buttonLinkPadding.small})`,
+                        },
+                    },
+                },
+            },
+        }),
+    ],
+});
+
+export const smallLinkInNewLine = styleVariants({
+    center: [linkBase],
+    left: [
+        linkBase,
+        style({
+            marginLeft: `calc(${buttonLayoutSpacing} / 2 - ${buttonLinkPadding.small})`,
+        }),
+    ],
+    right: [
+        linkBase,
+        style({
+            marginRight: `calc(${buttonLayoutSpacing} / 2 - ${buttonLinkPadding.small})`,
+        }),
+    ],
+    'full-width': [
+        linkBase,
+        style({
+            selectors: {
+                // in desktop, full-width is equivalent to left
+                [`${alignVariant['full-width']} &`]: {
+                    '@media': {
+                        [mq.desktopOrBigger]: {
+                            marginLeft: `calc(${buttonLayoutSpacing} / 2 - ${buttonLinkPadding.small})`,
+                        },
+                    },
+                },
+            },
+        }),
+    ],
+});

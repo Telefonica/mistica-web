@@ -12,7 +12,6 @@ import {getPrefixedDataAttributes} from './utils/dom';
 import Divider from './divider';
 import {Boxed} from './boxed';
 import {useIsInverseOrMediaVariant} from './theme-variant-context';
-import {useAriaId} from './hooks';
 import {CSSTransition} from 'react-transition-group';
 import {isRunningAcceptanceTest} from './utils/platform';
 import {sprinkles} from './sprinkles.css';
@@ -45,8 +44,6 @@ interface AccordionItemContentProps {
     dataAttributes?: DataAttributes;
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
     role?: string;
-    /** @deprecated Use onChange Accordion's onChange callback instead */
-    onToogle?: (value: boolean) => void;
 }
 
 const useAccordionState = ({
@@ -128,8 +125,8 @@ const AccordionItemContent = React.forwardRef<TouchableElement, AccordionItemCon
         const itemRef = React.useRef<HTMLDivElement | null>(null);
         const {index, toggle} = useAccordionContext();
         const isInverse = useIsInverseOrMediaVariant();
-        const labelId = useAriaId();
-        const panelId = useAriaId();
+        const labelId = React.useId();
+        const panelId = React.useId();
 
         const [itemIndex, setItemIndex] = React.useState<number>();
         const isOpen = itemIndex !== undefined && index?.includes(itemIndex);
