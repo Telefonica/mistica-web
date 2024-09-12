@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useModalState, Stack, Text2, alert} from '..';
+import {useModalState, Stack, Text2, useDialog} from '..';
 import {ButtonPrimary} from '../button';
 
 export default {
@@ -8,6 +8,7 @@ export default {
 
 export const UseModalState: StoryComponent = () => {
     const {isModalOpen} = useModalState();
+    const {alert} = useDialog();
     return (
         <div aria-hidden={isModalOpen}>
             <Stack space={32}>

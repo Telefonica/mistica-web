@@ -10,6 +10,7 @@ export {default as FadeIn} from './fade-in';
 
 export {AccordionItem, BoxedAccordionItem, Accordion, BoxedAccordion} from './accordion';
 export {ButtonPrimary, ButtonSecondary, ButtonDanger, ButtonLink, ButtonLinkDanger} from './button';
+export {default as ButtonGroup} from './button-group';
 export {default as ButtonLayout} from './button-layout';
 export {default as Counter} from './counter';
 export {default as FixedFooterLayout} from './fixed-footer-layout';
@@ -21,11 +22,7 @@ export {default as LoadingBar} from './loading-bar';
 export {default as FixedToTop, TopDistanceContext} from './fixed-to-top';
 export {createNestableContext} from './nestable-context';
 export type {NestableContext} from './nestable-context';
-export {
-    default as OverscrollColor,
-    useSetOverscrollColor,
-    OverscrollColorProvider,
-} from './overscroll-color-context';
+export {useSetOverscrollColor, OverscrollColorProvider} from './overscroll-color-context';
 export {
     FeedbackScreen,
     ErrorFeedbackScreen,
@@ -37,7 +34,7 @@ export {LoadingScreen, BrandLoadingScreen} from './loading-screen';
 export {IconButton, ToggleIconButton} from './icon-button';
 export {default as Popover} from './popover';
 export {default as FocusTrap} from './focus-trap';
-export {confirm, alert, dialog, useDialog} from './dialog-context';
+export {useDialog} from './dialog-context';
 export {default as Badge} from './badge';
 export {default as TextLink} from './text-link';
 export {default as Overlay} from './overlay';

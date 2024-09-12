@@ -15,7 +15,7 @@ import {
     Switch,
     Checkbox,
     TextLink,
-    alert,
+    useDialog,
     RadioGroup,
     RadioButton,
     Text3,
@@ -39,6 +39,7 @@ const fruitOptions = fruitEntries.map(([text, value]) => ({text, value}));
 const countryOptions = countriesList.map((text, i) => ({text, value: '' + i}));
 
 export const Default: StoryComponent = () => {
+    const {alert} = useDialog();
     return (
         <Form
             initialValues={{

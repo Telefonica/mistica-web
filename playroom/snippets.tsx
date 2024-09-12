@@ -220,7 +220,7 @@ const buttonSnippets: Array<Snippet> = [
         code: '<ButtonPrimary onPress={() => {}}><IconLockClosedRegular color="currentColor" />Action</ButtonPrimary>',
     },
     {
-        name: 'ButtonGroup (internal use)',
+        name: 'ButtonGroup',
         code: `
         <ButtonGroup
           primaryButton={<ButtonPrimary onPress={() => {}}>Action</ButtonPrimary>}
