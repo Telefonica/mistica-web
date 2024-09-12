@@ -219,11 +219,9 @@ const Snackbar = React.forwardRef<ImperativeHandle & HTMLDivElement, Props>(
                 isOpenRef.current = true;
                 nativeMessage({
                     message,
-                    // @ts-expect-error duration can be 'PERSISTENT' in new webview-bridge lib versions, and old apps will ignore it
                     duration: duration === Infinity ? 'PERSISTENT' : undefined,
                     buttonText,
                     buttonAccessibilityLabel,
-                    closeButtonLabel,
                     type,
                     withDismiss,
                 })

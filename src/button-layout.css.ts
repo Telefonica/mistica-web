@@ -9,18 +9,6 @@ const buttonLinkPadding = {
     small: `calc(${buttonStyles.buttonPaddingX.small} + ${buttonStyles.borderSize})`,
 };
 
-export const margins = style({
-    margin: '16px 0',
-    padding: '0 16px',
-
-    '@media': {
-        [mq.tabletOrSmaller]: {
-            padding: 0,
-            margin: 16,
-        },
-    },
-});
-
 export const container = style([
     sprinkles({display: 'flex', alignItems: 'center'}),
     {
