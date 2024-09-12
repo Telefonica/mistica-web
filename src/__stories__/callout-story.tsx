@@ -29,7 +29,9 @@ export const Default: StoryComponent<Args> = ({title, description, asset, action
     ) : undefined;
 
     const buttonLink = actions.includes('link') ? (
-        <ButtonLink onPress={() => {}}>Link</ButtonLink>
+        <ButtonLink small onPress={() => {}}>
+            Link
+        </ButtonLink>
     ) : undefined;
 
     const secondaryButton = actions.includes('secondary') ? (

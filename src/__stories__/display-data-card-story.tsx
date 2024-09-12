@@ -92,7 +92,11 @@ export const Default: StoryComponent<DisplayDataCardArgs> = ({
                 Action 2
             </ButtonSecondary>
         ) : undefined,
-        buttonLink: actions.includes('link') ? <ButtonLink href="#">Link</ButtonLink> : undefined,
+        buttonLink: actions.includes('link') ? (
+            <ButtonLink small href="#">
+                Link
+            </ButtonLink>
+        ) : undefined,
         onPress: actions === 'onPress' ? () => {} : undefined,
         to: actions === 'to' ? '#' : undefined,
         href: actions === 'href' ? 'https://example.org' : undefined,
