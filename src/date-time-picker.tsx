@@ -21,6 +21,7 @@ import 'moment/locale/es';
 import 'moment/locale/de';
 import 'moment/locale/pt-br';
 import 'moment/locale/en-gb';
+import * as tokens from './text-tokens';
 
 import type {CommonFormFieldProps} from './text-field-base';
 import type Moment from 'moment';
@@ -59,6 +60,7 @@ const DateTimePicker = ({
     const {
         texts,
         i18n: {locale},
+        t,
     } = useTheme();
     const fieldRef = React.useRef<HTMLInputElement | null>(null);
     const {height: pickerContainerHeight, ref: pickerContainerRef} = useElementDimensions();
@@ -116,7 +118,7 @@ const DateTimePicker = ({
             return (
                 <FieldEndIcon
                     Icon={IconCloseRegular}
-                    aria-label={texts.clearButton}
+                    aria-label={texts.clearButton || t(tokens.clearButton)}
                     hasBackgroundColor={false}
                     onPress={() => setValue('')}
                 />
