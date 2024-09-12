@@ -11,7 +11,7 @@ import {
     MenuItem,
     IconLightningRegular,
     MenuSection,
-    alert,
+    useDialog,
 } from '..';
 
 export default {
@@ -34,6 +34,7 @@ export const Default: StoryComponent<MenuArgs> = ({
     icon,
     checkbox,
 }) => {
+    const {alert} = useDialog();
     const [valuesState, setValuesState] = React.useState<ReadonlyArray<number>>([]);
 
     const setValues = (val: number) => {
