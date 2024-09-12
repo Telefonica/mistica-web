@@ -13,7 +13,9 @@ import type {ByBreakpoint, DataAttributes} from './utils/types';
 
 type Props = {
     children: React.ReactNode;
+    /** @deprecated use variant instead */
     isInverse?: boolean;
+    variant?: Variant;
     className?: string;
     role?: string;
     /** "data-" prefix is automatically added. For example, use "testid" instead of "data-testid" */
@@ -31,7 +33,6 @@ type InternalProps = {
     borderRadius?: typeof vars.borderRadii.container | typeof vars.borderRadii.legacyDisplay;
     desktopOnly?: boolean;
     background?: string;
-    variant?: Variant;
 };
 
 const getBorderStyle = (isInverseOutside: boolean, isInverseInside: boolean) => {
@@ -125,7 +126,7 @@ export const InternalBoxed = React.forwardRef<HTMLDivElement, Props & InternalPr
                 aria-labelledby={ariaLabelledby}
                 {...getPrefixedDataAttributes(dataAttributes)}
             >
-                <ThemeVariant variant={variant} isInverse={isInverseInside}>
+                <ThemeVariant variant={variant ?? (isInverseInside ? 'inverse' : undefined)}>
                     {children}
                 </ThemeVariant>
             </div>
