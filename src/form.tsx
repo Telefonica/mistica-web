@@ -1,6 +1,6 @@
 'use client';
 import * as React from 'react';
-import {useAriaId, useTheme} from './hooks';
+import {useTheme} from './hooks';
 import {FormContext} from './form-context';
 import classnames from 'classnames';
 import {sprinkles} from './sprinkles.css';
@@ -46,7 +46,8 @@ const Form = ({
     const fieldRegistrations = React.useRef(new Map<string, FieldRegistration>());
     const formRef = React.useRef<HTMLFormElement | null>(null);
     const {texts} = useTheme();
-    const id = useAriaId(idProp);
+    const reactId = React.useId();
+    const id = idProp || reactId;
 
     React.useEffect(() => {
         /**
