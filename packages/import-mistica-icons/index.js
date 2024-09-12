@@ -182,13 +182,13 @@ const createIconComponentSource = async (name, componentName, svgIconsInfo) => {
     import {useTheme} from '../../hooks';`
             : ''
     }
-    import {useIsInverseVariant} from '../../theme-variant-context';
+    import {useIsInverseOrOverMediaVariant} from '../../theme-variant-context';
     import {vars} from '../../skins/skin-contract.css';
 
     import type {IconProps} from '../../utils/types';
 
     const ${componentName} = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
-        const isInverse = useIsInverseVariant();
+        const isInverse = useIsInverseOrOverMediaVariant();
         const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
         ${hasVariants ? 'const {skinName} = useTheme();' : ''}
         ${getVariants()}

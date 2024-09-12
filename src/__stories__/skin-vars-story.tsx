@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {Stack, Text2, skinVars, getCssVarValue, useTheme} from '..';
-import {useIsInverseVariant} from '../theme-variant-context';
+import {useIsInverseOrOverMediaVariant} from '../theme-variant-context';
 
 export default {
     title: 'Utilities/skinVars',
@@ -9,7 +9,7 @@ export default {
 const CodeText = ({children}: {children: React.ReactNode}) => <Text2 medium>{children}</Text2>;
 
 const ColorsTable = () => {
-    const isInverse = useIsInverseVariant();
+    const isInverse = useIsInverseOrOverMediaVariant();
 
     const {skinName, isDarkMode} = useTheme();
     const [, forceUpdate] = React.useState(0);

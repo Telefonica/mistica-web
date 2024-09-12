@@ -6,7 +6,7 @@ import {useIsInViewport, useScreenSize, useTheme} from './hooks';
 import Inline from './inline';
 import {BaseTouchable} from './touchable';
 import classNames from 'classnames';
-import {useIsInverseVariant, ThemeVariant} from './theme-variant-context';
+import {useIsInverseOrOverMediaVariant, ThemeVariant} from './theme-variant-context';
 import {getPrefixedDataAttributes, listenResize} from './utils/dom';
 import {isAndroid, isIos, isRunningAcceptanceTest} from './utils/platform';
 import {useDocumentVisibility} from './utils/document-visibility';
@@ -34,7 +34,7 @@ type PageBulletsProps = {
 };
 
 export const PageBullets = ({currentIndex, numPages, onPress}: PageBulletsProps): JSX.Element => {
-    const isInverse = useIsInverseVariant();
+    const isInverse = useIsInverseOrOverMediaVariant();
     const {isDesktopOrBigger} = useScreenSize();
     const getClassName = (index: number) => {
         const isActive = index === currentIndex;

@@ -1,5 +1,5 @@
 'use client';
-import {useIsInverseVariant} from './theme-variant-context';
+import {useIsInverseOrOverMediaVariant} from './theme-variant-context';
 import * as React from 'react';
 import classnames from 'classnames';
 import {sprinkles} from './sprinkles.css';
@@ -20,7 +20,7 @@ const SkeletonBase = ({
     className,
     noBorderRadius = false,
 }: SkeletonBaseProps): JSX.Element => {
-    const isInverse = useIsInverseVariant();
+    const isInverse = useIsInverseOrOverMediaVariant();
 
     return (
         <div

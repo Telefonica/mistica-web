@@ -103,6 +103,7 @@ const CoverHero = React.forwardRef<HTMLDivElement, CoverHeroProps>(
                   default: vars.colors.background,
                   inverse: vars.colors.backgroundBrand,
                   alternative: vars.colors.backgroundAlternative,
+                  overMedia: 'none',
               }[variant ?? 'default'];
 
         const textShadow = hasMedia ? '0 0 15px rgba(0, 0, 0, 0.4)' : undefined;
@@ -169,7 +170,7 @@ const CoverHero = React.forwardRef<HTMLDivElement, CoverHeroProps>(
                     })}
                 >
                     {hasMedia ? <CoverHeroMedia {...mediaProps} /> : null}
-                    <ResponsiveLayout variant={hasMedia ? 'inverse' : variant} backgroundColor="none">
+                    <ResponsiveLayout variant={hasMedia ? 'overMedia' : variant}>
                         <Box paddingY={noPaddingY ? 0 : {desktop: 56, tablet: 56, mobile: 24}}>
                             <Stack space={24}>
                                 {centered && !sideExtra ? (

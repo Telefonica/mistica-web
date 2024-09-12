@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useIsInverseVariant, Select, TextField, Checkbox, skinVars} from '..';
+import {useIsInverseOrOverMediaVariant, Select, TextField, Checkbox, skinVars} from '..';
 import {isRunningAcceptanceTest} from '../utils/platform';
 
 type Props = {
@@ -8,7 +8,7 @@ type Props = {
 };
 
 export const StorySection = ({title, children}: Props): JSX.Element => {
-    const isInverse = useIsInverseVariant();
+    const isInverse = useIsInverseOrOverMediaVariant();
     return (
         <div style={{marginBottom: 32}}>
             <h1

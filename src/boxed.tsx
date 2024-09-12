@@ -1,13 +1,14 @@
 'use client';
 import * as React from 'react';
 import classnames from 'classnames';
-import {ThemeVariant, useIsInverseVariant} from './theme-variant-context';
+import {ThemeVariant, useIsInverseOrOverMediaVariant} from './theme-variant-context';
 import {getPrefixedDataAttributes} from './utils/dom';
 import {vars} from './skins/skin-contract.css';
 import * as styles from './boxed.css';
 import {sprinkles} from './sprinkles.css';
 import {applyCssVars} from './utils/css';
 
+import type {Variant} from './theme-variant-context';
 import type {ByBreakpoint, DataAttributes} from './utils/types';
 
 type Props = {
@@ -30,6 +31,7 @@ type InternalProps = {
     borderRadius?: typeof vars.borderRadii.container | typeof vars.borderRadii.legacyDisplay;
     desktopOnly?: boolean;
     background?: string;
+    variant?: Variant;
 };
 
 const getBorderStyle = (isInverseOutside: boolean, isInverseInside: boolean) => {
@@ -83,10 +85,11 @@ export const InternalBoxed = React.forwardRef<HTMLDivElement, Props & InternalPr
             borderRadius = vars.borderRadii.container,
             background,
             desktopOnly,
+            variant,
         },
         ref
     ) => {
-        const isInverseOutside = useIsInverseVariant();
+        const isInverseOutside = useIsInverseOrOverMediaVariant();
 
         return (
             <div
@@ -122,7 +125,9 @@ export const InternalBoxed = React.forwardRef<HTMLDivElement, Props & InternalPr
                 aria-labelledby={ariaLabelledby}
                 {...getPrefixedDataAttributes(dataAttributes)}
             >
-                <ThemeVariant isInverse={isInverseInside}>{children}</ThemeVariant>
+                <ThemeVariant variant={variant} isInverse={isInverseInside}>
+                    {children}
+                </ThemeVariant>
             </div>
         );
     }

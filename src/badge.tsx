@@ -6,7 +6,7 @@ import {getPrefixedDataAttributes} from './utils/dom';
 import {Text1} from './text';
 import {useTheme} from './hooks';
 import {vars} from './skins/skin-contract.css';
-import {useIsInverseVariant} from './theme-variant-context';
+import {useIsInverseOrOverMediaVariant} from './theme-variant-context';
 
 import type {DataAttributes} from './utils/types';
 
@@ -27,7 +27,7 @@ type Props = {
  * </Badge>
  */
 const Badge = ({children, value, right, top, dataAttributes}: Props): JSX.Element | null => {
-    const isInverse = useIsInverseVariant();
+    const isInverse = useIsInverseOrOverMediaVariant();
     const {textPresets} = useTheme();
     if (children && value === 0) {
         return <>{children}</>;
