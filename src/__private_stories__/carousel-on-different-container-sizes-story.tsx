@@ -50,7 +50,11 @@ const ExampleCarousel = ({
                 title={`Title ${idx} carousel ${cardsTitlePrefix}`}
                 description="Some description"
                 media={<Image src={tennisUrl} aspectRatio="16:9" />}
-                buttonLink={<ButtonLink href="https://google.com">Link {idx}</ButtonLink>}
+                buttonLink={
+                    <ButtonLink small href="https://google.com">
+                        Link {idx}
+                    </ButtonLink>
+                }
             />
         ))}
     />

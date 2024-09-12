@@ -73,11 +73,11 @@ export const WithCarouselContext: StoryComponent<WithCarouselContextArgs> = ({nu
                             <CarouselContextConsumer>
                                 {({goNext, goPrev, bulletsProps}) => (
                                     <Inline space="between" alignItems="center">
-                                        <ButtonLink bleedLeft onPress={goPrev}>
+                                        <ButtonLink small bleedLeft onPress={goPrev}>
                                             Prev
                                         </ButtonLink>
                                         <PageBullets {...bulletsProps} />
-                                        <ButtonLink bleedRight onPress={goNext}>
+                                        <ButtonLink small bleedRight onPress={goNext}>
                                             Next
                                         </ButtonLink>
                                     </Inline>

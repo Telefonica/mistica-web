@@ -41,7 +41,9 @@ export const Default: StoryComponent<Args> = ({
     ) : undefined;
 
     const linkButton = buttonLink ? (
-        <ButtonLink onPress={handleOnPress}>{buttonLinkText}</ButtonLink>
+        <ButtonLink small={small} onPress={handleOnPress}>
+            {buttonLinkText}
+        </ButtonLink>
     ) : undefined;
 
     return <ButtonGroup primaryButton={primaryButton} secondaryButton={secondaryButton} link={linkButton} />;

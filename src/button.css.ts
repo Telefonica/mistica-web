@@ -75,14 +75,8 @@ const button = style([
     },
 ]);
 
-const link = style([
-    button,
-    {
-        fontWeight: 500,
-    },
-]);
-
 export const small = style({});
+export const smallLink = style({});
 
 export const loadingFiller = style([
     sprinkles({
@@ -311,7 +305,7 @@ const danger: ComplexStyleRule = [
 ];
 
 export const defaultLink: ComplexStyleRule = [
-    link,
+    button,
     sprinkles({
         color: vars.colors.textLink,
         background: 'transparent',
@@ -339,7 +333,7 @@ export const defaultLink: ComplexStyleRule = [
 ];
 
 export const defaultLinkInverse: ComplexStyleRule = [
-    link,
+    button,
     sprinkles({
         color: vars.colors.textLinkInverse,
         background: 'transparent',
@@ -367,7 +361,7 @@ export const defaultLinkInverse: ComplexStyleRule = [
 ];
 
 const dangerLink: ComplexStyleRule = [
-    link,
+    button,
     sprinkles({
         color: vars.colors.textLinkDanger,
         background: 'transparent',
@@ -395,7 +389,7 @@ const dangerLink: ComplexStyleRule = [
 ];
 
 const dangerLinkInverse: ComplexStyleRule = [
-    link,
+    button,
     sprinkles({
         color: vars.colors.textLinkDanger,
         background: vars.colors.buttonLinkDangerBackgroundInverse,
@@ -423,7 +417,7 @@ const dangerLinkInverse: ComplexStyleRule = [
 ];
 
 const dangerLinkInverseDark: ComplexStyleRule = [
-    link,
+    button,
     sprinkles({
         color: vars.colors.textLinkDanger,
         background: 'transparent',
