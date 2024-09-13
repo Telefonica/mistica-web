@@ -10,6 +10,10 @@ jobs:
         name: Unpublish
         runs-on: ubuntu-latest
         steps:
+            - uses: actions/checkout@v4
+              with:
+                  token: ${{ secrets.FLOW_GITHUB_TOKEN }}
+
             - name: 'Set npm token'
               uses: './.github/actions/set-npm-token'
               with:
