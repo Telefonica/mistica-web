@@ -2900,8 +2900,8 @@ const alertSnippets = [
       title: fruit,
       description: "Description",
       asset: (
-        <Circle backgroundColor={skinVars.colors.brandLow} size={40}>
-          <IconMobileDeviceRegular color={skinVars.colors.brand} />
+        <Circle backgroundColor={colors.brandLow} size={40}>
+          <IconMobileDeviceRegular color={colors.brand} />
         </Circle>
       ),
     }))}
@@ -3326,8 +3326,8 @@ const gridSnippets = [
   <GridItem>
     <SnapCard
       icon={
-        <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
-          <IconAcademicRegular color={skinVars.colors.brand} />
+        <Circle size={40} backgroundColor={colors.brandLow}>
+          <IconAcademicRegular color={colors.brand} />
         </Circle>
       }
       title="Title 1"
@@ -3337,8 +3337,8 @@ const gridSnippets = [
   <GridItem rowSpan={2}>
     <SnapCard
       icon={
-        <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
-          <IconAcademicRegular color={skinVars.colors.brand} />
+        <Circle size={40} backgroundColor={colors.brandLow}>
+          <IconAcademicRegular color={colors.brand} />
         </Circle>
       }
       title="Title 2"
@@ -3348,8 +3348,8 @@ const gridSnippets = [
   <GridItem>
     <SnapCard
       icon={
-        <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
-          <IconAcademicRegular color={skinVars.colors.brand} />
+        <Circle size={40} backgroundColor={colors.brandLow}>
+          <IconAcademicRegular color={colors.brand} />
         </Circle>
       }
       title="Title 3"
@@ -3359,8 +3359,8 @@ const gridSnippets = [
   <GridItem columnSpan={2}>
     <SnapCard
       icon={
-        <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
-          <IconAcademicRegular color={skinVars.colors.brand} />
+        <Circle size={40} backgroundColor={colors.brandLow}>
+          <IconAcademicRegular color={colors.brand} />
         </Circle>
       }
       title="Title 4"
@@ -3640,12 +3640,90 @@ const timerSnippets: Array<Snippet> = [
     },
 ];
 
+const ratingSnippets: Array<Snippet> = [
+    {
+        group: 'Rating',
+        name: 'InfoRating',
+        code: `
+          <InfoRating
+            aria-label="info rating"
+            size={24}
+            value={3}
+            count={6}
+            icon={{
+              ActiveIcon: IconStarFilled,
+              InactiveIcon: IconStarRegular,
+              color: colors.warning,
+            }}
+          />
+        `,
+    },
+    {
+        group: 'Rating',
+        name: 'Rating quantitative',
+        code: `
+          <Rating
+            aria-label="quantitative rating"
+            type="quantitative"
+            size={32}
+            defaultValue={3}
+            count={5}
+            icon={{
+              ActiveIcon: IconStarFilled,
+              InactiveIcon: IconStarRegular,
+              color: colors.controlActivated,
+            }}
+          />
+        `,
+    },
+    {
+        group: 'Rating',
+        name: 'Rating qualitative',
+        code: `
+          <Rating
+            aria-label="qualitative rating"
+            type="qualitative"
+            size={32}
+            valueLabels={["very bad", "bad", "regular", "good", "very good"]}
+            icons={[
+              {
+                  ActiveIcon: IconFaceSadFilled,
+                  InactiveIcon: IconFaceSadRegular,
+                  color: colors.errorHigh,
+              },
+              {
+                  ActiveIcon: IconFaceSlightlySadFilled,
+                  InactiveIcon: IconFaceSlightlySadRegular,
+                  color: colors.error,
+              },
+              {
+                  ActiveIcon: IconFaceNeutralFilled,
+                  InactiveIcon: IconFaceNeutralRegular,
+                  color: colors.warning,
+              },
+              {
+                  ActiveIcon: IconFaceHappyFilled,
+                  InactiveIcon: IconFaceHappyRegular,
+                  color: colors.success,
+              },
+              {
+                  ActiveIcon: IconFaceSuperHappyFilled,
+                  InactiveIcon: IconFaceSuperHappyRegular,
+                  color: colors.successHigh,
+              },
+            ]}
+          />
+        `,
+    },
+];
+
 export default [
     ...buttonSnippets,
     ...formSnippets,
     ...feedbackSnippets,
     ...skeletonSnippets,
     ...timerSnippets,
+    ...ratingSnippets,
     {group: 'Feedbacks', name: 'Snackbar', code: '<Snackbar message="Some message here" />'},
     ...layoutSnippets,
     {

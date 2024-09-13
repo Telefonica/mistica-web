@@ -62,6 +62,12 @@ export type Dictionary = {
     timerDisplayMinutesLabel: string;
     timerDisplaySecondsLabel: string;
     tableActionsHeaderLabel: string;
+    ratingVeryBadLabel: string;
+    ratingBadLabel: string;
+    ratingRegularLabel: string;
+    ratingGoodLabel: string;
+    ratingVeryGoodLabel: string;
+    ratingQuantitativeLabel: string;
 };
 
 export type TextToken = Record<Language, string>;
@@ -491,4 +497,46 @@ export const tableActionsHeaderLabel: TextToken = {
     en: 'Actions',
     de: 'Aktionen',
     pt: 'Ações',
+};
+
+export const ratingVeryBadLabel: TextToken = {
+    es: 'muy malo',
+    en: 'very bad',
+    de: 'sehr schlecht',
+    pt: 'muito ruim',
+};
+
+export const ratingBadLabel: TextToken = {
+    es: 'malo',
+    en: 'bad',
+    de: 'schlecht',
+    pt: 'ruim',
+};
+
+export const ratingRegularLabel: TextToken = {
+    es: 'regular',
+    en: 'regular',
+    de: 'regular',
+    pt: 'regular',
+};
+
+export const ratingGoodLabel: TextToken = {
+    es: 'bueno',
+    en: 'good',
+    de: 'gut',
+    pt: 'bom',
+};
+
+export const ratingVeryGoodLabel: TextToken = {
+    es: 'muy bueno',
+    en: 'very good',
+    de: 'sehr gut',
+    pt: 'muito bom',
+};
+
+export const ratingQuantitativeLabel: TextToken = {
+    es: '1$s de 2$s',
+    en: '1$s out of 2$s',
+    de: '1$s von 2$s',
+    pt: '1$s de 2$s',
 };
