@@ -22,6 +22,7 @@ import IconFaceHappyRegular from './generated/mistica-icons/icon-face-happy-regu
 import IconFaceSuperHappyFilled from './generated/mistica-icons/icon-face-super-happy-filled';
 import IconFaceSuperHappyRegular from './generated/mistica-icons/icon-face-super-happy-regular';
 import {useTheme} from './hooks';
+import * as tokens from './text-tokens';
 
 import type {ExclusifyUnion} from './utils/utility-types';
 import type {DataAttributes, IconProps} from './utils/types';
@@ -160,18 +161,20 @@ const InternalRating = ({
     'aria-label': ariaLabel,
     'aria-labelledby': ariaLabelledBy,
 }: InternalRatingProps) => {
-    const {texts} = useTheme();
+    const {texts, t} = useTheme();
 
     const defaultQualitativeLabels = [
-        texts.ratingVeryBadLabel,
-        texts.ratingBadLabel,
-        texts.ratingRegularLabel,
-        texts.ratingGoodLabel,
-        texts.ratingVeryGoodLabel,
+        texts.ratingVeryBadLabel || t(tokens.ratingVeryBadLabel),
+        texts.ratingBadLabel || t(tokens.ratingBadLabel),
+        texts.ratingRegularLabel || t(tokens.ratingRegularLabel),
+        texts.ratingGoodLabel || t(tokens.ratingGoodLabel),
+        texts.ratingVeryGoodLabel || t(tokens.ratingVeryGoodLabel),
     ];
 
     const defaultQuantitativeLabels = Array.from({length: count}, (_, index) =>
-        texts.ratingQuantitativeLabel.replace('1$s', String(index + 1)).replace('2$s', String(count))
+        (texts.ratingQuantitativeLabel || t(tokens.ratingQuantitativeLabel))
+            .replace('1$s', String(index + 1))
+            .replace('2$s', String(count))
     );
 
     const iconList = type === 'qualitative' ? icons : Array.from({length: count}, () => icon);
