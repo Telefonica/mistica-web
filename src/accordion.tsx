@@ -11,8 +11,7 @@ import {vars as skinVars} from './skins/skin-contract.css';
 import {getPrefixedDataAttributes} from './utils/dom';
 import Divider from './divider';
 import {Boxed} from './boxed';
-import {useIsInverseVariant} from './theme-variant-context';
-import {useAriaId} from './hooks';
+import {useIsInverseOrMediaVariant} from './theme-variant-context';
 import {CSSTransition} from 'react-transition-group';
 import {isRunningAcceptanceTest} from './utils/platform';
 import {sprinkles} from './sprinkles.css';
@@ -45,8 +44,6 @@ interface AccordionItemContentProps {
     dataAttributes?: DataAttributes;
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
     role?: string;
-    /** @deprecated Use onChange Accordion's onChange callback instead */
-    onToogle?: (value: boolean) => void;
 }
 
 const useAccordionState = ({
@@ -127,9 +124,9 @@ const AccordionItemContent = React.forwardRef<TouchableElement, AccordionItemCon
         const panelContainerRef = React.useRef<HTMLDivElement | null>(null);
         const itemRef = React.useRef<HTMLDivElement | null>(null);
         const {index, toggle} = useAccordionContext();
-        const isInverse = useIsInverseVariant();
-        const labelId = useAriaId();
-        const panelId = useAriaId();
+        const isInverse = useIsInverseOrMediaVariant();
+        const labelId = React.useId();
+        const panelId = React.useId();
 
         const [itemIndex, setItemIndex] = React.useState<number>();
         const isOpen = itemIndex !== undefined && index?.includes(itemIndex);
@@ -230,7 +227,7 @@ type MultipleOpenProps = {
 
 type AccordionProps = AccordionBaseProps & ExclusifyUnion<SingleOpenProps | MultipleOpenProps>;
 
-export const Accordion: React.FC<AccordionProps> = ({
+export const Accordion = ({
     children,
     dataAttributes,
     index,
@@ -238,7 +235,7 @@ export const Accordion: React.FC<AccordionProps> = ({
     onChange,
     singleOpen,
     role,
-}) => {
+}: AccordionProps): JSX.Element => {
     const [indexList, toggle] = useAccordionState({
         value: index,
         defaultValue: defaultIndex,
@@ -285,7 +282,7 @@ export const BoxedAccordionItem = React.forwardRef<HTMLDivElement, BoxedAccordio
     )
 );
 
-export const BoxedAccordion: React.FC<AccordionProps> = ({
+export const BoxedAccordion = ({
     children,
     dataAttributes,
     index,
@@ -293,7 +290,7 @@ export const BoxedAccordion: React.FC<AccordionProps> = ({
     onChange,
     singleOpen,
     role,
-}) => {
+}: AccordionProps): JSX.Element => {
     const [indexList, toggle] = useAccordionState({
         value: index,
         defaultValue: defaultIndex,

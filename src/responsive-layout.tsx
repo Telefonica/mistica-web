@@ -12,15 +12,14 @@ type Props = {
     children: React.ReactNode;
     fullWidth?: boolean;
     className?: string;
+    /** @deprecated Use variant = 'inverse' instead */
     isInverse?: boolean;
     variant?: Variant;
     backgroundColor?: string;
     dataAttributes?: DataAttributes;
 };
 
-export const InternalResponsiveLayout: React.FC<
-    Props & {shouldExpandWhenNested?: boolean | 'desktop'; innerDivClassName?: string}
-> = ({
+export const InternalResponsiveLayout = ({
     children,
     isInverse = false,
     variant,
@@ -30,7 +29,7 @@ export const InternalResponsiveLayout: React.FC<
     dataAttributes,
     shouldExpandWhenNested = false,
     innerDivClassName,
-}) => {
+}: Props & {shouldExpandWhenNested?: boolean | 'desktop'; innerDivClassName?: string}): JSX.Element => {
     // @deprecated @TODO https://jira.tid.es/browse/WEB-1611
     const outsideVariant: Variant = useThemeVariant();
     const internalVariant: Variant | undefined = variant || (isInverse && 'inverse') || undefined;
@@ -71,17 +70,21 @@ export const InternalResponsiveLayout: React.FC<
     );
 };
 
-const ResponsiveLayout: React.FC<Props> = ({children, ...props}) => (
+const ResponsiveLayout = ({children, ...props}: Props): JSX.Element => (
     <InternalResponsiveLayout {...props} shouldExpandWhenNested>
         {children}
     </InternalResponsiveLayout>
 );
 
-export const ResetResponsiveLayout: React.FC<{
+export const ResetResponsiveLayout = ({
+    children,
+    skipMobile = false,
+    skipDesktop = false,
+}: {
     children: React.ReactNode;
     skipMobile?: boolean;
     skipDesktop?: boolean;
-}> = ({children, skipMobile = false, skipDesktop = false}) => {
+}): JSX.Element => {
     return (
         <div
             className={classnames({

@@ -3,6 +3,7 @@ import * as React from 'react';
 import {useFieldProps} from './form-context';
 import {useTheme} from './hooks';
 import {TextFieldBaseAutosuggest} from './text-field-base';
+import * as tokens from './text-tokens';
 
 import type {CommonFormFieldProps} from './text-field-base';
 
@@ -45,7 +46,7 @@ export interface IntegerFieldProps extends CommonFormFieldProps {
     onChangeValue?: (value: string, rawValue: string) => void;
 }
 
-const IntegerField: React.FC<IntegerFieldProps> = ({
+const IntegerField = ({
     disabled,
     error,
     helperText,
@@ -59,12 +60,12 @@ const IntegerField: React.FC<IntegerFieldProps> = ({
     defaultValue,
     dataAttributes,
     ...rest
-}) => {
-    const {texts} = useTheme();
+}: IntegerFieldProps): JSX.Element => {
+    const {texts, t} = useTheme();
 
     const validate = (value: string | undefined, rawValue: string) => {
         if (!value) {
-            return optional ? '' : texts.formFieldErrorIsMandatory;
+            return optional ? '' : texts.formFieldErrorIsMandatory || t(tokens.formFieldErrorIsMandatory);
         }
         return validateProp?.(value, rawValue);
     };

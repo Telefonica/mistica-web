@@ -2,10 +2,11 @@
 import * as React from 'react';
 import {getPlatform} from './utils/platform';
 import FadeIn from './fade-in';
-import {useAriaId, useTheme} from './hooks';
+import {useTheme} from './hooks';
 import * as styles from './spinner.css';
 import {vars} from './skins/skin-contract.css';
-import {useIsInverseVariant} from './theme-variant-context';
+import {useIsInverseOrMediaVariant} from './theme-variant-context';
+import * as tokens from './text-tokens';
 
 type Props = {
     color?: string;
@@ -16,13 +17,13 @@ type Props = {
     children?: void;
 };
 
-const Spinner: React.FC<Props> = ({color, delay = '500ms', size = 24, style, rolePresentation}) => {
-    const {texts, platformOverrides} = useTheme();
-    const isInverse = useIsInverseVariant();
+const Spinner = ({color, delay = '500ms', size = 24, style, rolePresentation}: Props): JSX.Element => {
+    const {texts, platformOverrides, t} = useTheme();
+    const isInverse = useIsInverseOrMediaVariant();
     color = color || (isInverse ? vars.colors.controlActivatedInverse : vars.colors.controlActivated);
-    const spinnerId = useAriaId();
+    const spinnerId = React.useId();
     const withTitle = !rolePresentation;
-    const title = texts.loading;
+    const title = texts.loading || t(tokens.loading);
     const content =
         getPlatform(platformOverrides) === 'ios' ? (
             <svg

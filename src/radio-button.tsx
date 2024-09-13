@@ -6,7 +6,7 @@ import {combineRefs} from './utils/common';
 import {Text3} from './text';
 import Inline from './inline';
 import classnames from 'classnames';
-import {useAriaId, useTheme} from './hooks';
+import {useTheme} from './hooks';
 import {getPrefixedDataAttributes} from './utils/dom';
 import * as styles from './radio-button.css';
 
@@ -55,16 +55,17 @@ type PropsChildren = {
     'aria-labelledby'?: string;
 };
 
-const RadioButton: React.FC<PropsRender | PropsChildren> = ({
+const RadioButton = ({
     value,
     id,
     dataAttributes,
     'aria-labelledby': ariaLabelledby,
     'aria-label': ariaLabel,
     ...rest
-}) => {
+}: PropsRender | PropsChildren): JSX.Element => {
     const {disabled, selectedValue, focusableValue, select, selectNext, selectPrev} = useRadioContext();
-    const labelId = useAriaId(ariaLabelledby);
+    const reactId = React.useId();
+    const labelId = ariaLabelledby || reactId;
     const ref = React.useRef<HTMLDivElement>(null);
     const checked = value === selectedValue;
     const tabIndex = focusableValue === value ? 0 : -1;
@@ -152,6 +153,7 @@ const RadioButton: React.FC<PropsRender | PropsChildren> = ({
 type RadioGroupProps = {
     name: string;
     disabled?: boolean;
+    'aria-label'?: string;
     'aria-labelledby'?: string;
     children: React.ReactNode;
     value?: string;
@@ -160,7 +162,7 @@ type RadioGroupProps = {
     dataAttributes?: DataAttributes;
 };
 
-export const RadioGroup: React.FC<RadioGroupProps> = (props) => {
+export const RadioGroup = (props: RadioGroupProps): JSX.Element => {
     const {
         value: valueContext,
         defaultValue,
@@ -252,7 +254,8 @@ export const RadioGroup: React.FC<RadioGroupProps> = (props) => {
         <div
             ref={combineRefs(ref, focusableRef)}
             role="radiogroup"
-            aria-labelledby={props['aria-labelledby']}
+            aria-label={props['aria-label']}
+            aria-labelledby={props['aria-label'] ? undefined : props['aria-labelledby']}
             {...getPrefixedDataAttributes(props.dataAttributes, 'RadioGroup')}
         >
             <RadioContext.Provider

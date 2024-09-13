@@ -9,6 +9,7 @@ import {
     ValueBlock,
 } from '../blocks';
 import imgExample from '../../__stories__/images/avatar.jpg';
+import {vars} from '../../skins/skin-contract.css';
 
 import type {TagType} from '../..';
 
@@ -146,8 +147,10 @@ export const BlockHighlightedValue: StoryComponent<HighlightedValueBlockArgs> = 
                     headline={<Tag type={headlineType}>{headline}</Tag>}
                     title={title}
                     description={description}
-                    mainHeading={{value, text}}
-                    secondaryValue={secondaryValue}
+                    headings={[
+                        {value, text},
+                        {value: secondaryValue, valueColor: vars.colors.textSecondary},
+                    ]}
                 />
             </Box>
         </ResponsiveLayout>

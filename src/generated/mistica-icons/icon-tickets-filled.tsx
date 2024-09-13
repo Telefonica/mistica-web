@@ -7,13 +7,13 @@
 
 import * as React from 'react';
 import {useTheme} from '../../hooks';
-import {useIsInverseVariant} from '../../theme-variant-context';
+import {useIsInverseOrMediaVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
 
 import type {IconProps} from '../../utils/types';
 
 const IconTicketsFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
-    const isInverse = useIsInverseVariant();
+    const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
     if (skinName.match(/^vivo-new/i)) {
@@ -56,7 +56,7 @@ const IconTicketsFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element 
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
-                    d="M17.693 2.155h2.238c1.05 0 1.905.852 1.905 1.9v14.249c0 1.047-.854 1.899-1.905 1.899h-2.254a1.01 1.01 0 0 1-.99-.816.9.9 0 0 0-.882-.722.9.9 0 0 0-.882.723 1.01 1.01 0 0 1-.989.815h-.82a.9.9 0 0 1-.373.434l-1.754.983a1.7 1.7 0 0 1-.848.221q-.237.001-.474-.064a1.73 1.73 0 0 1-1.047-.82L2.38 9.891a1.735 1.735 0 0 1 .663-2.364l1.737-.972a.944.944 0 0 1 1.213.249.757.757 0 0 0 1.305-.731.933.933 0 0 1 .418-1.163l1.736-.972c.11-.061.23-.098.35-.134a1.9 1.9 0 0 1 1.88-1.647h2.238c.504 0 .925.364.997.865a.906.906 0 0 0 .891.768c.445 0 .83-.33.894-.768a.993.993 0 0 1 .991-.868M5.43 10.603l4.373 7.521-.006-9.933zm6.448-4.386v9.972c0 .23.185.414.415.414h7.143c.23 0 .414-.185.414-.414V6.214a.414.414 0 0 0-.414-.415h-7.143v.003a.414.414 0 0 0-.415.415"
+                    d="M17.694 2.155h2.238c1.05 0 1.904.852 1.904 1.9v14.249c0 1.047-.854 1.899-1.904 1.899h-2.255a1.01 1.01 0 0 1-.99-.816.9.9 0 0 0-.881-.722.9.9 0 0 0-.883.723 1.01 1.01 0 0 1-.989.815h-.82a.9.9 0 0 1-.373.434l-1.753.983a1.7 1.7 0 0 1-.85.221q-.236.001-.472-.064a1.73 1.73 0 0 1-1.048-.82L2.38 9.891a1.735 1.735 0 0 1 .664-2.364l1.736-.972a.944.944 0 0 1 1.213.249.757.757 0 0 0 1.305-.731.933.933 0 0 1 .418-1.163l1.737-.972c.109-.061.23-.098.35-.134a1.9 1.9 0 0 1 1.88-1.647h2.237c.505 0 .925.364.998.865a.906.906 0 0 0 .89.768c.446 0 .83-.33.894-.768a.993.993 0 0 1 .991-.868M5.43 10.603l4.373 7.521-.006-9.933zm6.448-4.386v9.972c0 .23.185.414.415.414h7.143c.23 0 .414-.185.414-.414V6.214a.414.414 0 0 0-.414-.415h-7.143v.003a.414.414 0 0 0-.415.415"
                 />
             </svg>
         );

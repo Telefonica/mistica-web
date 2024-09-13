@@ -13,8 +13,7 @@ import {Text3, Text2, Text1} from './text';
 import Box from './box';
 import Stack from './stack';
 import Badge from './badge';
-import {useAriaId} from './hooks';
-import {useIsInverseVariant} from './theme-variant-context';
+import {useIsInverseOrMediaVariant} from './theme-variant-context';
 import IconChevron from './icons/icon-chevron';
 import Switch from './switch-component';
 import RadioButton, {useRadioContext} from './radio-button';
@@ -80,7 +79,7 @@ interface ContentProps extends CommonProps {
     labelId?: string;
 }
 
-export const Content: React.FC<ContentProps> = ({
+export const Content = ({
     withChevron,
     headline,
     headlineRef,
@@ -102,8 +101,8 @@ export const Content: React.FC<ContentProps> = ({
     labelId,
     disabled,
     control,
-}) => {
-    const isInverse = useIsInverseVariant();
+}: ContentProps): JSX.Element => {
+    const isInverse = useIsInverseOrMediaVariant();
     const numTextLines = [headline, title, subtitle, description, extra].filter(Boolean).length;
     const centerY = numTextLines === 1;
 
@@ -341,8 +340,8 @@ const hasControlProps = (
 };
 
 const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, ref) => {
-    const titleId = useAriaId();
-    const isInverse = useIsInverseVariant();
+    const titleId = React.useId();
+    const isInverse = useIsInverseOrMediaVariant();
     const {
         asset,
         headline,
@@ -645,12 +644,12 @@ type RowListProps = {
     dataAttributes?: DataAttributes;
 };
 
-export const RowList: React.FC<RowListProps> = ({
+export const RowList = ({
     children,
     ariaLabelledby,
     role = 'list',
     dataAttributes,
-}) => {
+}: RowListProps): JSX.Element => {
     const childrenContent = React.Children.toArray(children).filter(Boolean);
     const lastIndex = childrenContent.length - 1;
     return (
@@ -717,12 +716,12 @@ type BoxedRowListProps = {
     dataAttributes?: DataAttributes;
 };
 
-export const BoxedRowList: React.FC<BoxedRowListProps> = ({
+export const BoxedRowList = ({
     children,
     ariaLabelledby,
     role = 'list',
     dataAttributes,
-}) => (
+}: BoxedRowListProps): JSX.Element => (
     <Stack
         space={16}
         role={role}

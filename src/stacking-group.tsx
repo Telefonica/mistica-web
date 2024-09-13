@@ -1,6 +1,6 @@
 'use client';
 import * as React from 'react';
-import {useIsInverseVariant} from './theme-variant-context';
+import {useIsInverseOrMediaVariant} from './theme-variant-context';
 import {vars} from './skins/skin-contract.css';
 import Inline from './inline';
 import {Text4} from './text';
@@ -18,8 +18,13 @@ type Props = {
     children: React.ReactNode;
 };
 
-const StackingGroup: React.FC<Props> = ({moreItemsStyle, stacked = true, maxItems = Infinity, children}) => {
-    const isInverse = useIsInverseVariant();
+const StackingGroup = ({
+    moreItemsStyle,
+    stacked = true,
+    maxItems = Infinity,
+    children,
+}: Props): JSX.Element => {
+    const isInverse = useIsInverseOrMediaVariant();
     const countChildren = React.Children.count(children);
     const moreItemsCount = countChildren - maxItems + 1;
     const space = stacked ? -8 : 8;

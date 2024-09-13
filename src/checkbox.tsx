@@ -4,7 +4,7 @@ import {SPACE} from './utils/keys';
 import {useControlProps} from './form-context';
 import Inline from './inline';
 import {Text3} from './text';
-import {useAriaId, useTheme} from './hooks';
+import {useTheme} from './hooks';
 import classnames from 'classnames';
 import {getPrefixedDataAttributes} from './utils/dom';
 import * as styles from './checkbox.css';
@@ -13,7 +13,7 @@ import {combineRefs} from './utils/common';
 
 import type {DataAttributes} from './utils/types';
 
-const IconCheckbox: React.FC<{isChecked: boolean; disabled?: boolean}> = ({isChecked, disabled}) => {
+const IconCheckbox = ({isChecked, disabled}: {isChecked: boolean; disabled?: boolean}) => {
     const {isIos} = useTheme();
 
     const icon = isIos ? (
@@ -61,7 +61,7 @@ type RenderProps = {
         labelId: string;
         disabled: boolean;
         checked: boolean;
-    }) => React.ReactElement<any, any>; // Seems like this is the type returned by React.FC
+    }) => React.ReactElement;
     children?: undefined;
     disabled?: boolean;
     'aria-labelledby'?: string;
@@ -86,7 +86,8 @@ type ChildrenProps = {
 };
 
 const Checkbox = React.forwardRef<HTMLDivElement, RenderProps | ChildrenProps>((props, ref) => {
-    const labelId = useAriaId(props['aria-labelledby']);
+    const reactId = React.useId();
+    const labelId = props['aria-labelledby'] || reactId;
     const ariaLabel = props['aria-label'];
     const hasExternalLabel = ariaLabel || props['aria-labelledby'];
 

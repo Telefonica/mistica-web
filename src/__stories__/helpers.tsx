@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useAriaId, useIsInverseVariant, Select, TextField, Checkbox, skinVars} from '..';
+import {useIsInverseOrMediaVariant, Select, TextField, Checkbox, skinVars} from '..';
 import {isRunningAcceptanceTest} from '../utils/platform';
 
 type Props = {
@@ -7,8 +7,8 @@ type Props = {
     children: React.ReactNode;
 };
 
-export const StorySection: React.FC<Props> = ({title, children}) => {
-    const isInverse = useIsInverseVariant();
+export const StorySection = ({title, children}: Props): JSX.Element => {
+    const isInverse = useIsInverseOrMediaVariant();
     return (
         <div style={{marginBottom: 32}}>
             <h1
@@ -104,7 +104,7 @@ export const useCheckbox = (
     defaultValue = false
 ): [boolean, React.ReactElement<any, typeof Checkbox>] => {
     const [isEnabled, setIsEnabled] = React.useState(defaultValue);
-    const id = useAriaId();
+    const id = React.useId();
     const checkbox = (
         <Checkbox name={'checkbox-' + id} checked={isEnabled} onChange={setIsEnabled}>
             {label}
@@ -131,10 +131,10 @@ export const useSelect = (
     values: Array<string>
 ): [string, React.ReactNode] => {
     const [value, setValue] = React.useState(defaultValue);
-    const ariaId = useAriaId();
+    const id = React.useId();
     const select = (
         <Select
-            name={ariaId}
+            name={id}
             value={value}
             onChangeValue={setValue}
             label={label}

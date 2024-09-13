@@ -2,7 +2,7 @@
 import * as React from 'react';
 import classnames from 'classnames';
 import {useForm} from './form-context';
-import {useAriaId, useTheme} from './hooks';
+import {useTheme} from './hooks';
 import {DOWN, ENTER, ESC, SPACE, TAB, UP} from './utils/keys';
 import {FieldContainer, HelperText, Label} from './text-field-components';
 import ChevronDownRegular from './generated/mistica-icons/icon-chevron-down-regular';
@@ -40,7 +40,7 @@ export type SelectProps = {
     children?: void;
 };
 
-const Select: React.FC<SelectProps> = ({
+const Select = ({
     id,
     label,
     helperText: helperTextProp,
@@ -56,7 +56,7 @@ const Select: React.FC<SelectProps> = ({
     onBlur,
     autoFocus = false,
     native,
-}) => {
+}: SelectProps): JSX.Element => {
     const inputRef = React.useRef<HTMLSelectElement | HTMLInputElement>(null);
     const focusableRef = React.useRef<HTMLSelectElement | HTMLDivElement>(null);
     const fieldRef = React.useRef<HTMLDivElement>(null);
@@ -76,7 +76,8 @@ const Select: React.FC<SelectProps> = ({
     }>({});
     const [tentativeValueState, setTentativeValueState] = React.useState<string>();
     const lastElementSelectionScrollTop = React.useRef<number>(null);
-    const inputId = useAriaId(id);
+    const reactId = React.useId();
+    const inputId = id || reactId;
     const {
         rawValues,
         setRawValue,

@@ -6,7 +6,7 @@ import {getPrefixedDataAttributes} from './utils/dom';
 import {Text1} from './text';
 import {useTheme} from './hooks';
 import {vars} from './skins/skin-contract.css';
-import {useIsInverseVariant} from './theme-variant-context';
+import {useIsInverseOrMediaVariant} from './theme-variant-context';
 
 import type {DataAttributes} from './utils/types';
 
@@ -26,8 +26,8 @@ type Props = {
  *   <IconButton aria-label="Shopping Cart with 2 items" Icon={IconShoppingCartFilled}/>
  * </Badge>
  */
-const Badge: React.FC<Props> = ({children, value, right, top, dataAttributes}) => {
-    const isInverse = useIsInverseVariant();
+const Badge = ({children, value, right, top, dataAttributes}: Props): JSX.Element | null => {
+    const isInverse = useIsInverseOrMediaVariant();
     const {textPresets} = useTheme();
     if (children && value === 0) {
         return <>{children}</>;

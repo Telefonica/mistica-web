@@ -11,7 +11,7 @@ import {SPACE} from './utils/keys';
 import {useControlProps} from './form-context';
 import {Text3} from './text';
 import Inline from './inline';
-import {useAriaId, useTheme} from './hooks';
+import {useTheme} from './hooks';
 import {getPrefixedDataAttributes} from './utils/dom';
 import * as styles from './switch-component.css';
 
@@ -50,9 +50,10 @@ type PropsChildren = {
     dataAttributes?: DataAttributes;
 };
 
-const Switch: React.FC<PropsRender | PropsChildren> = (props) => {
+const Switch = (props: PropsRender | PropsChildren): JSX.Element => {
     const {isIos, isDarkMode} = useTheme();
-    const labelId = useAriaId(props['aria-labelledby']);
+    const reactId = React.useId();
+    const labelId = props['aria-labelledby'] || reactId;
     const {defaultValue, value, onChange, focusableRef, disabled} = useControlProps({
         name: props.name,
         value: props.checked,

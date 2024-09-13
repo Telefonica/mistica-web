@@ -54,12 +54,12 @@ interface RowBlockWithStackingGroup extends RowBlockBaseProps {
 
 type RowBlockProps = ExclusifyUnion<RowBlockWithDescription | RowBlockWithStackingGroup>;
 
-export const RowBlock: React.FC<RowBlockProps> = ({
+export const RowBlock = ({
     title,
     stackingGroup,
     description,
     'aria-label': ariaLabel,
-}) => {
+}: RowBlockProps): JSX.Element => {
     return (
         <div aria-label={ariaLabel}>
             <Inline space="between" alignItems="center">
@@ -86,7 +86,7 @@ interface SimpleBlockProps {
     'aria-label'?: string;
 }
 
-export const SimpleBlock: React.FC<SimpleBlockProps> = ({image, description, 'aria-label': ariaLabel}) => {
+export const SimpleBlock = ({image, description, 'aria-label': ariaLabel}: SimpleBlockProps): JSX.Element => {
     return (
         <div aria-label={ariaLabel}>
             <Inline space={16} alignItems="center">
@@ -114,14 +114,14 @@ interface InformationBlockProps {
     'aria-label'?: string;
 }
 
-export const InformationBlock: React.FC<InformationBlockProps> = ({
+export const InformationBlock = ({
     title,
     description,
     secondaryValue,
     value,
     valueColor = vars.colors.textPrimary,
     'aria-label': ariaLabel,
-}) => {
+}: InformationBlockProps): JSX.Element => {
     return (
         <Inline space="between" alignItems="flex-end" aria-label={ariaLabel}>
             <BlockContent title={title} description={description} />
@@ -143,49 +143,26 @@ interface Heading {
 
 interface HighlightedValueBlockProps {
     headline?: RendersNullableElement<typeof Tag>;
-
     headings?: ReadonlyArray<Heading>;
-
-    /** @deprecated Use headings instead */
-    mainHeading?: {
-        value: string;
-        text: string;
-    };
-
-    /** @deprecated Use headings instead */
-    secondHeading?: {
-        value: string;
-        text: string;
-    };
-
-    /** @deprecated Use headings instead */
-    secondaryValue?: string;
-
     title?: string;
     description?: ReadonlyArray<string> | string;
-    /** @deprecated Use headings instead */
-    valueColor?: string;
     'aria-label'?: string;
 }
 
-export const HighlightedValueBlock: React.FC<HighlightedValueBlockProps> = ({
+export const HighlightedValueBlock = ({
     headline,
     headings,
-    mainHeading,
-    secondHeading,
-    secondaryValue,
     title,
     description,
-    valueColor = vars.colors.textPrimary,
     'aria-label': ariaLabel,
-}) => {
+}: HighlightedValueBlockProps): JSX.Element => {
     return (
         <div aria-label={ariaLabel}>
             {headline && <Box paddingBottom={24}>{headline}</Box>}
 
-            <Stack space={2}>
-                {headings &&
-                    headings.map((heading, index) => (
+            {headings && (
+                <Stack space={2}>
+                    {headings.map((heading, index) => (
                         <Inline key={index} space={8} alignItems="baseline">
                             <Text8 color={heading.valueColor ?? vars.colors.textPrimary}>
                                 {heading.value}
@@ -195,24 +172,8 @@ export const HighlightedValueBlock: React.FC<HighlightedValueBlockProps> = ({
                             </Text2>
                         </Inline>
                     ))}
-                {mainHeading && (
-                    <Inline space={8} alignItems="baseline">
-                        <Text8 color={valueColor}>{mainHeading.value}</Text8>
-                        <Text2 regular color={vars.colors.textSecondary}>
-                            {mainHeading.text}
-                        </Text2>
-                    </Inline>
-                )}
-                {secondHeading && (
-                    <Inline space={8} alignItems="baseline">
-                        <Text8 color={valueColor}>{secondHeading.value}</Text8>
-                        <Text2 regular color={vars.colors.textSecondary}>
-                            {secondHeading.text}
-                        </Text2>
-                    </Inline>
-                )}
-                {secondaryValue && <Text8 color={vars.colors.textSecondary}>{secondaryValue}</Text8>}
-            </Stack>
+                </Stack>
+            )}
             {title || description ? (
                 <Box paddingTop={8}>
                     <BlockContent title={title} description={description} />
@@ -230,13 +191,13 @@ interface ValueBlockProps {
     'aria-label'?: string;
 }
 
-export const ValueBlock: React.FC<ValueBlockProps> = ({
+export const ValueBlock = ({
     title,
     value,
     description,
     valueColor = vars.colors.textPrimary,
     'aria-label': ariaLabel,
-}) => {
+}: ValueBlockProps): JSX.Element => {
     return (
         <div aria-label={ariaLabel} className={styles.column}>
             <Text2 regular color={vars.colors.textPrimary}>
@@ -265,7 +226,7 @@ interface ProgressBlockProps {
     'aria-label'?: string;
 }
 
-export const ProgressBlock: React.FC<ProgressBlockProps> = ({
+export const ProgressBlock = ({
     title,
     stackingGroup,
     progressPercent,
@@ -273,7 +234,7 @@ export const ProgressBlock: React.FC<ProgressBlockProps> = ({
     heading,
     description,
     'aria-label': ariaLabel,
-}) => {
+}: ProgressBlockProps): JSX.Element => {
     return (
         <div aria-label={ariaLabel}>
             <Stack space={8}>

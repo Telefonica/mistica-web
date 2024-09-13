@@ -8,7 +8,7 @@ import * as React from 'react';
 import {Text1} from './text';
 import {getPrefixedDataAttributes} from './utils/dom';
 import TextLink from './text-link';
-import {useIsInverseVariant} from './theme-variant-context';
+import {useIsInverseOrMediaVariant} from './theme-variant-context';
 import * as styles from './navigation-breadcrumbs.css';
 import {vars} from './skins/skin-contract.css';
 
@@ -28,13 +28,13 @@ export type NavigationBreadcrumbsProps = {
     'aria-label'?: string;
 };
 
-const NavigationBreadcrumbs: React.FC<NavigationBreadcrumbsProps> = ({
+const NavigationBreadcrumbs = ({
     title,
     breadcrumbs,
     dataAttributes,
     'aria-label': ariaLabel = 'Breadcrumb',
-}) => {
-    const isInverse = useIsInverseVariant();
+}: NavigationBreadcrumbsProps): JSX.Element => {
+    const isInverse = useIsInverseOrMediaVariant();
     return (
         <nav aria-label={ariaLabel} {...getPrefixedDataAttributes(dataAttributes, 'NavigationBreadcrumbs')}>
             <ol className={styles.list}>

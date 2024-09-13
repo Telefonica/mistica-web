@@ -29,7 +29,7 @@ export const CoverHeroMedia = ({
             {backgroundImage && <Image width="100%" height="100%" src={backgroundImage} />}
             {backgroundVideo && video}
             <div className={styles.mediaOverlay} />
-            {videoAction && <CardActionsGroup actions={[videoAction]} type="media" />}
+            {videoAction && <CardActionsGroup actions={[videoAction]} variant="media" />}
         </div>
     );
 };

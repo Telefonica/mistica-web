@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Stack, Title2, Text3, Tooltip, Placeholder, IconShopRegular} from '..';
+import {Stack, Text3, Tooltip, Placeholder, IconShopRegular, Title3} from '..';
 
 export default {
     title: 'Private/Tooltip',
@@ -9,7 +9,7 @@ export const InsideFixedContainer: StoryComponent = () => {
     return (
         <Stack space={16}>
             <Stack space={8}>
-                <Title2>Tooltip inside a fixed container with overflow hidden</Title2>
+                <Title3>Tooltip inside a fixed container with overflow hidden</Title3>
                 <Text3 regular as="p">
                     If the container has fixed position and overflow hidden, the tooltip should be visible and
                     appear next to the target.
@@ -66,7 +66,7 @@ export const MovingTarget: StoryComponent = () => {
     return (
         <Stack space={16}>
             <Stack space={8}>
-                <Title2>Tooltip with moving target</Title2>
+                <Title3>Tooltip with moving target</Title3>
                 <Text3 regular as="p">
                     The tooltip should follow the target position while it's open. Try focusing the target
                     with the keyboard to keep it open.
@@ -110,7 +110,7 @@ export const MultipleTooltips: StoryComponent = () => {
     return (
         <Stack space={16}>
             <Stack space={8}>
-                <Title2>Interaction between multiple tooltips</Title2>
+                <Title3>Interaction between multiple tooltips</Title3>
                 <Text3 regular as="p">
                     There will always be at most one active tooltip. Try opening different tooltips with mouse
                     hover and keyboard focus.

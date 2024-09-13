@@ -25,15 +25,7 @@ type InputProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'value' | 'o
 
 const isValidPrefix = (prefix: string): boolean => !!prefix.match(/^\+\d+$/);
 
-const PhoneInput: React.FC<InputProps> = ({
-    inputRef,
-    value,
-    defaultValue,
-    onChange,
-    prefix,
-    e164,
-    ...other
-}) => {
+const PhoneInput = ({inputRef, value, defaultValue, onChange, prefix, e164, ...other}: InputProps) => {
     const [selfValue, setSelfValue] = React.useState(defaultValue ?? '');
     const ref = React.useRef<HTMLInputElement | null>(null);
     const {i18n} = useTheme();
@@ -106,7 +98,7 @@ export interface PhoneNumberFieldProps extends CommonFormFieldProps {
     e164?: boolean;
 }
 
-const PhoneNumberField: React.FC<PhoneNumberFieldProps> = ({
+const PhoneNumberField = ({
     disabled,
     error,
     helperText,
@@ -121,7 +113,7 @@ const PhoneNumberField: React.FC<PhoneNumberFieldProps> = ({
     e164,
     dataAttributes,
     ...rest
-}) => {
+}: PhoneNumberFieldProps): JSX.Element => {
     const {i18n} = useTheme();
 
     const processValue = (value: string) => {

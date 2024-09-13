@@ -1,13 +1,14 @@
 'use client';
 import * as React from 'react';
 import classnames from 'classnames';
-import {useIsInverseVariant} from './theme-variant-context';
+import {useIsInverseOrMediaVariant} from './theme-variant-context';
 import {useTheme} from './hooks';
 import {Text1} from './text';
 import * as styles from './text-field-components.css';
 import {sprinkles} from './sprinkles.css';
 import {vars} from './skins/skin-contract.css';
 import {getPrefixedDataAttributes} from './utils/dom';
+import * as tokens from './text-tokens';
 
 import type {DataAttributes} from './utils/types';
 
@@ -23,7 +24,7 @@ type LabelProps = {
     optional?: boolean;
 };
 
-export const Label: React.FC<LabelProps> = ({
+export const Label = ({
     shrinkLabel,
     forId,
     inputState,
@@ -31,10 +32,10 @@ export const Label: React.FC<LabelProps> = ({
     children,
     style,
     optional,
-}) => {
+}: LabelProps): JSX.Element => {
     const isShrinked = shrinkLabel || inputState === 'focused' || inputState === 'filled';
     const [transitionStyle, setTransitionStyle] = React.useState('initial');
-    const {texts} = useTheme();
+    const {texts, t} = useTheme();
 
     // This way we prevent animation when field is filled as initial state
     React.useEffect(() => {
@@ -63,7 +64,12 @@ export const Label: React.FC<LabelProps> = ({
             style={{...style, transition: transitionStyle}}
         >
             <span className={styles.labelText}>{children}</span>
-            {optional ? <span>&nbsp;({texts.formFieldOptionalLabelSuffix})</span> : null}
+            {optional ? (
+                <span>
+                    &nbsp;(
+                    {texts.formFieldOptionalLabelSuffix || t(tokens.formFieldOptionalLabelSuffix)})
+                </span>
+            ) : null}
         </label>
     );
 };
@@ -76,8 +82,8 @@ type HelperTextProps = {
     children?: void;
 };
 
-export const HelperText: React.FC<HelperTextProps> = ({leftText, rightText, error, id}) => {
-    const isInverse = useIsInverseVariant();
+export const HelperText = ({leftText, rightText, error, id}: HelperTextProps): JSX.Element => {
+    const isInverse = useIsInverseOrMediaVariant();
     const leftColor = isInverse
         ? vars.colors.textPrimaryInverse
         : error
@@ -117,7 +123,7 @@ type FieldContainerProps = {
     dataAttributes?: DataAttributes;
 };
 
-export const FieldContainer: React.FC<FieldContainerProps> = ({
+export const FieldContainer = ({
     multiline,
     disabled,
     children,
@@ -127,7 +133,7 @@ export const FieldContainer: React.FC<FieldContainerProps> = ({
     fullWidth,
     readOnly,
     dataAttributes,
-}) => {
+}: FieldContainerProps): JSX.Element => {
     return (
         // eslint-disable-next-line jsx-a11y/no-static-element-interactions
         <div

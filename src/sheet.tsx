@@ -3,7 +3,7 @@ import classnames from 'classnames';
 import * as React from 'react';
 import * as styles from './sheet.css';
 import FocusTrap from './focus-trap';
-import {useAriaId, useDisableBodyScroll, useIsInViewport, useScreenSize, useTheme} from './hooks';
+import {useDisableBodyScroll, useIsInViewport, useScreenSize, useTheme} from './hooks';
 import {useSetModalStateEffect} from './modal-context-provider';
 import {Portal} from './portal';
 import {Text2, Text3, Text5} from './text';
@@ -25,6 +25,7 @@ import ButtonLayout from './button-layout';
 import Image from './image';
 import {safeAreaInsetBottom} from './utils/css';
 import {MOBILE_SIDE_MARGIN, SMALL_DESKTOP_SIDE_MARGIN, TABLET_SIDE_MARGIN} from './responsive-layout.css';
+import * as tokens from './text-tokens';
 
 import type {ExclusifyUnion} from './utils/utility-types';
 import type {DataAttributes, IconProps, RendersNullableElement, TrackingEvent} from './utils/types';
@@ -166,10 +167,10 @@ type SheetProps = {
 };
 
 const Sheet = React.forwardRef<HTMLDivElement, SheetProps>(({onClose, children, dataAttributes}, ref) => {
-    const {texts} = useTheme();
+    const {texts, t} = useTheme();
     const [modalState, dispatch] = React.useReducer(modalReducer, 'closed');
     const initRef = React.useRef(false);
-    const modalTitleId = useAriaId();
+    const modalTitleId = React.useId();
 
     const handleTransitionEnd = React.useCallback((ev: React.AnimationEvent | React.TransitionEvent) => {
         // Don't trigger transitionEnd if the event is not triggered by the sheet element.
@@ -258,7 +259,7 @@ const Sheet = React.forwardRef<HTMLDivElement, SheetProps>(({onClose, children, 
                                 <div className={styles.modalCloseButton}>
                                     <InternalIconButton
                                         onPress={closeModal}
-                                        aria-label={texts.modalClose || texts.closeButtonLabel}
+                                        aria-label={texts.modalClose || t(tokens.modalClose)}
                                         Icon={IconCloseRegular}
                                         bleedLeft
                                         bleedRight
@@ -416,7 +417,7 @@ export const RadioListSheet = React.forwardRef<HTMLDivElement, RadioListSheetPro
         const [selectedItemId, setSelectedItemId] = React.useState(selectedId);
         const hasSelectedRef = React.useRef(false);
         const {isDesktopOrBigger} = useScreenSize();
-        const {texts} = useTheme();
+        const {texts, t} = useTheme();
 
         return (
             <Sheet
@@ -435,12 +436,12 @@ export const RadioListSheet = React.forwardRef<HTMLDivElement, RadioListSheetPro
                                 <ButtonPrimary
                                     onPress={() => {
                                         if (hasSelectedRef.current) {
-                                            onSelect?.(selectedItemId ?? '');
+                                            onSelect?.(selectedItemId || '');
                                         }
                                         closeModal();
                                     }}
                                 >
-                                    {button?.text ?? texts.sheetConfirmButton}
+                                    {button?.text || texts.sheetConfirmButton || t(tokens.sheetConfirmButton)}
                                 </ButtonPrimary>
                             ) : undefined
                         }

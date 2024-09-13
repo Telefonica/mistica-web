@@ -19,12 +19,12 @@ type StepperProps = {
     dataAttributes?: DataAttributes;
 };
 
-const Stepper: React.FC<StepperProps> = ({
+const Stepper = ({
     steps,
     currentIndex,
     'aria-label': ariaLabel,
     dataAttributes,
-}: StepperProps) => {
+}: StepperProps): JSX.Element => {
     const {textPresets} = useTheme();
     const {isDesktopOrBigger} = useScreenSize();
     const {height, ref} = useElementDimensions();

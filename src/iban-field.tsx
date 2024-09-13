@@ -6,6 +6,7 @@ import {TextFieldBaseAutosuggest} from './text-field-base';
 import {createChangeEvent} from './utils/dom';
 import {combineRefs} from './utils/common';
 import {useTheme} from './hooks';
+import * as tokens from './text-tokens';
 
 import type {CommonFormFieldProps} from './text-field-base';
 
@@ -101,7 +102,7 @@ type Props = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'value' | 'onInpu
     onInput?: (event: React.FormEvent<HTMLInputElement>) => void;
 };
 
-const IbanInput: React.FC<Props> = ({inputRef, value, defaultValue, onChange, ...other}) => {
+const IbanInput = ({inputRef, value, defaultValue, onChange, ...other}: Props): JSX.Element => {
     const [selfValue, setSelfValue] = React.useState(defaultValue ?? '');
     const ref = React.useRef<HTMLInputElement | null>(null);
 
@@ -159,7 +160,7 @@ export interface IbanFieldProps extends CommonFormFieldProps {
     getSuggestions?: (value: string) => Array<string>;
 }
 
-const IbanField: React.FC<IbanFieldProps> = ({
+const IbanField = ({
     disabled,
     error,
     helperText,
@@ -173,15 +174,15 @@ const IbanField: React.FC<IbanFieldProps> = ({
     defaultValue,
     dataAttributes,
     ...rest
-}) => {
-    const {texts} = useTheme();
+}: IbanFieldProps): JSX.Element => {
+    const {texts, t} = useTheme();
 
     const validate = (value: string | undefined, rawValue: string) => {
         if (!value) {
-            return optional ? '' : texts.formFieldErrorIsMandatory;
+            return optional ? '' : texts.formFieldErrorIsMandatory || t(tokens.formFieldErrorIsMandatory);
         }
         if (!isValidIban(value)) {
-            return texts.formIbanError;
+            return texts.formIbanError || t(tokens.formIbanError);
         }
         return customValidate?.(value, rawValue);
     };

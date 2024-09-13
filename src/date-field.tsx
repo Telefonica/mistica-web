@@ -10,6 +10,7 @@ import {useTheme} from './hooks';
 import {isFirefox} from './utils/platform';
 import * as styles from './date-field.css';
 import {iconSize} from './icon-button.css';
+import * as tokens from './text-tokens';
 
 import type {CommonFormFieldProps} from './text-field-base';
 
@@ -23,7 +24,7 @@ const ReactDateTimePicker = React.lazy(
     () => import(/* webpackChunkName: "date-time-picker" */ './date-time-picker')
 );
 
-const DateField: React.FC<DateFieldProps> = ({
+const DateField = ({
     disabled,
     error,
     helperText,
@@ -39,7 +40,7 @@ const DateField: React.FC<DateFieldProps> = ({
     max,
     dataAttributes,
     ...rest
-}) => {
+}: DateFieldProps): JSX.Element => {
     const processValue = (value: string) => value;
     const hasNativePicker = React.useMemo(() => {
         if (isFirefox()) {
@@ -48,7 +49,7 @@ const DateField: React.FC<DateFieldProps> = ({
         }
         return isInputTypeSupported('date');
     }, []);
-    const {texts} = useTheme();
+    const {texts, t} = useTheme();
 
     const isInRange = (value: string): boolean => {
         if (min && value && value < getLocalDateString(min)) {
@@ -62,7 +63,7 @@ const DateField: React.FC<DateFieldProps> = ({
 
     const validate = (value: string, rawValue: string) => {
         if (!isInRange(value)) {
-            return texts.formDateOutOfRangeError;
+            return texts.formDateOutOfRangeError || t(tokens.formDateOutOfRangeError);
         }
         return validateProp?.(value, rawValue);
     };

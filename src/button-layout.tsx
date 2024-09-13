@@ -1,72 +1,72 @@
 'use client';
 import * as React from 'react';
-import {ButtonPrimary, ButtonSecondary, ButtonDanger} from './button';
 import classnames from 'classnames';
 import {getPrefixedDataAttributes} from './utils/dom';
 import * as styles from './button-layout.css';
+import * as buttonStyles from './button.css';
+import {useIsomorphicLayoutEffect} from './hooks';
 
+import type {ButtonPrimary, ButtonSecondary, ButtonDanger, ButtonLink} from './button';
 import type {DataAttributes, RendersNullableElement} from './utils/types';
-import type {NullableButtonElement, ButtonLink} from './button';
-
-type MaybeButtonElement = NullableButtonElement | void | false;
 
 type ButtonLayoutProps = {
-    /** @deprecated Use primaryButton and secondaryButton props */
-    children?: MaybeButtonElement | [MaybeButtonElement, MaybeButtonElement];
     align?: 'center' | 'left' | 'right' | 'full-width';
     primaryButton?: RendersNullableElement<typeof ButtonPrimary | typeof ButtonDanger>;
     secondaryButton?: RendersNullableElement<typeof ButtonSecondary>;
     link?: RendersNullableElement<typeof ButtonLink>;
-    /** @deprecated Use a wrapping Box if you need paddings */
-    withMargins?: boolean;
     dataAttributes?: DataAttributes;
 };
 
-const buttonsRange = [ButtonPrimary, ButtonDanger, ButtonSecondary];
-
-const ButtonLayout: React.FC<ButtonLayoutProps> = ({
-    children,
+const ButtonLayout = ({
     primaryButton,
     secondaryButton,
     align = 'full-width',
     link,
-    withMargins = false,
     dataAttributes,
-}) => {
-    const sortedButtons = React.Children.toArray(children as any).sort((b1: any, b2: any) => {
-        const range1 = buttonsRange.indexOf(b1.type);
-        const range2 = buttonsRange.indexOf(b2.type);
-        return align === 'right' ? range2 - range1 : range1 - range2;
-    });
+}: ButtonLayoutProps): JSX.Element => {
+    const linkContainerRef = React.useRef<HTMLDivElement>(null);
+    const [hasSmallLink, setHasSmallLink] = React.useState(false);
 
-    const numberOfButtons = children
-        ? sortedButtons.length
-        : (primaryButton ? 1 : 0) + (secondaryButton ? 1 : 0);
+    // In modern browsers we rely on CSS has() selector in order to add bleed to the ButtonLink.
+    // In old browsers, we use this effect as a polyfill (https://caniuse.com/css-has)
+    useIsomorphicLayoutEffect(() => {
+        if (linkContainerRef.current?.getElementsByClassName(buttonStyles.smallLink)?.length) {
+            setHasSmallLink(true);
+        }
+    }, []);
 
-    const buttons = children ? (
-        sortedButtons
-    ) : align === 'right' ? (
-        <>
-            {secondaryButton}
-            {primaryButton}
-        </>
-    ) : (
-        <>
-            {primaryButton}
-            {secondaryButton}
-        </>
-    );
+    const numberOfButtons = (primaryButton ? 1 : 0) + (secondaryButton ? 1 : 0);
+
+    const buttons =
+        align === 'right' ? (
+            <>
+                {secondaryButton}
+                {primaryButton}
+            </>
+        ) : (
+            <>
+                {primaryButton}
+                {secondaryButton}
+            </>
+        );
 
     const linkContainer = link ? (
         <div
-            className={classnames(numberOfButtons !== 1 ? styles.linkInNewLine : styles.link)}
+            ref={linkContainerRef}
+            className={classnames(
+                numberOfButtons !== 1
+                    ? hasSmallLink
+                        ? styles.smallLinkInNewLine[align]
+                        : styles.linkInNewLine[align]
+                    : styles.link
+            )}
             data-link="true"
         >
             {link}
         </div>
     ) : null;
 
-    const content = (
+    return (
         <div
             className={classnames(styles.container, styles.alignVariant[align], {
                 [styles.containerWithTwoButtons]: numberOfButtons > 1,
@@ -86,8 +86,6 @@ const ButtonLayout: React.FC<ButtonLayoutProps> = ({
             )}
         </div>
     );
-
-    return withMargins ? <div className={styles.margins}>{content}</div> : content;
 };
 
 export default ButtonLayout;

@@ -7,13 +7,13 @@
 
 import * as React from 'react';
 import {useTheme} from '../../hooks';
-import {useIsInverseVariant} from '../../theme-variant-context';
+import {useIsInverseOrMediaVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
 
 import type {IconProps} from '../../utils/types';
 
 const IconUserAccountFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
-    const isInverse = useIsInverseVariant();
+    const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
     if (skinName.match(/^o2-new/i)) {
@@ -39,7 +39,7 @@ const IconUserAccountFilled = ({color, size = 24, ...rest}: IconProps): JSX.Elem
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
-                    d="M8.391 10.797c.84.809 2.053 1.218 3.61 1.218 1.558 0 2.774-.409 3.614-1.219.877-.84 1.322-2.086 1.322-3.705s-.442-2.869-1.319-3.712c-.843-.812-2.059-1.224-3.616-1.224-1.558 0-2.77.412-3.61 1.224-.872.843-1.315 2.093-1.315 3.712s.443 2.865 1.314 3.706M3.81 21.847h16.386c.308 0 .56-.252.56-.56v-1.639c0-1.569-.49-2.905-1.42-3.871-1.008-1.05-2.51-1.605-4.336-1.605H8.991c-1.827 0-3.323.557-4.33 1.608-.925.963-1.413 2.3-1.413 3.868v1.639c0 .308.252.56.56.56"
+                    d="M8.39 10.797c.841.809 2.054 1.218 3.611 1.218s2.774-.409 3.614-1.219c.877-.84 1.322-2.086 1.322-3.705s-.443-2.869-1.32-3.712c-.842-.812-2.058-1.224-3.616-1.224-1.557 0-2.77.412-3.61 1.224-.871.843-1.314 2.093-1.314 3.712s.443 2.865 1.314 3.706m-4.582 11.05h16.387c.308 0 .56-.252.56-.56v-1.639c0-1.569-.49-2.905-1.42-3.871-1.009-1.05-2.51-1.605-4.336-1.605H8.99c-1.826 0-3.322.557-4.33 1.608-.925.963-1.412 2.3-1.412 3.868v1.639c0 .308.252.56.56.56"
                 />
             </svg>
         );

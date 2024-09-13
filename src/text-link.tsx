@@ -5,7 +5,7 @@ import * as React from 'react';
 import {BaseTouchable} from './touchable';
 import classnames from 'classnames';
 import {useTheme} from './hooks';
-import {useIsInverseVariant} from './theme-variant-context';
+import {useIsInverseOrMediaVariant} from './theme-variant-context';
 import {useForm} from './form-context';
 import {getTextFromChildren} from './utils/common';
 import {eventActions, eventCategories, eventNames, useTrackingConfig} from './utils/analytics';
@@ -31,15 +31,15 @@ interface CommonProps {
 
 export type TextLinkProps = AlwaysTouchableComponentProps & CommonProps;
 
-const TextLink: React.FC<TextLinkProps> = ({
+const TextLink = ({
     children,
     className = '',
     disabled,
     style,
     trackEvent,
     ...props
-}) => {
-    const isInverse = useIsInverseVariant();
+}: TextLinkProps): JSX.Element => {
+    const isInverse = useIsInverseOrMediaVariant();
     const {isDarkMode} = useTheme();
     const {formStatus} = useForm();
     const {eventFormat} = useTrackingConfig();

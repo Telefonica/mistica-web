@@ -43,23 +43,25 @@ type Props = {
     children: React.ReactNode;
     className?: string;
     role?: string;
+    'aria-label'?: string;
     'aria-labelledby'?: string;
     fullWidth?: boolean;
     dataAttributes?: DataAttributes;
     wrap?: boolean;
 };
 
-const Inline: React.FC<Props> = ({
+const Inline = ({
     space,
     className,
     children,
     role,
     alignItems = 'stretch',
+    'aria-label': ariaLabel,
     'aria-labelledby': ariaLabelledBy,
     fullWidth,
     wrap,
     dataAttributes,
-}) => {
+}: Props): JSX.Element => {
     const {platformOverrides} = useTheme();
     const isStringSpace = typeof space === 'string';
 
@@ -74,7 +76,8 @@ const Inline: React.FC<Props> = ({
             )}
             style={applyCssVars(calcInlineVars(space))}
             role={role}
-            aria-labelledby={ariaLabelledBy}
+            aria-label={ariaLabel}
+            aria-labelledby={ariaLabel ? undefined : ariaLabelledBy}
             {...getPrefixedDataAttributes(dataAttributes, 'Inline')}
         >
             {React.Children.map(children, (child) =>

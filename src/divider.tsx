@@ -1,10 +1,10 @@
 'use client';
 import * as React from 'react';
-import {useIsInverseVariant} from './theme-variant-context';
+import {useIsInverseOrMediaVariant} from './theme-variant-context';
 import * as styles from './divider.css';
 
-const Divider: React.FC<{children?: void}> = () => {
-    const isInverse = useIsInverseVariant();
+const Divider = (): JSX.Element => {
+    const isInverse = useIsInverseOrMediaVariant();
     return <div className={styles.variants[isInverse ? 'inverse' : 'default']} />;
 };
 

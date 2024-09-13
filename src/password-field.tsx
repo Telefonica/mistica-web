@@ -5,6 +5,7 @@ import {FieldEndIcon, TextFieldBaseAutosuggest} from './text-field-base';
 import {useTheme} from './hooks';
 import IconEyeOffRegular from './generated/mistica-icons/icon-eye-off-regular';
 import IconEyeRegular from './generated/mistica-icons/icon-eye-regular';
+import * as tokens from './text-tokens';
 
 import type {CommonFormFieldProps} from './text-field-base';
 
@@ -12,16 +13,26 @@ export interface PasswordFieldProps extends CommonFormFieldProps {
     onChangeValue?: (value: string, rawValue: string) => void;
 }
 
-const PasswordAdornment: React.FC<{
+const PasswordAdornment = ({
+    isVisible,
+    setVisibility,
+    focus,
+}: {
     isVisible: boolean;
     setVisibility: (isVisible: boolean) => void;
     focus: () => void;
-}> = ({isVisible, setVisibility, focus}) => {
-    const {texts} = useTheme();
+}) => {
+    const {texts, t} = useTheme();
     return (
         <FieldEndIcon
-            checkedProps={{Icon: IconEyeOffRegular, 'aria-label': texts.disablePasswordVisibility}}
-            uncheckedProps={{Icon: IconEyeRegular, 'aria-label': texts.enablePasswordVisibility}}
+            checkedProps={{
+                Icon: IconEyeOffRegular,
+                'aria-label': texts.disablePasswordVisibility || t(tokens.disablePasswordVisibility),
+            }}
+            uncheckedProps={{
+                Icon: IconEyeRegular,
+                'aria-label': texts.enablePasswordVisibility || t(tokens.enablePasswordVisibility),
+            }}
             checked={isVisible}
             onChange={(visible) => {
                 setVisibility(visible);
@@ -31,7 +42,7 @@ const PasswordAdornment: React.FC<{
     );
 };
 
-const PasswordField: React.FC<PasswordFieldProps> = ({
+const PasswordField = ({
     disabled,
     error,
     helperText,
@@ -46,7 +57,7 @@ const PasswordField: React.FC<PasswordFieldProps> = ({
     defaultValue,
     dataAttributes,
     ...rest
-}) => {
+}: PasswordFieldProps): JSX.Element => {
     const [isVisible, setIsVisible] = React.useState(false);
     const caretPositionRef = React.useRef<number>(0);
     const inputRef = React.useRef<HTMLInputElement | null>(null);

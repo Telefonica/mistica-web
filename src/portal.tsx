@@ -16,7 +16,7 @@ type Props = {
     className?: string;
 };
 
-export const Portal: React.FC<Props> = ({children, className}) => {
+export const Portal = ({children, className}: Props): JSX.Element | null => {
     const [container, setContainer] = React.useState<HTMLDivElement | null>(null);
 
     React.useEffect(() => {

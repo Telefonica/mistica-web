@@ -1,6 +1,6 @@
 import {openStoryPage} from '../test-utils';
 
-const themeVariants = ['default', 'inverse', 'alternative'] as const;
+const themeVariants = ['default', 'inverse', 'alternative', 'media'] as const;
 
 test.each(themeVariants)('ThemeVariant %s', async (themeVariant) => {
     const page = await openStoryPage({

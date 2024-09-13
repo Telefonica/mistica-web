@@ -2,16 +2,14 @@
 import * as React from 'react';
 import Box from './box';
 import Stack from './stack';
-import {useIsInverseVariant} from './theme-variant-context';
 import ResponsiveLayout from './responsive-layout';
 import GridLayout from './grid-layout';
 import {useSetOverscrollColor} from './overscroll-color-context';
-import {Text8, Text7, Text6, Text3, Text2} from './text';
-import ButtonGroup from './button-group';
+import {Text7, Text6, Text3, Text2} from './text';
 import {vars} from './skins/skin-contract.css';
 import * as styles from './header.css';
 import {getPrefixedDataAttributes} from './utils/dom';
-import {Title2, Title3} from './title';
+import {Title3, Title4} from './title';
 
 import type NavigationBreadcrumbs from './navigation-breadcrumbs';
 import type {ButtonPrimary, ButtonSecondary} from './button';
@@ -35,33 +33,9 @@ type HeaderProps = {
     description?: string;
     small?: boolean;
     dataAttributes?: DataAttributes;
-    /**
-     * @deprecated This field is deprecated, please use the extra slot in the HeaderLayout component instead.
-     */
-    preamount?: RichText;
-    /**
-     * @deprecated This field is deprecated, please use the extra slot in the HeaderLayout component instead.
-     */
-    amount?: string;
-    /**
-     * @deprecated This field is deprecated, please use the extra slot in the HeaderLayout component instead.
-     */
-    button?: RendersNullableElement<typeof ButtonPrimary>;
-    /**
-     * @deprecated This field is deprecated, please use the extra slot in the HeaderLayout component instead.
-     */
-    secondaryButton?: RendersNullableElement<typeof ButtonSecondary>;
-    /**
-     * @deprecated This field is deprecated, please use the extra slot in the HeaderLayout component instead.
-     */
-    subtitle?: RichText;
-    /**
-     * @deprecated This field is deprecated, please use the extra slot in the HeaderLayout component instead.
-     */
-    isErrorAmount?: boolean;
 };
 
-export const Header: React.FC<HeaderProps> = ({
+export const Header = ({
     headline,
     pretitle,
     pretitleAs,
@@ -70,15 +44,7 @@ export const Header: React.FC<HeaderProps> = ({
     description,
     dataAttributes,
     small = false,
-    preamount,
-    amount,
-    button,
-    subtitle,
-    isErrorAmount,
-    secondaryButton,
-}) => {
-    const isInverse = useIsInverseVariant();
-
+}: HeaderProps): JSX.Element => {
     const renderRichText = (richText: RichText, baseProps: Omit<TextPresetProps, 'children'>) => {
         if (typeof richText === 'string') {
             return (
@@ -105,9 +71,9 @@ export const Header: React.FC<HeaderProps> = ({
                             renderRichText(pretitle, {color: vars.colors.textPrimary, as: pretitleAs})}
                         {title &&
                             (small ? (
-                                <Title2 as={titleAs}>{title}</Title2>
-                            ) : (
                                 <Title3 as={titleAs}>{title}</Title3>
+                            ) : (
+                                <Title4 as={titleAs}>{title}</Title4>
                             ))}
                         {description &&
                             (small ? (
@@ -122,28 +88,6 @@ export const Header: React.FC<HeaderProps> = ({
                     </Stack>
                 </Box>
             )}
-            {(preamount || amount || button || subtitle) && (
-                <Stack space={16}>
-                    {(preamount || amount) && (
-                        <Stack space={8}>
-                            {preamount && renderRichText(preamount, {color: vars.colors.textPrimary})}
-                            <Text8
-                                color={
-                                    isErrorAmount && !isInverse
-                                        ? vars.colors.highlight
-                                        : vars.colors.textPrimary
-                                }
-                            >
-                                {amount}
-                            </Text8>
-                        </Stack>
-                    )}
-                    {(button || secondaryButton) && (
-                        <ButtonGroup primaryButton={button} secondaryButton={secondaryButton} />
-                    )}
-                    {subtitle && renderRichText(subtitle, {})}
-                </Stack>
-            )}
         </Stack>
     );
 };
@@ -155,12 +99,12 @@ type MainSectionHeaderProps = {
     button?: RendersNullableElement<typeof ButtonPrimary> | RendersNullableElement<typeof ButtonSecondary>;
 };
 
-export const MainSectionHeader: React.FC<MainSectionHeaderProps> = ({
+export const MainSectionHeader = ({
     title,
     titleAs = 'h1',
     description,
     button,
-}) => {
+}: MainSectionHeaderProps): JSX.Element => {
     return (
         <Stack space={32}>
             <Stack space={{mobile: 12, desktop: 16}}>
@@ -188,8 +132,8 @@ type HeaderLayoutProps = {
     noPaddingY?: boolean;
 };
 
-export const HeaderLayout: React.FC<HeaderLayoutProps> = ({
-    isInverse = true,
+export const HeaderLayout = ({
+    isInverse = false,
     breadcrumbs,
     header,
     extra,
@@ -197,7 +141,7 @@ export const HeaderLayout: React.FC<HeaderLayoutProps> = ({
     dataAttributes,
     bleed = false,
     noPaddingY = false,
-}) => {
+}: HeaderLayoutProps): JSX.Element => {
     const isBleedActivated = bleed && isInverse && extra;
 
     const mainContent = (
@@ -262,11 +206,11 @@ type MainSectionHeaderLayoutProps = {
     dataAttributes?: DataAttributes;
 };
 
-export const MainSectionHeaderLayout: React.FC<MainSectionHeaderLayoutProps> = ({
-    isInverse = true,
+export const MainSectionHeaderLayout = ({
+    isInverse = false,
     children,
     dataAttributes,
-}) => {
+}: MainSectionHeaderLayoutProps): JSX.Element => {
     useSetOverscrollColor(isInverse ? {topColor: vars.colors.backgroundBrandTop} : {});
     return (
         <ResponsiveLayout

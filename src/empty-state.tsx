@@ -1,7 +1,7 @@
 'use client';
 import * as React from 'react';
 import classnames from 'classnames';
-import {useIsInverseVariant} from './theme-variant-context';
+import {useIsInverseOrMediaVariant} from './theme-variant-context';
 import {ButtonPrimary} from './button';
 import {useTheme} from './hooks';
 import Stack from './stack';
@@ -34,18 +34,18 @@ interface ImageProps extends BaseProps {
     imageUrl: string;
 
     largeImageUrl?: undefined;
-    icon?: undefined;
+    asset?: undefined;
 }
 
 interface LargeImageProps extends BaseProps {
     largeImageUrl: string;
 
     imageUrl?: undefined;
-    icon?: undefined;
+    asset?: undefined;
 }
 
 interface IconProps extends BaseProps {
-    icon: React.ReactElement;
+    asset: React.ReactElement;
 
     imageUrl?: undefined;
     largeImageUrl?: undefined;
@@ -53,7 +53,7 @@ interface IconProps extends BaseProps {
 
 type Props = IconProps | ImageProps | LargeImageProps;
 
-const EmptyState: React.FC<Props> = ({
+const EmptyState = ({
     title,
     titleAs = 'h1',
     description,
@@ -61,12 +61,12 @@ const EmptyState: React.FC<Props> = ({
     buttonLink,
     largeImageUrl,
     imageUrl,
-    icon,
+    asset,
     'aria-label': ariaLabel,
     dataAttributes,
-}) => {
+}: Props): JSX.Element => {
     const {isDarkMode} = useTheme();
-    const isInverse = useIsInverseVariant();
+    const isInverse = useIsInverseOrMediaVariant();
 
     const image = imageUrl ? <img className={styles.smallImage} alt="" src={imageUrl} /> : undefined;
 
@@ -96,7 +96,7 @@ const EmptyState: React.FC<Props> = ({
                         largeImageUrl ? styles.contentVariants.largeImage : styles.contentVariants.default
                     }
                 >
-                    {image ?? (icon && <div className={styles.iconContainer}>{icon}</div>)}
+                    {image ?? (asset && <div className={styles.assetContainer}>{asset}</div>)}
                     <Stack space={16}>
                         <Text6 as={titleAs}>{title}</Text6>
                         <Text3

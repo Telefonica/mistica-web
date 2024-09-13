@@ -10,6 +10,7 @@ import {isFirefox} from './utils/platform';
 import {useTheme} from './hooks';
 import * as dateStyles from './date-field.css';
 import {iconSize} from './icon-button.css';
+import * as tokens from './text-tokens';
 
 import type {CommonFormFieldProps} from './text-field-base';
 
@@ -23,7 +24,7 @@ const ReactDateTimePicker = React.lazy(
     () => import(/* webpackChunkName: "date-time-picker" */ './date-time-picker')
 );
 
-const FormDateField: React.FC<DateFieldProps> = ({
+const FormDateField = ({
     disabled,
     error,
     helperText,
@@ -44,7 +45,7 @@ const FormDateField: React.FC<DateFieldProps> = ({
     max = new Date('9999-12-31T23:59'),
     dataAttributes,
     ...rest
-}) => {
+}: DateFieldProps): JSX.Element => {
     const hasNativePicker = React.useMemo(() => {
         if (isFirefox()) {
             // disabled for firefox because the picker has no option to select time
@@ -53,7 +54,7 @@ const FormDateField: React.FC<DateFieldProps> = ({
         return isInputTypeSupported('datetime-local');
     }, []);
     const processValue = (value: string) => (hasNativePicker ? value : value.replace(/\s/, 'T'));
-    const {texts} = useTheme();
+    const {texts, t} = useTheme();
 
     const isInRange = (value: string): boolean => {
         const isoValue = processValue(value);
@@ -68,7 +69,7 @@ const FormDateField: React.FC<DateFieldProps> = ({
 
     const validate = (value: string, rawValue: string) => {
         if (!isInRange(value)) {
-            return texts.formDateOutOfRangeError;
+            return texts.formDateOutOfRangeError || t(tokens.formDateOutOfRangeError);
         }
         return validateProp?.(value, rawValue);
     };
