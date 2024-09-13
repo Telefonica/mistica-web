@@ -220,7 +220,7 @@ const buttonSnippets: Array<Snippet> = [
         code: '<ButtonPrimary onPress={() => {}}><IconLockClosedRegular color="currentColor" />Action</ButtonPrimary>',
     },
     {
-        name: 'ButtonGroup (internal use)',
+        name: 'ButtonGroup',
         code: `
         <ButtonGroup
           primaryButton={<ButtonPrimary onPress={() => {}}>Action</ButtonPrimary>}
@@ -945,9 +945,9 @@ const tabsSnippets: Array<Snippet> = [
             selectedIndex={getState('tabIndex', 0)}
             onChange={setState('tabIndex')}
             tabs={[
-                {text: 'Tab 1', icon: <IconAppointmentRegular color="currentColor" />},
-                {text: 'Tab 2', icon: <IconBrainRegular color="currentColor" />},
-                {text: 'Tab 3', icon: <IconBusRegular color="currentColor" />},
+                {text: 'Tab 1', Icon: IconAppointmentRegular},
+                {text: 'Tab 2', Icon: IconBrainRegular},
+                {text: 'Tab 3', Icon: IconBusRegular},
             ]}
         />`,
     },
@@ -989,7 +989,7 @@ const cardSnippets: Array<Snippet> = [
                     Action
                 </ButtonPrimary>
             }
-            buttonLink={<ButtonLink onPress={() => {}}>Link</ButtonLink>}
+            buttonLink={<ButtonLink small onPress={() => {}}>Link</ButtonLink>}
         />`,
     },
     {
@@ -1010,7 +1010,7 @@ const cardSnippets: Array<Snippet> = [
                     Action
                 </ButtonPrimary>
             }
-            buttonLink={<ButtonLink onPress={() => {}}>Link</ButtonLink>}
+            buttonLink={<ButtonLink small onPress={() => {}}>Link</ButtonLink>}
         />`,
     },
     {
@@ -1033,7 +1033,7 @@ const cardSnippets: Array<Snippet> = [
                     Action
                 </ButtonPrimary>
             }
-            buttonLink={<ButtonLink onPress={() => {}}>Link</ButtonLink>}
+            buttonLink={<ButtonLink small onPress={() => {}}>Link</ButtonLink>}
         />`,
     },
     {
@@ -1288,7 +1288,7 @@ const cardSnippets: Array<Snippet> = [
                     Action
                 </ButtonPrimary>
             }
-            buttonLink={<ButtonLink onPress={() => {}}>Link</ButtonLink>}
+            buttonLink={<ButtonLink small onPress={() => {}}>Link</ButtonLink>}
         />`,
     },
     {
@@ -1308,7 +1308,7 @@ const cardSnippets: Array<Snippet> = [
                     Action
                 </ButtonPrimary>
             }
-            buttonLink={<ButtonLink onPress={() => {}}>Link</ButtonLink>}
+            buttonLink={<ButtonLink small onPress={() => {}}>Link</ButtonLink>}
         />`,
     },
 
@@ -1332,7 +1332,7 @@ const titlesSnippets: Array<Snippet> = [
     },
     {
         name: 'Title1 (with link)',
-        code: '<Title1 right={<ButtonLink onPress={() => {}} withChevron bleedRight bleedY>Link</ButtonLink>}>Some title</Title1>',
+        code: '<Title1 right={<ButtonLink small onPress={() => {}} withChevron bleedRight bleedY>Link</ButtonLink>}>Some title</Title1>',
     },
     {
         name: 'Title2',
@@ -1340,7 +1340,7 @@ const titlesSnippets: Array<Snippet> = [
     },
     {
         name: 'Title2 (with link)',
-        code: '<Title2 right={<ButtonLink onPress={() => {}} withChevron bleedRight bleedY>Link</ButtonLink>}>Some title</Title2>',
+        code: '<Title2 right={<ButtonLink small onPress={() => {}} withChevron bleedRight bleedY>Link</ButtonLink>}>Some title</Title2>',
     },
     {
         name: 'Title3',
@@ -1348,7 +1348,15 @@ const titlesSnippets: Array<Snippet> = [
     },
     {
         name: 'Title3 (with link)',
-        code: '<Title3 right={<ButtonLink onPress={() => {}} withChevron bleedRight bleedY>Link</ButtonLink>}>Some title</Title3>',
+        code: '<Title3 right={<ButtonLink small onPress={() => {}} withChevron bleedRight bleedY>Link</ButtonLink>}>Some title</Title3>',
+    },
+    {
+        name: 'Title4',
+        code: '<Title4>Some title</Title4>',
+    },
+    {
+        name: 'Title4 (with link)',
+        code: '<Title4 right={<ButtonLink onPress={() => {}} withChevron bleedRight bleedY>Link</ButtonLink>}>Some title</Title4>',
     },
 ].map((snippet) => ({...snippet, group: 'Titles'}));
 
@@ -1432,20 +1440,20 @@ const layoutSnippets: Array<Snippet> = [
                 {
                     categoryName: "Personal information",
                     settings: [
-                    { title: "Personal details", icon: <IconUserAccountRegular /> },
-                    { title: "Security", icon: <IconLockClosedRegular /> },
+                    { title: "Personal details", asset: <IconUserAccountRegular /> },
+                    { title: "Security", asset: <IconLockClosedRegular /> },
                     {
                         title: "Payment methods",
-                        icon: <IconCreditCardVisaRegular />,
+                        asset: <IconCreditCardVisaRegular />,
                     },
                     ],
                 },
                 {
                     categoryName: "Configuration",
                     settings: [
-                    { title: "Notifications", icon: <IconBellRegular /> },
-                    { title: "FAQs", icon: <IconSupportAgentRegular /> },
-                    { title: "About", icon: <IconInformationUserRegular /> },
+                    { title: "Notifications", asset: <IconBellRegular /> },
+                    { title: "FAQs", asset: <IconSupportAgentRegular /> },
+                    { title: "About", asset: <IconInformationUserRegular /> },
                     ],
                 },
                 ].map((category) => (
@@ -1548,7 +1556,7 @@ const emptyStatesGroup: Array<Snippet> = [
             title="Your cart is empty"
             description="Check our marketplaces and find something for you"
             button={<ButtonPrimary small onPress={() => {}}>Explore marketplace</ButtonPrimary>}
-            buttonLink={<ButtonLink onPress={() => {}}>More info</ButtonLink>}
+            buttonLink={<ButtonLink small onPress={() => {}}>More info</ButtonLink>}
         />`,
     },
 ].map((snippet) => ({...snippet, group: 'Empty states'}));
@@ -1611,21 +1619,21 @@ const exampleScreens: Array<Snippet> = [
                     settings: [
                       {
                         title: "Personal details",
-                        icon: <IconUserAccountRegular />,
+                        asset: <IconUserAccountRegular />,
                       },
-                      { title: "Security", icon: <IconLockClosedRegular /> },
+                      { title: "Security", asset: <IconLockClosedRegular /> },
                       {
                         title: "Payment methods",
-                        icon: <IconCreditCardVisaRegular />,
+                        asset: <IconCreditCardVisaRegular />,
                       },
                     ],
                   },
                   {
                     categoryName: "Configuration",
                     settings: [
-                      { title: "Notifications", icon: <IconBellRegular /> },
-                      { title: "FAQs", icon: <IconSupportAgentRegular /> },
-                      { title: "About", icon: <IconInformationUserRegular /> },
+                      { title: "Notifications", asset: <IconBellRegular /> },
+                      { title: "FAQs", asset: <IconSupportAgentRegular /> },
+                      { title: "About", asset: <IconInformationUserRegular /> },
                     ],
                   },
                 ].map((category) => (
@@ -1744,7 +1752,7 @@ const exampleScreens: Array<Snippet> = [
                     label="Password"
                     helperText="Helper text"
                   />
-                  <ButtonLink bleedLeft onPress>
+                  <ButtonLink small bleedLeft onPress>
                     I’m having problems with my password
                   </ButtonLink>
                 </Stack>
@@ -1757,7 +1765,7 @@ const exampleScreens: Array<Snippet> = [
                   </Text3>
                   <TextField name="phone" label="Phone number" prefix="+34" />
 
-                  <ButtonLink bleedLeft onPress>
+                  <ButtonLink small bleedLeft onPress>
                     I’m having access problems
                   </ButtonLink>
                 </Stack>
@@ -1907,7 +1915,7 @@ const exampleScreens: Array<Snippet> = [
         ))}
       />
       <Stack space={24}>
-        <Title2>Save money in technology</Title2>
+        <Title3>Save money in technology</Title3>
         <Carousel
           itemsPerPage={1}
           mobilePageOffset="large"
@@ -1946,7 +1954,7 @@ const exampleScreens: Array<Snippet> = [
             />
           ))}
         />
-        <ButtonLink bleedLeft onPress={() => {}}>
+        <ButtonLink small bleedLeft onPress={() => {}}>
           See all products
         </ButtonLink>
       </Stack>
@@ -1964,7 +1972,7 @@ const exampleScreens: Array<Snippet> = [
       />
 
       <Stack space={24}>
-        <Title2>Save money in technology</Title2>
+        <Title3>Save money in technology</Title3>
         <Carousel
           itemsPerPage={1}
           mobilePageOffset="large"
@@ -1989,7 +1997,7 @@ const exampleScreens: Array<Snippet> = [
             />
           ))}
         />
-        <ButtonLink bleedLeft onPress={() => {}}>
+        <ButtonLink small bleedLeft onPress={() => {}}>
           View more
         </ButtonLink>
       </Stack>
@@ -2498,7 +2506,7 @@ const carouselSnippets = [
           Action
         </ButtonPrimary>
       }
-      buttonLink={<ButtonLink onPress={() => {}}>Link</ButtonLink>}
+      buttonLink={<ButtonLink small onPress={() => {}}>Link</ButtonLink>}
     />
   ))}
 />`,
@@ -2639,7 +2647,7 @@ const alertSnippets = [
             forceWeb: true,
             showCancel: true,
             link: <ButtonLink href="https://google.com">Link</ButtonLink>,
-            icon: <IconInformationUserLight color={colors.brand} />,
+            asset: <IconInformationUserLight color={colors.brand} />,
         })
     }
 >
@@ -3786,7 +3794,7 @@ export default [
                     Action
                 </ButtonPrimary>
                 }
-                buttonLink={<ButtonLink onPress={() => {}}>Link</ButtonLink>}
+                buttonLink={<ButtonLink small onPress={() => {}}>Link</ButtonLink>}
             />`,
     },
     ...navigationBarSnippets,

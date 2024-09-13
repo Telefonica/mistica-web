@@ -6,6 +6,7 @@ const COMPONENT_TYPES = [
     {component: 'Title1', storyName: 'title-1'},
     {component: 'Title2', storyName: 'title-2'},
     {component: 'Title3', storyName: 'title-3'},
+    {component: 'Title4', storyName: 'title-4'},
 ];
 const CASE_NAMES = ['without-link', 'with-link', 'with-link-and-long-text', 'with-icon'] as const;
 const DEVICES = ['DESKTOP', 'MOBILE_IOS'] as const;

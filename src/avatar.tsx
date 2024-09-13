@@ -4,7 +4,7 @@
 import * as React from 'react';
 import Badge from './badge';
 import IconUserAccountRegular from './generated/mistica-icons/icon-user-account-regular';
-import {useIsInverseVariant} from './theme-variant-context';
+import {useIsInverseOrMediaVariant} from './theme-variant-context';
 import * as classes from './avatar.css';
 import {vars} from './skins/skin-contract.css';
 import {getPrefixedDataAttributes} from './utils/dom';
@@ -67,7 +67,7 @@ const Avatar = ({
     dataAttributes,
     ...props
 }: AvatarProps): JSX.Element => {
-    const isInverse = useIsInverseVariant();
+    const isInverse = useIsInverseOrMediaVariant();
     const backgroundColor =
         props.backgroundColor ?? (isInverse ? vars.colors.brandHigh : vars.colors.brandLow);
     const textColor = props.textColor ?? (isInverse ? vars.colors.textPrimaryInverse : vars.colors.textBrand);

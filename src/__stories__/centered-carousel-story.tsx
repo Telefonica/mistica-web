@@ -34,7 +34,7 @@ export const Default: StoryComponent<Args> = ({numItems, initialActiveItem}) => 
                 <Stack space={16}>
                     <Callout
                         description="Resize the window to see centerd carousel style in mobile. Arrow controls disappear in touch devices."
-                        icon={<IconInformationRegular />}
+                        asset={<IconInformationRegular />}
                     />
                     <CenteredCarousel
                         onPageChange={setPageInfo}

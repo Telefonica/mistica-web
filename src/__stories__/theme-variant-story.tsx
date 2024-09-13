@@ -1,6 +1,5 @@
 import * as React from 'react';
 import {
-    ThemeVariant,
     skinVars,
     Text2,
     Stack,
@@ -13,8 +12,11 @@ import {
     Chip,
     ButtonPrimary,
     useThemeVariant,
+    Image,
+    Timer,
 } from '..';
 import personPortraitImg from './images/person-portrait.jpg';
+import beachImg from './images/beach.jpg';
 
 import type {Variant} from '../theme-variant-context';
 
@@ -42,20 +44,20 @@ type Args = {
 };
 
 export const Default: StoryComponent<Args> = ({themeVariant}) => {
-    const background = {
-        default: 'transparent',
-        inverse: skinVars.colors.backgroundBrand,
-        alternative: skinVars.colors.backgroundAlternative,
-    }[themeVariant];
     return (
-        <div style={{background}}>
-            <ResponsiveLayout>
-                <Box paddingY={24}>
-                    <ThemeVariant variant={themeVariant}>
+        <div style={{position: 'relative'}}>
+            {themeVariant === 'media' && (
+                <div style={{position: 'absolute', width: '100%', height: '100%'}}>
+                    <Image src={beachImg} width="100%" height="100%" noBorderRadius />
+                </div>
+            )}
+            <div style={{position: 'relative'}}>
+                <ResponsiveLayout variant={themeVariant}>
+                    <Box paddingY={24}>
                         <OtherComponent />
-                    </ThemeVariant>
-                </Box>
-            </ResponsiveLayout>
+                    </Box>
+                </ResponsiveLayout>
+            </div>
         </div>
     );
 };
@@ -67,59 +69,70 @@ Default.args = {
 };
 Default.argTypes = {
     themeVariant: {
-        options: ['default', 'inverse', 'alternative'],
+        options: ['default', 'inverse', 'alternative', 'media'],
         control: {type: 'select'},
     },
 };
 
 export const ComponentsOverDifferentThemeVariants: StoryComponent<Args> = ({themeVariant}) => {
     return (
-        <ResponsiveLayout variant={themeVariant}>
-            <Box paddingY={24}>
-                <Stack space={16}>
-                    <Callout
-                        onClose={() => {}}
-                        title="Callout title"
-                        description="Calloout description"
-                        button={
-                            <ButtonPrimary small onPress={() => {}}>
-                                Action
-                            </ButtonPrimary>
-                        }
-                    />
-                    <Inline space={16}>
-                        <HighlightedCard
-                            isInverse={false}
-                            title="Card title"
-                            description="Card description"
-                            imageUrl={personPortraitImg}
-                            imageFit="fill"
-                            onClose={() => {}}
-                            button={
-                                <ButtonPrimary href="#" small>
-                                    Action
-                                </ButtonPrimary>
-                            }
-                        />
-                        <HighlightedCard
-                            isInverse
-                            title="Inverse card title"
-                            description="Card description"
-                            imageUrl={personPortraitImg}
-                            imageFit="fill"
-                            onClose={() => {}}
-                            button={
-                                <ButtonPrimary href="#" small>
-                                    Action
-                                </ButtonPrimary>
-                            }
-                        />
-                    </Inline>
-                    <Tag type="inactive">Inactive tag</Tag>
-                    <Chip>A chip</Chip>
-                </Stack>
-            </Box>
-        </ResponsiveLayout>
+        <div style={{position: 'relative'}}>
+            {themeVariant === 'media' && (
+                <div style={{position: 'absolute', width: '100%', height: '100%'}}>
+                    <Image src={beachImg} width="100%" height="100%" noBorderRadius />
+                </div>
+            )}
+            <div style={{position: 'relative'}}>
+                <ResponsiveLayout variant={themeVariant}>
+                    <Box paddingY={24}>
+                        <Stack space={16}>
+                            <Callout
+                                onClose={() => {}}
+                                title="Callout title"
+                                description="Callout description"
+                                button={
+                                    <ButtonPrimary small onPress={() => {}}>
+                                        Action
+                                    </ButtonPrimary>
+                                }
+                            />
+                            <Inline space={16}>
+                                <HighlightedCard
+                                    isInverse={false}
+                                    title="Card title"
+                                    description="Card description"
+                                    imageUrl={personPortraitImg}
+                                    imageFit="fill"
+                                    onClose={() => {}}
+                                    button={
+                                        <ButtonPrimary href="#" small>
+                                            Action
+                                        </ButtonPrimary>
+                                    }
+                                />
+                                <HighlightedCard
+                                    isInverse
+                                    title="Inverse card title"
+                                    description="Card description"
+                                    imageUrl={personPortraitImg}
+                                    imageFit="fill"
+                                    onClose={() => {}}
+                                    button={
+                                        <ButtonPrimary href="#" small>
+                                            Action
+                                        </ButtonPrimary>
+                                    }
+                                />
+                            </Inline>
+                            <Tag type="inactive">Inactive tag</Tag>
+                            <Chip>A chip</Chip>
+
+                            <Timer minTimeUnit="seconds" maxTimeUnit="days" endTimestamp={0} boxed />
+                        </Stack>
+                    </Box>
+                </ResponsiveLayout>
+            </div>
+        </div>
     );
 };
 
@@ -130,7 +143,7 @@ ComponentsOverDifferentThemeVariants.args = {
 ComponentsOverDifferentThemeVariants.parameters = {fullScreen: true};
 ComponentsOverDifferentThemeVariants.argTypes = {
     themeVariant: {
-        options: ['default', 'inverse', 'alternative'],
+        options: ['default', 'inverse', 'alternative', 'media'],
         control: {type: 'select'},
     },
 };

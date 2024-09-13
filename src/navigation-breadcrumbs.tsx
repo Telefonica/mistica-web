@@ -8,7 +8,7 @@ import * as React from 'react';
 import {Text1} from './text';
 import {getPrefixedDataAttributes} from './utils/dom';
 import TextLink from './text-link';
-import {useIsInverseVariant} from './theme-variant-context';
+import {useIsInverseOrMediaVariant} from './theme-variant-context';
 import * as styles from './navigation-breadcrumbs.css';
 import {vars} from './skins/skin-contract.css';
 
@@ -34,7 +34,7 @@ const NavigationBreadcrumbs = ({
     dataAttributes,
     'aria-label': ariaLabel = 'Breadcrumb',
 }: NavigationBreadcrumbsProps): JSX.Element => {
-    const isInverse = useIsInverseVariant();
+    const isInverse = useIsInverseOrMediaVariant();
     return (
         <nav aria-label={ariaLabel} {...getPrefixedDataAttributes(dataAttributes, 'NavigationBreadcrumbs')}>
             <ol className={styles.list}>

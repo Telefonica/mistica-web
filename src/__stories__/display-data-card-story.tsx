@@ -66,19 +66,19 @@ export const Default: StoryComponent<DisplayDataCardArgs> = ({
     isInverse,
     aspectRatio,
 }) => {
-    let icon;
+    let assetElement;
     if (asset === 'circle + icon') {
-        icon = (
+        assetElement = (
             <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
                 <IconInvoicePlanFileRegular color={skinVars.colors.brand} />
             </Circle>
         );
     } else if (asset === 'circle + image') {
-        icon = <Circle size={40} backgroundImage={avatarImg} />;
+        assetElement = <Circle size={40} backgroundImage={avatarImg} />;
     } else if (asset === 'icon') {
-        icon = <IconInvoicePlanFileRegular size={40} />;
+        assetElement = <IconInvoicePlanFileRegular size={40} />;
     } else if (asset === 'image') {
-        icon = <Image src={avatarImg} width={40} height={40} />;
+        assetElement = <Image src={avatarImg} width={40} height={40} />;
     }
 
     const interactiveActions = {
@@ -92,7 +92,11 @@ export const Default: StoryComponent<DisplayDataCardArgs> = ({
                 Action 2
             </ButtonSecondary>
         ) : undefined,
-        buttonLink: actions.includes('link') ? <ButtonLink href="#">Link</ButtonLink> : undefined,
+        buttonLink: actions.includes('link') ? (
+            <ButtonLink small href="#">
+                Link
+            </ButtonLink>
+        ) : undefined,
         onPress: actions === 'onPress' ? () => {} : undefined,
         to: actions === 'to' ? '#' : undefined,
         href: actions === 'href' ? 'https://example.org' : undefined,
@@ -134,7 +138,7 @@ export const Default: StoryComponent<DisplayDataCardArgs> = ({
                       ]
                     : undefined
             }
-            icon={icon}
+            asset={assetElement}
             headline={headline ? <Tag type={headlineType}>{headline}</Tag> : undefined}
             pretitle={pretitle}
             title={title}
@@ -221,7 +225,7 @@ export const Group: StoryComponent = () => {
                             }
                         />,
                         <DisplayDataCard
-                            icon={
+                            asset={
                                 <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
                                     <IconInvoicePlanFileRegular color={skinVars.colors.brand} />
                                 </Circle>

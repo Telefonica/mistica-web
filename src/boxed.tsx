@@ -1,18 +1,21 @@
 'use client';
 import * as React from 'react';
 import classnames from 'classnames';
-import {ThemeVariant, useIsInverseVariant} from './theme-variant-context';
+import {ThemeVariant, useIsInverseOrMediaVariant} from './theme-variant-context';
 import {getPrefixedDataAttributes} from './utils/dom';
 import {vars} from './skins/skin-contract.css';
 import * as styles from './boxed.css';
 import {sprinkles} from './sprinkles.css';
 import {applyCssVars} from './utils/css';
 
+import type {Variant} from './theme-variant-context';
 import type {ByBreakpoint, DataAttributes} from './utils/types';
 
 type Props = {
     children: React.ReactNode;
+    /** @deprecated use variant instead */
     isInverse?: boolean;
+    variant?: Variant;
     className?: string;
     role?: string;
     /** "data-" prefix is automatically added. For example, use "testid" instead of "data-testid" */
@@ -83,10 +86,11 @@ export const InternalBoxed = React.forwardRef<HTMLDivElement, Props & InternalPr
             borderRadius = vars.borderRadii.container,
             background,
             desktopOnly,
+            variant,
         },
         ref
     ) => {
-        const isInverseOutside = useIsInverseVariant();
+        const isInverseOutside = useIsInverseOrMediaVariant();
 
         return (
             <div
@@ -122,7 +126,9 @@ export const InternalBoxed = React.forwardRef<HTMLDivElement, Props & InternalPr
                 aria-labelledby={ariaLabelledby}
                 {...getPrefixedDataAttributes(dataAttributes)}
             >
-                <ThemeVariant isInverse={isInverseInside}>{children}</ThemeVariant>
+                <ThemeVariant variant={variant ?? (isInverseInside ? 'inverse' : undefined)}>
+                    {children}
+                </ThemeVariant>
             </div>
         );
     }

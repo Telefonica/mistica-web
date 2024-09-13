@@ -1,3 +1,55 @@
+# [16.0.0](https://github.com/Telefonica/mistica-web/compare/v15.20.1...v16.0.0) (2024-09-13)
+
+
+### Features
+
+* **ButtonLink:** add default variant ([#1211](https://github.com/Telefonica/mistica-web/issues/1211)) ([97aa4ad](https://github.com/Telefonica/mistica-web/commit/97aa4adbb11696b0e82dff387f004243e106ce18))
+* **Callout, Cards, Dialog, EmptyState, EmptyStateCard, FeedbackScreen, Tabs:** remove icon prop and use only Icon/asset ([#1206](https://github.com/Telefonica/mistica-web/issues/1206)) ([eb06fa3](https://github.com/Telefonica/mistica-web/commit/eb06fa32db2c654b17d14660fd6a66b484250616))
+* **Feedback, FixedFooterLayout, Dialog, Accordion, Touchable, Header, IconButton, NavigationBar, OverscrollColor:** remove deprecated props ([#1205](https://github.com/Telefonica/mistica-web/issues/1205)) ([e1c84ec](https://github.com/Telefonica/mistica-web/commit/e1c84ec9e3b60cefffe7d036e3344a81c4d76a2d))
+* **Header, MainSectionHeader:** use "default" as component's default variant ([#1207](https://github.com/Telefonica/mistica-web/issues/1207)) ([29e0ef4](https://github.com/Telefonica/mistica-web/commit/29e0ef494fc2d85689259e22134ec8be7c9839bc))
+* **i18n:** refactor texts to improve bundle size ([#1228](https://github.com/Telefonica/mistica-web/issues/1228)) ([088a290](https://github.com/Telefonica/mistica-web/commit/088a29084df488e8598ef0b5ea0eabbef94a7398))
+* **Icons:** add new icons and rename others ([#1197](https://github.com/Telefonica/mistica-web/issues/1197)) ([4cfffa5](https://github.com/Telefonica/mistica-web/commit/4cfffa5339a13ebade9c6c3e4e97e5b44301a680))
+* **React:** require react18 and replace useAriaId with React.useId ([#1213](https://github.com/Telefonica/mistica-web/issues/1213)) ([b29f778](https://github.com/Telefonica/mistica-web/commit/b29f778a13138711b65a8e7a52cb81207fca1e7f))
+* **skin:** rename some design tokens ([#1203](https://github.com/Telefonica/mistica-web/issues/1203)) ([d0a1452](https://github.com/Telefonica/mistica-web/commit/d0a1452ba2c3162e6dd527109f483b9a17ee06f8))
+* **Snackbar:** update snackbar duration logic ([#1208](https://github.com/Telefonica/mistica-web/issues/1208)) ([2ef5804](https://github.com/Telefonica/mistica-web/commit/2ef5804b11908d2f3a8b5f98ceba3b391d7e3418))
+* **ThemeVariant:** add media theme variant and update components in order to adapt to it ([#1236](https://github.com/Telefonica/mistica-web/issues/1236)) ([eada194](https://github.com/Telefonica/mistica-web/commit/eada194c5ec2b6e891837730834258e18b1b71c8))
+* **Titles:** add new Title2, replace Title2 and Title3 with Title3 and Title4 respectively ([#1202](https://github.com/Telefonica/mistica-web/issues/1202)) ([bed8fdf](https://github.com/Telefonica/mistica-web/commit/bed8fdf8ea0947927d1a9c1ecaa08dffc887911b))
+
+
+### BREAKING CHANGES
+
+* **ThemeVariant:** a new theme variant has been added and it may require changes in any logic that depends on variants
+* **ButtonLink:** ButtonLink won't be small as default anymore
+* **i18n:** texts from useTheme are now empty by default. If a mistica defined text is required, it should be imported from text-tokens and must be translated using the t function from useTheme
+* **Callout, Cards, Dialog, EmptyState, EmptyStateCard, FeedbackScreen, Tabs:** icon/Icon/asset props are renamed in several components
+* **skin:** some mistica internal tokens are renamed
+* **Snackbar:** snackbar duration prop type has changed
+* **React:** react17 is no longer supported by Mistica and useAriaId hook is removed
+* **Header, MainSectionHeader:** Header's variant changes from inverse to default if variant prop is not used
+* **Feedback, FixedFooterLayout, Dialog, Accordion, Touchable, Header, IconButton, NavigationBar, OverscrollColor:** deprecated props are removed in several components
+* **Titles:** renamed Title2 to Title3 and Title3 to Title4
+* **Icons:** renamed some icons
+
+autentication-failure → authentication-failure
+autentication-success → authentication-success
+adn → dna
+hamburguer → hamburger
+garaje → garage
+millenials → millennials
+not-photo-camera → no-photo-camera
+not-conexion-file → no-conexion-file
+smiley-happy → face-happy
+smiley-sad → face-sad
+like → thumb-up
+
+
+## [15.20.1](https://github.com/Telefonica/mistica-web/compare/v15.20.0...v15.20.1) (2024-09-12)
+
+
+### Bug Fixes
+
+* **confirm:** make destructive mode work with webview bridge ([#1237](https://github.com/Telefonica/mistica-web/issues/1237)) ([0dc1787](https://github.com/Telefonica/mistica-web/commit/0dc1787d627fd3cf370769366719d87cdf03d3e9))
+
 # [15.20.0](https://github.com/Telefonica/mistica-web/compare/v15.19.0...v15.20.0) (2024-09-06)
 
 

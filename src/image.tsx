@@ -5,7 +5,7 @@ import {SkeletonAnimation} from './skeletons';
 import {AspectRatioContainer} from './utils/aspect-ratio-support';
 import {getPrefixedDataAttributes} from './utils/dom';
 import {useIsInverseVariant} from './theme-variant-context';
-import {useAriaId, useTheme} from './hooks';
+import {useTheme} from './hooks';
 import {VIVO_SKIN, VIVO_NEW_SKIN} from './skins/constants';
 import {sprinkles} from './sprinkles.css';
 import * as styles from './image.css';
@@ -166,7 +166,7 @@ export const ImageContent = React.forwardRef<HTMLImageElement, ImageProps>(
         },
         ref
     ) => {
-        const imageId = useAriaId();
+        const imageId = React.useId();
         const imageRef = React.useRef<HTMLImageElement>();
         const borderRadiusStyle = props.circular
             ? styles.circularBorderRadius

@@ -62,7 +62,7 @@ export const Default: StoryComponent<Args> = ({
                 <Stack space={16}>
                     <Callout
                         description="Arrow controls disappear in touch devices"
-                        icon={<IconInformationRegular />}
+                        asset={<IconInformationRegular />}
                     />
                     <Carousel
                         dataAttributes={{testid: 'carousel-story'}}
@@ -84,7 +84,11 @@ export const Default: StoryComponent<Args> = ({
                                 title={`Title ${idx}`}
                                 description="Some description"
                                 media={<Image src={tennisUrl} aspectRatio="16:9" />}
-                                buttonLink={<ButtonLink href="https://google.com">Link {idx}</ButtonLink>}
+                                buttonLink={
+                                    <ButtonLink small href="https://google.com">
+                                        Link {idx}
+                                    </ButtonLink>
+                                }
                             />
                         ))}
                         initialActiveItem={initialActiveItem}
@@ -137,11 +141,11 @@ export const WithCarouselContext: StoryComponent<WithCarouselContextArgs> = ({nu
                             <CarouselContextConsumer>
                                 {({goNext, goPrev, goToPage, bulletsProps}) => (
                                     <Inline space="between" alignItems="center">
-                                        <ButtonLink bleedLeft onPress={goPrev}>
+                                        <ButtonLink small bleedLeft onPress={goPrev}>
                                             Prev
                                         </ButtonLink>
                                         <PageBullets {...bulletsProps} onPress={goToPage} />
-                                        <ButtonLink bleedRight onPress={goNext}>
+                                        <ButtonLink small bleedRight onPress={goNext}>
                                             Next
                                         </ButtonLink>
                                     </Inline>
@@ -161,7 +165,11 @@ export const WithCarouselContext: StoryComponent<WithCarouselContextArgs> = ({nu
                                     title={`Title ${idx}`}
                                     description="Some description"
                                     media={<Image src={tennisUrl} aspectRatio="16:9" />}
-                                    buttonLink={<ButtonLink href="https://google.com">Link {idx}</ButtonLink>}
+                                    buttonLink={
+                                        <ButtonLink small href="https://google.com">
+                                            Link {idx}
+                                        </ButtonLink>
+                                    }
                                 />
                             ))}
                         />

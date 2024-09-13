@@ -1,6 +1,6 @@
 'use client';
 import * as React from 'react';
-import {useAriaId, useBoundingRect, useTheme, useWindowSize} from './hooks';
+import {useBoundingRect, useTheme, useWindowSize} from './hooks';
 import {Portal} from './portal';
 import {Transition} from 'react-transition-group';
 import * as styles from './tooltip.css';
@@ -12,13 +12,14 @@ import {isTouchableDevice} from './utils/environment';
 import {isEqual} from './utils/helpers';
 import classNames from 'classnames';
 import {vars} from './skins/skin-contract.css';
-import {ThemeVariant, useIsInverseVariant} from './theme-variant-context';
+import {ThemeVariant, useIsInverseOrMediaVariant} from './theme-variant-context';
 import {combineRefs} from './utils/common';
 import {useSetTooltipState, useTooltipState} from './tooltip-context-provider';
 import {isRunningAcceptanceTest} from './utils/platform';
 import {IconButton} from './icon-button';
 import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
 import Box from './box';
+import * as tokens from './text-tokens';
 
 import type {BoundingRect} from './hooks';
 import type {DataAttributes, TrackingEvent} from './utils/types';
@@ -172,8 +173,8 @@ export const BaseTooltip = ({
     hasPointerInteractionOnly = false,
     trackingEvent,
 }: BaseTooltipProps): JSX.Element => {
-    const {texts} = useTheme();
-    const tooltipId = useAriaId();
+    const {texts, t} = useTheme();
+    const tooltipId = React.useId();
     const {openTooltipId} = useTooltipState();
     const {openTooltip, closeTooltip} = useSetTooltipState();
 
@@ -193,7 +194,7 @@ export const BaseTooltip = ({
     const hasControlledValue = open !== undefined;
     const [isFocused, setIsFocused] = React.useState(false);
     const isTooltipOpen = hasControlledValue ? open : tooltipId === openTooltipId;
-    const isInverse = useIsInverseVariant();
+    const isInverse = useIsInverseOrMediaVariant();
 
     const targetRect = useBoundingRect(targetRef, isTooltipOpen);
     const tooltipRect = useBoundingRect(tooltipRef, isTooltipOpen, true);
@@ -578,7 +579,9 @@ export const BaseTooltip = ({
                                                             }}
                                                             trackingEvent={trackingEvent}
                                                             aria-label={
-                                                                closeButtonLabel ?? texts.closeButtonLabel
+                                                                closeButtonLabel ||
+                                                                texts.closeButtonLabel ||
+                                                                t(tokens.closeButtonLabel)
                                                             }
                                                             Icon={IconCloseRegular}
                                                             small

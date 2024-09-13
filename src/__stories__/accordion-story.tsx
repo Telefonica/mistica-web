@@ -7,7 +7,7 @@ import {
     BoxedAccordion,
     BoxedAccordionItem,
     Circle,
-    IconLikeFilled,
+    IconThumbUpFilled,
     IconMobileDeviceRegular,
     Image,
     Placeholder,
@@ -48,7 +48,7 @@ const Template: StoryComponent<Args & {type?: 'boxed'}> = ({title, subtitle, sin
                         title={title}
                         subtitle={subtitle}
                         content={content}
-                        asset={<IconLikeFilled size={24} />}
+                        asset={<IconThumbUpFilled size={24} />}
                         {...(type === 'boxed' && {isInverse: inverse})}
                         dataAttributes={{testid: 'accordion-item-2'}}
                     />

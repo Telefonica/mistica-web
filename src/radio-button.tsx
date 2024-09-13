@@ -6,7 +6,7 @@ import {combineRefs} from './utils/common';
 import {Text3} from './text';
 import Inline from './inline';
 import classnames from 'classnames';
-import {useAriaId, useTheme} from './hooks';
+import {useTheme} from './hooks';
 import {getPrefixedDataAttributes} from './utils/dom';
 import * as styles from './radio-button.css';
 
@@ -64,7 +64,8 @@ const RadioButton = ({
     ...rest
 }: PropsRender | PropsChildren): JSX.Element => {
     const {disabled, selectedValue, focusableValue, select, selectNext, selectPrev} = useRadioContext();
-    const labelId = useAriaId(ariaLabelledby);
+    const reactId = React.useId();
+    const labelId = ariaLabelledby || reactId;
     const ref = React.useRef<HTMLDivElement>(null);
     const checked = value === selectedValue;
     const tabIndex = focusableValue === value ? 0 : -1;
