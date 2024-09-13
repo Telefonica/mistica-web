@@ -18,29 +18,39 @@
 
 ### BREAKING CHANGES
 
-* **ThemeVariant:** a new theme variant has been added and it may require changes in any logic that depends on variants
-* **ButtonLink:** ButtonLink won't be small as default anymore
+* **ThemeVariant:** `media` theme variant has been added and it may require changes in any logic that depends on variants
+* **ButtonLink:** ButtonLink now behaves like other buttons by default (it won't be small unless you specify this by setting `small` prop to `true`)
 * **i18n:** texts from useTheme are now empty by default. If a mistica defined text is required, it should be imported from text-tokens and must be translated using the t function from useTheme
-* **Callout, Cards, Dialog, EmptyState, EmptyStateCard, FeedbackScreen, Tabs:** icon/Icon/asset props are renamed in several components
+* **Callout, Cards, Dialog, EmptyState, EmptyStateCard, FeedbackScreen, Tabs:** `icon` prop was replaced by `Icon`/`asset`
 * **skin:** some mistica internal tokens are renamed
-* **Snackbar:** snackbar duration prop type has changed
+* **Snackbar:** snackbar duration prop type now allows only `"PERSISTENT"` as value. Numeric values are not valid anymore.
 * **React:** react17 is no longer supported by Mistica and useAriaId hook is removed
-* **Header, MainSectionHeader:** Header's variant changes from inverse to default if variant prop is not used
+* **Header, MainSectionHeader:** Header's variant changes from inverse to default if `variant` prop is not used
 * **Feedback, FixedFooterLayout, Dialog, Accordion, Touchable, Header, IconButton, NavigationBar, OverscrollColor:** deprecated props are removed in several components
-* **Titles:** renamed Title2 to Title3 and Title3 to Title4
+  - **Accordion**: removed `onToggle` callback from `AccordionItem`. Use `onChange` from `Accordion` instead
+  - **FixedFooterLayout**: alignment of buttons in desktop is not configurable anymore (`desktopButtonAlign` prop has been removed)
+  - **ButtonLayout**: `children` is not allowed. Use `primaryButton` / `secondaryButton` / `link` props
+  - **Cards**: prop `ariaLabel` is removed. Use `aria-label` instead
+  - **HighlightedValueBlock**: use `headings` props only (`mainHeading` / `secondHeading` / `secondaryValue` / `valueColor` have been removed)
+  - **Dialog**: if you want to use `alert`/`dialog`/`confirm` functions, import them by using `useDialog` hook
+  - **Feedback**: use `extra` instead of `children`
+  - **Header**: `preamount`, `amount`, `button`, `secondaryButton`, `subtitle` and `isErrorAmount` are removed. Use `extra` prop for this.
+  - **IconButton**: The deprecated version that allows any content or size has been removed. Use `Touchable` component if you need to style your content in a specific way
+  - **NavigationBar**: use `variant` instead of `isInverse` prop
+  - **OverscrollColor**: removed the `OverscrollColor` component. Use `useSetOverscrollColor` hook to configure the top/bottom overscroll colors.
+* **Titles:** renamed `Title2` to `Title3` and `Title3` to `Title4`
 * **Icons:** renamed some icons
-
-autentication-failure → authentication-failure
-autentication-success → authentication-success
-adn → dna
-hamburguer → hamburger
-garaje → garage
-millenials → millennials
-not-photo-camera → no-photo-camera
-not-conexion-file → no-conexion-file
-smiley-happy → face-happy
-smiley-sad → face-sad
-like → thumb-up
+  - autentication-failure → authentication-failure
+  - autentication-success → authentication-success
+  - adn → dna
+  - hamburguer → hamburger
+  - garaje → garage
+  - millenials → millennials
+  - not-photo-camera → no-photo-camera
+  - not-conexion-file → no-conexion-file
+  - smiley-happy → face-happy
+  - smiley-sad → face-sad
+  - like → thumb-up
 
 
 ## [15.20.1](https://github.com/Telefonica/mistica-web/compare/v15.20.0...v15.20.1) (2024-09-12)
