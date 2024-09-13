@@ -115,6 +115,7 @@ Start prototyping interfaces with Mistica components in the
 - [Analytics](https://github.com/Telefonica/mistica-web/blob/master/doc/analytics.md)
 - [Fonts](https://github.com/Telefonica/mistica-web/blob/master/doc/fonts.md)
 - [Testing notes](https://github.com/Telefonica/mistica-web/blob/master/doc/testing.md)
+- [Using Lottie](https://github.com/Telefonica/mistica-web/blob/master/doc/lottie.md)
 
 ## Development
 
