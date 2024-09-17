@@ -144,6 +144,11 @@ export const createServer = (): http.Server => {
             return;
         }
 
+        if (fs.existsSync(path.join(__dirname, '..', '..', 'public', 'ssr', `${moduleName}`))) {
+            serveFileInPath(path.join(__dirname, '..', '..', 'public', 'ssr', `${moduleName}`));
+            return;
+        }
+
         let Component;
         try {
             // eslint-disable-next-line @typescript-eslint/no-var-requires
