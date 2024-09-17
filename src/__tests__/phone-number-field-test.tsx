@@ -54,7 +54,7 @@ test.each`
     ${'ES'}           | ${'+49'}     | ${'69654321'}   | ${'69654321'}  | ${'6-9-6-5-4-3-2-1'}
     ${'DE'}           | ${undefined} | ${'069654321'}  | ${'069654321'} | ${'0-6-9-6-5-4-3-2-1'}
 `(
-    `PhoneNumberField with custom formatter ($contextRegionCode, $e164, $prefix, $typed, $expectedValue, $expectedValueRaw)`,
+    `PhoneNumberField with custom formatter ($contextRegionCode, $prefix, $typed, $expectedValue, $expectedValueRaw)`,
     async ({contextRegionCode, prefix, typed, expectedValue, expectedValueRaw}) => {
         const onChangeValueSpy = jest.fn();
         const theme = makeTheme();
