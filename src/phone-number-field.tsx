@@ -203,7 +203,6 @@ const PhoneNumberField = ({
             inputComponent={PhoneInput}
             dataAttributes={{
                 'component-name': 'PhoneNumberField',
-                libphonenumber: !!libphonenumber,
                 ...dataAttributes,
             }}
         />
