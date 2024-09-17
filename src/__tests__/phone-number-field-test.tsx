@@ -47,3 +47,40 @@ test.each`
         expect(onChangeValueSpy).toHaveBeenLastCalledWith(expectedValue, expectedValueRaw);
     }
 );
+
+test.each`
+    contextRegionCode | prefix       | typed           | expectedValue  | expectedValueRaw
+    ${'ES'}           | ${undefined} | ${'+123123123'} | ${'123123123'} | ${'1-2-3-1-2-3-1-2-3'}
+    ${'ES'}           | ${'+49'}     | ${'69654321'}   | ${'69654321'}  | ${'6-9-6-5-4-3-2-1'}
+    ${'DE'}           | ${undefined} | ${'069654321'}  | ${'069654321'} | ${'0-6-9-6-5-4-3-2-1'}
+`(
+    `PhoneNumberField with custom formatter ($contextRegionCode, $e164, $prefix, $typed, $expectedValue, $expectedValueRaw)`,
+    async ({contextRegionCode, prefix, typed, expectedValue, expectedValueRaw}) => {
+        const onChangeValueSpy = jest.fn();
+        const theme = makeTheme();
+
+        render(
+            <ThemeContextProvider
+                theme={{
+                    ...theme,
+                    i18n: {...theme.i18n, phoneNumberFormattingRegionCode: contextRegionCode},
+                }}
+            >
+                <PhoneNumberField
+                    prefix={prefix}
+                    label="Enter Phone"
+                    name="phone"
+                    onChangeValue={onChangeValueSpy}
+                    format={(number) => {
+                        // dumb formatter that just adds a dash between each digit
+                        return number.replace(/[^\d]/g, '').split('').join('-');
+                    }}
+                />
+            </ThemeContextProvider>
+        );
+
+        await userEvent.type(screen.getByLabelText('Enter Phone'), typed);
+
+        expect(onChangeValueSpy).toHaveBeenLastCalledWith(expectedValue, expectedValueRaw);
+    }
+);
