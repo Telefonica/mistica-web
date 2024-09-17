@@ -144,7 +144,7 @@ export const createServer = (): http.Server => {
             return;
         }
 
-        if (fs.existsSync(path.join(__dirname, '..', '..', 'public', 'ssr', `${moduleName}`))) {
+        if (moduleName.includes('telefonica_libphonenumber')) {
             serveFileInPath(path.join(__dirname, '..', '..', 'public', 'ssr', `${moduleName}`));
             return;
         }
