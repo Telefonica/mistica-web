@@ -16,6 +16,7 @@ type Props = {
     paddingBottom?: ByBreakpoint<PadSize>;
     paddingLeft?: ByBreakpoint<PadSize>;
     paddingRight?: ByBreakpoint<PadSize>;
+    as?: React.ComponentType<any> | string;
     children?: React.ReactNode;
     className?: string;
     role?: string;
@@ -31,6 +32,7 @@ const Box = React.forwardRef<HTMLDivElement, Props>(
         {
             className,
             children,
+            as: Component = 'div',
             width,
             padding = 0,
             paddingX = padding,
@@ -64,7 +66,7 @@ const Box = React.forwardRef<HTMLDivElement, Props>(
         }
 
         return (
-            <div
+            <Component
                 {...getPrefixedDataAttributes(dataAttributes)}
                 role={role}
                 aria-label={ariaLabel}
@@ -78,7 +80,7 @@ const Box = React.forwardRef<HTMLDivElement, Props>(
                 id={id}
             >
                 {children}
-            </div>
+            </Component>
         );
     }
 );

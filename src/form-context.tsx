@@ -170,7 +170,7 @@ export const useFieldProps = ({
         disabled: disabled || formStatus === 'sending',
         onBlur: (e: React.FocusEvent) => {
             let error: string | undefined;
-            if (!values[name] && !optional) {
+            if (!rawValues[name] && !optional) {
                 error = texts.formFieldErrorIsMandatory || t(tokens.formFieldErrorIsMandatory);
             } else if (validate) {
                 error = validate(values[name], rawValues[name]);

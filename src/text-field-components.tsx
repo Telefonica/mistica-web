@@ -98,7 +98,7 @@ export const HelperText = ({leftText, rightText, error, id}: HelperTextProps): J
             {leftText && (
                 <p className={classnames(styles.helperText, styles.leftHelperText)}>
                     {error && (
-                        <Box paddingRight={4}>
+                        <Box as="span" paddingRight={4}>
                             <IconInformationRegular size="1rem" color={leftColor} />
                         </Box>
                     )}
