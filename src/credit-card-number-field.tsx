@@ -187,7 +187,7 @@ const CreditCardNumberField = ({
         if (!isValidCreditCardNumber(value)) {
             return error;
         }
-        if (getCreditCardNumberLength(value) !== value.length) {
+        if (getCreditCardNumberLength(value) !== value?.length) {
             return error;
         }
         return validateProp?.(value, rawValue);
