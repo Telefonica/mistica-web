@@ -1,8 +1,9 @@
 import * as React from 'react';
-import {useScreenSize, useTheme, skinVars} from '../src';
+import {useScreenSize, useTheme, skinVars, useDialog} from '../src';
 import curry from 'lodash/curry';
 import iconKeywords from '../src/generated/mistica-icons/icons-keywords';
 
+import type {AlertProps, ConfirmProps, ExtendedDialogProps} from '../src/dialog';
 import type {Colors} from '../src/skins/types';
 import type {Theme} from '../src/theme';
 
@@ -49,8 +50,12 @@ const useScope = (): {
     colors: Colors;
     rawColors: Colors;
     iconKeywords: typeof iconKeywords;
+    alert: (params: AlertProps) => void;
+    confirm: (params: ConfirmProps) => void;
+    dialog: (params: ExtendedDialogProps) => void;
 } => {
     const theme = useTheme();
+    const {alert, confirm, dialog} = useDialog();
     const screenSize = useScreenSize();
     const playroomState = usePlayroomState();
 
@@ -59,6 +64,9 @@ const useScope = (): {
         colors: skinVars.colors,
         rawColors: skinVars.rawColors,
         iconKeywords,
+        alert,
+        confirm,
+        dialog,
         ...playroomState,
         ...screenSize,
     };
