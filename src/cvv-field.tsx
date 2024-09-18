@@ -42,7 +42,6 @@ const TooltipContent = ({acceptedCards}: {acceptedCards: CardOptions}) => {
                             <Text2>
                                 {texts.formCreditCardCvvTooltipAmex || t(tokens.formCreditCardCvvTooltipAmex)}
                             </Text2>
-                            )
                         </Inline>
                     )}
                 </Stack>

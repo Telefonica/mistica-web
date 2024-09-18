@@ -422,11 +422,7 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
                             })}
                         </Text3>
                     </div>
-                    {endIcon && (
-                        <div aria-hidden className={styles.endIconContainer}>
-                            {endIcon}
-                        </div>
-                    )}
+                    {endIcon && <div className={styles.endIconContainer}>{endIcon}</div>}
                     {endIconOverlay}
                 </ThemeVariant>
             </FieldContainer>
