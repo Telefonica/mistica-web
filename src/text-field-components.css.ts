@@ -116,14 +116,17 @@ export const helperContainer = sprinkles({
     display: 'flex',
 });
 
-export const helperText = style([
+export const leftHelperText = style([
     sprinkles({
-        flexGrow: 1,
         display: 'flex',
-        paddingTop: 4,
     }),
     {
         margin: 0, // reset p default browser margin
         lineHeight: '0',
     },
 ]);
+
+export const helperText = sprinkles({
+    flexGrow: 1,
+    paddingTop: 4,
+});
