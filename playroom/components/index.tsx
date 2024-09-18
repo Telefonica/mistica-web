@@ -41,37 +41,41 @@ export {default as ButtonGroup} from '../../src/button-group';
 type ValidSkinName = Exclude<KnownSkinName, 'O2' | 'Vivo'>;
 
 const themesMap: {
-    [skinName in ValidSkinName]: {themeConfig: ThemeConfig; text: string; icon: React.ReactNode};
+    [skinName in ValidSkinName]: {
+        themeConfig: ThemeConfig;
+        text: string;
+        Icon: (props: IconProps) => JSX.Element;
+    };
 } = {
     Movistar: {
         text: 'Movistar',
         themeConfig: Movistar,
-        icon: <MovistarLogo size={24} />,
+        Icon: () => <MovistarLogo size={24} />,
     },
     'Vivo-new': {
         text: 'Vivo',
         themeConfig: Vivo_New,
-        icon: <VivoLogo size={24} />,
+        Icon: () => <VivoLogo size={24} />,
     },
     'O2-new': {
         text: 'O2',
         themeConfig: O2_New,
-        icon: <O2NewLogo size={24} />,
+        Icon: () => <O2NewLogo size={24} />,
     },
     Telefonica: {
         text: 'Telefónica',
         themeConfig: Telefonica,
-        icon: <TelefonicaLogo size={24} />,
+        Icon: () => <TelefonicaLogo size={24} />,
     },
     Blau: {
         text: 'Blau',
         themeConfig: Blau,
-        icon: <BlauLogo size={24} />,
+        Icon: () => <BlauLogo size={24} />,
     },
     Tu: {
         text: 'Tu',
         themeConfig: Tu,
-        icon: <TuLogo size={24} />,
+        Icon: () => <TuLogo size={24} />,
     },
 };
 
@@ -166,7 +170,7 @@ const PreviewToolsControls = React.forwardRef<HTMLDivElement, PreviewToolsContro
                 <div className={styles.controls} ref={ref}>
                     <div className={styles.tabs}>
                         <Tabs
-                            tabs={Object.values(themesMap).map(({icon}) => ({text: '', icon}))}
+                            tabs={Object.values(themesMap).map(({Icon}) => ({text: '', Icon}))}
                             selectedIndex={Object.keys(themesMap).indexOf(skinName)}
                             onChange={(index) => {
                                 onSkinNameChange((Object.keys(themesMap) as Array<ValidSkinName>)[index]);
