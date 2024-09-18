@@ -123,6 +123,7 @@ export const helperText = style([
         paddingTop: 4,
     }),
     {
+        margin: 0, // reset p default browser margin
         lineHeight: '0',
     },
 ]);
