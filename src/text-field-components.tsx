@@ -11,6 +11,7 @@ import {getPrefixedDataAttributes} from './utils/dom';
 import * as tokens from './text-tokens';
 import Inline from './inline';
 import IconInformationRegular from './generated/mistica-icons/icon-information-regular';
+import Box from './box';
 
 import type {DataAttributes} from './utils/types';
 
@@ -96,18 +97,20 @@ export const HelperText = ({leftText, rightText, error, id}: HelperTextProps): J
     return (
         <>
             {leftText && (
-                <div className={classnames(styles.helperText, styles.leftText)}>
-                    <Inline space={4}>
-                        {error && <IconInformationRegular size="1em" color={leftColor} />}
-                        <Text1 color={leftColor} regular as="p" id={id}>
-                            {leftText}
-                        </Text1>
-                    </Inline>
-                </div>
+                <p className={classnames(styles.helperText)}>
+                    {error && (
+                        <Box paddingRight={4}>
+                            <IconInformationRegular size="1rem" color={leftColor} />
+                        </Box>
+                    )}
+                    <Text1 color={leftColor} regular id={id}>
+                        {leftText}
+                    </Text1>
+                </p>
             )}
             {rightText && (
-                <div className={classnames(styles.helperText, styles.rightText)}>
-                    <Text1 color={rightColor} regular as="p">
+                <div className={classnames(styles.helperText)}>
+                    <Text1 color={rightColor} regular as="p" textAlign="right">
                         {rightText}
                     </Text1>
                 </div>

@@ -116,16 +116,13 @@ export const helperContainer = sprinkles({
     display: 'flex',
 });
 
-export const helperText = style({
-    margin: 0,
-    marginTop: 4,
-    flexGrow: 1,
-});
-
-export const leftText = style({
-    textAlign: 'left',
-});
-
-export const rightText = style({
-    textAlign: 'right',
-});
+export const helperText = style([
+    sprinkles({
+        flexGrow: 1,
+        display: 'flex',
+        paddingTop: 4,
+    }),
+    {
+        lineHeight: '0',
+    },
+]);
