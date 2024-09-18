@@ -61,6 +61,7 @@ const CvvField = ({
     error,
     helperText,
     name,
+    label,
     optional,
     validate: validateProp,
     onChange,
@@ -79,9 +80,6 @@ const CvvField = ({
     const [isCvvHelpOpen, setIsCvvHelpOpen] = React.useState(false);
 
     const validate = (value: string, rawValue: string) => {
-        if (!value) {
-            return optional ? '' : texts.formFieldErrorIsMandatory || t(tokens.formFieldErrorIsMandatory);
-        }
         if (value.length !== maxLength) {
             return texts.formCreditCardCvvError || t(tokens.formCreditCardCvvError);
         }
@@ -92,6 +90,7 @@ const CvvField = ({
 
     const fieldProps = useFieldProps({
         name,
+        label,
         value,
         defaultValue,
         processValue,

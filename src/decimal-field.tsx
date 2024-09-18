@@ -115,8 +115,9 @@ const DecimalField = ({
     error,
     helperText,
     name,
+    label,
     optional,
-    validate: validateProp,
+    validate,
     onChange,
     onChangeValue,
     onBlur,
@@ -126,19 +127,11 @@ const DecimalField = ({
     dataAttributes,
     ...rest
 }: DecimalFieldProps): JSX.Element => {
-    const {texts, t} = useTheme();
-
-    const validate = (value: string | undefined, rawValue: string) => {
-        if (!value) {
-            return optional ? '' : texts.formFieldErrorIsMandatory || t(tokens.formFieldErrorIsMandatory);
-        }
-        return validateProp?.(value, rawValue);
-    };
-
     const processValue = (value: string) => value.trim();
 
     const fieldProps = useFieldProps({
         name,
+        label,
         value,
         defaultValue,
         processValue,

@@ -5,6 +5,7 @@ import {FormContext} from './form-context';
 import classnames from 'classnames';
 import {sprinkles} from './sprinkles.css';
 import * as tokens from './text-tokens';
+import ScreenReaderOnly from './screen-reader-only';
 
 import type {FormStatus, FormErrors, FieldRegistration} from './form-context';
 
@@ -27,6 +28,7 @@ type FormProps = {
     autoJump?: boolean;
     children: React.ReactNode;
     onValidationErrors?: (errors: FormErrors) => void;
+    getErrorMessageForScreenReader?: (errors: FormErrors) => string;
     className?: string;
 };
 
@@ -37,6 +39,7 @@ const Form = ({
     initialValues = {},
     autoJump = false,
     onValidationErrors,
+    getErrorMessageForScreenReader,
     id: idProp,
 }: FormProps): JSX.Element => {
     const isMountedRef = React.useRef(true); // https://github.com/facebook/react/issues/14369#issuecomment-468305796
@@ -64,12 +67,13 @@ const Form = ({
     }, []);
 
     const register = React.useCallback(
-        (name: string, {input, validator, focusableElement}: FieldRegistration) => {
+        (name: string, {input, validator, focusableElement, label}: FieldRegistration) => {
             if (input || focusableElement) {
                 fieldRegistrations.current.set(name, {
                     input,
                     validator,
                     focusableElement,
+                    label,
                 });
             } else {
                 fieldRegistrations.current.delete(name);
@@ -194,6 +198,12 @@ const Form = ({
         setRawValues((rawValues) => ({...rawValues, [name]: value}));
     }, []);
 
+    const fieldsWithErrorLabels = Object.entries(formErrors)
+        .map(([name, errorMessage]) => errorMessage && fieldRegistrations.current.get(name)?.label)
+        .filter(Boolean);
+
+    const hasMultipleFormErrors = fieldsWithErrorLabels.length > 1;
+
     return (
         <FormContext.Provider
             value={{
@@ -218,6 +228,15 @@ const Form = ({
                 className={classnames(sprinkles({width: '100%'}), className)}
                 noValidate
             >
+                {hasMultipleFormErrors ? (
+                    <ScreenReaderOnly>
+                        <span role="alert">
+                            {getErrorMessageForScreenReader
+                                ? getErrorMessageForScreenReader(formErrors)
+                                : `${texts.formErrorsAlertMessage || t(tokens.formErrorsAlertMessage)}: ${fieldsWithErrorLabels.join(', ')}`}
+                        </span>
+                    </ScreenReaderOnly>
+                ) : null}
                 {children}
             </form>
         </FormContext.Provider>

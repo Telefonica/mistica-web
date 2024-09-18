@@ -318,7 +318,7 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
                 readOnly={rest.readOnly}
                 dataAttributes={dataAttributes}
             >
-                <ThemeVariant isInverse={false}>
+                <ThemeVariant variant="default">
                     {startIcon && <div className={styles.startIcon}>{startIcon}</div>}
 
                     {prefix && (
@@ -335,6 +335,18 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
                                 {prefix}
                             </Text3>
                         </div>
+                    )}
+                    {label && (
+                        <Label
+                            style={labelStyle}
+                            error={error}
+                            forId={id}
+                            inputState={inputState}
+                            shrinkLabel={shrinkLabel}
+                            optional={!rest.required}
+                        >
+                            {label}
+                        </Label>
                     )}
                     <div className={styles.fullWidth}>
                         <Text3 as="div" regular>
@@ -410,19 +422,11 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
                             })}
                         </Text3>
                     </div>
-                    {label && (
-                        <Label
-                            style={labelStyle}
-                            error={error}
-                            forId={id}
-                            inputState={inputState}
-                            shrinkLabel={shrinkLabel}
-                            optional={!rest.required}
-                        >
-                            {label}
-                        </Label>
+                    {endIcon && (
+                        <div aria-hidden className={styles.endIconContainer}>
+                            {endIcon}
+                        </div>
                     )}
-                    {endIcon && <div className={styles.endIconContainer}>{endIcon}</div>}
                     {endIconOverlay}
                 </ThemeVariant>
             </FieldContainer>

@@ -9,6 +9,8 @@ import {sprinkles} from './sprinkles.css';
 import {vars} from './skins/skin-contract.css';
 import {getPrefixedDataAttributes} from './utils/dom';
 import * as tokens from './text-tokens';
+import Inline from './inline';
+import {IconInformationRegular} from '../playroom/components';
 
 import type {DataAttributes} from './utils/types';
 
@@ -95,9 +97,12 @@ export const HelperText = ({leftText, rightText, error, id}: HelperTextProps): J
         <>
             {leftText && (
                 <div className={classnames(styles.helperText, styles.leftText)}>
-                    <Text1 color={leftColor} regular as="p" id={id}>
-                        {leftText}
-                    </Text1>
+                    <Inline space={4}>
+                        {error && <IconInformationRegular size="1em" color={leftColor} />}
+                        <Text1 color={leftColor} regular as="p" id={id}>
+                            {leftText}
+                        </Text1>
+                    </Inline>
                 </div>
             )}
             {rightText && (

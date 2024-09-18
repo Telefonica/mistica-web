@@ -97,6 +97,7 @@ const CreditCardExpirationField = ({
     error,
     helperText,
     name,
+    label,
     optional,
     validate: validateProp,
     onChange,
@@ -112,9 +113,6 @@ const CreditCardExpirationField = ({
     const {setFormError, jumpToNext} = useForm();
 
     const validate = (value: ExpirationDateValue, rawValue: string): string | undefined => {
-        if (!rawValue) {
-            return optional ? '' : texts.formFieldErrorIsMandatory || t(tokens.formFieldErrorIsMandatory);
-        }
         const {month, year} = value;
         if (!month || !year) {
             return texts.formCreditCardExpirationError || t(tokens.formCreditCardExpirationError);
@@ -142,6 +140,7 @@ const CreditCardExpirationField = ({
 
     const fieldProps = useFieldProps({
         name,
+        label,
         value,
         defaultValue,
         processValue,

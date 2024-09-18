@@ -103,6 +103,7 @@ const PhoneNumberField = ({
     error,
     helperText,
     name,
+    label,
     optional,
     validate,
     onChange,
@@ -136,6 +137,7 @@ const PhoneNumberField = ({
 
     const fieldProps = useFieldProps({
         name,
+        label,
         value,
         defaultValue,
         processValue,
