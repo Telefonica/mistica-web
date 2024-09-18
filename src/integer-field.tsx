@@ -1,9 +1,7 @@
 'use client';
 import * as React from 'react';
 import {useFieldProps} from './form-context';
-import {useTheme} from './hooks';
 import {TextFieldBaseAutosuggest} from './text-field-base';
-import * as tokens from './text-tokens';
 
 import type {CommonFormFieldProps} from './text-field-base';
 

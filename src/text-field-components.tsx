@@ -9,7 +9,6 @@ import {sprinkles} from './sprinkles.css';
 import {vars} from './skins/skin-contract.css';
 import {getPrefixedDataAttributes} from './utils/dom';
 import * as tokens from './text-tokens';
-import Inline from './inline';
 import IconInformationRegular from './generated/mistica-icons/icon-information-regular';
 import Box from './box';
 

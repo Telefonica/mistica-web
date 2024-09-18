@@ -6,7 +6,6 @@ import {TextFieldBaseAutosuggest} from './text-field-base';
 import {createChangeEvent} from './utils/dom';
 import {useRifm} from 'rifm';
 import {combineRefs} from './utils/common';
-import * as tokens from './text-tokens';
 
 import type {Locale} from './utils/locale';
 import type {CommonFormFieldProps} from './text-field-base';
