@@ -35,7 +35,7 @@ const PhoneInput = ({
     inputRef,
     value,
     defaultValue,
-    onChange,
+    onChange: onChangeFromProps,
     prefix,
     e164,
     format: formatFromProps,
@@ -47,6 +47,14 @@ const PhoneInput = ({
     const formatRef = React.useRef<NumberFormatter>(formatFromProps || formatPhoneDummy);
     /**  this state is used to force a re-render when libphonenumber is loaded */
     const [isLibphonenumberLoaded, setIsLibphonenumberloaded] = React.useState(false);
+    const regionCode = i18n.phoneNumberFormattingRegionCode;
+    const isControlledByParent = typeof value !== 'undefined';
+    const controlledValue = (isControlledByParent ? value : selfValue) as string;
+    const onChangeRef = React.useRef(onChangeFromProps);
+
+    React.useEffect(() => {
+        onChangeRef.current = onChangeFromProps;
+    }, [onChangeFromProps]);
 
     React.useEffect(() => {
         if (formatFromProps) {
@@ -60,20 +68,16 @@ const PhoneInput = ({
         }
     }, [formatFromProps]);
 
-    const regionCode = i18n.phoneNumberFormattingRegionCode;
-    const isControlledByParent = typeof value !== 'undefined';
-    const controlledValue = (isControlledByParent ? value : selfValue) as string;
-
     const handleChangeValue = React.useCallback(
         (newFormattedValue: string) => {
             if (!isControlledByParent) {
                 setSelfValue(newFormattedValue);
             }
             if (ref.current) {
-                onChange?.(createChangeEvent(ref.current, newFormattedValue));
+                onChangeRef.current?.(createChangeEvent(ref.current, newFormattedValue));
             }
         },
-        [isControlledByParent, onChange]
+        [isControlledByParent]
     );
 
     const format = React.useCallback(
@@ -105,10 +109,17 @@ const PhoneInput = ({
     const rifm = useRifm({
         format,
         value: controlledValue,
-        onChange: handleChangeValue,
+        // Instead of calling `handleChangeValue` here, we call it in `useEffect` below.
+        // When the formatter changes (libphonenumber is lazy loaded), rifm should call `onChange`
+        // with the new formatted value but it doesn't, so we need to call it manually.
+        onChange: () => {},
         accept: /[\d\-+#*]+/g,
         replace: (s) => s.replace(/@/g, '-'),
     });
+
+    React.useEffect(() => {
+        handleChangeValue(rifm.value);
+    }, [rifm.value, handleChangeValue]);
 
     return (
         <input
