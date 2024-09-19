@@ -233,7 +233,7 @@ const Form = ({
                         <span role="alert">
                             {getErrorMessageForScreenReader
                                 ? getErrorMessageForScreenReader(formErrors)
-                                : `${texts.formErrorsAlertMessage || t(tokens.formErrorsAlertMessage)}: ${fieldsWithErrorLabels.join(', ')}`}
+                                : `${texts.formErrorsAlertMessage || t(tokens.formErrorsAlertMessage)} ${fieldsWithErrorLabels.join(', ')}`}
                         </span>
                     </ScreenReaderOnly>
                 ) : null}
