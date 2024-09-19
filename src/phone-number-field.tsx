@@ -1,7 +1,6 @@
 'use client';
 import * as React from 'react';
 import {useRifm} from 'rifm';
-import {formatAsYouType, formatToE164, parse, getRegionCodeForCountryCode} from '@telefonica/libphonenumber';
 import {useFieldProps} from './form-context';
 import {TextFieldBaseAutosuggest} from './text-field-base';
 import {useTheme} from './hooks';
@@ -11,8 +10,14 @@ import {combineRefs} from './utils/common';
 import type {CommonFormFieldProps} from './text-field-base';
 import type {RegionCode} from './utils/region-code';
 
-const formatPhone = (regionCode: RegionCode, number: string): string =>
-    formatAsYouType(number.replace(/[^\d+*#]/g, ''), regionCode);
+let libphonenumber: typeof import('@telefonica/libphonenumber');
+
+type NumberFormatter = (number: string, regionCode: RegionCode) => string;
+
+const formatPhoneDummy: NumberFormatter = (number) => number;
+
+const formatPhoneUsingLibphonenumber: NumberFormatter = (number, regionCode) =>
+    libphonenumber.formatAsYouType(number.replace(/[^\d+*#]/g, ''), regionCode);
 
 type InputProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'value' | 'onInput'> & {
     inputRef?: React.Ref<HTMLInputElement>;
@@ -21,18 +26,47 @@ type InputProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'value' | 'o
     onInput?: (event: React.FormEvent<HTMLInputElement>) => void;
     prefix?: string;
     e164?: boolean;
+    format?: NumberFormatter;
 };
 
 const isValidPrefix = (prefix: string): boolean => !!prefix.match(/^\+\d+$/);
 
-const PhoneInput = ({inputRef, value, defaultValue, onChange, prefix, e164, ...other}: InputProps) => {
+const PhoneInput = ({
+    inputRef,
+    value,
+    defaultValue,
+    onChange: onChangeFromProps,
+    prefix,
+    e164,
+    format: formatFromProps,
+    ...other
+}: InputProps) => {
     const [selfValue, setSelfValue] = React.useState(defaultValue ?? '');
     const ref = React.useRef<HTMLInputElement | null>(null);
     const {i18n} = useTheme();
-
+    const formatRef = React.useRef<NumberFormatter>(formatFromProps || formatPhoneDummy);
+    /**  this state is used to force a re-render when libphonenumber is loaded */
+    const [isLibphonenumberLoaded, setIsLibphonenumberloaded] = React.useState(false);
     const regionCode = i18n.phoneNumberFormattingRegionCode;
     const isControlledByParent = typeof value !== 'undefined';
     const controlledValue = (isControlledByParent ? value : selfValue) as string;
+    const onChangeRef = React.useRef(onChangeFromProps);
+
+    React.useEffect(() => {
+        onChangeRef.current = onChangeFromProps;
+    }, [onChangeFromProps]);
+
+    React.useEffect(() => {
+        if (formatFromProps) {
+            formatRef.current = formatFromProps;
+        } else {
+            import('@telefonica/libphonenumber' /* webpackChunkName: "libphonenumber" */).then((lib) => {
+                libphonenumber = lib;
+                formatRef.current = formatPhoneUsingLibphonenumber;
+                setIsLibphonenumberloaded(true);
+            });
+        }
+    }, [formatFromProps]);
 
     const handleChangeValue = React.useCallback(
         (newFormattedValue: string) => {
@@ -40,10 +74,10 @@ const PhoneInput = ({inputRef, value, defaultValue, onChange, prefix, e164, ...o
                 setSelfValue(newFormattedValue);
             }
             if (ref.current) {
-                onChange?.(createChangeEvent(ref.current, newFormattedValue));
+                onChangeRef.current?.(createChangeEvent(ref.current, newFormattedValue));
             }
         },
-        [isControlledByParent, onChange]
+        [isControlledByParent]
     );
 
     const format = React.useCallback(
@@ -57,15 +91,15 @@ const PhoneInput = ({inputRef, value, defaultValue, onChange, prefix, e164, ...o
             // then remove the prefix from the result
             if (prefix && isValidPrefix(prefix)) {
                 const prefixedValue = prefix + value;
-                result = formatPhone(regionCode, prefixedValue);
+                result = formatRef.current(prefixedValue, regionCode);
                 if (result.startsWith(prefix)) {
                     result = result.slice(prefix.length).trim();
                 } else {
                     // fallback to regular formatting
-                    result = formatPhone(regionCode, value);
+                    result = formatRef.current(value, regionCode);
                 }
             } else {
-                result = formatPhone(regionCode, value);
+                result = formatRef.current(value, regionCode);
             }
             return result.replace(/-/g, '@');
         },
@@ -75,10 +109,17 @@ const PhoneInput = ({inputRef, value, defaultValue, onChange, prefix, e164, ...o
     const rifm = useRifm({
         format,
         value: controlledValue,
-        onChange: handleChangeValue,
+        // Instead of calling `handleChangeValue` here, we call it in `useEffect` below.
+        // When the formatter changes (libphonenumber is lazy loaded), rifm should call `onChange`
+        // with the new formatted value but it doesn't, so we need to call it manually.
+        onChange: () => {},
         accept: /[\d\-+#*]+/g,
         replace: (s) => s.replace(/@/g, '-'),
     });
+
+    React.useEffect(() => {
+        handleChangeValue(rifm.value);
+    }, [rifm.value, handleChangeValue]);
 
     return (
         <input
@@ -87,6 +128,7 @@ const PhoneInput = ({inputRef, value, defaultValue, onChange, prefix, e164, ...o
             onChange={rifm.onChange}
             type="tel" // shows telephone keypad in Android and iOS
             ref={combineRefs(inputRef, ref)}
+            data-using-libphonenumber={isLibphonenumberLoaded}
         />
     );
 };
@@ -96,6 +138,7 @@ export interface PhoneNumberFieldProps extends CommonFormFieldProps {
     prefix?: string;
     getSuggestions?: (value: string) => Array<string>;
     e164?: boolean;
+    format?: NumberFormatter;
 }
 
 const PhoneNumberField = ({
@@ -110,21 +153,34 @@ const PhoneNumberField = ({
     onBlur,
     value,
     defaultValue,
-    e164,
     dataAttributes,
+    /**
+     * By default this component will use google's libphonenumber library to format numbers.
+     * The component will load libphonenumber on demand, so it won't impact the initial load time.
+     * You can opt-out of using libphonenumber by providing a custom formatter.
+     */
+    format,
+    /** enabling e164 is incompatible with custom formatters because this requires libphonenumber  */
+    e164,
     ...rest
 }: PhoneNumberFieldProps): JSX.Element => {
     const {i18n} = useTheme();
 
+    if (process.env.NODE_ENV !== 'production') {
+        if (e164 && format) {
+            console.error('[PhoneNumberField] enabling e164 is incompatible with custom formatters');
+        }
+    }
+
     const processValue = (value: string) => {
-        if (e164) {
+        if (e164 && libphonenumber && !format) {
             try {
                 const numericPrefix = (rest.prefix ?? '').replace(/[^\d]/g, '');
-                let regionCode = getRegionCodeForCountryCode(numericPrefix);
+                let regionCode = libphonenumber.getRegionCodeForCountryCode(numericPrefix);
                 if (!regionCode || regionCode === 'ZZ') {
                     regionCode = i18n.phoneNumberFormattingRegionCode;
                 }
-                return formatToE164(parse(value, regionCode));
+                return libphonenumber.formatToE164(libphonenumber.parse(value, regionCode));
             } catch (e) {
                 return '';
             }
@@ -154,9 +210,12 @@ const PhoneNumberField = ({
             {...rest}
             {...fieldProps}
             type="phone"
-            inputProps={{prefix: rest.prefix}}
+            inputProps={{prefix: rest.prefix, format}}
             inputComponent={PhoneInput}
-            dataAttributes={{'component-name': 'PhoneNumberField', ...dataAttributes}}
+            dataAttributes={{
+                'component-name': 'PhoneNumberField',
+                ...dataAttributes,
+            }}
         />
     );
 };
