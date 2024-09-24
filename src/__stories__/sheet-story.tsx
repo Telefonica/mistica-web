@@ -23,7 +23,7 @@ import {
     IconInformationRegular,
     ButtonLink,
 } from '..';
-import {ActionsSheet, ActionsListSheet, InfoSheet, RadioListSheet} from '../sheet';
+import {ActionsSheet, ActionsListSheet, InfoSheet, RadioListSheet} from '../sheet-common';
 import avatarImg from './images/avatar.jpg';
 
 export default {

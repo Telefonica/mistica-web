@@ -118,7 +118,7 @@ export {
     ActionsListSheet,
     RadioListSheet,
     SheetBody,
-} from './sheet';
+} from './sheet-common';
 export {default as SheetRoot, showSheet} from './sheet-root';
 export type {NativeSheetImplementation} from './sheet-root';
 export {default as StackingGroup} from './stacking-group';

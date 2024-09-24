@@ -1,6 +1,6 @@
 'use client';
 import * as React from 'react';
-import {ActionsSheet, ActionsListSheet, InfoSheet, RadioListSheet} from './sheet';
+import {ActionsSheet, ActionsListSheet, InfoSheet, RadioListSheet} from './sheet-common';
 import Image from './image';
 import {useTheme} from './hooks';
 

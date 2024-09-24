@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Sheet, {ActionsSheet, ActionsListSheet, InfoSheet, RadioListSheet} from '../sheet';
+import Sheet, {ActionsSheet, ActionsListSheet, InfoSheet, RadioListSheet} from '../sheet-common';
 import {act, render, screen, waitFor, waitForElementToBeRemoved, within} from '@testing-library/react';
 import {SheetRoot, ButtonPrimary, showSheet, ThemeContextProvider, Title1} from '..';
 import {makeTheme} from './test-utils';
