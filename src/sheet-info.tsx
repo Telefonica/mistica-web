@@ -2,6 +2,14 @@
 import * as React from 'react';
 import Inline from './inline';
 import Circle from './circle';
+import Sheet, {SheetBody} from './sheet-common';
+import {useTheme} from './hooks';
+import Box from './box';
+import Stack from './stack';
+import {Text3, Text2} from './text';
+import {vars as skinVars} from './skins/skin-contract.css';
+import * as styles from './sheet-info.css';
+import Image from './image';
 
 import type {ExclusifyUnion} from './utils/utility-types';
 import type {DataAttributes, IconProps} from './utils/types';
@@ -89,3 +97,5 @@ export const InfoSheet = React.forwardRef<HTMLDivElement, InfoSheetProps>(
         );
     }
 );
+
+export default InfoSheet;

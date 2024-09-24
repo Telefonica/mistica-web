@@ -13,20 +13,17 @@ import {Row, RowList} from './list';
 import NegativeBox from './negative-box';
 import Stack from './stack';
 import Box from './box';
-import Touchable from './touchable';
 import Divider from './divider';
 import {getPrefixedDataAttributes, getScrollableParentElement} from './utils/dom';
 import {ButtonLink, ButtonPrimary, ButtonSecondary} from './button';
 import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
 import {InternalIconButton} from './icon-button';
 import ButtonLayout from './button-layout';
-import Image from './image';
 import {safeAreaInsetBottom} from './utils/css';
 import {MOBILE_SIDE_MARGIN, SMALL_DESKTOP_SIDE_MARGIN, TABLET_SIDE_MARGIN} from './responsive-layout.css';
 import * as tokens from './text-tokens';
 
-import type {ExclusifyUnion} from './utils/utility-types';
-import type {DataAttributes, IconProps, RendersNullableElement, TrackingEvent} from './utils/types';
+import type {DataAttributes, RendersNullableElement, TrackingEvent} from './utils/types';
 
 const transitionDuration = process.env.NODE_ENV === 'test' ? 0 : styles.transitionDuration;
 
@@ -477,101 +474,6 @@ export const RadioListSheet = React.forwardRef<HTMLDivElement, RadioListSheetPro
                                     ))}
                                 </RowList>
                             </RadioGroup>
-                        </NegativeBox>
-                    </SheetBody>
-                )}
-            </Sheet>
-        );
-    }
-);
-
-type ActionsListSheetProps = {
-    title?: string;
-    subtitle?: string;
-    description?: string | ReadonlyArray<string>;
-    items: ReadonlyArray<{
-        id: string;
-        title: string;
-        style?: 'normal' | 'destructive'; // "normal" by default
-        icon?: ExclusifyUnion<
-            | {
-                  Icon: React.ComponentType<IconProps>;
-              }
-            | {
-                  url: string;
-                  urlDark?: string;
-              }
-        >;
-    }>;
-    onClose?: () => void;
-    onSelect?: (id: string) => void;
-    dataAttributes?: DataAttributes;
-};
-
-export const ActionsListSheet = React.forwardRef<HTMLDivElement, ActionsListSheetProps>(
-    ({title, subtitle, description, items, onClose, onSelect, dataAttributes}, ref) => {
-        const {isDarkMode} = useTheme();
-
-        return (
-            <Sheet
-                onClose={onClose}
-                ref={ref}
-                dataAttributes={{'component-name': 'ActionsListSheet', ...dataAttributes}}
-            >
-                {({closeModal, modalTitleId}) => (
-                    <SheetBody
-                        title={title}
-                        subtitle={subtitle}
-                        description={description}
-                        modalTitleId={modalTitleId}
-                    >
-                        <NegativeBox>
-                            {items.map(({id, style, title, icon}) => (
-                                <Touchable
-                                    key={id}
-                                    onPress={() => {
-                                        onSelect?.(id);
-                                        closeModal();
-                                    }}
-                                >
-                                    <div className={styles.sheetActionRow}>
-                                        {icon && (
-                                            <Box paddingRight={16}>
-                                                {icon.Icon ? (
-                                                    <icon.Icon
-                                                        size={24}
-                                                        color={
-                                                            style === 'destructive'
-                                                                ? skinVars.colors.textLinkDanger
-                                                                : skinVars.colors.neutralHigh
-                                                        }
-                                                    />
-                                                ) : (
-                                                    <Image
-                                                        circular
-                                                        src={
-                                                            isDarkMode && icon.urlDark
-                                                                ? icon.urlDark
-                                                                : icon.url
-                                                        }
-                                                        width={40}
-                                                    />
-                                                )}
-                                            </Box>
-                                        )}
-                                        <Text3
-                                            regular
-                                            color={
-                                                style === 'destructive'
-                                                    ? skinVars.colors.textLinkDanger
-                                                    : skinVars.colors.textPrimary
-                                            }
-                                        >
-                                            {title}
-                                        </Text3>
-                                    </div>
-                                </Touchable>
-                            ))}
                         </NegativeBox>
                     </SheetBody>
                 )}

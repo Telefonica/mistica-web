@@ -1,10 +1,25 @@
 'use client';
 import * as React from 'react';
-import {ActionsSheet, ActionsListSheet, InfoSheet, RadioListSheet} from './sheet-common';
+import {ActionsSheet, RadioListSheet} from './sheet-common';
 import Image from './image';
 import {useTheme} from './hooks';
 
 import type {ExclusifyUnion, Id} from './utils/utility-types';
+
+const InfoSheet = React.lazy(
+    () =>
+        import(
+            /* webpackChunkName: "sheet-info" */
+            './sheet-info'
+        )
+);
+const ActionsListSheet = React.lazy(
+    () =>
+        import(
+            /* webpackChunkName: "sheet-action-list" */
+            './sheet-action-list'
+        )
+);
 
 type InfoIcon = ExclusifyUnion<
     | {
@@ -373,9 +388,12 @@ export const SheetRoot = (props: Props): React.ReactElement | null => {
         selectionRef.current = id;
     };
 
+    let element = <></>;
+
     switch (sheetProps.type) {
         case 'INFO':
-            return <InfoSheet {...sheetProps.props} onClose={handleClose} />;
+            element = <InfoSheet {...sheetProps.props} onClose={handleClose} />;
+            break;
         case 'ACTIONS_LIST':
             return <ActionsListSheet {...sheetProps.props} onClose={handleClose} onSelect={handleSelect} />;
         case 'RADIO_LIST':
@@ -409,6 +427,8 @@ export const SheetRoot = (props: Props): React.ReactElement | null => {
             // @ts-expect-error sheetProps is never. This switch is exhaustive.
             throw new Error(`Unknown sheet type: ${sheetProps.type}`);
     }
+
+    return <React.Suspense fallback={null}>{element}</React.Suspense>;
 };
 
 export default SheetRoot;
