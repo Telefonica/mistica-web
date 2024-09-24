@@ -82,9 +82,10 @@ export const showSheet = <T extends SheetType>(
     };
 
     if (nativeSheetImplementation) {
+        const impl = nativeSheetImplementation;
         return import(/* webpackChunkName: "sheet-native" */ './sheet-native')
             .then(({showNativeSheet}) => {
-                return showNativeSheet(sheetProps);
+                return showNativeSheet(impl, sheetProps);
             })
             .catch((error) => {
                 if (error.code === '400') {
@@ -182,9 +183,12 @@ export const SheetRoot = (props: Props): React.ReactElement | null => {
             element = <InfoSheet {...sheetProps.props} onClose={handleClose} />;
             break;
         case 'ACTIONS_LIST':
-            return <ActionsListSheet {...sheetProps.props} onClose={handleClose} onSelect={handleSelect} />;
+            element = (
+                <ActionsListSheet {...sheetProps.props} onClose={handleClose} onSelect={handleSelect} />
+            );
+            break;
         case 'RADIO_LIST':
-            return (
+            element = (
                 <RadioListSheet
                     {...sheetProps.props}
                     items={sheetProps.props.items.map((item) => ({
@@ -201,8 +205,9 @@ export const SheetRoot = (props: Props): React.ReactElement | null => {
                     onSelect={handleSelect}
                 />
             );
+            break;
         case 'ACTIONS':
-            return (
+            element = (
                 <ActionsSheet
                     {...sheetProps.props}
                     buttonLink={sheetProps.props.link}
@@ -210,6 +215,7 @@ export const SheetRoot = (props: Props): React.ReactElement | null => {
                     onPressButton={handleSelect}
                 />
             );
+            break;
         default:
             // @ts-expect-error sheetProps is never. This switch is exhaustive.
             throw new Error(`Unknown sheet type: ${sheetProps.type}`);

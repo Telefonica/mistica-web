@@ -7,12 +7,6 @@ import type {
     SheetTypeWithPropsUnion,
 } from './sheet-types';
 
-let nativeSheetImplementation: NativeSheetImplementation | null = null;
-
-export const setNativeSheetImplementation = (implementation: NativeSheetImplementation): void => {
-    nativeSheetImplementation = implementation;
-};
-
 const normalizeDescriptionForNative = (description?: string | Array<string>): string | undefined => {
     if (Array.isArray(description)) {
         if (description.length) {
@@ -24,13 +18,10 @@ const normalizeDescriptionForNative = (description?: string | Array<string>): st
     return description;
 };
 
-const showRadioListNativeSheet = ({
-    title,
-    subtitle,
-    description,
-    selectedId,
-    items,
-}: SheetPropsByType['RADIO_LIST']): Promise<SheetResultByType['RADIO_LIST']> => {
+const showRadioListNativeSheet = (
+    nativeSheetImplementation: NativeSheetImplementation,
+    {title, subtitle, description, selectedId, items}: SheetPropsByType['RADIO_LIST']
+): Promise<SheetResultByType['RADIO_LIST']> => {
     return (nativeSheetImplementation as NativeSheetImplementation)({
         title,
         subtitle,
@@ -61,12 +52,10 @@ const showRadioListNativeSheet = ({
     });
 };
 
-const showActionsListNativeSheet = ({
-    title,
-    subtitle,
-    description,
-    items,
-}: SheetPropsByType['ACTIONS_LIST']): Promise<SheetResultByType['ACTIONS_LIST']> => {
+const showActionsListNativeSheet = (
+    nativeSheetImplementation: NativeSheetImplementation,
+    {title, subtitle, description, items}: SheetPropsByType['ACTIONS_LIST']
+): Promise<SheetResultByType['ACTIONS_LIST']> => {
     return (nativeSheetImplementation as NativeSheetImplementation)({
         title,
         subtitle,
@@ -97,12 +86,10 @@ const showActionsListNativeSheet = ({
     });
 };
 
-const showInfoNativeSheet = async ({
-    title,
-    subtitle,
-    description,
-    items,
-}: SheetPropsByType['INFO']): Promise<SheetResultByType['INFO']> => {
+const showInfoNativeSheet = async (
+    nativeSheetImplementation: NativeSheetImplementation,
+    {title, subtitle, description, items}: SheetPropsByType['INFO']
+): Promise<SheetResultByType['INFO']> => {
     // nothing to return, this is an informative sheet
     await (nativeSheetImplementation as NativeSheetImplementation)({
         title,
@@ -122,14 +109,10 @@ const showInfoNativeSheet = async ({
     });
 };
 
-const showActionsNativeSheet = ({
-    title,
-    subtitle,
-    description,
-    button,
-    secondaryButton,
-    link,
-}: SheetPropsByType['ACTIONS']): Promise<SheetResultByType['ACTIONS']> => {
+const showActionsNativeSheet = (
+    nativeSheetImplementation: NativeSheetImplementation,
+    {title, subtitle, description, button, secondaryButton, link}: SheetPropsByType['ACTIONS']
+): Promise<SheetResultByType['ACTIONS']> => {
     return (nativeSheetImplementation as NativeSheetImplementation)({
         title,
         subtitle,
@@ -161,22 +144,31 @@ const showActionsNativeSheet = ({
 };
 
 export const showNativeSheet = <T extends SheetType>(
+    nativeSheetImplementation: NativeSheetImplementation,
     sheetProps: SheetTypeWithProps<T>
 ): Promise<SheetResultByType[T]> => {
     let nativeResponse: Promise<SheetResultByType[T]>;
     const {type, props} = sheetProps as SheetTypeWithPropsUnion;
     switch (type) {
         case 'INFO':
-            nativeResponse = showInfoNativeSheet(props) as Promise<SheetResultByType[T]>;
+            nativeResponse = showInfoNativeSheet(nativeSheetImplementation, props) as Promise<
+                SheetResultByType[T]
+            >;
             break;
         case 'ACTIONS_LIST':
-            nativeResponse = showActionsListNativeSheet(props) as Promise<SheetResultByType[T]>;
+            nativeResponse = showActionsListNativeSheet(nativeSheetImplementation, props) as Promise<
+                SheetResultByType[T]
+            >;
             break;
         case 'RADIO_LIST':
-            nativeResponse = showRadioListNativeSheet(props) as Promise<SheetResultByType[T]>;
+            nativeResponse = showRadioListNativeSheet(nativeSheetImplementation, props) as Promise<
+                SheetResultByType[T]
+            >;
             break;
         case 'ACTIONS':
-            nativeResponse = showActionsNativeSheet(props) as Promise<SheetResultByType[T]>;
+            nativeResponse = showActionsNativeSheet(nativeSheetImplementation, props) as Promise<
+                SheetResultByType[T]
+            >;
             break;
         default:
             const unknownType: never = type;
