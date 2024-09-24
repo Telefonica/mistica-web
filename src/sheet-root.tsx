@@ -3,7 +3,15 @@ import * as React from 'react';
 import Image from './image';
 import {useTheme} from './hooks';
 
-import type {ExclusifyUnion, Id} from './utils/utility-types';
+import type {
+    NativeSheetImplementation,
+    SheetResultByType,
+    SheetType,
+    SheetTypeWithProps,
+    SheetTypeWithPropsUnion,
+} from './sheet-types';
+
+let nativeSheetImplementation: NativeSheetImplementation | null = null;
 
 const ActionsSheet = React.lazy(
     () =>
@@ -36,87 +44,6 @@ const RadioListSheet = React.lazy(
         )
 );
 
-type InfoIcon = ExclusifyUnion<
-    | {
-          type: 'small' | 'regular';
-          url: string;
-          urlDark?: string;
-      }
-    | {type: 'bullet'}
->;
-
-type SheetProps<T> = Id<
-    {
-        title?: string;
-        subtitle?: string;
-        description?: string | Array<string>;
-    } & T
->;
-
-type SheetPropsByType = {
-    RADIO_LIST: SheetProps<{
-        selectedId?: string;
-        items: Array<{
-            id: string;
-            title?: string;
-            description?: string;
-            icon?: {
-                size?: 'small' | 'large';
-                url: string;
-                urlDark?: string;
-            };
-        }>;
-    }>;
-    ACTIONS_LIST: SheetProps<{
-        items: Array<{
-            id: string;
-            title: string;
-            style?: 'normal' | 'destructive';
-            icon?: {
-                url: string;
-                urlDark?: string;
-            };
-        }>;
-    }>;
-    INFO: SheetProps<{
-        items: Array<{
-            id: string;
-            title: string;
-            description?: string;
-            icon: InfoIcon;
-        }>;
-    }>;
-    ACTIONS: SheetProps<{
-        button: {
-            text: string;
-        };
-        secondaryButton?: {
-            text: string;
-        };
-        link?: {
-            text: string;
-            withChevron?: boolean;
-        };
-    }>;
-};
-
-type SheetResultByType = {
-    RADIO_LIST: {action: 'SUBMIT'; selectedId: string} | {action: 'DISMISS'};
-    ACTIONS_LIST: {action: 'SUBMIT'; selectedId: string} | {action: 'DISMISS'};
-    INFO: void;
-    ACTIONS: {action: 'PRIMARY' | 'SECONDARY' | 'LINK' | 'DISMISS'};
-};
-
-type SheetType = keyof SheetPropsByType;
-
-type SheetTypeWithProps<T extends SheetType> = Id<{type: T; props: SheetPropsByType[T]}>;
-
-type SheetTypeWithPropsUnion = {
-    [T in SheetType]: SheetTypeWithProps<T>;
-}[SheetType];
-
-export type NativeSheetImplementation = (typeof import('@tef-novum/webview-bridge'))['bottomSheet'];
-
 type SheetPropsListener = (sheetProps: SheetTypeWithPropsUnion) => void;
 type SheetPromiseResolve = <T>(
     value: T extends SheetType ? SheetResultByType[T] : 'You must provide a type parameter'
@@ -124,146 +51,6 @@ type SheetPromiseResolve = <T>(
 
 let listener: SheetPropsListener | null = null;
 let sheetPromiseResolve: SheetPromiseResolve | null = null;
-let nativeSheetImplementation: NativeSheetImplementation | null = null;
-
-const normalizeDescriptionForNative = (description?: string | Array<string>): string | undefined => {
-    if (Array.isArray(description)) {
-        if (description.length) {
-            return description.join('\n\n');
-        } else {
-            return undefined;
-        }
-    }
-    return description;
-};
-
-const showRadioListNativeSheet = ({
-    title,
-    subtitle,
-    description,
-    selectedId,
-    items,
-}: SheetPropsByType['RADIO_LIST']) =>
-    (nativeSheetImplementation as NativeSheetImplementation)({
-        title,
-        subtitle,
-        // TODO: add multiline support to native sheet
-        description: normalizeDescriptionForNative(description),
-        content: [
-            {
-                type: 'LIST',
-                id: 'list-0',
-                listType: 'SINGLE_SELECTION',
-                autoSubmit: true,
-                selectedIds: typeof selectedId === 'string' ? [selectedId] : [],
-                items,
-            },
-        ],
-    }).then(({action, result}) => {
-        if (action === 'SUBMIT') {
-            return {
-                action,
-                selectedId: result[0].selectedIds[0],
-            };
-        } else {
-            return {
-                action,
-                selectedId: null,
-            };
-        }
-    });
-
-const showActionsListNativeSheet = ({
-    title,
-    subtitle,
-    description,
-    items,
-}: SheetPropsByType['ACTIONS_LIST']) =>
-    (nativeSheetImplementation as NativeSheetImplementation)({
-        title,
-        subtitle,
-        // TODO: add multiline support to native sheet
-        description: normalizeDescriptionForNative(description),
-        content: [
-            {
-                type: 'LIST',
-                id: 'list-0',
-                listType: 'ACTIONS',
-                autoSubmit: true,
-                selectedIds: [],
-                items,
-            },
-        ],
-    }).then(({action, result}) => {
-        if (action === 'SUBMIT') {
-            return {
-                action,
-                selectedId: result[0].selectedIds[0],
-            };
-        } else {
-            return {
-                action,
-                selectedId: null,
-            };
-        }
-    });
-
-const showInfoNativeSheet = async ({title, subtitle, description, items}: SheetPropsByType['INFO']) => {
-    await (nativeSheetImplementation as NativeSheetImplementation)({
-        title,
-        subtitle,
-        // TODO: add multiline support to native sheet
-        description: normalizeDescriptionForNative(description),
-        content: [
-            {
-                type: 'LIST',
-                id: 'list-0',
-                listType: 'INFORMATIVE',
-                autoSubmit: false,
-                selectedIds: [],
-                items,
-            },
-        ],
-    });
-};
-
-const showActionsNativeSheet = async ({
-    title,
-    subtitle,
-    description,
-    button,
-    secondaryButton,
-    link,
-}: SheetPropsByType['ACTIONS']) => {
-    return (nativeSheetImplementation as NativeSheetImplementation)({
-        title,
-        subtitle,
-        // TODO: add multiline support to native sheet
-        description: normalizeDescriptionForNative(description),
-        content: [
-            {
-                type: 'BOTTOM_ACTIONS',
-                id: 'bottom-actions-0',
-                button,
-                secondaryButton,
-                link,
-            },
-        ],
-    }).then(({action, result}) => {
-        if (action === 'SUBMIT') {
-            const bottomActionsResult = result.find(({id}) => id === 'bottom-actions-0');
-            const pressedAction = bottomActionsResult?.selectedIds[0];
-            if (pressedAction === 'PRIMARY' || pressedAction === 'SECONDARY' || pressedAction === 'LINK') {
-                return {
-                    action: pressedAction,
-                };
-            }
-        }
-        return {
-            action: 'DISMISS',
-        };
-    });
-};
 
 let isSheetOpen = false;
 export const showSheet = <T extends SheetType>(
@@ -295,33 +82,18 @@ export const showSheet = <T extends SheetType>(
     };
 
     if (nativeSheetImplementation) {
-        let nativeResponse: Promise<SheetResultByType[T]>;
-        const {type, props} = sheetProps as SheetTypeWithPropsUnion;
-        switch (type) {
-            case 'INFO':
-                nativeResponse = showInfoNativeSheet(props) as Promise<SheetResultByType[T]>;
-                break;
-            case 'ACTIONS_LIST':
-                nativeResponse = showActionsListNativeSheet(props) as Promise<SheetResultByType[T]>;
-                break;
-            case 'RADIO_LIST':
-                nativeResponse = showRadioListNativeSheet(props) as Promise<SheetResultByType[T]>;
-                break;
-            case 'ACTIONS':
-                nativeResponse = showActionsNativeSheet(props) as Promise<SheetResultByType[T]>;
-                break;
-            default:
-                const unknownType: never = type;
-                throw new Error(`Unknown sheet type: ${unknownType}`);
-        }
-        return nativeResponse.catch((error) => {
-            if (error.code === '400') {
-                // fallback to web implementation if native implementation doesn't support the sheet type
-                return webImplementation();
-            } else {
-                throw error;
-            }
-        });
+        return import(/* webpackChunkName: "sheet-native" */ './sheet-native')
+            .then(({showNativeSheet}) => {
+                return showNativeSheet(sheetProps);
+            })
+            .catch((error) => {
+                if (error.code === '400') {
+                    // fallback to web implementation if native implementation doesn't support the sheet type
+                    return webImplementation();
+                } else {
+                    throw error;
+                }
+            });
     } else {
         return webImplementation();
     }

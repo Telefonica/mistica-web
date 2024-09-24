@@ -27,6 +27,7 @@ import avatarImg from './images/avatar.jpg';
 import RadioListSheet from '../sheet-radio-list';
 import InfoSheet from '../sheet-info';
 import ActionsSheet from '../sheet-actions';
+import ActionsListSheet from '../sheet-action-list';
 
 export default {
     title: 'Components/Modals/Sheet',

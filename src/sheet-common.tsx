@@ -1,4 +1,9 @@
 'use client';
+/*
+ * Common code shared by web sheet components.
+ *
+ * IMPORTANT: Do NOT import anything from here into `sheet-root.tsx`
+ */
 import classnames from 'classnames';
 import * as React from 'react';
 import * as styles from './sheet-common.css';
