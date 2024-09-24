@@ -8,14 +8,10 @@ import {useSetModalStateEffect} from './modal-context-provider';
 import {Portal} from './portal';
 import {Text2, Text3, Text5} from './text';
 import {vars as skinVars} from './skins/skin-contract.css';
-import {RadioGroup} from './radio-button';
-import {Row, RowList} from './list';
-import NegativeBox from './negative-box';
 import Stack from './stack';
 import Box from './box';
 import Divider from './divider';
 import {getPrefixedDataAttributes, getScrollableParentElement} from './utils/dom';
-import {ButtonLink, ButtonPrimary, ButtonSecondary} from './button';
 import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
 import {InternalIconButton} from './icon-button';
 import ButtonLayout from './button-layout';
@@ -23,7 +19,8 @@ import {safeAreaInsetBottom} from './utils/css';
 import {MOBILE_SIDE_MARGIN, SMALL_DESKTOP_SIDE_MARGIN, TABLET_SIDE_MARGIN} from './responsive-layout.css';
 import * as tokens from './text-tokens';
 
-import type {DataAttributes, RendersNullableElement, TrackingEvent} from './utils/types';
+import type {DataAttributes, RendersNullableElement} from './utils/types';
+import type {ButtonLink, ButtonPrimary, ButtonSecondary} from './button';
 
 const transitionDuration = process.env.NODE_ENV === 'test' ? 0 : styles.transitionDuration;
 
@@ -387,185 +384,5 @@ export const SheetBody = ({
         </>
     );
 };
-
-type RadioListSheetProps = {
-    title?: string;
-    subtitle?: string;
-    description?: string | ReadonlyArray<string>;
-    items: ReadonlyArray<{
-        id: string;
-        title?: string;
-        description?: string;
-        asset?: React.ReactNode;
-    }>;
-    selectedId?: string;
-    onClose?: () => void;
-    onSelect?: (id: string) => void;
-    dataAttributes?: DataAttributes;
-    button?: {
-        text: string;
-    };
-};
-
-export const RadioListSheet = React.forwardRef<HTMLDivElement, RadioListSheetProps>(
-    ({title, subtitle, description, items, selectedId, onClose, onSelect, button, dataAttributes}, ref) => {
-        const [selectedItemId, setSelectedItemId] = React.useState(selectedId);
-        const hasSelectedRef = React.useRef(false);
-        const {isDesktopOrBigger} = useScreenSize();
-        const {texts, t} = useTheme();
-
-        return (
-            <Sheet
-                onClose={onClose}
-                ref={ref}
-                dataAttributes={{'component-name': 'RadioListSheet', ...dataAttributes}}
-            >
-                {({closeModal, modalTitleId}) => (
-                    <SheetBody
-                        title={title}
-                        subtitle={subtitle}
-                        description={description}
-                        modalTitleId={modalTitleId}
-                        button={
-                            isDesktopOrBigger ? (
-                                <ButtonPrimary
-                                    onPress={() => {
-                                        if (hasSelectedRef.current) {
-                                            onSelect?.(selectedItemId || '');
-                                        }
-                                        closeModal();
-                                    }}
-                                >
-                                    {button?.text || texts.sheetConfirmButton || t(tokens.sheetConfirmButton)}
-                                </ButtonPrimary>
-                            ) : undefined
-                        }
-                    >
-                        <NegativeBox>
-                            <RadioGroup
-                                aria-labelledby={modalTitleId}
-                                name="sheetselection"
-                                value={selectedItemId}
-                                onChange={(value) => {
-                                    setSelectedItemId(value);
-                                    hasSelectedRef.current = true;
-
-                                    // In desktop, the modal is closed with the ButtonPrimary
-                                    if (isDesktopOrBigger) {
-                                        return;
-                                    }
-
-                                    onSelect?.(value);
-                                    // Wait for radio animation to finish before closing the modal
-                                    setTimeout(() => {
-                                        closeModal();
-                                    }, 200);
-                                }}
-                            >
-                                <RowList>
-                                    {items.map((item) => (
-                                        <Row
-                                            key={item.id}
-                                            title={item.title ?? ''}
-                                            description={item.description}
-                                            asset={item.asset}
-                                            radioValue={item.id}
-                                        />
-                                    ))}
-                                </RowList>
-                            </RadioGroup>
-                        </NegativeBox>
-                    </SheetBody>
-                )}
-            </Sheet>
-        );
-    }
-);
-
-type PressedButton = 'PRIMARY' | 'SECONDARY' | 'LINK';
-
-type ButtonProps = {
-    text: string;
-    trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
-    trackEvent?: boolean;
-};
-
-type ActionsSheetProps = {
-    title?: string;
-    subtitle?: string;
-    description?: string | ReadonlyArray<string>;
-    button: ButtonProps;
-    secondaryButton?: ButtonProps;
-    buttonLink?: ButtonProps & {withChevron?: boolean};
-    onClose?: () => void;
-    onPressButton?: (pressedButton: PressedButton) => void;
-    dataAttributes?: DataAttributes;
-};
-
-export const ActionsSheet = React.forwardRef<HTMLDivElement, ActionsSheetProps>(
-    (
-        {
-            title,
-            subtitle,
-            description,
-            button,
-            secondaryButton,
-            buttonLink,
-            onClose,
-            dataAttributes,
-            onPressButton,
-        },
-        ref
-    ) => {
-        const createPressHandler = (closeModal: () => void, pressedButton: PressedButton) => () => {
-            onPressButton?.(pressedButton);
-            closeModal();
-        };
-
-        const getButtonProps = <T extends {text: string}>({text, ...otherProps}: T) => ({
-            children: text,
-            ...otherProps,
-        });
-
-        return (
-            <Sheet
-                onClose={onClose}
-                ref={ref}
-                dataAttributes={{'component-name': 'ActionsSheet', ...dataAttributes}}
-            >
-                {({modalTitleId, closeModal}) => (
-                    <SheetBody
-                        title={title}
-                        subtitle={subtitle}
-                        description={description}
-                        modalTitleId={modalTitleId}
-                        button={
-                            <ButtonPrimary
-                                {...getButtonProps(button)}
-                                onPress={createPressHandler(closeModal, 'PRIMARY')}
-                            />
-                        }
-                        secondaryButton={
-                            secondaryButton ? (
-                                <ButtonSecondary
-                                    {...getButtonProps(secondaryButton)}
-                                    onPress={createPressHandler(closeModal, 'SECONDARY')}
-                                />
-                            ) : undefined
-                        }
-                        link={
-                            buttonLink ? (
-                                <ButtonLink
-                                    {...getButtonProps(buttonLink)}
-                                    onPress={createPressHandler(closeModal, 'LINK')}
-                                />
-                            ) : undefined
-                        }
-                    />
-                )}
-            </Sheet>
-        );
-    }
-);
 
 export default Sheet;

@@ -23,8 +23,10 @@ import {
     IconInformationRegular,
     ButtonLink,
 } from '..';
-import {ActionsSheet, ActionsListSheet, InfoSheet, RadioListSheet} from '../sheet-common';
 import avatarImg from './images/avatar.jpg';
+import RadioListSheet from '../sheet-radio-list';
+import InfoSheet from '../sheet-info';
+import ActionsSheet from '../sheet-actions';
 
 export default {
     title: 'Components/Modals/Sheet',

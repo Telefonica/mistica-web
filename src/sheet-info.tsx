@@ -39,7 +39,7 @@ type InfoSheetProps = {
     dataAttributes?: DataAttributes;
 };
 
-export const InfoSheet = React.forwardRef<HTMLDivElement, InfoSheetProps>(
+const InfoSheet = React.forwardRef<HTMLDivElement, InfoSheetProps>(
     ({title, subtitle, description, items, onClose, dataAttributes}, ref) => {
         const {isDarkMode} = useTheme();
         return (

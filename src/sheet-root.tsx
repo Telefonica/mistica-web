@@ -1,10 +1,17 @@
 'use client';
 import * as React from 'react';
-import {ActionsSheet, RadioListSheet} from './sheet-common';
 import Image from './image';
 import {useTheme} from './hooks';
 
 import type {ExclusifyUnion, Id} from './utils/utility-types';
+
+const ActionsSheet = React.lazy(
+    () =>
+        import(
+            /* webpackChunkName: "sheet-actions" */
+            './sheet-actions'
+        )
+);
 
 const InfoSheet = React.lazy(
     () =>
@@ -18,6 +25,14 @@ const ActionsListSheet = React.lazy(
         import(
             /* webpackChunkName: "sheet-action-list" */
             './sheet-action-list'
+        )
+);
+
+const RadioListSheet = React.lazy(
+    () =>
+        import(
+            /* webpackChunkName: "sheet-radio-list" */
+            './sheet-radio-list'
         )
 );
 

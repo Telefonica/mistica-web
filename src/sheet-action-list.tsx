@@ -36,7 +36,7 @@ type ActionsListSheetProps = {
     dataAttributes?: DataAttributes;
 };
 
-export const ActionsListSheet = React.forwardRef<HTMLDivElement, ActionsListSheetProps>(
+const ActionsListSheet = React.forwardRef<HTMLDivElement, ActionsListSheetProps>(
     ({title, subtitle, description, items, onClose, onSelect, dataAttributes}, ref) => {
         const {isDarkMode} = useTheme();
 
