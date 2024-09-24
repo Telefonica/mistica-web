@@ -130,3 +130,10 @@ export const helperText = sprinkles({
     flexGrow: 1,
     paddingTop: 4,
 });
+
+export const warnIcon = style({
+    display: 'block',
+    marginRight: 4,
+    width: ['1rem', '1lh'], // some browsers don't support 'lh' unit yet
+    height: ['1rem', '1lh'],
+});
