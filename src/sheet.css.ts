@@ -243,7 +243,11 @@ export const stickyTitle = style([
         background: skinVars.colors.background,
     }),
     {
-        zIndex: 1,
+        '@media': {
+            [mq.tabletOrSmaller]: {
+                zIndex: 1,
+            },
+        },
     },
 ]);
 
@@ -254,7 +258,11 @@ export const stickyButtons = style([
         background: skinVars.colors.background,
     }),
     {
-        zIndex: 1,
+        '@media': {
+            [mq.tabletOrSmaller]: {
+                zIndex: 1,
+            },
+        },
     },
 ]);
 
