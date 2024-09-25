@@ -80,3 +80,7 @@ export type SheetTypeWithProps<T extends SheetType> = Id<{type: T; props: SheetP
 export type SheetTypeWithPropsUnion = {
     [T in SheetType]: SheetTypeWithProps<T>;
 }[SheetType];
+
+export type SheetPromiseResolve = <T>(
+    value: T extends SheetType ? SheetResultByType[T] : 'You must provide a type parameter'
+) => void;
