@@ -78,6 +78,7 @@ export {
     CardActionSpinner,
     CardActionIconButton,
 } from './card';
+export {default as StackingGroup} from './stacking-group';
 export {default as Hero} from './hero';
 export {default as CoverHero} from './cover-hero';
 export {Table} from './table';
@@ -111,17 +112,19 @@ export {
     CarouselContextConsumer,
 } from './carousel';
 export {Grid, GridItem} from './grid';
-export {
-    default as Sheet,
-    ActionsSheet,
-    InfoSheet,
-    ActionsListSheet,
-    RadioListSheet,
-    SheetBody,
-} from './sheet-common';
+
+// Sheets
 export {default as SheetRoot, showSheet} from './sheet-root';
-export type {NativeSheetImplementation} from './sheet-root';
-export {default as StackingGroup} from './stacking-group';
+export type {NativeSheetImplementation} from './sheet-types';
+export {default as Sheet, SheetBody} from './sheet-common';
+/** @deprecated use showSheet. It is easier to use and uses the app native implementation if available */
+export {default as ActionsSheet} from './sheet-actions';
+/** @deprecated use showSheet. It is easier to use and uses the app native implementation if available */
+export {default as InfoSheet} from './sheet-info';
+/** @deprecated use showSheet. It is easier to use and uses the app native implementation if available */
+export {default as ActionsListSheet} from './sheet-action-list';
+/** @deprecated use showSheet. It is easier to use and uses the app native implementation if available */
+export {default as RadioListSheet} from './sheet-radio-list';
 
 // Forms
 export {default as Form} from './form';

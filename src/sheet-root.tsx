@@ -73,9 +73,10 @@ export const showSheet = <T extends SheetType>(
 
 type Props = {
     nativeImplementation?: NativeSheetImplementation;
+    children?: React.ReactNode;
 };
 
-export const SheetRoot = (props: Props): React.ReactElement | null => {
+export const SheetRoot = (props: Props): JSX.Element => {
     const [sheetProps, setSheetProps] = React.useState<SheetTypeWithPropsUnion | null>(null);
 
     React.useEffect(() => {
@@ -96,20 +97,21 @@ export const SheetRoot = (props: Props): React.ReactElement | null => {
         };
     }, []);
 
-    if (!sheetProps) {
-        return null;
-    }
-
     return (
-        <React.Suspense fallback={null}>
-            <SheetWeb
-                sheetProps={sheetProps}
-                onResolve={(result) => {
-                    setSheetProps(null);
-                    resolveSheetPromise?.(result as any);
-                }}
-            />
-        </React.Suspense>
+        <>
+            {props.children}
+            {sheetProps && (
+                <React.Suspense fallback={null}>
+                    <SheetWeb
+                        sheetProps={sheetProps}
+                        onResolve={(result) => {
+                            setSheetProps(null);
+                            resolveSheetPromise?.(result);
+                        }}
+                    />
+                </React.Suspense>
+            )}
+        </>
     );
 };
 

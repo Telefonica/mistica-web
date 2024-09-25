@@ -20,9 +20,11 @@ type ActionsListSheetProps = {
     items: ReadonlyArray<{
         id: string;
         title: string;
-        style?: 'normal' | 'destructive'; // "normal" by default
+        /** "normal" by default */
+        style?: 'normal' | 'destructive';
         icon?: ExclusifyUnion<
             | {
+                  /** @deprecated - use url instead */
                   Icon: React.ComponentType<IconProps>;
               }
             | {

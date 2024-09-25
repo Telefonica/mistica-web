@@ -25,6 +25,7 @@ type InfoSheetProps = {
         icon: ExclusifyUnion<
             | {
                   type: 'regular' | 'small';
+                  /** @deprecated use url instead */
                   Icon: React.ComponentType<IconProps>;
               }
             | {
