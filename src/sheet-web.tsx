@@ -24,7 +24,7 @@ const ActionsListSheet = React.lazy(
     () =>
         import(
             /* webpackChunkName: "sheet-action-list" */
-            './sheet-action-list'
+            './sheet-actions-list'
         )
 );
 

@@ -16,7 +16,7 @@ import {
 import RadioListSheet from '../sheet-radio-list';
 import InfoSheet from '../sheet-info';
 import ActionsSheet from '../sheet-actions';
-import ActionsListSheet from '../sheet-action-list';
+import ActionsListSheet from '../sheet-actions-list';
 
 export default {
     title: 'Private/Sheet Presets',

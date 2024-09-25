@@ -1,9 +1,13 @@
 import * as React from 'react';
-import Sheet, {ActionsSheet, ActionsListSheet, InfoSheet, RadioListSheet} from '../sheet-common';
+import Sheet from '../sheet-common';
 import {act, render, screen, waitFor, waitForElementToBeRemoved, within} from '@testing-library/react';
 import {SheetRoot, ButtonPrimary, showSheet, ThemeContextProvider, Title1} from '..';
 import {makeTheme} from './test-utils';
 import userEvent from '@testing-library/user-event';
+import RadioListSheet from '../sheet-radio-list';
+import ActionsListSheet from '../sheet-actions-list';
+import InfoSheet from '../sheet-info';
+import ActionsSheet from '../sheet-actions';
 
 test('Sheet', async () => {
     const TestComponent = () => {
@@ -43,7 +47,7 @@ test('Sheet', async () => {
 
     const closeButton = await within(sheet).findByRole('button', {name: 'Close'});
 
-    await act(() => userEvent.click(closeButton));
+    await act(async () => userEvent.click(closeButton));
 
     await waitForElementToBeRemoved(sheet, {timeout: 5000});
 }, 30000);
@@ -272,7 +276,7 @@ test('showSheet INFO', async () => {
         </ThemeContextProvider>
     );
 
-    act(() => {
+    await act(async () => {
         showSheet({
             type: 'INFO',
             props: {
@@ -306,7 +310,7 @@ test('showSheet ACTIONS_LIST', async () => {
         </ThemeContextProvider>
     );
 
-    act(() => {
+    await act(async () => {
         showSheet({
             type: 'ACTIONS_LIST',
             props: {
@@ -344,7 +348,7 @@ test('showSheet ACTIONS_LIST dismiss', async () => {
         </ThemeContextProvider>
     );
 
-    act(() => {
+    await act(async () => {
         showSheet({
             type: 'ACTIONS_LIST',
             props: {
@@ -381,7 +385,7 @@ test('showSheet RADIO_LIST', async () => {
         </ThemeContextProvider>
     );
 
-    act(() => {
+    await act(async () => {
         showSheet({
             type: 'RADIO_LIST',
             props: {
@@ -421,7 +425,7 @@ test('showSheet RADIO_LIST dismiss', async () => {
         </ThemeContextProvider>
     );
 
-    act(() => {
+    await act(async () => {
         showSheet({
             type: 'RADIO_LIST',
             props: {
@@ -458,7 +462,7 @@ test('showSheet ACTIONS', async () => {
         </ThemeContextProvider>
     );
 
-    act(() => {
+    await act(async () => {
         showSheet({
             type: 'ACTIONS',
             props: {
@@ -503,7 +507,7 @@ test('showSheet ACTIONS dismiss', async () => {
         </ThemeContextProvider>
     );
 
-    act(() => {
+    await act(async () => {
         showSheet({
             type: 'ACTIONS',
             props: {
@@ -552,7 +556,7 @@ test('showSheet fails if there is already a sheet open', async () => {
         </ThemeContextProvider>
     );
 
-    act(() => {
+    await act(async () => {
         showSheet({
             type: 'INFO',
             props: {
@@ -596,7 +600,7 @@ test('showSheet with native implementation INFO', async () => {
         </ThemeContextProvider>
     );
 
-    await act(() =>
+    await act(async () =>
         showSheet({
             type: 'INFO',
             props: {
@@ -781,7 +785,7 @@ test('showSheet with native implementation fallbacks to web if native fails', as
         </ThemeContextProvider>
     );
 
-    act(() => {
+    await act(async () => {
         showSheet({
             type: 'ACTIONS',
             props: {

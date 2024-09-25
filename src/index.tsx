@@ -122,7 +122,7 @@ export {default as ActionsSheet} from './sheet-actions';
 /** @deprecated use showSheet. It is easier to use and uses the app native implementation if available */
 export {default as InfoSheet} from './sheet-info';
 /** @deprecated use showSheet. It is easier to use and uses the app native implementation if available */
-export {default as ActionsListSheet} from './sheet-action-list';
+export {default as ActionsListSheet} from './sheet-actions-list';
 /** @deprecated use showSheet. It is easier to use and uses the app native implementation if available */
 export {default as RadioListSheet} from './sheet-radio-list';
 
