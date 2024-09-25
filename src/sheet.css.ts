@@ -236,19 +236,31 @@ export const overlay = style([
 
 export const closingOverlay = style(overlayClosedStyle);
 
-export const stickyTitle = sprinkles({
-    position: 'sticky',
-    top: 0,
-    background: skinVars.colors.background,
-});
+export const stickyTitle = style([
+    sprinkles({
+        position: 'sticky',
+        top: 0,
+        background: skinVars.colors.background,
+    }),
+    {
+        zIndex: 1,
+    },
+]);
 
-export const stickyButtons = sprinkles({
-    position: 'sticky',
-    bottom: 0,
-    background: skinVars.colors.background,
-});
+export const stickyButtons = style([
+    sprinkles({
+        position: 'sticky',
+        bottom: 0,
+        background: skinVars.colors.background,
+    }),
+    {
+        zIndex: 1,
+    },
+]);
 
 export const bodyContent = style({
+    position: 'relative',
+    zIndex: 0,
     '@media': {
         [mq.desktopOrBigger]: {
             overflowY: 'auto',
