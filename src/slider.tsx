@@ -122,6 +122,7 @@ const Slider = React.forwardRef<HTMLInputElement, SliderProps>(
             name,
         } = useControlProps({
             name: props.name,
+            label: ariaLabel,
             value:
                 props.value !== undefined
                     ? getValueInRange(false, min, max, step, getClosestValidValue(min, props.value, values))

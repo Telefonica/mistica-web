@@ -30,10 +30,11 @@ export const isMasterCard: (str?: string) => boolean = getMatcher(/^5/);
 export const getCvvLength = (creditCardNumber: string): number =>
     isAmericanExpress(creditCardNumber) ? 4 : 3;
 
-export const getCreditCardNumberLength = (creditCardNumber: string): number =>
+export const getCreditCardNumberLength = (creditCardNumber?: string): number =>
     isAmericanExpress(creditCardNumber) ? 15 : 16;
 
-export const isValidCreditCardNumber = (creditCardNumber: string): boolean => {
+export const isValidCreditCardNumber = (creditCardNumber?: string): boolean => {
+    if (!creditCardNumber) return false;
     if (
         !isAmericanExpress(creditCardNumber) &&
         !isMasterCard(creditCardNumber) &&

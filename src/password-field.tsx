@@ -47,6 +47,7 @@ const PasswordField = ({
     error,
     helperText,
     name,
+    label,
     optional,
     validate,
     onChange,
@@ -90,6 +91,7 @@ const PasswordField = ({
 
     const fieldProps = useFieldProps({
         name,
+        label,
         value,
         defaultValue,
         processValue,

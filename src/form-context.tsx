@@ -1,5 +1,7 @@
 'use client';
 import * as React from 'react';
+import {useTheme} from './hooks';
+import * as tokens from './text-tokens';
 
 export type FormStatus = 'filling' | 'sending';
 export type FormErrors = {[name: string]: string | undefined};
@@ -9,6 +11,7 @@ export type FieldRegistration = {
     input?: HTMLInputElement | HTMLSelectElement | null;
     validator?: FieldValidator;
     focusableElement?: HTMLDivElement | HTMLSelectElement | null;
+    label?: string;
 };
 
 type Context = {
@@ -47,18 +50,21 @@ export const useForm = (): Context => React.useContext(FormContext);
 
 export const useControlProps = <T,>({
     name,
+    label,
     value,
     defaultValue,
     onChange,
     disabled,
 }: {
     name: string;
+    label?: string;
     value: undefined | T;
     defaultValue: undefined | T;
     onChange: undefined | ((value: T) => void);
     disabled?: boolean;
 }): {
     name: string;
+    label?: string;
     value?: T;
     defaultValue?: T;
     onChange: (value: T) => void;
@@ -77,11 +83,13 @@ export const useControlProps = <T,>({
 
     return {
         name,
+        label,
         value,
         defaultValue: defaultValue ?? (value === undefined ? rawValues[name] ?? false : undefined),
         focusableRef: (focusableElement: HTMLDivElement | null) =>
             register(name, {
                 focusableElement,
+                label,
             }),
         onChange: (value: T) => {
             setRawValue({name, value});
@@ -95,6 +103,7 @@ export const useControlProps = <T,>({
 
 export const useFieldProps = ({
     name,
+    label,
     value,
     defaultValue,
     processValue,
@@ -108,6 +117,7 @@ export const useFieldProps = ({
     onChangeValue,
 }: {
     name: string;
+    label: string;
     value?: string;
     defaultValue?: string;
     processValue: (value: string) => unknown;
@@ -123,6 +133,7 @@ export const useFieldProps = ({
     value?: string;
     defaultValue?: string;
     name: string;
+    label: string;
     helperText?: string;
     required: boolean;
     error: boolean;
@@ -131,6 +142,7 @@ export const useFieldProps = ({
     inputRef: (field: HTMLInputElement | null) => void;
     onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 } => {
+    const {texts, t} = useTheme();
     const {setRawValue, setValue, rawValues, values, formErrors, formStatus, setFormError, register} =
         useForm();
     const rawValue = value ?? defaultValue ?? rawValues[name] ?? '';
@@ -151,15 +163,22 @@ export const useFieldProps = ({
         value,
         defaultValue: defaultValue ?? (value === undefined ? rawValues[name] ?? '' : undefined),
         name,
+        label,
         helperText: formErrors[name] || helperText,
         required: !optional,
         error: error || !!formErrors[name],
         disabled: disabled || formStatus === 'sending',
         onBlur: (e: React.FocusEvent) => {
-            setFormError({name, error: validate?.(values[name], rawValues[name])});
+            let error: string | undefined;
+            if (!rawValues[name] && !optional) {
+                error = texts.formFieldErrorIsMandatory || t(tokens.formFieldErrorIsMandatory);
+            } else if (validate) {
+                error = validate(values[name], rawValues[name]);
+            }
+            setFormError({name, error});
             onBlur?.(e);
         },
-        inputRef: (input: HTMLInputElement | null) => register(name, {input, validator: validate}),
+        inputRef: (input: HTMLInputElement | null) => register(name, {input, validator: validate, label}),
         onChange: (event: React.ChangeEvent<HTMLInputElement>) => {
             const rawValue = event.currentTarget.value;
             const value = processValue(rawValue);

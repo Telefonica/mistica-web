@@ -116,16 +116,24 @@ export const helperContainer = sprinkles({
     display: 'flex',
 });
 
-export const helperText = style({
-    margin: 0,
-    marginTop: 4,
+export const leftHelperText = style([
+    sprinkles({
+        display: 'flex',
+    }),
+    {
+        margin: 0, // reset p default browser margin
+        lineHeight: '0',
+    },
+]);
+
+export const helperText = sprinkles({
     flexGrow: 1,
+    paddingTop: 4,
 });
 
-export const leftText = style({
-    textAlign: 'left',
-});
-
-export const rightText = style({
-    textAlign: 'right',
+export const warnIcon = style({
+    display: 'block',
+    marginRight: 4,
+    width: ['1rem', '1lh'], // some browsers don't support 'lh' unit yet
+    height: ['1rem', '1lh'],
 });

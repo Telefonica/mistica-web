@@ -25,6 +25,7 @@ const SearchField = React.forwardRef<any, SearchFieldProps>(
             error,
             helperText,
             name,
+            label,
             optional,
             validate,
             onChange,
@@ -65,6 +66,7 @@ const SearchField = React.forwardRef<any, SearchFieldProps>(
 
         const fieldProps = useFieldProps({
             name,
+            label,
             value: controlledValue,
             defaultValue: undefined,
             processValue: (v: string) => v,

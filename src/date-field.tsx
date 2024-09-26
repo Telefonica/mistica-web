@@ -29,6 +29,7 @@ const DateField = ({
     error,
     helperText,
     name,
+    label,
     optional,
     validate: validateProp,
     onChange,
@@ -77,6 +78,7 @@ const DateField = ({
 
     const fieldProps = useFieldProps({
         name,
+        label,
         value,
         defaultValue,
         processValue,
