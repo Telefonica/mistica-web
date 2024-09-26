@@ -5,10 +5,10 @@ of the screen.
 
 ## Predefined sheets
 
-Mística provides some predefined sheets that you can use out of the box: `RadioListSheet`, `ActionsListSheet`,
-`InfoSheet` and `ActionsSheet`. You can see examples in Storybook.
+Some predefined sheets are available: `RadioListSheet`, `ActionsListSheet`, `InfoSheet` and `ActionsSheet`.
+You can see examples in Storybook.
 
-First you must configure the `SheetRoot` component in your app:
+To use them, first you must configure the `SheetRoot` component in your app:
 
 ```jsx
 import {SheetRoot} from '@telefonica/mistica';
@@ -65,6 +65,8 @@ import {bottomSheet, isWebViewBridgeAvailable} from '@tef-novum/webview-bridge';
 
 <SheetRoot nativeImplementation={isWebViewBridgeAvailable() ? bottomSheet : undefined}>
 ```
+
+When possible, always use the native implementation, as it provides a better user experience.
 
 ## Custom sheets
 
