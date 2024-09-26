@@ -29,7 +29,7 @@ export interface TextFieldProps extends CommonFormFieldProps<HTMLInputElement | 
     endIcon?: React.ReactNode;
     getSuggestions?: (value: string) => ReadonlyArray<string>;
     role?: string;
-    inputMode?: string;
+    inputMode?: React.HTMLAttributes<HTMLInputElement>['inputMode'];
 }
 
 const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
