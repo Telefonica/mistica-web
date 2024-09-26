@@ -79,6 +79,7 @@ const ActionsSheet = React.forwardRef<HTMLDivElement, ActionsSheetProps>(
                         link={
                             buttonLink ? (
                                 <ButtonLink
+                                    small
                                     {...getButtonProps(buttonLink)}
                                     onPress={createPressHandler(closeModal, 'LINK')}
                                 />

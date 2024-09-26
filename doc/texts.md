@@ -2,39 +2,9 @@
 
 Some components use some default texts that you can customize using [`theme` prop](./theme-config.md)
 
-These are the customizable texts and their default values:
-
-- `expirationDatePlaceholder`: `'MM/AA'`
-- `enablePasswordVisibility`: `'Mostrar contraseña'`,
-- `disablePasswordVisibility`: `'Ocultar contraseña'`,
-- `loading`: `'Cargando'`
-- `linkOpensInNewTab`: `'Se abre en ventana nueva'`
-- `modalClose`: `'Cerrar'`
-- `dialogCancelButton`: `'Cancelar'`
-- `dialogAcceptButton`: `'Aceptar'`
-- `formFieldOptionalLabelSuffix`: `'opcional'`
-- `formFieldErrorIsMandatory`: `'Este campo es obligatorio'`
-- `formCreditCardNumberLabel`: `'Número de tarjeta'`
-- `formCreditCardExpirationLabel`: `'Caducidad'`
-- `formCreditCardCvvLabel`: `'CVV'`
-- `formCreditCardCvvError`: `'CVV incorrecto'`
-- `formCreditCardCvvTooltipVisaMcButton`: `'Mostrar ayuda CVV'`
-- `formCreditCardCvvTooltipVisaMc`: `'El CVV son los 3 últimos dígitos del reverso de tu tarjeta'`
-- `formCreditCardCvvTooltipAmex`: `'Si es American Express, añade los 4 dígitos del anverso'`
-- `formCreditCardExpirationError`: `'Fecha no válida'`
-- `formCreditCardNumberError`: `'No es un número de tarjeta válido'`
-- `formDateOutOfRangeError`: `'Fecha no permitida'`
-- `formEmailError`: `'Email incorrecto'`
-- `formIbanError`: `'IBAN incorrecto'`
-- `closeButtonLabel`: `'Cerrar'`
-- `formSearchClear`: `'Borrar búsqueda'`
-- `menuLabelSuffix`: `'menú'`
-- `openNavigationMenu`: `'Abrir menú de navegación'`
-- `closeNavigationMenu`: `'Cerrar menú de navegación'`
-
 You can customize them in your page. For example:
 
-```js
+```tsx
 <ThemeContextProvider
   theme={{
     skin: getMovistarSkin(),
@@ -49,5 +19,24 @@ You can customize them in your page. For example:
 </ThemeContextProvider>
 ```
 
+See the `Dictionary` type to known all the available texts.
+
 If your application supports multi language, you may need to override all the texts and use localized
 translation tokens depending on your user preferred language.
+
+## Using Mística text tokens
+
+You can use Mística tokens in your texts. The translate function `t` will translate the token using the
+configured locale in the `ThemeContextProvider`.
+
+Example:
+
+```tsx
+import {textTokens} from '@telefonica/mistica';
+
+const MyComponent = () => {
+  const {t} = useTheme();
+
+  return <div>{t(textTokens.formCreditCardExpirationError)}</div>;
+};
+```

@@ -25,7 +25,7 @@
         "ts-check": "tsc --project tsconfig.json --noEmit",
         "build": "yarn clean && node scripts/build.js",
         "compile": "node scripts/compile.js",
-        "clean": "rimraf dist && rimraf dist-es && rimraf dist-ts && rimraf css/mistica.css && rimraf community.d.ts && rimraf community.js && rimraf node_modules/.cache",
+        "clean": "rimraf dist && rimraf dist-es && rimraf dist-ts && rimraf css/mistica.css && rimraf community.d.ts && rimraf community.js && rimraf node_modules/.cache && bash -c 'yarn jest --clearCache > /dev/null 2>&1'",
         "prepublishOnly": "node scripts/prepublish-only.js",
         "prepack": "yarn build",
         "storybook": "storybook dev -p 6006",
