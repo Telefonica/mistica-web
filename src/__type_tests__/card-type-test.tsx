@@ -1,7 +1,6 @@
 import * as React from 'react';
 import {ButtonPrimary} from '../button';
 import {DisplayMediaCard, NakedCard, PosterCard, SmallNakedCard, SnapCard} from '../card';
-import HighlightedCard from '../highlighted-card';
 import Image from '../image';
 
 <SnapCard title="title" />;
@@ -18,8 +17,14 @@ import Image from '../image';
 // @ts-expect-error trackingEvent can't be used if the card is not touchable
 <SnapCard title="title" trackingEvent={{name: 'do-something'}} />;
 
+<DisplayMediaCard title="title" backgroundImage={{src: 'test', srcSet: 'test'}} />;
+<DisplayMediaCard title="title" backgroundImage={{src: undefined, srcSet: 'test'}} />;
+<DisplayMediaCard title="title" backgroundImage={{src: 'test', srcSet: undefined}} />;
+
 // @ts-expect-error backgroundImage and backgroundVideo can't be used together
 <DisplayMediaCard title="title" backgroundImage="" backgroundVideo="" />;
+// @ts-expect-error backgroundImage should have src or srcSet
+<DisplayMediaCard title="title" backgroundImage={{src: undefined, srcSet: undefined}} />;
 
 <PosterCard backgroundImage="background.png" title="title" />;
 <PosterCard backgroundVideo="background.mp4" title="title" />;
@@ -38,6 +43,9 @@ import Image from '../image';
 <PosterCard title="title" variant="alternative" />;
 <PosterCard title="title" isInverse backgroundColor="red" />;
 <PosterCard title="title" variant="inverse" backgroundColor="red" />;
+<PosterCard title="title" backgroundImage={{src: 'test', srcSet: 'test'}} />;
+<PosterCard title="title" backgroundImage={{src: undefined, srcSet: 'test'}} />;
+<PosterCard title="title" backgroundImage={{src: 'test', srcSet: undefined}} />;
 
 // @ts-expect-error onPress and href can't be used together
 <PosterCard title="title" onPress={() => {}} href="/" />;
@@ -57,6 +65,8 @@ import Image from '../image';
 <PosterCard title="title" />;
 // @ts-expect-error if you set a custom backgroundColor, you should specify the variant
 <PosterCard title="title" backgroundColor="red" />;
+// @ts-expect-error backgroundImage should have src or srcSet
+<PosterCard title="title" backgroundImage={{src: undefined, srcSet: undefined}} />;
 
 (isTouchable: boolean) => <SnapCard title="title" href={isTouchable ? '/' : undefined} />;
 (isTouchable: boolean) => <SnapCard title="title" to={isTouchable ? '/' : undefined} />;
