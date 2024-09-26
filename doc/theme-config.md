@@ -16,12 +16,13 @@ type ThemeConfig = {
     insideNovumNativeApp?: boolean;
     userAgent?: string;
   };
-  texts?: ThemeTexts;
+  texts?: Partial<Dictionary>;
   analytics?: {
     logEvent: (event: TrackingEvent) => Promise<void>;
   };
   Link?: LinkComponent;
   useHrefDecorator: () => (href: string) => string;
+  preventCopyInFormFields?: boolean;
 };
 ```
 
@@ -56,6 +57,8 @@ Here is a description of every attribute:
 - `useHrefDecorator`: it is a React hook that a function that takes a `href` and returns a new `href`. This is
   useful to automatically add parameters to the `href` being used in Touchable components (for example, to add
   a `utm_source` parameter to the `href`).
+- `preventCopyInFormFields?`: this is used as the default value for `preventCopy` prop in form fields. `false`
+  by default.
 
 ## LinkComponent
 
