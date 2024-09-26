@@ -1,6 +1,6 @@
 import {capitalize} from 'lodash';
 
-const imagePlaceholder = 'https://source.unsplash.com/800x800/?abstract';
+const imagePlaceholder = 'https://picsum.photos/1200/1200';
 
 type Snippet = {group: string; name: string; code: string};
 
@@ -100,7 +100,7 @@ const accordionSnippets: Array<Snippet> = [
                   you in obtaining your loan.
                 </p>
                 <br />
-                <Image src="https://picsum.photos/1200/1200" aspectRatio="16:9" />
+                <Image src="${imagePlaceholder}" aspectRatio="16:9" />
                 <br />
                 <p>
                   Depending on the characteristics of the information you provide us,
@@ -172,7 +172,7 @@ const accordionSnippets: Array<Snippet> = [
                 you in obtaining your loan.
               </p>
               <br />
-              <Image src="https://picsum.photos/1200/1200" aspectRatio="16:9" />
+              <Image src="${imagePlaceholder}" aspectRatio="16:9" />
               <br />
               <p>
                 Depending on the characteristics of the information you provide us,
@@ -559,7 +559,7 @@ const listSnippetsAvatar: Array<Snippet> = [
                   <Avatar
                     size={40}
                     initials="ML"
-                    src="https://source.unsplash.com/600x600/?face"
+                    src="${imagePlaceholder}"
                   />
                 }
                 title="Title"
@@ -976,13 +976,13 @@ const cardSnippets: Array<Snippet> = [
         name: 'MediaCard with Image',
         code: `
         <MediaCard
-            media={<Image src="https://picsum.photos/1200/1200" aspectRatio="16:9"/>}
+            media={<Image src="${imagePlaceholder}" aspectRatio="16:9"/>}
             headline={<Tag type="promo">Headline</Tag>}
             pretitle="Pretitle"
             title="Title"
             subtitle="Subtitle"
             description="Description"
-            icon={<Avatar size={40} src="https://source.unsplash.com/600x600/?face" />}
+            asset={<Avatar size={40} src="${imagePlaceholder}" />}
             extra={<Placeholder />}
             button={
                 <ButtonPrimary small onPress={() => {}}>
@@ -1003,7 +1003,7 @@ const cardSnippets: Array<Snippet> = [
             title="Title"
             subtitle="Subtitle"
             description="Description"
-            icon={<Avatar size={40} src="https://source.unsplash.com/600x600/?face" />}
+            asset={<Avatar size={40} src="${imagePlaceholder}" />}
             extra={<Placeholder />}
             button={
                 <ButtonPrimary small onPress={() => {}}>
@@ -1018,7 +1018,7 @@ const cardSnippets: Array<Snippet> = [
         name: 'DataCard',
         code: `
         <DataCard
-            icon={
+            asset={
                 <Circle backgroundColor={colors.brandLow} size={40}>
                     <IconShopRegular color={colors.brand} />
                 </Circle>
@@ -1041,7 +1041,7 @@ const cardSnippets: Array<Snippet> = [
         name: 'SnapCard',
         code: `
         <SnapCard
-            icon={
+            asset={
               <Circle size={40} backgroundColor={colors.brandLow}>
                 <IconAcademicRegular color={colors.brand} />
               </Circle>
@@ -1056,7 +1056,7 @@ const cardSnippets: Array<Snippet> = [
         name: 'DisplayDataCard',
         code: `
         <DisplayDataCard
-          icon={
+          asset={
             <Circle size={40} backgroundColor={colors.brandLow}>
               <IconInvoicePlanFileRegular color={colors.brand} />
             </Circle>
@@ -1101,7 +1101,7 @@ const cardSnippets: Array<Snippet> = [
           pretitle="Pretitle"
           title="Title"
           description="Description"
-          backgroundImage="https://source.unsplash.com/900x900/?landscape"
+          backgroundImage="${imagePlaceholder}"
           button={
             <ButtonPrimary small href="https://google.com">
               Action
@@ -1139,7 +1139,7 @@ const cardSnippets: Array<Snippet> = [
           title="Title"
           description="Description"
           backgroundVideo="https://fr-cert1-es.mytelco.io/2O4-xBJqiMlAfLkseq8RkXs_mv2ACV7Hnt20HqXxNl-mK7KLI3M2dAw"
-          poster="https://source.unsplash.com/900x900/?landscape"
+          poster="${imagePlaceholder}"
           button={
             <ButtonPrimary small href="https://google.com">
               Action
@@ -1157,7 +1157,7 @@ const cardSnippets: Array<Snippet> = [
           title="Title"
           subtitle="Subtitle"
           description="Description"
-          backgroundImage="https://source.unsplash.com/900x900/?landscape"
+          backgroundImage="${imagePlaceholder}"
           onClose={() => {}}
           onPress={() => {alert({ title: "pressed" });}}
           actions={[
@@ -1192,7 +1192,7 @@ const cardSnippets: Array<Snippet> = [
           subtitle="Subtitle"
           description="Description"
           backgroundVideo="https://fr-cert1-es.mytelco.io/2O4-xBJqiMlAfLkseq8RkXs_mv2ACV7Hnt20HqXxNl-mK7KLI3M2dAw"
-          poster="https://source.unsplash.com/900x900/?landscape"
+          poster="${imagePlaceholder}"
           onPress={() => {alert({ title: "pressed" });}}
           button={
             <ButtonPrimary small href="https://google.com">
@@ -1276,7 +1276,7 @@ const cardSnippets: Array<Snippet> = [
         name: 'NakedCard with Image',
         code: `
         <NakedCard
-            media={<Image src="https://picsum.photos/1200/1200" aspectRatio="16:9"/>}
+            media={<Image src="${imagePlaceholder}" aspectRatio="16:9"/>}
             headline={<Tag type="promo">Headline</Tag>}
             pretitle="Pretitle"
             title="Title"
@@ -1317,7 +1317,7 @@ const cardSnippets: Array<Snippet> = [
         name: 'SmallNakedCard',
         code: `
         <SmallNakedCard
-            media={<Image src="https://picsum.photos/1200/1200" aspectRatio="16:9"/>}
+            media={<Image src="${imagePlaceholder}" aspectRatio="16:9"/>}
             title="Title"
             subtitle="Subtitle"
             description="Description"
@@ -1511,7 +1511,7 @@ const layoutSnippets: Array<Snippet> = [
           <HorizontalMosaic
             items={Array.from({ length: 6 }, (_, index) => (
               <Image
-                src="https://picsum.photos/1200/1200"
+                src="${imagePlaceholder}"
                 width="100%"
                 height="100%"
                 key={index}
@@ -1527,7 +1527,7 @@ const layoutSnippets: Array<Snippet> = [
         <VerticalMosaic
           items={Array.from({ length: 6 }, (_, index) => (
             <Image
-              src="https://picsum.photos/1200/1200"
+              src="${imagePlaceholder}"
               width="100%"
               height="100%"
               key={index}
@@ -1586,7 +1586,7 @@ const exampleScreens: Array<Snippet> = [
               <Avatar
                 size={isDesktopOrBigger ? 32 : 24}
                 initials="ML"
-                src="https://source.unsplash.com/600x600/?face"
+                src="${imagePlaceholder}"
               />
               {isDesktopOrBigger && "María López Serrano"}
             </NavigationBarAction>
@@ -1857,7 +1857,7 @@ const exampleScreens: Array<Snippet> = [
         <Avatar
           size={isDesktopOrBigger ? 32 : 24}
           initials="ML"
-          src="https://source.unsplash.com/600x600/?face"
+          src="${imagePlaceholder}"
         />
         {isDesktopOrBigger && "María López Serrano"}
       </NavigationBarAction>
@@ -1876,7 +1876,7 @@ const exampleScreens: Array<Snippet> = [
         itemsPerPage={2}
         items={Array.from({ length: 3 }, (_, idx) => (
           <SnapCard
-            icon={
+            asset={
               [
                 <Circle size={40} backgroundColor={colors.brandLow}>
                   <IconOfferPercentRegular color={colors.brand} />
@@ -1961,7 +1961,7 @@ const exampleScreens: Array<Snippet> = [
 
       <DataCard
         aspectRatio="16:9"
-        icon={<IconMobileDeviceRegular size={40} color={colors.brand} />}
+        asset={<IconMobileDeviceRegular size={40} color={colors.brand} />}
         title="Looking for a smartphone?"
         description="These are some of the products you can you can buy with cryptocurrencies."
         button={
@@ -2109,7 +2109,7 @@ const exampleScreens: Array<Snippet> = [
                             <Row
                               asset={
                                 <Image
-                                  src="https://source.unsplash.com/900x900/?landscape"
+                                  src="${imagePlaceholder}"
                                   height={64}
                                   aspectRatio="1:1"
                                 />
@@ -2137,7 +2137,7 @@ const exampleScreens: Array<Snippet> = [
                             <Row
                               asset={
                                 <Image
-                                  src="https://source.unsplash.com/900x900/?landscape"
+                                  src="${imagePlaceholder}"
                                   height={64}
                                   aspectRatio="1:1"
                                 />
@@ -2185,7 +2185,7 @@ const exampleScreens: Array<Snippet> = [
                       </Inline>
 
                       <Callout
-                        icon={<IconTruckRegular color={colors.brand} />}
+                        asset={<IconTruckRegular color={colors.brand} />}
                         description="Products may be shipped separately depending on availability."
                       />
                     </Stack>
@@ -2303,7 +2303,7 @@ const exampleScreens: Array<Snippet> = [
         <Stack space={24}>
           <Text4 medium>Summary of your order</Text4>
           <Callout
-            icon={<IconTruckRegular color={colors.brand} />}
+            asset={<IconTruckRegular color={colors.brand} />}
             description="Products may be shipped separately depending on availability."
           />
 
@@ -2314,7 +2314,7 @@ const exampleScreens: Array<Snippet> = [
                   <Row
                     asset={
                       <Image
-                        src="https://source.unsplash.com/900x900/?landscape"
+                        src="${imagePlaceholder}"
                         height={64}
                         aspectRatio="1:1"
                       />
@@ -2340,7 +2340,7 @@ const exampleScreens: Array<Snippet> = [
                   <Row
                     asset={
                       <Image
-                        src="https://source.unsplash.com/900x900/?landscape"
+                        src="${imagePlaceholder}"
                         height={64}
                         aspectRatio="1:1"
                       />
@@ -2424,7 +2424,7 @@ const navigationBarSnippets = [
         <Avatar
           size={isDesktopOrBigger ? 32 : 24}
           initials="ML"
-          src="https://source.unsplash.com/600x600/?face"
+          src="${imagePlaceholder}"
         />
         {isDesktopOrBigger && "María López Serrano"}
       </NavigationBarAction>
@@ -2500,7 +2500,7 @@ const carouselSnippets = [
       headline={<Tag type="promo">Headline</Tag>}
       title={'Card ' + idx}
       description="Description"
-      media={<Image src="https://source.unsplash.com/1600x900/?watch" aspectRatio="16:9" />}
+      media={<Image src="${imagePlaceholder}" aspectRatio="16:9" />}
       button={
         <ButtonPrimary small onPress={() => {}}>
           Action
@@ -2518,8 +2518,8 @@ const carouselSnippets = [
 <Slideshow
   withBullets
   items={[
-    <Image src="https://source.unsplash.com/1600x900/?furniture" aspectRatio="16:9" />,
-    <Image src="https://source.unsplash.com/1600x900/?furniture" aspectRatio="16:9" />,
+    <Image src="${imagePlaceholder}" aspectRatio="16:9" />,
+    <Image src="${imagePlaceholder}" aspectRatio="16:9" />,
   ]}
 />`,
     },
@@ -2556,12 +2556,12 @@ const avatarSnippets = [
     {
         group: 'Avatar',
         name: 'Avatar with badge',
-        code: `<Avatar size={64} src="https://source.unsplash.com/600x600/?face" badge />`,
+        code: `<Avatar size={64} src="${imagePlaceholder}" badge />`,
     },
     {
         group: 'Avatar',
         name: 'Avatar with numeric badge',
-        code: `<Avatar size={64} src="https://source.unsplash.com/600x600/?face" badge={5} />`,
+        code: `<Avatar size={64} src="${imagePlaceholder}" badge={5} />`,
     },
     {
         group: 'Avatar',
@@ -2697,7 +2697,7 @@ const alertSnippets = [
             id: "1",
             title: "Action 1",
             icon: {
-              url: "https://source.unsplash.com/600x600/?face",
+              url: "${imagePlaceholder}",
             },
           },
           {
@@ -2760,7 +2760,7 @@ const alertSnippets = [
             title: "Item 1",
             description: "Description",
             icon: {
-              url: "https://source.unsplash.com/600x600/?face",
+              url: "${imagePlaceholder}",
             },
           },
           {
@@ -3125,7 +3125,7 @@ const heroSnippets = [
                 background="default"
                 media={
                   <Image
-                    src="https://source.unsplash.com/1600x900/?furniture"
+                    src="${imagePlaceholder}"
                     aspectRatio="16:9"
                   />
                 }
@@ -3325,7 +3325,7 @@ const gridSnippets = [
 <Grid columns={2} rows={3} gap={8}>
   <GridItem>
     <SnapCard
-      icon={
+      asset={
         <Circle size={40} backgroundColor={colors.brandLow}>
           <IconAcademicRegular color={colors.brand} />
         </Circle>
@@ -3336,7 +3336,7 @@ const gridSnippets = [
   </GridItem>
   <GridItem rowSpan={2}>
     <SnapCard
-      icon={
+      asset={
         <Circle size={40} backgroundColor={colors.brandLow}>
           <IconAcademicRegular color={colors.brand} />
         </Circle>
@@ -3347,7 +3347,7 @@ const gridSnippets = [
   </GridItem>
   <GridItem>
     <SnapCard
-      icon={
+      asset={
         <Circle size={40} backgroundColor={colors.brandLow}>
           <IconAcademicRegular color={colors.brand} />
         </Circle>
@@ -3358,7 +3358,7 @@ const gridSnippets = [
   </GridItem>
   <GridItem columnSpan={2}>
     <SnapCard
-      icon={
+      asset={
         <Circle size={40} backgroundColor={colors.brandLow}>
           <IconAcademicRegular color={colors.brand} />
         </Circle>
@@ -3378,7 +3378,7 @@ const gridSnippets = [
   {Array.from({ length: 10 }, (_, idx) => (
     <SnapCard
       key={idx}
-      icon={
+      asset={
         <Circle size={40} backgroundColor={colors.brandLow}>
           <IconAcademicRegular color={colors.brand} />
         </Circle>
@@ -3397,12 +3397,12 @@ const stackingGroupSnippets = [
         name: 'Stacking Group',
         code: `
         <StackingGroup maxItems={5} moreItemsStyle={{type: 'circle', size: 64}}>
-          <Avatar size={64} src="https://source.unsplash.com/600x600/?face" />
-          <Avatar size={64} src="https://source.unsplash.com/600x600/?face" />
-          <Avatar size={64} src="https://source.unsplash.com/600x600/?face" />
-          <Avatar size={64} src="https://source.unsplash.com/600x600/?face" />
-          <Avatar size={64} src="https://source.unsplash.com/600x600/?face" />
-          <Avatar size={64} src="https://source.unsplash.com/600x600/?face" />
+          <Avatar size={64} src="${imagePlaceholder}" />
+          <Avatar size={64} src="${imagePlaceholder}" />
+          <Avatar size={64} src="${imagePlaceholder}" />
+          <Avatar size={64} src="${imagePlaceholder}" />
+          <Avatar size={64} src="${imagePlaceholder}" />
+          <Avatar size={64} src="${imagePlaceholder}" />
         </StackingGroup>
     `,
         group: 'StackingGroup',
@@ -3424,7 +3424,7 @@ const advancedDataCardSnippets = [
             <RowBlock title="RowBlock" description="description" />,
             <SimpleBlock
               image={
-                <Image src="https://source.unsplash.com/600x600/?face" height={40} />
+                <Image src="${imagePlaceholder}" height={40} />
               }
               description="SimpleBlock"
             />,
@@ -3459,12 +3459,12 @@ const advancedDataCardSnippets = [
               description="description"
             />,
             <StackingGroup maxItems={5} moreItemsStyle={{ type: "circle", size: 64 }}>
-              <Avatar size={64} src="https://source.unsplash.com/600x600/?face" />
-              <Avatar size={64} src="https://source.unsplash.com/600x600/?face" />
-              <Avatar size={64} src="https://source.unsplash.com/600x600/?face" />
-              <Avatar size={64} src="https://source.unsplash.com/600x600/?face" />
-              <Avatar size={64} src="https://source.unsplash.com/600x600/?face" />
-              <Avatar size={64} src="https://source.unsplash.com/600x600/?face" />
+              <Avatar size={64} src="${imagePlaceholder}" />
+              <Avatar size={64} src="${imagePlaceholder}" />
+              <Avatar size={64} src="${imagePlaceholder}" />
+              <Avatar size={64} src="${imagePlaceholder}" />
+              <Avatar size={64} src="${imagePlaceholder}" />
+              <Avatar size={64} src="${imagePlaceholder}" />
             </StackingGroup>,
           ]}
           button={
@@ -3478,7 +3478,7 @@ const advancedDataCardSnippets = [
             </ButtonLink>
           }
           footerImage={
-            <Image src="https://source.unsplash.com/600x600/?face" height={40} />
+            <Image src="${imagePlaceholder}" height={40} />
           }
           footerText="footer text"
           onClose={() => window.alert("close")}
@@ -3505,7 +3505,7 @@ const SimpleBlockSnippets = [
         code: `
         <SimpleBlock
           image={
-            <Image src="https://source.unsplash.com/600x600/?face" height={40} />
+            <Image src="${imagePlaceholder}" height={40} />
           }
           description="description"
         />
@@ -3785,7 +3785,7 @@ export default [
         name: 'Callout',
         code: `
             <Callout
-                icon={<IconBoxRegular />}
+                asset={<IconBoxRegular />}
                 onClose={() => {}}
                 title="Some title"
                 description="This is a description for the callout"
@@ -3861,12 +3861,12 @@ export default [
     {
         group: 'Media',
         name: 'Image',
-        code: `<Image src="https://picsum.photos/1200/1200" aspectRatio="16:9" />`,
+        code: `<Image src="${imagePlaceholder}" aspectRatio="16:9" />`,
     },
     {
         group: 'Media',
         name: 'Image circular',
-        code: `<Image circular src="https://picsum.photos/1200/1200" />`,
+        code: `<Image circular src="${imagePlaceholder}" />`,
     },
     ...carouselSnippets,
     ...avatarSnippets,
