@@ -133,6 +133,7 @@ export interface CommonFormFieldProps<T = HTMLInputElement> {
     onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
     children?: void;
     readOnly?: boolean;
+    preventCopy?: boolean;
     dataAttributes?: DataAttributes;
 }
 
@@ -174,6 +175,7 @@ interface TextFieldBaseProps {
     multiline?: boolean;
     inputMode?: string;
     readOnly?: boolean;
+    preventCopy?: boolean;
     min?: string;
     max?: string;
     role?: string;
@@ -206,10 +208,13 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
             autoComplete: autoCompleteProp,
             fullWidth,
             dataAttributes,
+            preventCopy,
             ...rest
         },
         ref
     ) => {
+        const {preventCopyInFormFields} = useTheme();
+        preventCopy = preventCopy ?? preventCopyInFormFields;
         const reactId = React.useId();
         const id = idProp || reactId;
         const helperTextid = React.useId();
@@ -407,6 +412,16 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
                                 value,
                                 ...(error && {'aria-invalid': true}),
                                 ...(helperText && {'aria-describedby': helperTextid}),
+                                ...(preventCopy && {
+                                    onCopy: (e: React.ClipboardEvent<HTMLInputElement>) => {
+                                        console.log('Copying is disabled');
+                                        e.preventDefault();
+                                    },
+                                    onCut: (e: React.ClipboardEvent<HTMLInputElement>) => {
+                                        console.log('Copying is disabled');
+                                        e.preventDefault();
+                                    },
+                                }),
                             })}
                         </Text3>
                     </div>

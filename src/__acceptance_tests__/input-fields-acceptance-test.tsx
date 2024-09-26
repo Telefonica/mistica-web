@@ -290,3 +290,56 @@ test('PinField focus management', async () => {
     await firstDigitField.press('Delete');
     await screen.findByText("value: (string) '2'");
 }, 1200000);
+
+const copyFieldContentToClipboard = async (page: PageApi, field: ElementHandle) => {
+    await field.focus();
+    await page.keyboard.down('ControlLeft');
+    await page.keyboard.press('KeyA');
+    await page.keyboard.up('ControlLeft');
+
+    await page.keyboard.down('ControlLeft');
+    await page.keyboard.press('KeyC');
+    await page.keyboard.up('ControlLeft');
+};
+
+const pasteClipboardContentToField = async (page: PageApi, field: ElementHandle) => {
+    await field.focus();
+    await page.keyboard.down('ControlLeft');
+    await page.keyboard.press('KeyV');
+    await page.keyboard.up('ControlLeft');
+};
+
+test('TextField preventCopy', async () => {
+    let page = await openStoryPage(getStoryOfType('textfield', 'controlled'));
+
+    let field = await screen.findByLabelText('Label');
+
+    await clearAndType(page, field, 'first input text');
+
+    await copyFieldContentToClipboard(page, field);
+    await page.clear(field);
+    expect(await getValue(field)).toBe('');
+
+    await pasteClipboardContentToField(page, field);
+
+    // paste worked because preventCopy is false
+    expect(await getValue(field)).toBe('first input text');
+
+    page = await openStoryPage({
+        ...getStoryOfType('textfield', 'controlled'),
+        args: {preventCopy: true},
+    });
+
+    field = await screen.findByLabelText('Label');
+
+    await clearAndType(page, field, 'second input text');
+
+    await copyFieldContentToClipboard(page, field);
+    await page.clear(field);
+    expect(await getValue(field)).toBe('');
+
+    await pasteClipboardContentToField(page, field);
+
+    // paste did not work because preventCopy is true. So the field has the previous clipboard content
+    expect(await getValue(field)).toBe('first input text');
+}, 1200000);
