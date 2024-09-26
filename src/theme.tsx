@@ -139,6 +139,7 @@ export type ThemeConfig = Readonly<{
           };
     useHrefDecorator?: () => (href: string) => string;
     enableTabFocus?: boolean;
+    preventCopyInFormFields?: boolean;
 }>;
 
 // This is the lib INTERNAL context
@@ -167,4 +168,5 @@ export type Theme = {
     isIos: boolean;
     useHrefDecorator: () => (href: string) => string;
     t: (token: TextToken) => string;
+    preventCopyInFormFields: boolean;
 };

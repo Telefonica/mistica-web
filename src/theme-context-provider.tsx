@@ -179,6 +179,7 @@ const ThemeContextProvider = ({theme, children, as, withoutStyles = false}: Prop
             isIos: getPlatform(platformOverrides) === 'ios',
             useHrefDecorator: theme.useHrefDecorator ?? useDefaultHrefDecorator,
             t: translate,
+            preventCopyInFormFields: theme.preventCopyInFormFields ?? false,
         };
     }, [colors, theme, isDarkModeEnabled, translate]);
 

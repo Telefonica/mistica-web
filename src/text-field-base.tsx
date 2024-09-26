@@ -133,6 +133,7 @@ export interface CommonFormFieldProps<T = HTMLInputElement> {
     onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
     children?: void;
     readOnly?: boolean;
+    preventCopy?: boolean;
     dataAttributes?: DataAttributes;
 }
 
@@ -174,11 +175,16 @@ interface TextFieldBaseProps {
     multiline?: boolean;
     inputMode?: string;
     readOnly?: boolean;
+    preventCopy?: boolean;
     min?: string;
     max?: string;
     role?: string;
     dataAttributes?: DataAttributes;
 }
+
+const preventCopyHandler = (e: React.ClipboardEvent<HTMLInputElement>) => {
+    e.preventDefault();
+};
 
 export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
     (
@@ -206,10 +212,13 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
             autoComplete: autoCompleteProp,
             fullWidth,
             dataAttributes,
+            preventCopy,
             ...rest
         },
         ref
     ) => {
+        const {preventCopyInFormFields} = useTheme();
+        preventCopy = preventCopy ?? preventCopyInFormFields;
         const reactId = React.useId();
         const id = idProp || reactId;
         const helperTextid = React.useId();
@@ -419,6 +428,10 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
                                 value,
                                 ...(error && {'aria-invalid': true}),
                                 ...(helperText && {'aria-describedby': helperTextid}),
+                                ...(preventCopy && {
+                                    onCopy: preventCopyHandler,
+                                    onCut: preventCopyHandler,
+                                }),
                             })}
                         </Text3>
                     </div>
