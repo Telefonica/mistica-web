@@ -174,10 +174,10 @@ test.each(STORY_TYPES)('PhoneNumberField (%s)', async (storyType) => {
     const field = await screen.findByLabelText('Label');
 
     // TODO: https://jira.tid.es/browse/WEB-2047
-    // phonenumberlib is loaded lazily, and if we start typing before the lib is fully loaded,
+    // libphonenumber is loaded lazily, and if we start typing before the lib is fully loaded,
     // the test becomes unstable and the final value in the field may be wrong. As a workaround
     // we wait some time before typing anything into the field
-    await new Promise((r) => setTimeout(r, 100));
+    await new Promise((r) => setTimeout(r, 400));
 
     await clearAndType(page, field, '654834455');
     expect(await getValue(field)).toBe('654 83 44 55');
