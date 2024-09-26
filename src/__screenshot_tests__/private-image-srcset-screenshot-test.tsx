@@ -8,6 +8,6 @@ test.each(DEVICES)('Image with srcSet is responsive (%s)', async (device) => {
         device,
     });
 
-    const element = await screen.findByTestId('image');
+    const element = await screen.findByTestId('content');
     expect(await element.screenshot()).toMatchImageSnapshot();
 });
