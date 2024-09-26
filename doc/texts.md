@@ -2,8 +2,7 @@
 
 Some components use some default texts that you can customize using [`theme` prop](./theme-config.md)
 
-These are some of the customizable texts and their default values in spanish (see the
-[full list in the code](../src/text-tokens.tsx)):
+These are the customizable texts and their default values:
 
 - `expirationDatePlaceholder`: `'MM/AA'`
 - `enablePasswordVisibility`: `'Mostrar contraseña'`,
@@ -50,5 +49,5 @@ You can customize them in your page. For example:
 </ThemeContextProvider>
 ```
 
-If your application supports multi language, you may need to provide localized translation tokens depending on
-your user preferred language.
+If your application supports multi language, you may need to override all the texts and use localized
+translation tokens depending on your user preferred language.
