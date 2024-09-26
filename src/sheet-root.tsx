@@ -27,7 +27,7 @@ let isSheetOpen = false;
 export const showSheet = <T extends SheetType>(
     sheetProps: SheetTypeWithProps<T>
 ): Promise<SheetResultByType[T]> => {
-    const reactImplementation = () => {
+    const webImplementation = () => {
         if (!configureSheet) {
             return Promise.reject(
                 new Error('Tried to show a Sheet but the SheetRoot component was not mounted')
@@ -61,13 +61,13 @@ export const showSheet = <T extends SheetType>(
             .catch((error) => {
                 if (error.code === '400') {
                     // fallback to web implementation if native implementation doesn't support the sheet type
-                    return reactImplementation();
+                    return webImplementation();
                 } else {
                     throw error;
                 }
             });
     } else {
-        return reactImplementation();
+        return webImplementation();
     }
 };
 

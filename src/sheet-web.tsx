@@ -49,8 +49,6 @@ const SheetWeb = ({sheetProps, onResolve}: SheetWebProps): JSX.Element => {
         selectionRef.current = id;
     };
 
-    let element = <></>;
-
     const handleClose = () => {
         if (!onResolve) {
             throw new Error('onResolve handler is not set');
@@ -99,15 +97,13 @@ const SheetWeb = ({sheetProps, onResolve}: SheetWebProps): JSX.Element => {
 
     switch (sheetProps.type) {
         case 'INFO':
-            element = <InfoSheet {...sheetProps.props} onClose={handleClose} />;
-            break;
+            return <InfoSheet {...sheetProps.props} onClose={handleClose} />;
+
         case 'ACTIONS_LIST':
-            element = (
-                <ActionsListSheet {...sheetProps.props} onClose={handleClose} onSelect={handleSelect} />
-            );
-            break;
+            return <ActionsListSheet {...sheetProps.props} onClose={handleClose} onSelect={handleSelect} />;
+
         case 'RADIO_LIST':
-            element = (
+            return (
                 <RadioListSheet
                     {...sheetProps.props}
                     items={sheetProps.props.items.map((item) => ({
@@ -124,9 +120,9 @@ const SheetWeb = ({sheetProps, onResolve}: SheetWebProps): JSX.Element => {
                     onSelect={handleSelect}
                 />
             );
-            break;
+
         case 'ACTIONS':
-            element = (
+            return (
                 <ActionsSheet
                     {...sheetProps.props}
                     buttonLink={sheetProps.props.link}
@@ -134,13 +130,11 @@ const SheetWeb = ({sheetProps, onResolve}: SheetWebProps): JSX.Element => {
                     onPressButton={handleSelect}
                 />
             );
-            break;
+
         default:
             // @ts-expect-error sheetProps is never. This switch is exhaustive.
             throw new Error(`Unknown sheet type: ${sheetProps.type}`);
     }
-
-    return element;
 };
 
 export default SheetWeb;
