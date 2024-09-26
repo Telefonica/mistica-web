@@ -217,7 +217,7 @@ const buttonSnippets: Array<Snippet> = [
     {name: 'ButtonLinkDanger', code: '<ButtonLinkDanger onPress={() => {}}>Action</ButtonLinkDanger>'},
     {
         name: 'Button with icon',
-        code: '<ButtonPrimary onPress={() => {}}><IconLockClosedRegular color="currentColor" />Action</ButtonPrimary>',
+        code: '<ButtonPrimary StartIcon={IconLockClosedRegular} onPress={() => {}}>Action</ButtonPrimary>',
     },
     {
         name: 'ButtonGroup',
@@ -839,10 +839,10 @@ const headerSnippets: Array<Snippet> = [
     },
     {
         group: 'Headers',
-        name: 'Basic header layout (no inverse)',
+        name: 'Basic header layout (inverse)',
         code: `
         <HeaderLayout
-            isInverse={false}
+            isInverse={true}
             header={
                 <Header
                     title="The last invoice is available"
