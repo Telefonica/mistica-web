@@ -230,8 +230,10 @@ const CardContainer = React.forwardRef<HTMLDivElement, CardContainerProps>(
     }
 );
 
-const renderBackgroundImage = (src?: string) => {
-    return <Image width="100%" height="100%" src={src || ''} />;
+const renderBackgroundImage = (backgroundImageProps?: string | {src?: string; srcSet?: string}) => {
+    const src = typeof backgroundImageProps === 'string' ? backgroundImageProps : backgroundImageProps?.src;
+    const srcSet = typeof backgroundImageProps === 'string' ? undefined : backgroundImageProps?.srcSet;
+    return <Image width="100%" height="100%" src={src || ''} srcSet={srcSet} />;
 };
 
 type VideoState = 'loading' | 'loadingTimeout' | 'playing' | 'paused' | 'error';
@@ -1186,7 +1188,7 @@ type DisplayMediaCardBaseProps = {
 };
 
 type DisplayMediaCardWithImageProps = CommonDisplayCardProps & {
-    backgroundImage: string;
+    backgroundImage: string | {src: string; srcSet?: string} | {src?: string; srcSet: string};
 };
 
 type DisplayMediaCardWithVideoProps = Omit<CommonDisplayCardProps, 'actions' | 'onClose'> & {
@@ -1476,7 +1478,7 @@ interface PosterCardBaseProps {
 }
 
 interface PosterCardWithImageProps extends PosterCardBaseProps {
-    backgroundImage: string;
+    backgroundImage: string | {src: string; srcSet?: string} | {src?: string; srcSet: string};
 }
 
 type PosterCardWithVideoProps = Omit<PosterCardBaseProps, 'actions' | 'onClose'> & {
