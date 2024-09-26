@@ -182,6 +182,10 @@ interface TextFieldBaseProps {
     dataAttributes?: DataAttributes;
 }
 
+const preventCopyHandler = (e: React.ClipboardEvent<HTMLInputElement>) => {
+    e.preventDefault();
+};
+
 export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
     (
         {
@@ -413,14 +417,8 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
                                 ...(error && {'aria-invalid': true}),
                                 ...(helperText && {'aria-describedby': helperTextid}),
                                 ...(preventCopy && {
-                                    onCopy: (e: React.ClipboardEvent<HTMLInputElement>) => {
-                                        console.log('Copying is disabled');
-                                        e.preventDefault();
-                                    },
-                                    onCut: (e: React.ClipboardEvent<HTMLInputElement>) => {
-                                        console.log('Copying is disabled');
-                                        e.preventDefault();
-                                    },
+                                    onCopy: preventCopyHandler,
+                                    onCut: preventCopyHandler,
                                 }),
                             })}
                         </Text3>
