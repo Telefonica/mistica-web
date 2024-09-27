@@ -21,7 +21,7 @@ test.each(TESTABLE_DEVICES)('Sheet in %s', async (device) => {
 
 test.each(TESTABLE_DEVICES)('ActionsListSheet in %s', async (device) => {
     const page = await openStoryPage({
-        id: 'components-modals-sheet--actions-list',
+        id: 'private-sheet-presets--actions-list',
         device,
     });
 
@@ -37,7 +37,7 @@ test.each(TESTABLE_DEVICES)('ActionsListSheet in %s', async (device) => {
 
 test.each(TESTABLE_DEVICES)('RadioListSheet in %s', async (device) => {
     const page = await openStoryPage({
-        id: 'components-modals-sheet--radio-list',
+        id: 'private-sheet-presets--radio-list',
         device,
     });
 
@@ -53,7 +53,7 @@ test.each(TESTABLE_DEVICES)('RadioListSheet in %s', async (device) => {
 
 test.each(TESTABLE_DEVICES)('InfoSheet in %s', async (device) => {
     const page = await openStoryPage({
-        id: 'components-modals-sheet--info',
+        id: 'private-sheet-presets--info',
         device,
     });
 
@@ -69,7 +69,7 @@ test.each(TESTABLE_DEVICES)('InfoSheet in %s', async (device) => {
 
 test('InfoSheet with multiple description paragraphs', async () => {
     const page = await openStoryPage({
-        id: 'components-modals-sheet--info',
+        id: 'private-sheet-presets--info',
         device: 'MOBILE_IOS',
         args: {
             description: 'Description paragraph',
@@ -89,7 +89,7 @@ test('InfoSheet with multiple description paragraphs', async () => {
 
 test.each(TESTABLE_DEVICES_WITH_LARGE_DESKTOP)('ActionsSheet in %s', async (device) => {
     const page = await openStoryPage({
-        id: 'components-modals-sheet--actions',
+        id: 'private-sheet-presets--actions',
         device,
     });
 
@@ -105,7 +105,7 @@ test.each(TESTABLE_DEVICES_WITH_LARGE_DESKTOP)('ActionsSheet in %s', async (devi
 
 test('ActionsSheet with safe inset at the bottom', async () => {
     const page = await openStoryPage({
-        id: 'components-modals-sheet--actions',
+        id: 'private-sheet-presets--actions',
         device: 'MOBILE_IOS_INSET',
     });
 
