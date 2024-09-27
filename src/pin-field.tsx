@@ -299,6 +299,7 @@ const PinField = ({
 }: OtpFieldProps): React.ReactElement => {
     const fieldProps = useFieldProps({
         name,
+        label: ariaLabel ?? '',
         value,
         defaultValue,
         processValue: (s) => s,

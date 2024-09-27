@@ -165,6 +165,7 @@ const IbanField = ({
     error,
     helperText,
     name,
+    label,
     optional,
     validate: customValidate,
     onChange,
@@ -178,10 +179,7 @@ const IbanField = ({
     const {texts, t} = useTheme();
 
     const validate = (value: string | undefined, rawValue: string) => {
-        if (!value) {
-            return optional ? '' : texts.formFieldErrorIsMandatory || t(tokens.formFieldErrorIsMandatory);
-        }
-        if (!isValidIban(value)) {
+        if (!isValidIban(value ?? '')) {
             return texts.formIbanError || t(tokens.formIbanError);
         }
         return customValidate?.(value, rawValue);
@@ -191,6 +189,7 @@ const IbanField = ({
 
     const fieldProps = useFieldProps({
         name,
+        label,
         value,
         defaultValue,
         processValue,

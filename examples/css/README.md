@@ -1,9 +1,9 @@
-# Mistica css
+# Mística CSS
 
-If you can't use the Mistica React components in your project, you can still use the Mistica css to style your
+If you can't use the Mística React components in your project, you can still use the Mística CSS to style your
 app.
 
-Mistica css is a set of stylesheets that you can use to style your app with the design tokens of the system.
+Mística CSS is a set of stylesheets that you can use to style your app with the design tokens of the system.
 It includes css custom properties (css variables) for colors, border radius, typography, etc.
 
 ## How to use
