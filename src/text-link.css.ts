@@ -75,12 +75,3 @@ export const variants = styleVariants({
         },
     ],
 });
-
-export const touchable = sprinkles({
-    display: 'block',
-    border: 'none',
-    width: '100%',
-    background: 'transparent',
-    padding: 0,
-    overflow: 'visible',
-});
