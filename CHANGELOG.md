@@ -1,3 +1,17 @@
+# [16.1.0](https://github.com/Telefonica/mistica-web/compare/v16.0.0...v16.1.0) (2024-09-27)
+
+
+### Features
+
+* **BrandLoadingScreen:** improve lottie animations ([#1235](https://github.com/Telefonica/mistica-web/issues/1235)) ([e7dc87f](https://github.com/Telefonica/mistica-web/commit/e7dc87fe05e4f380212d0e98ec4f72ad71534a2e)), closes [/github.com/airbnb/lottie-web/issues/1184#issuecomment-411586909](https://github.com//github.com/airbnb/lottie-web/issues/1184/issues/issuecomment-411586909)
+* **Form fields:** allow blocking copy/cut ([#1251](https://github.com/Telefonica/mistica-web/issues/1251)) ([8fd2838](https://github.com/Telefonica/mistica-web/commit/8fd2838db2588a15a5239e045d5e4b4d87f77d2e))
+* **Form fields:** improve accesibility of errors ([#1246](https://github.com/Telefonica/mistica-web/issues/1246)) ([e35a99e](https://github.com/Telefonica/mistica-web/commit/e35a99e004cde09769f62fe7bee196c18a21850d))
+* **PhoneNumberField:** Custom formatter support + lazy load libphonenumber on demand ([#1244](https://github.com/Telefonica/mistica-web/issues/1244)) ([2ee88e9](https://github.com/Telefonica/mistica-web/commit/2ee88e9643998c84ca724469948f256802a5209e))
+* **PosterCard, DisplayMediaCard:** allow using srcSet for backgroundImage ([#1253](https://github.com/Telefonica/mistica-web/issues/1253)) ([3b3d85f](https://github.com/Telefonica/mistica-web/commit/3b3d85fe11e41a40a8d73f7791ac7297f7d6dc97))
+* **Rating, InfoRating:** new components ([#1196](https://github.com/Telefonica/mistica-web/issues/1196)) ([02c91f6](https://github.com/Telefonica/mistica-web/commit/02c91f6a98935a1fcaa2d9a2c32085c368529018))
+* **SearchField, TextField:** support inputMode prop ([#1249](https://github.com/Telefonica/mistica-web/issues/1249)) ([fe31eca](https://github.com/Telefonica/mistica-web/commit/fe31ecaa029241b46baa18f59660d6d0cd367e1b))
+* **Sheet:** lazy load sheet implementations ([#1250](https://github.com/Telefonica/mistica-web/issues/1250)) ([40fecdd](https://github.com/Telefonica/mistica-web/commit/40fecdda86dd757844148604ad5faedc40a2f98f))
+
 # [16.0.0](https://github.com/Telefonica/mistica-web/compare/v15.20.1...v16.0.0) (2024-09-13)
 
 
