@@ -1535,6 +1535,10 @@ const layoutSnippets: Array<Snippet> = [
           ))}
         />`,
     },
+    {
+        name: 'Align',
+        code: '<Align x="center" y="center"><IconLightningRegular/></Align>',
+    },
 ].map((snippet) => ({...snippet, group: 'Layouts'}));
 
 const emptyStatesGroup: Array<Snippet> = [
