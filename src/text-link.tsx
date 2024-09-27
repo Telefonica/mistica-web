@@ -64,10 +64,10 @@ const TextLink = ({
         <BaseTouchable
             {...props}
             stopPropagation
-            as={props.onPress ? 'a' : undefined}
             trackingEvent={props.trackingEvent ?? (trackEvent ? createDefaultTrackingEvent() : undefined)}
             disabled={disabled || formStatus === 'sending'}
             className={classnames(
+                styles.touchable,
                 isInverse
                     ? isDarkMode
                         ? styles.variants.inverseDark
