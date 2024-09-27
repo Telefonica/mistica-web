@@ -1,8 +1,11 @@
 'use client';
 /*
- * Common code shared by web sheet components.
- *
  * IMPORTANT: Do NOT import anything from here into `sheet-root.tsx`
+
+ * The idea is to keep the SheetRoot component as small as possible (to keep the initial load time low)
+ * and lazy load the implementations when needed.
+ *
+ * This file contains code that is shared between different sheet implementations.
  */
 import classnames from 'classnames';
 import * as React from 'react';

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Sheet from '../sheet-common';
-import {act, render, screen, waitFor, waitForElementToBeRemoved, within} from '@testing-library/react';
+import {act, render, screen, waitFor, within} from '@testing-library/react';
 import {SheetRoot, ButtonPrimary, showSheet, ThemeContextProvider, Title1} from '..';
 import {makeTheme} from './test-utils';
 import userEvent from '@testing-library/user-event';
@@ -47,9 +47,9 @@ test('Sheet', async () => {
 
     const closeButton = await within(sheet).findByRole('button', {name: 'Close'});
 
-    await act(async () => userEvent.click(closeButton));
+    await userEvent.click(closeButton);
 
-    await waitForElementToBeRemoved(sheet, {timeout: 5000});
+    await waitFor(() => expect(sheet).not.toBeInTheDocument());
 }, 30000);
 
 test('RadioListSheet', async () => {
@@ -96,9 +96,9 @@ test('RadioListSheet', async () => {
     expect(item2).toBeChecked();
 
     await userEvent.click(item1);
-    await act(() => userEvent.click(continueButton));
+    await userEvent.click(continueButton);
 
-    await waitForElementToBeRemoved(sheet, {timeout: 5000});
+    await waitFor(() => expect(sheet).not.toBeInTheDocument());
     expect(selectSpy).toHaveBeenCalledWith('1');
 }, 30000);
 
@@ -642,7 +642,7 @@ test('showSheet with native implementation ACTIONS_LIST', async () => {
         </ThemeContextProvider>
     );
 
-    await act(() =>
+    await act(async () =>
         showSheet({
             type: 'ACTIONS_LIST',
             props: {
@@ -690,7 +690,7 @@ test('showSheet with native implementation RADIO_LIST', async () => {
         </ThemeContextProvider>
     );
 
-    await act(() =>
+    await act(async () =>
         showSheet({
             type: 'RADIO_LIST',
             props: {
@@ -739,7 +739,7 @@ test('showSheet with native implementation ACTIONS', async () => {
         </ThemeContextProvider>
     );
 
-    await act(() =>
+    await act(async () =>
         showSheet({
             type: 'ACTIONS',
             props: {
