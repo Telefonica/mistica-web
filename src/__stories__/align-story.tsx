@@ -22,8 +22,8 @@ type Props = {
 
 export const Default: StoryComponent<Props> = ({x, y}) => {
     return (
-        <div style={{width: 200, height: 200, border: '1px solid red'}}>
-            <Align x={x} y={y} dataAttributes={{testid: 'story'}}>
+        <div style={{display: 'inline-block', border: '1px solid red'}}>
+            <Align width={200} height={200} x={x} y={y} dataAttributes={{testid: 'story'}}>
                 <Text2 regular>Content</Text2>
             </Align>
         </div>
