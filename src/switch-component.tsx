@@ -56,6 +56,7 @@ const Switch = (props: PropsRender | PropsChildren): JSX.Element => {
     const labelId = props['aria-labelledby'] || reactId;
     const {defaultValue, value, onChange, focusableRef, disabled} = useControlProps({
         name: props.name,
+        label: props['aria-label'],
         value: props.checked,
         defaultValue: props.defaultChecked,
         onChange: props.onChange,

@@ -15,6 +15,7 @@ import type {CommonFormFieldProps} from './text-field-base';
 export interface SearchFieldProps extends CommonFormFieldProps {
     onChangeValue?: (value: string, rawValue: string) => void;
     getSuggestions?: (value: string) => ReadonlyArray<string>;
+    inputMode?: React.HTMLAttributes<HTMLInputElement>['inputMode'];
 }
 
 const SearchField = React.forwardRef<any, SearchFieldProps>(
@@ -24,6 +25,7 @@ const SearchField = React.forwardRef<any, SearchFieldProps>(
             error,
             helperText,
             name,
+            label,
             optional,
             validate,
             onChange,
@@ -64,6 +66,7 @@ const SearchField = React.forwardRef<any, SearchFieldProps>(
 
         const fieldProps = useFieldProps({
             name,
+            label,
             value: controlledValue,
             defaultValue: undefined,
             processValue: (v: string) => v,

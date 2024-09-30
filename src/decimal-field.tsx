@@ -6,7 +6,6 @@ import {TextFieldBaseAutosuggest} from './text-field-base';
 import {createChangeEvent} from './utils/dom';
 import {useRifm} from 'rifm';
 import {combineRefs} from './utils/common';
-import * as tokens from './text-tokens';
 
 import type {Locale} from './utils/locale';
 import type {CommonFormFieldProps} from './text-field-base';
@@ -115,8 +114,9 @@ const DecimalField = ({
     error,
     helperText,
     name,
+    label,
     optional,
-    validate: validateProp,
+    validate,
     onChange,
     onChangeValue,
     onBlur,
@@ -126,19 +126,11 @@ const DecimalField = ({
     dataAttributes,
     ...rest
 }: DecimalFieldProps): JSX.Element => {
-    const {texts, t} = useTheme();
-
-    const validate = (value: string | undefined, rawValue: string) => {
-        if (!value) {
-            return optional ? '' : texts.formFieldErrorIsMandatory || t(tokens.formFieldErrorIsMandatory);
-        }
-        return validateProp?.(value, rawValue);
-    };
-
     const processValue = (value: string) => value.trim();
 
     const fieldProps = useFieldProps({
         name,
+        label,
         value,
         defaultValue,
         processValue,

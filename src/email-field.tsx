@@ -20,6 +20,7 @@ const EmailField = ({
     error,
     helperText,
     name,
+    label,
     optional,
     validate: validateProp,
     onChange,
@@ -34,10 +35,7 @@ const EmailField = ({
     const {texts, t} = useTheme();
 
     const validate = (value: string | undefined, rawValue: string) => {
-        if (!value) {
-            return optional ? '' : texts.formFieldErrorIsMandatory || t(tokens.formFieldErrorIsMandatory);
-        }
-        if (!RE_EMAIL.test(value)) {
+        if (!RE_EMAIL.test(value ?? '')) {
             return texts.formEmailError || t(tokens.formEmailError);
         }
         return validateProp?.(value, rawValue);
@@ -47,6 +45,7 @@ const EmailField = ({
 
     const fieldProps = useFieldProps({
         name,
+        label,
         value,
         defaultValue,
         processValue,

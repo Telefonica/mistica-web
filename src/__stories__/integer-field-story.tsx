@@ -16,6 +16,7 @@ interface IntegerFieldBaseArgs {
     optional: boolean;
     disabled: boolean;
     readOnly: boolean;
+    preventCopy: boolean;
 }
 
 const defaultBaseArgs: IntegerFieldBaseArgs = {
@@ -27,6 +28,7 @@ const defaultBaseArgs: IntegerFieldBaseArgs = {
     optional: false,
     disabled: false,
     readOnly: false,
+    preventCopy: false,
 };
 
 interface IntegerFieldControlledArgs extends IntegerFieldBaseArgs {

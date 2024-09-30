@@ -29,6 +29,7 @@ export interface TextFieldProps extends CommonFormFieldProps<HTMLInputElement | 
     endIcon?: React.ReactNode;
     getSuggestions?: (value: string) => ReadonlyArray<string>;
     role?: string;
+    inputMode?: React.HTMLAttributes<HTMLInputElement>['inputMode'];
 }
 
 const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
@@ -38,6 +39,7 @@ const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
             error,
             helperText,
             name,
+            label,
             optional,
             validate,
             onChangeValue,
@@ -81,6 +83,7 @@ const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
 
         const fieldProps = useFieldProps({
             name,
+            label,
             value,
             defaultValue,
             processValue,

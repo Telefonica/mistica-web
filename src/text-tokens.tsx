@@ -10,6 +10,7 @@ export type Dictionary = {
     modalClose: string;
     dialogCancelButton: string;
     dialogAcceptButton: string;
+    formErrorsAlertMessage: string;
     formFieldOptionalLabelSuffix: string;
     formFieldErrorIsMandatory: string;
     formCreditCardNumberLabel: string;
@@ -133,6 +134,13 @@ export const dialogAcceptButton: TextToken = {
     en: 'Accept',
     de: 'Akzeptieren',
     pt: 'Aceitar',
+};
+
+export const formErrorsAlertMessage: TextToken = {
+    es: 'Revisa los siguientes errores:',
+    en: 'Check the following errors:',
+    de: 'Prüfe folgende Fehler:',
+    pt: 'Confira os seguintes erros:',
 };
 
 export const formFieldOptionalLabelSuffix: TextToken = {

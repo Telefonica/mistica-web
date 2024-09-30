@@ -174,10 +174,10 @@ test.each(STORY_TYPES)('PhoneNumberField (%s)', async (storyType) => {
     const field = await screen.findByLabelText('Label');
 
     // TODO: https://jira.tid.es/browse/WEB-2047
-    // phonenumberlib is loaded lazily, and if we start typing before the lib is fully loaded,
+    // libphonenumber is loaded lazily, and if we start typing before the lib is fully loaded,
     // the test becomes unstable and the final value in the field may be wrong. As a workaround
     // we wait some time before typing anything into the field
-    await new Promise((r) => setTimeout(r, 100));
+    await new Promise((r) => setTimeout(r, 400));
 
     await clearAndType(page, field, '654834455');
     expect(await getValue(field)).toBe('654 83 44 55');
@@ -295,4 +295,57 @@ test('PinField focus management', async () => {
     expect(await firstDigitField.evaluate((el) => el === document.activeElement)).toBe(true);
     await firstDigitField.press('Delete');
     await screen.findByText("value: (string) '2'");
+}, 1200000);
+
+const copyFieldContentToClipboard = async (page: PageApi, field: ElementHandle) => {
+    await field.focus();
+    await page.keyboard.down('ControlLeft');
+    await page.keyboard.press('KeyA');
+    await page.keyboard.up('ControlLeft');
+
+    await page.keyboard.down('ControlLeft');
+    await page.keyboard.press('KeyC');
+    await page.keyboard.up('ControlLeft');
+};
+
+const pasteClipboardContentToField = async (page: PageApi, field: ElementHandle) => {
+    await field.focus();
+    await page.keyboard.down('ControlLeft');
+    await page.keyboard.press('KeyV');
+    await page.keyboard.up('ControlLeft');
+};
+
+test('TextField preventCopy', async () => {
+    let page = await openStoryPage(getStoryOfType('textfield', 'controlled'));
+
+    let field = await screen.findByLabelText('Label');
+
+    await clearAndType(page, field, 'first input text');
+
+    await copyFieldContentToClipboard(page, field);
+    await page.clear(field);
+    expect(await getValue(field)).toBe('');
+
+    await pasteClipboardContentToField(page, field);
+
+    // paste worked because preventCopy is false
+    expect(await getValue(field)).toBe('first input text');
+
+    page = await openStoryPage({
+        ...getStoryOfType('textfield', 'controlled'),
+        args: {preventCopy: true},
+    });
+
+    field = await screen.findByLabelText('Label');
+
+    await clearAndType(page, field, 'second input text');
+
+    await copyFieldContentToClipboard(page, field);
+    await page.clear(field);
+    expect(await getValue(field)).toBe('');
+
+    await pasteClipboardContentToField(page, field);
+
+    // paste did not work because preventCopy is true. So the field has the previous clipboard content
+    expect(await getValue(field)).toBe('first input text');
 }, 1200000);

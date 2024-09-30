@@ -9,6 +9,7 @@ import {sprinkles} from './sprinkles.css';
 import {vars} from './skins/skin-contract.css';
 import {getPrefixedDataAttributes} from './utils/dom';
 import * as tokens from './text-tokens';
+import IconWarningRegular from './generated/mistica-icons/icon-warning-regular';
 
 import type {DataAttributes} from './utils/types';
 
@@ -94,15 +95,20 @@ export const HelperText = ({leftText, rightText, error, id}: HelperTextProps): J
     return (
         <>
             {leftText && (
-                <div className={classnames(styles.helperText, styles.leftText)}>
-                    <Text1 color={leftColor} regular as="p" id={id}>
+                <p className={classnames(styles.helperText, styles.leftHelperText)}>
+                    {error && (
+                        <Text1 regular>
+                            <IconWarningRegular color={leftColor} className={styles.warnIcon} />
+                        </Text1>
+                    )}
+                    <Text1 color={leftColor} regular id={id}>
                         {leftText}
                     </Text1>
-                </div>
+                </p>
             )}
             {rightText && (
-                <div className={classnames(styles.helperText, styles.rightText)}>
-                    <Text1 color={rightColor} regular as="p">
+                <div className={classnames(styles.helperText)}>
+                    <Text1 color={rightColor} regular as="p" textAlign="right">
                         {rightText}
                     </Text1>
                 </div>

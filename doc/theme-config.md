@@ -16,12 +16,13 @@ type ThemeConfig = {
     insideNovumNativeApp?: boolean;
     userAgent?: string;
   };
-  texts?: ThemeTexts;
+  texts?: Partial<Dictionary>;
   analytics?: {
     logEvent: (event: TrackingEvent) => Promise<void>;
   };
   Link?: LinkComponent;
   useHrefDecorator: () => (href: string) => string;
+  preventCopyInFormFields?: boolean;
 };
 ```
 
@@ -48,7 +49,9 @@ Here is a description of every attribute:
   - `userAgent:` **IMPORTANT** In case you are using SSR, you should set this value with the user-agent header
     you receive on every request to your server, otherwise the server-side render won't take the user agent
     into account.
-- `texts?`: some copies you can customize. See [customizable texts doc](./texts.md).
+- `texts?`: some copies you can customize. See [texts doc](./texts.md).
+- `t`: this is the translate funtion. It accepts a token as exported by `textTokens`. See
+  [texts doc](./texts.md).
 - `analytics?`: see [analytics docs](./analytics.md).
 - `Link?`: the `Link` component you want to use by Touchables that use the prop `to`. By default, the lib uses
   an anchor tag (`<a>`). Use this prop to use the Link component from ReactRouter, Next.js or any other
@@ -56,6 +59,8 @@ Here is a description of every attribute:
 - `useHrefDecorator`: it is a React hook that a function that takes a `href` and returns a new `href`. This is
   useful to automatically add parameters to the `href` being used in Touchable components (for example, to add
   a `utm_source` parameter to the `href`).
+- `preventCopyInFormFields?`: this is used as the default value for `preventCopy` prop in form fields. `false`
+  by default.
 
 ## LinkComponent
 

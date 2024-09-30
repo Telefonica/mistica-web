@@ -157,6 +157,7 @@ const CreditCardNumberField = ({
     error,
     helperText,
     name,
+    label,
     optional,
     validate: validateProp,
     onChange,
@@ -174,9 +175,6 @@ const CreditCardNumberField = ({
 
     const validate = (value: string | undefined, rawValue: string) => {
         const error = texts.formCreditCardNumberError || t(tokens.formCreditCardNumberError);
-        if (!value) {
-            return optional ? '' : texts.formFieldErrorIsMandatory || t(tokens.formFieldErrorIsMandatory);
-        }
         if (isAmericanExpress(value) && !acceptedCards.americanExpress) {
             return error;
         }
@@ -189,7 +187,7 @@ const CreditCardNumberField = ({
         if (!isValidCreditCardNumber(value)) {
             return error;
         }
-        if (getCreditCardNumberLength(value) !== value.length) {
+        if (getCreditCardNumberLength(value) !== value?.length) {
             return error;
         }
         return validateProp?.(value, rawValue);
@@ -199,6 +197,7 @@ const CreditCardNumberField = ({
 
     const fieldProps = useFieldProps({
         name,
+        label,
         value,
         defaultValue,
         processValue,

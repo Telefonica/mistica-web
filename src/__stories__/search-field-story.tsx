@@ -22,6 +22,7 @@ interface SearchFieldBaseArgs {
     optional: boolean;
     disabled: boolean;
     readOnly: boolean;
+    preventCopy: boolean;
 }
 
 const defaultBaseArgs: SearchFieldBaseArgs = {
@@ -33,6 +34,7 @@ const defaultBaseArgs: SearchFieldBaseArgs = {
     optional: false,
     disabled: false,
     readOnly: false,
+    preventCopy: false,
 };
 
 interface SearchFieldControlledArgs extends SearchFieldBaseArgs {

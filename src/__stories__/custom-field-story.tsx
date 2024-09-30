@@ -214,6 +214,7 @@ const AutocompleteSelectField = ({name, options}: AutocompleteSelectFieldProps) 
 
     const fieldProps = useFieldProps({
         name,
+        label: 'Autocomplete',
         defaultValue: undefined,
         value: filterValue,
         processValue: (value: string) => value.trim(),
@@ -249,7 +250,6 @@ const AutocompleteSelectField = ({name, options}: AutocompleteSelectFieldProps) 
                 <TextField
                     {...fieldProps}
                     fullWidth
-                    label="Autocomplete"
                     ref={combineRefs(ref, inputRef)}
                     onFocus={onPress}
                     onPress={() => {

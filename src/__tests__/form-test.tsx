@@ -78,6 +78,29 @@ test('custom validator', async () => {
     );
 });
 
+test('when there are multiple errors on submit, the fields with error are anounced by screen reader', async () => {
+    const handleSubmitSpy = jest.fn();
+
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Form onSubmit={handleSubmitSpy}>
+                <TextField label="Username" name="username" />
+                <TextField label="Password" name="password" validate={() => 'wrong password'} />
+                <ButtonPrimary submit>Submit</ButtonPrimary>
+            </Form>
+        </ThemeContextProvider>
+    );
+
+    await userEvent.type(screen.getByLabelText('Password'), 'letmein');
+    await userEvent.click(screen.getByText('Submit'));
+
+    expect(screen.getByText('Este campo es obligatorio')).toBeInTheDocument();
+    expect(screen.getByText('wrong password')).toBeInTheDocument();
+    const liveRegion = screen.getByRole('alert');
+    expect(liveRegion).toBeInTheDocument();
+    expect(liveRegion).toHaveTextContent('Revisa los siguientes errores: Username, Password');
+});
+
 test('fields are disabled during submit', async () => {
     let resolveSubmitPromise: (value?: unknown) => void = () => {};
     const submitPromise = new Promise((r) => {
