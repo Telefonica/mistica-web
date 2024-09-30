@@ -41,4 +41,4 @@ export const Default: StoryComponent = () => {
     );
 };
 
-Default.storyName = 'CPF number';
+Default.storyName = 'Custom formatter field';
