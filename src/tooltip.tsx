@@ -18,7 +18,6 @@ import {useSetTooltipState, useTooltipState} from './tooltip-context-provider';
 import {isRunningAcceptanceTest} from './utils/platform';
 import {IconButton} from './icon-button';
 import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
-import Box from './box';
 import * as tokens from './text-tokens';
 
 import type {BoundingRect} from './hooks';
@@ -619,7 +618,7 @@ const Tooltip = ({
     return (
         <BaseTooltip
             content={
-                <Box className={styles.content}>
+                <div className={styles.content}>
                     {(title || description) && (
                         <Stack space={4}>
                             {title && <Text2 medium>{title}</Text2>}
@@ -627,7 +626,7 @@ const Tooltip = ({
                         </Stack>
                     )}
                     {extra ?? children}
-                </Box>
+                </div>
             }
             centerContent={centerContent}
             dataAttributes={{'component-name': 'Tooltip', ...dataAttributes}}
