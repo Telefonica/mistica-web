@@ -109,6 +109,7 @@ export const InternalBoxed = React.forwardRef<HTMLDivElement, Props & InternalPr
                                 : vars.colors.backgroundContainer,
                         [styles.vars.borderRadius]: borderRadius,
                     }),
+                    background,
                 }}
                 className={classnames(
                     className,
