@@ -101,15 +101,14 @@ export const InternalBoxed = React.forwardRef<HTMLDivElement, Props & InternalPr
                         ...calcCssVars('minWidth', minWidth),
                         ...calcCssVars('height', height),
                         ...calcCssVars('minHeight', minHeight),
+                        [styles.vars.background]:
+                            background ?? isInverseInside
+                                ? isInverseOutside
+                                    ? vars.colors.backgroundContainerBrandOverInverse
+                                    : vars.colors.backgroundContainerBrand
+                                : vars.colors.backgroundContainer,
+                        [styles.vars.borderRadius]: borderRadius,
                     }),
-                    borderRadius,
-                    overflow: 'hidden',
-                    background:
-                        background ?? isInverseInside
-                            ? isInverseOutside
-                                ? vars.colors.backgroundContainerBrandOverInverse
-                                : vars.colors.backgroundContainerBrand
-                            : vars.colors.backgroundContainer,
                 }}
                 className={classnames(
                     className,

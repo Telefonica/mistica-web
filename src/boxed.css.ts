@@ -28,8 +28,21 @@ const desktop = {
     maxWidth: createVar(),
     minWidth: createVar(),
 };
+const background = createVar();
+const borderRadius = createVar();
 
-export const vars = {width, height, minHeight, maxWidth, minWidth, mobile, tablet, desktop};
+export const vars = {
+    width,
+    height,
+    minHeight,
+    maxWidth,
+    minWidth,
+    mobile,
+    tablet,
+    desktop,
+    background,
+    borderRadius,
+};
 
 export const boxed = style({
     width,
@@ -37,6 +50,9 @@ export const boxed = style({
     minHeight,
     maxWidth,
     minWidth,
+    background,
+    borderRadius,
+    overflow: 'hidden',
 
     '@media': {
         [mq.mobile]: {
