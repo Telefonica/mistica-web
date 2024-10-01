@@ -5,7 +5,6 @@ import {ThemeVariant, useIsInverseOrMediaVariant} from './theme-variant-context'
 import {getPrefixedDataAttributes} from './utils/dom';
 import {vars} from './skins/skin-contract.css';
 import * as styles from './boxed.css';
-import {sprinkles} from './sprinkles.css';
 import {applyCssVars} from './utils/css';
 
 import type {Variant} from './theme-variant-context';
@@ -37,7 +36,7 @@ type InternalProps = {
 
 const getBorderStyle = (isInverseOutside: boolean, isInverseInside: boolean) => {
     if (isInverseOutside || isInverseInside) {
-        return sprinkles({border: 'none'});
+        return styles.noBorder;
     }
     return styles.boxBorder;
 };
@@ -103,22 +102,19 @@ export const InternalBoxed = React.forwardRef<HTMLDivElement, Props & InternalPr
                         ...calcCssVars('height', height),
                         ...calcCssVars('minHeight', minHeight),
                     }),
-                    background,
+                    borderRadius,
+                    overflow: 'hidden',
+                    background:
+                        background ?? isInverseInside
+                            ? isInverseOutside
+                                ? vars.colors.backgroundContainerBrandOverInverse
+                                : vars.colors.backgroundContainerBrand
+                            : vars.colors.backgroundContainer,
                 }}
                 className={classnames(
                     className,
                     styles.boxed,
                     getBorderStyle(isInverseOutside, isInverseInside),
-                    sprinkles({
-                        borderRadius,
-                        overflow: 'hidden',
-                        background:
-                            background ?? isInverseInside
-                                ? isInverseOutside
-                                    ? vars.colors.backgroundContainerBrandOverInverse
-                                    : vars.colors.backgroundContainerBrand
-                                : vars.colors.backgroundContainer,
-                    }),
                     {[styles.desktopOnly]: desktopOnly}
                 )}
                 role={role}

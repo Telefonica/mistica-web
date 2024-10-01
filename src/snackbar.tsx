@@ -6,7 +6,6 @@ import {isWebViewBridgeAvailable, nativeMessage} from '@tef-novum/webview-bridge
 import {useElementDimensions, useScreenSize, useTheme} from './hooks';
 import {Text2, Text3} from './text';
 import * as styles from './snackbar.css';
-import {sprinkles} from './sprinkles.css';
 import {vars} from './skins/skin-contract.css';
 import {getPrefixedDataAttributes} from './utils/dom';
 import {Portal} from './portal';
@@ -118,11 +117,7 @@ const SnackbarComponent = React.forwardRef<ImperativeHandle, Props>(
                     >
                         <div
                             className={classNames(
-                                styles.content,
-                                sprinkles({
-                                    flexDirection: hasLongButton ? 'column' : 'row',
-                                    alignItems: hasLongButton ? undefined : 'center',
-                                })
+                                hasLongButton ? styles.contentWithLongButton : styles.contentWithoutLongButton
                             )}
                             style={shouldShowDismissButton && !hasLongButton ? {paddingRight: 32} : undefined}
                         >
@@ -142,13 +137,7 @@ const SnackbarComponent = React.forwardRef<ImperativeHandle, Props>(
                                     })}
                                 >
                                     <BaseTouchable
-                                        className={sprinkles({
-                                            paddingY: 4,
-                                            paddingX: 8,
-                                            border: 'none',
-                                            padding: 0,
-                                            background: 'transparent',
-                                        })}
+                                        className={styles.buttonTouchable}
                                         ref={buttonRef}
                                         onPress={() => {
                                             close({action: 'BUTTON'});

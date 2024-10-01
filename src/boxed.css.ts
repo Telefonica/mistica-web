@@ -109,3 +109,7 @@ export const desktopOnly = style({
         },
     },
 });
+
+export const noBorder = sprinkles({
+    border: 'none',
+});

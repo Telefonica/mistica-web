@@ -172,6 +172,12 @@ export const navigationBarContent = style({
     },
 });
 
+export const navigationBarAction = sprinkles({
+    border: 'none',
+    background: 'transparent',
+    padding: 0,
+});
+
 export const desktopOnly = style({
     '@media': {
         [mq.tabletOrSmaller]: {

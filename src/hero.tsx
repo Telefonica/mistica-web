@@ -12,7 +12,6 @@ import * as styles from './hero.css';
 import * as mediaStyles from './image.css';
 import {useSlideshowContext} from './carousel';
 import {getPrefixedDataAttributes} from './utils/dom';
-import {sprinkles} from './sprinkles.css';
 import {useIsInverseOrMediaVariant} from './theme-variant-context';
 import {applyCssVars} from './utils/css';
 import {InternalResponsiveLayout, ResetResponsiveLayout} from './responsive-layout';
@@ -73,14 +72,7 @@ const HeroContent = ({
     buttonLink,
 }: HeroContentProps) => {
     return (
-        <section
-            className={sprinkles({
-                height: '100%',
-                display: 'flex',
-                justifyContent: 'space-between',
-                flexDirection: 'column',
-            })}
-        >
+        <section className={styles.contentContainer}>
             <div>
                 <Stack space={16}>
                     {headline && headline}
@@ -225,7 +217,7 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
                     }),
                     background: CONTENT_BACKGROUND_COLOR[background],
                 }}
-                className={sprinkles({height: '100%'})}
+                className={styles.hero}
             >
                 <Layout isInverse={isInverse}>
                     <GridLayout

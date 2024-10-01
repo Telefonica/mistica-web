@@ -1,4 +1,4 @@
-import {style} from '@vanilla-extract/css';
+import {style, styleVariants} from '@vanilla-extract/css';
 import {vars} from './skins/skin-contract.css';
 import {sprinkles} from './sprinkles.css';
 import * as mq from './media-queries.css';
@@ -136,4 +136,9 @@ export const warnIcon = style({
     marginRight: 4,
     width: ['1rem', '1lh'], // some browsers don't support 'lh' unit yet
     height: ['1rem', '1lh'],
+});
+
+export const background = styleVariants({
+    default: [sprinkles({background: vars.colors.backgroundContainer})],
+    readOnly: [sprinkles({background: vars.colors.neutralLow})],
 });

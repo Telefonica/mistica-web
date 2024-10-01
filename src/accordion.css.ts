@@ -92,3 +92,7 @@ export const panelTransitionClasses = {
 export const panel = style({
     overflow: 'hidden',
 });
+
+export const accordionItem = sprinkles({
+    width: '100%',
+});

@@ -3,7 +3,6 @@
 'use client';
 import * as React from 'react';
 import {Boxed} from '../boxed';
-import {sprinkles} from '../sprinkles.css';
 import Stack from '../stack';
 import * as styles from './advanced-data-card.css';
 import * as mediaStyles from '../image.css';
@@ -163,15 +162,11 @@ const CardFooter = ({button, footerImage, footerText, footerTextLinesMax, button
                 <div
                     className={classNames(
                         styles.footerDirection,
-                        hasAllItens
-                            ? styles.marginRightAuto
-                            : sprinkles({
-                                  paddingTop: 16,
-                              })
+                        hasAllItens ? styles.marginRightAuto : styles.withPaddingTop
                     )}
                 >
                     {hasFooterImage && (
-                        <Box paddingRight={16} className={sprinkles({alignItems: 'center', display: 'flex'})}>
+                        <Box paddingRight={16} className={styles.footerImage}>
                             <div
                                 style={applyCssVars({
                                     [mediaStyles.vars.mediaBorderRadius]: vars.borderRadii.mediaSmall,
@@ -286,10 +281,7 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
 
         return (
             <section
-                className={sprinkles({
-                    position: 'relative',
-                    height: '100%',
-                })}
+                className={styles.container}
                 {...getPrefixedDataAttributes(dataAttributes, 'AdvancedDataCard')}
                 ref={ref}
                 aria-label={isTouchable ? undefined : ariaLabel}

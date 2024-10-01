@@ -21,7 +21,6 @@ import {useSetModalState} from './modal-context-provider';
 import {Logo} from './logo';
 import {vars} from './skins/skin-contract.css';
 import * as styles from './navigation-bar.css';
-import {sprinkles} from './sprinkles.css';
 import {getPrefixedDataAttributes} from './utils/dom';
 import Stack from './stack';
 import Box from './box';
@@ -380,11 +379,9 @@ export const NavigationBar = ({
                     <ResponsiveLayout>{content}</ResponsiveLayout>
                 ) : (
                     <div
-                        className={sprinkles({
-                            width: '100%',
-                        })}
                         style={{
                             padding: `0 ${paddingX}px`,
+                            width: '100%',
                         }}
                     >
                         {content}
@@ -455,11 +452,7 @@ export const NavigationBarAction = ({children, ...touchableProps}: NavigationBar
         <BaseTouchable
             {...touchableProps}
             className={classnames(
-                sprinkles({
-                    border: 'none',
-                    background: 'transparent',
-                    padding: 0,
-                }),
+                styles.navigationBarAction,
                 styles.lineHeightFix,
                 styles.textWrapperVariants[isInverse ? 'inverse' : 'default']
             )}

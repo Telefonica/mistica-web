@@ -12,7 +12,6 @@ import classNames from 'classnames';
 import ButtonGroup from './button-group';
 import * as styles from './callout.css';
 import * as mediaStyles from './image.css';
-import {sprinkles} from './sprinkles.css';
 import {vars} from './skins/skin-contract.css';
 import {getPrefixedDataAttributes} from './utils/dom';
 import {applyCssVars} from './utils/css';
@@ -55,17 +54,7 @@ const Callout = ({
     const {texts, t} = useTheme();
     return (
         <section
-            className={classNames(
-                styles.container,
-                sprinkles({
-                    background: {
-                        inverse: vars.colors.backgroundContainer,
-                        alternative: vars.colors.backgroundContainer,
-                        default: vars.colors.backgroundContainerAlternative,
-                        media: vars.colors.backgroundContainer,
-                    }[variant],
-                })
-            )}
+            className={classNames(styles.container, styles.background[variant])}
             style={applyCssVars({
                 [mediaStyles.vars.mediaBorderRadius]: vars.borderRadii.mediaSmall,
             })}
