@@ -13,19 +13,16 @@ type Props = {
     dataAttributes?: DataAttributes;
 };
 
-const Align = ({
-    x = 'start',
-    y = 'start',
-    width = '100%',
-    height = '100%',
-    children,
-    dataAttributes,
-}: Props): JSX.Element => {
+const Align = ({x = 'start', y = 'start', width, height, children, dataAttributes}: Props): JSX.Element => {
     return (
         <div
             {...getPrefixedDataAttributes(dataAttributes, 'Align')}
             className={styles.container}
-            style={{placeItems: `${y} ${x}`, width, height}}
+            style={{
+                placeItems: `${y} ${x}`,
+                ...(width !== undefined ? {width} : {}),
+                ...(height !== undefined ? {height} : {}),
+            }}
         >
             {children}
         </div>
