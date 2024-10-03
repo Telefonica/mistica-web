@@ -19,6 +19,10 @@ type Props = {
     paddingRight?: ByBreakpoint<PadSize>;
     as?: React.ComponentType<any> | string;
     children?: React.ReactNode;
+    /**
+     * @deprecated this component is meant to be used only to add padding.
+     * Consider using a div (or similar) instead if you need to add extra styles
+     */
     className?: string;
     role?: string;
     /** "data-" prefix is automatically added. For example, use "testid" instead of "data-testid" */
