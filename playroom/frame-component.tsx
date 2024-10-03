@@ -16,6 +16,7 @@ import {
     O2_NEW_SKIN,
     TU_SKIN,
     MOVISTAR_SKIN,
+    BLAU_SKIN,
 } from '../src';
 
 import type {ThemeConfig} from '../src';
@@ -50,7 +51,7 @@ const App = ({children, skinName}: {children: React.ReactNode; skinName: string}
                 ? 'body {font-family: "On Air"}'
                 : ''
         }
-        
+        ${skinName === BLAU_SKIN ? 'body {font-family: "Code Pro"}' : ''}
 
         *[class^='_1fu0koy1'] {
             display: none;

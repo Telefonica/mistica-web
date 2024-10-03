@@ -122,6 +122,7 @@ const MisticaThemeProvider = ({Story, context}): React.ReactElement => {
                         {(skin === O2_SKIN || skin === O2_NEW_SKIN || skin === MOVISTAR_SKIN) && (
                             <style>{`body {font-family: "On Air"}`}</style>
                         )}
+                        {skin === BLAU_SKIN && <style>{`body {font-family: "Code Pro"}`}</style>}
                         <Story {...context} />
                     </OverscrollColorProvider>
                 </ThemeContextProvider>
