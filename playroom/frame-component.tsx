@@ -51,7 +51,7 @@ const App = ({children, skinName}: {children: React.ReactNode; skinName: string}
                 ? 'body {font-family: "On Air"}'
                 : ''
         }
-        ${skinName === BLAU_SKIN ? 'body {font-family: "Code Pro"}' : ''}
+        ${skinName === BLAU_SKIN ? 'body {font-family: "Code Pro", -apple-system, "Roboto", "Helvetica", "Arial", sans-serif}' : ''}
 
         *[class^='_1fu0koy1'] {
             display: none;
