@@ -3,21 +3,28 @@ import {TextField} from '..';
 import {useRifm} from 'rifm';
 
 export default {
-    title: 'Private/Inputs/Input with custom formatter',
+    title: 'Components/Input fields/Input field with custom formatter',
 };
 
 export const Default: StoryComponent = () => {
     const [value, setValue] = React.useState('');
 
-    // format as: 000.000.000-00
+    /**
+     * format as: 000.000.000-00
+     * https://en.wikipedia.org/wiki/CPF_number
+     */
     const format = (value: string) => {
-        const digits = value.replace(/\D/g, '');
+        const digits = value.replace(/\D/g, ''); // strip all non digit characters
         const d1 = digits.substring(0, 3);
         const d2 = digits.substring(3, 6);
         const d3 = digits.substring(6, 9);
         const d4 = digits.substring(9, 11);
 
-        return `${d1}.${d2}.${d3}-${d4}`.replace(/[^\d]+$/g, '');
+        return (
+            `${d1}.${d2}.${d3}-${d4}`
+                // remove non digit characters from the end
+                .replace(/\D*$/, '')
+        );
     };
 
     const rifm = useRifm({
@@ -28,14 +35,14 @@ export const Default: StoryComponent = () => {
 
     return (
         <TextField
+            inputMode="numeric" // to show numeric keyboard on mobile
             name="cpf"
-            label="CPF Number"
+            label="CPF"
             value={rifm.value}
             onChange={rifm.onChange}
-            placeholder="Type here"
-            helperText="CPF Number"
+            helperText="Cadastro de Pessoas Físicas"
         />
     );
 };
 
-Default.storyName = 'CPF number';
+Default.storyName = 'Input field with custom formatter';
