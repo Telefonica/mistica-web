@@ -265,6 +265,9 @@ const RawTouchable = React.forwardRef<TouchableElement, TouchableProps>((props, 
         return React.createElement(elementType, {
             ...commonProps,
             role,
+            // When an <a/> is rendered without an href value, the element is not accesible
+            // by keyboard (using tab key). We add a fictional href to "#" to avoid this.
+            href: elementType === 'a' ? '#' : undefined,
             // this "form" attribute is useful when the form's submit button
             // is located outside the <form> element, for example if you use
             // a ButtonFixedFooter layout inside a form with the submit
@@ -274,7 +277,13 @@ const RawTouchable = React.forwardRef<TouchableElement, TouchableProps>((props, 
             'aria-labelledby': props['aria-labelledby'],
             type,
             ref: ref as React.RefObject<HTMLButtonElement>,
-            onClick: handleButtonClick,
+            onClick: (e: React.MouseEvent<HTMLElement>) => {
+                // prevent navigating to fictional "#" if element is rendered as <a/>
+                if (elementType === 'a') {
+                    e.preventDefault();
+                }
+                handleButtonClick(e);
+            },
             children,
         });
     }
