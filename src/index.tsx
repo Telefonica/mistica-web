@@ -41,6 +41,7 @@ export {default as Overlay} from './overlay';
 export {default as Tooltip} from './tooltip';
 export {default as Stack} from './stack';
 export {default as Box} from './box';
+export {default as Align} from './align';
 export {Boxed} from './boxed';
 export {Header, HeaderLayout, MainSectionHeader, MainSectionHeaderLayout} from './header';
 export {default as GridLayout} from './grid-layout';
