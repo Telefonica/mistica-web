@@ -1,3 +1,11 @@
+## [16.1.1](https://github.com/Telefonica/mistica-web/compare/v16.1.0...v16.1.1) (2024-10-03)
+
+
+### Bug Fixes
+
+* **PhoneNumberField:** Revert lazy load of libphonenumber ([#1258](https://github.com/Telefonica/mistica-web/issues/1258)) ([3d18271](https://github.com/Telefonica/mistica-web/commit/3d18271fdb5a48727fbb1653bbed3fbb72365112)), closes [Telefonica/mistica-web#1244](https://github.com/Telefonica/mistica-web/issues/1244)
+* **Sheet:** avoid content from rendering on top of sticky title/buttons ([#1247](https://github.com/Telefonica/mistica-web/issues/1247)) ([21ce399](https://github.com/Telefonica/mistica-web/commit/21ce3995c7d16e4498b0f6734620cd7d267bdbf6))
+
 # [16.1.0](https://github.com/Telefonica/mistica-web/compare/v16.0.0...v16.1.0) (2024-09-27)
 
 
