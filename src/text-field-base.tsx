@@ -166,7 +166,7 @@ interface TextFieldBaseProps {
     onBlur?: React.FocusEventHandler;
     onFocus?: React.FocusEventHandler;
     onKeyDown?: (event: React.KeyboardEvent) => void;
-    inputProps?: {[name: string]: unknown};
+    inputProps?: {[name: string]: string | number | undefined};
     inputComponent?: React.ComponentType<any>;
     shrinkLabel?: boolean;
     focus?: boolean;

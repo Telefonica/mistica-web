@@ -144,11 +144,6 @@ export const createServer = (): http.Server => {
             return;
         }
 
-        if (moduleName.includes('telefonica_libphonenumber')) {
-            serveFileInPath(path.join(__dirname, '..', '..', 'public', 'ssr', `${moduleName}`));
-            return;
-        }
-
         let Component;
         try {
             // eslint-disable-next-line @typescript-eslint/no-var-requires
