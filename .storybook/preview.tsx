@@ -63,16 +63,14 @@ const getTheme = (
     selectedPlatform?: Platform,
     selectedColorScheme?: ColorScheme
 ): ThemeConfig => {
-    const skin = selectedSkin ?? MOVISTAR_SKIN;
-    const platform = selectedPlatform ?? 'desktop';
-    const colorScheme = selectedColorScheme ?? 'auto';
-    const themeConfig = AVAILABLE_THEMES.find(({skin: skinConfig}) => skinConfig.name === skin) || Movistar;
+    const themeConfig =
+        AVAILABLE_THEMES.find(({skin: skinConfig}) => skinConfig.name === selectedSkin) || Movistar;
     return {
         ...themeConfig,
-        colorScheme,
+        colorScheme: selectedColorScheme,
         platformOverrides: {
-            platform,
-            insideNovumNativeApp: platform !== 'desktop',
+            platform: selectedPlatform,
+            insideNovumNativeApp: selectedPlatform !== 'desktop',
         },
         enableTabFocus: true,
         dimensions: {
