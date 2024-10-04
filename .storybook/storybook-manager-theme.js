@@ -28,6 +28,7 @@ export const createStorybookTheme = (skinName) => {
         // Toolbar default and active colors
         barTextColor: colors.textSecondary,
         barSelectedColor: colors.primary,
+        barHoverColor: colors.brand,
 
         // UI
         appBg: '#ffffff',
