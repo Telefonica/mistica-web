@@ -67,11 +67,15 @@ const getTheme = (
         AVAILABLE_THEMES.find(({skin: skinConfig}) => skinConfig.name === selectedSkin) || Movistar;
     return {
         ...themeConfig,
-        colorScheme: selectedColorScheme,
-        platformOverrides: {
-            platform: selectedPlatform,
-            insideNovumNativeApp: selectedPlatform !== 'desktop',
-        },
+        ...(selectedColorScheme ? {colorScheme: selectedColorScheme} : {}),
+        ...(selectedPlatform
+            ? {
+                  platformOverrides: {
+                      platform: selectedPlatform,
+                      insideNovumNativeApp: selectedPlatform !== 'desktop',
+                  },
+              }
+            : {}),
         enableTabFocus: true,
         dimensions: {
             headerMobileHeight: 'mistica',
