@@ -219,7 +219,7 @@ export const MovistarLogo = ({
     ...props
 }: LogoProps): JSX.Element => (
     <MaybeTouchableLogo size={size} {...props}>
-        <LogoBase skinName="Movistar" type={type} size={size} />
+        <LogoBase skinName="Movistar" type={type} size={size} color={color} />
     </MaybeTouchableLogo>
 );
 
@@ -230,7 +230,7 @@ export const VivoLogo = ({
     ...props
 }: LogoProps): JSX.Element => (
     <MaybeTouchableLogo size={size} {...props}>
-        <LogoBase skinName="Vivo" type={type} size={size} />
+        <LogoBase skinName="Vivo" type={type} size={size} color={color} />
     </MaybeTouchableLogo>
 );
 
@@ -241,7 +241,7 @@ export const O2Logo = ({
     ...props
 }: LogoProps): JSX.Element => (
     <MaybeTouchableLogo size={size} {...props}>
-        <LogoBase skinName="O2" type={type} size={size} />
+        <LogoBase skinName="O2" type={type} size={size} color={color} />
     </MaybeTouchableLogo>
 );
 
@@ -252,7 +252,7 @@ export const O2NewLogo = ({
     ...props
 }: LogoProps): JSX.Element => (
     <MaybeTouchableLogo size={size} {...props}>
-        <LogoBase skinName="O2-new" type={type} size={size} />
+        <LogoBase skinName="O2-new" type={type} size={size} color={color} />
     </MaybeTouchableLogo>
 );
 
@@ -263,7 +263,7 @@ export const TelefonicaLogo = ({
     ...props
 }: LogoProps): JSX.Element => (
     <MaybeTouchableLogo size={size} {...props}>
-        <LogoBase skinName="Telefonica" type={type} size={size} />
+        <LogoBase skinName="Telefonica" type={type} size={size} color={color} />
     </MaybeTouchableLogo>
 );
 
@@ -274,7 +274,7 @@ export const BlauLogo = ({
     ...props
 }: LogoProps): JSX.Element => (
     <MaybeTouchableLogo size={size} {...props}>
-        <LogoBase skinName="Blau" type={type} size={size} />
+        <LogoBase skinName="Blau" type={type} size={size} color={color} />
     </MaybeTouchableLogo>
 );
 
@@ -285,6 +285,6 @@ export const TuLogo = ({
     ...props
 }: LogoProps): JSX.Element => (
     <MaybeTouchableLogo size={size} {...props}>
-        <LogoBase skinName="Tu" type={type} size={size} />
+        <LogoBase skinName="Tu" type={type} size={size} color={color} />
     </MaybeTouchableLogo>
 );
