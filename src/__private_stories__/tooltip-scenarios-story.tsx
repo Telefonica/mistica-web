@@ -1,5 +1,18 @@
 import * as React from 'react';
-import {Stack, Text3, Tooltip, Placeholder, IconShopRegular, Title3} from '..';
+import {
+    Stack,
+    Text3,
+    Tooltip,
+    Placeholder,
+    IconShopRegular,
+    Title3,
+    Grid,
+    GridItem,
+    SnapCard,
+    Circle,
+    IconAcademicRegular,
+} from '..';
+import {vars} from '../skins/skin-contract.css';
 
 export default {
     title: 'Private/Tooltip',
@@ -142,3 +155,61 @@ export const MultipleTooltips: StoryComponent = () => {
 };
 
 MultipleTooltips.storyName = 'Multiple tooltips';
+
+export const WithTargetStyles: StoryComponent = () => {
+    return (
+        <Stack space={16}>
+            <Stack space={8}>
+                <Title3>Tooltip with custom CSS styles for the target wrapper</Title3>
+                <Text3 regular as="p">
+                    Sometimes you may need to style the element that wraps the target content. You can use the
+                    targetStyle prop for this.
+                </Text3>
+            </Stack>
+            <Grid columns={2} gap={8}>
+                <GridItem>
+                    <Tooltip
+                        targetStyle={{height: '100%'}}
+                        position="bottom"
+                        target={
+                            <SnapCard
+                                dataAttributes={{testid: 'target-0'}}
+                                asset={
+                                    <Circle size={40} backgroundColor={vars.colors.brandLow}>
+                                        <IconAcademicRegular color={vars.colors.brand} />
+                                    </Circle>
+                                }
+                                description="Description description description description description description description description description description description description description description description description description description description description"
+                                title="Title"
+                            />
+                        }
+                        title="Title"
+                        description="Description"
+                    />
+                </GridItem>
+                <GridItem>
+                    <Tooltip
+                        targetStyle={{height: '100%'}}
+                        position="bottom"
+                        target={
+                            <SnapCard
+                                dataAttributes={{testid: 'target-1'}}
+                                asset={
+                                    <Circle size={40} backgroundColor={vars.colors.brandLow}>
+                                        <IconAcademicRegular color={vars.colors.brand} />
+                                    </Circle>
+                                }
+                                title="Title"
+                                description="Description"
+                            />
+                        }
+                        title="Title"
+                        description="Description"
+                    />
+                </GridItem>
+            </Grid>
+        </Stack>
+    );
+};
+
+WithTargetStyles.storyName = 'With custom styles for target';
