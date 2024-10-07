@@ -53,7 +53,7 @@ test.each(SKINS)('Logo. Default brand with skin={%s}', async (skin: KnownSkinNam
     await openStoryPage({
         id: 'components-logo--default',
         device: 'DESKTOP',
-        skin: skin as (typeof SKINS)[number],
+        skin,
     });
 
     const story = await screen.findByTestId('logo');
