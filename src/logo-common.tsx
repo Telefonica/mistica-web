@@ -9,6 +9,7 @@ export type LogoImageProps = {
     type: LogoType;
     isDarkMode: boolean;
     isInverse: boolean;
+    color?: string;
 };
 
 export const calcInlineVars = (size: ByBreakpoint<number>): Record<string, string> => {

@@ -6,9 +6,15 @@ import {calcInlineVars} from './logo-common';
 
 import type {LogoImageProps} from './logo-common';
 
-const MovistarLogoImage = ({size, type, isDarkMode, isInverse}: LogoImageProps): JSX.Element => {
+const MovistarLogoImage = ({
+    size,
+    type,
+    isDarkMode,
+    isInverse,
+    color: colorProp,
+}: LogoImageProps): JSX.Element => {
     const {colors} = getMovistarSkin();
-    const color = isInverse && !isDarkMode ? colors.inverse : colors.brand;
+    const color = colorProp || (isInverse && !isDarkMode ? colors.inverse : colors.brand);
 
     if (type === 'vertical') {
         return (

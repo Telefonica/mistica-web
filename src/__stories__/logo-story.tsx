@@ -17,6 +17,7 @@ type Args = {
     action: 'none' | 'onPress' | 'href' | 'to';
     forceBrandLogo: boolean;
     brand: 'Movistar' | 'O2' | 'O2-new' | 'Vivo' | 'Telefonica' | 'Blau' | 'Tu';
+    color: string;
 };
 
 const getLogoActionProps = (action: string) => {
@@ -42,11 +43,20 @@ const getLogoActionProps = (action: string) => {
             : {};
 };
 
-export const Default: StoryComponent<Args> = ({type, size, inverse, action, forceBrandLogo, brand}) => {
+export const Default: StoryComponent<Args> = ({
+    type,
+    size,
+    inverse,
+    action,
+    forceBrandLogo,
+    brand,
+    color,
+}) => {
     const logoProps = {
         ...getLogoActionProps(action),
         type,
         size,
+        color: color || undefined,
     };
 
     const CurrentLogo = {
@@ -78,6 +88,7 @@ Default.args = {
     inverse: false,
     forceBrandLogo: false,
     brand: 'Movistar',
+    color: '',
 };
 
 Default.argTypes = {

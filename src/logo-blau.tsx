@@ -6,10 +6,16 @@ import {calcInlineVars} from './logo-common';
 
 import type {LogoImageProps} from './logo-common';
 
-const BlauLogoImage = ({size, type, isDarkMode, isInverse}: LogoImageProps): JSX.Element => {
+const BlauLogoImage = ({
+    size,
+    type,
+    isDarkMode,
+    isInverse,
+    color: colorProp,
+}: LogoImageProps): JSX.Element => {
     const {colors} = getBlauSkin();
-    const color = isInverse && !isDarkMode ? colors.inverse : colors.brand;
-    const colorSecondary = isInverse && !isDarkMode ? colors.inverse : colors.promo;
+    const color = colorProp || (isInverse && !isDarkMode ? colors.inverse : colors.brand);
+    const colorSecondary = colorProp || (isInverse && !isDarkMode ? colors.inverse : colors.promo);
 
     if (type === 'vertical') {
         return (

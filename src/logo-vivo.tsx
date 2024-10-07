@@ -6,9 +6,15 @@ import {calcInlineVars} from './logo-common';
 
 import type {LogoImageProps} from './logo-common';
 
-const VivoLogoImage = ({size, type, isInverse, isDarkMode}: LogoImageProps): JSX.Element => {
+const VivoLogoImage = ({
+    size,
+    type,
+    isInverse,
+    isDarkMode,
+    color: colorProp,
+}: LogoImageProps): JSX.Element => {
     const {colors} = getVivoSkin();
-    const color = isInverse && !isDarkMode ? colors.inverse : colors.brand;
+    const color = colorProp || (isInverse && !isDarkMode ? colors.inverse : colors.brand);
 
     if (type === 'vertical') {
         return (
