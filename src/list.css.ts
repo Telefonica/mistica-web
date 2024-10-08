@@ -62,6 +62,10 @@ export const rowContent = sprinkles({
     height: '100%',
 });
 
+export const rowContentPadding = sprinkles({
+    paddingX: 16,
+});
+
 export const content = sprinkles({
     display: 'flex',
     width: '100%',

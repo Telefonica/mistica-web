@@ -619,7 +619,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
 
     return (
         <div
-            className={styles.rowContent}
+            className={classNames(styles.rowContent, styles.rowContentPadding)}
             role={role}
             {...getPrefixedDataAttributes(dataAttributes)}
             ref={ref as React.Ref<HTMLDivElement>}
