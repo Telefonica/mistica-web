@@ -15,6 +15,7 @@ type Position = 'top' | 'bottom' | 'left' | 'right';
 type Props = {
     description?: string;
     target: React.ReactNode;
+    targetStyle?: React.CSSProperties;
     title?: string;
     asset?: React.ReactNode;
     onClose?: () => void;

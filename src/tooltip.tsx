@@ -134,6 +134,7 @@ type Props = {
     extra?: React.ReactNode;
     description?: string;
     target: React.ReactNode;
+    targetStyle?: React.CSSProperties;
     title?: string;
     position?: Position;
     width?: number;
@@ -146,6 +147,7 @@ type Props = {
 type BaseTooltipProps = {
     content?: React.ReactNode;
     target: React.ReactNode;
+    targetStyle?: React.CSSProperties;
     position?: Position;
     width?: number;
     delay?: boolean;
@@ -161,6 +163,7 @@ type BaseTooltipProps = {
 export const BaseTooltip = ({
     content,
     target,
+    targetStyle,
     width,
     position = 'top',
     dataAttributes,
@@ -444,6 +447,7 @@ export const BaseTooltip = ({
         <>
             {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
             <div
+                style={targetStyle}
                 ref={(element) => {
                     /**
                      * Hack to set the target ref to the target element that was actually passed as prop.

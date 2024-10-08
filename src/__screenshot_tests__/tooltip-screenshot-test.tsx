@@ -122,6 +122,26 @@ test('Tooltip - active tooltip is closed if another one is opened', async () => 
     expect(thirdTooltip).toMatchImageSnapshot();
 });
 
+test('Tooltip - with targetStyle', async () => {
+    const page = await openStoryPage({
+        id: 'private-tooltip--with-target-styles',
+        device: 'DESKTOP',
+    });
+
+    const noOpenTooltip = await page.screenshot();
+    expect(noOpenTooltip).toMatchImageSnapshot();
+
+    await page.click(await screen.findByTestId('target-0'));
+
+    const firstTooltip = await page.screenshot();
+    expect(firstTooltip).toMatchImageSnapshot();
+
+    await page.click(await screen.findByTestId('target-1'));
+
+    const secondTooltip = await page.screenshot();
+    expect(secondTooltip).toMatchImageSnapshot();
+});
+
 /**
  * when using Vivo_new skin, the tooltip border radius is bigger than in other skins, so it's useful
  * to check that the tooltip's arrow is displayed properly in this scenario.
