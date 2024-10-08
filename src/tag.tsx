@@ -78,9 +78,9 @@ const Tag = ({Icon, children, dataAttributes, type = 'promo', badge}: TagProps):
                     {children}
                 </Text>
                 {badgeValue !== 0 && (
-                    <Box paddingLeft={4} className={styles.badge}>
+                    <div className={styles.badge}>
                         <Badge value={badgeValue} />
-                    </Box>
+                    </div>
                 )}
             </ThemeVariant>
         </span>

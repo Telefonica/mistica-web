@@ -157,9 +157,8 @@ const Options = ({
                 }
             `}</style>
             {options.map((option) => (
-                <Box
-                    paddingX={16}
-                    paddingY={8}
+                <div
+                    style={{paddingLeft: 16, paddingRight: 16, paddingTop: 8, paddingBottom: 8}}
                     key={option.value}
                     className={classNames('option', {
                         selected: option.value === tentativeValueState,
@@ -188,7 +187,7 @@ const Options = ({
                             {option.value}
                         </Text1>
                     </Touchable>
-                </Box>
+                </div>
             ))}
             {options.length === 0 ? (
                 <Box paddingX={16} paddingY={8}>

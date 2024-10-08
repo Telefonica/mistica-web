@@ -112,11 +112,14 @@ export const menuItemDisabled = style({
     opacity: 0.5,
 });
 
-export const menuSectionDivider = style({
-    ':last-child': {
-        display: 'none',
+export const menuSectionDivider = style([
+    sprinkles({paddingY: 8}),
+    {
+        ':last-child': {
+            display: 'none',
+        },
     },
-});
+]);
 
 export const itemContent = style({
     display: 'flex',

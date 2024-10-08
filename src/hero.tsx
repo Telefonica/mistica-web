@@ -172,13 +172,15 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
                                 backgroundColor={CONTENT_BACKGROUND_COLOR[background]}
                             >
                                 <div className={styles.expandedContent}>
-                                    <Box
-                                        paddingTop={24}
-                                        paddingBottom={hasSlideshowBullets ? 48 : noPaddingY ? 0 : 24}
+                                    <div
+                                        style={{
+                                            paddingTop: 24,
+                                            paddingBottom: hasSlideshowBullets ? 48 : noPaddingY ? 0 : 24,
+                                        }}
                                         className={styles.layout}
                                     >
                                         <HeroContent {...rest} />
-                                    </Box>
+                                    </div>
                                 </div>
                             </Layout>
                         </div>
@@ -223,24 +225,28 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
                     <GridLayout
                         template="6+6"
                         left={
-                            <Box
-                                paddingTop={noPaddingY ? 0 : 56}
-                                paddingBottom={noPaddingY && !hasSlideshowBullets ? 0 : 56}
+                            <div
+                                style={{
+                                    paddingTop: noPaddingY ? 0 : 56,
+                                    paddingBottom: noPaddingY && !hasSlideshowBullets ? 0 : 56,
+                                }}
                                 className={classnames(styles.container, styles.containerDesktop, {
                                     [styles.containerMinHeight]: !noPaddingY,
                                 })}
                             >
                                 {left}
-                            </Box>
+                            </div>
                         }
                         right={
-                            <Box
-                                paddingTop={noPaddingY ? 0 : 56}
-                                paddingBottom={noPaddingY && !hasSlideshowBullets ? 0 : 56}
+                            <div
+                                style={{
+                                    paddingTop: noPaddingY ? 0 : 56,
+                                    paddingBottom: noPaddingY && !hasSlideshowBullets ? 0 : 56,
+                                }}
                                 className={classnames(styles.container, styles.containerDesktop)}
                             >
                                 {right}
-                            </Box>
+                            </div>
                         }
                     />
                 </Layout>

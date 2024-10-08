@@ -223,6 +223,10 @@ export const mediaCardContent = style([
 ]);
 
 export const mediaCardAsset = style([
+    sprinkles({
+        paddingLeft: {mobile: 16, desktop: 24},
+        paddingTop: {mobile: 16, desktop: 24},
+    }),
     {
         position: 'absolute',
         zIndex: 1,
@@ -352,6 +356,9 @@ export const displayCardContent = style({
     zIndex: 2,
 });
 
+export const displayCardContentWithTopContent = sprinkles({paddingTop: 24});
+export const displayCardContentWithAsset = sprinkles({paddingTop: {mobile: 16, desktop: 24}});
+
 export const displayCardBackground = style({
     position: 'absolute',
     objectFit: 'cover',
@@ -360,8 +367,18 @@ export const displayCardBackground = style({
     zIndex: 0,
 });
 
-export const displayCardGradient = style({
-    background: skinVars.colors.cardContentOverlay,
+export const displayCardContentWrapper = sprinkles({paddingX: 24, paddingBottom: 24});
+
+export const displayCardGradient = style([
+    sprinkles({paddingTop: 40}),
+    {
+        background: skinVars.colors.cardContentOverlay,
+    },
+]);
+
+export const posterCardContentWrapper = sprinkles({
+    paddingX: {mobile: 16, desktop: 24},
+    paddingBottom: 24,
 });
 
 const aspectRatio = createVar();

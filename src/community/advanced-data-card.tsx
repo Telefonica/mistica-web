@@ -166,7 +166,7 @@ const CardFooter = ({button, footerImage, footerText, footerTextLinesMax, button
                     )}
                 >
                     {hasFooterImage && (
-                        <Box paddingRight={16} className={styles.footerImage}>
+                        <div className={styles.footerImage}>
                             <div
                                 style={applyCssVars({
                                     [mediaStyles.vars.mediaBorderRadius]: vars.borderRadii.mediaSmall,
@@ -174,7 +174,7 @@ const CardFooter = ({button, footerImage, footerText, footerTextLinesMax, button
                             >
                                 {footerImage}
                             </div>
-                        </Box>
+                        </div>
                     )}
 
                     {hasFooterText && (
@@ -333,7 +333,7 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
                         </div>
                         <div style={{flexGrow: 1}} />
                         {hasExtras && (
-                            <Box paddingTop={16} paddingBottom={24} width="100%" className={styles.zindex}>
+                            <div className={styles.extra}>
                                 {extra.map((item, index) => {
                                     return (
                                         <div key={index}>
@@ -347,7 +347,7 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
                                         </div>
                                     );
                                 })}
-                            </Box>
+                            </div>
                         )}
                     </Touchable>
                     {hasFooter && <CardFooter {...footerProps} />}
