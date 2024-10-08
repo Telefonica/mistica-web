@@ -1,3 +1,18 @@
+# [16.2.0](https://github.com/Telefonica/mistica-web/compare/v16.1.1...v16.2.0) (2024-10-08)
+
+
+### Bug Fixes
+
+* **Tooltip, Popover:** allow styling target wrapper ([#1262](https://github.com/Telefonica/mistica-web/issues/1262)) ([38abf25](https://github.com/Telefonica/mistica-web/commit/38abf25aa26a2cc2b75774b85027bb81eecd72e3))
+* **Touchable:** make content focusable when using onPress + as="a" ([#1255](https://github.com/Telefonica/mistica-web/issues/1255)) ([5e297d5](https://github.com/Telefonica/mistica-web/commit/5e297d50fbe01e7ded0df8052afc6a88a498c219))
+
+
+### Features
+
+* **Align:** create component ([#1254](https://github.com/Telefonica/mistica-web/issues/1254)) ([86fb294](https://github.com/Telefonica/mistica-web/commit/86fb294ddc1097149c171096f80193b798ca6351))
+* **Logo:** allow color override ([#1263](https://github.com/Telefonica/mistica-web/issues/1263)) ([4d16939](https://github.com/Telefonica/mistica-web/commit/4d16939984945745533ff0c93a24cc5e7161b973))
+* **vanilla-extract:** remove sprinkles usages from TS files ([#1257](https://github.com/Telefonica/mistica-web/issues/1257)) ([b0d6040](https://github.com/Telefonica/mistica-web/commit/b0d604030aae46002806496740d46407be90bb3e))
+
 ## [16.1.1](https://github.com/Telefonica/mistica-web/compare/v16.1.0...v16.1.1) (2024-10-03)
 
 
