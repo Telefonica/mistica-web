@@ -16,3 +16,7 @@ export const tag = style([
         borderRadius: vars.borderRadii.indicator,
     },
 ]);
+
+export const icon = sprinkles({display: 'block'});
+
+export const badge = sprinkles({display: 'inline-flex'});

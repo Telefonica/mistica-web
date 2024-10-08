@@ -6,12 +6,23 @@ const height = createVar();
 
 export const vars = {height};
 
+export const hero = sprinkles({
+    height: '100%',
+});
+
 export const container = style([
     sprinkles({display: 'flex'}),
     {
         height,
     },
 ]);
+
+export const contentContainer = sprinkles({
+    height: '100%',
+    display: 'flex',
+    justifyContent: 'space-between',
+    flexDirection: 'column',
+});
 
 export const containerMinHeight = style({
     minHeight: 400,

@@ -18,7 +18,6 @@ import {useSetTooltipState, useTooltipState} from './tooltip-context-provider';
 import {isRunningAcceptanceTest} from './utils/platform';
 import {IconButton} from './icon-button';
 import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
-import Box from './box';
 import * as tokens from './text-tokens';
 
 import type {BoundingRect} from './hooks';
@@ -135,6 +134,7 @@ type Props = {
     extra?: React.ReactNode;
     description?: string;
     target: React.ReactNode;
+    targetStyle?: React.CSSProperties;
     title?: string;
     position?: Position;
     width?: number;
@@ -147,6 +147,7 @@ type Props = {
 type BaseTooltipProps = {
     content?: React.ReactNode;
     target: React.ReactNode;
+    targetStyle?: React.CSSProperties;
     position?: Position;
     width?: number;
     delay?: boolean;
@@ -162,6 +163,7 @@ type BaseTooltipProps = {
 export const BaseTooltip = ({
     content,
     target,
+    targetStyle,
     width,
     position = 'top',
     dataAttributes,
@@ -445,6 +447,7 @@ export const BaseTooltip = ({
         <>
             {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
             <div
+                style={targetStyle}
                 ref={(element) => {
                     /**
                      * Hack to set the target ref to the target element that was actually passed as prop.
@@ -619,7 +622,7 @@ const Tooltip = ({
     return (
         <BaseTooltip
             content={
-                <Box className={styles.content}>
+                <div className={styles.content}>
                     {(title || description) && (
                         <Stack space={4}>
                             {title && <Text2 medium>{title}</Text2>}
@@ -627,7 +630,7 @@ const Tooltip = ({
                         </Stack>
                     )}
                     {extra ?? children}
-                </Box>
+                </div>
             }
             centerContent={centerContent}
             dataAttributes={{'component-name': 'Tooltip', ...dataAttributes}}

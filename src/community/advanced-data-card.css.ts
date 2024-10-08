@@ -7,6 +7,11 @@ import {iconContainerSize} from '../icon-button.css';
 
 const horizontalPadding = 24;
 
+export const container = sprinkles({
+    position: 'relative',
+    height: '100%',
+});
+
 export const paddingX = style([
     sprinkles({
         paddingX: 16,
@@ -202,6 +207,10 @@ export const marginRightAuto = style({
     },
 });
 
+export const withPaddingTop = sprinkles({
+    paddingTop: 16,
+});
+
 export const button = style({
     display: 'flex',
     marginTop: 8,
@@ -217,6 +226,8 @@ export const buttonMobile = style([
         },
     },
 ]);
+
+export const footerImage = sprinkles({alignItems: 'center', display: 'flex'});
 
 export const footerDirection = style([
     sprinkles({

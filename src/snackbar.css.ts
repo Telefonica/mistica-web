@@ -66,10 +66,25 @@ export const wrapperOpen = style({
     animationDuration: `${TRANSITION_TIME_IN_MS}ms`,
 });
 
-export const content = sprinkles({
+const baseContent = sprinkles({
     display: 'flex',
     justifyContent: 'space-between',
 });
+
+export const contentWithLongButton = style([
+    baseContent,
+    sprinkles({
+        flexDirection: 'column',
+    }),
+]);
+
+export const contentWithoutLongButton = style([
+    baseContent,
+    sprinkles({
+        flexDirection: 'row',
+        alignItems: 'center',
+    }),
+]);
 
 export const textContainer = sprinkles({
     display: 'flex',
@@ -125,6 +140,14 @@ export const longButton = style({
             marginLeft: -8,
         },
     },
+});
+
+export const buttonTouchable = sprinkles({
+    paddingY: 4,
+    paddingX: 8,
+    border: 'none',
+    padding: 0,
+    background: 'transparent',
 });
 
 const dismissButtonBase = sprinkles({

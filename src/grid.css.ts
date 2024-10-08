@@ -1,14 +1,53 @@
 import {createVar, fallbackVar, style, styleVariants} from '@vanilla-extract/css';
+import * as mq from './media-queries.css';
 
 const rowMinSize = createVar();
 const rowMaxSize = createVar();
 const columnMinSize = createVar();
 const columnMaxSize = createVar();
 
+const columnGap = {
+    desktop: createVar(),
+    tablet: createVar(),
+    mobile: createVar(),
+};
+
+const rowGap = {
+    desktop: createVar(),
+    tablet: createVar(),
+    mobile: createVar(),
+};
+
 export const vars = {rowMinSize, rowMaxSize, columnMinSize, columnMaxSize};
+export const gapVars = {columnGap, rowGap};
 
 export const grid = style({
     display: 'grid',
+});
+
+export const gap = style({
+    columnGap: columnGap.mobile,
+    rowGap: rowGap.mobile,
+
+    // Chrome 57-65 support
+    gridColumnGap: columnGap.mobile,
+    gridRowGap: rowGap.mobile,
+
+    '@media': {
+        [mq.tablet]: {
+            columnGap: columnGap.tablet,
+            rowGap: rowGap.tablet,
+            gridColumnGap: columnGap.tablet,
+            gridRowGap: rowGap.tablet,
+        },
+
+        [mq.desktopOrBigger]: {
+            columnGap: columnGap.desktop,
+            rowGap: rowGap.desktop,
+            gridColumnGap: columnGap.desktop,
+            gridRowGap: rowGap.desktop,
+        },
+    },
 });
 
 const cells = {

@@ -7,7 +7,6 @@ import {getPrefixedDataAttributes} from './utils/dom';
 import {useIsInverseVariant} from './theme-variant-context';
 import {useTheme} from './hooks';
 import {VIVO_SKIN, VIVO_NEW_SKIN} from './skins/constants';
-import {sprinkles} from './sprinkles.css';
 import * as styles from './image.css';
 import {vars} from './skins/skin-contract.css';
 import {combineRefs} from './utils/common';
@@ -229,18 +228,14 @@ export const ImageContent = React.forwardRef<HTMLImageElement, ImageProps>(
                     id={imageId}
                     style={{
                         opacity: isLoading && withLoadingFallback ? 0 : 1,
+                        position: ratio !== 0 ? 'absolute' : 'static',
                     }}
                     ref={combineRefs(imageRef, ref)}
                     src={src}
                     srcSet={srcSet}
-                    className={classnames(
-                        borderRadiusStyle,
-                        styles.image,
-                        {[styles.imageWithBorder]: props.border},
-                        sprinkles({
-                            position: ratio !== 0 ? 'absolute' : 'static',
-                        })
-                    )}
+                    className={classnames(borderRadiusStyle, styles.image, {
+                        [styles.imageWithBorder]: props.border,
+                    })}
                     alt={alt}
                     onError={() => {
                         setIsError(true);

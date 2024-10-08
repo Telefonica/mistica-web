@@ -4,7 +4,6 @@ import {BaseTooltip} from './tooltip';
 import Inline from './inline';
 import Stack from './stack';
 import {Text2, Text3} from './text';
-import Box from './box';
 import * as styles from './popover.css';
 import {vars as skinVars} from './skins/skin-contract.css';
 import {iconContainerSize} from './icon-button.css';
@@ -16,6 +15,7 @@ type Position = 'top' | 'bottom' | 'left' | 'right';
 type Props = {
     description?: string;
     target: React.ReactNode;
+    targetStyle?: React.CSSProperties;
     title?: string;
     asset?: React.ReactNode;
     onClose?: () => void;
@@ -45,7 +45,7 @@ const Popover = ({
     return (
         <BaseTooltip
             content={
-                <Box className={styles.content}>
+                <div className={styles.content}>
                     {(title || description || asset) && (
                         <div
                             style={{
@@ -67,7 +67,7 @@ const Popover = ({
                     )}
 
                     {extra ?? children}
-                </Box>
+                </div>
             }
             centerContent={false}
             open={open}

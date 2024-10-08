@@ -9,7 +9,6 @@ import Stack from './stack';
 import * as styles from './loading-screen.css';
 import Spinner from './spinner';
 import classnames from 'classnames';
-import {sprinkles} from './sprinkles.css';
 import {Logo} from './logo';
 import ScreenReaderOnly from './screen-reader-only';
 import {useTheme} from './hooks';
@@ -212,11 +211,11 @@ const BaseLoadingScreen = React.forwardRef<HTMLDivElement, Props>(
                         {
                             [styles.screenBackgroundFadeOut]: !isLoading && animateBackground,
                             [styles.screenBackgroundAnimated]: animateBackground,
-                        },
-                        sprinkles({
-                            justifyContent: centerContent ? 'center' : 'space-between',
-                        })
+                        }
                     )}
+                    style={{
+                        justifyContent: centerContent ? 'center' : 'space-between',
+                    }}
                     onAnimationEnd={() => {
                         setInAnimationEnd(true);
                     }}

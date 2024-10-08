@@ -11,7 +11,6 @@ import * as styles from './empty-state.css';
 import {vars} from './skins/skin-contract.css';
 import {AspectRatioContainer} from './utils/aspect-ratio-support';
 import {getPrefixedDataAttributes} from './utils/dom';
-import {sprinkles} from './sprinkles.css';
 import {applyCssVars} from './utils/css';
 
 import type {ButtonSecondary, ButtonLink} from './button';
@@ -77,10 +76,7 @@ const EmptyState = ({
 
     return (
         <div
-            className={classnames(
-                styles.container,
-                isInverse ? styles.inverseBorder : sprinkles({border: 'regular'})
-            )}
+            className={classnames(styles.container, isInverse ? styles.inverseBorder : styles.border)}
             style={applyCssVars({
                 [styles.vars.backgroundColor]:
                     isInverse && !isDarkMode ? vars.colors.backgroundBrand : vars.colors.backgroundContainer,

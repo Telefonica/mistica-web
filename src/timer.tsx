@@ -1,7 +1,6 @@
 'use client';
 import classNames from 'classnames';
 import * as React from 'react';
-import Box from './box';
 import {useIsomorphicLayoutEffect, useTheme} from './hooks';
 import Inline from './inline';
 import ScreenReaderOnly from './screen-reader-only';
@@ -378,7 +377,7 @@ export const Timer = ({
 
     const renderTime = () => {
         return timerValue.map((item, index) => (
-            <Box
+            <div
                 className={classNames({
                     [styles.boxedTimerValueContainer[themeVariant]]: boxed,
                 })}
@@ -396,7 +395,7 @@ export const Timer = ({
                         </Text2>
                     </div>
                 </ThemeVariant>
-            </Box>
+            </div>
         ));
     };
 

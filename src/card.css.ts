@@ -16,6 +16,13 @@ export const boxed = style([
     },
 ]);
 
+export const cardContentContainer = sprinkles({
+    display: 'flex',
+    flex: 1,
+    justifyContent: 'space-between',
+    flexDirection: 'column',
+});
+
 export const touchableContainer = style({});
 
 export const touchable = style({

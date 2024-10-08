@@ -6,8 +6,7 @@ import {Text} from './text';
 import {ThemeVariant, useThemeVariant} from './theme-variant-context';
 import {pxToRem} from './utils/css';
 import {getPrefixedDataAttributes} from './utils/dom';
-import * as classes from './tag.css';
-import {sprinkles} from './sprinkles.css';
+import * as styles from './tag.css';
 import {vars} from './skins/skin-contract.css';
 import classNames from 'classnames';
 import {useTheme} from './hooks';
@@ -56,18 +55,16 @@ const Tag = ({Icon, children, dataAttributes, type = 'promo', badge}: TagProps):
     return (
         <span
             {...getPrefixedDataAttributes(dataAttributes, 'Tag')}
-            className={classNames(
-                classes.tag,
-                sprinkles({
-                    paddingLeft: Icon ? 8 : 12,
-                    paddingRight: badgeValue !== 0 ? 8 : 12,
-                    background: backgroundColor,
-                })
-            )}
+            className={classNames(styles.tag)}
+            style={{
+                paddingLeft: Icon ? 8 : 12,
+                paddingRight: badgeValue !== 0 ? 8 : 12,
+                background: backgroundColor,
+            }}
         >
             {Icon && (
                 <Box paddingRight={4}>
-                    <Icon color={textColor} size={pxToRem(16)} className={sprinkles({display: 'block'})} />
+                    <Icon color={textColor} size={pxToRem(16)} className={styles.icon} />
                 </Box>
             )}
             <ThemeVariant isInverse={false}>
@@ -81,7 +78,7 @@ const Tag = ({Icon, children, dataAttributes, type = 'promo', badge}: TagProps):
                     {children}
                 </Text>
                 {badgeValue !== 0 && (
-                    <Box paddingLeft={4} className={sprinkles({display: 'inline-flex'})}>
+                    <Box paddingLeft={4} className={styles.badge}>
                         <Badge value={badgeValue} />
                     </Box>
                 )}

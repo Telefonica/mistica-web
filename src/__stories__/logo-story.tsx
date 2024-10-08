@@ -1,12 +1,20 @@
 import * as React from 'react';
 import {BlauLogo, Logo, MovistarLogo, O2Logo, TelefonicaLogo, VivoLogo, TuLogo, O2NewLogo} from '../logo';
-import {Box, ResponsiveLayout} from '../index';
+import {Box, ResponsiveLayout, useTheme} from '../index';
+
+const COLOR_OPTIONS = ['default', 'neutralHigh', 'neutralMedium', '#000000'] as const;
 
 export default {
     title: 'Components/Logo',
     component: Logo,
     parameters: {
         fullScreen: true,
+    },
+    argTypes: {
+        color: {
+            options: COLOR_OPTIONS,
+            control: {type: 'select'},
+        },
     },
 };
 
@@ -17,6 +25,7 @@ type Args = {
     action: 'none' | 'onPress' | 'href' | 'to';
     forceBrandLogo: boolean;
     brand: 'Movistar' | 'O2' | 'O2-new' | 'Vivo' | 'Telefonica' | 'Blau' | 'Tu';
+    color: (typeof COLOR_OPTIONS)[number];
 };
 
 const getLogoActionProps = (action: string) => {
@@ -42,11 +51,21 @@ const getLogoActionProps = (action: string) => {
             : {};
 };
 
-export const Default: StoryComponent<Args> = ({type, size, inverse, action, forceBrandLogo, brand}) => {
+export const Default: StoryComponent<Args> = ({
+    type,
+    size,
+    inverse,
+    action,
+    forceBrandLogo,
+    brand,
+    color,
+}) => {
+    const {colorValues} = useTheme();
     const logoProps = {
         ...getLogoActionProps(action),
         type,
         size,
+        color: color === 'default' ? undefined : colorValues[color as never] || color || undefined,
     };
 
     const CurrentLogo = {
@@ -78,6 +97,7 @@ Default.args = {
     inverse: false,
     forceBrandLogo: false,
     brand: 'Movistar',
+    color: 'default',
 };
 
 Default.argTypes = {

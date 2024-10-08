@@ -7,6 +7,10 @@ export const disabled = style({
     opacity: 0.5,
 });
 
+export const row = sprinkles({
+    width: '100%',
+});
+
 export const touchableBackground = style({
     transition: 'background-color 0.1s ease-in-out',
     ':active': {
