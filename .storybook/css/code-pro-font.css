@@ -1,0 +1,31 @@
+/* Regular */
+@font-face {
+    font-family: 'Code Pro';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Code Regular');
+}
+
+/* Light */
+@font-face {
+    font-family: 'Code Pro';
+    font-style: normal;
+    font-weight: 300;
+    src: local('Code Light');
+}
+
+/* Medium */
+@font-face {
+    font-family: 'Code Pro';
+    font-style: normal;
+    font-weight: 500;
+    src: local('Code Bold');
+}
+
+/* Bold */
+@font-face {
+    font-family: 'Code Pro';
+    font-style: normal;
+    font-weight: 700;
+    src: local('Code Bold');
+}
