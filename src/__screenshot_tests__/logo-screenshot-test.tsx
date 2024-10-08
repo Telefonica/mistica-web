@@ -1,6 +1,17 @@
 import {openStoryPage, screen} from '../test-utils';
 
-const SKINS = ['Movistar', 'O2', 'O2-new', 'Vivo', 'Vivo-new', 'Telefonica', 'Blau', 'Tu'] as const;
+import type {KnownSkinName} from '../skins/types';
+
+const SKINS: Array<KnownSkinName> = [
+    'Movistar',
+    'O2',
+    'O2-new',
+    'Vivo',
+    'Vivo-new',
+    'Telefonica',
+    'Blau',
+    'Tu',
+];
 const LOGO_TYPES = ['imagotype', 'vertical', 'isotype'];
 const INVERSE_VALUES = [false, true];
 const DARK_MODE_VALUES = [false, true];
@@ -38,11 +49,24 @@ test.each(getBrandLogoCases())(
     }
 );
 
-test.each(SKINS)('Logo. Default brand with skin={%s}', async (skin) => {
+test.each(SKINS)('Logo. Default brand with skin={%s}', async (skin: KnownSkinName) => {
     await openStoryPage({
         id: 'components-logo--default',
         device: 'DESKTOP',
-        skin: skin as (typeof SKINS)[number],
+        skin,
+    });
+
+    const story = await screen.findByTestId('logo');
+
+    const image = await story.screenshot();
+    expect(image).toMatchImageSnapshot();
+});
+
+test.each(SKINS)('Logo with color override skin=%s', async (skin: KnownSkinName) => {
+    await openStoryPage({
+        id: 'components-logo--default',
+        skin,
+        args: {color: '#000000', size: 64, type: 'imagotype'},
     });
 
     const story = await screen.findByTestId('logo');

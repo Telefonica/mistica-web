@@ -75,31 +75,84 @@ type LogoBaseProps = {
     skinName: KnownSkinName;
     size: ByBreakpoint<number>;
     type?: LogoType;
+    color?: string;
 };
 
-const LogoBase = ({size, skinName, type = 'isotype'}: LogoBaseProps): JSX.Element => {
+const LogoBase = ({size, skinName, type = 'isotype', color}: LogoBaseProps): JSX.Element => {
     const isInverse = useIsInverseOrMediaVariant();
     const {isDarkMode} = useTheme();
     switch (skinName) {
         case 'Movistar':
             return (
-                <MovistarLogoImage size={size} type={type} isDarkMode={isDarkMode} isInverse={isInverse} />
+                <MovistarLogoImage
+                    size={size}
+                    type={type}
+                    isDarkMode={isDarkMode}
+                    isInverse={isInverse}
+                    color={color}
+                />
             );
         case 'Vivo':
         case 'Vivo-new':
-            return <VivoLogoImage size={size} type={type} isDarkMode={isDarkMode} isInverse={isInverse} />;
+            return (
+                <VivoLogoImage
+                    size={size}
+                    type={type}
+                    isDarkMode={isDarkMode}
+                    isInverse={isInverse}
+                    color={color}
+                />
+            );
         case 'O2':
-            return <O2LogoImage size={size} type={type} isDarkMode={isDarkMode} isInverse={isInverse} />;
+            return (
+                <O2LogoImage
+                    size={size}
+                    type={type}
+                    isDarkMode={isDarkMode}
+                    isInverse={isInverse}
+                    color={color}
+                />
+            );
         case 'O2-new':
-            return <O2NewLogoImage size={size} type={type} isDarkMode={isDarkMode} isInverse={isInverse} />;
+            return (
+                <O2NewLogoImage
+                    size={size}
+                    type={type}
+                    isDarkMode={isDarkMode}
+                    isInverse={isInverse}
+                    color={color}
+                />
+            );
         case 'Telefonica':
             return (
-                <TelefonicaLogoImage size={size} type={type} isDarkMode={isDarkMode} isInverse={isInverse} />
+                <TelefonicaLogoImage
+                    size={size}
+                    type={type}
+                    isDarkMode={isDarkMode}
+                    isInverse={isInverse}
+                    color={color}
+                />
             );
         case 'Blau':
-            return <BlauLogoImage size={size} type={type} isDarkMode={isDarkMode} isInverse={isInverse} />;
+            return (
+                <BlauLogoImage
+                    size={size}
+                    type={type}
+                    isDarkMode={isDarkMode}
+                    isInverse={isInverse}
+                    color={color}
+                />
+            );
         case 'Tu':
-            return <TuLogoImage size={size} type={type} isDarkMode={isDarkMode} isInverse={isInverse} />;
+            return (
+                <TuLogoImage
+                    size={size}
+                    type={type}
+                    isDarkMode={isDarkMode}
+                    isInverse={isInverse}
+                    color={color}
+                />
+            );
         default:
             return <></>;
     }
@@ -108,6 +161,7 @@ const LogoBase = ({size, skinName, type = 'isotype'}: LogoBaseProps): JSX.Elemen
 type LogoProps = TouchableComponentProps<{
     size?: ByBreakpoint<number>;
     type?: LogoType;
+    color?: string;
     /** "data-" prefix is automatically added. For example, use "testid" instead of "data-testid" */
     dataAttributes?: DataAttributes;
 }>;
@@ -144,11 +198,16 @@ const MaybeTouchableLogo = (
     );
 };
 
-export const Logo = ({size = DEFAULT_HEIGHT_PX, type = 'isotype', ...props}: LogoProps): JSX.Element => {
+export const Logo = ({
+    size = DEFAULT_HEIGHT_PX,
+    type = 'isotype',
+    color,
+    ...props
+}: LogoProps): JSX.Element => {
     const {skinName} = useTheme();
     return (
         <MaybeTouchableLogo size={size} {...props}>
-            <LogoBase skinName={skinName as KnownSkinName} type={type} size={size} />
+            <LogoBase skinName={skinName as KnownSkinName} type={type} size={size} color={color} />
         </MaybeTouchableLogo>
     );
 };
@@ -156,49 +215,76 @@ export const Logo = ({size = DEFAULT_HEIGHT_PX, type = 'isotype', ...props}: Log
 export const MovistarLogo = ({
     size = DEFAULT_HEIGHT_PX,
     type = 'isotype',
+    color,
     ...props
 }: LogoProps): JSX.Element => (
     <MaybeTouchableLogo size={size} {...props}>
-        <LogoBase skinName="Movistar" type={type} size={size} />
+        <LogoBase skinName="Movistar" type={type} size={size} color={color} />
     </MaybeTouchableLogo>
 );
 
-export const VivoLogo = ({size = DEFAULT_HEIGHT_PX, type = 'isotype', ...props}: LogoProps): JSX.Element => (
+export const VivoLogo = ({
+    size = DEFAULT_HEIGHT_PX,
+    type = 'isotype',
+    color,
+    ...props
+}: LogoProps): JSX.Element => (
     <MaybeTouchableLogo size={size} {...props}>
-        <LogoBase skinName="Vivo" type={type} size={size} />
+        <LogoBase skinName="Vivo" type={type} size={size} color={color} />
     </MaybeTouchableLogo>
 );
 
-export const O2Logo = ({size = DEFAULT_HEIGHT_PX, type = 'isotype', ...props}: LogoProps): JSX.Element => (
+export const O2Logo = ({
+    size = DEFAULT_HEIGHT_PX,
+    type = 'isotype',
+    color,
+    ...props
+}: LogoProps): JSX.Element => (
     <MaybeTouchableLogo size={size} {...props}>
-        <LogoBase skinName="O2" type={type} size={size} />
+        <LogoBase skinName="O2" type={type} size={size} color={color} />
     </MaybeTouchableLogo>
 );
 
-export const O2NewLogo = ({size = DEFAULT_HEIGHT_PX, type = 'isotype', ...props}: LogoProps): JSX.Element => (
+export const O2NewLogo = ({
+    size = DEFAULT_HEIGHT_PX,
+    type = 'isotype',
+    color,
+    ...props
+}: LogoProps): JSX.Element => (
     <MaybeTouchableLogo size={size} {...props}>
-        <LogoBase skinName="O2-new" type={type} size={size} />
+        <LogoBase skinName="O2-new" type={type} size={size} color={color} />
     </MaybeTouchableLogo>
 );
 
 export const TelefonicaLogo = ({
     size = DEFAULT_HEIGHT_PX,
     type = 'isotype',
+    color,
     ...props
 }: LogoProps): JSX.Element => (
     <MaybeTouchableLogo size={size} {...props}>
-        <LogoBase skinName="Telefonica" type={type} size={size} />
+        <LogoBase skinName="Telefonica" type={type} size={size} color={color} />
     </MaybeTouchableLogo>
 );
 
-export const BlauLogo = ({size = DEFAULT_HEIGHT_PX, type = 'isotype', ...props}: LogoProps): JSX.Element => (
+export const BlauLogo = ({
+    size = DEFAULT_HEIGHT_PX,
+    type = 'isotype',
+    color,
+    ...props
+}: LogoProps): JSX.Element => (
     <MaybeTouchableLogo size={size} {...props}>
-        <LogoBase skinName="Blau" type={type} size={size} />
+        <LogoBase skinName="Blau" type={type} size={size} color={color} />
     </MaybeTouchableLogo>
 );
 
-export const TuLogo = ({size = DEFAULT_HEIGHT_PX, type = 'isotype', ...props}: LogoProps): JSX.Element => (
+export const TuLogo = ({
+    size = DEFAULT_HEIGHT_PX,
+    type = 'isotype',
+    color,
+    ...props
+}: LogoProps): JSX.Element => (
     <MaybeTouchableLogo size={size} {...props}>
-        <LogoBase skinName="Tu" type={type} size={size} />
+        <LogoBase skinName="Tu" type={type} size={size} color={color} />
     </MaybeTouchableLogo>
 );
