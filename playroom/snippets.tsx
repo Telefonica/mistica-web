@@ -3753,6 +3753,11 @@ export default [
           defaultValue={2}
         />`,
     },
+    {
+        group: 'Animation',
+        name: 'Animation',
+        code: '<Animation animationUrl="https://raw.githubusercontent.com/Telefonica/mistica-icons/refs/heads/production/animated-icons/Vivo/success.json" />',
+    },
     ...headerSnippets,
     ...accordionSnippets,
     ...listSnippets,

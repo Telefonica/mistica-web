@@ -36,7 +36,7 @@ import type {ThemeConfig, ColorScheme, KnownSkinName, IconProps} from '../../src
 export * from '../../src';
 export * from '../../src/community';
 export {default as Loader} from './loader';
-export {default as ButtonGroup} from '../../src/button-group';
+export {default as Animation} from './animation';
 
 type ValidSkinName = Exclude<KnownSkinName, 'O2' | 'Vivo'>;
 
