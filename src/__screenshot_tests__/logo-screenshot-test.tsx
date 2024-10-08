@@ -66,7 +66,7 @@ test.each(SKINS)('Logo with color override skin=%s', async (skin: KnownSkinName)
     await openStoryPage({
         id: 'components-logo--default',
         skin,
-        args: {color: 'black', size: 64, type: 'imagotype'},
+        args: {color: '#000000', size: 64, type: 'imagotype'},
     });
 
     const story = await screen.findByTestId('logo');
