@@ -106,11 +106,13 @@ export const Content = ({
     const centerY = numTextLines === 1;
 
     return (
-        <Box paddingY={16} className={styles.content} id={labelId}>
+        <div className={styles.content} id={labelId}>
             {asset && (
-                <Box
-                    paddingRight={16}
-                    className={classNames({[styles.center]: centerY, [styles.disabled]: disabled})}
+                <div
+                    className={classNames(styles.assetContainer, {
+                        [styles.center]: centerY,
+                        [styles.disabled]: disabled,
+                    })}
                     // We don't want asset to be readable by screen readers
                     aria-hidden
                 >
@@ -129,7 +131,7 @@ export const Content = ({
                     >
                         {asset}
                     </div>
-                </Box>
+                </div>
             )}
 
             <div
@@ -214,25 +216,25 @@ export const Content = ({
                     )}
 
                     {withChevron && (
-                        <Box
-                            paddingLeft={detail || right ? 4 : 0}
+                        <div
+                            style={{paddingLeft: detail || right ? 4 : 0}}
                             className={classNames(styles.center, {[styles.disabled]: disabled})}
                         >
                             <IconChevron
                                 color={isInverse ? vars.colors.inverse : vars.colors.neutralMedium}
                                 direction="right"
                             />
-                        </Box>
+                        </div>
                     )}
 
                     {control && (
-                        <Box paddingLeft={detail || right ? 8 : 0} className={styles.center}>
+                        <div style={{paddingLeft: detail || right ? 8 : 0}} className={styles.center}>
                             {control}
-                        </Box>
+                        </div>
                     )}
                 </div>
             )}
-        </Box>
+        </div>
     );
 };
 
@@ -616,15 +618,14 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
     }
 
     return (
-        <Box
-            paddingX={16}
+        <div
             className={styles.rowContent}
             role={role}
-            dataAttributes={dataAttributes}
+            {...getPrefixedDataAttributes(dataAttributes)}
             ref={ref as React.Ref<HTMLDivElement>}
         >
             {renderContent()}
-        </Box>
+        </div>
     );
 });
 

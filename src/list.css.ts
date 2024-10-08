@@ -60,12 +60,18 @@ export const rowContent = sprinkles({
     padding: 0,
     display: 'block',
     height: '100%',
+    paddingX: 16,
 });
 
 export const content = sprinkles({
     display: 'flex',
     width: '100%',
     minHeight: 72,
+    paddingY: 16,
+});
+
+export const assetContainer = sprinkles({
+    paddingRight: 16,
 });
 
 export const asset = sprinkles({

@@ -120,8 +120,25 @@ export const chipInteractiveVariants = styleVariants({
     ],
 });
 
-export const icon = style({color: vars.colors.neutralMedium});
-export const iconActive = style({color: vars.colors.controlActivated});
+export const icon = style([
+    sprinkles({paddingRight: 4}),
+    {color: vars.colors.neutralMedium, paddingRight: 4},
+]);
+
+export const iconActive = style([
+    sprinkles({paddingRight: 4}),
+    {color: vars.colors.controlActivated, paddingRight: 4},
+]);
+
+export const leftPadding = styleVariants({
+    default: [sprinkles({paddingLeft: {mobile: 20, desktop: 12}})],
+    withIcon: [sprinkles({paddingLeft: {mobile: 16, desktop: 8}})],
+});
+
+export const rightPadding = styleVariants({
+    default: [sprinkles({paddingRight: {mobile: 20, desktop: 12}})],
+    withIcon: [sprinkles({paddingRight: {mobile: 16, desktop: 8}})],
+});
 
 globalStyle(`${interactive}:hover:not(${chipActive}) > ${icon}`, {
     '@media': {
