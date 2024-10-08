@@ -3,7 +3,6 @@ import {DisplayMediaCard, Image, PosterCard, Stack, Text3} from '..';
 import usingVrImg from '../__stories__/images/using-vr.jpg';
 import beachImg from '../__stories__/images/beach.jpg';
 import laptopImg from '../__stories__/images/laptop.jpg';
-import {sprinkles} from '../sprinkles.css';
 
 export default {
     title: 'Private/Image/Image with srcSet attribute is responsive',
@@ -20,27 +19,25 @@ export const Default: StoryComponent = () => {
                 the backgroundImage in DisplayMediaCard and PosterCard components
             </Text3>
 
-            <Stack
-                space={16}
-                className={sprinkles({display: 'inline-block'})}
-                dataAttributes={{testid: 'content'}}
-            >
-                <Image aspectRatio="16:9" width={300} src={src} srcSet={srcSet} />
+            <div style={{width: 300}}>
+                <Stack space={16} dataAttributes={{testid: 'content'}}>
+                    <Image aspectRatio="16:9" width={300} src={src} srcSet={srcSet} />
 
-                <PosterCard
-                    aspectRatio="16:9"
-                    width={300}
-                    title="Poster Card"
-                    backgroundImage={{src, srcSet}}
-                />
+                    <PosterCard
+                        aspectRatio="16:9"
+                        width={300}
+                        title="Poster Card"
+                        backgroundImage={{src, srcSet}}
+                    />
 
-                <DisplayMediaCard
-                    aspectRatio="16:9"
-                    width={300}
-                    title="Display Media Card"
-                    backgroundImage={{src, srcSet}}
-                />
-            </Stack>
+                    <DisplayMediaCard
+                        aspectRatio="16:9"
+                        width={300}
+                        title="Display Media Card"
+                        backgroundImage={{src, srcSet}}
+                    />
+                </Stack>
+            </div>
         </Stack>
     );
 };

@@ -23,8 +23,11 @@ overrides:
       rules:
           no-restricted-imports:
               - error
-              - name: '@vanilla-extract/css'
-                message: This package should only be imported in css files
+              - patterns:
+                    - group:
+                          - '@vanilla-extract/css'
+                          - '**/sprinkles.css'
+                      message: This package should only be imported in css files
 rules:
     import/extensions:
         - error

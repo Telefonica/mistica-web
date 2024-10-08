@@ -2,7 +2,7 @@
 import {useIsInverseOrMediaVariant} from './theme-variant-context';
 import * as React from 'react';
 import classnames from 'classnames';
-import {sprinkles} from './sprinkles.css';
+import * as styles from './skeletons.css';
 import {vars} from './skins/skin-contract.css';
 
 type SkeletonBaseProps = {
@@ -26,11 +26,7 @@ const SkeletonBase = ({
         <div
             className={classnames(
                 className,
-                sprinkles({
-                    background: isInverse
-                        ? vars.colors.backgroundSkeletonInverse
-                        : vars.colors.backgroundSkeleton,
-                })
+                isInverse ? styles.background.inverse : styles.background.default
             )}
             style={{
                 borderRadius: noBorderRadius ? 0 : radius,

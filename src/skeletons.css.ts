@@ -1,7 +1,13 @@
+import {vars} from './skins/skin-contract.css';
 import {sprinkles} from './sprinkles.css';
-import {style, keyframes} from '@vanilla-extract/css';
+import {style, keyframes, styleVariants} from '@vanilla-extract/css';
 
 const transition = '1.5s linear';
+
+export const background = styleVariants({
+    default: [sprinkles({background: vars.colors.backgroundSkeleton})],
+    inverse: [sprinkles({background: vars.colors.backgroundSkeletonInverse})],
+});
 
 const pulseKeyframes = keyframes({
     '0%': {

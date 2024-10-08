@@ -1,7 +1,6 @@
 'use client';
 import * as React from 'react';
 import classnames from 'classnames';
-import {sprinkles} from './sprinkles.css';
 import {getPrefixedDataAttributes} from './utils/dom';
 import * as styles from './inline.css';
 import {applyCssVars} from './utils/css';
@@ -70,11 +69,10 @@ const Inline = ({
             className={classnames(
                 className,
                 styles.inline,
-                sprinkles({alignItems}),
                 wrap ? styles.wrap : fullWidth ? styles.fullWidth : styles.noFullWidth,
                 isStringSpace ? (wrap ? styles.stringSpaceWithWrap : styles.stringSpace) : styles.marginInline
             )}
-            style={applyCssVars(calcInlineVars(space))}
+            style={{...applyCssVars(calcInlineVars(space)), alignItems}}
             role={role}
             aria-label={ariaLabel}
             aria-labelledby={ariaLabel ? undefined : ariaLabelledBy}

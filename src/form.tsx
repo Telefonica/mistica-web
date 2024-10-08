@@ -3,7 +3,7 @@ import * as React from 'react';
 import {useTheme} from './hooks';
 import {FormContext} from './form-context';
 import classnames from 'classnames';
-import {sprinkles} from './sprinkles.css';
+import * as styles from './form.css';
 import * as tokens from './text-tokens';
 import ScreenReaderOnly from './screen-reader-only';
 
@@ -225,7 +225,7 @@ const Form = ({
                 id={id}
                 onSubmit={handleSubmit}
                 ref={formRef}
-                className={classnames(sprinkles({width: '100%'}), className)}
+                className={classnames(styles.form, className)}
                 noValidate
             >
                 {hasMultipleFormErrors ? (

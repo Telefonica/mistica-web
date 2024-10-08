@@ -106,6 +106,10 @@ export const smallImage = style([
     },
 ]);
 
+export const border = sprinkles({
+    border: 'regular',
+});
+
 export const inverseBorder = style({
     border: `1px solid ${skin.vars.colors.backgroundContainer}`,
 });

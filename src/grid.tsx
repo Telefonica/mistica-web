@@ -3,7 +3,6 @@ import * as React from 'react';
 import * as styles from './grid.css';
 import {applyCssVars} from './utils/css';
 import {getPrefixedDataAttributes} from './utils/dom';
-import {sprinkles} from './sprinkles.css';
 
 import type {ByBreakpoint, DataAttributes} from './utils/types';
 
@@ -100,22 +99,24 @@ export const Grid = React.forwardRef<HTMLDivElement, GridProps>(
     ) => {
         const [columnGap, rowGap] = Array.isArray(gap) ? gap : [gap, gap];
 
-        const gapSprinkles = {columnGap, rowGap, gridColumnGap: columnGap, gridRowGap: rowGap};
-        let gapStyles: React.CSSProperties = {};
-        let gapClasses = '';
-        try {
-            gapClasses = sprinkles(gapSprinkles);
-        } catch (e) {
-            // if this fails, it's because the consumer passed in a value that is not a valid gap size
-            // fallback to inline styles in that case.
-            gapStyles = {
-                columnGap: typeof columnGap === 'object' ? columnGap.mobile : columnGap,
-                rowGap: typeof rowGap === 'object' ? rowGap.mobile : rowGap,
-                // Chrome 57-65 support
-                gridColumnGap: typeof columnGap === 'object' ? columnGap.mobile : columnGap,
-                gridRowGap: typeof rowGap === 'object' ? rowGap.mobile : rowGap,
-            };
-        }
+        const columnGapValues =
+            typeof columnGap === 'object'
+                ? columnGap
+                : {mobile: columnGap, tablet: columnGap, desktop: columnGap};
+
+        const rowGapValues =
+            typeof rowGap === 'object' ? rowGap : {mobile: rowGap, tablet: rowGap, desktop: rowGap};
+
+        const applyGapVars = (
+            vars: (typeof styles.gapVars)[keyof typeof styles.gapVars],
+            values: {mobile: Gap; tablet?: Gap; desktop: Gap}
+        ) => {
+            return applyCssVars({
+                [vars.mobile]: `${values.mobile}px`,
+                [vars.tablet]: `${values.tablet ?? values.mobile}px`,
+                [vars.desktop]: `${values.desktop}px`,
+            });
+        };
 
         return React.createElement(
             as,
@@ -123,7 +124,7 @@ export const Grid = React.forwardRef<HTMLDivElement, GridProps>(
                 ref,
                 className: classNames(
                     styles.grid,
-                    gapClasses,
+                    styles.gap,
                     columns
                         ? typeof columns === 'number'
                             ? styles.gridTemplateColumns[columns]
@@ -143,7 +144,8 @@ export const Grid = React.forwardRef<HTMLDivElement, GridProps>(
                 style: {
                     height,
                     minHeight,
-                    ...(!gapClasses ? gapStyles : {}),
+                    ...applyGapVars(styles.gapVars.columnGap, columnGapValues),
+                    ...applyGapVars(styles.gapVars.rowGap, rowGapValues),
                     ...applyCssVars({
                         ...getAutoRepeatVars(rows, columns),
                     }),

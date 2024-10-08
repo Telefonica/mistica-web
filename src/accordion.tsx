@@ -14,7 +14,6 @@ import {Boxed} from './boxed';
 import {useIsInverseOrMediaVariant} from './theme-variant-context';
 import {CSSTransition} from 'react-transition-group';
 import {isRunningAcceptanceTest} from './utils/platform';
-import {sprinkles} from './sprinkles.css';
 
 import type {ExclusifyUnion} from './utils/utility-types';
 import type {DataAttributes, TrackingEvent} from './utils/types';
@@ -196,7 +195,7 @@ const AccordionItemContent = React.forwardRef<TouchableElement, AccordionItemCon
 
 export const AccordionItem = React.forwardRef<TouchableElement, AccordionItemContentProps>(
     ({dataAttributes, role, ...props}, ref) => (
-        <div role={role} className={sprinkles({width: '100%'})}>
+        <div role={role} className={styles.accordionItem}>
             <AccordionItemContent
                 {...props}
                 ref={ref}

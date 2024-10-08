@@ -12,7 +12,6 @@ import {vars} from './skins/skin-contract.css';
 import * as styles from './card.css';
 import * as mediaStyles from './image.css';
 import {useTheme} from './hooks';
-import {sprinkles} from './sprinkles.css';
 import {IconButton, ToggleIconButton} from './icon-button';
 import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
 import IconPauseFilled from './generated/mistica-icons/icon-pause-filled';
@@ -402,14 +401,7 @@ const CardContent = ({
 }: CardContentProps) => {
     const {textPresets} = useTheme();
     return (
-        <div
-            className={sprinkles({
-                display: 'flex',
-                flex: 1,
-                justifyContent: 'space-between',
-                flexDirection: 'column',
-            })}
-        >
+        <div className={styles.cardContentContainer}>
             {/** using flex instead of nested Stacks, this way we can rearrange texts so the DOM structure makes more sense for screen reader users */}
             <div className={styles.flexColumn}>
                 {title && (

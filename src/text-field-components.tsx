@@ -5,7 +5,6 @@ import {useIsInverseOrMediaVariant} from './theme-variant-context';
 import {useTheme} from './hooks';
 import {Text1} from './text';
 import * as styles from './text-field-components.css';
-import {sprinkles} from './sprinkles.css';
 import {vars} from './skins/skin-contract.css';
 import {getPrefixedDataAttributes} from './utils/dom';
 import * as tokens from './text-tokens';
@@ -60,9 +59,9 @@ export const Label = ({
 
     return (
         <label
-            className={classnames(styles.labelContainer, {[styles.shrinked]: isShrinked}, sprinkles({color}))}
+            className={classnames(styles.labelContainer, {[styles.shrinked]: isShrinked})}
             htmlFor={forId}
-            style={{...style, transition: transitionStyle}}
+            style={{color, ...style, transition: transitionStyle}}
         >
             <span className={styles.labelText}>{children}</span>
             {optional ? (
@@ -155,9 +154,7 @@ export const FieldContainer = ({
             <div
                 className={classnames(
                     styles.field,
-                    sprinkles({
-                        background: readOnly ? vars.colors.neutralLow : vars.colors.backgroundContainer,
-                    }),
+                    readOnly ? styles.background.readOnly : styles.background.default,
                     className
                 )}
                 ref={fieldRef}

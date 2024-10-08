@@ -1,6 +1,7 @@
 import * as React from 'react';
 import classnames from 'classnames';
-import {sprinkles} from './sprinkles.css';
+import * as styles from './box.css';
+import {applyCssVars} from './utils/css';
 import {getPrefixedDataAttributes} from './utils/dom';
 
 import type {ByBreakpoint, DataAttributes} from './utils/types';
@@ -18,6 +19,10 @@ type Props = {
     paddingRight?: ByBreakpoint<PadSize>;
     as?: React.ComponentType<any> | string;
     children?: React.ReactNode;
+    /**
+     * @deprecated this component is meant to be used only to add padding.
+     * Consider using a div (or similar) instead if you need to add extra styles
+     */
     className?: string;
     role?: string;
     /** "data-" prefix is automatically added. For example, use "testid" instead of "data-testid" */
@@ -49,21 +54,36 @@ const Box = React.forwardRef<HTMLDivElement, Props>(
         },
         ref
     ) => {
-        const paddingSprinkles = {paddingTop, paddingBottom, paddingLeft, paddingRight};
-        let paddingStyles: React.CSSProperties = {};
-        let paddingClasses = '';
-        try {
-            paddingClasses = sprinkles(paddingSprinkles);
-        } catch (e) {
-            // if this fails, it's because the consumer passed in a value that is not a valid padding size
-            // fallback to inline styles in that case.
-            paddingStyles = {
-                paddingTop: typeof paddingTop === 'object' ? paddingTop.mobile : paddingTop,
-                paddingBottom: typeof paddingBottom === 'object' ? paddingBottom.mobile : paddingBottom,
-                paddingLeft: typeof paddingLeft === 'object' ? paddingLeft.mobile : paddingLeft,
-                paddingRight: typeof paddingRight === 'object' ? paddingRight.mobile : paddingRight,
-            };
-        }
+        const paddingTopValues =
+            typeof paddingTop === 'object'
+                ? paddingTop
+                : {mobile: paddingTop, tablet: paddingTop, desktop: paddingTop};
+
+        const paddingBottomValues =
+            typeof paddingBottom === 'object'
+                ? paddingBottom
+                : {mobile: paddingBottom, tablet: paddingBottom, desktop: paddingBottom};
+
+        const paddingLeftValues =
+            typeof paddingLeft === 'object'
+                ? paddingLeft
+                : {mobile: paddingLeft, tablet: paddingLeft, desktop: paddingLeft};
+
+        const paddingRightValues =
+            typeof paddingRight === 'object'
+                ? paddingRight
+                : {mobile: paddingRight, tablet: paddingRight, desktop: paddingRight};
+
+        const applyPaddingVars = (
+            vars: (typeof styles.vars)[keyof typeof styles.vars],
+            values: {mobile: PadSize; tablet?: PadSize; desktop: PadSize}
+        ) => {
+            return applyCssVars({
+                [vars.mobile]: `${values.mobile}px`,
+                [vars.tablet]: `${values.tablet ?? values.mobile}px`,
+                [vars.desktop]: `${values.desktop}px`,
+            });
+        };
 
         return (
             <Component
@@ -72,10 +92,13 @@ const Box = React.forwardRef<HTMLDivElement, Props>(
                 aria-label={ariaLabel}
                 aria-hidden={ariaHidden}
                 ref={ref}
-                className={classnames(className, paddingClasses)}
+                className={classnames(className, styles.box)}
                 style={{
+                    ...applyPaddingVars(styles.vars.paddingTop, paddingTopValues),
+                    ...applyPaddingVars(styles.vars.paddingBottom, paddingBottomValues),
+                    ...applyPaddingVars(styles.vars.paddingLeft, paddingLeftValues),
+                    ...applyPaddingVars(styles.vars.paddingRight, paddingRightValues),
                     ...(width !== undefined ? {width, boxSizing: 'border-box'} : {}),
-                    ...(!paddingClasses ? paddingStyles : {}),
                 }}
                 id={id}
             >
