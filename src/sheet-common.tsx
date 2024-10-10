@@ -252,6 +252,7 @@ const Sheet = React.forwardRef<HTMLDivElement, SheetProps>(({onClose, children, 
                                 style={{
                                     paddingBottom: safeAreaInsetBottom,
                                 }}
+                                tabIndex={-1}
                             >
                                 {typeof children === 'function'
                                     ? children({closeModal, modalTitleId})
