@@ -123,7 +123,7 @@
         "lodash": "^4.17.21",
         "mini-css-extract-plugin": "^1.6.2",
         "node-fetch": "^2.6.7",
-        "playroom": "^0.38.0",
+        "playroom": "^0.39.0",
         "postcss": "^8.4.18",
         "postcss-loader": "^4.2.0",
         "prettier": "^3.3.2",
