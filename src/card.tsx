@@ -596,19 +596,14 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
                                 />
                             </div>
                             {asset && (
-                                <Box
+                                <div
                                     className={styles.mediaCardAsset}
-                                    paddingLeft={{mobile: 16, desktop: 24}}
-                                    paddingTop={{mobile: 16, desktop: 24}}
+                                    style={applyCssVars({
+                                        [mediaStyles.vars.mediaBorderRadius]: vars.borderRadii.mediaSmall,
+                                    })}
                                 >
-                                    <div
-                                        style={applyCssVars({
-                                            [mediaStyles.vars.mediaBorderRadius]: vars.borderRadii.mediaSmall,
-                                        })}
-                                    >
-                                        {asset}
-                                    </div>
-                                </Box>
+                                    {asset}
+                                </div>
                             )}
                         </div>
                     </BaseTouchable>
@@ -704,19 +699,14 @@ export const NakedCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
                             />
                         </div>
                         {asset && (
-                            <Box
+                            <div
                                 className={styles.mediaCardAsset}
-                                paddingLeft={{mobile: 16, desktop: 24}}
-                                paddingTop={{mobile: 16, desktop: 24}}
+                                style={applyCssVars({
+                                    [mediaStyles.vars.mediaBorderRadius]: vars.borderRadii.mediaSmall,
+                                })}
                             >
-                                <div
-                                    style={applyCssVars({
-                                        [mediaStyles.vars.mediaBorderRadius]: vars.borderRadii.mediaSmall,
-                                    })}
-                                >
-                                    {asset}
-                                </div>
-                            </Box>
+                                {asset}
+                            </div>
                         )}
                     </div>
                 </BaseTouchable>
@@ -1342,11 +1332,10 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
                                         }
                                     />
                                 )}
-                                <Box
-                                    paddingX={24}
-                                    paddingTop={withGradient ? 40 : 0}
-                                    paddingBottom={24}
-                                    className={withGradient ? styles.displayCardGradient : undefined}
+                                <div
+                                    className={classNames(styles.displayCardContentWrapper, {
+                                        [styles.displayCardGradient]: withGradient,
+                                    })}
                                 >
                                     <Stack space={24}>
                                         <DisplayCardContent
@@ -1409,7 +1398,7 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
                                             />
                                         )}
                                     </Stack>
-                                </Box>
+                                </div>
                             </div>
                         </div>
                     </BaseTouchable>
@@ -1614,13 +1603,15 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                                     </div>
                                 </ThemeVariant>
                             )}
-                            <Box
-                                className={styles.displayCardContent}
-                                paddingTop={
+                            <div
+                                className={classNames(
+                                    styles.displayCardContent,
                                     withGradient && !asset && !hasTopActions && !hasVideo
-                                        ? 0
-                                        : {mobile: asset ? 16 : 24, desktop: 24}
-                                }
+                                        ? undefined
+                                        : asset
+                                          ? styles.displayCardContentWithAsset
+                                          : styles.displayCardContentWithTopContent
+                                )}
                             >
                                 {asset ? (
                                     <div
@@ -1642,11 +1633,10 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                                         }
                                     />
                                 )}
-                                <Box
-                                    paddingX={{mobile: 16, desktop: 24}}
-                                    paddingTop={withGradient ? 40 : 0}
-                                    paddingBottom={24}
-                                    className={withGradient ? styles.displayCardGradient : undefined}
+                                <div
+                                    className={classNames(styles.posterCardContentWrapper, {
+                                        [styles.displayCardGradient]: withGradient,
+                                    })}
                                 >
                                     <DisplayCardContent
                                         title={
@@ -1710,8 +1700,8 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                                         extra={extra}
                                         extraRef={extraRef}
                                     />
-                                </Box>
-                            </Box>
+                                </div>
+                            </div>
                         </div>
                     </BaseTouchable>
                 </InternalBoxed>

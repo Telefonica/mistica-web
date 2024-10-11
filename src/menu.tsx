@@ -171,9 +171,9 @@ export const MenuSection = ({children}: MenuSectionProps): JSX.Element => {
     return children ? (
         <>
             {children}
-            <Box paddingY={8} className={styles.menuSectionDivider}>
+            <div className={styles.menuSectionDivider}>
                 <Divider />
-            </Box>
+            </div>
         </>
     ) : (
         <></>

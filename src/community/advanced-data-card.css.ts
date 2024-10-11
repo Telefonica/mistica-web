@@ -97,7 +97,7 @@ export const cardContentStyle = style([
     },
 ]);
 
-export const zindex = style({zIndex: -1});
+export const extra = style([sprinkles({paddingTop: 16, paddingBottom: 24}), {zIndex: -1}]);
 
 export const MIN_HEIGHT = 216;
 export const minHeight = style({minHeight: MIN_HEIGHT});
@@ -227,7 +227,7 @@ export const buttonMobile = style([
     },
 ]);
 
-export const footerImage = sprinkles({alignItems: 'center', display: 'flex'});
+export const footerImage = sprinkles({alignItems: 'center', display: 'flex', paddingRight: 16});
 
 export const footerDirection = style([
     sprinkles({

@@ -12,6 +12,7 @@ import {vars} from './skins/skin-contract.css';
 import {useThemeVariant} from './theme-variant-context';
 import Touchable, {BaseTouchable} from './touchable';
 import * as tokens from './text-tokens';
+import {getPrefixedDataAttributes} from './utils/dom';
 
 import type {TouchableComponentProps} from './touchable';
 import type {ExclusifyUnion} from './utils/utility-types';
@@ -44,16 +45,12 @@ const Chip = (props: ChipProps): JSX.Element => {
 
     const overAlternative = useThemeVariant() === 'alternative';
 
-    const paddingLeft = Icon ? ({mobile: 16, desktop: 8} as const) : ({mobile: 20, desktop: 12} as const);
-    const paddingRight = {mobile: 20, desktop: 12} as const;
-    const paddingIcon = {mobile: 16, desktop: 8} as const;
-
     const body = (
         <>
             {Icon && (
-                <Box paddingRight={4} className={active ? styles.iconActive : styles.icon}>
+                <div className={active ? styles.iconActive : styles.icon}>
                     <Icon color="currentColor" size={pxToRem(16)} />
-                </Box>
+                </div>
             )}
             <Box paddingRight={badge ? 8 : 0 || onClose ? 4 : 0}>
                 <Text2 id={id} weight={textPresets.indicator.weight} truncate={1} color="currentColor">
@@ -67,14 +64,14 @@ const Chip = (props: ChipProps): JSX.Element => {
 
     if (onClose) {
         return (
-            <Box
+            <div
                 className={classnames(
                     overAlternative ? styles.chipVariants.overAlternative : styles.chipVariants.default,
-                    styles.chipWrapper
+                    styles.chipWrapper,
+                    Icon ? styles.leftPadding.withIcon : styles.leftPadding.default,
+                    styles.rightPadding.withIcon
                 )}
-                paddingLeft={paddingLeft}
-                paddingRight={paddingIcon}
-                dataAttributes={chipDataAttributes}
+                {...getPrefixedDataAttributes(chipDataAttributes)}
             >
                 {body}
                 <Touchable
@@ -90,7 +87,7 @@ const Chip = (props: ChipProps): JSX.Element => {
                 >
                     <IconCloseRegular size={pxToRem(16)} color={vars.colors.neutralMedium} />
                 </Touchable>
-            </Box>
+            </div>
         );
     }
     const isTouchable = props.href || props.onPress || props.to;
@@ -104,22 +101,22 @@ const Chip = (props: ChipProps): JSX.Element => {
     };
 
     const renderContent = (dataAttributes?: DataAttributes) => (
-        <Box
+        <div
             className={classnames(
                 styles.chipVariants[active ? 'active' : overAlternative ? 'overAlternative' : 'default'],
                 // If the chip is wrapped inside a BaseTouchable, we set inline-flex to the Touchable instead
                 isTouchable ? styles.wrappedContent : styles.chipWrapper,
                 {
                     [styles.chipInteractiveVariants[isDarkMode ? 'dark' : 'light']]: isInteractive,
-                }
+                },
+                Icon ? styles.leftPadding.withIcon : styles.leftPadding.default,
+                badge ? styles.rightPadding.withIcon : styles.rightPadding.default
             )}
-            paddingLeft={paddingLeft}
-            paddingRight={badge ? paddingIcon : paddingRight}
-            dataAttributes={dataAttributes}
+            {...getPrefixedDataAttributes(dataAttributes)}
         >
             {body}
             {renderBadge()}
-        </Box>
+        </div>
     );
 
     if (isTouchable) {

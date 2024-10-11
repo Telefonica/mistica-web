@@ -19,4 +19,4 @@ export const tag = style([
 
 export const icon = sprinkles({display: 'block'});
 
-export const badge = sprinkles({display: 'inline-flex'});
+export const badge = sprinkles({display: 'inline-flex', paddingLeft: 4});
