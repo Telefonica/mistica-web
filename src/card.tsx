@@ -596,14 +596,13 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
                                 />
                             </div>
                             {asset && (
-                                <div className={styles.mediaCardAsset}>
-                                    <div
-                                        style={applyCssVars({
-                                            [mediaStyles.vars.mediaBorderRadius]: vars.borderRadii.mediaSmall,
-                                        })}
-                                    >
-                                        {asset}
-                                    </div>
+                                <div
+                                    className={styles.mediaCardAsset}
+                                    style={applyCssVars({
+                                        [mediaStyles.vars.mediaBorderRadius]: vars.borderRadii.mediaSmall,
+                                    })}
+                                >
+                                    {asset}
                                 </div>
                             )}
                         </div>
@@ -700,14 +699,13 @@ export const NakedCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
                             />
                         </div>
                         {asset && (
-                            <div className={styles.mediaCardAsset}>
-                                <div
-                                    style={applyCssVars({
-                                        [mediaStyles.vars.mediaBorderRadius]: vars.borderRadii.mediaSmall,
-                                    })}
-                                >
-                                    {asset}
-                                </div>
+                            <div
+                                className={styles.mediaCardAsset}
+                                style={applyCssVars({
+                                    [mediaStyles.vars.mediaBorderRadius]: vars.borderRadii.mediaSmall,
+                                })}
+                            >
+                                {asset}
                             </div>
                         )}
                     </div>
