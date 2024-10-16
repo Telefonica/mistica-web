@@ -1,3 +1,16 @@
+# [16.3.0](https://github.com/Telefonica/mistica-web/compare/v16.2.0...v16.3.0) (2024-10-16)
+
+
+### Bug Fixes
+
+* **Sheet:** lock focus inside sheet container when content is not interactive ([#1264](https://github.com/Telefonica/mistica-web/issues/1264)) ([dd0fdad](https://github.com/Telefonica/mistica-web/commit/dd0fdad6ee00d8feb71d8e51247426d274d88d62))
+* **Text:** extract textProps to separate file ([#1267](https://github.com/Telefonica/mistica-web/issues/1267)) ([3894eb9](https://github.com/Telefonica/mistica-web/commit/3894eb9567236be4560c34cf86cbc8a94f77f467))
+
+
+### Features
+
+* **Box:** remove className usages ([#1266](https://github.com/Telefonica/mistica-web/issues/1266)) ([56a25e0](https://github.com/Telefonica/mistica-web/commit/56a25e0e10f9e2e47c4656caeb8dc09c7a7219ae))
+
 # [16.2.0](https://github.com/Telefonica/mistica-web/compare/v16.1.1...v16.2.0) (2024-10-08)
 
 
