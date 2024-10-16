@@ -446,3 +446,20 @@ test('Text content is read by screen readers in the right order in Rows with rad
     });
     expect(row).toBeInTheDocument();
 });
+
+test('aria-label is read by screen readers in informative rows', () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <RowList>
+                <Row
+                    aria-label="Some custom label"
+                    headline={<Tag type="promo">Headline</Tag>}
+                    title="Title"
+                    description="Description"
+                />
+            </RowList>
+        </ThemeContextProvider>
+    );
+
+    expect(screen.getByText('Some custom label')).toBeInTheDocument();
+});
