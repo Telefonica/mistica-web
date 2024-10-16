@@ -26,6 +26,7 @@ import * as mediaStyles from './image.css';
 import {vars} from './skins/skin-contract.css';
 import {applyCssVars} from './utils/css';
 import {IconButton, ToggleIconButton} from './icon-button';
+import ScreenReaderOnly from './screen-reader-only';
 
 import type {IconButtonProps, ToggleIconButtonProps} from './icon-button';
 import type {TouchableElement, TouchableProps} from './touchable';
@@ -617,6 +618,8 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
               );
     }
 
+    const hasCustomAriaLabel = !!props['aria-label'];
+
     return (
         <div
             className={classNames(styles.rowContent, styles.rowContentPadding)}
@@ -624,7 +627,12 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
             {...getPrefixedDataAttributes(dataAttributes)}
             ref={ref as React.Ref<HTMLDivElement>}
         >
-            {renderContent()}
+            <div aria-hidden={hasCustomAriaLabel}>{renderContent()}</div>
+            {hasCustomAriaLabel && (
+                <ScreenReaderOnly>
+                    <span>{props['aria-label']}</span>
+                </ScreenReaderOnly>
+            )}
         </div>
     );
 });
