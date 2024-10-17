@@ -63,7 +63,10 @@ export const removePassiveEventListener = (
  * For example: `{foo: 'bar'}` => `{data-foo: 'bar'}`
  */
 export const getPrefixedDataAttributes = (attrs?: DataAttributes, componentName?: string): DataAttributes => {
-    const result: DataAttributes = componentName ? {'data-component-name': componentName} : {};
+    const result: DataAttributes = componentName
+        ? // TODO: remove deprecated component-name in next major release
+          {'data-component-name': componentName, 'data-testid': componentName}
+        : {};
     if (attrs) {
         Object.keys(attrs).forEach((key) => {
             result['data-' + key] = attrs[key];
