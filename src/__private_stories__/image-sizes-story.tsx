@@ -74,7 +74,7 @@ export const Default: StoryComponent<Args> = ({forceNonCssAspectRatio}) => {
     );
 
     return (
-        <Stack space={16} dataAttributes={{testId: 'story'}}>
+        <Stack space={16} dataAttributes={{testid: 'story'}}>
             <div style={{width: 400, border: '2px solid pink'}}>
                 <Stack space={16}>{cases.map((props, index) => renderCase(props, index))}</Stack>
             </div>

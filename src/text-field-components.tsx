@@ -62,6 +62,7 @@ export const Label = ({
             className={classnames(styles.labelContainer, {[styles.shrinked]: isShrinked})}
             htmlFor={forId}
             style={{color, ...style, transition: transitionStyle}}
+            data-testid="label"
         >
             <span className={styles.labelText}>{children}</span>
             {optional ? (
@@ -94,7 +95,10 @@ export const HelperText = ({leftText, rightText, error, id}: HelperTextProps): J
     return (
         <>
             {leftText && (
-                <p className={classnames(styles.helperText, styles.leftHelperText)}>
+                <p
+                    className={classnames(styles.helperText, styles.leftHelperText)}
+                    data-testid={error ? 'errorText' : 'helperText'}
+                >
                     {error && (
                         <Text1 regular>
                             <IconWarningRegular color={leftColor} className={styles.warnIcon} />
@@ -106,7 +110,7 @@ export const HelperText = ({leftText, rightText, error, id}: HelperTextProps): J
                 </p>
             )}
             {rightText && (
-                <div className={classnames(styles.helperText)}>
+                <div className={classnames(styles.helperText)} data-testid="endHelperText">
                     <Text1 color={rightColor} regular as="p" textAlign="right">
                         {rightText}
                     </Text1>

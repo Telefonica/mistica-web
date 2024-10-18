@@ -100,11 +100,11 @@ const DateField = ({
             max={max ? getLocalDateString(max) : undefined}
             type="date"
             endIconOverlay={
-                <div className={styles.iconContainer}>
+                <div className={styles.iconContainer} data-testid="endIcon">
                     <IconCalendarRegular size={iconSize.default} />
                 </div>
             }
-            dataAttributes={{'component-name': 'DateField', ...dataAttributes}}
+            dataAttributes={{'component-name': 'DateField', testid: 'DateField', ...dataAttributes}}
         />
     );
 
@@ -119,7 +119,7 @@ const DateField = ({
                 {...fieldProps}
                 optional={optional}
                 isValidDate={(currentDate) => isInRange(getLocalDateString(currentDate.toDate()))}
-                dataAttributes={{'component-name': 'DateField', ...dataAttributes}}
+                dataAttributes={{'component-name': 'DateField', testid: 'DateField', ...dataAttributes}}
             />
         </React.Suspense>
     );

@@ -80,14 +80,19 @@ const renderFeedbackBody = (
         );
     return (
         <Stack space={24}>
-            <div className={styles.assetContainer}>{asset}</div>
+            <div className={styles.assetContainer} data-testid="icon">
+                {asset}
+            </div>
             <Stack space={16} className={classnames(styles.feedbackData)}>
-                <div className={classnames(animateText && styles.feedbackTextAppearFast)}>
+                <div className={classnames(animateText && styles.feedbackTextAppearFast)} data-testid="title">
                     <Text6 as="h1">{title}</Text6>
                 </div>
 
                 {normalizedDescription && (
-                    <div className={classnames(animateText && styles.feedbackTextAppearMedium)}>
+                    <div
+                        className={classnames(animateText && styles.feedbackTextAppearMedium)}
+                        data-testid="description"
+                    >
                         {normalizedDescription && (
                             <Text3 regular color={vars.colors.textSecondary}>
                                 {normalizedDescription}
@@ -104,6 +109,7 @@ const renderFeedbackBody = (
                                     ? styles.feedbackTextAppearSlow
                                     : styles.feedbackTextAppearMedium)
                         )}
+                        data-testid="slot"
                     >
                         {extra}
                     </div>
@@ -151,6 +157,7 @@ const renderFeedback = ({
             {imageUrl && (
                 <div
                     className={styles.desktopImage}
+                    data-testid="image"
                     style={{
                         backgroundImage: `url(${imageUrl})`,
                         backgroundPosition: imageFit === 'fit' ? 'bottom right' : 'center right',
@@ -301,7 +308,11 @@ export const SuccessFeedbackScreen = ({dataAttributes, ...props}: AssetFeedbackP
             animateText
             imageUrl={props.imageUrl}
             imageFit={props.imageFit}
-            dataAttributes={{'component-name': 'SuccessFeedbackScreen', ...dataAttributes}}
+            dataAttributes={{
+                'component-name': 'SuccessFeedbackScreen',
+                testid: 'SuccessFeedbackScreen',
+                ...dataAttributes,
+            }}
         />
     );
 };
@@ -321,7 +332,11 @@ export const ErrorFeedbackScreen = ({
             hapticFeedback="error"
             asset={<IconError size="100%" />}
             animateText
-            dataAttributes={{'component-name': 'ErrorFeedbackScreen', ...dataAttributes}}
+            dataAttributes={{
+                'component-name': 'ErrorFeedbackScreen',
+                testid: 'ErrorFeedbackScreen',
+                ...dataAttributes,
+            }}
             extra={
                 <Stack space={16}>
                     {errorReference && (
@@ -346,7 +361,11 @@ export const InfoFeedbackScreen = ({
 }: InfoFeedbackScreenProps): JSX.Element => {
     return (
         <FeedbackScreen
-            dataAttributes={{'component-name': 'InfoFeedbackScreen', ...dataAttributes}}
+            dataAttributes={{
+                'component-name': 'InfoFeedbackScreen',
+                testid: 'InfoFeedbackScreen',
+                ...dataAttributes,
+            }}
             asset={<Icon size="100%" />}
             {...props}
         />
@@ -398,6 +417,6 @@ export const SuccessFeedback = ({
         ),
         imageFit,
         imageUrl,
-        dataAttributes: {'component-name': 'SuccessFeedback', ...dataAttributes},
+        dataAttributes: {'component-name': 'SuccessFeedback', testid: 'SuccessFeedback', ...dataAttributes},
     });
 };

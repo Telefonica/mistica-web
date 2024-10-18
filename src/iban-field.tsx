@@ -208,7 +208,7 @@ const IbanField = ({
             {...rest}
             {...fieldProps}
             inputComponent={IbanInput}
-            dataAttributes={{'component-name': 'IbanField', ...dataAttributes}}
+            dataAttributes={{'component-name': 'IbanField', testid: 'IbanField', ...dataAttributes}}
         />
     );
 };

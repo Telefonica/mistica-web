@@ -93,7 +93,7 @@ export const RawIconButton = React.forwardRef<
             role,
             'aria-label': ariaLabel,
             'aria-labelledby': ariaLabelledby,
-            dataAttributes: {'component-name': 'IconButton', ...dataAttributes},
+            dataAttributes: {'component-name': 'IconButton', testid: 'IconButton', ...dataAttributes},
             className: classNames(
                 styles.buttonContainer[buttonSize],
                 styles.iconButtonTokens[buttonTokensKey],
@@ -202,7 +202,11 @@ export const InternalToggleIconButton = React.forwardRef<
             ref={ref}
             {...props}
             {...(checked ?? checkedState ? checkedProps : uncheckedProps)}
-            dataAttributes={{'component-name': 'ToggleIconButton', ...dataAttributes}}
+            dataAttributes={{
+                'component-name': 'ToggleIconButton',
+                testid: 'ToggleIconButton',
+                ...dataAttributes,
+            }}
             onPress={handleChange}
         />
     );

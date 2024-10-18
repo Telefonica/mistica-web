@@ -115,6 +115,7 @@ export const Content = ({
                     })}
                     // We don't want asset to be readable by screen readers
                     aria-hidden
+                    data-testid="asset"
                 >
                     <div
                         className={styles.asset}
@@ -144,12 +145,18 @@ export const Content = ({
                     truncate={titleLinesMax}
                     hyphens="auto"
                     as={titleAs}
+                    dataAttributes={{testid: 'title'}}
                 >
                     {title}
                 </Text3>
                 {headline && (
                     <div ref={headlineRef} style={{order: -1, paddingBottom: 4}}>
-                        <Text1 regular color={vars.colors.textPrimary} hyphens="auto">
+                        <Text1
+                            regular
+                            color={vars.colors.textPrimary}
+                            hyphens="auto"
+                            dataAttributes={{testid: 'headline'}}
+                        >
                             {headline}
                         </Text1>
                     </div>
@@ -161,6 +168,7 @@ export const Content = ({
                             color={vars.colors.textPrimary}
                             truncate={subtitleLinesMax}
                             hyphens="auto"
+                            dataAttributes={{testid: 'subtitle'}}
                         >
                             {subtitle}
                         </Text2>
@@ -173,13 +181,14 @@ export const Content = ({
                             color={vars.colors.textSecondary}
                             truncate={descriptionLinesMax}
                             hyphens="auto"
+                            dataAttributes={{testid: 'description'}}
                         >
                             {description}
                         </Text2>
                     </Box>
                 )}
                 {extra && (
-                    <Box ref={extraRef} paddingTop={2}>
+                    <Box ref={extraRef} paddingTop={2} dataAttributes={{testid: 'slot'}}>
                         {extra}
                     </Box>
                 )}
@@ -197,7 +206,12 @@ export const Content = ({
                 <div className={classNames(styles.rightContent, {[styles.rightRestrictedWidth]: !!detail})}>
                     {detail && (
                         <div className={classNames(styles.detail, {[styles.disabled]: disabled})}>
-                            <Text2 regular color={vars.colors.textSecondary} hyphens="auto">
+                            <Text2
+                                regular
+                                color={vars.colors.textSecondary}
+                                hyphens="auto"
+                                dataAttributes={{testid: 'detail'}}
+                            >
                                 {detail}
                             </Text2>
                         </div>
@@ -210,6 +224,7 @@ export const Content = ({
                                 [styles.disabled]: disabled,
                             })}
                             ref={rightRef}
+                            data-testid="endSlot"
                         >
                             {renderRight(right, centerY)}
                         </div>
@@ -219,6 +234,7 @@ export const Content = ({
                         <div
                             style={{paddingLeft: detail || right ? 4 : 0}}
                             className={classNames(styles.center, {[styles.disabled]: disabled})}
+                            data-testid="chevron"
                         >
                             <IconChevron
                                 color={isInverse ? vars.colors.inverse : vars.colors.neutralMedium}
@@ -632,7 +648,11 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
 export const Row = React.forwardRef<TouchableElement, RowContentProps>(
     ({dataAttributes, role = 'listitem', ...props}, ref) => (
         <div role={role} className={styles.row}>
-            <RowContent {...props} ref={ref} dataAttributes={{'component-name': 'Row', ...dataAttributes}} />
+            <RowContent
+                {...props}
+                ref={ref}
+                dataAttributes={{'component-name': 'Row', testid: 'Row', ...dataAttributes}}
+            />
         </div>
     )
 );
@@ -701,9 +721,9 @@ type BoxedRowProps = ExclusifyUnion<
 
 export const BoxedRow = React.forwardRef<HTMLDivElement, BoxedRowProps>(({dataAttributes, ...props}, ref) => (
     <Boxed
-        isInverse={props.isInverse}
+        variant={props.isInverse ? 'inverse' : 'default'}
         ref={ref}
-        dataAttributes={{'component-name': 'BoxedRow', ...dataAttributes}}
+        dataAttributes={{'component-name': 'BoxedRow', testid: 'BoxedRow', ...dataAttributes}}
     >
         <RowContent {...props} />
     </Boxed>
@@ -726,7 +746,7 @@ export const BoxedRowList = ({
         space={16}
         role={role}
         aria-labelledby={ariaLabelledby}
-        dataAttributes={{'component-name': 'BoxedRowList', ...dataAttributes}}
+        dataAttributes={{'component-name': 'BoxedRowList', testid: 'BoxedRowList', ...dataAttributes}}
     >
         {children}
     </Stack>

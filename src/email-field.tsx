@@ -66,7 +66,7 @@ const EmailField = ({
             type="email"
             inputMode="email"
             autoComplete={autoComplete}
-            dataAttributes={{'component-name': 'EmailField', ...dataAttributes}}
+            dataAttributes={{'component-name': 'EmailField', testid: 'EmailField', ...dataAttributes}}
         />
     );
 };

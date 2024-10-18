@@ -382,7 +382,7 @@ const Select = ({
                         ))}
                     </select>
                     <div className={styles.arrowDown} aria-hidden>
-                        <div className={styles.iconContainer}>
+                        <div className={styles.iconContainer} data-testid="endIcon">
                             <ChevronDownRegular size={iconSize} />
                         </div>
                     </div>

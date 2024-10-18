@@ -159,7 +159,7 @@ const CvvField = ({
             }
             autoComplete={autoComplete}
             inputComponent={IntegerInput}
-            dataAttributes={{'component-name': 'CvvField', ...dataAttributes}}
+            dataAttributes={{'component-name': 'CvvField', testid: 'CvvField', ...dataAttributes}}
         />
     );
 };

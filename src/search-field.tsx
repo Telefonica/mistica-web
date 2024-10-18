@@ -96,7 +96,7 @@ const SearchField = React.forwardRef<any, SearchFieldProps>(
                 {...rest}
                 {...fieldProps}
                 type="search"
-                dataAttributes={{'component-name': 'SearchField', ...dataAttributes}}
+                dataAttributes={{'component-name': 'SearchField', testid: 'SearchField', ...dataAttributes}}
             />
         );
     }
