@@ -231,7 +231,11 @@ const CreditCardNumberField = ({
             inputComponent={CreditCardInput}
             autoComplete={autoComplete}
             endIcon={<CreditcardAdornment value={value ?? rawValues[name] ?? ''} />}
-            dataAttributes={{'component-name': 'CreditCardNumberField', ...dataAttributes}}
+            dataAttributes={{
+                'component-name': 'CreditCardNumberField',
+                testid: 'CreditCardNumberField',
+                ...dataAttributes,
+            }}
         />
     );
 };

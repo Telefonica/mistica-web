@@ -328,7 +328,11 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
                 dataAttributes={dataAttributes}
             >
                 <ThemeVariant variant="default">
-                    {startIcon && <div className={styles.startIcon}>{startIcon}</div>}
+                    {startIcon && (
+                        <div className={styles.startIcon} data-testid="startIcon">
+                            {startIcon}
+                        </div>
+                    )}
 
                     {prefix && (
                         <div
@@ -435,7 +439,11 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
                             })}
                         </Text3>
                     </div>
-                    {endIcon && <div className={styles.endIconContainer}>{endIcon}</div>}
+                    {endIcon && (
+                        <div className={styles.endIconContainer} data-testId="endIcon">
+                            {endIcon}
+                        </div>
+                    )}
                     {endIconOverlay}
                 </ThemeVariant>
             </FieldContainer>
