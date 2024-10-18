@@ -440,7 +440,7 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
                         </Text3>
                     </div>
                     {endIcon && (
-                        <div className={styles.endIconContainer} data-testId="endIcon">
+                        <div className={styles.endIconContainer} data-testid="endIcon">
                             {endIcon}
                         </div>
                     )}
