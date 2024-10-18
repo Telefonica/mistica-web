@@ -26,6 +26,7 @@ export type Dictionary = {
     formDateOutOfRangeError: string;
     formEmailError: string;
     formIbanError: string;
+    formTextMultilineMaxCount: string;
     closeButtonLabel: string;
     formSearchClear: string;
     menuLabelSuffix: string;
@@ -246,6 +247,13 @@ export const formIbanError: TextToken = {
     en: 'Incorrect IBAN',
     de: 'Falsche IBAN',
     pt: 'IBAN incorreto',
+};
+
+export const formTextMultilineMaxCount: TextToken = {
+    es: '1$s de 2$s caracteres',
+    en: '1$s of 2$s characters',
+    de: '1$s von 2$s Zeichen',
+    pt: '1$s de 2$s caracteres',
 };
 
 export const closeButtonLabel: TextToken = {
