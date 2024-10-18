@@ -71,7 +71,7 @@ export const InternalBoxed = React.forwardRef<HTMLDivElement, Props & InternalPr
     (
         {
             children,
-            isInverse: isInverseInside = false,
+            isInverse = false,
             className,
             role,
             dataAttributes,
@@ -90,6 +90,7 @@ export const InternalBoxed = React.forwardRef<HTMLDivElement, Props & InternalPr
         ref
     ) => {
         const isInverseOutside = useIsInverseOrMediaVariant();
+        const isInverseInside = isInverse || variant === 'inverse' || variant === 'media';
 
         return (
             <div
