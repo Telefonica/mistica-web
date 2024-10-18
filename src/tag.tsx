@@ -3,7 +3,7 @@
 import * as React from 'react';
 import Box from './box';
 import {Text} from './text';
-import {ThemeVariant, useThemeVariant} from './theme-variant-context';
+import {ThemeVariant} from './theme-variant-context';
 import {pxToRem} from './utils/css';
 import {getPrefixedDataAttributes} from './utils/dom';
 import * as styles from './tag.css';
@@ -29,7 +29,6 @@ const {colors} = vars;
 
 const Tag = ({Icon, children, dataAttributes, type = 'promo', badge}: TagProps): JSX.Element | null => {
     const {textPresets} = useTheme();
-    const themeVariant = useThemeVariant();
     const badgeValue = badge === true ? undefined : badge || 0;
 
     if (!children) {
@@ -40,11 +39,7 @@ const Tag = ({Icon, children, dataAttributes, type = 'promo', badge}: TagProps):
         // [textColor, backgroundColor]
         promo: [colors.tagTextPromo, colors.tagBackgroundPromo],
         active: [colors.tagTextActive, colors.tagBackgroundActive],
-        inactive: [
-            colors.tagTextInactive,
-            // TODO: remove logic for alternative variant (https://jira.tid.es/browse/WEB-1803)
-            themeVariant === 'alternative' ? colors.neutralLowAlternative : colors.tagBackgroundInactive,
-        ],
+        inactive: [colors.tagTextInactive, colors.tagBackgroundInactive],
         success: [colors.tagTextSuccess, colors.tagBackgroundSuccess],
         warning: [colors.tagTextWarning, colors.tagBackgroundWarning],
         error: [colors.tagTextError, colors.tagBackgroundError],
