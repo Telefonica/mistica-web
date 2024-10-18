@@ -103,6 +103,7 @@ export interface TextPresetProps {
     role?: string;
     'aria-level'?: number;
     'aria-label'?: string;
+    'aria-hidden'?: React.HTMLAttributes<HTMLDivElement>['aria-hidden'];
     dataAttributes?: DataAttributes;
     forceMobileSizes?: boolean;
     textShadow?: string;
@@ -150,6 +151,7 @@ export const Text = ({
     role,
     'aria-level': ariaLevel,
     'aria-label': ariaLabel,
+    'aria-hidden': ariaHidden,
     dataAttributes,
 }: TextProps): JSX.Element | null => {
     const {skinName} = useTheme();
@@ -195,6 +197,7 @@ export const Text = ({
             role,
             'aria-level': ariaLevel,
             'aria-label': ariaLabel,
+            'aria-hidden': ariaHidden,
             ...getPrefixedDataAttributes(dataAttributes, 'Text'),
             style: {
                 ...sizeVars,
