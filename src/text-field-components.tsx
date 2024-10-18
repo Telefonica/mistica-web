@@ -106,7 +106,7 @@ export const HelperText = ({leftText, rightText, error, id}: HelperTextProps): J
                 </p>
             )}
             {rightText && (
-                <div className={classnames(styles.helperText)}>
+                <div className={classnames(styles.helperText, {[styles.rightHelperText]: !!leftText})}>
                     <Text1 color={rightColor} regular as="p" textAlign="right" wordBreak={false}>
                         {rightText}
                     </Text1>
