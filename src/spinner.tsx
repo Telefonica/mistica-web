@@ -31,7 +31,9 @@ const Spinner = ({color, delay = '500ms', size = 24, style, rolePresentation}: P
                 className={styles.spinnerIos}
                 height={size}
                 style={{...style}}
-                role="img"
+                role="progressbar"
+                aria-live="polite"
+                aria-busy
                 viewBox="0 0 30 30"
                 width={size}
             >
@@ -85,7 +87,9 @@ const Spinner = ({color, delay = '500ms', size = 24, style, rolePresentation}: P
                 className={styles.spinnerDefault}
                 height={size}
                 style={{...style}}
-                role="img"
+                role="progressbar"
+                aria-live="polite"
+                aria-busy
                 viewBox="0 0 66 66"
                 width={size}
             >
