@@ -126,6 +126,8 @@ export const leftHelperText = style([
     },
 ]);
 
+export const rightHelperText = sprinkles({paddingLeft: 16});
+
 export const helperText = sprinkles({
     flexGrow: 1,
     paddingTop: 4,

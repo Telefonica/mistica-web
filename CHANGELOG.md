@@ -1,3 +1,10 @@
+## [16.3.1](https://github.com/Telefonica/mistica-web/compare/v16.3.0...v16.3.1) (2024-10-21)
+
+
+### Bug Fixes
+
+* **AdvancedDataCard:** make container of extra content expand to fit container's width ([#1275](https://github.com/Telefonica/mistica-web/issues/1275)) ([486c605](https://github.com/Telefonica/mistica-web/commit/486c605934ee80413b829395eac914ed385763c1))
+
 # [16.3.0](https://github.com/Telefonica/mistica-web/compare/v16.2.0...v16.3.0) (2024-10-16)
 
 
