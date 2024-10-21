@@ -11,7 +11,7 @@ const SomeComponent = ({innerRef}: {innerRef?: (node: HTMLElement | null) => voi
         <div
             ref={innerRef}
             style={{
-                backgroundColor: 'gray',
+                backgroundColor: 'red',
                 width: 100,
                 height: 100,
                 resize: 'both',
