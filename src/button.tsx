@@ -235,7 +235,7 @@ const renderButtonContent = ({
             >
                 {shouldRenderSpinner ? (
                     <Spinner
-                        rolePresentation={!!loadingText}
+                        aria-hidden={!!loadingText}
                         color="currentcolor"
                         delay="0s"
                         size={spinnerSizeRem}

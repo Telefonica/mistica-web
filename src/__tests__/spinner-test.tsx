@@ -17,15 +17,14 @@ test('spinner is accessible', () => {
     expect(spinner).toHaveAttribute('aria-busy');
 });
 
-test('spinner with role presentation is accessible', () => {
+test('spinner with aria-hidden is not visible', () => {
     render(
         <ThemeContextProvider theme={makeTheme()}>
-            <Spinner rolePresentation />
+            <Spinner aria-hidden />
         </ThemeContextProvider>
     );
 
-    const spinner = screen.getByRole('progressbar');
+    const spinner = screen.queryByRole('progressbar');
 
-    expect(spinner).toBeInTheDocument();
-    expect(spinner).toHaveAttribute('aria-busy');
+    expect(spinner).not.toBeInTheDocument();
 });
