@@ -97,7 +97,7 @@ export const cardContentStyle = style([
     },
 ]);
 
-export const extra = style([sprinkles({paddingTop: 16, paddingBottom: 24}), {zIndex: -1}]);
+export const extra = style([sprinkles({paddingTop: 16, paddingBottom: 24, width: '100%'}), {zIndex: -1}]);
 
 export const MIN_HEIGHT = 216;
 export const minHeight = style({minHeight: MIN_HEIGHT});
