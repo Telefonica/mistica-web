@@ -3,6 +3,7 @@ import {Box, ResponsiveLayout, Slider} from '..';
 
 export default {
     title: 'Components/Slider',
+    parameters: {fullScreen: true},
 };
 
 type Args = {
@@ -11,13 +12,14 @@ type Args = {
     max: number;
     min: number;
     tooltip: boolean;
+    inverse: boolean;
 };
 
-export const Controlled: StoryComponent<Args> = ({disabled, step, max, min, tooltip}) => {
+export const Controlled: StoryComponent<Args> = ({disabled, step, max, min, tooltip, inverse}) => {
     const [value, setValue] = React.useState(min);
     return (
-        <ResponsiveLayout>
-            <Box paddingY={48}>
+        <ResponsiveLayout variant={inverse ? 'inverse' : undefined}>
+            <Box paddingX={16} paddingY={64}>
                 <Slider
                     name="slider"
                     aria-label="slider"
@@ -42,12 +44,13 @@ Controlled.args = {
     max: 100,
     min: 0,
     tooltip: false,
+    inverse: false,
 };
 
-export const Uncontrolled: StoryComponent<Args> = ({disabled, step, max, min, tooltip}) => {
+export const Uncontrolled: StoryComponent<Args> = ({disabled, step, max, min, tooltip, inverse}) => {
     return (
-        <ResponsiveLayout>
-            <Box padding={48}>
+        <ResponsiveLayout variant={inverse ? 'inverse' : undefined}>
+            <Box paddingX={16} paddingY={64}>
                 <Slider
                     name="slider"
                     aria-label="slider"
@@ -71,4 +74,5 @@ Uncontrolled.args = {
     max: 100,
     min: 0,
     tooltip: false,
+    inverse: false,
 };
