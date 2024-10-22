@@ -106,11 +106,11 @@ const FormDateField = ({
             max={max ? getLocalDateTimeString(max) : undefined}
             type="datetime-local"
             endIconOverlay={
-                <div className={dateStyles.iconContainer}>
+                <div className={dateStyles.iconContainer} data-testid="endIcon">
                     <IconCalendarRegular size={iconSize.default} />
                 </div>
             }
-            dataAttributes={{'component-name': 'DateTimeField', ...dataAttributes}}
+            dataAttributes={{'component-name': 'DateTimeField', testid: 'DateTimeField', ...dataAttributes}}
         />
     );
 
@@ -126,7 +126,11 @@ const FormDateField = ({
                 optional={optional}
                 withTime
                 isValidDate={(currentDate) => isInRange(getLocalDateTimeString(currentDate.toDate()))}
-                dataAttributes={{'component-name': 'DateTimeField', ...dataAttributes}}
+                dataAttributes={{
+                    'component-name': 'DateTimeField',
+                    testid: 'DateTimeField',
+                    ...dataAttributes,
+                }}
             />
         </React.Suspense>
     );

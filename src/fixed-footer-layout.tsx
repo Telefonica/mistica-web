@@ -188,6 +188,7 @@ const FixedFooterLayout = ({
                     <aside
                         ref={ref}
                         data-component-name="FixedFooter"
+                        data-testid="FixedFooter"
                         style={{
                             height: footerHeight,
                             marginBottom: safeAreaInsetBottom,
