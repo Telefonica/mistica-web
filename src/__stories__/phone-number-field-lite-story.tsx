@@ -44,6 +44,30 @@ interface PhoneNumberFieldControlledArgs extends PhoneNumberFieldBaseArgs {
     suggestions: boolean;
 }
 
+const Description = () => {
+    return (
+        <Boxed>
+            <Box padding={16}>
+                <Stack space={16}>
+                    <div>
+                        This is a "light" version of the PhoneNumberField component. It does not use google's
+                        libphonenumber library to reduce bundle size.
+                    </div>
+                    <Stack space={8}>
+                        <div>- Only supported countries are formatted</div>
+                        <div>- Not all phone number types are formatted</div>
+                        <div>- Numbers in E164 are returned unformatted</div>
+                        <div>
+                            - A custom formatter can be provided via props and the formatter used by this
+                            component is exported as `formatPhoneLite`
+                        </div>
+                    </Stack>
+                </Stack>
+            </Box>
+        </Boxed>
+    );
+};
+
 export const Controlled: StoryComponent<PhoneNumberFieldControlledArgs> = ({
     inverse,
     initialValue,
@@ -57,25 +81,7 @@ export const Controlled: StoryComponent<PhoneNumberFieldControlledArgs> = ({
         <ResponsiveLayout variant={inverse ? 'inverse' : undefined} fullWidth>
             <Box padding={16}>
                 <Stack space={16}>
-                    <Boxed>
-                        <Box padding={16}>
-                            <Stack space={16}>
-                                <div>
-                                    This is a "light" version of the PhoneNumberField component. It does not
-                                    use google's libphonenumber library to reduce bundle size.
-                                </div>
-                                <Stack space={8}>
-                                    <div>- Only supported countries are formatted</div>
-                                    <div>- Not all phone number types are formatted</div>
-                                    <div>- Numbers in E164 are returned unformatted</div>
-                                    <div>
-                                        - A custom formatter can be provided via props and the formatter used
-                                        by this component is exported as `formatPhoneLite`
-                                    </div>
-                                </Stack>
-                            </Stack>
-                        </Box>
-                    </Boxed>
+                    <Description />
                     <PhoneNumberFieldLite
                         value={rawValue}
                         onChangeValue={(value, rawValue) => {
@@ -84,7 +90,7 @@ export const Controlled: StoryComponent<PhoneNumberFieldControlledArgs> = ({
                         }}
                         name="phoneNumber"
                         autoComplete="off"
-                        dataAttributes={{testid: 'phone-number-field'}}
+                        dataAttributes={{testid: 'phone-number-field-lite'}}
                         getSuggestions={suggestions ? getPhoneNumberSuggestions : undefined}
                         {...rest}
                     />
@@ -125,9 +131,10 @@ export const Uncontrolled: StoryComponent<PhoneNumberFieldUncontrolledArgs> = ({
     const [value, setValue] = React.useState<any>(undefined);
 
     return (
-        <ResponsiveLayout isInverse={inverse} fullWidth>
+        <ResponsiveLayout variant={inverse ? 'inverse' : undefined} fullWidth>
             <Box padding={16}>
                 <Stack space={16}>
+                    <Description />
                     <PhoneNumberFieldLite
                         defaultValue={defaultValue}
                         onChangeValue={(value, rawValue) => {
@@ -136,7 +143,7 @@ export const Uncontrolled: StoryComponent<PhoneNumberFieldUncontrolledArgs> = ({
                         }}
                         name="phoneNumber"
                         autoComplete="off"
-                        dataAttributes={{testid: 'phone-number-field'}}
+                        dataAttributes={{testid: 'phone-number-field-lite'}}
                         {...rest}
                     />
                     <Stack space={8}>

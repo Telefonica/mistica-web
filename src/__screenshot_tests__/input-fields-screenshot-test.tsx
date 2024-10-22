@@ -521,6 +521,28 @@ test.each`
     expect(await fieldWrapper.screenshot()).toMatchImageSnapshot();
 });
 
+test.only.each`
+    skin          | number
+    ${'Vivo'}     | ${'2145678901'}
+    ${'Vivo'}     | ${'+34654834455'}
+    ${'Movistar'} | ${'654834455'}
+`('PhoneNumberFieldLite - $number in $skin skin', async ({skin, number}) => {
+    await openStoryPage({
+        id: 'components-input-fields-phonenumberfieldlite--uncontrolled',
+        device: 'MOBILE_IOS',
+        skin,
+        args: {defaultValue: number},
+    });
+
+    const fieldWrapper = await screen.findByTestId('phone-number-field-lite');
+    const field = await screen.findByLabelText('Label');
+
+    await field.click({clickCount: 3});
+    await field.type(number);
+
+    expect(await fieldWrapper.screenshot()).toMatchImageSnapshot();
+});
+
 test('CreditCardExpirationField', async () => {
     await openStoryPage({
         id: 'components-input-fields-creditcardexpirationfield--uncontrolled',
