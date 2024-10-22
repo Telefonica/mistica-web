@@ -1,13 +1,17 @@
 import {sprinkles} from './sprinkles.css';
 import {vars} from './skins/skin-contract.css';
-import {style, keyframes} from '@vanilla-extract/css';
+import {style, keyframes, styleVariants} from '@vanilla-extract/css';
 
 const transition = '1s cubic-bezier(0.75, 0, 0.27, 1)';
 
-export const barBackground = sprinkles({
+const barBackgroundBase = sprinkles({
     borderRadius: vars.borderRadii.bar,
     height: 4,
-    background: vars.colors.barTrack,
+});
+
+export const barBackground = styleVariants({
+    default: [barBackgroundBase, {background: vars.colors.barTrack}],
+    inverse: [barBackgroundBase, {background: vars.colors.barTrackInverse}],
 });
 
 export const bar = sprinkles({
@@ -50,6 +54,5 @@ export const inverse = style({
 });
 
 export const progressBarSteppedContainer = style({
-    display: 'inline-block',
     width: '100%',
 });
