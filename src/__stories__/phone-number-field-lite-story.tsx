@@ -1,10 +1,10 @@
 import * as React from 'react';
-import {Box, Text1, Stack, ResponsiveLayout, PhoneNumberField} from '..';
+import {Box, Text1, Stack, ResponsiveLayout, PhoneNumberFieldLite, Boxed} from '..';
 import {inspect} from 'util';
 import {phoneNumbersList} from './helpers';
 
 export default {
-    title: 'Components/Input fields/PhoneNumberField',
+    title: 'Components/Input fields/PhoneNumberFieldLite',
     parameters: {fullScreen: true},
 };
 
@@ -24,7 +24,6 @@ interface PhoneNumberFieldBaseArgs {
     disabled: boolean;
     readOnly: boolean;
     preventCopy: boolean;
-    e164: boolean;
 }
 
 const defaultBaseArgs: PhoneNumberFieldBaseArgs = {
@@ -38,7 +37,6 @@ const defaultBaseArgs: PhoneNumberFieldBaseArgs = {
     disabled: false,
     readOnly: false,
     preventCopy: false,
-    e164: true,
 };
 
 interface PhoneNumberFieldControlledArgs extends PhoneNumberFieldBaseArgs {
@@ -59,7 +57,26 @@ export const Controlled: StoryComponent<PhoneNumberFieldControlledArgs> = ({
         <ResponsiveLayout variant={inverse ? 'inverse' : undefined} fullWidth>
             <Box padding={16}>
                 <Stack space={16}>
-                    <PhoneNumberField
+                    <Boxed>
+                        <Box padding={16}>
+                            <Stack space={16}>
+                                <div>
+                                    This is a "light" version of the PhoneNumberField component. It does not
+                                    use google's libphonenumber library to reduce bundle size.
+                                </div>
+                                <Stack space={8}>
+                                    <div>- Only supported countries are formatted</div>
+                                    <div>- Not all phone number types are formatted</div>
+                                    <div>- Numbers in E164 are returned unformatted</div>
+                                    <div>
+                                        - A custom formatter can be provided via props and the formatter used
+                                        by this component is exported as `formatPhoneLite`
+                                    </div>
+                                </Stack>
+                            </Stack>
+                        </Box>
+                    </Boxed>
+                    <PhoneNumberFieldLite
                         value={rawValue}
                         onChangeValue={(value, rawValue) => {
                             setValue(value);
@@ -111,7 +128,7 @@ export const Uncontrolled: StoryComponent<PhoneNumberFieldUncontrolledArgs> = ({
         <ResponsiveLayout isInverse={inverse} fullWidth>
             <Box padding={16}>
                 <Stack space={16}>
-                    <PhoneNumberField
+                    <PhoneNumberFieldLite
                         defaultValue={defaultValue}
                         onChangeValue={(value, rawValue) => {
                             setValue(value);
