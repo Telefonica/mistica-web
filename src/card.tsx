@@ -158,7 +158,7 @@ export const CardActionsGroup = ({
                     zIndex: 3, // needed because images has zIndex 1 and touchable overlay has zIndex 2
                 }}
             >
-                <Inline space={16}>
+                <Inline space={16} dataAttributes={{testid: 'topActions'}}>
                     {finalActions.map((action, index) => {
                         if ('Icon' in action || 'checkedProps' in action) {
                             // action is a CardAction object
@@ -406,7 +406,7 @@ const CardContent = ({
             {/** using flex instead of nested Stacks, this way we can rearrange texts so the DOM structure makes more sense for screen reader users */}
             <div className={styles.flexColumn}>
                 {title && (
-                    <div style={{paddingBottom: subtitle || description ? 4 : 0}}>
+                    <div style={{paddingBottom: subtitle || description ? 4 : 0}} data-testid="title">
                         <Text
                             {...textProps.text4}
                             truncate={titleLinesMax}
@@ -420,19 +420,19 @@ const CardContent = ({
                 )}
                 {headline && (
                     // assuming that the headline will always be followed by one of: pretitle, title, subtitle, description
-                    <div ref={headlineRef} style={{order: -2, paddingBottom: 8}}>
+                    <div ref={headlineRef} style={{order: -2, paddingBottom: 8}} data-testid="headline">
                         {typeof headline === 'string' ? <Tag type="promo">{headline}</Tag> : headline}
                     </div>
                 )}
                 {pretitle && (
-                    <div style={{order: -1, paddingBottom: 4}}>
+                    <div style={{order: -1, paddingBottom: 4}} data-testid="pretitle">
                         <Text2 truncate={pretitleLinesMax} as="div" regular hyphens="auto">
                             {pretitle}
                         </Text2>
                     </div>
                 )}
                 {subtitle && (
-                    <div style={{paddingBottom: description ? 4 : 0}}>
+                    <div style={{paddingBottom: description ? 4 : 0}} data-testid="subtitle">
                         <Text2 truncate={subtitleLinesMax} as="div" regular hyphens="auto">
                             {subtitle}
                         </Text2>
@@ -445,6 +445,7 @@ const CardContent = ({
                         style={{
                             paddingTop: pretitle || title || subtitle ? 4 : 0,
                         }}
+                        data-testid="description"
                     >
                         <Text2
                             truncate={descriptionLinesMax}
@@ -457,7 +458,11 @@ const CardContent = ({
                         </Text2>
                     </div>
                 )}
-                {extra && <div ref={extraRef}>{extra}</div>}
+                {extra && (
+                    <div ref={extraRef} data-testid="slot">
+                        {extra}
+                    </div>
+                )}
             </div>
 
             {(button || buttonLink) && (
@@ -560,7 +565,7 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
 
         return (
             <CardContainer
-                dataAttributes={{'component-name': 'MediaCard', ...dataAttributes}}
+                dataAttributes={{'component-name': 'MediaCard', testid: 'MediaCard', ...dataAttributes}}
                 ref={ref}
                 aria-label={isTouchable ? undefined : ariaLabelProp}
                 className={styles.touchableContainer}
@@ -602,6 +607,7 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
                                     style={applyCssVars({
                                         [mediaStyles.vars.mediaBorderRadius]: vars.borderRadii.mediaSmall,
                                     })}
+                                    data-testid="asset"
                                 >
                                     {asset}
                                 </div>
@@ -659,7 +665,7 @@ export const NakedCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
         return (
             <CardContainer
                 ref={ref}
-                dataAttributes={{'component-name': 'NakedCard', ...dataAttributes}}
+                dataAttributes={{'component-name': 'NakedCard', testid: 'NakedCard', ...dataAttributes}}
                 aria-label={isTouchable ? undefined : ariaLabelProp}
                 className={isTouchable ? styles.touchableContainer : undefined}
             >
@@ -705,6 +711,7 @@ export const NakedCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
                                 style={applyCssVars({
                                     [mediaStyles.vars.mediaBorderRadius]: vars.borderRadii.mediaSmall,
                                 })}
+                                data-testid="asset"
                             >
                                 {asset}
                             </div>
@@ -765,7 +772,11 @@ export const SmallNakedCard = React.forwardRef<HTMLDivElement, SmallNakedCardPro
         return (
             <CardContainer
                 ref={ref}
-                dataAttributes={{'component-name': 'SmallNakedCard', ...dataAttributes}}
+                dataAttributes={{
+                    'component-name': 'SmallNakedCard',
+                    testid: 'SmallNakedCard',
+                    ...dataAttributes,
+                }}
                 aria-label={isTouchable ? undefined : ariaLabelProp}
                 className={isTouchable ? styles.touchableContainer : undefined}
             >
@@ -796,12 +807,19 @@ export const SmallNakedCard = React.forwardRef<HTMLDivElement, SmallNakedCardPro
                                             weight={textPresets.cardTitle.weight}
                                             as={titleAs}
                                             hyphens="auto"
+                                            dataAttributes={{testid: 'title'}}
                                         >
                                             {title}
                                         </Text>
                                     )}
                                     {subtitle && (
-                                        <Text2 truncate={subtitleLinesMax} regular as="p" hyphens="auto">
+                                        <Text2
+                                            truncate={subtitleLinesMax}
+                                            regular
+                                            as="p"
+                                            hyphens="auto"
+                                            dataAttributes={{testid: 'subtitle'}}
+                                        >
                                             {subtitle}
                                         </Text2>
                                     )}
@@ -812,13 +830,18 @@ export const SmallNakedCard = React.forwardRef<HTMLDivElement, SmallNakedCardPro
                                             as="p"
                                             color={vars.colors.textSecondary}
                                             hyphens="auto"
+                                            dataAttributes={{testid: 'description'}}
                                         >
                                             {description}
                                         </Text2>
                                     )}
                                 </Stack>
                             </div>
-                            {extra && <div ref={extraRef}>{extra}</div>}
+                            {extra && (
+                                <div ref={extraRef} data-testid="slot">
+                                    {extra}
+                                </div>
+                            )}
                         </div>
                     </div>
                 </BaseTouchable>
@@ -902,7 +925,7 @@ export const DataCard = React.forwardRef<HTMLDivElement, DataCardProps>(
 
         return (
             <CardContainer
-                dataAttributes={{'component-name': 'DataCard', ...dataAttributes}}
+                dataAttributes={{'component-name': 'DataCard', testid: 'DataCard', ...dataAttributes}}
                 ref={ref}
                 aria-label={isTouchable ? undefined : ariaLabelProp}
                 className={styles.touchableContainer}
@@ -925,6 +948,7 @@ export const DataCard = React.forwardRef<HTMLDivElement, DataCardProps>(
                                                 [mediaStyles.vars.mediaBorderRadius]:
                                                     vars.borderRadii.mediaSmall,
                                             })}
+                                            data-testid="asset"
                                         >
                                             {asset}
                                         </div>
@@ -954,7 +978,11 @@ export const DataCard = React.forwardRef<HTMLDivElement, DataCardProps>(
                                 )}
                             </Inline>
 
-                            {extra && <div ref={extraRef}>{extra}</div>}
+                            {extra && (
+                                <div ref={extraRef} data-testid="slot">
+                                    {extra}
+                                </div>
+                            )}
 
                             {(button || buttonLink) && (
                                 <div className={styles.actions}>
@@ -1023,13 +1051,18 @@ export const SnapCard = React.forwardRef<HTMLDivElement, SnapCardProps>(
 
         return (
             <CardContainer
-                dataAttributes={{'component-name': 'SnapCard', ...dataAttributes}}
+                dataAttributes={{'component-name': 'SnapCard', testid: 'SnapCard', ...dataAttributes}}
                 ref={ref}
                 className={styles.touchableContainer}
                 aspectRatio={aspectRatio}
                 aria-label={isTouchable ? undefined : ariaLabelProp}
             >
-                <Boxed className={styles.boxed} isInverse={isInverse} width="100%" minHeight="100%">
+                <Boxed
+                    className={styles.boxed}
+                    variant={isInverse ? 'inverse' : 'default'}
+                    width="100%"
+                    minHeight="100%"
+                >
                     <BaseTouchable
                         maybe
                         {...touchableProps}
@@ -1044,6 +1077,7 @@ export const SnapCard = React.forwardRef<HTMLDivElement, SnapCardProps>(
                                         style={applyCssVars({
                                             [mediaStyles.vars.mediaBorderRadius]: vars.borderRadii.mediaSmall,
                                         })}
+                                        data-testid="asset"
                                     >
                                         <Box paddingBottom={16}>{asset}</Box>
                                     </div>
@@ -1056,6 +1090,7 @@ export const SnapCard = React.forwardRef<HTMLDivElement, SnapCardProps>(
                                             weight={textPresets.cardTitle.weight}
                                             as={titleAs}
                                             hyphens="auto"
+                                            dataAttributes={{testid: 'title'}}
                                         >
                                             {title}
                                         </Text>
@@ -1067,6 +1102,7 @@ export const SnapCard = React.forwardRef<HTMLDivElement, SnapCardProps>(
                                             color={vars.colors.textPrimary}
                                             as="p"
                                             hyphens="auto"
+                                            dataAttributes={{testid: 'subtitle'}}
                                         >
                                             {subtitle}
                                         </Text2>
@@ -1078,13 +1114,18 @@ export const SnapCard = React.forwardRef<HTMLDivElement, SnapCardProps>(
                                             color={vars.colors.textSecondary}
                                             as="p"
                                             hyphens="auto"
+                                            dataAttributes={{testid: 'description'}}
                                         >
                                             {description}
                                         </Text2>
                                     )}
                                 </Stack>
                             </div>
-                            {extra && <div ref={extraRef}>{extra}</div>}
+                            {extra && (
+                                <div ref={extraRef} data-testid="slot">
+                                    {extra}
+                                </div>
+                            )}
                         </section>
                     </BaseTouchable>
                 </Boxed>
@@ -1117,16 +1158,28 @@ const DisplayCardContent = ({
     // using flex instead of nested Stacks, this way we can rearrange texts so the DOM structure makes more sense for screen reader users
     return (
         <div className={styles.flexColumn}>
-            {title && <div style={{paddingBottom: subtitle || description ? 4 : 0}}>{title}</div>}
+            {title && (
+                <div style={{paddingBottom: subtitle || description ? 4 : 0}} data-testid="title">
+                    {title}
+                </div>
+            )}
             {headline && (
                 // assuming that the headline will always be followed by one of: pretitle, title, subtitle, description
-                <div ref={headlineRef} style={{order: -2, paddingBottom: 16}}>
+                <div ref={headlineRef} style={{order: -2, paddingBottom: 16}} data-testid="headline">
                     {headline}
                 </div>
             )}
-            {pretitle && <div style={{order: -1, paddingBottom: 4}}>{pretitle}</div>}
+            {pretitle && (
+                <div style={{order: -1, paddingBottom: 4}} data-testid="pretitle">
+                    {pretitle}
+                </div>
+            )}
 
-            {subtitle && <div style={{paddingBottom: subtitle ? 4 : 0}}>{subtitle}</div>}
+            {subtitle && (
+                <div style={{paddingBottom: subtitle ? 4 : 0}} data-testid="subtitle">
+                    {subtitle}
+                </div>
+            )}
             {description && (
                 // this is tricky, the padding between a headline and a description is 16px
                 // but the padding between a title|pretitle|subtitle and a description is 8px (4px + 4px)
@@ -1134,11 +1187,16 @@ const DisplayCardContent = ({
                     style={{
                         paddingTop: pretitle || title || subtitle ? 4 : 0,
                     }}
+                    data-testid="description"
                 >
                     {description}
                 </div>
             )}
-            {extra && <div ref={extraRef}>{extra}</div>}
+            {extra && (
+                <div ref={extraRef} data-testid="slot">
+                    {extra}
+                </div>
+            )}
         </div>
     );
 };
@@ -1282,7 +1340,6 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
                     className={styles.boxed}
                     width="100%"
                     minHeight="100%"
-                    isInverse={isInverse}
                     background={
                         hasImage || hasVideo
                             ? isExternalInverse
@@ -1290,7 +1347,7 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
                                 : vars.colors.backgroundContainer
                             : undefined
                     }
-                    variant={hasImage || hasVideo ? 'media' : undefined}
+                    variant={hasImage || hasVideo ? 'media' : isInverse ? 'inverse' : 'default'}
                 >
                     <BaseTouchable
                         maybe
@@ -1302,7 +1359,7 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
 
                         <div className={styles.displayCardContainer}>
                             {(hasImage || hasVideo) && (
-                                <ThemeVariant isInverse={isExternalInverse}>
+                                <ThemeVariant variant={isExternalInverse ? 'inverse' : 'default'}>
                                     <div className={styles.displayCardBackground}>
                                         {hasVideo ? video : image}
                                     </div>
@@ -1321,6 +1378,7 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
                                         style={applyCssVars({
                                             [mediaStyles.vars.mediaBorderRadius]: vars.borderRadii.mediaSmall,
                                         })}
+                                        data-testid="asset"
                                     >
                                         <Box paddingBottom={withGradient ? 0 : 40} paddingX={24}>
                                             {asset}
@@ -1421,7 +1479,11 @@ export const DisplayMediaCard = React.forwardRef<HTMLDivElement, DisplayMediaCar
             {...props}
             ref={ref}
             isInverse
-            dataAttributes={{'component-name': 'DisplayMediaCard', ...dataAttributes}}
+            dataAttributes={{
+                'component-name': 'DisplayMediaCard',
+                testid: 'DisplayMediaCard',
+                ...dataAttributes,
+            }}
         />
     )
 );
@@ -1431,7 +1493,11 @@ export const DisplayDataCard = React.forwardRef<HTMLDivElement, DisplayDataCardP
         <DisplayCard
             {...props}
             ref={ref}
-            dataAttributes={{'component-name': 'DisplayDataCard', ...dataAttributes}}
+            dataAttributes={{
+                'component-name': 'DisplayDataCard',
+                testid: 'DisplayDataCard',
+                ...dataAttributes,
+            }}
         />
     )
 );
@@ -1573,7 +1639,7 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
             <CardContainer
                 width={width}
                 height={height}
-                dataAttributes={{'component-name': 'PosterCard', ...dataAttributes}}
+                dataAttributes={{'component-name': 'PosterCard', testid: 'PosterCard', ...dataAttributes}}
                 ref={ref}
                 aspectRatio={aspectRatio}
                 className={styles.touchableContainer}
@@ -1584,9 +1650,14 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                     className={styles.boxed}
                     width="100%"
                     minHeight="100%"
-                    isInverse={hasImage || hasVideo || normalizedVariant === 'inverse'}
                     background={calcBackgroundColor()}
-                    variant={hasImage || hasVideo ? 'media' : undefined}
+                    variant={
+                        hasImage || hasVideo
+                            ? 'media'
+                            : hasImage || hasVideo || normalizedVariant === 'inverse'
+                              ? 'inverse'
+                              : 'default'
+                    }
                 >
                     <BaseTouchable
                         maybe
@@ -1598,7 +1669,7 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
 
                         <div className={styles.displayCardContainer} aria-hidden={isTouchable}>
                             {(hasImage || hasVideo) && (
-                                <ThemeVariant isInverse={isExternalInverse}>
+                                <ThemeVariant variant={isExternalInverse ? 'inverse' : 'default'}>
                                     <div className={styles.displayCardBackground}>
                                         {hasVideo ? video : image}
                                     </div>
@@ -1619,6 +1690,7 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                                         style={applyCssVars({
                                             [mediaStyles.vars.mediaBorderRadius]: vars.borderRadii.mediaSmall,
                                         })}
+                                        data-testid="asset"
                                     >
                                         <Box
                                             paddingBottom={withGradient ? 0 : 40}
