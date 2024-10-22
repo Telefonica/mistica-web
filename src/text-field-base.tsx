@@ -217,7 +217,7 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
         },
         ref
     ) => {
-        const {preventCopyInFormFields} = useTheme();
+        const {preventCopyInFormFields, texts, t} = useTheme();
         preventCopy = preventCopy ?? preventCopyInFormFields;
         const reactId = React.useId();
         const id = idProp || reactId;
@@ -319,6 +319,14 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
                         leftText={helperText}
                         id={helperTextid}
                         rightText={multiline && maxLength ? `${characterCount}/${maxLength}` : undefined}
+                        rightTextLabel={
+                            multiline && maxLength
+                                ? texts.formTextMultilineMaxCount ||
+                                  t(tokens.formTextMultilineMaxCount)
+                                      .replace('1$s', String(characterCount))
+                                      .replace('2$s', String(maxLength))
+                                : undefined
+                        }
                     />
                 }
                 multiline={multiline}
@@ -328,7 +336,11 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
                 dataAttributes={dataAttributes}
             >
                 <ThemeVariant variant="default">
-                    {startIcon && <div className={styles.startIcon}>{startIcon}</div>}
+                    {startIcon && (
+                        <div className={styles.startIcon} data-testid="startIcon">
+                            {startIcon}
+                        </div>
+                    )}
 
                     {prefix && (
                         <div
@@ -435,7 +447,11 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
                             })}
                         </Text3>
                     </div>
-                    {endIcon && <div className={styles.endIconContainer}>{endIcon}</div>}
+                    {endIcon && (
+                        <div className={styles.endIconContainer} data-testid="endIcon">
+                            {endIcon}
+                        </div>
+                    )}
                     {endIconOverlay}
                 </ThemeVariant>
             </FieldContainer>

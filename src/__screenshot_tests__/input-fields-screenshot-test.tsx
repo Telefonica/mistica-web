@@ -65,6 +65,24 @@ test('TextField - multiline and maxLength', async () => {
     expect(image).toMatchImageSnapshot();
 });
 
+test('TextField - multiline and maxLength with long helperText', async () => {
+    await openStoryPage({
+        id: 'components-input-fields-textfield--uncontrolled',
+        device: 'MOBILE_IOS',
+        args: {
+            defaultValue: '',
+            maxLength: true,
+            multiline: true,
+            helperText: 'This is a very long helper text to test that the maxLength text is not wrapping',
+        },
+    });
+
+    const fieldWrapper = await screen.findByTestId('text-field');
+    const image = await fieldWrapper.screenshot();
+
+    expect(image).toMatchImageSnapshot();
+});
+
 test('TextField - long label', async () => {
     await openStoryPage({
         id: 'components-input-fields-textfield--uncontrolled',

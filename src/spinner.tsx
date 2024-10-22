@@ -12,17 +12,25 @@ type Props = {
     color?: string;
     delay?: string;
     size?: number | string;
+    /** @deprecated Use aria-hidden instead */
     rolePresentation?: boolean;
+    'aria-hidden'?: 'true' | 'false' | boolean;
     style?: React.CSSProperties;
     children?: void;
 };
 
-const Spinner = ({color, delay = '500ms', size = 24, style, rolePresentation}: Props): JSX.Element => {
+const Spinner = ({
+    color,
+    delay = '500ms',
+    size = 24,
+    style,
+    rolePresentation,
+    'aria-hidden': ariaHidden,
+}: Props): JSX.Element => {
     const {texts, platformOverrides, t} = useTheme();
     const isInverse = useIsInverseOrMediaVariant();
     color = color || (isInverse ? vars.colors.controlActivatedInverse : vars.colors.controlActivated);
     const spinnerId = React.useId();
-    const withTitle = !rolePresentation;
     const title = texts.loading || t(tokens.loading);
     const content =
         getPlatform(platformOverrides) === 'ios' ? (
@@ -31,11 +39,14 @@ const Spinner = ({color, delay = '500ms', size = 24, style, rolePresentation}: P
                 className={styles.spinnerIos}
                 height={size}
                 style={{...style}}
-                role="img"
+                role="progressbar"
+                aria-live="polite"
+                aria-busy
+                aria-hidden={ariaHidden || rolePresentation}
                 viewBox="0 0 30 30"
                 width={size}
             >
-                {withTitle && <title id={spinnerId}>{title}</title>}
+                <title id={spinnerId}>{title}</title>
                 <g role="presentation">
                     <path
                         className={styles.spinnerIosSvgPath}
@@ -81,15 +92,18 @@ const Spinner = ({color, delay = '500ms', size = 24, style, rolePresentation}: P
             </svg>
         ) : (
             <svg
-                aria-labelledby={withTitle ? spinnerId : undefined}
+                aria-labelledby={spinnerId}
                 className={styles.spinnerDefault}
                 height={size}
                 style={{...style}}
-                role="img"
+                role="progressbar"
+                aria-live="polite"
+                aria-busy
+                aria-hidden={ariaHidden || rolePresentation}
                 viewBox="0 0 66 66"
                 width={size}
             >
-                {withTitle && <title id={spinnerId}>{title}</title>}
+                <title id={spinnerId}>{title}</title>
                 <circle
                     className={styles.spinnerDefaultPath}
                     cx="33"
