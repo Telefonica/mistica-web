@@ -10,7 +10,6 @@ const outerCircleBase = style([
         cursor: 'pointer',
         flexShrink: 0,
         borderRadius: '50%',
-        background: vars.colors.background,
     }),
     {
         width: 20,
@@ -21,11 +20,58 @@ const outerCircleBase = style([
 ]);
 
 export const outerCircleVariants = styleVariants({
-    default: [outerCircleBase, {boxShadow: `inset 0 0 0 2px ${vars.colors.control}`}],
-    ios: [outerCircleBase, {boxShadow: `inset 0 0 0 1px ${vars.colors.control}`}],
+    default: [
+        outerCircleBase,
+        {background: vars.colors.background, boxShadow: `inset 0 0 0 2px ${vars.colors.control}`},
+    ],
+    ios: [
+        outerCircleBase,
+        {background: vars.colors.background, boxShadow: `inset 0 0 0 1px ${vars.colors.control}`},
+    ],
+    checked: [
+        outerCircleBase,
+        {
+            boxShadow: `inset 0 0 0 2px ${vars.colors.controlActivated}`,
+            // using a gradient here to not fill until the circle edge, otherwise the radiobutton border looks strange
+            background: vars.colors.background,
+        },
+    ],
+    checkedIos: [
+        outerCircleBase,
+        {
+            boxShadow: `inset 0 0 0 5px ${vars.colors.controlActivated}`,
+            background: `radial-gradient(circle, ${vars.colors.iosControlKnob} 0%, ${vars.colors.iosControlKnob} 64%, transparent 64%, transparent 100%)`,
+        },
+    ],
 });
 
-export const innerCircle = style([
+export const inverseOuterCircleVariants = styleVariants({
+    default: [
+        outerCircleBase,
+        {background: 'transparent', boxShadow: `inset 0 0 0 2px ${vars.colors.controlInverse}`},
+    ],
+    ios: [
+        outerCircleBase,
+        {background: 'transparent', boxShadow: `inset 0 0 0 1px ${vars.colors.controlInverse}`},
+    ],
+    checked: [
+        outerCircleBase,
+        {
+            boxShadow: `inset 0 0 0 2px ${vars.colors.controlActivatedInverse}`,
+            // using a gradient here to not fill until the circle edge, otherwise the radiobutton border looks strange
+            background: 'transparent',
+        },
+    ],
+    checkedIos: [
+        outerCircleBase,
+        {
+            boxShadow: `inset 0 0 0 5px ${vars.colors.controlActivatedInverse}`,
+            background: `radial-gradient(circle, ${vars.colors.controlKnobInverse} 0%, ${vars.colors.controlKnobInverse} 64%, transparent 64%, transparent 100%)`,
+        },
+    ],
+});
+
+const innerCircleBase = style([
     sprinkles({
         display: 'flex',
         borderRadius: '50%',
@@ -39,15 +85,33 @@ export const innerCircle = style([
     },
 ]);
 
-export const innerCircleChecked = style([
-    sprinkles({
-        background: vars.colors.controlActivated,
-    }),
-    {
-        opacity: 1,
-        transform: 'none',
-    },
-]);
+export const innerCircleVariant = styleVariants({
+    default: [innerCircleBase],
+    checked: [
+        innerCircleBase,
+        sprinkles({
+            background: vars.colors.controlActivated,
+        }),
+        {
+            opacity: 1,
+            transform: 'none',
+        },
+    ],
+});
+
+export const inverseInnerCircleVariant = styleVariants({
+    default: [innerCircleBase],
+    checked: [
+        innerCircleBase,
+        sprinkles({
+            background: vars.colors.controlActivatedInverse,
+        }),
+        {
+            opacity: 1,
+            transform: 'none',
+        },
+    ],
+});
 
 const radioButtonBase = style({
     WebkitTapHighlightColor: 'transparent',
@@ -66,17 +130,5 @@ export const radioButtonContainerDisabled = style([
         cursor: 'default',
     },
 ]);
-
-export const outerCircleCheckedVariants = styleVariants({
-    default: {
-        boxShadow: `inset 0 0 0 2px ${vars.colors.controlActivated}`,
-        // using a gradient here to not fill until the circle edge, otherwise the radiobutton border looks strange
-        background: vars.colors.background,
-    },
-    ios: {
-        boxShadow: `inset 0 0 0 5px ${vars.colors.controlActivated}`,
-        background: `radial-gradient(circle, ${vars.colors.iosControlKnob} 0%, ${vars.colors.iosControlKnob} 64%, transparent 64%, transparent 100%)`,
-    },
-});
 
 export const disabled = style({cursor: 'default', opacity: 0.5});

@@ -10,11 +10,14 @@ import {getPrefixedDataAttributes} from './utils/dom';
 import * as styles from './checkbox.css';
 import {vars} from './skins/skin-contract.css';
 import {combineRefs} from './utils/common';
+import {useIsInverseVariant} from './theme-variant-context';
 
 import type {DataAttributes} from './utils/types';
 
 const IconCheckbox = ({isChecked, disabled}: {isChecked: boolean; disabled?: boolean}) => {
     const {isIos} = useTheme();
+    const isInverse = useIsInverseVariant();
+    const variant = isChecked ? 'checked' : isIos ? 'ios' : 'rest';
 
     const icon = isIos ? (
         <svg
@@ -25,7 +28,7 @@ const IconCheckbox = ({isChecked, disabled}: {isChecked: boolean; disabled?: boo
         >
             <path
                 d="M2.659 7.724c.33.366.92.368 1.254.005L9.79 1.336A.782.782 0 009.719.202a.858.858 0 00-1.178.069l-5.236 5.72-1.841-2.038a.857.857 0 00-1.177-.078.782.782 0 00-.082 1.133l2.454 2.716z"
-                fill={vars.colors.inverse}
+                fill={isInverse ? vars.colors.controlKnobInverse : vars.colors.inverse}
             />
         </svg>
     ) : (
@@ -35,15 +38,21 @@ const IconCheckbox = ({isChecked, disabled}: {isChecked: boolean; disabled?: boo
             height="10"
             className={classnames(styles.check, {[styles.checkChecked]: isChecked})}
         >
-            <path d="M5 10L0 5.192l1.4-1.346L5 7.308 12.6 0 14 1.346z" fill={vars.colors.inverse} />
+            <path
+                d="M5 10L0 5.192l1.4-1.346L5 7.308 12.6 0 14 1.346z"
+                fill={isInverse ? vars.colors.controlKnobInverse : vars.colors.inverse}
+            />
         </svg>
     );
 
     return (
         <div
-            className={classnames(styles.boxVariant[isChecked ? 'checked' : isIos ? 'ios' : 'rest'], {
-                [styles.disabled]: disabled,
-            })}
+            className={classnames(
+                isInverse ? styles.inverseBoxVariant[variant] : styles.boxVariant[variant],
+                {
+                    [styles.disabled]: disabled,
+                }
+            )}
         >
             {icon}
         </div>

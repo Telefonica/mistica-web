@@ -14,6 +14,7 @@ import Inline from './inline';
 import {useTheme} from './hooks';
 import {getPrefixedDataAttributes} from './utils/dom';
 import * as styles from './switch-component.css';
+import {useIsInverseVariant} from './theme-variant-context';
 
 import type {DataAttributes} from './utils/types';
 
@@ -52,6 +53,7 @@ type PropsChildren = {
 
 const Switch = (props: PropsRender | PropsChildren): JSX.Element => {
     const {isIos, isDarkMode} = useTheme();
+    const isInverse = useIsInverseVariant();
     const reactId = React.useId();
     const labelId = props['aria-labelledby'] || reactId;
     const {defaultValue, value, onChange, focusableRef, disabled} = useControlProps({
@@ -93,6 +95,18 @@ const Switch = (props: PropsRender | PropsChildren): JSX.Element => {
         }
     };
 
+    const barVariant = isIos
+        ? isChecked
+            ? 'checkedIos'
+            : isDarkMode
+              ? 'iosDark'
+              : 'ios'
+        : isChecked
+          ? 'checked'
+          : 'default';
+
+    const ballVariant = isIos ? (isChecked ? 'checkedIos' : 'ios') : isChecked ? 'checked' : 'default';
+
     const switchEl = (
         <div
             className={
@@ -105,24 +119,14 @@ const Switch = (props: PropsRender | PropsChildren): JSX.Element => {
                 <div className={styles.switchCheckboxLabel}>
                     <span
                         className={
-                            styles.barVariants[
-                                isIos
-                                    ? isChecked
-                                        ? 'checkedIos'
-                                        : isDarkMode
-                                          ? 'iosDark'
-                                          : 'ios'
-                                    : isChecked
-                                      ? 'checked'
-                                      : 'default'
-                            ]
+                            isInverse ? styles.inverseBarVariants[barVariant] : styles.barVariants[barVariant]
                         }
                     />
                     <span
                         className={
-                            styles.ballVariants[
-                                isIos ? (isChecked ? 'checkedIos' : 'ios') : isChecked ? 'checked' : 'default'
-                            ]
+                            isInverse
+                                ? styles.inverseBallVariants[ballVariant]
+                                : styles.ballVariants[ballVariant]
                         }
                     />
                 </div>

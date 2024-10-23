@@ -9,6 +9,7 @@ import classnames from 'classnames';
 import {useTheme} from './hooks';
 import {getPrefixedDataAttributes} from './utils/dom';
 import * as styles from './radio-button.css';
+import {useIsInverseVariant} from './theme-variant-context';
 
 import type {DataAttributes} from './utils/types';
 
@@ -70,6 +71,7 @@ const RadioButton = ({
     const checked = value === selectedValue;
     const tabIndex = focusableValue === value ? 0 : -1;
     const {isIos} = useTheme();
+    const isInverse = useIsInverseVariant();
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
         switch (event.key) {
@@ -95,18 +97,28 @@ const RadioButton = ({
         }
     };
 
+    const outerCircleVariant = isIos ? (checked ? 'checkedIos' : 'ios') : checked ? 'checked' : 'default';
+    const innerCircleVariant = checked ? 'checked' : 'default';
+
     const radio = (
         <div
             className={classnames(
-                isIos ? styles.outerCircleVariants.ios : styles.outerCircleVariants.default,
+                isInverse
+                    ? styles.inverseOuterCircleVariants[outerCircleVariant]
+                    : styles.outerCircleVariants[outerCircleVariant],
                 {
-                    [styles.outerCircleCheckedVariants[isIos ? 'ios' : 'default']]: checked,
                     [styles.disabled]: disabled,
                 }
             )}
         >
             {!isIos && (
-                <div className={classnames(styles.innerCircle, {[styles.innerCircleChecked]: checked})} />
+                <div
+                    className={
+                        isInverse
+                            ? styles.inverseInnerCircleVariant[innerCircleVariant]
+                            : styles.innerCircleVariant[innerCircleVariant]
+                    }
+                />
             )}
         </div>
     );

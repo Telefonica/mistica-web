@@ -14,6 +14,19 @@ test.each(DEVICES)('Slider - %s', async (device) => {
     expect(image).toMatchImageSnapshot();
 });
 
+test.each(DEVICES)('Slider - inverse in %s', async (device) => {
+    await openStoryPage({
+        id: 'components-slider--uncontrolled',
+        device,
+        args: {inverse: true},
+    });
+
+    const slider = await screen.findByTestId('slider');
+
+    const image = await slider.screenshot();
+    expect(image).toMatchImageSnapshot();
+});
+
 test('Slider - disabled', async () => {
     await openStoryPage({
         id: 'components-slider--uncontrolled',
