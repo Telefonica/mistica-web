@@ -136,6 +136,7 @@ export {TextFieldBase} from './text-field-base';
 export {default as SearchField} from './search-field';
 export {default as EmailField} from './email-field';
 export {default as PhoneNumberField} from './phone-number-field';
+export {default as PhoneNumberFieldLite, formatPhoneLite} from './phone-number-field-lite';
 export {default as CreditCardNumberField} from './credit-card-number-field';
 export {default as CreditCardExpirationField} from './credit-card-expiration-field';
 export {default as CreditCardFields} from './credit-card-fields';
