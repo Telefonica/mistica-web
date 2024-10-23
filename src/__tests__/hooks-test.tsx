@@ -11,7 +11,7 @@ const INITIAL_BODY_STYLES = 'background: red;';
 const DISABLED_BODY_STYLES =
     INITIAL_BODY_STYLES +
     ' ' +
-    'overflow: hidden; overflow-y: scroll; position: fixed; top: 0px; left: 0px; right: 0px; bottom: 0px;';
+    'overflow: hidden; overflow-y: scroll; position: fixed; top: 0px; left: 0px; right: 0px;';
 
 const DisableScroll = () => {
     useDisableBodyScroll(true);
