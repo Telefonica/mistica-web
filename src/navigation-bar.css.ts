@@ -2,7 +2,7 @@ import {style, styleVariants} from '@vanilla-extract/css';
 import {sprinkles} from './sprinkles.css';
 import {NAVBAR_HEIGHT_DESKTOP, NAVBAR_HEIGHT_DESKTOP_LARGE, NAVBAR_HEIGHT_MOBILE} from './theme';
 import * as mq from './media-queries.css';
-import {vars as colorVars, vars} from './skins/skin-contract.css';
+import {vars as colorVars} from './skins/skin-contract.css';
 
 const NAVBAR_ZINDEX = 25;
 
@@ -383,7 +383,7 @@ export const desktopMenuWrapper = style([
 export const desktopMenuContainer = style([
     sprinkles({
         overflow: 'hidden',
-        background: vars.colors.backgroundContainer,
+        background: colorVars.colors.backgroundContainer,
     }),
     {
         boxShadow: '0px 2px 4px rgba(0,0,0,0.2)',
@@ -413,5 +413,5 @@ export const desktopMenuColumn = style({
 });
 
 export const desktopMenuColumnItem = style({
-    color: vars.colors.textPrimary,
+    color: colorVars.colors.textPrimary,
 });
