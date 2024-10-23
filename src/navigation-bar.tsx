@@ -1,6 +1,6 @@
 'use client';
 import * as React from 'react';
-import {Transition} from 'react-transition-group';
+import {CSSTransition} from 'react-transition-group';
 import classnames from 'classnames';
 import ResponsiveLayout from './responsive-layout';
 import Inline from './inline';
@@ -26,7 +26,10 @@ import Stack from './stack';
 import Box from './box';
 import {isRunningAcceptanceTest} from './utils/platform';
 import * as tokens from './text-tokens';
+import {NAVBAR_HEIGHT_DESKTOP, NAVBAR_HEIGHT_DESKTOP_LARGE} from './theme';
+import TextLink from './text-link';
 
+import type {ExclusifyUnion} from './utils/utility-types';
 import type {Variant} from './theme-variant-context';
 import type {TouchableProps} from './touchable';
 import type {DataAttributes, HeadingType} from './utils/types';
@@ -45,6 +48,7 @@ const BurgerMenuIcon = ({isOpen}: {isOpen: boolean}) => {
 };
 
 const BURGER_MENU_ANIMATION_DURATION_MS = 300;
+const DESKTOP_MENU_ANIMATION_DURATION_MS = 400;
 
 type HeaderProps = {
     children: React.ReactNode;
@@ -113,10 +117,23 @@ const NavigationBarContentContainer = ({
     );
 };
 
-type MainNavigationBarSection =
-    | {href: string; to?: undefined; onPress?: undefined; title: string}
-    | {to: string; href?: undefined; onPress?: undefined; title: string}
-    | {onPress: () => void; to?: undefined; href?: undefined; title: string};
+type InteractiveProps = ExclusifyUnion<{href: string} | {to: string} | {onPress: () => void}>;
+
+type SectionColumn = {
+    title: string;
+    items: ReadonlyArray<{name: string} & InteractiveProps>;
+};
+
+type SectionMenu = {
+    columns?: ReadonlyArray<SectionColumn>;
+    extra?: React.ReactElement;
+    small?: boolean;
+};
+
+type MainNavigationBarSection = {
+    title: string;
+    menu?: SectionMenu;
+} & InteractiveProps;
 
 type MainNavigationBarPropsBase = {
     sections?: ReadonlyArray<MainNavigationBarSection>;
@@ -154,36 +171,162 @@ export const MainNavigationBar = ({
     const {isTabletOrSmaller} = useScreenSize();
     const setModalState = useSetModalState();
     const logoElement = logo || <Logo size={{mobile: 40, desktop: 48}} />;
+    const hasBottomSections = large && sections.length > 0;
+
+    const menuRef = React.useRef<HTMLDivElement>(null);
+    const [isMenuHovered, setIsMenuHovered] = React.useState(false);
+    const [hoveredSection, setHoveredSection] = React.useState(-1);
+    const [isDesktopMenuOpen, setIsDesktopMenuOpen] = React.useState(false);
+    const [desktopMenuOpenedSection, setDesktopMenuOpenedSection] = React.useState(-1);
+
+    React.useEffect(() => {
+        // Close desktop menu when scrolling in the page
+        const handleScroll = () => {
+            if (!isTabletOrSmaller) setIsDesktopMenuOpen(false);
+        };
+        document.addEventListener('scroll', handleScroll);
+        return () => {
+            document.removeEventListener('scroll', handleScroll);
+        };
+    }, [isTabletOrSmaller]);
+
+    React.useEffect(() => {
+        if (!isMenuHovered && hoveredSection === -1) {
+            setIsDesktopMenuOpen(false);
+        } else if (hoveredSection !== -1) {
+            setDesktopMenuOpenedSection(hoveredSection);
+            setIsDesktopMenuOpen(true);
+        }
+    }, [isMenuHovered, hoveredSection]);
 
     const renderDesktopSections = () => {
         return (
             <nav className={styles.desktopOnly}>
                 <Inline space={32}>
-                    {sections.map(({title, ...touchableProps}, idx) => (
-                        <BaseTouchable
-                            {...touchableProps}
+                    {sections.map(({title, menu, ...touchableProps}, idx) => (
+                        <div
                             key={idx}
-                            className={classnames(
-                                styles.section,
-                                {
-                                    [styles.selectedSectionVariantes[
-                                        variant === 'inverse' ? 'inverse' : 'default'
-                                    ]]: idx === selectedIndex,
-                                },
-                                styles.textWrapperVariants[variant === 'inverse' ? 'inverse' : 'default']
-                            )}
+                            className={classnames(styles.sectionContainer, {
+                                [styles.firstSection]: idx === 0,
+                                [styles.lastSection]: idx === sections.length - 1,
+                            })}
+                            onMouseEnter={() => setHoveredSection(idx)}
+                            onMouseLeave={() => setHoveredSection(-1)}
                         >
-                            <Text3 regular color="inherit">
-                                {title}
-                            </Text3>
-                        </BaseTouchable>
+                            <BaseTouchable
+                                {...touchableProps}
+                                className={classnames(
+                                    styles.section,
+                                    {
+                                        [styles.selectedSectionVariantes[
+                                            variant === 'inverse' ? 'inverse' : 'default'
+                                        ]]: idx === selectedIndex,
+                                    },
+                                    styles.textWrapperVariants[variant === 'inverse' ? 'inverse' : 'default']
+                                )}
+                            >
+                                <Text3 regular color="inherit">
+                                    {title}
+                                </Text3>
+                            </BaseTouchable>
+                        </div>
                     ))}
                 </Inline>
             </nav>
         );
     };
 
-    const hasBottomSections = large && sections.length > 0;
+    const renderDesktopMenu = () => {
+        const topSpace = hasBottomSections ? NAVBAR_HEIGHT_DESKTOP_LARGE : NAVBAR_HEIGHT_DESKTOP;
+        // TODO: verify this
+        const bottomSpace = 32;
+
+        return (
+            <div className={styles.desktopOnly}>
+                <Portal>
+                    <CSSTransition
+                        in={isDesktopMenuOpen}
+                        timeout={isRunningAcceptanceTest() ? 0 : DESKTOP_MENU_ANIMATION_DURATION_MS}
+                        nodeRef={menuRef}
+                        classNames={styles.desktopMenuTransitionClasses}
+                        mountOnEnter
+                        unmountOnExit
+                        onExited={() => setDesktopMenuOpenedSection(-1)}
+                    >
+                        {(transitionStatus) => {
+                            return (
+                                <div
+                                    onMouseEnter={() => setIsMenuHovered(true)}
+                                    onMouseLeave={() => setIsMenuHovered(false)}
+                                    ref={menuRef}
+                                    style={{
+                                        top: hasBottomSections
+                                            ? NAVBAR_HEIGHT_DESKTOP_LARGE
+                                            : NAVBAR_HEIGHT_DESKTOP,
+                                    }}
+                                    className={styles.desktopMenuWrapper}
+                                >
+                                    <div className={styles.desktopMenuContainer}>
+                                        <div
+                                            className={styles.desktopMenu}
+                                            style={{
+                                                maxHeight: `calc(100vh - ${topSpace}px - ${bottomSpace}px)`,
+                                                ...(transitionStatus !== 'exited'
+                                                    ? {
+                                                          transform: 'translateY(0px)',
+                                                          opacity: 1,
+                                                          transition:
+                                                              'opacity .8s cubic-bezier(0.33, 1, 0.68, 1), transform .8s cubic-bezier(0.33, 1, 0.68, 1)',
+                                                      }
+                                                    : {}),
+                                            }}
+                                        >
+                                            <Inline space="between">
+                                                <Inline space={24}>
+                                                    {sections[desktopMenuOpenedSection]?.menu?.columns?.map(
+                                                        (column) => (
+                                                            <Stack
+                                                                space={24}
+                                                                className={styles.desktopMenuColumn}
+                                                            >
+                                                                <Text2
+                                                                    medium
+                                                                    color={vars.colors.textSecondary}
+                                                                    transform="uppercase"
+                                                                >
+                                                                    {column.title}
+                                                                </Text2>
+
+                                                                <Stack space={16}>
+                                                                    {column.items.map(
+                                                                        ({name, ...touchableProps}) => (
+                                                                            <TextLink
+                                                                                className={
+                                                                                    styles.desktopMenuColumnItem
+                                                                                }
+                                                                                {...touchableProps}
+                                                                            >
+                                                                                {name}
+                                                                            </TextLink>
+                                                                        )
+                                                                    )}
+                                                                </Stack>
+                                                            </Stack>
+                                                        )
+                                                    )}
+                                                </Inline>
+                                                {sections[desktopMenuOpenedSection]?.menu?.extra}
+                                            </Inline>
+                                        </div>
+                                    </div>
+                                </div>
+                            );
+                        }}
+                    </CSSTransition>
+                </Portal>
+            </div>
+        );
+    };
 
     const openMenu = () => {
         setIsMenuOpen(true);
@@ -239,6 +382,7 @@ export const MainNavigationBar = ({
                 </ResponsiveLayout>
             </Header>
             {topFixed && <div className={hasBottomSections ? styles.spacerLarge : styles.spacer} />}
+            {renderDesktopMenu()}
         </ThemeVariant>
     );
 
@@ -254,7 +398,7 @@ export const MainNavigationBar = ({
             {showBurger && (
                 <Portal>
                     <FocusTrap disabled={disableFocusTrap} group="burger-menu-lock">
-                        <Transition
+                        <CSSTransition
                             onEntering={() => {
                                 setMenuTransitionState('opening');
                             }}
@@ -308,7 +452,7 @@ export const MainNavigationBar = ({
                                     </nav>
                                 </>
                             )}
-                        </Transition>
+                        </CSSTransition>
                     </FocusTrap>
                 </Portal>
             )}

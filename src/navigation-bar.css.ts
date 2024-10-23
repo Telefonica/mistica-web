@@ -2,7 +2,7 @@ import {style, styleVariants} from '@vanilla-extract/css';
 import {sprinkles} from './sprinkles.css';
 import {NAVBAR_HEIGHT_DESKTOP, NAVBAR_HEIGHT_DESKTOP_LARGE, NAVBAR_HEIGHT_MOBILE} from './theme';
 import * as mq from './media-queries.css';
-import {vars as colorVars} from './skins/skin-contract.css';
+import {vars as colorVars, vars} from './skins/skin-contract.css';
 
 const NAVBAR_ZINDEX = 25;
 
@@ -112,6 +112,33 @@ export const navbarBorderColorVariants = styleVariants({
     ],
 });
 
+export const firstSection = style({});
+export const lastSection = style({});
+
+export const sectionContainer = style([
+    sprinkles({position: 'relative', display: 'flex'}),
+    {
+        '::after': {
+            content: '',
+            position: 'absolute',
+            top: 0,
+            bottom: 0,
+            left: 0,
+            right: 0,
+        },
+
+        selectors: {
+            // Add extra width on the left/right of interactive area so that we cover the space between sections
+            [`&:not(${firstSection}):after`]: {
+                left: -16,
+            },
+            [`&:not(${lastSection}):after`]: {
+                right: -16,
+            },
+        },
+    },
+]);
+
 export const section = style([
     sprinkles({
         height: NAVBAR_HEIGHT_DESKTOP,
@@ -120,8 +147,10 @@ export const section = style([
         paddingX: 8,
         border: 'none',
         background: 'transparent',
+        position: 'relative',
     }),
     {
+        zIndex: 1,
         borderBottom: `2px solid transparent`,
         transition: 'border-color 300ms ease-in-out',
     },
@@ -312,4 +341,77 @@ export const lineHeightFix = style({
     // This fixes vertical alignment issues with icons in the secondary navigation, because mistica icons
     // use display inline and other components like Badge use inline-block.
     lineHeight: 0,
+});
+
+export const desktopMenuTransitionClasses = {
+    enter: style({
+        gridTemplateRows: '0fr',
+    }),
+    enterActive: style({
+        gridTemplateRows: '1fr',
+        transition: 'grid-template-rows 0.4s cubic-bezier(0.65, 0, 0.35, 1)',
+        '@media': {
+            ['(prefers-reduced-motion)']: {
+                transition: 'none',
+            },
+        },
+    }),
+    exit: style({
+        gridTemplateRows: '1fr',
+    }),
+    exitActive: style({
+        gridTemplateRows: '0fr',
+        transition: 'grid-template-rows 0.4s cubic-bezier(0.65, 0, 0.35, 1)',
+        '@media': {
+            ['(prefers-reduced-motion)']: {
+                transition: 'none',
+            },
+        },
+    }),
+};
+
+export const desktopMenuWrapper = style([
+    sprinkles({
+        position: 'fixed',
+        width: '100%',
+    }),
+    {
+        display: 'grid',
+    },
+]);
+
+export const desktopMenuContainer = style([
+    sprinkles({
+        overflow: 'hidden',
+        background: vars.colors.backgroundContainer,
+    }),
+    {
+        boxShadow: '0px 2px 4px rgba(0,0,0,0.2)',
+    },
+]);
+
+export const desktopMenu = style([
+    sprinkles({
+        paddingX: 72,
+        paddingY: 40,
+        overflow: 'auto',
+        position: 'relative',
+    }),
+    {
+        transform: 'translateY(-16px)',
+        opacity: 0,
+        '@media': {
+            ['(prefers-reduced-motion)']: {
+                transition: 'none',
+            },
+        },
+    },
+]);
+
+export const desktopMenuColumn = style({
+    minWidth: 184,
+});
+
+export const desktopMenuColumnItem = style({
+    color: vars.colors.textPrimary,
 });
