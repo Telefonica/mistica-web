@@ -196,6 +196,152 @@ const MainNavigationBarBurgerMenu = ({
     );
 };
 
+const MainNavigationBarDesktopMenu = ({
+    sections,
+    isLargeNavigationBar,
+    hoveredSection,
+}: {
+    sections: ReadonlyArray<MainNavigationBarSection>;
+    isLargeNavigationBar: boolean;
+    hoveredSection: number;
+}): JSX.Element => {
+    const {isTabletOrSmaller} = useScreenSize();
+    const topSpace = isLargeNavigationBar ? NAVBAR_HEIGHT_DESKTOP_LARGE : NAVBAR_HEIGHT_DESKTOP;
+    const bottomSpace = 40;
+
+    const menuRef = React.useRef<HTMLDivElement>(null);
+    const [isMenuHovered, setIsMenuHovered] = React.useState(false);
+    const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+    const [openedSection, setOpenedSection] = React.useState(-1);
+    const [menuHeight, setMenuHeight] = React.useState('0px');
+    const [isMenuScrollable, setIsMenuScrollable] = React.useState(false);
+    const isFirstOpenedSectionRef = React.useRef(false);
+
+    React.useEffect(() => {
+        // Close desktop menu when scrolling in the page
+        const handleScroll = () => {
+            if (!isTabletOrSmaller) setIsMenuOpen(false);
+        };
+        document.addEventListener('scroll', handleScroll);
+        return () => {
+            document.removeEventListener('scroll', handleScroll);
+        };
+    }, [isTabletOrSmaller]);
+
+    React.useEffect(() => {
+        if (!isMenuHovered && hoveredSection === -1) {
+            setIsMenuOpen(false);
+        } else if (hoveredSection !== -1) {
+            setOpenedSection(hoveredSection);
+            setIsMenuOpen(true);
+        }
+    }, [isMenuHovered, hoveredSection]);
+
+    // Disable scroll in menu content until it's fully open
+    React.useEffect(() => {
+        setIsMenuScrollable(false);
+        const id = setTimeout(() => setIsMenuScrollable(true), DESKTOP_MENU_ANIMATION_DURATION_MS);
+        return () => clearTimeout(id);
+    }, [openedSection]);
+
+    return (
+        <div className={styles.desktopOnly}>
+            <Portal>
+                <CSSTransition
+                    in={isMenuOpen}
+                    timeout={isRunningAcceptanceTest() ? 0 : DESKTOP_MENU_ANIMATION_DURATION_MS}
+                    nodeRef={menuRef}
+                    mountOnEnter
+                    unmountOnExit
+                    onEnter={() => {
+                        isFirstOpenedSectionRef.current = true;
+                    }}
+                    onExiting={() => setIsMenuScrollable(false)}
+                    onExited={() => {
+                        isFirstOpenedSectionRef.current = false;
+                        setOpenedSection(-1);
+                    }}
+                >
+                    <div
+                        onMouseEnter={() => setIsMenuHovered(true)}
+                        onMouseLeave={() => setIsMenuHovered(false)}
+                        ref={menuRef}
+                        style={{top: topSpace}}
+                        className={styles.desktopMenuWrapper}
+                    >
+                        <div
+                            className={styles.desktopMenuContainer}
+                            style={{
+                                height: menuHeight,
+                                maxHeight: `calc(100vh - ${topSpace}px - ${bottomSpace}px)`,
+                                overflow: isMenuScrollable ? 'auto' : 'hidden',
+                            }}
+                        >
+                            <ResponsiveLayout>
+                                <div
+                                    className={classnames(styles.desktopMenu, {
+                                        [styles.desktopMenuContentFadeIn]: isFirstOpenedSectionRef.current,
+                                    })}
+                                    ref={(el) => {
+                                        if (el) {
+                                            // In old browsers, the speed of the menu height's animation will depend on
+                                            // the height of the content instead of the height of the container.
+                                            const value = supportsCssMin()
+                                                ? `min(${el.scrollHeight}px, calc(100vh - ${topSpace}px - ${bottomSpace}px))`
+                                                : `${el.scrollHeight}px`;
+                                            setMenuHeight(!isMenuOpen ? '0px' : value);
+                                        }
+                                    }}
+                                >
+                                    <Inline space="between">
+                                        <Inline space={24}>
+                                            {sections[openedSection]?.menu?.columns?.map(
+                                                (column, columnIdx) => (
+                                                    <Stack
+                                                        key={columnIdx}
+                                                        space={24}
+                                                        className={styles.desktopMenuColumn}
+                                                    >
+                                                        <Text2
+                                                            medium
+                                                            color={vars.colors.textSecondary}
+                                                            transform="uppercase"
+                                                        >
+                                                            {column.title}
+                                                        </Text2>
+
+                                                        <Stack space={16}>
+                                                            {column.items.map(
+                                                                ({title, ...touchableProps}, itemIdx) => (
+                                                                    <div key={itemIdx}>
+                                                                        <TextLink
+                                                                            className={
+                                                                                styles.desktopMenuColumnItem
+                                                                            }
+                                                                            {...touchableProps}
+                                                                        >
+                                                                            {title}
+                                                                        </TextLink>
+                                                                    </div>
+                                                                )
+                                                            )}
+                                                        </Stack>
+                                                    </Stack>
+                                                )
+                                            )}
+                                        </Inline>
+                                        {sections[openedSection]?.menu?.extra}
+                                    </Inline>
+                                </div>
+                            </ResponsiveLayout>
+                        </div>
+                    </div>
+                </CSSTransition>
+            </Portal>
+        </div>
+    );
+};
+
 export const MainNavigationBar = ({
     sections = [],
     selectedIndex,
@@ -220,33 +366,7 @@ export const MainNavigationBar = ({
     const setModalState = useSetModalState();
     const shadowAlpha = isDarkMode ? 1 : 0.2;
 
-    const desktopMenuRef = React.useRef<HTMLDivElement>(null);
-    const [isDesktopMenuHovered, setIsDesktopMenuHovered] = React.useState(false);
     const [desktopHoveredSection, setDesktopHoveredSection] = React.useState(-1);
-    const [isDesktopMenuOpen, setIsDesktopMenuOpen] = React.useState(false);
-    const [desktopMenuOpenedSection, setDesktopMenuOpenedSection] = React.useState(-1);
-    const [desktopMenuHeight, setDesktopMenuHeight] = React.useState('0px');
-    const [isDesktopMenuScrollable, setIsDesktopMenuScrollable] = React.useState(false);
-
-    React.useEffect(() => {
-        // Close desktop menu when scrolling in the page
-        const handleScroll = () => {
-            if (!isTabletOrSmaller) setIsDesktopMenuOpen(false);
-        };
-        document.addEventListener('scroll', handleScroll);
-        return () => {
-            document.removeEventListener('scroll', handleScroll);
-        };
-    }, [isTabletOrSmaller]);
-
-    React.useEffect(() => {
-        if (!isDesktopMenuHovered && desktopHoveredSection === -1) {
-            setIsDesktopMenuOpen(false);
-        } else if (desktopHoveredSection !== -1) {
-            setDesktopMenuOpenedSection(desktopHoveredSection);
-            setIsDesktopMenuOpen(true);
-        }
-    }, [isDesktopMenuHovered, desktopHoveredSection]);
 
     const renderDesktopSections = () => {
         return (
@@ -282,130 +402,6 @@ export const MainNavigationBar = ({
                     ))}
                 </Inline>
             </nav>
-        );
-    };
-
-    // Disable scroll in menu content until it's fully open
-    React.useEffect(() => {
-        setIsDesktopMenuScrollable(false);
-        const id = setTimeout(() => setIsDesktopMenuScrollable(true), DESKTOP_MENU_ANIMATION_DURATION_MS);
-        return () => clearTimeout(id);
-    }, [desktopMenuOpenedSection]);
-
-    const renderDesktopMenu = () => {
-        const topSpace = hasBottomSections ? NAVBAR_HEIGHT_DESKTOP_LARGE : NAVBAR_HEIGHT_DESKTOP;
-        const bottomSpace = 40;
-
-        return (
-            <div className={styles.desktopOnly}>
-                <Portal>
-                    <CSSTransition
-                        in={isDesktopMenuOpen}
-                        timeout={isRunningAcceptanceTest() ? 0 : DESKTOP_MENU_ANIMATION_DURATION_MS}
-                        nodeRef={desktopMenuRef}
-                        mountOnEnter
-                        unmountOnExit
-                        onExiting={() => setIsDesktopMenuScrollable(false)}
-                        onExited={() => setDesktopMenuOpenedSection(-1)}
-                    >
-                        {(transitionStatus) => {
-                            return (
-                                <div
-                                    onMouseEnter={() => setIsDesktopMenuHovered(true)}
-                                    onMouseLeave={() => setIsDesktopMenuHovered(false)}
-                                    ref={desktopMenuRef}
-                                    style={{
-                                        top: hasBottomSections
-                                            ? NAVBAR_HEIGHT_DESKTOP_LARGE
-                                            : NAVBAR_HEIGHT_DESKTOP,
-                                    }}
-                                    className={styles.desktopMenuWrapper}
-                                >
-                                    <div
-                                        className={styles.desktopMenuContainer}
-                                        style={{
-                                            height: desktopMenuHeight,
-                                            maxHeight: `calc(100vh - ${topSpace}px - ${bottomSpace}px)`,
-                                            overflow: isDesktopMenuScrollable ? 'auto' : 'hidden',
-                                        }}
-                                    >
-                                        <ResponsiveLayout>
-                                            <div
-                                                className={styles.desktopMenu}
-                                                style={{
-                                                    ...(transitionStatus !== 'exited'
-                                                        ? {
-                                                              transform: 'translateY(0px)',
-                                                              opacity: 1,
-                                                              transition:
-                                                                  'opacity .8s cubic-bezier(0.33, 1, 0.68, 1), transform .8s cubic-bezier(0.33, 1, 0.68, 1)',
-                                                          }
-                                                        : {}),
-                                                }}
-                                                ref={(el) => {
-                                                    if (el) {
-                                                        // In old browsers, the speed of the menu height's animation will depend on the height of the content
-                                                        // instead of the height of the container.
-                                                        const value = supportsCssMin()
-                                                            ? `min(${el.scrollHeight}px, calc(100vh - ${topSpace}px - ${bottomSpace}px))`
-                                                            : `${el.scrollHeight}px`;
-                                                        setDesktopMenuHeight(
-                                                            !isDesktopMenuOpen ? '0px' : value
-                                                        );
-                                                    }
-                                                }}
-                                            >
-                                                <Inline space="between">
-                                                    <Inline space={24}>
-                                                        {sections[
-                                                            desktopMenuOpenedSection
-                                                        ]?.menu?.columns?.map((column, columnIdx) => (
-                                                            <Stack
-                                                                key={columnIdx}
-                                                                space={24}
-                                                                className={styles.desktopMenuColumn}
-                                                            >
-                                                                <Text2
-                                                                    medium
-                                                                    color={vars.colors.textSecondary}
-                                                                    transform="uppercase"
-                                                                >
-                                                                    {column.title}
-                                                                </Text2>
-
-                                                                <Stack space={16}>
-                                                                    {column.items.map(
-                                                                        (
-                                                                            {title, ...touchableProps},
-                                                                            itemIdx
-                                                                        ) => (
-                                                                            <div key={itemIdx}>
-                                                                                <TextLink
-                                                                                    className={
-                                                                                        styles.desktopMenuColumnItem
-                                                                                    }
-                                                                                    {...touchableProps}
-                                                                                >
-                                                                                    {title}
-                                                                                </TextLink>
-                                                                            </div>
-                                                                        )
-                                                                    )}
-                                                                </Stack>
-                                                            </Stack>
-                                                        ))}
-                                                    </Inline>
-                                                    {sections[desktopMenuOpenedSection]?.menu?.extra}
-                                                </Inline>
-                                            </div>
-                                        </ResponsiveLayout>
-                                    </div>
-                                </div>
-                            );
-                        }}
-                    </CSSTransition>
-                </Portal>
-            </div>
         );
     };
 
@@ -463,7 +459,11 @@ export const MainNavigationBar = ({
                 </ResponsiveLayout>
             </Header>
             {topFixed && <div className={hasBottomSections ? styles.spacerLarge : styles.spacer} />}
-            {renderDesktopMenu()}
+            <MainNavigationBarDesktopMenu
+                sections={sections}
+                isLargeNavigationBar={hasBottomSections}
+                hoveredSection={desktopHoveredSection}
+            />
         </ThemeVariant>
     );
 

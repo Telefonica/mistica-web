@@ -391,6 +391,12 @@ export const desktopMenu = style([
     },
 ]);
 
+export const desktopMenuContentFadeIn = style({
+    transform: 'translateY(0px)',
+    opacity: 1,
+    transition: 'opacity .8s cubic-bezier(0.33, 1, 0.68, 1), transform .8s cubic-bezier(0.33, 1, 0.68, 1)',
+});
+
 export const desktopMenuColumn = style({
     minWidth: 184,
 });
