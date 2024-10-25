@@ -2,7 +2,7 @@
 import * as React from 'react';
 import {CSSTransition} from 'react-transition-group';
 import classnames from 'classnames';
-import ResponsiveLayout from './responsive-layout';
+import ResponsiveLayout, {ResetResponsiveLayout} from './responsive-layout';
 import Inline from './inline';
 import Touchable, {BaseTouchable} from './touchable';
 import {Text2, Text3} from './text';
@@ -11,8 +11,7 @@ import IconMenuRegular from './generated/mistica-icons/icon-menu-regular';
 import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
 import IconChevronLeftRegular from './generated/mistica-icons/icon-chevron-left-regular';
 import {IconButton} from './icon-button';
-import NegativeBox from './negative-box';
-import {Row, RowList} from './list';
+import {RowList} from './list';
 import {ThemeVariant, useIsInverseOrMediaVariant} from './theme-variant-context';
 import FocusTrap from './focus-trap';
 import {Portal} from './portal';
@@ -33,6 +32,12 @@ import type {ExclusifyUnion} from './utils/utility-types';
 import type {Variant} from './theme-variant-context';
 import type {TouchableProps} from './touchable';
 import type {DataAttributes, HeadingType} from './utils/types';
+
+const supportsCssMin = () => {
+    const element = document.createElement('div');
+    element.style.height = 'min(2px, 3px)';
+    return element.style.height === 'calc(2px)';
+};
 
 const BurgerMenuIcon = ({isOpen}: {isOpen: boolean}) => {
     return (
@@ -55,7 +60,7 @@ type HeaderProps = {
     topFixed?: boolean;
     variant?: Variant;
     withBorder?: boolean;
-    isMenuOpen?: boolean;
+    isBurgerMenuOpen?: boolean;
     dataAttributes?: DataAttributes;
     isBottomRow?: boolean;
 };
@@ -64,7 +69,7 @@ const Header = ({
     children,
     topFixed,
     withBorder,
-    isMenuOpen,
+    isBurgerMenuOpen,
     variant = 'default',
     dataAttributes,
 }: HeaderProps) => {
@@ -73,7 +78,7 @@ const Header = ({
     const getBorderClass = () => {
         const inverse = variant === 'inverse' && !isDarkMode;
         if (inverse || !withBorder) return styles.navbarBorderColorVariants.noBorder;
-        if (isMenuOpen) return styles.navbarBorderColorVariants.menuOpen;
+        if (isBurgerMenuOpen) return styles.navbarBorderColorVariants.menuOpen;
 
         return styles.navbarBorderColorVariants.default;
     };
@@ -119,9 +124,11 @@ const NavigationBarContentContainer = ({
 
 type InteractiveProps = ExclusifyUnion<{href: string} | {to: string} | {onPress: () => void}>;
 
+type SectionItem = {title: string} & InteractiveProps;
+
 type SectionColumn = {
     title: string;
-    items: ReadonlyArray<{name: string} & InteractiveProps>;
+    items: ReadonlyArray<SectionItem>;
 };
 
 type SectionMenu = {
@@ -149,8 +156,45 @@ type MainNavigationBarPropsBase = {
 };
 
 type MainNavigationBarProps = MainNavigationBarPropsBase;
+type BurgerMenuTransitionState = 'closed' | 'open';
 
-type MenuTransitionState = 'closed' | 'opening' | 'open' | 'closing';
+const MainNavigationBarBurgerMenu = ({
+    sections,
+    extra,
+    closeMenu,
+}: {
+    sections: ReadonlyArray<MainNavigationBarSection>;
+    extra: React.ReactNode;
+    closeMenu: () => void;
+}) => {
+    const renderSectionContent = (items: ReadonlyArray<SectionItem> | undefined, extra: React.ReactNode) => {
+        // TODO: implement
+        console.log(items, extra);
+        return undefined;
+    };
+
+    const renderSection = (section: MainNavigationBarSection, index: number) => {
+        // TODO: implement
+        console.log(
+            section,
+            index,
+            closeMenu,
+            renderSectionContent(section.menu?.columns?.[0].items, section.menu?.extra)
+        );
+        return undefined;
+    };
+
+    return (
+        <ResponsiveLayout>
+            <Stack space={16}>
+                <ResetResponsiveLayout>
+                    <RowList>{sections.map((section, index) => renderSection(section, index))}</RowList>
+                </ResetResponsiveLayout>
+                {extra && <Box paddingBottom={16}>{extra}</Box>}
+            </Stack>
+        </ResponsiveLayout>
+    );
+};
 
 export const MainNavigationBar = ({
     sections = [],
@@ -164,20 +208,25 @@ export const MainNavigationBar = ({
     large = false,
 }: MainNavigationBarProps): JSX.Element => {
     const {texts, isDarkMode, t} = useTheme();
-    const [isMenuOpen, setIsMenuOpen] = React.useState(false);
-    const [menuTransitionState, setMenuTransitionState] = React.useState<MenuTransitionState>('closed');
     const menuId = React.useId();
-    const shadowAlpha = isDarkMode ? 1 : 0.2;
     const {isTabletOrSmaller} = useScreenSize();
-    const setModalState = useSetModalState();
     const logoElement = logo || <Logo size={{mobile: 40, desktop: 48}} />;
     const hasBottomSections = large && sections.length > 0;
 
-    const menuRef = React.useRef<HTMLDivElement>(null);
-    const [isMenuHovered, setIsMenuHovered] = React.useState(false);
-    const [hoveredSection, setHoveredSection] = React.useState(-1);
+    const burgerMenuRef = React.useRef<HTMLDivElement>(null);
+    const [isBurgerMenuOpen, setIsBurgerMenuOpen] = React.useState(false);
+    const [burgerMenuTransitionState, setBurgerMenuTransitionState] =
+        React.useState<BurgerMenuTransitionState>('closed');
+    const setModalState = useSetModalState();
+    const shadowAlpha = isDarkMode ? 1 : 0.2;
+
+    const desktopMenuRef = React.useRef<HTMLDivElement>(null);
+    const [isDesktopMenuHovered, setIsDesktopMenuHovered] = React.useState(false);
+    const [desktopHoveredSection, setDesktopHoveredSection] = React.useState(-1);
     const [isDesktopMenuOpen, setIsDesktopMenuOpen] = React.useState(false);
     const [desktopMenuOpenedSection, setDesktopMenuOpenedSection] = React.useState(-1);
+    const [desktopMenuHeight, setDesktopMenuHeight] = React.useState('0px');
+    const [isDesktopMenuScrollable, setIsDesktopMenuScrollable] = React.useState(false);
 
     React.useEffect(() => {
         // Close desktop menu when scrolling in the page
@@ -191,13 +240,13 @@ export const MainNavigationBar = ({
     }, [isTabletOrSmaller]);
 
     React.useEffect(() => {
-        if (!isMenuHovered && hoveredSection === -1) {
+        if (!isDesktopMenuHovered && desktopHoveredSection === -1) {
             setIsDesktopMenuOpen(false);
-        } else if (hoveredSection !== -1) {
-            setDesktopMenuOpenedSection(hoveredSection);
+        } else if (desktopHoveredSection !== -1) {
+            setDesktopMenuOpenedSection(desktopHoveredSection);
             setIsDesktopMenuOpen(true);
         }
-    }, [isMenuHovered, hoveredSection]);
+    }, [isDesktopMenuHovered, desktopHoveredSection]);
 
     const renderDesktopSections = () => {
         return (
@@ -210,8 +259,8 @@ export const MainNavigationBar = ({
                                 [styles.firstSection]: idx === 0,
                                 [styles.lastSection]: idx === sections.length - 1,
                             })}
-                            onMouseEnter={() => setHoveredSection(idx)}
-                            onMouseLeave={() => setHoveredSection(-1)}
+                            onMouseEnter={() => setDesktopHoveredSection(idx)}
+                            onMouseLeave={() => setDesktopHoveredSection(-1)}
                         >
                             <BaseTouchable
                                 {...touchableProps}
@@ -236,10 +285,16 @@ export const MainNavigationBar = ({
         );
     };
 
+    // Disable scroll in menu content until it's fully open
+    React.useEffect(() => {
+        setIsDesktopMenuScrollable(false);
+        const id = setTimeout(() => setIsDesktopMenuScrollable(true), DESKTOP_MENU_ANIMATION_DURATION_MS);
+        return () => clearTimeout(id);
+    }, [desktopMenuOpenedSection]);
+
     const renderDesktopMenu = () => {
         const topSpace = hasBottomSections ? NAVBAR_HEIGHT_DESKTOP_LARGE : NAVBAR_HEIGHT_DESKTOP;
-        // TODO: verify this
-        const bottomSpace = 32;
+        const bottomSpace = 40;
 
         return (
             <div className={styles.desktopOnly}>
@@ -247,18 +302,18 @@ export const MainNavigationBar = ({
                     <CSSTransition
                         in={isDesktopMenuOpen}
                         timeout={isRunningAcceptanceTest() ? 0 : DESKTOP_MENU_ANIMATION_DURATION_MS}
-                        nodeRef={menuRef}
-                        classNames={styles.desktopMenuTransitionClasses}
+                        nodeRef={desktopMenuRef}
                         mountOnEnter
                         unmountOnExit
+                        onExiting={() => setIsDesktopMenuScrollable(false)}
                         onExited={() => setDesktopMenuOpenedSection(-1)}
                     >
                         {(transitionStatus) => {
                             return (
                                 <div
-                                    onMouseEnter={() => setIsMenuHovered(true)}
-                                    onMouseLeave={() => setIsMenuHovered(false)}
-                                    ref={menuRef}
+                                    onMouseEnter={() => setIsDesktopMenuHovered(true)}
+                                    onMouseLeave={() => setIsDesktopMenuHovered(false)}
+                                    ref={desktopMenuRef}
                                     style={{
                                         top: hasBottomSections
                                             ? NAVBAR_HEIGHT_DESKTOP_LARGE
@@ -266,11 +321,17 @@ export const MainNavigationBar = ({
                                     }}
                                     className={styles.desktopMenuWrapper}
                                 >
-                                    <div className={styles.desktopMenuContainer}>
+                                    <div
+                                        className={styles.desktopMenuContainer}
+                                        style={{
+                                            height: desktopMenuHeight,
+                                            maxHeight: `calc(100vh - ${topSpace}px - ${bottomSpace}px)`,
+                                            overflow: isDesktopMenuScrollable ? 'auto' : 'hidden',
+                                        }}
+                                    >
                                         <div
                                             className={styles.desktopMenu}
                                             style={{
-                                                maxHeight: `calc(100vh - ${topSpace}px - ${bottomSpace}px)`,
                                                 ...(transitionStatus !== 'exited'
                                                     ? {
                                                           transform: 'translateY(0px)',
@@ -280,12 +341,23 @@ export const MainNavigationBar = ({
                                                       }
                                                     : {}),
                                             }}
+                                            ref={(el) => {
+                                                if (el) {
+                                                    // In old browsers, the speed of the menu height's animation will depend on the height of the content
+                                                    // instead of the height of the container.
+                                                    const value = supportsCssMin()
+                                                        ? `min(${el.scrollHeight}px, calc(100vh - ${topSpace}px - ${bottomSpace}px))`
+                                                        : `${el.scrollHeight}px`;
+                                                    setDesktopMenuHeight(!isDesktopMenuOpen ? '0px' : value);
+                                                }
+                                            }}
                                         >
                                             <Inline space="between">
                                                 <Inline space={24}>
                                                     {sections[desktopMenuOpenedSection]?.menu?.columns?.map(
-                                                        (column) => (
+                                                        (column, columnIdx) => (
                                                             <Stack
+                                                                key={columnIdx}
                                                                 space={24}
                                                                 className={styles.desktopMenuColumn}
                                                             >
@@ -299,15 +371,20 @@ export const MainNavigationBar = ({
 
                                                                 <Stack space={16}>
                                                                     {column.items.map(
-                                                                        ({name, ...touchableProps}) => (
-                                                                            <TextLink
-                                                                                className={
-                                                                                    styles.desktopMenuColumnItem
-                                                                                }
-                                                                                {...touchableProps}
-                                                                            >
-                                                                                {name}
-                                                                            </TextLink>
+                                                                        (
+                                                                            {title, ...touchableProps},
+                                                                            itemIdx
+                                                                        ) => (
+                                                                            <div key={itemIdx}>
+                                                                                <TextLink
+                                                                                    className={
+                                                                                        styles.desktopMenuColumnItem
+                                                                                    }
+                                                                                    {...touchableProps}
+                                                                                >
+                                                                                    {title}
+                                                                                </TextLink>
+                                                                            </div>
                                                                         )
                                                                     )}
                                                                 </Stack>
@@ -329,16 +406,16 @@ export const MainNavigationBar = ({
     };
 
     const openMenu = () => {
-        setIsMenuOpen(true);
+        setIsBurgerMenuOpen(true);
         setModalState({isModalOpen: true});
     };
 
     const closeMenu = () => {
-        setIsMenuOpen(false);
+        setIsBurgerMenuOpen(false);
         setModalState({isModalOpen: false});
     };
 
-    const disableFocusTrap = menuTransitionState !== 'open';
+    const disableFocusTrap = burgerMenuTransitionState !== 'open';
 
     const showBurger = sections.length > 1;
 
@@ -347,7 +424,7 @@ export const MainNavigationBar = ({
             <Header
                 topFixed={topFixed}
                 withBorder={withBorder}
-                isMenuOpen={isMenuOpen}
+                isBurgerMenuOpen={isBurgerMenuOpen}
                 variant={variant}
                 dataAttributes={{'component-name': 'MainNavigationBar'}}
             >
@@ -359,15 +436,15 @@ export const MainNavigationBar = ({
                                     className={styles.burgerMenuButton}
                                     aria-live="polite"
                                     aria-label={
-                                        isMenuOpen
+                                        isBurgerMenuOpen
                                             ? texts.closeNavigationMenu || t(tokens.closeNavigationMenu)
                                             : texts.openNavigationMenu || t(tokens.openNavigationMenu)
                                     }
-                                    aria-expanded={isMenuOpen}
+                                    aria-expanded={isBurgerMenuOpen}
                                     aria-controls={menuId}
-                                    onPress={isMenuOpen ? closeMenu : openMenu}
+                                    onPress={isBurgerMenuOpen ? closeMenu : openMenu}
                                 >
-                                    <BurgerMenuIcon isOpen={isMenuOpen} />
+                                    <BurgerMenuIcon isOpen={isBurgerMenuOpen} />
                                 </Touchable>
                             )}
                             <div className={styles.logoContainer}>{logoElement}</div>
@@ -399,59 +476,26 @@ export const MainNavigationBar = ({
                 <Portal>
                     <FocusTrap disabled={disableFocusTrap} group="burger-menu-lock">
                         <CSSTransition
-                            onEntering={() => {
-                                setMenuTransitionState('opening');
-                            }}
-                            onEntered={() => {
-                                setMenuTransitionState('open');
-                            }}
-                            onExiting={() => {
-                                setMenuTransitionState('closing');
-                            }}
-                            onExited={() => {
-                                setMenuTransitionState('closed');
-                            }}
-                            in={isMenuOpen}
+                            onEntered={() => setBurgerMenuTransitionState('open')}
+                            onExiting={() => setBurgerMenuTransitionState('closed')}
+                            classNames={styles.burgerMenuTransition}
+                            in={isBurgerMenuOpen}
+                            nodeRef={burgerMenuRef}
                             timeout={isRunningAcceptanceTest() ? 0 : BURGER_MENU_ANIMATION_DURATION_MS}
                             unmountOnExit
                         >
-                            {(burgerMenuState) => (
-                                <>
-                                    {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
-                                    <nav
-                                        className={classnames(
-                                            styles.burgerMenu,
-                                            styles.burgerMenuTransition[burgerMenuState]
-                                        )}
-                                        style={{
-                                            boxShadow:
-                                                menuTransitionState !== 'closed'
-                                                    ? `6px 0 4px -4px rgba(0, 0, 0, ${shadowAlpha})`
-                                                    : 'none',
-                                        }}
-                                        id={menuId}
-                                        onClick={() => {
-                                            // Capture bubbling click events to close the burger menu when any row is pressed
-                                            closeMenu();
-                                        }}
-                                    >
-                                        <ResponsiveLayout>
-                                            <Stack space={16}>
-                                                <NegativeBox>
-                                                    <RowList>
-                                                        {sections.map((section, index) => (
-                                                            <Row key={index} {...section} />
-                                                        ))}
-                                                    </RowList>
-                                                </NegativeBox>
-                                                {burgerMenuExtra && (
-                                                    <Box paddingBottom={16}>{burgerMenuExtra}</Box>
-                                                )}
-                                            </Stack>
-                                        </ResponsiveLayout>
-                                    </nav>
-                                </>
-                            )}
+                            <nav
+                                className={styles.burgerMenu}
+                                style={{boxShadow: `6px 0 4px -4px rgba(0, 0, 0, ${shadowAlpha})`}}
+                                id={menuId}
+                                ref={burgerMenuRef}
+                            >
+                                <MainNavigationBarBurgerMenu
+                                    sections={sections}
+                                    extra={burgerMenuExtra}
+                                    closeMenu={() => setIsBurgerMenuOpen(false)}
+                                />
+                            </nav>
                         </CSSTransition>
                     </FocusTrap>
                 </Portal>

@@ -250,21 +250,32 @@ export const spacerLarge = style([
     spacerMobile,
 ]);
 
-export const burgerMenuTransition = styleVariants({
-    entering: {
-        transform: 'translate(0vw)',
-    },
-    entered: {
-        transform: 'translate(0vw)',
-    },
-    exiting: {
+export const burgerMenuTransition = {
+    enter: style({
         transform: 'translate(-100vw)',
-    },
-    exited: {
+    }),
+    enterActive: style({
+        transform: 'translate(0vw)',
+        transition: `transform ${BURGER_MENU_ANIMATION_DURATION_MS}ms ease-out`,
+        '@media': {
+            ['(prefers-reduced-motion)']: {
+                transition: 'none',
+            },
+        },
+    }),
+    exit: style({
+        transform: 'translate(0vw)',
+    }),
+    exitActive: style({
         transform: 'translate(-100vw)',
-    },
-    unmounted: {},
-});
+        transition: `transform ${BURGER_MENU_ANIMATION_DURATION_MS}ms ease-out`,
+        '@media': {
+            ['(prefers-reduced-motion)']: {
+                transition: 'none',
+            },
+        },
+    }),
+};
 
 export const mainNavbarContent = style({
     display: 'flex',
@@ -306,7 +317,6 @@ export const burgerMenu = style([
     {
         height: `calc(100vh - ${NAVBAR_HEIGHT_MOBILE}px)`,
         overflowY: 'auto',
-        transition: `transform ${BURGER_MENU_ANIMATION_DURATION_MS}ms ease-out`,
     },
 ]);
 
@@ -343,50 +353,25 @@ export const lineHeightFix = style({
     lineHeight: 0,
 });
 
-export const desktopMenuTransitionClasses = {
-    enter: style({
-        gridTemplateRows: '0fr',
-    }),
-    enterActive: style({
-        gridTemplateRows: '1fr',
-        transition: 'grid-template-rows 0.4s cubic-bezier(0.65, 0, 0.35, 1)',
-        '@media': {
-            ['(prefers-reduced-motion)']: {
-                transition: 'none',
-            },
-        },
-    }),
-    exit: style({
-        gridTemplateRows: '1fr',
-    }),
-    exitActive: style({
-        gridTemplateRows: '0fr',
-        transition: 'grid-template-rows 0.4s cubic-bezier(0.65, 0, 0.35, 1)',
-        '@media': {
-            ['(prefers-reduced-motion)']: {
-                transition: 'none',
-            },
-        },
-    }),
-};
-
 export const desktopMenuWrapper = style([
     sprinkles({
         position: 'fixed',
         width: '100%',
     }),
-    {
-        display: 'grid',
-    },
 ]);
 
 export const desktopMenuContainer = style([
     sprinkles({
-        overflow: 'hidden',
         background: colorVars.colors.backgroundContainer,
     }),
     {
+        transition: 'height 0.4s cubic-bezier(0.65, 0, 0.35, 1)',
         boxShadow: '0px 2px 4px rgba(0,0,0,0.2)',
+        '@media': {
+            ['(prefers-reduced-motion)']: {
+                transition: 'none',
+            },
+        },
     },
 ]);
 
@@ -394,7 +379,6 @@ export const desktopMenu = style([
     sprinkles({
         paddingX: 72,
         paddingY: 40,
-        overflow: 'auto',
         position: 'relative',
     }),
     {
