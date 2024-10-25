@@ -329,33 +329,37 @@ export const MainNavigationBar = ({
                                             overflow: isDesktopMenuScrollable ? 'auto' : 'hidden',
                                         }}
                                     >
-                                        <div
-                                            className={styles.desktopMenu}
-                                            style={{
-                                                ...(transitionStatus !== 'exited'
-                                                    ? {
-                                                          transform: 'translateY(0px)',
-                                                          opacity: 1,
-                                                          transition:
-                                                              'opacity .8s cubic-bezier(0.33, 1, 0.68, 1), transform .8s cubic-bezier(0.33, 1, 0.68, 1)',
-                                                      }
-                                                    : {}),
-                                            }}
-                                            ref={(el) => {
-                                                if (el) {
-                                                    // In old browsers, the speed of the menu height's animation will depend on the height of the content
-                                                    // instead of the height of the container.
-                                                    const value = supportsCssMin()
-                                                        ? `min(${el.scrollHeight}px, calc(100vh - ${topSpace}px - ${bottomSpace}px))`
-                                                        : `${el.scrollHeight}px`;
-                                                    setDesktopMenuHeight(!isDesktopMenuOpen ? '0px' : value);
-                                                }
-                                            }}
-                                        >
-                                            <Inline space="between">
-                                                <Inline space={24}>
-                                                    {sections[desktopMenuOpenedSection]?.menu?.columns?.map(
-                                                        (column, columnIdx) => (
+                                        <ResponsiveLayout>
+                                            <div
+                                                className={styles.desktopMenu}
+                                                style={{
+                                                    ...(transitionStatus !== 'exited'
+                                                        ? {
+                                                              transform: 'translateY(0px)',
+                                                              opacity: 1,
+                                                              transition:
+                                                                  'opacity .8s cubic-bezier(0.33, 1, 0.68, 1), transform .8s cubic-bezier(0.33, 1, 0.68, 1)',
+                                                          }
+                                                        : {}),
+                                                }}
+                                                ref={(el) => {
+                                                    if (el) {
+                                                        // In old browsers, the speed of the menu height's animation will depend on the height of the content
+                                                        // instead of the height of the container.
+                                                        const value = supportsCssMin()
+                                                            ? `min(${el.scrollHeight}px, calc(100vh - ${topSpace}px - ${bottomSpace}px))`
+                                                            : `${el.scrollHeight}px`;
+                                                        setDesktopMenuHeight(
+                                                            !isDesktopMenuOpen ? '0px' : value
+                                                        );
+                                                    }
+                                                }}
+                                            >
+                                                <Inline space="between">
+                                                    <Inline space={24}>
+                                                        {sections[
+                                                            desktopMenuOpenedSection
+                                                        ]?.menu?.columns?.map((column, columnIdx) => (
                                                             <Stack
                                                                 key={columnIdx}
                                                                 space={24}
@@ -389,12 +393,12 @@ export const MainNavigationBar = ({
                                                                     )}
                                                                 </Stack>
                                                             </Stack>
-                                                        )
-                                                    )}
+                                                        ))}
+                                                    </Inline>
+                                                    {sections[desktopMenuOpenedSection]?.menu?.extra}
                                                 </Inline>
-                                                {sections[desktopMenuOpenedSection]?.menu?.extra}
-                                            </Inline>
-                                        </div>
+                                            </div>
+                                        </ResponsiveLayout>
                                     </div>
                                 </div>
                             );

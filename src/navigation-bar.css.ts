@@ -377,7 +377,6 @@ export const desktopMenuContainer = style([
 
 export const desktopMenu = style([
     sprinkles({
-        paddingX: 72,
         paddingY: 40,
         position: 'relative',
     }),
