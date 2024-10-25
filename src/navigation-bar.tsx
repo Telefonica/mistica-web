@@ -234,7 +234,7 @@ const MainNavigationBarDesktopMenu = ({
     const [isMenuOpen, setIsMenuOpen] = React.useState(false);
     const [openedSection, setOpenedSection] = React.useState(-1);
     const [menuHeight, setMenuHeight] = React.useState('0px');
-    const [isMenuScrollable, setIsMenuScrollable] = React.useState(false);
+    const [isMenuContentScrollable, setIsMenuContentScrollable] = React.useState(false);
     const isFirstOpenedSectionRef = React.useRef(false);
 
     React.useEffect(() => {
@@ -260,8 +260,8 @@ const MainNavigationBarDesktopMenu = ({
     // Disable scroll in menu content until height's animation is finished to avoid
     // showing the scrollbar while the menu's container is changing it's height
     React.useEffect(() => {
-        setIsMenuScrollable(false);
-        const id = setTimeout(() => setIsMenuScrollable(true), DESKTOP_MENU_ANIMATION_DURATION_MS);
+        setIsMenuContentScrollable(false);
+        const id = setTimeout(() => setIsMenuContentScrollable(true), DESKTOP_MENU_ANIMATION_DURATION_MS);
         return () => clearTimeout(id);
     }, [openedSection]);
 
@@ -277,7 +277,7 @@ const MainNavigationBarDesktopMenu = ({
                     onEnter={() => {
                         isFirstOpenedSectionRef.current = true;
                     }}
-                    onExiting={() => setIsMenuScrollable(false)}
+                    onExiting={() => setIsMenuContentScrollable(false)}
                     onExited={() => {
                         isFirstOpenedSectionRef.current = false;
                         setOpenedSection(-1);
@@ -295,7 +295,7 @@ const MainNavigationBarDesktopMenu = ({
                             style={{
                                 height: menuHeight,
                                 maxHeight: `calc(100vh - ${topSpace}px - ${bottomSpace}px)`,
-                                overflow: isMenuScrollable ? 'auto' : 'hidden',
+                                overflowY: isMenuContentScrollable ? 'auto' : 'hidden',
                             }}
                         >
                             <ResponsiveLayout>
