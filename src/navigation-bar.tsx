@@ -11,7 +11,7 @@ import IconMenuRegular from './generated/mistica-icons/icon-menu-regular';
 import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
 import IconChevronLeftRegular from './generated/mistica-icons/icon-chevron-left-regular';
 import {IconButton} from './icon-button';
-import {RowList} from './list';
+import {Row, RowList} from './list';
 import {ThemeVariant, useIsInverseOrMediaVariant} from './theme-variant-context';
 import FocusTrap from './focus-trap';
 import {Portal} from './portal';
@@ -142,7 +142,7 @@ type MainNavigationBarSection = {
     menu?: SectionMenu;
 } & InteractiveProps;
 
-type MainNavigationBarPropsBase = {
+type MainNavigationBarProps = {
     sections?: ReadonlyArray<MainNavigationBarSection>;
     selectedIndex?: number;
     right?: React.ReactElement;
@@ -155,44 +155,64 @@ type MainNavigationBarPropsBase = {
     large?: boolean;
 };
 
-type MainNavigationBarProps = MainNavigationBarPropsBase;
-type BurgerMenuTransitionState = 'closed' | 'open';
-
 const MainNavigationBarBurgerMenu = ({
     sections,
     extra,
     closeMenu,
+    open,
+    id,
+    disableFocusTrap,
+    setDisableFocusTrap,
 }: {
     sections: ReadonlyArray<MainNavigationBarSection>;
     extra: React.ReactNode;
     closeMenu: () => void;
+    open: boolean;
+    id: string;
+    disableFocusTrap: boolean;
+    setDisableFocusTrap: (value: boolean) => void;
 }) => {
-    const renderSectionContent = (items: ReadonlyArray<SectionItem> | undefined, extra: React.ReactNode) => {
-        // TODO: implement
-        console.log(items, extra);
-        return undefined;
-    };
+    const {isDarkMode} = useTheme();
+    const menuRef = React.useRef<HTMLDivElement>(null);
+    const shadowAlpha = isDarkMode ? 1 : 0.2;
 
     const renderSection = (section: MainNavigationBarSection, index: number) => {
         // TODO: implement
-        console.log(
-            section,
-            index,
-            closeMenu,
-            renderSectionContent(section.menu?.columns?.[0].items, section.menu?.extra)
-        );
-        return undefined;
+        return <Row key={index} title={section.title} onPress={closeMenu} />;
     };
 
     return (
-        <ResponsiveLayout>
-            <Stack space={16}>
-                <ResetResponsiveLayout>
-                    <RowList>{sections.map((section, index) => renderSection(section, index))}</RowList>
-                </ResetResponsiveLayout>
-                {extra && <Box paddingBottom={16}>{extra}</Box>}
-            </Stack>
-        </ResponsiveLayout>
+        <Portal>
+            <CSSTransition
+                onEntered={() => setDisableFocusTrap(false)}
+                onExiting={() => setDisableFocusTrap(true)}
+                classNames={styles.burgerMenuTransition}
+                in={open}
+                nodeRef={menuRef}
+                timeout={isRunningAcceptanceTest() ? 0 : BURGER_MENU_ANIMATION_DURATION_MS}
+                unmountOnExit
+            >
+                <FocusTrap disabled={disableFocusTrap} group="burger-menu-lock">
+                    <nav
+                        className={styles.burgerMenu}
+                        style={{boxShadow: `6px 0 4px -4px rgba(0, 0, 0, ${shadowAlpha})`}}
+                        id={id}
+                        ref={menuRef}
+                    >
+                        <ResponsiveLayout>
+                            <Stack space={16}>
+                                <ResetResponsiveLayout>
+                                    <RowList>
+                                        {sections.map((section, index) => renderSection(section, index))}
+                                    </RowList>
+                                </ResetResponsiveLayout>
+                                {extra && <Box paddingBottom={16}>{extra}</Box>}
+                            </Stack>
+                        </ResponsiveLayout>
+                    </nav>
+                </FocusTrap>
+            </CSSTransition>
+        </Portal>
     );
 };
 
@@ -218,7 +238,16 @@ const MainNavigationBarDesktopMenu = ({
     const isFirstOpenedSectionRef = React.useRef(false);
 
     React.useEffect(() => {
-        // Close desktop menu when scrolling in the page
+        if (!isMenuHovered && hoveredSection === -1) {
+            setIsMenuOpen(false);
+        } else if (hoveredSection !== -1) {
+            setOpenedSection(hoveredSection);
+            setIsMenuOpen(true);
+        }
+    }, [isMenuHovered, hoveredSection]);
+
+    // Close desktop menu when scrolling in the page
+    React.useEffect(() => {
         const handleScroll = () => {
             if (!isTabletOrSmaller) setIsMenuOpen(false);
         };
@@ -228,16 +257,8 @@ const MainNavigationBarDesktopMenu = ({
         };
     }, [isTabletOrSmaller]);
 
-    React.useEffect(() => {
-        if (!isMenuHovered && hoveredSection === -1) {
-            setIsMenuOpen(false);
-        } else if (hoveredSection !== -1) {
-            setOpenedSection(hoveredSection);
-            setIsMenuOpen(true);
-        }
-    }, [isMenuHovered, hoveredSection]);
-
-    // Disable scroll in menu content until it's fully open
+    // Disable scroll in menu content until height's animation is finished to avoid
+    // showing the scrollbar while the menu's container is changing it's height
     React.useEffect(() => {
         setIsMenuScrollable(false);
         const id = setTimeout(() => setIsMenuScrollable(true), DESKTOP_MENU_ANIMATION_DURATION_MS);
@@ -353,18 +374,15 @@ export const MainNavigationBar = ({
     logo,
     large = false,
 }: MainNavigationBarProps): JSX.Element => {
-    const {texts, isDarkMode, t} = useTheme();
+    const {texts, t} = useTheme();
     const menuId = React.useId();
     const {isTabletOrSmaller} = useScreenSize();
     const logoElement = logo || <Logo size={{mobile: 40, desktop: 48}} />;
     const hasBottomSections = large && sections.length > 0;
 
-    const burgerMenuRef = React.useRef<HTMLDivElement>(null);
     const [isBurgerMenuOpen, setIsBurgerMenuOpen] = React.useState(false);
-    const [burgerMenuTransitionState, setBurgerMenuTransitionState] =
-        React.useState<BurgerMenuTransitionState>('closed');
+    const [disableFocusTrap, setDisableFocusTrap] = React.useState(true);
     const setModalState = useSetModalState();
-    const shadowAlpha = isDarkMode ? 1 : 0.2;
 
     const [desktopHoveredSection, setDesktopHoveredSection] = React.useState(-1);
 
@@ -414,8 +432,6 @@ export const MainNavigationBar = ({
         setIsBurgerMenuOpen(false);
         setModalState({isModalOpen: false});
     };
-
-    const disableFocusTrap = burgerMenuTransitionState !== 'open';
 
     const showBurger = sections.length > 1;
 
@@ -476,34 +492,15 @@ export const MainNavigationBar = ({
             <FocusTrap disabled={disableFocusTrap} group="burger-menu-lock">
                 {mainNavBar}
             </FocusTrap>
-            {showBurger && (
-                <Portal>
-                    <FocusTrap disabled={disableFocusTrap} group="burger-menu-lock">
-                        <CSSTransition
-                            onEntered={() => setBurgerMenuTransitionState('open')}
-                            onExiting={() => setBurgerMenuTransitionState('closed')}
-                            classNames={styles.burgerMenuTransition}
-                            in={isBurgerMenuOpen}
-                            nodeRef={burgerMenuRef}
-                            timeout={isRunningAcceptanceTest() ? 0 : BURGER_MENU_ANIMATION_DURATION_MS}
-                            unmountOnExit
-                        >
-                            <nav
-                                className={styles.burgerMenu}
-                                style={{boxShadow: `6px 0 4px -4px rgba(0, 0, 0, ${shadowAlpha})`}}
-                                id={menuId}
-                                ref={burgerMenuRef}
-                            >
-                                <MainNavigationBarBurgerMenu
-                                    sections={sections}
-                                    extra={burgerMenuExtra}
-                                    closeMenu={() => setIsBurgerMenuOpen(false)}
-                                />
-                            </nav>
-                        </CSSTransition>
-                    </FocusTrap>
-                </Portal>
-            )}
+            <MainNavigationBarBurgerMenu
+                open={isBurgerMenuOpen}
+                id={menuId}
+                sections={sections}
+                extra={burgerMenuExtra}
+                closeMenu={() => setIsBurgerMenuOpen(false)}
+                disableFocusTrap={disableFocusTrap}
+                setDisableFocusTrap={setDisableFocusTrap}
+            />
         </>
     );
 };
