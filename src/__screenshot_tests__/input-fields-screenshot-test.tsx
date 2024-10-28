@@ -521,7 +521,7 @@ test.each`
     expect(await fieldWrapper.screenshot()).toMatchImageSnapshot();
 });
 
-test.only.each`
+test.each`
     skin          | number
     ${'Vivo'}     | ${'2145678901'}
     ${'Vivo'}     | ${'+34654834455'}
