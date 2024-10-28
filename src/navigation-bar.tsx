@@ -258,7 +258,7 @@ const MainNavigationBarBurgerMenu = ({
 
     const shadowAlpha = isDarkMode ? 1 : 0.2;
 
-    const getClosableInteractionProps = (interactiveProps: InteractiveProps) => {
+    const getInteractivePropsWithCloseMenu = (interactiveProps: InteractiveProps) => {
         return interactiveProps.onPress
             ? {
                   onPress: () => {
@@ -290,7 +290,7 @@ const MainNavigationBarBurgerMenu = ({
                                     bleedY
                                     bleedRight
                                     withChevron
-                                    {...getClosableInteractionProps(interactiveProps)}
+                                    {...getInteractivePropsWithCloseMenu(interactiveProps)}
                                 >
                                     {texts.MainNavigationBarSectionSeeAll ||
                                         t(tokens.MainNavigationBarSectionSeeAll)}
@@ -311,7 +311,7 @@ const MainNavigationBarBurgerMenu = ({
                                             <Row
                                                 key={itemIndex}
                                                 title={itemTitle}
-                                                {...getClosableInteractionProps(itemInteractiveProps)}
+                                                {...getInteractivePropsWithCloseMenu(itemInteractiveProps)}
                                             />
                                         )
                                     )}
@@ -358,7 +358,7 @@ const MainNavigationBarBurgerMenu = ({
                                                 title={title}
                                                 {...(menu
                                                     ? {onPress: () => setOpenedSection(index)}
-                                                    : getClosableInteractionProps(interactiveProps))}
+                                                    : getInteractivePropsWithCloseMenu(interactiveProps))}
                                             />
                                         ))}
                                     </RowList>
