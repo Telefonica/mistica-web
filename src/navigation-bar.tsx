@@ -274,51 +274,55 @@ const MainNavigationBarBurgerMenu = ({
         const columns = menu?.columns || [];
 
         return (
-            <Stack space={32}>
-                <Stack space={16}>
-                    <NavigationBar
-                        title={texts.backNavigationBar || t(tokens.backNavigationBar)}
-                        onBack={() => setOpenedSection(-1)}
-                        topFixed={false}
-                        withBorder={false}
-                    />
-                    <Title3
-                        right={
-                            <ButtonLink
-                                small
-                                bleedY
-                                bleedRight
-                                withChevron
-                                {...getClosableInteractionProps(interactiveProps)}
-                            >
-                                {texts.MainNavigationBarSectionSeeAll ||
-                                    t(tokens.MainNavigationBarSectionSeeAll)}
-                            </ButtonLink>
-                        }
-                    >
-                        {sections[openedSection].title}
-                    </Title3>
+            <>
+                <Stack space={32}>
+                    <Stack space={16}>
+                        <NavigationBar
+                            title={texts.backNavigationBar || t(tokens.backNavigationBar)}
+                            onBack={() => setOpenedSection(-1)}
+                            topFixed={false}
+                            withBorder={false}
+                        />
+                        <Title3
+                            right={
+                                <ButtonLink
+                                    small
+                                    bleedY
+                                    bleedRight
+                                    withChevron
+                                    {...getClosableInteractionProps(interactiveProps)}
+                                >
+                                    {texts.MainNavigationBarSectionSeeAll ||
+                                        t(tokens.MainNavigationBarSectionSeeAll)}
+                                </ButtonLink>
+                            }
+                        >
+                            {sections[openedSection].title}
+                        </Title3>
+                    </Stack>
+
+                    {columns.map((column, columnIndex) => (
+                        <Stack space={8} key={columnIndex}>
+                            <Title1> {column.title}</Title1>
+                            <ResetResponsiveLayout>
+                                <RowList>
+                                    {column.items.map(
+                                        ({title: itemTitle, ...itemInteractiveProps}, itemIndex) => (
+                                            <Row
+                                                key={itemIndex}
+                                                title={itemTitle}
+                                                {...getClosableInteractionProps(itemInteractiveProps)}
+                                            />
+                                        )
+                                    )}
+                                </RowList>
+                            </ResetResponsiveLayout>
+                        </Stack>
+                    ))}
                 </Stack>
 
-                {columns.map((column, columnIndex) => (
-                    <Stack space={8} key={columnIndex}>
-                        <Title1> {column.title}</Title1>
-                        <ResetResponsiveLayout>
-                            <RowList>
-                                {column.items.map(
-                                    ({title: itemTitle, ...itemInteractiveProps}, itemIndex) => (
-                                        <Row
-                                            key={itemIndex}
-                                            title={itemTitle}
-                                            {...getClosableInteractionProps(itemInteractiveProps)}
-                                        />
-                                    )
-                                )}
-                            </RowList>
-                        </ResetResponsiveLayout>
-                    </Stack>
-                ))}
-            </Stack>
+                {menu?.extra && <Box paddingY={16}>{menu.extra}</Box>}
+            </>
         );
     };
 
