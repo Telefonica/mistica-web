@@ -297,7 +297,7 @@ const MainNavigationBarBurgerMenu = ({
                                 </ButtonLink>
                             }
                         >
-                            {sections[openedSection].title}
+                            {sections[index].title}
                         </Title3>
                     </Stack>
 
