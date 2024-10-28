@@ -295,8 +295,8 @@ export const closeNavigationMenu: TextToken = {
 export const MainNavigationBarSectionSeeAll: TextToken = {
     es: 'Ver todo',
     en: 'See all',
-    de: 'alles sehen',
-    pt: 'ver tudo',
+    de: 'Alle anzeigen',
+    pt: 'Ver tudo',
 };
 
 export const backNavigationBar: TextToken = {
