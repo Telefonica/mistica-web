@@ -127,7 +127,6 @@ type InputProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'value' | 'o
     onInput?: (event: React.FormEvent<HTMLInputElement>) => void;
     prefix?: string;
     format?: (number: string) => string;
-    e164?: boolean;
 };
 
 const PhoneInput = ({
@@ -137,7 +136,6 @@ const PhoneInput = ({
     onChange,
     prefix,
     format: formatFromProps,
-    e164,
     ...other
 }: InputProps) => {
     const [selfValue, setSelfValue] = React.useState(defaultValue || '');
