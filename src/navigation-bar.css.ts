@@ -316,9 +316,22 @@ export const burgerMenu = style([
     }),
     {
         height: `calc(100vh - ${NAVBAR_HEIGHT_MOBILE}px)`,
-        overflowY: 'auto',
     },
 ]);
+
+export const burgerMainMenuContainer = style({
+    height: `calc(100vh - ${NAVBAR_HEIGHT_MOBILE}px)`,
+    overflowY: 'auto',
+});
+
+export const burgerSubMenuContainer = style({
+    height: `calc(100vh - ${NAVBAR_HEIGHT_MOBILE}px)`,
+    overflowY: 'auto',
+    width: '100%',
+    position: 'absolute',
+    left: '100vw',
+    top: 0,
+});
 
 export const iconButtonVariants = styleVariants({
     default: [
