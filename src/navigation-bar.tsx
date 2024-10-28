@@ -274,7 +274,7 @@ const MainNavigationBarBurgerMenu = ({
         const columns = menu?.columns || [];
 
         return (
-            <>
+            <ResponsiveLayout>
                 <Stack space={32}>
                     <Stack space={16}>
                         <NavigationBar
@@ -322,7 +322,7 @@ const MainNavigationBarBurgerMenu = ({
                 </Stack>
 
                 {menu?.extra && <Box paddingY={16}>{menu.extra}</Box>}
-            </>
+            </ResponsiveLayout>
         );
     };
 
@@ -346,28 +346,26 @@ const MainNavigationBarBurgerMenu = ({
                         id={id}
                         ref={menuRef}
                     >
-                        <ResponsiveLayout>
-                            {openedSection !== -1 ? (
-                                renderSection(openedSection)
-                            ) : (
-                                <Stack space={16}>
-                                    <ResetResponsiveLayout>
-                                        <RowList>
-                                            {sections.map(({title, menu, ...interactiveProps}, index) => (
-                                                <Row
-                                                    key={index}
-                                                    title={title}
-                                                    {...(menu
-                                                        ? {onPress: () => setOpenedSection(index)}
-                                                        : getClosableInteractionProps(interactiveProps))}
-                                                />
-                                            ))}
-                                        </RowList>
-                                    </ResetResponsiveLayout>
-                                    {extra && <Box paddingBottom={16}>{extra}</Box>}
-                                </Stack>
-                            )}
-                        </ResponsiveLayout>
+                        {openedSection !== -1 ? (
+                            renderSection(openedSection)
+                        ) : (
+                            <ResponsiveLayout>
+                                <ResetResponsiveLayout>
+                                    <RowList>
+                                        {sections.map(({title, menu, ...interactiveProps}, index) => (
+                                            <Row
+                                                key={index}
+                                                title={title}
+                                                {...(menu
+                                                    ? {onPress: () => setOpenedSection(index)}
+                                                    : getClosableInteractionProps(interactiveProps))}
+                                            />
+                                        ))}
+                                    </RowList>
+                                </ResetResponsiveLayout>
+                                {extra && <Box paddingY={16}>{extra}</Box>}
+                            </ResponsiveLayout>
+                        )}
                     </nav>
                 </FocusTrap>
             </CSSTransition>
