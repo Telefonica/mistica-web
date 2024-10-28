@@ -594,7 +594,7 @@ export const MainNavigationBar = ({
                                 [styles.firstSection]: idx === 0,
                                 [styles.lastSection]: idx === sections.length - 1,
                             })}
-                            onMouseEnter={() => setDesktopHoveredSection(idx)}
+                            onMouseEnter={() => setDesktopHoveredSection(menu ? idx : -1)}
                             onMouseLeave={() => setDesktopHoveredSection(-1)}
                         >
                             <BaseTouchable
