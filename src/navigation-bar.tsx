@@ -235,7 +235,7 @@ const MainNavigationBarDesktopMenu = ({
     const [openedSection, setOpenedSection] = React.useState(-1);
     const [menuHeight, setMenuHeight] = React.useState('0px');
     const [isMenuContentScrollable, setIsMenuContentScrollable] = React.useState(false);
-    const isFirstOpenedSectionRef = React.useRef(false);
+    const isAnySectionOpened = React.useRef(false);
 
     React.useEffect(() => {
         if (!isMenuHovered && hoveredSection === -1) {
@@ -265,6 +265,8 @@ const MainNavigationBarDesktopMenu = ({
         return () => clearTimeout(id);
     }, [openedSection]);
 
+    const columns = sections[openedSection]?.menu?.columns || [];
+
     return (
         <div className={styles.desktopOnly}>
             <Portal>
@@ -275,11 +277,11 @@ const MainNavigationBarDesktopMenu = ({
                     mountOnEnter
                     unmountOnExit
                     onEnter={() => {
-                        isFirstOpenedSectionRef.current = true;
+                        isAnySectionOpened.current = true;
                     }}
                     onExiting={() => setIsMenuContentScrollable(false)}
                     onExited={() => {
-                        isFirstOpenedSectionRef.current = false;
+                        isAnySectionOpened.current = false;
                         setOpenedSection(-1);
                     }}
                 >
@@ -301,7 +303,7 @@ const MainNavigationBarDesktopMenu = ({
                             <ResponsiveLayout>
                                 <div
                                     className={classnames(styles.desktopMenu, {
-                                        [styles.desktopMenuContentFadeIn]: isFirstOpenedSectionRef.current,
+                                        [styles.desktopMenuContentFadeIn]: isAnySectionOpened.current,
                                     })}
                                     ref={(el) => {
                                         if (el) {
@@ -315,9 +317,9 @@ const MainNavigationBarDesktopMenu = ({
                                     }}
                                 >
                                     <Inline space="between">
-                                        <Inline space={24}>
-                                            {sections[openedSection]?.menu?.columns?.map(
-                                                (column, columnIdx) => (
+                                        {columns.length > 0 && (
+                                            <Inline space={24}>
+                                                {columns.map((column, columnIdx) => (
                                                     <Stack
                                                         key={columnIdx}
                                                         space={24}
@@ -348,9 +350,9 @@ const MainNavigationBarDesktopMenu = ({
                                                             )}
                                                         </Stack>
                                                     </Stack>
-                                                )
-                                            )}
-                                        </Inline>
+                                                ))}
+                                            </Inline>
+                                        )}
                                         {sections[openedSection]?.menu?.extra}
                                     </Inline>
                                 </div>
