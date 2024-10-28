@@ -27,6 +27,8 @@ import {isRunningAcceptanceTest} from './utils/platform';
 import * as tokens from './text-tokens';
 import {NAVBAR_HEIGHT_DESKTOP, NAVBAR_HEIGHT_DESKTOP_LARGE} from './theme';
 import TextLink from './text-link';
+import {Title1, Title3} from './title';
+import {ButtonLink} from './button';
 
 import type {ExclusifyUnion} from './utils/utility-types';
 import type {Variant} from './theme-variant-context';
@@ -122,6 +124,83 @@ const NavigationBarContentContainer = ({
     );
 };
 
+interface NavigationBarCommonProps {
+    variant?: Variant;
+    onBack?: () => void;
+    title?: string;
+    titleAs?: HeadingType;
+    right?: React.ReactElement;
+    withBorder?: boolean;
+    children?: undefined;
+}
+
+interface NavigationBarTopFixedProps extends NavigationBarCommonProps {
+    topFixed?: true;
+    paddingX?: undefined;
+}
+
+interface NavigationBarNotFixedProps extends NavigationBarCommonProps {
+    topFixed: false;
+    paddingX?: number;
+}
+
+type NavigationBarProps = NavigationBarTopFixedProps | NavigationBarNotFixedProps;
+
+export const NavigationBar = ({
+    onBack,
+    title,
+    titleAs,
+    right,
+    variant = 'default',
+    topFixed = true,
+    paddingX = 0,
+    withBorder = true,
+}: NavigationBarProps): JSX.Element => {
+    const {texts, t} = useTheme();
+    const content = (
+        <NavigationBarContentContainer right={right}>
+            <Inline space={24} alignItems="center">
+                {onBack && (
+                    <IconButton
+                        aria-label={texts.backNavigationBar || t(tokens.backNavigationBar)}
+                        onPress={onBack}
+                        Icon={IconChevronLeftRegular}
+                        bleedLeft
+                        bleedRight
+                    />
+                )}
+                <Text3 regular truncate as={titleAs}>
+                    {title}
+                </Text3>
+            </Inline>
+        </NavigationBarContentContainer>
+    );
+    return (
+        <ThemeVariant variant={variant}>
+            <Header
+                topFixed={topFixed}
+                withBorder={withBorder}
+                variant={variant}
+                dataAttributes={{'component-name': 'NavigationBar'}}
+            >
+                {topFixed ? (
+                    <ResponsiveLayout>{content}</ResponsiveLayout>
+                ) : (
+                    <div
+                        style={{
+                            padding: `0 ${paddingX}px`,
+                            width: '100%',
+                        }}
+                    >
+                        {content}
+                    </div>
+                )}
+            </Header>
+            {topFixed && <div className={styles.spacer} />}
+        </ThemeVariant>
+    );
+};
+
 type InteractiveProps = ExclusifyUnion<{href: string} | {to: string} | {onPress: () => void}>;
 
 type SectionItem = {title: string} & InteractiveProps;
@@ -172,13 +251,75 @@ const MainNavigationBarBurgerMenu = ({
     disableFocusTrap: boolean;
     setDisableFocusTrap: (value: boolean) => void;
 }) => {
+    const {texts, t} = useTheme();
     const {isDarkMode} = useTheme();
+    const [openedSection, setOpenedSection] = React.useState(-1);
     const menuRef = React.useRef<HTMLDivElement>(null);
+
     const shadowAlpha = isDarkMode ? 1 : 0.2;
 
-    const renderSection = (section: MainNavigationBarSection, index: number) => {
-        // TODO: implement
-        return <Row key={index} title={section.title} onPress={closeMenu} />;
+    const getClosableInteractionProps = (interactiveProps: InteractiveProps) => {
+        return interactiveProps.onPress
+            ? {
+                  onPress: () => {
+                      interactiveProps.onPress();
+                      closeMenu();
+                  },
+              }
+            : {...interactiveProps, onNavigate: () => closeMenu()};
+    };
+
+    const renderSection = (index: number) => {
+        const {title, menu, ...interactiveProps} = sections[index];
+        const columns = menu?.columns || [];
+
+        return (
+            <Stack space={32}>
+                <Stack space={16}>
+                    <NavigationBar
+                        title={texts.backNavigationBar || t(tokens.backNavigationBar)}
+                        onBack={() => setOpenedSection(-1)}
+                        topFixed={false}
+                        withBorder={false}
+                    />
+                    <Title3
+                        right={
+                            <ButtonLink
+                                small
+                                bleedY
+                                bleedRight
+                                withChevron
+                                {...getClosableInteractionProps(interactiveProps)}
+                            >
+                                {texts.MainNavigationBarSectionSeeAll ||
+                                    t(tokens.MainNavigationBarSectionSeeAll)}
+                            </ButtonLink>
+                        }
+                    >
+                        {sections[openedSection].title}
+                    </Title3>
+                </Stack>
+
+                {columns.map((column, columnIndex) => (
+                    <Stack space={8} key={columnIndex}>
+                        <Title1> {column.title}</Title1>
+                        <ResetResponsiveLayout>
+                            <RowList>
+                                {column.items.map(
+                                    ({title: itemTitle, ...itemInteractiveProps}, itemIndex) => (
+                                        <Row
+                                            key={itemIndex}
+                                            title={itemTitle}
+                                            {...getClosableInteractionProps(itemInteractiveProps)}
+                                        />
+                                    )
+                                )}
+                            </RowList>
+                        </ResetResponsiveLayout>
+                    </Stack>
+                ))}
+            </Stack>
+        );
     };
 
     return (
@@ -186,10 +327,12 @@ const MainNavigationBarBurgerMenu = ({
             <CSSTransition
                 onEntered={() => setDisableFocusTrap(false)}
                 onExiting={() => setDisableFocusTrap(true)}
+                onExited={() => setOpenedSection(-1)}
                 classNames={styles.burgerMenuTransition}
                 in={open}
                 nodeRef={menuRef}
                 timeout={isRunningAcceptanceTest() ? 0 : BURGER_MENU_ANIMATION_DURATION_MS}
+                mountOnEnter
                 unmountOnExit
             >
                 <FocusTrap disabled={disableFocusTrap} group="burger-menu-lock">
@@ -200,14 +343,26 @@ const MainNavigationBarBurgerMenu = ({
                         ref={menuRef}
                     >
                         <ResponsiveLayout>
-                            <Stack space={16}>
-                                <ResetResponsiveLayout>
-                                    <RowList>
-                                        {sections.map((section, index) => renderSection(section, index))}
-                                    </RowList>
-                                </ResetResponsiveLayout>
-                                {extra && <Box paddingBottom={16}>{extra}</Box>}
-                            </Stack>
+                            {openedSection !== -1 ? (
+                                renderSection(openedSection)
+                            ) : (
+                                <Stack space={16}>
+                                    <ResetResponsiveLayout>
+                                        <RowList>
+                                            {sections.map(({title, menu, ...interactiveProps}, index) => (
+                                                <Row
+                                                    key={index}
+                                                    title={title}
+                                                    {...(menu
+                                                        ? {onPress: () => setOpenedSection(index)}
+                                                        : getClosableInteractionProps(interactiveProps))}
+                                                />
+                                            ))}
+                                        </RowList>
+                                    </ResetResponsiveLayout>
+                                    {extra && <Box paddingBottom={16}>{extra}</Box>}
+                                </Stack>
+                            )}
                         </ResponsiveLayout>
                     </nav>
                 </FocusTrap>
@@ -505,83 +660,6 @@ export const MainNavigationBar = ({
                 setDisableFocusTrap={setDisableFocusTrap}
             />
         </>
-    );
-};
-
-interface NavigationBarCommonProps {
-    variant?: Variant;
-    onBack?: () => void;
-    title?: string;
-    titleAs?: HeadingType;
-    right?: React.ReactElement;
-    withBorder?: boolean;
-    children?: undefined;
-}
-
-interface NavigationBarTopFixedProps extends NavigationBarCommonProps {
-    topFixed?: true;
-    paddingX?: undefined;
-}
-
-interface NavigationBarNotFixedProps extends NavigationBarCommonProps {
-    topFixed: false;
-    paddingX?: number;
-}
-
-type NavigationBarProps = NavigationBarTopFixedProps | NavigationBarNotFixedProps;
-
-export const NavigationBar = ({
-    onBack,
-    title,
-    titleAs,
-    right,
-    variant = 'default',
-    topFixed = true,
-    paddingX = 0,
-    withBorder = true,
-}: NavigationBarProps): JSX.Element => {
-    const {texts, t} = useTheme();
-    const content = (
-        <NavigationBarContentContainer right={right}>
-            <Inline space={24} alignItems="center">
-                {onBack && (
-                    <IconButton
-                        aria-label={texts.backNavigationBar || t(tokens.backNavigationBar)}
-                        onPress={onBack}
-                        Icon={IconChevronLeftRegular}
-                        bleedLeft
-                        bleedRight
-                    />
-                )}
-                <Text3 regular truncate as={titleAs}>
-                    {title}
-                </Text3>
-            </Inline>
-        </NavigationBarContentContainer>
-    );
-    return (
-        <ThemeVariant variant={variant}>
-            <Header
-                topFixed={topFixed}
-                withBorder={withBorder}
-                variant={variant}
-                dataAttributes={{'component-name': 'NavigationBar'}}
-            >
-                {topFixed ? (
-                    <ResponsiveLayout>{content}</ResponsiveLayout>
-                ) : (
-                    <div
-                        style={{
-                            padding: `0 ${paddingX}px`,
-                            width: '100%',
-                        }}
-                    >
-                        {content}
-                    </div>
-                )}
-            </Header>
-            {topFixed && <div className={styles.spacer} />}
-        </ThemeVariant>
     );
 };
 
