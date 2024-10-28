@@ -1280,6 +1280,15 @@ export {default as IconMenuRegular} from './generated/mistica-icons/icon-menu-re
 export {default as IconMicrochipFilled} from './generated/mistica-icons/icon-microchip-filled';
 export {default as IconMicrochipLight} from './generated/mistica-icons/icon-microchip-light';
 export {default as IconMicrochipRegular} from './generated/mistica-icons/icon-microchip-regular';
+export {default as IconMicrophoneAuraDisabledFilled} from './generated/mistica-icons/icon-microphone-aura-disabled-filled';
+export {default as IconMicrophoneAuraDisabledLight} from './generated/mistica-icons/icon-microphone-aura-disabled-light';
+export {default as IconMicrophoneAuraDisabledRegular} from './generated/mistica-icons/icon-microphone-aura-disabled-regular';
+export {default as IconMicrophoneAuraFilled} from './generated/mistica-icons/icon-microphone-aura-filled';
+export {default as IconMicrophoneAuraLight} from './generated/mistica-icons/icon-microphone-aura-light';
+export {default as IconMicrophoneAuraRegular} from './generated/mistica-icons/icon-microphone-aura-regular';
+export {default as IconMicrophoneDisabledFilled} from './generated/mistica-icons/icon-microphone-disabled-filled';
+export {default as IconMicrophoneDisabledLight} from './generated/mistica-icons/icon-microphone-disabled-light';
+export {default as IconMicrophoneDisabledRegular} from './generated/mistica-icons/icon-microphone-disabled-regular';
 export {default as IconMicrophoneFilled} from './generated/mistica-icons/icon-microphone-filled';
 export {default as IconMicrophoneLight} from './generated/mistica-icons/icon-microphone-light';
 export {default as IconMicrophoneRegular} from './generated/mistica-icons/icon-microphone-regular';
@@ -1896,6 +1905,9 @@ export {default as IconUserAccountRegular} from './generated/mistica-icons/icon-
 export {default as IconUserSupportFilled} from './generated/mistica-icons/icon-user-support-filled';
 export {default as IconUserSupportLight} from './generated/mistica-icons/icon-user-support-light';
 export {default as IconUserSupportRegular} from './generated/mistica-icons/icon-user-support-regular';
+export {default as IconVideoCameraDisabledFilled} from './generated/mistica-icons/icon-video-camera-disabled-filled';
+export {default as IconVideoCameraDisabledLight} from './generated/mistica-icons/icon-video-camera-disabled-light';
+export {default as IconVideoCameraDisabledRegular} from './generated/mistica-icons/icon-video-camera-disabled-regular';
 export {default as IconVideoCameraFilled} from './generated/mistica-icons/icon-video-camera-filled';
 export {default as IconVideoCameraLight} from './generated/mistica-icons/icon-video-camera-light';
 export {default as IconVideoCameraRegular} from './generated/mistica-icons/icon-video-camera-regular';
