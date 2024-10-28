@@ -353,16 +353,11 @@ export const lineHeightFix = style({
     lineHeight: 0,
 });
 
-export const desktopMenuWrapper = style([
-    sprinkles({
-        position: 'fixed',
-        width: '100%',
-    }),
-]);
-
 export const desktopMenuContainer = style([
     sprinkles({
         background: colorVars.colors.backgroundContainer,
+        position: 'fixed',
+        width: '100%',
     }),
     {
         transition: 'height 0.4s cubic-bezier(0.65, 0, 0.35, 1)',

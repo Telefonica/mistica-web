@@ -246,8 +246,8 @@ const MainNavigationBarDesktopMenu = ({
         }
     }, [isMenuHovered, hoveredSection]);
 
-    // Close desktop menu when scrolling in the page
     React.useEffect(() => {
+        // Close desktop menu when scrolling in the page
         const handleScroll = () => {
             if (!isTabletOrSmaller) setIsMenuOpen(false);
         };
@@ -257,9 +257,14 @@ const MainNavigationBarDesktopMenu = ({
         };
     }, [isTabletOrSmaller]);
 
-    // Disable scroll in menu content until height's animation is finished to avoid
-    // showing the scrollbar while the menu's container is changing it's height
     React.useEffect(() => {
+        // scroll to top of the content if the opened section changed
+        if (menuRef.current) {
+            menuRef.current.scrollTop = 0;
+        }
+
+        // Disable scroll in menu content until height's animation is finished to avoid
+        // showing the scrollbar while the menu's container is changing it's height
         setIsMenuContentScrollable(false);
         const id = setTimeout(() => setIsMenuContentScrollable(true), DESKTOP_MENU_ANIMATION_DURATION_MS);
         return () => clearTimeout(id);
@@ -286,78 +291,74 @@ const MainNavigationBarDesktopMenu = ({
                     }}
                 >
                     <div
+                        className={styles.desktopMenuContainer}
                         onMouseEnter={() => setIsMenuHovered(true)}
                         onMouseLeave={() => setIsMenuHovered(false)}
                         ref={menuRef}
-                        style={{top: topSpace}}
-                        className={styles.desktopMenuWrapper}
+                        style={{
+                            top: topSpace,
+                            height: menuHeight,
+                            maxHeight: `calc(100vh - ${topSpace}px - ${bottomSpace}px)`,
+                            overflowY: isMenuContentScrollable ? 'auto' : 'hidden',
+                        }}
                     >
-                        <div
-                            className={styles.desktopMenuContainer}
-                            style={{
-                                height: menuHeight,
-                                maxHeight: `calc(100vh - ${topSpace}px - ${bottomSpace}px)`,
-                                overflowY: isMenuContentScrollable ? 'auto' : 'hidden',
-                            }}
-                        >
-                            <ResponsiveLayout>
-                                <div
-                                    className={classnames(styles.desktopMenu, {
-                                        [styles.desktopMenuContentFadeIn]: isAnySectionOpened.current,
-                                    })}
-                                    ref={(el) => {
-                                        if (el) {
-                                            // In old browsers, the speed of the menu height's animation will depend on
-                                            // the height of the content instead of the height of the container.
-                                            const value = supportsCssMin()
-                                                ? `min(${el.scrollHeight}px, calc(100vh - ${topSpace}px - ${bottomSpace}px))`
-                                                : `${el.scrollHeight}px`;
-                                            setMenuHeight(!isMenuOpen ? '0px' : value);
-                                        }
-                                    }}
-                                >
-                                    <Inline space="between">
-                                        {columns.length > 0 && (
-                                            <Inline space={24}>
-                                                {columns.map((column, columnIdx) => (
-                                                    <Stack
-                                                        key={columnIdx}
-                                                        space={24}
-                                                        className={styles.desktopMenuColumn}
+                        <ResponsiveLayout>
+                            <div
+                                className={classnames(styles.desktopMenu, {
+                                    [styles.desktopMenuContentFadeIn]: isAnySectionOpened.current,
+                                })}
+                                ref={(el) => {
+                                    if (el) {
+                                        // In old browsers, the speed of the menu height's animation will depend on
+                                        // the height of the content instead of the height of the container.
+                                        const value = supportsCssMin()
+                                            ? `min(${el.scrollHeight}px, calc(100vh - ${topSpace}px - ${bottomSpace}px))`
+                                            : `${el.scrollHeight}px`;
+                                        setMenuHeight(!isMenuOpen ? '0px' : value);
+                                    }
+                                }}
+                            >
+                                <Inline space="between">
+                                    {columns.length > 0 && (
+                                        <Inline space={24}>
+                                            {columns.map((column, columnIdx) => (
+                                                <Stack
+                                                    key={columnIdx}
+                                                    space={24}
+                                                    className={styles.desktopMenuColumn}
+                                                >
+                                                    <Text2
+                                                        medium
+                                                        color={vars.colors.textSecondary}
+                                                        transform="uppercase"
                                                     >
-                                                        <Text2
-                                                            medium
-                                                            color={vars.colors.textSecondary}
-                                                            transform="uppercase"
-                                                        >
-                                                            {column.title}
-                                                        </Text2>
+                                                        {column.title}
+                                                    </Text2>
 
-                                                        <Stack space={16}>
-                                                            {column.items.map(
-                                                                ({title, ...touchableProps}, itemIdx) => (
-                                                                    <div key={itemIdx}>
-                                                                        <TextLink
-                                                                            className={
-                                                                                styles.desktopMenuColumnItem
-                                                                            }
-                                                                            {...touchableProps}
-                                                                        >
-                                                                            {title}
-                                                                        </TextLink>
-                                                                    </div>
-                                                                )
-                                                            )}
-                                                        </Stack>
+                                                    <Stack space={16}>
+                                                        {column.items.map(
+                                                            ({title, ...touchableProps}, itemIdx) => (
+                                                                <div key={itemIdx}>
+                                                                    <TextLink
+                                                                        className={
+                                                                            styles.desktopMenuColumnItem
+                                                                        }
+                                                                        {...touchableProps}
+                                                                    >
+                                                                        {title}
+                                                                    </TextLink>
+                                                                </div>
+                                                            )
+                                                        )}
                                                     </Stack>
-                                                ))}
-                                            </Inline>
-                                        )}
-                                        {sections[openedSection]?.menu?.extra}
-                                    </Inline>
-                                </div>
-                            </ResponsiveLayout>
-                        </div>
+                                                </Stack>
+                                            ))}
+                                        </Inline>
+                                    )}
+                                    {sections[openedSection]?.menu?.extra}
+                                </Inline>
+                            </div>
+                        </ResponsiveLayout>
                     </div>
                 </CSSTransition>
             </Portal>
