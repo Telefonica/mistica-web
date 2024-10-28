@@ -6,7 +6,9 @@ import {vars as colorVars} from './skins/skin-contract.css';
 
 const NAVBAR_ZINDEX = 25;
 
-const BURGER_MENU_ANIMATION_DURATION_MS = 300;
+export const BURGER_MENU_ANIMATION_DURATION_MS = 300;
+export const DESKTOP_MENU_ANIMATION_DURATION_MS = 400;
+const DESKTOP_MENU_CONTENT_ANIMATION_DURATION_MS = 800;
 
 export const burgerIconContainer = style([
     sprinkles({
@@ -373,7 +375,7 @@ export const desktopMenuContainer = style([
         width: '100%',
     }),
     {
-        transition: 'height 0.4s cubic-bezier(0.65, 0, 0.35, 1)',
+        transition: `height ${DESKTOP_MENU_ANIMATION_DURATION_MS}ms cubic-bezier(0.65, 0, 0.35, 1)`,
         boxShadow: '0px 2px 4px rgba(0,0,0,0.2)',
         '@media': {
             ['(prefers-reduced-motion)']: {
@@ -402,7 +404,12 @@ export const desktopMenu = style([
 export const desktopMenuContentFadeIn = style({
     transform: 'translateY(0px)',
     opacity: 1,
-    transition: 'opacity .8s cubic-bezier(0.33, 1, 0.68, 1), transform .8s cubic-bezier(0.33, 1, 0.68, 1)',
+    transition: `opacity ${DESKTOP_MENU_CONTENT_ANIMATION_DURATION_MS}ms cubic-bezier(0.33, 1, 0.68, 1), transform ${DESKTOP_MENU_CONTENT_ANIMATION_DURATION_MS}ms cubic-bezier(0.33, 1, 0.68, 1)`,
+    '@media': {
+        ['(prefers-reduced-motion)']: {
+            transition: 'none',
+        },
+    },
 });
 
 export const desktopMenuColumn = style({

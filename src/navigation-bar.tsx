@@ -54,9 +54,6 @@ const BurgerMenuIcon = ({isOpen}: {isOpen: boolean}) => {
     );
 };
 
-const BURGER_MENU_ANIMATION_DURATION_MS = 300;
-const DESKTOP_MENU_ANIMATION_DURATION_MS = 400;
-
 type HeaderProps = {
     children: React.ReactNode;
     topFixed?: boolean;
@@ -258,7 +255,9 @@ const MainNavigationBarBurgerMenu = ({
     const menuContentRef = React.useRef<HTMLDivElement>(null);
 
     const shadowAlpha = isDarkMode ? 1 : 0.2;
+    const menuAnimationDuration = isRunningAcceptanceTest() ? 0 : styles.BURGER_MENU_ANIMATION_DURATION_MS;
 
+    // Close the menu when one of the rows is pressed
     const getInteractivePropsWithCloseMenu = (interactiveProps: InteractiveProps) => {
         return interactiveProps.onPress
             ? {
@@ -341,7 +340,7 @@ const MainNavigationBarBurgerMenu = ({
                 classNames={styles.burgerMenuTransition}
                 in={open}
                 nodeRef={menuRef}
-                timeout={isRunningAcceptanceTest() ? 0 : BURGER_MENU_ANIMATION_DURATION_MS}
+                timeout={menuAnimationDuration}
                 mountOnEnter
                 unmountOnExit
             >
@@ -353,7 +352,7 @@ const MainNavigationBarBurgerMenu = ({
                         ref={menuRef}
                     >
                         <CSSTransition
-                            timeout={isRunningAcceptanceTest() ? 0 : BURGER_MENU_ANIMATION_DURATION_MS}
+                            timeout={menuAnimationDuration}
                             in={isSubMenuOpen}
                             nodeRef={menuContentRef}
                         >
@@ -361,7 +360,7 @@ const MainNavigationBarBurgerMenu = ({
                                 <div
                                     ref={menuContentRef}
                                     style={{
-                                        transition: `transform ${isRunningAcceptanceTest() ? 0 : BURGER_MENU_ANIMATION_DURATION_MS}ms ease-out`,
+                                        transition: `transform ${menuAnimationDuration}ms ease-out`,
                                         transform: `translate(${isSubMenuOpen ? '-100vw' : '0vw'})`,
                                     }}
                                 >
@@ -420,9 +419,6 @@ const MainNavigationBarDesktopMenu = ({
     hoveredSection: number;
 }): JSX.Element => {
     const {isTabletOrSmaller} = useScreenSize();
-    const topSpace = isLargeNavigationBar ? NAVBAR_HEIGHT_DESKTOP_LARGE : NAVBAR_HEIGHT_DESKTOP;
-    const bottomSpace = 40;
-
     const menuRef = React.useRef<HTMLDivElement>(null);
     const [isMenuHovered, setIsMenuHovered] = React.useState(false);
     const [isMenuOpen, setIsMenuOpen] = React.useState(false);
@@ -430,6 +426,10 @@ const MainNavigationBarDesktopMenu = ({
     const [menuHeight, setMenuHeight] = React.useState('0px');
     const [isMenuContentScrollable, setIsMenuContentScrollable] = React.useState(false);
     const isAnySectionOpened = React.useRef(false);
+
+    const menuAnimationDuration = isRunningAcceptanceTest() ? 0 : styles.DESKTOP_MENU_ANIMATION_DURATION_MS;
+    const topSpace = isLargeNavigationBar ? NAVBAR_HEIGHT_DESKTOP_LARGE : NAVBAR_HEIGHT_DESKTOP;
+    const bottomSpace = 40;
 
     React.useEffect(() => {
         if (!isMenuHovered && hoveredSection === -1) {
@@ -460,9 +460,9 @@ const MainNavigationBarDesktopMenu = ({
         // Disable scroll in menu content until height's animation is finished to avoid
         // showing the scrollbar while the menu's container is changing it's height
         setIsMenuContentScrollable(false);
-        const id = setTimeout(() => setIsMenuContentScrollable(true), DESKTOP_MENU_ANIMATION_DURATION_MS);
+        const id = setTimeout(() => setIsMenuContentScrollable(true), menuAnimationDuration);
         return () => clearTimeout(id);
-    }, [openedSection]);
+    }, [openedSection, menuAnimationDuration]);
 
     const columns = sections[openedSection]?.menu?.columns || [];
 
@@ -471,7 +471,7 @@ const MainNavigationBarDesktopMenu = ({
             <Portal>
                 <CSSTransition
                     in={isMenuOpen}
-                    timeout={isRunningAcceptanceTest() ? 0 : DESKTOP_MENU_ANIMATION_DURATION_MS}
+                    timeout={menuAnimationDuration}
                     nodeRef={menuRef}
                     mountOnEnter
                     unmountOnExit
