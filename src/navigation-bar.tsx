@@ -29,6 +29,7 @@ import {NAVBAR_HEIGHT_DESKTOP, NAVBAR_HEIGHT_DESKTOP_LARGE} from './theme';
 import TextLink from './text-link';
 import {Title1, Title3} from './title';
 import {ButtonLink} from './button';
+import {Grid, GridItem} from './grid';
 
 import type {ExclusifyUnion} from './utils/utility-types';
 import type {Variant} from './theme-variant-context';
@@ -207,11 +208,11 @@ type SectionColumn = {
     items: ReadonlyArray<SectionItem>;
 };
 
-type SectionMenu = {
-    columns?: ReadonlyArray<SectionColumn>;
-    extra?: React.ReactElement;
-    small?: boolean;
-};
+type SectionMenu = ExclusifyUnion<
+    | {small: true; column: SectionColumn}
+    | {small?: false; columns: ReadonlyArray<SectionColumn>}
+    | {small?: boolean; content?: React.ReactElement}
+>;
 
 type MainNavigationBarSection = {
     title: string;
@@ -273,7 +274,7 @@ const MainNavigationBarBurgerMenu = ({
 
     const renderSection = (index: number) => {
         const {title, menu, ...interactiveProps} = sections[index];
-        const columns = menu?.columns || [];
+        const columns = menu?.columns || (menu?.column ? [menu.column] : []);
 
         return (
             <ResponsiveLayout>
@@ -303,27 +304,31 @@ const MainNavigationBarBurgerMenu = ({
                         </Title3>
                     </Stack>
 
-                    {columns.map((column, columnIndex) => (
-                        <Stack space={8} key={columnIndex}>
-                            <Title1> {column.title}</Title1>
-                            <ResetResponsiveLayout>
-                                <RowList>
-                                    {column.items.map(
-                                        ({title: itemTitle, ...itemInteractiveProps}, itemIndex) => (
-                                            <Row
-                                                key={itemIndex}
-                                                title={itemTitle}
-                                                {...getInteractivePropsWithCloseMenu(itemInteractiveProps)}
-                                            />
-                                        )
-                                    )}
-                                </RowList>
-                            </ResetResponsiveLayout>
-                        </Stack>
-                    ))}
+                    {menu?.content ? (
+                        <Box paddingBottom={16}>{menu.content}</Box>
+                    ) : (
+                        columns.map((column, columnIndex) => (
+                            <Stack space={8} key={columnIndex}>
+                                <Title1> {column.title}</Title1>
+                                <ResetResponsiveLayout>
+                                    <RowList>
+                                        {column.items.map(
+                                            ({title: itemTitle, ...itemInteractiveProps}, itemIndex) => (
+                                                <Row
+                                                    key={itemIndex}
+                                                    title={itemTitle}
+                                                    {...getInteractivePropsWithCloseMenu(
+                                                        itemInteractiveProps
+                                                    )}
+                                                />
+                                            )
+                                        )}
+                                    </RowList>
+                                </ResetResponsiveLayout>
+                            </Stack>
+                        ))
+                    )}
                 </Stack>
-
-                {menu?.extra && <Box paddingY={16}>{menu.extra}</Box>}
             </ResponsiveLayout>
         );
     };
@@ -512,15 +517,11 @@ const MainNavigationBarDesktopMenu = ({
                                     }
                                 }}
                             >
-                                <Inline space="between">
-                                    {columns.length > 0 && (
-                                        <Inline space={24}>
-                                            {columns.map((column, columnIdx) => (
-                                                <Stack
-                                                    key={columnIdx}
-                                                    space={24}
-                                                    className={styles.desktopMenuColumn}
-                                                >
+                                {sections[openedSection]?.menu?.content ?? (
+                                    <Grid rows={1} columns={12} gap={24}>
+                                        {columns.map((column, columnIdx) => (
+                                            <GridItem key={columnIdx} columnSpan={2}>
+                                                <Stack space={24}>
                                                     <Text2
                                                         medium
                                                         color={vars.colors.textSecondary}
@@ -546,11 +547,10 @@ const MainNavigationBarDesktopMenu = ({
                                                         )}
                                                     </Stack>
                                                 </Stack>
-                                            ))}
-                                        </Inline>
-                                    )}
-                                    {sections[openedSection]?.menu?.extra}
-                                </Inline>
+                                            </GridItem>
+                                        ))}
+                                    </Grid>
+                                )}
                             </div>
                         </ResponsiveLayout>
                     </div>

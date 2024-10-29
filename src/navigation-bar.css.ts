@@ -412,10 +412,6 @@ export const desktopMenuContentFadeIn = style({
     },
 });
 
-export const desktopMenuColumn = style({
-    minWidth: 184,
-});
-
 export const desktopMenuColumnItem = style({
     color: colorVars.colors.textPrimary,
 });
