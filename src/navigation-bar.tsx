@@ -214,7 +214,7 @@ type SectionMenu = ExclusifyUnion<
     | {
           small?: boolean;
           // Custom content can be passed as a function that takes an argument with a callback to close the menu in mobile
-          content?: React.ReactElement | ((props?: {closeMenu: () => void}) => React.ReactElement);
+          content?: React.ReactElement | ((props: {closeMenu: () => void}) => React.ReactElement);
       }
 >;
 
@@ -526,7 +526,8 @@ const MainNavigationBarDesktopMenu = ({
                             >
                                 {customContent ? (
                                     typeof customContent === 'function' ? (
-                                        customContent()
+                                        // the callback to close the menu is not required in desktop menu
+                                        customContent({closeMenu: () => {}})
                                     ) : (
                                         customContent
                                     )
