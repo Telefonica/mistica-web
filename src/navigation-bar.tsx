@@ -465,9 +465,11 @@ const MainNavigationBarDesktopMenu = ({
         // Disable scroll in menu content until height's animation is finished to avoid
         // showing the scrollbar while the menu's container is changing it's height
         setIsMenuContentScrollable(false);
-        const id = setTimeout(() => setIsMenuContentScrollable(true), menuAnimationDuration);
-        return () => clearTimeout(id);
-    }, [openedSection, menuAnimationDuration]);
+        if (isMenuOpen) {
+            const id = setTimeout(() => setIsMenuContentScrollable(true), menuAnimationDuration);
+            return () => clearTimeout(id);
+        }
+    }, [isMenuOpen, openedSection, menuAnimationDuration]);
 
     const columns = sections[openedSection]?.menu?.columns || [];
     const customContent = sections[openedSection]?.menu?.content;
