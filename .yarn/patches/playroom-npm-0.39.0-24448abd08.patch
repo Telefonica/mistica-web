@@ -1,0 +1,493 @@
+diff --git a/src/Playroom/AiPanel/AiPanel.tsx b/src/Playroom/AiPanel/AiPanel.tsx
+new file mode 100644
+index 0000000000000000000000000000000000000000..520c51aa2be1b6f990f5a17694b2831a7cb5366c
+--- /dev/null
++++ b/src/Playroom/AiPanel/AiPanel.tsx
+@@ -0,0 +1,304 @@
++/* eslint-disable no-nested-ternary */
++import * as React from 'react';
++import { Heading } from '../Heading/Heading';
++import { ToolbarPanel } from '../ToolbarPanel/ToolbarPanel';
++import { colorPaletteVars } from '../sprinkles.css';
++import { vars } from '../vars.css';
++import { StoreContext } from '../../StoreContext/StoreContext';
++import { formatCode } from '../../utils/formatting';
++
++const iconButtonStyles: React.CSSProperties = {
++  display: 'inline-flex',
++  background: 'transparent',
++  border: 'none',
++  cursor: 'pointer',
++  width: 'auto',
++  color: 'inherit',
++  lineHeight: 'normal',
++  WebkitAppearance: 'none',
++  padding: 0,
++  margin: 0,
++};
++
++const AnnimatedDots = () => {
++  const [dots, setDots] = React.useState('.');
++
++  React.useEffect(() => {
++    const interval = setInterval(() => {
++      setDots((currentDots) => {
++        if (currentDots.length === 3) {
++          return '.';
++        }
++        return `${currentDots}.`;
++      });
++    }, 500);
++    return () => clearInterval(interval);
++  }, []);
++
++  return <>{dots}</>;
++};
++
++const aiBaseUrl = `https://mistica-playroom-api-atoledano.tooling-dev.svc.dev.tuenti.io`; // `http://localhost:3000`;
++
++const fetchApi = (path: string, options?: RequestInit): Promise<Response> =>
++  fetch(`${aiBaseUrl}${path}`, {
++    credentials: 'include',
++    method: options?.method || 'GET',
++    headers: {
++      Accept: 'application/json',
++      'Content-Type': 'application/json',
++      ...options?.headers,
++    },
++    ...options,
++  }).then((response) => {
++    if (response.status === 401) {
++      window.location.assign('/oauth2/sign_in');
++      return new Promise(() => {}); // never resolve, as we are redirecting to login
++    }
++    return response;
++  });
++
++const askAi = (sessionId: string, message: string) =>
++  fetchApi('/ask', {
++    method: 'POST',
++    body: JSON.stringify({ sessionId, message }),
++  })
++    .then((response) => response.json())
++    .then((data) => {
++      if (!data.success) {
++        console.error('Error:', data);
++        throw new Error(data.error);
++      }
++      return data.source;
++    });
++
++const createAiSession = (): Promise<string> =>
++  fetchApi('/create-session')
++    .then((response) => response.json())
++    .then((data) => data.sessionId);
++
++export default () => {
++  const [{ aiConversation }, dispatch] = React.useContext(StoreContext);
++  const [isWaitingForResponse, setIsWaitingForResponse] =
++    React.useState<boolean>(false);
++  const [error, setError] = React.useState<string | null>(null);
++
++  const textAreaRef = React.useRef<HTMLTextAreaElement>(null);
++
++  const sendMessage = async (message: string) => {
++    if (!message) {
++      return;
++    }
++    dispatch({
++      type: 'addAiMessage',
++      payload: {
++        message: {
++          role: 'user',
++          content: { type: 'text', text: message },
++        },
++      },
++    });
++    setIsWaitingForResponse(true);
++    let sessionId = aiConversation.sessionId;
++    if (!sessionId) {
++      sessionId = await createAiSession();
++      dispatch({
++        type: 'createAiSession',
++        payload: { sessionId },
++      });
++    }
++    try {
++      const response = await askAi(sessionId, message);
++      console.error('response', response);
++      const { code: formattedCode } = formatCode({
++        code: response,
++        cursor: { line: 0, ch: 0 },
++      });
++
++      dispatch({
++        type: 'updateCode',
++        payload: { code: formattedCode },
++      });
++
++      dispatch({
++        type: 'addAiMessage',
++        payload: {
++          message: {
++            role: 'assistant',
++            content: { type: 'text', text: formattedCode },
++          },
++        },
++      });
++    } catch (e) {
++      console.error('setError', e);
++      setError((e as Error).message || 'Error');
++      setTimeout(() => setError(null), 5000);
++    } finally {
++      setIsWaitingForResponse(false);
++    }
++  };
++
++  const restoreSnippet = (snippet: string) => {
++    dispatch({
++      type: 'updateCode',
++      payload: { code: snippet },
++    });
++  };
++
++  const restartConversation = () => {
++    dispatch({
++      type: 'resetAiMessages',
++    });
++    textAreaRef.current?.focus();
++  };
++
++  return (
++    <ToolbarPanel>
++      <div
++        style={{
++          display: 'flex',
++          flexDirection: 'column',
++          height: '100%',
++          gap: 16,
++        }}
++      >
++        <div style={{ display: 'flex' }}>
++          <div style={{ flex: 1 }}>
++            <Heading as="h4" level="3">
++              {error || 'AI Assistant'}
++            </Heading>
++          </div>
++          {aiConversation.sessionId && (
++            <button
++              onClick={restartConversation}
++              style={{ ...iconButtonStyles }}
++              title="Restart conversation"
++              aria-label="Restart conversation"
++            >
++              <svg
++                width={24}
++                height={24}
++                viewBox="0 0 24 24"
++                role="presentation"
++              >
++                <path
++                  fill="currentColor"
++                  d="M18.2 7.905h-4.405v-1.25h2.321a6.75 6.75 0 0 0-10.865 5.45H4l-.001-.1A8 8 0 0 1 16.95 5.72V3.5h1.25zM5.8 16.105h4.405v1.25H7.884a6.75 6.75 0 0 0 10.866-5.45H20v.1A8 8 0 0 1 7.05 18.29v2.22H5.8z"
++                />
++              </svg>
++            </button>
++          )}
++        </div>
++        <div
++          style={{
++            flex: 1,
++            display: 'flex',
++            flexDirection: 'column',
++            gap: 16,
++            overflowY: 'auto',
++            margin: '0 -20px',
++            padding: '0 20px',
++          }}
++        >
++          {aiConversation.messages.map((message, idx) =>
++            message.role === 'assistant' ? (
++              <div
++                key={idx}
++                style={{
++                  border: `1px solid ${colorPaletteVars.border.standard}`,
++                  borderRadius: '16px',
++                  padding: '8px',
++                  width: 'fit-content',
++                  fontStyle: 'italic',
++                  display: 'flex',
++                  alignItems: 'center',
++                  gap: 8,
++                }}
++              >
++                <button
++                  onClick={() => restoreSnippet(message.content.text)}
++                  aria-label="Load code"
++                  title="Load code"
++                  style={iconButtonStyles}
++                >
++                  <svg
++                    width={24}
++                    height={24}
++                    viewBox="0 0 24 24"
++                    role="presentation"
++                  >
++                    <path
++                      fill="currentColor"
++                      d="M21.841 6.019c0-.774-.652-1.404-1.456-1.404H3.615c-.807 0-1.46.63-1.46 1.404v11.958c0 .773.655 1.403 1.46 1.403h16.77c.804 0 1.456-.63 1.456-1.403zM3.614 5.797h16.774c.126 0 .226.098.226.219v1.73H3.388v-1.73c0-.12.1-.219.226-.219m16.77 12.398v-.003H3.613a.224.224 0 0 1-.227-.218V8.932h17.227v9.045c0 .12-.101.218-.227.218M6.313 7.24a.56.56 0 0 1-.569-.55c0-.304.255-.548.569-.548.316 0 .569.246.569.549a.56.56 0 0 1-.57.549m1.14-.55c0 .303.252.55.569.55a.556.556 0 0 0 .568-.55.56.56 0 0 0-.568-.548.56.56 0 0 0-.57.549M4.6 7.24a.56.56 0 0 1-.568-.55c0-.304.252-.548.568-.548.317 0 .569.246.569.549a.556.556 0 0 1-.569.549m4.398 4.77a.54.54 0 0 0 .04-.781.585.585 0 0 0-.81-.037l-2.34 2.045a.54.54 0 0 0-.187.406c0 .154.067.303.185.406l2.34 2.082c.108.1.251.148.388.148a.58.58 0 0 0 .42-.176.54.54 0 0 0-.03-.782l-1.88-1.672zm6.684-.82 2.339 2.044a.55.55 0 0 1 .187.406.55.55 0 0 1-.185.41l-2.339 2.08a.59.59 0 0 1-.81-.03.54.54 0 0 1 .032-.782l1.88-1.672-1.875-1.639a.54.54 0 0 1-.039-.781.59.59 0 0 1 .81-.037m-2.255.66a.544.544 0 0 0-.289-.73.58.58 0 0 0-.759.282l-1.896 4.079a.54.54 0 0 0 .288.728q.116.046.236.048a.58.58 0 0 0 .523-.328z"
++                    />
++                  </svg>
++                </button>
++                <p>Code generated</p>
++              </div>
++            ) : (
++              <div
++                key={idx}
++                style={{
++                  alignSelf: 'flex-end',
++                  border: `1px solid ${colorPaletteVars.border.standard}`,
++                  borderRadius: '16px',
++                  padding: '8px',
++                  width: 'fit-content',
++                }}
++              >
++                {message.content.text}
++              </div>
++            )
++          )}
++          {isWaitingForResponse && (
++            <div
++              style={{
++                border: `1px solid ${colorPaletteVars.border.standard}`,
++                borderRadius: '16px',
++                padding: '8px',
++                width: 'fit-content',
++                minWidth: '56px',
++                textAlign: 'center',
++              }}
++            >
++              <AnnimatedDots />
++            </div>
++          )}
++        </div>
++        <textarea
++          ref={textAreaRef}
++          onKeyUp={(e) => {
++            if (e.key === 'Enter' && !e.shiftKey) {
++              sendMessage(e.currentTarget.value.trim());
++              e.currentTarget.value = '';
++            }
++          }}
++          disabled={isWaitingForResponse || Boolean(error)}
++          style={{
++            width: '100%',
++            minWidth: '100%',
++            maxWidth: '100%',
++            ['fieldSizing' as any]: 'content',
++            minHeight: 'calc(3lh + 16px)',
++            maxHeight: 'calc(8lh + 16px)',
++            fontFamily: vars.font.family.standard,
++            fontSize: 'inherit',
++            padding: '8px',
++            border: error
++              ? `1px solid red`
++              : `1px solid ${colorPaletteVars.border.standard}`,
++          }}
++          placeholder={
++            isWaitingForResponse
++              ? 'Generating...'
++              : error
++              ? 'There was an error'
++              : aiConversation.sessionId
++              ? 'Ask for changes'
++              : 'What do you want to build?'
++          }
++        />
++      </div>
++    </ToolbarPanel>
++  );
++};
+diff --git a/src/Playroom/Toolbar/Toolbar.tsx b/src/Playroom/Toolbar/Toolbar.tsx
+index 389401bc0df0a8cba17cc0f4a53229027bdc81f2..9ebbaa25c6204357b052a9093fd15dc548c07518 100644
+--- a/src/Playroom/Toolbar/Toolbar.tsx
++++ b/src/Playroom/Toolbar/Toolbar.tsx
+@@ -18,6 +18,7 @@ import SettingsIcon from '../icons/SettingsIcon';
+ import { isMac } from '../../utils/formatting';
+ 
+ import { CSSTransition } from 'react-transition-group';
++import AiPanel from '../AiPanel/AiPanel';
+ 
+ interface Props {
+   themes: PlayroomProps['themes'];
+@@ -59,6 +60,7 @@ export default ({ themes: allThemes, widths: allWidths, snippets }: Props) => {
+   const isFramesOpen = activeToolbarPanel === 'frames';
+   const isSettingsOpen = activeToolbarPanel === 'settings';
+   const isPreviewOpen = activeToolbarPanel === 'preview';
++  const isAiOpen = activeToolbarPanel === 'ai';
+ 
+   const [lastActivePanel, setLastActivePanel] =
+     useState<typeof activeToolbarPanel>(undefined);
+@@ -131,6 +133,24 @@ export default ({ themes: allThemes, widths: allWidths, snippets }: Props) => {
+             >
+               <PlayIcon />
+             </ToolbarItem>
++
++            <ToolbarItem
++              active={isAiOpen}
++              title="AI Assistant"
++              onClick={() => {
++                dispatch({
++                  type: 'toggleToolbar',
++                  payload: { panel: 'ai' },
++                });
++              }}
++            >
++              <svg width={24} height={24} viewBox="0 0 24 24" role="img">
++                <path
++                  fill="currentColor"
++                  d="M17.823 12.909H13.88v.753h5.877c.697 0 1.263.549 1.263 1.224v5.74c0 .675-.566 1.224-1.263 1.224H4.243c-.697 0-1.263-.547-1.263-1.224v-5.74c0-.675.566-1.224 1.263-1.224h5.877v-.754H6.176c-.697 0-1.263-.546-1.263-1.224v-.689h-.664c-.698 0-1.263-.546-1.263-1.224v-2.89c0-.676.565-1.225 1.263-1.225h.664v-.983c0-.675.566-1.224 1.263-1.224h5.32V3.18a.6.6 0 0 1-.152-.39c0-.35.294-.635.656-.635.36 0 .655.286.655.636 0 .148-.062.28-.151.39v.268h5.32c.697 0 1.262.546 1.262 1.224v.995h.676c.697 0 1.263.546 1.263 1.224v2.89c0 .675-.566 1.225-1.263 1.225h-.676v.677c0 .676-.565 1.225-1.263 1.225m0-1.225V4.676H6.176v2.123l.003.028q.005.029.005.056v2.891q0 .028-.005.056l-.003.028v1.83h4.544q.008 0 .015-.004l.015-.002h2.499q.009-.002.018 0 .006.002.013.002zm-5.207 1.975v-.753H11.38v.753zm.65 1.224h-.004l-.004.003q-.005.002-.012.003h-2.498l-.008-.002q-.006-.004-.012-.004H4.243v5.74h1.832l-.001-.017-.002-.017v-3.678c0-.675.563-1.224 1.264-1.224h9.33c.698 0 1.264.546 1.264 1.224v3.678l-.002.017-.001.017h1.832v-5.74zm3.4 5.706v-3.678h-9.33v3.678zM4.25 9.771h.664v-2.89h-.664zm15.513.011v-2.89h-.673v2.89zm-9.687-2.644a.454.454 0 0 0-.462-.445.454.454 0 0 0-.462.445c0 .25.204.448.462.448a.456.456 0 0 0 .462-.448m1.177.003c0 .877-.737 1.588-1.642 1.588S7.97 8.018 7.97 7.141c0-.874.736-1.588 1.641-1.588s1.642.714 1.642 1.588m3.596-.017a.454.454 0 0 0-.462-.445.454.454 0 0 0-.462.445c0 .244.207.446.462.446a.454.454 0 0 0 .462-.446m-.462-1.588c.905 0 1.639.711 1.639 1.588 0 .874-.737 1.588-1.639 1.588s-1.641-.711-1.641-1.588c.003-.877.74-1.588 1.641-1.588m-.134 4.507a.62.62 0 0 0-.63-.61H10.38a.62.62 0 0 0-.63.61c0 .336.283.61.63.61h3.241a.62.62 0 0 0 .63-.61"
++                />
++              </svg>
++            </ToolbarItem>
+           </div>
+ 
+           <div>
+@@ -198,6 +218,8 @@ export default ({ themes: allThemes, widths: allWidths, snippets }: Props) => {
+               <PreviewPanel themes={allThemes} visibleThemes={visibleThemes} />
+             )}
+ 
++            {lastActivePanel === 'ai' && <AiPanel />}
++
+             {lastActivePanel === 'settings' && <SettingsPanel />}
+           </div>
+         </CSSTransition>
+diff --git a/src/Playroom/ToolbarPanel/ToolbarPanel.css.ts b/src/Playroom/ToolbarPanel/ToolbarPanel.css.ts
+index 739d6a6258f2e321a7df0139ce3b587f62630c51..96d81e933f099b4816d652339a00a89ac908f7f8 100644
+--- a/src/Playroom/ToolbarPanel/ToolbarPanel.css.ts
++++ b/src/Playroom/ToolbarPanel/ToolbarPanel.css.ts
+@@ -1,5 +1,12 @@
++import { style } from '@vanilla-extract/css';
+ import { sprinkles } from '../sprinkles.css';
+ 
+-export const root = sprinkles({
+-  padding: 'xxlarge',
+-});
++export const root = style([
++  sprinkles({
++    padding: 'xxlarge',
++  }),
++  {
++    height: '100%',
++    boxSizing: 'border-box',
++  },
++]);
+diff --git a/src/StoreContext/StoreContext.tsx b/src/StoreContext/StoreContext.tsx
+index d40aa4054681e1069ef4535f9faa9e31a75521cc..90f0813c526966e047e40fa1d7c99a16faaee243 100644
+--- a/src/StoreContext/StoreContext.tsx
++++ b/src/StoreContext/StoreContext.tsx
+@@ -73,7 +73,15 @@ interface StatusMessage {
+   tone: 'positive' | 'critical';
+ }
+ 
+-type ToolbarPanel = 'snippets' | 'frames' | 'preview' | 'settings';
++export interface AiConversationMessage {
++  role: 'user' | 'assistant';
++  content: {
++    type: 'text';
++    text: string;
++  };
++}
++
++type ToolbarPanel = 'snippets' | 'frames' | 'preview' | 'settings' | 'ai';
+ interface State {
+   code: string;
+   title?: string;
+@@ -92,6 +100,10 @@ interface State {
+   visibleWidths?: number[];
+   ready: boolean;
+   colorScheme: ColorScheme;
++  aiConversation: {
++    messages: Array<AiConversationMessage>;
++    sessionId: string | null;
++  };
+ }
+ 
+ type Action =
+@@ -127,7 +139,11 @@ type Action =
+   | { type: 'resetVisibleThemes' }
+   | { type: 'updateVisibleWidths'; payload: { widths: number[] } }
+   | { type: 'resetVisibleWidths' }
+-  | { type: 'updateTitle'; payload: { title: string } };
++  | { type: 'updateTitle'; payload: { title: string } }
++  | { type: 'addAiMessage'; payload: { message: AiConversationMessage } }
++  | { type: 'resetAiMessages' }
++  | { type: 'goBackToAiMessage'; payload: { index: number } }
++  | { type: 'createAiSession'; payload: { sessionId: string } };
+ 
+ const resetPreview = ({
+   previewRenderCode,
+@@ -422,6 +438,52 @@ const createReducer =
+         };
+       }
+ 
++      case 'createAiSession': {
++        const { sessionId } = action.payload;
++
++        return {
++          ...state,
++          aiConversation: {
++            ...state.aiConversation,
++            sessionId,
++          },
++        };
++      }
++
++      case 'addAiMessage': {
++        const { message } = action.payload;
++
++        return {
++          ...state,
++          aiConversation: {
++            ...state.aiConversation,
++            messages: [...state.aiConversation.messages, message],
++          },
++        };
++      }
++
++      case 'resetAiMessages': {
++        return {
++          ...state,
++          aiConversation: {
++            sessionId: null,
++            messages: [],
++          },
++        };
++      }
++
++      case 'goBackToAiMessage': {
++        const { index } = action.payload;
++
++        return {
++          ...state,
++          aiConversation: {
++            ...state.aiConversation,
++            messages: state.aiConversation.messages.slice(0, index + 1),
++          },
++        };
++      }
++
+       default:
+         return state;
+     }
+@@ -439,6 +501,10 @@ const initialState: State = {
+   editorWidth: defaultEditorSize,
+   ready: false,
+   colorScheme: 'light',
++  aiConversation: {
++    messages: [],
++    sessionId: null,
++  },
+ };
+ 
+ export const StoreContext = createContext<StoreContextValues>([
