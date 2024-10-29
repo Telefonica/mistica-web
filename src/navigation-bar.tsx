@@ -279,6 +279,7 @@ const MainNavigationBarBurgerMenu = ({
     const renderSection = (index: number) => {
         const {title, menu, ...interactiveProps} = sections[index];
         const columns = menu?.columns || (menu?.column ? [menu.column] : []);
+        const customContent = menu?.content;
 
         return (
             <ResponsiveLayout>
@@ -308,9 +309,9 @@ const MainNavigationBarBurgerMenu = ({
                         </Title3>
                     </Stack>
 
-                    {menu?.content ? (
+                    {customContent ? (
                         <Box paddingBottom={16}>
-                            {typeof menu.content === 'function' ? menu.content({closeMenu}) : menu.content}
+                            {typeof customContent === 'function' ? customContent({closeMenu}) : customContent}
                         </Box>
                     ) : (
                         columns.map((column, columnIndex) => (
