@@ -211,7 +211,11 @@ type SectionColumn = {
 type SectionMenu = ExclusifyUnion<
     | {small: true; column: SectionColumn}
     | {small?: false; columns: ReadonlyArray<SectionColumn>}
-    | {small?: boolean; content?: React.ReactElement}
+    | {
+          small?: boolean;
+          // Custom content can be passed as a function that takes an argument with a callback to close the menu in mobile
+          content?: React.ReactElement | ((props?: {closeMenu: () => void}) => React.ReactElement);
+      }
 >;
 
 type MainNavigationBarSection = {
@@ -305,7 +309,9 @@ const MainNavigationBarBurgerMenu = ({
                     </Stack>
 
                     {menu?.content ? (
-                        <Box paddingBottom={16}>{menu.content}</Box>
+                        <Box paddingBottom={16}>
+                            {typeof menu.content === 'function' ? menu.content({closeMenu}) : menu.content}
+                        </Box>
                     ) : (
                         columns.map((column, columnIndex) => (
                             <Stack space={8} key={columnIndex}>
@@ -470,6 +476,7 @@ const MainNavigationBarDesktopMenu = ({
     }, [openedSection, menuAnimationDuration]);
 
     const columns = sections[openedSection]?.menu?.columns || [];
+    const customContent = sections[openedSection]?.menu?.content;
 
     return (
         <div className={styles.desktopOnly}>
@@ -517,7 +524,13 @@ const MainNavigationBarDesktopMenu = ({
                                     }
                                 }}
                             >
-                                {sections[openedSection]?.menu?.content ?? (
+                                {customContent ? (
+                                    typeof customContent === 'function' ? (
+                                        customContent()
+                                    ) : (
+                                        customContent
+                                    )
+                                ) : (
                                     <Grid rows={1} columns={12} gap={24}>
                                         {columns.map((column, columnIdx) => (
                                             <GridItem key={columnIdx} columnSpan={2}>
