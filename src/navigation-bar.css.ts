@@ -465,3 +465,20 @@ export const desktopMenuContentFadeIn = style({
 export const desktopMenuColumnItem = style({
     color: vars.colors.textPrimary,
 });
+
+export const desktopMenuSectionArrowContainer = style({
+    position: 'absolute',
+    zIndex: -1,
+    right: -8,
+    top: 0,
+    bottom: 0,
+    display: 'flex',
+    alignItems: 'center',
+});
+
+export const desktopMenuSectionArrow = style({
+    border: 'none',
+    background: 'transparent',
+    padding: 0,
+    transition: `opacity 0.1s`,
+});

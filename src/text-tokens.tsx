@@ -32,7 +32,8 @@ export type Dictionary = {
     menuLabelSuffix: string;
     openNavigationMenu: string;
     closeNavigationMenu: string;
-    MainNavigationBarSectionSeeAll: string;
+    mainNavigationBarOpenSectionMenu: string;
+    mainNavigationBarSectionSeeAll: string;
     backNavigationBar: string;
     clearButton: string;
     carouselNextButton: string;
@@ -292,7 +293,14 @@ export const closeNavigationMenu: TextToken = {
     pt: 'Fechar menu de navegação',
 };
 
-export const MainNavigationBarSectionSeeAll: TextToken = {
+export const mainNavigationBarOpenSectionMenu: TextToken = {
+    es: 'Abrir submenú',
+    en: 'Open submenu',
+    de: 'Untermenü öffnen',
+    pt: 'Abrir submenu',
+};
+
+export const mainNavigationBarSectionSeeAll: TextToken = {
     es: 'Ver todo',
     en: 'See all',
     de: 'Alle anzeigen',
