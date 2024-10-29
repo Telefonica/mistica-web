@@ -15,7 +15,8 @@ type ProgressBarStoryArgs = {foo: 'bar'};
 
 export const ProgressBarStory: StoryComponent<ProgressBarStoryArgs> = () => {
     const [key, setKey] = React.useState(0);
-    const [values, setValues] = React.useState(Array.from({length: 8}, () => 0.1));
+    const segments = 8;
+    const [values, setValues] = React.useState(Array.from({length: segments}, () => 0.1));
     return (
         <div
             style={{
@@ -23,17 +24,17 @@ export const ProgressBarStory: StoryComponent<ProgressBarStoryArgs> = () => {
             }}
         >
             <div key={key}>
-                <Meter values={values} />
+                <Meter type="circle" values={values} />
             </div>
             <Stack space={16}>
                 <input
                     type="range"
                     style={{width: 400}}
-                    value={values[0] * 1000 * 8}
+                    value={values[0] * 1000 * segments}
                     max={1000}
                     onChange={(e) => {
-                        const v = +e.currentTarget.value / 1000 / 8;
-                        setValues(Array.from({length: 8}, () => v));
+                        const v = +e.currentTarget.value / 1000 / segments;
+                        setValues(Array.from({length: segments}, () => v));
                     }}
                 />
                 <div>{values[0]}</div>
