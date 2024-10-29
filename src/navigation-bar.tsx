@@ -239,7 +239,6 @@ const MainNavigationBarBurgerMenu = ({
     closeMenu,
     open,
     id,
-    disableFocusTrap,
     setDisableFocusTrap,
 }: {
     sections: ReadonlyArray<MainNavigationBarSection>;
@@ -247,7 +246,6 @@ const MainNavigationBarBurgerMenu = ({
     closeMenu: () => void;
     open: boolean;
     id: string;
-    disableFocusTrap: boolean;
     setDisableFocusTrap: (value: boolean) => void;
 }) => {
     const {texts, t} = useTheme();
@@ -353,66 +351,64 @@ const MainNavigationBarBurgerMenu = ({
                 mountOnEnter
                 unmountOnExit
             >
-                <FocusTrap disabled={disableFocusTrap} group="burger-menu-lock">
-                    <nav
-                        className={styles.burgerMenu}
-                        style={{boxShadow: `6px 0 4px -4px rgba(0, 0, 0, ${shadowAlpha})`}}
-                        id={id}
-                        ref={menuRef}
+                <nav
+                    className={styles.burgerMenu}
+                    style={{boxShadow: `6px 0 4px -4px rgba(0, 0, 0, ${shadowAlpha})`}}
+                    id={id}
+                    ref={menuRef}
+                >
+                    <CSSTransition
+                        timeout={menuAnimationDuration}
+                        in={isSubMenuOpen}
+                        nodeRef={menuContentRef}
                     >
-                        <CSSTransition
-                            timeout={menuAnimationDuration}
-                            in={isSubMenuOpen}
-                            nodeRef={menuContentRef}
-                        >
-                            {(transitionStatus) => (
-                                <div
-                                    ref={menuContentRef}
-                                    style={{
-                                        transition: `transform ${menuAnimationDuration}ms ease-out`,
-                                        transform: `translate(${isSubMenuOpen ? '-100vw' : '0vw'})`,
-                                    }}
-                                >
-                                    {transitionStatus !== 'entered' && (
-                                        <div className={styles.burgerMainMenuContainer}>
-                                            <ResponsiveLayout>
-                                                <ResetResponsiveLayout>
-                                                    <RowList>
-                                                        {sections.map(
-                                                            ({title, menu, ...interactiveProps}, index) => (
-                                                                <Row
-                                                                    key={index}
-                                                                    title={title}
-                                                                    {...(menu
-                                                                        ? {
-                                                                              onPress: () => {
-                                                                                  setIsSubMenuOpen(true);
-                                                                                  setOpenedSection(index);
-                                                                              },
-                                                                          }
-                                                                        : getInteractivePropsWithCloseMenu(
-                                                                              interactiveProps
-                                                                          ))}
-                                                                />
-                                                            )
-                                                        )}
-                                                    </RowList>
-                                                </ResetResponsiveLayout>
-                                                {extra && <Box paddingY={16}>{extra}</Box>}
-                                            </ResponsiveLayout>
-                                        </div>
-                                    )}
+                        {(transitionStatus) => (
+                            <div
+                                ref={menuContentRef}
+                                style={{
+                                    transition: `transform ${menuAnimationDuration}ms ease-out`,
+                                    transform: `translate(${isSubMenuOpen ? '-100vw' : '0vw'})`,
+                                }}
+                            >
+                                {transitionStatus !== 'entered' && (
+                                    <div className={styles.burgerMainMenuContainer}>
+                                        <ResponsiveLayout>
+                                            <ResetResponsiveLayout>
+                                                <RowList>
+                                                    {sections.map(
+                                                        ({title, menu, ...interactiveProps}, index) => (
+                                                            <Row
+                                                                key={index}
+                                                                title={title}
+                                                                {...(menu
+                                                                    ? {
+                                                                          onPress: () => {
+                                                                              setIsSubMenuOpen(true);
+                                                                              setOpenedSection(index);
+                                                                          },
+                                                                      }
+                                                                    : getInteractivePropsWithCloseMenu(
+                                                                          interactiveProps
+                                                                      ))}
+                                                            />
+                                                        )
+                                                    )}
+                                                </RowList>
+                                            </ResetResponsiveLayout>
+                                            {extra && <Box paddingY={16}>{extra}</Box>}
+                                        </ResponsiveLayout>
+                                    </div>
+                                )}
 
-                                    {transitionStatus !== 'exited' && openedSection !== -1 && (
-                                        <div className={styles.burgerSubMenuContainer}>
-                                            {renderSection(openedSection)}
-                                        </div>
-                                    )}
-                                </div>
-                            )}
-                        </CSSTransition>
-                    </nav>
-                </FocusTrap>
+                                {transitionStatus !== 'exited' && openedSection !== -1 && (
+                                    <div className={styles.burgerSubMenuContainer}>
+                                        {renderSection(openedSection)}
+                                    </div>
+                                )}
+                            </div>
+                        )}
+                    </CSSTransition>
+                </nav>
             </CSSTransition>
         </Portal>
     );
@@ -867,20 +863,17 @@ export const MainNavigationBar = ({
     }
 
     return (
-        <>
-            <FocusTrap disabled={disableFocusTrap} group="burger-menu-lock">
-                {mainNavBar}
-            </FocusTrap>
+        <FocusTrap disabled={disableFocusTrap}>
+            {mainNavBar}
             <MainNavigationBarBurgerMenu
                 open={isBurgerMenuOpen}
                 id={menuId}
                 sections={sections}
                 extra={burgerMenuExtra}
-                closeMenu={() => setIsBurgerMenuOpen(false)}
-                disableFocusTrap={disableFocusTrap}
+                closeMenu={closeMenu}
                 setDisableFocusTrap={setDisableFocusTrap}
             />
-        </>
+        </FocusTrap>
     );
 };
 
