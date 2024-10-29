@@ -2,11 +2,14 @@ import {style, styleVariants} from '@vanilla-extract/css';
 import {sprinkles} from './sprinkles.css';
 import {NAVBAR_HEIGHT_DESKTOP, NAVBAR_HEIGHT_DESKTOP_LARGE, NAVBAR_HEIGHT_MOBILE} from './theme';
 import * as mq from './media-queries.css';
-import {vars as colorVars} from './skins/skin-contract.css';
+import {vars} from './skins/skin-contract.css';
 
 const NAVBAR_ZINDEX = 25;
 
+export const DESKTOP_SMALL_MENU_WIDTH = 184;
+
 export const BURGER_MENU_ANIMATION_DURATION_MS = 300;
+export const DESKTOP_SMALL_MENU_ANIMATION_DURATION_MS = 200;
 export const DESKTOP_MENU_ANIMATION_DURATION_MS = 400;
 const DESKTOP_MENU_CONTENT_ANIMATION_DURATION_MS = 800;
 
@@ -98,12 +101,12 @@ const navbarBase = style([
 ]);
 
 export const navbarBorderColorVariants = styleVariants({
-    default: [navbarBase, {borderColor: colorVars.colors.divider}],
+    default: [navbarBase, {borderColor: vars.colors.divider}],
     noBorder: [navbarBase, {borderColor: 'transparent'}],
     menuOpen: [
         navbarBase,
         {
-            borderColor: colorVars.colors.divider,
+            borderColor: vars.colors.divider,
 
             '@media': {
                 [mq.tabletOrSmaller]: {
@@ -159,27 +162,27 @@ export const section = style([
 ]);
 
 export const selectedSectionVariantes = styleVariants({
-    default: {borderColor: colorVars.colors.controlActivated},
-    inverse: {borderColor: colorVars.colors.inverse},
+    default: {borderColor: vars.colors.controlActivated},
+    inverse: {borderColor: vars.colors.inverse},
 });
 
 export const textWrapperVariants = styleVariants({
     default: {
-        color: colorVars.colors.textPrimary,
+        color: vars.colors.textPrimary,
         '@media': {
             [mq.supportsHover]: {
                 ':hover': {
-                    color: colorVars.colors.textSecondary,
+                    color: vars.colors.textSecondary,
                 },
             },
         },
     },
     inverse: {
-        color: colorVars.colors.textPrimaryInverse,
+        color: vars.colors.textPrimaryInverse,
         '@media': {
             [mq.supportsHover]: {
                 ':hover': {
-                    color: colorVars.colors.textSecondaryInverse,
+                    color: vars.colors.textSecondaryInverse,
                 },
             },
         },
@@ -314,7 +317,7 @@ export const burgerMenu = style([
         top: NAVBAR_HEIGHT_MOBILE,
         left: 0,
         right: 0,
-        background: colorVars.colors.background,
+        background: vars.colors.background,
     }),
     {
         height: `calc(100vh - ${NAVBAR_HEIGHT_MOBILE}px)`,
@@ -337,24 +340,24 @@ export const burgerSubMenuContainer = style({
 
 export const iconButtonVariants = styleVariants({
     default: [
-        sprinkles({color: colorVars.colors.neutralHigh}),
+        sprinkles({color: vars.colors.neutralHigh}),
         {
             '@media': {
                 [mq.supportsHover]: {
                     ':hover': {
-                        color: colorVars.colors.neutralMedium,
+                        color: vars.colors.neutralMedium,
                     },
                 },
             },
         },
     ],
     inverse: [
-        sprinkles({color: colorVars.colors.inverse}),
+        sprinkles({color: vars.colors.inverse}),
         {
             '@media': {
                 [mq.supportsHover]: {
                     ':hover': {
-                        color: colorVars.colors.inverse,
+                        color: vars.colors.inverse,
                     },
                 },
             },
@@ -370,12 +373,59 @@ export const lineHeightFix = style({
 
 export const desktopMenuContainer = style([
     sprinkles({
-        background: colorVars.colors.backgroundContainer,
+        background: vars.colors.backgroundContainer,
         position: 'fixed',
         width: '100%',
     }),
     {
         transition: `height ${DESKTOP_MENU_ANIMATION_DURATION_MS}ms cubic-bezier(0.65, 0, 0.35, 1)`,
+        boxShadow: '0px 2px 4px rgba(0,0,0,0.2)',
+        '@media': {
+            ['(prefers-reduced-motion)']: {
+                transition: 'none',
+            },
+        },
+    },
+]);
+
+export const desktopSmallMenuTransition = {
+    enter: style({
+        opacity: 0,
+    }),
+    enterActive: style({
+        opacity: 1,
+        transition: `opacity ${DESKTOP_SMALL_MENU_ANIMATION_DURATION_MS}ms ease-out`,
+        '@media': {
+            ['(prefers-reduced-motion)']: {
+                transition: 'none',
+            },
+        },
+    }),
+    exit: style({
+        opacity: 1,
+    }),
+    exitActive: style({
+        opacity: 0,
+        transition: `opacity ${DESKTOP_SMALL_MENU_ANIMATION_DURATION_MS}ms ease-out`,
+        '@media': {
+            ['(prefers-reduced-motion)']: {
+                transition: 'none',
+            },
+        },
+    }),
+};
+
+export const desktopSmallMenuContainer = style([
+    sprinkles({
+        background: vars.colors.backgroundContainer,
+        position: 'fixed',
+        paddingY: 40,
+        paddingX: 24,
+    }),
+    {
+        borderRadius: `0 0 ${vars.borderRadii.popup} ${vars.borderRadii.popup}`,
+        width: DESKTOP_SMALL_MENU_WIDTH,
+        overflowY: 'auto',
         boxShadow: '0px 2px 4px rgba(0,0,0,0.2)',
         '@media': {
             ['(prefers-reduced-motion)']: {
@@ -413,5 +463,5 @@ export const desktopMenuContentFadeIn = style({
 });
 
 export const desktopMenuColumnItem = style({
-    color: colorVars.colors.textPrimary,
+    color: vars.colors.textPrimary,
 });
