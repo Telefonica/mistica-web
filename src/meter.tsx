@@ -142,7 +142,12 @@ const Meter = ({type = 'arc', width = 400, colors = DEFAULT_COLORS, values}: Met
     }, [radius, values, maxAngle]);
 
     return (
-        <svg viewBox={`0 0 ${VIEW_BOX_WIDTH} ${VIEW_BOX_WIDTH}`} width={width} height={width}>
+        <svg
+            viewBox={`0 0 ${VIEW_BOX_WIDTH} ${VIEW_BOX_WIDTH}`}
+            width={width}
+            height={width}
+            style={{transform: `rotate(${type === 'circle' ? '90deg' : 0})`}}
+        >
             <defs>
                 <marker
                     id="marker-current"
@@ -155,7 +160,7 @@ const Meter = ({type = 'arc', width = 400, colors = DEFAULT_COLORS, values}: Met
                 >
                     <path
                         // the half pixel displacement is to avoid a gap between the marker and the path
-                        d={createArcPath({x1: 4.5, y1: 0, x2: 4.5, y2: 10, radius: 5})}
+                        d={createArcPath({x1: 5 - 0.5, y1: 0, x2: 5 - 0.5, y2: 10, radius: 5})}
                         fill={getColor(values.length - 1)}
                     />
                 </marker>
@@ -170,7 +175,7 @@ const Meter = ({type = 'arc', width = 400, colors = DEFAULT_COLORS, values}: Met
                 >
                     <path
                         // the half pixel displacement is to avoid a gap between the marker and the path
-                        d={createArcPath({x1: 5.5, y1: 0, x2: 5.5, y2: 10, radius: 5, clockwise: 0})}
+                        d={createArcPath({x1: 5 + 0.5, y1: 0, x2: 5 + 0.5, y2: 10, radius: 5, clockwise: 0})}
                         fill={getColor(firstNonZeroIndex)}
                     />
                 </marker>
@@ -206,12 +211,12 @@ const Meter = ({type = 'arc', width = 400, colors = DEFAULT_COLORS, values}: Met
                 stroke={vars.colors.barTrack}
                 fill="none"
                 strokeWidth={strokeWidth}
-                strokeLinecap="round"
+                strokeLinecap={type === 'circle' ? 'butt' : 'round'}
                 d={createArcPath({
                     x1: getX(0, radius),
                     y1: getY(0, radius),
-                    x2: getX(type === 'circle' ? 2 * Math.PI - 0.01 : Math.PI, radius),
-                    y2: getY(type === 'circle' ? 2 * Math.PI - 0.01 : Math.PI, radius),
+                    x2: getX(type === 'circle' ? 2 * Math.PI - separationAngle : Math.PI, radius),
+                    y2: getY(type === 'circle' ? 2 * Math.PI - separationAngle : Math.PI, radius),
                     largeArchFlag: type === 'circle' ? 1 : 0,
                     radius,
                 })}
