@@ -221,7 +221,8 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
         preventCopy = preventCopy ?? preventCopyInFormFields;
         const reactId = React.useId();
         const id = idProp || reactId;
-        const helperTextid = React.useId();
+        const leftHelperTextid = React.useId();
+        const rightHelperTextid = React.useId();
 
         const [inputState, setInputState] = React.useState<InputState>(
             defaultValue?.length || value?.length ? 'filled' : 'default'
@@ -317,7 +318,8 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
                     <HelperText
                         error={error}
                         leftText={helperText}
-                        id={helperTextid}
+                        leftTextId={leftHelperTextid}
+                        rightTextId={rightHelperTextid}
                         rightText={multiline && maxLength ? `${characterCount}/${maxLength}` : undefined}
                         rightTextLabel={
                             multiline && maxLength
@@ -439,7 +441,9 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
                                 defaultValue,
                                 value,
                                 ...(error && {'aria-invalid': true}),
-                                ...(helperText && {'aria-describedby': helperTextid}),
+                                ...(helperText && {
+                                    'aria-describedby': `${leftHelperTextid} ${rightHelperTextid}`,
+                                }),
                                 ...(preventCopy && {
                                     onCopy: preventCopyHandler,
                                     onCut: preventCopyHandler,

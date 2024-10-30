@@ -81,16 +81,18 @@ type HelperTextProps = {
     rightText?: string;
     rightTextLabel?: string;
     error?: boolean;
-    id?: string;
+    leftTextId?: string;
+    rightTextId?: string;
     children?: void;
 };
 
 export const HelperText = ({
     leftText,
+    leftTextId,
     rightText,
+    rightTextId,
     rightTextLabel,
     error,
-    id,
 }: HelperTextProps): JSX.Element => {
     const isInverse = useIsInverseOrMediaVariant();
     const leftColor = isInverse
@@ -112,7 +114,7 @@ export const HelperText = ({
                             <IconWarningRegular color={leftColor} className={styles.warnIcon} />
                         </Text1>
                     )}
-                    <Text1 color={leftColor} regular id={id}>
+                    <Text1 color={leftColor} regular id={leftTextId}>
                         {leftText}
                     </Text1>
                 </p>
@@ -122,7 +124,14 @@ export const HelperText = ({
                     className={classnames(styles.helperText, {[styles.rightHelperText]: !!leftText})}
                     data-testid="endHelperText"
                 >
-                    <Text1 color={rightColor} regular as="p" textAlign="right" wordBreak={false}>
+                    <Text1
+                        color={rightColor}
+                        regular
+                        as="p"
+                        textAlign="right"
+                        wordBreak={false}
+                        id={rightTextId}
+                    >
                         {rightTextLabel && (
                             <ScreenReaderOnly>
                                 <span>{rightTextLabel}</span>
