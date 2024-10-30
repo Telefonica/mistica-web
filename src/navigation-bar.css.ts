@@ -117,10 +117,10 @@ export const navbarBorderColorVariants = styleVariants({
     ],
 });
 
-export const firstSection = style({});
-export const lastSection = style({});
+export const desktopMenuFirstSection = style({});
+export const desktopMenuLastSection = style({});
 
-export const sectionContainer = style([
+export const desktopMenuSectionContainer = style([
     sprinkles({position: 'relative', display: 'flex'}),
     {
         '::after': {
@@ -134,15 +134,36 @@ export const sectionContainer = style([
 
         selectors: {
             // Add extra width on the left/right of interactive area so that we cover the space between sections
-            [`&:not(${firstSection}):after`]: {
+            [`&:not(${desktopMenuFirstSection}):after`]: {
                 left: -16,
             },
-            [`&:not(${lastSection}):after`]: {
+            [`&:not(${desktopMenuLastSection}):after`]: {
                 right: -16,
             },
         },
     },
 ]);
+
+export const desktopMenuSectionWithArrowWrapper = style({
+    position: 'relative',
+});
+
+export const desktopMenuSectionArrowContainer = style({
+    position: 'absolute',
+    zIndex: -1,
+    right: -8,
+    top: 0,
+    bottom: 0,
+    display: 'flex',
+    alignItems: 'center',
+});
+
+export const desktopMenuSectionArrow = style({
+    border: 'none',
+    background: 'transparent',
+    padding: 0,
+    transition: `opacity 0.1s`,
+});
 
 export const section = style([
     sprinkles({

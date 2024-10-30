@@ -20,7 +20,7 @@ import {useSetModalState} from './modal-context-provider';
 import {Logo} from './logo';
 import {vars} from './skins/skin-contract.css';
 import * as styles from './navigation-bar.css';
-import {getPrefixedDataAttributes} from './utils/dom';
+import {cancelEvent, getPrefixedDataAttributes} from './utils/dom';
 import Stack from './stack';
 import Box from './box';
 import {isRunningAcceptanceTest} from './utils/platform';
@@ -30,6 +30,7 @@ import TextLink from './text-link';
 import {Title1, Title3} from './title';
 import {ButtonLink} from './button';
 import {Grid, GridItem} from './grid';
+import {DOWN, ESC, UP} from './utils/keys';
 
 import type {ExclusifyUnion} from './utils/utility-types';
 import type {Variant} from './theme-variant-context';
@@ -211,6 +212,8 @@ type SectionColumn = {
 
 type SectionMenu = ExclusifyUnion<
     | {columns: ReadonlyArray<SectionColumn>}
+    // content prop can receive a function as value with the closeMenu callback as parameter.
+    // In this way, custom content can also force the menu to close programmatically.
     | {content?: React.ReactElement | ((props: {closeMenu: () => void}) => React.ReactElement)}
 >;
 
@@ -232,6 +235,139 @@ type MainNavigationBarProps = {
     large?: boolean;
     desktopSmallMenu?: boolean;
 };
+
+type MainNavigationBarDesktopMenuState = {
+    isMenuOpen: boolean;
+    openedSection: number;
+    setSectionAsActive: (index: number) => void;
+    setSectionAsInactive: (index: number, forceCloseMenu?: boolean) => void;
+    closeMenu: () => void;
+    onMenuExited: () => void;
+    setIsMenuHovered: (value: boolean) => void;
+};
+
+const MainNavigationBarDesktopMenuContext = React.createContext<MainNavigationBarDesktopMenuState>({
+    isMenuOpen: false,
+    openedSection: -1,
+    setSectionAsActive: () => {},
+    setSectionAsInactive: () => {},
+    closeMenu: () => {},
+    onMenuExited: () => {},
+    setIsMenuHovered: () => {},
+});
+
+const MainNavigationBarDesktopMenuContextProvider = ({
+    children,
+    sections,
+    isSmallMenu,
+}: {
+    children: React.ReactNode;
+    sections?: ReadonlyArray<MainNavigationBarSection>;
+    isSmallMenu?: boolean;
+}): JSX.Element => {
+    const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+    const [isMenuHovered, setIsMenuHovered] = React.useState(false);
+
+    // Section that has been hovered. This state is used to determine whether the menu opens/closes.
+    const [activeSection, setActiveSection] = React.useState(-1);
+
+    /**
+     * Section that is currently being rendered. We keep this as a different state from
+     * activeSection because when the large menu is closing, we still need to display the
+     * section that was opened.
+     */
+    const [openedSection, setOpenedSection] = React.useState(-1);
+
+    const closeMenu = React.useCallback(() => {
+        setIsMenuHovered(false);
+        setActiveSection(-1);
+    }, []);
+
+    // Callback used when a section has been hovered or it's focused arrow has been pressed while it's closed
+    const setSectionAsActive = React.useCallback(
+        (index: number) => {
+            if (sections?.[index]?.menu) {
+                setActiveSection(index);
+            } else {
+                // If the section has no menu, close the current opened one
+                closeMenu();
+            }
+        },
+        [sections, closeMenu]
+    );
+
+    // Callback used when a section has been blurred or it's focused arrow has been pressed while it's open
+    const setSectionAsInactive = React.useCallback(
+        (index: number, forceCloseMenu?: boolean) => {
+            if (index === openedSection) {
+                // We may want to close the menu even when menu is hovered, and if so, we should reset isMenuHovered
+                // (for example, when the current menu is being hovered and we press the arrow from another section)
+                if (forceCloseMenu) {
+                    closeMenu();
+                } else {
+                    setActiveSection(-1);
+                }
+            }
+        },
+        [openedSection, closeMenu]
+    );
+
+    // Callback used to reset openedSection once the large menu close animation has finished
+    const onMenuExited = React.useCallback(() => {
+        setOpenedSection(-1);
+    }, []);
+
+    React.useEffect(() => {
+        if (activeSection === -1 && !isMenuHovered) {
+            setIsMenuOpen(false);
+            if (isSmallMenu) {
+                // When rendering the small menu, we don't need to wait for the animation to finish
+                onMenuExited();
+            }
+        } else if (activeSection !== -1) {
+            setOpenedSection(activeSection);
+            setIsMenuOpen(true);
+        }
+    }, [isMenuHovered, activeSection, isSmallMenu, onMenuExited]);
+
+    React.useEffect(() => {
+        const handleKeyDown = (e: KeyboardEvent) => {
+            switch (e.key) {
+                case ESC:
+                    closeMenu();
+                    break;
+                default:
+                // do nothing
+            }
+        };
+        // Close menu when ESC key is pressed or when scrolling in the page
+        document.addEventListener('keydown', handleKeyDown, false);
+        document.addEventListener('scroll', closeMenu);
+        return () => {
+            document.removeEventListener('keydown', handleKeyDown, false);
+            document.removeEventListener('scroll', closeMenu);
+        };
+    }, [closeMenu]);
+
+    return (
+        <MainNavigationBarDesktopMenuContext.Provider
+            value={{
+                isMenuOpen,
+                openedSection,
+                setSectionAsActive,
+                setSectionAsInactive,
+                closeMenu,
+                onMenuExited,
+                setIsMenuHovered,
+            }}
+        >
+            {children}
+        </MainNavigationBarDesktopMenuContext.Provider>
+    );
+};
+
+export const useMainNavigationBarDesktopMenuState = (): MainNavigationBarDesktopMenuState =>
+    React.useContext(MainNavigationBarDesktopMenuContext);
 
 const MainNavigationBarBurgerMenu = ({
     sections,
@@ -295,8 +431,8 @@ const MainNavigationBarBurgerMenu = ({
                                     withChevron
                                     {...getInteractivePropsWithCloseMenu(interactiveProps)}
                                 >
-                                    {texts.MainNavigationBarSectionSeeAll ||
-                                        t(tokens.MainNavigationBarSectionSeeAll)}
+                                    {texts.mainNavigationBarSectionSeeAll ||
+                                        t(tokens.mainNavigationBarSectionSeeAll)}
                                 </ButtonLink>
                             }
                         >
@@ -417,17 +553,11 @@ const MainNavigationBarBurgerMenu = ({
 const MainNavigationBarDesktopMenu = ({
     sections,
     isLargeNavigationBar,
-    hoveredSection,
 }: {
     sections: ReadonlyArray<MainNavigationBarSection>;
     isLargeNavigationBar: boolean;
-    hoveredSection: number;
 }): JSX.Element => {
-    const {isTabletOrSmaller} = useScreenSize();
     const menuRef = React.useRef<HTMLDivElement>(null);
-    const [isMenuHovered, setIsMenuHovered] = React.useState(false);
-    const [isMenuOpen, setIsMenuOpen] = React.useState(false);
-    const [openedSection, setOpenedSection] = React.useState(-1);
     const [menuHeight, setMenuHeight] = React.useState('0px');
     const [isMenuContentScrollable, setIsMenuContentScrollable] = React.useState(false);
     const isAnySectionOpened = React.useRef(false);
@@ -436,25 +566,8 @@ const MainNavigationBarDesktopMenu = ({
     const topSpace = isLargeNavigationBar ? NAVBAR_HEIGHT_DESKTOP_LARGE : NAVBAR_HEIGHT_DESKTOP;
     const bottomSpace = 40;
 
-    React.useEffect(() => {
-        if (!isMenuHovered && hoveredSection === -1) {
-            setIsMenuOpen(false);
-        } else if (hoveredSection !== -1) {
-            setOpenedSection(hoveredSection);
-            setIsMenuOpen(true);
-        }
-    }, [isMenuHovered, hoveredSection]);
-
-    React.useEffect(() => {
-        // Close desktop menu when scrolling in the page
-        const handleScroll = () => {
-            if (!isTabletOrSmaller) setIsMenuOpen(false);
-        };
-        document.addEventListener('scroll', handleScroll);
-        return () => {
-            document.removeEventListener('scroll', handleScroll);
-        };
-    }, [isTabletOrSmaller]);
+    const {isMenuOpen, openedSection, closeMenu, onMenuExited, setIsMenuHovered} =
+        useMainNavigationBarDesktopMenuState();
 
     React.useEffect(() => {
         // scroll to top of the content if the opened section changed
@@ -484,12 +597,13 @@ const MainNavigationBarDesktopMenu = ({
                     mountOnEnter
                     unmountOnExit
                     onEnter={() => {
+                        // Hack to be able to set the fade-in effect in the content after the first render
                         isAnySectionOpened.current = true;
                     }}
                     onExiting={() => setIsMenuContentScrollable(false)}
                     onExited={() => {
                         isAnySectionOpened.current = false;
-                        setOpenedSection(-1);
+                        onMenuExited();
                     }}
                 >
                     <div
@@ -522,8 +636,7 @@ const MainNavigationBarDesktopMenu = ({
                             >
                                 {customContent ? (
                                     typeof customContent === 'function' ? (
-                                        // the callback to close the menu is not required in desktop menu
-                                        customContent({closeMenu: () => {}})
+                                        customContent({closeMenu})
                                     ) : (
                                         customContent
                                     )
@@ -573,46 +686,30 @@ const MainNavigationBarDesktopMenu = ({
 const MainNavigationBarDesktopSmallMenu = ({
     section,
     isLargeNavigationBar,
-    open,
     leftPosition,
+    index,
 }: {
     section: MainNavigationBarSection;
     isLargeNavigationBar: boolean;
-    open: boolean;
     leftPosition: number;
+    index: number;
 }): JSX.Element => {
-    const {isTabletOrSmaller} = useScreenSize();
     const menuRef = React.useRef<HTMLDivElement>(null);
-    const [isMenuHovered, setIsMenuHovered] = React.useState(false);
-    const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
     const menuAnimationDuration = isRunningAcceptanceTest() ? 0 : styles.DESKTOP_MENU_ANIMATION_DURATION_MS;
     const topSpace = isLargeNavigationBar ? NAVBAR_HEIGHT_DESKTOP_LARGE : NAVBAR_HEIGHT_DESKTOP;
     const bottomSpace = 40;
 
-    React.useEffect(() => {
-        // Close desktop menu when scrolling in the page
-        const handleScroll = () => {
-            if (!isTabletOrSmaller) setIsMenuOpen(false);
-        };
-        document.addEventListener('scroll', handleScroll);
-        return () => {
-            document.removeEventListener('scroll', handleScroll);
-        };
-    }, [isTabletOrSmaller]);
-
-    React.useEffect(() => {
-        setIsMenuOpen(open || isMenuHovered);
-    }, [open, isMenuHovered]);
-
     const columns = section.menu?.columns || [];
     const customContent = section?.menu?.content;
+
+    const {openedSection, setIsMenuHovered, closeMenu} = useMainNavigationBarDesktopMenuState();
 
     return (
         <div className={styles.desktopOnly}>
             <Portal>
                 <CSSTransition
-                    in={isMenuOpen}
+                    in={index === openedSection}
                     timeout={menuAnimationDuration}
                     nodeRef={menuRef}
                     classNames={styles.desktopSmallMenuTransition}
@@ -632,8 +729,7 @@ const MainNavigationBarDesktopSmallMenu = ({
                     >
                         {customContent ? (
                             typeof customContent === 'function' ? (
-                                // the callback to close the menu is not required in desktop menu
-                                customContent({closeMenu: () => {}})
+                                customContent({closeMenu})
                             ) : (
                                 customContent
                             )
@@ -675,8 +771,6 @@ const MainNavigationBarDesktopSection = ({
     isFirstSection,
     isLastSection,
     navigationBarRef,
-    hoveredSection,
-    setDesktopHoveredSection,
     variant,
     isLargeNavigationBar,
     desktopSmallMenu,
@@ -687,38 +781,75 @@ const MainNavigationBarDesktopSection = ({
     isFirstSection: boolean;
     isLastSection: boolean;
     navigationBarRef: React.RefObject<HTMLDivElement>;
-    hoveredSection: number;
-    setDesktopHoveredSection: (index: number) => void;
     variant?: Variant;
     isLargeNavigationBar: boolean;
     desktopSmallMenu?: boolean;
 }): JSX.Element => {
+    const {texts, t} = useTheme();
     const {title, menu, ...touchableProps} = section;
     const sectionRef = React.useRef<HTMLDivElement>(null);
     const [smallMenuLeftPosition, setSmallMenuLeftPosition] = React.useState(0);
+    const [isArrowFocused, setIsArrowFocused] = React.useState(false);
+    const {openedSection, setSectionAsActive, setSectionAsInactive} = useMainNavigationBarDesktopMenuState();
 
-    // Align menu to left border of the section if it fits. Otherwise, align it to the right border
-    const getSmallMenuLeftPosition = () => {
-        const {left, right} = sectionRef.current?.getBoundingClientRect() || {left: 0, right: 0};
-        const maxLeftOffset =
-            (navigationBarRef.current?.getBoundingClientRect().right || 0) - styles.DESKTOP_SMALL_MENU_WIDTH;
+    const openSectionMenu = React.useCallback(() => {
+        // Align small menu to left border of the section if it fits. Otherwise, align it to the right border
+        const getSmallMenuLeftPosition = () => {
+            const {left, right} = sectionRef.current?.getBoundingClientRect() || {left: 0, right: 0};
+            const maxLeftOffset =
+                (navigationBarRef.current?.getBoundingClientRect().right || 0) -
+                styles.DESKTOP_SMALL_MENU_WIDTH;
 
-        return left <= maxLeftOffset ? left : right - styles.DESKTOP_SMALL_MENU_WIDTH;
-    };
+            return left <= maxLeftOffset ? left : right - styles.DESKTOP_SMALL_MENU_WIDTH;
+        };
+
+        if (desktopSmallMenu) {
+            setSmallMenuLeftPosition(getSmallMenuLeftPosition());
+        }
+
+        setSectionAsActive(index);
+    }, [desktopSmallMenu, index, setSectionAsActive, navigationBarRef]);
+
+    React.useEffect(() => {
+        const handleKeyDown = (e: KeyboardEvent) => {
+            switch (e.key) {
+                // if arrow is focused and DOWN key is pressed, open the menu if it was closed
+                case DOWN:
+                    if (isArrowFocused) {
+                        cancelEvent(e);
+                        openSectionMenu();
+                    }
+                    break;
+
+                // if arrow is focused and UP key is pressed, close the menu if it was opened
+                case UP:
+                    if (isArrowFocused) {
+                        cancelEvent(e);
+                        setSectionAsInactive(index, true);
+                    }
+                    break;
+
+                default:
+                // do nothing
+            }
+        };
+
+        document.addEventListener('keydown', handleKeyDown, false);
+        return () => {
+            document.removeEventListener('keydown', handleKeyDown, false);
+        };
+    }, [index, isArrowFocused, openSectionMenu, setSectionAsInactive]);
 
     return (
-        <>
+        <div className={styles.desktopMenuSectionWithArrowWrapper}>
             <div
                 ref={sectionRef}
-                className={classnames(styles.sectionContainer, {
-                    [styles.firstSection]: isFirstSection,
-                    [styles.lastSection]: isLastSection,
+                className={classnames(styles.desktopMenuSectionContainer, {
+                    [styles.desktopMenuFirstSection]: isFirstSection,
+                    [styles.desktopMenuLastSection]: isLastSection,
                 })}
-                onMouseEnter={() => {
-                    setSmallMenuLeftPosition(getSmallMenuLeftPosition());
-                    setDesktopHoveredSection(menu ? index : -1);
-                }}
-                onMouseLeave={() => setDesktopHoveredSection(-1)}
+                onMouseEnter={() => openSectionMenu()}
+                onMouseLeave={() => setSectionAsInactive(index)}
             >
                 <BaseTouchable
                     {...touchableProps}
@@ -736,15 +867,49 @@ const MainNavigationBarDesktopSection = ({
                     </Text3>
                 </BaseTouchable>
             </div>
-            {desktopSmallMenu && (
-                <MainNavigationBarDesktopSmallMenu
-                    section={section}
-                    open={hoveredSection === index}
-                    isLargeNavigationBar={isLargeNavigationBar}
-                    leftPosition={smallMenuLeftPosition}
-                />
+            {menu && (
+                <>
+                    <div
+                        className={styles.desktopMenuSectionArrowContainer}
+                        onFocus={() => setIsArrowFocused(true)}
+                        onBlur={() => setIsArrowFocused(false)}
+                    >
+                        <BaseTouchable
+                            className={styles.desktopMenuSectionArrow}
+                            aria-label={`${section.title}, ${texts.mainNavigationBarOpenSectionMenu || t(tokens.mainNavigationBarOpenSectionMenu)}`}
+                            onPress={() => {
+                                if (isArrowFocused) {
+                                    if (index !== openedSection) {
+                                        openSectionMenu();
+                                    } else {
+                                        setSectionAsInactive(index, true);
+                                    }
+                                }
+                            }}
+                            style={{
+                                pointerEvents: isArrowFocused ? 'auto' : 'none',
+                                opacity: isArrowFocused ? 1 : 0,
+                            }}
+                        >
+                            <IconChevronLeftRegular
+                                size={8}
+                                style={{
+                                    transform: `rotate(${openedSection === index ? 90 : -90}deg)`,
+                                }}
+                            />
+                        </BaseTouchable>
+                    </div>
+                    {desktopSmallMenu && (
+                        <MainNavigationBarDesktopSmallMenu
+                            section={section}
+                            isLargeNavigationBar={isLargeNavigationBar}
+                            leftPosition={smallMenuLeftPosition}
+                            index={index}
+                        />
+                    )}
+                </>
             )}
-        </>
+        </div>
     );
 };
 
@@ -771,8 +936,6 @@ export const MainNavigationBar = ({
     const navigationBarRef = React.useRef<HTMLDivElement>(null);
     const setModalState = useSetModalState();
 
-    const [desktopHoveredSection, setDesktopHoveredSection] = React.useState(-1);
-
     const renderDesktopSections = () => {
         return (
             <nav className={styles.desktopOnly}>
@@ -787,8 +950,6 @@ export const MainNavigationBar = ({
                             isLastSection={idx === sections.length - 1}
                             variant={variant}
                             section={section}
-                            hoveredSection={desktopHoveredSection}
-                            setDesktopHoveredSection={setDesktopHoveredSection}
                             isLargeNavigationBar={hasBottomSections}
                             desktopSmallMenu={desktopSmallMenu}
                         />
@@ -851,31 +1012,29 @@ export const MainNavigationBar = ({
             </Header>
             {topFixed && <div className={hasBottomSections ? styles.spacerLarge : styles.spacer} />}
             {!desktopSmallMenu && (
-                <MainNavigationBarDesktopMenu
-                    sections={sections}
-                    isLargeNavigationBar={hasBottomSections}
-                    hoveredSection={desktopHoveredSection}
-                />
+                <MainNavigationBarDesktopMenu sections={sections} isLargeNavigationBar={hasBottomSections} />
             )}
         </ThemeVariant>
     );
 
-    if (!isTabletOrSmaller) {
-        return mainNavBar;
-    }
-
     return (
-        <FocusTrap disabled={disableFocusTrap}>
-            {mainNavBar}
-            <MainNavigationBarBurgerMenu
-                open={isBurgerMenuOpen}
-                id={menuId}
-                sections={sections}
-                extra={burgerMenuExtra}
-                closeMenu={closeMenu}
-                setDisableFocusTrap={setDisableFocusTrap}
-            />
-        </FocusTrap>
+        <MainNavigationBarDesktopMenuContextProvider sections={sections} isSmallMenu={desktopSmallMenu}>
+            {!isTabletOrSmaller ? (
+                mainNavBar
+            ) : (
+                <FocusTrap disabled={disableFocusTrap}>
+                    {mainNavBar}
+                    <MainNavigationBarBurgerMenu
+                        open={isBurgerMenuOpen}
+                        id={menuId}
+                        sections={sections}
+                        extra={burgerMenuExtra}
+                        closeMenu={closeMenu}
+                        setDisableFocusTrap={setDisableFocusTrap}
+                    />
+                </FocusTrap>
+            )}
+        </MainNavigationBarDesktopMenuContextProvider>
     );
 };
 
