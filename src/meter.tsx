@@ -16,6 +16,8 @@ const ANIMATION_DELAY_MS = 200;
 const ANIMATION_DURATION_MS = 1000;
 const ANIMATION_EPSILON = 1000 / 60 / ANIMATION_DURATION_MS / 4;
 
+const ANGLE_THRESHOLD = Math.PI / 1000;
+
 const DEFAULT_COLORS = [
     vars.colors.success,
     vars.colors.error,
@@ -62,7 +64,11 @@ const calculateSegments = (
 
         const t = clamp(timingFunction(animationTime), 0, 1);
         const a1 = segments.at(-1)?.a2 || 0;
-        const a2 = clamp((startValue + (endValue - startValue) * t) * maxAngle, 0, maxAngle - 0.01);
+        const a2 = clamp(
+            (startValue + (endValue - startValue) * t) * maxAngle,
+            0,
+            maxAngle - ANGLE_THRESHOLD
+        );
         segments.push({a1, a2});
     }
     return segments;
@@ -103,7 +109,7 @@ type MeterProps = {
 };
 
 const Meter = ({type = 'arc', width = 400, colors = DEFAULT_COLORS, values}: MeterProps): JSX.Element => {
-    const maxAngle = type === 'circle' ? 2 * Math.PI : 2;
+    const maxAngle = type === 'circle' ? 2 * Math.PI : Math.PI;
     const scaleFactor = VIEW_BOX_WIDTH / width;
     const strokeWidth = STROKE_WIDTH_PX * scaleFactor;
     const radius = CENTER_X - strokeWidth / 2;
@@ -118,35 +124,40 @@ const Meter = ({type = 'arc', width = 400, colors = DEFAULT_COLORS, values}: Met
 
     const getColor = (index: number) => colors[index % colors.length];
 
-    const firstNonZeroIndex = segments.findIndex((s) => s.a1 !== s.a2);
+    const firstNonZeroIndex = segments.findIndex((s) => s.a2 - s.a1 > ANGLE_THRESHOLD);
     const lastSegment: Segment | undefined = segments.at(-1);
 
     React.useEffect(() => {
         let raf: number;
         const start = performance.now();
         const end = start + ANIMATION_DURATION_MS + ANIMATION_DELAY_MS * (values.length - 1);
+        let currentSegments: Array<Segment> = [];
         const animate = () => {
             const now = performance.now();
-            setSegments(calculateSegments(initialValuesRef.current, values, now - start, maxAngle));
+            currentSegments = calculateSegments(initialValuesRef.current, values, now - start, maxAngle);
             if (now < end) {
                 raf = requestAnimationFrame(animate); // request next frame
             } else {
-                setSegments(calculateSegments(initialValuesRef.current, values, end - start, maxAngle)); // set the final values
+                currentSegments = calculateSegments(initialValuesRef.current, values, end - start, maxAngle); // set the final values
                 initialValuesRef.current = values;
             }
+            setSegments(currentSegments);
         };
         animate();
         return () => {
             cancelAnimationFrame(raf);
+            initialValuesRef.current = currentSegments.map(
+                (s) => (s.a2 - s.a1) / (type === 'circle' ? Math.PI * 2 : Math.PI)
+            );
         };
-    }, [radius, values, maxAngle]);
+    }, [radius, values, maxAngle, type]);
 
     return (
         <svg
             viewBox={`0 0 ${VIEW_BOX_WIDTH} ${VIEW_BOX_WIDTH}`}
             width={width}
             height={width}
-            style={{transform: `rotate(${type === 'circle' ? '90deg' : 0})`}}
+            style={{transform: `rotate(${type === 'circle' ? '90deg' : 0})`, border: '1px dotted red'}}
         >
             <defs>
                 <marker
@@ -179,7 +190,7 @@ const Meter = ({type = 'arc', width = 400, colors = DEFAULT_COLORS, values}: Met
                         fill={getColor(firstNonZeroIndex)}
                     />
                 </marker>
-                <mask id="mask-line">
+                <mask id="mask-bar-track">
                     <rect x={0} y={0} width={VIEW_BOX_WIDTH} height={VIEW_BOX_WIDTH} fill="white" />
                     {firstNonZeroIndex >= 0 && lastSegment && (
                         <>
@@ -201,7 +212,17 @@ const Meter = ({type = 'arc', width = 400, colors = DEFAULT_COLORS, values}: Met
                                 cx={getX(lastSegment.a2, radius)}
                                 cy={getY(lastSegment.a2, radius)}
                                 r={strokeWidth / 2 + separation}
+                                fill="black"
                             />
+                            {type === 'circle' && lastSegment.a2 < Math.PI && (
+                                <rect
+                                    x={0}
+                                    y={CENTER_Y + separation}
+                                    width={strokeWidth + separation * 2}
+                                    height={strokeWidth / 2 + separation}
+                                    fill="white"
+                                />
+                            )}
                         </>
                     )}
                 </mask>
@@ -220,7 +241,7 @@ const Meter = ({type = 'arc', width = 400, colors = DEFAULT_COLORS, values}: Met
                     largeArchFlag: type === 'circle' ? 1 : 0,
                     radius,
                 })}
-                mask="url(#mask-line)"
+                mask="url(#mask-bar-track)"
             />
 
             {firstNonZeroIndex >= 0 &&
@@ -240,7 +261,7 @@ const Meter = ({type = 'arc', width = 400, colors = DEFAULT_COLORS, values}: Met
                         isLast || segment.a2 < minAngleForSeparation
                             ? segment.a2
                             : segment.a2 - separationAngle / 2;
-                    if (a2 <= a1) {
+                    if (a2 <= a1 || a2 - a1 < ANGLE_THRESHOLD) {
                         return null;
                     }
                     const hasStartMarker = isFirst && type === 'arc';

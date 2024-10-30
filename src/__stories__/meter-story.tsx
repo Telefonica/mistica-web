@@ -24,7 +24,7 @@ export const ProgressBarStory: StoryComponent<ProgressBarStoryArgs> = () => {
             }}
         >
             <div key={key}>
-                <Meter type="circle" values={values} />
+                <Meter type="arc" values={values} />
             </div>
             <Stack space={16}>
                 <input
