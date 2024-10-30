@@ -442,7 +442,7 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
                                 value,
                                 ...(error && {'aria-invalid': true}),
                                 ...((helperText || (multiline && maxLength)) && {
-                                    'aria-describedby': rightHelperTextid,
+                                    'aria-describedby': `${leftHelperTextid} ${rightHelperTextid}`,
                                 }),
                                 ...(preventCopy && {
                                     onCopy: preventCopyHandler,
