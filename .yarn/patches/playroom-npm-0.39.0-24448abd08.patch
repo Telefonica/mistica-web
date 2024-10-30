@@ -1,9 +1,9 @@
 diff --git a/src/Playroom/AiPanel/AiPanel.tsx b/src/Playroom/AiPanel/AiPanel.tsx
 new file mode 100644
-index 0000000000000000000000000000000000000000..520c51aa2be1b6f990f5a17694b2831a7cb5366c
+index 0000000000000000000000000000000000000000..670a3775c0054bbb1d827d6c2a1c96f90db9f8fb
 --- /dev/null
 +++ b/src/Playroom/AiPanel/AiPanel.tsx
-@@ -0,0 +1,304 @@
+@@ -0,0 +1,322 @@
 +/* eslint-disable no-nested-ternary */
 +import * as React from 'react';
 +import { Heading } from '../Heading/Heading';
@@ -72,7 +72,6 @@ index 0000000000000000000000000000000000000000..520c51aa2be1b6f990f5a17694b2831a
 +    .then((response) => response.json())
 +    .then((data) => {
 +      if (!data.success) {
-+        console.error('Error:', data);
 +        throw new Error(data.error);
 +      }
 +      return data.source;
@@ -95,6 +94,7 @@ index 0000000000000000000000000000000000000000..520c51aa2be1b6f990f5a17694b2831a
 +    if (!message) {
 +      return;
 +    }
++    const prevAiMessageIdx = aiConversation.messages.length - 1;
 +    dispatch({
 +      type: 'addAiMessage',
 +      payload: {
@@ -106,16 +106,15 @@ index 0000000000000000000000000000000000000000..520c51aa2be1b6f990f5a17694b2831a
 +    });
 +    setIsWaitingForResponse(true);
 +    let sessionId = aiConversation.sessionId;
-+    if (!sessionId) {
-+      sessionId = await createAiSession();
-+      dispatch({
-+        type: 'createAiSession',
-+        payload: { sessionId },
-+      });
-+    }
 +    try {
++      if (!sessionId) {
++        sessionId = await createAiSession();
++        dispatch({
++          type: 'createAiSession',
++          payload: { sessionId },
++        });
++      }
 +      const response = await askAi(sessionId, message);
-+      console.error('response', response);
 +      const { code: formattedCode } = formatCode({
 +        code: response,
 +        cursor: { line: 0, ch: 0 },
@@ -136,9 +135,14 @@ index 0000000000000000000000000000000000000000..520c51aa2be1b6f990f5a17694b2831a
 +        },
 +      });
 +    } catch (e) {
-+      console.error('setError', e);
 +      setError((e as Error).message || 'Error');
-+      setTimeout(() => setError(null), 5000);
++      setTimeout(() => {
++        dispatch({
++          type: 'goBackToAiMessage',
++          payload: { index: prevAiMessageIdx },
++        });
++        setError(null);
++      }, 5000);
 +    } finally {
 +      setIsWaitingForResponse(false);
 +    }
@@ -268,6 +272,20 @@ index 0000000000000000000000000000000000000000..520c51aa2be1b6f990f5a17694b2831a
 +              }}
 +            >
 +              <AnnimatedDots />
++            </div>
++          )}
++          {error && (
++            <div
++              style={{
++                border: `1px solid red`,
++                borderRadius: '16px',
++                padding: '8px',
++                width: 'fit-content',
++                minWidth: '56px',
++                color: 'red',
++              }}
++            >
++              {error}
 +            </div>
 +          )}
 +        </div>
