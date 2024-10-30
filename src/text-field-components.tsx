@@ -122,20 +122,13 @@ export const HelperText = ({
                     className={classnames(styles.helperText, {[styles.rightHelperText]: !!leftText})}
                     data-testid="endHelperText"
                 >
-                    {rightTextLabel && (
-                        <ScreenReaderOnly>
-                            <span>{rightTextLabel}</span>
-                        </ScreenReaderOnly>
-                    )}
-                    <Text1
-                        color={rightColor}
-                        regular
-                        as="p"
-                        textAlign="right"
-                        wordBreak={false}
-                        aria-hidden={rightTextLabel !== undefined}
-                    >
-                        {rightText}
+                    <Text1 color={rightColor} regular as="p" textAlign="right" wordBreak={false}>
+                        {rightTextLabel && (
+                            <ScreenReaderOnly>
+                                <span>{rightTextLabel}</span>
+                            </ScreenReaderOnly>
+                        )}
+                        <span aria-hidden={rightTextLabel !== undefined}>{rightText}</span>
                     </Text1>
                 </div>
             )}
