@@ -81,16 +81,18 @@ type HelperTextProps = {
     rightText?: string;
     rightTextLabel?: string;
     error?: boolean;
-    id?: string;
+    leftTextId?: string;
+    rightTextId?: string;
     children?: void;
 };
 
 export const HelperText = ({
     leftText,
+    leftTextId,
     rightText,
+    rightTextId,
     rightTextLabel,
     error,
-    id,
 }: HelperTextProps): JSX.Element => {
     const isInverse = useIsInverseOrMediaVariant();
     const leftColor = isInverse
@@ -112,7 +114,7 @@ export const HelperText = ({
                             <IconWarningRegular color={leftColor} className={styles.warnIcon} />
                         </Text1>
                     )}
-                    <Text1 color={leftColor} regular id={id}>
+                    <Text1 color={leftColor} regular id={leftTextId}>
                         {leftText}
                     </Text1>
                 </p>
@@ -122,20 +124,20 @@ export const HelperText = ({
                     className={classnames(styles.helperText, {[styles.rightHelperText]: !!leftText})}
                     data-testid="endHelperText"
                 >
-                    {rightTextLabel && (
-                        <ScreenReaderOnly>
-                            <span>{rightTextLabel}</span>
-                        </ScreenReaderOnly>
-                    )}
                     <Text1
                         color={rightColor}
                         regular
                         as="p"
                         textAlign="right"
                         wordBreak={false}
-                        aria-hidden={rightTextLabel !== undefined}
+                        id={rightTextId}
                     >
-                        {rightText}
+                        {rightTextLabel && (
+                            <ScreenReaderOnly>
+                                <span>{rightTextLabel}</span>
+                            </ScreenReaderOnly>
+                        )}
+                        <span aria-hidden={rightTextLabel !== undefined}>{rightText}</span>
                     </Text1>
                 </div>
             )}
