@@ -1002,7 +1002,7 @@ const MainNavigationBarDesktopSection = ({
                                 className={styles.desktopMenuSectionArrow}
                                 aria-label={`${section.title}, ${texts.mainNavigationBarOpenSectionMenu || t(tokens.mainNavigationBarOpenSectionMenu)}`}
                                 aria-haspopup
-                                aria-expanded={!hasCustomInteraction ? openedSection === index : undefined}
+                                aria-expanded={openedSection === index}
                                 onPress={() => {
                                     if (isArrowFocused) {
                                         if (index !== openedSection) {
