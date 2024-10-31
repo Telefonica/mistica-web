@@ -445,7 +445,7 @@ const MainNavigationBarDesktopMenuSectionColumn = ({
                 {column.title}
             </Text2>
 
-            <Stack space={16}>
+            <Stack space={16} role="list">
                 {column.items.map(({title, ...touchableProps}, itemIdx) => (
                     <div
                         key={itemIdx}
@@ -458,6 +458,7 @@ const MainNavigationBarDesktopMenuSectionColumn = ({
                                 [`navigation-bar-menu-item-${columnIndex}-${itemIdx}`]: 'true',
                             }}
                             {...touchableProps}
+                            role="listitem"
                         >
                             {title}
                         </TextLink>
@@ -905,10 +906,12 @@ const MainNavigationBarDesktopSection = ({
 
     React.useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
+            const shouldReactOnArrowKeyPress = isArrowFocused || (menu && !hasCustomInteraction);
+
             switch (e.key) {
                 // If arrow is focused and DOWN key is pressed, open the menu if it was closed
                 case DOWN:
-                    if (isArrowFocused) {
+                    if (shouldReactOnArrowKeyPress) {
                         cancelEvent(e);
                         openSectionMenu();
                     }
@@ -916,7 +919,7 @@ const MainNavigationBarDesktopSection = ({
 
                 // If arrow is focused and UP key is pressed, close the menu if it was opened
                 case UP:
-                    if (isArrowFocused) {
+                    if (shouldReactOnArrowKeyPress) {
                         cancelEvent(e);
                         setSectionAsInactive(index, true);
                     }
@@ -931,7 +934,7 @@ const MainNavigationBarDesktopSection = ({
         return () => {
             document.removeEventListener('keydown', handleKeyDown, false);
         };
-    }, [index, isArrowFocused, openSectionMenu, setSectionAsInactive]);
+    }, [index, isArrowFocused, openSectionMenu, setSectionAsInactive, menu, hasCustomInteraction]);
 
     // Close the menu when one of the rows is pressed
     const getInteractivePropsWithCloseMenu = React.useCallback(
@@ -967,10 +970,12 @@ const MainNavigationBarDesktopSection = ({
                 <BaseTouchable
                     {...getInteractivePropsWithCloseMenu(touchableProps as InteractiveProps)}
                     aria-label={
-                        hasCustomInteraction
-                            ? undefined
-                            : `${section.title}, ${texts.mainNavigationBarOpenSectionMenu || t(tokens.mainNavigationBarOpenSectionMenu)}`
+                        !hasCustomInteraction
+                            ? `${section.title}, ${texts.mainNavigationBarOpenSectionMenu || t(tokens.mainNavigationBarOpenSectionMenu)}`
+                            : undefined
                     }
+                    aria-haspopup={!hasCustomInteraction}
+                    aria-expanded={!hasCustomInteraction ? openedSection === index : undefined}
                     className={classnames(
                         styles.section,
                         {
@@ -996,6 +1001,8 @@ const MainNavigationBarDesktopSection = ({
                             <BaseTouchable
                                 className={styles.desktopMenuSectionArrow}
                                 aria-label={`${section.title}, ${texts.mainNavigationBarOpenSectionMenu || t(tokens.mainNavigationBarOpenSectionMenu)}`}
+                                aria-haspopup
+                                aria-expanded={!hasCustomInteraction ? openedSection === index : undefined}
                                 onPress={() => {
                                     if (isArrowFocused) {
                                         if (index !== openedSection) {
