@@ -16,7 +16,13 @@ const ANIMATION_DELAY_MS = 200;
 const ANIMATION_DURATION_MS = 1000;
 const ANIMATION_EPSILON = 1000 / 60 / ANIMATION_DURATION_MS / 4;
 
-const ANGLE_THRESHOLD = Math.PI / 1000;
+const SMALL_VALUE_THRESHOLD = Math.PI / 1000;
+
+const TYPE_LINEAR = 'linear';
+const TYPE_ANGULAR = 'angular';
+const TYPE_CIRCULAR = 'circular';
+
+export type MeterType = typeof TYPE_LINEAR | typeof TYPE_ANGULAR | typeof TYPE_CIRCULAR;
 
 const DEFAULT_COLORS = [
     vars.colors.success,
@@ -26,9 +32,12 @@ const DEFAULT_COLORS = [
     vars.colors.highlight,
 ];
 
+/**
+ * "start"/"end" values are angles for types 'angular' and 'circular', and a fraction of the total for 'linear'.
+ */
 type Segment = {
-    a1: number; // start angle
-    a2: number; // end angle
+    start: number;
+    end: number;
 };
 
 /**
@@ -39,19 +48,16 @@ type Segment = {
  */
 const timingFunction: (time: number) => number = bezier(0.75, 0, 0.27, 1, ANIMATION_EPSILON);
 
-const getX = (angle: number, radius: number) => CENTER_X - radius * Math.cos(angle);
-const getY = (angle: number, radius: number) => CENTER_Y - radius * Math.sin(angle);
-
 const clamp = (n: number, min: number, max: number) => Math.min(Math.max(n, min), max);
 
 /**
- * Calculate the start and end angles for each segment of the meter
+ * Calculate the start and end segment values for each segment of the meter
  */
 const calculateSegments = (
     startValues: Array<number>,
     endValues: Array<number>,
     time: number,
-    maxAngle: number
+    maxValue: number // radians if angular, 1 if linear
 ) => {
     const segments: Array<Segment> = [];
     for (let i = 0; i < startValues.length; i++) {
@@ -63,23 +69,18 @@ const calculateSegments = (
         const animationTime = clamp((time - delay) / ANIMATION_DURATION_MS, 0, 1);
 
         const t = clamp(timingFunction(animationTime), 0, 1);
-        const a1 = segments.at(-1)?.a2 || 0;
-        const a2 = clamp(
-            (startValue + (endValue - startValue) * t) * maxAngle,
+        const start = segments.at(-1)?.end || 0;
+        const end = clamp(
+            (startValue + (endValue - startValue) * t) * maxValue,
             0,
-            maxAngle - ANGLE_THRESHOLD
+            maxValue - SMALL_VALUE_THRESHOLD
         );
-        segments.push({a1, a2});
+        segments.push({start, end});
     }
     return segments;
 };
 
-/**
- * Returns an SVG path string for a circular (radX === radY) arc between two points
- *
- * https://www.nan.fyi/svg-paths/arcs
- */
-const createArcPath = ({
+const createPath = ({
     x1,
     y1,
     x2,
@@ -97,34 +98,43 @@ const createArcPath = ({
     largeArchFlag?: 0 | 1 | boolean;
 }): string => {
     const xAxisRotation = 0;
-    return `M ${x1} ${y1} A ${radius} ${radius} ${xAxisRotation} ${+largeArchFlag} ${+clockwise} ${x2} ${y2}`;
+    if (radius) {
+        //  https://www.nan.fyi/svg-paths/arcs
+        return `M ${x1} ${y1} A ${radius} ${radius} ${xAxisRotation} ${+largeArchFlag} ${+clockwise} ${x2} ${y2}`;
+    } else {
+        // https://www.nan.fyi/svg-paths/lines
+        return `M ${x1} ${y1} L ${x2} ${y2}`;
+    }
 };
 
 type MeterProps = {
-    type?: 'arc' | 'circle' | 'line';
+    type?: MeterType;
     /** Position of the meter. 0 is at the start, 1 is at the end. The sum of the values must not exceed 1. */
     values: Array<number>;
     width?: number;
     colors?: Array<string>;
 };
 
-const Meter = ({type = 'arc', width = 400, colors = DEFAULT_COLORS, values}: MeterProps): JSX.Element => {
-    const maxAngle = type === 'circle' ? 2 * Math.PI : Math.PI;
+const Meter = ({
+    type = TYPE_ANGULAR,
+    width = 400,
+    colors = DEFAULT_COLORS,
+    values,
+}: MeterProps): JSX.Element => {
     const scaleFactor = VIEW_BOX_WIDTH / width;
     const strokeWidth = STROKE_WIDTH_PX * scaleFactor;
-    const radius = CENTER_X - strokeWidth / 2;
+    const maxValue = type === TYPE_LINEAR ? 1 : type === TYPE_CIRCULAR ? 2 * Math.PI : Math.PI;
+    const radius = type === TYPE_LINEAR ? 0 : CENTER_X - strokeWidth / 2;
     const separation = SEPARATION_PX * scaleFactor;
-    const separationAngle = separation / radius;
+    const segmentSeparation = type === TYPE_LINEAR ? separation / VIEW_BOX_WIDTH : separation / radius;
 
     const initialValuesRef = React.useRef(Array.from({length: values.length}, () => 0));
 
     const [segments, setSegments] = React.useState<Array<Segment>>(() => {
-        return values.map(() => ({a1: 0, a2: 0}));
+        return values.map(() => ({start: 0, end: 0}));
     });
 
-    const getColor = (index: number) => colors[index % colors.length];
-
-    const firstNonZeroIndex = segments.findIndex((s) => s.a2 - s.a1 > ANGLE_THRESHOLD);
+    const firstNonZeroIndex = segments.findIndex((s) => s.end - s.start > SMALL_VALUE_THRESHOLD);
     const lastSegment: Segment | undefined = segments.at(-1);
 
     React.useEffect(() => {
@@ -134,11 +144,11 @@ const Meter = ({type = 'arc', width = 400, colors = DEFAULT_COLORS, values}: Met
         let currentSegments: Array<Segment> = [];
         const animate = () => {
             const now = performance.now();
-            currentSegments = calculateSegments(initialValuesRef.current, values, now - start, maxAngle);
+            currentSegments = calculateSegments(initialValuesRef.current, values, now - start, maxValue);
             if (now < end) {
                 raf = requestAnimationFrame(animate); // request next frame
             } else {
-                currentSegments = calculateSegments(initialValuesRef.current, values, end - start, maxAngle); // set the final values
+                currentSegments = calculateSegments(initialValuesRef.current, values, end - start, maxValue); // set the final values
                 initialValuesRef.current = values;
             }
             setSegments(currentSegments);
@@ -146,18 +156,33 @@ const Meter = ({type = 'arc', width = 400, colors = DEFAULT_COLORS, values}: Met
         animate();
         return () => {
             cancelAnimationFrame(raf);
+            // animation was cancelled, snapshot current values
             initialValuesRef.current = currentSegments.map(
-                (s) => (s.a2 - s.a1) / (type === 'circle' ? Math.PI * 2 : Math.PI)
+                (s) =>
+                    (s.end - s.start) /
+                    (type === TYPE_LINEAR ? 1 : type === TYPE_CIRCULAR ? Math.PI * 2 : Math.PI)
             );
         };
-    }, [radius, values, maxAngle, type]);
+    }, [radius, values, maxValue, type]);
+
+    const getX = (value: number) =>
+        type === TYPE_LINEAR
+            ? strokeWidth / 2 + (VIEW_BOX_WIDTH - strokeWidth) * value
+            : CENTER_X - radius * Math.cos(value);
+
+    const getY = (value: number) =>
+        type === TYPE_LINEAR ? strokeWidth / 2 : CENTER_Y - radius * Math.sin(value);
+
+    const getHeight = (width: number) =>
+        type === TYPE_LINEAR ? strokeWidth : type === TYPE_CIRCULAR ? width : width / 2 + strokeWidth / 2;
+
+    const getColor = (index: number) => colors[index % colors.length];
 
     return (
         <svg
-            viewBox={`0 0 ${VIEW_BOX_WIDTH} ${VIEW_BOX_WIDTH}`}
+            viewBox={`0 0 ${VIEW_BOX_WIDTH} ${getHeight(VIEW_BOX_WIDTH)}`}
             width={width}
-            height={width}
-            style={{transform: `rotate(${type === 'circle' ? '90deg' : 0})`, border: '1px dotted red'}}
+            style={{transform: `rotate(${type === TYPE_CIRCULAR ? '90deg' : 0})`, border: '1px dotted red'}}
         >
             <defs>
                 <marker
@@ -170,8 +195,8 @@ const Meter = ({type = 'arc', width = 400, colors = DEFAULT_COLORS, values}: Met
                     refY={5}
                 >
                     <path
-                        // the half pixel displacement is to avoid a gap between the marker and the path
-                        d={createArcPath({x1: 5 - 0.5, y1: 0, x2: 5 - 0.5, y2: 10, radius: 5})}
+                        // the sub-pixel displacement is to avoid a gap between the marker and the path
+                        d={createPath({x1: 5 - 0.3, y1: 0, x2: 5 - 0.3, y2: 10, radius: 5})}
                         fill={getColor(values.length - 1)}
                     />
                 </marker>
@@ -185,8 +210,8 @@ const Meter = ({type = 'arc', width = 400, colors = DEFAULT_COLORS, values}: Met
                     refY={5}
                 >
                     <path
-                        // the half pixel displacement is to avoid a gap between the marker and the path
-                        d={createArcPath({x1: 5 + 0.5, y1: 0, x2: 5 + 0.5, y2: 10, radius: 5, clockwise: 0})}
+                        // the sub-pixel displacement is to avoid a gap between the marker and the path
+                        d={createPath({x1: 5 + 0.3, y1: 0, x2: 5 + 0.3, y2: 10, radius: 5, clockwise: 0})}
                         fill={getColor(firstNonZeroIndex)}
                     />
                 </marker>
@@ -199,22 +224,22 @@ const Meter = ({type = 'arc', width = 400, colors = DEFAULT_COLORS, values}: Met
                                 fill="none"
                                 strokeWidth={strokeWidth + separation * 2}
                                 strokeLinecap="butt"
-                                d={createArcPath({
+                                d={createPath({
                                     x1: strokeWidth / 2,
                                     y1: CENTER_Y,
-                                    x2: getX(lastSegment.a2, radius),
-                                    y2: getY(lastSegment.a2, radius),
+                                    x2: getX(lastSegment.end),
+                                    y2: getY(lastSegment.end),
                                     radius,
-                                    largeArchFlag: lastSegment.a2 >= Math.PI,
+                                    largeArchFlag: lastSegment.end >= Math.PI,
                                 })}
                             />
                             <circle
-                                cx={getX(lastSegment.a2, radius)}
-                                cy={getY(lastSegment.a2, radius)}
+                                cx={getX(lastSegment.end)}
+                                cy={getY(lastSegment.end)}
                                 r={strokeWidth / 2 + separation}
                                 fill="black"
                             />
-                            {type === 'circle' && lastSegment.a2 < Math.PI && (
+                            {type === TYPE_CIRCULAR && lastSegment.end < Math.PI && (
                                 <rect
                                     x={0}
                                     y={CENTER_Y + separation}
@@ -232,13 +257,13 @@ const Meter = ({type = 'arc', width = 400, colors = DEFAULT_COLORS, values}: Met
                 stroke={vars.colors.barTrack}
                 fill="none"
                 strokeWidth={strokeWidth}
-                strokeLinecap={type === 'circle' ? 'butt' : 'round'}
-                d={createArcPath({
-                    x1: getX(0, radius),
-                    y1: getY(0, radius),
-                    x2: getX(type === 'circle' ? 2 * Math.PI - separationAngle : Math.PI, radius),
-                    y2: getY(type === 'circle' ? 2 * Math.PI - separationAngle : Math.PI, radius),
-                    largeArchFlag: type === 'circle' ? 1 : 0,
+                strokeLinecap={type === TYPE_CIRCULAR ? 'butt' : 'round'}
+                d={createPath({
+                    x1: getX(0),
+                    y1: getY(0),
+                    x2: getX(type === TYPE_CIRCULAR ? 2 * Math.PI - segmentSeparation : Math.PI),
+                    y2: getY(type === TYPE_CIRCULAR ? 2 * Math.PI - segmentSeparation : Math.PI),
+                    largeArchFlag: type === TYPE_CIRCULAR ? 1 : 0,
                     radius,
                 })}
                 mask="url(#mask-bar-track)"
@@ -252,19 +277,19 @@ const Meter = ({type = 'arc', width = 400, colors = DEFAULT_COLORS, values}: Met
                     const isFirst = index === firstNonZeroIndex;
                     const isLast = index === segments.length - 1;
                     // do not add separation if segment angles are too near to the start
-                    const minAngleForSeparation = separationAngle * segments.length;
-                    const a1 =
-                        isFirst || segment.a1 < minAngleForSeparation
-                            ? segment.a1
-                            : segment.a1 + separationAngle / 2;
-                    const a2 =
-                        isLast || segment.a2 < minAngleForSeparation
-                            ? segment.a2
-                            : segment.a2 - separationAngle / 2;
-                    if (a2 <= a1 || a2 - a1 < ANGLE_THRESHOLD) {
+                    const minValueForSeparation = segmentSeparation * segments.length;
+                    const start =
+                        isFirst || segment.end < minValueForSeparation
+                            ? segment.start
+                            : segment.start + segmentSeparation / 2;
+                    const end =
+                        isLast || segment.end < minValueForSeparation
+                            ? segment.end
+                            : segment.end - segmentSeparation / 2;
+                    if (end <= start || end - start < SMALL_VALUE_THRESHOLD) {
                         return null;
                     }
-                    const hasStartMarker = isFirst && type === 'arc';
+                    const hasStartMarker = isFirst && type !== TYPE_CIRCULAR;
                     return (
                         <path
                             key={reversedIndex}
@@ -274,12 +299,12 @@ const Meter = ({type = 'arc', width = 400, colors = DEFAULT_COLORS, values}: Met
                             strokeLinecap="butt"
                             markerEnd={isLast ? 'url(#marker-current)' : undefined}
                             markerStart={hasStartMarker ? 'url(#marker-start)' : undefined}
-                            d={createArcPath({
-                                x1: getX(a1, radius),
-                                y1: getY(a1, radius),
-                                x2: getX(a2, radius),
-                                y2: getY(a2, radius),
-                                largeArchFlag: a2 - a1 >= Math.PI ? 1 : 0,
+                            d={createPath({
+                                x1: getX(start),
+                                y1: getY(start),
+                                x2: getX(end),
+                                y2: getY(end),
+                                largeArchFlag: end - start >= Math.PI ? 1 : 0,
                                 radius,
                             })}
                         />

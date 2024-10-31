@@ -1,19 +1,21 @@
 import * as React from 'react';
 import {Meter, Stack} from '..';
 
+import type {MeterType} from '../meter';
+
 export default {
     title: 'Components/Meters',
     argTypes: {
-        // color: {
-        //     options: ['default', 'error'],
-        //     control: {type: 'select'},
-        // },
+        type: {
+            options: ['angular', 'circular', 'linear'] as Array<MeterType>,
+            control: {type: 'select'},
+        },
     },
 };
 
-type ProgressBarStoryArgs = {foo: 'bar'};
+type ProgressBarStoryArgs = {type: MeterType};
 
-export const ProgressBarStory: StoryComponent<ProgressBarStoryArgs> = () => {
+export const ProgressBarStory: StoryComponent<ProgressBarStoryArgs> = ({type}) => {
     const [key, setKey] = React.useState(0);
     const segments = 8;
     const [values, setValues] = React.useState(Array.from({length: segments}, () => 0.1));
@@ -23,9 +25,8 @@ export const ProgressBarStory: StoryComponent<ProgressBarStoryArgs> = () => {
                 padding: 16,
             }}
         >
-            <div key={key}>
-                <Meter type="arc" values={values} />
-            </div>
+            <Meter key={key + type} type={type} values={values} />
+
             <Stack space={16}>
                 <input
                     type="range"
@@ -46,5 +47,5 @@ export const ProgressBarStory: StoryComponent<ProgressBarStoryArgs> = () => {
 
 ProgressBarStory.storyName = 'Meter';
 ProgressBarStory.args = {
-    foo: 'bar',
+    type: 'angular',
 };
