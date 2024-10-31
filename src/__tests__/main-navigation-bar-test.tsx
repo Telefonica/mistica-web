@@ -5,6 +5,7 @@ import ThemeContextProvider from '../theme-context-provider';
 import {MainNavigationBar} from '../navigation-bar';
 import userEvent from '@testing-library/user-event';
 import {act} from 'react-dom/test-utils';
+import {ButtonPrimary} from '../button';
 
 test('MainNavigationBar section with interaction is accessible', async () => {
     const firstSectionOnPressSpy = jest.fn();
@@ -109,4 +110,37 @@ test('MainNavigationBar section with interaction is accessible', async () => {
     // Menu is closed, no section should be visible
     expect(screen.queryByRole('button', {name: 'item 1-1'})).not.toBeInTheDocument();
     expect(screen.queryByRole('button', {name: 'item 2-1'})).not.toBeInTheDocument();
+});
+
+test('MainNavigationBar menu closeMenu callback closes the menu', async () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <MainNavigationBar
+                sections={[
+                    {
+                        title: 'section 1',
+                        menu: {
+                            content: ({closeMenu}) => (
+                                <ButtonPrimary onPress={closeMenu}>Close menu</ButtonPrimary>
+                            ),
+                        },
+                    },
+                ]}
+            />
+        </ThemeContextProvider>
+    );
+
+    // Open the menu
+    const sectionButton = await screen.findByRole('button', {name: 'section 1, Abrir submenú'});
+    await userEvent.click(sectionButton);
+    expect(sectionButton).toHaveAttribute('aria-expanded', 'true');
+
+    // Close the menu with the closeMenu callback
+    const closeButton = await screen.findByRole('button', {name: 'Close menu'});
+    await userEvent.click(closeButton);
+
+    await waitFor(() => {
+        expect(sectionButton).toHaveAttribute('aria-expanded', 'false');
+        expect(screen.queryByRole('button', {name: 'Close menu'})).not.toBeInTheDocument();
+    });
 });

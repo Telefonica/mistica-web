@@ -2508,6 +2508,74 @@ const navigationBarSnippets = [
                         </Stack>
                       ),
                     }
+                  : title === "Support"
+                  ? {
+                      content: isDesktopOrBigger ? (
+                        <Grid columns={12} gap={24}>
+                          {Array.from({ length: 3 }, (_, index) => (
+                            <GridItem columnSpan={2} key={index}>
+                              <Stack space={24}>
+                                <Title1>Contenidos</Title1>
+                                <Stack space={16}>
+                                  {[
+                                    "Destacados",
+                                    "Todo fútbol",
+                                    "#0",
+                                    "Cine",
+                                    "Oferta comercial",
+                                    "Mi Movistar",
+                                    "Movistar Cloud",
+                                  ].map((title, index) => (
+                                    <TextLink
+                                      key={index}
+                                      onPress={() => {}}
+                                      style={{ color: colors.textPrimary }}
+                                    >
+                                      {title}
+                                    </TextLink>
+                                  ))}
+                                </Stack>
+                              </Stack>
+                            </GridItem>
+                          ))}
+
+                          <GridItem columnSpan={5} columnStart={8}>
+                            <DisplayMediaCard
+                              headline={<Tag type="promo">Oferta</Tag>}
+                              title="Movistar Plus+"
+                              onPress={() => {}}
+                              description="Contrata solo TV por 9,99 €"
+                              backgroundImage="https://picsum.photos/1200/1200"
+                            />
+                          </GridItem>
+                        </Grid>
+                      ) : (
+                        <Stack space={40}>
+                          {Array.from({ length: 3 }, (_, index) => (
+                            <Stack space={16} key={index}>
+                              <Title1>Title</Title1>
+                              <NegativeBox>
+                                <RowList>
+                                  <Row title="Title" onPress={() => {}} />
+                                  <Row title="Title" onPress={() => {}} />
+                                  <Row title="Title" onPress={() => {}} />
+                                  <Row title="Title" onPress={() => {}} />
+                                </RowList>
+                              </NegativeBox>
+                            </Stack>
+                          ))}
+
+                          <DisplayMediaCard
+                            headline={<Tag type="promo">Oferta</Tag>}
+                            title="Movistar Plus+"
+                            aspectRatio="1:1"
+                            onPress={() => {}}
+                            description="Contrata solo TV por 9,99 €"
+                            backgroundImage="https://picsum.photos/1200/1200"
+                          />
+                        </Stack>
+                      ),
+                    }
                   : undefined,
             }))}
             selectedIndex={getState("index", 0)}
