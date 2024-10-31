@@ -203,6 +203,7 @@ export const NavigationBar = ({
 };
 
 type InteractiveProps = ExclusifyUnion<{href: string} | {to: string} | {onPress: () => void}>;
+type MaybeInteractiveProps = ExclusifyUnion<{href?: string} | {to?: string} | {onPress?: () => void}>;
 
 type SectionItem = {title: string} & InteractiveProps;
 
@@ -221,7 +222,7 @@ type SectionMenu = ExclusifyUnion<
 type MainNavigationBarSection = {
     title: string;
     menu?: SectionMenu;
-} & InteractiveProps;
+} & MaybeInteractiveProps;
 
 type MainNavigationBarProps = {
     sections?: ReadonlyArray<MainNavigationBarSection>;
@@ -268,6 +269,7 @@ const MainNavigationBarDesktopMenuContextProvider = ({
     sections?: ReadonlyArray<MainNavigationBarSection>;
     isSmallMenu?: boolean;
 }): JSX.Element => {
+    const {isTabletOrSmaller} = useScreenSize();
     const [isMenuOpen, setIsMenuOpen] = React.useState(false);
     const [isMenuHovered, setIsMenuHovered] = React.useState(false);
 
@@ -320,6 +322,14 @@ const MainNavigationBarDesktopMenuContextProvider = ({
     const onMenuExited = React.useCallback(() => {
         setOpenedSection(-1);
     }, []);
+
+    // Close menu when viewport is too small
+    React.useEffect(() => {
+        if (isTabletOrSmaller) {
+            closeMenu();
+            setOpenedSection(-1);
+        }
+    }, [isTabletOrSmaller, closeMenu]);
 
     React.useEffect(() => {
         if (activeSection === -1 && !isMenuHovered) {
@@ -475,9 +485,9 @@ const MainNavigationBarBurgerMenu = ({
     disableFocusTrap: boolean;
     setDisableFocusTrap: (value: boolean) => void;
 }) => {
-    const {texts, t} = useTheme();
-    const {isDarkMode} = useTheme();
+    const {texts, t, isDarkMode} = useTheme();
     const [openedSection, setOpenedSection] = React.useState(-1);
+    const [isSubMenuOpen, setIsSubMenuOpen] = React.useState(false);
     const menuRef = React.useRef<HTMLDivElement>(null);
     const menuContentRef = React.useRef<HTMLDivElement>(null);
 
@@ -486,6 +496,14 @@ const MainNavigationBarBurgerMenu = ({
 
     // Close the menu when one of the rows is pressed
     const getInteractivePropsWithCloseMenu = (interactiveProps: InteractiveProps) => {
+        if (
+            interactiveProps.href === undefined &&
+            interactiveProps.onPress === undefined &&
+            interactiveProps.to === undefined
+        ) {
+            return {onPress: closeMenu};
+        }
+
         return interactiveProps.onPress
             ? {
                   onPress: () => {
@@ -496,12 +514,14 @@ const MainNavigationBarBurgerMenu = ({
             : {...interactiveProps, onNavigate: () => closeMenu()};
     };
 
-    const [isSubMenuOpen, setIsSubMenuOpen] = React.useState(false);
-
     const renderSection = (index: number) => {
         const {title, menu, ...interactiveProps} = sections[index];
         const columns = menu?.columns || [];
         const customContent = menu?.content;
+        const hasCustomInteraction =
+            interactiveProps.href !== undefined ||
+            interactiveProps.onPress !== undefined ||
+            interactiveProps.to !== undefined;
 
         return (
             <ResponsiveLayout>
@@ -515,16 +535,20 @@ const MainNavigationBarBurgerMenu = ({
                         />
                         <Title3
                             right={
-                                <ButtonLink
-                                    small
-                                    bleedY
-                                    bleedRight
-                                    withChevron
-                                    {...getInteractivePropsWithCloseMenu(interactiveProps)}
-                                >
-                                    {texts.mainNavigationBarSectionSeeAll ||
-                                        t(tokens.mainNavigationBarSectionSeeAll)}
-                                </ButtonLink>
+                                hasCustomInteraction ? (
+                                    <ButtonLink
+                                        small
+                                        bleedY
+                                        bleedRight
+                                        withChevron
+                                        {...getInteractivePropsWithCloseMenu(
+                                            interactiveProps as InteractiveProps
+                                        )}
+                                    >
+                                        {texts.mainNavigationBarSectionSeeAll ||
+                                            t(tokens.mainNavigationBarSectionSeeAll)}
+                                    </ButtonLink>
+                                ) : undefined
                             }
                         >
                             {sections[index].title}
@@ -616,7 +640,7 @@ const MainNavigationBarBurgerMenu = ({
                                                                               },
                                                                           }
                                                                         : getInteractivePropsWithCloseMenu(
-                                                                              interactiveProps
+                                                                              interactiveProps as InteractiveProps
                                                                           ))}
                                                                 />
                                                             )
@@ -856,6 +880,11 @@ const MainNavigationBarDesktopSection = ({
     const [isArrowFocused, setIsArrowFocused] = React.useState(false);
     const {openedSection, setSectionAsActive, setSectionAsInactive} = useMainNavigationBarDesktopMenuState();
 
+    const hasCustomInteraction =
+        touchableProps.href !== undefined ||
+        touchableProps.onPress !== undefined ||
+        touchableProps.to !== undefined;
+
     const openSectionMenu = React.useCallback(() => {
         // Align small menu to left border of the section if it fits. Otherwise, align it to the right border
         const getSmallMenuLeftPosition = () => {
@@ -904,6 +933,26 @@ const MainNavigationBarDesktopSection = ({
         };
     }, [index, isArrowFocused, openSectionMenu, setSectionAsInactive]);
 
+    // Close the menu when one of the rows is pressed
+    const getInteractivePropsWithCloseMenu = React.useCallback(
+        (touchableProps: InteractiveProps) => {
+            if (!hasCustomInteraction) {
+                return {
+                    onPress: () => {
+                        if (index !== openedSection) {
+                            openSectionMenu();
+                        } else {
+                            setSectionAsInactive(index, true);
+                        }
+                    },
+                };
+            }
+
+            return touchableProps as InteractiveProps;
+        },
+        [hasCustomInteraction, index, openSectionMenu, openedSection, setSectionAsInactive]
+    );
+
     return (
         <div className={styles.desktopMenuSectionWithArrowWrapper}>
             <div
@@ -916,7 +965,12 @@ const MainNavigationBarDesktopSection = ({
                 onMouseLeave={() => setSectionAsInactive(index)}
             >
                 <BaseTouchable
-                    {...touchableProps}
+                    {...getInteractivePropsWithCloseMenu(touchableProps as InteractiveProps)}
+                    aria-label={
+                        hasCustomInteraction
+                            ? undefined
+                            : `${section.title}, ${texts.mainNavigationBarOpenSectionMenu || t(tokens.mainNavigationBarOpenSectionMenu)}`
+                    }
                     className={classnames(
                         styles.section,
                         {
@@ -933,36 +987,38 @@ const MainNavigationBarDesktopSection = ({
             </div>
             {menu && (
                 <>
-                    <div
-                        className={styles.desktopMenuSectionArrowContainer}
-                        onFocus={() => setIsArrowFocused(true)}
-                        onBlur={() => setIsArrowFocused(false)}
-                    >
-                        <BaseTouchable
-                            className={styles.desktopMenuSectionArrow}
-                            aria-label={`${section.title}, ${texts.mainNavigationBarOpenSectionMenu || t(tokens.mainNavigationBarOpenSectionMenu)}`}
-                            onPress={() => {
-                                if (isArrowFocused) {
-                                    if (index !== openedSection) {
-                                        openSectionMenu();
-                                    } else {
-                                        setSectionAsInactive(index, true);
-                                    }
-                                }
-                            }}
-                            style={{
-                                pointerEvents: isArrowFocused ? 'auto' : 'none',
-                                opacity: isArrowFocused ? 1 : 0,
-                            }}
+                    {hasCustomInteraction && (
+                        <div
+                            className={styles.desktopMenuSectionArrowContainer}
+                            onFocus={() => setIsArrowFocused(true)}
+                            onBlur={() => setIsArrowFocused(false)}
                         >
-                            <IconChevronLeftRegular
-                                size={8}
-                                style={{
-                                    transform: `rotate(${openedSection === index ? 90 : -90}deg)`,
+                            <BaseTouchable
+                                className={styles.desktopMenuSectionArrow}
+                                aria-label={`${section.title}, ${texts.mainNavigationBarOpenSectionMenu || t(tokens.mainNavigationBarOpenSectionMenu)}`}
+                                onPress={() => {
+                                    if (isArrowFocused) {
+                                        if (index !== openedSection) {
+                                            openSectionMenu();
+                                        } else {
+                                            setSectionAsInactive(index, true);
+                                        }
+                                    }
                                 }}
-                            />
-                        </BaseTouchable>
-                    </div>
+                                style={{
+                                    pointerEvents: isArrowFocused ? 'auto' : 'none',
+                                    opacity: isArrowFocused ? 1 : 0,
+                                }}
+                            >
+                                <IconChevronLeftRegular
+                                    size={8}
+                                    style={{
+                                        transform: `rotate(${openedSection === index ? 90 : -90}deg)`,
+                                    }}
+                                />
+                            </BaseTouchable>
+                        </div>
+                    )}
                     {desktopSmallMenu && (
                         <MainNavigationBarDesktopSmallMenu
                             section={section}
