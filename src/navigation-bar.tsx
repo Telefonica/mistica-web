@@ -277,7 +277,7 @@ const MainNavigationBarDesktopMenuContextProvider = ({
     // up/down arrows to navigate through the items of a section.
     const [focusedItem, setFocusedItem] = React.useState<{column: number; index: number} | undefined>();
 
-    // Section that has been hovered. This state is used to determine whether the menu opens/closes.
+    // Section that has been hovered. This state is used to determine whether the menu should be open or closed.
     const [activeSection, setActiveSection] = React.useState(-1);
 
     // Section that is currently being rendered. We keep this as a different state from activeSection
@@ -429,45 +429,6 @@ const MainNavigationBarDesktopMenuContextProvider = ({
 
 export const useMainNavigationBarDesktopMenuState = (): MainNavigationBarDesktopMenuState =>
     React.useContext(MainNavigationBarDesktopMenuContext);
-
-const MainNavigationBarDesktopMenuSectionColumn = ({
-    column,
-    columnIndex,
-}: {
-    column: SectionColumn;
-    columnIndex: number;
-}) => {
-    const {setFocusedItem} = useMainNavigationBarDesktopMenuState();
-
-    return (
-        <Stack space={24}>
-            <Text2 medium color={vars.colors.textSecondary} transform="uppercase">
-                {column.title}
-            </Text2>
-
-            <Stack space={16} role="list">
-                {column.items.map(({title, ...touchableProps}, itemIdx) => (
-                    <div
-                        key={itemIdx}
-                        onFocus={() => setFocusedItem({column: columnIndex, index: itemIdx})}
-                        onBlur={() => setFocusedItem(undefined)}
-                    >
-                        <TextLink
-                            className={styles.desktopMenuColumnItem}
-                            dataAttributes={{
-                                [`navigation-bar-menu-item-${columnIndex}-${itemIdx}`]: 'true',
-                            }}
-                            {...touchableProps}
-                            role="listitem"
-                        >
-                            {title}
-                        </TextLink>
-                    </div>
-                ))}
-            </Stack>
-        </Stack>
-    );
-};
 
 const MainNavigationBarBurgerMenu = ({
     sections,
@@ -665,6 +626,45 @@ const MainNavigationBarBurgerMenu = ({
                 </CSSTransition>
             </FocusTrap>
         </Portal>
+    );
+};
+
+const MainNavigationBarDesktopMenuSectionColumn = ({
+    column,
+    columnIndex,
+}: {
+    column: SectionColumn;
+    columnIndex: number;
+}) => {
+    const {setFocusedItem} = useMainNavigationBarDesktopMenuState();
+
+    return (
+        <Stack space={24}>
+            <Text2 medium color={vars.colors.textSecondary} transform="uppercase">
+                {column.title}
+            </Text2>
+
+            <Stack space={16} role="list">
+                {column.items.map(({title, ...touchableProps}, itemIdx) => (
+                    <div
+                        key={itemIdx}
+                        onFocus={() => setFocusedItem({column: columnIndex, index: itemIdx})}
+                        onBlur={() => setFocusedItem(undefined)}
+                    >
+                        <TextLink
+                            className={styles.desktopMenuColumnItem}
+                            dataAttributes={{
+                                [`navigation-bar-menu-item-${columnIndex}-${itemIdx}`]: 'true',
+                            }}
+                            {...touchableProps}
+                            role="listitem"
+                        >
+                            {title}
+                        </TextLink>
+                    </div>
+                ))}
+            </Stack>
+        </Stack>
     );
 };
 
@@ -936,9 +936,9 @@ const MainNavigationBarDesktopSection = ({
         };
     }, [index, isArrowFocused, openSectionMenu, setSectionAsInactive, menu, hasCustomInteraction]);
 
-    // Close the menu when one of the rows is pressed
     const getInteractivePropsWithCloseMenu = React.useCallback(
         (touchableProps: InteractiveProps) => {
+            // Open or close the menu when a section without interaction is pressed
             if (!hasCustomInteraction) {
                 return {
                     onPress: () => {
