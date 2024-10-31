@@ -2408,33 +2408,183 @@ const navigationBarSnippets = [
         group: 'NavigationBar',
         name: 'MainNavigationBar',
         code: `
-<MainNavigationBar
-  sections={["Start", "Account", "Explore", "Support"].map((title, idx) => ({
-    title,
-    onPress: () => setState("index", idx),
-  }))}
-  selectedIndex={getState("index", 0)}
-  right={
-    <NavigationBarActionGroup>
-      <NavigationBarAction
-        onPress={() => {}}
-        aria-label="shopping cart with 2 items"
-      >
-        <Badge value={2}>
-          <IconShoppingCartRegular color="currentColor" />
-        </Badge>
-      </NavigationBarAction>
-      <NavigationBarAction onPress={() => {}} aria-label="Open profile">
-        <Avatar
-          size={isDesktopOrBigger ? 32 : 24}
-          initials="ML"
-          src="${imagePlaceholder}"
-        />
-        {isDesktopOrBigger && "María López Serrano"}
-      </NavigationBarAction>
-    </NavigationBarActionGroup>
-  }
-/>`,
+          <MainNavigationBar
+            sections={["Start", "Account", "Explore", "Support"].map((title, idx) => ({
+              title,
+              onPress: () => setState("index", idx),
+            }))}
+            selectedIndex={getState("index", 0)}
+            right={
+              <NavigationBarActionGroup>
+                <NavigationBarAction
+                  onPress={() => {}}
+                  aria-label="shopping cart with 2 items"
+                >
+                  <Badge value={2}>
+                    <IconShoppingCartRegular color="currentColor" />
+                  </Badge>
+                </NavigationBarAction>
+                <NavigationBarAction onPress={() => {}} aria-label="Open profile">
+                  <Avatar
+                    size={isDesktopOrBigger ? 32 : 24}
+                    initials="ML"
+                    src="${imagePlaceholder}"
+                  />
+                  {isDesktopOrBigger && "María López Serrano"}
+                </NavigationBarAction>
+              </NavigationBarActionGroup>
+            }
+          />`,
+    },
+    {
+        group: 'NavigationBar',
+        name: 'MainNavigationBar with large menu',
+        code: `
+          <MainNavigationBar
+            sections={["Start", "Account", "Explore", "Support"].map((title, idx) => ({
+              onPress: () => setState("index", idx),
+              title,
+              menu:
+                title === "Start"
+                  ? {
+                      columns: [
+                        {
+                          title: \`\${title} 1\`,
+                          items: [
+                            {
+                              title: "item 1",
+                              onPress: () => {},
+                            },
+                            {
+                              title: "item 2",
+                              onPress: () => {},
+                            },
+                            {
+                              title: "item 3",
+                              onPress: () => {},
+                            },
+                          ],
+                        },
+                        {
+                          title: \`\${title} 2\`,
+                          items: [
+                            {
+                              title: "item 1",
+                              onPress: () => {},
+                            },
+                            {
+                              title: "item 2",
+                              onPress: () => {},
+                            },
+                            {
+                              title: "item 3",
+                              onPress: () => {},
+                            },
+                          ],
+                        },
+                      ],
+                    }
+                  : title === "Account"
+                  ? {
+                      columns: [
+                        {
+                          title: \`\${title} 1\`,
+                          items: [
+                            {
+                              title: "item 1",
+                              onPress: () => {},
+                            },
+                          ],
+                        },
+                      ],
+                    }
+                  : title === "Explore"
+                  ? {
+                      content: ({ closeMenu }) => (
+                        <Stack space={16}>
+                          <Text2 regular>Custom content</Text2>
+                          <Placeholder />
+                          <ButtonPrimary onPress={closeMenu}>Close menu</ButtonPrimary>
+                        </Stack>
+                      ),
+                    }
+                  : undefined,
+            }))}
+            selectedIndex={getState("index", 0)}
+          />`,
+    },
+    {
+        group: 'NavigationBar',
+        name: 'MainNavigationBar with small menu',
+        code: `
+          <MainNavigationBar
+            desktopSmallMenu
+            sections={["Start", "Account", "Explore", "Support"].map((title, idx) => ({
+              onPress: () => setState("index", idx),
+              title,
+              menu:
+                title === "Start"
+                  ? {
+                      columns: [
+                        {
+                          title: \`\${title} 1\`,
+                          items: [
+                            {
+                              title: "item 1",
+                              onPress: () => {},
+                            },
+                            {
+                              title: "item 2",
+                              onPress: () => {},
+                            },
+                            {
+                              title: "item 3",
+                              onPress: () => {},
+                            },
+                          ],
+                        },
+                      ],
+                    }
+                  : title === "Account"
+                  ? {
+                      columns: [
+                        {
+                          title: \`\${title} 1\`,
+                          items: [
+                            {
+                              title: "item 1",
+                              onPress: () => {},
+                            },
+                          ],
+                        },
+                      ],
+                    }
+                  : title === "Explore"
+                  ? {
+                      columns: [
+                        {
+                          title: \`\${title} 1\`,
+                          items: [
+                            {
+                              title: "item 1",
+                              onPress: () => {},
+                            },
+                            {
+                              title: "item 2",
+                              onPress: () => {},
+                            },
+                            {
+                              title: "item 3",
+                              onPress: () => {},
+                            },
+                          ],
+                        },
+                      ],
+                    }
+                  : undefined,
+            }))}
+            selectedIndex={getState("index", 0)}
+          />`,
     },
     {
         group: 'NavigationBar',

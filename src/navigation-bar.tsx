@@ -427,6 +427,25 @@ const MainNavigationBarDesktopMenuContextProvider = ({
     );
 };
 
+const getInteractivePropsWithCloseMenu = (interactiveProps: InteractiveProps, closeMenu: () => void) => {
+    if (
+        interactiveProps.href === undefined &&
+        interactiveProps.onPress === undefined &&
+        interactiveProps.to === undefined
+    ) {
+        return {onPress: closeMenu};
+    }
+
+    return interactiveProps.onPress
+        ? {
+              onPress: () => {
+                  interactiveProps.onPress();
+                  closeMenu();
+              },
+          }
+        : {...interactiveProps, onNavigate: () => closeMenu()};
+};
+
 export const useMainNavigationBarDesktopMenuState = (): MainNavigationBarDesktopMenuState =>
     React.useContext(MainNavigationBarDesktopMenuContext);
 
@@ -456,26 +475,6 @@ const MainNavigationBarBurgerMenu = ({
     const shadowAlpha = isDarkMode ? 1 : 0.2;
     const menuAnimationDuration = isRunningAcceptanceTest() ? 0 : styles.BURGER_MENU_ANIMATION_DURATION_MS;
 
-    // Close the menu when one of the rows is pressed
-    const getInteractivePropsWithCloseMenu = (interactiveProps: InteractiveProps) => {
-        if (
-            interactiveProps.href === undefined &&
-            interactiveProps.onPress === undefined &&
-            interactiveProps.to === undefined
-        ) {
-            return {onPress: closeMenu};
-        }
-
-        return interactiveProps.onPress
-            ? {
-                  onPress: () => {
-                      interactiveProps.onPress();
-                      closeMenu();
-                  },
-              }
-            : {...interactiveProps, onNavigate: () => closeMenu()};
-    };
-
     const renderSection = (index: number) => {
         const {title, menu, ...interactiveProps} = sections[index];
         const columns = menu?.columns || [];
@@ -503,8 +502,10 @@ const MainNavigationBarBurgerMenu = ({
                                         bleedY
                                         bleedRight
                                         withChevron
+                                        // Close the menu when "See all" button is pressed
                                         {...getInteractivePropsWithCloseMenu(
-                                            interactiveProps as InteractiveProps
+                                            interactiveProps as InteractiveProps,
+                                            closeMenu
                                         )}
                                     >
                                         {texts.mainNavigationBarSectionSeeAll ||
@@ -532,8 +533,10 @@ const MainNavigationBarBurgerMenu = ({
                                                 <Row
                                                     key={itemIndex}
                                                     title={itemTitle}
+                                                    // Close the menu when one of the rows is pressed
                                                     {...getInteractivePropsWithCloseMenu(
-                                                        itemInteractiveProps
+                                                        itemInteractiveProps,
+                                                        closeMenu
                                                     )}
                                                 />
                                             )
@@ -601,8 +604,10 @@ const MainNavigationBarBurgerMenu = ({
                                                                                   setOpenedSection(index);
                                                                               },
                                                                           }
-                                                                        : getInteractivePropsWithCloseMenu(
-                                                                              interactiveProps as InteractiveProps
+                                                                        : // Close the menu when one of the rows is pressed
+                                                                          getInteractivePropsWithCloseMenu(
+                                                                              interactiveProps as InteractiveProps,
+                                                                              closeMenu
                                                                           ))}
                                                                 />
                                                             )
@@ -636,7 +641,7 @@ const MainNavigationBarDesktopMenuSectionColumn = ({
     column: SectionColumn;
     columnIndex: number;
 }) => {
-    const {setFocusedItem} = useMainNavigationBarDesktopMenuState();
+    const {setFocusedItem, closeMenu} = useMainNavigationBarDesktopMenuState();
 
     return (
         <Stack space={24}>
@@ -656,7 +661,8 @@ const MainNavigationBarDesktopMenuSectionColumn = ({
                             dataAttributes={{
                                 [`navigation-bar-menu-item-${columnIndex}-${itemIdx}`]: 'true',
                             }}
-                            {...touchableProps}
+                            // Close the menu when one of the section items is pressed
+                            {...getInteractivePropsWithCloseMenu(touchableProps, closeMenu)}
                             role="listitem"
                         >
                             {title}
@@ -936,7 +942,7 @@ const MainNavigationBarDesktopSection = ({
         };
     }, [index, isArrowFocused, openSectionMenu, setSectionAsInactive, menu, hasCustomInteraction]);
 
-    const getInteractivePropsWithCloseMenu = React.useCallback(
+    const getSectionInteractiveProps = React.useCallback(
         (touchableProps: InteractiveProps) => {
             // Open or close the menu when a section without interaction is pressed
             if (!hasCustomInteraction) {
@@ -968,7 +974,7 @@ const MainNavigationBarDesktopSection = ({
                 onMouseLeave={() => setSectionAsInactive(index)}
             >
                 <BaseTouchable
-                    {...getInteractivePropsWithCloseMenu(touchableProps as InteractiveProps)}
+                    {...getSectionInteractiveProps(touchableProps as InteractiveProps)}
                     aria-label={
                         !hasCustomInteraction
                             ? `${section.title}, ${texts.mainNavigationBarOpenSectionMenu || t(tokens.mainNavigationBarOpenSectionMenu)}`
