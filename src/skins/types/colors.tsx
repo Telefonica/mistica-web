@@ -66,11 +66,13 @@ export type Colors = {
     controlActivatedInverse: string;
     controlError: string;
     barTrack: string;
+    barTrackInverse: string;
     loadingBar: string;
     loadingBarBackground: string;
     toggleAndroidInactive: string;
     toggleAndroidBackgroundActive: string;
     iosControlKnob: string;
+    controlKnobInverse: string;
     divider: string;
     dividerInverse: string;
     navigationBarDivider: string;
