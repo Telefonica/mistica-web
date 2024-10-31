@@ -31,6 +31,7 @@ import {Title1, Title3} from './title';
 import {ButtonLink} from './button';
 import {Grid, GridItem} from './grid';
 import {DOWN, ESC, UP} from './utils/keys';
+import {isEqual} from './utils/helpers';
 
 import type {ExclusifyUnion} from './utils/utility-types';
 import type {Variant} from './theme-variant-context';
@@ -212,7 +213,7 @@ type SectionColumn = {
 
 type SectionMenu = ExclusifyUnion<
     | {columns: ReadonlyArray<SectionColumn>}
-    // content prop can receive a function as value with the closeMenu callback as parameter.
+    // Content prop can receive a function as value with the closeMenu callback as parameter.
     // In this way, custom content can also force the menu to close programmatically.
     | {content?: React.ReactElement | ((props: {closeMenu: () => void}) => React.ReactElement)}
 >;
@@ -244,6 +245,7 @@ type MainNavigationBarDesktopMenuState = {
     closeMenu: () => void;
     onMenuExited: () => void;
     setIsMenuHovered: (value: boolean) => void;
+    setFocusedItem: (item?: {column: number; index: number}) => void;
 };
 
 const MainNavigationBarDesktopMenuContext = React.createContext<MainNavigationBarDesktopMenuState>({
@@ -254,6 +256,7 @@ const MainNavigationBarDesktopMenuContext = React.createContext<MainNavigationBa
     closeMenu: () => {},
     onMenuExited: () => {},
     setIsMenuHovered: () => {},
+    setFocusedItem: () => {},
 });
 
 const MainNavigationBarDesktopMenuContextProvider = ({
@@ -268,14 +271,15 @@ const MainNavigationBarDesktopMenuContextProvider = ({
     const [isMenuOpen, setIsMenuOpen] = React.useState(false);
     const [isMenuHovered, setIsMenuHovered] = React.useState(false);
 
+    // Item that is currently focused inside a section. This state is used to handle pressing
+    // up/down arrows to navigate through the items of a section.
+    const [focusedItem, setFocusedItem] = React.useState<{column: number; index: number} | undefined>();
+
     // Section that has been hovered. This state is used to determine whether the menu opens/closes.
     const [activeSection, setActiveSection] = React.useState(-1);
 
-    /**
-     * Section that is currently being rendered. We keep this as a different state from
-     * activeSection because when the large menu is closing, we still need to display the
-     * section that was opened.
-     */
+    // Section that is currently being rendered. We keep this as a different state from activeSection
+    // because when the large menu is closing, we still need to display the section that was opened.
     const [openedSection, setOpenedSection] = React.useState(-1);
 
     const closeMenu = React.useCallback(() => {
@@ -330,14 +334,55 @@ const MainNavigationBarDesktopMenuContextProvider = ({
         }
     }, [isMenuHovered, activeSection, isSmallMenu, onMenuExited]);
 
+    const focusItem = React.useCallback(
+        (item: {column: number; index: number} | undefined) => {
+            if (!isEqual(focusedItem, item)) {
+                setFocusedItem(item);
+            }
+        },
+        [focusedItem]
+    );
+
     React.useEffect(() => {
+        // Find all the items of the section and focus the next (or previous) element
+        const focusNextItem = (reverse?: boolean) => {
+            if (focusedItem) {
+                const itemsContainer = document.querySelector('[data-navigation-bar-menu-items]');
+                const itemsList = Array.from(itemsContainer?.querySelectorAll('a,button') || []);
+
+                const currentIndex = itemsList.findIndex((el) =>
+                    el.hasAttribute(
+                        `data-navigation-bar-menu-item-${focusedItem.column}-${focusedItem.index}`
+                    )
+                );
+
+                const nextIndex = reverse ? currentIndex - 1 : currentIndex + 1;
+                (itemsList[(nextIndex + itemsList.length) % itemsList.length] as HTMLElement).focus();
+            }
+        };
+
         const handleKeyDown = (e: KeyboardEvent) => {
             switch (e.key) {
+                case DOWN:
+                    if (focusedItem) {
+                        cancelEvent(e);
+                        focusNextItem();
+                    }
+                    break;
+
+                case UP:
+                    if (focusedItem) {
+                        cancelEvent(e);
+                        focusNextItem(true);
+                    }
+                    break;
+
                 case ESC:
                     closeMenu();
                     break;
+
                 default:
-                // do nothing
+                // Do nothing
             }
         };
         // Close menu when ESC key is pressed or when scrolling in the page
@@ -347,7 +392,12 @@ const MainNavigationBarDesktopMenuContextProvider = ({
             document.removeEventListener('keydown', handleKeyDown, false);
             document.removeEventListener('scroll', closeMenu);
         };
-    }, [closeMenu]);
+    }, [closeMenu, focusedItem]);
+
+    React.useEffect(() => {
+        // Restore focusedItem when opened section changes (or when the menu is closed)
+        setFocusedItem(undefined);
+    }, [openedSection]);
 
     return (
         <MainNavigationBarDesktopMenuContext.Provider
@@ -359,6 +409,7 @@ const MainNavigationBarDesktopMenuContextProvider = ({
                 closeMenu,
                 onMenuExited,
                 setIsMenuHovered,
+                setFocusedItem: focusItem,
             }}
         >
             {children}
@@ -369,12 +420,51 @@ const MainNavigationBarDesktopMenuContextProvider = ({
 export const useMainNavigationBarDesktopMenuState = (): MainNavigationBarDesktopMenuState =>
     React.useContext(MainNavigationBarDesktopMenuContext);
 
+const MainNavigationBarDesktopMenuSectionColumn = ({
+    column,
+    columnIndex,
+}: {
+    column: SectionColumn;
+    columnIndex: number;
+}) => {
+    const {setFocusedItem} = useMainNavigationBarDesktopMenuState();
+
+    return (
+        <Stack space={24}>
+            <Text2 medium color={vars.colors.textSecondary} transform="uppercase">
+                {column.title}
+            </Text2>
+
+            <Stack space={16}>
+                {column.items.map(({title, ...touchableProps}, itemIdx) => (
+                    <div
+                        key={itemIdx}
+                        onFocus={() => setFocusedItem({column: columnIndex, index: itemIdx})}
+                        onBlur={() => setFocusedItem(undefined)}
+                    >
+                        <TextLink
+                            className={styles.desktopMenuColumnItem}
+                            dataAttributes={{
+                                [`navigation-bar-menu-item-${columnIndex}-${itemIdx}`]: 'true',
+                            }}
+                            {...touchableProps}
+                        >
+                            {title}
+                        </TextLink>
+                    </div>
+                ))}
+            </Stack>
+        </Stack>
+    );
+};
+
 const MainNavigationBarBurgerMenu = ({
     sections,
     extra,
     closeMenu,
     open,
     id,
+    disableFocusTrap,
     setDisableFocusTrap,
 }: {
     sections: ReadonlyArray<MainNavigationBarSection>;
@@ -382,6 +472,7 @@ const MainNavigationBarBurgerMenu = ({
     closeMenu: () => void;
     open: boolean;
     id: string;
+    disableFocusTrap: boolean;
     setDisableFocusTrap: (value: boolean) => void;
 }) => {
     const {texts, t} = useTheme();
@@ -473,79 +564,81 @@ const MainNavigationBarBurgerMenu = ({
 
     return (
         <Portal>
-            <CSSTransition
-                onEntered={() => setDisableFocusTrap(false)}
-                onExiting={() => setDisableFocusTrap(true)}
-                onExited={() => {
-                    setIsSubMenuOpen(false);
-                    setOpenedSection(-1);
-                }}
-                classNames={styles.burgerMenuTransition}
-                in={open}
-                nodeRef={menuRef}
-                timeout={menuAnimationDuration}
-                mountOnEnter
-                unmountOnExit
-            >
-                <nav
-                    className={styles.burgerMenu}
-                    style={{boxShadow: `6px 0 4px -4px rgba(0, 0, 0, ${shadowAlpha})`}}
-                    id={id}
-                    ref={menuRef}
+            <FocusTrap disabled={disableFocusTrap} group="burger-menu-lock">
+                <CSSTransition
+                    onEntered={() => setDisableFocusTrap(false)}
+                    onExiting={() => setDisableFocusTrap(true)}
+                    onExited={() => {
+                        setIsSubMenuOpen(false);
+                        setOpenedSection(-1);
+                    }}
+                    classNames={styles.burgerMenuTransition}
+                    in={open}
+                    nodeRef={menuRef}
+                    timeout={menuAnimationDuration}
+                    mountOnEnter
+                    unmountOnExit
                 >
-                    <CSSTransition
-                        timeout={menuAnimationDuration}
-                        in={isSubMenuOpen}
-                        nodeRef={menuContentRef}
+                    <nav
+                        className={styles.burgerMenu}
+                        style={{boxShadow: `6px 0 4px -4px rgba(0, 0, 0, ${shadowAlpha})`}}
+                        id={id}
+                        ref={menuRef}
                     >
-                        {(transitionStatus) => (
-                            <div
-                                ref={menuContentRef}
-                                style={{
-                                    transition: `transform ${menuAnimationDuration}ms ease-out`,
-                                    transform: `translate(${isSubMenuOpen ? '-100vw' : '0vw'})`,
-                                }}
-                            >
-                                {transitionStatus !== 'entered' && (
-                                    <div className={styles.burgerMainMenuContainer}>
-                                        <ResponsiveLayout>
-                                            <ResetResponsiveLayout>
-                                                <RowList>
-                                                    {sections.map(
-                                                        ({title, menu, ...interactiveProps}, index) => (
-                                                            <Row
-                                                                key={index}
-                                                                title={title}
-                                                                {...(menu
-                                                                    ? {
-                                                                          onPress: () => {
-                                                                              setIsSubMenuOpen(true);
-                                                                              setOpenedSection(index);
-                                                                          },
-                                                                      }
-                                                                    : getInteractivePropsWithCloseMenu(
-                                                                          interactiveProps
-                                                                      ))}
-                                                            />
-                                                        )
-                                                    )}
-                                                </RowList>
-                                            </ResetResponsiveLayout>
-                                            {extra && <Box paddingY={16}>{extra}</Box>}
-                                        </ResponsiveLayout>
-                                    </div>
-                                )}
+                        <CSSTransition
+                            timeout={menuAnimationDuration}
+                            in={isSubMenuOpen}
+                            nodeRef={menuContentRef}
+                        >
+                            {(transitionStatus) => (
+                                <div
+                                    ref={menuContentRef}
+                                    style={{
+                                        transition: `transform ${menuAnimationDuration}ms ease-out`,
+                                        transform: `translate(${isSubMenuOpen ? '-100vw' : '0vw'})`,
+                                    }}
+                                >
+                                    {transitionStatus !== 'entered' && (
+                                        <div className={styles.burgerMainMenuContainer}>
+                                            <ResponsiveLayout>
+                                                <ResetResponsiveLayout>
+                                                    <RowList>
+                                                        {sections.map(
+                                                            ({title, menu, ...interactiveProps}, index) => (
+                                                                <Row
+                                                                    key={index}
+                                                                    title={title}
+                                                                    {...(menu
+                                                                        ? {
+                                                                              onPress: () => {
+                                                                                  setIsSubMenuOpen(true);
+                                                                                  setOpenedSection(index);
+                                                                              },
+                                                                          }
+                                                                        : getInteractivePropsWithCloseMenu(
+                                                                              interactiveProps
+                                                                          ))}
+                                                                />
+                                                            )
+                                                        )}
+                                                    </RowList>
+                                                </ResetResponsiveLayout>
+                                                {extra && <Box paddingY={16}>{extra}</Box>}
+                                            </ResponsiveLayout>
+                                        </div>
+                                    )}
 
-                                {transitionStatus !== 'exited' && openedSection !== -1 && (
-                                    <div className={styles.burgerSubMenuContainer}>
-                                        {renderSection(openedSection)}
-                                    </div>
-                                )}
-                            </div>
-                        )}
-                    </CSSTransition>
-                </nav>
-            </CSSTransition>
+                                    {transitionStatus !== 'exited' && openedSection !== -1 && (
+                                        <div className={styles.burgerSubMenuContainer}>
+                                            {renderSection(openedSection)}
+                                        </div>
+                                    )}
+                                </div>
+                            )}
+                        </CSSTransition>
+                    </nav>
+                </CSSTransition>
+            </FocusTrap>
         </Portal>
     );
 };
@@ -570,7 +663,7 @@ const MainNavigationBarDesktopMenu = ({
         useMainNavigationBarDesktopMenuState();
 
     React.useEffect(() => {
-        // scroll to top of the content if the opened section changed
+        // Scroll to top of the content if the opened section changed
         if (menuRef.current) {
             menuRef.current.scrollTop = 0;
         }
@@ -625,8 +718,9 @@ const MainNavigationBarDesktopMenu = ({
                                 })}
                                 ref={(el) => {
                                     if (el) {
-                                        // In old browsers, the speed of the menu height's animation will depend on
-                                        // the height of the content instead of the height of the container.
+                                        // In old browsers where min() is not supported, the speed of the menu
+                                        // height's animation will depend on the height of the content instead of
+                                        // the height of the container.
                                         const value = supportsCssMin()
                                             ? `min(${el.scrollHeight}px, calc(100vh - ${topSpace}px - ${bottomSpace}px))`
                                             : `${el.scrollHeight}px`;
@@ -641,35 +735,18 @@ const MainNavigationBarDesktopMenu = ({
                                         customContent
                                     )
                                 ) : (
-                                    <Grid rows={1} columns={12} gap={24}>
+                                    <Grid
+                                        rows={1}
+                                        columns={12}
+                                        gap={24}
+                                        dataAttributes={{'navigation-bar-menu-items': 'true'}}
+                                    >
                                         {columns.map((column, columnIdx) => (
                                             <GridItem key={columnIdx} columnSpan={2}>
-                                                <Stack space={24}>
-                                                    <Text2
-                                                        medium
-                                                        color={vars.colors.textSecondary}
-                                                        transform="uppercase"
-                                                    >
-                                                        {column.title}
-                                                    </Text2>
-
-                                                    <Stack space={16}>
-                                                        {column.items.map(
-                                                            ({title, ...touchableProps}, itemIdx) => (
-                                                                <div key={itemIdx}>
-                                                                    <TextLink
-                                                                        className={
-                                                                            styles.desktopMenuColumnItem
-                                                                        }
-                                                                        {...touchableProps}
-                                                                    >
-                                                                        {title}
-                                                                    </TextLink>
-                                                                </div>
-                                                            )
-                                                        )}
-                                                    </Stack>
-                                                </Stack>
+                                                <MainNavigationBarDesktopMenuSectionColumn
+                                                    column={column}
+                                                    columnIndex={columnIdx}
+                                                />
                                             </GridItem>
                                         ))}
                                     </Grid>
@@ -734,26 +811,13 @@ const MainNavigationBarDesktopSmallMenu = ({
                                 customContent
                             )
                         ) : (
-                            <Stack space={40}>
+                            <Stack space={40} dataAttributes={{'navigation-bar-menu-items': 'true'}}>
                                 {columns.map((column, columnIdx) => (
-                                    <Stack space={24} key={columnIdx}>
-                                        <Text2 medium color={vars.colors.textSecondary} transform="uppercase">
-                                            {column.title}
-                                        </Text2>
-
-                                        <Stack space={16}>
-                                            {column.items.map(({title, ...touchableProps}, itemIdx) => (
-                                                <div key={itemIdx}>
-                                                    <TextLink
-                                                        className={styles.desktopMenuColumnItem}
-                                                        {...touchableProps}
-                                                    >
-                                                        {title}
-                                                    </TextLink>
-                                                </div>
-                                            ))}
-                                        </Stack>
-                                    </Stack>
+                                    <MainNavigationBarDesktopMenuSectionColumn
+                                        key={columnIdx}
+                                        column={column}
+                                        columnIndex={columnIdx}
+                                    />
                                 ))}
                             </Stack>
                         )}
@@ -813,7 +877,7 @@ const MainNavigationBarDesktopSection = ({
     React.useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
             switch (e.key) {
-                // if arrow is focused and DOWN key is pressed, open the menu if it was closed
+                // If arrow is focused and DOWN key is pressed, open the menu if it was closed
                 case DOWN:
                     if (isArrowFocused) {
                         cancelEvent(e);
@@ -821,7 +885,7 @@ const MainNavigationBarDesktopSection = ({
                     }
                     break;
 
-                // if arrow is focused and UP key is pressed, close the menu if it was opened
+                // If arrow is focused and UP key is pressed, close the menu if it was opened
                 case UP:
                     if (isArrowFocused) {
                         cancelEvent(e);
@@ -830,7 +894,7 @@ const MainNavigationBarDesktopSection = ({
                     break;
 
                 default:
-                // do nothing
+                // Do nothing
             }
         };
 
@@ -1022,17 +1086,20 @@ export const MainNavigationBar = ({
             {!isTabletOrSmaller ? (
                 mainNavBar
             ) : (
-                <FocusTrap disabled={disableFocusTrap}>
-                    {mainNavBar}
+                <>
+                    <FocusTrap disabled={disableFocusTrap} group="burger-menu-lock">
+                        {mainNavBar}
+                    </FocusTrap>
                     <MainNavigationBarBurgerMenu
                         open={isBurgerMenuOpen}
                         id={menuId}
                         sections={sections}
                         extra={burgerMenuExtra}
                         closeMenu={closeMenu}
+                        disableFocusTrap={disableFocusTrap}
                         setDisableFocusTrap={setDisableFocusTrap}
                     />
-                </FocusTrap>
+                </>
             )}
         </MainNavigationBarDesktopMenuContextProvider>
     );
