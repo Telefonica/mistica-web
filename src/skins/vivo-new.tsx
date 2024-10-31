@@ -343,6 +343,10 @@ export const getVivoNewSkin: GetKnownSkin = () => {
             },
             indicator: {weight: 'regular'},
             navigationBar: {weight: 'regular'},
+            text1: {size: {mobile: 12, desktop: 14}, lineHeight: {mobile: 16, desktop: 20}},
+            text2: {size: {mobile: 14, desktop: 16}, lineHeight: {mobile: 20, desktop: 24}},
+            text3: {size: {mobile: 16, desktop: 18}, lineHeight: {mobile: 24, desktop: 24}},
+            text4: {size: {mobile: 18, desktop: 20}, lineHeight: {mobile: 24, desktop: 28}},
             text5: {
                 weight: 'regular',
                 size: {mobile: 20, desktop: 28},
@@ -373,10 +377,6 @@ export const getVivoNewSkin: GetKnownSkin = () => {
                 size: {mobile: 48, desktop: 64},
                 lineHeight: {mobile: 56, desktop: 72},
             },
-            text1: {size: {mobile: 12, desktop: 14}, lineHeight: {mobile: 16, desktop: 20}},
-            text2: {size: {mobile: 14, desktop: 16}, lineHeight: {mobile: 20, desktop: 24}},
-            text3: {size: {mobile: 16, desktop: 18}, lineHeight: {mobile: 24, desktop: 24}},
-            text4: {size: {mobile: 18, desktop: 20}, lineHeight: {mobile: 24, desktop: 28}},
         },
     };
     return skin;
