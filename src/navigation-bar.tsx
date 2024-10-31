@@ -651,10 +651,12 @@ const MainNavigationBarDesktopMenuSectionColumn = ({
 
             <Stack space={16} role="list">
                 {column.items.map(({title, ...touchableProps}, itemIdx) => (
+                    // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
                     <div
                         key={itemIdx}
                         onFocus={() => setFocusedItem({column: columnIndex, index: itemIdx})}
                         onBlur={() => setFocusedItem(undefined)}
+                        role="listitem"
                     >
                         <TextLink
                             className={styles.desktopMenuColumnItem}
@@ -663,7 +665,6 @@ const MainNavigationBarDesktopMenuSectionColumn = ({
                             }}
                             // Close the menu when one of the section items is pressed
                             {...getInteractivePropsWithCloseMenu(touchableProps, closeMenu)}
-                            role="listitem"
                         >
                             {title}
                         </TextLink>
