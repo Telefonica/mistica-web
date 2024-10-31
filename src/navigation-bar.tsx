@@ -803,9 +803,6 @@ const MainNavigationBarDesktopSmallMenu = ({
     leftPosition: number;
     index: number;
 }): JSX.Element => {
-    const menuRef = React.useRef<HTMLDivElement>(null);
-
-    const menuAnimationDuration = isRunningAcceptanceTest() ? 0 : styles.DESKTOP_MENU_ANIMATION_DURATION_MS;
     const topSpace = isLargeNavigationBar ? NAVBAR_HEIGHT_DESKTOP_LARGE : NAVBAR_HEIGHT_DESKTOP;
     const bottomSpace = 40;
 
@@ -816,20 +813,12 @@ const MainNavigationBarDesktopSmallMenu = ({
 
     return (
         <div className={styles.desktopOnly}>
-            <Portal>
-                <CSSTransition
-                    in={index === openedSection}
-                    timeout={menuAnimationDuration}
-                    nodeRef={menuRef}
-                    classNames={styles.desktopSmallMenuTransition}
-                    mountOnEnter
-                    unmountOnExit
-                >
+            {index === openedSection && (
+                <Portal>
                     <div
                         className={styles.desktopSmallMenuContainer}
                         onMouseEnter={() => setIsMenuHovered(true)}
                         onMouseLeave={() => setIsMenuHovered(false)}
-                        ref={menuRef}
                         style={{
                             top: topSpace,
                             left: leftPosition,
@@ -854,8 +843,8 @@ const MainNavigationBarDesktopSmallMenu = ({
                             </Stack>
                         )}
                     </div>
-                </CSSTransition>
-            </Portal>
+                </Portal>
+            )}
         </div>
     );
 };

@@ -9,7 +9,6 @@ const NAVBAR_ZINDEX = 25;
 export const DESKTOP_SMALL_MENU_WIDTH = 184;
 
 export const BURGER_MENU_ANIMATION_DURATION_MS = 300;
-export const DESKTOP_SMALL_MENU_ANIMATION_DURATION_MS = 200;
 export const DESKTOP_MENU_ANIMATION_DURATION_MS = 400;
 const DESKTOP_MENU_CONTENT_ANIMATION_DURATION_MS = 800;
 
@@ -409,33 +408,6 @@ export const desktopMenuContainer = style([
     },
 ]);
 
-export const desktopSmallMenuTransition = {
-    enter: style({
-        opacity: 0,
-    }),
-    enterActive: style({
-        opacity: 1,
-        transition: `opacity ${DESKTOP_SMALL_MENU_ANIMATION_DURATION_MS}ms ease-out`,
-        '@media': {
-            ['(prefers-reduced-motion)']: {
-                transition: 'none',
-            },
-        },
-    }),
-    exit: style({
-        opacity: 1,
-    }),
-    exitActive: style({
-        opacity: 0,
-        transition: `opacity ${DESKTOP_SMALL_MENU_ANIMATION_DURATION_MS}ms ease-out`,
-        '@media': {
-            ['(prefers-reduced-motion)']: {
-                transition: 'none',
-            },
-        },
-    }),
-};
-
 export const desktopSmallMenuContainer = style([
     sprinkles({
         background: vars.colors.backgroundContainer,
@@ -448,11 +420,6 @@ export const desktopSmallMenuContainer = style([
         width: DESKTOP_SMALL_MENU_WIDTH,
         overflowY: 'auto',
         boxShadow: '0px 2px 4px rgba(0,0,0,0.2)',
-        '@media': {
-            ['(prefers-reduced-motion)']: {
-                transition: 'none',
-            },
-        },
     },
 ]);
 
