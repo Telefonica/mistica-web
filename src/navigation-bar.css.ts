@@ -399,8 +399,27 @@ export const desktopMenuWrapper = sprinkles({
 
 export const desktopMenuContainer = style([
     sprinkles({
+        position: 'fixed',
+        left: 0,
+        right: 0,
+    }),
+    {
+        zIndex: NAVBAR_ZINDEX,
+        transition: `height ${DESKTOP_MENU_ANIMATION_DURATION_MS}ms cubic-bezier(0.65, 0, 0.35, 1)`,
+        '@media': {
+            ['(prefers-reduced-motion)']: {
+                transition: 'none',
+            },
+        },
+    },
+]);
+
+export const desktopMenuBackgroundContainer = style([
+    sprinkles({
         background: vars.colors.backgroundContainer,
-        width: '100%',
+        position: 'absolute',
+        left: 0,
+        right: 0,
     }),
     {
         transition: `height ${DESKTOP_MENU_ANIMATION_DURATION_MS}ms cubic-bezier(0.65, 0, 0.35, 1)`,

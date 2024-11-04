@@ -38,12 +38,6 @@ import type {Variant} from './theme-variant-context';
 import type {TouchableProps} from './touchable';
 import type {DataAttributes, HeadingType} from './utils/types';
 
-const supportsCssMin = () => {
-    const element = document.createElement('div');
-    element.style.height = 'min(2px, 3px)';
-    return element.style.height === 'calc(2px)';
-};
-
 const BurgerMenuIcon = ({isOpen}: {isOpen: boolean}) => {
     return (
         <div className={styles.burgerIconContainer} role="presentation" data-component-name="BurgerMenuIcon">
@@ -238,13 +232,44 @@ type MainNavigationBarProps = {
     desktopSmallMenu?: boolean;
 };
 
+type MainNavigationBarMenuStatus = 'opening' | 'opened' | 'closing' | 'closed';
+type MainNavigationBarMenuAction = 'open' | 'finishOpen' | 'close' | 'finishClose';
+
+const transitions: Record<
+    MainNavigationBarMenuStatus,
+    Partial<Record<MainNavigationBarMenuAction, MainNavigationBarMenuStatus>>
+> = {
+    opening: {
+        close: 'closing',
+        finishOpen: 'opened',
+    },
+    opened: {
+        close: 'closing',
+    },
+    closing: {
+        // If a section was opened while the menu was closing, the menu should be considered as
+        // already open. This is useful for example to avoid the new content's fade-in animation
+        open: 'opened',
+        finishClose: 'closed',
+    },
+    closed: {
+        open: 'opening',
+    },
+};
+
+const menuReducer = (state: MainNavigationBarMenuStatus, action: MainNavigationBarMenuAction) => {
+    return transitions[state][action] || state;
+};
+
 type MainNavigationBarDesktopMenuState = {
     isMenuOpen: boolean;
     openedSection: number;
+    menuHeight: string;
+    menuStatus: MainNavigationBarMenuStatus;
     setSectionAsActive: (index: number) => void;
     setSectionAsInactive: (index: number, forceCloseMenu?: boolean) => void;
     closeMenu: () => void;
-    onMenuExited: () => void;
+    setMenuHeight: (height: string) => void;
     setIsMenuHovered: (value: boolean) => void;
     setFocusedItem: (item?: {column: number; index: number}) => void;
 };
@@ -252,10 +277,12 @@ type MainNavigationBarDesktopMenuState = {
 const MainNavigationBarDesktopMenuContext = React.createContext<MainNavigationBarDesktopMenuState>({
     isMenuOpen: false,
     openedSection: -1,
+    menuHeight: '0px',
+    menuStatus: 'closed',
     setSectionAsActive: () => {},
     setSectionAsInactive: () => {},
     closeMenu: () => {},
-    onMenuExited: () => {},
+    setMenuHeight: () => {},
     setIsMenuHovered: () => {},
     setFocusedItem: () => {},
 });
@@ -271,29 +298,33 @@ const MainNavigationBarDesktopMenuContextProvider = ({
 }): JSX.Element => {
     const {isTabletOrSmaller} = useScreenSize();
     const [isMenuOpen, setIsMenuOpen] = React.useState(false);
-    const [isMenuHovered, setIsMenuHovered] = React.useState(false);
+    const [menuHeight, setMenuHeight] = React.useState('0px');
+    const [menuStatus, dispatch] = React.useReducer(menuReducer, 'closed');
 
     // Item that is currently focused inside a section. This state is used to handle pressing
     // up/down arrows to navigate through the items of a section.
     const [focusedItem, setFocusedItem] = React.useState<{column: number; index: number} | undefined>();
 
-    // Section that has been hovered. This state is used to determine whether the menu should be open or closed.
-    const [activeSection, setActiveSection] = React.useState(-1);
+    // State that indicated whether the menu container has been hovered
+    const [isMenuHovered, setIsMenuHovered] = React.useState(false);
 
-    // Section that is currently being rendered. We keep this as a different state from activeSection
-    // because when the large menu is closing, we still need to display the section that was opened.
+    // State that indicates whether the current rendered section has been hovered or its arrow button is focused
+    const [isSectionHovered, setIsSectionHovered] = React.useState(false);
+
+    // Section that is currently being rendered
     const [openedSection, setOpenedSection] = React.useState(-1);
 
     const closeMenu = React.useCallback(() => {
         setIsMenuHovered(false);
-        setActiveSection(-1);
+        setIsSectionHovered(false);
     }, []);
 
     // Callback used when a section has been hovered or it's focused arrow has been pressed while it's closed
     const setSectionAsActive = React.useCallback(
         (index: number) => {
             if (sections?.[index]?.menu) {
-                setActiveSection(index);
+                setIsSectionHovered(true);
+                setOpenedSection(index);
             } else {
                 // If the section has no menu, close the current opened one
                 closeMenu();
@@ -306,43 +337,58 @@ const MainNavigationBarDesktopMenuContextProvider = ({
     const setSectionAsInactive = React.useCallback(
         (index: number, forceCloseMenu?: boolean) => {
             if (index === openedSection) {
+                setIsSectionHovered(false);
+
                 // We may want to close the menu even when menu is hovered, and if so, we should reset isMenuHovered
                 // (for example, when the current menu is being hovered and we press the arrow from another section)
                 if (forceCloseMenu) {
-                    closeMenu();
-                } else {
-                    setActiveSection(-1);
+                    setIsMenuHovered(false);
                 }
             }
         },
-        [openedSection, closeMenu]
+        [openedSection]
     );
-
-    // Callback used to reset openedSection once the large menu close animation has finished
-    const onMenuExited = React.useCallback(() => {
-        setOpenedSection(-1);
-    }, []);
 
     // Close menu when viewport is too small
     React.useEffect(() => {
         if (isTabletOrSmaller) {
             closeMenu();
-            setOpenedSection(-1);
         }
     }, [isTabletOrSmaller, closeMenu]);
 
     React.useEffect(() => {
-        if (activeSection === -1 && !isMenuHovered) {
+        if (!isSectionHovered && !isMenuHovered) {
             setIsMenuOpen(false);
-            if (isSmallMenu) {
-                // When rendering the small menu, we don't need to wait for the animation to finish
-                onMenuExited();
-            }
-        } else if (activeSection !== -1) {
-            setOpenedSection(activeSection);
+            setMenuHeight('0px');
+        } else {
             setIsMenuOpen(true);
         }
-    }, [isMenuHovered, activeSection, isSmallMenu, onMenuExited]);
+    }, [isMenuHovered, isSectionHovered]);
+
+    React.useEffect(() => {
+        const menuAnimationDuration =
+            isRunningAcceptanceTest() || isSmallMenu ? 0 : styles.DESKTOP_MENU_ANIMATION_DURATION_MS;
+
+        let id: NodeJS.Timeout;
+
+        // If menu started opening/closing
+        if (!isMenuOpen) {
+            dispatch('close');
+            id = setTimeout(() => dispatch('finishClose'), menuAnimationDuration);
+        } else {
+            dispatch('open');
+            id = setTimeout(() => dispatch('finishOpen'), menuAnimationDuration);
+        }
+
+        return () => clearTimeout(id);
+    }, [isMenuOpen, isSmallMenu]);
+
+    React.useEffect(() => {
+        // reset openedSection when the menu has been closed
+        if (menuStatus === 'closed') {
+            setOpenedSection(-1);
+        }
+    }, [menuStatus]);
 
     const focusItem = React.useCallback(
         (item: {column: number; index: number} | undefined) => {
@@ -395,12 +441,10 @@ const MainNavigationBarDesktopMenuContextProvider = ({
                 // Do nothing
             }
         };
-        // Close menu when ESC key is pressed or when scrolling in the page
+        // Close menu when ESC key is pressed
         document.addEventListener('keydown', handleKeyDown, false);
-        document.addEventListener('scroll', closeMenu);
         return () => {
             document.removeEventListener('keydown', handleKeyDown, false);
-            document.removeEventListener('scroll', closeMenu);
         };
     }, [closeMenu, focusedItem]);
 
@@ -414,10 +458,12 @@ const MainNavigationBarDesktopMenuContextProvider = ({
             value={{
                 isMenuOpen,
                 openedSection,
+                menuHeight,
+                menuStatus,
                 setSectionAsActive,
                 setSectionAsInactive,
                 closeMenu,
-                onMenuExited,
+                setMenuHeight,
                 setIsMenuHovered,
                 setFocusedItem: focusItem,
             }}
@@ -675,28 +721,28 @@ const MainNavigationBarDesktopMenuSectionColumn = ({
     );
 };
 
-const MainNavigationBarDesktopMenu = ({
-    sections,
+const MainNavigationBarDesktopMenuContent = ({
+    section,
+    index,
     isLargeNavigationBar,
 }: {
-    sections: ReadonlyArray<MainNavigationBarSection>;
+    section: MainNavigationBarSection;
+    index: number;
     isLargeNavigationBar: boolean;
 }): JSX.Element => {
     const menuRef = React.useRef<HTMLDivElement>(null);
-    const [menuHeight, setMenuHeight] = React.useState('0px');
     const [isMenuContentScrollable, setIsMenuContentScrollable] = React.useState(false);
-    const isAnySectionOpened = React.useRef(false);
 
     const menuAnimationDuration = isRunningAcceptanceTest() ? 0 : styles.DESKTOP_MENU_ANIMATION_DURATION_MS;
     const topSpace = isLargeNavigationBar ? NAVBAR_HEIGHT_DESKTOP_LARGE : NAVBAR_HEIGHT_DESKTOP;
     const bottomSpace = 40;
 
-    const {isMenuOpen, openedSection, closeMenu, onMenuExited, setIsMenuHovered} =
+    const {menuStatus, isMenuOpen, openedSection, menuHeight, closeMenu, setIsMenuHovered, setMenuHeight} =
         useMainNavigationBarDesktopMenuState();
 
     React.useEffect(() => {
         // Scroll to top of the content if the opened section changed
-        if (menuRef.current) {
+        if (menuRef.current && isMenuOpen) {
             menuRef.current.scrollTop = 0;
         }
 
@@ -709,54 +755,56 @@ const MainNavigationBarDesktopMenu = ({
         }
     }, [isMenuOpen, openedSection, menuAnimationDuration]);
 
-    const columns = sections[openedSection]?.menu?.columns || [];
-    const customContent = sections[openedSection]?.menu?.content;
+    const [isContentVisible, setIsContentVisible] = React.useState(true);
+
+    React.useEffect(() => {
+        if (openedSection === index) {
+            // If menu is opening, trigger the fade-in effect for current section
+            if (menuStatus === 'opening') {
+                setIsContentVisible(false);
+                // TODO: evaluate if we want a delay in here
+                setTimeout(() => setIsContentVisible(true), 0);
+            } else {
+                setIsContentVisible(true);
+            }
+        }
+    }, [menuStatus, openedSection, index]);
+
+    React.useEffect(() => {
+        // disable scroll when menu is closing to avoid showing the scrollbar
+        if (menuStatus === 'closing') {
+            setIsMenuContentScrollable(false);
+        }
+    }, [menuStatus]);
+
+    const columns = section.menu?.columns || [];
+    const customContent = section?.menu?.content;
 
     return (
         <div className={styles.desktopOnly}>
-            <ResetResponsiveLayout>
-                <div className={styles.desktopMenuWrapper} style={{top: topSpace}}>
-                    <CSSTransition
-                        in={isMenuOpen}
-                        timeout={menuAnimationDuration}
-                        nodeRef={menuRef}
-                        mountOnEnter
-                        unmountOnExit
-                        onEnter={() => {
-                            // Hack to be able to set the fade-in effect in the content after the first render
-                            isAnySectionOpened.current = true;
-                        }}
-                        onExiting={() => setIsMenuContentScrollable(false)}
-                        onExited={() => {
-                            isAnySectionOpened.current = false;
-                            onMenuExited();
-                        }}
-                    >
+            <ThemeVariant variant="default">
+                {openedSection === index && (
+                    <ResetResponsiveLayout>
                         <div
                             className={styles.desktopMenuContainer}
                             onMouseEnter={() => setIsMenuHovered(true)}
                             onMouseLeave={() => setIsMenuHovered(false)}
-                            ref={menuRef}
                             style={{
+                                top: topSpace,
                                 height: menuHeight,
-                                maxHeight: `calc(100vh - ${topSpace}px - ${bottomSpace}px)`,
                                 overflowY: isMenuContentScrollable ? 'auto' : 'hidden',
                             }}
                         >
                             <ResponsiveLayout>
                                 <div
                                     className={classnames(styles.desktopMenu, {
-                                        [styles.desktopMenuContentFadeIn]: isAnySectionOpened.current,
+                                        [styles.desktopMenuContentFadeIn]: isContentVisible,
                                     })}
                                     ref={(el) => {
-                                        if (el) {
-                                            // In old browsers where min() is not supported, the speed of the menu
-                                            // height's animation will depend on the height of the content instead of
-                                            // the height of the container.
-                                            const value = supportsCssMin()
-                                                ? `min(${el.scrollHeight}px, calc(100vh - ${topSpace}px - ${bottomSpace}px))`
-                                                : `${el.scrollHeight}px`;
-                                            setMenuHeight(!isMenuOpen ? '0px' : value);
+                                        if (el && isMenuOpen) {
+                                            setMenuHeight(
+                                                `min(${el.scrollHeight}px, calc(100vh - ${topSpace}px - ${bottomSpace}px))`
+                                            );
                                         }
                                     }}
                                 >
@@ -786,9 +834,34 @@ const MainNavigationBarDesktopMenu = ({
                                 </div>
                             </ResponsiveLayout>
                         </div>
-                    </CSSTransition>
-                </div>
-            </ResetResponsiveLayout>
+                    </ResetResponsiveLayout>
+                )}
+            </ThemeVariant>
+        </div>
+    );
+};
+
+// This is the menu's background panel. The menu content is rendered separately for each tab
+// in order to make the section's content follow the natural focus order of elements
+// when using the keyboard or a screen reader to navigate
+const MainNavigationBarDesktopMenuBackground = ({
+    isLargeNavigationBar,
+}: {
+    isLargeNavigationBar: boolean;
+}): JSX.Element => {
+    const topSpace = isLargeNavigationBar ? NAVBAR_HEIGHT_DESKTOP_LARGE : NAVBAR_HEIGHT_DESKTOP;
+    const {menuHeight} = useMainNavigationBarDesktopMenuState();
+
+    return (
+        <div className={styles.desktopOnly}>
+            <div className={styles.desktopMenuWrapper} style={{top: topSpace}}>
+                <div
+                    className={styles.desktopMenuBackgroundContainer}
+                    style={{
+                        height: menuHeight,
+                    }}
+                />
+            </div>
         </div>
     );
 };
@@ -815,34 +888,36 @@ const MainNavigationBarDesktopSmallMenu = ({
     return (
         <div className={styles.desktopOnly}>
             {index === openedSection && (
-                <div
-                    className={styles.desktopSmallMenuContainer}
-                    onMouseEnter={() => setIsMenuHovered(true)}
-                    onMouseLeave={() => setIsMenuHovered(false)}
-                    style={{
-                        top: topSpace,
-                        left: leftPosition,
-                        maxHeight: `calc(100vh - ${topSpace}px - ${bottomSpace}px)`,
-                    }}
-                >
-                    {customContent ? (
-                        typeof customContent === 'function' ? (
-                            customContent({closeMenu})
+                <ThemeVariant variant="default">
+                    <div
+                        className={styles.desktopSmallMenuContainer}
+                        onMouseEnter={() => setIsMenuHovered(true)}
+                        onMouseLeave={() => setIsMenuHovered(false)}
+                        style={{
+                            top: topSpace,
+                            left: leftPosition,
+                            maxHeight: `calc(100vh - ${topSpace}px - ${bottomSpace}px)`,
+                        }}
+                    >
+                        {customContent ? (
+                            typeof customContent === 'function' ? (
+                                customContent({closeMenu})
+                            ) : (
+                                customContent
+                            )
                         ) : (
-                            customContent
-                        )
-                    ) : (
-                        <Stack space={40} dataAttributes={{'navigation-bar-menu-items': 'true'}}>
-                            {columns.map((column, columnIdx) => (
-                                <MainNavigationBarDesktopMenuSectionColumn
-                                    key={columnIdx}
-                                    column={column}
-                                    columnIndex={columnIdx}
-                                />
-                            ))}
-                        </Stack>
-                    )}
-                </div>
+                            <Stack space={40} dataAttributes={{'navigation-bar-menu-items': 'true'}}>
+                                {columns.map((column, columnIdx) => (
+                                    <MainNavigationBarDesktopMenuSectionColumn
+                                        key={columnIdx}
+                                        column={column}
+                                        columnIndex={columnIdx}
+                                    />
+                                ))}
+                            </Stack>
+                        )}
+                    </div>
+                </ThemeVariant>
             )}
         </div>
     );
@@ -874,7 +949,8 @@ const MainNavigationBarDesktopSection = ({
     const sectionRef = React.useRef<HTMLDivElement>(null);
     const [smallMenuLeftPosition, setSmallMenuLeftPosition] = React.useState(0);
     const [isArrowFocused, setIsArrowFocused] = React.useState(false);
-    const {openedSection, setSectionAsActive, setSectionAsInactive} = useMainNavigationBarDesktopMenuState();
+    const {isMenuOpen, openedSection, setSectionAsActive, setSectionAsInactive} =
+        useMainNavigationBarDesktopMenuState();
 
     const hasCustomInteraction =
         touchableProps.href !== undefined ||
@@ -931,24 +1007,28 @@ const MainNavigationBarDesktopSection = ({
         };
     }, [index, isArrowFocused, openSectionMenu, setSectionAsInactive, menu, hasCustomInteraction]);
 
+    const isSectionMenuOpen = isMenuOpen && openedSection === index;
+
+    const menuButtonOnPress = React.useCallback(() => {
+        if (isSectionMenuOpen) {
+            setSectionAsInactive(index, true);
+        } else {
+            openSectionMenu();
+        }
+    }, [isSectionMenuOpen, setSectionAsInactive, openSectionMenu, index]);
+
     const getSectionInteractiveProps = React.useCallback(
         (touchableProps: InteractiveProps) => {
             // Open or close the menu when a section without interaction is pressed
             if (!hasCustomInteraction) {
                 return {
-                    onPress: () => {
-                        if (index !== openedSection) {
-                            openSectionMenu();
-                        } else {
-                            setSectionAsInactive(index, true);
-                        }
-                    },
+                    onPress: menuButtonOnPress,
                 };
             }
 
             return touchableProps as InteractiveProps;
         },
-        [hasCustomInteraction, index, openSectionMenu, openedSection, setSectionAsInactive]
+        [hasCustomInteraction, menuButtonOnPress]
     );
 
     return (
@@ -959,7 +1039,8 @@ const MainNavigationBarDesktopSection = ({
                     [styles.desktopMenuFirstSection]: isFirstSection,
                     [styles.desktopMenuLastSection]: isLastSection,
                 })}
-                onMouseEnter={() => openSectionMenu()}
+                // TODO: debounce this!
+                onMouseEnter={openSectionMenu}
                 onMouseLeave={() => setSectionAsInactive(index)}
             >
                 <BaseTouchable
@@ -970,7 +1051,7 @@ const MainNavigationBarDesktopSection = ({
                             : undefined
                     }
                     aria-haspopup={!hasCustomInteraction}
-                    aria-expanded={!hasCustomInteraction ? openedSection === index : undefined}
+                    aria-expanded={!hasCustomInteraction ? isSectionMenuOpen : undefined}
                     className={classnames(
                         styles.section,
                         {
@@ -997,14 +1078,10 @@ const MainNavigationBarDesktopSection = ({
                                 className={styles.desktopMenuSectionArrow}
                                 aria-label={`${section.title}, ${texts.mainNavigationBarOpenSectionMenu || t(tokens.mainNavigationBarOpenSectionMenu)}`}
                                 aria-haspopup
-                                aria-expanded={openedSection === index}
+                                aria-expanded={isSectionMenuOpen}
                                 onPress={() => {
                                     if (isArrowFocused) {
-                                        if (index !== openedSection) {
-                                            openSectionMenu();
-                                        } else {
-                                            setSectionAsInactive(index, true);
-                                        }
+                                        menuButtonOnPress();
                                     }
                                 }}
                                 style={{
@@ -1015,17 +1092,23 @@ const MainNavigationBarDesktopSection = ({
                                 <IconChevronLeftRegular
                                     size={8}
                                     style={{
-                                        transform: `rotate(${openedSection === index ? 90 : -90}deg)`,
+                                        transform: `rotate(${isSectionMenuOpen ? 90 : -90}deg)`,
                                     }}
                                 />
                             </BaseTouchable>
                         </div>
                     )}
-                    {desktopSmallMenu && (
+                    {desktopSmallMenu ? (
                         <MainNavigationBarDesktopSmallMenu
                             section={section}
                             isLargeNavigationBar={isLargeNavigationBar}
                             leftPosition={smallMenuLeftPosition}
+                            index={index}
+                        />
+                    ) : (
+                        <MainNavigationBarDesktopMenuContent
+                            section={section}
+                            isLargeNavigationBar={isLargeNavigationBar}
                             index={index}
                         />
                     )}
@@ -1076,13 +1159,10 @@ export const MainNavigationBar = ({
                             desktopSmallMenu={desktopSmallMenu}
                         />
                     ))}
-                    {!desktopSmallMenu && (
-                        <MainNavigationBarDesktopMenu
-                            sections={sections}
-                            isLargeNavigationBar={hasBottomSections}
-                        />
-                    )}
                 </Inline>
+                {!desktopSmallMenu && (
+                    <MainNavigationBarDesktopMenuBackground isLargeNavigationBar={hasBottomSections} />
+                )}
             </nav>
         );
     };

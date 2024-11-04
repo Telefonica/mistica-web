@@ -216,3 +216,15 @@ test.each(['default', 'custom'])('MainNavigationBar with menu and %s content in 
     await page.click(await screen.findByRole('button', {name: 'Cerrar menú de navegación'}));
     expect(await page.screenshot()).toMatchImageSnapshot();
 });
+
+test.each(['large', 'small'])('MainNavigationBar inverse with %s menu in DESKTOP', async (menuType) => {
+    const page = await openStoryPage({
+        id: 'components-navigation-bars-mainnavigationbar--default',
+        device: 'DESKTOP',
+        args: {sections: true, desktopSmallMenu: menuType === 'small', menu: 'default', variant: 'inverse'},
+    });
+
+    // first section opened
+    await page.click(await screen.findByRole('button', {name: 'Start'}));
+    expect(await page.screenshot()).toMatchImageSnapshot();
+});

@@ -73,6 +73,9 @@ test('MainNavigationBar section with interaction is accessible', async () => {
     expect(screen.getByRole('link', {name: /item 1-3/})).toBeInTheDocument();
     expect(screen.queryByRole('button', {name: 'item 2-1'})).not.toBeInTheDocument();
 
+    // Remove mouse hover from section in order to close the menu
+    await userEvent.unhover(firstSectionButton);
+
     // Section onPress shouldn't have been called
     expect(firstSectionOnPressSpy).toHaveBeenCalledTimes(0);
 
@@ -87,7 +90,7 @@ test('MainNavigationBar section with interaction is accessible', async () => {
     });
 
     // Open second section's menu
-    await userEvent.click(secondSectionButton);
+    await userEvent.hover(secondSectionButton);
     expect(firstSectionMenuButton).toHaveAttribute('aria-expanded', 'false');
     expect(secondSectionButton).toHaveAttribute('aria-expanded', 'true');
 
@@ -98,18 +101,22 @@ test('MainNavigationBar section with interaction is accessible', async () => {
     // Close the menu with ESC key
     await userEvent.keyboard('{Escape}');
 
-    await waitFor(() => {
-        expect(firstSectionMenuButton).toHaveAttribute('aria-expanded', 'false');
-        expect(secondSectionButton).toHaveAttribute('aria-expanded', 'false');
-    });
+    await waitFor(
+        () => {
+            expect(firstSectionMenuButton).toHaveAttribute('aria-expanded', 'false');
+            expect(secondSectionButton).toHaveAttribute('aria-expanded', 'false');
 
-    // Buttons that open the menu should have aria-haspopup
-    expect(firstSectionMenuButton).toHaveAttribute('aria-haspopup', 'true');
-    expect(secondSectionButton).toHaveAttribute('aria-haspopup', 'true');
+            // Buttons that open the menu should have aria-haspopup
+            expect(firstSectionMenuButton).toHaveAttribute('aria-haspopup', 'true');
+            expect(secondSectionButton).toHaveAttribute('aria-haspopup', 'true');
 
-    // Menu is closed, no section should be visible
-    expect(screen.queryByRole('button', {name: 'item 1-1'})).not.toBeInTheDocument();
-    expect(screen.queryByRole('button', {name: 'item 2-1'})).not.toBeInTheDocument();
+            // Menu is closed, no section should be visible
+            expect(screen.queryByRole('button', {name: 'item 1-1'})).not.toBeInTheDocument();
+            expect(screen.queryByRole('button', {name: 'item 2-1'})).not.toBeInTheDocument();
+        },
+        // queryByRole takes longer to execute
+        {timeout: 2000}
+    );
 });
 
 test('MainNavigationBar menu closeMenu callback closes the menu', async () => {
@@ -132,15 +139,19 @@ test('MainNavigationBar menu closeMenu callback closes the menu', async () => {
 
     // Open the menu
     const sectionButton = await screen.findByRole('button', {name: 'section 1, Abrir submenú'});
-    await userEvent.click(sectionButton);
+    await userEvent.hover(sectionButton);
     expect(sectionButton).toHaveAttribute('aria-expanded', 'true');
 
     // Close the menu with the closeMenu callback
     const closeButton = await screen.findByRole('button', {name: 'Close menu'});
     await userEvent.click(closeButton);
 
-    await waitFor(() => {
-        expect(sectionButton).toHaveAttribute('aria-expanded', 'false');
-        expect(screen.queryByRole('button', {name: 'Close menu'})).not.toBeInTheDocument();
-    });
+    await waitFor(
+        () => {
+            expect(sectionButton).toHaveAttribute('aria-expanded', 'false');
+            expect(screen.queryByRole('button', {name: 'Close menu'})).not.toBeInTheDocument();
+        },
+        // queryByRole takes longer to execute
+        {timeout: 2000}
+    );
 });
