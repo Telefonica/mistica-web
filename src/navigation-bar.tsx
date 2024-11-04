@@ -714,80 +714,81 @@ const MainNavigationBarDesktopMenu = ({
 
     return (
         <div className={styles.desktopOnly}>
-            <Portal>
-                <CSSTransition
-                    in={isMenuOpen}
-                    timeout={menuAnimationDuration}
-                    nodeRef={menuRef}
-                    mountOnEnter
-                    unmountOnExit
-                    onEnter={() => {
-                        // Hack to be able to set the fade-in effect in the content after the first render
-                        isAnySectionOpened.current = true;
-                    }}
-                    onExiting={() => setIsMenuContentScrollable(false)}
-                    onExited={() => {
-                        isAnySectionOpened.current = false;
-                        onMenuExited();
-                    }}
-                >
-                    <div
-                        className={styles.desktopMenuContainer}
-                        onMouseEnter={() => setIsMenuHovered(true)}
-                        onMouseLeave={() => setIsMenuHovered(false)}
-                        ref={menuRef}
-                        style={{
-                            top: topSpace,
-                            height: menuHeight,
-                            maxHeight: `calc(100vh - ${topSpace}px - ${bottomSpace}px)`,
-                            overflowY: isMenuContentScrollable ? 'auto' : 'hidden',
+            <ResetResponsiveLayout>
+                <div className={styles.desktopMenuWrapper} style={{top: topSpace}}>
+                    <CSSTransition
+                        in={isMenuOpen}
+                        timeout={menuAnimationDuration}
+                        nodeRef={menuRef}
+                        mountOnEnter
+                        unmountOnExit
+                        onEnter={() => {
+                            // Hack to be able to set the fade-in effect in the content after the first render
+                            isAnySectionOpened.current = true;
+                        }}
+                        onExiting={() => setIsMenuContentScrollable(false)}
+                        onExited={() => {
+                            isAnySectionOpened.current = false;
+                            onMenuExited();
                         }}
                     >
-                        <ResponsiveLayout>
-                            <div
-                                className={classnames(styles.desktopMenu, {
-                                    [styles.desktopMenuContentFadeIn]: isAnySectionOpened.current,
-                                })}
-                                ref={(el) => {
-                                    if (el) {
-                                        // In old browsers where min() is not supported, the speed of the menu
-                                        // height's animation will depend on the height of the content instead of
-                                        // the height of the container.
-                                        const value = supportsCssMin()
-                                            ? `min(${el.scrollHeight}px, calc(100vh - ${topSpace}px - ${bottomSpace}px))`
-                                            : `${el.scrollHeight}px`;
-                                        setMenuHeight(!isMenuOpen ? '0px' : value);
-                                    }
-                                }}
-                            >
-                                {customContent ? (
-                                    typeof customContent === 'function' ? (
-                                        customContent({closeMenu})
+                        <div
+                            className={styles.desktopMenuContainer}
+                            onMouseEnter={() => setIsMenuHovered(true)}
+                            onMouseLeave={() => setIsMenuHovered(false)}
+                            ref={menuRef}
+                            style={{
+                                height: menuHeight,
+                                maxHeight: `calc(100vh - ${topSpace}px - ${bottomSpace}px)`,
+                                overflowY: isMenuContentScrollable ? 'auto' : 'hidden',
+                            }}
+                        >
+                            <ResponsiveLayout>
+                                <div
+                                    className={classnames(styles.desktopMenu, {
+                                        [styles.desktopMenuContentFadeIn]: isAnySectionOpened.current,
+                                    })}
+                                    ref={(el) => {
+                                        if (el) {
+                                            // In old browsers where min() is not supported, the speed of the menu
+                                            // height's animation will depend on the height of the content instead of
+                                            // the height of the container.
+                                            const value = supportsCssMin()
+                                                ? `min(${el.scrollHeight}px, calc(100vh - ${topSpace}px - ${bottomSpace}px))`
+                                                : `${el.scrollHeight}px`;
+                                            setMenuHeight(!isMenuOpen ? '0px' : value);
+                                        }
+                                    }}
+                                >
+                                    {customContent ? (
+                                        typeof customContent === 'function' ? (
+                                            customContent({closeMenu})
+                                        ) : (
+                                            customContent
+                                        )
                                     ) : (
-                                        customContent
-                                    )
-                                ) : (
-                                    <Grid
-                                        rows={1}
-                                        columns={12}
-                                        gap={24}
-                                        dataAttributes={{'navigation-bar-menu-items': 'true'}}
-                                    >
-                                        {columns.map((column, columnIdx) => (
-                                            <GridItem key={columnIdx} columnSpan={2}>
-                                                <MainNavigationBarDesktopMenuSectionColumn
-                                                    column={column}
-                                                    columnIndex={columnIdx}
-                                                />
-                                            </GridItem>
-                                        ))}
-                                    </Grid>
-                                )}
-                            </div>
-                        </ResponsiveLayout>
-                    </div>
-                </CSSTransition>
-            </Portal>
+                                        <Grid
+                                            rows={1}
+                                            columns={12}
+                                            gap={[24, 40]}
+                                            dataAttributes={{'navigation-bar-menu-items': 'true'}}
+                                        >
+                                            {columns.map((column, columnIdx) => (
+                                                <GridItem key={columnIdx} columnSpan={2}>
+                                                    <MainNavigationBarDesktopMenuSectionColumn
+                                                        column={column}
+                                                        columnIndex={columnIdx}
+                                                    />
+                                                </GridItem>
+                                            ))}
+                                        </Grid>
+                                    )}
+                                </div>
+                            </ResponsiveLayout>
+                        </div>
+                    </CSSTransition>
+                </div>
+            </ResetResponsiveLayout>
         </div>
     );
 };
@@ -814,36 +815,34 @@ const MainNavigationBarDesktopSmallMenu = ({
     return (
         <div className={styles.desktopOnly}>
             {index === openedSection && (
-                <Portal>
-                    <div
-                        className={styles.desktopSmallMenuContainer}
-                        onMouseEnter={() => setIsMenuHovered(true)}
-                        onMouseLeave={() => setIsMenuHovered(false)}
-                        style={{
-                            top: topSpace,
-                            left: leftPosition,
-                            maxHeight: `calc(100vh - ${topSpace}px - ${bottomSpace}px)`,
-                        }}
-                    >
-                        {customContent ? (
-                            typeof customContent === 'function' ? (
-                                customContent({closeMenu})
-                            ) : (
-                                customContent
-                            )
+                <div
+                    className={styles.desktopSmallMenuContainer}
+                    onMouseEnter={() => setIsMenuHovered(true)}
+                    onMouseLeave={() => setIsMenuHovered(false)}
+                    style={{
+                        top: topSpace,
+                        left: leftPosition,
+                        maxHeight: `calc(100vh - ${topSpace}px - ${bottomSpace}px)`,
+                    }}
+                >
+                    {customContent ? (
+                        typeof customContent === 'function' ? (
+                            customContent({closeMenu})
                         ) : (
-                            <Stack space={40} dataAttributes={{'navigation-bar-menu-items': 'true'}}>
-                                {columns.map((column, columnIdx) => (
-                                    <MainNavigationBarDesktopMenuSectionColumn
-                                        key={columnIdx}
-                                        column={column}
-                                        columnIndex={columnIdx}
-                                    />
-                                ))}
-                            </Stack>
-                        )}
-                    </div>
-                </Portal>
+                            customContent
+                        )
+                    ) : (
+                        <Stack space={40} dataAttributes={{'navigation-bar-menu-items': 'true'}}>
+                            {columns.map((column, columnIdx) => (
+                                <MainNavigationBarDesktopMenuSectionColumn
+                                    key={columnIdx}
+                                    column={column}
+                                    columnIndex={columnIdx}
+                                />
+                            ))}
+                        </Stack>
+                    )}
+                </div>
             )}
         </div>
     );
@@ -1077,6 +1076,12 @@ export const MainNavigationBar = ({
                             desktopSmallMenu={desktopSmallMenu}
                         />
                     ))}
+                    {!desktopSmallMenu && (
+                        <MainNavigationBarDesktopMenu
+                            sections={sections}
+                            isLargeNavigationBar={hasBottomSections}
+                        />
+                    )}
                 </Inline>
             </nav>
         );
@@ -1134,9 +1139,6 @@ export const MainNavigationBar = ({
                 </ResponsiveLayout>
             </Header>
             {topFixed && <div className={hasBottomSections ? styles.spacerLarge : styles.spacer} />}
-            {!desktopSmallMenu && (
-                <MainNavigationBarDesktopMenu sections={sections} isLargeNavigationBar={hasBottomSections} />
-            )}
         </ThemeVariant>
     );
 

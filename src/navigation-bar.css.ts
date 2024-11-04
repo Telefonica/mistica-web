@@ -391,10 +391,15 @@ export const lineHeightFix = style({
     lineHeight: 0,
 });
 
+export const desktopMenuWrapper = sprinkles({
+    position: 'absolute',
+    left: 0,
+    right: 0,
+});
+
 export const desktopMenuContainer = style([
     sprinkles({
         background: vars.colors.backgroundContainer,
-        position: 'fixed',
         width: '100%',
     }),
     {
@@ -416,6 +421,7 @@ export const desktopSmallMenuContainer = style([
         paddingX: 24,
     }),
     {
+        zIndex: NAVBAR_ZINDEX,
         borderRadius: `0 0 ${vars.borderRadii.popup} ${vars.borderRadii.popup}`,
         width: DESKTOP_SMALL_MENU_WIDTH,
         overflowY: 'auto',
