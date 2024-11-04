@@ -33,7 +33,7 @@ const DEFAULT_COLORS = [
 ];
 
 /**
- * "start"/"end" values are angles for types 'angular' and 'circular', and a fraction of the total for 'linear'.
+ * "start"/"end" values for each segment of the meter. The values are in the range [0, 1]
  */
 type Segment = {
     start: number;
@@ -41,8 +41,7 @@ type Segment = {
 };
 
 /**
- * Cubic bezier easing function
- * https://github.com/arian/cubic-bezier/blob/27d2512d15a0b873fa0fca8769069c7b290e80f8/index.js
+ * Cubic bezier easing function https://github.com/arian/cubic-bezier/blob/27d2512d15a0b873fa0fca8769069c7b290e80f8/index.js
  *
  * @param time - time in the range [0, 1]
  */
@@ -54,27 +53,25 @@ const clamp = (n: number, min: number, max: number) => Math.min(Math.max(n, min)
  * Calculate the start and end segment values for each segment of the meter
  */
 const calculateSegments = (
-    startValues: Array<number>,
-    endValues: Array<number>,
-    time: number,
-    maxValue: number // radians if angular, 1 if linear
-) => {
+    currentValues: Array<number>,
+    targetValues: Array<number>,
+    time: number
+): Array<Segment> => {
     const segments: Array<Segment> = [];
-    for (let i = 0; i < startValues.length; i++) {
-        const startValue = startValues.slice(0, i + 1).reduce((acc, v) => acc + v, 0);
-        const endValue = endValues.slice(0, i + 1).reduce((acc, v) => acc + v, 0);
+
+    let startValue = 0;
+    let endValue = 0;
+    for (let i = 0; i < currentValues.length; i++) {
+        startValue += currentValues[i];
+        endValue += targetValues[i];
 
         // each segment has an accumulated delay time. The last segment has no delay
-        const delay = ANIMATION_DELAY_MS * (startValues.length - i - 1);
+        const delay = ANIMATION_DELAY_MS * (currentValues.length - i - 1);
         const animationTime = clamp((time - delay) / ANIMATION_DURATION_MS, 0, 1);
 
         const t = clamp(timingFunction(animationTime), 0, 1);
         const start = segments.at(-1)?.end || 0;
-        const end = clamp(
-            (startValue + (endValue - startValue) * t) * maxValue,
-            0,
-            maxValue - SMALL_VALUE_THRESHOLD
-        );
+        const end = clamp(startValue + (endValue - startValue) * t, 0, 1 - SMALL_VALUE_THRESHOLD);
         segments.push({start, end});
     }
     return segments;
@@ -123,10 +120,24 @@ const Meter = ({
 }: MeterProps): JSX.Element => {
     const scaleFactor = VIEW_BOX_WIDTH / width;
     const strokeWidth = STROKE_WIDTH_PX * scaleFactor;
-    const maxValue = type === TYPE_LINEAR ? 1 : type === TYPE_CIRCULAR ? 2 * Math.PI : Math.PI;
+    const maxValue =
+        type === TYPE_LINEAR ? VIEW_BOX_WIDTH - strokeWidth : type === TYPE_CIRCULAR ? 2 * Math.PI : Math.PI;
     const radius = type === TYPE_LINEAR ? 0 : CENTER_X - strokeWidth / 2;
     const separation = SEPARATION_PX * scaleFactor;
-    const segmentSeparation = type === TYPE_LINEAR ? separation / VIEW_BOX_WIDTH : separation / radius;
+    const segmentSeparation =
+        type === TYPE_LINEAR ? separation / VIEW_BOX_WIDTH : separation / radius / maxValue;
+    const height =
+        type === TYPE_LINEAR
+            ? STROKE_WIDTH_PX
+            : type === TYPE_CIRCULAR
+              ? width
+              : width / 2 + STROKE_WIDTH_PX / 2;
+    const viewBoxHeight =
+        type === TYPE_LINEAR
+            ? strokeWidth
+            : type === TYPE_CIRCULAR
+              ? VIEW_BOX_WIDTH
+              : VIEW_BOX_WIDTH / 2 + strokeWidth / 2;
 
     const initialValuesRef = React.useRef(Array.from({length: values.length}, () => 0));
 
@@ -144,11 +155,11 @@ const Meter = ({
         let currentSegments: Array<Segment> = [];
         const animate = () => {
             const now = performance.now();
-            currentSegments = calculateSegments(initialValuesRef.current, values, now - start, maxValue);
+            currentSegments = calculateSegments(initialValuesRef.current, values, now - start);
             if (now < end) {
                 raf = requestAnimationFrame(animate); // request next frame
             } else {
-                currentSegments = calculateSegments(initialValuesRef.current, values, end - start, maxValue); // set the final values
+                currentSegments = calculateSegments(initialValuesRef.current, values, end - start); // set the final values
                 initialValuesRef.current = values;
             }
             setSegments(currentSegments);
@@ -157,31 +168,31 @@ const Meter = ({
         return () => {
             cancelAnimationFrame(raf);
             // animation was cancelled, snapshot current values
-            initialValuesRef.current = currentSegments.map(
-                (s) =>
-                    (s.end - s.start) /
-                    (type === TYPE_LINEAR ? 1 : type === TYPE_CIRCULAR ? Math.PI * 2 : Math.PI)
-            );
+            initialValuesRef.current = currentSegments.map((s) => s.end - s.start);
         };
-    }, [radius, values, maxValue, type]);
+    }, [radius, values, type]);
 
-    const getX = (value: number) =>
-        type === TYPE_LINEAR
-            ? strokeWidth / 2 + (VIEW_BOX_WIDTH - strokeWidth) * value
-            : CENTER_X - radius * Math.cos(value);
+    const getX = React.useCallback(
+        (value: number) =>
+            type === TYPE_LINEAR
+                ? strokeWidth / 2 + maxValue * value
+                : CENTER_X - radius * Math.cos(value * maxValue),
+        [maxValue, radius, strokeWidth, type]
+    );
 
-    const getY = (value: number) =>
-        type === TYPE_LINEAR ? strokeWidth / 2 : CENTER_Y - radius * Math.sin(value);
-
-    const getHeight = (width: number) =>
-        type === TYPE_LINEAR ? strokeWidth : type === TYPE_CIRCULAR ? width : width / 2 + strokeWidth / 2;
+    const getY = React.useCallback(
+        (value: number) =>
+            type === TYPE_LINEAR ? strokeWidth / 2 : CENTER_Y - radius * Math.sin(value * maxValue),
+        [maxValue, radius, strokeWidth, type]
+    );
 
     const getColor = (index: number) => colors[index % colors.length];
 
     return (
         <svg
-            viewBox={`0 0 ${VIEW_BOX_WIDTH} ${getHeight(VIEW_BOX_WIDTH)}`}
+            viewBox={`0 0 ${VIEW_BOX_WIDTH} ${viewBoxHeight}`}
             width={width}
+            height={height}
             style={{transform: `rotate(${type === TYPE_CIRCULAR ? '90deg' : 0})`, border: '1px dotted red'}}
         >
             <defs>
@@ -215,31 +226,35 @@ const Meter = ({
                         fill={getColor(firstNonZeroIndex)}
                     />
                 </marker>
-                <mask id="mask-bar-track">
-                    <rect x={0} y={0} width={VIEW_BOX_WIDTH} height={VIEW_BOX_WIDTH} fill="white" />
+                <mask id="mask-bar-track" maskUnits="userSpaceOnUse">
+                    <rect x={0} y={0} width={VIEW_BOX_WIDTH} height={viewBoxHeight} fill="white" />
                     {firstNonZeroIndex >= 0 && lastSegment && (
                         <>
                             <path
                                 stroke="black"
                                 fill="none"
                                 strokeWidth={strokeWidth + separation * 2}
-                                strokeLinecap="butt"
+                                strokeLinecap={type === TYPE_CIRCULAR ? 'butt' : 'round'}
                                 d={createPath({
-                                    x1: strokeWidth / 2,
-                                    y1: CENTER_Y,
+                                    x1: getX(0),
+                                    y1: getY(0),
                                     x2: getX(lastSegment.end),
                                     y2: getY(lastSegment.end),
                                     radius,
-                                    largeArchFlag: lastSegment.end >= Math.PI,
+                                    largeArchFlag: type === TYPE_CIRCULAR ? lastSegment.end >= 0.5 : 0,
                                 })}
                             />
-                            <circle
-                                cx={getX(lastSegment.end)}
-                                cy={getY(lastSegment.end)}
-                                r={strokeWidth / 2 + separation}
-                                fill="black"
-                            />
-                            {type === TYPE_CIRCULAR && lastSegment.end < Math.PI && (
+
+                            {type === TYPE_CIRCULAR && (
+                                <circle
+                                    cx={getX(lastSegment.end)}
+                                    cy={getY(lastSegment.end)}
+                                    r={strokeWidth / 2 + separation}
+                                    fill="black"
+                                />
+                            )}
+
+                            {type === TYPE_CIRCULAR && lastSegment.end <= 0.5 && (
                                 <rect
                                     x={0}
                                     y={CENTER_Y + separation}
@@ -251,6 +266,23 @@ const Meter = ({
                         </>
                     )}
                 </mask>
+                {type === TYPE_CIRCULAR && (
+                    <mask id="mask-last-segment" maskUnits="userSpaceOnUse">
+                        <rect x={0} y={0} width={VIEW_BOX_WIDTH} height={viewBoxHeight} fill="white" />
+                        <path
+                            stroke="black"
+                            strokeWidth={strokeWidth}
+                            fill="none"
+                            d={createPath({
+                                x1: getX(1 - segmentSeparation),
+                                y1: getY(1 - segmentSeparation),
+                                x2: getX(1),
+                                y2: getY(1),
+                                radius,
+                            })}
+                        />
+                    </mask>
+                )}
             </defs>
 
             <path
@@ -261,9 +293,9 @@ const Meter = ({
                 d={createPath({
                     x1: getX(0),
                     y1: getY(0),
-                    x2: getX(type === TYPE_CIRCULAR ? 2 * Math.PI - segmentSeparation : Math.PI),
-                    y2: getY(type === TYPE_CIRCULAR ? 2 * Math.PI - segmentSeparation : Math.PI),
-                    largeArchFlag: type === TYPE_CIRCULAR ? 1 : 0,
+                    x2: getX(1 - (type === TYPE_CIRCULAR ? segmentSeparation : 0)),
+                    y2: getY(1 - (type === TYPE_CIRCULAR ? segmentSeparation : 0)),
+                    largeArchFlag: 1,
                     radius,
                 })}
                 mask="url(#mask-bar-track)"
@@ -286,10 +318,12 @@ const Meter = ({
                         isLast || segment.end < minValueForSeparation
                             ? segment.end
                             : segment.end - segmentSeparation / 2;
+
                     if (end <= start || end - start < SMALL_VALUE_THRESHOLD) {
                         return null;
                     }
-                    const hasStartMarker = isFirst && type !== TYPE_CIRCULAR;
+
+                    const shouldIncludeStartMarker = isFirst && type !== TYPE_CIRCULAR;
                     return (
                         <path
                             key={reversedIndex}
@@ -298,13 +332,14 @@ const Meter = ({
                             strokeWidth={strokeWidth}
                             strokeLinecap="butt"
                             markerEnd={isLast ? 'url(#marker-current)' : undefined}
-                            markerStart={hasStartMarker ? 'url(#marker-start)' : undefined}
+                            markerStart={shouldIncludeStartMarker ? 'url(#marker-start)' : undefined}
+                            mask={isLast && type === TYPE_CIRCULAR ? 'url("#mask-last-segment")' : undefined}
                             d={createPath({
                                 x1: getX(start),
                                 y1: getY(start),
                                 x2: getX(end),
                                 y2: getY(end),
-                                largeArchFlag: end - start >= Math.PI ? 1 : 0,
+                                largeArchFlag: type === TYPE_CIRCULAR ? end - start >= 0.5 : 0,
                                 radius,
                             })}
                         />
