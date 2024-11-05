@@ -248,7 +248,7 @@ type MainNavigationBarProps = {
 type MainNavigationBarMenuStatus = 'opening' | 'opened' | 'closing' | 'closed';
 type MainNavigationBarMenuAction = 'open' | 'finishOpen' | 'close' | 'finishClose';
 
-const transitions: Record<
+const mainNavigationDesktopMenuTranstions: Record<
     MainNavigationBarMenuStatus,
     Partial<Record<MainNavigationBarMenuAction, MainNavigationBarMenuStatus>>
 > = {
@@ -271,7 +271,7 @@ const transitions: Record<
 };
 
 const menuReducer = (state: MainNavigationBarMenuStatus, action: MainNavigationBarMenuAction) => {
-    return transitions[state][action] || state;
+    return mainNavigationDesktopMenuTranstions[state][action] || state;
 };
 
 type MainNavigationBarDesktopMenuState = {
