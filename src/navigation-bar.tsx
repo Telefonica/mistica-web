@@ -38,7 +38,7 @@ import type {Variant} from './theme-variant-context';
 import type {TouchableProps} from './touchable';
 import type {DataAttributes, HeadingType} from './utils/types';
 
-const MAIN_NAVIGATION_BAR_MENU_DEBOUNCE_TIME = 300;
+const MAIN_NAVIGATION_BAR_MENU_DEBOUNCE_TIME = 120;
 
 const BurgerMenuIcon = ({isOpen}: {isOpen: boolean}) => {
     return (
