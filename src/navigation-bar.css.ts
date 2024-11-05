@@ -391,6 +391,18 @@ export const lineHeightFix = style({
     lineHeight: 0,
 });
 
+export const mainNavigationBarContentWrapper = style([
+    sprinkles({width: '100%'}),
+    {
+        transition: `clip-path ${DESKTOP_MENU_ANIMATION_DURATION_MS}ms cubic-bezier(0.65, 0, 0.35, 1)`,
+        '@media': {
+            ['(prefers-reduced-motion)']: {
+                transition: 'none',
+            },
+        },
+    },
+]);
+
 export const desktopMenuWrapper = sprinkles({
     position: 'absolute',
     left: 0,
@@ -405,12 +417,6 @@ export const desktopMenuContainer = style([
     }),
     {
         zIndex: NAVBAR_ZINDEX,
-        transition: `height ${DESKTOP_MENU_ANIMATION_DURATION_MS}ms cubic-bezier(0.65, 0, 0.35, 1)`,
-        '@media': {
-            ['(prefers-reduced-motion)']: {
-                transition: 'none',
-            },
-        },
     },
 ]);
 

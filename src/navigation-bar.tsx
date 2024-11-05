@@ -737,7 +737,7 @@ const MainNavigationBarDesktopMenuContent = ({
     const topSpace = isLargeNavigationBar ? NAVBAR_HEIGHT_DESKTOP_LARGE : NAVBAR_HEIGHT_DESKTOP;
     const bottomSpace = 40;
 
-    const {menuStatus, isMenuOpen, openedSection, menuHeight, closeMenu, setIsMenuHovered, setMenuHeight} =
+    const {menuStatus, isMenuOpen, openedSection, closeMenu, setIsMenuHovered, setMenuHeight} =
         useMainNavigationBarDesktopMenuState();
 
     React.useEffect(() => {
@@ -791,7 +791,6 @@ const MainNavigationBarDesktopMenuContent = ({
                             onMouseLeave={() => setIsMenuHovered(false)}
                             style={{
                                 top: topSpace,
-                                height: menuHeight,
                                 overflowY: isMenuContentScrollable ? 'auto' : 'hidden',
                             }}
                         >
@@ -1118,6 +1117,32 @@ const MainNavigationBarDesktopSection = ({
     );
 };
 
+// It's not easy to coordinate the animation of the menu content height when switching between opened
+// sections. This is because each section has it's own element where it displays the content. Instead,
+// the contents of the sections are rendered without any animation, and we keep this wrapper around
+// all of them, which "hides" the rendered smoothly by using animated clip-path
+const MainNavigationBarContentWrapper = ({
+    children,
+    isLargeNavigationBar,
+}: {
+    children: React.ReactNode;
+    isLargeNavigationBar: boolean;
+}): JSX.Element => {
+    const {menuHeight} = useMainNavigationBarDesktopMenuState();
+    const topSpace = isLargeNavigationBar ? NAVBAR_HEIGHT_DESKTOP_LARGE : NAVBAR_HEIGHT_DESKTOP;
+
+    return (
+        <div
+            className={styles.mainNavigationBarContentWrapper}
+            style={{
+                clipPath: `rect(0 100% calc(${topSpace}px + ${menuHeight}) 0)`,
+            }}
+        >
+            {children}
+        </div>
+    );
+};
+
 export const MainNavigationBar = ({
     sections = [],
     selectedIndex,
@@ -1160,9 +1185,6 @@ export const MainNavigationBar = ({
                         />
                     ))}
                 </Inline>
-                {!desktopSmallMenu && (
-                    <MainNavigationBarDesktopMenuBackground isLargeNavigationBar={hasBottomSections} />
-                )}
             </nav>
         );
     };
@@ -1188,35 +1210,40 @@ export const MainNavigationBar = ({
                 variant={variant}
                 dataAttributes={{'component-name': 'MainNavigationBar'}}
             >
-                <ResponsiveLayout>
-                    <NavigationBarContentContainer ref={navigationBarRef} right={right}>
-                        <div className={styles.mainNavbarContent}>
-                            {showBurger && (
-                                <Touchable
-                                    className={styles.burgerMenuButton}
-                                    aria-live="polite"
-                                    aria-label={
-                                        isBurgerMenuOpen
-                                            ? texts.closeNavigationMenu || t(tokens.closeNavigationMenu)
-                                            : texts.openNavigationMenu || t(tokens.openNavigationMenu)
-                                    }
-                                    aria-expanded={isBurgerMenuOpen}
-                                    aria-controls={menuId}
-                                    onPress={isBurgerMenuOpen ? closeMenu : openMenu}
-                                >
-                                    <BurgerMenuIcon isOpen={isBurgerMenuOpen} />
-                                </Touchable>
-                            )}
-                            <div className={styles.logoContainer}>{logoElement}</div>
-                            {!hasBottomSections && renderDesktopSections()}
-                        </div>
-                    </NavigationBarContentContainer>
-                    {hasBottomSections && (
-                        <NavigationBarContentContainer desktopOnly>
-                            {renderDesktopSections()}
+                {!desktopSmallMenu && (
+                    <MainNavigationBarDesktopMenuBackground isLargeNavigationBar={hasBottomSections} />
+                )}
+                <MainNavigationBarContentWrapper isLargeNavigationBar={hasBottomSections}>
+                    <ResponsiveLayout>
+                        <NavigationBarContentContainer ref={navigationBarRef} right={right}>
+                            <div className={styles.mainNavbarContent}>
+                                {showBurger && (
+                                    <Touchable
+                                        className={styles.burgerMenuButton}
+                                        aria-live="polite"
+                                        aria-label={
+                                            isBurgerMenuOpen
+                                                ? texts.closeNavigationMenu || t(tokens.closeNavigationMenu)
+                                                : texts.openNavigationMenu || t(tokens.openNavigationMenu)
+                                        }
+                                        aria-expanded={isBurgerMenuOpen}
+                                        aria-controls={menuId}
+                                        onPress={isBurgerMenuOpen ? closeMenu : openMenu}
+                                    >
+                                        <BurgerMenuIcon isOpen={isBurgerMenuOpen} />
+                                    </Touchable>
+                                )}
+                                <div className={styles.logoContainer}>{logoElement}</div>
+                                {!hasBottomSections && renderDesktopSections()}
+                            </div>
                         </NavigationBarContentContainer>
-                    )}
-                </ResponsiveLayout>
+                        {hasBottomSections && (
+                            <NavigationBarContentContainer desktopOnly>
+                                {renderDesktopSections()}
+                            </NavigationBarContentContainer>
+                        )}
+                    </ResponsiveLayout>
+                </MainNavigationBarContentWrapper>
             </Header>
             {topFixed && <div className={hasBottomSections ? styles.spacerLarge : styles.spacer} />}
         </ThemeVariant>

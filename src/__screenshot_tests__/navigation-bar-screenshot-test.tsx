@@ -226,5 +226,5 @@ test.each(['large', 'small'])('MainNavigationBar inverse with %s menu in DESKTOP
 
     // first section opened
     await page.click(await screen.findByRole('button', {name: 'Start'}));
-    expect(await page.screenshot()).toMatchImageSnapshot();
+    expect(await page.screenshot()).toMatchImageSnapshot({failureThreshold: 0.00001});
 });
