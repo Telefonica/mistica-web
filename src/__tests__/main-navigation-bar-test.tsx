@@ -91,12 +91,15 @@ test('MainNavigationBar section with interaction is accessible', async () => {
 
     // Open second section's menu
     await userEvent.hover(secondSectionButton);
-    expect(firstSectionMenuButton).toHaveAttribute('aria-expanded', 'false');
-    expect(secondSectionButton).toHaveAttribute('aria-expanded', 'true');
 
-    // Second section should be visible, while first one shouldn't
-    expect(screen.getByText('item 2-1')).toBeInTheDocument();
-    expect(screen.queryByText('item 1-1')).not.toBeInTheDocument();
+    await waitFor(() => {
+        expect(firstSectionMenuButton).toHaveAttribute('aria-expanded', 'false');
+        expect(secondSectionButton).toHaveAttribute('aria-expanded', 'true');
+
+        // Second section should be visible, while first one shouldn't
+        expect(screen.getByText('item 2-1')).toBeInTheDocument();
+        expect(screen.queryByText('item 1-1')).not.toBeInTheDocument();
+    });
 
     // Close the menu with ESC key
     await userEvent.keyboard('{Escape}');
@@ -136,7 +139,10 @@ test('MainNavigationBar menu closeMenu callback closes the menu', async () => {
     // Open the menu
     const sectionButton = await screen.findByRole('button', {name: 'section 1, Abrir submenú'});
     await userEvent.hover(sectionButton);
-    expect(sectionButton).toHaveAttribute('aria-expanded', 'true');
+
+    await waitFor(() => {
+        expect(sectionButton).toHaveAttribute('aria-expanded', 'true');
+    });
 
     // Close the menu with the closeMenu callback
     const closeButton = await screen.findByRole('button', {name: 'Close menu'});
