@@ -256,16 +256,15 @@ export const desktopOnly = style({
 export const navigationBarContentRight = style([
     sprinkles({
         display: 'flex',
-        flex: 1,
         alignItems: 'center',
         justifyContent: 'flex-end',
     }),
     {
-        paddingLeft: 136,
         height: NAVBAR_HEIGHT_DESKTOP,
         '@media': {
             [mq.tabletOrSmaller]: {
                 paddingLeft: 24,
+                flex: 1,
                 height: NAVBAR_HEIGHT_MOBILE - borderWidth,
             },
             [mq.desktopOrBigger]: {
@@ -274,6 +273,16 @@ export const navigationBarContentRight = style([
                 },
             },
         },
+    },
+]);
+
+export const navigationBarContentRightExpanded = style([
+    navigationBarContentRight,
+    sprinkles({
+        flex: 1,
+    }),
+    {
+        paddingLeft: 136,
     },
 ]);
 
@@ -331,13 +340,17 @@ export const mainNavbarContent = sprinkles({
     alignItems: 'center',
 });
 
+export const mainNavBarSectionsContainer = style([
+    sprinkles({display: 'flex', flex: 1}),
+    {minWidth: 'fit-content'},
+]);
+
 export const logoContainer = style([
     sprinkles({
         display: 'flex',
         justifyContent: 'center',
     }),
     {
-        marginRight: 48,
         '@media': {
             [mq.tabletOrSmaller]: {
                 marginRight: 0,
@@ -348,6 +361,7 @@ export const logoContainer = style([
 
 export const burgerMenuButton = style({
     marginRight: 24,
+    width: 'fit-content',
     '@media': {
         [mq.desktopOrBigger]: {
             display: 'none',

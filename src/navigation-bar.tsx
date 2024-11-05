@@ -105,17 +105,28 @@ type NavigationBarContentContainerProps = {
     right?: React.ReactNode;
     children?: React.ReactNode;
     desktopOnly?: boolean;
+    expandRightContent?: boolean;
 };
 
 const NavigationBarContentContainer = React.forwardRef<HTMLDivElement, NavigationBarContentContainerProps>(
-    ({right, children, desktopOnly}, ref) => {
+    ({right, children, desktopOnly, expandRightContent}, ref) => {
         return (
             <div
                 ref={ref}
                 className={classnames(styles.navigationBarContent, {[styles.desktopOnly]: desktopOnly})}
             >
                 {children}
-                {right && <div className={styles.navigationBarContentRight}>{right}</div>}
+                {right && (
+                    <div
+                        className={
+                            expandRightContent
+                                ? styles.navigationBarContentRightExpanded
+                                : styles.navigationBarContentRight
+                        }
+                    >
+                        {right}
+                    </div>
+                )}
             </div>
         );
     }
@@ -155,7 +166,7 @@ export const NavigationBar = ({
 }: NavigationBarProps): JSX.Element => {
     const {texts, t} = useTheme();
     const content = (
-        <NavigationBarContentContainer right={right}>
+        <NavigationBarContentContainer right={right} expandRightContent>
             <Inline space={24} alignItems="center">
                 {onBack && (
                     <IconButton
@@ -1184,12 +1195,14 @@ const MainNavigationBarDesktopSections = ({
     navigationBarRef,
     variant,
     isLargeNavigationBar,
+    hasRightContent,
     desktopSmallMenu,
 }: {
     sections: ReadonlyArray<MainNavigationBarSection>;
     selectedIndex?: number;
     navigationBarRef: React.RefObject<HTMLDivElement>;
     variant: Variant;
+    hasRightContent: boolean;
     isLargeNavigationBar: boolean;
     desktopSmallMenu: boolean;
 }): JSX.Element => {
@@ -1198,7 +1211,11 @@ const MainNavigationBarDesktopSections = ({
     return (
         // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
         <nav
-            className={styles.desktopOnly}
+            className={classnames(styles.desktopOnly, styles.mainNavBarSectionsContainer)}
+            style={{
+                paddingLeft: !isLargeNavigationBar ? 48 : 0,
+                paddingRight: !isLargeNavigationBar && hasRightContent ? 136 : 0,
+            }}
             onMouseEnter={() => {
                 // Mark current opened section as active to avoid closing the menu when moving the pointer
                 // from the menu content to the navigation bar (without hovering the tab itself)
@@ -1257,6 +1274,7 @@ export const MainNavigationBar = ({
             selectedIndex={selectedIndex}
             navigationBarRef={navigationBarRef}
             variant={variant}
+            hasRightContent={!!right}
             isLargeNavigationBar={hasBottomSections}
             desktopSmallMenu={desktopSmallMenu}
         />
@@ -1291,27 +1309,29 @@ export const MainNavigationBar = ({
                     desktopSmallMenu={desktopSmallMenu}
                 >
                     <ResponsiveLayout>
-                        <NavigationBarContentContainer ref={navigationBarRef} right={right}>
-                            <div className={styles.mainNavbarContent}>
-                                {showBurger && (
-                                    <Touchable
-                                        className={styles.burgerMenuButton}
-                                        aria-live="polite"
-                                        aria-label={
-                                            isBurgerMenuOpen
-                                                ? texts.closeNavigationMenu || t(tokens.closeNavigationMenu)
-                                                : texts.openNavigationMenu || t(tokens.openNavigationMenu)
-                                        }
-                                        aria-expanded={isBurgerMenuOpen}
-                                        aria-controls={menuId}
-                                        onPress={isBurgerMenuOpen ? closeMenu : openMenu}
-                                    >
-                                        <BurgerMenuIcon isOpen={isBurgerMenuOpen} />
-                                    </Touchable>
-                                )}
-                                <div className={styles.logoContainer}>{logoElement}</div>
-                                {!hasBottomSections && desktopSections}
-                            </div>
+                        <NavigationBarContentContainer
+                            ref={navigationBarRef}
+                            right={right}
+                            expandRightContent={hasBottomSections}
+                        >
+                            {showBurger && (
+                                <Touchable
+                                    className={styles.burgerMenuButton}
+                                    aria-live="polite"
+                                    aria-label={
+                                        isBurgerMenuOpen
+                                            ? texts.closeNavigationMenu || t(tokens.closeNavigationMenu)
+                                            : texts.openNavigationMenu || t(tokens.openNavigationMenu)
+                                    }
+                                    aria-expanded={isBurgerMenuOpen}
+                                    aria-controls={menuId}
+                                    onPress={isBurgerMenuOpen ? closeMenu : openMenu}
+                                >
+                                    <BurgerMenuIcon isOpen={isBurgerMenuOpen} />
+                                </Touchable>
+                            )}
+                            <div className={styles.logoContainer}>{logoElement}</div>
+                            {!hasBottomSections && desktopSections}
                         </NavigationBarContentContainer>
                         {hasBottomSections && (
                             <NavigationBarContentContainer desktopOnly>
@@ -1377,7 +1397,9 @@ export const FunnelNavigationBar = ({
             >
                 <ResponsiveLayout>
                     <GridLayout template="10">
-                        <NavigationBarContentContainer right={right}>{logo}</NavigationBarContentContainer>
+                        <NavigationBarContentContainer right={right} expandRightContent>
+                            {logo}
+                        </NavigationBarContentContainer>
                     </GridLayout>
                 </ResponsiveLayout>
             </Header>
