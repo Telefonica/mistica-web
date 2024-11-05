@@ -371,7 +371,7 @@ const MainNavigationBarDesktopMenuContextProvider = ({
 
         let id: NodeJS.Timeout;
 
-        // If menu started opening/closing
+        // menu starts opening or closing
         if (!isMenuOpen) {
             dispatch('close');
             id = setTimeout(() => dispatch('finishClose'), menuAnimationDuration);
@@ -947,7 +947,7 @@ const MainNavigationBarDesktopSection = ({
     const {title, menu, ...touchableProps} = section;
     const sectionRef = React.useRef<HTMLDivElement>(null);
     const [smallMenuLeftPosition, setSmallMenuLeftPosition] = React.useState(0);
-    const [isArrowFocused, setIsArrowFocused] = React.useState(false);
+    const [isMenuControlFocused, setIsMenuControlFocused] = React.useState(false);
     const {isMenuOpen, openedSection, setSectionAsActive, setSectionAsInactive} =
         useMainNavigationBarDesktopMenuState();
 
@@ -976,12 +976,10 @@ const MainNavigationBarDesktopSection = ({
 
     React.useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
-            const shouldReactOnArrowKeyPress = isArrowFocused || (menu && !hasCustomInteraction);
-
             switch (e.key) {
                 // If arrow is focused and DOWN key is pressed, open the menu if it was closed
                 case DOWN:
-                    if (shouldReactOnArrowKeyPress) {
+                    if (isMenuControlFocused) {
                         cancelEvent(e);
                         openSectionMenu();
                     }
@@ -989,7 +987,7 @@ const MainNavigationBarDesktopSection = ({
 
                 // If arrow is focused and UP key is pressed, close the menu if it was opened
                 case UP:
-                    if (shouldReactOnArrowKeyPress) {
+                    if (isMenuControlFocused) {
                         cancelEvent(e);
                         setSectionAsInactive(index, true);
                     }
@@ -1004,7 +1002,7 @@ const MainNavigationBarDesktopSection = ({
         return () => {
             document.removeEventListener('keydown', handleKeyDown, false);
         };
-    }, [index, isArrowFocused, openSectionMenu, setSectionAsInactive, menu, hasCustomInteraction]);
+    }, [index, isMenuControlFocused, openSectionMenu, setSectionAsInactive, menu, hasCustomInteraction]);
 
     const isSectionMenuOpen = isMenuOpen && openedSection === index;
 
@@ -1041,6 +1039,12 @@ const MainNavigationBarDesktopSection = ({
                 // TODO: debounce this!
                 onMouseEnter={openSectionMenu}
                 onMouseLeave={() => setSectionAsInactive(index)}
+                onFocus={() => {
+                    if (menu && !hasCustomInteraction) setIsMenuControlFocused(true);
+                }}
+                onBlur={() => {
+                    if (menu && !hasCustomInteraction) setIsMenuControlFocused(false);
+                }}
             >
                 <BaseTouchable
                     {...getSectionInteractiveProps(touchableProps as InteractiveProps)}
@@ -1070,8 +1074,8 @@ const MainNavigationBarDesktopSection = ({
                     {hasCustomInteraction && (
                         <div
                             className={styles.desktopMenuSectionArrowContainer}
-                            onFocus={() => setIsArrowFocused(true)}
-                            onBlur={() => setIsArrowFocused(false)}
+                            onFocus={() => setIsMenuControlFocused(true)}
+                            onBlur={() => setIsMenuControlFocused(false)}
                         >
                             <BaseTouchable
                                 className={styles.desktopMenuSectionArrow}
@@ -1079,13 +1083,13 @@ const MainNavigationBarDesktopSection = ({
                                 aria-haspopup
                                 aria-expanded={isSectionMenuOpen}
                                 onPress={() => {
-                                    if (isArrowFocused) {
+                                    if (isMenuControlFocused) {
                                         menuButtonOnPress();
                                     }
                                 }}
                                 style={{
-                                    pointerEvents: isArrowFocused ? 'auto' : 'none',
-                                    opacity: isArrowFocused ? 1 : 0,
+                                    pointerEvents: isMenuControlFocused ? 'auto' : 'none',
+                                    opacity: isMenuControlFocused ? 1 : 0,
                                 }}
                             >
                                 <IconChevronLeftRegular

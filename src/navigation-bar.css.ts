@@ -143,26 +143,35 @@ export const desktopMenuSectionContainer = style([
     },
 ]);
 
-export const desktopMenuSectionWithArrowWrapper = style({
+export const desktopMenuSectionWithArrowWrapper = sprinkles({
     position: 'relative',
 });
 
-export const desktopMenuSectionArrowContainer = style({
-    position: 'absolute',
-    zIndex: -1,
-    right: -8,
-    top: 0,
-    bottom: 0,
-    display: 'flex',
-    alignItems: 'center',
-});
+export const desktopMenuSectionArrowContainer = style([
+    sprinkles({
+        position: 'absolute',
+        top: 0,
+        bottom: 0,
+        display: 'flex',
+        alignItems: 'center',
+    }),
+    {
+        // Avoid element from affecting hover status of the section
+        zIndex: -1,
+        right: -8,
+    },
+]);
 
-export const desktopMenuSectionArrow = style({
-    border: 'none',
-    background: 'transparent',
-    padding: 0,
-    transition: `opacity 0.1s`,
-});
+export const desktopMenuSectionArrow = style([
+    sprinkles({
+        border: 'none',
+        background: 'transparent',
+        padding: 0,
+    }),
+    {
+        transition: `opacity 0.1s`,
+    },
+]);
 
 export const section = style([
     sprinkles({
@@ -209,22 +218,26 @@ export const textWrapperVariants = styleVariants({
     },
 });
 
-export const navigationBarContent = style({
-    alignItems: 'center',
-    width: '100%',
-    display: 'flex',
-    height: NAVBAR_HEIGHT_DESKTOP,
-    '@media': {
-        [mq.tabletOrSmaller]: {
-            height: NAVBAR_HEIGHT_MOBILE - borderWidth,
-        },
-        [mq.desktopOrBigger]: {
-            ':last-child': {
-                height: NAVBAR_HEIGHT_DESKTOP - borderWidth,
+export const navigationBarContent = style([
+    sprinkles({
+        alignItems: 'center',
+        width: '100%',
+        display: 'flex',
+    }),
+    {
+        height: NAVBAR_HEIGHT_DESKTOP,
+        '@media': {
+            [mq.tabletOrSmaller]: {
+                height: NAVBAR_HEIGHT_MOBILE - borderWidth,
+            },
+            [mq.desktopOrBigger]: {
+                ':last-child': {
+                    height: NAVBAR_HEIGHT_DESKTOP - borderWidth,
+                },
             },
         },
     },
-});
+]);
 
 export const navigationBarAction = sprinkles({
     border: 'none',
@@ -240,18 +253,29 @@ export const desktopOnly = style({
     },
 });
 
-export const navigationBarContentRight = style({
-    display: 'flex',
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    paddingLeft: 136,
-    '@media': {
-        [mq.tabletOrSmaller]: {
-            paddingLeft: 24,
+export const navigationBarContentRight = style([
+    sprinkles({
+        display: 'flex',
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'flex-end',
+    }),
+    {
+        paddingLeft: 136,
+        height: NAVBAR_HEIGHT_DESKTOP,
+        '@media': {
+            [mq.tabletOrSmaller]: {
+                paddingLeft: 24,
+                height: NAVBAR_HEIGHT_MOBILE - borderWidth,
+            },
+            [mq.desktopOrBigger]: {
+                ':last-child': {
+                    height: NAVBAR_HEIGHT_DESKTOP - borderWidth,
+                },
+            },
         },
     },
-});
+]);
 
 const spacerMobile = style({
     '@media': {
@@ -280,7 +304,7 @@ export const burgerMenuTransition = {
         transform: 'translate(-100vw)',
     }),
     enterActive: style({
-        transform: 'translate(0vw)',
+        transform: 'translate(0)',
         transition: `transform ${BURGER_MENU_ANIMATION_DURATION_MS}ms ease-out`,
         '@media': {
             ['(prefers-reduced-motion)']: {
@@ -289,7 +313,7 @@ export const burgerMenuTransition = {
         },
     }),
     exit: style({
-        transform: 'translate(0vw)',
+        transform: 'translate(0)',
     }),
     exitActive: style({
         transform: 'translate(-100vw)',
@@ -302,7 +326,7 @@ export const burgerMenuTransition = {
     }),
 };
 
-export const mainNavbarContent = style({
+export const mainNavbarContent = sprinkles({
     display: 'flex',
     alignItems: 'center',
 });
@@ -344,19 +368,25 @@ export const burgerMenu = style([
     },
 ]);
 
-export const burgerMainMenuContainer = style({
-    height: `calc(100vh - ${NAVBAR_HEIGHT_MOBILE}px)`,
-    overflowY: 'auto',
-});
+export const burgerMainMenuContainer = style([
+    sprinkles({overflowY: 'auto'}),
+    {
+        height: `calc(100vh - ${NAVBAR_HEIGHT_MOBILE}px)`,
+    },
+]);
 
-export const burgerSubMenuContainer = style({
-    height: `calc(100vh - ${NAVBAR_HEIGHT_MOBILE}px)`,
-    overflowY: 'auto',
-    width: '100%',
-    position: 'absolute',
-    left: '100vw',
-    top: 0,
-});
+export const burgerSubMenuContainer = style([
+    sprinkles({
+        overflowY: 'auto',
+        width: '100%',
+        position: 'absolute',
+        top: 0,
+    }),
+    {
+        height: `calc(100vh - ${NAVBAR_HEIGHT_MOBILE}px)`,
+        left: '100vw',
+    },
+]);
 
 export const iconButtonVariants = styleVariants({
     default: [
@@ -444,12 +474,12 @@ export const desktopSmallMenuContainer = style([
         position: 'fixed',
         paddingY: 40,
         paddingX: 24,
+        overflowY: 'auto',
     }),
     {
         zIndex: NAVBAR_ZINDEX,
         borderRadius: `0 0 ${vars.borderRadii.popup} ${vars.borderRadii.popup}`,
         width: DESKTOP_SMALL_MENU_WIDTH,
-        overflowY: 'auto',
         boxShadow: '0px 2px 4px rgba(0,0,0,0.2)',
     },
 ]);
@@ -471,7 +501,7 @@ export const desktopMenu = style([
 ]);
 
 export const desktopMenuContentFadeIn = style({
-    transform: 'translateY(0px)',
+    transform: 'translateY(0)',
     opacity: 1,
     transition: `opacity ${DESKTOP_MENU_CONTENT_ANIMATION_DURATION_MS}ms cubic-bezier(0.33, 1, 0.68, 1), transform ${DESKTOP_MENU_CONTENT_ANIMATION_DURATION_MS}ms cubic-bezier(0.33, 1, 0.68, 1)`,
     '@media': {
