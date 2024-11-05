@@ -1124,9 +1124,11 @@ const MainNavigationBarDesktopSection = ({
 const MainNavigationBarContentWrapper = ({
     children,
     isLargeNavigationBar,
+    desktopSmallMenu,
 }: {
     children: React.ReactNode;
     isLargeNavigationBar: boolean;
+    desktopSmallMenu: boolean;
 }): JSX.Element => {
     const {menuHeight} = useMainNavigationBarDesktopMenuState();
     const topSpace = isLargeNavigationBar ? NAVBAR_HEIGHT_DESKTOP_LARGE : NAVBAR_HEIGHT_DESKTOP;
@@ -1135,7 +1137,9 @@ const MainNavigationBarContentWrapper = ({
         <div
             className={styles.mainNavigationBarContentWrapper}
             style={{
-                clipPath: `rect(0 100% calc(${topSpace}px + ${menuHeight}) 0)`,
+                clipPath: !desktopSmallMenu
+                    ? `rect(0 100% calc(${topSpace}px + ${menuHeight}) 0)`
+                    : undefined,
             }}
         >
             {children}
@@ -1213,7 +1217,10 @@ export const MainNavigationBar = ({
                 {!desktopSmallMenu && (
                     <MainNavigationBarDesktopMenuBackground isLargeNavigationBar={hasBottomSections} />
                 )}
-                <MainNavigationBarContentWrapper isLargeNavigationBar={hasBottomSections}>
+                <MainNavigationBarContentWrapper
+                    isLargeNavigationBar={hasBottomSections}
+                    desktopSmallMenu={desktopSmallMenu}
+                >
                     <ResponsiveLayout>
                         <NavigationBarContentContainer ref={navigationBarRef} right={right}>
                             <div className={styles.mainNavbarContent}>
