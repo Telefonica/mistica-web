@@ -791,6 +791,7 @@ const MainNavigationBarDesktopMenuContent = ({
                             onMouseLeave={() => setIsMenuHovered(false)}
                             style={{
                                 top: topSpace,
+                                maxHeight: `calc(100vh - ${topSpace}px - ${bottomSpace}px)`,
                                 overflowY: isMenuContentScrollable ? 'auto' : 'hidden',
                             }}
                         >
