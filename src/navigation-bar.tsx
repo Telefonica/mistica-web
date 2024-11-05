@@ -1136,11 +1136,14 @@ const MainNavigationBarContentWrapper = ({
     return (
         <div
             className={styles.mainNavigationBarContentWrapper}
-            style={{
-                clipPath: !desktopSmallMenu
-                    ? `rect(0 100% calc(${topSpace}px + ${menuHeight}) 0)`
-                    : undefined,
-            }}
+            style={
+                !desktopSmallMenu
+                    ? {
+                          clipPath: `rect(0 100% calc(${topSpace}px + ${menuHeight}) 0)`,
+                          WebkitClipPath: `rect(0 100% calc(${topSpace}px + ${menuHeight}) 0)`,
+                      }
+                    : undefined
+            }
         >
             {children}
         </div>
