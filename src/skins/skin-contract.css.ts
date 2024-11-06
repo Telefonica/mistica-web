@@ -62,12 +62,14 @@ const colors: Colors = {
     controlActivatedInverse: '',
     controlError: '',
     barTrack: '',
+    barTrackInverse: '',
     loadingBar: '',
     loadingBarBackground: '',
     textActivated: '',
 
     toggleAndroidInactive: '',
     toggleAndroidBackgroundActive: '',
+    controlKnobInverse: '',
     iosControlKnob: '',
 
     // DIVIDERS

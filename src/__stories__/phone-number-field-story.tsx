@@ -56,7 +56,7 @@ export const Controlled: StoryComponent<PhoneNumberFieldControlledArgs> = ({
     const [value, setValue] = React.useState<any>(undefined);
 
     return (
-        <ResponsiveLayout isInverse={inverse} fullWidth>
+        <ResponsiveLayout variant={inverse ? 'inverse' : undefined} fullWidth>
             <Box padding={16}>
                 <Stack space={16}>
                     <PhoneNumberField
@@ -108,7 +108,7 @@ export const Uncontrolled: StoryComponent<PhoneNumberFieldUncontrolledArgs> = ({
     const [value, setValue] = React.useState<any>(undefined);
 
     return (
-        <ResponsiveLayout isInverse={inverse} fullWidth>
+        <ResponsiveLayout variant={inverse ? 'inverse' : undefined} fullWidth>
             <Box padding={16}>
                 <Stack space={16}>
                     <PhoneNumberField

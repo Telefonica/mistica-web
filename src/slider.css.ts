@@ -1,4 +1,4 @@
-import {style} from '@vanilla-extract/css';
+import {style, styleVariants} from '@vanilla-extract/css';
 import {vars} from './skins/skin-contract.css';
 import * as mq from './media-queries.css';
 import {applyAlpha} from './utils/color';
@@ -46,17 +46,21 @@ export const thumbContainer = style([
     },
 ]);
 
-export const defaultThumb = style([
+const defaultThumbBase = style([
     sprinkles({
         width: DEFAULT_THUMB_SIZE,
         height: DEFAULT_THUMB_SIZE,
         borderRadius: '50%',
-        background: vars.colors.controlActivated,
     }),
     {
         transition: '0.3s cubic-bezier(0.215, 0.61, 0.355, 1)',
     },
 ]);
+
+export const defaultThumb = styleVariants({
+    default: [defaultThumbBase, sprinkles({background: vars.colors.controlActivated})],
+    inverse: [defaultThumbBase, sprinkles({background: vars.colors.controlActivatedInverse})],
+});
 
 export const iosThumb = style([
     sprinkles({
@@ -72,16 +76,38 @@ export const iosThumb = style([
     },
 ]);
 
-export const thumbHover = style({
-    '@media': {
-        [mq.supportsHover]: {
-            boxShadow: `0 0 0 5px ${applyAlpha(vars.rawColors.controlActivated, 0.2)}`,
+export const thumbHover = styleVariants({
+    default: [
+        {
+            '@media': {
+                [mq.supportsHover]: {
+                    boxShadow: `0 0 0 5px ${applyAlpha(vars.rawColors.controlActivated, 0.2)}`,
+                },
+            },
         },
-    },
+    ],
+    inverse: [
+        {
+            '@media': {
+                [mq.supportsHover]: {
+                    boxShadow: `0 0 0 5px ${applyAlpha(vars.rawColors.controlActivatedInverse, 0.2)}`,
+                },
+            },
+        },
+    ],
 });
 
-export const thumbActive = style({
-    boxShadow: `0 0 0 8px ${applyAlpha(vars.rawColors.controlActivated, 0.2)}`,
+export const thumbActive = styleVariants({
+    default: [
+        {
+            boxShadow: `0 0 0 8px ${applyAlpha(vars.rawColors.controlActivated, 0.2)}`,
+        },
+    ],
+    inverse: [
+        {
+            boxShadow: `0 0 0 8px ${applyAlpha(vars.rawColors.controlActivatedInverse, 0.2)}`,
+        },
+    ],
 });
 
 export const input = style([
