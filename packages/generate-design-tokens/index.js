@@ -20,8 +20,7 @@ To run this script locally using a custom path for the tokens, you can do the fo
 // @ts-ignore
 const currentDir = url.fileURLToPath(new URL('.', import.meta.url));
 
-const DESIGN_TOKENS_FOLDER =
-    process.env.DESIGN_TOKENS_FOLDER || path.join(currentDir, '../../../mistica-design/tokens/');
+const DESIGN_TOKENS_FOLDER = process.env.DESIGN_TOKENS_FOLDER || '../../../.github/mistica-design/tokens/';
 
 console.log('Using design tokens from:', DESIGN_TOKENS_FOLDER);
 
