@@ -75,15 +75,16 @@ const buildColor = (colorDescription) => {
 };
 
 const generateSkinSrc = (skinName) => {
-    const designTokensFile = fs.readFileSync(path.join(DESIGN_TOKENS_FOLDER, `${skinName}.json`), 'utf8');
+    const designTokensFile = fs.readFileSync(
+        path.join(currentDir, DESIGN_TOKENS_FOLDER, `${skinName}.json`),
+        'utf8'
+    );
+    console.log('designTokensFile:', designTokensFile);
     const needsApplyAlphaImport = designTokensFile.includes('rgba');
     const designTokens = JSON.parse(designTokensFile);
     const skinConstantName = `${skinName.toUpperCase().replace(/-/g, '_')}_SKIN`;
 
     const textTokens = {};
-    if (skinName === 'movistar') {
-        console.log('Generating text tokens for skin', skinName, designTokens.text);
-    }
     Object.entries(designTokens.text).forEach(([textAttribute, textAttributeConfig]) => {
         Object.entries(textAttributeConfig).forEach(([textPresetName, {value}]) => {
             if (!textTokens[textPresetName]) {
