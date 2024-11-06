@@ -16,11 +16,12 @@ To run this script locally using a custom path for the tokens, you can do the fo
     DESIGN_TOKENS_FOLDER="/path/to/mistica-design/tokens" node index.js
 */
 
-const DESIGN_TOKENS_FOLDER = process.env.DESIGN_TOKENS_FOLDER || '../../../mistica-design/tokens/';
-
 // in node >= 20 we could use import.meta.dirname instead
 // @ts-ignore
 const currentDir = url.fileURLToPath(new URL('.', import.meta.url));
+
+const DESIGN_TOKENS_FOLDER =
+    process.env.DESIGN_TOKENS_FOLDER || path.join(currentDir, '../../../mistica-design/tokens/');
 
 const SKINS_FOLDER = path.join(currentDir, '..', '..', 'src', 'skins');
 const CSS_FOLDER = path.join(currentDir, '..', '..', 'css');
@@ -75,11 +76,7 @@ const buildColor = (colorDescription) => {
 };
 
 const generateSkinSrc = (skinName) => {
-    const designTokensFile = fs.readFileSync(
-        path.join(currentDir, DESIGN_TOKENS_FOLDER, `${skinName}.json`),
-        'utf8'
-    );
-    console.log('designTokensFile:', designTokensFile);
+    const designTokensFile = fs.readFileSync(path.join(DESIGN_TOKENS_FOLDER, `${skinName}.json`), 'utf8');
     const needsApplyAlphaImport = designTokensFile.includes('rgba');
     const designTokens = JSON.parse(designTokensFile);
     const skinConstantName = `${skinName.toUpperCase().replace(/-/g, '_')}_SKIN`;
