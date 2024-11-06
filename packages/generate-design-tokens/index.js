@@ -81,6 +81,9 @@ const generateSkinSrc = (skinName) => {
     const skinConstantName = `${skinName.toUpperCase().replace(/-/g, '_')}_SKIN`;
 
     const textTokens = {};
+    if (skinName === 'movistar') {
+        console.log('Generating text tokens for skin', skinName, designTokens.text);
+    }
     Object.entries(designTokens.text).forEach(([textAttribute, textAttributeConfig]) => {
         Object.entries(textAttributeConfig).forEach(([textPresetName, {value}]) => {
             if (!textTokens[textPresetName]) {
