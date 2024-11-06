@@ -2457,11 +2457,11 @@ const navigationBarSnippets = [
                             },
                             {
                               title: "item 2",
-                              onPress: () => {},
+                              href: "https://www.google.com/",
                             },
                             {
                               title: "item 3",
-                              onPress: () => {},
+                              to: "#",
                             },
                           ],
                         },
@@ -2474,11 +2474,11 @@ const navigationBarSnippets = [
                             },
                             {
                               title: "item 2",
-                              onPress: () => {},
+                              href: "https://www.google.com/",
                             },
                             {
                               title: "item 3",
-                              onPress: () => {},
+                              to: "#",
                             },
                           ],
                         },
@@ -2603,11 +2603,11 @@ const navigationBarSnippets = [
                             },
                             {
                               title: "item 2",
-                              onPress: () => {},
+                              href: "https://www.google.com/",
                             },
                             {
                               title: "item 3",
-                              onPress: () => {},
+                              to: "#",
                             },
                           ],
                         },
@@ -2639,11 +2639,11 @@ const navigationBarSnippets = [
                             },
                             {
                               title: "item 2",
-                              onPress: () => {},
+                              href: "https://www.google.com/",
                             },
                             {
                               title: "item 3",
-                              onPress: () => {},
+                              to: "#",
                             },
                           ],
                         },
