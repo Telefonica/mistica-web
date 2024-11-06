@@ -35,6 +35,23 @@ const capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1);
 const toCamelCase = (str) => str.replace(/-([a-z])/g, (g) => g[1].toUpperCase());
 const toPascalCase = (str) => capitalize(toCamelCase(str));
 
+const jsonSort = (obj) => {
+    if (Array.isArray(obj)) {
+        return obj.map(jsonSort);
+    }
+
+    if (typeof obj !== 'object' || obj === null) {
+        return obj;
+    }
+
+    return Object.keys(obj)
+        .sort((a, b) => a.localeCompare(b, undefined, {numeric: true, sensitivity: 'base'}))
+        .reduce((acc, key) => {
+            acc[key] = jsonSort(obj[key]);
+            return acc;
+        }, {});
+};
+
 /**
  * @param {{angle: number, colors: Array<{
  *     value: string,
@@ -127,7 +144,7 @@ export const get${toPascalCase(skinName)}Skin: GetKnownSkin = () => {
                 )
                 .join(',')}
         },
-        textPresets: ${JSON.stringify(textTokens)},
+        textPresets: ${JSON.stringify(jsonSort(textTokens))},
     };
     return skin;
 };
