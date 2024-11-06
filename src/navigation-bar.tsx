@@ -291,6 +291,93 @@ const burgerMenuReducer = (state: MainNavigationBarMenuStatus, action: MainNavig
     return mainNavigationBurgerMenuTranstions[state][action] || state;
 };
 
+const MainNavigationBarBurgerSection = ({
+    section,
+    closeSubMenu,
+    closeMenu,
+}: {
+    section: MainNavigationBarSection;
+    closeSubMenu: () => void;
+    closeMenu: () => void;
+}) => {
+    const {texts, t} = useTheme();
+
+    const {title, menu, ...interactiveProps} = section;
+
+    const columns = menu?.columns || [];
+    const customContent = menu?.content;
+    const hasCustomInteraction =
+        interactiveProps.href !== undefined ||
+        interactiveProps.onPress !== undefined ||
+        interactiveProps.to !== undefined;
+
+    return (
+        <ResponsiveLayout>
+            <Stack space={32}>
+                <Stack space={16}>
+                    <NavigationBar
+                        title={texts.backNavigationBar || t(tokens.backNavigationBar)}
+                        onBack={closeSubMenu}
+                        topFixed={false}
+                        withBorder={false}
+                    />
+                    <Title3
+                        right={
+                            hasCustomInteraction ? (
+                                <ButtonLink
+                                    small
+                                    bleedY
+                                    bleedRight
+                                    withChevron
+                                    // Close the menu when "See all" button is pressed
+                                    {...getInteractivePropsWithCloseMenu(
+                                        interactiveProps as InteractiveProps,
+                                        closeMenu
+                                    )}
+                                >
+                                    {texts.mainNavigationBarSectionSeeAll ||
+                                        t(tokens.mainNavigationBarSectionSeeAll)}
+                                </ButtonLink>
+                            ) : undefined
+                        }
+                    >
+                        {title}
+                    </Title3>
+                </Stack>
+
+                {customContent ? (
+                    <Box paddingBottom={16}>
+                        {typeof customContent === 'function' ? customContent({closeMenu}) : customContent}
+                    </Box>
+                ) : (
+                    columns.map((column, columnIndex) => (
+                        <Stack space={8} key={columnIndex}>
+                            <Title1> {column.title}</Title1>
+                            <ResetResponsiveLayout>
+                                <RowList>
+                                    {column.items.map(
+                                        ({title: itemTitle, ...itemInteractiveProps}, itemIndex) => (
+                                            <Row
+                                                key={itemIndex}
+                                                title={itemTitle}
+                                                // Close the menu when one of the rows is pressed
+                                                {...getInteractivePropsWithCloseMenu(
+                                                    itemInteractiveProps,
+                                                    closeMenu
+                                                )}
+                                            />
+                                        )
+                                    )}
+                                </RowList>
+                            </ResetResponsiveLayout>
+                        </Stack>
+                    ))
+                )}
+            </Stack>
+        </ResponsiveLayout>
+    );
+};
+
 const MainNavigationBarBurgerMenu = ({
     sections,
     extra,
@@ -308,15 +395,14 @@ const MainNavigationBarBurgerMenu = ({
     disableFocusTrap: boolean;
     setDisableFocusTrap: (value: boolean) => void;
 }) => {
-    const {texts, t, isDarkMode} = useTheme();
+    const {isDarkMode} = useTheme();
     const [openedSection, setOpenedSection] = React.useState(-1);
     const [isSubMenuOpen, setIsSubMenuOpen] = React.useState(false);
+    const [subMenuStatus, dispatch] = React.useReducer(burgerMenuReducer, 'closed');
     const menuRef = React.useRef<HTMLDivElement>(null);
 
     const shadowAlpha = isDarkMode ? 1 : 0.2;
     const menuAnimationDuration = isRunningAcceptanceTest() ? 0 : styles.BURGER_MENU_ANIMATION_DURATION_MS;
-
-    const [subMenuStatus, dispatch] = React.useReducer(burgerMenuReducer, 'closed');
 
     React.useEffect(() => {
         let id: NodeJS.Timeout;
@@ -332,82 +418,6 @@ const MainNavigationBarBurgerMenu = ({
 
         return () => clearTimeout(id);
     }, [isSubMenuOpen, menuAnimationDuration]);
-
-    const renderSection = (index: number) => {
-        const {title, menu, ...interactiveProps} = sections[index];
-        const columns = menu?.columns || [];
-        const customContent = menu?.content;
-        const hasCustomInteraction =
-            interactiveProps.href !== undefined ||
-            interactiveProps.onPress !== undefined ||
-            interactiveProps.to !== undefined;
-
-        return (
-            <ResponsiveLayout>
-                <Stack space={32}>
-                    <Stack space={16}>
-                        <NavigationBar
-                            title={texts.backNavigationBar || t(tokens.backNavigationBar)}
-                            onBack={() => setIsSubMenuOpen(false)}
-                            topFixed={false}
-                            withBorder={false}
-                        />
-                        <Title3
-                            right={
-                                hasCustomInteraction ? (
-                                    <ButtonLink
-                                        small
-                                        bleedY
-                                        bleedRight
-                                        withChevron
-                                        // Close the menu when "See all" button is pressed
-                                        {...getInteractivePropsWithCloseMenu(
-                                            interactiveProps as InteractiveProps,
-                                            closeMenu
-                                        )}
-                                    >
-                                        {texts.mainNavigationBarSectionSeeAll ||
-                                            t(tokens.mainNavigationBarSectionSeeAll)}
-                                    </ButtonLink>
-                                ) : undefined
-                            }
-                        >
-                            {sections[index].title}
-                        </Title3>
-                    </Stack>
-
-                    {customContent ? (
-                        <Box paddingBottom={16}>
-                            {typeof customContent === 'function' ? customContent({closeMenu}) : customContent}
-                        </Box>
-                    ) : (
-                        columns.map((column, columnIndex) => (
-                            <Stack space={8} key={columnIndex}>
-                                <Title1> {column.title}</Title1>
-                                <ResetResponsiveLayout>
-                                    <RowList>
-                                        {column.items.map(
-                                            ({title: itemTitle, ...itemInteractiveProps}, itemIndex) => (
-                                                <Row
-                                                    key={itemIndex}
-                                                    title={itemTitle}
-                                                    // Close the menu when one of the rows is pressed
-                                                    {...getInteractivePropsWithCloseMenu(
-                                                        itemInteractiveProps,
-                                                        closeMenu
-                                                    )}
-                                                />
-                                            )
-                                        )}
-                                    </RowList>
-                                </ResetResponsiveLayout>
-                            </Stack>
-                        ))
-                    )}
-                </Stack>
-            </ResponsiveLayout>
-        );
-    };
 
     return (
         <Portal>
@@ -474,9 +484,13 @@ const MainNavigationBarBurgerMenu = ({
                                     transform: `translate(${isSubMenuOpen ? '0' : '100vw'})`,
                                 }}
                             >
-                                {subMenuStatus !== 'closed' &&
-                                    openedSection !== -1 &&
-                                    renderSection(openedSection)}
+                                {subMenuStatus !== 'closed' && openedSection !== -1 && (
+                                    <MainNavigationBarBurgerSection
+                                        section={sections[openedSection]}
+                                        closeMenu={closeMenu}
+                                        closeSubMenu={() => setIsSubMenuOpen(false)}
+                                    />
+                                )}
                             </div>
                         </div>
                     </nav>
