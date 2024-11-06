@@ -4,12 +4,16 @@ import * as React from 'react';
 import {vars} from './skins/skin-contract.css';
 // @ts-expect-error - no types
 import bezier from 'cubic-bezier';
+import {getPrefixedDataAttributes} from './utils/dom';
+import {useThemeVariant} from './theme-variant-context';
+
+import type {DataAttributes} from './utils/types';
 
 const VIEW_BOX_WIDTH = 100;
 const CENTER_X = VIEW_BOX_WIDTH / 2;
 const CENTER_Y = VIEW_BOX_WIDTH / 2;
 
-const STROKE_WIDTH_PX = 26;
+const STROKE_WIDTH_PX = 6;
 const SEPARATION_PX = 2;
 
 const ANIMATION_DELAY_MS = 200;
@@ -32,6 +36,8 @@ const DEFAULT_COLORS = [
     vars.colors.highlight,
 ];
 
+const DEFAULT_COLORS_INVERSE = [vars.colors.controlActivatedInverse];
+
 /**
  * "start"/"end" values for each segment of the meter. The values are in the range [0, 1]
  */
@@ -42,7 +48,6 @@ type Segment = {
 
 /**
  * Cubic bezier easing function https://github.com/arian/cubic-bezier/blob/27d2512d15a0b873fa0fca8769069c7b290e80f8/index.js
- *
  * @param time - time in the range [0, 1]
  */
 const timingFunction: (time: number) => number = bezier(0.75, 0, 0.27, 1, ANIMATION_EPSILON);
@@ -55,7 +60,8 @@ const clamp = (n: number, min: number, max: number) => Math.min(Math.max(n, min)
 const calculateSegments = (
     currentValues: Array<number>,
     targetValues: Array<number>,
-    time: number
+    time: number,
+    reverse: boolean
 ): Array<Segment> => {
     const segments: Array<Segment> = [];
 
@@ -66,7 +72,7 @@ const calculateSegments = (
         endValue += targetValues[i];
 
         // each segment has an accumulated delay time. The last segment has no delay
-        const delay = ANIMATION_DELAY_MS * (currentValues.length - i - 1);
+        const delay = ANIMATION_DELAY_MS * (reverse ? i : currentValues.length - 1 - i);
         const animationTime = clamp((time - delay) / ANIMATION_DURATION_MS, 0, 1);
 
         const t = clamp(timingFunction(animationTime), 0, 1);
@@ -110,14 +116,24 @@ type MeterProps = {
     values: Array<number>;
     width?: number;
     colors?: Array<string>;
+    reverse?: boolean;
+    'aria-hidden'?: boolean | 'true' | 'false';
+    dataAttributes?: DataAttributes;
 };
 
-const Meter = ({
+const MeterComponent = ({
     type = TYPE_ANGULAR,
     width = 400,
-    colors = DEFAULT_COLORS,
+    colors,
     values,
+    reverse = false,
+    'aria-hidden': ariaHidden,
+    dataAttributes,
 }: MeterProps): JSX.Element => {
+    const themeVariant = useThemeVariant();
+    const isOverMedia = themeVariant === 'media';
+    const isInverse = themeVariant === 'inverse' || isOverMedia; // "inverse" and "media" share the same colors
+    const segmentColors = colors || (isInverse ? DEFAULT_COLORS_INVERSE : DEFAULT_COLORS);
     const scaleFactor = VIEW_BOX_WIDTH / width;
     const strokeWidth = STROKE_WIDTH_PX * scaleFactor;
     const maxValue =
@@ -139,7 +155,9 @@ const Meter = ({
               ? VIEW_BOX_WIDTH
               : VIEW_BOX_WIDTH / 2 + strokeWidth / 2;
 
-    const initialValuesRef = React.useRef(Array.from({length: values.length}, () => 0));
+    const initialValuesRef = React.useRef<Array<number>>(
+        Array.from({length: values.length}, () => (reverse ? 1 : 0))
+    );
 
     const [segments, setSegments] = React.useState<Array<Segment>>(() => {
         return values.map(() => ({start: 0, end: 0}));
@@ -149,17 +167,18 @@ const Meter = ({
     const lastSegment: Segment | undefined = segments.at(-1);
 
     React.useEffect(() => {
+        const shouldAnimate = window.matchMedia(`(prefers-reduced-motion: reduce)`).matches !== true;
         let raf: number;
         const start = performance.now();
         const end = start + ANIMATION_DURATION_MS + ANIMATION_DELAY_MS * (values.length - 1);
         let currentSegments: Array<Segment> = [];
         const animate = () => {
             const now = performance.now();
-            currentSegments = calculateSegments(initialValuesRef.current, values, now - start);
-            if (now < end) {
+            currentSegments = calculateSegments(initialValuesRef.current, values, now - start, reverse);
+            if (shouldAnimate && now < end) {
                 raf = requestAnimationFrame(animate); // request next frame
             } else {
-                currentSegments = calculateSegments(initialValuesRef.current, values, end - start); // set the final values
+                currentSegments = calculateSegments(initialValuesRef.current, values, end - start, reverse); // set the final values
                 initialValuesRef.current = values;
             }
             setSegments(currentSegments);
@@ -170,7 +189,7 @@ const Meter = ({
             // animation was cancelled, snapshot current values
             initialValuesRef.current = currentSegments.map((s) => s.end - s.start);
         };
-    }, [radius, values, type]);
+    }, [radius, values, type, reverse]);
 
     const getX = React.useCallback(
         (value: number) =>
@@ -186,14 +205,17 @@ const Meter = ({
         [maxValue, radius, strokeWidth, type]
     );
 
-    const getColor = (index: number) => colors[index % colors.length];
+    const getColor = (index: number) => segmentColors[index % segmentColors.length];
 
     return (
         <svg
             viewBox={`0 0 ${VIEW_BOX_WIDTH} ${viewBoxHeight}`}
             width={width}
             height={height}
-            style={{transform: `rotate(${type === TYPE_CIRCULAR ? '90deg' : 0})`, border: '1px dotted red'}}
+            style={{transform: `rotate(${type === TYPE_CIRCULAR ? '90deg' : 0})`}}
+            aria-hidden={ariaHidden}
+            role="meter"
+            {...getPrefixedDataAttributes(dataAttributes, 'Meter')}
         >
             <defs>
                 <marker
@@ -286,7 +308,7 @@ const Meter = ({
             </defs>
 
             <path
-                stroke={vars.colors.barTrack}
+                stroke={isInverse ? vars.colors.control : vars.colors.barTrack}
                 fill="none"
                 strokeWidth={strokeWidth}
                 strokeLinecap={type === TYPE_CIRCULAR ? 'butt' : 'round'}
@@ -347,6 +369,13 @@ const Meter = ({
                 })}
         </svg>
     );
+};
+
+/**
+ * This wrapper is to force a remount when some specific props change
+ */
+const Meter = (props: MeterProps): JSX.Element => {
+    return <MeterComponent {...props} key={`${props.type},${props.values.length},${props.reverse}`} />;
 };
 
 export default Meter;
