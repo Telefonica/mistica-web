@@ -71,7 +71,6 @@ export const MeterStory: StoryComponent<MeterStoryArgs> = ({
     ...valuesArgs
 }) => {
     const values = Object.values(valuesArgs).slice(0, valuesCount);
-    console.log('values', values);
     return (
         <ResponsiveLayout variant={themeVariant}>
             <Box paddingY={24}>
@@ -82,7 +81,9 @@ export const MeterStory: StoryComponent<MeterStoryArgs> = ({
                     />
                 )}
 
-                <Meter type={type} reverse={reverse} values={values} />
+                <div style={{width: 'fit-content', border: '1px dotted red'}}>
+                    <Meter type={type} reverse={reverse} values={values} />
+                </div>
             </Box>
         </ResponsiveLayout>
     );

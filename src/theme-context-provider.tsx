@@ -174,6 +174,7 @@ const ThemeContextProvider = ({theme, children, as, withoutStyles = false}: Prop
                 ...sanitizeDimensions(theme.dimensions),
             },
             textPresets,
+            borderRadii: theme.skin.borderRadii ?? defaultBorderRadiiConfig,
             Link: getMisticaLinkComponent(theme.Link),
             isDarkMode: isDarkModeEnabled,
             isIos: getPlatform(platformOverrides) === 'ios',

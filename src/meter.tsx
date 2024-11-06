@@ -6,6 +6,7 @@ import {vars} from './skins/skin-contract.css';
 import bezier from 'cubic-bezier';
 import {getPrefixedDataAttributes} from './utils/dom';
 import {useThemeVariant} from './theme-variant-context';
+import {useTheme} from './hooks';
 
 import type {DataAttributes} from './utils/types';
 
@@ -20,7 +21,7 @@ const ANIMATION_DELAY_MS = 200;
 const ANIMATION_DURATION_MS = 1000;
 const ANIMATION_EPSILON = 1000 / 60 / ANIMATION_DURATION_MS / 4;
 
-const SMALL_VALUE_THRESHOLD = Math.PI / 1000;
+const SMALL_VALUE_THRESHOLD = Math.PI / 10000;
 
 const TYPE_LINEAR = 'linear';
 const TYPE_ANGULAR = 'angular';
@@ -138,38 +139,49 @@ const MeterComponent = ({
     'aria-hidden': ariaHidden,
     dataAttributes,
 }: MeterProps): JSX.Element => {
-    const values = React.useMemo(() => valuesFromProps.map((v) => v / MAX_SEGMENT_VALUE), [valuesFromProps]);
+    const theme = useTheme();
+    const hasRoundLineCaps = theme.borderRadii.bar !== '0px';
     const themeVariant = useThemeVariant();
     const isOverMedia = themeVariant === 'media';
     const isInverse = themeVariant === 'inverse';
     const segmentColors = colors || (isInverse || isOverMedia ? DEFAULT_COLORS_INVERSE : DEFAULT_COLORS);
     const scaleFactor = VIEW_BOX_WIDTH / width;
+    const lineCapRadiusPx = hasRoundLineCaps ? STROKE_WIDTH_PX / 2 : 0;
+    const lineCapRadius = lineCapRadiusPx * scaleFactor;
     const strokeWidth = STROKE_WIDTH_PX * scaleFactor;
     const maxValue =
-        type === TYPE_LINEAR ? VIEW_BOX_WIDTH - strokeWidth : type === TYPE_CIRCULAR ? 2 * Math.PI : Math.PI;
+        type === TYPE_LINEAR
+            ? VIEW_BOX_WIDTH - lineCapRadius * 2
+            : type === TYPE_CIRCULAR
+              ? 2 * Math.PI
+              : Math.PI;
     const radius = type === TYPE_LINEAR ? 0 : CENTER_X - strokeWidth / 2;
     const separation = SEPARATION_PX * scaleFactor;
     const segmentSeparation =
         type === TYPE_LINEAR ? separation / VIEW_BOX_WIDTH : separation / radius / maxValue;
+
     const height =
-        type === TYPE_LINEAR
-            ? STROKE_WIDTH_PX
-            : type === TYPE_CIRCULAR
-              ? width
-              : width / 2 + STROKE_WIDTH_PX / 2;
+        type === TYPE_LINEAR ? STROKE_WIDTH_PX : type === TYPE_CIRCULAR ? width : width / 2 + lineCapRadiusPx;
+
     const viewBoxHeight =
         type === TYPE_LINEAR
             ? strokeWidth
             : type === TYPE_CIRCULAR
               ? VIEW_BOX_WIDTH
-              : VIEW_BOX_WIDTH / 2 + strokeWidth / 2;
+              : CENTER_X + lineCapRadius;
 
     const trackbarColor = isOverMedia
         ? vars.colors.inverse
         : isInverse
-          ? vars.colors.barTrack // @FIXME. Should be: barTrackInverse
+          ? vars.colors.barTrackInverse
           : vars.colors.barTrack;
 
+    /**  scale values to the range [0, 1] */
+    const values = React.useMemo(() => {
+        return valuesFromProps.map((v) => v / MAX_SEGMENT_VALUE);
+    }, [valuesFromProps]);
+
+    /** the animation starts with these values */
     const initialValuesRef = React.useRef<Array<number>>(
         Array.from({length: values.length}, () => (reverse ? 1 : 0))
     );
@@ -209,9 +221,9 @@ const MeterComponent = ({
     const getX = React.useCallback(
         (value: number) =>
             type === TYPE_LINEAR
-                ? strokeWidth / 2 + maxValue * value
+                ? lineCapRadius + maxValue * value
                 : CENTER_X - radius * Math.cos(value * maxValue),
-        [maxValue, radius, strokeWidth, type]
+        [lineCapRadius, maxValue, radius, type]
     );
 
     const getY = React.useCallback(
@@ -227,62 +239,85 @@ const MeterComponent = ({
             viewBox={`0 0 ${VIEW_BOX_WIDTH} ${viewBoxHeight}`}
             width={width}
             height={height}
-            style={{transform: `rotate(${type === TYPE_CIRCULAR ? '90deg' : 0})`}}
+            style={{transform: `rotate(${type === TYPE_CIRCULAR ? '90deg' : 0})`, display: 'block'}}
             aria-hidden={ariaHidden}
             role="meter"
             {...getPrefixedDataAttributes(dataAttributes, 'Meter')}
         >
             <defs>
-                <marker
-                    id="marker-current"
-                    viewBox="0 0 10 10"
-                    markerWidth={1}
-                    markerHeight={1}
-                    orient="auto"
-                    refX={5}
-                    refY={5}
-                >
-                    <path
-                        // the sub-pixel displacement is to avoid a gap between the marker and the path
-                        d={createPath({x1: 5 - 0.3, y1: 0, x2: 5 - 0.3, y2: 10, radius: 5})}
-                        fill={getColor(values.length - 1)}
-                    />
-                </marker>
-                <marker
-                    id="marker-start"
-                    viewBox="0 0 10 10"
-                    markerWidth={1}
-                    markerHeight={1}
-                    orient="auto"
-                    refX={5}
-                    refY={5}
-                >
-                    <path
-                        // the sub-pixel displacement is to avoid a gap between the marker and the path
-                        d={createPath({x1: 5 + 0.3, y1: 0, x2: 5 + 0.3, y2: 10, radius: 5, clockwise: 0})}
-                        fill={getColor(firstNonZeroIndex)}
-                    />
-                </marker>
+                {hasRoundLineCaps && (
+                    <>
+                        <marker
+                            id="marker-current"
+                            viewBox="0 0 10 10"
+                            markerWidth={1}
+                            markerHeight={1}
+                            orient="auto"
+                            refX={5}
+                            refY={5}
+                        >
+                            <path
+                                // the sub-pixel displacement is to avoid a gap between the marker and the path
+                                d={createPath({x1: 5 - 0.3, y1: 0, x2: 5 - 0.3, y2: 10, radius: 5})}
+                                fill={getColor(values.length - 1)}
+                            />
+                        </marker>
+                        <marker
+                            id="marker-start"
+                            viewBox="0 0 10 10"
+                            markerWidth={1}
+                            markerHeight={1}
+                            orient="auto"
+                            refX={5}
+                            refY={5}
+                        >
+                            <path
+                                // the sub-pixel displacement is to avoid a gap between the marker and the path
+                                d={createPath({
+                                    x1: 5 + 0.3,
+                                    y1: 0,
+                                    x2: 5 + 0.3,
+                                    y2: 10,
+                                    radius: 5,
+                                    clockwise: 0,
+                                })}
+                                fill={getColor(firstNonZeroIndex)}
+                            />
+                        </marker>
+                    </>
+                )}
                 <mask id="mask-bar-track" maskUnits="userSpaceOnUse">
                     <rect x={0} y={0} width={VIEW_BOX_WIDTH} height={viewBoxHeight} fill="white" />
                     {firstNonZeroIndex >= 0 && lastSegment && (
                         <>
                             <path
+                                // this path is used to mask the trackbar
                                 stroke="black"
                                 fill="none"
                                 strokeWidth={strokeWidth + separation * 2}
-                                strokeLinecap={type === TYPE_CIRCULAR ? 'butt' : 'round'}
+                                strokeLinecap={type === TYPE_CIRCULAR || !hasRoundLineCaps ? 'butt' : 'round'}
                                 d={createPath({
                                     x1: getX(0),
                                     y1: getY(0),
-                                    x2: getX(lastSegment.end),
-                                    y2: getY(lastSegment.end),
+                                    x2: getX(
+                                        clamp(
+                                            lastSegment.end + (hasRoundLineCaps ? 0 : segmentSeparation),
+                                            0,
+                                            1 - SMALL_VALUE_THRESHOLD
+                                        )
+                                    ),
+                                    y2: getY(
+                                        clamp(
+                                            lastSegment.end + (hasRoundLineCaps ? 0 : segmentSeparation),
+                                            0,
+                                            1 - SMALL_VALUE_THRESHOLD
+                                        )
+                                    ),
                                     radius,
                                     largeArchFlag: type === TYPE_CIRCULAR ? lastSegment.end >= 0.5 : 0,
                                 })}
                             />
-
-                            {type === TYPE_CIRCULAR && (
+                            {type === TYPE_CIRCULAR && hasRoundLineCaps && (
                                 <circle
                                     cx={getX(lastSegment.end)}
                                     cy={getY(lastSegment.end)}
@@ -290,7 +325,6 @@ const MeterComponent = ({
                                     fill="black"
                                 />
                             )}
-
                             {type === TYPE_CIRCULAR && lastSegment.end <= 0.5 && (
                                 <rect
                                     x={0}
@@ -327,7 +361,7 @@ const MeterComponent = ({
                 opacity={isOverMedia ? 0.5 : 1}
                 fill="none"
                 strokeWidth={strokeWidth}
-                strokeLinecap={type === TYPE_CIRCULAR ? 'butt' : 'round'}
+                strokeLinecap={type === TYPE_CIRCULAR || !hasRoundLineCaps ? 'butt' : 'round'}
                 d={createPath({
                     x1: getX(0),
                     y1: getY(0),
