@@ -3,6 +3,7 @@ import path from 'path';
 import url from 'url';
 // eslint-disable-next-line import/extensions
 import {generateSkinCssSrc, buildRadius, generateCommonCssSrc} from './css-generator.js';
+import prettier from 'prettier';
 
 /*
 By default, this script will look for the design tokens inside .github folder but you may want to clone the mistica-design repo elsewhere.
@@ -145,10 +146,22 @@ export type Colors = {
 };`;
 };
 
-const generateSkinFiles = () => {
+const formatCss = async (source) =>
+    prettier.format(source, {
+        ...(await prettier.resolveConfig('.')),
+        parser: 'css',
+    });
+
+const formatTs = async (source) =>
+    prettier.format(source, {
+        ...(await prettier.resolveConfig('.')),
+        parser: 'typescript',
+    });
+
+const generateSkinFiles = async () => {
     let anyGeneratedSkin;
 
-    KNOWN_SKINS.forEach((skinName) => {
+    for (const skinName of KNOWN_SKINS) {
         console.log('Generating tokens for skin', skinName);
 
         if (!fs.existsSync(path.join(DESIGN_TOKENS_FOLDER, `${skinName}.json`))) {
@@ -156,20 +169,20 @@ const generateSkinFiles = () => {
             return;
         }
 
-        const skinSrc = generateSkinSrc(skinName);
+        const skinSrc = await formatTs(generateSkinSrc(skinName));
         fs.writeFileSync(path.join(SKINS_FOLDER, `${skinName}.tsx`), skinSrc);
 
-        const skinCssSrc = generateSkinCssSrc(skinName, DESIGN_TOKENS_FOLDER);
+        const skinCssSrc = await formatCss(generateSkinCssSrc(skinName, DESIGN_TOKENS_FOLDER));
         fs.writeFileSync(path.join(CSS_FOLDER, `${skinName}.css`), skinCssSrc);
 
         anyGeneratedSkin = skinName;
-    });
+    }
 
     if (anyGeneratedSkin) {
-        const typesSrc = generateColorTypesSrc(anyGeneratedSkin);
+        const typesSrc = await formatTs(generateColorTypesSrc(anyGeneratedSkin));
         fs.writeFileSync(path.join(SKINS_FOLDER, 'types', 'colors.tsx'), typesSrc);
 
-        const commonCssSrc = generateCommonCssSrc(DESIGN_TOKENS_FOLDER);
+        const commonCssSrc = await formatCss(generateCommonCssSrc(DESIGN_TOKENS_FOLDER));
         fs.writeFileSync(path.join(CSS_FOLDER, `mistica-common.css`), commonCssSrc);
     }
 };
