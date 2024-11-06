@@ -644,15 +644,14 @@ const MainNavigationBarBurgerMenu = ({
                             nodeRef={menuContentRef}
                         >
                             {(transitionStatus) => (
-                                <div
-                                    ref={menuContentRef}
-                                    style={{
-                                        transition: `transform ${menuAnimationDuration}ms ease-out`,
-                                        transform: `translate(${isSubMenuOpen ? '-100vw' : '0vw'})`,
-                                    }}
-                                >
-                                    {transitionStatus !== 'entered' && (
-                                        <div className={styles.burgerMainMenuContainer}>
+                                <div ref={menuContentRef} className={styles.burgerMenuContainer}>
+                                    <div
+                                        className={styles.burgerMenuContentContainer}
+                                        style={{
+                                            transform: `translate(${isSubMenuOpen ? '-100vw' : '0'})`,
+                                        }}
+                                    >
+                                        {transitionStatus !== 'entered' && (
                                             <ResponsiveLayout>
                                                 <ResetResponsiveLayout>
                                                     <RowList>
@@ -680,14 +679,19 @@ const MainNavigationBarBurgerMenu = ({
                                                 </ResetResponsiveLayout>
                                                 {extra && <Box paddingY={16}>{extra}</Box>}
                                             </ResponsiveLayout>
-                                        </div>
-                                    )}
+                                        )}
+                                    </div>
 
-                                    {transitionStatus !== 'exited' && openedSection !== -1 && (
-                                        <div className={styles.burgerSubMenuContainer}>
-                                            {renderSection(openedSection)}
-                                        </div>
-                                    )}
+                                    <div
+                                        className={styles.burgerMenuContentContainer}
+                                        style={{
+                                            transform: `translate(${isSubMenuOpen ? '0' : '100vw'})`,
+                                        }}
+                                    >
+                                        {transitionStatus !== 'exited' &&
+                                            openedSection !== -1 &&
+                                            renderSection(openedSection)}
+                                    </div>
                                 </div>
                             )}
                         </CSSTransition>

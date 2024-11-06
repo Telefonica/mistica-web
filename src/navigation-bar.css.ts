@@ -369,36 +369,35 @@ export const burgerMenuButton = style({
     },
 });
 
-export const burgerMenu = style([
-    sprinkles({
-        position: 'fixed',
-        top: NAVBAR_HEIGHT_MOBILE,
-        left: 0,
-        right: 0,
-        background: vars.colors.background,
-    }),
-    {
-        height: `calc(100vh - ${NAVBAR_HEIGHT_MOBILE}px)`,
-    },
-]);
+export const burgerMenu = sprinkles({
+    position: 'fixed',
+    top: NAVBAR_HEIGHT_MOBILE,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    background: vars.colors.background,
+});
 
-export const burgerMainMenuContainer = style([
-    sprinkles({overflowY: 'auto'}),
-    {
-        height: `calc(100vh - ${NAVBAR_HEIGHT_MOBILE}px)`,
-    },
-]);
+export const burgerMenuContainer = sprinkles({
+    height: '100%',
+    position: 'relative',
+});
 
-export const burgerSubMenuContainer = style([
+export const burgerMenuContentContainer = style([
     sprinkles({
         overflowY: 'auto',
         width: '100%',
+        height: '100%',
         position: 'absolute',
         top: 0,
     }),
     {
-        height: `calc(100vh - ${NAVBAR_HEIGHT_MOBILE}px)`,
-        left: '100vw',
+        transition: `transform ${BURGER_MENU_ANIMATION_DURATION_MS}ms ease-out`,
+        '@media': {
+            ['(prefers-reduced-motion)']: {
+                transition: 'none',
+            },
+        },
     },
 ]);
 
