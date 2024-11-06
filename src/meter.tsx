@@ -13,7 +13,7 @@ const VIEW_BOX_WIDTH = 100;
 const CENTER_X = VIEW_BOX_WIDTH / 2;
 const CENTER_Y = VIEW_BOX_WIDTH / 2;
 
-const STROKE_WIDTH_PX = 6;
+const STROKE_WIDTH_PX = 26;
 const SEPARATION_PX = 2;
 
 const ANIMATION_DELAY_MS = 200;
@@ -26,17 +26,25 @@ const TYPE_LINEAR = 'linear';
 const TYPE_ANGULAR = 'angular';
 const TYPE_CIRCULAR = 'circular';
 
+const MAX_SEGMENT_VALUE = 100;
+
 export type MeterType = typeof TYPE_LINEAR | typeof TYPE_ANGULAR | typeof TYPE_CIRCULAR;
 
 const DEFAULT_COLORS = [
-    vars.colors.success,
-    vars.colors.error,
+    vars.colors.controlActivated,
     vars.colors.warning,
-    vars.colors.promo,
+    vars.colors.success,
     vars.colors.highlight,
+    vars.colors.promo,
 ];
 
-const DEFAULT_COLORS_INVERSE = [vars.colors.controlActivatedInverse];
+const DEFAULT_COLORS_INVERSE = [
+    vars.colors.controlActivatedInverse,
+    vars.colors.warning,
+    vars.colors.success,
+    vars.colors.highlight,
+    vars.colors.promo,
+];
 
 /**
  * "start"/"end" values for each segment of the meter. The values are in the range [0, 1]
@@ -125,15 +133,16 @@ const MeterComponent = ({
     type = TYPE_ANGULAR,
     width = 400,
     colors,
-    values,
+    values: valuesFromProps,
     reverse = false,
     'aria-hidden': ariaHidden,
     dataAttributes,
 }: MeterProps): JSX.Element => {
+    const values = React.useMemo(() => valuesFromProps.map((v) => v / MAX_SEGMENT_VALUE), [valuesFromProps]);
     const themeVariant = useThemeVariant();
     const isOverMedia = themeVariant === 'media';
-    const isInverse = themeVariant === 'inverse' || isOverMedia; // "inverse" and "media" share the same colors
-    const segmentColors = colors || (isInverse ? DEFAULT_COLORS_INVERSE : DEFAULT_COLORS);
+    const isInverse = themeVariant === 'inverse';
+    const segmentColors = colors || (isInverse || isOverMedia ? DEFAULT_COLORS_INVERSE : DEFAULT_COLORS);
     const scaleFactor = VIEW_BOX_WIDTH / width;
     const strokeWidth = STROKE_WIDTH_PX * scaleFactor;
     const maxValue =
@@ -154,6 +163,12 @@ const MeterComponent = ({
             : type === TYPE_CIRCULAR
               ? VIEW_BOX_WIDTH
               : VIEW_BOX_WIDTH / 2 + strokeWidth / 2;
+
+    const trackbarColor = isOverMedia
+        ? vars.colors.inverse
+        : isInverse
+          ? vars.colors.barTrack // @FIXME. Should be: barTrackInverse
+          : vars.colors.barTrack;
 
     const initialValuesRef = React.useRef<Array<number>>(
         Array.from({length: values.length}, () => (reverse ? 1 : 0))
@@ -308,7 +323,8 @@ const MeterComponent = ({
             </defs>
 
             <path
-                stroke={isInverse ? vars.colors.control : vars.colors.barTrack}
+                stroke={trackbarColor}
+                opacity={isOverMedia ? 0.5 : 1}
                 fill="none"
                 strokeWidth={strokeWidth}
                 strokeLinecap={type === TYPE_CIRCULAR ? 'butt' : 'round'}

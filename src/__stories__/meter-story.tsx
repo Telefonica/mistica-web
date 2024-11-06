@@ -1,5 +1,6 @@
 import * as React from 'react';
-import {Box, Meter, ResponsiveLayout, Stack, ThemeVariant} from '..';
+import {Box, Meter, ResponsiveLayout} from '..';
+import beachImg from './images/beach.jpg';
 
 import type {MeterType} from '../meter';
 
@@ -14,6 +15,33 @@ export default {
             options: ['default', 'inverse', 'media'],
             control: {type: 'select'},
         },
+        valuesCount: {
+            control: {type: 'range', min: 1, max: 8, step: 1},
+        },
+        value1: {
+            control: {type: 'range', min: 0, max: 100, step: 1},
+        },
+        value2: {
+            control: {type: 'range', min: 0, max: 100, step: 1},
+        },
+        value3: {
+            control: {type: 'range', min: 0, max: 100, step: 1},
+        },
+        value4: {
+            control: {type: 'range', min: 0, max: 100, step: 1},
+        },
+        value5: {
+            control: {type: 'range', min: 0, max: 100, step: 1},
+        },
+        value6: {
+            control: {type: 'range', min: 0, max: 100, step: 1},
+        },
+        value7: {
+            control: {type: 'range', min: 0, max: 100, step: 1},
+        },
+        value8: {
+            control: {type: 'range', min: 0, max: 100, step: 1},
+        },
     },
     parameters: {
         fullScreen: true,
@@ -24,36 +52,38 @@ type MeterStoryArgs = {
     type: MeterType;
     reverse: boolean;
     themeVariant: 'default' | 'inverse' | 'media';
+    valuesCount: number;
+    value1: number;
+    value2: number;
+    value3: number;
+    value4: number;
+    value5: number;
+    value6: number;
+    value7: number;
+    value8: number;
 };
 
-export const MeterStory: StoryComponent<MeterStoryArgs> = ({type, reverse, themeVariant}) => {
-    const [key, setKey] = React.useState(0);
-    const segments = 8;
-    const [values, setValues] = React.useState(Array.from({length: segments}, () => 0.1));
+export const MeterStory: StoryComponent<MeterStoryArgs> = ({
+    type,
+    reverse,
+    themeVariant,
+    valuesCount,
+    ...valuesArgs
+}) => {
+    const values = Object.values(valuesArgs).slice(0, valuesCount);
+    console.log('values', values);
     return (
         <ResponsiveLayout variant={themeVariant}>
-            <ThemeVariant variant={themeVariant}>
-                <Box paddingY={24}>
-                    <Stack space={16}>
-                        <Meter key={key} type={type} reverse={reverse} values={values} />
+            <Box paddingY={24}>
+                {themeVariant === 'media' && (
+                    <img
+                        src={beachImg}
+                        style={{position: 'absolute', top: 0, bottom: 0, left: 0, right: 0, zIndex: -1}}
+                    />
+                )}
 
-                        <Stack space={16}>
-                            <input
-                                type="range"
-                                style={{width: 400}}
-                                value={values[0] * 1000 * segments}
-                                max={1000}
-                                onChange={(e) => {
-                                    const v = +e.currentTarget.value / 1000 / segments;
-                                    setValues(Array.from({length: segments}, () => v));
-                                }}
-                            />
-                            <div>{values[0]}</div>
-                            <button onClick={() => setKey(Date.now())}>Reset</button>
-                        </Stack>
-                    </Stack>
-                </Box>
-            </ThemeVariant>
+                <Meter type={type} reverse={reverse} values={values} />
+            </Box>
         </ResponsiveLayout>
     );
 };
@@ -63,4 +93,13 @@ MeterStory.args = {
     type: 'angular',
     reverse: false,
     themeVariant: 'default',
+    valuesCount: 8,
+    value1: 10,
+    value2: 10,
+    value3: 10,
+    value4: 10,
+    value5: 10,
+    value6: 10,
+    value7: 10,
+    value8: 10,
 };
