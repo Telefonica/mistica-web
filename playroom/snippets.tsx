@@ -2438,9 +2438,82 @@ const navigationBarSnippets = [
     },
     {
         group: 'NavigationBar',
+        name: 'MainNavigationBar with menu',
+        code: `
+          <MainNavigationBar
+            sections={["Start", "Account", "Explore", "Support"].map((title, idx) => ({
+              onPress: () => setState("index", idx),
+              title,
+              menu:
+                title === "Start"
+                  ? {
+                      columns: [
+                        {
+                          title: \`\${title} 1\`,
+                          items: [
+                            {
+                              title: "item 1",
+                              onPress: () => {},
+                            },
+                            {
+                              title: "item 2",
+                              href: "https://www.google.com/",
+                            },
+                            {
+                              title: "item 3",
+                              to: "#",
+                            },
+                          ],
+                        },
+                      ],
+                    }
+                  : title === "Account"
+                  ? {
+                      columns: [
+                        {
+                          title: \`\${title} 1\`,
+                          items: [
+                            {
+                              title: "item 1",
+                              onPress: () => {},
+                            },
+                          ],
+                        },
+                      ],
+                    }
+                  : title === "Explore"
+                  ? {
+                      columns: [
+                        {
+                          title: \`\${title} 1\`,
+                          items: [
+                            {
+                              title: "item 1",
+                              onPress: () => {},
+                            },
+                            {
+                              title: "item 2",
+                              href: "https://www.google.com/",
+                            },
+                            {
+                              title: "item 3",
+                              to: "#",
+                            },
+                          ],
+                        },
+                      ],
+                    }
+                  : undefined,
+            }))}
+            selectedIndex={getState("index", 0)}
+          />`,
+    },
+    {
+        group: 'NavigationBar',
         name: 'MainNavigationBar with large menu',
         code: `
           <MainNavigationBar
+            desktopLargeMenu
             sections={["Start", "Account", "Explore", "Support"].map((title, idx) => ({
               onPress: () => setState("index", idx),
               title,
@@ -2575,79 +2648,6 @@ const navigationBarSnippets = [
                           />
                         </Stack>
                       ),
-                    }
-                  : undefined,
-            }))}
-            selectedIndex={getState("index", 0)}
-          />`,
-    },
-    {
-        group: 'NavigationBar',
-        name: 'MainNavigationBar with small menu',
-        code: `
-          <MainNavigationBar
-            desktopSmallMenu
-            sections={["Start", "Account", "Explore", "Support"].map((title, idx) => ({
-              onPress: () => setState("index", idx),
-              title,
-              menu:
-                title === "Start"
-                  ? {
-                      columns: [
-                        {
-                          title: \`\${title} 1\`,
-                          items: [
-                            {
-                              title: "item 1",
-                              onPress: () => {},
-                            },
-                            {
-                              title: "item 2",
-                              href: "https://www.google.com/",
-                            },
-                            {
-                              title: "item 3",
-                              to: "#",
-                            },
-                          ],
-                        },
-                      ],
-                    }
-                  : title === "Account"
-                  ? {
-                      columns: [
-                        {
-                          title: \`\${title} 1\`,
-                          items: [
-                            {
-                              title: "item 1",
-                              onPress: () => {},
-                            },
-                          ],
-                        },
-                      ],
-                    }
-                  : title === "Explore"
-                  ? {
-                      columns: [
-                        {
-                          title: \`\${title} 1\`,
-                          items: [
-                            {
-                              title: "item 1",
-                              onPress: () => {},
-                            },
-                            {
-                              title: "item 2",
-                              href: "https://www.google.com/",
-                            },
-                            {
-                              title: "item 3",
-                              to: "#",
-                            },
-                          ],
-                        },
-                      ],
                     }
                   : undefined,
             }))}

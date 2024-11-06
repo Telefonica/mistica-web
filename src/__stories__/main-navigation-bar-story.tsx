@@ -32,7 +32,7 @@ type Args = {
     large: boolean;
     sections: boolean;
     menu: 'undefined' | 'default' | 'custom';
-    desktopSmallMenu: boolean;
+    desktopLargeMenu: boolean;
 };
 
 export const Default: StoryComponent<Args> = ({
@@ -42,7 +42,7 @@ export const Default: StoryComponent<Args> = ({
     large,
     sections,
     menu,
-    desktopSmallMenu,
+    desktopLargeMenu,
 }) => {
     const [selectedIndex, setSelectedIndex] = React.useState(0);
     const {isDesktopOrBigger} = useScreenSize();
@@ -60,7 +60,7 @@ export const Default: StoryComponent<Args> = ({
             large={large}
             withBorder={border}
             burgerMenuExtra={burgerMenuExtra ? <Placeholder /> : undefined}
-            desktopSmallMenu={desktopSmallMenu}
+            desktopLargeMenu={desktopLargeMenu}
             sections={
                 sections
                     ? sectionTitles.map((title, idx) => ({
@@ -73,7 +73,7 @@ export const Default: StoryComponent<Args> = ({
                                     ? {
                                           title: `${title} menu`,
                                           columns: Array.from(
-                                              {length: desktopSmallMenu ? 1 : 2},
+                                              {length: desktopLargeMenu ? 2 : 1},
                                               (_, columnIndex) => ({
                                                   title: `${title} ${columnIndex + 1}`,
                                                   items: Array.from(
@@ -129,7 +129,7 @@ Default.args = {
     large: false,
     sections: true,
     menu: 'undefined',
-    desktopSmallMenu: false,
+    desktopLargeMenu: false,
 };
 
 Default.argTypes = {
@@ -142,5 +142,5 @@ Default.argTypes = {
         control: {type: 'select'},
         if: {arg: 'sections'},
     },
-    desktopSmallMenu: {if: {arg: 'sections'}},
+    desktopLargeMenu: {if: {arg: 'sections'}},
 };

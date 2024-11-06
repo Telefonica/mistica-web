@@ -270,7 +270,7 @@ type MainNavigationBarProps = {
     withBorder?: boolean;
     burgerMenuExtra?: React.ReactNode;
     large?: boolean;
-    desktopSmallMenu?: boolean;
+    desktopLargeMenu?: boolean;
 };
 
 type MainNavigationBarMenuStatus = 'opening' | 'opened' | 'closing' | 'closed';
@@ -566,11 +566,11 @@ const MainNavigationBarDesktopMenuContext = React.createContext<MainNavigationBa
 const MainNavigationBarDesktopMenuContextProvider = ({
     children,
     sections,
-    isSmallMenu,
+    isLargeMenu,
 }: {
     children: React.ReactNode;
     sections?: ReadonlyArray<MainNavigationBarSection>;
-    isSmallMenu?: boolean;
+    isLargeMenu?: boolean;
 }): JSX.Element => {
     const {isTabletOrSmaller} = useScreenSize();
     const [isMenuOpen, setIsMenuOpen] = React.useState(false);
@@ -637,7 +637,7 @@ const MainNavigationBarDesktopMenuContextProvider = ({
 
     React.useEffect(() => {
         const menuAnimationDuration =
-            isRunningAcceptanceTest() || isSmallMenu ? 0 : styles.DESKTOP_MENU_ANIMATION_DURATION_MS;
+            isRunningAcceptanceTest() || !isLargeMenu ? 0 : styles.DESKTOP_MENU_ANIMATION_DURATION_MS;
 
         let id: NodeJS.Timeout;
 
@@ -651,7 +651,7 @@ const MainNavigationBarDesktopMenuContextProvider = ({
         }
 
         return () => clearTimeout(id);
-    }, [isMenuOpen, isSmallMenu]);
+    }, [isMenuOpen, isLargeMenu]);
 
     React.useEffect(() => {
         // reset openedSection when the menu has been closed
@@ -1012,7 +1012,7 @@ const MainNavigationBarDesktopSection = ({
     navigationBarRef,
     variant,
     isLargeNavigationBar,
-    desktopSmallMenu,
+    desktopLargeMenu,
 }: {
     section: MainNavigationBarSection;
     index: number;
@@ -1022,7 +1022,7 @@ const MainNavigationBarDesktopSection = ({
     navigationBarRef: React.RefObject<HTMLDivElement>;
     variant?: Variant;
     isLargeNavigationBar: boolean;
-    desktopSmallMenu?: boolean;
+    desktopLargeMenu?: boolean;
 }): JSX.Element => {
     const {texts, t} = useTheme();
     const {title, menu, ...touchableProps} = section;
@@ -1054,7 +1054,7 @@ const MainNavigationBarDesktopSection = ({
 
                 return left <= maxLeftOffset ? left : right - styles.DESKTOP_SMALL_MENU_WIDTH;
             };
-            if (desktopSmallMenu) {
+            if (!desktopLargeMenu) {
                 setSmallMenuLeftPosition(getSmallMenuLeftPosition());
             }
 
@@ -1064,7 +1064,7 @@ const MainNavigationBarDesktopSection = ({
                 openSectionMenu(index);
             }
         },
-        [desktopSmallMenu, index, openSectionMenu, debouncedOpenSectionMenu, navigationBarRef]
+        [desktopLargeMenu, index, openSectionMenu, debouncedOpenSectionMenu, navigationBarRef]
     );
 
     React.useEffect(() => {
@@ -1196,17 +1196,17 @@ const MainNavigationBarDesktopSection = ({
                             </BaseTouchable>
                         </div>
                     )}
-                    {desktopSmallMenu ? (
+                    {desktopLargeMenu ? (
+                        <MainNavigationBarDesktopMenuContent
+                            section={section}
+                            isLargeNavigationBar={isLargeNavigationBar}
+                            index={index}
+                        />
+                    ) : (
                         <MainNavigationBarDesktopSmallMenu
                             section={section}
                             isLargeNavigationBar={isLargeNavigationBar}
                             leftPosition={smallMenuLeftPosition}
-                            index={index}
-                        />
-                    ) : (
-                        <MainNavigationBarDesktopMenuContent
-                            section={section}
-                            isLargeNavigationBar={isLargeNavigationBar}
                             index={index}
                         />
                     )}
@@ -1223,7 +1223,7 @@ const MainNavigationBarDesktopSections = ({
     variant,
     isLargeNavigationBar,
     hasRightContent,
-    desktopSmallMenu,
+    desktopLargeMenu,
 }: {
     sections: ReadonlyArray<MainNavigationBarSection>;
     selectedIndex?: number;
@@ -1231,7 +1231,7 @@ const MainNavigationBarDesktopSections = ({
     variant: Variant;
     hasRightContent: boolean;
     isLargeNavigationBar: boolean;
-    desktopSmallMenu: boolean;
+    desktopLargeMenu: boolean;
 }): JSX.Element => {
     const {openSectionMenu, openedSection, closeMenu} = useMainNavigationBarDesktopMenuState();
 
@@ -1264,7 +1264,7 @@ const MainNavigationBarDesktopSections = ({
                         variant={variant}
                         section={section}
                         isLargeNavigationBar={isLargeNavigationBar}
-                        desktopSmallMenu={desktopSmallMenu}
+                        desktopLargeMenu={desktopLargeMenu}
                     />
                 ))}
             </Inline>
@@ -1279,11 +1279,11 @@ const MainNavigationBarDesktopSections = ({
 const MainNavigationBarContentWrapper = ({
     children,
     isLargeNavigationBar,
-    desktopSmallMenu,
+    desktopLargeMenu,
 }: {
     children: React.ReactNode;
     isLargeNavigationBar: boolean;
-    desktopSmallMenu: boolean;
+    desktopLargeMenu: boolean;
 }): JSX.Element => {
     const {menuHeight} = useMainNavigationBarDesktopMenuState();
     const topSpace = isLargeNavigationBar ? NAVBAR_HEIGHT_DESKTOP_LARGE : NAVBAR_HEIGHT_DESKTOP;
@@ -1292,7 +1292,7 @@ const MainNavigationBarContentWrapper = ({
         <div
             className={styles.mainNavigationBarContentWrapper}
             style={
-                !desktopSmallMenu
+                desktopLargeMenu
                     ? {
                           clipPath: `rect(0 100% calc(${topSpace}px + ${menuHeight}) 0)`,
                           WebkitClipPath: `rect(0 100% calc(${topSpace}px + ${menuHeight}) 0)`,
@@ -1315,7 +1315,7 @@ export const MainNavigationBar = ({
     burgerMenuExtra,
     logo,
     large = false,
-    desktopSmallMenu = false,
+    desktopLargeMenu = false,
 }: MainNavigationBarProps): JSX.Element => {
     const {texts, t} = useTheme();
     const menuId = React.useId();
@@ -1336,7 +1336,7 @@ export const MainNavigationBar = ({
             variant={variant}
             hasRightContent={!!right}
             isLargeNavigationBar={hasBottomSections}
-            desktopSmallMenu={desktopSmallMenu}
+            desktopLargeMenu={desktopLargeMenu}
         />
     );
 
@@ -1361,12 +1361,12 @@ export const MainNavigationBar = ({
                 variant={variant}
                 dataAttributes={{'component-name': 'MainNavigationBar'}}
             >
-                {!desktopSmallMenu && (
+                {desktopLargeMenu && (
                     <MainNavigationBarDesktopMenuBackground isLargeNavigationBar={hasBottomSections} />
                 )}
                 <MainNavigationBarContentWrapper
                     isLargeNavigationBar={hasBottomSections}
-                    desktopSmallMenu={desktopSmallMenu}
+                    desktopLargeMenu={desktopLargeMenu}
                 >
                     <ResponsiveLayout>
                         <NavigationBarContentContainer
@@ -1406,7 +1406,7 @@ export const MainNavigationBar = ({
     );
 
     return (
-        <MainNavigationBarDesktopMenuContextProvider sections={sections} isSmallMenu={desktopSmallMenu}>
+        <MainNavigationBarDesktopMenuContextProvider sections={sections} isLargeMenu={desktopLargeMenu}>
             {!isTabletOrSmaller ? (
                 mainNavBar
             ) : (

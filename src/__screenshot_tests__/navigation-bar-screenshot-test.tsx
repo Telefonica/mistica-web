@@ -175,7 +175,7 @@ test.each`
     const page = await openStoryPage({
         id: 'components-navigation-bars-mainnavigationbar--default',
         device: 'DESKTOP',
-        args: {sections: true, desktopSmallMenu: menuType === 'small', menu: content},
+        args: {sections: true, desktopLargeMenu: menuType === 'large', menu: content},
     });
 
     // first section opened
@@ -221,7 +221,7 @@ test.each(['large', 'small'])('MainNavigationBar inverse with %s menu in DESKTOP
     const page = await openStoryPage({
         id: 'components-navigation-bars-mainnavigationbar--default',
         device: 'DESKTOP',
-        args: {sections: true, desktopSmallMenu: menuType === 'small', menu: 'default', variant: 'inverse'},
+        args: {sections: true, desktopLargeMenu: menuType === 'large', menu: 'default', variant: 'inverse'},
     });
 
     // first section opened
