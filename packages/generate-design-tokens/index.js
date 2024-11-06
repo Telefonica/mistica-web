@@ -23,6 +23,8 @@ const currentDir = url.fileURLToPath(new URL('.', import.meta.url));
 const DESIGN_TOKENS_FOLDER =
     process.env.DESIGN_TOKENS_FOLDER || path.join(currentDir, '../../../mistica-design/tokens/');
 
+console.log('Using design tokens from:', DESIGN_TOKENS_FOLDER);
+
 const SKINS_FOLDER = path.join(currentDir, '..', '..', 'src', 'skins');
 const CSS_FOLDER = path.join(currentDir, '..', '..', 'css');
 
