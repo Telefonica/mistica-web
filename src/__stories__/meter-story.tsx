@@ -18,6 +18,13 @@ export default {
         valuesCount: {
             control: {type: 'range', min: 1, max: 8, step: 1},
         },
+        fullWidth: {
+            control: {type: 'boolean'},
+        },
+        width: {
+            if: {arg: 'fullWidth', eq: false},
+            control: {type: 'range', min: 64, max: 600, step: 1},
+        },
         value1: {
             control: {type: 'range', min: 0, max: 100, step: 1},
         },
@@ -52,6 +59,8 @@ type MeterStoryArgs = {
     type: MeterType;
     reverse: boolean;
     themeVariant: 'default' | 'inverse' | 'media';
+    fullWidth: boolean;
+    width: number;
     valuesCount: number;
     value1: number;
     value2: number;
@@ -68,24 +77,25 @@ export const MeterStory: StoryComponent<MeterStoryArgs> = ({
     reverse,
     themeVariant,
     valuesCount,
+    fullWidth,
+    width,
     ...valuesArgs
 }) => {
     const values = Object.values(valuesArgs).slice(0, valuesCount);
     return (
-        <ResponsiveLayout variant={themeVariant}>
-            <Box paddingY={24}>
-                {themeVariant === 'media' && (
-                    <img
-                        src={beachImg}
-                        style={{position: 'absolute', top: 0, bottom: 0, left: 0, right: 0, zIndex: -1}}
-                    />
-                )}
-
-                <div style={{width: 'fit-content', border: '1px dotted red'}}>
-                    <Meter type={type} reverse={reverse} values={values} />
-                </div>
-            </Box>
-        </ResponsiveLayout>
+        <div
+            style={{
+                backgroundImage: themeVariant === 'media' ? `url(${beachImg})` : '',
+                backgroundPosition: 'center',
+                backgroundSize: 'cover',
+            }}
+        >
+            <ResponsiveLayout variant={themeVariant} fullWidth>
+                <Box padding={16}>
+                    <Meter type={type} reverse={reverse} values={values} width={fullWidth ? '100%' : width} />
+                </Box>
+            </ResponsiveLayout>
+        </div>
     );
 };
 
@@ -94,6 +104,8 @@ MeterStory.args = {
     type: 'angular',
     reverse: false,
     themeVariant: 'default',
+    fullWidth: false,
+    width: 400,
     valuesCount: 8,
     value1: 10,
     value2: 10,

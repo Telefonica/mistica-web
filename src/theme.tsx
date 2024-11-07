@@ -168,6 +168,6 @@ export type Theme = {
     isDarkMode: boolean;
     isIos: boolean;
     useHrefDecorator: () => (href: string) => string;
-    t: (token: TextToken) => string;
+    t: (token: TextToken, ...params: Array<string | number>) => string;
     preventCopyInFormFields: boolean;
 };

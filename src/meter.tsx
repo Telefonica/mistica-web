@@ -6,7 +6,7 @@ import {vars} from './skins/skin-contract.css';
 import bezier from 'cubic-bezier';
 import {getPrefixedDataAttributes} from './utils/dom';
 import {useThemeVariant} from './theme-variant-context';
-import {useTheme} from './hooks';
+import {useElementDimensions, useTheme} from './hooks';
 
 import type {DataAttributes} from './utils/types';
 
@@ -14,7 +14,7 @@ const VIEW_BOX_WIDTH = 100;
 const CENTER_X = VIEW_BOX_WIDTH / 2;
 const CENTER_Y = VIEW_BOX_WIDTH / 2;
 
-const STROKE_WIDTH_PX = 26;
+const STROKE_WIDTH_PX = 6;
 const SEPARATION_PX = 2;
 
 const ANIMATION_DELAY_MS = 200;
@@ -121,42 +121,48 @@ const createPath = ({
 
 type MeterProps = {
     type?: MeterType;
-    /** Position of the meter. 0 is at the start, 1 is at the end. The sum of the values must not exceed 1. */
+    // Position of the meter. 0 is at the start, 1 is at the end. The sum of the values must not exceed 1.
     values: Array<number>;
-    width?: number;
+    width?: number | string;
     colors?: Array<string>;
     reverse?: boolean;
-    'aria-hidden'?: boolean | 'true' | 'false';
     dataAttributes?: DataAttributes;
+    'aria-hidden'?: boolean | 'true' | 'false';
+    'aria-label'?: string;
 };
 
 const MeterComponent = ({
     type = TYPE_ANGULAR,
-    width = 400,
+    width: widthProp = '100%',
     colors,
-    values: valuesFromProps,
+    values: valuesProp,
     reverse = false,
-    'aria-hidden': ariaHidden,
     dataAttributes,
+    'aria-hidden': ariaHidden = false,
+    'aria-label': ariaLabel,
 }: MeterProps): JSX.Element => {
-    const theme = useTheme();
-    const hasRoundLineCaps = theme.borderRadii.bar !== '0px';
+    const {borderRadii, t} = useTheme();
+    const {ref: containerRef, width: containerWidth} = useElementDimensions();
+    const hasRoundLineCaps = parseInt(borderRadii.bar) !== 0;
     const themeVariant = useThemeVariant();
     const isOverMedia = themeVariant === 'media';
     const isInverse = themeVariant === 'inverse';
     const segmentColors = colors || (isInverse || isOverMedia ? DEFAULT_COLORS_INVERSE : DEFAULT_COLORS);
-    const scaleFactor = VIEW_BOX_WIDTH / width;
+    const [width, setWidth] = React.useState<number>(typeof widthProp === 'number' ? widthProp : 0);
+    const scaleFactor = width === 0 ? 1 : VIEW_BOX_WIDTH / width;
     const lineCapRadiusPx = hasRoundLineCaps ? STROKE_WIDTH_PX / 2 : 0;
     const lineCapRadius = lineCapRadiusPx * scaleFactor;
     const strokeWidth = STROKE_WIDTH_PX * scaleFactor;
+    const radius = type === TYPE_LINEAR ? 0 : CENTER_X - strokeWidth / 2;
+    const separation = SEPARATION_PX * scaleFactor;
+
     const maxValue =
         type === TYPE_LINEAR
             ? VIEW_BOX_WIDTH - lineCapRadius * 2
             : type === TYPE_CIRCULAR
-              ? 2 * Math.PI
+              ? Math.PI * 2
               : Math.PI;
-    const radius = type === TYPE_LINEAR ? 0 : CENTER_X - strokeWidth / 2;
-    const separation = SEPARATION_PX * scaleFactor;
+
     const segmentSeparation =
         type === TYPE_LINEAR ? separation / VIEW_BOX_WIDTH : separation / radius / maxValue;
 
@@ -176,12 +182,12 @@ const MeterComponent = ({
           ? vars.colors.barTrackInverse
           : vars.colors.barTrack;
 
-    /**  scale values to the range [0, 1] */
+    //  scale values to the range [0, 1]
     const values = React.useMemo(() => {
-        return valuesFromProps.map((v) => v / MAX_SEGMENT_VALUE);
-    }, [valuesFromProps]);
+        return valuesProp.map((v) => v / MAX_SEGMENT_VALUE);
+    }, [valuesProp]);
 
-    /** the animation starts with these values */
+    // the animation starts with these values
     const initialValuesRef = React.useRef<Array<number>>(
         Array.from({length: values.length}, () => (reverse ? 1 : 0))
     );
@@ -190,8 +196,27 @@ const MeterComponent = ({
         return values.map(() => ({start: 0, end: 0}));
     });
 
-    const firstNonZeroIndex = segments.findIndex((s) => s.end - s.start > SMALL_VALUE_THRESHOLD);
+    // this is to know which are the first and last visible segments, which have special treatments
+    let firstNonZeroIndex = -1;
+    let lastNonZeroIndex = -1;
+    for (let i = 0; i < segments.length; i++) {
+        if (segments[i].end - segments[i].start > SMALL_VALUE_THRESHOLD) {
+            if (firstNonZeroIndex < 0) {
+                firstNonZeroIndex = i;
+            }
+            lastNonZeroIndex = i;
+        }
+    }
+
     const lastSegment: Segment | undefined = segments.at(-1);
+
+    React.useEffect(() => {
+        if (typeof widthProp === 'number') {
+            setWidth(widthProp);
+        } else {
+            setWidth(containerWidth);
+        }
+    }, [widthProp, containerWidth]);
 
     React.useEffect(() => {
         const shouldAnimate = window.matchMedia(`(prefers-reduced-motion: reduce)`).matches !== true;
@@ -235,189 +260,199 @@ const MeterComponent = ({
     const getColor = (index: number) => segmentColors[index % segmentColors.length];
 
     return (
-        <svg
-            viewBox={`0 0 ${VIEW_BOX_WIDTH} ${viewBoxHeight}`}
-            width={width}
-            height={height}
-            style={{transform: `rotate(${type === TYPE_CIRCULAR ? '90deg' : 0})`, display: 'block'}}
-            aria-hidden={ariaHidden}
-            role="meter"
+        <div
+            ref={containerRef}
+            style={{width: widthProp}}
             {...getPrefixedDataAttributes(dataAttributes, 'Meter')}
+            role="meter"
+            aria-label={ariaLabel}
+            aria-valuenow={values.length > 0 ? values[0] : undefined}
+            aria-valuetext={values.length > 0 ? values.map((v, i) => `${i + 1} ${v}`).join(' ') : ''}
+            aria-hidden={ariaHidden}
         >
-            <defs>
-                {hasRoundLineCaps && (
-                    <>
-                        <marker
-                            id="marker-current"
-                            viewBox="0 0 10 10"
-                            markerWidth={1}
-                            markerHeight={1}
-                            orient="auto"
-                            refX={5}
-                            refY={5}
-                        >
-                            <path
-                                // the sub-pixel displacement is to avoid a gap between the marker and the path
-                                d={createPath({x1: 5 - 0.3, y1: 0, x2: 5 - 0.3, y2: 10, radius: 5})}
-                                fill={getColor(values.length - 1)}
-                            />
-                        </marker>
-                        <marker
-                            id="marker-start"
-                            viewBox="0 0 10 10"
-                            markerWidth={1}
-                            markerHeight={1}
-                            orient="auto"
-                            refX={5}
-                            refY={5}
-                        >
-                            <path
-                                // the sub-pixel displacement is to avoid a gap between the marker and the path
-                                d={createPath({
-                                    x1: 5 + 0.3,
-                                    y1: 0,
-                                    x2: 5 + 0.3,
-                                    y2: 10,
-                                    radius: 5,
-                                    clockwise: 0,
-                                })}
-                                fill={getColor(firstNonZeroIndex)}
-                            />
-                        </marker>
-                    </>
-                )}
-                <mask id="mask-bar-track" maskUnits="userSpaceOnUse">
-                    <rect x={0} y={0} width={VIEW_BOX_WIDTH} height={viewBoxHeight} fill="white" />
-                    {firstNonZeroIndex >= 0 && lastSegment && (
+            <svg
+                viewBox={`0 0 ${VIEW_BOX_WIDTH} ${viewBoxHeight}`}
+                style={{
+                    width,
+                    height,
+                    display: 'block',
+                    transform: `rotate(${type === TYPE_CIRCULAR ? '90deg' : 0})`,
+                }}
+                // always hidden
+                aria-hidden="true"
+            >
+                <defs>
+                    {hasRoundLineCaps && (
                         <>
-                            <path
-                                // this path is used to mask the trackbar
-                                stroke="black"
-                                fill="none"
-                                strokeWidth={strokeWidth + separation * 2}
-                                strokeLinecap={type === TYPE_CIRCULAR || !hasRoundLineCaps ? 'butt' : 'round'}
-                                d={createPath({
-                                    x1: getX(0),
-                                    y1: getY(0),
-                                    x2: getX(
-                                        clamp(
-                                            lastSegment.end + (hasRoundLineCaps ? 0 : segmentSeparation),
-                                            0,
-                                            1 - SMALL_VALUE_THRESHOLD
-                                        )
-                                    ),
-                                    y2: getY(
-                                        clamp(
-                                            lastSegment.end + (hasRoundLineCaps ? 0 : segmentSeparation),
-                                            0,
-                                            1 - SMALL_VALUE_THRESHOLD
-                                        )
-                                    ),
-                                    radius,
-                                    largeArchFlag: type === TYPE_CIRCULAR ? lastSegment.end >= 0.5 : 0,
-                                })}
-                            />
-                            {type === TYPE_CIRCULAR && hasRoundLineCaps && (
-                                <circle
-                                    cx={getX(lastSegment.end)}
-                                    cy={getY(lastSegment.end)}
-                                    r={strokeWidth / 2 + separation}
-                                    fill="black"
+                            <marker
+                                id="marker-current"
+                                viewBox="0 0 10 10"
+                                markerWidth={1}
+                                markerHeight={1}
+                                orient="auto"
+                                refX={5}
+                                refY={5}
+                            >
+                                <rect x={4} y={0} width={2} height={10} fill={getColor(lastNonZeroIndex)} />
+                                <path
+                                    d={createPath({x1: 5, y1: 0, x2: 5, y2: 10, radius: 5})}
+                                    fill={getColor(lastNonZeroIndex)}
                                 />
-                            )}
-                            {type === TYPE_CIRCULAR && lastSegment.end <= 0.5 && (
-                                <rect
-                                    x={0}
-                                    y={CENTER_Y + separation}
-                                    width={strokeWidth + separation * 2}
-                                    height={strokeWidth / 2 + separation}
-                                    fill="white"
+                            </marker>
+                            <marker
+                                id="marker-start"
+                                viewBox="0 0 10 10"
+                                markerWidth={1}
+                                markerHeight={1}
+                                orient="auto"
+                                refX={5}
+                                refY={5}
+                            >
+                                <rect x={4} y={0} width={2} height={10} fill={getColor(firstNonZeroIndex)} />
+                                <path
+                                    d={createPath({x1: 5, y1: 0, x2: 5, y2: 10, radius: 5, clockwise: 0})}
+                                    fill={getColor(firstNonZeroIndex)}
                                 />
-                            )}
+                            </marker>
                         </>
                     )}
-                </mask>
-                {type === TYPE_CIRCULAR && (
-                    <mask id="mask-last-segment" maskUnits="userSpaceOnUse">
+                    <mask id="mask-bar-track" maskUnits="userSpaceOnUse">
                         <rect x={0} y={0} width={VIEW_BOX_WIDTH} height={viewBoxHeight} fill="white" />
-                        <path
-                            stroke="black"
-                            strokeWidth={strokeWidth}
-                            fill="none"
-                            d={createPath({
-                                x1: getX(1 - segmentSeparation),
-                                y1: getY(1 - segmentSeparation),
-                                x2: getX(1),
-                                y2: getY(1),
-                                radius,
-                            })}
-                        />
+                        {firstNonZeroIndex >= 0 && lastSegment && (
+                            <>
+                                <path
+                                    // this path is used to mask the trackbar
+                                    stroke="black"
+                                    fill="none"
+                                    strokeWidth={strokeWidth + separation * 2}
+                                    strokeLinecap={
+                                        type === TYPE_CIRCULAR || !hasRoundLineCaps ? 'butt' : 'round'
+                                    }
+                                    d={createPath({
+                                        x1: getX(0),
+                                        y1: getY(0),
+                                        x2: getX(
+                                            clamp(
+                                                lastSegment.end + (hasRoundLineCaps ? 0 : segmentSeparation),
+                                                0,
+                                                1 - SMALL_VALUE_THRESHOLD
+                                            )
+                                        ),
+                                        y2: getY(
+                                            clamp(
+                                                lastSegment.end + (hasRoundLineCaps ? 0 : segmentSeparation),
+                                                0,
+                                                1 - SMALL_VALUE_THRESHOLD
+                                            )
+                                        ),
+                                        radius,
+                                        largeArchFlag: type === TYPE_CIRCULAR ? lastSegment.end >= 0.5 : 0,
+                                    })}
+                                />
+                                {type === TYPE_CIRCULAR && hasRoundLineCaps && (
+                                    // the circular type has butt line caps, so we need to add a circle to the end
+                                    <circle
+                                        cx={getX(lastSegment.end)}
+                                        cy={getY(lastSegment.end)}
+                                        r={strokeWidth / 2 + separation}
+                                        fill="black"
+                                    />
+                                )}
+                                {type === TYPE_CIRCULAR && lastSegment.end <= 0.5 && (
+                                    // small patch to remove the circular mask when the last segment is too near to the start
+                                    <rect
+                                        x={0}
+                                        y={CENTER_Y + separation}
+                                        width={strokeWidth + separation * 2}
+                                        height={strokeWidth / 2 + separation}
+                                        fill="white"
+                                    />
+                                )}
+                            </>
+                        )}
                     </mask>
-                )}
-            </defs>
+                    {type === TYPE_CIRCULAR && (
+                        <mask id="mask-last-segment" maskUnits="userSpaceOnUse">
+                            <rect x={0} y={0} width={VIEW_BOX_WIDTH} height={viewBoxHeight} fill="white" />
+                            <path
+                                stroke="black"
+                                strokeWidth={strokeWidth}
+                                fill="none"
+                                d={createPath({
+                                    x1: getX(1 - segmentSeparation),
+                                    y1: getY(1 - segmentSeparation),
+                                    x2: getX(1),
+                                    y2: getY(1),
+                                    radius,
+                                })}
+                            />
+                        </mask>
+                    )}
+                </defs>
 
-            <path
-                stroke={trackbarColor}
-                opacity={isOverMedia ? 0.5 : 1}
-                fill="none"
-                strokeWidth={strokeWidth}
-                strokeLinecap={type === TYPE_CIRCULAR || !hasRoundLineCaps ? 'butt' : 'round'}
-                d={createPath({
-                    x1: getX(0),
-                    y1: getY(0),
-                    x2: getX(1 - (type === TYPE_CIRCULAR ? segmentSeparation : 0)),
-                    y2: getY(1 - (type === TYPE_CIRCULAR ? segmentSeparation : 0)),
-                    largeArchFlag: 1,
-                    radius,
-                })}
-                mask="url(#mask-bar-track)"
-            />
+                <path
+                    stroke={trackbarColor}
+                    opacity={isOverMedia ? 0.5 : 1}
+                    fill="none"
+                    strokeWidth={strokeWidth}
+                    strokeLinecap={type === TYPE_CIRCULAR || !hasRoundLineCaps ? 'butt' : 'round'}
+                    d={createPath({
+                        x1: getX(0),
+                        y1: getY(0),
+                        x2: getX(1 - (type === TYPE_CIRCULAR ? segmentSeparation : 0)),
+                        y2: getY(1 - (type === TYPE_CIRCULAR ? segmentSeparation : 0)),
+                        largeArchFlag: 1,
+                        radius,
+                    })}
+                    mask="url(#mask-bar-track)"
+                />
 
-            {firstNonZeroIndex >= 0 &&
-                [...segments].reverse().map((segment, reversedIndex) => {
-                    // note that the list is reversed, so the first segment is drawn last
-                    const index = segments.length - 1 - reversedIndex;
-                    const color = getColor(index);
-                    const isFirst = index === firstNonZeroIndex;
-                    const isLast = index === segments.length - 1;
-                    // do not add separation if segment angles are too near to the start
-                    const minValueForSeparation = segmentSeparation * segments.length;
-                    const start =
-                        isFirst || segment.end < minValueForSeparation
-                            ? segment.start
-                            : segment.start + segmentSeparation / 2;
-                    const end =
-                        isLast || segment.end < minValueForSeparation
-                            ? segment.end
-                            : segment.end - segmentSeparation / 2;
+                {firstNonZeroIndex >= 0 &&
+                    [...segments].reverse().map((segment, reversedIndex) => {
+                        // note that the list is reversed, so the first segment is drawn last
+                        const index = segments.length - 1 - reversedIndex;
+                        const color = getColor(index);
+                        const isFirst = index === firstNonZeroIndex;
+                        const isLast = index === lastNonZeroIndex;
+                        const start =
+                            isFirst || segment.end - segment.start < segmentSeparation
+                                ? segment.start
+                                : segment.start + segmentSeparation / 2;
+                        const end =
+                            isLast || segment.end - segment.start < segmentSeparation
+                                ? segment.end
+                                : segment.end - segmentSeparation / 2;
 
-                    if (end <= start || end - start < SMALL_VALUE_THRESHOLD) {
-                        return null;
-                    }
+                        if (end - start < SMALL_VALUE_THRESHOLD) {
+                            return null;
+                        }
 
-                    const shouldIncludeStartMarker = isFirst && type !== TYPE_CIRCULAR;
-                    return (
-                        <path
-                            key={reversedIndex}
-                            stroke={color}
-                            fill="none"
-                            strokeWidth={strokeWidth}
-                            strokeLinecap="butt"
-                            markerEnd={isLast ? 'url(#marker-current)' : undefined}
-                            markerStart={shouldIncludeStartMarker ? 'url(#marker-start)' : undefined}
-                            mask={isLast && type === TYPE_CIRCULAR ? 'url("#mask-last-segment")' : undefined}
-                            d={createPath({
-                                x1: getX(start),
-                                y1: getY(start),
-                                x2: getX(end),
-                                y2: getY(end),
-                                largeArchFlag: type === TYPE_CIRCULAR ? end - start >= 0.5 : 0,
-                                radius,
-                            })}
-                        />
-                    );
-                })}
-        </svg>
+                        const shouldIncludeStartMarker = isFirst && type !== TYPE_CIRCULAR;
+                        return (
+                            <path
+                                key={reversedIndex}
+                                stroke={color}
+                                fill="none"
+                                strokeWidth={strokeWidth}
+                                strokeLinecap="butt"
+                                markerEnd={isLast ? 'url(#marker-current)' : undefined}
+                                markerStart={shouldIncludeStartMarker ? 'url(#marker-start)' : undefined}
+                                mask={
+                                    isLast && type === TYPE_CIRCULAR ? 'url("#mask-last-segment")' : undefined
+                                }
+                                d={createPath({
+                                    x1: getX(start),
+                                    y1: getY(start),
+                                    x2: getX(end),
+                                    y2: getY(end),
+                                    largeArchFlag: type === TYPE_CIRCULAR ? end - start >= 0.5 : 0,
+                                    radius,
+                                })}
+                            />
+                        );
+                    })}
+            </svg>
+        </div>
     );
 };
 
