@@ -2618,7 +2618,7 @@ const navigationBarSnippets = [
                               title="Movistar Plus+"
                               onPress={() => {}}
                               description="Contrata solo TV por 9,99 €"
-                              backgroundImage="https://picsum.photos/1200/1200"
+                              backgroundImage="${imagePlaceholder}"
                             />
                           </GridItem>
                         </Grid>
@@ -2644,7 +2644,7 @@ const navigationBarSnippets = [
                             aspectRatio="1:1"
                             onPress={() => {}}
                             description="Contrata solo TV por 9,99 €"
-                            backgroundImage="https://picsum.photos/1200/1200"
+                            backgroundImage="${imagePlaceholder}"
                           />
                         </Stack>
                       ),
