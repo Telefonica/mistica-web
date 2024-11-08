@@ -200,13 +200,13 @@
     --mistica-line-height-4: 1.5rem;
     --mistica-font-size-5: 1.25rem;
     --mistica-line-height-5: 1.5rem;
-    --mistica-font-weight-5: 500;
+    --mistica-font-weight-5: 400;
     --mistica-font-size-6: 1.5rem;
     --mistica-line-height-6: 2rem;
-    --mistica-font-weight-6: 500;
+    --mistica-font-weight-6: 400;
     --mistica-font-size-7: 1.75rem;
     --mistica-line-height-7: 2rem;
-    --mistica-font-weight-7: 500;
+    --mistica-font-weight-7: 400;
     --mistica-font-size-8: 2rem;
     --mistica-line-height-8: 2.5rem;
     --mistica-font-weight-8: 400;
@@ -218,18 +218,18 @@
     --mistica-font-weight-10: 400;
     --mistica-font-size-cardTitle: 1.25rem;
     --mistica-line-height-cardTitle: 1.5rem;
-    --mistica-font-weight-cardTitle: 500;
-    --mistica-font-weight-button: 500;
+    --mistica-font-weight-cardTitle: 400;
+    --mistica-font-weight-button: 400;
     --mistica-font-size-tabsLabel: 1.125rem;
     --mistica-line-height-tabsLabel: 1.5rem;
-    --mistica-font-weight-tabsLabel: 500;
-    --mistica-font-weight-link: 500;
-    --mistica-font-weight-title1: 500;
-    --mistica-font-weight-title2: 500;
+    --mistica-font-weight-tabsLabel: 400;
+    --mistica-font-weight-link: 400;
+    --mistica-font-weight-title1: 400;
+    --mistica-font-weight-title2: 400;
     --mistica-font-size-title3: 1.125rem;
     --mistica-line-height-title3: 1.5rem;
-    --mistica-font-weight-title3: 500;
-    --mistica-font-weight-indicator: 500;
+    --mistica-font-weight-title3: 400;
+    --mistica-font-weight-indicator: 400;
     --mistica-font-weight-navigationBar: 400;
 }
 
