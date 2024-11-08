@@ -111,7 +111,7 @@ MeterStory.storyName = 'Meter';
 MeterStory.args = {
     type: 'angular',
     reverse: false,
-    ariaLabel: '',
+    ariaLabel: 'Meter example',
     themeVariant: 'default',
     fullWidth: false,
     width: 400,
