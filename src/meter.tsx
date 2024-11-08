@@ -275,7 +275,7 @@ const MeterComponent = ({
 
     const getColor = (index: number) => segmentColors[index % segmentColors.length];
 
-    const totalPercent = Math.round((segments.at(-1)?.end || 0) * 100);
+    const totalPercent = Math.round((lastSegment?.end || 0) * 100);
 
     const valueText =
         values.map((v, i) => `${t(meterSegmentLabel, i + 1, Math.round(v * 100))}`).join(', ') +
