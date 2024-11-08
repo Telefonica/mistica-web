@@ -3,9 +3,31 @@
 
 __metadata:
   version: 6
+  cacheKey: 8
+
+"@telefonica/prettier-config@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "@telefonica/prettier-config@npm:2.0.0"
+  peerDependencies:
+    prettier: ^3.0.0
+  checksum: b7fe4ee936195f26b1b1977236b97ec241afa01b12d72d801272788bf9699cd4b9a6e3feccde86bd88b311335f0cfd39ec0b53a9bb44dacf5c01b5627729f174
+  languageName: node
+  linkType: hard
 
 "generate-design-tokens@workspace:.":
   version: 0.0.0-use.local
   resolution: "generate-design-tokens@workspace:."
+  dependencies:
+    "@telefonica/prettier-config": ^2.0.0
+    prettier: ^3.3.3
   languageName: unknown
   linkType: soft
+
+"prettier@npm:^3.3.3":
+  version: 3.3.3
+  resolution: "prettier@npm:3.3.3"
+  bin:
+    prettier: bin/prettier.cjs
+  checksum: bc8604354805acfdde6106852d14b045bb20827ad76a5ffc2455b71a8257f94de93f17f14e463fe844808d2ccc87248364a5691488a3304f1031326e62d9276e
+  languageName: node
+  linkType: hard
