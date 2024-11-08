@@ -1,21 +1,17 @@
 import {openStoryPage, screen} from '../test-utils';
 
 test.each`
-    component            | inverse  | singleOpen
-    ${'Accordion'}       | ${false} | ${false}
-    ${'Accordion'}       | ${false} | ${true}
-    ${'Accordion'}       | ${true}  | ${false}
-    ${'Accordion'}       | ${true}  | ${true}
-    ${'Boxed accordion'} | ${false} | ${false}
-    ${'Boxed accordion'} | ${false} | ${true}
-    ${'Boxed accordion'} | ${true}  | ${false}
-    ${'Boxed accordion'} | ${true}  | ${true}
-`('$component. inverse($inverse) singleOpen($singleOpen)', async ({component, inverse, singleOpen}) => {
+    overInverse | singleOpen
+    ${false}    | ${false}
+    ${false}    | ${true}
+    ${true}     | ${false}
+    ${true}     | ${true}
+`('Accordion. overInverse($overInverse) singleOpen($singleOpen)', async ({overInverse, singleOpen}) => {
     await openStoryPage({
-        id: `components-accordions--${component.toLowerCase().replace(' ', '-')}-story`,
+        id: 'components-accordions--accordion-story',
         device: 'MOBILE_IOS',
         args: {
-            inverse,
+            overInverse,
             singleOpen,
         },
     });
@@ -23,6 +19,97 @@ test.each`
     const accordion = await screen.findByTestId('accordion');
 
     expect(await accordion.screenshot()).toMatchImageSnapshot();
+
+    await (await screen.findByTestId('accordion-item-1')).click();
+    await (await screen.findByTestId('accordion-item-1')).click();
+    await (await screen.findByTestId('accordion-item-2')).click();
+    await (await screen.findByTestId('accordion-item-4')).click();
+    await (await screen.findByTestId('accordion-item-6')).click();
+
+    expect(await accordion.screenshot()).toMatchImageSnapshot();
+});
+
+test.each`
+    inverse  | overInverse | singleOpen
+    ${false} | ${false}    | ${false}
+    ${false} | ${false}    | ${true}
+    ${false} | ${true}     | ${false}
+    ${false} | ${true}     | ${true}
+    ${true}  | ${false}    | ${false}
+    ${true}  | ${false}    | ${true}
+    ${true}  | ${true}     | ${false}
+    ${true}  | ${true}     | ${true}
+`(
+    'BoxedAccordion. inverse($inverse) overInverse($overInverse) singleOpen($singleOpen)',
+    async ({inverse, overInverse, singleOpen}) => {
+        await openStoryPage({
+            id: 'components-accordions--boxed-accordion-story',
+            device: 'MOBILE_IOS',
+            args: {
+                inverse,
+                overInverse,
+                singleOpen,
+            },
+        });
+
+        const accordion = await screen.findByTestId('accordion');
+
+        expect(await accordion.screenshot()).toMatchImageSnapshot();
+
+        await (await screen.findByTestId('accordion-item-1')).click();
+        await (await screen.findByTestId('accordion-item-1')).click();
+        await (await screen.findByTestId('accordion-item-2')).click();
+        await (await screen.findByTestId('accordion-item-4')).click();
+        await (await screen.findByTestId('accordion-item-6')).click();
+
+        expect(await accordion.screenshot()).toMatchImageSnapshot();
+    }
+);
+
+test.each`
+    detail      | right
+    ${''}       | ${false}
+    ${''}       | ${true}
+    ${'Detail'} | ${false}
+    ${'Detail'} | ${true}
+`('Accordion. detail($detail) right($right)', async ({detail, right}) => {
+    await openStoryPage({
+        id: 'components-accordions--accordion-story',
+        device: 'MOBILE_IOS',
+        args: {
+            detail,
+            right,
+        },
+    });
+
+    const accordion = await screen.findByTestId('accordion');
+
+    await (await screen.findByTestId('accordion-item-1')).click();
+    await (await screen.findByTestId('accordion-item-1')).click();
+    await (await screen.findByTestId('accordion-item-2')).click();
+    await (await screen.findByTestId('accordion-item-4')).click();
+    await (await screen.findByTestId('accordion-item-6')).click();
+
+    expect(await accordion.screenshot()).toMatchImageSnapshot();
+});
+
+test.each`
+    detail      | right
+    ${''}       | ${false}
+    ${''}       | ${true}
+    ${'Detail'} | ${false}
+    ${'Detail'} | ${true}
+`('BoxedAccordion. detail($detail) right($right)', async ({detail, right}) => {
+    await openStoryPage({
+        id: 'components-accordions--boxed-accordion-story',
+        device: 'MOBILE_IOS',
+        args: {
+            detail,
+            right,
+        },
+    });
+
+    const accordion = await screen.findByTestId('accordion');
 
     await (await screen.findByTestId('accordion-item-1')).click();
     await (await screen.findByTestId('accordion-item-1')).click();

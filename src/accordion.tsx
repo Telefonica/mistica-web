@@ -14,6 +14,7 @@ import {Boxed} from './boxed';
 import {useIsInverseOrMediaVariant} from './theme-variant-context';
 import {CSSTransition} from 'react-transition-group';
 import {isRunningAcceptanceTest} from './utils/platform';
+import Inline from './inline';
 
 import type {ExclusifyUnion} from './utils/utility-types';
 import type {DataAttributes, TrackingEvent} from './utils/types';
@@ -43,6 +44,8 @@ interface AccordionItemContentProps {
     dataAttributes?: DataAttributes;
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
     role?: string;
+    detail?: string;
+    right?: React.ReactNode;
 }
 
 const useAccordionState = ({
@@ -119,7 +122,7 @@ const getAccordionItemIndex = (element: Element | null) => {
 };
 
 const AccordionItemContent = React.forwardRef<TouchableElement, AccordionItemContentProps>(
-    ({content, dataAttributes, trackingEvent, ...props}, ref) => {
+    ({content, dataAttributes, trackingEvent, right, ...props}, ref) => {
         const panelContainerRef = React.useRef<HTMLDivElement | null>(null);
         const itemRef = React.useRef<HTMLDivElement | null>(null);
         const {index, toggle} = useAccordionContext();
@@ -152,23 +155,32 @@ const AccordionItemContent = React.forwardRef<TouchableElement, AccordionItemCon
                     <Box paddingX={16}>
                         <HeaderContent
                             labelId={labelId}
-                            {...props}
-                            right={
-                                <div className={styles.chevronContainer}>
-                                    <IconChevron
-                                        size={24}
-                                        transitionDuration={ACCORDION_TRANSITION_DURATION_IN_MS}
-                                        direction={isOpen ? 'up' : 'down'}
-                                        color={
-                                            isInverse
-                                                ? skinVars.colors.inverse
-                                                : isOpen
-                                                  ? skinVars.colors.neutralHigh
-                                                  : skinVars.colors.neutralMedium
-                                        }
-                                    />
-                                </div>
-                            }
+                            {...{
+                                ...props,
+                                right: ({centerY}) => (
+                                    <Inline
+                                        space={4}
+                                        alignItems={centerY ? 'center' : undefined}
+                                        className={styles.rightContentContainer}
+                                    >
+                                        {right}
+                                        <div className={styles.chevronContainer}>
+                                            <IconChevron
+                                                size={24}
+                                                transitionDuration={ACCORDION_TRANSITION_DURATION_IN_MS}
+                                                direction={isOpen ? 'up' : 'down'}
+                                                color={
+                                                    isInverse
+                                                        ? skinVars.colors.inverse
+                                                        : isOpen
+                                                          ? skinVars.colors.neutralHigh
+                                                          : skinVars.colors.neutralMedium
+                                                }
+                                            />
+                                        </div>
+                                    </Inline>
+                                ),
+                            }}
                         />
                     </Box>
                 </BaseTouchable>
