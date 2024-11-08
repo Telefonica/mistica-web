@@ -131,6 +131,7 @@ type MeterProps = {
     dataAttributes?: DataAttributes;
     'aria-hidden'?: boolean | 'true' | 'false';
     'aria-label'?: string;
+    'aria-labelledby'?: string;
 };
 
 const MeterComponent = ({
@@ -142,6 +143,7 @@ const MeterComponent = ({
     dataAttributes,
     'aria-hidden': ariaHidden = false,
     'aria-label': ariaLabel,
+    'aria-labelledby': ariaLabelledBy,
 }: MeterProps): JSX.Element => {
     const {borderRadii, t} = useTheme();
     const {ref: containerRef, width: containerWidth} = useElementDimensions();
@@ -275,22 +277,23 @@ const MeterComponent = ({
 
     const totalPercent = Math.round((segments.at(-1)?.end || 0) * 100);
 
+    const valueText =
+        values.map((v, i) => `${t(meterSegmentLabel, i + 1, Math.round(v * 100))}`).join(', ') +
+        `, ${t(meterPercentageLabel, totalPercent)}`;
+
     return (
         <div
             ref={containerRef}
             style={{width: widthProp}}
             {...getPrefixedDataAttributes(dataAttributes, 'Meter')}
             role="meter"
-            aria-label={ariaLabel}
+            aria-label={ariaLabel || (ariaLabelledBy ? undefined : valueText)}
+            aria-labelledby={ariaLabelledBy}
             aria-valuenow={totalPercent}
             aria-valuemin={0}
             aria-valuemax={100}
             aria-live="polite"
-            aria-valuetext={
-                ariaLabel ||
-                values.map((v, i) => `${t(meterSegmentLabel, i + 1, Math.round(v * 100))}`).join(', ') +
-                    `, ${t(meterPercentageLabel, totalPercent)}`
-            }
+            aria-valuetext={valueText}
             aria-hidden={ariaHidden}
         >
             <svg
