@@ -7,9 +7,10 @@ import bezier from 'cubic-bezier';
 import {getPrefixedDataAttributes} from './utils/dom';
 import {useThemeVariant} from './theme-variant-context';
 import {useElementDimensions, useTheme} from './hooks';
+import {meterPercentageLabel, meterSegmentLabel} from './text-tokens';
+import {isRunningAcceptanceTest} from './utils/platform';
 
 import type {DataAttributes} from './utils/types';
-import {meterPercentageLabel, meterSegmentLabel} from './text-tokens';
 
 const VIEW_BOX_WIDTH = 100;
 const CENTER_X = VIEW_BOX_WIDTH / 2;
@@ -157,6 +158,19 @@ const MeterComponent = ({
     const radius = type === TYPE_LINEAR ? 0 : CENTER_X - strokeWidth / 2;
     const separation = SEPARATION_PX * scaleFactor;
 
+    const id = React.useId();
+    const markerCurrentId = `marker-current-${id}`;
+    const markerStartId = `marker-start-${id}`;
+    const maskLastSegmentId = `mask-last-segment-${id}`;
+    const maskBarTrackId = `mask-bar-track-${id}`;
+
+    const shouldAnimate = React.useMemo(() => {
+        return (
+            window.matchMedia(`(prefers-reduced-motion: reduce)`).matches !== true &&
+            !isRunningAcceptanceTest()
+        );
+    }, []);
+
     const maxValue =
         type === TYPE_LINEAR
             ? VIEW_BOX_WIDTH - lineCapRadius * 2
@@ -220,7 +234,6 @@ const MeterComponent = ({
     }, [widthProp, containerWidth]);
 
     React.useEffect(() => {
-        const shouldAnimate = window.matchMedia(`(prefers-reduced-motion: reduce)`).matches !== true;
         let raf: number;
         const start = performance.now();
         const end = start + ANIMATION_DURATION_MS + ANIMATION_DELAY_MS * (values.length - 1);
@@ -242,7 +255,7 @@ const MeterComponent = ({
             // animation was cancelled, snapshot current values
             initialValuesRef.current = currentSegments.map((s) => s.end - s.start);
         };
-    }, [radius, values, type, reverse]);
+    }, [radius, values, type, reverse, shouldAnimate]);
 
     const getX = React.useCallback(
         (value: number) =>
@@ -295,7 +308,7 @@ const MeterComponent = ({
                     {hasRoundLineCaps && (
                         <>
                             <marker
-                                id="marker-current"
+                                id={markerCurrentId}
                                 viewBox="0 0 10 10"
                                 markerWidth={1}
                                 markerHeight={1}
@@ -310,7 +323,7 @@ const MeterComponent = ({
                                 />
                             </marker>
                             <marker
-                                id="marker-start"
+                                id={markerStartId}
                                 viewBox="0 0 10 10"
                                 markerWidth={1}
                                 markerHeight={1}
@@ -326,7 +339,7 @@ const MeterComponent = ({
                             </marker>
                         </>
                     )}
-                    <mask id="mask-bar-track" maskUnits="userSpaceOnUse">
+                    <mask id={maskBarTrackId} maskUnits="userSpaceOnUse">
                         <rect x={0} y={0} width={VIEW_BOX_WIDTH} height={viewBoxHeight} fill="white" />
                         {firstNonZeroIndex >= 0 && lastSegment && (
                             <>
@@ -382,7 +395,7 @@ const MeterComponent = ({
                         )}
                     </mask>
                     {type === TYPE_CIRCULAR && (
-                        <mask id="mask-last-segment" maskUnits="userSpaceOnUse">
+                        <mask id={maskLastSegmentId} maskUnits="userSpaceOnUse">
                             <rect x={0} y={0} width={VIEW_BOX_WIDTH} height={viewBoxHeight} fill="white" />
                             <path
                                 stroke="black"
@@ -414,7 +427,7 @@ const MeterComponent = ({
                         largeArchFlag: 1,
                         radius,
                     })}
-                    mask="url(#mask-bar-track)"
+                    mask={`url("#${maskBarTrackId}")`}
                 />
 
                 {firstNonZeroIndex >= 0 &&
@@ -445,10 +458,12 @@ const MeterComponent = ({
                                 fill="none"
                                 strokeWidth={strokeWidth}
                                 strokeLinecap="butt"
-                                markerEnd={isLast ? 'url(#marker-current)' : undefined}
-                                markerStart={shouldIncludeStartMarker ? 'url(#marker-start)' : undefined}
+                                markerEnd={isLast ? `url(#${markerCurrentId})` : undefined}
+                                markerStart={shouldIncludeStartMarker ? `url(#${markerStartId})` : undefined}
                                 mask={
-                                    isLast && type === TYPE_CIRCULAR ? 'url("#mask-last-segment")' : undefined
+                                    isLast && type === TYPE_CIRCULAR
+                                        ? `url("#${maskLastSegmentId}")`
+                                        : undefined
                                 }
                                 d={createPath({
                                     x1: getX(start),

@@ -51,6 +51,7 @@ import {
     Placeholder,
     NegativeBox,
     IconInvoicePlanFileRegular,
+    Meter,
 } from '..';
 import avatarImg from '../__stories__/images/avatar.jpg';
 import usingVrImg from '../__stories__/images/using-vr.jpg';
@@ -314,6 +315,13 @@ export const Default: StoryComponent<Args> = ({variant}) => {
                             aria-label="label"
                             steps={['First', 'Second', 'Third', 'Fourth', 'Fifth']}
                         />
+
+                        {/** Meter */}
+                        <Inline space={16}>
+                            <Meter width={200} type="linear" values={[30, 30, 0]} />
+                            <Meter width={200} type="angular" values={[30, 30, 0]} />
+                            <Meter width={200} type="circular" values={[30, 30, 0]} />
+                        </Inline>
 
                         {/** TextLink */}
                         <TextLink onPress={() => {}}>This is a text link</TextLink>
