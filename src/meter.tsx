@@ -285,7 +285,6 @@ const MeterComponent = ({
         <div
             ref={containerRef}
             style={{width: widthProp}}
-            {...getPrefixedDataAttributes(dataAttributes, 'Meter')}
             role="meter"
             aria-label={ariaLabel || (ariaLabelledBy ? undefined : valueText)}
             aria-labelledby={ariaLabelledBy}
@@ -295,6 +294,7 @@ const MeterComponent = ({
             aria-live="polite"
             aria-valuetext={valueText}
             aria-hidden={ariaHidden}
+            {...getPrefixedDataAttributes(dataAttributes, 'Meter')}
         >
             <svg
                 viewBox={`0 0 ${VIEW_BOX_WIDTH} ${viewBoxHeight}`}
