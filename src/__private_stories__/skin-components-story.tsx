@@ -318,9 +318,24 @@ export const Default: StoryComponent<Args> = ({variant}) => {
 
                         {/** Meter */}
                         <Inline space={16}>
-                            <Meter width={200} type="linear" values={[30, 30, 0]} />
-                            <Meter width={200} type="angular" values={[30, 30, 0]} />
-                            <Meter width={200} type="circular" values={[30, 30, 0]} />
+                            <Meter
+                                width={200}
+                                type="linear"
+                                values={[30, 30, 0]}
+                                arial-label="linear meter"
+                            />
+                            <Meter
+                                width={200}
+                                type="angular"
+                                values={[30, 30, 0]}
+                                arial-label="angular meter"
+                            />
+                            <Meter
+                                width={200}
+                                type="circular"
+                                values={[30, 30, 0]}
+                                arial-label="circular meter"
+                            />
                         </Inline>
 
                         {/** TextLink */}
