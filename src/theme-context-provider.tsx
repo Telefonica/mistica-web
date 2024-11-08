@@ -137,7 +137,7 @@ const ThemeContextProvider = ({theme, children, as, withoutStyles = false}: Prop
             const text = token[language] || token.en;
             // replace token parameters: 1$s, 2$s, 3$s, etc.
             return text.replace(/\d+\$s/g, (substr) => {
-                return String(params[parseInt(substr) - 1] || '');
+                return String(params[parseInt(substr) - 1] ?? substr);
             });
         },
         [language]
