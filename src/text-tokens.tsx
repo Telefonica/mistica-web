@@ -556,3 +556,24 @@ export const ratingQuantitativeLabel: TextToken = {
     de: '1$s von 2$s',
     pt: '1$s de 2$s',
 };
+
+/**
+ * 1$s: segment number
+ * 2$s: segment percentage value
+ */
+export const meterSegmentLabel: TextToken = {
+    es: 'Segmento 1$s 2$s%',
+    en: 'Segment 1$s 2$s%',
+    de: 'Segment 1$s 2$s%',
+    pt: 'Segmento 1$s 2$s%',
+};
+
+/**
+ * 1$s: percentage value
+ */
+export const meterPercentageLabel: TextToken = {
+    es: '1$s% de 0% a 100%',
+    en: '1$s% from 0% to 100%',
+    de: '1$s% von 0% bis 100%',
+    pt: '1$s% de 0% a 100%',
+};

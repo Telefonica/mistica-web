@@ -58,6 +58,7 @@ export default {
 type MeterStoryArgs = {
     type: MeterType;
     reverse: boolean;
+    ariaLabel: string;
     themeVariant: 'default' | 'inverse' | 'media';
     fullWidth: boolean;
     width: number;
@@ -79,6 +80,7 @@ export const MeterStory: StoryComponent<MeterStoryArgs> = ({
     valuesCount,
     fullWidth,
     width,
+    ariaLabel,
     ...valuesArgs
 }) => {
     const values = Object.values(valuesArgs).slice(0, valuesCount);
@@ -92,7 +94,13 @@ export const MeterStory: StoryComponent<MeterStoryArgs> = ({
         >
             <ResponsiveLayout variant={themeVariant} fullWidth>
                 <Box padding={16}>
-                    <Meter type={type} reverse={reverse} values={values} width={fullWidth ? '100%' : width} />
+                    <Meter
+                        aria-label={ariaLabel || undefined}
+                        type={type}
+                        reverse={reverse}
+                        values={values}
+                        width={fullWidth ? '100%' : width}
+                    />
                 </Box>
             </ResponsiveLayout>
         </div>
@@ -103,6 +111,7 @@ MeterStory.storyName = 'Meter';
 MeterStory.args = {
     type: 'angular',
     reverse: false,
+    ariaLabel: '',
     themeVariant: 'default',
     fullWidth: false,
     width: 400,

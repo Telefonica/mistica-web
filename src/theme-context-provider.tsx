@@ -134,10 +134,10 @@ const ThemeContextProvider = ({theme, children, as, withoutStyles = false}: Prop
 
     const translate = React.useCallback(
         (token: TextToken, ...params: Array<string | number>): string => {
-            const text = token[language] || token.en;
+            let text = token[language] || token.en;
             // reverse loop because we want to substitute 11$s before 1$s
             for (let i = params.length - 1; i >= 0; i--) {
-                text.replaceAll(`${i + 1}$s`, String(params[i]));
+                text = text.replaceAll(`${i + 1}$s`, String(params[i]));
             }
             return text;
         },

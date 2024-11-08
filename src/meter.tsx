@@ -9,6 +9,7 @@ import {useThemeVariant} from './theme-variant-context';
 import {useElementDimensions, useTheme} from './hooks';
 
 import type {DataAttributes} from './utils/types';
+import {meterPercentageLabel, meterSegmentLabel} from './text-tokens';
 
 const VIEW_BOX_WIDTH = 100;
 const CENTER_X = VIEW_BOX_WIDTH / 2;
@@ -259,6 +260,8 @@ const MeterComponent = ({
 
     const getColor = (index: number) => segmentColors[index % segmentColors.length];
 
+    const totalPercent = Math.round((segments.at(-1)?.end || 0) * 100);
+
     return (
         <div
             ref={containerRef}
@@ -266,8 +269,15 @@ const MeterComponent = ({
             {...getPrefixedDataAttributes(dataAttributes, 'Meter')}
             role="meter"
             aria-label={ariaLabel}
-            aria-valuenow={values.length > 0 ? values[0] : undefined}
-            aria-valuetext={values.length > 0 ? values.map((v, i) => `${i + 1} ${v}`).join(' ') : ''}
+            aria-valuenow={totalPercent}
+            aria-valuemin={0}
+            aria-valuemax={100}
+            aria-live="polite"
+            aria-valuetext={
+                ariaLabel ||
+                values.map((v, i) => `${t(meterSegmentLabel, i + 1, Math.round(v * 100))}`).join(', ') +
+                    `, ${t(meterPercentageLabel, totalPercent)}`
+            }
             aria-hidden={ariaHidden}
         >
             <svg
