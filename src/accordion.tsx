@@ -155,32 +155,30 @@ const AccordionItemContent = React.forwardRef<TouchableElement, AccordionItemCon
                     <Box paddingX={16}>
                         <HeaderContent
                             labelId={labelId}
-                            {...{
-                                ...props,
-                                right: ({centerY}) => (
-                                    <Inline
-                                        space={4}
-                                        alignItems={centerY ? 'center' : undefined}
-                                        className={styles.rightContentContainer}
-                                    >
-                                        {right}
-                                        <div className={styles.chevronContainer}>
-                                            <IconChevron
-                                                size={24}
-                                                transitionDuration={ACCORDION_TRANSITION_DURATION_IN_MS}
-                                                direction={isOpen ? 'up' : 'down'}
-                                                color={
-                                                    isInverse
-                                                        ? skinVars.colors.inverse
-                                                        : isOpen
-                                                          ? skinVars.colors.neutralHigh
-                                                          : skinVars.colors.neutralMedium
-                                                }
-                                            />
-                                        </div>
-                                    </Inline>
-                                ),
-                            }}
+                            {...props}
+                            right={({centerY}) => (
+                                <Inline
+                                    space={4}
+                                    alignItems={centerY ? 'center' : undefined}
+                                    className={styles.rightContentContainer}
+                                >
+                                    {right}
+                                    <div className={styles.chevronContainer}>
+                                        <IconChevron
+                                            size={24}
+                                            transitionDuration={ACCORDION_TRANSITION_DURATION_IN_MS}
+                                            direction={isOpen ? 'up' : 'down'}
+                                            color={
+                                                isInverse
+                                                    ? skinVars.colors.inverse
+                                                    : isOpen
+                                                      ? skinVars.colors.neutralHigh
+                                                      : skinVars.colors.neutralMedium
+                                            }
+                                        />
+                                    </div>
+                                </Inline>
+                            )}
                         />
                     </Box>
                 </BaseTouchable>
