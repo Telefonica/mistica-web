@@ -85,9 +85,11 @@ export const Header = ({
                 <Box paddingRight={16}>
                     {/** using flex instead of nested Stacks, this way we can rearrange texts so the DOM structure makes more sense for screen reader users */}
                     <div className={styles.flexColumn}>
-                        <div style={{paddingBottom: pretitle || title || description ? 8 : 0}}>
-                            {headline}
-                        </div>
+                        {headline && (
+                            <div style={{paddingBottom: pretitle || title || description ? 8 : 0}}>
+                                {headline}
+                            </div>
+                        )}
 
                         {isBiggerHeading(titleAs, pretitleAs) ? (
                             <>
