@@ -14,3 +14,10 @@ export type IconProps = {
 export type ByBreakpoint<T> = T | {mobile: T; tablet?: T; desktop: T};
 
 export type HeadingType = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'span';
+
+export const isBiggerHeading = (heading: HeadingType, otherHeading?: HeadingType): boolean => {
+    if (!otherHeading) {
+        return true;
+    }
+    return heading !== 'span' && (otherHeading === 'span' || heading < otherHeading);
+};
