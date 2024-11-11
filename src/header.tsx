@@ -198,7 +198,7 @@ export const HeaderLayout = ({
 
     return (
         <div {...getPrefixedDataAttributes({'component-name': 'HeaderLayout', ...dataAttributes})}>
-            <ResponsiveLayout variant={isInverse ? 'inverse' : 'default'}>
+            <ResponsiveLayout variant={isInverse ? 'inverse' : undefined}>
                 <Box
                     paddingTop={
                         noPaddingY
@@ -257,7 +257,7 @@ export const MainSectionHeaderLayout = ({
     useSetOverscrollColor(isInverse ? {topColor: vars.colors.backgroundBrandTop} : {});
     return (
         <ResponsiveLayout
-            variant={isInverse ? 'inverse' : 'default'}
+            variant={isInverse ? 'inverse' : undefined}
             dataAttributes={{'component-name': 'MainSectionHeaderLayout', ...dataAttributes}}
         >
             <GridLayout
