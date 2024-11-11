@@ -837,7 +837,8 @@ const MainNavigationBarDesktopMenuContent = ({
             // If menu is opening, trigger the fade-in effect for current section
             if (menuStatus === 'opening') {
                 setIsContentVisible(false);
-                setTimeout(() => setIsContentVisible(true), 0);
+                const id = requestAnimationFrame(() => setIsContentVisible(true));
+                return () => cancelAnimationFrame(id);
             } else {
                 setIsContentVisible(true);
             }
