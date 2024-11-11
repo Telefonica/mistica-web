@@ -57,3 +57,8 @@ export const expandedContent = style({
     flexDirection: 'column',
     flex: 1,
 });
+
+export const flexColumn = sprinkles({
+    display: 'flex',
+    flexDirection: 'column',
+});

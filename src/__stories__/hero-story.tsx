@@ -4,6 +4,7 @@ import usingVrImg from './images/using-vr.jpg';
 import beachImg from './images/beach.jpg';
 import beachVideo from './videos/beach.mp4';
 
+import type {HeadingType} from '../utils/types';
 import type {TagType} from '..';
 import type {AspectRatio} from '../video';
 
@@ -19,7 +20,9 @@ type HeroArgs = {
     headlineType: TagType;
     headline: string;
     pretitle: string;
+    pretitleAs: HeadingType;
     title: string;
+    titleAs: HeadingType;
     description: string;
     extra: boolean;
     actions: 'button' | 'link' | 'button and link';
@@ -36,7 +39,9 @@ export const Default: StoryComponent<HeroArgs> = ({
     headline,
     headlineType,
     pretitle,
+    pretitleAs,
     title,
+    titleAs,
     description,
     actions,
     desktopMediaPosition,
@@ -65,7 +70,9 @@ export const Default: StoryComponent<HeroArgs> = ({
             media={mediaComponent}
             headline={headline ? <Tag type={headlineType}>{headline}</Tag> : undefined}
             pretitle={pretitle}
+            pretitleAs={pretitleAs}
             title={title}
+            titleAs={titleAs}
             description={description}
             extra={extra ? <Placeholder /> : undefined}
             button={button}
@@ -85,7 +92,9 @@ Default.args = {
     headlineType: 'promo',
     headline: 'Hero',
     pretitle: 'Pretitle',
+    pretitleAs: 'span',
     title: 'Title',
+    titleAs: 'h1',
     description: 'This is a long description with a long text to see how this works',
     extra: false,
     actions: 'button and link',
@@ -127,5 +136,13 @@ Default.argTypes = {
                 '4 3': '4:3',
             },
         },
+    },
+    pretitleAs: {
+        options: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'span'],
+        control: {type: 'select'},
+    },
+    titleAs: {
+        options: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'span'],
+        control: {type: 'select'},
     },
 };

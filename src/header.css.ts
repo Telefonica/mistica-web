@@ -24,7 +24,7 @@ export const hideOnDesktop = style({
     },
 });
 
-export const flexColumn = style({
+export const flexColumn = sprinkles({
     display: 'flex',
     flexDirection: 'column',
 });
