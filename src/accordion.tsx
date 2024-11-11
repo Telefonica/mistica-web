@@ -46,6 +46,8 @@ interface AccordionItemContentProps {
     role?: string;
     detail?: string;
     right?: React.ReactNode;
+    'aria-label'?: string;
+    'aria-labelledby'?: string;
 }
 
 const useAccordionState = ({
@@ -122,7 +124,18 @@ const getAccordionItemIndex = (element: Element | null) => {
 };
 
 const AccordionItemContent = React.forwardRef<TouchableElement, AccordionItemContentProps>(
-    ({content, dataAttributes, trackingEvent, right, ...props}, ref) => {
+    (
+        {
+            content,
+            dataAttributes,
+            trackingEvent,
+            right,
+            'aria-label': ariaLabel,
+            'aria-labelledby': ariaLabelledby,
+            ...props
+        },
+        ref
+    ) => {
         const panelContainerRef = React.useRef<HTMLDivElement | null>(null);
         const itemRef = React.useRef<HTMLDivElement | null>(null);
         const {index, toggle} = useAccordionContext();
@@ -151,6 +164,8 @@ const AccordionItemContent = React.forwardRef<TouchableElement, AccordionItemCon
                     trackingEvent={trackingEvent}
                     aria-expanded={isOpen}
                     aria-controls={panelId}
+                    aria-label={ariaLabel}
+                    aria-labelledby={ariaLabelledby}
                 >
                     <Box paddingX={16}>
                         <HeaderContent
@@ -282,7 +297,7 @@ interface BoxedAccordionItemProps extends AccordionItemContentProps {
 export const BoxedAccordionItem = React.forwardRef<HTMLDivElement, BoxedAccordionItemProps>(
     ({dataAttributes, isInverse, ...props}, ref) => (
         <Boxed
-            isInverse={isInverse}
+            variant={isInverse ? 'inverse' : 'default'}
             ref={ref}
             dataAttributes={{'component-name': 'BoxedAccordionItem', ...dataAttributes}}
         >
