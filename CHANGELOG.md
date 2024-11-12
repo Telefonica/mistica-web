@@ -1,3 +1,28 @@
+# [16.4.0](https://github.com/Telefonica/mistica-web/compare/v16.3.1...v16.4.0) (2024-11-04)
+
+
+### Bug Fixes
+
+* **TextField:** adjust position of maxLength's screen reader label ([#1283](https://github.com/Telefonica/mistica-web/issues/1283)) ([fda424e](https://github.com/Telefonica/mistica-web/commit/fda424e2874328be37a5566e57d0d3b87518b483))
+* **TextField:** avoid right helper text from wrapping, fix spacing and aria label for maxCount text when multiline is true ([#1272](https://github.com/Telefonica/mistica-web/issues/1272)) ([85fcb31](https://github.com/Telefonica/mistica-web/commit/85fcb31caf82bca1cf41bf87d60a978d06d0c611))
+* **useDisableBodyScroll:** avoid affecting body's height ([#1279](https://github.com/Telefonica/mistica-web/issues/1279)) ([b68f317](https://github.com/Telefonica/mistica-web/commit/b68f317a1e0da272c227d11bfba8dc41bf448223))
+
+
+### Features
+
+* **PhoneNumberFieldLite:** Phone number field with simple formatting to reduce bundle size ([#1276](https://github.com/Telefonica/mistica-web/issues/1276)) ([a141b97](https://github.com/Telefonica/mistica-web/commit/a141b97e600efb30e37167990cb1b7ae23f16352))
+* **Row:** allow aria-label in informative rows ([#1269](https://github.com/Telefonica/mistica-web/issues/1269)) ([65b5d42](https://github.com/Telefonica/mistica-web/commit/65b5d4232a19c481535d65e7aa98aa6040918e61))
+* **Rows, Cards, FeedbackScreen, FormFields, Buttons:** add test ids for components and their internal elements ([#1270](https://github.com/Telefonica/mistica-web/issues/1270)) ([fc63201](https://github.com/Telefonica/mistica-web/commit/fc632019375e5b124fbf75d1a399b9ec4c05422d))
+* **Spinner:** improve a11y ([#1274](https://github.com/Telefonica/mistica-web/issues/1274)) ([5267ad5](https://github.com/Telefonica/mistica-web/commit/5267ad5c1a579e3e8aa9f1587356016426f426f0))
+* **Switch, RadioButton, Checkbox, ProgressBar, ProgressBarStepped, Slider:** create inverse variant ([#1277](https://github.com/Telefonica/mistica-web/issues/1277)) ([3129fb9](https://github.com/Telefonica/mistica-web/commit/3129fb9edc12a6b0be23e648053388a775fc34d7))
+
+## [16.3.1](https://github.com/Telefonica/mistica-web/compare/v16.3.0...v16.3.1) (2024-10-21)
+
+
+### Bug Fixes
+
+* **AdvancedDataCard:** make container of extra content expand to fit container's width ([#1275](https://github.com/Telefonica/mistica-web/issues/1275)) ([486c605](https://github.com/Telefonica/mistica-web/commit/486c605934ee80413b829395eac914ed385763c1))
+
 # [16.3.0](https://github.com/Telefonica/mistica-web/compare/v16.2.0...v16.3.0) (2024-10-16)
 
 

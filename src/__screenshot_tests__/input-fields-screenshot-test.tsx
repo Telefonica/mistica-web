@@ -65,6 +65,24 @@ test('TextField - multiline and maxLength', async () => {
     expect(image).toMatchImageSnapshot();
 });
 
+test('TextField - multiline and maxLength with long helperText', async () => {
+    await openStoryPage({
+        id: 'components-input-fields-textfield--uncontrolled',
+        device: 'MOBILE_IOS',
+        args: {
+            defaultValue: '',
+            maxLength: true,
+            multiline: true,
+            helperText: 'This is a very long helper text to test that the maxLength text is not wrapping',
+        },
+    });
+
+    const fieldWrapper = await screen.findByTestId('text-field');
+    const image = await fieldWrapper.screenshot();
+
+    expect(image).toMatchImageSnapshot();
+});
+
 test('TextField - long label', async () => {
     await openStoryPage({
         id: 'components-input-fields-textfield--uncontrolled',
@@ -495,6 +513,28 @@ test.each`
     });
 
     const fieldWrapper = await screen.findByTestId('phone-number-field');
+    const field = await screen.findByLabelText('Label');
+
+    await field.click({clickCount: 3});
+    await field.type(number);
+
+    expect(await fieldWrapper.screenshot()).toMatchImageSnapshot();
+});
+
+test.each`
+    skin          | number
+    ${'Vivo'}     | ${'2145678901'}
+    ${'Vivo'}     | ${'+34654834455'}
+    ${'Movistar'} | ${'654834455'}
+`('PhoneNumberFieldLite - $number in $skin skin', async ({skin, number}) => {
+    await openStoryPage({
+        id: 'components-input-fields-phonenumberfieldlite--uncontrolled',
+        device: 'MOBILE_IOS',
+        skin,
+        args: {defaultValue: number},
+    });
+
+    const fieldWrapper = await screen.findByTestId('phone-number-field-lite');
     const field = await screen.findByLabelText('Label');
 
     await field.click({clickCount: 3});

@@ -20,12 +20,11 @@ type InputProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'value' | 'o
     defaultValue?: string;
     onInput?: (event: React.FormEvent<HTMLInputElement>) => void;
     prefix?: string;
-    e164?: boolean;
 };
 
 const isValidPrefix = (prefix: string): boolean => !!prefix.match(/^\+\d+$/);
 
-const PhoneInput = ({inputRef, value, defaultValue, onChange, prefix, e164, ...other}: InputProps) => {
+const PhoneInput = ({inputRef, value, defaultValue, onChange, prefix, ...other}: InputProps) => {
     const [selfValue, setSelfValue] = React.useState(defaultValue ?? '');
     const ref = React.useRef<HTMLInputElement | null>(null);
     const {i18n} = useTheme();
@@ -158,7 +157,11 @@ const PhoneNumberField = ({
             type="phone"
             inputProps={{prefix: rest.prefix}}
             inputComponent={PhoneInput}
-            dataAttributes={{'component-name': 'PhoneNumberField', ...dataAttributes}}
+            dataAttributes={{
+                'component-name': 'PhoneNumberField',
+                testid: 'PhoneNumberField',
+                ...dataAttributes,
+            }}
         />
     );
 };

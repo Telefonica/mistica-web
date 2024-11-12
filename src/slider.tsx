@@ -10,6 +10,7 @@ import Tooltip from './tooltip';
 import Box from './box';
 import {useControlProps} from './form-context';
 import {combineRefs} from './utils/common';
+import {useIsInverseVariant} from './theme-variant-context';
 
 import type {ExclusifyUnion} from './utils/utility-types';
 import type {DataAttributes} from './utils/types';
@@ -178,6 +179,8 @@ const Slider = React.forwardRef<HTMLInputElement, SliderProps>(
         const [isThumbHovered, setIsThumbHovered] = React.useState(false);
         const [isFocused, setIsFocused] = React.useState(false);
         const {isIos} = useTheme();
+        const isInverse = useIsInverseVariant();
+        const thumbVariant = isInverse ? 'inverse' : 'default';
 
         const isPointerOverElement = (element: HTMLElement | null, x: number, y: number) => {
             const box = element?.getBoundingClientRect();
@@ -235,9 +238,9 @@ const Slider = React.forwardRef<HTMLInputElement, SliderProps>(
 
         const thumb = (
             <div
-                className={classNames(isIos ? styles.iosThumb : styles.defaultThumb, {
-                    [styles.thumbHover]: !isIos && isThumbHovered && !isPointerDown,
-                    [styles.thumbActive]: !isIos && isPointerDown,
+                className={classNames(isIos ? styles.iosThumb : styles.defaultThumb[thumbVariant], {
+                    [styles.thumbHover[thumbVariant]]: !isIos && isThumbHovered && !isPointerDown,
+                    [styles.thumbActive[thumbVariant]]: !isIos && isPointerDown,
                 })}
             />
         );
@@ -295,7 +298,7 @@ const Slider = React.forwardRef<HTMLInputElement, SliderProps>(
                         className={styles.track}
                         ref={trackRef}
                         style={{
-                            background: `linear-gradient(to right, ${vars.colors.controlActivated} ${trackProgressPosition}, ${vars.colors.barTrack} ${trackProgressPosition}`,
+                            background: `linear-gradient(to right, ${isInverse ? vars.colors.controlActivatedInverse : vars.colors.controlActivated} ${trackProgressPosition}, ${isInverse ? vars.colors.barTrackInverse : vars.colors.barTrack} ${trackProgressPosition}`,
                         }}
                     />
                     <div

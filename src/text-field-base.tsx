@@ -217,11 +217,12 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
         },
         ref
     ) => {
-        const {preventCopyInFormFields} = useTheme();
+        const {preventCopyInFormFields, texts, t} = useTheme();
         preventCopy = preventCopy ?? preventCopyInFormFields;
         const reactId = React.useId();
         const id = idProp || reactId;
-        const helperTextid = React.useId();
+        const leftHelperTextid = React.useId();
+        const rightHelperTextid = React.useId();
 
         const [inputState, setInputState] = React.useState<InputState>(
             defaultValue?.length || value?.length ? 'filled' : 'default'
@@ -317,8 +318,17 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
                     <HelperText
                         error={error}
                         leftText={helperText}
-                        id={helperTextid}
+                        leftTextId={leftHelperTextid}
+                        rightTextId={rightHelperTextid}
                         rightText={multiline && maxLength ? `${characterCount}/${maxLength}` : undefined}
+                        rightTextLabel={
+                            multiline && maxLength
+                                ? texts.formTextMultilineMaxCount ||
+                                  t(tokens.formTextMultilineMaxCount)
+                                      .replace('1$s', String(characterCount))
+                                      .replace('2$s', String(maxLength))
+                                : undefined
+                        }
                     />
                 }
                 multiline={multiline}
@@ -328,7 +338,11 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
                 dataAttributes={dataAttributes}
             >
                 <ThemeVariant variant="default">
-                    {startIcon && <div className={styles.startIcon}>{startIcon}</div>}
+                    {startIcon && (
+                        <div className={styles.startIcon} data-testid="startIcon">
+                            {startIcon}
+                        </div>
+                    )}
 
                     {prefix && (
                         <div
@@ -427,7 +441,9 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
                                 defaultValue,
                                 value,
                                 ...(error && {'aria-invalid': true}),
-                                ...(helperText && {'aria-describedby': helperTextid}),
+                                ...((helperText || (multiline && maxLength)) && {
+                                    'aria-describedby': `${leftHelperTextid} ${rightHelperTextid}`,
+                                }),
                                 ...(preventCopy && {
                                     onCopy: preventCopyHandler,
                                     onCut: preventCopyHandler,
@@ -435,7 +451,11 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
                             })}
                         </Text3>
                     </div>
-                    {endIcon && <div className={styles.endIconContainer}>{endIcon}</div>}
+                    {endIcon && (
+                        <div className={styles.endIconContainer} data-testid="endIcon">
+                            {endIcon}
+                        </div>
+                    )}
                     {endIconOverlay}
                 </ThemeVariant>
             </FieldContainer>

@@ -93,11 +93,11 @@ const DateField = ({
             max={max ? getLocalYearMonthString(max) : undefined}
             type="month"
             endIconOverlay={
-                <div className={dateStyles.iconContainer}>
+                <div className={dateStyles.iconContainer} data-testid="endIcon">
                     <IconCalendarRegular size={iconSize.default} />
                 </div>
             }
-            dataAttributes={{'component-name': 'MonthField', ...dataAttributes}}
+            dataAttributes={{'component-name': 'MonthField', testid: 'MonthField', ...dataAttributes}}
         />
     );
 
@@ -113,7 +113,7 @@ const DateField = ({
                 optional={optional}
                 isValidDate={(currentDate) => isInRange(getLocalYearMonthString(currentDate.toDate()))}
                 mode="year-month"
-                dataAttributes={{'component-name': 'MonthField', ...dataAttributes}}
+                dataAttributes={{'component-name': 'MonthField', testid: 'MonthField', ...dataAttributes}}
             />
         </React.Suspense>
     );

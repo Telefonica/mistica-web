@@ -9,6 +9,7 @@ import {vars} from './skins/skin-contract.css';
 import {getPrefixedDataAttributes} from './utils/dom';
 import * as tokens from './text-tokens';
 import IconWarningRegular from './generated/mistica-icons/icon-warning-regular';
+import ScreenReaderOnly from './screen-reader-only';
 
 import type {DataAttributes} from './utils/types';
 
@@ -62,6 +63,7 @@ export const Label = ({
             className={classnames(styles.labelContainer, {[styles.shrinked]: isShrinked})}
             htmlFor={forId}
             style={{color, ...style, transition: transitionStyle}}
+            data-testid="label"
         >
             <span className={styles.labelText}>{children}</span>
             {optional ? (
@@ -77,12 +79,21 @@ export const Label = ({
 type HelperTextProps = {
     leftText?: string;
     rightText?: string;
+    rightTextLabel?: string;
     error?: boolean;
-    id?: string;
+    leftTextId?: string;
+    rightTextId?: string;
     children?: void;
 };
 
-export const HelperText = ({leftText, rightText, error, id}: HelperTextProps): JSX.Element => {
+export const HelperText = ({
+    leftText,
+    leftTextId,
+    rightText,
+    rightTextId,
+    rightTextLabel,
+    error,
+}: HelperTextProps): JSX.Element => {
     const isInverse = useIsInverseOrMediaVariant();
     const leftColor = isInverse
         ? vars.colors.textPrimaryInverse
@@ -94,21 +105,39 @@ export const HelperText = ({leftText, rightText, error, id}: HelperTextProps): J
     return (
         <>
             {leftText && (
-                <p className={classnames(styles.helperText, styles.leftHelperText)}>
+                <p
+                    className={classnames(styles.helperText, styles.leftHelperText)}
+                    data-testid={error ? 'errorText' : 'helperText'}
+                >
                     {error && (
                         <Text1 regular>
                             <IconWarningRegular color={leftColor} className={styles.warnIcon} />
                         </Text1>
                     )}
-                    <Text1 color={leftColor} regular id={id}>
+                    <Text1 color={leftColor} regular id={leftTextId}>
                         {leftText}
                     </Text1>
                 </p>
             )}
             {rightText && (
-                <div className={classnames(styles.helperText)}>
-                    <Text1 color={rightColor} regular as="p" textAlign="right">
-                        {rightText}
+                <div
+                    className={classnames(styles.helperText, {[styles.rightHelperText]: !!leftText})}
+                    data-testid="endHelperText"
+                >
+                    <Text1
+                        color={rightColor}
+                        regular
+                        as="p"
+                        textAlign="right"
+                        wordBreak={false}
+                        id={rightTextId}
+                    >
+                        {rightTextLabel && (
+                            <ScreenReaderOnly>
+                                <span>{rightTextLabel}</span>
+                            </ScreenReaderOnly>
+                        )}
+                        <span aria-hidden={rightTextLabel !== undefined}>{rightText}</span>
                     </Text1>
                 </div>
             )}

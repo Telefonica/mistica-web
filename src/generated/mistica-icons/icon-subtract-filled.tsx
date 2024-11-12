@@ -21,7 +21,7 @@ const IconSubtractFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
-                    d="M3.002 10.498a1.002 1.002 0 1 0 0 2.004h17.996a1.002 1.002 0 0 0 0-2.004z"
+                    d="M3.002 10.498a1.002 1.002 0 1 0 0 2.004h17.996a1.002 1.002 0 1 0 0-2.004z"
                 />
             </svg>
         );

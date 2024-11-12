@@ -176,6 +176,7 @@ const renderButtonContent = ({
                             alignItems: 'center',
                             marginRight: styles.iconMargin,
                         }}
+                        data-testid="startIcon"
                     >
                         <StartIcon size={defaultIconSize} color="currentColor" />
                     </div>
@@ -201,6 +202,7 @@ const renderButtonContent = ({
                             alignItems: 'center',
                             marginLeft: styles.iconMargin,
                         }}
+                        data-testid="endIcon"
                     >
                         <EndIcon size={defaultIconSize} color="currentColor" />
                     </div>
@@ -235,7 +237,7 @@ const renderButtonContent = ({
             >
                 {shouldRenderSpinner ? (
                     <Spinner
-                        rolePresentation={!!loadingText}
+                        aria-hidden={!!loadingText}
                         color="currentcolor"
                         delay="0s"
                         size={spinnerSizeRem}
@@ -249,7 +251,11 @@ const renderButtonContent = ({
                         }}
                     />
                 )}
-                {loadingText ? <Box paddingLeft={8}>{loadingButtonElement}</Box> : null}
+                {loadingText ? (
+                    <Box paddingLeft={8} dataAttributes={{testid: 'loadingText'}}>
+                        {loadingButtonElement}
+                    </Box>
+                ) : null}
             </div>
         </>
     );
@@ -513,7 +519,7 @@ export const ButtonLink = React.forwardRef<
 >(({dataAttributes, className, ...props}, ref) => {
     return (
         <BaseButton
-            dataAttributes={{'component-name': 'ButtonLink', ...dataAttributes}}
+            dataAttributes={{'component-name': 'ButtonLink', testid: 'ButtonLink', ...dataAttributes}}
             className={classnames(className, {[styles.smallLink]: props.small})}
             {...props}
             ref={ref}
@@ -526,7 +532,11 @@ export const ButtonLinkDanger = React.forwardRef<TouchableElement, ButtonLinkPro
     ({dataAttributes, className, ...props}, ref) => {
         return (
             <BaseButton
-                dataAttributes={{'component-name': 'ButtonLinkDanger', ...dataAttributes}}
+                dataAttributes={{
+                    'component-name': 'ButtonLinkDanger',
+                    testid: 'ButtonLinkDanger',
+                    ...dataAttributes,
+                }}
                 className={classnames(className, {[styles.smallLink]: props.small})}
                 {...props}
                 withChevron={false}
@@ -541,7 +551,11 @@ export const ButtonPrimary = React.forwardRef<TouchableElement, ButtonProps>(
     ({dataAttributes, ...props}, ref) => {
         return (
             <BaseButton
-                dataAttributes={{'component-name': 'ButtonPrimary', ...dataAttributes}}
+                dataAttributes={{
+                    'component-name': 'ButtonPrimary',
+                    testid: 'ButtonPrimary',
+                    ...dataAttributes,
+                }}
                 {...props}
                 ref={ref}
                 buttonType="primary"
@@ -554,7 +568,11 @@ export const ButtonSecondary = React.forwardRef<TouchableElement, ButtonProps>(
     ({dataAttributes, ...props}, ref) => {
         return (
             <BaseButton
-                dataAttributes={{'component-name': 'ButtonSecondary', ...dataAttributes}}
+                dataAttributes={{
+                    'component-name': 'ButtonSecondary',
+                    testid: 'ButtonSecondary',
+                    ...dataAttributes,
+                }}
                 {...props}
                 ref={ref}
                 buttonType="secondary"
@@ -567,7 +585,7 @@ export const ButtonDanger = React.forwardRef<TouchableElement, ButtonProps>(
     ({dataAttributes, ...props}, ref) => {
         return (
             <BaseButton
-                dataAttributes={{'component-name': 'ButtonDanger', ...dataAttributes}}
+                dataAttributes={{'component-name': 'ButtonDanger', testid: 'ButtonDanger', ...dataAttributes}}
                 {...props}
                 ref={ref}
                 buttonType="danger"
