@@ -29,7 +29,7 @@ cd $repo_tmp_dir
 
 echo "Cloning Playroom repository in $repo_tmp_dir"
 
-Clone the Playroom repository
+echo "Clone the Playroom repository"
 git clone git@github.com:seek-oss/playroom.git .
 
 # Checkout the version of Playroom that is used in the project
