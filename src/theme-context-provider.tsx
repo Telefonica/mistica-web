@@ -135,6 +135,9 @@ const ThemeContextProvider = ({theme, children, as, withoutStyles = false}: Prop
     const translate = React.useCallback(
         (token: TextToken, ...params: Array<string | number>): string => {
             const text = token[language] || token.en;
+            if (!params.length) {
+                return text;
+            }
             // replace token parameters: 1$s, 2$s, 3$s, etc.
             return text.replace(/\d+\$s/g, (substr) => {
                 return String(params[parseInt(substr) - 1] ?? substr);
