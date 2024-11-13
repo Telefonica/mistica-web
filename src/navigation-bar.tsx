@@ -32,6 +32,7 @@ import {ButtonLink} from './button';
 import {Grid, GridItem} from './grid';
 import {DOWN, ESC, UP} from './utils/keys';
 import {debounce, isEqual} from './utils/helpers';
+import NegativeBox from './negative-box';
 
 import type {ExclusifyUnion} from './utils/utility-types';
 import type {Variant} from './theme-variant-context';
@@ -362,7 +363,7 @@ const MainNavigationBarBurgerSection = ({
                     columns.map((column, columnIndex) => (
                         <Stack space={8} key={columnIndex}>
                             <Title1> {column.title}</Title1>
-                            <ResetResponsiveLayout>
+                            <NegativeBox>
                                 <RowList>
                                     {column.items.map(
                                         ({title: itemTitle, ...itemInteractiveProps}, itemIndex) => (
@@ -378,7 +379,7 @@ const MainNavigationBarBurgerSection = ({
                                         )
                                     )}
                                 </RowList>
-                            </ResetResponsiveLayout>
+                            </NegativeBox>
                         </Stack>
                     ))
                 )}
@@ -404,7 +405,7 @@ const MainNavigationBarBurgerMenu = ({
     disableFocusTrap: boolean;
     setDisableFocusTrap: (value: boolean) => void;
 }) => {
-    const {isDarkMode} = useTheme();
+    const {isDarkMode, texts, t} = useTheme();
     const [openedSection, setOpenedSection] = React.useState(-1);
     const [isSubMenuOpen, setIsSubMenuOpen] = React.useState(false);
     const [subMenuStatus, dispatch] = React.useReducer(burgerMenuReducer, 'closed');
@@ -427,6 +428,19 @@ const MainNavigationBarBurgerMenu = ({
 
         return () => clearTimeout(id);
     }, [isSubMenuOpen, menuAnimationDuration]);
+
+    const sectionContainerRef = React.useRef<HTMLDivElement>(null);
+
+    React.useEffect(() => {
+        // Make screen reader focus on back button when opening any section's menu
+        if (subMenuStatus === 'opening') {
+            const sectionBackButtonElement = sectionContainerRef.current?.querySelector<HTMLButtonElement>(
+                `button[aria-label="${texts.backNavigationBar || t(tokens.backNavigationBar)}"]`
+            );
+
+            sectionBackButtonElement?.focus();
+        }
+    }, [subMenuStatus, t, texts]);
 
     return (
         <Portal>
@@ -489,6 +503,7 @@ const MainNavigationBarBurgerMenu = ({
 
                             <div
                                 className={styles.burgerMenuContentContainer}
+                                ref={sectionContainerRef}
                                 style={{
                                     transform: `translate(${isSubMenuOpen ? '0' : '100vw'})`,
                                 }}
