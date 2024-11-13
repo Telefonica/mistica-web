@@ -5,7 +5,7 @@ import beachImg from './images/beach.jpg';
 import type {MeterType} from '../meter';
 
 export default {
-    title: 'Components/Meters',
+    title: 'Components/Data Visualizations/Meter',
     argTypes: {
         type: {
             options: ['angular', 'circular', 'linear'] as Array<MeterType>,

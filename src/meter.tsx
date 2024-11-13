@@ -23,13 +23,12 @@ const ANIMATION_DELAY_MS = 200;
 const ANIMATION_DURATION_MS = 1000;
 const ANIMATION_EPSILON = 1000 / 60 / ANIMATION_DURATION_MS / 4;
 
-const SMALL_VALUE_THRESHOLD = Math.PI / 10000;
+const MAX_SEGMENT_VALUE = 100;
+const SMALL_VALUE_THRESHOLD = 0.0001;
 
 const TYPE_LINEAR = 'linear';
 const TYPE_ANGULAR = 'angular';
 const TYPE_CIRCULAR = 'circular';
-
-const MAX_SEGMENT_VALUE = 100;
 
 export type MeterType = typeof TYPE_LINEAR | typeof TYPE_ANGULAR | typeof TYPE_CIRCULAR;
 
@@ -123,7 +122,7 @@ const createPath = ({
 
 type MeterProps = {
     type?: MeterType;
-    // Position of the meter. 0 is at the start, 1 is at the end. The sum of the values must not exceed 1.
+    /** Position of the meter. 0 is at the start, 100 is at the end. The sum of the values must not exceed 100. */
     values: Array<number>;
     width?: number | string;
     colors?: Array<string>;

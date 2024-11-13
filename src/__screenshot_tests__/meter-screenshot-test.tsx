@@ -22,7 +22,7 @@ test.each`
     ${[20, 20, 20, 20, 0]} | ${'angular'}  | ${'default'}
 `('Meter $themeVariant $type $values', async ({themeVariant, values, type}) => {
     await openStoryPage({
-        id: 'components-meters--meter-story',
+        id: 'components-data-visualizations-meter--meter-story',
         args: {
             themeVariant,
             width: 200,
