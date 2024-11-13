@@ -26,6 +26,7 @@ import ButtonLayout from './button-layout';
 import {safeAreaInsetBottom} from './utils/css';
 import {MOBILE_SIDE_MARGIN, SMALL_DESKTOP_SIDE_MARGIN, TABLET_SIDE_MARGIN} from './responsive-layout.css';
 import * as tokens from './text-tokens';
+import Touchable from './touchable';
 
 import type {DataAttributes, RendersNullableElement} from './utils/types';
 import type {ButtonLink, ButtonPrimary, ButtonSecondary} from './button';
@@ -240,9 +241,12 @@ const Sheet = React.forwardRef<HTMLDivElement, SheetProps>(({onClose, children, 
                 >
                     <div className={styles.Sheet}>
                         <div className={styles.SheetContent}>
-                            <div className={styles.handleContainer}>
-                                <div className={styles.handle} />
-                            </div>
+                            {/**
+                             * Space rendered on the top part of the sheet on top of
+                             * the content in order to be able to drag the sheet
+                             */}
+                            <div className={styles.sheetTopDraggingArea} />
+
                             <section
                                 role="dialog"
                                 aria-modal="true"
@@ -252,7 +256,6 @@ const Sheet = React.forwardRef<HTMLDivElement, SheetProps>(({onClose, children, 
                                 style={{
                                     paddingBottom: safeAreaInsetBottom,
                                 }}
-                                tabIndex={-1}
                             >
                                 {typeof children === 'function'
                                     ? children({closeModal, modalTitleId})
@@ -266,6 +269,19 @@ const Sheet = React.forwardRef<HTMLDivElement, SheetProps>(({onClose, children, 
                                         bleedRight
                                         bleedY
                                     />
+                                </div>
+                                {/**
+                                 * We put a button behind the top dragging area so that the sheet can
+                                 * be closed while navigating with the keyboard or with a screen reader.
+                                 */}
+                                <div className={styles.handleContainer}>
+                                    <Touchable
+                                        onPress={closeModal}
+                                        className={styles.handleTouchable}
+                                        aria-label={texts.modalClose || t(tokens.modalClose)}
+                                    >
+                                        <div className={styles.handleBar} />
+                                    </Touchable>
                                 </div>
                             </section>
                         </div>
