@@ -2409,10 +2409,24 @@ const navigationBarSnippets = [
         name: 'MainNavigationBar',
         code: `
           <MainNavigationBar
-            sections={["Start", "Account", "Explore", "Support"].map((title, idx) => ({
-              title,
-              onPress: () => setState("index", idx),
-            }))}
+            sections={[
+              {
+                title: "Start",
+                onPress: () => setState("index", 0),
+              },
+              {
+                title: "Account",
+                onPress: () => setState("index", 1),
+              },
+              {
+                title: "Explore",
+                onPress: () => setState("index", 2),
+              },
+              {
+                title: "Support",
+                onPress: () => setState("index", 3),
+              },
+            ]}
             selectedIndex={getState("index", 0)}
             right={
               <NavigationBarActionGroup>
@@ -2441,70 +2455,75 @@ const navigationBarSnippets = [
         name: 'MainNavigationBar with menu',
         code: `
           <MainNavigationBar
-            sections={["Start", "Account", "Explore", "Support"].map((title, idx) => ({
-              onPress: () => setState("index", idx),
-              title,
-              menu:
-                title === "Start"
-                  ? {
-                      columns: [
+            sections={[
+              {
+                onPress: () => setState("index", 0),
+                title: "Start",
+                menu: {
+                  columns: [
+                    {
+                      title: "Start 1",
+                      items: [
                         {
-                          title: \`\${title} 1\`,
-                          items: [
-                            {
-                              title: "item 1",
-                              onPress: () => {},
-                            },
-                            {
-                              title: "item 2",
-                              href: "https://www.google.com/",
-                            },
-                            {
-                              title: "item 3",
-                              to: "#",
-                            },
-                          ],
+                          title: "item 1",
+                          onPress: () => {},
+                        },
+                        {
+                          title: "item 2",
+                          href: "https://www.google.com/",
+                        },
+                        {
+                          title: "item 3",
+                          to: "#",
                         },
                       ],
-                    }
-                  : title === "Account"
-                  ? {
-                      columns: [
+                    },
+                  ],
+                },
+              },
+              {
+                onPress: () => setState("index", 1),
+                title: "Account",
+                menu: {
+                  columns: [
+                    {
+                      title: "Account 1",
+                      items: [
                         {
-                          title: \`\${title} 1\`,
-                          items: [
-                            {
-                              title: "item 1",
-                              onPress: () => {},
-                            },
-                          ],
+                          title: "item 1",
+                          onPress: () => {},
                         },
                       ],
-                    }
-                  : title === "Explore"
-                  ? {
-                      columns: [
+                    },
+                  ],
+                },
+              },
+              {
+                onPress: () => setState("index", 2),
+                title: "Explore",
+                menu: {
+                  columns: [
+                    {
+                      title: "Explore 1",
+                      items: [
                         {
-                          title: \`\${title} 1\`,
-                          items: [
-                            {
-                              title: "item 1",
-                              onPress: () => {},
-                            },
-                            {
-                              title: "item 2",
-                              href: "https://www.google.com/",
-                            },
-                            {
-                              title: "item 3",
-                              to: "#",
-                            },
-                          ],
+                          title: "item 1",
+                          onPress: () => {},
+                        },
+                        {
+                          title: "item 2",
+                          href: "https://www.google.com/",
+                        },
+                        {
+                          title: "item 3",
+                          to: "#",
                         },
                       ],
-                    }
-                  : undefined,
-            }))}
+                    },
+                  ],
+                },
+              },
+            ]}
             selectedIndex={getState("index", 0)}
           />`,
     },
@@ -2514,143 +2533,151 @@ const navigationBarSnippets = [
         code: `
           <MainNavigationBar
             desktopLargeMenu
-            sections={["Start", "Account", "Explore", "Support"].map((title, idx) => ({
-              onPress: () => setState("index", idx),
-              title,
-              menu:
-                title === "Start"
-                  ? {
-                      columns: [
+            sections={[
+              {
+                onPress: () => setState("index", 0),
+                title: "Start",
+                menu: {
+                  columns: [
+                    {
+                      title: "Start 1",
+                      items: [
                         {
-                          title: \`\${title} 1\`,
-                          items: [
-                            {
-                              title: "item 1",
-                              onPress: () => {},
-                            },
-                            {
-                              title: "item 2",
-                              href: "https://www.google.com/",
-                            },
-                            {
-                              title: "item 3",
-                              to: "#",
-                            },
-                          ],
+                          title: "item 1",
+                          onPress: () => {},
                         },
                         {
-                          title: \`\${title} 2\`,
-                          items: [
-                            {
-                              title: "item 1",
-                              onPress: () => {},
-                            },
-                            {
-                              title: "item 2",
-                              href: "https://www.google.com/",
-                            },
-                            {
-                              title: "item 3",
-                              to: "#",
-                            },
-                          ],
+                          title: "item 2",
+                          href: "https://www.google.com/",
+                        },
+                        {
+                          title: "item 3",
+                          to: "#",
                         },
                       ],
-                    }
-                  : title === "Account"
-                  ? {
-                      columns: [
+                    },
+                    {
+                      title: "Start 2",
+                      items: [
                         {
-                          title: \`\${title} 1\`,
-                          items: [
-                            {
-                              title: "item 1",
-                              onPress: () => {},
-                            },
-                          ],
+                          title: "item 1",
+                          onPress: () => {},
+                        },
+                        {
+                          title: "item 2",
+                          href: "https://www.google.com/",
+                        },
+                        {
+                          title: "item 3",
+                          to: "#",
                         },
                       ],
-                    }
-                  : title === "Explore"
-                  ? {
-                      content: ({ closeMenu }) => (
-                        <Stack space={16}>
-                          <Text2 regular>Custom content</Text2>
-                          <Placeholder />
-                          <ButtonPrimary onPress={closeMenu}>Close menu</ButtonPrimary>
-                        </Stack>
-                      ),
-                    }
-                  : title === "Support"
-                  ? {
-                      content: isDesktopOrBigger ? (
-                        <Grid columns={12} gap={24}>
-                          {Array.from({ length: 3 }, (_, index) => (
-                            <GridItem columnSpan={2} key={index}>
-                              <Stack space={24}>
-                                <Title1>Contenidos</Title1>
-                                <Stack space={16}>
-                                  {[
-                                    "Destacados",
-                                    "Todo fútbol",
-                                    "#0",
-                                    "Cine",
-                                    "Oferta comercial",
-                                    "Mi Movistar",
-                                    "Movistar Cloud",
-                                  ].map((title, index) => (
-                                    <TextLink
-                                      key={index}
-                                      onPress={() => {}}
-                                      style={{ color: colors.textPrimary }}
-                                    >
-                                      {title}
-                                    </TextLink>
-                                  ))}
-                                </Stack>
-                              </Stack>
-                            </GridItem>
-                          ))}
-
-                          <GridItem columnSpan={5} columnStart={8}>
-                            <DisplayMediaCard
-                              headline={<Tag type="promo">Oferta</Tag>}
-                              title="Movistar Plus+"
-                              onPress={() => {}}
-                              description="Contrata solo TV por 9,99 €"
-                              backgroundImage="${imagePlaceholder}"
-                            />
-                          </GridItem>
-                        </Grid>
-                      ) : (
-                        <Stack space={40}>
-                          {Array.from({ length: 3 }, (_, index) => (
-                            <Stack space={16} key={index}>
-                              <Title1>Title</Title1>
-                              <NegativeBox>
-                                <RowList>
-                                  <Row title="Title" onPress={() => {}} />
-                                  <Row title="Title" onPress={() => {}} />
-                                  <Row title="Title" onPress={() => {}} />
-                                  <Row title="Title" onPress={() => {}} />
-                                </RowList>
-                              </NegativeBox>
+                    },
+                  ],
+                },
+              },
+              {
+                onPress: () => setState("index", 1),
+                title: "Account",
+                menu: {
+                  columns: [
+                    {
+                      title: "Account 1",
+                      items: [
+                        {
+                          title: "item 1",
+                          onPress: () => {},
+                        },
+                      ],
+                    },
+                  ],
+                },
+              },
+              {
+                onPress: () => setState("index", 2),
+                title: "Explore",
+                menu: {
+                  content: ({ closeMenu }) => (
+                    <Stack space={16}>
+                      <Text2 regular>Custom content</Text2>
+                      <Placeholder />
+                      <ButtonPrimary onPress={closeMenu}>Close menu</ButtonPrimary>
+                    </Stack>
+                  ),
+                },
+              },
+              {
+                onPress: () => setState("index", 3),
+                title: "Support",
+                menu: {
+                  content: isDesktopOrBigger ? (
+                    <Grid columns={12} gap={24}>
+                      {Array.from({ length: 3 }, (_, index) => (
+                        <GridItem columnSpan={2} key={index}>
+                          <Stack space={24}>
+                            <Title1>Contenidos</Title1>
+                            <Stack space={16}>
+                              {[
+                                "Destacados",
+                                "Todo fútbol",
+                                "#0",
+                                "Cine",
+                                "Oferta comercial",
+                                "Mi Movistar",
+                                "Movistar Cloud",
+                              ].map((title, index) => (
+                                <TextLink
+                                  key={index}
+                                  onPress={() => {}}
+                                  style={{ color: colors.textPrimary }}
+                                >
+                                  {title}
+                                </TextLink>
+                              ))}
                             </Stack>
-                          ))}
+                          </Stack>
+                        </GridItem>
+                      ))}
 
-                          <DisplayMediaCard
-                            headline={<Tag type="promo">Oferta</Tag>}
-                            title="Movistar Plus+"
-                            aspectRatio="1:1"
-                            onPress={() => {}}
-                            description="Contrata solo TV por 9,99 €"
-                            backgroundImage="${imagePlaceholder}"
-                          />
+                      <GridItem columnSpan={5} columnStart={8}>
+                        <DisplayMediaCard
+                          headline={<Tag type="promo">Oferta</Tag>}
+                          title="Movistar Plus+"
+                          onPress={() => {}}
+                          description="Contrata solo TV por 9,99 €"
+                          backgroundImage="${imagePlaceholder}"
+                        />
+                      </GridItem>
+                    </Grid>
+                  ) : (
+                    <Stack space={40}>
+                      {Array.from({ length: 3 }, (_, index) => (
+                        <Stack space={16} key={index}>
+                          <Title1>Title</Title1>
+                          <NegativeBox>
+                            <RowList>
+                              <Row title="Title" onPress={() => {}} />
+                              <Row title="Title" onPress={() => {}} />
+                              <Row title="Title" onPress={() => {}} />
+                              <Row title="Title" onPress={() => {}} />
+                            </RowList>
+                          </NegativeBox>
                         </Stack>
-                      ),
-                    }
-                  : undefined,
-            }))}
+                      ))}
+
+                      <DisplayMediaCard
+                        headline={<Tag type="promo">Oferta</Tag>}
+                        title="Movistar Plus+"
+                        aspectRatio="1:1"
+                        onPress={() => {}}
+                        description="Contrata solo TV por 9,99 €"
+                        backgroundImage="${imagePlaceholder}"
+                      />
+                    </Stack>
+                  ),
+                },
+              },
+            ]}
             selectedIndex={getState("index", 0)}
           />`,
     },
