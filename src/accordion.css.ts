@@ -52,6 +52,10 @@ export const touchableBackgroundInverse = style({
     },
 });
 
+export const rightContentContainer = style({
+    height: '100%',
+});
+
 export const chevronContainer = style({
     height: '100%',
     display: 'flex',
