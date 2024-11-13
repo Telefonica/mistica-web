@@ -137,75 +137,251 @@ const accordionSnippets: Array<Snippet> = [
     },
     {
         group: 'Accordion',
+        name: 'Accordion (detail and right)',
+        code: `
+        <Accordion>
+          <AccordionItem
+            asset={<IconInvoicePlanFileRegular />}
+            title="What is Movistar Money"
+            detail="Detail"
+            right={<Placeholder width={32} height={32} />}
+            content={
+              <Text3 color={colors.textSecondary}>
+                It's a loan available to anyone, whether or not you're a Movistar
+                customer. It offers from €2,000 to €15,000 with a simple and fast
+                application process, and you receive the money in less than 48 hours.
+              </Text3>
+            }
+          />
+          <AccordionItem
+            asset={<IconLocationMapRegular />}
+            title="To whom is it aimed?"
+            detail="Detail"
+            right={<Placeholder width={32} height={32} />}
+            content={
+              <Text3 color={colors.textSecondary}>
+                The Movistar Money loan service is aimed at anyone, whether you are a{" "}
+                <TextLink href="https://example.org" newTab>
+                  Movistar
+                </TextLink>{" "}
+                customer or not.
+              </Text3>
+            }
+          />
+          <AccordionItem
+            asset={<IconLockEyeClosedRegular />}
+            title="Who offers Movistar Money?"
+            detail="Detail"
+            right={<Placeholder width={32} height={32} />}
+            content={
+              <Text3 color={colors.textSecondary}>
+                <p>
+                  At Telefónica, we have our own financial institution, Telefonica
+                  Consumer Finance, and agreements with other institutions to assist
+                  you in obtaining your loan.
+                </p>
+                <br />
+                <Image src="https://picsum.photos/1200/1200" aspectRatio="16:9" />
+                <br />
+                <p>
+                  Depending on the characteristics of the information you provide us,
+                  your application will be sent to one of the institutions{" "}
+                  <TextLink href="https://example.org" newTab>
+                    with which Movistar has agreements
+                  </TextLink>
+                  .
+                </p>
+              </Text3>
+            }
+          />
+          <AccordionItem
+            asset={<IconIdCardRegular />}
+            title="How can I hire it?"
+            detail="Detail"
+            right={<Placeholder width={32} height={32} />}
+            content={
+              <Text3 color={colors.textSecondary}>
+                It's a very agile process that you can access through the
+                money.movistar.es website. You can find more detailed information
+                about the process on our "How It Works" page.
+              </Text3>
+            }
+          />
+          <AccordionItem
+            asset={<IconLifeguardFloatRegular />}
+            title="What should I do if I don't receive the SMS with the contracting code?"
+            detail="Detail"
+            right={<Placeholder width={32} height={32} />}
+            content={
+              <Text3 color={colors.textSecondary}>
+                It may take a few minutes until you receive the SMS with the code. If
+                you still haven't received the code, you can request a new one by
+                clicking on "resend SMS."
+              </Text3>
+            }
+          />
+        </Accordion>
+        `,
+    },
+    {
+        group: 'Accordion',
         name: 'BoxedAccordion',
         code: `
-      <BoxedAccordion>
-        <BoxedAccordionItem
-          asset={<IconInvoicePlanFileRegular />}
-          title="What is Movistar Money"
-          content={
-            <Text3 color={colors.textSecondary}>
-              It's a loan available to anyone, whether or not you're a Movistar
-              customer. It offers from €2,000 to €15,000 with a simple and fast
-              application process, and you receive the money in less than 48 hours.
-            </Text3>
-          }
-        />
-        <BoxedAccordionItem
-          asset={<IconLocationMapRegular />}
-          title="To whom is it aimed?"
-          content={
-            <Text3 color={colors.textSecondary}>
-              The Movistar Money loan service is aimed at anyone, whether you are a{" "}
-              <TextLink href="https://example.org" newTab>Movistar</TextLink> customer or not.
-            </Text3>
-          }
-        />
-        <BoxedAccordionItem
-          asset={<IconLockEyeClosedRegular />}
-          title="Who offers Movistar Money?"
-          content={
-            <Text3 color={colors.textSecondary}>
-              <p>
-                At Telefónica, we have our own financial institution, Telefonica
-                Consumer Finance, and agreements with other institutions to assist
-                you in obtaining your loan.
-              </p>
-              <br />
-              <Image src="${imagePlaceholder}" aspectRatio="16:9" />
-              <br />
-              <p>
-                Depending on the characteristics of the information you provide us,
-                your application will be sent to one of the institutions{" "}
-                <TextLink href="https://example.org" newTab>with which Movistar has agreements</TextLink>.
-              </p>
-            </Text3>
-          }
-        />
-        <BoxedAccordionItem
-          asset={<IconIdCardRegular />}
-          title="How can I hire it?"
-          content={
-            <Text3 color={colors.textSecondary}>
-              It's a very agile process that you can access through the
-              money.movistar.es website. You can find more detailed information
-              about the process on our "How It Works" page.
-            </Text3>
-          }
-        />
-        <BoxedAccordionItem
-          asset={<IconLifeguardFloatRegular />}
-          title="What should I do if I don't receive the SMS with the contracting code?"
-          content={
-            <Text3 color={colors.textSecondary}>
-              It may take a few minutes until you receive the SMS with the code. If
-              you still haven't received the code, you can request a new one by
-              clicking on "resend SMS."
-            </Text3>
-          }
-        />
-      </BoxedAccordion>
-      `,
+        <BoxedAccordion>
+          <BoxedAccordionItem
+            asset={<IconInvoicePlanFileRegular />}
+            title="What is Movistar Money"
+            content={
+              <Text3 color={colors.textSecondary}>
+                It's a loan available to anyone, whether or not you're a Movistar
+                customer. It offers from €2,000 to €15,000 with a simple and fast
+                application process, and you receive the money in less than 48 hours.
+              </Text3>
+            }
+          />
+          <BoxedAccordionItem
+            asset={<IconLocationMapRegular />}
+            title="To whom is it aimed?"
+            content={
+              <Text3 color={colors.textSecondary}>
+                The Movistar Money loan service is aimed at anyone, whether you are a{" "}
+                <TextLink href="https://example.org" newTab>Movistar</TextLink> customer or not.
+              </Text3>
+            }
+          />
+          <BoxedAccordionItem
+            asset={<IconLockEyeClosedRegular />}
+            title="Who offers Movistar Money?"
+            content={
+              <Text3 color={colors.textSecondary}>
+                <p>
+                  At Telefónica, we have our own financial institution, Telefonica
+                  Consumer Finance, and agreements with other institutions to assist
+                  you in obtaining your loan.
+                </p>
+                <br />
+                <Image src="${imagePlaceholder}" aspectRatio="16:9" />
+                <br />
+                <p>
+                  Depending on the characteristics of the information you provide us,
+                  your application will be sent to one of the institutions{" "}
+                  <TextLink href="https://example.org" newTab>with which Movistar has agreements</TextLink>.
+                </p>
+              </Text3>
+            }
+          />
+          <BoxedAccordionItem
+            asset={<IconIdCardRegular />}
+            title="How can I hire it?"
+            content={
+              <Text3 color={colors.textSecondary}>
+                It's a very agile process that you can access through the
+                money.movistar.es website. You can find more detailed information
+                about the process on our "How It Works" page.
+              </Text3>
+            }
+          />
+          <BoxedAccordionItem
+            asset={<IconLifeguardFloatRegular />}
+            title="What should I do if I don't receive the SMS with the contracting code?"
+            content={
+              <Text3 color={colors.textSecondary}>
+                It may take a few minutes until you receive the SMS with the code. If
+                you still haven't received the code, you can request a new one by
+                clicking on "resend SMS."
+              </Text3>
+            }
+          />
+        </BoxedAccordion>
+        `,
+    },
+    {
+        group: 'Accordion',
+        name: 'BoxedAccordion (detail and right)',
+        code: `
+        <BoxedAccordion>
+          <BoxedAccordionItem
+            asset={<IconInvoicePlanFileRegular />}
+            title="What is Movistar Money"
+            detail="Detail"
+            right={<Placeholder width={32} height={32} />}
+            content={
+              <Text3 color={colors.textSecondary}>
+                It's a loan available to anyone, whether or not you're a Movistar
+                customer. It offers from €2,000 to €15,000 with a simple and fast
+                application process, and you receive the money in less than 48 hours.
+              </Text3>
+            }
+          />
+          <BoxedAccordionItem
+            asset={<IconLocationMapRegular />}
+            title="To whom is it aimed?"
+            detail="Detail"
+            right={<Placeholder width={32} height={32} />}
+            content={
+              <Text3 color={colors.textSecondary}>
+                The Movistar Money loan service is aimed at anyone, whether you are a{" "}
+                <TextLink href="https://example.org" newTab>
+                  Movistar
+                </TextLink>{" "}
+                customer or not.
+              </Text3>
+            }
+          />
+          <BoxedAccordionItem
+            asset={<IconLockEyeClosedRegular />}
+            title="Who offers Movistar Money?"
+            detail="Detail"
+            right={<Placeholder width={32} height={32} />}
+            content={
+              <Text3 color={colors.textSecondary}>
+                <p>
+                  At Telefónica, we have our own financial institution, Telefonica
+                  Consumer Finance, and agreements with other institutions to assist
+                  you in obtaining your loan.
+                </p>
+                <br />
+                <Image src="https://picsum.photos/1200/1200" aspectRatio="16:9" />
+                <br />
+                <p>
+                  Depending on the characteristics of the information you provide us,
+                  your application will be sent to one of the institutions{" "}
+                  <TextLink href="https://example.org" newTab>
+                    with which Movistar has agreements
+                  </TextLink>
+                  .
+                </p>
+              </Text3>
+            }
+          />
+          <BoxedAccordionItem
+            asset={<IconIdCardRegular />}
+            title="How can I hire it?"
+            detail="Detail"
+            right={<Placeholder width={32} height={32} />}
+            content={
+              <Text3 color={colors.textSecondary}>
+                It's a very agile process that you can access through the
+                money.movistar.es website. You can find more detailed information
+                about the process on our "How It Works" page.
+              </Text3>
+            }
+          />
+          <BoxedAccordionItem
+            asset={<IconLifeguardFloatRegular />}
+            title="What should I do if I don't receive the SMS with the contracting code?"
+            detail="Detail"
+            right={<Placeholder width={32} height={32} />}
+            content={
+              <Text3 color={colors.textSecondary}>
+                It may take a few minutes until you receive the SMS with the code. If
+                you still haven't received the code, you can request a new one by
+                clicking on "resend SMS."
+              </Text3>
+            }
+          />
+        </BoxedAccordion>
+        `,
     },
 ];
 
