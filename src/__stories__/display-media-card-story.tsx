@@ -23,6 +23,7 @@ import avatarImg from './images/avatar.jpg';
 import beachVideo from './videos/beach.mp4';
 import beachImg from './images/beach.jpg';
 
+import type {HeadingType} from '../utils/types';
 import type {TagType} from '..';
 
 export default {
@@ -39,7 +40,9 @@ type DisplayMediaCardArgs = {
     background: 'image' | 'video';
     headline: string;
     pretitle: string;
+    pretitleAs: HeadingType;
     title: string;
+    titleAs: HeadingType;
     description: string;
     extra: boolean;
     closable: boolean;
@@ -65,7 +68,9 @@ export const Default: StoryComponent<DisplayMediaCardArgs> = ({
     headlineType,
     background,
     pretitle,
+    pretitleAs,
     title,
+    titleAs,
     description,
     extra,
     actions = 'button',
@@ -153,7 +158,9 @@ export const Default: StoryComponent<DisplayMediaCardArgs> = ({
                     asset={assetElement}
                     headline={headline ? <Tag type={headlineType}>{headline}</Tag> : undefined}
                     pretitle={pretitle}
+                    pretitleAs={pretitleAs}
                     title={title}
+                    titleAs={titleAs}
                     description={description}
                     {...interactiveActions}
                     aria-label="Display media card label"
@@ -174,7 +181,9 @@ Default.args = {
     background: 'image',
     headline: 'Priority',
     pretitle: 'Pretitle',
+    pretitleAs: 'span',
     title: 'Title',
+    titleAs: 'h3',
     description: 'This is a description for the card',
     extra: false,
     actions: 'button',
@@ -213,6 +222,14 @@ Default.argTypes = {
     },
     aspectRatio: {
         options: ['1:1', '16:9', '7:10', '9:10', 'auto'],
+        control: {type: 'select'},
+    },
+    pretitleAs: {
+        options: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'span'],
+        control: {type: 'select'},
+    },
+    titleAs: {
+        options: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'span'],
         control: {type: 'select'},
     },
 };

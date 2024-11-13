@@ -20,6 +20,7 @@ import avatarImg from './images/avatar.jpg';
 import beachVideo from './videos/beach.mp4';
 import beachImg from './images/beach.jpg';
 
+import type {HeadingType} from '../utils/types';
 import type {TagType} from '..';
 
 export default {
@@ -39,7 +40,9 @@ type PosterCardArgs = {
     headlineType: TagType;
     headline: string;
     pretitle: string;
+    pretitleAs: HeadingType;
     title: string;
+    titleAs: HeadingType;
     subtitle: string;
     description: string;
     extra: boolean;
@@ -63,7 +66,9 @@ export const Default: StoryComponent<PosterCardArgs> = ({
     headline,
     headlineType,
     pretitle,
+    pretitleAs,
     title,
+    titleAs,
     subtitle,
     description,
     extra,
@@ -144,7 +149,9 @@ export const Default: StoryComponent<PosterCardArgs> = ({
                     asset={assetElement}
                     headline={headline ? <Tag type={headlineType}>{headline}</Tag> : undefined}
                     pretitle={pretitle}
+                    pretitleAs={pretitleAs}
                     title={title}
+                    titleAs={titleAs}
                     subtitle={subtitle}
                     description={description}
                     extra={extra ? <Placeholder /> : undefined}
@@ -169,7 +176,9 @@ Default.args = {
     variant: 'default',
     headline: 'Priority',
     pretitle: 'Pretitle',
+    pretitleAs: 'span',
     title: 'Title',
+    titleAs: 'h3',
     subtitle: 'Subtitle',
     description: 'This is a description for the card',
     extra: false,
@@ -224,6 +233,14 @@ Default.argTypes = {
     },
     actions: {
         options: ['onPress', 'href', 'to', 'none'],
+        control: {type: 'select'},
+    },
+    pretitleAs: {
+        options: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'span'],
+        control: {type: 'select'},
+    },
+    titleAs: {
+        options: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'span'],
         control: {type: 'select'},
     },
 };
