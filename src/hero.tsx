@@ -16,12 +16,12 @@ import {useIsInverseOrMediaVariant} from './theme-variant-context';
 import {applyCssVars} from './utils/css';
 import {InternalResponsiveLayout, ResetResponsiveLayout} from './responsive-layout';
 import {
-    isBiggerHeading,
     type DataAttributes,
     type HeadingType,
     type RendersElement,
     type RendersNullableElement,
 } from './utils/types';
+import {isBiggerHeading} from './utils/headings';
 
 import type Image from './image';
 import type Video from './video';

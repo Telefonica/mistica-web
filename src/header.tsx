@@ -11,12 +11,12 @@ import * as styles from './header.css';
 import {getPrefixedDataAttributes} from './utils/dom';
 import {Title3, Title4} from './title';
 import {
-    isBiggerHeading,
     type DataAttributes,
     type HeadingType,
     type RendersElement,
     type RendersNullableElement,
 } from './utils/types';
+import {isBiggerHeading} from './utils/headings';
 
 import type NavigationBreadcrumbs from './navigation-breadcrumbs';
 import type {ButtonPrimary, ButtonSecondary} from './button';

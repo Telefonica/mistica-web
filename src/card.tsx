@@ -28,7 +28,6 @@ import {isRunningAcceptanceTest} from './utils/platform';
 import {applyCssVars} from './utils/css';
 import * as tokens from './text-tokens';
 import {
-    isBiggerHeading,
     type DataAttributes,
     type HeadingType,
     type IconProps,
@@ -36,6 +35,7 @@ import {
     type RendersNullableElement,
     type TrackingEvent,
 } from './utils/types';
+import {isBiggerHeading} from './utils/headings';
 
 import type {Variant} from './theme-variant-context';
 import type {PressHandler} from './touchable';

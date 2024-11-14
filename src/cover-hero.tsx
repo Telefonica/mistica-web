@@ -12,7 +12,7 @@ import * as mediaStyles from './image.css';
 import GridLayout from './grid-layout';
 import {CoverHeroMedia} from './cover-hero-media';
 import {getPrefixedDataAttributes} from './utils/dom';
-import {isBiggerHeading} from './utils/types';
+import {isBiggerHeading} from './utils/headings';
 
 import type {DataAttributes, HeadingType} from './utils/types';
 import type {ImageProps, VideoProps} from './cover-hero-media';
