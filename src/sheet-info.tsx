@@ -58,7 +58,7 @@ const InfoSheet = React.forwardRef<HTMLDivElement, InfoSheetProps>(
                     >
                         <Box paddingBottom={16} role="list">
                             {items.map((item, idx) => (
-                                <div key={item.id || idx} className={styles.itemContainer}>
+                                <div key={item.id || idx} className={styles.itemContainer} role="listitem">
                                     <Inline space={8}>
                                         <div
                                             className={styles.infoItemIconContainer}
