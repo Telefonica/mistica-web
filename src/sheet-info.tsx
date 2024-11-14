@@ -56,29 +56,41 @@ const InfoSheet = React.forwardRef<HTMLDivElement, InfoSheetProps>(
                         description={description}
                         modalTitleId={modalTitleId}
                     >
-                        <Box paddingBottom={16}>
-                            <Stack space={16} role="list">
-                                {items.map((item, idx) => (
-                                    <Inline key={item.id || idx} space={8}>
-                                        <div className={styles.infoItemIcon}>
-                                            {item.icon.type === 'bullet' ? (
-                                                <Circle
-                                                    size={8}
-                                                    backgroundColor={skinVars.colors.textPrimary}
-                                                />
-                                            ) : item.icon.Icon ? (
-                                                <item.icon.Icon size={item.icon.type === 'small' ? 16 : 24} />
-                                            ) : (
-                                                <Image
-                                                    src={
-                                                        isDarkMode && item.icon.urlDark
-                                                            ? item.icon.urlDark
-                                                            : item.icon.url
-                                                    }
-                                                    width={item.icon.type === 'small' ? 16 : 24}
-                                                    height={item.icon.type === 'small' ? 16 : 24}
-                                                />
-                                            )}
+                        <Box paddingBottom={16} role="list">
+                            {items.map((item, idx) => (
+                                <div key={item.id || idx} className={styles.itemContainer}>
+                                    <Inline space={8}>
+                                        <div
+                                            className={styles.infoItemIconContainer}
+                                            style={{
+                                                alignItems:
+                                                    item.icon.type !== 'bullet' && !item.description
+                                                        ? 'center'
+                                                        : undefined,
+                                            }}
+                                        >
+                                            <div className={styles.infoItemIcon}>
+                                                {item.icon.type === 'bullet' ? (
+                                                    <Circle
+                                                        size={8}
+                                                        backgroundColor={skinVars.colors.textPrimary}
+                                                    />
+                                                ) : item.icon.Icon ? (
+                                                    <item.icon.Icon
+                                                        size={item.icon.type === 'small' ? 16 : 24}
+                                                    />
+                                                ) : (
+                                                    <Image
+                                                        src={
+                                                            isDarkMode && item.icon.urlDark
+                                                                ? item.icon.urlDark
+                                                                : item.icon.url
+                                                        }
+                                                        width={item.icon.type === 'small' ? 16 : 24}
+                                                        height={item.icon.type === 'small' ? 16 : 24}
+                                                    />
+                                                )}
+                                            </div>
                                         </div>
                                         <Stack space={2}>
                                             <Text3 regular>{item.title}</Text3>
@@ -89,8 +101,8 @@ const InfoSheet = React.forwardRef<HTMLDivElement, InfoSheetProps>(
                                             )}
                                         </Stack>
                                     </Inline>
-                                ))}
-                            </Stack>
+                                </div>
+                            ))}
                         </Box>
                     </SheetBody>
                 )}
