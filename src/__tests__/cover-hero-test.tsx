@@ -17,7 +17,7 @@ test.each`
     ${'h3'}      | ${undefined} | ${titleFirst}
     ${'h3'}      | ${'h1'}      | ${titleFirst}
     ${'span'}    | ${'h1'}      | ${titleFirst}
-    ${'h1'}      | ${undefined} | ${pretitleFirst}
+    ${'h1'}      | ${undefined} | ${titleFirst}
     ${'h1'}      | ${'h3'}      | ${pretitleFirst}
     ${'h1'}      | ${'span'}    | ${pretitleFirst}
 `(
