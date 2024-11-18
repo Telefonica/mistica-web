@@ -593,7 +593,7 @@ test('showSheet fails if there is already a sheet open', async () => {
 test('showSheet with native implementation INFO', async () => {
     const resultSpy = jest.fn();
 
-    const nativeImplementation = jest.fn();
+    const nativeImplementation = jest.fn(() => Promise.resolve({action: 'DISMISS' as const, result: []}));
     render(
         <ThemeContextProvider theme={makeTheme()}>
             <SheetRoot nativeImplementation={nativeImplementation} />
