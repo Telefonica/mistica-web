@@ -299,7 +299,7 @@ test('showSheet INFO', async () => {
         {timeout: 5000}
     );
 
-    expect(resultSpy).toHaveBeenCalledWith(undefined);
+    expect(resultSpy).toHaveBeenCalledWith({action: 'DISMISS'});
 }, 30000);
 
 test('showSheet ACTIONS_LIST', async () => {
