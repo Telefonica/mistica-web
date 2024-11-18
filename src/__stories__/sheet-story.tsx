@@ -124,6 +124,7 @@ export const ShowSheet: StoryComponent<ShowSheetArgs> = ({
                                             },
                                         },
                                     ],
+                                    button: {text: 'Dismiss'},
                                 },
                             }).then((response) => {
                                 setOpenDialogType(undefined);

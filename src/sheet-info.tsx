@@ -10,6 +10,7 @@ import {Text3, Text2} from './text';
 import {vars as skinVars} from './skins/skin-contract.css';
 import * as styles from './sheet-info.css';
 import Image from './image';
+import {ButtonPrimary} from './button';
 
 import type {ExclusifyUnion} from './utils/utility-types';
 import type {DataAttributes, IconProps} from './utils/types';
@@ -38,10 +39,13 @@ type InfoSheetProps = {
     }>;
     onClose?: () => void;
     dataAttributes?: DataAttributes;
+    button?: {
+        text: string;
+    };
 };
 
 const InfoSheet = React.forwardRef<HTMLDivElement, InfoSheetProps>(
-    ({title, subtitle, description, items, onClose, dataAttributes}, ref) => {
+    ({title, subtitle, description, items, onClose, button, dataAttributes}, ref) => {
         const {isDarkMode} = useTheme();
         return (
             <Sheet
@@ -49,12 +53,17 @@ const InfoSheet = React.forwardRef<HTMLDivElement, InfoSheetProps>(
                 ref={ref}
                 dataAttributes={{'component-name': 'InfoSheet', ...dataAttributes}}
             >
-                {({modalTitleId}) => (
+                {({closeModal, modalTitleId}) => (
                     <SheetBody
                         title={title}
                         subtitle={subtitle}
                         description={description}
                         modalTitleId={modalTitleId}
+                        button={
+                            button ? (
+                                <ButtonPrimary onPress={closeModal}>{button.text}</ButtonPrimary>
+                            ) : undefined
+                        }
                     >
                         <Box paddingBottom={16} role="list">
                             {items.map((item, idx) => (

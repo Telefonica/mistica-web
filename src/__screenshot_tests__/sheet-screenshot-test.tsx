@@ -87,6 +87,23 @@ test('InfoSheet with multiple description paragraphs', async () => {
     expect(image).toMatchImageSnapshot();
 });
 
+test.each(TESTABLE_DEVICES)('InfoSheet with dismiss button in %s', async (device) => {
+    const page = await openStoryPage({
+        id: 'private-sheet-presets--info',
+        device,
+        args: {buttonText: 'Dismiss'},
+    });
+
+    const button = await screen.findByRole('button', {name: 'Open'});
+    await button.click();
+
+    await screen.findByRole('dialog');
+
+    const image = await page.screenshot();
+
+    expect(image).toMatchImageSnapshot();
+});
+
 test.each(TESTABLE_DEVICES_WITH_LARGE_DESKTOP)('ActionsSheet in %s', async (device) => {
     const page = await openStoryPage({
         id: 'private-sheet-presets--actions',

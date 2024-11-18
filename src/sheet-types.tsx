@@ -51,6 +51,9 @@ export type SheetPropsByType = {
             description?: string;
             icon: InfoIcon;
         }>;
+        button?: {
+            text: string;
+        };
     }>;
     ACTIONS: SheetProps<{
         button: {
@@ -71,7 +74,7 @@ export type SheetType = keyof SheetPropsByType;
 export type SheetResultByType = {
     RADIO_LIST: {action: 'SUBMIT'; selectedId: string} | {action: 'DISMISS'};
     ACTIONS_LIST: {action: 'SUBMIT'; selectedId: string} | {action: 'DISMISS'};
-    INFO: void;
+    INFO: {action: 'DISMISS'};
     ACTIONS: {action: 'PRIMARY' | 'SECONDARY' | 'LINK' | 'DISMISS'};
 };
 
