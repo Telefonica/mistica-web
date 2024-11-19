@@ -574,22 +574,23 @@ export const ratingQuantitativeLabel: TextToken = {
 };
 
 /**
- * 1$s: segment number
- * 2$s: segment percentage value
+ * 1$s: segments count
+ * 2$s: total percentage value
  */
-export const meterSegmentLabel: TextToken = {
-    es: 'Segmento 1$s 2$s%',
-    en: 'Segment 1$s 2$s%',
-    de: 'Segment 1$s 2$s%',
-    pt: 'Segmento 1$s 2$s%',
+export const meterTotalLabel: TextToken = {
+    es: 'Indicador de progreso con 1$s secciones, total 2$s% de 100%.',
+    en: 'Gauge chart 1$s segments, total 2$s% out of 100%.',
+    de: 'Fortschrittsanzeige mit 1$s Abschnitten, insgesamt 2$s% von 100%.',
+    pt: 'Indicador de progresso com 1$s seções, total 2$s% de 100%.',
 };
 
 /**
- * 1$s: percentage value
+ * 1$s: segment number
+ * 2$s: segment percentage value
  */
-export const meterPercentageLabel: TextToken = {
-    es: '1$s% de 0% a 100%',
-    en: '1$s% from 0% to 100%',
-    de: '1$s% von 0% bis 100%',
-    pt: '1$s% de 0% a 100%',
+export const meterSectionLabel: TextToken = {
+    es: 'Sección 1$s: 2$s%',
+    en: 'Segment 1$s: 2$s%',
+    de: 'Abschnitt 1$s: 2$s%',
+    pt: 'Seção 1$s: 2$s%',
 };

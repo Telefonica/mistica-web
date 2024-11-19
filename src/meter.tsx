@@ -7,7 +7,7 @@ import bezier from 'cubic-bezier';
 import {getPrefixedDataAttributes} from './utils/dom';
 import {useThemeVariant} from './theme-variant-context';
 import {useElementDimensions, useTheme} from './hooks';
-import {meterPercentageLabel, meterSegmentLabel} from './text-tokens';
+import {meterTotalLabel, meterSectionLabel} from './text-tokens';
 import {isRunningAcceptanceTest} from './utils/platform';
 
 import type {DataAttributes} from './utils/types';
@@ -277,9 +277,9 @@ const MeterComponent = ({
     const totalPercent = Math.round((lastSegment?.end || 0) * 100);
 
     const valueText =
-        values.map((v, i) => `${t(meterSegmentLabel, i + 1, Math.round(v * 100))}`).join(', ') +
-        `, ${t(meterPercentageLabel, totalPercent)}`;
-
+        t(meterTotalLabel, totalPercent) +
+        ' ' +
+        values.map((v, i) => `${t(meterSectionLabel, i + 1, Math.round(v * 100))}`).join(', ');
     return (
         <div
             ref={containerRef}
