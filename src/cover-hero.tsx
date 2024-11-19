@@ -156,7 +156,7 @@ const CoverHero = React.forwardRef<HTMLDivElement, CoverHeroProps>(
                         </div>
                     )}
                 </Stack>
-                <div data-testid="slot">{extra}</div>
+                {extra && <div data-testid="slot">{extra}</div>}
             </div>
         );
 

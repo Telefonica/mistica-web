@@ -72,7 +72,7 @@ export const Header = ({
             {(title || pretitle || description) && (
                 <Box paddingRight={16}>
                     <Stack space={8}>
-                        <div data-testid="headline">{headline}</div>
+                        {headline && <div data-testid="headline">{headline}</div>}
                         {renderPretitle()}
                         {title &&
                             (small ? (
