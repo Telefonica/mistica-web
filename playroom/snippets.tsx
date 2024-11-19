@@ -2584,33 +2584,278 @@ const navigationBarSnippets = [
         group: 'NavigationBar',
         name: 'MainNavigationBar',
         code: `
-<MainNavigationBar
-  sections={["Start", "Account", "Explore", "Support"].map((title, idx) => ({
-    title,
-    onPress: () => setState("index", idx),
-  }))}
-  selectedIndex={getState("index", 0)}
-  right={
-    <NavigationBarActionGroup>
-      <NavigationBarAction
-        onPress={() => {}}
-        aria-label="shopping cart with 2 items"
-      >
-        <Badge value={2}>
-          <IconShoppingCartRegular color="currentColor" />
-        </Badge>
-      </NavigationBarAction>
-      <NavigationBarAction onPress={() => {}} aria-label="Open profile">
-        <Avatar
-          size={isDesktopOrBigger ? 32 : 24}
-          initials="ML"
-          src="${imagePlaceholder}"
-        />
-        {isDesktopOrBigger && "María López Serrano"}
-      </NavigationBarAction>
-    </NavigationBarActionGroup>
-  }
-/>`,
+          <MainNavigationBar
+            sections={[
+              {
+                title: "Start",
+                onPress: () => setState("index", 0),
+              },
+              {
+                title: "Account",
+                onPress: () => setState("index", 1),
+              },
+              {
+                title: "Explore",
+                onPress: () => setState("index", 2),
+              },
+              {
+                title: "Support",
+                onPress: () => setState("index", 3),
+              },
+            ]}
+            selectedIndex={getState("index", 0)}
+            right={
+              <NavigationBarActionGroup>
+                <NavigationBarAction
+                  onPress={() => {}}
+                  aria-label="shopping cart with 2 items"
+                >
+                  <Badge value={2}>
+                    <IconShoppingCartRegular color="currentColor" />
+                  </Badge>
+                </NavigationBarAction>
+                <NavigationBarAction onPress={() => {}} aria-label="Open profile">
+                  <Avatar
+                    size={isDesktopOrBigger ? 32 : 24}
+                    initials="ML"
+                    src="${imagePlaceholder}"
+                  />
+                  {isDesktopOrBigger && "María López Serrano"}
+                </NavigationBarAction>
+              </NavigationBarActionGroup>
+            }
+          />`,
+    },
+    {
+        group: 'NavigationBar',
+        name: 'MainNavigationBar with menu',
+        code: `
+          <MainNavigationBar
+            sections={[
+              {
+                onPress: () => setState("index", 0),
+                title: "Start",
+                menu: {
+                  columns: [
+                    {
+                      title: "Start 1",
+                      items: [
+                        {
+                          title: "item 1",
+                          onPress: () => {},
+                        },
+                        {
+                          title: "item 2",
+                          href: "https://www.google.com/",
+                        },
+                        {
+                          title: "item 3",
+                          to: "#",
+                        },
+                      ],
+                    },
+                  ],
+                },
+              },
+              {
+                onPress: () => setState("index", 1),
+                title: "Account",
+                menu: {
+                  columns: [
+                    {
+                      title: "Account 1",
+                      items: [
+                        {
+                          title: "item 1",
+                          onPress: () => {},
+                        },
+                      ],
+                    },
+                  ],
+                },
+              },
+              {
+                onPress: () => setState("index", 2),
+                title: "Explore",
+                menu: {
+                  columns: [
+                    {
+                      title: "Explore 1",
+                      items: [
+                        {
+                          title: "item 1",
+                          onPress: () => {},
+                        },
+                        {
+                          title: "item 2",
+                          href: "https://www.google.com/",
+                        },
+                        {
+                          title: "item 3",
+                          to: "#",
+                        },
+                      ],
+                    },
+                  ],
+                },
+              },
+            ]}
+            selectedIndex={getState("index", 0)}
+          />`,
+    },
+    {
+        group: 'NavigationBar',
+        name: 'MainNavigationBar with large menu',
+        code: `
+          <MainNavigationBar
+            desktopLargeMenu
+            sections={[
+              {
+                onPress: () => setState("index", 0),
+                title: "Start",
+                menu: {
+                  columns: [
+                    {
+                      title: "Start 1",
+                      items: [
+                        {
+                          title: "item 1",
+                          onPress: () => {},
+                        },
+                        {
+                          title: "item 2",
+                          href: "https://www.google.com/",
+                        },
+                        {
+                          title: "item 3",
+                          to: "#",
+                        },
+                      ],
+                    },
+                    {
+                      title: "Start 2",
+                      items: [
+                        {
+                          title: "item 1",
+                          onPress: () => {},
+                        },
+                        {
+                          title: "item 2",
+                          href: "https://www.google.com/",
+                        },
+                        {
+                          title: "item 3",
+                          to: "#",
+                        },
+                      ],
+                    },
+                  ],
+                },
+              },
+              {
+                onPress: () => setState("index", 1),
+                title: "Account",
+                menu: {
+                  columns: [
+                    {
+                      title: "Account 1",
+                      items: [
+                        {
+                          title: "item 1",
+                          onPress: () => {},
+                        },
+                      ],
+                    },
+                  ],
+                },
+              },
+              {
+                onPress: () => setState("index", 2),
+                title: "Explore",
+                menu: {
+                  content: ({ closeMenu }) => (
+                    <Stack space={16}>
+                      <Text2 regular>Custom content</Text2>
+                      <Placeholder />
+                      <ButtonPrimary onPress={closeMenu}>Close menu</ButtonPrimary>
+                    </Stack>
+                  ),
+                },
+              },
+              {
+                onPress: () => setState("index", 3),
+                title: "Support",
+                menu: {
+                  content: isDesktopOrBigger ? (
+                    <Grid columns={12} gap={24}>
+                      {Array.from({ length: 3 }, (_, index) => (
+                        <GridItem columnSpan={2} key={index}>
+                          <Stack space={24}>
+                            <Title1>Contenidos</Title1>
+                            <Stack space={16}>
+                              {[
+                                "Destacados",
+                                "Todo fútbol",
+                                "#0",
+                                "Cine",
+                                "Oferta comercial",
+                                "Mi Movistar",
+                                "Movistar Cloud",
+                              ].map((title, index) => (
+                                <TextLink
+                                  key={index}
+                                  onPress={() => {}}
+                                  style={{ color: colors.textPrimary }}
+                                >
+                                  {title}
+                                </TextLink>
+                              ))}
+                            </Stack>
+                          </Stack>
+                        </GridItem>
+                      ))}
+
+                      <GridItem columnSpan={5} columnStart={8}>
+                        <DisplayMediaCard
+                          headline={<Tag type="promo">Oferta</Tag>}
+                          title="Movistar Plus+"
+                          onPress={() => {}}
+                          description="Contrata solo TV por 9,99 €"
+                          backgroundImage="${imagePlaceholder}"
+                        />
+                      </GridItem>
+                    </Grid>
+                  ) : (
+                    <Stack space={40}>
+                      {Array.from({ length: 3 }, (_, index) => (
+                        <Stack space={16} key={index}>
+                          <Title1>Title</Title1>
+                          <NegativeBox>
+                            <RowList>
+                              <Row title="Title" onPress={() => {}} />
+                              <Row title="Title" onPress={() => {}} />
+                              <Row title="Title" onPress={() => {}} />
+                              <Row title="Title" onPress={() => {}} />
+                            </RowList>
+                          </NegativeBox>
+                        </Stack>
+                      ))}
+
+                      <DisplayMediaCard
+                        headline={<Tag type="promo">Oferta</Tag>}
+                        title="Movistar Plus+"
+                        aspectRatio="1:1"
+                        onPress={() => {}}
+                        description="Contrata solo TV por 9,99 €"
+                        backgroundImage="${imagePlaceholder}"
+                      />
+                    </Stack>
+                  ),
+                },
+              },
+            ]}
+            selectedIndex={getState("index", 0)}
+          />`,
     },
     {
         group: 'NavigationBar',
