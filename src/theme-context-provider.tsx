@@ -133,8 +133,15 @@ const ThemeContextProvider = ({theme, children, as, withoutStyles = false}: Prop
     const language = localeToLanguage(theme.i18n.locale);
 
     const translate = React.useCallback(
-        (token: TextToken): string => {
-            return token[language] || token.en;
+        (token: TextToken, ...params: Array<string | number>): string => {
+            const text = token[language] || token.en;
+            if (!params.length) {
+                return text;
+            }
+            // replace token parameters: 1$s, 2$s, 3$s, etc.
+            return text.replace(/\d+\$s/g, (substr) => {
+                return String(params[parseInt(substr) - 1] ?? substr);
+            });
         },
         [language]
     );
@@ -174,6 +181,7 @@ const ThemeContextProvider = ({theme, children, as, withoutStyles = false}: Prop
                 ...sanitizeDimensions(theme.dimensions),
             },
             textPresets,
+            borderRadii: theme.skin.borderRadii ?? defaultBorderRadiiConfig,
             Link: getMisticaLinkComponent(theme.Link),
             isDarkMode: isDarkModeEnabled,
             isIos: getPlatform(platformOverrides) === 'ios',

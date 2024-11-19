@@ -11,6 +11,7 @@ import {
     Image,
     HighlightedCard,
     IconShopRegular,
+    Meter,
     Placeholder,
     SearchField,
     Stack,
@@ -277,4 +278,13 @@ test('MainSectionHeader test ids', () => {
             },
         ]
     );
+});
+
+test('Meter test ids', () => {
+    checkTestIds(<Meter values={[10, 20, 30]} />, [
+        {
+            componentName: 'Meter',
+            internalTestIds: [],
+        },
+    ]);
 });
