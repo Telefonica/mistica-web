@@ -68,12 +68,8 @@ const InfoSheet = React.forwardRef<HTMLDivElement, InfoSheetProps>(
                     >
                         <Box paddingBottom={16} role="list">
                             {items.map((item, idx) => (
-                                <>
-                                    <div
-                                        key={item.id || idx}
-                                        className={styles.itemContainer}
-                                        role="listitem"
-                                    >
+                                <React.Fragment key={item.id || idx}>
+                                    <div className={styles.itemContainer} role="listitem">
                                         <Inline space={8}>
                                             <div
                                                 className={styles.infoItemIconContainer}
@@ -118,7 +114,7 @@ const InfoSheet = React.forwardRef<HTMLDivElement, InfoSheetProps>(
                                         </Inline>
                                     </div>
                                     {idx < items.length - 1 && <Divider />}
-                                </>
+                                </React.Fragment>
                             ))}
                         </Box>
                     </SheetBody>
