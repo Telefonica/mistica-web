@@ -277,9 +277,10 @@ const MeterComponent = ({
     const totalPercent = Math.round((lastSegment?.end || 0) * 100);
 
     const valueText =
-        t(meterTotalLabel, totalPercent) +
+        t(meterTotalLabel, values.length, totalPercent) +
         ' ' +
-        values.map((v, i) => `${t(meterSectionLabel, i + 1, Math.round(v * 100))}`).join(', ');
+        values.map((v, i) => `${t(meterSectionLabel, i + 1, Math.round(v * 100))}`).join('. ');
+
     return (
         <div
             ref={containerRef}
