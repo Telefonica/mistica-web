@@ -4142,6 +4142,24 @@ const ratingSnippets: Array<Snippet> = [
     },
 ];
 
+const meterSnippets: Array<Snippet> = [
+    {
+        group: 'Meter',
+        name: 'Meter Linear',
+        code: '<Meter width={200} type="linear" values={[33, 33, 0]} />',
+    },
+    {
+        group: 'Meter',
+        name: 'Meter Angular',
+        code: '<Meter width={200} type="angular" values={[33, 33, 0]} />',
+    },
+    {
+        group: 'Meter',
+        name: 'Meter Circular',
+        code: '<Meter width={200} type="circular" values={[33, 33, 0]} />',
+    },
+];
+
 export default [
     ...buttonSnippets,
     ...formSnippets,
@@ -4188,6 +4206,7 @@ export default [
     ...sliderSnippets,
     ...cardSnippets,
     ...exampleScreens,
+    ...meterSnippets,
     {
         group: 'Progress',
         name: 'Stepper',
