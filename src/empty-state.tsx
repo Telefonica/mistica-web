@@ -67,7 +67,9 @@ const EmptyState = ({
     const {isDarkMode} = useTheme();
     const isInverse = useIsInverseOrMediaVariant();
 
-    const image = imageUrl ? <img className={styles.smallImage} alt="" src={imageUrl} /> : undefined;
+    const image = imageUrl ? (
+        <img data-testid="image" className={styles.smallImage} alt="" src={imageUrl} />
+    ) : undefined;
 
     const buttons: ButtonGroupProps = {
         ...(button?.type === ButtonPrimary ? {primaryButton: button} : {secondaryButton: button}),
@@ -92,13 +94,21 @@ const EmptyState = ({
                         largeImageUrl ? styles.contentVariants.largeImage : styles.contentVariants.default
                     }
                 >
-                    {image ?? (asset && <div className={styles.assetContainer}>{asset}</div>)}
+                    {image ??
+                        (asset && (
+                            <div data-testid="asset" className={styles.assetContainer}>
+                                {asset}
+                            </div>
+                        ))}
                     <Stack space={16}>
-                        <Text6 as={titleAs}>{title}</Text6>
+                        <Text6 as={titleAs} dataAttributes={{testid: 'title'}}>
+                            {title}
+                        </Text6>
                         <Text3
                             regular
                             as="p"
                             color={isInverse ? vars.colors.inverse : vars.colors.textSecondary}
+                            dataAttributes={{testid: 'description'}}
                         >
                             {description}
                         </Text3>
@@ -115,6 +125,7 @@ const EmptyState = ({
                         width="100%"
                     >
                         <div
+                            data-testid="image"
                             className={styles.largeImage}
                             style={{backgroundImage: `url(${largeImageUrl})`}}
                         />

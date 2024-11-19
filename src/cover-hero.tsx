@@ -110,17 +110,34 @@ const CoverHero = React.forwardRef<HTMLDivElement, CoverHeroProps>(
 
         const mainContent = (
             <div className={styles.mainContent}>
-                {headline && <Box paddingBottom={{desktop: 8, tablet: 8, mobile: 16}}>{headline}</Box>}
+                {headline && (
+                    <Box
+                        dataAttributes={{testid: 'headline'}}
+                        paddingBottom={{desktop: 8, tablet: 8, mobile: 16}}
+                    >
+                        {headline}
+                    </Box>
+                )}
                 <Stack space={16}>
                     <Stack space={8}>
                         {pretitle && (
                             <div className={styles.sixColumns}>
-                                <Text3 regular truncate={pretitleLinesMax} textShadow={textShadow}>
+                                <Text3
+                                    regular
+                                    truncate={pretitleLinesMax}
+                                    textShadow={textShadow}
+                                    dataAttributes={{testid: 'pretitle'}}
+                                >
                                     {pretitle}
                                 </Text3>
                             </div>
                         )}
-                        <Text8 as={titleAs} truncate={titleLinesMax} textShadow={textShadow}>
+                        <Text8
+                            as={titleAs}
+                            truncate={titleLinesMax}
+                            textShadow={textShadow}
+                            dataAttributes={{testid: 'title'}}
+                        >
                             {title}
                         </Text8>
                     </Stack>
@@ -132,13 +149,14 @@ const CoverHero = React.forwardRef<HTMLDivElement, CoverHeroProps>(
                                 truncate={descriptionLinesMax}
                                 color={hasMedia ? vars.colors.textPrimary : vars.colors.textSecondary}
                                 textShadow={textShadow}
+                                dataAttributes={{testid: 'description'}}
                             >
                                 {description}
                             </Text3>
                         </div>
                     )}
                 </Stack>
-                {extra}
+                <div data-testid="slot">{extra}</div>
             </div>
         );
 
@@ -180,7 +198,11 @@ const CoverHero = React.forwardRef<HTMLDivElement, CoverHeroProps>(
                                         template="8+4"
                                         collapseBreakpoint="mobile"
                                         left={mainContent}
-                                        right={<div className={styles.sideExtra}>{sideExtra}</div>}
+                                        right={
+                                            <div className={styles.sideExtra} data-testid="sideSlot">
+                                                {sideExtra}
+                                            </div>
+                                        }
                                     />
                                 )}
                                 <ButtonGroup

@@ -63,15 +63,24 @@ const Callout = ({
             {...getPrefixedDataAttributes(dataAttributes, 'Callout')}
         >
             <ThemeVariant isInverse={false}>
-                {asset && <Box paddingRight={16}>{asset}</Box>}
+                {asset && (
+                    <Box paddingRight={16} dataAttributes={{testid: 'asset'}}>
+                        {asset}
+                    </Box>
+                )}
                 <div className={styles.content}>
                     <Stack space={16}>
                         <Inline fullWidth alignItems="flex-start" space="between">
                             <Stack space={4}>
-                                <Text3 as={titleAs} regular>
+                                <Text3 as={titleAs} regular dataAttributes={{testid: 'title'}}>
                                     {title}
                                 </Text3>
-                                <Text2 as="p" regular color={vars.colors.textSecondary}>
+                                <Text2
+                                    as="p"
+                                    regular
+                                    color={vars.colors.textSecondary}
+                                    dataAttributes={{testid: 'description'}}
+                                >
                                     {description}
                                 </Text2>
                             </Stack>
@@ -93,6 +102,7 @@ const Callout = ({
                     {onClose && (
                         <div className={styles.closeButtonContainer}>
                             <IconButton
+                                dataAttributes={{testid: 'closeButton'}}
                                 small
                                 bleedY
                                 bleedRight

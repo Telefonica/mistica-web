@@ -2,7 +2,10 @@ export type {RendersElement, RendersNullableElement} from './renders-element';
 
 export type {TrackingEvent} from '@tef-novum/webview-bridge';
 
-export type DataAttributes = {[name: string]: string | number | boolean | undefined};
+export type DataAttributes = {
+    [name: string]: string | number | boolean | undefined;
+    testid?: string;
+};
 
 export type IconProps = {
     color?: string;

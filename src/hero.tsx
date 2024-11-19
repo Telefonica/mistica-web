@@ -75,14 +75,18 @@ const HeroContent = ({
         <section className={styles.contentContainer}>
             <div>
                 <Stack space={16}>
-                    {headline && headline}
+                    {headline && <div data-testid="headline">{headline}</div>}
                     <Stack space={8}>
                         {pretitle && (
-                            <Text3 as="p" regular>
+                            <Text3 as="p" regular dataAttributes={{testid: 'pretitle'}}>
                                 {pretitle}
                             </Text3>
                         )}
-                        {title && <Text8 as={titleAs}>{title}</Text8>}
+                        {title && (
+                            <Text8 as={titleAs} dataAttributes={{testid: 'title'}}>
+                                {title}
+                            </Text8>
+                        )}
                     </Stack>
                     {description && (
                         <Text3
@@ -90,12 +94,13 @@ const HeroContent = ({
                             regular
                             color={skinVars.colors.textSecondary}
                             truncate={descriptionLinesMax}
+                            dataAttributes={{testid: 'description'}}
                         >
                             {description}
                         </Text3>
                     )}
                 </Stack>
-                {extra && <div>{extra}</div>}
+                {extra && <div data-testid="slot">{extra}</div>}
             </div>
             {(button || buttonLink) && (
                 <div className={styles.actions}>
@@ -151,7 +156,7 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
                 <ResetResponsiveLayout>
                     <div style={applyCssVars({[mediaStyles.vars.mediaBorderRadius]: '0px'})}>
                         <div
-                            {...getPrefixedDataAttributes({'component-name': 'Hero', ...dataAttributes})}
+                            {...getPrefixedDataAttributes(dataAttributes, 'Hero')}
                             ref={ref}
                             style={{
                                 ...(height === '100vh' ? {maxHeight: '-webkit-fill-available'} : {}), // Hack to avoid issues in Safari with 100vh
@@ -209,7 +214,7 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
 
         return (
             <div
-                {...getPrefixedDataAttributes({'component-name': 'Hero', ...dataAttributes})}
+                {...getPrefixedDataAttributes(dataAttributes, 'Hero')}
                 ref={ref}
                 style={{
                     ...(height === '100vh' ? {maxHeight: '-webkit-fill-available'} : {}), // Hack to avoid issues in Safari with 100vh
