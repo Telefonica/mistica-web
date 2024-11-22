@@ -6,7 +6,7 @@ import {
     ButtonPrimary,
     Inline,
     Placeholder,
-    ResponsiveLayout,
+    SheetBody,
     showSheet,
     Stack,
     Text2,
@@ -45,7 +45,10 @@ export const Default: StoryComponent = () => {
                     description="Check Sheet component docs for more info."
                     asset={<IconInformationRegular />}
                     buttonLink={
-                        <ButtonLink href="https://github.com/Telefonica/mistica-web/blob/master/doc/sheet.md">
+                        <ButtonLink
+                            small
+                            href="https://github.com/Telefonica/mistica-web/blob/master/doc/sheet.md"
+                        >
                             See docs
                         </ButtonLink>
                     }
@@ -58,11 +61,13 @@ export const Default: StoryComponent = () => {
                         setOpen(false);
                     }}
                 >
-                    <ResponsiveLayout>
-                        <Box paddingBottom={{mobile: 16, desktop: 40}} paddingTop={{mobile: 0, desktop: 40}}>
-                            <Placeholder />
-                        </Box>
-                    </ResponsiveLayout>
+                    {({modalTitleId}) => (
+                        <SheetBody modalTitleId={modalTitleId}>
+                            <Box paddingBottom={{mobile: 16, desktop: 0}}>
+                                <Placeholder />
+                            </Box>
+                        </SheetBody>
+                    )}
                 </Sheet>
             )}
         </Box>
