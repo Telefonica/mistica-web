@@ -7,6 +7,7 @@ import Image from '../../image';
 import StackingGroup from '../../stacking-group';
 import {Placeholder} from '../../placeholder';
 
+import type {HeadingType} from '../../utils/types';
 import type {TagType} from '../../tag';
 
 export default {
@@ -17,7 +18,9 @@ type Args = {
     headlineType: TagType;
     headline: string;
     pretitle: string;
+    pretitleAs: HeadingType;
     title: string;
+    titleAs: HeadingType;
     subtitle: string;
     description: string;
     stackingGroup: boolean;
@@ -33,7 +36,9 @@ export const Default: StoryComponent<Args> = ({
     headlineType,
     headline,
     pretitle,
+    pretitleAs,
     title,
+    titleAs,
     subtitle,
     description,
     stackingGroup,
@@ -86,7 +91,9 @@ export const Default: StoryComponent<Args> = ({
             }
             headline={headline ? <Tag type={headlineType}>{headline}</Tag> : undefined}
             pretitle={pretitle}
+            pretitleAs={pretitleAs}
             title={title}
+            titleAs={titleAs}
             subtitle={subtitle}
             description={description}
             aria-label="aria label"
@@ -109,7 +116,9 @@ Default.args = {
     headlineType: 'promo',
     headline: 'headline',
     pretitle: 'pretitle',
+    pretitleAs: 'span',
     title: 'title',
+    titleAs: 'h3',
     subtitle: 'subtitle',
     description: 'description',
     stackingGroup: true,
@@ -136,6 +145,14 @@ Default.argTypes = {
             'link and href',
             'button link and href',
         ],
+        control: {type: 'select'},
+    },
+    pretitleAs: {
+        options: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'span'],
+        control: {type: 'select'},
+    },
+    titleAs: {
+        options: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'span'],
         control: {type: 'select'},
     },
 };

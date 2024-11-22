@@ -13,11 +13,13 @@ import {vars} from '../skins/skin-contract.css';
 import Box from '../box';
 import Touchable from '../touchable';
 import classNames from 'classnames';
-import {CardActionsGroup} from '../card';
+import {CardActionsGroup, useInnerText} from '../card';
 import {useTheme} from '../hooks';
 import {getPrefixedDataAttributes} from '../utils/dom';
 import Inline from '../inline';
 import {applyCssVars} from '../utils/css';
+import Tag from '../tag';
+import {isBiggerHeading} from '../utils/headings';
 
 import type {PressHandler} from '../touchable';
 import type {ExclusifyUnion} from '../utils/utility-types';
@@ -27,7 +29,6 @@ import type Image from '../image';
 import type {ButtonPrimary, ButtonLink} from '../button';
 import type {DataAttributes, HeadingType, TrackingEvent} from '../utils/types';
 import type {RendersNullableElement} from '../utils/renders-element';
-import type Tag from '../tag';
 import type {
     HighlightedValueBlock,
     InformationBlock,
@@ -59,11 +60,12 @@ type MaybeTouchableCard<T> = ExclusifyUnion<TouchableCard<T> | T>;
 
 type CardContentProps = {
     headline?: string | RendersNullableElement<typeof Tag>;
+    headlineRef?: (instance: HTMLElement | null) => void;
     pretitle?: string;
-    pretitleAs?: string;
+    pretitleAs?: HeadingType;
     pretitleLinesMax?: number;
     title?: string;
-    titleAs?: string;
+    titleAs: HeadingType;
     titleLinesMax?: number;
     subtitle?: string;
     subtitleLinesMax?: number;
@@ -73,11 +75,12 @@ type CardContentProps = {
 
 const CardContent = ({
     headline,
+    headlineRef,
     pretitle,
-    pretitleAs = 'p',
+    pretitleAs,
     pretitleLinesMax,
     title,
-    titleAs = 'h3',
+    titleAs,
     titleLinesMax,
     subtitle,
     subtitleLinesMax,
@@ -87,36 +90,78 @@ const CardContent = ({
     const {textPresets} = useTheme();
 
     return (
-        <Stack space={4}>
-            {headline}
-            {pretitle && (
-                <Text2
-                    color={vars.colors.textPrimary}
-                    truncate={pretitleLinesMax}
-                    as={pretitleAs}
-                    regular
-                    hyphens="auto"
-                >
-                    {pretitle}
-                </Text2>
+        /** using flex instead of nested Stacks, this way we can rearrange texts so the DOM structure makes more sense for screen reader users */
+        <div className={styles.flexColumn}>
+            {isBiggerHeading(titleAs, pretitleAs) ? (
+                <>
+                    {title && (
+                        <div style={{paddingBottom: subtitle || description ? 4 : 0}}>
+                            <Text
+                                {...textProps.text4}
+                                truncate={titleLinesMax}
+                                weight={textPresets.cardTitle.weight}
+                                as={titleAs}
+                                hyphens="auto"
+                            >
+                                {title}
+                            </Text>
+                        </div>
+                    )}
+                    {headline && (
+                        // assuming that the headline will always be followed by one of: pretitle, title, subtitle, description
+                        <div ref={headlineRef} style={{order: -2, paddingBottom: 4}}>
+                            {typeof headline === 'string' ? <Tag type="promo">{headline}</Tag> : headline}
+                        </div>
+                    )}
+                    {pretitle && (
+                        <div style={{order: -1, paddingBottom: title || subtitle || description ? 4 : 0}}>
+                            <Text2 truncate={pretitleLinesMax} as={pretitleAs} regular hyphens="auto">
+                                {pretitle}
+                            </Text2>
+                        </div>
+                    )}
+                </>
+            ) : (
+                <>
+                    {pretitle && (
+                        <div style={{paddingBottom: title || subtitle || description ? 4 : 0}}>
+                            <Text2 truncate={pretitleLinesMax} as={pretitleAs} regular hyphens="auto">
+                                {pretitle}
+                            </Text2>
+                        </div>
+                    )}
+                    {headline && (
+                        // assuming that the headline will always be followed by one of: pretitle, title, subtitle, description
+                        <div ref={headlineRef} style={{order: -1, paddingBottom: 4}}>
+                            {typeof headline === 'string' ? <Tag type="promo">{headline}</Tag> : headline}
+                        </div>
+                    )}
+                    {title && (
+                        <div style={{paddingBottom: subtitle || description ? 4 : 0}}>
+                            <Text
+                                {...textProps.text4}
+                                truncate={titleLinesMax}
+                                weight={textPresets.cardTitle.weight}
+                                as={titleAs}
+                                hyphens="auto"
+                            >
+                                {title}
+                            </Text>
+                        </div>
+                    )}
+                </>
             )}
-
-            <Text
-                {...textProps.text4}
-                truncate={titleLinesMax}
-                weight={textPresets.cardTitle.weight}
-                as={titleAs}
-                hyphens="auto"
-            >
-                {title}
-            </Text>
-            <Text2 color={vars.colors.textPrimary} truncate={subtitleLinesMax} as="p" regular hyphens="auto">
-                {subtitle}
-            </Text2>
+            {subtitle && (
+                <div style={{paddingBottom: description ? 4 : 0}}>
+                    <Text2 truncate={subtitleLinesMax} as="div" regular hyphens="auto">
+                        {subtitle}
+                    </Text2>
+                </div>
+            )}
             {description && (
                 <Text2
                     truncate={descriptionLinesMax}
-                    as="p"
+                    as="div"
                     regular
                     color={vars.colors.textSecondary}
                     hyphens="auto"
@@ -124,7 +169,7 @@ const CardContent = ({
                     {description}
                 </Text2>
             )}
-        </Stack>
+        </div>
     );
 };
 
@@ -246,7 +291,7 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
             pretitleAs,
             pretitleLinesMax,
             title,
-            titleAs,
+            titleAs = 'h3',
             titleLinesMax,
             subtitle,
             subtitleLinesMax,
@@ -265,7 +310,7 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
 
             dataAttributes,
             actions,
-            'aria-label': ariaLabel,
+            'aria-label': ariaLabelProp,
             onClose,
             ...touchableProps
         },
@@ -279,6 +324,18 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
         const hasExtras = !!extra?.length;
 
         const topActionsCount = (actions?.length || 0) + (onClose ? 1 : 0);
+
+        const {text: headlineText, ref: headlineRef} = useInnerText();
+        const {text: extraText, ref: extraRef} = useInnerText();
+
+        const ariaLabel =
+            ariaLabelProp ||
+            (isBiggerHeading(titleAs, pretitleAs)
+                ? [title, headlineText, pretitle, subtitle, description, extraText]
+                : [pretitle, headlineText, title, subtitle, description, extraText]
+            )
+                .filter(Boolean)
+                .join(' ');
 
         return (
             <section
@@ -301,6 +358,7 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
                                 styles.cardContentStyle,
                                 !hasFooter && !hasExtras ? styles.minHeight : ''
                             )}
+                            aria-hidden={isTouchable}
                         >
                             <Box paddingTop={8}>
                                 <Inline space={0}>
@@ -308,6 +366,7 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
                                         {stackingGroup}
                                         <CardContent
                                             headline={headline}
+                                            headlineRef={headlineRef}
                                             pretitle={pretitle}
                                             pretitleAs={pretitleAs}
                                             pretitleLinesMax={pretitleLinesMax}
@@ -334,7 +393,7 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
                         </div>
                         <div style={{flexGrow: 1}} />
                         {hasExtras && (
-                            <div className={styles.extra}>
+                            <div className={styles.extra} ref={extraRef}>
                                 {extra.map((item, index) => {
                                     return (
                                         <div key={index}>

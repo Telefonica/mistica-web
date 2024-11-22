@@ -43,7 +43,7 @@ import type {VideoElement, VideoSource} from './video';
 import type {ButtonLink, ButtonPrimary, ButtonSecondary} from './button';
 import type {ExclusifyUnion} from './utils/utility-types';
 
-const useInnerText = () => {
+export const useInnerText = (): {text: string; ref: (instance: HTMLElement | null) => void} => {
     const [text, setText] = React.useState('');
 
     const ref: React.LegacyRef<HTMLElement> = React.useCallback((node: HTMLElement) => {
@@ -638,7 +638,7 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
                         aria-label={isTouchable ? ariaLabel : undefined}
                     >
                         {isTouchable && <div className={styles.touchableMediaCardOverlay} />}
-                        <div className={styles.mediaCard}>
+                        <div className={styles.mediaCard} aria-hidden={isTouchable}>
                             <div style={applyCssVars({[mediaStyles.vars.mediaBorderRadius]: '0px'})}>
                                 {media}
                             </div>
@@ -742,7 +742,7 @@ export const NakedCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
                     className={styles.touchable}
                     aria-label={isTouchable ? ariaLabel : undefined}
                 >
-                    <div className={styles.mediaCard}>
+                    <div className={styles.mediaCard} aria-hidden={isTouchable}>
                         <div style={{position: 'relative'}}>
                             {isTouchable && (
                                 <div
@@ -854,7 +854,7 @@ export const SmallNakedCard = React.forwardRef<HTMLDivElement, SmallNakedCardPro
                     className={styles.touchable}
                     aria-label={isTouchable ? ariaLabel : undefined}
                 >
-                    <div className={styles.mediaCard}>
+                    <div className={styles.mediaCard} aria-hidden={isTouchable}>
                         <div style={{position: 'relative'}}>
                             {isTouchable && (
                                 <div
@@ -1014,7 +1014,7 @@ export const DataCard = React.forwardRef<HTMLDivElement, DataCardProps>(
                         aria-label={isTouchable ? ariaLabel : undefined}
                     >
                         {isTouchable && <div className={styles.touchableCardOverlay} />}
-                        <div className={styles.dataCard}>
+                        <div className={styles.dataCard} aria-hidden={isTouchable}>
                             <Inline space={0}>
                                 <Stack space={16}>
                                     {asset && (
@@ -1146,7 +1146,7 @@ export const SnapCard = React.forwardRef<HTMLDivElement, SnapCardProps>(
                         aria-label={isTouchable ? ariaLabel : undefined}
                     >
                         {isTouchable && <div className={overlayStyle} />}
-                        <section className={styles.snapCard}>
+                        <section className={styles.snapCard} aria-hidden={isTouchable}>
                             <div>
                                 {asset && (
                                     <div
@@ -1467,7 +1467,7 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
                     >
                         {isTouchable && <div className={overlayStyle} />}
 
-                        <div className={styles.displayCardContainer}>
+                        <div className={styles.displayCardContainer} aria-hidden={isTouchable}>
                             {(hasImage || hasVideo) && (
                                 <ThemeVariant variant={isExternalInverse ? 'inverse' : 'default'}>
                                     <div className={styles.displayCardBackground}>
