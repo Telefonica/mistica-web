@@ -4,8 +4,8 @@ import {makeTheme} from './test-utils';
 import {render, screen} from '@testing-library/react';
 import ThemeContextProvider from '../theme-context-provider';
 
-const pretitleFirst = 'HeadlinePretitleTitleDescription';
-const titleFirst = 'HeadlineTitlePretitleDescription';
+const pretitleFirst = 'PretitleHeadlineTitleDescription';
+const titleFirst = 'TitleHeadlinePretitleDescription';
 
 test.each`
     pretitleAs   | titleAs      | expectedOrder

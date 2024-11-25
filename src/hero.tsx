@@ -91,17 +91,23 @@ const HeroContent = ({
         </Text3>
     ) : undefined;
 
+    const headlineContent = headline ? (
+        // assuming that the headline will always be followed by one of: pretitle, title, subtitle, description
+        <div data-testid="headline" style={{paddingBottom: 16, order: -1}}>
+            {headline}
+        </div>
+    ) : undefined;
+
     return (
         <section className={styles.contentContainer}>
             <div>
                 <Stack space={16}>
-                    {headline && <div data-testid="headline">{headline}</div>}
-
                     {/** using flex instead of nested Stacks, this way we can rearrange texts so the DOM structure makes more sense for screen reader users */}
                     <div className={styles.flexColumn}>
                         {isBiggerHeading(titleAs, pretitleAs) ? (
                             <>
                                 {titleContent}
+                                {headlineContent}
                                 {pretitleContent && (
                                     <div style={{paddingBottom: title ? 8 : 0, order: -1}}>
                                         {pretitleContent}
@@ -113,6 +119,7 @@ const HeroContent = ({
                                 {pretitleContent && (
                                     <div style={{paddingBottom: title ? 8 : 0}}>{pretitleContent}</div>
                                 )}
+                                {headlineContent}
                                 {titleContent}
                             </>
                         )}

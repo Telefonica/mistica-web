@@ -87,30 +87,29 @@ export const Header = ({
         )
     ) : undefined;
 
+    const headlineContent = headline ? (
+        // assuming that the headline will always be followed by one of: pretitle, title, description
+        <div style={{paddingBottom: 8, order: -1}} data-testid="headline">
+            {headline}
+        </div>
+    ) : undefined;
+
     return (
         <Stack space={{mobile: 24, desktop: 32}} dataAttributes={{testid: 'Header', ...dataAttributes}}>
             {(title || pretitle || description) && (
                 <Box paddingRight={16}>
                     {/** using flex instead of nested Stacks, this way we can rearrange texts so the DOM structure makes more sense for screen reader users */}
                     <div className={styles.flexColumn}>
-                        {headline && (
-                            <div
-                                style={{paddingBottom: pretitle || title || description ? 8 : 0}}
-                                data-testid="headline"
-                            >
-                                {headline}
-                            </div>
-                        )}
-
                         {isBiggerHeading(titleAs, pretitleAs) ? (
                             <>
                                 {titleContent && (
-                                    <div style={{paddingBottom: pretitle || description ? 8 : 0, order: 1}}>
-                                        {titleContent}
-                                    </div>
+                                    <div style={{paddingBottom: description ? 8 : 0}}>{titleContent}</div>
                                 )}
+                                {headlineContent}
                                 {pretitleContent && (
-                                    <div style={{paddingBottom: description ? 8 : 0}}>{pretitleContent}</div>
+                                    <div style={{paddingBottom: pretitle || description ? 8 : 0, order: -1}}>
+                                        {pretitleContent}
+                                    </div>
                                 )}
                             </>
                         ) : (
@@ -120,6 +119,7 @@ export const Header = ({
                                         {pretitleContent}
                                     </div>
                                 )}
+                                {headlineContent}
                                 {titleContent && (
                                     <div style={{paddingBottom: description ? 8 : 0}}>{titleContent}</div>
                                 )}

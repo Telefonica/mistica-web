@@ -123,7 +123,7 @@ const CoverHero = React.forwardRef<HTMLDivElement, CoverHeroProps>(
             </Text3>
         ) : undefined;
 
-        const titleContent = (
+        const titleContent = title ? (
             <Text8
                 as={titleAs}
                 truncate={titleLinesMax}
@@ -132,24 +132,28 @@ const CoverHero = React.forwardRef<HTMLDivElement, CoverHeroProps>(
             >
                 {title}
             </Text8>
-        );
+        ) : undefined;
+
+        const headlineContent = headline ? (
+            <div style={{order: -1}}>
+                <Box
+                    dataAttributes={{testid: 'headline'}}
+                    paddingBottom={{desktop: 8, tablet: 8, mobile: 16}}
+                >
+                    {headline}
+                </Box>
+            </div>
+        ) : undefined;
 
         const mainContent = (
             <div className={styles.mainContent}>
-                {headline && (
-                    <Box
-                        dataAttributes={{testid: 'headline'}}
-                        paddingBottom={{desktop: 8, tablet: 8, mobile: 16}}
-                    >
-                        {headline}
-                    </Box>
-                )}
                 <Stack space={16}>
                     {/** using flex instead of nested Stacks, this way we can rearrange texts so the DOM structure makes more sense for screen reader users */}
                     <div className={styles.flexColumn}>
                         {isBiggerHeading(titleAs, pretitleAs) ? (
                             <>
                                 {titleContent}
+                                {headlineContent}
                                 {pretitleContent && (
                                     <div
                                         className={styles.sixColumns}
@@ -166,6 +170,7 @@ const CoverHero = React.forwardRef<HTMLDivElement, CoverHeroProps>(
                                         {pretitleContent}
                                     </div>
                                 )}
+                                {headlineContent}
                                 {titleContent}
                             </>
                         )}
