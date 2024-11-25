@@ -1,3 +1,13 @@
+# [16.5.0](https://github.com/Telefonica/mistica-web/compare/v16.4.0...v16.5.0) (2024-11-18)
+
+
+### Features
+
+* **Accordion, BoxedAccordion:** allow detail and right content in header ([#1290](https://github.com/Telefonica/mistica-web/issues/1290)) ([087c486](https://github.com/Telefonica/mistica-web/commit/087c4866757733339e51ed9de54b844fecf7aed5))
+* **HorizontalMosaic, VerticalMosaic:** allow passing gridMode information to each item ([#1289](https://github.com/Telefonica/mistica-web/issues/1289)) ([bb8852c](https://github.com/Telefonica/mistica-web/commit/bb8852c439cb33b2ae7c877a2ac32760ec29180c))
+* **MainNavigationBar:** add menu ([#1280](https://github.com/Telefonica/mistica-web/issues/1280)) ([3973ead](https://github.com/Telefonica/mistica-web/commit/3973ead1ebef7f613b1aebd3c18306fc88999de0))
+* **vivo-type:** added medium weight ([#1291](https://github.com/Telefonica/mistica-web/issues/1291)) ([8a38d2c](https://github.com/Telefonica/mistica-web/commit/8a38d2c1c16a17b931f96c75b400d7ba8c036a93))
+
 # [16.4.0](https://github.com/Telefonica/mistica-web/compare/v16.3.1...v16.4.0) (2024-11-04)
 
 

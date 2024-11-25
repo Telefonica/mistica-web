@@ -2,11 +2,15 @@ import {style, styleVariants} from '@vanilla-extract/css';
 import {sprinkles} from './sprinkles.css';
 import {NAVBAR_HEIGHT_DESKTOP, NAVBAR_HEIGHT_DESKTOP_LARGE, NAVBAR_HEIGHT_MOBILE} from './theme';
 import * as mq from './media-queries.css';
-import {vars as colorVars} from './skins/skin-contract.css';
+import {vars} from './skins/skin-contract.css';
 
 const NAVBAR_ZINDEX = 25;
 
-const BURGER_MENU_ANIMATION_DURATION_MS = 300;
+export const DESKTOP_SMALL_MENU_WIDTH = 184;
+
+export const BURGER_MENU_ANIMATION_DURATION_MS = 300;
+export const DESKTOP_MENU_ANIMATION_DURATION_MS = 400;
+const DESKTOP_MENU_CONTENT_ANIMATION_DURATION_MS = 800;
 
 export const burgerIconContainer = style([
     sprinkles({
@@ -96,12 +100,12 @@ const navbarBase = style([
 ]);
 
 export const navbarBorderColorVariants = styleVariants({
-    default: [navbarBase, {borderColor: colorVars.colors.divider}],
+    default: [navbarBase, {borderColor: vars.colors.divider}],
     noBorder: [navbarBase, {borderColor: 'transparent'}],
     menuOpen: [
         navbarBase,
         {
-            borderColor: colorVars.colors.divider,
+            borderColor: vars.colors.divider,
 
             '@media': {
                 [mq.tabletOrSmaller]: {
@@ -112,6 +116,63 @@ export const navbarBorderColorVariants = styleVariants({
     ],
 });
 
+export const desktopMenuFirstSection = style({});
+export const desktopMenuLastSection = style({});
+
+export const desktopMenuSectionContainer = style([
+    sprinkles({position: 'relative', display: 'flex'}),
+    {
+        '::after': {
+            content: '',
+            position: 'absolute',
+            top: 0,
+            bottom: 0,
+            left: 0,
+            right: 0,
+        },
+
+        selectors: {
+            // Add extra width on the left/right of interactive area so that we cover the space between sections
+            [`&:not(${desktopMenuFirstSection}):after`]: {
+                left: -16,
+            },
+            [`&:not(${desktopMenuLastSection}):after`]: {
+                right: -16,
+            },
+        },
+    },
+]);
+
+export const desktopMenuSectionWithArrowWrapper = sprinkles({
+    position: 'relative',
+});
+
+export const desktopMenuSectionArrowContainer = style([
+    sprinkles({
+        position: 'absolute',
+        top: 0,
+        bottom: 0,
+        display: 'flex',
+        alignItems: 'center',
+    }),
+    {
+        // Avoid element from affecting hover status of the section
+        zIndex: -1,
+        right: -8,
+    },
+]);
+
+export const desktopMenuSectionArrow = style([
+    sprinkles({
+        border: 'none',
+        background: 'transparent',
+        padding: 0,
+    }),
+    {
+        transition: `opacity 0.1s`,
+    },
+]);
+
 export const section = style([
     sprinkles({
         height: NAVBAR_HEIGHT_DESKTOP,
@@ -120,57 +181,63 @@ export const section = style([
         paddingX: 8,
         border: 'none',
         background: 'transparent',
+        position: 'relative',
     }),
     {
+        zIndex: 1,
         borderBottom: `2px solid transparent`,
         transition: 'border-color 300ms ease-in-out',
     },
 ]);
 
 export const selectedSectionVariantes = styleVariants({
-    default: {borderColor: colorVars.colors.controlActivated},
-    inverse: {borderColor: colorVars.colors.inverse},
+    default: {borderColor: vars.colors.controlActivated},
+    inverse: {borderColor: vars.colors.inverse},
 });
 
 export const textWrapperVariants = styleVariants({
     default: {
-        color: colorVars.colors.textPrimary,
+        color: vars.colors.textPrimary,
         '@media': {
             [mq.supportsHover]: {
                 ':hover': {
-                    color: colorVars.colors.textSecondary,
+                    color: vars.colors.textSecondary,
                 },
             },
         },
     },
     inverse: {
-        color: colorVars.colors.textPrimaryInverse,
+        color: vars.colors.textPrimaryInverse,
         '@media': {
             [mq.supportsHover]: {
                 ':hover': {
-                    color: colorVars.colors.textSecondaryInverse,
+                    color: vars.colors.textSecondaryInverse,
                 },
             },
         },
     },
 });
 
-export const navigationBarContent = style({
-    alignItems: 'center',
-    width: '100%',
-    display: 'flex',
-    height: NAVBAR_HEIGHT_DESKTOP,
-    '@media': {
-        [mq.tabletOrSmaller]: {
-            height: NAVBAR_HEIGHT_MOBILE - borderWidth,
-        },
-        [mq.desktopOrBigger]: {
-            ':last-child': {
-                height: NAVBAR_HEIGHT_DESKTOP - borderWidth,
+export const navigationBarContent = style([
+    sprinkles({
+        alignItems: 'center',
+        width: '100%',
+        display: 'flex',
+    }),
+    {
+        height: NAVBAR_HEIGHT_DESKTOP,
+        '@media': {
+            [mq.tabletOrSmaller]: {
+                height: NAVBAR_HEIGHT_MOBILE - borderWidth,
+            },
+            [mq.desktopOrBigger]: {
+                ':last-child': {
+                    height: NAVBAR_HEIGHT_DESKTOP - borderWidth,
+                },
             },
         },
     },
-});
+]);
 
 export const navigationBarAction = sprinkles({
     border: 'none',
@@ -186,18 +253,38 @@ export const desktopOnly = style({
     },
 });
 
-export const navigationBarContentRight = style({
-    display: 'flex',
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    paddingLeft: 136,
-    '@media': {
-        [mq.tabletOrSmaller]: {
-            paddingLeft: 24,
+export const navigationBarContentRight = style([
+    sprinkles({
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'flex-end',
+    }),
+    {
+        height: NAVBAR_HEIGHT_DESKTOP,
+        '@media': {
+            [mq.tabletOrSmaller]: {
+                paddingLeft: 24,
+                flex: 1,
+                height: NAVBAR_HEIGHT_MOBILE - borderWidth,
+            },
+            [mq.desktopOrBigger]: {
+                ':last-child': {
+                    height: NAVBAR_HEIGHT_DESKTOP - borderWidth,
+                },
+            },
         },
     },
-});
+]);
+
+export const navigationBarContentRightExpanded = style([
+    navigationBarContentRight,
+    sprinkles({
+        flex: 1,
+    }),
+    {
+        paddingLeft: 136,
+    },
+]);
 
 const spacerMobile = style({
     '@media': {
@@ -221,26 +308,42 @@ export const spacerLarge = style([
     spacerMobile,
 ]);
 
-export const burgerMenuTransition = styleVariants({
-    entering: {
-        transform: 'translate(0vw)',
-    },
-    entered: {
-        transform: 'translate(0vw)',
-    },
-    exiting: {
+export const burgerMenuTransition = {
+    enter: style({
         transform: 'translate(-100vw)',
-    },
-    exited: {
+    }),
+    enterActive: style({
+        transform: 'translate(0)',
+        transition: `transform ${BURGER_MENU_ANIMATION_DURATION_MS}ms ease-out`,
+        '@media': {
+            ['(prefers-reduced-motion)']: {
+                transition: 'none',
+            },
+        },
+    }),
+    exit: style({
+        transform: 'translate(0)',
+    }),
+    exitActive: style({
         transform: 'translate(-100vw)',
-    },
-    unmounted: {},
-});
+        transition: `transform ${BURGER_MENU_ANIMATION_DURATION_MS}ms ease-out`,
+        '@media': {
+            ['(prefers-reduced-motion)']: {
+                transition: 'none',
+            },
+        },
+    }),
+};
 
-export const mainNavbarContent = style({
+export const mainNavbarContent = sprinkles({
     display: 'flex',
     alignItems: 'center',
 });
+
+export const mainNavBarSectionsContainer = style([
+    sprinkles({display: 'flex', flex: 1}),
+    {minWidth: 'fit-content'},
+]);
 
 export const logoContainer = style([
     sprinkles({
@@ -248,7 +351,6 @@ export const logoContainer = style([
         justifyContent: 'center',
     }),
     {
-        marginRight: 48,
         '@media': {
             [mq.tabletOrSmaller]: {
                 marginRight: 0,
@@ -259,6 +361,7 @@ export const logoContainer = style([
 
 export const burgerMenuButton = style({
     marginRight: 24,
+    width: 'fit-content',
     '@media': {
         [mq.desktopOrBigger]: {
             display: 'none',
@@ -266,41 +369,58 @@ export const burgerMenuButton = style({
     },
 });
 
-export const burgerMenu = style([
+export const burgerMenu = sprinkles({
+    position: 'fixed',
+    top: NAVBAR_HEIGHT_MOBILE,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    background: vars.colors.background,
+});
+
+export const burgerMenuContainer = sprinkles({
+    height: '100%',
+    position: 'relative',
+});
+
+export const burgerMenuContentContainer = style([
     sprinkles({
-        position: 'fixed',
-        top: NAVBAR_HEIGHT_MOBILE,
-        left: 0,
-        right: 0,
-        background: colorVars.colors.background,
+        overflowY: 'auto',
+        width: '100%',
+        height: '100%',
+        position: 'absolute',
+        top: 0,
     }),
     {
-        height: `calc(100vh - ${NAVBAR_HEIGHT_MOBILE}px)`,
-        overflowY: 'auto',
         transition: `transform ${BURGER_MENU_ANIMATION_DURATION_MS}ms ease-out`,
+        '@media': {
+            ['(prefers-reduced-motion)']: {
+                transition: 'none',
+            },
+        },
     },
 ]);
 
 export const iconButtonVariants = styleVariants({
     default: [
-        sprinkles({color: colorVars.colors.neutralHigh}),
+        sprinkles({color: vars.colors.neutralHigh}),
         {
             '@media': {
                 [mq.supportsHover]: {
                     ':hover': {
-                        color: colorVars.colors.neutralMedium,
+                        color: vars.colors.neutralMedium,
                     },
                 },
             },
         },
     ],
     inverse: [
-        sprinkles({color: colorVars.colors.inverse}),
+        sprinkles({color: vars.colors.inverse}),
         {
             '@media': {
                 [mq.supportsHover]: {
                     ':hover': {
-                        color: colorVars.colors.inverse,
+                        color: vars.colors.inverse,
                     },
                 },
             },
@@ -312,4 +432,98 @@ export const lineHeightFix = style({
     // This fixes vertical alignment issues with icons in the secondary navigation, because mistica icons
     // use display inline and other components like Badge use inline-block.
     lineHeight: 0,
+});
+
+export const mainNavigationBarContentWrapper = style([
+    sprinkles({width: '100%'}),
+    {
+        transition: `clip-path ${DESKTOP_MENU_ANIMATION_DURATION_MS}ms cubic-bezier(0.65, 0, 0.35, 1)`,
+        '@media': {
+            ['(prefers-reduced-motion)']: {
+                transition: 'none',
+            },
+        },
+    },
+]);
+
+export const desktopMenuWrapper = sprinkles({
+    position: 'absolute',
+    left: 0,
+    right: 0,
+});
+
+export const desktopMenuContainer = style([
+    sprinkles({
+        position: 'fixed',
+        left: 0,
+        right: 0,
+    }),
+    {
+        zIndex: NAVBAR_ZINDEX,
+    },
+]);
+
+export const desktopMenuBackgroundContainer = style([
+    sprinkles({
+        background: vars.colors.backgroundContainer,
+        position: 'absolute',
+        left: 0,
+        right: 0,
+    }),
+    {
+        transition: `height ${DESKTOP_MENU_ANIMATION_DURATION_MS}ms cubic-bezier(0.65, 0, 0.35, 1)`,
+        boxShadow: '0px 2px 4px rgba(0,0,0,0.2)',
+        '@media': {
+            ['(prefers-reduced-motion)']: {
+                transition: 'none',
+            },
+        },
+    },
+]);
+
+export const desktopSmallMenuContainer = style([
+    sprinkles({
+        background: vars.colors.backgroundContainer,
+        position: 'fixed',
+        paddingY: 40,
+        paddingX: 24,
+        overflowY: 'auto',
+    }),
+    {
+        zIndex: NAVBAR_ZINDEX,
+        borderRadius: `0 0 ${vars.borderRadii.popup} ${vars.borderRadii.popup}`,
+        width: DESKTOP_SMALL_MENU_WIDTH,
+        boxShadow: '0px 2px 4px rgba(0,0,0,0.2)',
+    },
+]);
+
+export const desktopMenu = style([
+    sprinkles({
+        paddingY: 40,
+        position: 'relative',
+    }),
+    {
+        transform: 'translateY(-16px)',
+        opacity: 0,
+        '@media': {
+            ['(prefers-reduced-motion)']: {
+                transition: 'none',
+            },
+        },
+    },
+]);
+
+export const desktopMenuContentFadeIn = style({
+    transform: 'translateY(0)',
+    opacity: 1,
+    transition: `opacity ${DESKTOP_MENU_CONTENT_ANIMATION_DURATION_MS}ms cubic-bezier(0.33, 1, 0.68, 1), transform ${DESKTOP_MENU_CONTENT_ANIMATION_DURATION_MS}ms cubic-bezier(0.33, 1, 0.68, 1)`,
+    '@media': {
+        ['(prefers-reduced-motion)']: {
+            transition: 'none',
+        },
+    },
+});
+
+export const desktopMenuColumnItem = style({
+    color: vars.colors.textPrimary,
 });

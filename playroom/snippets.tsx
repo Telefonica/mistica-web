@@ -2478,100 +2478,102 @@ const exampleScreens: Array<Snippet> = [
       setState("isSheetOpen", false);
     }}
   >
-    <ResponsiveLayout>
-      <Box paddingBottom={80} paddingTop={0}>
-        <Stack space={24}>
-          <Text4 medium>Summary of your order</Text4>
-          <Callout
-            asset={<IconTruckRegular color={colors.brand} />}
-            description="Products may be shipped separately depending on availability."
-          />
-
+    {({ modalTitleId }) => (
+      <SheetBody modalTitleId={modalTitleId}>
+        <Box paddingBottom={80} paddingTop={0}>
           <Stack space={24}>
-            <Stack space={8}>
-              <NegativeBox>
-                <RowList>
-                  <Row
-                    asset={
-                      <Image
-                        src="${imagePlaceholder}"
-                        height={64}
-                        aspectRatio="1:1"
-                      />
-                    }
-                    title="iPhone 14 Pro"
-                    subtitle="Color: Green"
-                    description="Capacity: 256 GB"
-                    right={
-                      <div
-                        style={{
-                          height: "100%",
-                          display: "flex",
-                          alignItems: "flex-end",
-                          justifyContent: "center",
-                          flexDirection: "column",
-                        }}
-                      >
-                        <Text2 color={colors.textSecondary}>1.379 €</Text2>
-                        <Text4 medium>1.379 €</Text4>
-                      </div>
-                    }
-                  />
-                  <Row
-                    asset={
-                      <Image
-                        src="${imagePlaceholder}"
-                        height={64}
-                        aspectRatio="1:1"
-                      />
-                    }
-                    title="AirPods 3ª gen."
-                    subtitle="Color: White"
-                    right={
-                      <div
-                        style={{
-                          height: "100%",
-                          display: "flex",
-                          alignItems: "flex-end",
-                          justifyContent: "center",
+            <Text4 medium>Summary of your order</Text4>
+            <Callout
+              asset={<IconTruckRegular color={colors.brand} />}
+              description="Products may be shipped separately depending on availability."
+            />
 
-                          flexDirection: "column",
-                        }}
-                      >
-                        <Text4 medium>200 €</Text4>
-                      </div>
-                    }
-                  />
-                </RowList>
-              </NegativeBox>
+            <Stack space={24}>
+              <Stack space={8}>
+                <NegativeBox>
+                  <RowList>
+                    <Row
+                      asset={
+                        <Image
+                          src="${imagePlaceholder}"
+                          height={64}
+                          aspectRatio="1:1"
+                        />
+                      }
+                      title="iPhone 14 Pro"
+                      subtitle="Color: Green"
+                      description="Capacity: 256 GB"
+                      right={
+                        <div
+                          style={{
+                            height: "100%",
+                            display: "flex",
+                            alignItems: "flex-end",
+                            justifyContent: "center",
+                            flexDirection: "column",
+                          }}
+                        >
+                          <Text2 color={colors.textSecondary}>1.379 €</Text2>
+                          <Text4 medium>1.379 €</Text4>
+                        </div>
+                      }
+                    />
+                    <Row
+                      asset={
+                        <Image
+                          src="${imagePlaceholder}"
+                          height={64}
+                          aspectRatio="1:1"
+                        />
+                      }
+                      title="AirPods 3ª gen."
+                      subtitle="Color: White"
+                      right={
+                        <div
+                          style={{
+                            height: "100%",
+                            display: "flex",
+                            alignItems: "flex-end",
+                            justifyContent: "center",
+
+                            flexDirection: "column",
+                          }}
+                        >
+                          <Text4 medium>200 €</Text4>
+                        </div>
+                      }
+                    />
+                  </RowList>
+                </NegativeBox>
+                <Divider />
+              </Stack>
+              <Stack space={16}>
+                <Inline space="between">
+                  <Text3>Subtotal</Text3>
+                  <Text3>1.369 €</Text3>
+                </Inline>
+                <Inline space="between">
+                  <Text3 color={colors.promoHigh}>Promoción 7% descuento</Text3>
+                  <Text3 color={colors.promoHigh}>-100 €</Text3>
+                </Inline>
+                <Inline space="between">
+                  <Text3>Shipping costs</Text3>
+                  <Text3>0 €</Text3>
+                </Inline>
+              </Stack>
               <Divider />
-            </Stack>
-            <Stack space={16}>
-              <Inline space="between">
-                <Text3>Subtotal</Text3>
-                <Text3>1.369 €</Text3>
-              </Inline>
-              <Inline space="between">
-                <Text3 color={colors.promoHigh}>Promoción 7% descuento</Text3>
-                <Text3 color={colors.promoHigh}>-100 €</Text3>
-              </Inline>
-              <Inline space="between">
-                <Text3>Shipping costs</Text3>
-                <Text3>0 €</Text3>
-              </Inline>
-            </Stack>
-            <Divider />
-            <Stack space={8}>
-              <Inline space="between">
-                <Text4 medium>Total</Text4>
-                <Text4 medium>1.269 €</Text4>
-              </Inline>
-              <Text1 color={colors.textSecondary}>* All taxes included</Text1>
+              <Stack space={8}>
+                <Inline space="between">
+                  <Text4 medium>Total</Text4>
+                  <Text4 medium>1.269 €</Text4>
+                </Inline>
+                <Text1 color={colors.textSecondary}>* All taxes included</Text1>
+              </Stack>
             </Stack>
           </Stack>
-        </Stack>
       </Box>
-    </ResponsiveLayout>
+      </SheetBody>
+    )}
   </Sheet>
 )}
 
@@ -2584,33 +2586,278 @@ const navigationBarSnippets = [
         group: 'NavigationBar',
         name: 'MainNavigationBar',
         code: `
-<MainNavigationBar
-  sections={["Start", "Account", "Explore", "Support"].map((title, idx) => ({
-    title,
-    onPress: () => setState("index", idx),
-  }))}
-  selectedIndex={getState("index", 0)}
-  right={
-    <NavigationBarActionGroup>
-      <NavigationBarAction
-        onPress={() => {}}
-        aria-label="shopping cart with 2 items"
-      >
-        <Badge value={2}>
-          <IconShoppingCartRegular color="currentColor" />
-        </Badge>
-      </NavigationBarAction>
-      <NavigationBarAction onPress={() => {}} aria-label="Open profile">
-        <Avatar
-          size={isDesktopOrBigger ? 32 : 24}
-          initials="ML"
-          src="${imagePlaceholder}"
-        />
-        {isDesktopOrBigger && "María López Serrano"}
-      </NavigationBarAction>
-    </NavigationBarActionGroup>
-  }
-/>`,
+          <MainNavigationBar
+            sections={[
+              {
+                title: "Start",
+                onPress: () => setState("index", 0),
+              },
+              {
+                title: "Account",
+                onPress: () => setState("index", 1),
+              },
+              {
+                title: "Explore",
+                onPress: () => setState("index", 2),
+              },
+              {
+                title: "Support",
+                onPress: () => setState("index", 3),
+              },
+            ]}
+            selectedIndex={getState("index", 0)}
+            right={
+              <NavigationBarActionGroup>
+                <NavigationBarAction
+                  onPress={() => {}}
+                  aria-label="shopping cart with 2 items"
+                >
+                  <Badge value={2}>
+                    <IconShoppingCartRegular color="currentColor" />
+                  </Badge>
+                </NavigationBarAction>
+                <NavigationBarAction onPress={() => {}} aria-label="Open profile">
+                  <Avatar
+                    size={isDesktopOrBigger ? 32 : 24}
+                    initials="ML"
+                    src="${imagePlaceholder}"
+                  />
+                  {isDesktopOrBigger && "María López Serrano"}
+                </NavigationBarAction>
+              </NavigationBarActionGroup>
+            }
+          />`,
+    },
+    {
+        group: 'NavigationBar',
+        name: 'MainNavigationBar with menu',
+        code: `
+          <MainNavigationBar
+            sections={[
+              {
+                onPress: () => setState("index", 0),
+                title: "Start",
+                menu: {
+                  columns: [
+                    {
+                      title: "Start 1",
+                      items: [
+                        {
+                          title: "item 1",
+                          onPress: () => {},
+                        },
+                        {
+                          title: "item 2",
+                          href: "https://www.google.com/",
+                        },
+                        {
+                          title: "item 3",
+                          to: "#",
+                        },
+                      ],
+                    },
+                  ],
+                },
+              },
+              {
+                onPress: () => setState("index", 1),
+                title: "Account",
+                menu: {
+                  columns: [
+                    {
+                      title: "Account 1",
+                      items: [
+                        {
+                          title: "item 1",
+                          onPress: () => {},
+                        },
+                      ],
+                    },
+                  ],
+                },
+              },
+              {
+                onPress: () => setState("index", 2),
+                title: "Explore",
+                menu: {
+                  columns: [
+                    {
+                      title: "Explore 1",
+                      items: [
+                        {
+                          title: "item 1",
+                          onPress: () => {},
+                        },
+                        {
+                          title: "item 2",
+                          href: "https://www.google.com/",
+                        },
+                        {
+                          title: "item 3",
+                          to: "#",
+                        },
+                      ],
+                    },
+                  ],
+                },
+              },
+            ]}
+            selectedIndex={getState("index", 0)}
+          />`,
+    },
+    {
+        group: 'NavigationBar',
+        name: 'MainNavigationBar with large menu',
+        code: `
+          <MainNavigationBar
+            desktopLargeMenu
+            sections={[
+              {
+                onPress: () => setState("index", 0),
+                title: "Start",
+                menu: {
+                  columns: [
+                    {
+                      title: "Start 1",
+                      items: [
+                        {
+                          title: "item 1",
+                          onPress: () => {},
+                        },
+                        {
+                          title: "item 2",
+                          href: "https://www.google.com/",
+                        },
+                        {
+                          title: "item 3",
+                          to: "#",
+                        },
+                      ],
+                    },
+                    {
+                      title: "Start 2",
+                      items: [
+                        {
+                          title: "item 1",
+                          onPress: () => {},
+                        },
+                        {
+                          title: "item 2",
+                          href: "https://www.google.com/",
+                        },
+                        {
+                          title: "item 3",
+                          to: "#",
+                        },
+                      ],
+                    },
+                  ],
+                },
+              },
+              {
+                onPress: () => setState("index", 1),
+                title: "Account",
+                menu: {
+                  columns: [
+                    {
+                      title: "Account 1",
+                      items: [
+                        {
+                          title: "item 1",
+                          onPress: () => {},
+                        },
+                      ],
+                    },
+                  ],
+                },
+              },
+              {
+                onPress: () => setState("index", 2),
+                title: "Explore",
+                menu: {
+                  content: ({ closeMenu }) => (
+                    <Stack space={16}>
+                      <Text2 regular>Custom content</Text2>
+                      <Placeholder />
+                      <ButtonPrimary onPress={closeMenu}>Close menu</ButtonPrimary>
+                    </Stack>
+                  ),
+                },
+              },
+              {
+                onPress: () => setState("index", 3),
+                title: "Support",
+                menu: {
+                  content: isDesktopOrBigger ? (
+                    <Grid columns={12} gap={24}>
+                      {Array.from({ length: 3 }, (_, index) => (
+                        <GridItem columnSpan={2} key={index}>
+                          <Stack space={24}>
+                            <Title1>Contenidos</Title1>
+                            <Stack space={16}>
+                              {[
+                                "Destacados",
+                                "Todo fútbol",
+                                "#0",
+                                "Cine",
+                                "Oferta comercial",
+                                "Mi Movistar",
+                                "Movistar Cloud",
+                              ].map((title, index) => (
+                                <TextLink
+                                  key={index}
+                                  onPress={() => {}}
+                                  style={{ color: colors.textPrimary }}
+                                >
+                                  {title}
+                                </TextLink>
+                              ))}
+                            </Stack>
+                          </Stack>
+                        </GridItem>
+                      ))}
+
+                      <GridItem columnSpan={5} columnStart={8}>
+                        <DisplayMediaCard
+                          headline={<Tag type="promo">Oferta</Tag>}
+                          title="Movistar Plus+"
+                          onPress={() => {}}
+                          description="Contrata solo TV por 9,99 €"
+                          backgroundImage="${imagePlaceholder}"
+                        />
+                      </GridItem>
+                    </Grid>
+                  ) : (
+                    <Stack space={40}>
+                      {Array.from({ length: 3 }, (_, index) => (
+                        <Stack space={16} key={index}>
+                          <Title1>Title</Title1>
+                          <NegativeBox>
+                            <RowList>
+                              <Row title="Title" onPress={() => {}} />
+                              <Row title="Title" onPress={() => {}} />
+                              <Row title="Title" onPress={() => {}} />
+                              <Row title="Title" onPress={() => {}} />
+                            </RowList>
+                          </NegativeBox>
+                        </Stack>
+                      ))}
+
+                      <DisplayMediaCard
+                        headline={<Tag type="promo">Oferta</Tag>}
+                        title="Movistar Plus+"
+                        aspectRatio="1:1"
+                        onPress={() => {}}
+                        description="Contrata solo TV por 9,99 €"
+                        backgroundImage="${imagePlaceholder}"
+                      />
+                    </Stack>
+                  ),
+                },
+              },
+            ]}
+            selectedIndex={getState("index", 0)}
+          />`,
     },
     {
         group: 'NavigationBar',
@@ -2980,14 +3227,13 @@ const alertSnippets = [
       setState("isSheetOpen", false);
     }}
   >
-    <ResponsiveLayout>
-      <Box
-        paddingBottom={{ mobile: 16, desktop: 40 }}
-        paddingTop={{ mobile: 0, desktop: 40 }}
-      >
-        <Placeholder />
-      </Box>
-    </ResponsiveLayout>
+    {({ modalTitleId }) => (
+      <SheetBody modalTitleId={modalTitleId}>
+        <Box paddingBottom={{ mobile: 16, desktop: 0 }}>
+          <Placeholder />
+        </Box>
+      </SheetBody>
+    )}
   </Sheet>
 )}`,
     },
@@ -3897,6 +4143,24 @@ const ratingSnippets: Array<Snippet> = [
     },
 ];
 
+const meterSnippets: Array<Snippet> = [
+    {
+        group: 'Meter',
+        name: 'Meter Linear',
+        code: '<Meter width={200} type="linear" values={[33, 33, 0]} />',
+    },
+    {
+        group: 'Meter',
+        name: 'Meter Angular',
+        code: '<Meter width={200} type="angular" values={[33, 33, 0]} />',
+    },
+    {
+        group: 'Meter',
+        name: 'Meter Circular',
+        code: '<Meter width={200} type="circular" values={[33, 33, 0]} />',
+    },
+];
+
 export default [
     ...buttonSnippets,
     ...formSnippets,
@@ -3943,6 +4207,7 @@ export default [
     ...sliderSnippets,
     ...cardSnippets,
     ...exampleScreens,
+    ...meterSnippets,
     {
         group: 'Progress',
         name: 'Stepper',

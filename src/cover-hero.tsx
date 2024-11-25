@@ -112,20 +112,38 @@ const CoverHero = React.forwardRef<HTMLDivElement, CoverHeroProps>(
         const textShadow = hasMedia ? '0 0 15px rgba(0, 0, 0, 0.4)' : undefined;
 
         const pretitleContent = pretitle ? (
-            <Text3 regular as={pretitleAs} truncate={pretitleLinesMax} textShadow={textShadow}>
+            <Text3
+                regular
+                as={pretitleAs}
+                truncate={pretitleLinesMax}
+                textShadow={textShadow}
+                dataAttributes={{testid: 'pretitle'}}
+            >
                 {pretitle}
             </Text3>
         ) : undefined;
 
         const titleContent = (
-            <Text8 as={titleAs} truncate={titleLinesMax} textShadow={textShadow}>
+            <Text8
+                as={titleAs}
+                truncate={titleLinesMax}
+                textShadow={textShadow}
+                dataAttributes={{testid: 'title'}}
+            >
                 {title}
             </Text8>
         );
 
         const mainContent = (
             <div className={styles.mainContent}>
-                {headline && <Box paddingBottom={{desktop: 8, tablet: 8, mobile: 16}}>{headline}</Box>}
+                {headline && (
+                    <Box
+                        dataAttributes={{testid: 'headline'}}
+                        paddingBottom={{desktop: 8, tablet: 8, mobile: 16}}
+                    >
+                        {headline}
+                    </Box>
+                )}
                 <Stack space={16}>
                     {/** using flex instead of nested Stacks, this way we can rearrange texts so the DOM structure makes more sense for screen reader users */}
                     <div className={styles.flexColumn}>
@@ -160,13 +178,14 @@ const CoverHero = React.forwardRef<HTMLDivElement, CoverHeroProps>(
                                 truncate={descriptionLinesMax}
                                 color={hasMedia ? vars.colors.textPrimary : vars.colors.textSecondary}
                                 textShadow={textShadow}
+                                dataAttributes={{testid: 'description'}}
                             >
                                 {description}
                             </Text3>
                         </div>
                     )}
                 </Stack>
-                {extra}
+                {extra && <div data-testid="slot">{extra}</div>}
             </div>
         );
 
@@ -208,7 +227,11 @@ const CoverHero = React.forwardRef<HTMLDivElement, CoverHeroProps>(
                                         template="8+4"
                                         collapseBreakpoint="mobile"
                                         left={mainContent}
-                                        right={<div className={styles.sideExtra}>{sideExtra}</div>}
+                                        right={
+                                            <div className={styles.sideExtra} data-testid="sideSlot">
+                                                {sideExtra}
+                                            </div>
+                                        }
                                     />
                                 )}
                                 <ButtonGroup

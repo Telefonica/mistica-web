@@ -32,6 +32,8 @@ export type Dictionary = {
     menuLabelSuffix: string;
     openNavigationMenu: string;
     closeNavigationMenu: string;
+    mainNavigationBarOpenSectionMenu: string;
+    mainNavigationBarSectionSeeAll: string;
     backNavigationBar: string;
     clearButton: string;
     carouselNextButton: string;
@@ -289,6 +291,20 @@ export const closeNavigationMenu: TextToken = {
     en: 'Close navigation menu',
     de: 'Navigationsmenü schließen',
     pt: 'Fechar menu de navegação',
+};
+
+export const mainNavigationBarOpenSectionMenu: TextToken = {
+    es: 'Abrir submenú',
+    en: 'Open submenu',
+    de: 'Untermenü öffnen',
+    pt: 'Abrir submenu',
+};
+
+export const mainNavigationBarSectionSeeAll: TextToken = {
+    es: 'Ver todo',
+    en: 'See all',
+    de: 'Alle anzeigen',
+    pt: 'Ver tudo',
 };
 
 export const backNavigationBar: TextToken = {
@@ -555,4 +571,26 @@ export const ratingQuantitativeLabel: TextToken = {
     en: '1$s out of 2$s',
     de: '1$s von 2$s',
     pt: '1$s de 2$s',
+};
+
+/**
+ * 1$s: segments count
+ * 2$s: total percentage value
+ */
+export const meterTotalLabel: TextToken = {
+    es: 'Indicador de progreso con 1$s secciones, total 2$s% de 100%.',
+    en: 'Gauge chart 1$s segments, total 2$s% out of 100%.',
+    de: 'Fortschrittsanzeige mit 1$s Abschnitten, insgesamt 2$s% von 100%.',
+    pt: 'Indicador de progresso com 1$s seções, total 2$s% de 100%.',
+};
+
+/**
+ * 1$s: segment number
+ * 2$s: segment percentage value
+ */
+export const meterSectionLabel: TextToken = {
+    es: 'Sección 1$s: 2$s%',
+    en: 'Segment 1$s: 2$s%',
+    de: 'Abschnitt 1$s: 2$s%',
+    pt: 'Seção 1$s: 2$s%',
 };

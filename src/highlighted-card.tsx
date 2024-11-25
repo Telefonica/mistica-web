@@ -73,9 +73,13 @@ const Content = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     const content = (
         <Boxed
             ref={ref}
-            isInverse={isInverse}
+            variant={isInverse ? 'inverse' : 'default'}
             className={styles.container}
-            dataAttributes={{'component-name': 'HighlightedCard', ...dataAttributes}}
+            dataAttributes={{
+                'component-name': 'HighlightedCard',
+                testid: 'HighlightedCard',
+                ...dataAttributes,
+            }}
             width={width ? `${width}px` : '100%'}
             minHeight="100%"
         >
@@ -94,6 +98,7 @@ const Content = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
                             weight={textPresets.cardTitle.weight}
                             as={titleAs}
                             hyphens="auto"
+                            dataAttributes={{testid: 'title'}}
                         >
                             {title}
                         </Text>
@@ -105,6 +110,7 @@ const Content = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
                             truncate={descriptionLinesMax}
                             as="p"
                             hyphens="auto"
+                            dataAttributes={{testid: 'description'}}
                         >
                             {description}
                         </Text2>
@@ -119,6 +125,7 @@ const Content = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
             </div>
             {imageUrl && (
                 <div
+                    data-testid="image"
                     {...(imageAlt
                         ? {
                               role: 'img',
