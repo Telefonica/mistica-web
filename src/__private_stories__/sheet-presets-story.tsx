@@ -215,6 +215,7 @@ ActionsList.argTypes = {
 
 type InfoSheetArgs = SheetArgs & {
     numItems: number;
+    buttonText: string;
     iconType: 'bullet' | 'regular' | 'small';
 };
 
@@ -222,6 +223,7 @@ export const Info: StoryComponent<InfoSheetArgs> = ({
     title,
     subtitle,
     description,
+    buttonText,
     multiparagraphDescription,
     numItems,
     iconType,
@@ -246,6 +248,7 @@ export const Info: StoryComponent<InfoSheetArgs> = ({
                     onClose={() => {
                         setOpen(false);
                     }}
+                    button={buttonText ? {text: buttonText} : undefined}
                     title={title}
                     subtitle={subtitle}
                     description={
@@ -276,6 +279,7 @@ Info.storyName = 'InfoSheet';
 Info.args = {
     title: 'Title',
     subtitle: 'Subtitle',
+    buttonText: '',
     description: 'Description',
     numItems: 5,
     iconType: 'bullet',

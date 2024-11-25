@@ -55,7 +55,7 @@ const SheetWeb = ({sheetProps, onResolve}: SheetWebProps): JSX.Element => {
         }
         switch (sheetProps.type) {
             case 'INFO':
-                onResolve<'INFO'>(undefined);
+                onResolve<'INFO'>({action: 'DISMISS'});
                 break;
             case 'ACTIONS_LIST':
                 if (selectionRef.current) {

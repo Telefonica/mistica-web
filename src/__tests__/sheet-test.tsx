@@ -299,7 +299,7 @@ test('showSheet INFO', async () => {
         {timeout: 5000}
     );
 
-    expect(resultSpy).toHaveBeenCalledWith(undefined);
+    expect(resultSpy).toHaveBeenCalledWith({action: 'DISMISS'});
 }, 30000);
 
 test('showSheet ACTIONS_LIST', async () => {
@@ -593,7 +593,7 @@ test('showSheet fails if there is already a sheet open', async () => {
 test('showSheet with native implementation INFO', async () => {
     const resultSpy = jest.fn();
 
-    const nativeImplementation = jest.fn();
+    const nativeImplementation = jest.fn(() => Promise.resolve({action: 'DISMISS' as const, result: []}));
     render(
         <ThemeContextProvider theme={makeTheme()}>
             <SheetRoot nativeImplementation={nativeImplementation} />
