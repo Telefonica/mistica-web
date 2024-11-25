@@ -2478,100 +2478,102 @@ const exampleScreens: Array<Snippet> = [
       setState("isSheetOpen", false);
     }}
   >
-    <ResponsiveLayout>
-      <Box paddingBottom={80} paddingTop={0}>
-        <Stack space={24}>
-          <Text4 medium>Summary of your order</Text4>
-          <Callout
-            asset={<IconTruckRegular color={colors.brand} />}
-            description="Products may be shipped separately depending on availability."
-          />
-
+    {({ modalTitleId }) => (
+      <SheetBody modalTitleId={modalTitleId}>
+        <Box paddingBottom={80} paddingTop={0}>
           <Stack space={24}>
-            <Stack space={8}>
-              <NegativeBox>
-                <RowList>
-                  <Row
-                    asset={
-                      <Image
-                        src="${imagePlaceholder}"
-                        height={64}
-                        aspectRatio="1:1"
-                      />
-                    }
-                    title="iPhone 14 Pro"
-                    subtitle="Color: Green"
-                    description="Capacity: 256 GB"
-                    right={
-                      <div
-                        style={{
-                          height: "100%",
-                          display: "flex",
-                          alignItems: "flex-end",
-                          justifyContent: "center",
-                          flexDirection: "column",
-                        }}
-                      >
-                        <Text2 color={colors.textSecondary}>1.379 €</Text2>
-                        <Text4 medium>1.379 €</Text4>
-                      </div>
-                    }
-                  />
-                  <Row
-                    asset={
-                      <Image
-                        src="${imagePlaceholder}"
-                        height={64}
-                        aspectRatio="1:1"
-                      />
-                    }
-                    title="AirPods 3ª gen."
-                    subtitle="Color: White"
-                    right={
-                      <div
-                        style={{
-                          height: "100%",
-                          display: "flex",
-                          alignItems: "flex-end",
-                          justifyContent: "center",
+            <Text4 medium>Summary of your order</Text4>
+            <Callout
+              asset={<IconTruckRegular color={colors.brand} />}
+              description="Products may be shipped separately depending on availability."
+            />
 
-                          flexDirection: "column",
-                        }}
-                      >
-                        <Text4 medium>200 €</Text4>
-                      </div>
-                    }
-                  />
-                </RowList>
-              </NegativeBox>
+            <Stack space={24}>
+              <Stack space={8}>
+                <NegativeBox>
+                  <RowList>
+                    <Row
+                      asset={
+                        <Image
+                          src="${imagePlaceholder}"
+                          height={64}
+                          aspectRatio="1:1"
+                        />
+                      }
+                      title="iPhone 14 Pro"
+                      subtitle="Color: Green"
+                      description="Capacity: 256 GB"
+                      right={
+                        <div
+                          style={{
+                            height: "100%",
+                            display: "flex",
+                            alignItems: "flex-end",
+                            justifyContent: "center",
+                            flexDirection: "column",
+                          }}
+                        >
+                          <Text2 color={colors.textSecondary}>1.379 €</Text2>
+                          <Text4 medium>1.379 €</Text4>
+                        </div>
+                      }
+                    />
+                    <Row
+                      asset={
+                        <Image
+                          src="${imagePlaceholder}"
+                          height={64}
+                          aspectRatio="1:1"
+                        />
+                      }
+                      title="AirPods 3ª gen."
+                      subtitle="Color: White"
+                      right={
+                        <div
+                          style={{
+                            height: "100%",
+                            display: "flex",
+                            alignItems: "flex-end",
+                            justifyContent: "center",
+
+                            flexDirection: "column",
+                          }}
+                        >
+                          <Text4 medium>200 €</Text4>
+                        </div>
+                      }
+                    />
+                  </RowList>
+                </NegativeBox>
+                <Divider />
+              </Stack>
+              <Stack space={16}>
+                <Inline space="between">
+                  <Text3>Subtotal</Text3>
+                  <Text3>1.369 €</Text3>
+                </Inline>
+                <Inline space="between">
+                  <Text3 color={colors.promoHigh}>Promoción 7% descuento</Text3>
+                  <Text3 color={colors.promoHigh}>-100 €</Text3>
+                </Inline>
+                <Inline space="between">
+                  <Text3>Shipping costs</Text3>
+                  <Text3>0 €</Text3>
+                </Inline>
+              </Stack>
               <Divider />
-            </Stack>
-            <Stack space={16}>
-              <Inline space="between">
-                <Text3>Subtotal</Text3>
-                <Text3>1.369 €</Text3>
-              </Inline>
-              <Inline space="between">
-                <Text3 color={colors.promoHigh}>Promoción 7% descuento</Text3>
-                <Text3 color={colors.promoHigh}>-100 €</Text3>
-              </Inline>
-              <Inline space="between">
-                <Text3>Shipping costs</Text3>
-                <Text3>0 €</Text3>
-              </Inline>
-            </Stack>
-            <Divider />
-            <Stack space={8}>
-              <Inline space="between">
-                <Text4 medium>Total</Text4>
-                <Text4 medium>1.269 €</Text4>
-              </Inline>
-              <Text1 color={colors.textSecondary}>* All taxes included</Text1>
+              <Stack space={8}>
+                <Inline space="between">
+                  <Text4 medium>Total</Text4>
+                  <Text4 medium>1.269 €</Text4>
+                </Inline>
+                <Text1 color={colors.textSecondary}>* All taxes included</Text1>
+              </Stack>
             </Stack>
           </Stack>
-        </Stack>
       </Box>
-    </ResponsiveLayout>
+      </SheetBody>
+    )}
   </Sheet>
 )}
 
@@ -3225,14 +3227,13 @@ const alertSnippets = [
       setState("isSheetOpen", false);
     }}
   >
-    <ResponsiveLayout>
-      <Box
-        paddingBottom={{ mobile: 16, desktop: 40 }}
-        paddingTop={{ mobile: 0, desktop: 40 }}
-      >
-        <Placeholder />
-      </Box>
-    </ResponsiveLayout>
+    {({ modalTitleId }) => (
+      <SheetBody modalTitleId={modalTitleId}>
+        <Box paddingBottom={{ mobile: 16, desktop: 0 }}>
+          <Placeholder />
+        </Box>
+      </SheetBody>
+    )}
   </Sheet>
 )}`,
     },
@@ -4142,6 +4143,24 @@ const ratingSnippets: Array<Snippet> = [
     },
 ];
 
+const meterSnippets: Array<Snippet> = [
+    {
+        group: 'Meter',
+        name: 'Meter Linear',
+        code: '<Meter width={200} type="linear" values={[33, 33, 0]} />',
+    },
+    {
+        group: 'Meter',
+        name: 'Meter Angular',
+        code: '<Meter width={200} type="angular" values={[33, 33, 0]} />',
+    },
+    {
+        group: 'Meter',
+        name: 'Meter Circular',
+        code: '<Meter width={200} type="circular" values={[33, 33, 0]} />',
+    },
+];
+
 export default [
     ...buttonSnippets,
     ...formSnippets,
@@ -4188,6 +4207,7 @@ export default [
     ...sliderSnippets,
     ...cardSnippets,
     ...exampleScreens,
+    ...meterSnippets,
     {
         group: 'Progress',
         name: 'Stepper',

@@ -43,6 +43,7 @@ const MaybeDismissable = ({
             <ThemeVariant variant={variant}>
                 <div className={styles.dismissableButton}>
                     <IconButton
+                        dataAttributes={{testid: 'closeButton'}}
                         onPress={onClose}
                         aria-label={texts.closeButtonLabel || t(tokens.closeButtonLabel)}
                         small

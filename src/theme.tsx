@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import type {RegionCode} from './utils/region-code';
 import type {Locale} from './utils/locale';
-import type {Colors, Skin, SkinName, TextPresetsConfig} from './skins/types';
+import type {BorderRadiiConfig, Colors, Skin, SkinName, TextPresetsConfig} from './skins/types';
 import type {TrackingEvent} from './utils/types';
 import type {Dictionary, TextToken} from './text-tokens';
 
@@ -162,11 +162,12 @@ export type Theme = {
     // TODO: rename this props to navigationBarHeight (or something similar) in next major
     dimensions: {headerMobileHeight: number; headerDesktopHeight: number};
     colorValues: Colors;
+    borderRadii: BorderRadiiConfig;
     textPresets: TextPresetsConfig;
     Link: LinkComponent;
     isDarkMode: boolean;
     isIos: boolean;
     useHrefDecorator: () => (href: string) => string;
-    t: (token: TextToken) => string;
+    t: (token: TextToken, ...params: Array<string | number>) => string;
     preventCopyInFormFields: boolean;
 };

@@ -5543,6 +5543,7 @@ __metadata:
     classnames: ^2.3.1
     cpx: ^1.5.0
     cross-env: ^7.0.3
+    cubic-bezier: ^0.1.2
     detect-port: ^1.3.0
     dpdm: ^3.8.0
     es6-promise-pool: ^2.5.0
@@ -9476,6 +9477,13 @@ __metadata:
   version: 3.1.0
   resolution: "csstype@npm:3.1.0"
   checksum: 644e986cefab86525f0b674a06889cfdbb1f117e5b7d1ce0fc55b0423ecc58807a1ea42ecc75c4f18999d14fc42d1d255f84662a45003a52bb5840e977eb2ffd
+  languageName: node
+  linkType: hard
+
+"cubic-bezier@npm:^0.1.2":
+  version: 0.1.2
+  resolution: "cubic-bezier@npm:0.1.2"
+  checksum: db21ebda82ab3662e1209dcff7612a3b265bb94e05892a609be01cf788ed681914ed9df8d277eb936012b4a58e5786846a8318b6e6bd0ec74087d6ad42566cc6
   languageName: node
   linkType: hard
 

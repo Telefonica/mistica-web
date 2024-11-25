@@ -133,7 +133,7 @@ export const children = sprinkles({
     flexDirection: 'column',
 });
 
-export const handleContainer = style([
+export const sheetTopDraggingArea = style([
     sprinkles({
         // Absolute positioned with a bigger size to increase the touchable area for dragging
         position: 'absolute',
@@ -156,10 +156,35 @@ export const handleContainer = style([
     },
 ]);
 
-export const handle = sprinkles({
+export const handleContainer = style([
+    sprinkles({
+        display: 'none',
+    }),
+    {
+        '@media': {
+            // Handle is rendered only in mobile version
+            [mq.tabletOrSmaller]: {
+                position: 'absolute',
+                top: 8,
+                width: '100%',
+                display: 'flex',
+                justifyContent: 'center',
+            },
+        },
+    },
+]);
+
+export const handleTouchable = style([
+    sprinkles({
+        width: 24,
+        height: 4,
+    }),
+]);
+
+export const handleBar = sprinkles({
     background: skinVars.colors.control,
-    width: 24,
-    height: 4,
+    width: '100%',
+    height: '100%',
     borderRadius: 2,
 });
 
