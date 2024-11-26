@@ -88,8 +88,10 @@ export const Header = ({
     ) : undefined;
 
     const headlineContent = headline ? (
-        // assuming that the headline will always be followed by one of: pretitle, title, description
-        <div style={{paddingBottom: 8, order: -1}} data-testid="headline">
+        <div
+            style={{paddingBottom: pretitle || title || description ? 8 : 0, order: -1}}
+            data-testid="headline"
+        >
             {headline}
         </div>
     ) : undefined;
@@ -107,7 +109,7 @@ export const Header = ({
                                 )}
                                 {headlineContent}
                                 {pretitleContent && (
-                                    <div style={{paddingBottom: pretitle || description ? 8 : 0, order: -1}}>
+                                    <div style={{paddingBottom: title || description ? 8 : 0, order: -1}}>
                                         {pretitleContent}
                                     </div>
                                 )}

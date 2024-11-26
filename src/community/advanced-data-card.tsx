@@ -108,8 +108,13 @@ const CardContent = ({
                         </div>
                     )}
                     {headline && (
-                        // assuming that the headline will always be followed by one of: pretitle, title, subtitle, description
-                        <div ref={headlineRef} style={{order: -2, paddingBottom: 4}}>
+                        <div
+                            ref={headlineRef}
+                            style={{
+                                order: -2,
+                                paddingBottom: pretitle || title || subtitle || description ? 4 : 0,
+                            }}
+                        >
                             {typeof headline === 'string' ? <Tag type="promo">{headline}</Tag> : headline}
                         </div>
                     )}
@@ -131,8 +136,13 @@ const CardContent = ({
                         </div>
                     )}
                     {headline && (
-                        // assuming that the headline will always be followed by one of: pretitle, title, subtitle, description
-                        <div ref={headlineRef} style={{order: -1, paddingBottom: 4}}>
+                        <div
+                            ref={headlineRef}
+                            style={{
+                                order: -1,
+                                paddingBottom: pretitle || title || subtitle || description ? 4 : 0,
+                            }}
+                        >
                             {typeof headline === 'string' ? <Tag type="promo">{headline}</Tag> : headline}
                         </div>
                     )}
