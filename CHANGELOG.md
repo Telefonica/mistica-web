@@ -1,3 +1,10 @@
+## [16.6.1](https://github.com/Telefonica/mistica-web/compare/v16.6.0...v16.6.1) (2024-11-26)
+
+
+### Bug Fixes
+
+* **Header, Cards, Hero:** fix spacings logic ([#1298](https://github.com/Telefonica/mistica-web/issues/1298)) ([327ac5f](https://github.com/Telefonica/mistica-web/commit/327ac5fe90b5bb3dc2a23af5bb890368439d1d77))
+
 # [16.6.0](https://github.com/Telefonica/mistica-web/compare/v16.5.0...v16.6.0) (2024-11-26)
 
 
