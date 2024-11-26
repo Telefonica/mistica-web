@@ -20,6 +20,7 @@ import {
 import {Placeholder} from '../placeholder';
 import avatarImg from './images/avatar.jpg';
 
+import type {HeadingType} from '../utils/types';
 import type {AspectRatio} from '../card';
 import type {TagType} from '..';
 
@@ -32,7 +33,9 @@ type DisplayDataCardArgs = {
     headlineType: TagType;
     headline: string;
     pretitle: string;
+    pretitleAs: HeadingType;
     title: string;
+    titleAs: HeadingType;
     description: string;
     extra: boolean;
     closable: boolean;
@@ -57,7 +60,9 @@ export const Default: StoryComponent<DisplayDataCardArgs> = ({
     headline,
     headlineType,
     pretitle,
+    pretitleAs,
     title,
+    titleAs,
     description,
     extra,
     actions = 'button',
@@ -141,7 +146,9 @@ export const Default: StoryComponent<DisplayDataCardArgs> = ({
             asset={assetElement}
             headline={headline ? <Tag type={headlineType}>{headline}</Tag> : undefined}
             pretitle={pretitle}
+            pretitleAs={pretitleAs}
             title={title}
+            titleAs={titleAs}
             description={description}
             aspectRatio={aspectRatioValue as AspectRatio}
             extra={extra ? <Placeholder /> : undefined}
@@ -158,7 +165,9 @@ Default.args = {
     headlineType: 'promo',
     headline: 'Priority',
     pretitle: 'Pretitle',
+    pretitleAs: 'span',
     title: 'Title',
+    titleAs: 'h3',
     description: 'This is a description for the card',
     extra: false,
     actions: 'button',
@@ -200,6 +209,14 @@ Default.argTypes = {
                 '9 10': '9:10',
             },
         },
+    },
+    pretitleAs: {
+        options: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'span'],
+        control: {type: 'select'},
+    },
+    titleAs: {
+        options: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'span'],
+        control: {type: 'select'},
     },
 };
 

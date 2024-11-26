@@ -15,12 +15,18 @@ import {getPrefixedDataAttributes} from './utils/dom';
 import {useIsInverseOrMediaVariant} from './theme-variant-context';
 import {applyCssVars} from './utils/css';
 import {InternalResponsiveLayout, ResetResponsiveLayout} from './responsive-layout';
+import {
+    type DataAttributes,
+    type HeadingType,
+    type RendersElement,
+    type RendersNullableElement,
+} from './utils/types';
+import {isBiggerHeading} from './utils/headings';
 
 import type Image from './image';
 import type Video from './video';
 import type {ButtonLink, ButtonPrimary, ButtonSecondary} from './button';
 import type Tag from './tag';
-import type {DataAttributes, HeadingType, RendersElement, RendersNullableElement} from './utils/types';
 
 const CONTENT_BACKGROUND_COLOR = {
     default: skinVars.colors.background,
@@ -49,6 +55,7 @@ const Layout = ({children, isInverse, backgroundColor}: LayoutProps) => {
 type HeroContentProps = {
     headline?: RendersNullableElement<typeof Tag>;
     pretitle?: string;
+    pretitleAs?: HeadingType;
     title?: string;
     titleAs?: HeadingType;
     description?: string;
@@ -64,6 +71,7 @@ const HeroContent = ({
     title,
     titleAs = 'h1',
     pretitle,
+    pretitleAs,
     description,
     descriptionLinesMax,
     extra,
@@ -71,23 +79,52 @@ const HeroContent = ({
     secondaryButton,
     buttonLink,
 }: HeroContentProps) => {
+    const titleContent = title ? (
+        <Text8 as={titleAs} dataAttributes={{testid: 'title'}}>
+            {title}
+        </Text8>
+    ) : undefined;
+
+    const pretitleContent = pretitle ? (
+        <Text3 as={pretitleAs} regular dataAttributes={{testid: 'pretitle'}}>
+            {pretitle}
+        </Text3>
+    ) : undefined;
+
+    const headlineContent = headline ? (
+        // assuming that the headline will always be followed by one of: pretitle, title, subtitle, description
+        <div data-testid="headline" style={{paddingBottom: 16, order: -1}}>
+            {headline}
+        </div>
+    ) : undefined;
+
     return (
         <section className={styles.contentContainer}>
             <div>
                 <Stack space={16}>
-                    {headline && <div data-testid="headline">{headline}</div>}
-                    <Stack space={8}>
-                        {pretitle && (
-                            <Text3 as="p" regular dataAttributes={{testid: 'pretitle'}}>
-                                {pretitle}
-                            </Text3>
+                    {/** using flex instead of nested Stacks, this way we can rearrange texts so the DOM structure makes more sense for screen reader users */}
+                    <div className={styles.flexColumn}>
+                        {isBiggerHeading(titleAs, pretitleAs) ? (
+                            <>
+                                {titleContent}
+                                {headlineContent}
+                                {pretitleContent && (
+                                    <div style={{paddingBottom: title ? 8 : 0, order: -1}}>
+                                        {pretitleContent}
+                                    </div>
+                                )}
+                            </>
+                        ) : (
+                            <>
+                                {pretitleContent && (
+                                    <div style={{paddingBottom: title ? 8 : 0}}>{pretitleContent}</div>
+                                )}
+                                {headlineContent}
+                                {titleContent}
+                            </>
                         )}
-                        {title && (
-                            <Text8 as={titleAs} dataAttributes={{testid: 'title'}}>
-                                {title}
-                            </Text8>
-                        )}
-                    </Stack>
+                    </div>
+
                     {description && (
                         <Text3
                             as="p"
@@ -118,6 +155,7 @@ type HeroProps = {
     media: RendersElement<typeof Image> | RendersElement<typeof Video>;
     headline?: RendersNullableElement<typeof Tag>;
     pretitle?: string;
+    pretitleAs?: HeadingType;
     title?: string;
     titleAs?: HeadingType;
     description?: string;

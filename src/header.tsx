@@ -10,10 +10,16 @@ import {vars} from './skins/skin-contract.css';
 import * as styles from './header.css';
 import {getPrefixedDataAttributes} from './utils/dom';
 import {Title3, Title4} from './title';
+import {
+    type DataAttributes,
+    type HeadingType,
+    type RendersElement,
+    type RendersNullableElement,
+} from './utils/types';
+import {isBiggerHeading} from './utils/headings';
 
 import type NavigationBreadcrumbs from './navigation-breadcrumbs';
 import type {ButtonPrimary, ButtonSecondary} from './button';
-import type {DataAttributes, HeadingType, RendersElement, RendersNullableElement} from './utils/types';
 import type {TextPresetProps} from './text';
 
 type OverridableTextProps = {
@@ -67,42 +73,81 @@ export const Header = ({
         );
     };
 
+    const pretitleContent = renderPretitle();
+
+    const titleContent = title ? (
+        small ? (
+            <Title3 as={titleAs} dataAttributes={{testid: 'title'}}>
+                {title}
+            </Title3>
+        ) : (
+            <Title4 as={titleAs} dataAttributes={{testid: 'title'}}>
+                {title}
+            </Title4>
+        )
+    ) : undefined;
+
+    const headlineContent = headline ? (
+        // assuming that the headline will always be followed by one of: pretitle, title, description
+        <div style={{paddingBottom: 8, order: -1}} data-testid="headline">
+            {headline}
+        </div>
+    ) : undefined;
+
     return (
         <Stack space={{mobile: 24, desktop: 32}} dataAttributes={{testid: 'Header', ...dataAttributes}}>
             {(title || pretitle || description) && (
                 <Box paddingRight={16}>
-                    <Stack space={8}>
-                        {headline && <div data-testid="headline">{headline}</div>}
-                        {renderPretitle()}
-                        {title &&
-                            (small ? (
-                                <Title3 as={titleAs} dataAttributes={{testid: 'title'}}>
-                                    {title}
-                                </Title3>
-                            ) : (
-                                <Title4 as={titleAs} dataAttributes={{testid: 'title'}}>
-                                    {title}
-                                </Title4>
-                            ))}
-                        {description &&
-                            (small ? (
-                                <Text2
-                                    regular
-                                    color={vars.colors.textSecondary}
-                                    dataAttributes={{testid: 'description'}}
-                                >
-                                    {description}
-                                </Text2>
-                            ) : (
-                                <Text3
-                                    regular
-                                    color={vars.colors.textSecondary}
-                                    dataAttributes={{testid: 'description'}}
-                                >
-                                    {description}
-                                </Text3>
-                            ))}
-                    </Stack>
+                    {/** using flex instead of nested Stacks, this way we can rearrange texts so the DOM structure makes more sense for screen reader users */}
+                    <div className={styles.flexColumn}>
+                        {isBiggerHeading(titleAs, pretitleAs) ? (
+                            <>
+                                {titleContent && (
+                                    <div style={{paddingBottom: description ? 8 : 0}}>{titleContent}</div>
+                                )}
+                                {headlineContent}
+                                {pretitleContent && (
+                                    <div style={{paddingBottom: pretitle || description ? 8 : 0, order: -1}}>
+                                        {pretitleContent}
+                                    </div>
+                                )}
+                            </>
+                        ) : (
+                            <>
+                                {pretitleContent && (
+                                    <div style={{paddingBottom: title || description ? 8 : 0}}>
+                                        {pretitleContent}
+                                    </div>
+                                )}
+                                {headlineContent}
+                                {titleContent && (
+                                    <div style={{paddingBottom: description ? 8 : 0}}>{titleContent}</div>
+                                )}
+                            </>
+                        )}
+
+                        {description && (
+                            <div style={{order: 1}}>
+                                {small ? (
+                                    <Text2
+                                        regular
+                                        color={vars.colors.textSecondary}
+                                        dataAttributes={{testid: 'description'}}
+                                    >
+                                        {description}
+                                    </Text2>
+                                ) : (
+                                    <Text3
+                                        regular
+                                        color={vars.colors.textSecondary}
+                                        dataAttributes={{testid: 'description'}}
+                                    >
+                                        {description}
+                                    </Text3>
+                                )}
+                            </div>
+                        )}
+                    </div>
                 </Box>
             )}
         </Stack>
@@ -184,7 +229,7 @@ export const HeaderLayout = ({
 
     return (
         <div {...getPrefixedDataAttributes(dataAttributes, 'HeaderLayout')}>
-            <ResponsiveLayout isInverse={isInverse}>
+            <ResponsiveLayout variant={isInverse ? 'inverse' : undefined}>
                 <Box
                     paddingTop={
                         noPaddingY
@@ -243,7 +288,7 @@ export const MainSectionHeaderLayout = ({
     useSetOverscrollColor(isInverse ? {topColor: vars.colors.backgroundBrandTop} : {});
     return (
         <ResponsiveLayout
-            isInverse={isInverse}
+            variant={isInverse ? 'inverse' : undefined}
             dataAttributes={{
                 'component-name': 'MainSectionHeaderLayout',
                 testid: 'MainSectionHeaderLayout',
