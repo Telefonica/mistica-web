@@ -92,8 +92,10 @@ const HeroContent = ({
     ) : undefined;
 
     const headlineContent = headline ? (
-        // assuming that the headline will always be followed by one of: pretitle, title, subtitle, description
-        <div data-testid="headline" style={{paddingBottom: 16, order: -1}}>
+        <div
+            data-testid="headline"
+            style={{paddingBottom: pretitle || title || description ? 16 : 0, order: -1}}
+        >
             {headline}
         </div>
     ) : undefined;
