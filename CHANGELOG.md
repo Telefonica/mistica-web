@@ -1,3 +1,14 @@
+# [16.6.0](https://github.com/Telefonica/mistica-web/compare/v16.5.0...v16.6.0) (2024-11-26)
+
+
+### Features
+
+* **data-testid:** support for Callout, HighlightedCard, Hero, EmptyState and Headers ([#1296](https://github.com/Telefonica/mistica-web/issues/1296)) ([15b798c](https://github.com/Telefonica/mistica-web/commit/15b798c91a4ad898d95036c8dd54e4a41997f3c1))
+* **Header, Cards, Hero, CoverHero:** improve a11y ([#1292](https://github.com/Telefonica/mistica-web/issues/1292)) ([cdcf2fc](https://github.com/Telefonica/mistica-web/commit/cdcf2fcafcd4df435f38927cbbc65d52c9b29590))
+* **InfoSheet:** update styles and allow adding a button to the content ([#1294](https://github.com/Telefonica/mistica-web/issues/1294)) ([c4a0749](https://github.com/Telefonica/mistica-web/commit/c4a0749d816702644020112fd00d6d6b2a61ae39))
+* **Meter:** New component ([#1281](https://github.com/Telefonica/mistica-web/issues/1281)) ([1a061d8](https://github.com/Telefonica/mistica-web/commit/1a061d8b645a418930ae0a8921db1900b8e084ce))
+* **Sheet:** allow closing the sheet with the keyboard or a screen reader ([#1293](https://github.com/Telefonica/mistica-web/issues/1293)) ([42099fb](https://github.com/Telefonica/mistica-web/commit/42099fb17e1f5682f196ee5390ceb386616a2d59))
+
 # [16.5.0](https://github.com/Telefonica/mistica-web/compare/v16.4.0...v16.5.0) (2024-11-18)
 
 
