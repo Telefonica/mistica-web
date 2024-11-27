@@ -1,23 +1,49 @@
-diff --git a/src/Playroom/AiPanel/AiPanel.tsx b/src/Playroom/AiPanel/AiPanel.tsx
+diff --git a/src/Playroom/AiPanel/AiPanel.css.ts b/src/Playroom/AiPanel/AiPanel.css.ts
 new file mode 100644
-index 0000000000000000000000000000000000000000..09c748db44dc2d25cc7f8396828f04c0c5adfc07
+index 0000000000000000000000000000000000000000..21d14ae14f317c051123f269242ee58dee262275
 --- /dev/null
-+++ b/src/Playroom/AiPanel/AiPanel.tsx
-@@ -0,0 +1,344 @@
-+/* eslint-disable no-nested-ternary */
-+import * as React from 'react';
-+import { flushSync } from 'react-dom';
-+import { Heading } from '../Heading/Heading';
-+import { ToolbarPanel } from '../ToolbarPanel/ToolbarPanel';
++++ b/src/Playroom/AiPanel/AiPanel.css.ts
+@@ -0,0 +1,143 @@
++import { keyframes, style } from '@vanilla-extract/css';
 +import { colorPaletteVars } from '../sprinkles.css';
-+import { vars } from '../vars.css';
-+import {
-+  type AiConversationMessage,
-+  StoreContext,
-+} from '../../StoreContext/StoreContext';
-+import { formatCode } from '../../utils/formatting';
++import * as framesPanelStyles from '../FramesPanel/FramesPanel.css';
 +
-+const iconButtonStyles: React.CSSProperties = {
++export const panel = style({
++  display: 'flex',
++  flexDirection: 'column',
++  height: '100%',
++  gap: 16,
++});
++
++export const conversationContainer = style({
++  flex: 1,
++  display: 'flex',
++  flexDirection: 'column',
++  gap: 16,
++  overflowY: 'auto',
++  margin: '0 -20px',
++  padding: '0 20px',
++});
++
++export const emptyState = style({
++  flex: 1,
++  display: 'flex',
++  flexDirection: 'column',
++  alignItems: 'center',
++  justifyContent: 'center',
++  gap: 16,
++  color: colorPaletteVars.foreground.secondary,
++  lineHeight: '1.3',
++});
++
++export const dragging = style({
++  border: `2px dashed ${colorPaletteVars.border.standard}`,
++  padding: 12,
++  borderRadius: 8,
++  textAlign: 'center',
++});
++
++export const iconButton = style({
 +  display: 'inline-flex',
 +  background: 'transparent',
 +  border: 'none',
@@ -28,7 +54,117 @@ index 0000000000000000000000000000000000000000..09c748db44dc2d25cc7f8396828f04c0
 +  WebkitAppearance: 'none',
 +  padding: 0,
 +  margin: 0,
-+};
++  ':disabled': {
++    cursor: 'default',
++  },
++});
++
++const bubble = style({
++  border: `1px solid ${colorPaletteVars.border.standard}`,
++  borderRadius: '16px',
++  padding: '8px',
++  width: 'fit-content',
++  lineHeight: '1.3',
++});
++
++export const userBubble = style([bubble, { alignSelf: 'flex-end' }]);
++export const assistantBubble = style([
++  bubble,
++  {
++    fontStyle: 'italic',
++    display: 'flex',
++    alignItems: 'center',
++    gap: 8,
++  },
++]);
++export const loadingBubble = style([
++  bubble,
++  {
++    minWidth: '56px',
++    textAlign: 'center',
++  },
++]);
++export const errorBubble = style([
++  bubble,
++  {
++    minWidth: '56px',
++    color: 'red',
++    borderColor: 'red',
++  },
++]);
++
++export const regenerating = style({});
++
++export const assistantMessage = style({
++  display: 'flex',
++  alignItems: 'center',
++  gap: 8,
++});
++
++export const disabledMessage = style({
++  opacity: 0.5,
++});
++
++export const messageActions = style({
++  display: 'none',
++  selectors: {
++    [`${regenerating} &`]: {
++      display: 'flex',
++    },
++    [`${assistantMessage}:hover:not(${disabledMessage}) &`]: {
++      display: 'flex',
++    },
++  },
++});
++
++const spin = keyframes({
++  from: {
++    transform: 'rotate(0deg)',
++  },
++  to: {
++    transform: 'rotate(360deg)',
++  },
++});
++
++export const regenerateIcon = style({
++  selectors: {
++    [`${regenerating} &`]: {
++      animation: `${spin} 1s linear infinite`,
++    },
++  },
++});
++
++export const textarea = style([
++  framesPanelStyles.textField,
++  {
++    width: '100%',
++    minWidth: '100%',
++    maxWidth: '100%',
++    ['fieldSizing' as any]: 'content',
++    minHeight: 'calc(3lh + 16px)',
++    maxHeight: 'calc(8lh + 16px)',
++    paddingTop: 12,
++    paddingBottom: 12,
++  },
++]);
+diff --git a/src/Playroom/AiPanel/AiPanel.tsx b/src/Playroom/AiPanel/AiPanel.tsx
+new file mode 100644
+index 0000000000000000000000000000000000000000..c8049aac33ab6b4afbaa01dcdba48635c6ab2bf6
+--- /dev/null
++++ b/src/Playroom/AiPanel/AiPanel.tsx
+@@ -0,0 +1,506 @@
++/* eslint-disable no-nested-ternary */
++import * as React from 'react';
++import { flushSync } from 'react-dom';
++import classNames from 'classnames';
++import { Heading } from '../Heading/Heading';
++import { ToolbarPanel } from '../ToolbarPanel/ToolbarPanel';
++import {
++  type AiConversationMessage,
++  StoreContext,
++} from '../../StoreContext/StoreContext';
++import { formatCode } from '../../utils/formatting';
++import * as styles from './AiPanel.css';
 +
 +const AnnimatedDots = () => {
 +  const [dots, setDots] = React.useState('.');
@@ -86,11 +222,152 @@ index 0000000000000000000000000000000000000000..09c748db44dc2d25cc7f8396828f04c0
 +    .then((response) => response.json())
 +    .then((data) => data.conversationId);
 +
++const deleteConversation = (conversationId: string) =>
++  fetchApi('/delete-conversation', {
++    body: JSON.stringify({ conversationId }),
++  });
++
++const regenerateMessage = (conversationId: string, messageIndex: number) =>
++  fetchApi('/regenerate-message', {
++    body: JSON.stringify({ conversationId, messageIndex }),
++  })
++    .then((response) => response.json())
++    .then((data) => {
++      if (!data.success) {
++        throw new Error(data.error);
++      }
++      return data.source;
++    });
++
++export const EmptyState = ({
++  onImagePaste,
++}: {
++  onImagePaste: (dataUrl: string) => void;
++}) => {
++  const [isDragging, setIsDragging] = React.useState(false);
++
++  const dropAreaRefCallback = React.useCallback(
++    (node: HTMLDivElement | null) => {
++      if (!node) {
++        return;
++      }
++      const handleDragOver = (e: DragEvent) => {
++        e.preventDefault();
++        setIsDragging(true);
++      };
++
++      const handleDragLeave = (e: DragEvent) => {
++        e.preventDefault();
++        setIsDragging(false);
++      };
++
++      const handleDrop = (e: DragEvent) => {
++        e.preventDefault();
++        setIsDragging(false);
++        const imageFile = e.dataTransfer?.files[0];
++        if (!imageFile || !imageFile.type.startsWith('image/')) {
++          return;
++        }
++        const reader = new FileReader();
++        reader.onload = () => {
++          onImagePaste(reader.result as string);
++        };
++        reader.readAsDataURL(imageFile);
++      };
++
++      node.addEventListener('dragover', handleDragOver);
++      node.addEventListener('dragleave', handleDragLeave);
++      node.addEventListener('drop', handleDrop);
++
++      return () => {
++        node.removeEventListener('dragover', handleDragOver);
++        node.removeEventListener('dragleave', handleDragLeave);
++        node.removeEventListener('drop', handleDrop);
++      };
++    },
++    [onImagePaste]
++  );
++
++  React.useEffect(() => {
++    const handlePaste = (e: ClipboardEvent) => {
++      const imageFile = e.clipboardData?.files[0];
++      if (!imageFile || !imageFile.type.startsWith('image/')) {
++        return;
++      }
++      const canvas = document.createElement('canvas');
++      const ctx = canvas.getContext('2d');
++      if (!ctx) {
++        return;
++      }
++      const img = new Image();
++      img.onload = () => {
++        canvas.width = img.width;
++        canvas.height = img.height;
++        ctx.drawImage(img, 0, 0);
++        const dataUrl = canvas.toDataURL('image/png');
++        onImagePaste(dataUrl);
++      };
++      img.src = URL.createObjectURL(imageFile);
++    };
++
++    document.addEventListener('paste', handlePaste);
++    return () => {
++      document.removeEventListener('paste', handlePaste);
++    };
++  }, [onImagePaste]);
++
++  return (
++    <div
++      className={classNames(styles.emptyState, {
++        [styles.dragging]: isDragging,
++      })}
++      ref={dropAreaRefCallback}
++    >
++      {isDragging ? (
++        'Drop the image here'
++      ) : (
++        <>
++          <p>Use Mistica AI assistant to start building a UI.</p>
++          <p>
++            Type what you want to build and the AI will generate the code for
++            you.
++          </p>
++          <p>
++            You can also paste an{' '}
++            <svg
++              xmlns="http://www.w3.org/2000/svg"
++              width="16"
++              height="16"
++              viewBox="0 0 24 24"
++              fill="none"
++              stroke="currentColor"
++              strokeWidth="2"
++              strokeLinecap="round"
++              strokeLinejoin="round"
++              style={{ verticalAlign: 'middle' }}
++            >
++              <rect width="18" height="18" x="3" y="3" rx="2" ry="2" />
++              <circle cx="9" cy="9" r="2" />
++              <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21" />
++            </svg>{' '}
++            image with a design prototype here to start.
++          </p>
++        </>
++      )}
++    </div>
++  );
++};
++
 +export default () => {
 +  const [{ aiConversation }, dispatch] = React.useContext(StoreContext);
 +  const [isWaitingForResponse, setIsWaitingForResponse] =
 +    React.useState<boolean>(false);
++  const [regeneratingIndex, setRegeneratingIndex] = React.useState<
++    number | null
++  >(null);
 +  const [error, setError] = React.useState<string | null>(null);
++
++  const isLoading = isWaitingForResponse || regeneratingIndex !== null;
 +
 +  const conversationContainerRef = React.useRef<HTMLDivElement>(null);
 +  const textAreaRef = React.useRef<HTMLTextAreaElement>(null);
@@ -112,14 +389,16 @@ index 0000000000000000000000000000000000000000..09c748db44dc2d25cc7f8396828f04c0
 +    scrollConversationToBottom();
 +  };
 +
-+  const sendMessage = async (message: string) => {
-+    if (!message) {
++  const sendMessage = async (
++    messageContent: AiConversationMessage['content']
++  ) => {
++    if (messageContent.type === 'text' && !messageContent.text.trim()) {
 +      return;
 +    }
 +    const prevAiMessageIdx = aiConversation.messages.length - 1;
 +    addAiMessage({
 +      role: 'user',
-+      content: { type: 'text', text: message },
++      content: messageContent,
 +    });
 +    setIsWaitingForResponse(true);
 +    let conversationId = aiConversation.conversationId;
@@ -131,7 +410,12 @@ index 0000000000000000000000000000000000000000..09c748db44dc2d25cc7f8396828f04c0
 +          payload: { conversationId },
 +        });
 +      }
-+      const response = await sendMessageToAi(conversationId, message);
++      const response = await sendMessageToAi(
++        conversationId,
++        messageContent.type === 'text'
++          ? messageContent.text
++          : messageContent.url
++      );
 +      const { code: formattedCode } = formatCode({
 +        code: response,
 +        cursor: { line: 0, ch: 0 },
@@ -160,6 +444,45 @@ index 0000000000000000000000000000000000000000..09c748db44dc2d25cc7f8396828f04c0
 +    }
 +  };
 +
++  const regenerate = async (messageIndex: number) => {
++    if (!aiConversation.conversationId) {
++      return;
++    }
++    setRegeneratingIndex(messageIndex);
++    try {
++      const response = await regenerateMessage(
++        aiConversation.conversationId,
++        messageIndex
++      );
++      const { code: formattedCode } = formatCode({
++        code: response,
++        cursor: { line: 0, ch: 0 },
++      });
++
++      dispatch({
++        type: 'updateCode',
++        payload: { code: formattedCode },
++      });
++
++      dispatch({
++        type: 'goBackToAiMessage',
++        payload: { index: messageIndex - 1 },
++      });
++
++      addAiMessage({
++        role: 'assistant',
++        content: { type: 'text', text: formattedCode },
++      });
++    } catch (e) {
++      setError((e as Error).message || 'Error');
++      setTimeout(() => {
++        setError(null);
++      }, 5000);
++    } finally {
++      setRegeneratingIndex(null);
++    }
++  };
++
 +  const restoreSnippet = (snippet: string) => {
 +    dispatch({
 +      type: 'updateCode',
@@ -168,6 +491,9 @@ index 0000000000000000000000000000000000000000..09c748db44dc2d25cc7f8396828f04c0
 +  };
 +
 +  const restartConversation = () => {
++    if (aiConversation.conversationId) {
++      deleteConversation(aiConversation.conversationId);
++    }
 +    dispatch({
 +      type: 'resetAiMessages',
 +    });
@@ -184,14 +510,7 @@ index 0000000000000000000000000000000000000000..09c748db44dc2d25cc7f8396828f04c0
 +
 +  return (
 +    <ToolbarPanel>
-+      <div
-+        style={{
-+          display: 'flex',
-+          flexDirection: 'column',
-+          height: '100%',
-+          gap: 16,
-+        }}
-+      >
++      <div className={styles.panel}>
 +        <div style={{ display: 'flex' }}>
 +          <div style={{ flex: 1 }}>
 +            <Heading as="h4" level="3">
@@ -200,9 +519,9 @@ index 0000000000000000000000000000000000000000..09c748db44dc2d25cc7f8396828f04c0
 +          </div>
 +          {aiConversation.conversationId && (
 +            <button
-+              disabled={isWaitingForResponse || Boolean(error)}
++              disabled={isLoading || Boolean(error)}
 +              onClick={restartConversation}
-+              style={{ ...iconButtonStyles }}
++              className={styles.iconButton}
 +              title="Restart conversation"
 +              aria-label="Restart conversation"
 +            >
@@ -222,120 +541,112 @@ index 0000000000000000000000000000000000000000..09c748db44dc2d25cc7f8396828f04c0
 +        </div>
 +        <div
 +          ref={conversationContainerRef}
-+          style={{
-+            flex: 1,
-+            display: 'flex',
-+            flexDirection: 'column',
-+            gap: 16,
-+            overflowY: 'auto',
-+            margin: '0 -20px',
-+            padding: '0 20px',
-+          }}
++          className={styles.conversationContainer}
 +        >
++          {aiConversation.messages.length === 0 && !isLoading && (
++            <EmptyState
++              onImagePaste={(dataUrl) =>
++                sendMessage({ type: 'image', url: dataUrl })
++              }
++            />
++          )}
 +          {aiConversation.messages.map((message, idx) =>
 +            message.role === 'assistant' ? (
 +              <div
 +                key={idx}
-+                style={{
-+                  border: `1px solid ${colorPaletteVars.border.standard}`,
-+                  borderRadius: '16px',
-+                  padding: '8px',
-+                  width: 'fit-content',
-+                  fontStyle: 'italic',
-+                  display: 'flex',
-+                  alignItems: 'center',
-+                  gap: 8,
-+                }}
++                className={classNames(styles.assistantMessage, {
++                  [styles.disabledMessage]:
++                    regeneratingIndex !== null && regeneratingIndex < idx,
++                  [styles.regenerating]: regeneratingIndex === idx,
++                })}
 +              >
-+                <button
-+                  onClick={() => restoreSnippet(message.content.text)}
-+                  aria-label="Load code"
-+                  title="Load code"
-+                  style={iconButtonStyles}
-+                >
-+                  <svg
-+                    width={24}
-+                    height={24}
-+                    viewBox="0 0 24 24"
-+                    role="presentation"
++                <div className={styles.assistantBubble}>
++                  <button
++                    onClick={() => restoreSnippet(message.content.text)}
++                    aria-label="Load code"
++                    title="Load code"
++                    className={styles.iconButton}
++                    disabled={isLoading}
 +                  >
-+                    <path
-+                      fill="currentColor"
-+                      d="M21.841 6.019c0-.774-.652-1.404-1.456-1.404H3.615c-.807 0-1.46.63-1.46 1.404v11.958c0 .773.655 1.403 1.46 1.403h16.77c.804 0 1.456-.63 1.456-1.403zM3.614 5.797h16.774c.126 0 .226.098.226.219v1.73H3.388v-1.73c0-.12.1-.219.226-.219m16.77 12.398v-.003H3.613a.224.224 0 0 1-.227-.218V8.932h17.227v9.045c0 .12-.101.218-.227.218M6.313 7.24a.56.56 0 0 1-.569-.55c0-.304.255-.548.569-.548.316 0 .569.246.569.549a.56.56 0 0 1-.57.549m1.14-.55c0 .303.252.55.569.55a.556.556 0 0 0 .568-.55.56.56 0 0 0-.568-.548.56.56 0 0 0-.57.549M4.6 7.24a.56.56 0 0 1-.568-.55c0-.304.252-.548.568-.548.317 0 .569.246.569.549a.556.556 0 0 1-.569.549m4.398 4.77a.54.54 0 0 0 .04-.781.585.585 0 0 0-.81-.037l-2.34 2.045a.54.54 0 0 0-.187.406c0 .154.067.303.185.406l2.34 2.082c.108.1.251.148.388.148a.58.58 0 0 0 .42-.176.54.54 0 0 0-.03-.782l-1.88-1.672zm6.684-.82 2.339 2.044a.55.55 0 0 1 .187.406.55.55 0 0 1-.185.41l-2.339 2.08a.59.59 0 0 1-.81-.03.54.54 0 0 1 .032-.782l1.88-1.672-1.875-1.639a.54.54 0 0 1-.039-.781.59.59 0 0 1 .81-.037m-2.255.66a.544.544 0 0 0-.289-.73.58.58 0 0 0-.759.282l-1.896 4.079a.54.54 0 0 0 .288.728q.116.046.236.048a.58.58 0 0 0 .523-.328z"
-+                    />
-+                  </svg>
-+                </button>
-+                <p>Code generated</p>
++                    <svg
++                      width={24}
++                      height={24}
++                      viewBox="0 0 24 24"
++                      role="presentation"
++                    >
++                      <path
++                        fill="currentColor"
++                        d="M21.841 6.019c0-.774-.652-1.404-1.456-1.404H3.615c-.807 0-1.46.63-1.46 1.404v11.958c0 .773.655 1.403 1.46 1.403h16.77c.804 0 1.456-.63 1.456-1.403zM3.614 5.797h16.774c.126 0 .226.098.226.219v1.73H3.388v-1.73c0-.12.1-.219.226-.219m16.77 12.398v-.003H3.613a.224.224 0 0 1-.227-.218V8.932h17.227v9.045c0 .12-.101.218-.227.218M6.313 7.24a.56.56 0 0 1-.569-.55c0-.304.255-.548.569-.548.316 0 .569.246.569.549a.56.56 0 0 1-.57.549m1.14-.55c0 .303.252.55.569.55a.556.556 0 0 0 .568-.55.56.56 0 0 0-.568-.548.56.56 0 0 0-.57.549M4.6 7.24a.56.56 0 0 1-.568-.55c0-.304.252-.548.568-.548.317 0 .569.246.569.549a.556.556 0 0 1-.569.549m4.398 4.77a.54.54 0 0 0 .04-.781.585.585 0 0 0-.81-.037l-2.34 2.045a.54.54 0 0 0-.187.406c0 .154.067.303.185.406l2.34 2.082c.108.1.251.148.388.148a.58.58 0 0 0 .42-.176.54.54 0 0 0-.03-.782l-1.88-1.672zm6.684-.82 2.339 2.044a.55.55 0 0 1 .187.406.55.55 0 0 1-.185.41l-2.339 2.08a.59.59 0 0 1-.81-.03.54.54 0 0 1 .032-.782l1.88-1.672-1.875-1.639a.54.54 0 0 1-.039-.781.59.59 0 0 1 .81-.037m-2.255.66a.544.544 0 0 0-.289-.73.58.58 0 0 0-.759.282l-1.896 4.079a.54.54 0 0 0 .288.728q.116.046.236.048a.58.58 0 0 0 .523-.328z"
++                      />
++                    </svg>
++                  </button>
++                  <p>
++                    {regeneratingIndex === idx
++                      ? 'Regenerating...'
++                      : 'Code generated'}
++                  </p>
++                </div>
++                <div className={styles.messageActions}>
++                  <button
++                    onClick={() => regenerate(idx)}
++                    aria-label="Regenerate message"
++                    title="Regenerate message"
++                    className={styles.iconButton}
++                    disabled={isLoading}
++                  >
++                    <svg
++                      width={24}
++                      height={24}
++                      viewBox="0 0 24 24"
++                      role="presentation"
++                      className={styles.regenerateIcon}
++                    >
++                      <path
++                        fill="currentColor"
++                        d="M18.2 7.905h-4.405v-1.25h2.321a6.75 6.75 0 0 0-10.865 5.45H4l-.001-.1A8 8 0 0 1 16.95 5.72V3.5h1.25zM5.8 16.105h4.405v1.25H7.884a6.75 6.75 0 0 0 10.866-5.45H20v.1A8 8 0 0 1 7.05 18.29v2.22H5.8z"
++                      />
++                    </svg>
++                  </button>
++                </div>
 +              </div>
 +            ) : (
 +              <div
 +                key={idx}
-+                style={{
-+                  alignSelf: 'flex-end',
-+                  border: `1px solid ${colorPaletteVars.border.standard}`,
-+                  borderRadius: '16px',
-+                  padding: '8px',
-+                  width: 'fit-content',
-+                }}
++                className={classNames(styles.userBubble, {
++                  [styles.disabledMessage]:
++                    regeneratingIndex !== null && regeneratingIndex < idx,
++                })}
 +              >
-+                {message.content.text}
++                {message.content.type === 'text' ? (
++                  message.content.text
++                ) : (
++                  <img src={message.content.url} width="100%" />
++                )}
 +              </div>
 +            )
 +          )}
 +          {isWaitingForResponse && (
-+            <div
-+              style={{
-+                border: `1px solid ${colorPaletteVars.border.standard}`,
-+                borderRadius: '16px',
-+                padding: '8px',
-+                width: 'fit-content',
-+                minWidth: '56px',
-+                textAlign: 'center',
-+              }}
-+            >
++            <div className={styles.loadingBubble}>
 +              <AnnimatedDots />
 +            </div>
 +          )}
-+          {error && (
-+            <div
-+              style={{
-+                border: `1px solid red`,
-+                borderRadius: '16px',
-+                padding: '8px',
-+                width: 'fit-content',
-+                minWidth: '56px',
-+                color: 'red',
-+              }}
-+            >
-+              {error}
-+            </div>
-+          )}
++          {error && <div className={styles.errorBubble}>{error}</div>}
 +        </div>
 +        <textarea
 +          ref={textAreaRef}
 +          onKeyUp={(e) => {
 +            if (e.key === 'Enter' && !e.shiftKey) {
-+              sendMessage(e.currentTarget.value.trim());
++              sendMessage({ type: 'text', text: e.currentTarget.value.trim() });
 +              e.currentTarget.value = '';
 +            }
 +          }}
-+          disabled={isWaitingForResponse || Boolean(error)}
++          disabled={isLoading || Boolean(error)}
++          className={styles.textarea}
 +          style={{
-+            width: '100%',
-+            minWidth: '100%',
-+            maxWidth: '100%',
-+            ['fieldSizing' as any]: 'content',
-+            minHeight: 'calc(3lh + 16px)',
-+            maxHeight: 'calc(8lh + 16px)',
-+            fontFamily: vars.font.family.standard,
-+            fontSize: 'inherit',
-+            padding: '8px',
-+            border: error
-+              ? `1px solid red`
-+              : `1px solid ${colorPaletteVars.border.standard}`,
++            borderColor: error ? `red` : undefined,
 +          }}
 +          placeholder={
-+            isWaitingForResponse
++            isLoading
 +              ? 'Generating...'
 +              : error
 +              ? 'There was an error'
@@ -349,7 +660,7 @@ index 0000000000000000000000000000000000000000..09c748db44dc2d25cc7f8396828f04c0
 +  );
 +};
 diff --git a/src/Playroom/Toolbar/Toolbar.tsx b/src/Playroom/Toolbar/Toolbar.tsx
-index 389401bc0df0a8cba17cc0f4a53229027bdc81f2..9ebbaa25c6204357b052a9093fd15dc548c07518 100644
+index 389401bc0df0a8cba17cc0f4a53229027bdc81f2..3f9134de736dbd873d72b1db7fb255f1845d63f6 100644
 --- a/src/Playroom/Toolbar/Toolbar.tsx
 +++ b/src/Playroom/Toolbar/Toolbar.tsx
 @@ -18,6 +18,7 @@ import SettingsIcon from '../icons/SettingsIcon';
@@ -368,7 +679,7 @@ index 389401bc0df0a8cba17cc0f4a53229027bdc81f2..9ebbaa25c6204357b052a9093fd15dc5
  
    const [lastActivePanel, setLastActivePanel] =
      useState<typeof activeToolbarPanel>(undefined);
-@@ -131,6 +133,24 @@ export default ({ themes: allThemes, widths: allWidths, snippets }: Props) => {
+@@ -131,6 +133,36 @@ export default ({ themes: allThemes, widths: allWidths, snippets }: Props) => {
              >
                <PlayIcon />
              </ToolbarItem>
@@ -383,17 +694,29 @@ index 389401bc0df0a8cba17cc0f4a53229027bdc81f2..9ebbaa25c6204357b052a9093fd15dc5
 +                });
 +              }}
 +            >
-+              <svg width={24} height={24} viewBox="0 0 24 24" role="img">
-+                <path
-+                  fill="currentColor"
-+                  d="M17.823 12.909H13.88v.753h5.877c.697 0 1.263.549 1.263 1.224v5.74c0 .675-.566 1.224-1.263 1.224H4.243c-.697 0-1.263-.547-1.263-1.224v-5.74c0-.675.566-1.224 1.263-1.224h5.877v-.754H6.176c-.697 0-1.263-.546-1.263-1.224v-.689h-.664c-.698 0-1.263-.546-1.263-1.224v-2.89c0-.676.565-1.225 1.263-1.225h.664v-.983c0-.675.566-1.224 1.263-1.224h5.32V3.18a.6.6 0 0 1-.152-.39c0-.35.294-.635.656-.635.36 0 .655.286.655.636 0 .148-.062.28-.151.39v.268h5.32c.697 0 1.262.546 1.262 1.224v.995h.676c.697 0 1.263.546 1.263 1.224v2.89c0 .675-.566 1.225-1.263 1.225h-.676v.677c0 .676-.565 1.225-1.263 1.225m0-1.225V4.676H6.176v2.123l.003.028q.005.029.005.056v2.891q0 .028-.005.056l-.003.028v1.83h4.544q.008 0 .015-.004l.015-.002h2.499q.009-.002.018 0 .006.002.013.002zm-5.207 1.975v-.753H11.38v.753zm.65 1.224h-.004l-.004.003q-.005.002-.012.003h-2.498l-.008-.002q-.006-.004-.012-.004H4.243v5.74h1.832l-.001-.017-.002-.017v-3.678c0-.675.563-1.224 1.264-1.224h9.33c.698 0 1.264.546 1.264 1.224v3.678l-.002.017-.001.017h1.832v-5.74zm3.4 5.706v-3.678h-9.33v3.678zM4.25 9.771h.664v-2.89h-.664zm15.513.011v-2.89h-.673v2.89zm-9.687-2.644a.454.454 0 0 0-.462-.445.454.454 0 0 0-.462.445c0 .25.204.448.462.448a.456.456 0 0 0 .462-.448m1.177.003c0 .877-.737 1.588-1.642 1.588S7.97 8.018 7.97 7.141c0-.874.736-1.588 1.641-1.588s1.642.714 1.642 1.588m3.596-.017a.454.454 0 0 0-.462-.445.454.454 0 0 0-.462.445c0 .244.207.446.462.446a.454.454 0 0 0 .462-.446m-.462-1.588c.905 0 1.639.711 1.639 1.588 0 .874-.737 1.588-1.639 1.588s-1.641-.711-1.641-1.588c.003-.877.74-1.588 1.641-1.588m-.134 4.507a.62.62 0 0 0-.63-.61H10.38a.62.62 0 0 0-.63.61c0 .336.283.61.63.61h3.241a.62.62 0 0 0 .63-.61"
-+                />
++              <svg
++                xmlns="http://www.w3.org/2000/svg"
++                width="24"
++                height="24"
++                viewBox="0 0 24 24"
++                fill="none"
++                stroke="currentColor"
++                strokeWidth="2"
++                strokeLinecap="round"
++                strokeLinejoin="round"
++                role="img"
++              >
++                <path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z" />
++                <path d="M20 3v4" />
++                <path d="M22 5h-4" />
++                <path d="M4 17v2" />
++                <path d="M5 18H3" />
 +              </svg>
 +            </ToolbarItem>
            </div>
  
            <div>
-@@ -198,6 +218,8 @@ export default ({ themes: allThemes, widths: allWidths, snippets }: Props) => {
+@@ -198,6 +230,8 @@ export default ({ themes: allThemes, widths: allWidths, snippets }: Props) => {
                <PreviewPanel themes={allThemes} visibleThemes={visibleThemes} />
              )}
  
@@ -423,27 +746,37 @@ index 739d6a6258f2e321a7df0139ce3b587f62630c51..96d81e933f099b4816d652339a00a89a
 +  },
 +]);
 diff --git a/src/StoreContext/StoreContext.tsx b/src/StoreContext/StoreContext.tsx
-index d40aa4054681e1069ef4535f9faa9e31a75521cc..f5e516436ba5570075d1bd0f64bf7065977af075 100644
+index d40aa4054681e1069ef4535f9faa9e31a75521cc..10c61dc801d3b8e35ee0c77d0683ee19d429dfcc 100644
 --- a/src/StoreContext/StoreContext.tsx
 +++ b/src/StoreContext/StoreContext.tsx
-@@ -73,7 +73,15 @@ interface StatusMessage {
+@@ -73,7 +73,25 @@ interface StatusMessage {
    tone: 'positive' | 'critical';
  }
  
 -type ToolbarPanel = 'snippets' | 'frames' | 'preview' | 'settings';
-+export interface AiConversationMessage {
-+  role: 'user' | 'assistant';
-+  content: {
-+    type: 'text';
-+    text: string;
-+  };
-+}
++export type AiConversationMessage =
++  | {
++      role: 'assistant';
++      content: { type: 'text'; text: string };
++    }
++  | {
++      role: 'user';
++      content:
++        | {
++            type: 'text';
++            text: string;
++          }
++        | {
++            type: 'image';
++            url: string;
++          };
++    };
 +
 +type ToolbarPanel = 'snippets' | 'frames' | 'preview' | 'settings' | 'ai';
  interface State {
    code: string;
    title?: string;
-@@ -92,6 +100,10 @@ interface State {
+@@ -92,6 +110,10 @@ interface State {
    visibleWidths?: number[];
    ready: boolean;
    colorScheme: ColorScheme;
@@ -454,7 +787,7 @@ index d40aa4054681e1069ef4535f9faa9e31a75521cc..f5e516436ba5570075d1bd0f64bf7065
  }
  
  type Action =
-@@ -127,7 +139,11 @@ type Action =
+@@ -127,7 +149,11 @@ type Action =
    | { type: 'resetVisibleThemes' }
    | { type: 'updateVisibleWidths'; payload: { widths: number[] } }
    | { type: 'resetVisibleWidths' }
@@ -467,7 +800,7 @@ index d40aa4054681e1069ef4535f9faa9e31a75521cc..f5e516436ba5570075d1bd0f64bf7065
  
  const resetPreview = ({
    previewRenderCode,
-@@ -422,6 +438,52 @@ const createReducer =
+@@ -422,6 +448,52 @@ const createReducer =
          };
        }
  
@@ -520,7 +853,7 @@ index d40aa4054681e1069ef4535f9faa9e31a75521cc..f5e516436ba5570075d1bd0f64bf7065
        default:
          return state;
      }
-@@ -439,6 +501,10 @@ const initialState: State = {
+@@ -439,6 +511,10 @@ const initialState: State = {
    editorWidth: defaultEditorSize,
    ready: false,
    colorScheme: 'light',
