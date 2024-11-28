@@ -3,10 +3,10 @@ import * as React from 'react';
 import {useIsInverseOrMediaVariant} from './theme-variant-context';
 import {vars} from './skins/skin-contract.css';
 import Inline from './inline';
-import {Text4} from './text';
 import * as styles from './stacking-group.css';
 import * as mediaStyles from './image.css';
 import {applyCssVars} from './utils/css';
+import {renderText} from './avatar';
 
 type Props = {
     stacked?: boolean;
@@ -31,6 +31,7 @@ const StackingGroup = ({
     const size = moreItemsStyle.size;
 
     const borderRadius = moreItemsStyle.type === 'circle' ? '50%' : vars.borderRadii.mediaSmall;
+    const textColor = isInverse ? vars.colors.textPrimaryInverse : vars.colors.textBrand;
 
     return (
         <div
@@ -49,17 +50,13 @@ const StackingGroup = ({
                         style={{
                             width: size,
                             height: size,
+                            color: textColor,
                             borderRadius,
                             backgroundColor: isInverse ? vars.colors.brandHigh : vars.colors.brandLow,
                             border: stacked ? `1px solid ${vars.colors.borderLow}` : 'none',
                         }}
                     >
-                        <Text4
-                            regular
-                            color={isInverse ? vars.colors.textPrimaryInverse : vars.colors.textBrand}
-                        >
-                            {'+' + moreItemsCount}
-                        </Text4>
+                        {renderText(size, `+${moreItemsCount}`)}
                     </div>
                 )}
             </Inline>
