@@ -12,8 +12,9 @@ import {version as packageVersion} from './package.json';
  *
  * 1.2.3 => v1_2_3
  * 1.2.0 => v1_2
+ * 1.0.0 => v1
  */
-const version = 'v' + packageVersion.replace(/[0\.]+$/, '').replace(/\./g, '_');
+const version = 'v' + packageVersion.replace(/(\.0)*$/, '').replace(/\./g, '_');
 
 export default defineConfig({
     plugins: [
