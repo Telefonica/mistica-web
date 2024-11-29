@@ -10,6 +10,8 @@ import {Text3, Text2} from './text';
 import {vars as skinVars} from './skins/skin-contract.css';
 import * as styles from './sheet-info.css';
 import Image from './image';
+import {ButtonPrimary} from './button';
+import Divider from './divider';
 
 import type {ExclusifyUnion} from './utils/utility-types';
 import type {DataAttributes, IconProps} from './utils/types';
@@ -38,10 +40,13 @@ type InfoSheetProps = {
     }>;
     onClose?: () => void;
     dataAttributes?: DataAttributes;
+    button?: {
+        text: string;
+    };
 };
 
 const InfoSheet = React.forwardRef<HTMLDivElement, InfoSheetProps>(
-    ({title, subtitle, description, items, onClose, dataAttributes}, ref) => {
+    ({title, subtitle, description, items, onClose, button, dataAttributes}, ref) => {
         const {isDarkMode} = useTheme();
         return (
             <Sheet
@@ -49,48 +54,68 @@ const InfoSheet = React.forwardRef<HTMLDivElement, InfoSheetProps>(
                 ref={ref}
                 dataAttributes={{'component-name': 'InfoSheet', ...dataAttributes}}
             >
-                {({modalTitleId}) => (
+                {({closeModal, modalTitleId}) => (
                     <SheetBody
                         title={title}
                         subtitle={subtitle}
                         description={description}
                         modalTitleId={modalTitleId}
+                        button={
+                            button ? (
+                                <ButtonPrimary onPress={closeModal}>{button.text}</ButtonPrimary>
+                            ) : undefined
+                        }
                     >
-                        <Box paddingBottom={16}>
-                            <Stack space={16} role="list">
-                                {items.map((item, idx) => (
-                                    <Inline key={item.id || idx} space={8}>
-                                        <div className={styles.infoItemIcon}>
-                                            {item.icon.type === 'bullet' ? (
-                                                <Circle
-                                                    size={8}
-                                                    backgroundColor={skinVars.colors.textPrimary}
-                                                />
-                                            ) : item.icon.Icon ? (
-                                                <item.icon.Icon size={item.icon.type === 'small' ? 16 : 24} />
-                                            ) : (
-                                                <Image
-                                                    src={
-                                                        isDarkMode && item.icon.urlDark
-                                                            ? item.icon.urlDark
-                                                            : item.icon.url
-                                                    }
-                                                    width={item.icon.type === 'small' ? 16 : 24}
-                                                    height={item.icon.type === 'small' ? 16 : 24}
-                                                />
-                                            )}
-                                        </div>
-                                        <Stack space={2}>
-                                            <Text3 regular>{item.title}</Text3>
-                                            {item.description && (
-                                                <Text2 regular color={skinVars.colors.textSecondary}>
-                                                    {item.description}
-                                                </Text2>
-                                            )}
-                                        </Stack>
-                                    </Inline>
-                                ))}
-                            </Stack>
+                        <Box paddingBottom={16} role="list">
+                            {items.map((item, idx) => (
+                                <React.Fragment key={item.id || idx}>
+                                    <div className={styles.itemContainer} role="listitem">
+                                        <Inline space={8}>
+                                            <div
+                                                className={styles.infoItemIconContainer}
+                                                style={{
+                                                    alignItems:
+                                                        item.icon.type !== 'bullet' && !item.description
+                                                            ? 'center'
+                                                            : undefined,
+                                                }}
+                                            >
+                                                <div className={styles.infoItemIcon}>
+                                                    {item.icon.type === 'bullet' ? (
+                                                        <Circle
+                                                            size={8}
+                                                            backgroundColor={skinVars.colors.textPrimary}
+                                                        />
+                                                    ) : item.icon.Icon ? (
+                                                        <item.icon.Icon
+                                                            size={item.icon.type === 'small' ? 16 : 24}
+                                                        />
+                                                    ) : (
+                                                        <Image
+                                                            src={
+                                                                isDarkMode && item.icon.urlDark
+                                                                    ? item.icon.urlDark
+                                                                    : item.icon.url
+                                                            }
+                                                            width={item.icon.type === 'small' ? 16 : 24}
+                                                            height={item.icon.type === 'small' ? 16 : 24}
+                                                        />
+                                                    )}
+                                                </div>
+                                            </div>
+                                            <Stack space={2}>
+                                                <Text3 regular>{item.title}</Text3>
+                                                {item.description && (
+                                                    <Text2 regular color={skinVars.colors.textSecondary}>
+                                                        {item.description}
+                                                    </Text2>
+                                                )}
+                                            </Stack>
+                                        </Inline>
+                                    </div>
+                                    {idx < items.length - 1 && <Divider />}
+                                </React.Fragment>
+                            ))}
                         </Box>
                     </SheetBody>
                 )}

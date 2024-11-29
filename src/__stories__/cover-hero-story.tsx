@@ -13,6 +13,7 @@ import usingVrImg from './images/using-vr.jpg';
 import beachImg from './images/beach.jpg';
 import beachVideo from './videos/beach.mp4';
 
+import type {HeadingType} from '../utils/types';
 import type {TagType} from '..';
 
 export default {
@@ -30,7 +31,9 @@ type Args = {
     headlineType: TagType;
     headline: string;
     pretitle: string;
+    pretitleAs: HeadingType;
     title: string;
+    titleAs: HeadingType;
     description: string;
     extra: boolean;
     sideExtra: boolean;
@@ -56,7 +59,9 @@ export const Default: StoryComponent<Args> = ({
     headlineType,
     headline,
     pretitle,
+    pretitleAs,
     title,
+    titleAs,
     description,
     extra,
     sideExtra,
@@ -92,7 +97,9 @@ export const Default: StoryComponent<Args> = ({
             dataAttributes={{testid: 'cover-hero'}}
             headline={headline ? <Tag type={headlineType}>{headline}</Tag> : undefined}
             pretitle={pretitle}
+            pretitleAs={pretitleAs}
             title={title}
+            titleAs={titleAs}
             description={description}
             extra={extra ? <Placeholder /> : undefined}
             sideExtra={sideExtra ? <Placeholder /> : undefined}
@@ -118,7 +125,9 @@ Default.args = {
     headlineType: 'promo',
     headline: 'Hero',
     pretitle: 'Pretitle',
+    pretitleAs: 'span',
     title: 'Title',
+    titleAs: 'h1',
     description: 'This is a long description with a long text to see how this works',
     extra: false,
     sideExtra: false,
@@ -196,6 +205,14 @@ Default.argTypes = {
                 '4 3': '4:3',
             },
         },
+    },
+    pretitleAs: {
+        options: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'span'],
+        control: {type: 'select'},
+    },
+    titleAs: {
+        options: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'span'],
+        control: {type: 'select'},
     },
 };
 

@@ -27,22 +27,23 @@ import {getPrefixedDataAttributes} from './utils/dom';
 import {isRunningAcceptanceTest} from './utils/platform';
 import {applyCssVars} from './utils/css';
 import * as tokens from './text-tokens';
+import {
+    type DataAttributes,
+    type HeadingType,
+    type IconProps,
+    type RendersElement,
+    type RendersNullableElement,
+    type TrackingEvent,
+} from './utils/types';
+import {isBiggerHeading} from './utils/headings';
 
 import type {Variant} from './theme-variant-context';
 import type {PressHandler} from './touchable';
 import type {VideoElement, VideoSource} from './video';
 import type {ButtonLink, ButtonPrimary, ButtonSecondary} from './button';
 import type {ExclusifyUnion} from './utils/utility-types';
-import type {
-    DataAttributes,
-    HeadingType,
-    IconProps,
-    RendersElement,
-    RendersNullableElement,
-    TrackingEvent,
-} from './utils/types';
 
-const useInnerText = () => {
+export const useInnerText = (): {text: string; ref: (instance: HTMLElement | null) => void} => {
     const [text, setText] = React.useState('');
 
     const ref: React.LegacyRef<HTMLElement> = React.useCallback((node: HTMLElement) => {
@@ -369,6 +370,7 @@ type CardContentProps = {
     headline?: string | RendersNullableElement<typeof Tag>;
     headlineRef?: (instance: HTMLElement | null) => void;
     pretitle?: string;
+    pretitleAs?: HeadingType;
     pretitleLinesMax?: number;
     title?: string;
     titleAs?: HeadingType;
@@ -387,6 +389,7 @@ const CardContent = ({
     headline,
     headlineRef,
     pretitle,
+    pretitleAs,
     pretitleLinesMax,
     title,
     titleAs = 'h3',
@@ -405,31 +408,85 @@ const CardContent = ({
         <div className={styles.cardContentContainer}>
             {/** using flex instead of nested Stacks, this way we can rearrange texts so the DOM structure makes more sense for screen reader users */}
             <div className={styles.flexColumn}>
-                {title && (
-                    <div style={{paddingBottom: subtitle || description ? 4 : 0}} data-testid="title">
-                        <Text
-                            {...textProps.text4}
-                            truncate={titleLinesMax}
-                            weight={textPresets.cardTitle.weight}
-                            as={titleAs}
-                            hyphens="auto"
-                        >
-                            {title}
-                        </Text>
-                    </div>
-                )}
-                {headline && (
-                    // assuming that the headline will always be followed by one of: pretitle, title, subtitle, description
-                    <div ref={headlineRef} style={{order: -2, paddingBottom: 8}} data-testid="headline">
-                        {typeof headline === 'string' ? <Tag type="promo">{headline}</Tag> : headline}
-                    </div>
-                )}
-                {pretitle && (
-                    <div style={{order: -1, paddingBottom: 4}} data-testid="pretitle">
-                        <Text2 truncate={pretitleLinesMax} as="div" regular hyphens="auto">
-                            {pretitle}
-                        </Text2>
-                    </div>
+                {isBiggerHeading(titleAs, pretitleAs) ? (
+                    <>
+                        {title && (
+                            <div style={{paddingBottom: subtitle || description ? 4 : 0}} data-testid="title">
+                                <Text
+                                    {...textProps.text4}
+                                    truncate={titleLinesMax}
+                                    weight={textPresets.cardTitle.weight}
+                                    as={titleAs}
+                                    hyphens="auto"
+                                >
+                                    {title}
+                                </Text>
+                            </div>
+                        )}
+                        {headline && (
+                            <div
+                                ref={headlineRef}
+                                style={{
+                                    order: -2,
+                                    paddingBottom: pretitle || title || subtitle || description ? 8 : 0,
+                                }}
+                                data-testid="headline"
+                            >
+                                {typeof headline === 'string' ? <Tag type="promo">{headline}</Tag> : headline}
+                            </div>
+                        )}
+                        {pretitle && (
+                            <div style={{order: -1, paddingBottom: 4}} data-testid="pretitle">
+                                <Text2 truncate={pretitleLinesMax} as={pretitleAs} regular hyphens="auto">
+                                    {pretitle}
+                                </Text2>
+                            </div>
+                        )}
+                    </>
+                ) : (
+                    <>
+                        <>
+                            {pretitle && (
+                                <div style={{paddingBottom: 4}} data-testid="pretitle">
+                                    <Text2 truncate={pretitleLinesMax} as={pretitleAs} regular hyphens="auto">
+                                        {pretitle}
+                                    </Text2>
+                                </div>
+                            )}
+                            {headline && (
+                                <div
+                                    ref={headlineRef}
+                                    style={{
+                                        order: -1,
+                                        paddingBottom: pretitle || title || subtitle || description ? 8 : 0,
+                                    }}
+                                    data-testid="headline"
+                                >
+                                    {typeof headline === 'string' ? (
+                                        <Tag type="promo">{headline}</Tag>
+                                    ) : (
+                                        headline
+                                    )}
+                                </div>
+                            )}
+                            {title && (
+                                <div
+                                    style={{paddingBottom: subtitle || description ? 4 : 0}}
+                                    data-testid="title"
+                                >
+                                    <Text
+                                        {...textProps.text4}
+                                        truncate={titleLinesMax}
+                                        weight={textPresets.cardTitle.weight}
+                                        as={titleAs}
+                                        hyphens="auto"
+                                    >
+                                        {title}
+                                    </Text>
+                                </div>
+                            )}
+                        </>
+                    </>
                 )}
                 {subtitle && (
                     <div style={{paddingBottom: description ? 4 : 0}} data-testid="subtitle">
@@ -502,6 +559,7 @@ interface MediaCardBaseProps {
     asset?: React.ReactElement;
     headline?: string | RendersNullableElement<typeof Tag>;
     pretitle?: string;
+    pretitleAs?: HeadingType;
     pretitleLinesMax?: number;
     title?: string;
     titleAs?: HeadingType;
@@ -535,6 +593,7 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
             asset,
             headline,
             pretitle,
+            pretitleAs,
             pretitleLinesMax,
             subtitle,
             subtitleLinesMax,
@@ -561,7 +620,12 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
 
         const ariaLabel =
             ariaLabelProp ||
-            [title, headlineText, pretitle, subtitle, description, extraText].filter(Boolean).join(' ');
+            (isBiggerHeading(titleAs, pretitleAs)
+                ? [title, headlineText, pretitle, subtitle, description, extraText]
+                : [pretitle, headlineText, title, subtitle, description, extraText]
+            )
+                .filter(Boolean)
+                .join(' ');
 
         return (
             <CardContainer
@@ -578,7 +642,7 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
                         aria-label={isTouchable ? ariaLabel : undefined}
                     >
                         {isTouchable && <div className={styles.touchableMediaCardOverlay} />}
-                        <div className={styles.mediaCard}>
+                        <div className={styles.mediaCard} aria-hidden={isTouchable}>
                             <div style={applyCssVars({[mediaStyles.vars.mediaBorderRadius]: '0px'})}>
                                 {media}
                             </div>
@@ -587,6 +651,7 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
                                     headline={headline}
                                     headlineRef={headlineRef}
                                     pretitle={pretitle}
+                                    pretitleAs={pretitleAs}
                                     pretitleLinesMax={pretitleLinesMax}
                                     title={title}
                                     titleAs={titleAs}
@@ -633,6 +698,7 @@ export const NakedCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
             asset,
             headline,
             pretitle,
+            pretitleAs,
             pretitleLinesMax,
             subtitle,
             subtitleLinesMax,
@@ -660,7 +726,12 @@ export const NakedCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
 
         const ariaLabel =
             ariaLabelProp ||
-            [title, headlineText, pretitle, subtitle, description, extraText].filter(Boolean).join(' ');
+            (isBiggerHeading(titleAs, pretitleAs)
+                ? [title, headlineText, pretitle, subtitle, description, extraText]
+                : [pretitle, headlineText, title, subtitle, description, extraText]
+            )
+                .filter(Boolean)
+                .join(' ');
 
         return (
             <CardContainer
@@ -675,7 +746,7 @@ export const NakedCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
                     className={styles.touchable}
                     aria-label={isTouchable ? ariaLabel : undefined}
                 >
-                    <div className={styles.mediaCard}>
+                    <div className={styles.mediaCard} aria-hidden={isTouchable}>
                         <div style={{position: 'relative'}}>
                             {isTouchable && (
                                 <div
@@ -691,6 +762,7 @@ export const NakedCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
                                 headline={headline}
                                 headlineRef={headlineRef}
                                 pretitle={pretitle}
+                                pretitleAs={pretitleAs}
                                 pretitleLinesMax={pretitleLinesMax}
                                 title={title}
                                 titleAs={titleAs}
@@ -786,7 +858,7 @@ export const SmallNakedCard = React.forwardRef<HTMLDivElement, SmallNakedCardPro
                     className={styles.touchable}
                     aria-label={isTouchable ? ariaLabel : undefined}
                 >
-                    <div className={styles.mediaCard}>
+                    <div className={styles.mediaCard} aria-hidden={isTouchable}>
                         <div style={{position: 'relative'}}>
                             {isTouchable && (
                                 <div
@@ -857,6 +929,7 @@ interface DataCardBaseProps {
     asset?: React.ReactElement;
     headline?: string | RendersNullableElement<typeof Tag>;
     pretitle?: string;
+    pretitleAs?: HeadingType;
     pretitleLinesMax?: number;
     title?: string;
     titleAs?: HeadingType;
@@ -891,6 +964,7 @@ export const DataCard = React.forwardRef<HTMLDivElement, DataCardProps>(
             asset,
             headline,
             pretitle,
+            pretitleAs,
             pretitleLinesMax,
             title,
             titleAs = 'h3',
@@ -921,7 +995,12 @@ export const DataCard = React.forwardRef<HTMLDivElement, DataCardProps>(
 
         const ariaLabel =
             ariaLabelProp ||
-            [title, headlineText, pretitle, description, extraText].filter(Boolean).join(' ');
+            (isBiggerHeading(titleAs, pretitleAs)
+                ? [title, headlineText, pretitle, subtitle, description, extraText]
+                : [pretitle, headlineText, title, subtitle, description, extraText]
+            )
+                .filter(Boolean)
+                .join(' ');
 
         return (
             <CardContainer
@@ -939,7 +1018,7 @@ export const DataCard = React.forwardRef<HTMLDivElement, DataCardProps>(
                         aria-label={isTouchable ? ariaLabel : undefined}
                     >
                         {isTouchable && <div className={styles.touchableCardOverlay} />}
-                        <div className={styles.dataCard}>
+                        <div className={styles.dataCard} aria-hidden={isTouchable}>
                             <Inline space={0}>
                                 <Stack space={16}>
                                     {asset && (
@@ -957,6 +1036,7 @@ export const DataCard = React.forwardRef<HTMLDivElement, DataCardProps>(
                                         headline={headline}
                                         headlineRef={headlineRef}
                                         pretitle={pretitle}
+                                        pretitleAs={pretitleAs}
                                         pretitleLinesMax={pretitleLinesMax}
                                         title={title}
                                         titleAs={titleAs}
@@ -1070,7 +1150,7 @@ export const SnapCard = React.forwardRef<HTMLDivElement, SnapCardProps>(
                         aria-label={isTouchable ? ariaLabel : undefined}
                     >
                         {isTouchable && <div className={overlayStyle} />}
-                        <section className={styles.snapCard}>
+                        <section className={styles.snapCard} aria-hidden={isTouchable}>
                             <div>
                                 {asset && (
                                     <div
@@ -1136,8 +1216,10 @@ export const SnapCard = React.forwardRef<HTMLDivElement, SnapCardProps>(
 
 interface DisplayCardContentProps {
     title?: React.ReactNode;
+    titleAs?: HeadingType;
     headline?: React.ReactNode;
     pretitle?: React.ReactNode;
+    pretitleAs?: HeadingType;
     subtitle?: React.ReactNode;
     description?: React.ReactNode;
     extra?: React.ReactNode;
@@ -1147,8 +1229,10 @@ interface DisplayCardContentProps {
 
 const DisplayCardContent = ({
     title,
+    titleAs = 'h3',
     headline,
     pretitle,
+    pretitleAs,
     subtitle,
     description,
     extra,
@@ -1158,21 +1242,56 @@ const DisplayCardContent = ({
     // using flex instead of nested Stacks, this way we can rearrange texts so the DOM structure makes more sense for screen reader users
     return (
         <div className={styles.flexColumn}>
-            {title && (
-                <div style={{paddingBottom: subtitle || description ? 4 : 0}} data-testid="title">
-                    {title}
-                </div>
-            )}
-            {headline && (
-                // assuming that the headline will always be followed by one of: pretitle, title, subtitle, description
-                <div ref={headlineRef} style={{order: -2, paddingBottom: 16}} data-testid="headline">
-                    {headline}
-                </div>
-            )}
-            {pretitle && (
-                <div style={{order: -1, paddingBottom: 4}} data-testid="pretitle">
-                    {pretitle}
-                </div>
+            {isBiggerHeading(titleAs, pretitleAs) ? (
+                <>
+                    {title && (
+                        <div style={{paddingBottom: subtitle || description ? 4 : 0}} data-testid="title">
+                            {title}
+                        </div>
+                    )}
+                    {headline && (
+                        <div
+                            ref={headlineRef}
+                            style={{
+                                order: -2,
+                                paddingBottom: pretitle || title || subtitle || description ? 16 : 0,
+                            }}
+                            data-testid="headline"
+                        >
+                            {headline}
+                        </div>
+                    )}
+                    {pretitle && (
+                        <div style={{order: -1, paddingBottom: 4}} data-testid="pretitle">
+                            {pretitle}
+                        </div>
+                    )}
+                </>
+            ) : (
+                <>
+                    {pretitle && (
+                        <div style={{paddingBottom: 4}} data-testid="pretitle">
+                            {pretitle}
+                        </div>
+                    )}
+                    {headline && (
+                        <div
+                            ref={headlineRef}
+                            style={{
+                                order: -1,
+                                paddingBottom: pretitle || title || subtitle || description ? 16 : 0,
+                            }}
+                            data-testid="headline"
+                        >
+                            {headline}
+                        </div>
+                    )}
+                    {title && (
+                        <div style={{paddingBottom: subtitle || description ? 4 : 0}} data-testid="title">
+                            {title}
+                        </div>
+                    )}
+                </>
             )}
 
             {subtitle && (
@@ -1212,6 +1331,7 @@ interface CommonDisplayCardProps {
     dataAttributes?: DataAttributes;
     headline?: React.ReactComponentElement<typeof Tag>;
     pretitle?: string;
+    pretitleAs?: HeadingType;
     pretitleLinesMax?: number;
     title: string;
     titleAs?: HeadingType;
@@ -1275,6 +1395,7 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
             asset,
             headline,
             pretitle,
+            pretitleAs,
             pretitleLinesMax,
             title,
             titleAs = 'h3',
@@ -1323,7 +1444,12 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
 
         const ariaLabel =
             ariaLabelProp ||
-            [title, headlineText, pretitle, description, extraText].filter(Boolean).join(' ');
+            (isBiggerHeading(titleAs, pretitleAs)
+                ? [title, headlineText, pretitle, description, extraText]
+                : [pretitle, headlineText, title, description, extraText]
+            )
+                .filter(Boolean)
+                .join(' ');
 
         return (
             <CardContainer
@@ -1357,7 +1483,7 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
                     >
                         {isTouchable && <div className={overlayStyle} />}
 
-                        <div className={styles.displayCardContainer}>
+                        <div className={styles.displayCardContainer} aria-hidden={isTouchable}>
                             {(hasImage || hasVideo) && (
                                 <ThemeVariant variant={isExternalInverse ? 'inverse' : 'default'}>
                                     <div className={styles.displayCardBackground}>
@@ -1411,13 +1537,14 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
                                                     </Text6>
                                                 ) : undefined
                                             }
+                                            titleAs={titleAs}
                                             headline={headline}
                                             pretitle={
                                                 pretitle ? (
                                                     <Text2
                                                         forceMobileSizes
                                                         truncate={pretitleLinesMax}
-                                                        as="div"
+                                                        as={pretitleAs}
                                                         regular
                                                         textShadow={textShadow}
                                                     >
@@ -1425,6 +1552,7 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
                                                     </Text2>
                                                 ) : undefined
                                             }
+                                            pretitleAs={pretitleAs}
                                             description={
                                                 description ? (
                                                     <Text3
@@ -1514,6 +1642,7 @@ interface PosterCardBaseProps {
     dataAttributes?: DataAttributes;
     headline?: string | RendersNullableElement<typeof Tag>;
     pretitle?: string;
+    pretitleAs?: HeadingType;
     pretitleLinesMax?: number;
     title?: string;
     titleAs?: HeadingType;
@@ -1568,6 +1697,7 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
             asset,
             headline,
             pretitle,
+            pretitleAs,
             pretitleLinesMax,
             title,
             titleAs = 'h3',
@@ -1633,7 +1763,12 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
 
         const ariaLabel =
             ariaLabelProp ||
-            [title, headlineText, pretitle, subtitle, description, extraText].filter(Boolean).join(' ');
+            (isBiggerHeading(titleAs, pretitleAs)
+                ? [title, headlineText, pretitle, subtitle, description, extraText]
+                : [pretitle, headlineText, title, subtitle, description, extraText]
+            )
+                .filter(Boolean)
+                .join(' ');
 
         return (
             <CardContainer
@@ -1724,13 +1859,14 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                                                 </Text>
                                             ) : undefined
                                         }
+                                        titleAs={titleAs}
                                         headline={headline}
                                         pretitle={
                                             pretitle ? (
                                                 <Text2
                                                     forceMobileSizes
                                                     truncate={pretitleLinesMax}
-                                                    as="div"
+                                                    as={pretitleAs}
                                                     regular
                                                     textShadow={textShadow}
                                                 >
@@ -1738,6 +1874,7 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                                                 </Text2>
                                             ) : undefined
                                         }
+                                        pretitleAs={pretitleAs}
                                         subtitle={
                                             subtitle ? (
                                                 <Text2

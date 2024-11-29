@@ -43,7 +43,7 @@ type AvatarProps = {
 /**
  * Not using TextPresets here because we don't want to scale the avatar text with the device settings
  */
-const renderText = (size: number, text: string): JSX.Element | null => {
+export const renderText = (size: number, text: string): JSX.Element | null => {
     if (!text) {
         return null;
     }

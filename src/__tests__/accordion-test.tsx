@@ -1,7 +1,7 @@
 import * as React from 'react';
 import userEvent from '@testing-library/user-event';
 import {render, screen, waitFor} from '@testing-library/react';
-import {ThemeContextProvider, Text3, AccordionItem, Accordion} from '..';
+import {ThemeContextProvider, Text3, AccordionItem, Accordion, Text2} from '..';
 import {makeTheme} from './test-utils';
 
 const items = [
@@ -138,4 +138,29 @@ test('Accordion with singleOpen', async () => {
         expect(screen.queryByText('Content 2')).not.toBeInTheDocument();
     });
     expect(screen.getByText('Content 3')).toBeInTheDocument();
+});
+
+test('Accordion with custom labels is accessible', async () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Accordion>
+                <AccordionItem
+                    title="Title 1"
+                    content={<Text3 regular>Content 1</Text3>}
+                    aria-label="Custom label 1"
+                />
+                <AccordionItem
+                    title="Title 2"
+                    content={<Text3 regular>Content 2</Text3>}
+                    aria-labelledby="item2-id"
+                />
+            </Accordion>
+            <Text2 regular id="item2-id">
+                Custom label 2
+            </Text2>
+        </ThemeContextProvider>
+    );
+
+    expect(screen.getByLabelText('Custom label 1')).toBeInTheDocument();
+    expect(screen.getByLabelText('Custom label 2')).toBeInTheDocument();
 });

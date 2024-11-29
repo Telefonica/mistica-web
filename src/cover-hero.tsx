@@ -12,6 +12,7 @@ import * as mediaStyles from './image.css';
 import GridLayout from './grid-layout';
 import {CoverHeroMedia} from './cover-hero-media';
 import {getPrefixedDataAttributes} from './utils/dom';
+import {isBiggerHeading} from './utils/headings';
 
 import type {DataAttributes, HeadingType} from './utils/types';
 import type {ImageProps, VideoProps} from './cover-hero-media';
@@ -26,6 +27,7 @@ type BaseProps = {
     headline?: RendersNullableElement<typeof Tag>;
     pretitle?: string;
     pretitleLinesMax?: number;
+    pretitleAs?: HeadingType;
     title: string;
     titleLinesMax?: number;
     titleAs?: HeadingType;
@@ -73,6 +75,7 @@ const CoverHero = React.forwardRef<HTMLDivElement, CoverHeroProps>(
             headline,
             pretitle,
             pretitleLinesMax,
+            pretitleAs,
             title,
             titleLinesMax,
             titleAs = 'h1',
@@ -108,22 +111,70 @@ const CoverHero = React.forwardRef<HTMLDivElement, CoverHeroProps>(
 
         const textShadow = hasMedia ? '0 0 15px rgba(0, 0, 0, 0.4)' : undefined;
 
+        const pretitleContent = pretitle ? (
+            <Text3
+                regular
+                as={pretitleAs}
+                truncate={pretitleLinesMax}
+                textShadow={textShadow}
+                dataAttributes={{testid: 'pretitle'}}
+            >
+                {pretitle}
+            </Text3>
+        ) : undefined;
+
+        const titleContent = title ? (
+            <Text8
+                as={titleAs}
+                truncate={titleLinesMax}
+                textShadow={textShadow}
+                dataAttributes={{testid: 'title'}}
+            >
+                {title}
+            </Text8>
+        ) : undefined;
+
+        const headlineContent = headline ? (
+            <div style={{order: -1}}>
+                <Box
+                    dataAttributes={{testid: 'headline'}}
+                    paddingBottom={{desktop: 8, tablet: 8, mobile: 16}}
+                >
+                    {headline}
+                </Box>
+            </div>
+        ) : undefined;
+
         const mainContent = (
             <div className={styles.mainContent}>
-                {headline && <Box paddingBottom={{desktop: 8, tablet: 8, mobile: 16}}>{headline}</Box>}
                 <Stack space={16}>
-                    <Stack space={8}>
-                        {pretitle && (
-                            <div className={styles.sixColumns}>
-                                <Text3 regular truncate={pretitleLinesMax} textShadow={textShadow}>
-                                    {pretitle}
-                                </Text3>
-                            </div>
+                    {/** using flex instead of nested Stacks, this way we can rearrange texts so the DOM structure makes more sense for screen reader users */}
+                    <div className={styles.flexColumn}>
+                        {isBiggerHeading(titleAs, pretitleAs) ? (
+                            <>
+                                {titleContent}
+                                {headlineContent}
+                                {pretitleContent && (
+                                    <div
+                                        className={styles.sixColumns}
+                                        style={{paddingBottom: title ? 8 : 0, order: -1}}
+                                    >
+                                        {pretitleContent}
+                                    </div>
+                                )}
+                            </>
+                        ) : (
+                            <>
+                                {pretitleContent && (
+                                    <div className={styles.sixColumns} style={{paddingBottom: title ? 8 : 0}}>
+                                        {pretitleContent}
+                                    </div>
+                                )}
+                                {headlineContent}
+                                {titleContent}
+                            </>
                         )}
-                        <Text8 as={titleAs} truncate={titleLinesMax} textShadow={textShadow}>
-                            {title}
-                        </Text8>
-                    </Stack>
+                    </div>
                     {description && (
                         <div className={styles.sixColumns}>
                             <Text3
@@ -132,13 +183,14 @@ const CoverHero = React.forwardRef<HTMLDivElement, CoverHeroProps>(
                                 truncate={descriptionLinesMax}
                                 color={hasMedia ? vars.colors.textPrimary : vars.colors.textSecondary}
                                 textShadow={textShadow}
+                                dataAttributes={{testid: 'description'}}
                             >
                                 {description}
                             </Text3>
                         </div>
                     )}
                 </Stack>
-                {extra}
+                {extra && <div data-testid="slot">{extra}</div>}
             </div>
         );
 
@@ -180,7 +232,11 @@ const CoverHero = React.forwardRef<HTMLDivElement, CoverHeroProps>(
                                         template="8+4"
                                         collapseBreakpoint="mobile"
                                         left={mainContent}
-                                        right={<div className={styles.sideExtra}>{sideExtra}</div>}
+                                        right={
+                                            <div className={styles.sideExtra} data-testid="sideSlot">
+                                                {sideExtra}
+                                            </div>
+                                        }
                                     />
                                 )}
                                 <ButtonGroup

@@ -264,3 +264,8 @@ export const topActionsWithoutIcon = style({
         },
     },
 });
+
+export const flexColumn = style({
+    display: 'flex',
+    flexDirection: 'column',
+});
