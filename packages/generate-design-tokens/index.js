@@ -3,6 +3,7 @@ import path from 'path';
 import url from 'url';
 // eslint-disable-next-line import/extensions
 import {generateSkinCssSrc, buildRadius, generateCommonCssSrc} from './css-generator.js';
+import prettier from 'prettier';
 
 /*
 By default, this script will look for the design tokens inside .github folder but you may want to clone the mistica-design repo elsewhere.
@@ -16,11 +17,14 @@ To run this script locally using a custom path for the tokens, you can do the fo
     DESIGN_TOKENS_FOLDER="/path/to/mistica-design/tokens" node index.js
 */
 
-const DESIGN_TOKENS_FOLDER = process.env.DESIGN_TOKENS_FOLDER || '../../../mistica-design/tokens/';
-
 // in node >= 20 we could use import.meta.dirname instead
 // @ts-ignore
 const currentDir = url.fileURLToPath(new URL('.', import.meta.url));
+
+const DESIGN_TOKENS_FOLDER =
+    process.env.DESIGN_TOKENS_FOLDER || path.join(currentDir, '../../.github/mistica-design/tokens/');
+
+console.log('Using design tokens from:', DESIGN_TOKENS_FOLDER);
 
 const SKINS_FOLDER = path.join(currentDir, '..', '..', 'src', 'skins');
 const CSS_FOLDER = path.join(currentDir, '..', '..', 'css');
@@ -30,6 +34,23 @@ const KNOWN_SKINS = ['blau', 'movistar', 'o2', 'o2-new', 'telefonica', 'vivo', '
 const capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1);
 const toCamelCase = (str) => str.replace(/-([a-z])/g, (g) => g[1].toUpperCase());
 const toPascalCase = (str) => capitalize(toCamelCase(str));
+
+const jsonSort = (obj) => {
+    if (Array.isArray(obj)) {
+        return obj.map(jsonSort);
+    }
+
+    if (typeof obj !== 'object' || obj === null) {
+        return obj;
+    }
+
+    return Object.keys(obj)
+        .sort((a, b) => a.localeCompare(b, undefined, {numeric: true, sensitivity: 'base'}))
+        .reduce((acc, key) => {
+            acc[key] = jsonSort(obj[key]);
+            return acc;
+        }, {});
+};
 
 /**
  * @param {{angle: number, colors: Array<{
@@ -123,7 +144,7 @@ export const get${toPascalCase(skinName)}Skin: GetKnownSkin = () => {
                 )
                 .join(',')}
         },
-        textPresets: ${JSON.stringify(textTokens)},
+        textPresets: ${JSON.stringify(jsonSort(textTokens))},
     };
     return skin;
 };
@@ -142,10 +163,22 @@ export type Colors = {
 };`;
 };
 
-const generateSkinFiles = () => {
+const formatCss = async (source) =>
+    prettier.format(source, {
+        ...(await prettier.resolveConfig('.')),
+        parser: 'css',
+    });
+
+const formatTs = async (source) =>
+    prettier.format(source, {
+        ...(await prettier.resolveConfig('.')),
+        parser: 'typescript',
+    });
+
+const generateSkinFiles = async () => {
     let anyGeneratedSkin;
 
-    KNOWN_SKINS.forEach((skinName) => {
+    for (const skinName of KNOWN_SKINS) {
         console.log('Generating tokens for skin', skinName);
 
         if (!fs.existsSync(path.join(DESIGN_TOKENS_FOLDER, `${skinName}.json`))) {
@@ -153,20 +186,20 @@ const generateSkinFiles = () => {
             return;
         }
 
-        const skinSrc = generateSkinSrc(skinName);
+        const skinSrc = await formatTs(generateSkinSrc(skinName));
         fs.writeFileSync(path.join(SKINS_FOLDER, `${skinName}.tsx`), skinSrc);
 
-        const skinCssSrc = generateSkinCssSrc(skinName, DESIGN_TOKENS_FOLDER);
+        const skinCssSrc = await formatCss(generateSkinCssSrc(skinName, DESIGN_TOKENS_FOLDER));
         fs.writeFileSync(path.join(CSS_FOLDER, `${skinName}.css`), skinCssSrc);
 
         anyGeneratedSkin = skinName;
-    });
+    }
 
     if (anyGeneratedSkin) {
-        const typesSrc = generateColorTypesSrc(anyGeneratedSkin);
+        const typesSrc = await formatTs(generateColorTypesSrc(anyGeneratedSkin));
         fs.writeFileSync(path.join(SKINS_FOLDER, 'types', 'colors.tsx'), typesSrc);
 
-        const commonCssSrc = generateCommonCssSrc(DESIGN_TOKENS_FOLDER);
+        const commonCssSrc = await formatCss(generateCommonCssSrc(DESIGN_TOKENS_FOLDER));
         fs.writeFileSync(path.join(CSS_FOLDER, `mistica-common.css`), commonCssSrc);
     }
 };

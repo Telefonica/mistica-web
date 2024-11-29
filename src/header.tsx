@@ -10,10 +10,16 @@ import {vars} from './skins/skin-contract.css';
 import * as styles from './header.css';
 import {getPrefixedDataAttributes} from './utils/dom';
 import {Title3, Title4} from './title';
+import {
+    type DataAttributes,
+    type HeadingType,
+    type RendersElement,
+    type RendersNullableElement,
+} from './utils/types';
+import {isBiggerHeading} from './utils/headings';
 
 import type NavigationBreadcrumbs from './navigation-breadcrumbs';
 import type {ButtonPrimary, ButtonSecondary} from './button';
-import type {DataAttributes, HeadingType, RendersElement, RendersNullableElement} from './utils/types';
 import type {TextPresetProps} from './text';
 
 type OverridableTextProps = {
@@ -45,47 +51,105 @@ export const Header = ({
     dataAttributes,
     small = false,
 }: HeaderProps): JSX.Element => {
-    const renderRichText = (richText: RichText, baseProps: Omit<TextPresetProps, 'children'>) => {
-        if (typeof richText === 'string') {
-            return (
-                <Text3 regular {...baseProps}>
-                    {richText}
-                </Text3>
-            );
+    const renderPretitle = () => {
+        if (!pretitle) {
+            return null;
         }
-        const {text, ...textProps} = richText;
+        const baseTextProps = {
+            regular: true,
+            color: vars.colors.textPrimary,
+            as: pretitleAs,
+            dataAttributes: {testid: 'pretitle'},
+        } as const;
+
+        if (typeof pretitle === 'string') {
+            return <Text3 {...baseTextProps}>{pretitle}</Text3>;
+        }
+        const {text, ...textProps} = pretitle;
         return (
-            <Text3 regular {...baseProps} {...textProps}>
-                {richText.text}
+            <Text3 {...baseTextProps} {...textProps}>
+                {text}
             </Text3>
         );
     };
 
+    const pretitleContent = renderPretitle();
+
+    const titleContent = title ? (
+        small ? (
+            <Title3 as={titleAs} dataAttributes={{testid: 'title'}}>
+                {title}
+            </Title3>
+        ) : (
+            <Title4 as={titleAs} dataAttributes={{testid: 'title'}}>
+                {title}
+            </Title4>
+        )
+    ) : undefined;
+
+    const headlineContent = headline ? (
+        <div
+            style={{paddingBottom: pretitle || title || description ? 8 : 0, order: -1}}
+            data-testid="headline"
+        >
+            {headline}
+        </div>
+    ) : undefined;
+
     return (
-        <Stack space={{mobile: 24, desktop: 32}} dataAttributes={dataAttributes}>
+        <Stack space={{mobile: 24, desktop: 32}} dataAttributes={{testid: 'Header', ...dataAttributes}}>
             {(title || pretitle || description) && (
                 <Box paddingRight={16}>
-                    <Stack space={8}>
-                        {headline}
-                        {pretitle &&
-                            renderRichText(pretitle, {color: vars.colors.textPrimary, as: pretitleAs})}
-                        {title &&
-                            (small ? (
-                                <Title3 as={titleAs}>{title}</Title3>
-                            ) : (
-                                <Title4 as={titleAs}>{title}</Title4>
-                            ))}
-                        {description &&
-                            (small ? (
-                                <Text2 regular color={vars.colors.textSecondary}>
-                                    {description}
-                                </Text2>
-                            ) : (
-                                <Text3 regular color={vars.colors.textSecondary}>
-                                    {description}
-                                </Text3>
-                            ))}
-                    </Stack>
+                    {/** using flex instead of nested Stacks, this way we can rearrange texts so the DOM structure makes more sense for screen reader users */}
+                    <div className={styles.flexColumn}>
+                        {isBiggerHeading(titleAs, pretitleAs) ? (
+                            <>
+                                {titleContent && (
+                                    <div style={{paddingBottom: description ? 8 : 0}}>{titleContent}</div>
+                                )}
+                                {headlineContent}
+                                {pretitleContent && (
+                                    <div style={{paddingBottom: title || description ? 8 : 0, order: -1}}>
+                                        {pretitleContent}
+                                    </div>
+                                )}
+                            </>
+                        ) : (
+                            <>
+                                {pretitleContent && (
+                                    <div style={{paddingBottom: title || description ? 8 : 0}}>
+                                        {pretitleContent}
+                                    </div>
+                                )}
+                                {headlineContent}
+                                {titleContent && (
+                                    <div style={{paddingBottom: description ? 8 : 0}}>{titleContent}</div>
+                                )}
+                            </>
+                        )}
+
+                        {description && (
+                            <div style={{order: 1}}>
+                                {small ? (
+                                    <Text2
+                                        regular
+                                        color={vars.colors.textSecondary}
+                                        dataAttributes={{testid: 'description'}}
+                                    >
+                                        {description}
+                                    </Text2>
+                                ) : (
+                                    <Text3
+                                        regular
+                                        color={vars.colors.textSecondary}
+                                        dataAttributes={{testid: 'description'}}
+                                    >
+                                        {description}
+                                    </Text3>
+                                )}
+                            </div>
+                        )}
+                    </div>
                 </Box>
             )}
         </Stack>
@@ -97,6 +161,7 @@ type MainSectionHeaderProps = {
     titleAs?: HeadingType;
     description?: string;
     button?: RendersNullableElement<typeof ButtonPrimary> | RendersNullableElement<typeof ButtonSecondary>;
+    dataAttributes?: DataAttributes;
 };
 
 export const MainSectionHeader = ({
@@ -104,12 +169,23 @@ export const MainSectionHeader = ({
     titleAs = 'h1',
     description,
     button,
+    dataAttributes,
 }: MainSectionHeaderProps): JSX.Element => {
     return (
-        <Stack space={32}>
+        <Stack
+            space={32}
+            dataAttributes={{
+                testid: 'MainSectionHeader',
+                ...dataAttributes,
+            }}
+        >
             <Stack space={{mobile: 12, desktop: 16}}>
-                {title && <Text7 as={titleAs}>{title}</Text7>}
-                {description && <Text6>{description}</Text6>}
+                {title && (
+                    <Text7 as={titleAs} dataAttributes={{testid: 'title'}}>
+                        {title}
+                    </Text7>
+                )}
+                {description && <Text6 dataAttributes={{testid: 'description'}}>{description}</Text6>}
             </Stack>
             {button}
         </Stack>
@@ -154,8 +230,8 @@ export const HeaderLayout = ({
     useSetOverscrollColor(isInverse ? {topColor: vars.colors.backgroundBrandTop} : {});
 
     return (
-        <div {...getPrefixedDataAttributes({'component-name': 'HeaderLayout', ...dataAttributes})}>
-            <ResponsiveLayout isInverse={isInverse}>
+        <div {...getPrefixedDataAttributes(dataAttributes, 'HeaderLayout')}>
+            <ResponsiveLayout variant={isInverse ? 'inverse' : undefined}>
                 <Box
                     paddingTop={
                         noPaddingY
@@ -214,8 +290,12 @@ export const MainSectionHeaderLayout = ({
     useSetOverscrollColor(isInverse ? {topColor: vars.colors.backgroundBrandTop} : {});
     return (
         <ResponsiveLayout
-            isInverse={isInverse}
-            dataAttributes={{'component-name': 'MainSectionHeaderLayout', ...dataAttributes}}
+            variant={isInverse ? 'inverse' : undefined}
+            dataAttributes={{
+                'component-name': 'MainSectionHeaderLayout',
+                testid: 'MainSectionHeaderLayout',
+                ...dataAttributes,
+            }}
         >
             <GridLayout
                 template="6+6"

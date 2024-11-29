@@ -137,75 +137,251 @@ const accordionSnippets: Array<Snippet> = [
     },
     {
         group: 'Accordion',
+        name: 'Accordion (detail and right)',
+        code: `
+        <Accordion>
+          <AccordionItem
+            asset={<IconInvoicePlanFileRegular />}
+            title="What is Movistar Money"
+            detail="Detail"
+            right={<Placeholder width={32} height={32} />}
+            content={
+              <Text3 color={colors.textSecondary}>
+                It's a loan available to anyone, whether or not you're a Movistar
+                customer. It offers from €2,000 to €15,000 with a simple and fast
+                application process, and you receive the money in less than 48 hours.
+              </Text3>
+            }
+          />
+          <AccordionItem
+            asset={<IconLocationMapRegular />}
+            title="To whom is it aimed?"
+            detail="Detail"
+            right={<Placeholder width={32} height={32} />}
+            content={
+              <Text3 color={colors.textSecondary}>
+                The Movistar Money loan service is aimed at anyone, whether you are a{" "}
+                <TextLink href="https://example.org" newTab>
+                  Movistar
+                </TextLink>{" "}
+                customer or not.
+              </Text3>
+            }
+          />
+          <AccordionItem
+            asset={<IconLockEyeClosedRegular />}
+            title="Who offers Movistar Money?"
+            detail="Detail"
+            right={<Placeholder width={32} height={32} />}
+            content={
+              <Text3 color={colors.textSecondary}>
+                <p>
+                  At Telefónica, we have our own financial institution, Telefonica
+                  Consumer Finance, and agreements with other institutions to assist
+                  you in obtaining your loan.
+                </p>
+                <br />
+                <Image src="https://picsum.photos/1200/1200" aspectRatio="16:9" />
+                <br />
+                <p>
+                  Depending on the characteristics of the information you provide us,
+                  your application will be sent to one of the institutions{" "}
+                  <TextLink href="https://example.org" newTab>
+                    with which Movistar has agreements
+                  </TextLink>
+                  .
+                </p>
+              </Text3>
+            }
+          />
+          <AccordionItem
+            asset={<IconIdCardRegular />}
+            title="How can I hire it?"
+            detail="Detail"
+            right={<Placeholder width={32} height={32} />}
+            content={
+              <Text3 color={colors.textSecondary}>
+                It's a very agile process that you can access through the
+                money.movistar.es website. You can find more detailed information
+                about the process on our "How It Works" page.
+              </Text3>
+            }
+          />
+          <AccordionItem
+            asset={<IconLifeguardFloatRegular />}
+            title="What should I do if I don't receive the SMS with the contracting code?"
+            detail="Detail"
+            right={<Placeholder width={32} height={32} />}
+            content={
+              <Text3 color={colors.textSecondary}>
+                It may take a few minutes until you receive the SMS with the code. If
+                you still haven't received the code, you can request a new one by
+                clicking on "resend SMS."
+              </Text3>
+            }
+          />
+        </Accordion>
+        `,
+    },
+    {
+        group: 'Accordion',
         name: 'BoxedAccordion',
         code: `
-      <BoxedAccordion>
-        <BoxedAccordionItem
-          asset={<IconInvoicePlanFileRegular />}
-          title="What is Movistar Money"
-          content={
-            <Text3 color={colors.textSecondary}>
-              It's a loan available to anyone, whether or not you're a Movistar
-              customer. It offers from €2,000 to €15,000 with a simple and fast
-              application process, and you receive the money in less than 48 hours.
-            </Text3>
-          }
-        />
-        <BoxedAccordionItem
-          asset={<IconLocationMapRegular />}
-          title="To whom is it aimed?"
-          content={
-            <Text3 color={colors.textSecondary}>
-              The Movistar Money loan service is aimed at anyone, whether you are a{" "}
-              <TextLink href="https://example.org" newTab>Movistar</TextLink> customer or not.
-            </Text3>
-          }
-        />
-        <BoxedAccordionItem
-          asset={<IconLockEyeClosedRegular />}
-          title="Who offers Movistar Money?"
-          content={
-            <Text3 color={colors.textSecondary}>
-              <p>
-                At Telefónica, we have our own financial institution, Telefonica
-                Consumer Finance, and agreements with other institutions to assist
-                you in obtaining your loan.
-              </p>
-              <br />
-              <Image src="${imagePlaceholder}" aspectRatio="16:9" />
-              <br />
-              <p>
-                Depending on the characteristics of the information you provide us,
-                your application will be sent to one of the institutions{" "}
-                <TextLink href="https://example.org" newTab>with which Movistar has agreements</TextLink>.
-              </p>
-            </Text3>
-          }
-        />
-        <BoxedAccordionItem
-          asset={<IconIdCardRegular />}
-          title="How can I hire it?"
-          content={
-            <Text3 color={colors.textSecondary}>
-              It's a very agile process that you can access through the
-              money.movistar.es website. You can find more detailed information
-              about the process on our "How It Works" page.
-            </Text3>
-          }
-        />
-        <BoxedAccordionItem
-          asset={<IconLifeguardFloatRegular />}
-          title="What should I do if I don't receive the SMS with the contracting code?"
-          content={
-            <Text3 color={colors.textSecondary}>
-              It may take a few minutes until you receive the SMS with the code. If
-              you still haven't received the code, you can request a new one by
-              clicking on "resend SMS."
-            </Text3>
-          }
-        />
-      </BoxedAccordion>
-      `,
+        <BoxedAccordion>
+          <BoxedAccordionItem
+            asset={<IconInvoicePlanFileRegular />}
+            title="What is Movistar Money"
+            content={
+              <Text3 color={colors.textSecondary}>
+                It's a loan available to anyone, whether or not you're a Movistar
+                customer. It offers from €2,000 to €15,000 with a simple and fast
+                application process, and you receive the money in less than 48 hours.
+              </Text3>
+            }
+          />
+          <BoxedAccordionItem
+            asset={<IconLocationMapRegular />}
+            title="To whom is it aimed?"
+            content={
+              <Text3 color={colors.textSecondary}>
+                The Movistar Money loan service is aimed at anyone, whether you are a{" "}
+                <TextLink href="https://example.org" newTab>Movistar</TextLink> customer or not.
+              </Text3>
+            }
+          />
+          <BoxedAccordionItem
+            asset={<IconLockEyeClosedRegular />}
+            title="Who offers Movistar Money?"
+            content={
+              <Text3 color={colors.textSecondary}>
+                <p>
+                  At Telefónica, we have our own financial institution, Telefonica
+                  Consumer Finance, and agreements with other institutions to assist
+                  you in obtaining your loan.
+                </p>
+                <br />
+                <Image src="${imagePlaceholder}" aspectRatio="16:9" />
+                <br />
+                <p>
+                  Depending on the characteristics of the information you provide us,
+                  your application will be sent to one of the institutions{" "}
+                  <TextLink href="https://example.org" newTab>with which Movistar has agreements</TextLink>.
+                </p>
+              </Text3>
+            }
+          />
+          <BoxedAccordionItem
+            asset={<IconIdCardRegular />}
+            title="How can I hire it?"
+            content={
+              <Text3 color={colors.textSecondary}>
+                It's a very agile process that you can access through the
+                money.movistar.es website. You can find more detailed information
+                about the process on our "How It Works" page.
+              </Text3>
+            }
+          />
+          <BoxedAccordionItem
+            asset={<IconLifeguardFloatRegular />}
+            title="What should I do if I don't receive the SMS with the contracting code?"
+            content={
+              <Text3 color={colors.textSecondary}>
+                It may take a few minutes until you receive the SMS with the code. If
+                you still haven't received the code, you can request a new one by
+                clicking on "resend SMS."
+              </Text3>
+            }
+          />
+        </BoxedAccordion>
+        `,
+    },
+    {
+        group: 'Accordion',
+        name: 'BoxedAccordion (detail and right)',
+        code: `
+        <BoxedAccordion>
+          <BoxedAccordionItem
+            asset={<IconInvoicePlanFileRegular />}
+            title="What is Movistar Money"
+            detail="Detail"
+            right={<Placeholder width={32} height={32} />}
+            content={
+              <Text3 color={colors.textSecondary}>
+                It's a loan available to anyone, whether or not you're a Movistar
+                customer. It offers from €2,000 to €15,000 with a simple and fast
+                application process, and you receive the money in less than 48 hours.
+              </Text3>
+            }
+          />
+          <BoxedAccordionItem
+            asset={<IconLocationMapRegular />}
+            title="To whom is it aimed?"
+            detail="Detail"
+            right={<Placeholder width={32} height={32} />}
+            content={
+              <Text3 color={colors.textSecondary}>
+                The Movistar Money loan service is aimed at anyone, whether you are a{" "}
+                <TextLink href="https://example.org" newTab>
+                  Movistar
+                </TextLink>{" "}
+                customer or not.
+              </Text3>
+            }
+          />
+          <BoxedAccordionItem
+            asset={<IconLockEyeClosedRegular />}
+            title="Who offers Movistar Money?"
+            detail="Detail"
+            right={<Placeholder width={32} height={32} />}
+            content={
+              <Text3 color={colors.textSecondary}>
+                <p>
+                  At Telefónica, we have our own financial institution, Telefonica
+                  Consumer Finance, and agreements with other institutions to assist
+                  you in obtaining your loan.
+                </p>
+                <br />
+                <Image src="https://picsum.photos/1200/1200" aspectRatio="16:9" />
+                <br />
+                <p>
+                  Depending on the characteristics of the information you provide us,
+                  your application will be sent to one of the institutions{" "}
+                  <TextLink href="https://example.org" newTab>
+                    with which Movistar has agreements
+                  </TextLink>
+                  .
+                </p>
+              </Text3>
+            }
+          />
+          <BoxedAccordionItem
+            asset={<IconIdCardRegular />}
+            title="How can I hire it?"
+            detail="Detail"
+            right={<Placeholder width={32} height={32} />}
+            content={
+              <Text3 color={colors.textSecondary}>
+                It's a very agile process that you can access through the
+                money.movistar.es website. You can find more detailed information
+                about the process on our "How It Works" page.
+              </Text3>
+            }
+          />
+          <BoxedAccordionItem
+            asset={<IconLifeguardFloatRegular />}
+            title="What should I do if I don't receive the SMS with the contracting code?"
+            detail="Detail"
+            right={<Placeholder width={32} height={32} />}
+            content={
+              <Text3 color={colors.textSecondary}>
+                It may take a few minutes until you receive the SMS with the code. If
+                you still haven't received the code, you can request a new one by
+                clicking on "resend SMS."
+              </Text3>
+            }
+          />
+        </BoxedAccordion>
+        `,
     },
 ];
 
@@ -2302,100 +2478,102 @@ const exampleScreens: Array<Snippet> = [
       setState("isSheetOpen", false);
     }}
   >
-    <ResponsiveLayout>
-      <Box paddingBottom={80} paddingTop={0}>
-        <Stack space={24}>
-          <Text4 medium>Summary of your order</Text4>
-          <Callout
-            asset={<IconTruckRegular color={colors.brand} />}
-            description="Products may be shipped separately depending on availability."
-          />
-
+    {({ modalTitleId }) => (
+      <SheetBody modalTitleId={modalTitleId}>
+        <Box paddingBottom={80} paddingTop={0}>
           <Stack space={24}>
-            <Stack space={8}>
-              <NegativeBox>
-                <RowList>
-                  <Row
-                    asset={
-                      <Image
-                        src="${imagePlaceholder}"
-                        height={64}
-                        aspectRatio="1:1"
-                      />
-                    }
-                    title="iPhone 14 Pro"
-                    subtitle="Color: Green"
-                    description="Capacity: 256 GB"
-                    right={
-                      <div
-                        style={{
-                          height: "100%",
-                          display: "flex",
-                          alignItems: "flex-end",
-                          justifyContent: "center",
-                          flexDirection: "column",
-                        }}
-                      >
-                        <Text2 color={colors.textSecondary}>1.379 €</Text2>
-                        <Text4 medium>1.379 €</Text4>
-                      </div>
-                    }
-                  />
-                  <Row
-                    asset={
-                      <Image
-                        src="${imagePlaceholder}"
-                        height={64}
-                        aspectRatio="1:1"
-                      />
-                    }
-                    title="AirPods 3ª gen."
-                    subtitle="Color: White"
-                    right={
-                      <div
-                        style={{
-                          height: "100%",
-                          display: "flex",
-                          alignItems: "flex-end",
-                          justifyContent: "center",
+            <Text4 medium>Summary of your order</Text4>
+            <Callout
+              asset={<IconTruckRegular color={colors.brand} />}
+              description="Products may be shipped separately depending on availability."
+            />
 
-                          flexDirection: "column",
-                        }}
-                      >
-                        <Text4 medium>200 €</Text4>
-                      </div>
-                    }
-                  />
-                </RowList>
-              </NegativeBox>
+            <Stack space={24}>
+              <Stack space={8}>
+                <NegativeBox>
+                  <RowList>
+                    <Row
+                      asset={
+                        <Image
+                          src="${imagePlaceholder}"
+                          height={64}
+                          aspectRatio="1:1"
+                        />
+                      }
+                      title="iPhone 14 Pro"
+                      subtitle="Color: Green"
+                      description="Capacity: 256 GB"
+                      right={
+                        <div
+                          style={{
+                            height: "100%",
+                            display: "flex",
+                            alignItems: "flex-end",
+                            justifyContent: "center",
+                            flexDirection: "column",
+                          }}
+                        >
+                          <Text2 color={colors.textSecondary}>1.379 €</Text2>
+                          <Text4 medium>1.379 €</Text4>
+                        </div>
+                      }
+                    />
+                    <Row
+                      asset={
+                        <Image
+                          src="${imagePlaceholder}"
+                          height={64}
+                          aspectRatio="1:1"
+                        />
+                      }
+                      title="AirPods 3ª gen."
+                      subtitle="Color: White"
+                      right={
+                        <div
+                          style={{
+                            height: "100%",
+                            display: "flex",
+                            alignItems: "flex-end",
+                            justifyContent: "center",
+
+                            flexDirection: "column",
+                          }}
+                        >
+                          <Text4 medium>200 €</Text4>
+                        </div>
+                      }
+                    />
+                  </RowList>
+                </NegativeBox>
+                <Divider />
+              </Stack>
+              <Stack space={16}>
+                <Inline space="between">
+                  <Text3>Subtotal</Text3>
+                  <Text3>1.369 €</Text3>
+                </Inline>
+                <Inline space="between">
+                  <Text3 color={colors.promoHigh}>Promoción 7% descuento</Text3>
+                  <Text3 color={colors.promoHigh}>-100 €</Text3>
+                </Inline>
+                <Inline space="between">
+                  <Text3>Shipping costs</Text3>
+                  <Text3>0 €</Text3>
+                </Inline>
+              </Stack>
               <Divider />
-            </Stack>
-            <Stack space={16}>
-              <Inline space="between">
-                <Text3>Subtotal</Text3>
-                <Text3>1.369 €</Text3>
-              </Inline>
-              <Inline space="between">
-                <Text3 color={colors.promoHigh}>Promoción 7% descuento</Text3>
-                <Text3 color={colors.promoHigh}>-100 €</Text3>
-              </Inline>
-              <Inline space="between">
-                <Text3>Shipping costs</Text3>
-                <Text3>0 €</Text3>
-              </Inline>
-            </Stack>
-            <Divider />
-            <Stack space={8}>
-              <Inline space="between">
-                <Text4 medium>Total</Text4>
-                <Text4 medium>1.269 €</Text4>
-              </Inline>
-              <Text1 color={colors.textSecondary}>* All taxes included</Text1>
+              <Stack space={8}>
+                <Inline space="between">
+                  <Text4 medium>Total</Text4>
+                  <Text4 medium>1.269 €</Text4>
+                </Inline>
+                <Text1 color={colors.textSecondary}>* All taxes included</Text1>
+              </Stack>
             </Stack>
           </Stack>
-        </Stack>
       </Box>
-    </ResponsiveLayout>
+      </SheetBody>
+    )}
   </Sheet>
 )}
 
@@ -2408,33 +2586,278 @@ const navigationBarSnippets = [
         group: 'NavigationBar',
         name: 'MainNavigationBar',
         code: `
-<MainNavigationBar
-  sections={["Start", "Account", "Explore", "Support"].map((title, idx) => ({
-    title,
-    onPress: () => setState("index", idx),
-  }))}
-  selectedIndex={getState("index", 0)}
-  right={
-    <NavigationBarActionGroup>
-      <NavigationBarAction
-        onPress={() => {}}
-        aria-label="shopping cart with 2 items"
-      >
-        <Badge value={2}>
-          <IconShoppingCartRegular color="currentColor" />
-        </Badge>
-      </NavigationBarAction>
-      <NavigationBarAction onPress={() => {}} aria-label="Open profile">
-        <Avatar
-          size={isDesktopOrBigger ? 32 : 24}
-          initials="ML"
-          src="${imagePlaceholder}"
-        />
-        {isDesktopOrBigger && "María López Serrano"}
-      </NavigationBarAction>
-    </NavigationBarActionGroup>
-  }
-/>`,
+          <MainNavigationBar
+            sections={[
+              {
+                title: "Start",
+                onPress: () => setState("index", 0),
+              },
+              {
+                title: "Account",
+                onPress: () => setState("index", 1),
+              },
+              {
+                title: "Explore",
+                onPress: () => setState("index", 2),
+              },
+              {
+                title: "Support",
+                onPress: () => setState("index", 3),
+              },
+            ]}
+            selectedIndex={getState("index", 0)}
+            right={
+              <NavigationBarActionGroup>
+                <NavigationBarAction
+                  onPress={() => {}}
+                  aria-label="shopping cart with 2 items"
+                >
+                  <Badge value={2}>
+                    <IconShoppingCartRegular color="currentColor" />
+                  </Badge>
+                </NavigationBarAction>
+                <NavigationBarAction onPress={() => {}} aria-label="Open profile">
+                  <Avatar
+                    size={isDesktopOrBigger ? 32 : 24}
+                    initials="ML"
+                    src="${imagePlaceholder}"
+                  />
+                  {isDesktopOrBigger && "María López Serrano"}
+                </NavigationBarAction>
+              </NavigationBarActionGroup>
+            }
+          />`,
+    },
+    {
+        group: 'NavigationBar',
+        name: 'MainNavigationBar with menu',
+        code: `
+          <MainNavigationBar
+            sections={[
+              {
+                onPress: () => setState("index", 0),
+                title: "Start",
+                menu: {
+                  columns: [
+                    {
+                      title: "Start 1",
+                      items: [
+                        {
+                          title: "item 1",
+                          onPress: () => {},
+                        },
+                        {
+                          title: "item 2",
+                          href: "https://www.google.com/",
+                        },
+                        {
+                          title: "item 3",
+                          to: "#",
+                        },
+                      ],
+                    },
+                  ],
+                },
+              },
+              {
+                onPress: () => setState("index", 1),
+                title: "Account",
+                menu: {
+                  columns: [
+                    {
+                      title: "Account 1",
+                      items: [
+                        {
+                          title: "item 1",
+                          onPress: () => {},
+                        },
+                      ],
+                    },
+                  ],
+                },
+              },
+              {
+                onPress: () => setState("index", 2),
+                title: "Explore",
+                menu: {
+                  columns: [
+                    {
+                      title: "Explore 1",
+                      items: [
+                        {
+                          title: "item 1",
+                          onPress: () => {},
+                        },
+                        {
+                          title: "item 2",
+                          href: "https://www.google.com/",
+                        },
+                        {
+                          title: "item 3",
+                          to: "#",
+                        },
+                      ],
+                    },
+                  ],
+                },
+              },
+            ]}
+            selectedIndex={getState("index", 0)}
+          />`,
+    },
+    {
+        group: 'NavigationBar',
+        name: 'MainNavigationBar with large menu',
+        code: `
+          <MainNavigationBar
+            desktopLargeMenu
+            sections={[
+              {
+                onPress: () => setState("index", 0),
+                title: "Start",
+                menu: {
+                  columns: [
+                    {
+                      title: "Start 1",
+                      items: [
+                        {
+                          title: "item 1",
+                          onPress: () => {},
+                        },
+                        {
+                          title: "item 2",
+                          href: "https://www.google.com/",
+                        },
+                        {
+                          title: "item 3",
+                          to: "#",
+                        },
+                      ],
+                    },
+                    {
+                      title: "Start 2",
+                      items: [
+                        {
+                          title: "item 1",
+                          onPress: () => {},
+                        },
+                        {
+                          title: "item 2",
+                          href: "https://www.google.com/",
+                        },
+                        {
+                          title: "item 3",
+                          to: "#",
+                        },
+                      ],
+                    },
+                  ],
+                },
+              },
+              {
+                onPress: () => setState("index", 1),
+                title: "Account",
+                menu: {
+                  columns: [
+                    {
+                      title: "Account 1",
+                      items: [
+                        {
+                          title: "item 1",
+                          onPress: () => {},
+                        },
+                      ],
+                    },
+                  ],
+                },
+              },
+              {
+                onPress: () => setState("index", 2),
+                title: "Explore",
+                menu: {
+                  content: ({ closeMenu }) => (
+                    <Stack space={16}>
+                      <Text2 regular>Custom content</Text2>
+                      <Placeholder />
+                      <ButtonPrimary onPress={closeMenu}>Close menu</ButtonPrimary>
+                    </Stack>
+                  ),
+                },
+              },
+              {
+                onPress: () => setState("index", 3),
+                title: "Support",
+                menu: {
+                  content: isDesktopOrBigger ? (
+                    <Grid columns={12} gap={24}>
+                      {Array.from({ length: 3 }, (_, index) => (
+                        <GridItem columnSpan={2} key={index}>
+                          <Stack space={24}>
+                            <Title1>Contenidos</Title1>
+                            <Stack space={16}>
+                              {[
+                                "Destacados",
+                                "Todo fútbol",
+                                "#0",
+                                "Cine",
+                                "Oferta comercial",
+                                "Mi Movistar",
+                                "Movistar Cloud",
+                              ].map((title, index) => (
+                                <TextLink
+                                  key={index}
+                                  onPress={() => {}}
+                                  style={{ color: colors.textPrimary }}
+                                >
+                                  {title}
+                                </TextLink>
+                              ))}
+                            </Stack>
+                          </Stack>
+                        </GridItem>
+                      ))}
+
+                      <GridItem columnSpan={5} columnStart={8}>
+                        <DisplayMediaCard
+                          headline={<Tag type="promo">Oferta</Tag>}
+                          title="Movistar Plus+"
+                          onPress={() => {}}
+                          description="Contrata solo TV por 9,99 €"
+                          backgroundImage="${imagePlaceholder}"
+                        />
+                      </GridItem>
+                    </Grid>
+                  ) : (
+                    <Stack space={40}>
+                      {Array.from({ length: 3 }, (_, index) => (
+                        <Stack space={16} key={index}>
+                          <Title1>Title</Title1>
+                          <NegativeBox>
+                            <RowList>
+                              <Row title="Title" onPress={() => {}} />
+                              <Row title="Title" onPress={() => {}} />
+                              <Row title="Title" onPress={() => {}} />
+                              <Row title="Title" onPress={() => {}} />
+                            </RowList>
+                          </NegativeBox>
+                        </Stack>
+                      ))}
+
+                      <DisplayMediaCard
+                        headline={<Tag type="promo">Oferta</Tag>}
+                        title="Movistar Plus+"
+                        aspectRatio="1:1"
+                        onPress={() => {}}
+                        description="Contrata solo TV por 9,99 €"
+                        backgroundImage="${imagePlaceholder}"
+                      />
+                    </Stack>
+                  ),
+                },
+              },
+            ]}
+            selectedIndex={getState("index", 0)}
+          />`,
     },
     {
         group: 'NavigationBar',
@@ -2804,14 +3227,13 @@ const alertSnippets = [
       setState("isSheetOpen", false);
     }}
   >
-    <ResponsiveLayout>
-      <Box
-        paddingBottom={{ mobile: 16, desktop: 40 }}
-        paddingTop={{ mobile: 0, desktop: 40 }}
-      >
-        <Placeholder />
-      </Box>
-    </ResponsiveLayout>
+    {({ modalTitleId }) => (
+      <SheetBody modalTitleId={modalTitleId}>
+        <Box paddingBottom={{ mobile: 16, desktop: 0 }}>
+          <Placeholder />
+        </Box>
+      </SheetBody>
+    )}
   </Sheet>
 )}`,
     },
@@ -3721,6 +4143,24 @@ const ratingSnippets: Array<Snippet> = [
     },
 ];
 
+const meterSnippets: Array<Snippet> = [
+    {
+        group: 'Meter',
+        name: 'Meter Linear',
+        code: '<Meter width={200} type="linear" values={[33, 33, 0]} />',
+    },
+    {
+        group: 'Meter',
+        name: 'Meter Angular',
+        code: '<Meter width={200} type="angular" values={[33, 33, 0]} />',
+    },
+    {
+        group: 'Meter',
+        name: 'Meter Circular',
+        code: '<Meter width={200} type="circular" values={[33, 33, 0]} />',
+    },
+];
+
 export default [
     ...buttonSnippets,
     ...formSnippets,
@@ -3767,6 +4207,7 @@ export default [
     ...sliderSnippets,
     ...cardSnippets,
     ...exampleScreens,
+    ...meterSnippets,
     {
         group: 'Progress',
         name: 'Stepper',

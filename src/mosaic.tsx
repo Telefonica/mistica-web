@@ -7,9 +7,17 @@ import type {DataAttributes} from './utils/types';
 
 const GRID_GAP = {mobile: 8, desktop: 16} as const;
 
+type MosaicItemGridMode = 'horizontal' | 'square' | 'vertical';
+
+type MosaicItem = React.ReactElement | ((config: {gridMode: MosaicItemGridMode}) => React.ReactElement);
+
 type HorizontalMosaicPageProps = {
-    items: ReadonlyArray<React.ReactElement>;
+    items: ReadonlyArray<MosaicItem>;
     isEven: boolean;
+};
+
+const renderItem = (item: MosaicItem, gridMode: MosaicItemGridMode) => {
+    return typeof item === 'function' ? item({gridMode}) : item;
 };
 
 const HorizontalMosaicPage = ({items, isEven}: HorizontalMosaicPageProps) => {
@@ -18,9 +26,13 @@ const HorizontalMosaicPage = ({items, isEven}: HorizontalMosaicPageProps) => {
             <Grid gap={GRID_GAP} rows={2} columns={2} height="100%">
                 {items.length === 3 ? (
                     <>
-                        <GridItem columnSpan={isEven ? 2 : undefined}>{items[0]}</GridItem>
-                        <GridItem>{items[1]}</GridItem>
-                        <GridItem columnSpan={isEven ? undefined : 2}>{items[2]}</GridItem>
+                        <GridItem columnSpan={isEven ? 2 : undefined}>
+                            {renderItem(items[0], isEven ? 'horizontal' : 'square')}
+                        </GridItem>
+                        <GridItem>{renderItem(items[1], 'square')}</GridItem>
+                        <GridItem columnSpan={isEven ? undefined : 2}>
+                            {renderItem(items[2], isEven ? 'square' : 'horizontal')}
+                        </GridItem>
                     </>
                 ) : (
                     items.map((item, itemIndex) => (
@@ -29,7 +41,7 @@ const HorizontalMosaicPage = ({items, isEven}: HorizontalMosaicPageProps) => {
                             rowSpan={items.length === 1 ? 2 : undefined}
                             key={itemIndex}
                         >
-                            {item}
+                            {renderItem(item, items.length === 4 ? 'square' : 'horizontal')}
                         </GridItem>
                     ))
                 )}
@@ -39,7 +51,7 @@ const HorizontalMosaicPage = ({items, isEven}: HorizontalMosaicPageProps) => {
 };
 
 type HorizontalMosaicProps = {
-    items: ReadonlyArray<React.ReactElement>;
+    items: ReadonlyArray<MosaicItem>;
     withBullets?: boolean;
     free?: boolean;
     dataAttributes?: DataAttributes;
@@ -54,7 +66,7 @@ export const HorizontalMosaic = ({
     const itemsCount = items.length;
 
     const pagesCount = itemsCount < 5 ? Math.min(itemsCount, 1) : Math.floor((itemsCount + 1) / 3);
-    const pages = Array.from({length: pagesCount}, () => [] as Array<React.ReactElement>);
+    const pages = Array.from({length: pagesCount}, () => [] as Array<MosaicItem>);
 
     items.forEach((item, index) => {
         const itemPageIndex = Math.min(pagesCount - 1, Math.floor(index / 3));
@@ -76,7 +88,7 @@ export const HorizontalMosaic = ({
 };
 
 type VerticalMosaicPageProps = {
-    items: ReadonlyArray<React.ReactElement>;
+    items: ReadonlyArray<MosaicItem>;
 };
 
 const VerticalMosaicPage = ({items}: VerticalMosaicPageProps) => {
@@ -88,7 +100,7 @@ const VerticalMosaicPage = ({items}: VerticalMosaicPageProps) => {
                     <Grid gap={GRID_GAP} columns={2} height="100%">
                         {items.map((item, itemIndex) => (
                             <GridItem columnSpan={items.length === 2 ? undefined : 2} key={itemIndex}>
-                                {item}
+                                {renderItem(item, items.length === 2 ? 'square' : 'horizontal')}
                             </GridItem>
                         ))}
                     </Grid>
@@ -101,7 +113,7 @@ const VerticalMosaicPage = ({items}: VerticalMosaicPageProps) => {
                     <Grid gap={GRID_GAP} columns={2} flow="column" height="100%">
                         {items.map((item, itemIndex) => (
                             <GridItem rowSpan={itemIndex === 0 ? 2 : undefined} key={itemIndex}>
-                                {item}
+                                {renderItem(item, itemIndex === 0 ? 'vertical' : 'square')}
                             </GridItem>
                         ))}
                     </Grid>
@@ -113,10 +125,10 @@ const VerticalMosaicPage = ({items}: VerticalMosaicPageProps) => {
             return (
                 <div className={styles.fourItemsContainer}>
                     <Grid gap={GRID_GAP} rows={3} columns={2} height="100%">
-                        <GridItem rowSpan={2}>{items[0]}</GridItem>
-                        <GridItem>{items[1]}</GridItem>
-                        <GridItem rowSpan={2}>{items[3]}</GridItem>
-                        <GridItem>{items[2]}</GridItem>
+                        <GridItem rowSpan={2}>{renderItem(items[0], 'vertical')}</GridItem>
+                        <GridItem>{renderItem(items[1], 'square')}</GridItem>
+                        <GridItem rowSpan={2}>{renderItem(items[3], 'vertical')}</GridItem>
+                        <GridItem>{renderItem(items[2], 'square')}</GridItem>
                     </Grid>
                 </div>
             );
@@ -124,7 +136,7 @@ const VerticalMosaicPage = ({items}: VerticalMosaicPageProps) => {
 };
 
 type VerticalMosaicProps = {
-    items: ReadonlyArray<React.ReactElement>;
+    items: ReadonlyArray<MosaicItem>;
     dataAttributes?: DataAttributes;
 };
 
@@ -132,7 +144,7 @@ export const VerticalMosaic = ({items, dataAttributes}: VerticalMosaicProps): JS
     const itemsCount = items.length;
 
     const pagesCount = Math.ceil(itemsCount / 4);
-    const pages = Array.from({length: pagesCount}, () => [] as Array<React.ReactElement<any>>);
+    const pages = Array.from({length: pagesCount}, () => [] as Array<MosaicItem>);
 
     items.forEach((item, index) => {
         const itemPageIndex = Math.floor(index / 4);

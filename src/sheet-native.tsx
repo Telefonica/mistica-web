@@ -88,25 +88,36 @@ const showActionsListNativeSheet = (
 
 const showInfoNativeSheet = async (
     nativeSheetImplementation: NativeSheetImplementation,
-    {title, subtitle, description, items}: SheetPropsByType['INFO']
+    {title, subtitle, description, items, button}: SheetPropsByType['INFO']
 ): Promise<SheetResultByType['INFO']> => {
-    // nothing to return, this is an informative sheet
-    await (nativeSheetImplementation as NativeSheetImplementation)({
+    const infoSheetContent = {
+        type: 'LIST' as const,
+        id: 'list-0',
+        listType: 'INFORMATIVE' as const,
+        autoSubmit: false,
+        selectedIds: [],
+        items,
+    };
+
+    return await (nativeSheetImplementation as NativeSheetImplementation)({
         title,
         subtitle,
         // TODO: add multiline support to native sheet
         description: normalizeDescriptionForNative(description),
-        content: [
-            {
-                type: 'LIST',
-                id: 'list-0',
-                listType: 'INFORMATIVE',
-                autoSubmit: false,
-                selectedIds: [],
-                items,
-            },
-        ],
-    });
+        content: button
+            ? [
+                  infoSheetContent,
+                  {
+                      type: 'BOTTOM_ACTIONS',
+                      id: 'bottom-actions-0',
+                      button,
+                  },
+              ]
+            : [infoSheetContent],
+    }).then(() => ({
+        // this is an informative sheet, it can only be dismissed
+        action: 'DISMISS',
+    }));
 };
 
 const showActionsNativeSheet = (

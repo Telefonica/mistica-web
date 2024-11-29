@@ -25,97 +25,103 @@ export default {
     parameters: {fullScreen: true},
 };
 
-type Args = {title: string; subtitle: string; singleOpen: boolean; inverse: boolean};
+type Args = {
+    title: string;
+    subtitle: string;
+    detail: string;
+    right: boolean;
+    singleOpen: boolean;
+    overInverse: boolean;
+};
 
-const Template: StoryComponent<Args & {type?: 'boxed'}> = ({title, subtitle, singleOpen, inverse, type}) => {
+type BoxedArgs = Args & {inverse: boolean};
+
+const Template: StoryComponent<BoxedArgs & {type?: 'boxed'}> = ({
+    title,
+    subtitle,
+    detail,
+    right,
+    singleOpen,
+    inverse,
+    overInverse,
+    type,
+}) => {
     const content = <Placeholder height={100} />;
 
     const AccordionComponent = type === 'boxed' ? BoxedAccordion : Accordion;
     const ItemComponent = type === 'boxed' ? BoxedAccordionItem : AccordionItem;
 
+    const getAccordionItemContentProps = () => {
+        return {
+            title,
+            subtitle,
+            content,
+            detail,
+            right: right ? (
+                <div style={{display: 'flex', alignItems: 'center', height: '100%'}}>
+                    <div style={{width: 32, height: 32, borderRadius: '50%', background: 'pink'}} />
+                </div>
+            ) : undefined,
+            ...(type === 'boxed' && {isInverse: inverse}),
+        };
+    };
+
     return (
-        <ResponsiveLayout fullWidth isInverse={inverse}>
+        <ResponsiveLayout fullWidth variant={overInverse ? 'inverse' : 'default'}>
             <Box padding={16}>
                 <AccordionComponent singleOpen={singleOpen} dataAttributes={{testid: 'accordion'}}>
                     <ItemComponent
-                        title={title}
-                        subtitle={subtitle}
-                        content={content}
-                        {...(type === 'boxed' && {isInverse: inverse})}
+                        {...getAccordionItemContentProps()}
                         dataAttributes={{testid: 'accordion-item-1'}}
                     />
                     <ItemComponent
-                        title={title}
-                        subtitle={subtitle}
-                        content={content}
+                        {...getAccordionItemContentProps()}
                         asset={<IconThumbUpFilled size={24} />}
-                        {...(type === 'boxed' && {isInverse: inverse})}
                         dataAttributes={{testid: 'accordion-item-2'}}
                     />
                     <ItemComponent
-                        title={title}
-                        subtitle={subtitle}
-                        content={content}
+                        {...getAccordionItemContentProps()}
                         asset={
                             <Circle backgroundColor={skinVars.colors.brandLow} size={40}>
                                 <IconMobileDeviceRegular color={skinVars.colors.brand} />
                             </Circle>
                         }
-                        {...(type === 'boxed' && {isInverse: inverse})}
                         dataAttributes={{testid: 'accordion-item-3'}}
                     />
 
                     <ItemComponent
-                        title={title}
-                        subtitle={subtitle}
-                        content={content}
+                        {...getAccordionItemContentProps()}
                         asset={<Circle size={40} backgroundImage={laptopImg} />}
-                        {...(type === 'boxed' && {isInverse: inverse})}
                         dataAttributes={{testid: 'accordion-item-4'}}
                     />
 
                     <ItemComponent
-                        title={title}
-                        subtitle={subtitle}
-                        content={content}
+                        {...getAccordionItemContentProps()}
                         asset={<Image src={usingVrImg} height={80} aspectRatio="16:9" />}
-                        {...(type === 'boxed' && {isInverse: inverse})}
                         dataAttributes={{testid: 'accordion-item-5'}}
                     />
 
                     <ItemComponent
-                        title={title}
-                        subtitle={subtitle}
-                        content={content}
+                        {...getAccordionItemContentProps()}
                         asset={<Image src={personPortraitImg} width={80} aspectRatio="7:10" />}
-                        {...(type === 'boxed' && {isInverse: inverse})}
                         dataAttributes={{testid: 'accordion-item-6'}}
                     />
 
                     <ItemComponent
-                        title={title}
-                        subtitle={subtitle}
-                        content={content}
+                        {...getAccordionItemContentProps()}
                         asset={<Image src={touchImg} width={80} aspectRatio="1:1" />}
-                        {...(type === 'boxed' && {isInverse: inverse})}
                         dataAttributes={{testid: 'accordion-item-7'}}
                     />
 
                     <ItemComponent
-                        title={title}
-                        subtitle={subtitle}
-                        content={content}
+                        {...getAccordionItemContentProps()}
                         asset={<Avatar size={40} src={avatarImg} />}
-                        {...(type === 'boxed' && {isInverse: inverse})}
                         dataAttributes={{testid: 'accordion-item-8'}}
                     />
 
                     <ItemComponent
-                        title={title}
-                        subtitle={subtitle}
-                        content={content}
+                        {...getAccordionItemContentProps()}
                         asset={<Avatar size={40} initials="MS" />}
-                        {...(type === 'boxed' && {isInverse: inverse})}
                         dataAttributes={{testid: 'accordion-item-9'}}
                     />
                 </AccordionComponent>
@@ -127,14 +133,16 @@ const Template: StoryComponent<Args & {type?: 'boxed'}> = ({title, subtitle, sin
 const defaultArgs = {
     title: 'Title',
     subtitle: 'Subtitle',
+    detail: '',
+    right: false,
     singleOpen: false,
-    inverse: false,
+    overInverse: false,
 };
 
-export const AccordionStory: StoryComponent<Args> = (args) => <Template {...args} />;
+export const AccordionStory: StoryComponent<Args> = (args) => <Template inverse={false} {...args} />;
 AccordionStory.storyName = 'Accordion';
 AccordionStory.args = defaultArgs;
 
-export const BoxedAccordionStory: StoryComponent<Args> = (args) => <Template type="boxed" {...args} />;
+export const BoxedAccordionStory: StoryComponent<BoxedArgs> = (args) => <Template type="boxed" {...args} />;
 BoxedAccordionStory.storyName = 'BoxedAccordion';
-BoxedAccordionStory.args = defaultArgs;
+BoxedAccordionStory.args = {...defaultArgs, inverse: false};

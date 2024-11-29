@@ -126,3 +126,8 @@ export const sixColumns = style({
 });
 
 export const sideExtra = sprinkles({position: 'relative'});
+
+export const flexColumn = sprinkles({
+    display: 'flex',
+    flexDirection: 'column',
+});

@@ -4,15 +4,24 @@ import {screen, render, within} from '@testing-library/react';
 import {
     ButtonPrimary,
     ButtonSecondary,
+    Callout,
     DataCard,
     DateField,
+    Hero,
+    Image,
+    HighlightedCard,
     IconShopRegular,
+    Meter,
     Placeholder,
     SearchField,
     Stack,
     SuccessFeedbackScreen,
     TextField,
     ThemeContextProvider,
+    Tag,
+    CoverHero,
+    Header,
+    MainSectionHeader,
 } from '..';
 import {makeTheme} from './test-utils';
 
@@ -100,6 +109,15 @@ test('Cards test ids', () => {
     );
 });
 
+test('HighlightedCard test ids', () => {
+    checkTestIds(<HighlightedCard title="Title" description="Description" imageUrl="https://anyurl.com" />, [
+        {
+            componentName: 'HighlightedCard',
+            internalTestIds: ['title', 'description', 'image'],
+        },
+    ]);
+});
+
 test('FeedbackScreen test ids', () => {
     checkTestIds(
         <SuccessFeedbackScreen
@@ -172,4 +190,101 @@ test('Buttons test ids', () => {
             },
         ]
     );
+});
+
+test('Callout test ids', () => {
+    checkTestIds(
+        <Callout title="Title" description="Description" asset={<IconShopRegular />} onClose={() => {}} />,
+        [
+            {
+                componentName: 'Callout',
+                internalTestIds: ['title', 'description', 'asset', 'closeButton'],
+            },
+        ]
+    );
+});
+
+test('Hero test ids', () => {
+    checkTestIds(
+        <Hero
+            background="default"
+            media={<Image src="https://anyurl.com" />}
+            headline={<Tag type="active">tag</Tag>}
+            pretitle="pretitle"
+            title="title"
+            description="description"
+            button={<ButtonPrimary fake>button</ButtonPrimary>}
+            desktopMediaPosition="right"
+            extra={<Placeholder />}
+        />,
+        [
+            {
+                componentName: 'Hero',
+                internalTestIds: ['headline', 'pretitle', 'title', 'description', 'slot'],
+            },
+        ]
+    );
+});
+
+test('CoverHero test ids', () => {
+    checkTestIds(
+        <CoverHero
+            backgroundImage="https://anyurl.com"
+            headline={<Tag type="active">tag</Tag>}
+            pretitle="pretitle"
+            title="title"
+            description="description"
+            button={<ButtonPrimary fake>button</ButtonPrimary>}
+            extra={<Placeholder />}
+            sideExtra={<Placeholder />}
+        />,
+        [
+            {
+                componentName: 'CoverHero',
+                internalTestIds: ['headline', 'pretitle', 'title', 'description', 'slot', 'sideSlot'],
+            },
+        ]
+    );
+});
+
+test('Header test ids', () => {
+    checkTestIds(
+        <Header
+            headline={<Tag type="active">tag</Tag>}
+            pretitle="pretitle"
+            title="title"
+            description="description"
+        />,
+        [
+            {
+                componentName: 'Header',
+                internalTestIds: ['headline', 'pretitle', 'title', 'description'],
+            },
+        ]
+    );
+});
+
+test('MainSectionHeader test ids', () => {
+    checkTestIds(
+        <MainSectionHeader
+            title="Title"
+            description="Description"
+            button={<ButtonPrimary href="asdf">Action</ButtonPrimary>}
+        />,
+        [
+            {
+                componentName: 'MainSectionHeader',
+                internalTestIds: ['title', 'description'],
+            },
+        ]
+    );
+});
+
+test('Meter test ids', () => {
+    checkTestIds(<Meter values={[10, 20, 30]} />, [
+        {
+            componentName: 'Meter',
+            internalTestIds: [],
+        },
+    ]);
 });

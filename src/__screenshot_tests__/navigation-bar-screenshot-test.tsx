@@ -164,3 +164,67 @@ test.each(DEVICES)('MainNavigationBar without sections (%s)', async (device) => 
 
     expect(image).toMatchImageSnapshot();
 });
+
+test.each`
+    menuType   | content
+    ${'large'} | ${'default'}
+    ${'large'} | ${'custom'}
+    ${'small'} | ${'default'}
+    ${'small'} | ${'custom'}
+`('MainNavigationBar with $menuType menu and $content content in DESKTOP', async ({menuType, content}) => {
+    const page = await openStoryPage({
+        id: 'components-navigation-bars-mainnavigationbar--default',
+        device: 'DESKTOP',
+        args: {sections: true, desktopLargeMenu: menuType === 'large', menu: content},
+    });
+
+    // first section opened
+    await page.click(await screen.findByRole('button', {name: 'Start'}));
+    expect(await page.screenshot()).toMatchImageSnapshot();
+
+    // second section opened
+    await page.click(await screen.findByRole('button', {name: 'Account'}));
+    expect(await page.screenshot()).toMatchImageSnapshot();
+
+    // close menu with ESC key
+    await page.keyboard.press('Escape');
+    expect(await page.screenshot()).toMatchImageSnapshot();
+});
+
+test.each(['default', 'custom'])('MainNavigationBar with menu and %s content in MOBILE_IOS', async (menu) => {
+    const page = await openStoryPage({
+        id: 'components-navigation-bars-mainnavigationbar--default',
+        device: 'MOBILE_IOS',
+        args: {sections: true, menu},
+    });
+
+    await page.click(await screen.findByRole('button', {name: 'Abrir menú de navegación'}));
+
+    // open first section
+    await page.click(await screen.findByRole('button', {name: 'Start'}));
+    expect(await page.screenshot()).toMatchImageSnapshot();
+
+    // go back
+    await page.click(await screen.findByRole('button', {name: 'Atrás'}));
+    expect(await page.screenshot()).toMatchImageSnapshot();
+
+    // open second section
+    await page.click(await screen.findByRole('button', {name: 'Account'}));
+    expect(await page.screenshot()).toMatchImageSnapshot();
+
+    // close menu
+    await page.click(await screen.findByRole('button', {name: 'Cerrar menú de navegación'}));
+    expect(await page.screenshot()).toMatchImageSnapshot();
+});
+
+test.each(['large', 'small'])('MainNavigationBar inverse with %s menu in DESKTOP', async (menuType) => {
+    const page = await openStoryPage({
+        id: 'components-navigation-bars-mainnavigationbar--default',
+        device: 'DESKTOP',
+        args: {sections: true, desktopLargeMenu: menuType === 'large', menu: 'default', variant: 'inverse'},
+    });
+
+    // first section opened
+    await page.click(await screen.findByRole('button', {name: 'Start'}));
+    expect(await page.screenshot()).toMatchImageSnapshot({failureThreshold: 0.00001});
+});
