@@ -1,264 +1,260 @@
 import * as React from 'react';
-import Stack from '../stack';
-import * as styles from './blocks.css';
-import * as mediaStyles from '../image.css';
-import {Text2, Text3, Text5, Text8} from '../text';
-import {vars} from '../skins/skin-contract.css';
-import Inline from '../inline';
-import Box from '../box';
-import {ProgressBar} from '../progress-bar';
-import classNames from 'classnames';
-import {applyCssVars} from '../utils/css';
+import {Avatar, Image, Box, ResponsiveLayout, StackingGroup, Tag, Stack} from '../..';
+import {
+    HighlightedValueBlock,
+    InformationBlock,
+    ProgressBlock,
+    RowBlock,
+    SimpleBlock,
+    ValueBlock,
+} from '../blocks';
+import imgExample from '../../__stories__/images/avatar.jpg';
+import {vars} from '../../skins/skin-contract.css';
 
-import type StackingGroup from '../stacking-group';
-import type Image from '../image';
-import type Tag from '../tag';
-import type {RendersNullableElement} from '../utils/renders-element';
-import type {ExclusifyUnion} from '../utils/utility-types';
+import type {TagType} from '../..';
 
-interface BlockContentProps {
-    title?: string;
-    description?: ReadonlyArray<string> | string;
-}
-
-const BlockContent = ({title, description}: BlockContentProps) => {
-    const descriptionLines = typeof description === 'string' ? [description] : description;
-    return (
-        <div className={styles.column}>
-            <Text3 regular color={vars.colors.textPrimary}>
-                {title}
-            </Text3>
-
-            {descriptionLines &&
-                descriptionLines.map((paragraph, i) => (
-                    <Text2 regular color={vars.colors.textSecondary} as="p" key={i}>
-                        {paragraph}
-                    </Text2>
-                ))}
-        </div>
-    );
+export default {
+    title: 'Community/Blocks',
+    parameters: {
+        fullScreen: true,
+    },
 };
 
-interface RowBlockBaseProps {
-    title?: string;
-    'aria-label'?: string;
-}
-
-interface RowBlockWithDescription extends RowBlockBaseProps {
-    description?: string;
-}
-
-interface RowBlockWithStackingGroup extends RowBlockBaseProps {
-    stackingGroup?: RendersNullableElement<typeof StackingGroup>;
-}
-
-type RowBlockProps = ExclusifyUnion<RowBlockWithDescription | RowBlockWithStackingGroup>;
-
-export const RowBlock = ({
-    title,
-    stackingGroup,
-    description,
-    'aria-label': ariaLabel,
-}: RowBlockProps): JSX.Element => {
-    return (
-        <div aria-label={ariaLabel}>
-            <Inline space="between" alignItems="center">
-                {title && (
-                    <Box paddingRight={32}>
-                        <Text2 regular>{title}</Text2>
-                    </Box>
-                )}
-                {stackingGroup ? (
-                    stackingGroup
-                ) : (
-                    <Text2 regular color={vars.colors.textSecondary} textAlign="right" as="div">
-                        {description}
-                    </Text2>
-                )}
-            </Inline>
-        </div>
-    );
+type RowBlockArgs = {
+    title: string;
+    description: string;
+    stackingGroup: boolean;
 };
 
-interface SimpleBlockProps {
-    image?: RendersNullableElement<typeof Image>;
-    description?: string;
-    'aria-label'?: string;
-}
-
-export const SimpleBlock = ({image, description, 'aria-label': ariaLabel}: SimpleBlockProps): JSX.Element => {
+export const BlockRow: StoryComponent<RowBlockArgs> = ({title, description, stackingGroup}) => {
     return (
-        <div aria-label={ariaLabel}>
-            <Inline space={16} alignItems="center">
-                <div
-                    style={applyCssVars({
-                        [mediaStyles.vars.mediaBorderRadius]: vars.borderRadii.mediaSmall,
-                    })}
-                >
-                    {image}
-                </div>
-                <Text2 regular color={vars.colors.textSecondary}>
-                    {description}
-                </Text2>
-            </Inline>
-        </div>
-    );
-};
-
-interface InformationBlockProps {
-    title?: string;
-    description?: ReadonlyArray<string> | string;
-    value?: string;
-    secondaryValue?: string;
-    valueColor?: string;
-    'aria-label'?: string;
-}
-
-export const InformationBlock = ({
-    title,
-    description,
-    secondaryValue,
-    value,
-    valueColor = vars.colors.textPrimary,
-    'aria-label': ariaLabel,
-}: InformationBlockProps): JSX.Element => {
-    return (
-        <Inline space="between" alignItems="flex-end" aria-label={ariaLabel}>
-            <BlockContent title={title} description={description} />
-            <div className={classNames(styles.column, styles.rightContent)}>
-                <Text2 regular color={vars.colors.textSecondary} decoration="line-through">
-                    {secondaryValue}
-                </Text2>
-                <Text5 color={valueColor}>{value}</Text5>
-            </div>
-        </Inline>
-    );
-};
-
-interface Heading {
-    value: string;
-    text?: string;
-    valueColor?: string;
-}
-
-interface HighlightedValueBlockProps {
-    headline?: RendersNullableElement<typeof Tag>;
-    headings?: ReadonlyArray<Heading>;
-    title?: string;
-    description?: ReadonlyArray<string> | string;
-    'aria-label'?: string;
-}
-
-export const HighlightedValueBlock = ({
-    headline,
-    headings,
-    title,
-    description,
-    'aria-label': ariaLabel,
-}: HighlightedValueBlockProps): JSX.Element => {
-    return (
-        <div aria-label={ariaLabel}>
-            {headline && <Box paddingBottom={24}>{headline}</Box>}
-
-            {headings && (
-                <Stack space={2}>
-                    {headings.map((heading, index) => (
-                        <Inline key={index} space={8} alignItems="baseline">
-                            <Text8 color={heading.valueColor ?? vars.colors.textPrimary}>
-                                {heading.value}
-                            </Text8>
-                            <Text2 regular color={vars.colors.textSecondary}>
-                                {heading.text}
-                            </Text2>
-                        </Inline>
-                    ))}
+        <ResponsiveLayout>
+            <Box paddingY={24}>
+                <Stack space={24} dataAttributes={{testid: 'row-block'}}>
+                    <RowBlock
+                        title={title}
+                        stackingGroup={
+                            stackingGroup ? (
+                                <StackingGroup
+                                    stacked
+                                    maxItems={3}
+                                    moreItemsStyle={{type: 'circle', size: 40}}
+                                >
+                                    <Avatar size={40} src={imgExample} />
+                                    <Avatar size={40} src={imgExample} />
+                                    <Avatar size={40} src={imgExample} />
+                                    <Avatar size={40} src={imgExample} />
+                                    <Avatar size={40} src={imgExample} />
+                                    <Avatar size={40} src={imgExample} />
+                                </StackingGroup>
+                            ) : undefined
+                        }
+                    />
+                    <RowBlock title={title} description={description} />
                 </Stack>
-            )}
-            {title || description ? (
-                <Box paddingTop={8}>
-                    <BlockContent title={title} description={description} />
-                </Box>
-            ) : null}
-        </div>
+            </Box>
+        </ResponsiveLayout>
     );
 };
 
-interface ValueBlockProps {
-    title?: string;
-    value?: string;
-    description?: ReadonlyArray<string> | string;
-    valueColor?: string;
-    'aria-label'?: string;
-}
+BlockRow.storyName = 'RowBlock';
+BlockRow.args = {
+    title: 'title',
+    description: 'description',
+    stackingGroup: true,
+};
 
-export const ValueBlock = ({
-    title,
-    value,
-    description,
-    valueColor = vars.colors.textPrimary,
-    'aria-label': ariaLabel,
-}: ValueBlockProps): JSX.Element => {
+type SimpleBlockArgs = {
+    description: string;
+    label: string;
+};
+
+export const BlockSimple: StoryComponent<SimpleBlockArgs> = ({description, label}) => {
     return (
-        <div aria-label={ariaLabel} className={styles.column}>
-            <Text2 regular color={vars.colors.textPrimary}>
-                {title}
-            </Text2>
-            <Text8 color={valueColor}>{value}</Text8>
-            <BlockContent description={description} />
-        </div>
+        <ResponsiveLayout>
+            <Box paddingY={24} dataAttributes={{testid: 'simple-block'}}>
+                <SimpleBlock description={description} label={label} image={<Image height={40} src={imgExample} />} />
+            </Box>
+        </ResponsiveLayout>
     );
 };
 
-interface ProgressBlockProps {
-    title?: string;
-    stackingGroup?: RendersNullableElement<typeof StackingGroup>;
+BlockSimple.storyName = 'SimpleBlock';
+BlockSimple.args = {
+    description: 'description',
+    label: 'label',
+};
 
-    progressPercent?: number;
-    reverse?: boolean;
+type InformationBlockArgs = {
+    title: string;
+    description: string;
+    value: string;
+    secondaryValue: string;
+};
 
-    heading: {
-        value: string;
-        valueColor?: string;
-        text: string;
-    };
+export const BlockInformation: StoryComponent<InformationBlockArgs> = ({
+    title,
+    description,
+    value,
+    secondaryValue,
+}) => {
+    return (
+        <ResponsiveLayout>
+            <Box paddingY={24} dataAttributes={{testid: 'information-block'}}>
+                <InformationBlock
+                    title={title}
+                    description={description}
+                    value={value}
+                    secondaryValue={secondaryValue}
+                />
+            </Box>
+        </ResponsiveLayout>
+    );
+};
 
-    description?: string;
-    'aria-label'?: string;
-}
+BlockInformation.storyName = 'InformationBlock';
+BlockInformation.args = {
+    title: 'title',
+    description: 'description',
+    value: '20',
+    secondaryValue: '20',
+};
 
-export const ProgressBlock = ({
+type HighlightedValueBlockArgs = {
+    headline: string;
+    headlineType: TagType;
+
+    value: string;
+    text: string;
+
+    secondaryValue: string;
+
+    title: string;
+    description: string;
+};
+
+export const BlockHighlightedValue: StoryComponent<HighlightedValueBlockArgs> = ({
+    headline,
+    headlineType,
+    value,
+    text,
+    secondaryValue,
+    title,
+    description,
+}) => {
+    return (
+        <ResponsiveLayout>
+            <Box paddingY={24} dataAttributes={{testid: 'highlighted-value-block'}}>
+                <HighlightedValueBlock
+                    headline={<Tag type={headlineType}>{headline}</Tag>}
+                    title={title}
+                    description={description}
+                    headings={[
+                        {value, text},
+                        {value: secondaryValue, valueColor: vars.colors.textSecondary},
+                    ]}
+                />
+            </Box>
+        </ResponsiveLayout>
+    );
+};
+
+BlockHighlightedValue.storyName = 'HighlightedValueBlock';
+BlockHighlightedValue.args = {
+    headline: 'Priority',
+    headlineType: 'promo',
+    text: 'text',
+    value: '20',
+    secondaryValue: '20',
+    title: 'title',
+    description: 'description',
+};
+BlockHighlightedValue.argTypes = {
+    headlineType: {
+        options: ['promo', 'active', 'inactive', 'success', 'warning', 'error'],
+        control: {type: 'select'},
+    },
+};
+
+type ValueBlockArgs = {
+    title: string;
+    value: string;
+    description: string;
+};
+
+export const BlockValue: StoryComponent<ValueBlockArgs> = ({title, value, description}) => {
+    return (
+        <ResponsiveLayout>
+            <Box paddingY={24} dataAttributes={{testid: 'value-block'}}>
+                <ValueBlock title={title} description={description} value={value} />
+            </Box>
+        </ResponsiveLayout>
+    );
+};
+
+BlockValue.storyName = 'ValueBlock';
+BlockValue.args = {
+    title: 'title',
+    description: 'description',
+    value: '20',
+};
+
+type ProgressBlockArgs = {
+    title: string;
+
+    stackingGroup: boolean;
+
+    progressPercent: number;
+    reverse: boolean;
+
+    value: string;
+    text: string;
+    description: string;
+};
+
+export const BlockProgress: StoryComponent<ProgressBlockArgs> = ({
     title,
     stackingGroup,
     progressPercent,
     reverse,
-    heading,
+    value,
+    text,
     description,
-    'aria-label': ariaLabel,
-}: ProgressBlockProps): JSX.Element => {
+}) => {
     return (
-        <div aria-label={ariaLabel}>
-            <Stack space={8}>
-                <Inline space="between" alignItems="flex-end">
-                    <Box paddingRight={32}>
-                        <Text2 regular>{title}</Text2>
-                    </Box>
-                    {stackingGroup}
-                </Inline>
-                {progressPercent !== undefined && (
-                    <ProgressBar aria-hidden progressPercent={progressPercent} reverse={reverse} />
-                )}
-                <Inline space={8} alignItems="baseline">
-                    <Text8 color={heading.valueColor || vars.colors.textPrimary}>{heading.value}</Text8>
-                    <Text2 regular color={vars.colors.textSecondary}>
-                        {heading.text}
-                    </Text2>
-                </Inline>
-                {description && (
-                    <Text2 regular color={vars.colors.textSecondary}>
-                        {description}
-                    </Text2>
-                )}
-            </Stack>
-        </div>
+        <ResponsiveLayout>
+            <Box paddingY={24} dataAttributes={{testid: 'progress-block'}}>
+                <ProgressBlock
+                    title={title}
+                    stackingGroup={
+                        stackingGroup ? (
+                            <StackingGroup stacked maxItems={3} moreItemsStyle={{type: 'circle', size: 40}}>
+                                <Avatar size={40} src={imgExample} />
+                                <Avatar size={40} src={imgExample} />
+                                <Avatar size={40} src={imgExample} />
+                                <Avatar size={40} src={imgExample} />
+                                <Avatar size={40} src={imgExample} />
+                                <Avatar size={40} src={imgExample} />
+                            </StackingGroup>
+                        ) : null
+                    }
+                    progressPercent={progressPercent}
+                    reverse={reverse}
+                    heading={{value, text}}
+                    description={description}
+                />
+            </Box>
+        </ResponsiveLayout>
     );
 };
+
+BlockProgress.storyName = 'ProgressBlock';
+BlockProgress.args = {
+    title: 'title',
+    stackingGroup: false,
+    progressPercent: 20,
+    reverse: false,
+    value: '20',
+    text: 'text',
+    description: 'description',
+}; 
