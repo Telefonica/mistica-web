@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Avatar, Image, Box, ResponsiveLayout, StackingGroup, Tag, Stack} from '../..';
+import {Avatar, Image, Box, ResponsiveLayout, StackingGroup, Tag, Stack} from '..';
 import {
     HighlightedValueBlock,
     InformationBlock,
@@ -7,11 +7,11 @@ import {
     RowBlock,
     SimpleBlock,
     ValueBlock,
-} from '../blocks';
-import imgExample from '../../__stories__/images/avatar.jpg';
-import {vars} from '../../skins/skin-contract.css';
+} from './blocks';
+import imgExample from '../__stories__/images/avatar.jpg';
+import {vars} from '../skins/skin-contract.css';
 
-import type {TagType} from '../..';
+import type {TagType} from '../tag';
 
 export default {
     title: 'Community/Blocks',
