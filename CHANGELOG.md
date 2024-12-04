@@ -1,3 +1,11 @@
+# [16.7.0](https://github.com/Telefonica/mistica-web/compare/v16.6.1...v16.7.0) (2024-12-04)
+
+
+### Features
+
+* **StackingGroup:** use Avatar's text style for moreItems text ([#1297](https://github.com/Telefonica/mistica-web/issues/1297)) ([e45e47c](https://github.com/Telefonica/mistica-web/commit/e45e47c9c1c3ae0b9351c03130de88cc494d4d3b))
+* **VanillaExtract:** Use custom identifier generation ([#1299](https://github.com/Telefonica/mistica-web/issues/1299)) ([8872f87](https://github.com/Telefonica/mistica-web/commit/8872f87465d3bb994326895cfef870391a329cdd))
+
 ## [16.6.1](https://github.com/Telefonica/mistica-web/compare/v16.6.0...v16.6.1) (2024-11-26)
 
 
