@@ -41,7 +41,7 @@ const chipActive = style({});
 
 export const chipVariants = styleVariants({
     default: [
-        containerBase, 
+        containerBase,
         sprinkles({
             background: vars.colors.backgroundContainer,
             color: vars.colors.textPrimary,
