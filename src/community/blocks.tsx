@@ -123,12 +123,9 @@ BlockInformation.args = {
 type HighlightedValueBlockArgs = {
     headline: string;
     headlineType: TagType;
-
     value: string;
     text: string;
-
     secondaryValue: string;
-
     title: string;
     description: string;
 };
@@ -201,12 +198,9 @@ BlockValue.args = {
 
 type ProgressBlockArgs = {
     title: string;
-
     stackingGroup: boolean;
-
     progressPercent: number;
     reverse: boolean;
-
     value: string;
     text: string;
     description: string;
@@ -257,4 +251,4 @@ BlockProgress.args = {
     value: '20',
     text: 'text',
     description: 'description',
-}; 
+};

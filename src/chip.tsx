@@ -134,7 +134,7 @@ const Chip = (props: ChipProps): JSX.Element => {
                 {renderContent()}
             </BaseTouchable>
         );
-    } 
+    }
 
     return renderContent(chipDataAttributes);
 };
