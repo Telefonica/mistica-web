@@ -60,6 +60,9 @@ export const chipVariants = styleVariants({
             background: vars.colors.brand,
             color: vars.colors.textPrimaryInverse,
         }),
+        {
+            borderColor: vars.colors.brand,
+        },
     ],
     active: [
         chipActive,

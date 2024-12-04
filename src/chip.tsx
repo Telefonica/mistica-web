@@ -42,18 +42,19 @@ type ChipProps = ExclusifyUnion<ClosableChipProps | ToggleChipProps | ClickableC
 const Chip = (props: ChipProps): JSX.Element => {
     const {Icon, children, id, dataAttributes, active, badge, onClose, closeButtonLabel} = props;
     const {texts, isDarkMode, textPresets, t} = useTheme();
-
     const overAlternative = useThemeVariant() === 'alternative';
     const inverse = useThemeVariant() === 'inverse';
 
     const body = (
         <>
             {Icon && (
-                <div className={classnames({
-                    [styles.iconActive]: active,
-                    [styles.iconInverse]: inverse,
-                    [styles.icon]: !active && !inverse
-                })}>
+                <div
+                    className={classnames({
+                        [styles.iconActive]: active,
+                        [styles.iconInverse]: !active && inverse,
+                        [styles.icon]: !active && !inverse,
+                    })}
+                >
                     <Icon color="currentColor" size={pxToRem(16)} />
                 </div>
             )}
@@ -71,7 +72,11 @@ const Chip = (props: ChipProps): JSX.Element => {
         return (
             <div
                 className={classnames(
-                    inverse ? styles.chipVariants.inverse : overAlternative ? styles.chipVariants.overAlternative : styles.chipVariants.default,
+                    inverse
+                        ? styles.chipVariants.inverse
+                        : overAlternative
+                          ? styles.chipVariants.overAlternative
+                          : styles.chipVariants.default,
                     styles.chipWrapper,
                     Icon ? styles.leftPadding.withIcon : styles.leftPadding.default,
                     styles.rightPadding.withIcon
@@ -108,7 +113,9 @@ const Chip = (props: ChipProps): JSX.Element => {
     const renderContent = (dataAttributes?: DataAttributes) => (
         <div
             className={classnames(
-                styles.chipVariants[active ? 'active' : inverse ? 'inverse' : overAlternative ? 'overAlternative' : 'default'],
+                styles.chipVariants[
+                    active ? 'active' : inverse ? 'inverse' : overAlternative ? 'overAlternative' : 'default'
+                ],
                 // If the chip is wrapped inside a BaseTouchable, we set inline-flex to the Touchable instead
                 isTouchable ? styles.wrappedContent : styles.chipWrapper,
                 {
