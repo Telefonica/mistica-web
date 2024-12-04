@@ -73,7 +73,11 @@ export const BlockSimple: StoryComponent<SimpleBlockArgs> = ({description, label
     return (
         <ResponsiveLayout>
             <Box paddingY={24} dataAttributes={{testid: 'simple-block'}}>
-                <SimpleBlock description={description} label={label} image={<Image height={40} src={imgExample} />} />
+                <SimpleBlock
+                    description={description}
+                    label={label}
+                    image={<Image height={40} src={imgExample} />}
+                />
             </Box>
         </ResponsiveLayout>
     );
