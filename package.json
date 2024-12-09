@@ -39,7 +39,8 @@
         "detect-circular-dependencies": "npx dpdm --circular src/index.tsx",
         "audit-accessibility": "node .github/actions/audit-accessibility/main.js",
         "circular-dependencies": "yarn dpdm src/index.tsx --tree=false --warning=false --exit-code circular:1",
-        "prepare": "husky install"
+        "prepare": "husky install",
+        "edit-playroom-patch": "playroom/patch-playroom.sh"
     },
     "browserslist": [
         "chrome >= 51",

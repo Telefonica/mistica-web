@@ -149,7 +149,7 @@ index 0000000000000000000000000000000000000000..21d14ae14f317c051123f269242ee58d
 +]);
 diff --git a/src/Playroom/AiPanel/AiPanel.tsx b/src/Playroom/AiPanel/AiPanel.tsx
 new file mode 100644
-index 0000000000000000000000000000000000000000..dd60b29783442680768eba84b600c2f5a90b6a5d
+index 0000000000000000000000000000000000000000..57e123e4dfc28dbd4154d2c7bb62d47596ecbf25
 --- /dev/null
 +++ b/src/Playroom/AiPanel/AiPanel.tsx
 @@ -0,0 +1,506 @@
@@ -187,7 +187,7 @@ index 0000000000000000000000000000000000000000..dd60b29783442680768eba84b600c2f5
 +// export const aiBaseUrl = `http://localhost:3000`;
 +export const aiBaseUrl = `https://mistica-playroom-api.tooling-dev.svc.dev.tuenti.io`;
 +
-+const fetchApi = (path: string, options?: RequestInit): Promise<Response> =>
++const fetchApi = (path: string, options?: RequestInit): Promise<any> =>
 +  fetch(`${aiBaseUrl}${path}`, {
 +    credentials: 'include',
 +    method: 'POST',
@@ -202,42 +202,42 @@ index 0000000000000000000000000000000000000000..dd60b29783442680768eba84b600c2f5
 +      window.location.assign('/oauth2/sign_in');
 +      return new Promise(() => {}); // never resolve, as we are redirecting to login
 +    }
-+    return response;
++    return response.json();
 +  });
 +
-+const sendMessageToAi = (conversationId: string, message: string) =>
++const sendMessageToAi = (
++  conversationId: string,
++  message: string
++): Promise<string> =>
 +  fetchApi('/send-message', {
 +    body: JSON.stringify({ conversationId, message }),
-+  })
-+    .then((response) => response.json())
-+    .then((data) => {
-+      if (!data.success) {
-+        throw new Error(data.error);
-+      }
-+      return data.source;
-+    });
-+
-+const createConversation = (): Promise<string> =>
-+  fetchApi('/create-conversation')
-+    .then((response) => response.json())
-+    .then((data) => data.conversationId);
-+
-+const deleteConversation = (conversationId: string) =>
-+  fetchApi('/delete-conversation', {
-+    body: JSON.stringify({ conversationId }),
++  }).then((data) => {
++    if (!data.success) {
++      throw new Error(data.error);
++    }
++    return data.source;
 +  });
 +
-+const regenerateMessage = (conversationId: string, messageIndex: number) =>
++const createConversation = (): Promise<string> =>
++  fetchApi('/create-conversation').then((data) => data.conversationId);
++
++const deleteConversation = (conversationId: string): Promise<void> =>
++  fetchApi('/delete-conversation', {
++    body: JSON.stringify({ conversationId }),
++  }).then(() => {});
++
++const regenerateMessage = (
++  conversationId: string,
++  messageIndex: number
++): Promise<string> =>
 +  fetchApi('/regenerate-message', {
 +    body: JSON.stringify({ conversationId, messageIndex }),
-+  })
-+    .then((response) => response.json())
-+    .then((data) => {
-+      if (!data.success) {
-+        throw new Error(data.error);
-+      }
-+      return data.source;
-+    });
++  }).then((data) => {
++    if (!data.success) {
++      throw new Error(data.error);
++    }
++    return data.source;
++  });
 +
 +export const EmptyState = ({
 +  onImagePaste,
