@@ -54,6 +54,16 @@ export const chipVariants = styleVariants({
             color: vars.colors.textPrimary,
         }),
     ],
+    inverse: [
+        containerBase,
+        sprinkles({
+            background: vars.colors.brand,
+            color: vars.colors.textPrimaryInverse,
+        }),
+        {
+            borderColor: vars.colors.brand,
+        },
+    ],
     active: [
         chipActive,
         containerBase,
@@ -128,6 +138,11 @@ export const icon = style([
 export const iconActive = style([
     sprinkles({paddingRight: 4}),
     {color: vars.colors.controlActivated, paddingRight: 4},
+]);
+
+export const iconInverse = style([
+    sprinkles({paddingRight: 4}),
+    {color: vars.colors.neutralLow, paddingRight: 4},
 ]);
 
 export const leftPadding = styleVariants({

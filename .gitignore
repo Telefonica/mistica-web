@@ -30,3 +30,4 @@ community.d.ts
 !.yarn/versions
 # SonarQube scan
 .scannerwork
+*.Zone.Identifier
