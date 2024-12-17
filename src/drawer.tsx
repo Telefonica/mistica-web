@@ -12,10 +12,12 @@ import classnames from 'classnames';
 import {Portal} from './portal';
 import {useScreenSize} from './hooks';
 import FocusTrap from './focus-trap';
+import {useSetModalStateEffect} from './modal-context-provider';
 
 const PADDING_X_DESKTOP = 40;
 const PADDING_X_MOBILE = 16;
-const CONTENT_WIDTH_DESKTOP = 388;
+const WIDTH_CONTENT_DESKTOP = 388;
+const WIDTH_DESKTOP = WIDTH_CONTENT_DESKTOP + PADDING_X_DESKTOP * 2;
 
 type DrawerLayoutProps = {
     width?: number;
@@ -29,10 +31,8 @@ type DrawerPropsRef = {
 
 const DrawerLayout = React.forwardRef<DrawerPropsRef, DrawerLayoutProps>(
     ({width, children, onClose}, ref) => {
-        const defaultWidth = CONTENT_WIDTH_DESKTOP + PADDING_X_DESKTOP * 2;
-
+        useSetModalStateEffect();
         const {isDesktopOrBigger} = useScreenSize();
-
         const [isOpen, setIsOpen] = React.useState(false);
 
         const open = React.useCallback((node: HTMLDivElement) => {
@@ -53,6 +53,18 @@ const DrawerLayout = React.forwardRef<DrawerPropsRef, DrawerLayoutProps>(
             close,
         }));
 
+        React.useEffect(() => {
+            const handleKeyDown = (event: KeyboardEvent) => {
+                if (event.key === 'Escape') {
+                    close();
+                }
+            };
+            document.addEventListener('keydown', handleKeyDown);
+            return () => {
+                document.removeEventListener('keydown', handleKeyDown);
+            };
+        }, [close]);
+
         return (
             <Portal>
                 <FocusTrap>
@@ -66,7 +78,7 @@ const DrawerLayout = React.forwardRef<DrawerPropsRef, DrawerLayoutProps>(
                     />
                     <div
                         ref={open}
-                        style={{width: isDesktopOrBigger ? width || defaultWidth : 'unset'}}
+                        style={{width: isDesktopOrBigger ? width || WIDTH_DESKTOP : 'unset'}}
                         className={classnames(styles.container, isOpen ? styles.open : styles.closed)}
                     >
                         {children}
