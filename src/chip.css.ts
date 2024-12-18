@@ -68,14 +68,15 @@ export const chipVariants = styleVariants({
     ],
 });
 
-const interactive = style({
+export const interactive = style({
+    position: 'relative',
+    overflow: 'hidden',
     userSelect: 'none',
     '@media': {
         [mq.supportsHover]: {
             selectors: {
                 [`&:hover:not(${chipActive})`]: {
                     color: vars.colors.textActivated,
-                    backgroundColor: vars.colors.brandLow,
                     cursor: 'pointer',
                 },
             },
@@ -83,42 +84,43 @@ const interactive = style({
     },
 });
 
-export const button = sprinkles({
+export const button = style({
     border: 'none',
     background: 'transparent',
     padding: 0,
 });
 
-export const chipInteractiveVariants = styleVariants({
-    light: [
-        interactive,
-        {
-            '@media': {
-                [mq.supportsHover]: {
-                    selectors: {
-                        [`&:hover:not(${chipActive})`]: {
-                            borderColor: vars.colors.brandLow,
-                        },
+export const interactiveChipOverlay = style([
+    sprinkles({
+        height: '100%',
+        width: '100%',
+        position: 'absolute',
+    }),
+    {
+        backgroundColor: 'transparent',
+        transition: 'background-color 0.1s ease-in-out',
+        selectors: {
+            [`${button}:active &`]: {
+                backgroundColor: vars.colors.backgroundContainerPressed,
+            },
+        },
+        '@media': {
+            [mq.supportsHover]: {
+                selectors: {
+                    [`${interactive}:hover &`]: {
+                        backgroundColor: vars.colors.backgroundContainerHover,
+                    },
+                    [`${button}:active &`]: {
+                        backgroundColor: vars.colors.backgroundContainerPressed,
                     },
                 },
             },
-        },
-    ],
-    dark: [
-        interactive,
-        {
-            '@media': {
-                [mq.supportsHover]: {
-                    selectors: {
-                        [`&:hover:not(${chipActive})`]: {
-                            borderColor: vars.colors.background,
-                        },
-                    },
-                },
+            [mq.touchableOnly]: {
+                transition: 'none',
             },
         },
-    ],
-});
+    },
+]);
 
 export const icon = style([
     sprinkles({paddingRight: 4}),
