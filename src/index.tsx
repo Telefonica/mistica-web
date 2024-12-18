@@ -1012,6 +1012,9 @@ export {default as IconFlagRegular} from './generated/mistica-icons/icon-flag-re
 export {default as IconFloorplanFilled} from './generated/mistica-icons/icon-floorplan-filled';
 export {default as IconFloorplanLight} from './generated/mistica-icons/icon-floorplan-light';
 export {default as IconFloorplanRegular} from './generated/mistica-icons/icon-floorplan-regular';
+export {default as IconFloppyDiskFilled} from './generated/mistica-icons/icon-floppy-disk-filled';
+export {default as IconFloppyDiskLight} from './generated/mistica-icons/icon-floppy-disk-light';
+export {default as IconFloppyDiskRegular} from './generated/mistica-icons/icon-floppy-disk-regular';
 export {default as IconFlowerFilled} from './generated/mistica-icons/icon-flower-filled';
 export {default as IconFlowerLight} from './generated/mistica-icons/icon-flower-light';
 export {default as IconFlowerRegular} from './generated/mistica-icons/icon-flower-regular';
