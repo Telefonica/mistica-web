@@ -1,4 +1,4 @@
-import {style, styleVariants, globalStyle} from '@vanilla-extract/css';
+import {style, styleVariants} from '@vanilla-extract/css';
 import * as mq from './media-queries.css';
 import {vars} from './skins/skin-contract.css';
 import {sprinkles} from './sprinkles.css';
@@ -72,16 +72,7 @@ export const interactive = style({
     position: 'relative',
     overflow: 'hidden',
     userSelect: 'none',
-    '@media': {
-        [mq.supportsHover]: {
-            selectors: {
-                [`&:hover:not(${chipActive})`]: {
-                    color: vars.colors.textActivated,
-                    cursor: 'pointer',
-                },
-            },
-        },
-    },
+    cursor: 'pointer',
 });
 
 export const button = style({
@@ -140,20 +131,4 @@ export const leftPadding = styleVariants({
 export const rightPadding = styleVariants({
     default: [sprinkles({paddingRight: {mobile: 20, desktop: 12}})],
     withIcon: [sprinkles({paddingRight: {mobile: 16, desktop: 8}})],
-});
-
-globalStyle(`${interactive}:hover:not(${chipActive}) > ${icon}`, {
-    '@media': {
-        [mq.supportsHover]: {
-            color: vars.colors.controlActivated,
-        },
-    },
-});
-
-globalStyle(`${interactive}:hover:not(${chipActive}) > ${iconActive}`, {
-    '@media': {
-        [mq.supportsHover]: {
-            color: vars.colors.controlActivated,
-        },
-    },
 });
