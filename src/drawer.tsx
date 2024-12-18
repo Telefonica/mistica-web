@@ -13,26 +13,34 @@ import {Portal} from './portal';
 import {useScreenSize} from './hooks';
 import FocusTrap from './focus-trap';
 import {useSetModalStateEffect} from './modal-context-provider';
+import ButtonLayout from './button-layout';
+import {ButtonLink, ButtonPrimary, ButtonSecondary} from './button';
+
+import type {DataAttributes, TrackingEvent} from './utils/types';
 
 const PADDING_X_DESKTOP = 40;
 const PADDING_X_MOBILE = 16;
-const WIDTH_CONTENT_DESKTOP = 388;
-const WIDTH_DESKTOP = WIDTH_CONTENT_DESKTOP + PADDING_X_DESKTOP * 2;
+const PADDING_X_TABLET = 16;
+const WIDTH_CONTENT = 388;
+const WIDTH_DESKTOP = WIDTH_CONTENT + PADDING_X_DESKTOP * 2;
+const WIDTH_TABLET = WIDTH_CONTENT + PADDING_X_TABLET * 2;
 
 type DrawerLayoutProps = {
     width?: number;
     children: React.ReactNode;
-    onClose?: () => void;
+    onClose: () => void;
+    onDismiss?: () => void;
 };
 
 type DrawerPropsRef = {
-    close: () => void;
+    close: () => Promise<void>;
+    dismiss: () => Promise<void>;
 };
 
 const DrawerLayout = React.forwardRef<DrawerPropsRef, DrawerLayoutProps>(
-    ({width, children, onClose}, ref) => {
+    ({width, children, onClose, onDismiss}, ref) => {
         useSetModalStateEffect();
-        const {isDesktopOrBigger} = useScreenSize();
+        const {isMobile, isTablet} = useScreenSize();
         const [isOpen, setIsOpen] = React.useState(false);
 
         const open = React.useCallback((node: HTMLDivElement) => {
@@ -44,33 +52,35 @@ const DrawerLayout = React.forwardRef<DrawerPropsRef, DrawerLayoutProps>(
 
         const close = React.useCallback(() => {
             setIsOpen(false);
-            setTimeout(() => {
-                onClose?.();
-            }, styles.ANIMATION_DURATION_MS);
+            return new Promise((resolve) => {
+                setTimeout(resolve, styles.ANIMATION_DURATION_MS);
+            }).then(onClose);
         }, [onClose]);
 
-        React.useImperativeHandle(ref, () => ({
-            close,
-        }));
+        const dismiss = React.useCallback(() => {
+            return close().then(() => onDismiss?.());
+        }, [onDismiss, close]);
+
+        React.useImperativeHandle(ref, () => ({close, dismiss}));
 
         React.useEffect(() => {
             const handleKeyDown = (event: KeyboardEvent) => {
                 if (event.key === 'Escape') {
-                    close();
+                    dismiss();
                 }
             };
             document.addEventListener('keydown', handleKeyDown);
             return () => {
                 document.removeEventListener('keydown', handleKeyDown);
             };
-        }, [close]);
+        }, [dismiss]);
 
         return (
             <Portal>
                 <FocusTrap>
                     {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
                     <div
-                        onClick={close}
+                        onClick={onDismiss ? dismiss : undefined}
                         className={classnames(
                             styles.overlay,
                             isOpen ? styles.overlayOpen : styles.overlayClosed
@@ -78,7 +88,9 @@ const DrawerLayout = React.forwardRef<DrawerPropsRef, DrawerLayoutProps>(
                     />
                     <div
                         ref={open}
-                        style={{width: isDesktopOrBigger ? width || WIDTH_DESKTOP : 'unset'}}
+                        style={{
+                            width: isMobile ? 'unset' : width || (isTablet ? WIDTH_TABLET : WIDTH_DESKTOP),
+                        }}
                         className={classnames(styles.container, isOpen ? styles.open : styles.closed)}
                     >
                         {children}
@@ -89,49 +101,134 @@ const DrawerLayout = React.forwardRef<DrawerPropsRef, DrawerLayoutProps>(
     }
 );
 
+type ButtonProps = {
+    text: string;
+    trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
+    trackEvent?: boolean;
+    onPress: () => unknown;
+};
+
 type DrawerProps = {
     title?: string;
     subtitle?: string;
     description?: string;
-    onClose?: () => void;
+    /**
+     * set this handler to enable dismiss:
+     * - touching "X"
+     * - touching overlay
+     * - pressing ESC
+     */
+    onDismiss?: () => void;
+    onClose: () => void;
     children?: React.ReactNode;
-    // actions?: React.ReactNode;
-    /** Ignored in mobile viewport */
+    /**
+     * width is ignored in mobile viewport
+     */
     width?: number;
+    button?: ButtonProps;
+    secondaryButton?: ButtonProps;
+    buttonLink?: ButtonProps;
 };
 
-const Drawer = ({title, subtitle, description, onClose, width, children}: DrawerProps): JSX.Element => {
+const Drawer = ({
+    title,
+    subtitle,
+    description,
+    width,
+    onClose,
+    onDismiss,
+    children,
+    button,
+    secondaryButton,
+    buttonLink,
+}: DrawerProps): JSX.Element => {
     const layoutRef = React.useRef<DrawerPropsRef>(null);
+    const hasButtons = !!(button || secondaryButton || buttonLink);
+    const paddingX = {
+        mobile: PADDING_X_MOBILE,
+        tablet: PADDING_X_TABLET,
+        desktop: PADDING_X_DESKTOP,
+    } as const;
+
+    const handleButtonPress = (pressHandlerFromProps: () => unknown) => {
+        layoutRef.current?.close().then(pressHandlerFromProps);
+    };
 
     return (
-        <DrawerLayout width={width} ref={layoutRef} onClose={onClose}>
-            <Box
-                paddingX={{desktop: PADDING_X_DESKTOP, mobile: PADDING_X_MOBILE}}
-                paddingTop={40}
-                paddingBottom={24}
-            >
-                {onClose && (
-                    <div className={styles.closeButton}>
+        <DrawerLayout width={width} ref={layoutRef} onClose={onClose} onDismiss={onDismiss}>
+            <div className={styles.drawer}>
+                {onDismiss && (
+                    <div className={styles.closeButtonContainer}>
                         <IconButton
-                            onPress={() => layoutRef.current?.close()}
+                            onPress={() => layoutRef.current?.dismiss()}
                             Icon={IconCloseRegular}
                             aria-label="Close drawer"
                             type="neutral"
                             backgroundType="transparent"
-                        ></IconButton>
+                        />
                     </div>
                 )}
-                <Stack space={16}>
-                    {title && <Text5>{title}</Text5>}
-                    {subtitle && <Text4 regular>{subtitle}</Text4>}
-                    {description && (
-                        <Text3 regular color={vars.colors.textSecondary}>
-                            {description}
-                        </Text3>
-                    )}
-                    {children}
-                </Stack>
-            </Box>
+                {title && (
+                    <div style={{marginBottom: 16, flexShrink: 0, flexGrow: 0}}>
+                        <Box paddingX={paddingX}>
+                            <Text5>{title}</Text5>
+                        </Box>
+                    </div>
+                )}
+                <div className={styles.scrollableSection}>
+                    <Box paddingX={paddingX}>
+                        <Stack space={16}>
+                            {subtitle && <Text4 regular>{subtitle}</Text4>}
+                            {description && (
+                                <Text3 regular color={vars.colors.textSecondary}>
+                                    {description}
+                                </Text3>
+                            )}
+                            {children}
+                        </Stack>
+                    </Box>
+                </div>
+                <Box paddingBottom={16} />
+                {hasButtons && (
+                    <Box paddingX={paddingX}>
+                        <ButtonLayout
+                            primaryButton={
+                                button ? (
+                                    <ButtonPrimary
+                                        trackEvent={button.trackEvent}
+                                        trackingEvent={button.trackingEvent}
+                                        onPress={() => handleButtonPress(button.onPress)}
+                                    >
+                                        {button.text}
+                                    </ButtonPrimary>
+                                ) : undefined
+                            }
+                            secondaryButton={
+                                secondaryButton ? (
+                                    <ButtonSecondary
+                                        trackEvent={secondaryButton.trackEvent}
+                                        trackingEvent={secondaryButton.trackingEvent}
+                                        onPress={() => handleButtonPress(secondaryButton.onPress)}
+                                    >
+                                        {secondaryButton.text}
+                                    </ButtonSecondary>
+                                ) : undefined
+                            }
+                            link={
+                                buttonLink ? (
+                                    <ButtonLink
+                                        trackEvent={buttonLink.trackEvent}
+                                        trackingEvent={buttonLink.trackingEvent}
+                                        onPress={() => handleButtonPress(buttonLink.onPress)}
+                                    >
+                                        {buttonLink.text}
+                                    </ButtonLink>
+                                ) : undefined
+                            }
+                        />
+                    </Box>
+                )}
+            </div>
         </DrawerLayout>
     );
 };

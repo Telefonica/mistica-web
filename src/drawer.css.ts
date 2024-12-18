@@ -6,17 +6,20 @@ import {sprinkles} from './sprinkles.css';
 export const ANIMATION_DURATION_MS = 400; // review
 
 export const container = style({
-    background: vars.colors.background,
     position: 'fixed',
+    display: 'flex',
+    paddingBottom: 'env(safe-area-inset-bottom)',
+    background: vars.colors.background,
     top: 0,
     right: 0,
     bottom: 0,
+    overflow: 'hidden',
     '@media': {
-        [mq.tabletOrSmaller]: {
+        [mq.mobile]: {
             left: 0,
             transition: `transform ${ANIMATION_DURATION_MS}ms cubic-bezier(0.32, 0.72, 0, 1)`,
         },
-        [mq.desktopOrBigger]: {
+        [mq.tabletOrBigger]: {
             borderTopLeftRadius: vars.borderRadii.container,
             borderBottomLeftRadius: vars.borderRadii.container,
             transition: `transform ${ANIMATION_DURATION_MS}ms cubic-bezier(0.65, 0, 0.35, 1)`,
@@ -24,17 +27,44 @@ export const container = style({
     },
 });
 
+export const drawer = style([
+    sprinkles({
+        paddingTop: 40,
+        display: 'flex',
+        flexDirection: 'column',
+        flexGrow: 1,
+    }),
+    {
+        border: '1px dotted red',
+        '@media': {
+            [mq.tabletOrSmaller]: {
+                paddingBottom: 16 - 8,
+            },
+            [mq.desktopOrBigger]: {
+                paddingBottom: 24 - 8,
+            },
+        },
+    },
+]);
+
+export const scrollableSection = style([
+    sprinkles({
+        flexGrow: 1,
+        overflowY: 'auto',
+    }),
+]);
+
 export const open = style({
     transform: '',
 });
 
 export const closed = style({
     '@media': {
-        [mq.desktopOrBigger]: {
-            transform: 'translateX(100%)',
-        },
-        [mq.tabletOrSmaller]: {
+        [mq.mobile]: {
             transform: 'translateY(100%)',
+        },
+        [mq.tabletOrBigger]: {
+            transform: 'translateX(100%)',
         },
     },
 });
@@ -62,7 +92,7 @@ export const overlayOpen = style({
     opacity: 1,
 });
 
-export const closeButton = style({
+export const closeButtonContainer = style({
     position: 'absolute',
     top: 8,
     right: 8,
