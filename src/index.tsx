@@ -114,6 +114,7 @@ export {
     CarouselContextConsumer,
 } from './carousel';
 export {Grid, GridItem} from './grid';
+export {default as Drawer} from './drawer';
 
 // Sheets
 export {default as SheetRoot, showSheet} from './sheet-root';
