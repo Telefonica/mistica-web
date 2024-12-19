@@ -41,7 +41,7 @@ type ChipProps = ExclusifyUnion<ClosableChipProps | ToggleChipProps | ClickableC
 
 const Chip = (props: ChipProps): JSX.Element => {
     const {Icon, children, id, dataAttributes, active, badge, onClose, closeButtonLabel} = props;
-    const {texts, isDarkMode, textPresets, t} = useTheme();
+    const {texts, textPresets, t} = useTheme();
 
     const overAlternative = useThemeVariant() === 'alternative';
 
@@ -107,13 +107,14 @@ const Chip = (props: ChipProps): JSX.Element => {
                 // If the chip is wrapped inside a BaseTouchable, we set inline-flex to the Touchable instead
                 isTouchable ? styles.wrappedContent : styles.chipWrapper,
                 {
-                    [styles.chipInteractiveVariants[isDarkMode ? 'dark' : 'light']]: isInteractive,
+                    [styles.interactive]: isInteractive,
                 },
                 Icon ? styles.leftPadding.withIcon : styles.leftPadding.default,
                 badge ? styles.rightPadding.withIcon : styles.rightPadding.default
             )}
             {...getPrefixedDataAttributes(dataAttributes)}
         >
+            {isInteractive && <div className={styles.interactiveChipOverlay} />}
             {body}
             {renderBadge()}
         </div>
