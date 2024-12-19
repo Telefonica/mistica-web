@@ -91,7 +91,7 @@ export const interactiveChipOverlay = style([
         backgroundColor: 'transparent',
         transition: 'background-color 0.1s ease-in-out',
         selectors: {
-            [`${button}:active &`]: {
+            [`${interactive}:active &`]: {
                 backgroundColor: vars.colors.backgroundContainerPressed,
             },
         },
@@ -101,7 +101,7 @@ export const interactiveChipOverlay = style([
                     [`${interactive}:hover &`]: {
                         backgroundColor: vars.colors.backgroundContainerHover,
                     },
-                    [`${button}:active &`]: {
+                    [`${interactive}:active &`]: {
                         backgroundColor: vars.colors.backgroundContainerPressed,
                     },
                 },
