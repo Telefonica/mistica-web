@@ -14,7 +14,7 @@ test.each`
     ${'TABLET'}     | ${false}    | ${true}     | ${1}
 `(
     'Drawer $device actions:$withActions dismissible:$dismissible contentLength:$contentLength',
-    async ({device, withActions, dismissible}) => {
+    async ({device, withActions, dismissible, contentLength}) => {
         const page = await openStoryPage({
             id: 'components-modals-drawer--default',
             device: device as Device,
@@ -23,6 +23,7 @@ test.each`
                 showSecondaryButton: withActions,
                 showButtonLink: withActions,
                 onDismissHandler: dismissible,
+                contentLength,
             },
         });
 
