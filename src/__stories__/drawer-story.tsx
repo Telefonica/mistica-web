@@ -26,6 +26,9 @@ export const Default = ({
     description,
     contentLength,
     onDismissHandler,
+    showButton,
+    showSecondaryButton,
+    showButtonLink,
 }: Args): JSX.Element => {
     const [isOpen, setIsOpen] = React.useState(false);
     const [result, setResult] = React.useState('');
@@ -52,9 +55,13 @@ export const Default = ({
                     description={description}
                     onClose={() => setIsOpen(false)}
                     onDismiss={onDismissHandler ? () => setResult('dismiss') : undefined}
-                    button={{text: 'Primary', onPress: () => setResult('primary')}}
-                    secondaryButton={{text: 'Secondary', onPress: () => setResult('secondary')}}
-                    buttonLink={{text: 'Link', onPress: () => setResult('link')}}
+                    button={showButton ? {text: 'Primary', onPress: () => setResult('primary')} : undefined}
+                    secondaryButton={
+                        showSecondaryButton
+                            ? {text: 'Secondary', onPress: () => setResult('secondary')}
+                            : undefined
+                    }
+                    buttonLink={showButtonLink ? {text: 'Link', onPress: () => setResult('link')} : undefined}
                 >
                     {content}
                 </Drawer>
