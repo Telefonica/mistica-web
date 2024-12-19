@@ -35,7 +35,6 @@ export const drawer = style([
         flexGrow: 1,
     }),
     {
-        border: '1px dotted red',
         '@media': {
             [mq.tabletOrSmaller]: {
                 paddingBottom: 16 - 8,
@@ -44,6 +43,16 @@ export const drawer = style([
                 paddingBottom: 24 - 8,
             },
         },
+    },
+]);
+
+export const titleContainer = style([
+    sprinkles({
+        flexShrink: 0,
+        flexGrow: 0,
+    }),
+    {
+        marginBottom: 16,
     },
 ]);
 

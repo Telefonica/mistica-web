@@ -20,29 +20,22 @@ export const Portal = ({children, className}: Props): JSX.Element | null => {
     const [container, setContainer] = React.useState<HTMLDivElement | null>(null);
 
     React.useEffect(() => {
-        if (!container) {
-            const newContainer = document.createElement('div');
-            newContainer.style.isolation = 'isolate';
-            setContainer(newContainer);
-            document.body.appendChild(newContainer);
-        }
+        const newContainer = document.createElement('div');
+        newContainer.style.isolation = 'isolate';
+        setContainer(newContainer);
+        document.body.appendChild(newContainer);
 
         return () => {
-            if (container) {
-                document.body.removeChild(container);
-            }
+            document.body.removeChild(newContainer);
         };
-    }, [container]);
+    }, []);
 
     React.useEffect(() => {
-        if (container && className) {
-            container.classList.add(...className.split(' '));
-        }
+        const classes = className?.split(' ') || [];
+        container?.classList.add(...classes);
 
         return () => {
-            if (container && className) {
-                container.classList.remove(...className.split(' '));
-            }
+            container?.classList.remove(...classes);
         };
     }, [className, container]);
 

@@ -10,11 +10,14 @@ import Box from './box';
 import * as styles from './drawer.css';
 import classnames from 'classnames';
 import {Portal} from './portal';
-import {useScreenSize} from './hooks';
+import {useIsInViewport, useScreenSize, useTheme} from './hooks';
 import FocusTrap from './focus-trap';
 import {useSetModalStateEffect} from './modal-context-provider';
 import ButtonLayout from './button-layout';
 import {ButtonLink, ButtonPrimary, ButtonSecondary} from './button';
+import Divider from './divider';
+import {getPrefixedDataAttributes} from './utils/dom';
+import * as tokens from './text-tokens';
 
 import type {DataAttributes, TrackingEvent} from './utils/types';
 
@@ -24,6 +27,25 @@ const PADDING_X_TABLET = 16;
 const WIDTH_CONTENT = 388;
 const WIDTH_DESKTOP = WIDTH_CONTENT + PADDING_X_DESKTOP * 2;
 const WIDTH_TABLET = WIDTH_CONTENT + PADDING_X_TABLET * 2;
+
+/**
+ * Renders divider or a div with transparent border to avoid the small but noticeable layout shift on scroll
+ */
+const MaybeDivider = ({show}: {show: boolean}) =>
+    show ? <Divider /> : <div style={{borderBottom: '1px solid transparent'}} />;
+
+/**
+ * Restores the focus to the element that was focused before the Drawer was opened
+ */
+const useRestoreFocus = () => {
+    const activeElementRef = React.useRef<HTMLElement | null>(document.activeElement as HTMLElement);
+    React.useEffect(() => {
+        const elementToFocus = activeElementRef.current;
+        return () => {
+            elementToFocus?.focus?.();
+        };
+    }, []);
+};
 
 type DrawerLayoutProps = {
     width?: number;
@@ -40,6 +62,7 @@ type DrawerPropsRef = {
 const DrawerLayout = React.forwardRef<DrawerPropsRef, DrawerLayoutProps>(
     ({width, children, onClose, onDismiss}, ref) => {
         useSetModalStateEffect();
+        useRestoreFocus();
         const {isMobile, isTablet} = useScreenSize();
         const [isOpen, setIsOpen] = React.useState(false);
 
@@ -85,6 +108,7 @@ const DrawerLayout = React.forwardRef<DrawerPropsRef, DrawerLayoutProps>(
                             styles.overlay,
                             isOpen ? styles.overlayOpen : styles.overlayClosed
                         )}
+                        {...getPrefixedDataAttributes({}, 'DrawerOverlay')}
                     />
                     <div
                         ref={open}
@@ -92,6 +116,7 @@ const DrawerLayout = React.forwardRef<DrawerPropsRef, DrawerLayoutProps>(
                             width: isMobile ? 'unset' : width || (isTablet ? WIDTH_TABLET : WIDTH_DESKTOP),
                         }}
                         className={classnames(styles.container, isOpen ? styles.open : styles.closed)}
+                        {...getPrefixedDataAttributes({}, 'DrawerLayout')}
                     >
                         {children}
                     </div>
@@ -128,6 +153,7 @@ type DrawerProps = {
     button?: ButtonProps;
     secondaryButton?: ButtonProps;
     buttonLink?: ButtonProps;
+    dataAttributes?: DataAttributes;
 };
 
 const Drawer = ({
@@ -141,9 +167,15 @@ const Drawer = ({
     button,
     secondaryButton,
     buttonLink,
+    dataAttributes,
 }: DrawerProps): JSX.Element => {
     const layoutRef = React.useRef<DrawerPropsRef>(null);
     const hasButtons = !!(button || secondaryButton || buttonLink);
+    const [scrollableParentElement, setScrollableParentElement] = React.useState<HTMLElement | null>(null);
+    const topScrollSignalRef = React.useRef<HTMLDivElement>(null);
+    const bottomScrollSignalRef = React.useRef<HTMLDivElement>(null);
+    const {t, texts} = useTheme();
+
     const paddingX = {
         mobile: PADDING_X_MOBILE,
         tablet: PADDING_X_TABLET,
@@ -154,46 +186,74 @@ const Drawer = ({
         layoutRef.current?.close().then(pressHandlerFromProps);
     };
 
+    const showTitleDivider = !useIsInViewport(topScrollSignalRef, true, {
+        root: scrollableParentElement,
+    });
+
+    const showButtonsDivider = !useIsInViewport(bottomScrollSignalRef, true, {
+        rootMargin: '1px', // bottomScrollSignal div has 0px height so we need a 1px margin to trigger the intersection observer
+        root: scrollableParentElement,
+    });
+
     return (
         <DrawerLayout width={width} ref={layoutRef} onClose={onClose} onDismiss={onDismiss}>
-            <div className={styles.drawer}>
+            <section
+                role="dialog"
+                aria-modal="true"
+                className={styles.drawer}
+                ref={setScrollableParentElement}
+                {...getPrefixedDataAttributes(dataAttributes, 'Drawer')}
+            >
                 {onDismiss && (
                     <div className={styles.closeButtonContainer}>
                         <IconButton
+                            dataAttributes={{testid: 'dismissButton'}}
                             onPress={() => layoutRef.current?.dismiss()}
                             Icon={IconCloseRegular}
-                            aria-label="Close drawer"
+                            aria-label={texts.modalClose || t(tokens.modalClose)}
                             type="neutral"
                             backgroundType="transparent"
                         />
                     </div>
                 )}
                 {title && (
-                    <div style={{marginBottom: 16, flexShrink: 0, flexGrow: 0}}>
+                    <div className={styles.titleContainer}>
                         <Box paddingX={paddingX}>
-                            <Text5>{title}</Text5>
+                            <Text5 dataAttributes={{testid: 'title'}}>{title}</Text5>
                         </Box>
                     </div>
                 )}
+                <MaybeDivider show={showTitleDivider} />
                 <div className={styles.scrollableSection}>
+                    <div ref={topScrollSignalRef} />
                     <Box paddingX={paddingX}>
                         <Stack space={16}>
-                            {subtitle && <Text4 regular>{subtitle}</Text4>}
+                            {subtitle && (
+                                <Text4 regular dataAttributes={{testid: 'subtitle'}}>
+                                    {subtitle}
+                                </Text4>
+                            )}
                             {description && (
-                                <Text3 regular color={vars.colors.textSecondary}>
+                                <Text3
+                                    regular
+                                    color={vars.colors.textSecondary}
+                                    dataAttributes={{testid: 'description'}}
+                                >
                                     {description}
                                 </Text3>
                             )}
                             {children}
                         </Stack>
                     </Box>
+                    <div ref={bottomScrollSignalRef} />
                 </div>
+                <MaybeDivider show={showButtonsDivider} />
                 <Box paddingBottom={16} />
                 {hasButtons && (
                     <Box paddingX={paddingX}>
                         <ButtonLayout
                             primaryButton={
-                                button ? (
+                                button && (
                                     <ButtonPrimary
                                         trackEvent={button.trackEvent}
                                         trackingEvent={button.trackingEvent}
@@ -201,10 +261,10 @@ const Drawer = ({
                                     >
                                         {button.text}
                                     </ButtonPrimary>
-                                ) : undefined
+                                )
                             }
                             secondaryButton={
-                                secondaryButton ? (
+                                secondaryButton && (
                                     <ButtonSecondary
                                         trackEvent={secondaryButton.trackEvent}
                                         trackingEvent={secondaryButton.trackingEvent}
@@ -212,10 +272,10 @@ const Drawer = ({
                                     >
                                         {secondaryButton.text}
                                     </ButtonSecondary>
-                                ) : undefined
+                                )
                             }
                             link={
-                                buttonLink ? (
+                                buttonLink && (
                                     <ButtonLink
                                         trackEvent={buttonLink.trackEvent}
                                         trackingEvent={buttonLink.trackingEvent}
@@ -223,12 +283,12 @@ const Drawer = ({
                                     >
                                         {buttonLink.text}
                                     </ButtonLink>
-                                ) : undefined
+                                )
                             }
                         />
                     </Box>
                 )}
-            </div>
+            </section>
         </DrawerLayout>
     );
 };

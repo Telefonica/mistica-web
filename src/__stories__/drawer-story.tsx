@@ -41,7 +41,9 @@ export const Default = ({
         <>
             <Stack space={16}>
                 <ButtonPrimary onPress={() => setIsOpen(true)}>Open Drawer</ButtonPrimary>
-                <Text3 regular>Result: {result}</Text3>
+                <Text3 regular>
+                    Result: <span data-testid="result">{result}</span>
+                </Text3>
             </Stack>
             {isOpen && (
                 <Drawer
