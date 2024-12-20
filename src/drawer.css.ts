@@ -5,27 +5,31 @@ import {sprinkles} from './sprinkles.css';
 
 export const ANIMATION_DURATION_MS = 400; // review
 
-export const container = style({
-    position: 'fixed',
-    display: 'flex',
-    paddingBottom: 'env(safe-area-inset-bottom)',
-    background: vars.colors.background,
-    top: 0,
-    right: 0,
-    bottom: 0,
-    overflow: 'hidden',
-    '@media': {
-        [mq.mobile]: {
-            left: 0,
-            transition: `transform ${ANIMATION_DURATION_MS}ms cubic-bezier(0.32, 0.72, 0, 1)`,
-        },
-        [mq.tabletOrBigger]: {
-            borderTopLeftRadius: vars.borderRadii.container,
-            borderBottomLeftRadius: vars.borderRadii.container,
-            transition: `transform ${ANIMATION_DURATION_MS}ms cubic-bezier(0.65, 0, 0.35, 1)`,
+export const container = style([
+    sprinkles({
+        position: 'fixed',
+        display: 'flex',
+        background: vars.colors.background,
+        top: 0,
+        right: 0,
+        bottom: 0,
+        overflow: 'hidden',
+    }),
+    {
+        paddingBottom: 'env(safe-area-inset-bottom)',
+        '@media': {
+            [mq.mobile]: {
+                left: 0,
+                transition: `transform ${ANIMATION_DURATION_MS}ms cubic-bezier(0.32, 0.72, 0, 1)`,
+            },
+            [mq.tabletOrBigger]: {
+                borderTopLeftRadius: vars.borderRadii.container,
+                borderBottomLeftRadius: vars.borderRadii.container,
+                transition: `transform ${ANIMATION_DURATION_MS}ms cubic-bezier(0.65, 0, 0.35, 1)`,
+            },
         },
     },
-});
+]);
 
 export const drawer = style([
     sprinkles({
@@ -101,7 +105,7 @@ export const overlayOpen = style({
     opacity: 1,
 });
 
-export const closeButtonContainer = style({
+export const closeButtonContainer = sprinkles({
     position: 'absolute',
     top: 8,
     right: 8,
