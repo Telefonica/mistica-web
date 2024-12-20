@@ -22,6 +22,7 @@ import {
     CoverHero,
     Header,
     MainSectionHeader,
+    Drawer,
 } from '..';
 import {makeTheme} from './test-utils';
 
@@ -285,6 +286,15 @@ test('Meter test ids', () => {
         {
             componentName: 'Meter',
             internalTestIds: [],
+        },
+    ]);
+});
+
+test('Drawer test ids', () => {
+    checkTestIds(<Drawer title="Title" subtitle="Subtitle" description="Description" onClose={() => {}} />, [
+        {
+            componentName: 'Drawer',
+            internalTestIds: ['title', 'subtitle', 'description'],
         },
     ]);
 });

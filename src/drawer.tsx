@@ -19,7 +19,7 @@ import Divider from './divider';
 import {getPrefixedDataAttributes} from './utils/dom';
 import * as tokens from './text-tokens';
 
-import type {DataAttributes, TrackingEvent} from './utils/types';
+import type {DataAttributes, HeadingType, TrackingEvent} from './utils/types';
 
 const PADDING_X_DESKTOP = 40;
 const PADDING_X_MOBILE = 16;
@@ -131,13 +131,15 @@ type ButtonProps = {
     text: string;
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
     trackEvent?: boolean;
-    onPress: () => unknown;
+    onPress?: () => unknown;
 };
 
 type DrawerProps = {
     title?: string;
     subtitle?: string;
     description?: string;
+    titleAs?: HeadingType;
+    dismissLabel?: string;
     /**
      * this handler is mandatory. You should unmount the Drawer component on close.
      */
@@ -164,6 +166,8 @@ const Drawer = ({
     title,
     subtitle,
     description,
+    titleAs = 'h2',
+    dismissLabel,
     width,
     onClose,
     onDismiss,
@@ -186,8 +190,8 @@ const Drawer = ({
         desktop: PADDING_X_DESKTOP,
     } as const;
 
-    const handleButtonPress = (pressHandlerFromProps: () => unknown) => {
-        layoutRef.current?.close().then(pressHandlerFromProps);
+    const handleButtonPress = (pressHandlerFromProps?: () => unknown) => {
+        layoutRef.current?.close().then(() => pressHandlerFromProps?.());
     };
 
     const showTitleDivider = !useIsInViewport(topScrollSignalRef, true, {
@@ -214,7 +218,7 @@ const Drawer = ({
                             dataAttributes={{testid: 'dismissButton'}}
                             onPress={() => layoutRef.current?.dismiss()}
                             Icon={IconCloseRegular}
-                            aria-label={texts.modalClose || t(tokens.modalClose)}
+                            aria-label={dismissLabel || texts.modalClose || t(tokens.modalClose)}
                             type="neutral"
                             backgroundType="transparent"
                         />
@@ -223,7 +227,9 @@ const Drawer = ({
                 {title && (
                     <div className={styles.titleContainer}>
                         <Box paddingX={paddingX}>
-                            <Text5 dataAttributes={{testid: 'title'}}>{title}</Text5>
+                            <Text5 as={titleAs} dataAttributes={{testid: 'title'}}>
+                                {title}
+                            </Text5>
                         </Box>
                     </div>
                 )}
