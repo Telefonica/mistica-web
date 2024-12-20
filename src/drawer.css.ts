@@ -41,10 +41,10 @@ export const drawer = style([
     {
         '@media': {
             [mq.tabletOrSmaller]: {
-                paddingBottom: 16 - 8,
+                paddingBottom: 16,
             },
             [mq.desktopOrBigger]: {
-                paddingBottom: 24 - 8,
+                paddingBottom: 24,
             },
         },
     },

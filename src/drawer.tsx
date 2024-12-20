@@ -290,6 +290,7 @@ const Drawer = ({
                                         trackEvent={buttonLink.trackEvent}
                                         trackingEvent={buttonLink.trackingEvent}
                                         onPress={() => handleButtonPress(buttonLink.onPress)}
+                                        bleedY
                                     >
                                         {buttonLink.text}
                                     </ButtonLink>
