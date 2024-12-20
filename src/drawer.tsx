@@ -178,7 +178,7 @@ const Drawer = ({
     dataAttributes,
 }: DrawerProps): JSX.Element => {
     const layoutRef = React.useRef<DrawerPropsRef>(null);
-    const hasButtons = !!(button || secondaryButton || buttonLink);
+    const hasActions = !!(button || secondaryButton || buttonLink);
     const [scrollableParentElement, setScrollableParentElement] = React.useState<HTMLElement | null>(null);
     const topScrollSignalRef = React.useRef<HTMLDivElement>(null);
     const bottomScrollSignalRef = React.useRef<HTMLDivElement>(null);
@@ -255,12 +255,12 @@ const Drawer = ({
                             {children}
                         </Stack>
                     </Box>
+                    {!hasActions && <Box paddingBottom={{mobile: 16, desktop: 24}} />}
                     <div ref={bottomScrollSignalRef} />
                 </div>
-                <MaybeDivider show={showButtonsDivider} />
-                <Box paddingBottom={16} />
-                {hasButtons && (
-                    <Box paddingX={paddingX}>
+                <MaybeDivider show={hasActions && showButtonsDivider} />
+                {hasActions && (
+                    <Box paddingX={paddingX} paddingY={{mobile: 16, desktop: 24}}>
                         <ButtonLayout
                             primaryButton={
                                 button && (

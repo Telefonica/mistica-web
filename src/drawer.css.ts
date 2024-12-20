@@ -3,7 +3,7 @@ import * as mq from './media-queries.css';
 import {vars} from './skins/skin-contract.css';
 import {sprinkles} from './sprinkles.css';
 
-export const ANIMATION_DURATION_MS = 400; // review
+export const ANIMATION_DURATION_MS = 350;
 
 export const container = style([
     sprinkles({
@@ -20,12 +20,13 @@ export const container = style([
         '@media': {
             [mq.mobile]: {
                 left: 0,
-                transition: `transform ${ANIMATION_DURATION_MS}ms cubic-bezier(0.32, 0.72, 0, 1)`,
+                transition: `transform ${ANIMATION_DURATION_MS}ms cubic-bezier(0.5, 0, 0.5, 1)`,
             },
             [mq.tabletOrBigger]: {
                 borderTopLeftRadius: vars.borderRadii.container,
                 borderBottomLeftRadius: vars.borderRadii.container,
-                transition: `transform ${ANIMATION_DURATION_MS}ms cubic-bezier(0.65, 0, 0.35, 1)`,
+                transition: `transform ${ANIMATION_DURATION_MS}ms cubic-bezier(0.5, 0, 0.5, 1)`,
+                maxWidth: 'calc(100vw - 40px)',
             },
         },
     },
@@ -38,16 +39,6 @@ export const drawer = style([
         flexDirection: 'column',
         flexGrow: 1,
     }),
-    {
-        '@media': {
-            [mq.tabletOrSmaller]: {
-                paddingBottom: 16,
-            },
-            [mq.desktopOrBigger]: {
-                paddingBottom: 24,
-            },
-        },
-    },
 ]);
 
 export const titleContainer = style([
