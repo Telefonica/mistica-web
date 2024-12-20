@@ -1,4 +1,4 @@
-import {style, styleVariants, globalStyle} from '@vanilla-extract/css';
+import {style, styleVariants} from '@vanilla-extract/css';
 import * as mq from './media-queries.css';
 import {vars} from './skins/skin-contract.css';
 import {sprinkles} from './sprinkles.css';
@@ -68,57 +68,52 @@ export const chipVariants = styleVariants({
     ],
 });
 
-const interactive = style({
+export const interactive = style({
+    position: 'relative',
+    overflow: 'hidden',
     userSelect: 'none',
-    '@media': {
-        [mq.supportsHover]: {
-            selectors: {
-                [`&:hover:not(${chipActive})`]: {
-                    color: vars.colors.textActivated,
-                    backgroundColor: vars.colors.brandLow,
-                    cursor: 'pointer',
-                },
-            },
-        },
-    },
+    cursor: 'pointer',
 });
 
-export const button = sprinkles({
+export const button = style({
     border: 'none',
     background: 'transparent',
     padding: 0,
 });
 
-export const chipInteractiveVariants = styleVariants({
-    light: [
-        interactive,
-        {
-            '@media': {
-                [mq.supportsHover]: {
-                    selectors: {
-                        [`&:hover:not(${chipActive})`]: {
-                            borderColor: vars.colors.brandLow,
-                        },
+export const interactiveChipOverlay = style([
+    sprinkles({
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0,
+        position: 'absolute',
+    }),
+    {
+        backgroundColor: 'transparent',
+        transition: 'background-color 0.1s ease-in-out',
+        selectors: {
+            [`${interactive}:active &`]: {
+                backgroundColor: vars.colors.backgroundContainerPressed,
+            },
+        },
+        '@media': {
+            [mq.supportsHover]: {
+                selectors: {
+                    [`${interactive}:hover &`]: {
+                        backgroundColor: vars.colors.backgroundContainerHover,
+                    },
+                    [`${interactive}:active &`]: {
+                        backgroundColor: vars.colors.backgroundContainerPressed,
                     },
                 },
             },
-        },
-    ],
-    dark: [
-        interactive,
-        {
-            '@media': {
-                [mq.supportsHover]: {
-                    selectors: {
-                        [`&:hover:not(${chipActive})`]: {
-                            borderColor: vars.colors.background,
-                        },
-                    },
-                },
+            [mq.touchableOnly]: {
+                transition: 'none',
             },
         },
-    ],
-});
+    },
+]);
 
 export const icon = style([
     sprinkles({paddingRight: 4}),
@@ -138,20 +133,4 @@ export const leftPadding = styleVariants({
 export const rightPadding = styleVariants({
     default: [sprinkles({paddingRight: {mobile: 20, desktop: 12}})],
     withIcon: [sprinkles({paddingRight: {mobile: 16, desktop: 8}})],
-});
-
-globalStyle(`${interactive}:hover:not(${chipActive}) > ${icon}`, {
-    '@media': {
-        [mq.supportsHover]: {
-            color: vars.colors.controlActivated,
-        },
-    },
-});
-
-globalStyle(`${interactive}:hover:not(${chipActive}) > ${iconActive}`, {
-    '@media': {
-        [mq.supportsHover]: {
-            color: vars.colors.controlActivated,
-        },
-    },
 });
