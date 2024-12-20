@@ -7,6 +7,12 @@ import {Text3} from '../text';
 
 export default {
     title: 'Components/Modals/Drawer',
+    component: Drawer,
+    argTypes: {
+        width: {
+            control: {type: 'range', min: 0, max: 1000, step: 1},
+        },
+    },
 };
 
 type Args = {
@@ -18,6 +24,7 @@ type Args = {
     showButton: boolean;
     showSecondaryButton: boolean;
     showButtonLink: boolean;
+    width: number;
 };
 
 export const Default = ({
@@ -29,6 +36,7 @@ export const Default = ({
     showButton,
     showSecondaryButton,
     showButtonLink,
+    width,
 }: Args): JSX.Element => {
     const [isOpen, setIsOpen] = React.useState(false);
     const [result, setResult] = React.useState('');
@@ -50,6 +58,7 @@ export const Default = ({
             </Stack>
             {isOpen && (
                 <Drawer
+                    width={width}
                     title={title}
                     subtitle={subtitle}
                     description={description}
@@ -81,4 +90,5 @@ Default.args = {
     showButton: true,
     showSecondaryButton: true,
     showButtonLink: true,
+    width: 0,
 };
