@@ -65,11 +65,14 @@ const DrawerLayout = React.forwardRef<DrawerPropsRef, DrawerLayoutProps>(
         useRestoreFocus();
         const {isMobile, isTablet} = useScreenSize();
         const [isOpen, setIsOpen] = React.useState(false);
+        const widthStyle = isMobile ? 'auto' : width || (isTablet ? WIDTH_TABLET : WIDTH_DESKTOP);
 
         const open = React.useCallback((node: HTMLDivElement) => {
             if (node) {
                 // small delay to allow the Portal to be mounted
-                setTimeout(() => setIsOpen(true), 50);
+                setTimeout(() => {
+                    setIsOpen(true);
+                }, 50);
             }
         }, []);
 
@@ -103,20 +106,18 @@ const DrawerLayout = React.forwardRef<DrawerPropsRef, DrawerLayoutProps>(
                 <FocusTrap>
                     {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
                     <div
+                        data-testid="drawerOverlay"
                         onClick={onDismiss ? dismiss : undefined}
                         className={classnames(
                             styles.overlay,
                             isOpen ? styles.overlayOpen : styles.overlayClosed
                         )}
-                        {...getPrefixedDataAttributes({}, 'DrawerOverlay')}
                     />
                     <div
+                        data-testid="drawerLayout"
                         ref={open}
-                        style={{
-                            width: isMobile ? 'unset' : width || (isTablet ? WIDTH_TABLET : WIDTH_DESKTOP),
-                        }}
+                        style={{width: widthStyle}}
                         className={classnames(styles.container, isOpen ? styles.open : styles.closed)}
-                        {...getPrefixedDataAttributes({}, 'DrawerLayout')}
                     >
                         {children}
                     </div>
@@ -138,13 +139,16 @@ type DrawerProps = {
     subtitle?: string;
     description?: string;
     /**
+     * this handler is mandatory. You should unmount the Drawer component on close.
+     */
+    onClose: () => void;
+    /**
      * set this handler to enable dismiss:
      * - touching "X"
      * - touching overlay
      * - pressing ESC
      */
     onDismiss?: () => void;
-    onClose: () => void;
     children?: React.ReactNode;
     /**
      * width is ignored in mobile viewport
