@@ -308,7 +308,7 @@ test('Disabling a field removes the error state and disabled fields are not subm
     );
 });
 
-test.only.each`
+test.each`
     platform     | element             | expectedFocus
     ${'ios'}     | ${'date'}           | ${false}
     ${'ios'}     | ${'datetime-local'} | ${false}
