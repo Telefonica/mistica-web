@@ -310,7 +310,7 @@ test('Disabling a field removes the error state and disabled fields are not subm
 });
 
 test.each`
-    platform     | element             | expectedFocus
+    platform     | type                | expectedFocus
     ${'ios'}     | ${'date'}           | ${false}
     ${'ios'}     | ${'datetime-local'} | ${false}
     ${'ios'}     | ${'month'}          | ${false}
@@ -321,18 +321,18 @@ test.each`
     ${'android'} | ${'month'}          | ${true}
     ${'android'} | ${'select'}         | ${true}
     ${'android'} | ${'text'}           | ${true}
-`('autofocus on error - $platform $element $expectedFocus', async ({platform, element, expectedFocus}) => {
+`('autofocus on error - $platform $type $expectedFocus', async ({platform, type, expectedFocus}) => {
     const FormComponent = () => {
         return (
             <ThemeContextProvider theme={makeTheme({platformOverrides: {platform}})}>
                 <Form onSubmit={() => {}}>
-                    {element === 'date' && <DateField label="Field" name="field" />}
-                    {element === 'datetime-local' && <DateTimeField label="Field" name="field" />}
-                    {element === 'month' && <MonthField label="Field" name="field" />}
-                    {element === 'select' && (
+                    {type === 'date' && <DateField label="Field" name="field" />}
+                    {type === 'datetime-local' && <DateTimeField label="Field" name="field" />}
+                    {type === 'month' && <MonthField label="Field" name="field" />}
+                    {type === 'select' && (
                         <Select name="field" label="Field" options={[{value: '1', text: '1'}]} />
                     )}
-                    {element === 'text' && <TextField label="Field" name="field" />}
+                    {type === 'text' && <TextField label="Field" name="field" />}
                     <ButtonPrimary submit>Submit</ButtonPrimary>
                 </Form>
             </ThemeContextProvider>
