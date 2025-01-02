@@ -12,6 +12,7 @@ import {
     DateField,
     DateTimeField,
     Select,
+    MonthField,
 } from '..';
 import ThemeContextProvider from '../theme-context-provider';
 import {makeTheme} from './test-utils';
@@ -327,7 +328,7 @@ test.each`
                 <Form onSubmit={() => {}}>
                     {element === 'date' && <DateField label="Field" name="field" />}
                     {element === 'datetime-local' && <DateTimeField label="Field" name="field" />}
-                    {element === 'month' && <DateField label="Field" name="field" />}
+                    {element === 'month' && <MonthField label="Field" name="field" />}
                     {element === 'select' && (
                         <Select name="field" label="Field" options={[{value: '1', text: '1'}]} />
                     )}
