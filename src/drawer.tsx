@@ -22,11 +22,11 @@ import * as tokens from './text-tokens';
 import type {DataAttributes, HeadingType, TrackingEvent} from './utils/types';
 
 const PADDING_X_DESKTOP = 40;
+const PADDING_X_TABLET = 32;
 const PADDING_X_MOBILE = 16;
-const PADDING_X_TABLET = 16;
 const WIDTH_CONTENT = 388;
-const WIDTH_DESKTOP = WIDTH_CONTENT + PADDING_X_DESKTOP * 2;
-const WIDTH_TABLET = WIDTH_CONTENT + PADDING_X_TABLET * 2;
+const MIN_WIDTH_DESKTOP = WIDTH_CONTENT + PADDING_X_DESKTOP * 2;
+const MIN_WIDTH_TABLET = WIDTH_CONTENT + PADDING_X_TABLET * 2;
 
 /**
  * Renders divider or a div with transparent border to avoid the small but noticeable layout shift on scroll
@@ -65,7 +65,8 @@ const DrawerLayout = React.forwardRef<DrawerPropsRef, DrawerLayoutProps>(
         useRestoreFocus();
         const {isMobile, isTablet} = useScreenSize();
         const [isOpen, setIsOpen] = React.useState(false);
-        const widthStyle = isMobile ? 'auto' : width || (isTablet ? WIDTH_TABLET : WIDTH_DESKTOP);
+        const minWidthStyle = isMobile ? 'none' : isTablet ? MIN_WIDTH_TABLET : MIN_WIDTH_DESKTOP;
+        const widthStyle = isMobile ? 'auto' : width;
 
         const open = React.useCallback((node: HTMLDivElement) => {
             if (node) {
@@ -116,7 +117,7 @@ const DrawerLayout = React.forwardRef<DrawerPropsRef, DrawerLayoutProps>(
                     <div
                         data-testid="drawerLayout"
                         ref={open}
-                        style={{width: widthStyle}}
+                        style={{width: widthStyle, minWidth: minWidthStyle}}
                         className={classnames(styles.container, isOpen ? styles.open : styles.closed)}
                     >
                         {children}
