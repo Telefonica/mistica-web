@@ -10,7 +10,7 @@ export default {
     component: Drawer,
     argTypes: {
         width: {
-            control: {type: 'range', min: 0, max: 1000, step: 1},
+            control: {type: 'range', min: 300, max: 1000, step: 1},
         },
     },
 };
