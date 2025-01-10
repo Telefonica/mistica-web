@@ -3958,13 +3958,14 @@ const SimpleBlockSnippets = [
     {
         name: 'Simple Block',
         code: `
-        <SimpleBlock
-          image={
-            <Image src="${imagePlaceholder}" height={40} />
-          }
-          description="description"
-        />
-      `,
+      <SimpleBlock
+        image={
+          <Image src="${imagePlaceholder}" height={40} />
+        }
+        label="label"
+        description="description"
+      />
+    `,
         group: 'Blocks',
     },
 ];
