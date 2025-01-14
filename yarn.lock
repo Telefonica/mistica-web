@@ -5571,7 +5571,7 @@ __metadata:
     prop-types: ^15.8.1
     react: 18.2.0
     react-autosuggest: ^10.1.0
-    react-datetime: ^3.1.1
+    react-datetime: ^3.2.0
     react-dom: 18.2.0
     react-focus-lock: ^2.8.1
     react-router: ^6.6.2
@@ -18674,15 +18674,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-datetime@npm:^3.1.1":
-  version: 3.1.1
-  resolution: "react-datetime@npm:3.1.1"
+"react-datetime@npm:^3.2.0":
+  version: 3.2.0
+  resolution: "react-datetime@npm:3.2.0"
   dependencies:
     prop-types: ^15.5.7
   peerDependencies:
     moment: ^2.16.0
-    react: ^16.5.0 || ^17.0.0
-  checksum: a8ef1c9c19c8d896595b1fec4b97785ae15230303ae804c01db9280ec0414ede1e8648b8d87c87644b4298971d974a45507b749e8013d829d75ab2e93f8387e3
+    react: ^16.5.0 || ^17.0.0 || ^18.0.0
+  checksum: c3407beb64f44cd5944252bee1c4565fc138e3f1e81d8e4fd00d2aeac564a18848ee9af5f51fbbb39bba588f8c2d659570384af1ce8378d4e0049a6bdb083655
   languageName: node
   linkType: hard
 

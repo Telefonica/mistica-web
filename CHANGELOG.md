@@ -1,3 +1,17 @@
+# [16.8.0](https://github.com/Telefonica/mistica-web/compare/v16.7.0...v16.8.0) (2025-01-09)
+
+
+### Bug Fixes
+
+* **react-datetime:** upgrade react-datetime to support React18 ([#1303](https://github.com/Telefonica/mistica-web/issues/1303)) ([9caf2c2](https://github.com/Telefonica/mistica-web/commit/9caf2c277a9f6412e98f5eb8888e8257fdb4f65c))
+
+
+### Features
+
+* **Chip:** change background color on hover/active ([#1302](https://github.com/Telefonica/mistica-web/issues/1302)) ([73e33eb](https://github.com/Telefonica/mistica-web/commit/73e33ebefafbae7522ab18af9e2c680393e6ef19))
+* **Drawer:** new component ([#1306](https://github.com/Telefonica/mistica-web/issues/1306)) ([2543c67](https://github.com/Telefonica/mistica-web/commit/2543c67a29a9f3e26a84712ba8ca406c21bd101e))
+* **icons:** New floppy disk icon ([#1304](https://github.com/Telefonica/mistica-web/issues/1304)) ([d9c5353](https://github.com/Telefonica/mistica-web/commit/d9c5353400f90f4521caa6daf5d3e4641bf0d6f0)), closes [/github.com/Telefonica/mistica-design/issues/1956#issuecomment-2535956321](https://github.com//github.com/Telefonica/mistica-design/issues/1956/issues/issuecomment-2535956321)
+
 # [16.7.0](https://github.com/Telefonica/mistica-web/compare/v16.6.1...v16.7.0) (2024-12-04)
 
 

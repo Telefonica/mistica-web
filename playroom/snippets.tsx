@@ -62,6 +62,35 @@ const menuSnippet = {
     group: 'Menu',
 };
 
+const drawerSnippet = {
+    name: 'Drawer',
+    group: 'Drawer',
+    code: `
+      <ButtonPrimary onPress={() => setState("openDrawer", true)}>
+        Open Drawer
+      </ButtonPrimary>
+      {getState("openDrawer", false) && (
+        <Drawer
+          title="Title"
+          subtitle="Subtitle"
+          description="Description"
+          onClose={() => setState("openDrawer", false)}
+          button={{ text: "Primary", onPress: () => {} }}
+          secondaryButton={{ text: "Secondary", onPress: () => {} }}
+          buttonLink={{ text: "Link", onPress: () => {} }}
+          onDismiss={() => {}}
+        >
+          <Stack space={16}>
+            <Placeholder height={300} />
+            <Placeholder height={300} />
+            <Placeholder height={300} />
+            <Placeholder height={300} />
+          </Stack>
+        </Drawer>
+      )}
+  `,
+};
+
 const accordionSnippets: Array<Snippet> = [
     {
         group: 'Accordion',
@@ -4337,4 +4366,5 @@ export default [
     ...ProgressBlockSnippets,
     ...loadingScreenSnippets,
     ...tableSnippets,
+    drawerSnippet,
 ].sort((s1, s2) => s1.group.localeCompare(s2.group)) as Array<Snippet>;
