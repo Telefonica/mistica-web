@@ -376,6 +376,20 @@ const iconKeywords: {[key: string]: Array<string>} = {
         'setas bilaterais',
         'doppelte Richtungspfeile',
     ],
+    'artificial-intelligence': [
+        'machine learning',
+        'automated intellect',
+        'synthetic cognition',
+        'inteligencia artificial',
+        'aprendizaje automático',
+        'cognición sintética',
+        'aprendizado de máquina',
+        'intelecto automatizado',
+        'cognição sintética',
+        'maschinelles Lernen',
+        'automatisierter Verstand',
+        'synthetische Kognition',
+    ],
     audio: ['sound', 'audio signal', 'soundwave', 'sonido', 'sinal de áudio', 'Ton'],
     aura: ['assistant', 'virtual', 'helper', 'aura', 'aura virtual', 'Helfer'],
     'authentication-failure': [
@@ -2295,6 +2309,7 @@ const iconKeywords: {[key: string]: Array<string>} = {
     ],
     music: ['melody', 'tunes', 'sound', 'música', 'música', 'Musik'],
     mute: ['silent', 'quiet', 'soundless', 'silenciar', 'silencioso', 'stumm'],
+    'my-handy': ['my handy'],
     'negative-film': [
         'film negative',
         'photographic negative',
