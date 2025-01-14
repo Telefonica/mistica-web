@@ -6,6 +6,7 @@ import classnames from 'classnames';
 import * as styles from './form.css';
 import * as tokens from './text-tokens';
 import ScreenReaderOnly from './screen-reader-only';
+import {isIos} from './utils/platform';
 
 import type {FormStatus, FormErrors, FieldRegistration} from './form-context';
 
@@ -20,6 +21,8 @@ if (
 }
 
 export type FormValues = {[name: string]: any};
+
+type HTMLFieldElement = HTMLSelectElement | HTMLInputElement;
 
 type FormProps = {
     id?: string;
@@ -49,7 +52,7 @@ const Form = ({
     const [formErrors, setFormErrors] = React.useState<FormErrors>({});
     const fieldRegistrations = React.useRef(new Map<string, FieldRegistration>());
     const formRef = React.useRef<HTMLFormElement | null>(null);
-    const {texts, t} = useTheme();
+    const {texts, t, platformOverrides} = useTheme();
     const reactId = React.useId();
     const id = idProp || reactId;
 
@@ -89,6 +92,26 @@ const Form = ({
     );
 
     /**
+     * In iOS the pickers/selects are automatically opened when the input is focused
+     * This is not what we want so, for some specific elements, we disable the autofocus on error
+     */
+    const shouldAutofocusFieldOnError = React.useCallback(
+        (element: HTMLFieldElement): boolean => {
+            if (!isIos(platformOverrides)) {
+                return true;
+            }
+            if (element.tagName === 'SELECT') {
+                return false;
+            }
+            if (['date', 'datetime-local', 'month'].includes(element.type)) {
+                return false;
+            }
+            return true;
+        },
+        [platformOverrides]
+    );
+
+    /**
      * returns true if all fields are ok and focuses the first field with an error
      */
     const validateFields = React.useCallback((): FormErrors => {
@@ -114,16 +137,19 @@ const Form = ({
                 const reg = fieldRegistrations.current.get(name);
                 return reg?.focusableElement || reg?.input;
             })
-            .filter(Boolean) as Array<HTMLSelectElement | HTMLDivElement>; // casted to remove inferred nulls/undefines
+            .filter(Boolean) as Array<HTMLFieldElement>; // casted to remove inferred nulls/undefines
 
         if (elementsWithErrors.length) {
             elementsWithErrors.sort((a, b) =>
                 a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING ? -1 : 1
             );
-            elementsWithErrors[0].focus();
+            const firstElementWithError = elementsWithErrors[0];
+            if (shouldAutofocusFieldOnError(firstElementWithError)) {
+                firstElementWithError.focus();
+            }
             try {
                 // polyfilled, see import at the top of this file
-                elementsWithErrors[0].scrollIntoView({behavior: 'smooth', block: 'center', inline: 'center'});
+                firstElementWithError.scrollIntoView({behavior: 'smooth', block: 'center', inline: 'center'});
             } catch (e) {
                 // ignore errors
                 // element.scrollIntoView not available in unit test environment
@@ -135,7 +161,14 @@ const Form = ({
             onValidationErrors(errors);
         }
         return errors;
-    }, [onValidationErrors, rawValues, texts, values, t]);
+    }, [
+        onValidationErrors,
+        rawValues,
+        texts.formFieldErrorIsMandatory,
+        t,
+        values,
+        shouldAutofocusFieldOnError,
+    ]);
 
     const jumpToNext = React.useCallback(
         (currentName: string) => {

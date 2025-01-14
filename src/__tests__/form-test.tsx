@@ -1,7 +1,19 @@
 import * as React from 'react';
 import {render, screen, waitFor} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import {ButtonPrimary, Form, TextField, EmailField, PasswordField, Switch, PhoneNumberField} from '..';
+import {
+    ButtonPrimary,
+    Form,
+    TextField,
+    EmailField,
+    PasswordField,
+    Switch,
+    PhoneNumberField,
+    DateField,
+    DateTimeField,
+    Select,
+    MonthField,
+} from '..';
 import ThemeContextProvider from '../theme-context-provider';
 import {makeTheme} from './test-utils';
 
@@ -295,4 +307,44 @@ test('Disabling a field removes the error state and disabled fields are not subm
         {phone: '654834455', switch: false},
         {phone: '654 83 44 55', switch: false}
     );
+});
+
+test.each`
+    platform     | type                | expectedFocus
+    ${'ios'}     | ${'date'}           | ${false}
+    ${'ios'}     | ${'datetime-local'} | ${false}
+    ${'ios'}     | ${'month'}          | ${false}
+    ${'ios'}     | ${'select'}         | ${false}
+    ${'ios'}     | ${'text'}           | ${true}
+    ${'android'} | ${'date'}           | ${true}
+    ${'android'} | ${'datetime-local'} | ${true}
+    ${'android'} | ${'month'}          | ${true}
+    ${'android'} | ${'select'}         | ${true}
+    ${'android'} | ${'text'}           | ${true}
+`('autofocus on error - $platform $type $expectedFocus', async ({platform, type, expectedFocus}) => {
+    const FormComponent = () => {
+        return (
+            <ThemeContextProvider theme={makeTheme({platformOverrides: {platform}})}>
+                <Form onSubmit={() => {}}>
+                    {type === 'date' && <DateField label="Field" name="field" />}
+                    {type === 'datetime-local' && <DateTimeField label="Field" name="field" />}
+                    {type === 'month' && <MonthField label="Field" name="field" />}
+                    {type === 'select' && (
+                        <Select name="field" label="Field" options={[{value: '1', text: '1'}]} />
+                    )}
+                    {type === 'text' && <TextField label="Field" name="field" />}
+                    <ButtonPrimary submit>Submit</ButtonPrimary>
+                </Form>
+            </ThemeContextProvider>
+        );
+    };
+
+    render(<FormComponent />);
+
+    const submitButton = await screen.findByRole('button', {name: 'Submit'});
+    await userEvent.click(submitButton);
+
+    const input = await screen.findByLabelText('Field');
+    // eslint-disable-next-line testing-library/no-node-access
+    expect(document.activeElement === input).toBe(expectedFocus);
 });

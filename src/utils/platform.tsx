@@ -21,10 +21,19 @@ export const isRunningAcceptanceTest = (platformOverrides: Theme['platformOverri
 
 const isEdgeOrIE = Boolean(typeof self !== 'undefined' && (self as any).MSStream);
 
-export const isAndroid = (platformOverrides: Theme['platformOverrides']): boolean =>
-    getUserAgent(platformOverrides).toLowerCase().includes('android') && !isEdgeOrIE;
+export const isAndroid = (platformOverrides: Theme['platformOverrides']): boolean => {
+    if (platformOverrides.platform === 'android') {
+        return true;
+    }
+
+    return getUserAgent(platformOverrides).toLowerCase().includes('android') && !isEdgeOrIE;
+};
 
 export const isIos = (platformOverrides: Theme['platformOverrides']): boolean => {
+    if (platformOverrides.platform === 'ios') {
+        return true;
+    }
+
     // IE and Edge mobile browsers includes Android and iPhone in the user agent
     if (/iPad|iPhone|iPod/.test(getUserAgent(platformOverrides)) && !isEdgeOrIE) {
         return true;
