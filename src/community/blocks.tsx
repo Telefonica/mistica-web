@@ -84,22 +84,35 @@ interface SimpleBlockProps {
     image?: RendersNullableElement<typeof Image>;
     description?: string;
     'aria-label'?: string;
+    rightText?: string;
 }
 
-export const SimpleBlock = ({image, description, 'aria-label': ariaLabel}: SimpleBlockProps): JSX.Element => {
+export const SimpleBlock = ({
+    image,
+    description,
+    'aria-label': ariaLabel,
+    rightText,
+}: SimpleBlockProps): JSX.Element => {
     return (
         <div aria-label={ariaLabel}>
-            <Inline space={16} alignItems="center">
-                <div
-                    style={applyCssVars({
-                        [mediaStyles.vars.mediaBorderRadius]: vars.borderRadii.mediaSmall,
-                    })}
-                >
-                    {image}
+            <Inline space="between" alignItems="center">
+                <Inline space={16} alignItems="center">
+                    <div
+                        style={applyCssVars({
+                            [mediaStyles.vars.mediaBorderRadius]: vars.borderRadii.mediaSmall,
+                        })}
+                    >
+                        {image}
+                    </div>
+                    <Text2 regular color={vars.colors.textSecondary}>
+                        {description}
+                    </Text2>
+                </Inline>
+                <div className={styles.rightContent}>
+                    <Text2 regular color={vars.colors.textBrand}>
+                        {rightText}
+                    </Text2>
                 </div>
-                <Text2 regular color={vars.colors.textSecondary}>
-                    {description}
-                </Text2>
             </Inline>
         </div>
     );
