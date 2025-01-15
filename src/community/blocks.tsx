@@ -84,14 +84,14 @@ interface SimpleBlockProps {
     image?: RendersNullableElement<typeof Image>;
     description?: string;
     'aria-label'?: string;
-    label?: string;
+    rightText?: string;
 }
 
 export const SimpleBlock = ({
     image,
     description,
     'aria-label': ariaLabel,
-    label,
+    rightText,
 }: SimpleBlockProps): JSX.Element => {
     return (
         <div aria-label={ariaLabel}>
@@ -110,7 +110,7 @@ export const SimpleBlock = ({
                 </Inline>
                 <div className={styles.rightContent}>
                     <Text2 regular color={vars.colors.textBrand}>
-                        {label}
+                        {rightText}
                     </Text2>
                 </div>
             </Inline>

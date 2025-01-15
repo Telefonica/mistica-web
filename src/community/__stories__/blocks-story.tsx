@@ -66,16 +66,16 @@ BlockRow.args = {
 
 type SimpleBlockArgs = {
     description: string;
-    label: string;
+    rightText: string;
 };
 
-export const BlockSimple: StoryComponent<SimpleBlockArgs> = ({description, label}) => {
+export const BlockSimple: StoryComponent<SimpleBlockArgs> = ({description, rightText}) => {
     return (
         <ResponsiveLayout>
             <Box paddingY={24} dataAttributes={{testid: 'simple-block'}}>
                 <SimpleBlock
                     description={description}
-                    label={label}
+                    rightText={rightText}
                     image={<Image height={40} src={imgExample} />}
                 />
             </Box>
@@ -86,7 +86,7 @@ export const BlockSimple: StoryComponent<SimpleBlockArgs> = ({description, label
 BlockSimple.storyName = 'SimpleBlock';
 BlockSimple.args = {
     description: 'description',
-    label: 'label',
+    rightText: 'label',
 };
 
 type InformationBlockArgs = {

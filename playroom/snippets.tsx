@@ -3962,7 +3962,7 @@ const SimpleBlockSnippets = [
         image={
           <Image src="${imagePlaceholder}" height={40} />
         }
-        label="label"
+        rightText="rightText"
         description="description"
       />
     `,
