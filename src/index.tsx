@@ -379,6 +379,9 @@ export {default as IconArrowUpRegular} from './generated/mistica-icons/icon-arro
 export {default as IconArrowUpRightFilled} from './generated/mistica-icons/icon-arrow-up-right-filled';
 export {default as IconArrowUpRightLight} from './generated/mistica-icons/icon-arrow-up-right-light';
 export {default as IconArrowUpRightRegular} from './generated/mistica-icons/icon-arrow-up-right-regular';
+export {default as IconArtificialIntelligenceFilled} from './generated/mistica-icons/icon-artificial-intelligence-filled';
+export {default as IconArtificialIntelligenceLight} from './generated/mistica-icons/icon-artificial-intelligence-light';
+export {default as IconArtificialIntelligenceRegular} from './generated/mistica-icons/icon-artificial-intelligence-regular';
 export {default as IconAudioFilled} from './generated/mistica-icons/icon-audio-filled';
 export {default as IconAudioLight} from './generated/mistica-icons/icon-audio-light';
 export {default as IconAudioRegular} from './generated/mistica-icons/icon-audio-regular';
@@ -1363,6 +1366,9 @@ export {default as IconMusicRegular} from './generated/mistica-icons/icon-music-
 export {default as IconMuteFilled} from './generated/mistica-icons/icon-mute-filled';
 export {default as IconMuteLight} from './generated/mistica-icons/icon-mute-light';
 export {default as IconMuteRegular} from './generated/mistica-icons/icon-mute-regular';
+export {default as IconMyHandyFilled} from './generated/mistica-icons/icon-my-handy-filled';
+export {default as IconMyHandyLight} from './generated/mistica-icons/icon-my-handy-light';
+export {default as IconMyHandyRegular} from './generated/mistica-icons/icon-my-handy-regular';
 export {default as IconNegativeFilmRegular} from './generated/mistica-icons/icon-negative-film-regular';
 export {default as IconNetworkHotspotFilled} from './generated/mistica-icons/icon-network-hotspot-filled';
 export {default as IconNetworkHotspotLight} from './generated/mistica-icons/icon-network-hotspot-light';
