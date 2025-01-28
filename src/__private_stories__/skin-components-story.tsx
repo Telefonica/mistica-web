@@ -52,6 +52,9 @@ import {
     NegativeBox,
     IconInvoicePlanFileRegular,
     Meter,
+    Timeline,
+    TimelineItem,
+    IconShopRegular,
 } from '..';
 import avatarImg from '../__stories__/images/avatar.jpg';
 import usingVrImg from '../__stories__/images/using-vr.jpg';
@@ -479,6 +482,67 @@ export const Default: StoryComponent<Args> = ({variant}) => {
                             <Timer endTimestamp={0} minTimeUnit="seconds" maxTimeUnit="days" />
                             <Timer endTimestamp={0} minTimeUnit="seconds" maxTimeUnit="days" boxed />
                         </Inline>
+                        <Timeline>
+                            <TimelineItem state="completed">
+                                <Placeholder />
+                            </TimelineItem>
+                            <TimelineItem state="active">
+                                <Placeholder />
+                            </TimelineItem>
+                            <TimelineItem state="inactive">
+                                <Placeholder />
+                            </TimelineItem>
+                        </Timeline>
+                        <Timeline orientation="horizontal">
+                            <TimelineItem state="completed">
+                                <Placeholder />
+                            </TimelineItem>
+                            <TimelineItem state="active">
+                                <Placeholder />
+                            </TimelineItem>
+                            <TimelineItem state="inactive">
+                                <Placeholder />
+                            </TimelineItem>
+                        </Timeline>
+                        <Timeline>
+                            <TimelineItem state="completed" asset={{kind: 'number'}}>
+                                <Placeholder />
+                            </TimelineItem>
+                            <TimelineItem state="active" asset={{kind: 'number', number: 2}}>
+                                <Placeholder />
+                            </TimelineItem>
+                            <TimelineItem state="inactive" asset={{kind: 'number', number: 3}}>
+                                <Placeholder />
+                            </TimelineItem>
+                        </Timeline>
+                        <Timeline>
+                            <TimelineItem state="completed" asset={{kind: 'icon'}}>
+                                <Placeholder />
+                            </TimelineItem>
+                            <TimelineItem state="active" asset={{kind: 'icon', Icon: IconShopRegular}}>
+                                <Placeholder />
+                            </TimelineItem>
+                            <TimelineItem state="inactive" asset={{kind: 'icon', Icon: IconShopRegular}}>
+                                <Placeholder />
+                            </TimelineItem>
+                        </Timeline>
+                        <Timeline>
+                            <TimelineItem state="completed" asset={{kind: 'circled-icon'}}>
+                                <Placeholder />
+                            </TimelineItem>
+                            <TimelineItem
+                                state="active"
+                                asset={{kind: 'circled-icon', Icon: IconShopRegular}}
+                            >
+                                <Placeholder />
+                            </TimelineItem>
+                            <TimelineItem
+                                state="inactive"
+                                asset={{kind: 'circled-icon', Icon: IconShopRegular}}
+                            >
+                                <Placeholder />
+                            </TimelineItem>
+                        </Timeline>
                     </ComponentsGroup>
                 </Stack>
             </Box>

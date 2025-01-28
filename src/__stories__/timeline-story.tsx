@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {ResponsiveLayout, Placeholder, Timeline, TimelineItem, Circle, skinVars, IconShopRegular} from '..';
+import {ResponsiveLayout, Placeholder, Timeline, TimelineItem, IconShopRegular} from '..';
 
 import type {Variant} from '../theme-variant-context';
 
@@ -13,7 +13,7 @@ type Args = {
     items: number;
     activeItem: number;
     orientation: 'horizontal' | 'vertical';
-    asset: 'icon' | 'number' | 'dot';
+    asset: 'icon' | 'circled-icon' | 'number' | 'dot';
 };
 
 export const TimelineStory: StoryComponent<Args> = ({
@@ -33,15 +33,13 @@ export const TimelineStory: StoryComponent<Args> = ({
                             index < activeItem ? 'completed' : index === activeItem ? 'active' : 'inactive'
                         }
                         asset={
-                            asset === 'dot' ? (
-                                {kind: 'dot'}
-                            ) : asset === 'number' ? (
-                                {kind: 'number', number: index + 1}
-                            ) : (
-                                <Circle size={40} border>
-                                    <IconShopRegular color={skinVars.colors.brand} />
-                                </Circle>
-                            )
+                            asset === 'dot'
+                                ? {kind: 'dot'}
+                                : asset === 'number'
+                                  ? {kind: 'number', number: index + 1}
+                                  : asset === 'icon'
+                                    ? {kind: 'icon', Icon: IconShopRegular}
+                                    : {kind: 'circled-icon', Icon: IconShopRegular}
                         }
                     >
                         <Placeholder />
@@ -70,7 +68,7 @@ TimelineStory.argTypes = {
         control: {type: 'select'},
     },
     asset: {
-        options: ['icon', 'number', 'dot'],
+        options: ['icon', 'circled-icon', 'number', 'dot'],
         control: {type: 'select'},
     },
 };

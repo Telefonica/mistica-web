@@ -4191,6 +4191,101 @@ const meterSnippets: Array<Snippet> = [
     },
 ];
 
+const timelineSnippets: Array<Snippet> = [
+    {
+        group: 'Timeline',
+        name: 'Timeline',
+        code: `
+<Timeline>
+  <TimelineItem state="completed">
+    <Placeholder />
+  </TimelineItem>
+  <TimelineItem state="active">
+    <Placeholder />
+  </TimelineItem>
+  <TimelineItem state="inactive">
+    <Placeholder />
+  </TimelineItem>
+</Timeline>`,
+    },
+    {
+        group: 'Timeline',
+        name: 'Timeline with numbers',
+        code: `
+<Timeline>
+  <TimelineItem state="completed" asset={{ kind: "number" }}>
+    <Placeholder />
+  </TimelineItem>
+  <TimelineItem state="active" asset={{ kind: "number", number: 2 }}>
+    <Placeholder />
+  </TimelineItem>
+  <TimelineItem state="inactive" asset={{ kind: "number", number: 3 }}>
+    <Placeholder />
+  </TimelineItem>
+</Timeline>`,
+    },
+    {
+        group: 'Timeline',
+        name: 'Timeline with icons',
+        code: `
+<Timeline>
+  <TimelineItem state="completed" asset={{ kind: "icon" }}>
+    <Placeholder />
+  </TimelineItem>
+  <TimelineItem
+    state="active"
+    asset={{ kind: "icon", Icon: IconShopRegular }}
+  >
+    <Placeholder />
+  </TimelineItem>
+  <TimelineItem
+    state="inactive"
+    asset={{ kind: "icon", Icon: IconShopRegular }}
+  >
+    <Placeholder />
+  </TimelineItem>
+</Timeline>`,
+    },
+    {
+        group: 'Timeline',
+        name: 'Timeline with custom circled icons',
+        code: `
+<Timeline>
+  <TimelineItem state="completed" asset={{ kind: "circled-icon" }}>
+    <Placeholder />
+  </TimelineItem>
+  <TimelineItem
+    state="active"
+    asset={{ kind: "circled-icon", Icon: IconShopRegular }}
+  >
+    <Placeholder />
+  </TimelineItem>
+  <TimelineItem
+    state="inactive"
+    asset={{ kind: "circled-icon", Icon: IconShopRegular }}
+  >
+    <Placeholder />
+  </TimelineItem>
+</Timeline>`,
+    },
+    {
+        group: 'Timeline',
+        name: 'Timeline horizontal',
+        code: `
+<Timeline orientation="horizontal">
+  <TimelineItem state="completed">
+    <Placeholder />
+  </TimelineItem>
+  <TimelineItem state="active">
+    <Placeholder />
+  </TimelineItem>
+  <TimelineItem state="inactive">
+    <Placeholder />
+  </TimelineItem>
+</Timeline>`,
+    },
+];
+
 export default [
     ...buttonSnippets,
     ...formSnippets,
@@ -4367,5 +4462,6 @@ export default [
     ...ProgressBlockSnippets,
     ...loadingScreenSnippets,
     ...tableSnippets,
+    ...timelineSnippets,
     drawerSnippet,
 ].sort((s1, s2) => s1.group.localeCompare(s2.group)) as Array<Snippet>;

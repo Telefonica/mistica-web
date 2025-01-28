@@ -74,24 +74,38 @@ export const asset = style({
     },
 });
 
-export const assetNumberContainer = style({
-    border: `2px solid ${vars.colors.borderHigh}`,
+const assetNumberContainerCommon = style({
     width: 32,
     height: 32,
     borderRadius: '50%',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    selectors: {
-        [`${timelineItemState.active} &`]: {
-            borderColor: vars.colors.textActivated,
-        },
-    },
 });
 
-export const line = style({
+export const assetNumberContainer = styleVariants({
+    default: [
+        assetNumberContainerCommon,
+        {
+            background: vars.colors.background,
+            border: `2px solid ${vars.colors.borderHigh}`,
+            selectors: {
+                [`${timelineItemState.active} &`]: {
+                    borderColor: vars.colors.textActivated,
+                },
+            },
+        },
+    ],
+    inverse: [
+        assetNumberContainerCommon,
+        {
+            background: vars.colors.inverse,
+        },
+    ],
+});
+
+const lineCommon = style({
     flex: 1,
-    backgroundColor: vars.colors.barTrack,
     selectors: {
         [`${timeline.horizontal} &`]: {
             height: 2,
@@ -103,4 +117,9 @@ export const line = style({
             display: 'none',
         },
     },
+});
+
+export const line = styleVariants({
+    default: [lineCommon, {backgroundColor: vars.colors.barTrack}],
+    inverse: [lineCommon, {backgroundColor: vars.colors.barTrackInverse}],
 });
