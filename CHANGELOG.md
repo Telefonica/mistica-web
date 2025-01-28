@@ -1,3 +1,12 @@
+# [16.9.0](https://github.com/Telefonica/mistica-web/compare/v16.8.0...v16.9.0) (2025-01-28)
+
+
+### Features
+
+* add label property to simple-block ([#1308](https://github.com/Telefonica/mistica-web/issues/1308)) ([2c57982](https://github.com/Telefonica/mistica-web/commit/2c57982940a2e78c87148172f817382716b814c6))
+* **Form:** Disable autofocus on error for some fields on iOS ([#1307](https://github.com/Telefonica/mistica-web/issues/1307)) ([316565d](https://github.com/Telefonica/mistica-web/commit/316565dc4eec2bc664c45fb3303afbce6112c595))
+* **icons:** New artificial intelligence and my handy icons ([#1310](https://github.com/Telefonica/mistica-web/issues/1310)) ([433db7c](https://github.com/Telefonica/mistica-web/commit/433db7cb3b8493c3fba76738fa871f653e63efaa))
+
 # [16.8.0](https://github.com/Telefonica/mistica-web/compare/v16.7.0...v16.8.0) (2025-01-09)
 
 
