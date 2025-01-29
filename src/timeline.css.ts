@@ -74,34 +74,20 @@ export const asset = style({
     },
 });
 
-const assetNumberContainerCommon = style({
+export const assetNumberContainer = style({
     width: 32,
     height: 32,
     borderRadius: '50%',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-});
-
-export const assetNumberContainer = styleVariants({
-    default: [
-        assetNumberContainerCommon,
-        {
-            background: vars.colors.background,
-            border: `2px solid ${vars.colors.borderHigh}`,
-            selectors: {
-                [`${timelineItemState.active} &`]: {
-                    borderColor: vars.colors.textActivated,
-                },
-            },
+    background: vars.colors.backgroundContainer,
+    border: `2px solid ${vars.colors.borderHigh}`,
+    selectors: {
+        [`${timelineItemState.active} &`]: {
+            borderColor: vars.colors.textActivated,
         },
-    ],
-    inverse: [
-        assetNumberContainerCommon,
-        {
-            background: vars.colors.inverse,
-        },
-    ],
+    },
 });
 
 const lineCommon = style({

@@ -96,19 +96,30 @@ export const TimelineItem = ({
     const themeVariant = useThemeVariant();
     const backgroundVariant = isDarkMode ? 'default' : themeVariant;
     const isOverInverse = backgroundVariant === 'inverse';
+
+    const renderCompletedCircle = ({size, iconSize}: {size: number; iconSize: number}) => (
+        <Circle
+            background={
+                isOverInverse
+                    ? vars.colors.backgroundContainerBrandOverInverse
+                    : vars.colors.backgroundContainerBrand
+            }
+            size={size}
+        >
+            <IconCheckFilled size={iconSize} color={vars.colors.inverse} />
+        </Circle>
+    );
+
     const renderAsset = () => {
         if (!asset) {
             return null;
         }
         if (typeof asset === 'object' && 'kind' in asset) {
-            const completedOrActiveColor = {
-                inverse: vars.colors.inverse,
-                media: vars.colors.inverse,
-                default: vars.colors.brand,
-                alternative: vars.colors.brandHigh,
-            }[backgroundVariant];
+            const completedOrActiveColor = isOverInverse
+                ? vars.colors.controlActivatedInverse
+                : vars.colors.controlActivated;
 
-            const inactiveColor = isOverInverse ? vars.colors.brandLow : vars.colors.neutralMedium;
+            const inactiveColor = isOverInverse ? vars.colors.controlInverse : vars.colors.control;
 
             const bareAssetColor = {
                 inactive: inactiveColor,
@@ -137,23 +148,14 @@ export const TimelineItem = ({
                 );
             } else if (asset.kind === 'number') {
                 return state === 'completed' ? (
-                    <Circle background={completedOrActiveColor} size={32}>
-                        <IconCheckFilled
-                            size={16}
-                            color={isOverInverse ? vars.colors.brand : vars.colors.inverse}
-                        />
-                    </Circle>
+                    renderCompletedCircle({size: 32, iconSize: 16})
                 ) : (
-                    <div className={styles.assetNumberContainer[isOverInverse ? 'inverse' : 'default']}>
+                    <div className={styles.assetNumberContainer}>
                         <ThemeVariant variant="default">
                             <Text1
                                 medium
                                 color={
-                                    state === 'active'
-                                        ? isOverInverse
-                                            ? vars.colors.brand
-                                            : vars.colors.textActivated
-                                        : vars.colors.textSecondary
+                                    state === 'active' ? vars.colors.textActivated : vars.colors.textSecondary
                                 }
                             >
                                 {asset.number}
@@ -168,16 +170,18 @@ export const TimelineItem = ({
                     <asset.Icon size={24} color={bareAssetColor} />
                 ) : null;
             } else if (asset.kind === 'circled-icon') {
-                return (
-                    <Circle background={vars.colors.background} size={40} border={!isOverInverse}>
-                        {state === 'completed' ? (
-                            <IconCheckFilled size={24} color={vars.colors.brand} />
-                        ) : asset.Icon ? (
+                return state === 'completed' ? (
+                    renderCompletedCircle({size: 40, iconSize: 24})
+                ) : (
+                    <Circle background={vars.colors.backgroundContainer} size={40} border={!isOverInverse}>
+                        {asset.Icon && (
                             <asset.Icon
                                 size={24}
-                                color={state === 'inactive' ? vars.colors.neutralMedium : vars.colors.brand}
+                                color={
+                                    state === 'inactive' ? vars.colors.control : vars.colors.controlActivated
+                                }
                             />
-                        ) : null}
+                        )}
                     </Circle>
                 );
             }
