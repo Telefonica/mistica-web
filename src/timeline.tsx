@@ -199,7 +199,9 @@ export const TimelineItem = ({
             {...getPrefixedDataAttributes(dataAttributes, 'TimelineItem')}
         >
             <div className={styles.lineContainer}>
-                <div className={styles.asset}>{renderAsset()}</div>
+                <div className={styles.asset} aria-hidden>
+                    {renderAsset()}
+                </div>
                 <div className={styles.line[isOverInverse ? 'inverse' : 'default']} />
             </div>
             <div>{children}</div>
