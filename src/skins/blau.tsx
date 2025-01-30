@@ -108,7 +108,7 @@ export const getBlauSkin: GetKnownSkin = () => {
             textLinkSnackbar: palette.blauPurple30,
             textActivated: palette.blauBlueSecondary,
             textBrand: palette.blauBluePrimary,
-            control: palette.grey2,
+            control: palette.grey5,
             controlActivated: palette.blauBlueSecondary,
             controlInverse: palette.blauBluePrimary30,
             controlActivatedInverse: palette.white,
