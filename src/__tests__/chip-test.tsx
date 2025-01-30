@@ -51,3 +51,27 @@ test('Chip can be clicked', async () => {
 
     expect(clickSpy).toHaveBeenCalledTimes(1);
 });
+
+test('Chip with href calls onNavigate', async () => {
+    const onNavigate = jest.fn();
+
+    Object.defineProperty(window, 'location', {
+        writable: true,
+        value: {assign: jest.fn()},
+    });
+
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Chip href="https://example.com" onNavigate={onNavigate}>
+                some text
+            </Chip>
+        </ThemeContextProvider>
+    );
+
+    const chip = screen.getByText('some text');
+    expect(chip.closest('a')).toHaveAttribute('href', 'https://example.com');
+
+    await userEvent.click(chip);
+
+    expect(onNavigate).toHaveBeenCalledTimes(1);
+});

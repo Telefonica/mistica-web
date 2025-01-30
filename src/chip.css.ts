@@ -66,6 +66,18 @@ export const chipVariants = styleVariants({
             cursor: 'pointer',
         },
     ],
+    navigationActive: [
+        chipActive,
+        containerBase,
+        sprinkles({
+            color: vars.colors.textPrimaryInverse,
+            background: vars.colors.controlActivated,
+        }),
+        {
+            borderColor: vars.colors.controlActivated,
+            cursor: 'pointer',
+        },
+    ],
 });
 
 export const interactive = style({
@@ -118,6 +130,10 @@ export const interactiveChipOverlay = style([
 export const icon = style([
     sprinkles({paddingRight: 4}),
     {color: vars.colors.neutralMedium, paddingRight: 4},
+]);
+export const iconNavigation = style([
+    sprinkles({paddingRight: 4}),
+    {color: vars.colors.textPrimaryInverse, paddingRight: 4},
 ]);
 
 export const iconActive = style([

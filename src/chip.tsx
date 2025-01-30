@@ -35,20 +35,47 @@ interface ToggleChipProps extends SimpleChipProps {
     active: boolean;
 }
 
-type ClickableChipProps = TouchableComponentProps<SimpleChipProps & {active?: boolean}>;
+interface NavigableChipProps extends SimpleChipProps {
+    href: string;
+}
 
-type ChipProps = ExclusifyUnion<ClosableChipProps | ToggleChipProps | ClickableChipProps>;
+type ClickableChipProps = TouchableComponentProps<
+    SimpleChipProps & {
+        active?: boolean;
+    }
+>;
+
+type ChipProps = ExclusifyUnion<
+    ClosableChipProps | ToggleChipProps | NavigableChipProps | ClickableChipProps
+>;
 
 const Chip = (props: ChipProps): JSX.Element => {
-    const {Icon, children, id, dataAttributes, active, badge, onClose, closeButtonLabel} = props;
+    const {Icon, children, id, dataAttributes, badge, onClose, closeButtonLabel} = props;
     const {texts, textPresets, t} = useTheme();
-
     const overAlternative = useThemeVariant() === 'alternative';
+
+    const href = 'href' in props ? props.href : undefined;
+    const navigationActive = !!(href && href.trim() !== '');
+
+    let isActive = false;
+    if (navigationActive) {
+        isActive = true;
+    } else if (props.active) {
+        isActive = true;
+    }
 
     const body = (
         <>
             {Icon && (
-                <div className={active ? styles.iconActive : styles.icon}>
+                <div
+                    className={
+                        isActive && navigationActive
+                            ? styles.iconNavigation
+                            : isActive
+                              ? styles.iconActive
+                              : styles.icon
+                    }
+                >
                     <Icon color="currentColor" size={pxToRem(16)} />
                 </div>
             )}
@@ -90,21 +117,29 @@ const Chip = (props: ChipProps): JSX.Element => {
             </div>
         );
     }
+
     const isTouchable = props.href || props.onPress || props.to;
-    const isInteractive = active !== undefined || isTouchable;
+    const isInteractive = isActive || isTouchable;
 
     const renderBadge = () => {
         if (!badge) {
             return null;
         }
-        return <>{badge === true ? <Badge /> : <Badge value={badge} />}</>;
+        return badge === true ? <Badge /> : <Badge value={badge} />;
     };
 
     const renderContent = (dataAttributes?: DataAttributes) => (
         <div
             className={classnames(
-                styles.chipVariants[active ? 'active' : overAlternative ? 'overAlternative' : 'default'],
-                // If the chip is wrapped inside a BaseTouchable, we set inline-flex to the Touchable instead
+                styles.chipVariants[
+                    isActive
+                        ? navigationActive
+                            ? 'navigationActive'
+                            : 'active'
+                        : overAlternative
+                          ? 'overAlternative'
+                          : 'default'
+                ],
                 isTouchable ? styles.wrappedContent : styles.chipWrapper,
                 {
                     [styles.interactive]: isInteractive,
