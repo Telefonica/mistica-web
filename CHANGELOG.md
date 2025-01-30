@@ -1,3 +1,10 @@
+# [16.10.0](https://github.com/Telefonica/mistica-web/compare/v16.9.0...v16.10.0) (2025-01-30)
+
+
+### Features
+
+* **o2-new and blau skins:** update `orange` and `control` colors ([#1314](https://github.com/Telefonica/mistica-web/issues/1314)) ([7ad9dcc](https://github.com/Telefonica/mistica-web/commit/7ad9dcc4e33dde3ff6ab6732be47a5f3319cd68b))
+
 # [16.9.0](https://github.com/Telefonica/mistica-web/compare/v16.8.0...v16.9.0) (2025-01-28)
 
 
