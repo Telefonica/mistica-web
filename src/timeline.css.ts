@@ -74,36 +74,44 @@ export const asset = style({
     },
 });
 
-export const assetNumberContainer = style({
-    width: 32,
-    height: 32,
-    borderRadius: '50%',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    background: vars.colors.backgroundContainer,
-    border: `2px solid ${vars.colors.borderHigh}`,
-    selectors: {
-        [`${timelineItemState.active} &`]: {
-            borderColor: vars.colors.textActivated,
+export const assetNumberContainer = style([
+    sprinkles({
+        width: 32,
+        height: 32,
+        borderRadius: '50%',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        background: vars.colors.backgroundContainer,
+    }),
+    {
+        border: `2px solid ${vars.colors.borderHigh}`,
+        selectors: {
+            [`${timelineItemState.active} &`]: {
+                borderColor: vars.colors.textActivated,
+            },
         },
     },
-});
+]);
 
-const lineCommon = style({
-    flex: 1,
-    selectors: {
-        [`${timeline.horizontal} &`]: {
-            height: 2,
-        },
-        [`${timeline.vertical} &`]: {
-            width: 2,
-        },
-        [`${timelineItem}:last-child &`]: {
-            display: 'none',
+const lineCommon = style([
+    sprinkles({
+        flex: 1,
+    }),
+    {
+        selectors: {
+            [`${timeline.horizontal} &`]: {
+                height: 2,
+            },
+            [`${timeline.vertical} &`]: {
+                width: 2,
+            },
+            [`${timelineItem}:last-child &`]: {
+                display: 'none',
+            },
         },
     },
-});
+]);
 
 export const line = styleVariants({
     default: [lineCommon, {backgroundColor: vars.colors.barTrack}],

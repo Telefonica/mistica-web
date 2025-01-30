@@ -127,63 +127,75 @@ export const TimelineItem = ({
                 completed: completedOrActiveColor,
             }[state];
 
-            if (asset.kind === 'dot') {
-                return (
-                    <svg width="24" height="24" viewBox="0 0 24 24">
-                        {state === 'active' && !isRunningAcceptanceTest() && (
-                            <>
-                                <AnimatedCircle stroke={bareAssetColor} />
-                                <AnimatedCircle stroke={bareAssetColor} begin="0.5s" />
-                            </>
-                        )}
-                        <circle
-                            cx="12"
-                            cy="12"
-                            r="6"
-                            strokeWidth={2}
-                            stroke={bareAssetColor}
-                            fill={state === 'completed' ? bareAssetColor : 'none'}
-                        />
-                    </svg>
-                );
-            } else if (asset.kind === 'number') {
-                return state === 'completed' ? (
-                    renderCompletedCircle({size: 32, iconSize: 16})
-                ) : (
-                    <div className={styles.assetNumberContainer}>
-                        <ThemeVariant variant="default">
-                            <Text1
-                                medium
-                                color={
-                                    state === 'active' ? vars.colors.textActivated : vars.colors.textSecondary
-                                }
-                            >
-                                {asset.number}
-                            </Text1>
-                        </ThemeVariant>
-                    </div>
-                );
-            } else if (asset.kind === 'icon') {
-                return state === 'completed' ? (
-                    <IconCheckFilled size={24} color={bareAssetColor} />
-                ) : asset.Icon ? (
-                    <asset.Icon size={24} color={bareAssetColor} />
-                ) : null;
-            } else if (asset.kind === 'circled-icon') {
-                return state === 'completed' ? (
-                    renderCompletedCircle({size: 40, iconSize: 24})
-                ) : (
-                    <Circle background={vars.colors.backgroundContainer} size={40} border={!isOverInverse}>
-                        {asset.Icon && (
-                            <asset.Icon
-                                size={24}
-                                color={
-                                    state === 'inactive' ? vars.colors.control : vars.colors.controlActivated
-                                }
+            switch (asset.kind) {
+                case 'dot':
+                    return (
+                        <svg width="24" height="24" viewBox="0 0 24 24">
+                            {state === 'active' && !isRunningAcceptanceTest() && (
+                                <>
+                                    <AnimatedCircle stroke={bareAssetColor} />
+                                    <AnimatedCircle stroke={bareAssetColor} begin="0.5s" />
+                                </>
+                            )}
+                            <circle
+                                cx="12"
+                                cy="12"
+                                r="6"
+                                strokeWidth={2}
+                                stroke={bareAssetColor}
+                                fill={state === 'completed' ? bareAssetColor : 'none'}
                             />
-                        )}
-                    </Circle>
-                );
+                        </svg>
+                    );
+                case 'number':
+                    return state === 'completed' ? (
+                        renderCompletedCircle({size: 32, iconSize: 16})
+                    ) : (
+                        <div className={styles.assetNumberContainer}>
+                            <ThemeVariant variant="default">
+                                <Text1
+                                    medium
+                                    color={
+                                        state === 'active'
+                                            ? vars.colors.textActivated
+                                            : vars.colors.textSecondary
+                                    }
+                                >
+                                    {asset.number}
+                                </Text1>
+                            </ThemeVariant>
+                        </div>
+                    );
+                case 'icon':
+                    return state === 'completed' ? (
+                        <IconCheckFilled size={24} color={bareAssetColor} />
+                    ) : asset.Icon ? (
+                        <asset.Icon size={24} color={bareAssetColor} />
+                    ) : null;
+                case 'circled-icon':
+                    return state === 'completed' ? (
+                        renderCompletedCircle({size: 40, iconSize: 24})
+                    ) : (
+                        <Circle
+                            background={vars.colors.backgroundContainer}
+                            size={40}
+                            border={!isOverInverse}
+                        >
+                            {asset.Icon && (
+                                <asset.Icon
+                                    size={24}
+                                    color={
+                                        state === 'inactive'
+                                            ? vars.colors.control
+                                            : vars.colors.controlActivated
+                                    }
+                                />
+                            )}
+                        </Circle>
+                    );
+                default:
+                    asset satisfies never;
+                    return null;
             }
         }
         return asset;
