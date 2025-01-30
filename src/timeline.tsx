@@ -216,7 +216,7 @@ export const TimelineItem = ({
                 </div>
                 <div className={styles.line[isOverInverse ? 'inverse' : 'default']} />
             </div>
-            <div>{children}</div>
+            <div className={styles.itemContent}>{children}</div>
         </div>
     );
 };

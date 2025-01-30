@@ -21,6 +21,7 @@ export const timelineItem = style([
     {
         selectors: {
             [`${timeline.horizontal} &`]: {
+                flex: 1,
                 flexDirection: 'column',
                 marginRight: 16,
             },
@@ -35,6 +36,8 @@ export const timelineItem = style([
         },
     },
 ]);
+
+export const itemContent = sprinkles({flex: 1});
 
 export const timelineItemState = styleVariants({
     active: {},
