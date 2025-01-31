@@ -4288,6 +4288,22 @@ export default [
     },
     {
         group: 'Chip',
+        name: 'Chip navigation',
+        code: '<Chip href="https://example.com">Chip</Chip>',
+    },
+    {
+        group: 'Chip',
+        name: 'Chip navigation inverse',
+        code: ` <ResponsiveLayout isInverse={true} fullWidth>
+                  <Box padding={16} width="fit-content" >
+                    <div style={{lineHeight: 0}}>
+                      <Chip href="https://example.com">Chip</Chip>
+                    </div>
+                  </Box>
+                </ResponsiveLayout>`,
+    },
+    {
+        group: 'Chip',
         name: 'Chip checkbox',
         code: `
         <Checkbox

@@ -53,6 +53,7 @@ const Chip = (props: ChipProps): JSX.Element => {
     const {Icon, children, id, dataAttributes, badge, onClose, closeButtonLabel} = props;
     const {texts, textPresets, t} = useTheme();
     const overAlternative = useThemeVariant() === 'alternative';
+    const inverse = useThemeVariant() === 'inverse';
 
     const href = 'href' in props ? props.href : undefined;
     const navigationActive = !!(href && href.trim() !== '');
@@ -70,7 +71,9 @@ const Chip = (props: ChipProps): JSX.Element => {
                 <div
                     className={
                         isActive && navigationActive
-                            ? styles.iconNavigation
+                            ? inverse
+                                ? styles.iconNavigationInverse
+                                : styles.iconNavigation //mudar cor
                             : isActive
                               ? styles.iconActive
                               : styles.icon
@@ -134,7 +137,9 @@ const Chip = (props: ChipProps): JSX.Element => {
                 styles.chipVariants[
                     isActive
                         ? navigationActive
-                            ? 'navigationActive'
+                            ? inverse
+                                ? 'navigationActiveInverse'
+                                : 'navigationActive'
                             : 'active'
                         : overAlternative
                           ? 'overAlternative'

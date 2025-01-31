@@ -9,7 +9,6 @@ import {
     RadioGroup,
     ResponsiveLayout,
 } from '..';
-
 import type {DataAttributes} from '../utils/types';
 
 const badgeOptions = ['0', '2', '14', 'undefined'];
@@ -24,6 +23,7 @@ type Args = {
     icon: boolean;
     closable: boolean;
     badge: string;
+    href: string;
 };
 
 type Props = {
@@ -35,29 +35,24 @@ type Props = {
 const ChipBackgroundContainer = ({inverse, dataAttributes, children}: Props) => (
     <ResponsiveLayout isInverse={inverse} fullWidth>
         <Box padding={16} width="fit-content" dataAttributes={dataAttributes}>
-            <div
-                style={{
-                    // prevent line-height from affecting the height of the container;
-                    // happens when changing the base font size
-                    lineHeight: 0,
-                }}
-            >
-                {children}
-            </div>
+            <div style={{lineHeight: 0}}>{children}</div>
         </Box>
     </ResponsiveLayout>
 );
 
-export const Default: StoryComponent<Args> = ({inverse, icon, closable, badge}) => {
+export const Default: StoryComponent<Args> = ({inverse, icon, closable, badge, href: hrefProp}) => {
     const props = {
         Icon: icon ? IconLightningFilled : undefined,
         badge: badge !== 'undefined' ? +badge : undefined,
+        href: hrefProp !== 'undefined' ? hrefProp : '',
     };
+
+    const {href, ...rest} = props;
 
     return (
         <ChipBackgroundContainer dataAttributes={{testid: 'chip'}} inverse={inverse}>
             {closable ? (
-                <Chip onClose={() => window.alert('closed')} {...props}>
+                <Chip onClose={() => window.alert('closed')} {...rest}>
                     Chip
                 </Chip>
             ) : (
@@ -150,11 +145,16 @@ const defaultArgs = {
     badge: '0',
     icon: false,
     closable: false,
+    href: 'undefined',
 };
 
 const defaultArgTypes = {
     badge: {
         options: badgeOptions,
+        control: {type: 'select'},
+    },
+    href: {
+        options: ['undefined', 'https://example.com'],
         control: {type: 'select'},
     },
 };

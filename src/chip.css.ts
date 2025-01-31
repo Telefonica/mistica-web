@@ -78,6 +78,17 @@ export const chipVariants = styleVariants({
             cursor: 'pointer',
         },
     ],
+    navigationActiveInverse: [
+        containerBase,
+        sprinkles({
+            color: vars.colors.controlActivated,
+            background: vars.colors.controlActivatedInverse,
+        }),
+        {
+            borderColor: vars.colors.controlActivatedInverse,
+            cursor: 'pointer',
+        },
+    ],
 });
 
 export const interactive = style({
@@ -134,6 +145,11 @@ export const icon = style([
 export const iconNavigation = style([
     sprinkles({paddingRight: 4}),
     {color: vars.colors.textPrimaryInverse, paddingRight: 4},
+]);
+
+export const iconNavigationInverse = style([
+    sprinkles({paddingRight: 4}),
+    {color: vars.colors.controlActivated, paddingRight: 4},
 ]);
 
 export const iconActive = style([
