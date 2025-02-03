@@ -73,7 +73,7 @@ const Chip = (props: ChipProps): JSX.Element => {
                         isActive && navigationActive
                             ? inverse
                                 ? styles.iconNavigationInverse
-                                : styles.iconNavigation //mudar cor
+                                : styles.iconNavigation
                             : isActive
                               ? styles.iconActive
                               : styles.icon

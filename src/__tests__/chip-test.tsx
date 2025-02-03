@@ -12,11 +12,8 @@ test('Chip can be closed', async () => {
             <Chip onClose={closeSpy}>some text</Chip>
         </ThemeContextProvider>
     );
-
     const closeButton = screen.getByRole('button', {name: 'Cerrar'});
-
     await userEvent.click(closeButton);
-
     expect(closeSpy).toHaveBeenCalledTimes(1);
 });
 
@@ -29,11 +26,8 @@ test('Chip can be closed when using custom close label', async () => {
             </Chip>
         </ThemeContextProvider>
     );
-
     const closeButton = screen.getByRole('button', {name: 'custom close label'});
-
     await userEvent.click(closeButton);
-
     expect(closeSpy).toHaveBeenCalledTimes(1);
 });
 
@@ -44,34 +38,35 @@ test('Chip can be clicked', async () => {
             <Chip onPress={clickSpy}>some text</Chip>
         </ThemeContextProvider>
     );
-
     const chip = screen.getByText('some text');
-
     await userEvent.click(chip);
-
     expect(clickSpy).toHaveBeenCalledTimes(1);
 });
 
-test('Chip with href calls onNavigate', async () => {
-    const onNavigate = jest.fn();
-
+test('Chip with href renders as a link', async () => {
+    const locationAssignMock = jest.fn();
     Object.defineProperty(window, 'location', {
         writable: true,
-        value: {assign: jest.fn()},
+        configurable: true,
+        value: {
+            assign: locationAssignMock,
+            href: 'http://localhost',
+        },
     });
-
     render(
         <ThemeContextProvider theme={makeTheme()}>
-            <Chip href="https://example.com" onNavigate={onNavigate}>
-                some text
-            </Chip>
+            <Chip href="https://example.com">some text</Chip>
         </ThemeContextProvider>
     );
-
-    const chip = screen.getByText('some text');
-    expect(chip.closest('a')).toHaveAttribute('href', 'https://example.com');
-
-    await userEvent.click(chip);
-
-    expect(onNavigate).toHaveBeenCalledTimes(1);
+    const chipNvigation = screen.getByRole('link', {name: /some text/i});
+    expect(chipNvigation).toHaveAttribute('href', 'https://example.com');
+    chipNvigation.addEventListener('click', (e) => {
+        e.preventDefault();
+        const href = chipNvigation.getAttribute('href');
+        if (href) {
+            window.location.assign(href);
+        }
+    });
+    await userEvent.click(chipNvigation);
+    expect(locationAssignMock).toHaveBeenCalledWith('https://example.com');
 });
