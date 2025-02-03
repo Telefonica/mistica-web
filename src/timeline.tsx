@@ -130,11 +130,11 @@ export const TimelineItem = ({
             switch (asset.kind) {
                 case 'dot':
                     return (
-                        <svg width="24" height="24" viewBox="0 0 24 24">
+                        <svg style={{display: 'block'}} width="24" height="24" viewBox="0 0 24 24">
                             {state === 'active' && !isRunningAcceptanceTest() && (
                                 <>
                                     <AnimatedCircle stroke={bareAssetColor} />
-                                    <AnimatedCircle stroke={bareAssetColor} begin="0.5s" />
+                                    <AnimatedCircle stroke={bareAssetColor} begin="1s" />
                                 </>
                             )}
                             <circle

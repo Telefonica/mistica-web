@@ -37,7 +37,16 @@ export const timelineItem = style([
     },
 ]);
 
-export const itemContent = sprinkles({flex: 1});
+export const itemContent = style([
+    sprinkles({
+        flex: 1,
+        minHeight: 72,
+        paddingBottom: 8,
+    }),
+    {
+        minWidth: 240,
+    },
+]);
 
 export const timelineItemState = styleVariants({
     active: {},
