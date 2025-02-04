@@ -1,3 +1,10 @@
+# [16.11.0](https://github.com/Telefonica/mistica-web/compare/v16.10.0...v16.11.0) (2025-02-04)
+
+
+### Features
+
+* **Timeline:** new component ([#1312](https://github.com/Telefonica/mistica-web/issues/1312)) ([03426af](https://github.com/Telefonica/mistica-web/commit/03426afa0f8414f7d28a2e57a796c44b634f4404))
+
 # [16.10.0](https://github.com/Telefonica/mistica-web/compare/v16.9.0...v16.10.0) (2025-01-30)
 
 
