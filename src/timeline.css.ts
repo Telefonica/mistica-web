@@ -1,4 +1,4 @@
-import {style, styleVariants} from '@vanilla-extract/css';
+import {globalStyle, style, styleVariants} from '@vanilla-extract/css';
 import {vars} from './skins/skin-contract.css';
 import {sprinkles} from './sprinkles.css';
 
@@ -84,6 +84,10 @@ export const asset = style({
             marginBottom: 16,
         },
     },
+});
+
+globalStyle(`${asset} svg`, {
+    display: 'block',
 });
 
 export const assetNumberContainer = style([
