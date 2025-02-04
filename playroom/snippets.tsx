@@ -4289,7 +4289,7 @@ export default [
     {
         group: 'Chip',
         name: 'Chip navigation',
-        code: '<Chip href="https://example.com">Chip</Chip>',
+        code: '<Chip active={true} href="https://example.com">Chip</Chip>',
     },
     {
         group: 'Chip',

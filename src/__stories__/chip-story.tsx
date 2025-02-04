@@ -23,6 +23,7 @@ type Args = {
     inverse: boolean;
     icon: boolean;
     closable: boolean;
+    active: boolean;
     badge: string;
     href: string;
 };
@@ -41,14 +42,22 @@ const ChipBackgroundContainer = ({inverse, dataAttributes, children}: Props) => 
     </ResponsiveLayout>
 );
 
-export const Default: StoryComponent<Args> = ({inverse, icon, closable, badge, href: hrefProp}) => {
+export const Default: StoryComponent<Args> = ({
+    inverse,
+    icon,
+    closable,
+    badge,
+    active: chipActive,
+    href: hrefProp,
+}) => {
     const props = {
         Icon: icon ? IconLightningFilled : undefined,
         badge: badge !== 'undefined' ? +badge : undefined,
         href: hrefProp !== 'undefined' ? hrefProp : '',
+        active: chipActive,
     };
 
-    const {href, ...rest} = props;
+    const {href, active, ...rest} = props;
 
     return (
         <ChipBackgroundContainer dataAttributes={{testid: 'chip'}} inverse={inverse}>
@@ -143,6 +152,7 @@ export const MultipleSelection: StoryComponent<Omit<Args, 'closable'>> = ({inver
 
 const defaultArgs = {
     inverse: false,
+    active: false,
     badge: '0',
     icon: false,
     closable: false,

@@ -56,27 +56,21 @@ const Chip = (props: ChipProps): JSX.Element => {
     const inverse = useThemeVariant() === 'inverse';
 
     const href = 'href' in props ? props.href : undefined;
-    const navigationActive = !!(href && href.trim() !== '');
-
-    let isActive = false;
-    if (navigationActive) {
-        isActive = true;
-    } else if (props.active) {
-        isActive = true;
-    }
+    const isActive = !!props.active;
+    const isNavigationActive = !!(href && href.trim() !== '');
 
     const body = (
         <>
             {Icon && (
                 <div
                     className={
-                        isActive && navigationActive
-                            ? inverse
-                                ? styles.iconNavigationInverse
-                                : styles.iconNavigation
-                            : isActive
-                              ? styles.iconActive
-                              : styles.icon
+                        isActive
+                            ? isNavigationActive
+                                ? inverse
+                                    ? styles.iconNavigationInverse
+                                    : styles.iconNavigation
+                                : styles.iconActive
+                            : styles.icon
                     }
                 >
                     <Icon color="currentColor" size={pxToRem(16)} />
@@ -136,7 +130,7 @@ const Chip = (props: ChipProps): JSX.Element => {
             className={classnames(
                 styles.chipVariants[
                     isActive
-                        ? navigationActive
+                        ? isNavigationActive
                             ? inverse
                                 ? 'navigationActiveInverse'
                                 : 'navigationActive'
@@ -145,6 +139,7 @@ const Chip = (props: ChipProps): JSX.Element => {
                           ? 'overAlternative'
                           : 'default'
                 ],
+
                 isTouchable ? styles.wrappedContent : styles.chipWrapper,
                 {
                     [styles.interactive]: isInteractive,
