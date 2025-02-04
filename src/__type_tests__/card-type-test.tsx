@@ -73,6 +73,7 @@ import Image from '../image';
 (isTouchable: boolean) => <SnapCard title="title" onPress={isTouchable ? () => {} : undefined} />;
 
 <NakedCard media={<Image src="/something.png" />} title="title" />;
+<NakedCard title="title" />;
 <NakedCard
     media={<Image src="/something.png" />}
     title="title"

@@ -691,7 +691,17 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
     }
 );
 
-export const NakedCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
+type NakedCardProps = Omit<MediaCardBaseProps, 'media'> & {
+    media?: MediaCardBaseProps['media'];
+} & ExclusifyUnion<
+        | TouchableProps
+        | {
+              button?: RendersNullableElement<typeof ButtonPrimary>;
+              buttonLink?: RendersNullableElement<typeof ButtonLink>;
+          }
+    >;
+
+export const NakedCard = React.forwardRef<HTMLDivElement, NakedCardProps>(
     (
         {
             media,
@@ -757,7 +767,7 @@ export const NakedCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
                             )}
                             {media}
                         </div>
-                        <div className={styles.nakedCardContent}>
+                        <div className={styles.nakedCardContent} style={{paddingTop: media ? 16 : 0}}>
                             <CardContent
                                 headline={headline}
                                 headlineRef={headlineRef}
@@ -802,7 +812,7 @@ export const NakedCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
 );
 
 type SmallNakedCardProps = MaybeTouchableCard<{
-    media: RendersElement<typeof Image> | RendersElement<typeof Video>;
+    media?: RendersElement<typeof Image> | RendersElement<typeof Video>;
     title?: string;
     titleAs?: HeadingType;
     titleLinesMax?: number;
@@ -859,17 +869,19 @@ export const SmallNakedCard = React.forwardRef<HTMLDivElement, SmallNakedCardPro
                     aria-label={isTouchable ? ariaLabel : undefined}
                 >
                     <div className={styles.mediaCard} aria-hidden={isTouchable}>
-                        <div style={{position: 'relative'}}>
-                            {isTouchable && (
-                                <div
-                                    className={classNames(styles.touchableNakedMediaOverlay, {
-                                        [styles.circularMediaOverlay]: isCircularMedia,
-                                    })}
-                                />
-                            )}
-                            {media}
-                        </div>
-                        <div className={styles.nakedCardContent}>
+                        {media && (
+                            <div style={{position: 'relative'}}>
+                                {isTouchable && (
+                                    <div
+                                        className={classNames(styles.touchableNakedMediaOverlay, {
+                                            [styles.circularMediaOverlay]: isCircularMedia,
+                                        })}
+                                    />
+                                )}
+                                {media}
+                            </div>
+                        )}
+                        <div className={styles.nakedCardContent} style={{paddingTop: media ? 16 : 0}}>
                             <div>
                                 <Stack space={4}>
                                     {title && (

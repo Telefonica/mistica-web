@@ -240,7 +240,6 @@ export const nakedCardContent = style([
         position: 'relative',
         flexDirection: 'column',
         justifyContent: 'space-between',
-        paddingTop: 16,
         paddingRight: 16,
     }),
     {
