@@ -184,7 +184,7 @@ Default.argTypes = {
         control: {type: 'select'},
     },
     media: {
-        options: ['image', 'circular image', 'video'],
+        options: ['image', 'circular image', 'video', 'none'],
         control: {type: 'select'},
     },
     headlineType: {
@@ -259,7 +259,7 @@ Small.args = {
 };
 Small.argTypes = {
     media: {
-        options: ['image', 'circular image'],
+        options: ['image', 'circular image', 'none'],
         control: {type: 'select'},
     },
 };
