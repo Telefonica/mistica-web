@@ -82,10 +82,10 @@ export const chipVariants = styleVariants({
         containerBase,
         sprinkles({
             color: vars.colors.controlActivated,
-            background: vars.colors.controlActivatedInverse,
+            background: vars.colors.brandLow,
         }),
         {
-            borderColor: vars.colors.controlActivatedInverse,
+            borderColor: vars.colors.controlActivated,
             cursor: 'pointer',
         },
     ],
