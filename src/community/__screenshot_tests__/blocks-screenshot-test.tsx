@@ -52,7 +52,43 @@ test('Blocks Row Block', async () => {
 });
 
 test('Blocks Simple Block', async () => {
-    await openStoryPage({id: 'community-blocks--block-simple', device: 'MOBILE_IOS'});
+    await openStoryPage({
+        id: 'community-blocks--block-simple',
+        device: 'MOBILE_IOS',
+    });
+
+    const stepper = await screen.findByTestId('simple-block');
+
+    const image = await stepper.screenshot();
+
+    expect(image).toMatchImageSnapshot();
+});
+
+test('Blocks Simple Block with long content', async () => {
+    await openStoryPage({
+        id: 'community-blocks--block-simple',
+        device: 'MOBILE_IOS',
+        args: {
+            description: 'This is a very long description to verify text alignment',
+        },
+    });
+
+    const stepper = await screen.findByTestId('simple-block');
+
+    const image = await stepper.screenshot();
+
+    expect(image).toMatchImageSnapshot();
+});
+
+test('Blocks Simple Block without right text', async () => {
+    await openStoryPage({
+        id: 'community-blocks--block-simple',
+        device: 'MOBILE_IOS',
+        args: {
+            description: 'This is a very long description to verify text alignment',
+            rightText: '',
+        },
+    });
 
     const stepper = await screen.findByTestId('simple-block');
 
