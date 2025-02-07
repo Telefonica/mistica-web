@@ -108,11 +108,13 @@ export const SimpleBlock = ({
                         {description}
                     </Text2>
                 </Inline>
-                <div className={styles.rightContent}>
-                    <Text2 regular color={vars.colors.textBrand}>
-                        {rightText}
-                    </Text2>
-                </div>
+                {rightText && (
+                    <div className={styles.rightContent}>
+                        <Text2 regular color={vars.colors.textBrand}>
+                            {rightText}
+                        </Text2>
+                    </div>
+                )}
             </Inline>
         </div>
     );
