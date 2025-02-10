@@ -81,7 +81,7 @@ export const chipVariants = styleVariants({
     navigationActiveInverse: [
         containerBase,
         sprinkles({
-            color: vars.colors.controlActivated,
+            color: vars.colors.textActivated,
             background: vars.colors.brandLow,
         }),
         {
