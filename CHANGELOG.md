@@ -1,3 +1,10 @@
+## [16.11.1](https://github.com/Telefonica/mistica-web/compare/v16.11.0...v16.11.1) (2025-02-12)
+
+
+### Bug Fixes
+
+* **SimpleBlock:** remove wrong right padding when no rightText provided ([#1317](https://github.com/Telefonica/mistica-web/issues/1317)) ([3daabb1](https://github.com/Telefonica/mistica-web/commit/3daabb1397fa3c48b17cf91fff3131e8e1d2a4fc))
+
 # [16.11.0](https://github.com/Telefonica/mistica-web/compare/v16.10.0...v16.11.0) (2025-02-04)
 
 
