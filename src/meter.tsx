@@ -128,6 +128,7 @@ type MeterProps = {
     colors?: Array<string>;
     reverse?: boolean;
     dataAttributes?: DataAttributes;
+    extra?: React.ReactNode;
     'aria-hidden'?: boolean | 'true' | 'false';
     'aria-label'?: string;
     'aria-labelledby'?: string;
@@ -143,6 +144,7 @@ const MeterComponent = ({
     'aria-hidden': ariaHidden = false,
     'aria-label': ariaLabel,
     'aria-labelledby': ariaLabelledBy,
+    extra,
 }: MeterProps): JSX.Element => {
     const {borderRadii, t} = useTheme();
     const {ref: containerRef, width: containerWidth} = useElementDimensions();
@@ -281,10 +283,19 @@ const MeterComponent = ({
         ' ' +
         values.map((v, i) => `${t(meterSectionLabel, i + 1, Math.round(v * 100))}`).join('. ');
 
+    const extraStyle = React.useMemo(() => {
+        const gap =
+            type === TYPE_CIRCULAR ? (height / 2) * 0.2929 : type === TYPE_ANGULAR ? height * 0.2929 : 0;
+        return {
+            gap,
+            minHeight: type === TYPE_LINEAR ? 0 : type === TYPE_ANGULAR ? height - gap : height - gap * 2,
+        };
+    }, [height, type]);
+
     return (
         <div
             ref={containerRef}
-            style={{width: widthProp}}
+            style={{width: widthProp, position: 'relative'}}
             role="meter"
             aria-label={ariaLabel || (ariaLabelledBy ? undefined : valueText)}
             aria-labelledby={ariaLabelledBy}
@@ -480,6 +491,19 @@ const MeterComponent = ({
                         );
                     })}
             </svg>
+            {extra && (
+                <div
+                    style={{
+                        position: 'absolute',
+                        left: extraStyle.gap,
+                        right: extraStyle.gap,
+                        top: extraStyle.gap,
+                        minHeight: extraStyle.minHeight,
+                    }}
+                >
+                    {extra}
+                </div>
+            )}
         </div>
     );
 };

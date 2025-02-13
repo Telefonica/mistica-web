@@ -71,6 +71,7 @@ type MeterStoryArgs = {
     value6: number;
     value7: number;
     value8: number;
+    extraContent: string;
 };
 
 export const MeterStory: StoryComponent<MeterStoryArgs> = ({
@@ -81,6 +82,7 @@ export const MeterStory: StoryComponent<MeterStoryArgs> = ({
     fullWidth,
     width,
     ariaLabel,
+    extraContent,
     ...valuesArgs
 }) => {
     const values = Object.values(valuesArgs).slice(0, valuesCount);
@@ -100,6 +102,7 @@ export const MeterStory: StoryComponent<MeterStoryArgs> = ({
                         reverse={reverse}
                         values={values}
                         width={fullWidth ? '100%' : width}
+                        {...(extraContent ? {extra: <p>extraContent</p>} : {})}
                     />
                 </Box>
             </ResponsiveLayout>
@@ -124,4 +127,5 @@ MeterStory.args = {
     value6: 10,
     value7: 10,
     value8: 10,
+    extraContent: 'This is a small extra',
 };
