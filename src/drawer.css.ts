@@ -59,7 +59,7 @@ export const scrollableSection = style([
 ]);
 
 export const open = style({
-    transform: '',
+    transform: 'initial',
 });
 
 export const closed = style({
