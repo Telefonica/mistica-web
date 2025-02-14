@@ -283,19 +283,26 @@ const MeterComponent = ({
         ' ' +
         values.map((v, i) => `${t(meterSectionLabel, i + 1, Math.round(v * 100))}`).join('. ');
 
-    const extraStyle = React.useMemo(() => {
-        const gap =
-            type === TYPE_CIRCULAR ? (height / 2) * 0.2929 : type === TYPE_ANGULAR ? height * 0.2929 : 0;
-        return {
-            gap,
-            minHeight: type === TYPE_LINEAR ? 0 : type === TYPE_ANGULAR ? height - gap : height - gap * 2,
-        };
-    }, [height, type]);
+    const extraDimensions = React.useMemo(() => {
+        if (type === TYPE_LINEAR) {
+            return {
+                gap: 0,
+                minHeight: 0,
+            };
+        } else {
+            const COS_45 = 0.52532198881;
+            const gap = width / 2 - (width / 2 - STROKE_WIDTH_PX) * COS_45;
+            return {
+                gap,
+                minHeight: type === TYPE_ANGULAR ? width / 2 - gap + STROKE_WIDTH_PX / 2 : width - gap * 2,
+            };
+        }
+    }, [width, type]);
 
     return (
         <div
             ref={containerRef}
-            style={{width: widthProp, position: 'relative'}}
+            style={{width: widthProp, ...(type !== TYPE_LINEAR ? {position: 'relative'} : {})}}
             role="meter"
             aria-label={ariaLabel || (ariaLabelledBy ? undefined : valueText)}
             aria-labelledby={ariaLabelledBy}
@@ -494,11 +501,16 @@ const MeterComponent = ({
             {extra && (
                 <div
                     style={{
-                        position: 'absolute',
-                        left: extraStyle.gap,
-                        right: extraStyle.gap,
-                        top: extraStyle.gap,
-                        minHeight: extraStyle.minHeight,
+                        display: 'flex',
+                        ...(type !== TYPE_LINEAR
+                            ? {
+                                  position: 'absolute',
+                                  left: extraDimensions.gap,
+                                  right: extraDimensions.gap,
+                                  top: extraDimensions.gap,
+                                  minHeight: extraDimensions.minHeight,
+                              }
+                            : {}),
                     }}
                 >
                     {extra}
