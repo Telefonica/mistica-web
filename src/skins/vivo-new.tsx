@@ -339,7 +339,7 @@ export const getVivoNewSkin: GetKnownSkin = () => {
             text1: {lineHeight: {desktop: 20, mobile: 16}, size: {desktop: 14, mobile: 12}},
             text2: {lineHeight: {desktop: 24, mobile: 20}, size: {desktop: 16, mobile: 14}},
             text3: {lineHeight: {desktop: 24, mobile: 24}, size: {desktop: 18, mobile: 16}},
-            text4: {lineHeight: {desktop: 28, mobile: 24}, size: {desktop: 20, mobile: 18}},
+            text4: {lineHeight: {desktop: 28, mobile: 24}, size: {desktop: 24, mobile: 18}},
             text5: {lineHeight: {desktop: 32, mobile: 24}, size: {desktop: 28, mobile: 20}, weight: 'medium'},
             text6: {lineHeight: {desktop: 40, mobile: 32}, size: {desktop: 32, mobile: 24}, weight: 'medium'},
             text7: {lineHeight: {desktop: 48, mobile: 32}, size: {desktop: 40, mobile: 28}, weight: 'medium'},
@@ -362,7 +362,7 @@ export const getVivoNewSkin: GetKnownSkin = () => {
             title2: {weight: 'medium'},
             title3: {
                 lineHeight: {desktop: 28, mobile: 24},
-                size: {desktop: 20, mobile: 18},
+                size: {desktop: 24, mobile: 18},
                 weight: 'medium',
             },
         },
