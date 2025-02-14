@@ -20,12 +20,12 @@ test.each`
     ${[20, 20, 20, 20, 0]} | ${'linear'}   | ${'default'} | ${''}
     ${[20, 20, 20, 20, 0]} | ${'circular'} | ${'default'} | ${''}
     ${[20, 20, 20, 20, 0]} | ${'angular'}  | ${'default'} | ${''}
-    ${[0]}                 | ${'linear'}   | ${'default'} | ${'This is a small extra'}
-    ${[0]}                 | ${'linear'}   | ${'default'} | ${'This is a super long extra This is a super long extra This is a super long extra This is a super long extra'}
-    ${[0]}                 | ${'angular'}  | ${'default'} | ${'This is a small extra'}
-    ${[0]}                 | ${'angular'}  | ${'default'} | ${'This is a super long extra This is a super long extra This is a super long extra This is a super long extra'}
-    ${[0]}                 | ${'circular'} | ${'default'} | ${'This is a small extra'}
-    ${[0]}                 | ${'circular'} | ${'default'} | ${'This is a super long extra This is a super long extra This is a super long extra This is a super long extra'}
+    ${[33, 33]}            | ${'linear'}   | ${'default'} | ${'This is a small extra'}
+    ${[33, 33]}            | ${'linear'}   | ${'default'} | ${'This is a super long extra This is a super long extra This is a super long extra This is a super long extra'}
+    ${[33, 33]}            | ${'angular'}  | ${'default'} | ${'This is a small extra'}
+    ${[33, 33]}            | ${'angular'}  | ${'default'} | ${'This is a super long extra This is a super long extra This is a super long extra This is a super long extra'}
+    ${[33, 33]}            | ${'circular'} | ${'default'} | ${'This is a small extra'}
+    ${[33, 33]}            | ${'circular'} | ${'default'} | ${'This is a super long extra This is a super long extra This is a super long extra This is a super long extra'}
 `('Meter $themeVariant $type $values', async ({themeVariant, values, type, extraContent}) => {
     await openStoryPage({
         id: 'components-data-visualizations-meter--meter-story',
