@@ -23,7 +23,9 @@ type Args = {
     inverse: boolean;
     icon: boolean;
     closable: boolean;
+    active: boolean;
     badge: string;
+    href: string;
 };
 
 type Props = {
@@ -35,29 +37,32 @@ type Props = {
 const ChipBackgroundContainer = ({inverse, dataAttributes, children}: Props) => (
     <ResponsiveLayout isInverse={inverse} fullWidth>
         <Box padding={16} width="fit-content" dataAttributes={dataAttributes}>
-            <div
-                style={{
-                    // prevent line-height from affecting the height of the container;
-                    // happens when changing the base font size
-                    lineHeight: 0,
-                }}
-            >
-                {children}
-            </div>
+            <div style={{lineHeight: 0}}>{children}</div>
         </Box>
     </ResponsiveLayout>
 );
 
-export const Default: StoryComponent<Args> = ({inverse, icon, closable, badge}) => {
+export const Default: StoryComponent<Args> = ({
+    inverse,
+    icon,
+    closable,
+    badge,
+    active: chipActive,
+    href: hrefProp,
+}) => {
     const props = {
         Icon: icon ? IconLightningFilled : undefined,
         badge: badge !== 'undefined' ? +badge : undefined,
+        href: hrefProp !== 'undefined' ? hrefProp : '',
+        active: chipActive,
     };
+
+    const {href, active, ...rest} = props;
 
     return (
         <ChipBackgroundContainer dataAttributes={{testid: 'chip'}} inverse={inverse}>
             {closable ? (
-                <Chip onClose={() => window.alert('closed')} {...props}>
+                <Chip onClose={() => window.alert('closed')} {...rest}>
                     Chip
                 </Chip>
             ) : (
@@ -147,14 +152,20 @@ export const MultipleSelection: StoryComponent<Omit<Args, 'closable'>> = ({inver
 
 const defaultArgs = {
     inverse: false,
+    active: false,
     badge: '0',
     icon: false,
     closable: false,
+    href: 'undefined',
 };
 
 const defaultArgTypes = {
     badge: {
         options: badgeOptions,
+        control: {type: 'select'},
+    },
+    href: {
+        options: ['undefined', 'https://example.com'],
         control: {type: 'select'},
     },
 };
