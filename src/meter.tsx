@@ -303,7 +303,7 @@ const MeterComponent = ({
     return (
         <div
             ref={containerRef}
-            style={{width: widthProp}}
+            style={{width: widthProp, minHeight: height}}
             role="meter"
             aria-label={ariaLabel || (ariaLabelledBy ? undefined : valueText)}
             aria-labelledby={ariaLabelledBy}
