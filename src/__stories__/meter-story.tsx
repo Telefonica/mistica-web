@@ -110,21 +110,19 @@ export const MeterStory: StoryComponent<MeterStoryArgs> = ({
                         reverse={reverse}
                         values={values}
                         width={fullWidth ? '100%' : width}
-                        {...(extraContent
-                            ? {
-                                  extra: (
-                                      <div
-                                          style={{
-                                              alignSelf: extraAlignment,
-                                              justifyContent: 'center',
-                                              ...(type === 'linear' ? {} : {margin: '0 auto'}),
-                                          }}
-                                      >
-                                          <div>{extraContent}</div>
-                                      </div>
-                                  ),
-                              }
-                            : {})}
+                        extra={
+                            extraContent ? (
+                                <div
+                                    style={{
+                                        alignSelf: extraAlignment,
+                                        justifyContent: 'center',
+                                        ...(type === 'linear' ? {} : {margin: '0 auto'}),
+                                    }}
+                                >
+                                    <div>{extraContent}</div>
+                                </div>
+                            ) : undefined
+                        }
                     />
                 </Box>
             </ResponsiveLayout>
