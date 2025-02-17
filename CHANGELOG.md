@@ -1,3 +1,10 @@
+## [16.11.2](https://github.com/Telefonica/mistica-web/compare/v16.11.1...v16.11.2) (2025-02-14)
+
+
+### Bug Fixes
+
+* **Drawer:** missing css value for transform ([#1319](https://github.com/Telefonica/mistica-web/issues/1319)) ([fd775d6](https://github.com/Telefonica/mistica-web/commit/fd775d607378e8016886bd7924802cfb9ffe9ab8))
+
 ## [16.11.1](https://github.com/Telefonica/mistica-web/compare/v16.11.0...v16.11.1) (2025-02-12)
 
 
