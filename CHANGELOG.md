@@ -1,3 +1,10 @@
+# [16.12.0](https://github.com/Telefonica/mistica-web/compare/v16.11.2...v16.12.0) (2025-02-17)
+
+
+### Features
+
+* **Meter:** added extra prop ([#1318](https://github.com/Telefonica/mistica-web/issues/1318)) ([631591b](https://github.com/Telefonica/mistica-web/commit/631591bb304aabcc2fa02f056ef89be9e7a6c2ae))
+
 ## [16.11.2](https://github.com/Telefonica/mistica-web/compare/v16.11.1...v16.11.2) (2025-02-14)
 
 
