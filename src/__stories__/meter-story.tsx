@@ -4,6 +4,8 @@ import beachImg from './images/beach.jpg';
 
 import type {MeterType} from '../meter';
 
+type MeterExtraAlignment = 'start' | 'center' | 'end';
+
 export default {
     title: 'Components/Data Visualizations/Meter',
     argTypes: {
@@ -49,6 +51,10 @@ export default {
         value8: {
             control: {type: 'range', min: 0, max: 100, step: 1},
         },
+        extraAlignment: {
+            options: ['start', 'center', 'end'] as Array<MeterExtraAlignment>,
+            control: {type: 'select'},
+        },
     },
     parameters: {
         fullScreen: true,
@@ -71,6 +77,8 @@ type MeterStoryArgs = {
     value6: number;
     value7: number;
     value8: number;
+    extraContent: string;
+    extraAlignment: MeterExtraAlignment;
 };
 
 export const MeterStory: StoryComponent<MeterStoryArgs> = ({
@@ -81,6 +89,8 @@ export const MeterStory: StoryComponent<MeterStoryArgs> = ({
     fullWidth,
     width,
     ariaLabel,
+    extraContent,
+    extraAlignment,
     ...valuesArgs
 }) => {
     const values = Object.values(valuesArgs).slice(0, valuesCount);
@@ -100,6 +110,19 @@ export const MeterStory: StoryComponent<MeterStoryArgs> = ({
                         reverse={reverse}
                         values={values}
                         width={fullWidth ? '100%' : width}
+                        extra={
+                            extraContent ? (
+                                <div
+                                    style={{
+                                        alignSelf: extraAlignment,
+                                        justifyContent: 'center',
+                                        ...(type === 'linear' ? {} : {margin: '0 auto'}),
+                                    }}
+                                >
+                                    <div>{extraContent}</div>
+                                </div>
+                            ) : undefined
+                        }
                     />
                 </Box>
             </ResponsiveLayout>
@@ -124,4 +147,6 @@ MeterStory.args = {
     value6: 10,
     value7: 10,
     value8: 10,
+    extraContent: 'This is a small extra',
+    extraAlignment: 'center',
 };
