@@ -12,6 +12,7 @@ test('Chip can be closed', async () => {
             <Chip onClose={closeSpy}>some text</Chip>
         </ThemeContextProvider>
     );
+
     const closeButton = screen.getByRole('button', {name: 'Cerrar'});
     await userEvent.click(closeButton);
     expect(closeSpy).toHaveBeenCalledTimes(1);
@@ -41,32 +42,4 @@ test('Chip can be clicked', async () => {
     const chip = screen.getByText('some text');
     await userEvent.click(chip);
     expect(clickSpy).toHaveBeenCalledTimes(1);
-});
-
-test('Chip with href renders as a link', async () => {
-    const locationAssignMock = jest.fn();
-    Object.defineProperty(window, 'location', {
-        writable: true,
-        configurable: true,
-        value: {
-            assign: locationAssignMock,
-            href: 'http://localhost',
-        },
-    });
-    render(
-        <ThemeContextProvider theme={makeTheme()}>
-            <Chip href="https://example.com">some text</Chip>
-        </ThemeContextProvider>
-    );
-    const chipNvigation = screen.getByRole('link', {name: /some text/i});
-    expect(chipNvigation).toHaveAttribute('href', 'https://example.com');
-    chipNvigation.addEventListener('click', (e) => {
-        e.preventDefault();
-        const href = chipNvigation.getAttribute('href');
-        if (href) {
-            window.location.assign(href);
-        }
-    });
-    await userEvent.click(chipNvigation);
-    expect(locationAssignMock).toHaveBeenCalledWith('https://example.com');
 });

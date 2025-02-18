@@ -35,38 +35,32 @@ interface ToggleChipProps extends SimpleChipProps {
     active: boolean;
 }
 
-interface NavigableChipProps extends SimpleChipProps {
-    href: string;
+interface ToggleChipProps extends SimpleChipProps {
+    active: boolean;
 }
 
-type ClickableChipProps = TouchableComponentProps<
-    SimpleChipProps & {
-        active?: boolean;
-    }
->;
+type ClickableChipProps = TouchableComponentProps<SimpleChipProps & {active?: boolean}>;
 
-type ChipProps = ExclusifyUnion<
-    ClosableChipProps | ToggleChipProps | NavigableChipProps | ClickableChipProps
->;
+type ChipProps = ExclusifyUnion<ClosableChipProps | ToggleChipProps | ClickableChipProps>;
 
 const Chip = (props: ChipProps): JSX.Element => {
-    const {Icon, children, id, dataAttributes, badge, onClose, closeButtonLabel} = props;
+    const {Icon, children, id, dataAttributes, badge, active, onClose, closeButtonLabel} = props;
     const {texts, textPresets, t} = useTheme();
-    const overAlternative = useThemeVariant() === 'alternative';
-    const inverse = useThemeVariant() === 'inverse';
+    const themeVariante = useThemeVariant();
+    const overAlternative = themeVariante === 'alternative';
+    const overInverse = themeVariante === 'inverse';
 
-    const href = 'href' in props ? props.href : undefined;
-    const isActive = !!props.active;
-    const isNavigationActive = !!(href && href.trim() !== '');
+    const isTouchable = props.href || props.onPress || props.to;
+    const isInteractive = active !== undefined || isTouchable;
 
     const body = (
         <>
             {Icon && (
                 <div
                     className={
-                        isActive
-                            ? isNavigationActive
-                                ? inverse
+                        !!props.active
+                            ? isTouchable
+                                ? overInverse
                                     ? styles.iconNavigationInverse
                                     : styles.iconNavigation
                                 : styles.iconActive
@@ -115,9 +109,6 @@ const Chip = (props: ChipProps): JSX.Element => {
         );
     }
 
-    const isTouchable = props.href || props.onPress || props.to;
-    const isInteractive = isActive || isTouchable;
-
     const renderBadge = () => {
         if (!badge) {
             return null;
@@ -129,9 +120,9 @@ const Chip = (props: ChipProps): JSX.Element => {
         <div
             className={classnames(
                 styles.chipVariants[
-                    isActive
-                        ? isNavigationActive
-                            ? inverse
+                    !!props.active
+                        ? isTouchable
+                            ? overInverse
                                 ? 'navigationActiveInverse'
                                 : 'navigationActive'
                             : 'active'

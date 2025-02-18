@@ -37,7 +37,15 @@ type Props = {
 const ChipBackgroundContainer = ({inverse, dataAttributes, children}: Props) => (
     <ResponsiveLayout isInverse={inverse} fullWidth>
         <Box padding={16} width="fit-content" dataAttributes={dataAttributes}>
-            <div style={{lineHeight: 0}}>{children}</div>
+            <div
+                style={{
+                    // prevent line-height from affecting the height of the container;
+                    // happens when changing the base font size
+                    lineHeight: 0,
+                }}
+            >
+                {children}
+            </div>
         </Box>
     </ResponsiveLayout>
 );
@@ -149,6 +157,26 @@ export const MultipleSelection: StoryComponent<Omit<Args, 'closable'>> = ({inver
         </ChipBackgroundContainer>
     );
 };
+export const NavigableChip: StoryComponent<Omit<Args, 'closable'>> = ({
+    inverse,
+    icon,
+    badge,
+    active: chipActive,
+    href: hrefProp,
+}) => {
+    const props = {
+        Icon: icon ? IconLightningFilled : undefined,
+        badge: badge !== 'undefined' ? +badge : undefined,
+        href: hrefProp !== 'undefined' ? hrefProp : '',
+        active: chipActive,
+    };
+
+    return (
+        <ChipBackgroundContainer dataAttributes={{testid: 'chip'}} inverse={inverse}>
+            <Chip {...props}>Chip</Chip>
+        </ChipBackgroundContainer>
+    );
+};
 
 const defaultArgs = {
     inverse: false,
@@ -157,6 +185,14 @@ const defaultArgs = {
     icon: false,
     closable: false,
     href: 'undefined',
+};
+
+const navigableArgs = {
+    inverse: false,
+    active: true,
+    badge: '0',
+    icon: false,
+    href: 'https://example.com',
 };
 
 const defaultArgTypes = {
@@ -179,3 +215,6 @@ SingleSelection.args = {...(({closable, ...o}) => o)(defaultArgs)};
 
 MultipleSelection.argTypes = defaultArgTypes;
 MultipleSelection.args = {...(({closable, ...o}) => o)(defaultArgs)};
+
+NavigableChip.argTypes = defaultArgTypes;
+NavigableChip.args = navigableArgs;

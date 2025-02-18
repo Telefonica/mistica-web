@@ -63,3 +63,34 @@ test('Chip - should expand when inside a grid', async () => {
 
     expect(await story.screenshot()).toMatchImageSnapshot();
 });
+test('Chip - navigable with href and active', async () => {
+    await openStoryPage({
+        id: 'components-chip--navigable-chip',
+        device: 'DESKTOP',
+        args: {
+            href: 'https://example.com',
+            active: true,
+            icon: true,
+        },
+    });
+
+    const story = await screen.findByTestId('chip');
+
+    expect(await story.screenshot()).toMatchImageSnapshot();
+});
+test('Chip - navigable with href and active and inverse', async () => {
+    await openStoryPage({
+        id: 'components-chip--navigable-chip',
+        device: 'DESKTOP',
+        args: {
+            href: 'https://example.com',
+            active: true,
+            icon: true,
+            inverse: true,
+        },
+    });
+
+    const story = await screen.findByTestId('chip');
+
+    expect(await story.screenshot()).toMatchImageSnapshot();
+});
