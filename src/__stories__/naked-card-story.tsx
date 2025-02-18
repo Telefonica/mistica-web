@@ -38,7 +38,7 @@ const IMAGE_SRC = tennisImg;
 
 type Args = {
     asset: 'circle with icon' | 'circle with image' | 'none';
-    media: 'image' | 'circular image' | 'video';
+    media: 'image' | 'circular image' | 'video' | 'none';
     headlineType: TagType;
     headline: string;
     pretitle: string;
@@ -117,7 +117,7 @@ export const Default: StoryComponent<Args> = ({
                     subtitle={subtitle}
                     description={description}
                     media={
-                        media === 'video' ? (
+                        media === 'none' ? undefined : media === 'video' ? (
                             <Video src={emptySource ? '' : VIDEO_SRC} aspectRatio="16:9" />
                         ) : media === 'image' ? (
                             <Image aspectRatio="16:9" src={emptySource ? '' : IMAGE_SRC} />
@@ -184,7 +184,7 @@ Default.argTypes = {
         control: {type: 'select'},
     },
     media: {
-        options: ['image', 'circular image', 'video'],
+        options: ['image', 'circular image', 'video', 'none'],
         control: {type: 'select'},
     },
     headlineType: {
@@ -206,7 +206,7 @@ Default.argTypes = {
 };
 
 type SmallArgs = {
-    media: 'image' | 'circular image';
+    media: 'image' | 'circular image' | 'none';
     title: string;
     subtitle: string;
     description: string;
@@ -230,7 +230,7 @@ export const Small: StoryComponent<SmallArgs> = ({
                 <SmallNakedCard
                     dataAttributes={{testid: 'small-naked-card'}}
                     media={
-                        media === 'image' ? (
+                        media === 'none' ? undefined : media === 'image' ? (
                             <Image aspectRatio="16:9" src={emptySource ? '' : IMAGE_SRC} />
                         ) : (
                             <Image circular src={emptySource ? '' : IMAGE_SRC} />
@@ -259,7 +259,7 @@ Small.args = {
 };
 Small.argTypes = {
     media: {
-        options: ['image', 'circular image'],
+        options: ['image', 'circular image', 'none'],
         control: {type: 'select'},
     },
 };

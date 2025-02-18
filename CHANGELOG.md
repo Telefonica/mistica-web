@@ -1,3 +1,31 @@
+# [16.12.0](https://github.com/Telefonica/mistica-web/compare/v16.11.2...v16.12.0) (2025-02-17)
+
+
+### Features
+
+* **Meter:** added extra prop ([#1318](https://github.com/Telefonica/mistica-web/issues/1318)) ([631591b](https://github.com/Telefonica/mistica-web/commit/631591bb304aabcc2fa02f056ef89be9e7a6c2ae))
+
+## [16.11.2](https://github.com/Telefonica/mistica-web/compare/v16.11.1...v16.11.2) (2025-02-14)
+
+
+### Bug Fixes
+
+* **Drawer:** missing css value for transform ([#1319](https://github.com/Telefonica/mistica-web/issues/1319)) ([fd775d6](https://github.com/Telefonica/mistica-web/commit/fd775d607378e8016886bd7924802cfb9ffe9ab8))
+
+## [16.11.1](https://github.com/Telefonica/mistica-web/compare/v16.11.0...v16.11.1) (2025-02-12)
+
+
+### Bug Fixes
+
+* **SimpleBlock:** remove wrong right padding when no rightText provided ([#1317](https://github.com/Telefonica/mistica-web/issues/1317)) ([3daabb1](https://github.com/Telefonica/mistica-web/commit/3daabb1397fa3c48b17cf91fff3131e8e1d2a4fc))
+
+# [16.11.0](https://github.com/Telefonica/mistica-web/compare/v16.10.0...v16.11.0) (2025-02-04)
+
+
+### Features
+
+* **Timeline:** new component ([#1312](https://github.com/Telefonica/mistica-web/issues/1312)) ([03426af](https://github.com/Telefonica/mistica-web/commit/03426afa0f8414f7d28a2e57a796c44b634f4404))
+
 # [16.10.0](https://github.com/Telefonica/mistica-web/compare/v16.9.0...v16.10.0) (2025-01-30)
 
 

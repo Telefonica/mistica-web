@@ -71,6 +71,21 @@ test('NakedCard with circular image ', async () => {
     expect(image).toMatchImageSnapshot();
 });
 
+test('NakedCard without media ', async () => {
+    await openStoryPage({
+        id: 'components-cards-nakedcard--default',
+        device: 'MOBILE_IOS',
+        args: {
+            media: 'none',
+        },
+    });
+
+    const nakedCard = await screen.findByTestId('naked-card');
+    const image = await nakedCard.screenshot({captureBeyondViewport: true});
+
+    expect(image).toMatchImageSnapshot();
+});
+
 test('NakedCard closeable', async () => {
     await openStoryPage({
         id: 'components-cards-nakedcard--default',
@@ -166,6 +181,21 @@ test('SmallNakedCard with circular image ', async () => {
         device: 'MOBILE_IOS',
         args: {
             media: 'circular image',
+        },
+    });
+
+    const smallNakedCard = await screen.findByTestId('small-naked-card');
+    const image = await smallNakedCard.screenshot({captureBeyondViewport: true});
+
+    expect(image).toMatchImageSnapshot();
+});
+
+test('SmallNakedCard without media ', async () => {
+    await openStoryPage({
+        id: 'components-cards-nakedcard--small',
+        device: 'MOBILE_IOS',
+        args: {
+            media: 'none',
         },
     });
 
