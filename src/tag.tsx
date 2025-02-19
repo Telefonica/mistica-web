@@ -13,6 +13,7 @@ import {useTheme} from './hooks';
 import Badge from './badge';
 
 import type {DataAttributes, IconProps} from './utils/types';
+import {background} from './skeletons.css';
 
 export type TagType = 'promo' | 'active' | 'inactive' | 'success' | 'warning' | 'error';
 
@@ -30,6 +31,7 @@ const {colors} = vars;
 const Tag = ({Icon, children, dataAttributes, type = 'promo', badge}: TagProps): JSX.Element | null => {
     const {textPresets} = useTheme();
     const themeVariant = useThemeVariant();
+    const isInverse = themeVariant === 'inverse';
     const badgeValue = badge === true ? undefined : badge || 0;
 
     if (!children) {
@@ -37,20 +39,47 @@ const Tag = ({Icon, children, dataAttributes, type = 'promo', badge}: TagProps):
     }
 
     const tagTypeToColors = {
-        // [textColor, backgroundColor]
-        promo: [colors.tagTextPromo, colors.tagBackgroundPromo],
-        active: [colors.tagTextActive, colors.tagBackgroundActive],
+        // [textColor, inverseTextColor, backgroundColor, backgroundColorInverse]
+        promo: [
+            colors.tagTextPromo,
+            colors.tagTextPromoInverse,
+            colors.tagBackgroundPromo,
+            colors.tagBackgroundPromoInverse,
+        ],
+        active: [
+            colors.tagTextActive,
+            colors.tagTextActiveInverse,
+            colors.tagBackgroundActive,
+            colors.tagBackgroundActiveInverse,
+        ],
         inactive: [
             colors.tagTextInactive,
+            colors.tagTextInactiveInverse,
             // TODO: remove logic for alternative variant (https://jira.tid.es/browse/WEB-1803)
             themeVariant === 'alternative' ? colors.neutralLowAlternative : colors.tagBackgroundInactive,
+            colors.tagBackgroundInactiveInverse,
         ],
-        success: [colors.tagTextSuccess, colors.tagBackgroundSuccess],
-        warning: [colors.tagTextWarning, colors.tagBackgroundWarning],
-        error: [colors.tagTextError, colors.tagBackgroundError],
+        success: [
+            colors.tagTextSuccess,
+            colors.tagTextSuccessInverse,
+            colors.tagBackgroundSuccess,
+            colors.tagBackgroundSuccessInverse,
+        ],
+        warning: [
+            colors.tagTextWarning,
+            colors.tagTextWarningInverse,
+            colors.tagBackgroundWarning,
+            colors.tagBackgroundWarningInverse,
+        ],
+        error: [
+            colors.tagTextError,
+            colors.tagTextErrorInverse,
+            colors.tagBackgroundError,
+            colors.tagBackgroundErrorInverse,
+        ],
     } as const;
 
-    const [textColor, backgroundColor] = tagTypeToColors[type];
+    const [textColor, inverseTextColor, backgroundColor, backgroundColorInverse] = tagTypeToColors[type];
 
     return (
         <span
@@ -59,17 +88,21 @@ const Tag = ({Icon, children, dataAttributes, type = 'promo', badge}: TagProps):
             style={{
                 paddingLeft: Icon ? 8 : 12,
                 paddingRight: badgeValue !== 0 ? 8 : 12,
-                background: backgroundColor,
+                background: isInverse ? backgroundColorInverse : backgroundColor,
             }}
         >
             {Icon && (
                 <Box paddingRight={4}>
-                    <Icon color={textColor} size={pxToRem(16)} className={styles.icon} />
+                    <Icon
+                        color={isInverse ? inverseTextColor : textColor}
+                        size={pxToRem(16)}
+                        className={styles.icon}
+                    />
                 </Box>
             )}
             <ThemeVariant isInverse={false}>
                 <Text
-                    color={textColor}
+                    color={isInverse ? inverseTextColor : textColor}
                     size={14}
                     lineHeight={20}
                     weight={textPresets.indicator.weight}
