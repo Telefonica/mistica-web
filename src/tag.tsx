@@ -13,7 +13,6 @@ import {useTheme} from './hooks';
 import Badge from './badge';
 
 import type {DataAttributes, IconProps} from './utils/types';
-import {background} from './skeletons.css';
 
 export type TagType = 'promo' | 'active' | 'inactive' | 'success' | 'warning' | 'error';
 
