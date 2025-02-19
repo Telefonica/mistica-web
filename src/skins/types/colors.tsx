@@ -130,5 +130,17 @@ export type Colors = {
     tagBackgroundSuccess: string;
     tagBackgroundWarning: string;
     tagBackgroundError: string;
+    tagTextPromoInverse: string;
+    tagTextActiveInverse: string;
+    tagTextInactiveInverse: string;
+    tagTextSuccessInverse: string;
+    tagTextWarningInverse: string;
+    tagTextErrorInverse: string;
+    tagBackgroundPromoInverse: string;
+    tagBackgroundActiveInverse: string;
+    tagBackgroundInactiveInverse: string;
+    tagBackgroundSuccessInverse: string;
+    tagBackgroundWarningInverse: string;
+    tagBackgroundErrorInverse: string;
     cardContentOverlay: string;
 };

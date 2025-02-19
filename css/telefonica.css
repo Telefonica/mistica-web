@@ -36,7 +36,7 @@
     --mistica-telefonica-orchid40: #d694f4;
 
     /* Raw palette colors, for use with rgba() */
-    --mistica-telefonica-raw-telefonicaBlue: 0, 102, 255;
+    --mistica-telefonica-raw-telefonicaBlue70: 3, 86, 201;
     --mistica-telefonica-raw-darkModeBlack: 25, 25, 25;
     --mistica-telefonica-raw-grey6: 88, 97, 122;
     --mistica-telefonica-raw-white: 255, 255, 255;
@@ -48,8 +48,8 @@
     --mistica-color-background: var(--mistica-telefonica-white);
     --mistica-color-backgroundContainer: var(--mistica-telefonica-white);
     --mistica-color-backgroundContainerError: var(--mistica-telefonica-coral10);
-    --mistica-color-backgroundContainerHover: rgba(var(--mistica-telefonica-raw-telefonicaBlue), 0.03);
-    --mistica-color-backgroundContainerPressed: rgba(var(--mistica-telefonica-raw-telefonicaBlue), 0.05);
+    --mistica-color-backgroundContainerHover: rgba(var(--mistica-telefonica-raw-telefonicaBlue70), 0.05);
+    --mistica-color-backgroundContainerPressed: rgba(var(--mistica-telefonica-raw-telefonicaBlue70), 0.08);
     --mistica-color-backgroundContainerBrand: var(--mistica-telefonica-telefonicaBlue);
     --mistica-color-backgroundContainerBrandHover: rgba(var(--mistica-telefonica-raw-darkModeBlack), 0.2);
     --mistica-color-backgroundContainerBrandPressed: rgba(var(--mistica-telefonica-raw-darkModeBlack), 0.4);
@@ -175,6 +175,18 @@
     --mistica-color-tagBackgroundSuccess: var(--mistica-telefonica-turquoise10);
     --mistica-color-tagBackgroundWarning: var(--mistica-telefonica-ambar10);
     --mistica-color-tagBackgroundError: var(--mistica-telefonica-coral10);
+    --mistica-color-tagTextPromoInverse: var(--mistica-telefonica-orchid70);
+    --mistica-color-tagTextActiveInverse: var(--mistica-telefonica-telefonicaBlue);
+    --mistica-color-tagTextInactiveInverse: var(--mistica-telefonica-grey5);
+    --mistica-color-tagTextSuccessInverse: var(--mistica-telefonica-turquoise70);
+    --mistica-color-tagTextWarningInverse: var(--mistica-telefonica-ambar70);
+    --mistica-color-tagTextErrorInverse: var(--mistica-telefonica-coral70);
+    --mistica-color-tagBackgroundPromoInverse: var(--mistica-telefonica-orchid10);
+    --mistica-color-tagBackgroundActiveInverse: var(--mistica-telefonica-telefonicaBlue10);
+    --mistica-color-tagBackgroundInactiveInverse: var(--mistica-telefonica-grey1);
+    --mistica-color-tagBackgroundSuccessInverse: var(--mistica-telefonica-turquoise10);
+    --mistica-color-tagBackgroundWarningInverse: var(--mistica-telefonica-ambar10);
+    --mistica-color-tagBackgroundErrorInverse: var(--mistica-telefonica-coral10);
     --mistica-color-cardContentOverlay: linear-gradient(
         180deg,
         rgba(var(--mistica-telefonica-raw-black), 0) 0%,
@@ -246,8 +258,8 @@
     --mistica-color-backgroundBrandSecondary: var(--mistica-telefonica-darkModeBlack);
     --mistica-color-backgroundContainer: var(--mistica-telefonica-darkModeGrey);
     --mistica-color-backgroundContainerError: var(--mistica-telefonica-darkModeGrey);
-    --mistica-color-backgroundContainerHover: rgba(var(--mistica-telefonica-raw-white), 0.03);
-    --mistica-color-backgroundContainerPressed: rgba(var(--mistica-telefonica-raw-white), 0.05);
+    --mistica-color-backgroundContainerHover: rgba(var(--mistica-telefonica-raw-white), 0.05);
+    --mistica-color-backgroundContainerPressed: rgba(var(--mistica-telefonica-raw-white), 0.08);
     --mistica-color-backgroundContainerBrand: var(--mistica-telefonica-darkModeGrey);
     --mistica-color-backgroundContainerBrandHover: rgba(var(--mistica-telefonica-raw-white), 0.03);
     --mistica-color-backgroundContainerBrandPressed: rgba(var(--mistica-telefonica-raw-white), 0.05);
@@ -371,6 +383,18 @@
     --mistica-color-tagBackgroundSuccess: var(--mistica-telefonica-darkModeGrey6);
     --mistica-color-tagBackgroundWarning: var(--mistica-telefonica-darkModeGrey6);
     --mistica-color-tagBackgroundError: var(--mistica-telefonica-darkModeGrey6);
+    --mistica-color-tagTextPromoInverse: var(--mistica-telefonica-orchid40);
+    --mistica-color-tagTextActiveInverse: var(--mistica-telefonica-telefonicaBlue);
+    --mistica-color-tagTextInactiveInverse: var(--mistica-telefonica-grey5);
+    --mistica-color-tagTextSuccessInverse: var(--mistica-telefonica-turquoise40);
+    --mistica-color-tagTextWarningInverse: var(--mistica-telefonica-ambar40);
+    --mistica-color-tagTextErrorInverse: var(--mistica-telefonica-coral40);
+    --mistica-color-tagBackgroundPromoInverse: var(--mistica-telefonica-darkModeGrey6);
+    --mistica-color-tagBackgroundActiveInverse: var(--mistica-telefonica-darkModeGrey6);
+    --mistica-color-tagBackgroundInactiveInverse: var(--mistica-telefonica-darkModeGrey6);
+    --mistica-color-tagBackgroundSuccessInverse: var(--mistica-telefonica-darkModeGrey6);
+    --mistica-color-tagBackgroundWarningInverse: var(--mistica-telefonica-darkModeGrey6);
+    --mistica-color-tagBackgroundErrorInverse: var(--mistica-telefonica-darkModeGrey6);
     --mistica-color-cardContentOverlay: linear-gradient(
         180deg,
         rgba(var(--mistica-telefonica-raw-black), 0) 0%,
@@ -387,8 +411,8 @@
         --mistica-color-backgroundBrandSecondary: var(--mistica-telefonica-darkModeBlack);
         --mistica-color-backgroundContainer: var(--mistica-telefonica-darkModeGrey);
         --mistica-color-backgroundContainerError: var(--mistica-telefonica-darkModeGrey);
-        --mistica-color-backgroundContainerHover: rgba(var(--mistica-telefonica-raw-white), 0.03);
-        --mistica-color-backgroundContainerPressed: rgba(var(--mistica-telefonica-raw-white), 0.05);
+        --mistica-color-backgroundContainerHover: rgba(var(--mistica-telefonica-raw-white), 0.05);
+        --mistica-color-backgroundContainerPressed: rgba(var(--mistica-telefonica-raw-white), 0.08);
         --mistica-color-backgroundContainerBrand: var(--mistica-telefonica-darkModeGrey);
         --mistica-color-backgroundContainerBrandHover: rgba(var(--mistica-telefonica-raw-white), 0.03);
         --mistica-color-backgroundContainerBrandPressed: rgba(var(--mistica-telefonica-raw-white), 0.05);
@@ -521,6 +545,18 @@
         --mistica-color-tagBackgroundSuccess: var(--mistica-telefonica-darkModeGrey6);
         --mistica-color-tagBackgroundWarning: var(--mistica-telefonica-darkModeGrey6);
         --mistica-color-tagBackgroundError: var(--mistica-telefonica-darkModeGrey6);
+        --mistica-color-tagTextPromoInverse: var(--mistica-telefonica-orchid40);
+        --mistica-color-tagTextActiveInverse: var(--mistica-telefonica-telefonicaBlue);
+        --mistica-color-tagTextInactiveInverse: var(--mistica-telefonica-grey5);
+        --mistica-color-tagTextSuccessInverse: var(--mistica-telefonica-turquoise40);
+        --mistica-color-tagTextWarningInverse: var(--mistica-telefonica-ambar40);
+        --mistica-color-tagTextErrorInverse: var(--mistica-telefonica-coral40);
+        --mistica-color-tagBackgroundPromoInverse: var(--mistica-telefonica-darkModeGrey6);
+        --mistica-color-tagBackgroundActiveInverse: var(--mistica-telefonica-darkModeGrey6);
+        --mistica-color-tagBackgroundInactiveInverse: var(--mistica-telefonica-darkModeGrey6);
+        --mistica-color-tagBackgroundSuccessInverse: var(--mistica-telefonica-darkModeGrey6);
+        --mistica-color-tagBackgroundWarningInverse: var(--mistica-telefonica-darkModeGrey6);
+        --mistica-color-tagBackgroundErrorInverse: var(--mistica-telefonica-darkModeGrey6);
         --mistica-color-cardContentOverlay: linear-gradient(
             180deg,
             rgba(var(--mistica-telefonica-raw-black), 0) 0%,
@@ -536,8 +572,11 @@
         --mistica-color-backgroundBrandSecondary: var(--mistica-telefonica-telefonicaBlue);
         --mistica-color-backgroundContainer: var(--mistica-telefonica-white);
         --mistica-color-backgroundContainerError: var(--mistica-telefonica-coral10);
-        --mistica-color-backgroundContainerHover: rgba(var(--mistica-telefonica-raw-telefonicaBlue), 0.03);
-        --mistica-color-backgroundContainerPressed: rgba(var(--mistica-telefonica-raw-telefonicaBlue), 0.05);
+        --mistica-color-backgroundContainerHover: rgba(var(--mistica-telefonica-raw-telefonicaBlue70), 0.05);
+        --mistica-color-backgroundContainerPressed: rgba(
+            var(--mistica-telefonica-raw-telefonicaBlue70),
+            0.08
+        );
         --mistica-color-backgroundContainerBrand: var(--mistica-telefonica-telefonicaBlue);
         --mistica-color-backgroundContainerBrandHover: rgba(var(--mistica-telefonica-raw-darkModeBlack), 0.2);
         --mistica-color-backgroundContainerBrandPressed: rgba(
@@ -667,6 +706,18 @@
         --mistica-color-tagBackgroundSuccess: var(--mistica-telefonica-turquoise10);
         --mistica-color-tagBackgroundWarning: var(--mistica-telefonica-ambar10);
         --mistica-color-tagBackgroundError: var(--mistica-telefonica-coral10);
+        --mistica-color-tagTextPromoInverse: var(--mistica-telefonica-orchid70);
+        --mistica-color-tagTextActiveInverse: var(--mistica-telefonica-telefonicaBlue);
+        --mistica-color-tagTextInactiveInverse: var(--mistica-telefonica-grey5);
+        --mistica-color-tagTextSuccessInverse: var(--mistica-telefonica-turquoise70);
+        --mistica-color-tagTextWarningInverse: var(--mistica-telefonica-ambar70);
+        --mistica-color-tagTextErrorInverse: var(--mistica-telefonica-coral70);
+        --mistica-color-tagBackgroundPromoInverse: var(--mistica-telefonica-orchid10);
+        --mistica-color-tagBackgroundActiveInverse: var(--mistica-telefonica-telefonicaBlue10);
+        --mistica-color-tagBackgroundInactiveInverse: var(--mistica-telefonica-grey1);
+        --mistica-color-tagBackgroundSuccessInverse: var(--mistica-telefonica-turquoise10);
+        --mistica-color-tagBackgroundWarningInverse: var(--mistica-telefonica-ambar10);
+        --mistica-color-tagBackgroundErrorInverse: var(--mistica-telefonica-coral10);
         --mistica-color-cardContentOverlay: linear-gradient(
             180deg,
             rgba(var(--mistica-telefonica-raw-black), 0) 0%,

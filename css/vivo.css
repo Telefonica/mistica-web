@@ -45,8 +45,8 @@
     --mistica-color-backgroundBrandSecondary: var(--mistica-vivo-vivoPurple);
     --mistica-color-backgroundContainer: var(--mistica-vivo-white);
     --mistica-color-backgroundContainerError: var(--mistica-vivo-pepperLight10);
-    --mistica-color-backgroundContainerHover: rgba(var(--mistica-vivo-raw-darkModeBlack), 0.03);
-    --mistica-color-backgroundContainerPressed: rgba(var(--mistica-vivo-raw-darkModeBlack), 0.05);
+    --mistica-color-backgroundContainerHover: rgba(var(--mistica-vivo-raw-darkModeBlack), 0.05);
+    --mistica-color-backgroundContainerPressed: rgba(var(--mistica-vivo-raw-darkModeBlack), 0.08);
     --mistica-color-backgroundContainerBrand: var(--mistica-vivo-vivoPurple);
     --mistica-color-backgroundContainerBrandHover: rgba(var(--mistica-vivo-raw-darkModeBlack), 0.2);
     --mistica-color-backgroundContainerBrandPressed: rgba(var(--mistica-vivo-raw-darkModeBlack), 0.4);
@@ -170,6 +170,18 @@
     --mistica-color-tagBackgroundSuccess: var(--mistica-vivo-vivoGreenLight10);
     --mistica-color-tagBackgroundWarning: var(--mistica-vivo-orangeLight10);
     --mistica-color-tagBackgroundError: var(--mistica-vivo-pepperLight10);
+    --mistica-color-tagTextPromoInverse: var(--mistica-vivo-vivoPurple);
+    --mistica-color-tagTextActiveInverse: var(--mistica-vivo-vivoPurple);
+    --mistica-color-tagTextInactiveInverse: var(--mistica-vivo-grey5);
+    --mistica-color-tagTextSuccessInverse: var(--mistica-vivo-vivoGreenDark);
+    --mistica-color-tagTextWarningInverse: var(--mistica-vivo-orangeDark);
+    --mistica-color-tagTextErrorInverse: var(--mistica-vivo-pepperDark80);
+    --mistica-color-tagBackgroundPromoInverse: var(--mistica-vivo-vivoPurpleLight10);
+    --mistica-color-tagBackgroundActiveInverse: var(--mistica-vivo-vivoPurpleLight10);
+    --mistica-color-tagBackgroundInactiveInverse: var(--mistica-vivo-grey1);
+    --mistica-color-tagBackgroundSuccessInverse: var(--mistica-vivo-vivoGreenLight10);
+    --mistica-color-tagBackgroundWarningInverse: var(--mistica-vivo-orangeLight10);
+    --mistica-color-tagBackgroundErrorInverse: var(--mistica-vivo-pepperLight10);
     --mistica-color-cardContentOverlay: linear-gradient(
         180deg,
         rgba(var(--mistica-vivo-raw-grey6), 0) 0%,
@@ -241,8 +253,8 @@
     --mistica-color-backgroundBrandSecondary: var(--mistica-vivo-darkModeBlack);
     --mistica-color-backgroundContainer: var(--mistica-vivo-darkModeGrey);
     --mistica-color-backgroundContainerError: var(--mistica-vivo-darkModeGrey);
-    --mistica-color-backgroundContainerHover: rgba(var(--mistica-vivo-raw-white), 0.03);
-    --mistica-color-backgroundContainerPressed: rgba(var(--mistica-vivo-raw-white), 0.05);
+    --mistica-color-backgroundContainerHover: rgba(var(--mistica-vivo-raw-white), 0.05);
+    --mistica-color-backgroundContainerPressed: rgba(var(--mistica-vivo-raw-white), 0.08);
     --mistica-color-backgroundContainerBrand: var(--mistica-vivo-darkModeGrey);
     --mistica-color-backgroundContainerBrandHover: rgba(var(--mistica-vivo-raw-white), 0.03);
     --mistica-color-backgroundContainerBrandPressed: rgba(var(--mistica-vivo-raw-white), 0.05);
@@ -366,6 +378,18 @@
     --mistica-color-tagBackgroundSuccess: var(--mistica-vivo-darkModeGrey6);
     --mistica-color-tagBackgroundWarning: var(--mistica-vivo-darkModeGrey6);
     --mistica-color-tagBackgroundError: var(--mistica-vivo-darkModeGrey6);
+    --mistica-color-tagTextPromoInverse: var(--mistica-vivo-vivoPurpleLight50);
+    --mistica-color-tagTextActiveInverse: var(--mistica-vivo-vivoPurpleLight80);
+    --mistica-color-tagTextInactiveInverse: var(--mistica-vivo-grey5);
+    --mistica-color-tagTextSuccessInverse: var(--mistica-vivo-vivoGreenLight30);
+    --mistica-color-tagTextWarningInverse: var(--mistica-vivo-orangeLight40);
+    --mistica-color-tagTextErrorInverse: var(--mistica-vivo-pepperLight40);
+    --mistica-color-tagBackgroundPromoInverse: var(--mistica-vivo-darkModeGrey6);
+    --mistica-color-tagBackgroundActiveInverse: var(--mistica-vivo-darkModeGrey6);
+    --mistica-color-tagBackgroundInactiveInverse: var(--mistica-vivo-darkModeGrey6);
+    --mistica-color-tagBackgroundSuccessInverse: var(--mistica-vivo-darkModeGrey6);
+    --mistica-color-tagBackgroundWarningInverse: var(--mistica-vivo-darkModeGrey6);
+    --mistica-color-tagBackgroundErrorInverse: var(--mistica-vivo-darkModeGrey6);
     --mistica-color-cardContentOverlay: linear-gradient(
         180deg,
         rgba(var(--mistica-vivo-raw-grey6), 0) 0%,
@@ -382,8 +406,8 @@
         --mistica-color-backgroundBrandSecondary: var(--mistica-vivo-darkModeBlack);
         --mistica-color-backgroundContainer: var(--mistica-vivo-darkModeGrey);
         --mistica-color-backgroundContainerError: var(--mistica-vivo-darkModeGrey);
-        --mistica-color-backgroundContainerHover: rgba(var(--mistica-vivo-raw-white), 0.03);
-        --mistica-color-backgroundContainerPressed: rgba(var(--mistica-vivo-raw-white), 0.05);
+        --mistica-color-backgroundContainerHover: rgba(var(--mistica-vivo-raw-white), 0.05);
+        --mistica-color-backgroundContainerPressed: rgba(var(--mistica-vivo-raw-white), 0.08);
         --mistica-color-backgroundContainerBrand: var(--mistica-vivo-darkModeGrey);
         --mistica-color-backgroundContainerBrandHover: rgba(var(--mistica-vivo-raw-white), 0.03);
         --mistica-color-backgroundContainerBrandPressed: rgba(var(--mistica-vivo-raw-white), 0.05);
@@ -507,6 +531,18 @@
         --mistica-color-tagBackgroundSuccess: var(--mistica-vivo-darkModeGrey6);
         --mistica-color-tagBackgroundWarning: var(--mistica-vivo-darkModeGrey6);
         --mistica-color-tagBackgroundError: var(--mistica-vivo-darkModeGrey6);
+        --mistica-color-tagTextPromoInverse: var(--mistica-vivo-vivoPurpleLight50);
+        --mistica-color-tagTextActiveInverse: var(--mistica-vivo-vivoPurpleLight80);
+        --mistica-color-tagTextInactiveInverse: var(--mistica-vivo-grey5);
+        --mistica-color-tagTextSuccessInverse: var(--mistica-vivo-vivoGreenLight30);
+        --mistica-color-tagTextWarningInverse: var(--mistica-vivo-orangeLight40);
+        --mistica-color-tagTextErrorInverse: var(--mistica-vivo-pepperLight40);
+        --mistica-color-tagBackgroundPromoInverse: var(--mistica-vivo-darkModeGrey6);
+        --mistica-color-tagBackgroundActiveInverse: var(--mistica-vivo-darkModeGrey6);
+        --mistica-color-tagBackgroundInactiveInverse: var(--mistica-vivo-darkModeGrey6);
+        --mistica-color-tagBackgroundSuccessInverse: var(--mistica-vivo-darkModeGrey6);
+        --mistica-color-tagBackgroundWarningInverse: var(--mistica-vivo-darkModeGrey6);
+        --mistica-color-tagBackgroundErrorInverse: var(--mistica-vivo-darkModeGrey6);
         --mistica-color-cardContentOverlay: linear-gradient(
             180deg,
             rgba(var(--mistica-vivo-raw-grey6), 0) 0%,
@@ -522,8 +558,8 @@
         --mistica-color-backgroundBrandSecondary: var(--mistica-vivo-vivoPurple);
         --mistica-color-backgroundContainer: var(--mistica-vivo-white);
         --mistica-color-backgroundContainerError: var(--mistica-vivo-pepperLight10);
-        --mistica-color-backgroundContainerHover: rgba(var(--mistica-vivo-raw-darkModeBlack), 0.03);
-        --mistica-color-backgroundContainerPressed: rgba(var(--mistica-vivo-raw-darkModeBlack), 0.05);
+        --mistica-color-backgroundContainerHover: rgba(var(--mistica-vivo-raw-darkModeBlack), 0.05);
+        --mistica-color-backgroundContainerPressed: rgba(var(--mistica-vivo-raw-darkModeBlack), 0.08);
         --mistica-color-backgroundContainerBrand: var(--mistica-vivo-vivoPurple);
         --mistica-color-backgroundContainerBrandHover: rgba(var(--mistica-vivo-raw-darkModeBlack), 0.2);
         --mistica-color-backgroundContainerBrandPressed: rgba(var(--mistica-vivo-raw-darkModeBlack), 0.4);
@@ -647,6 +683,18 @@
         --mistica-color-tagBackgroundSuccess: var(--mistica-vivo-vivoGreenLight10);
         --mistica-color-tagBackgroundWarning: var(--mistica-vivo-orangeLight10);
         --mistica-color-tagBackgroundError: var(--mistica-vivo-pepperLight10);
+        --mistica-color-tagTextPromoInverse: var(--mistica-vivo-vivoPurple);
+        --mistica-color-tagTextActiveInverse: var(--mistica-vivo-vivoPurple);
+        --mistica-color-tagTextInactiveInverse: var(--mistica-vivo-grey5);
+        --mistica-color-tagTextSuccessInverse: var(--mistica-vivo-vivoGreenDark);
+        --mistica-color-tagTextWarningInverse: var(--mistica-vivo-orangeDark);
+        --mistica-color-tagTextErrorInverse: var(--mistica-vivo-pepperDark80);
+        --mistica-color-tagBackgroundPromoInverse: var(--mistica-vivo-vivoPurpleLight10);
+        --mistica-color-tagBackgroundActiveInverse: var(--mistica-vivo-vivoPurpleLight10);
+        --mistica-color-tagBackgroundInactiveInverse: var(--mistica-vivo-grey1);
+        --mistica-color-tagBackgroundSuccessInverse: var(--mistica-vivo-vivoGreenLight10);
+        --mistica-color-tagBackgroundWarningInverse: var(--mistica-vivo-orangeLight10);
+        --mistica-color-tagBackgroundErrorInverse: var(--mistica-vivo-pepperLight10);
         --mistica-color-cardContentOverlay: linear-gradient(
             180deg,
             rgba(var(--mistica-vivo-raw-grey6), 0) 0%,
