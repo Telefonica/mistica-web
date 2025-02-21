@@ -58,7 +58,7 @@ const Chip = (props: ChipProps): JSX.Element => {
             {Icon && (
                 <div
                     className={
-                        props.active
+                        active
                             ? isTouchable
                                 ? overInverse
                                     ? styles.iconNavigationInverse
@@ -120,7 +120,7 @@ const Chip = (props: ChipProps): JSX.Element => {
         <div
             className={classnames(
                 styles.chipVariants[
-                    props.active
+                    active
                         ? isTouchable
                             ? overInverse
                                 ? 'navigationActiveInverse'

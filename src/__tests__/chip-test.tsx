@@ -14,7 +14,9 @@ test('Chip can be closed', async () => {
     );
 
     const closeButton = screen.getByRole('button', {name: 'Cerrar'});
+
     await userEvent.click(closeButton);
+
     expect(closeSpy).toHaveBeenCalledTimes(1);
 });
 
@@ -27,8 +29,11 @@ test('Chip can be closed when using custom close label', async () => {
             </Chip>
         </ThemeContextProvider>
     );
+
     const closeButton = screen.getByRole('button', {name: 'custom close label'});
+
     await userEvent.click(closeButton);
+
     expect(closeSpy).toHaveBeenCalledTimes(1);
 });
 
@@ -39,7 +44,10 @@ test('Chip can be clicked', async () => {
             <Chip onPress={clickSpy}>some text</Chip>
         </ThemeContextProvider>
     );
+
     const chip = screen.getByText('some text');
+
     await userEvent.click(chip);
+
     expect(clickSpy).toHaveBeenCalledTimes(1);
 });

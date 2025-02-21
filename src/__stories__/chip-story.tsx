@@ -157,22 +157,20 @@ export const MultipleSelection: StoryComponent<Omit<Args, 'closable'>> = ({inver
         </ChipBackgroundContainer>
     );
 };
-export const NavigableChip: StoryComponent<Omit<Args, 'closable'>> = ({
-    inverse,
-    icon,
-    badge,
-    active: chipActive,
-    href: hrefProp,
-}) => {
+export const NavigableChip: StoryComponent<{
+    inverse: boolean;
+    icon: boolean;
+    badge: string;
+}> = ({inverse, icon, badge}) => {
     const props = {
         Icon: icon ? IconLightningFilled : undefined,
         badge: badge !== 'undefined' ? +badge : undefined,
-        href: hrefProp !== 'undefined' ? hrefProp : '',
-        active: chipActive,
+        href: 'https://example.com',
+        active: true,
     };
 
     return (
-        <ChipBackgroundContainer dataAttributes={{testid: 'chip'}} inverse={inverse}>
+        <ChipBackgroundContainer dataAttributes={{testid: 'navigable-chip'}} inverse={inverse}>
             <Chip {...props}>Chip</Chip>
         </ChipBackgroundContainer>
     );
@@ -189,10 +187,8 @@ const defaultArgs = {
 
 const navigableArgs = {
     inverse: false,
-    active: true,
     badge: '0',
     icon: false,
-    href: 'https://example.com',
 };
 
 const defaultArgTypes = {
@@ -202,6 +198,12 @@ const defaultArgTypes = {
     },
     href: {
         options: ['undefined', 'https://example.com'],
+        control: {type: 'select'},
+    },
+};
+const NavigableChipArgTypes = {
+    badge: {
+        options: badgeOptions,
         control: {type: 'select'},
     },
 };
@@ -216,5 +218,5 @@ SingleSelection.args = {...(({closable, ...o}) => o)(defaultArgs)};
 MultipleSelection.argTypes = defaultArgTypes;
 MultipleSelection.args = {...(({closable, ...o}) => o)(defaultArgs)};
 
-NavigableChip.argTypes = defaultArgTypes;
+NavigableChip.argTypes = NavigableChipArgTypes;
 NavigableChip.args = navigableArgs;
