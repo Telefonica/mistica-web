@@ -68,13 +68,11 @@ test('Chip - navigable with href and active', async () => {
         id: 'components-chip--navigable-chip',
         device: 'DESKTOP',
         args: {
-            href: 'https://example.com',
-            active: true,
             icon: true,
         },
     });
 
-    const story = await screen.findByTestId('chip');
+    const story = await screen.findByTestId('navigable-chip');
 
     expect(await story.screenshot()).toMatchImageSnapshot();
 });
@@ -83,14 +81,12 @@ test('Chip - navigable with href and active and inverse', async () => {
         id: 'components-chip--navigable-chip',
         device: 'DESKTOP',
         args: {
-            href: 'https://example.com',
-            active: true,
             icon: true,
             inverse: true,
         },
     });
 
-    const story = await screen.findByTestId('chip');
+    const story = await screen.findByTestId('navigable-chip');
 
     expect(await story.screenshot()).toMatchImageSnapshot();
 });
