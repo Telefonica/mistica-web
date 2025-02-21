@@ -50,8 +50,8 @@
     --mistica-color-background: var(--mistica-tu-white);
     --mistica-color-backgroundContainer: var(--mistica-tu-white);
     --mistica-color-backgroundContainerError: var(--mistica-tu-red10);
-    --mistica-color-backgroundContainerHover: rgba(var(--mistica-tu-raw-grey9), 0.03);
-    --mistica-color-backgroundContainerPressed: rgba(var(--mistica-tu-raw-grey9), 0.05);
+    --mistica-color-backgroundContainerHover: rgba(var(--mistica-tu-raw-grey9), 0.05);
+    --mistica-color-backgroundContainerPressed: rgba(var(--mistica-tu-raw-grey9), 0.08);
     --mistica-color-backgroundContainerBrand: var(--mistica-tu-primary);
     --mistica-color-backgroundContainerBrandHover: rgba(var(--mistica-tu-raw-grey9), 0.2);
     --mistica-color-backgroundContainerBrandPressed: rgba(var(--mistica-tu-raw-grey9), 0.4);
@@ -177,6 +177,18 @@
     --mistica-color-tagBackgroundSuccess: var(--mistica-tu-green10);
     --mistica-color-tagBackgroundWarning: var(--mistica-tu-orange20);
     --mistica-color-tagBackgroundError: var(--mistica-tu-red10);
+    --mistica-color-tagTextPromoInverse: var(--mistica-tu-blue);
+    --mistica-color-tagTextActiveInverse: var(--mistica-tu-blue);
+    --mistica-color-tagTextInactiveInverse: var(--mistica-tu-grey5);
+    --mistica-color-tagTextSuccessInverse: var(--mistica-tu-green75);
+    --mistica-color-tagTextWarningInverse: var(--mistica-tu-orange70);
+    --mistica-color-tagTextErrorInverse: var(--mistica-tu-red70);
+    --mistica-color-tagBackgroundPromoInverse: var(--mistica-tu-blue10);
+    --mistica-color-tagBackgroundActiveInverse: var(--mistica-tu-blue10);
+    --mistica-color-tagBackgroundInactiveInverse: var(--mistica-tu-grey1);
+    --mistica-color-tagBackgroundSuccessInverse: var(--mistica-tu-green10);
+    --mistica-color-tagBackgroundWarningInverse: var(--mistica-tu-orange20);
+    --mistica-color-tagBackgroundErrorInverse: var(--mistica-tu-red10);
     --mistica-color-cardContentOverlay: linear-gradient(
         180deg,
         rgba(var(--mistica-tu-raw-black), 0) 0%,
@@ -248,8 +260,8 @@
     --mistica-color-backgroundBrandSecondary: var(--mistica-tu-darkModeBlack);
     --mistica-color-backgroundContainer: var(--mistica-tu-darkModeGrey);
     --mistica-color-backgroundContainerError: var(--mistica-tu-darkModeGrey);
-    --mistica-color-backgroundContainerHover: rgba(var(--mistica-tu-raw-white), 0.03);
-    --mistica-color-backgroundContainerPressed: rgba(var(--mistica-tu-raw-white), 0.05);
+    --mistica-color-backgroundContainerHover: rgba(var(--mistica-tu-raw-white), 0.05);
+    --mistica-color-backgroundContainerPressed: rgba(var(--mistica-tu-raw-white), 0.08);
     --mistica-color-backgroundContainerBrand: var(--mistica-tu-darkModeGrey);
     --mistica-color-backgroundContainerBrandHover: rgba(var(--mistica-tu-raw-white), 0.03);
     --mistica-color-backgroundContainerBrandPressed: rgba(var(--mistica-tu-raw-white), 0.05);
@@ -373,6 +385,18 @@
     --mistica-color-tagBackgroundSuccess: var(--mistica-tu-darkModeGrey6);
     --mistica-color-tagBackgroundWarning: var(--mistica-tu-darkModeGrey6);
     --mistica-color-tagBackgroundError: var(--mistica-tu-darkModeGrey6);
+    --mistica-color-tagTextPromoInverse: var(--mistica-tu-blue30);
+    --mistica-color-tagTextActiveInverse: var(--mistica-tu-blue30);
+    --mistica-color-tagTextInactiveInverse: var(--mistica-tu-grey5);
+    --mistica-color-tagTextSuccessInverse: var(--mistica-tu-green40);
+    --mistica-color-tagTextWarningInverse: var(--mistica-tu-orange55);
+    --mistica-color-tagTextErrorInverse: var(--mistica-tu-red40);
+    --mistica-color-tagBackgroundPromoInverse: var(--mistica-tu-darkModeGrey6);
+    --mistica-color-tagBackgroundActiveInverse: var(--mistica-tu-darkModeGrey6);
+    --mistica-color-tagBackgroundInactiveInverse: var(--mistica-tu-darkModeGrey6);
+    --mistica-color-tagBackgroundSuccessInverse: var(--mistica-tu-darkModeGrey6);
+    --mistica-color-tagBackgroundWarningInverse: var(--mistica-tu-darkModeGrey6);
+    --mistica-color-tagBackgroundErrorInverse: var(--mistica-tu-darkModeGrey6);
     --mistica-color-cardContentOverlay: linear-gradient(
         180deg,
         rgba(var(--mistica-tu-raw-black), 0) 0%,
@@ -389,8 +413,8 @@
         --mistica-color-backgroundBrandSecondary: var(--mistica-tu-darkModeBlack);
         --mistica-color-backgroundContainer: var(--mistica-tu-darkModeGrey);
         --mistica-color-backgroundContainerError: var(--mistica-tu-darkModeGrey);
-        --mistica-color-backgroundContainerHover: rgba(var(--mistica-tu-raw-white), 0.03);
-        --mistica-color-backgroundContainerPressed: rgba(var(--mistica-tu-raw-white), 0.05);
+        --mistica-color-backgroundContainerHover: rgba(var(--mistica-tu-raw-white), 0.05);
+        --mistica-color-backgroundContainerPressed: rgba(var(--mistica-tu-raw-white), 0.08);
         --mistica-color-backgroundContainerBrand: var(--mistica-tu-darkModeGrey);
         --mistica-color-backgroundContainerBrandHover: rgba(var(--mistica-tu-raw-white), 0.03);
         --mistica-color-backgroundContainerBrandPressed: rgba(var(--mistica-tu-raw-white), 0.05);
@@ -514,6 +538,18 @@
         --mistica-color-tagBackgroundSuccess: var(--mistica-tu-darkModeGrey6);
         --mistica-color-tagBackgroundWarning: var(--mistica-tu-darkModeGrey6);
         --mistica-color-tagBackgroundError: var(--mistica-tu-darkModeGrey6);
+        --mistica-color-tagTextPromoInverse: var(--mistica-tu-blue30);
+        --mistica-color-tagTextActiveInverse: var(--mistica-tu-blue30);
+        --mistica-color-tagTextInactiveInverse: var(--mistica-tu-grey5);
+        --mistica-color-tagTextSuccessInverse: var(--mistica-tu-green40);
+        --mistica-color-tagTextWarningInverse: var(--mistica-tu-orange55);
+        --mistica-color-tagTextErrorInverse: var(--mistica-tu-red40);
+        --mistica-color-tagBackgroundPromoInverse: var(--mistica-tu-darkModeGrey6);
+        --mistica-color-tagBackgroundActiveInverse: var(--mistica-tu-darkModeGrey6);
+        --mistica-color-tagBackgroundInactiveInverse: var(--mistica-tu-darkModeGrey6);
+        --mistica-color-tagBackgroundSuccessInverse: var(--mistica-tu-darkModeGrey6);
+        --mistica-color-tagBackgroundWarningInverse: var(--mistica-tu-darkModeGrey6);
+        --mistica-color-tagBackgroundErrorInverse: var(--mistica-tu-darkModeGrey6);
         --mistica-color-cardContentOverlay: linear-gradient(
             180deg,
             rgba(var(--mistica-tu-raw-black), 0) 0%,
@@ -529,8 +565,8 @@
         --mistica-color-backgroundBrandSecondary: var(--mistica-tu-blue);
         --mistica-color-backgroundContainer: var(--mistica-tu-white);
         --mistica-color-backgroundContainerError: var(--mistica-tu-red10);
-        --mistica-color-backgroundContainerHover: rgba(var(--mistica-tu-raw-grey9), 0.03);
-        --mistica-color-backgroundContainerPressed: rgba(var(--mistica-tu-raw-grey9), 0.05);
+        --mistica-color-backgroundContainerHover: rgba(var(--mistica-tu-raw-grey9), 0.05);
+        --mistica-color-backgroundContainerPressed: rgba(var(--mistica-tu-raw-grey9), 0.08);
         --mistica-color-backgroundContainerBrand: var(--mistica-tu-primary);
         --mistica-color-backgroundContainerBrandHover: rgba(var(--mistica-tu-raw-grey9), 0.2);
         --mistica-color-backgroundContainerBrandPressed: rgba(var(--mistica-tu-raw-grey9), 0.4);
@@ -654,6 +690,18 @@
         --mistica-color-tagBackgroundSuccess: var(--mistica-tu-green10);
         --mistica-color-tagBackgroundWarning: var(--mistica-tu-orange20);
         --mistica-color-tagBackgroundError: var(--mistica-tu-red10);
+        --mistica-color-tagTextPromoInverse: var(--mistica-tu-blue);
+        --mistica-color-tagTextActiveInverse: var(--mistica-tu-blue);
+        --mistica-color-tagTextInactiveInverse: var(--mistica-tu-grey5);
+        --mistica-color-tagTextSuccessInverse: var(--mistica-tu-green75);
+        --mistica-color-tagTextWarningInverse: var(--mistica-tu-orange70);
+        --mistica-color-tagTextErrorInverse: var(--mistica-tu-red70);
+        --mistica-color-tagBackgroundPromoInverse: var(--mistica-tu-blue10);
+        --mistica-color-tagBackgroundActiveInverse: var(--mistica-tu-blue10);
+        --mistica-color-tagBackgroundInactiveInverse: var(--mistica-tu-grey1);
+        --mistica-color-tagBackgroundSuccessInverse: var(--mistica-tu-green10);
+        --mistica-color-tagBackgroundWarningInverse: var(--mistica-tu-orange20);
+        --mistica-color-tagBackgroundErrorInverse: var(--mistica-tu-red10);
         --mistica-color-cardContentOverlay: linear-gradient(
             180deg,
             rgba(var(--mistica-tu-raw-black), 0) 0%,
