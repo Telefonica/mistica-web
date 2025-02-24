@@ -1,3 +1,10 @@
+# [16.13.0](https://github.com/Telefonica/mistica-web/compare/v16.12.0...v16.13.0) (2025-02-24)
+
+
+### Features
+
+* **Tag:** New tokens for Movistar promo tag ([#1321](https://github.com/Telefonica/mistica-web/issues/1321)) ([761613c](https://github.com/Telefonica/mistica-web/commit/761613c68502823607ee94df32fa53cfa69a430e))
+
 # [16.12.0](https://github.com/Telefonica/mistica-web/compare/v16.11.2...v16.12.0) (2025-02-17)
 
 
