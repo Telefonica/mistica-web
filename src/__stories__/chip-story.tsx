@@ -23,7 +23,9 @@ type Args = {
     inverse: boolean;
     icon: boolean;
     closable: boolean;
+    active: boolean;
     badge: string;
+    href: string;
 };
 
 type Props = {
@@ -48,16 +50,27 @@ const ChipBackgroundContainer = ({inverse, dataAttributes, children}: Props) => 
     </ResponsiveLayout>
 );
 
-export const Default: StoryComponent<Args> = ({inverse, icon, closable, badge}) => {
+export const Default: StoryComponent<Args> = ({
+    inverse,
+    icon,
+    closable,
+    badge,
+    active: chipActive,
+    href: hrefProp,
+}) => {
     const props = {
         Icon: icon ? IconLightningFilled : undefined,
         badge: badge !== 'undefined' ? +badge : undefined,
+        href: hrefProp !== 'undefined' ? hrefProp : '',
+        active: chipActive,
     };
+
+    const {href, active, ...rest} = props;
 
     return (
         <ChipBackgroundContainer dataAttributes={{testid: 'chip'}} inverse={inverse}>
             {closable ? (
-                <Chip onClose={() => window.alert('closed')} {...props}>
+                <Chip onClose={() => window.alert('closed')} {...rest}>
                     Chip
                 </Chip>
             ) : (
@@ -144,15 +157,51 @@ export const MultipleSelection: StoryComponent<Omit<Args, 'closable'>> = ({inver
         </ChipBackgroundContainer>
     );
 };
+export const NavigableChip: StoryComponent<{
+    inverse: boolean;
+    icon: boolean;
+    badge: string;
+}> = ({inverse, icon, badge}) => {
+    const props = {
+        Icon: icon ? IconLightningFilled : undefined,
+        badge: badge !== 'undefined' ? +badge : undefined,
+        href: 'https://example.com',
+        active: true,
+    };
+
+    return (
+        <ChipBackgroundContainer dataAttributes={{testid: 'navigable-chip'}} inverse={inverse}>
+            <Chip {...props}>Chip</Chip>
+        </ChipBackgroundContainer>
+    );
+};
 
 const defaultArgs = {
     inverse: false,
+    active: false,
     badge: '0',
     icon: false,
     closable: false,
+    href: 'undefined',
+};
+
+const navigableArgs = {
+    inverse: false,
+    badge: '0',
+    icon: false,
 };
 
 const defaultArgTypes = {
+    badge: {
+        options: badgeOptions,
+        control: {type: 'select'},
+    },
+    href: {
+        options: ['undefined', 'https://example.com'],
+        control: {type: 'select'},
+    },
+};
+const NavigableChipArgTypes = {
     badge: {
         options: badgeOptions,
         control: {type: 'select'},
@@ -168,3 +217,6 @@ SingleSelection.args = {...(({closable, ...o}) => o)(defaultArgs)};
 
 MultipleSelection.argTypes = defaultArgTypes;
 MultipleSelection.args = {...(({closable, ...o}) => o)(defaultArgs)};
+
+NavigableChip.argTypes = NavigableChipArgTypes;
+NavigableChip.args = navigableArgs;
