@@ -1,3 +1,10 @@
+# [16.14.0](https://github.com/Telefonica/mistica-web/compare/v16.13.0...v16.14.0) (2025-02-25)
+
+
+### Features
+
+* **Chips:** Chip Active Navigation strong style ([#1315](https://github.com/Telefonica/mistica-web/issues/1315)) ([8d2b855](https://github.com/Telefonica/mistica-web/commit/8d2b855291c792daa6586e1e2893a714d349f84e))
+
 # [16.13.0](https://github.com/Telefonica/mistica-web/compare/v16.12.0...v16.13.0) (2025-02-24)
 
 
