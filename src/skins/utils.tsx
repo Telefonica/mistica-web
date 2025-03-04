@@ -8,7 +8,7 @@ import {
     MOVISTAR_SKIN,
     VIVO_NEW_SKIN,
     TU_SKIN,
-    ESIM_FLAG_SKIN,
+    ESIMFLAG_SKIN,
 } from './constants';
 import {getBlauSkin} from './blau';
 import {getTelefonicaSkin} from './telefonica';

@@ -6,4 +6,4 @@ export const VIVO_NEW_SKIN = 'Vivo-new';
 export const TELEFONICA_SKIN = 'Telefonica';
 export const BLAU_SKIN = 'Blau';
 export const TU_SKIN = 'Tu';
-export const ESIM_FLAG_SKIN = 'EsimFlag';
+export const ESIMFLAG_SKIN = 'EsimFlag';

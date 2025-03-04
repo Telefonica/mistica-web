@@ -16,7 +16,7 @@ import {
     O2_NEW_SKIN,
     TU_SKIN,
     MOVISTAR_SKIN,
-    ESIM_FLAG_SKIN,
+    ESIMFLAG_SKIN,
 } from '../src';
 
 import type {ThemeConfig} from '../src';
@@ -50,7 +50,7 @@ const App = ({children, skinName}: {children: React.ReactNode; skinName: string}
             skinName === MOVISTAR_SKIN ||
             skinName === O2_SKIN ||
             skinName === O2_NEW_SKIN ||
-            skinName === ESIM_FLAG_SKIN
+            skinName === ESIMFLAG_SKIN
                 ? 'body {font-family: "On Air"}'
                 : ''
         }

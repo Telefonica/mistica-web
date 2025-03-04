@@ -214,7 +214,7 @@ export {
     TELEFONICA_SKIN,
     BLAU_SKIN,
     TU_SKIN,
-    ESIM_FLAG_SKIN,
+    ESIMFLAG_SKIN,
 } from './skins/constants';
 export {getSkinByName} from './skins/utils';
 export {getVivoSkin} from './skins/vivo';
