@@ -50,9 +50,9 @@ export const Tu = {
     skin: getTuSkin(),
 } as const;
 
-export const Esim_Flag = {
+export const EsimFlag = {
     i18n: {locale: 'es-ES', phoneNumberFormattingRegionCode: 'ES'},
     skin: getEsimFlagSkin(),
 } as const;
 
-export const AVAILABLE_THEMES = [Movistar, O2, O2_New, Vivo, Vivo_New, Telefonica, Blau, Tu, Esim_Flag];
+export const AVAILABLE_THEMES = [Movistar, O2, O2_New, Vivo, Vivo_New, Telefonica, Blau, Tu, EsimFlag];

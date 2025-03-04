@@ -1,4 +1,4 @@
-import {ESIM_FLAG_SKIN} from './constants';
+import {ESIMFLAG_SKIN} from './constants';
 import {applyAlpha} from '../utils/color';
 
 import type {GetKnownSkin, KnownSkin} from './types';
@@ -54,7 +54,7 @@ export const palette = {
 
 export const getEsimFlagSkin: GetKnownSkin = () => {
     const skin: KnownSkin = {
-        name: ESIM_FLAG_SKIN,
+        name: ESIMFLAG_SKIN,
         colors: {
             background: palette.white,
             backgroundAlternative: palette.grey20,

@@ -18,7 +18,7 @@ import {getO2Skin} from './o2';
 import {getO2NewSkin} from './o2-new';
 import {getMovistarSkin} from './movistar';
 import {getTuSkin} from './tu';
-import {getEsimFlagSkin} from './esim-flag';
+import {getEsimFlagSkin} from './esimflag';
 
 import type {SkinVariant, KnownSkin, KnownSkinName} from './types';
 
@@ -40,7 +40,7 @@ export const getSkinByName = (name: KnownSkinName, variant?: SkinVariant): Known
             return getMovistarSkin(variant);
         case TU_SKIN:
             return getTuSkin(variant);
-        case ESIM_FLAG_SKIN:
+        case ESIMFLAG_SKIN:
             return getEsimFlagSkin(variant);
         default: {
             const n: never = name;
