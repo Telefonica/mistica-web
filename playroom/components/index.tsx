@@ -21,7 +21,7 @@ import {
     Portal,
     O2NewLogo,
 } from '../../src';
-import {Movistar, Telefonica, Blau, Vivo_New, Tu, O2_New} from '../themes';
+import {Movistar, Telefonica, Blau, Vivo_New, Tu, O2_New, Esim_Flag} from '../themes';
 import {useOverrideTheme} from '../frame-component';
 import IconSun from '../icons/icon-sun';
 import IconMoon from '../icons/icon-moon';
@@ -76,6 +76,11 @@ const themesMap: {
         text: 'Tu',
         themeConfig: Tu,
         Icon: () => <TuLogo size={24} />,
+    },
+    'Esim-flag': {
+        text: 'Esim Flag',
+        themeConfig: Esim_Flag,
+        Icon: () => <EsimFlagLogo size={24} />,
     },
 };
 
