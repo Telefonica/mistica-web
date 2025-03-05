@@ -1,0 +1,1922 @@
+{
+  "light": {
+    "backgroundBrand": {
+      "value": "{palette.blauBluePrimary}",
+      "type": "color",
+      "description": "blauBluePrimary"
+    },
+    "backgroundBrandSecondary": {
+      "value": "{palette.blauBluePrimary}",
+      "type": "color",
+      "description": "blauBluePrimary"
+    },
+    "appBarBackground": {
+      "value": "{palette.white}",
+      "type": "color",
+      "description": "white"
+    },
+    "background": {
+      "value": "{palette.white}",
+      "type": "color",
+      "description": "white"
+    },
+    "backgroundContainer": {
+      "value": "{palette.white}",
+      "type": "color",
+      "description": "white"
+    },
+    "backgroundContainerError": {
+      "value": "{palette.blauRed10}",
+      "type": "color",
+      "description": "blauRed10"
+    },
+    "backgroundContainerHover": {
+      "value": "rgba({palette.blauBlueSecondary}, 0.05)",
+      "type": "color",
+      "description": "blauBlueSecondary"
+    },
+    "backgroundContainerPressed": {
+      "value": "rgba({palette.blauBlueSecondary}, 0.08)",
+      "type": "color",
+      "description": "blauBlueSecondary"
+    },
+    "backgroundContainerBrand": {
+      "value": "{palette.blauBluePrimary}",
+      "type": "color",
+      "description": "blauBluePrimary"
+    },
+    "backgroundContainerBrandHover": {
+      "value": "rgba({palette.darkModeBlack}, 0.2)",
+      "type": "color",
+      "description": "darkModeBlack"
+    },
+    "backgroundContainerBrandPressed": {
+      "value": "rgba({palette.darkModeBlack}, 0.4)",
+      "type": "color",
+      "description": "darkModeBlack"
+    },
+    "backgroundContainerBrandOverInverse": {
+      "value": "{palette.blauBlueSecondary}",
+      "type": "color",
+      "description": "blauBlueSecondary"
+    },
+    "backgroundContainerAlternative": {
+      "value": "{palette.blauBluePrimary20}",
+      "type": "color",
+      "description": "blauBluePrimary20"
+    },
+    "backgroundOverlay": {
+      "value": "rgba({palette.blauBlueSecondary}, 0.75)",
+      "type": "color",
+      "description": "blauBlueSecondary"
+    },
+    "backgroundSkeleton": {
+      "value": "{palette.grey2}",
+      "type": "color",
+      "description": "grey2"
+    },
+    "backgroundSkeletonInverse": {
+      "value": "{palette.blauBlueSecondary}",
+      "type": "color",
+      "description": "blauBlueSecondary"
+    },
+    "navigationBarBackground": {
+      "value": "{palette.blauBluePrimary}",
+      "type": "color",
+      "description": "blauBluePrimary"
+    },
+    "backgroundAlternative": {
+      "value": "{palette.blauBluePrimary20}",
+      "type": "color",
+      "description": "blauBluePrimary20"
+    },
+    "backgroundBrandTop": {
+      "value": "{palette.blauBluePrimary}",
+      "type": "color",
+      "description": "blauBluePrimary"
+    },
+    "backgroundBrandBottom": {
+      "value": "{palette.blauBluePrimary}",
+      "type": "color",
+      "description": "blauBluePrimary"
+    },
+    "skeletonWave": {
+      "value": "{palette.grey2}",
+      "type": "color",
+      "description": "grey2"
+    },
+    "borderLow": {
+      "value": "{palette.grey1}",
+      "type": "color",
+      "description": "grey1"
+    },
+    "border": {
+      "value": "{palette.grey2}",
+      "type": "color",
+      "description": "grey2"
+    },
+    "borderHigh": {
+      "value": "{palette.grey5}",
+      "type": "color",
+      "description": "grey5"
+    },
+    "borderSelected": {
+      "value": "{palette.blauBlueSecondary60}",
+      "type": "color",
+      "description": "blauBlueSecondary60"
+    },
+    "coverBackgroundHover": {
+      "value": "rgba({palette.darkModeBlack}, 0.25)",
+      "type": "color",
+      "description": "darkModeBlack"
+    },
+    "coverBackgroundPressed": {
+      "value": "rgba({palette.darkModeBlack}, 0.35)",
+      "type": "color",
+      "description": "darkModeBlack"
+    },
+    "buttonDangerBackground": {
+      "value": "{palette.blauRed}",
+      "type": "color",
+      "description": "blauRed"
+    },
+    "buttonDangerBackgroundPressed": {
+      "value": "{palette.blauRed70}",
+      "type": "color",
+      "description": "blauRed70"
+    },
+    "buttonDangerBackgroundHover": {
+      "value": "{palette.blauRed70}",
+      "type": "color",
+      "description": "blauRed70"
+    },
+    "buttonLinkDangerBackgroundPressed": {
+      "value": "{palette.blauRed10}",
+      "type": "color",
+      "description": "blauRed10"
+    },
+    "buttonLinkDangerBackgroundInverse": {
+      "value": "{palette.white}",
+      "type": "color",
+      "description": "white"
+    },
+    "buttonLinkDangerBackgroundInversePressed": {
+      "value": "{palette.blauRed10}",
+      "type": "color",
+      "description": "blauRed10"
+    },
+    "buttonLinkBackgroundPressed": {
+      "value": "{palette.blauPurple10}",
+      "type": "color",
+      "description": "blauPurple10"
+    },
+    "buttonLinkBackgroundInversePressed": {
+      "value": "rgba({palette.white}, 0.15)",
+      "type": "color",
+      "description": "white"
+    },
+    "buttonPrimaryBackground": {
+      "value": "{palette.blauBlueSecondary}",
+      "type": "color",
+      "description": "blauBlueSecondary"
+    },
+    "buttonPrimaryBackgroundInverse": {
+      "value": "{palette.white}",
+      "type": "color",
+      "description": "white"
+    },
+    "buttonPrimaryBackgroundPressed": {
+      "value": "{palette.blauBlueSecondary60}",
+      "type": "color",
+      "description": "blauBlueSecondary60"
+    },
+    "buttonPrimaryBackgroundHover": {
+      "value": "{palette.blauBlueSecondary60}",
+      "type": "color",
+      "description": "blauBlueSecondary60"
+    },
+    "buttonPrimaryBackgroundInversePressed": {
+      "value": "{palette.blauBluePrimary30}",
+      "type": "color",
+      "description": "blauBluePrimary30"
+    },
+    "buttonSecondaryBorder": {
+      "value": "{palette.blauBlueSecondary}",
+      "type": "color",
+      "description": "blauBlueSecondary"
+    },
+    "buttonSecondaryBorderPressed": {
+      "value": "{palette.blauBlueSecondary60}",
+      "type": "color",
+      "description": "blauBlueSecondary60"
+    },
+    "buttonSecondaryBorderInverse": {
+      "value": "{palette.white}",
+      "type": "color",
+      "description": "white"
+    },
+    "buttonSecondaryBackgroundHover": {
+      "value": "{palette.blauBlueSecondary10}",
+      "type": "color",
+      "description": "blauBlueSecondary10"
+    },
+    "buttonSecondaryBackgroundPressed": {
+      "value": "{palette.blauBlueSecondary10}",
+      "type": "color",
+      "description": "blauBlueSecondary10"
+    },
+    "buttonSecondaryBorderInversePressed": {
+      "value": "{palette.white}",
+      "type": "color",
+      "description": "white"
+    },
+    "buttonSecondaryBackgroundInverseHover": {
+      "value": "rgba({palette.white}, 0.2)",
+      "type": "color",
+      "description": "white"
+    },
+    "buttonSecondaryBackgroundInversePressed": {
+      "value": "rgba({palette.white}, 0.2)",
+      "type": "color",
+      "description": "white"
+    },
+    "textButtonPrimary": {
+      "value": "{palette.white}",
+      "type": "color",
+      "description": "white"
+    },
+    "textButtonPrimaryInverse": {
+      "value": "{palette.blauBlueSecondary}",
+      "type": "color",
+      "description": "blauBlueSecondary"
+    },
+    "textButtonPrimaryInversePressed": {
+      "value": "{palette.blauBlueSecondary60}",
+      "type": "color",
+      "description": "blauBlueSecondary60"
+    },
+    "textButtonSecondary": {
+      "value": "{palette.blauBlueSecondary}",
+      "type": "color",
+      "description": "blauBlueSecondary"
+    },
+    "textButtonSecondaryPressed": {
+      "value": "{palette.blauBlueSecondary60}",
+      "type": "color",
+      "description": "blauBlueSecondary60"
+    },
+    "textButtonSecondaryInverse": {
+      "value": "{palette.white}",
+      "type": "color",
+      "description": "white"
+    },
+    "textButtonSecondaryInversePressed": {
+      "value": "{palette.white}",
+      "type": "color",
+      "description": "white"
+    },
+    "textLink": {
+      "value": "{palette.blauPurple}",
+      "type": "color",
+      "description": "blauPurple"
+    },
+    "textLinkInverse": {
+      "value": "{palette.white}",
+      "type": "color",
+      "description": "white"
+    },
+    "textLinkDanger": {
+      "value": "{palette.blauRed}",
+      "type": "color",
+      "description": "blauRed"
+    },
+    "textLinkSnackbar": {
+      "value": "{palette.blauPurple30}",
+      "type": "color",
+      "description": "blauPurple30"
+    },
+    "textActivated": {
+      "value": "{palette.blauBlueSecondary}",
+      "type": "color",
+      "description": "blauBlueSecondary"
+    },
+    "textBrand": {
+      "value": "{palette.blauBluePrimary}",
+      "type": "color",
+      "description": "blauBluePrimary"
+    },
+    "control": {
+      "value": "{palette.grey5}",
+      "type": "color",
+      "description": "grey5"
+    },
+    "controlActivated": {
+      "value": "{palette.blauBlueSecondary}",
+      "type": "color",
+      "description": "blauBlueSecondary"
+    },
+    "controlInverse": {
+      "value": "{palette.blauBluePrimary30}",
+      "type": "color",
+      "description": "blauBluePrimary30"
+    },
+    "controlActivatedInverse": {
+      "value": "{palette.white}",
+      "type": "color",
+      "description": "white"
+    },
+    "controlError": {
+      "value": "{palette.blauRed}",
+      "type": "color",
+      "description": "blauRed"
+    },
+    "barTrack": {
+      "value": "{palette.grey2}",
+      "type": "color",
+      "description": "grey2"
+    },
+    "barTrackInverse": {
+      "value": "rgba({palette.grey6}, 0.2)",
+      "type": "color",
+      "description": "grey6"
+    },
+    "loadingBar": {
+      "value": "{palette.blauBlueSecondary}",
+      "type": "color",
+      "description": "blauBlueSecondary"
+    },
+    "loadingBarBackground": {
+      "value": "{palette.blauBlueSecondary10}",
+      "type": "color",
+      "description": "blauBlueSecondary10"
+    },
+    "toggleAndroidInactive": {
+      "value": "{palette.grey2}",
+      "type": "color",
+      "description": "grey2"
+    },
+    "toggleAndroidBackgroundActive": {
+      "value": "{palette.blauBlueSecondary10}",
+      "type": "color",
+      "description": "blauBlueSecondary10"
+    },
+    "iosControlKnob": {
+      "value": "{palette.white}",
+      "type": "color",
+      "description": "white"
+    },
+    "controlKnobInverse": {
+      "value": "{palette.blauBlueSecondary}",
+      "type": "color",
+      "description": "blauBlueSecondary"
+    },
+    "divider": {
+      "value": "{palette.grey2}",
+      "type": "color",
+      "description": "grey2"
+    },
+    "dividerInverse": {
+      "value": "rgba({palette.white}, 0.2)",
+      "type": "color",
+      "description": "white"
+    },
+    "navigationBarDivider": {
+      "value": "{palette.blauBluePrimary}",
+      "type": "color",
+      "description": "blauBluePrimary"
+    },
+    "badge": {
+      "value": "{palette.blauRed}",
+      "type": "color",
+      "description": "blauRed"
+    },
+    "feedbackErrorBackground": {
+      "value": "{palette.blauRed}",
+      "type": "color",
+      "description": "blauRed"
+    },
+    "feedbackInfoBackground": {
+      "value": "{palette.grey6}",
+      "type": "color",
+      "description": "grey6"
+    },
+    "brand": {
+      "value": "{palette.blauBluePrimary}",
+      "type": "color",
+      "description": "blauBluePrimary"
+    },
+    "brandHigh": {
+      "value": "{palette.blauBlueSecondary}",
+      "type": "color",
+      "description": "blauBlueSecondary"
+    },
+    "inverse": {
+      "value": "{palette.white}",
+      "type": "color",
+      "description": "white"
+    },
+    "neutralHigh": {
+      "value": "{palette.grey6}",
+      "type": "color",
+      "description": "grey6"
+    },
+    "neutralMedium": {
+      "value": "{palette.grey5}",
+      "type": "color",
+      "description": "grey5"
+    },
+    "neutralMediumInverse": {
+      "value": "{palette.grey5}",
+      "type": "color",
+      "description": "grey5"
+    },
+    "neutralLow": {
+      "value": "{palette.grey1}",
+      "type": "color",
+      "description": "grey1"
+    },
+    "neutralLowAlternative": {
+      "value": "{palette.grey2}",
+      "type": "color",
+      "description": "grey2"
+    },
+    "textPrimary": {
+      "value": "{palette.grey6}",
+      "type": "color",
+      "description": "grey6"
+    },
+    "textPrimaryInverse": {
+      "value": "{palette.white}",
+      "type": "color",
+      "description": "white"
+    },
+    "textSecondary": {
+      "value": "{palette.grey5}",
+      "type": "color",
+      "description": "grey5"
+    },
+    "textSecondaryInverse": {
+      "value": "{palette.blauBluePrimary20}",
+      "type": "color",
+      "description": "blauBluePrimary20"
+    },
+    "error": {
+      "value": "{palette.blauRed}",
+      "type": "color",
+      "description": "blauRed"
+    },
+    "textError": {
+      "value": "{palette.blauRed}",
+      "type": "color",
+      "description": "blauRed"
+    },
+    "textErrorInverse": {
+      "value": "{palette.white}",
+      "type": "color",
+      "description": "white"
+    },
+    "success": {
+      "value": "{palette.blauGreen}",
+      "type": "color",
+      "description": "blauGreen"
+    },
+    "warning": {
+      "value": "{palette.blauYellow}",
+      "type": "color",
+      "description": "blauYellow"
+    },
+    "promo": {
+      "value": "{palette.blauPurple}",
+      "type": "color",
+      "description": "blauPurple"
+    },
+    "highlight": {
+      "value": "{palette.blauBluePrimary}",
+      "type": "color",
+      "description": "blauBluePrimary"
+    },
+    "successLow": {
+      "value": "{palette.blauGreen10}",
+      "type": "color",
+      "description": "blauGreen10"
+    },
+    "warningLow": {
+      "value": "{palette.blauYellow10}",
+      "type": "color",
+      "description": "blauYellow10"
+    },
+    "errorLow": {
+      "value": "{palette.blauRed10}",
+      "type": "color",
+      "description": "blauRed10"
+    },
+    "promoLow": {
+      "value": "{palette.blauPurple10}",
+      "type": "color",
+      "description": "blauPurple10"
+    },
+    "brandLow": {
+      "value": "{palette.blauBlueSecondary10}",
+      "type": "color",
+      "description": "blauBlueSecondary10"
+    },
+    "successHigh": {
+      "value": "{palette.blauGreen70}",
+      "type": "color",
+      "description": "blauGreen70"
+    },
+    "warningHigh": {
+      "value": "{palette.blauYellow70}",
+      "type": "color",
+      "description": "blauYellow70"
+    },
+    "errorHigh": {
+      "value": "{palette.blauRed70}",
+      "type": "color",
+      "description": "blauRed70"
+    },
+    "promoHigh": {
+      "value": "{palette.blauPurple}",
+      "type": "color",
+      "description": "blauPurple"
+    },
+    "successHighInverse": {
+      "value": "{palette.blauGreen70}",
+      "type": "color",
+      "description": "blauGreen70"
+    },
+    "warningHighInverse": {
+      "value": "{palette.blauYellow70}",
+      "type": "color",
+      "description": "blauYellow70"
+    },
+    "errorHighInverse": {
+      "value": "{palette.blauRed70}",
+      "type": "color",
+      "description": "blauRed70"
+    },
+    "promoHighInverse": {
+      "value": "{palette.blauPurple}",
+      "type": "color",
+      "description": "blauPurple"
+    },
+    "textNavigationBarPrimary": {
+      "value": "{palette.white}",
+      "type": "color",
+      "description": "white"
+    },
+    "textNavigationBarSecondary": {
+      "value": "{palette.blauBlueSecondary20}",
+      "type": "color",
+      "description": "blauBlueSecondary20"
+    },
+    "textNavigationSearchBarHint": {
+      "value": "{palette.blauBlueSecondary20}",
+      "type": "color",
+      "description": "blauBlueSecondary20"
+    },
+    "textNavigationSearchBarText": {
+      "value": "{palette.white}",
+      "type": "color",
+      "description": "white"
+    },
+    "textAppBar": {
+      "value": "{palette.grey5}",
+      "type": "color",
+      "description": "grey5"
+    },
+    "textAppBarSelected": {
+      "value": "{palette.blauBlueSecondary60}",
+      "type": "color",
+      "description": "blauBlueSecondary60"
+    },
+    "customTabsBackground": {
+      "value": "{palette.blauBluePrimary}",
+      "type": "color",
+      "description": "blauBluePrimary"
+    },
+    "tagTextPromo": {
+      "value": "{palette.blauPurple}",
+      "type": "color",
+      "description": "blauPurple"
+    },
+    "tagTextActive": {
+      "value": "{palette.blauBluePrimary}",
+      "type": "color",
+      "description": "blauBluePrimary"
+    },
+    "tagTextInactive": {
+      "value": "{palette.grey5}",
+      "type": "color",
+      "description": "grey5"
+    },
+    "tagTextSuccess": {
+      "value": "{palette.blauGreen70}",
+      "type": "color",
+      "description": "blauGreen70"
+    },
+    "tagTextWarning": {
+      "value": "{palette.blauYellow70}",
+      "type": "color",
+      "description": "blauYellow70"
+    },
+    "tagTextError": {
+      "value": "{palette.blauRed70}",
+      "type": "color",
+      "description": "blauRed70"
+    },
+    "tagBackgroundPromo": {
+      "value": "{palette.blauPurple10}",
+      "type": "color",
+      "description": "blauPurple10"
+    },
+    "tagBackgroundActive": {
+      "value": "{palette.blauBlueSecondary10}",
+      "type": "color",
+      "description": "blauBlueSecondary10"
+    },
+    "tagBackgroundInactive": {
+      "value": "{palette.grey1}",
+      "type": "color",
+      "description": "grey1"
+    },
+    "tagBackgroundSuccess": {
+      "value": "{palette.blauGreen10}",
+      "type": "color",
+      "description": "blauGreen10"
+    },
+    "tagBackgroundWarning": {
+      "value": "{palette.blauYellow10}",
+      "type": "color",
+      "description": "blauYellow10"
+    },
+    "tagBackgroundError": {
+      "value": "{palette.blauRed10}",
+      "type": "color",
+      "description": "blauRed10"
+    },
+    "tagTextPromoInverse": {
+      "value": "{palette.blauPurple}",
+      "type": "color",
+      "description": "blauPurple"
+    },
+    "tagTextActiveInverse": {
+      "value": "{palette.blauBluePrimary}",
+      "type": "color",
+      "description": "blauBluePrimary"
+    },
+    "tagTextInactiveInverse": {
+      "value": "{palette.grey5}",
+      "type": "color",
+      "description": "grey5"
+    },
+    "tagTextSuccessInverse": {
+      "value": "{palette.blauGreen70}",
+      "type": "color",
+      "description": "blauGreen70"
+    },
+    "tagTextWarningInverse": {
+      "value": "{palette.blauYellow70}",
+      "type": "color",
+      "description": "blauYellow70"
+    },
+    "tagTextErrorInverse": {
+      "value": "{palette.blauRed70}",
+      "type": "color",
+      "description": "blauRed70"
+    },
+    "tagBackgroundPromoInverse": {
+      "value": "{palette.blauPurple10}",
+      "type": "color",
+      "description": "blauPurple10"
+    },
+    "tagBackgroundActiveInverse": {
+      "value": "{palette.blauBlueSecondary10}",
+      "type": "color",
+      "description": "blauBlueSecondary10"
+    },
+    "tagBackgroundInactiveInverse": {
+      "value": "{palette.grey1}",
+      "type": "color",
+      "description": "grey1"
+    },
+    "tagBackgroundSuccessInverse": {
+      "value": "{palette.blauGreen10}",
+      "type": "color",
+      "description": "blauGreen10"
+    },
+    "tagBackgroundWarningInverse": {
+      "value": "{palette.blauYellow10}",
+      "type": "color",
+      "description": "blauYellow10"
+    },
+    "tagBackgroundErrorInverse": {
+      "value": "{palette.blauRed10}",
+      "type": "color",
+      "description": "blauRed10"
+    },
+    "cardContentOverlay": {
+      "type": "linear-gradient",
+      "value": {
+        "angle": 180,
+        "colors": [
+          {
+            "value": "rgba({palette.grey6}, 0)",
+            "stop": 0
+          },
+          {
+            "value": "rgba({palette.grey6}, 0.4)",
+            "stop": 0.3
+          },
+          {
+            "value": "rgba({palette.grey6}, 0.7)",
+            "stop": 1
+          }
+        ]
+      },
+      "description": "grey6"
+    }
+  },
+  "dark": {
+    "background": {
+      "value": "{palette.darkModeBlack}",
+      "type": "color",
+      "description": "darkModeBlack"
+    },
+    "backgroundAlternative": {
+      "value": "{palette.darkModeBlack}",
+      "type": "color",
+      "description": "darkModeBlack"
+    },
+    "backgroundBrand": {
+      "value": "{palette.darkModeBlack}",
+      "type": "color",
+      "description": "darkModeBlack"
+    },
+    "backgroundBrandSecondary": {
+      "value": "{palette.darkModeBlack}",
+      "type": "color",
+      "description": "darkModeBlack"
+    },
+    "backgroundContainer": {
+      "value": "{palette.darkModeGrey}",
+      "type": "color",
+      "description": "darkModeGrey"
+    },
+    "backgroundContainerError": {
+      "value": "{palette.darkModeGrey}",
+      "type": "color",
+      "description": "darkModeGrey"
+    },
+    "backgroundContainerHover": {
+      "value": "rgba({palette.white}, 0.05)",
+      "type": "color",
+      "description": "white"
+    },
+    "backgroundContainerPressed": {
+      "value": "rgba({palette.white}, 0.08)",
+      "type": "color",
+      "description": "white"
+    },
+    "backgroundContainerBrand": {
+      "value": "{palette.darkModeGrey}",
+      "type": "color",
+      "description": "darkModeGrey"
+    },
+    "backgroundContainerBrandHover": {
+      "value": "rgba({palette.white}, 0.03)",
+      "type": "color",
+      "description": "white"
+    },
+    "backgroundContainerBrandPressed": {
+      "value": "rgba({palette.white}, 0.05)",
+      "type": "color",
+      "description": "white"
+    },
+    "backgroundContainerBrandOverInverse": {
+      "value": "{palette.darkModeGrey}",
+      "type": "color",
+      "description": "darkModeGrey"
+    },
+    "backgroundContainerAlternative": {
+      "value": "{palette.darkModeGrey}",
+      "type": "color",
+      "description": "darkModeGrey"
+    },
+    "backgroundOverlay": {
+      "value": "rgba({palette.darkModeGrey}, 0.8)",
+      "type": "color",
+      "description": "darkModeGrey"
+    },
+    "backgroundSkeleton": {
+      "value": "{palette.darkModeGrey}",
+      "type": "color",
+      "description": "darkModeGrey"
+    },
+    "backgroundSkeletonInverse": {
+      "value": "{palette.darkModeGrey}",
+      "type": "color",
+      "description": "darkModeGrey"
+    },
+    "backgroundBrandTop": {
+      "value": "{palette.darkModeBlack}",
+      "type": "color",
+      "description": "darkModeBlack"
+    },
+    "backgroundBrandBottom": {
+      "value": "{palette.darkModeBlack}",
+      "type": "color",
+      "description": "darkModeBlack"
+    },
+    "appBarBackground": {
+      "value": "{palette.darkModeGrey}",
+      "type": "color",
+      "description": "darkModeGrey"
+    },
+    "navigationBarBackground": {
+      "value": "{palette.darkModeBlack}",
+      "type": "color",
+      "description": "darkModeBlack"
+    },
+    "skeletonWave": {
+      "value": "{palette.grey5}",
+      "type": "color",
+      "description": "grey5"
+    },
+    "borderLow": {
+      "value": "{palette.darkModeBlack}",
+      "type": "color",
+      "description": "darkModeBlack"
+    },
+    "border": {
+      "value": "{palette.darkModeGrey}",
+      "type": "color",
+      "description": "darkModeGrey"
+    },
+    "borderHigh": {
+      "value": "{palette.grey5}",
+      "type": "color",
+      "description": "grey5"
+    },
+    "borderSelected": {
+      "value": "{palette.blauBlueSecondary60}",
+      "type": "color",
+      "description": "blauBlueSecondary60"
+    },
+    "coverBackgroundHover": {
+      "value": "rgba({palette.darkModeBlack}, 0.25)",
+      "type": "color",
+      "description": "darkModeBlack"
+    },
+    "coverBackgroundPressed": {
+      "value": "rgba({palette.darkModeBlack}, 0.35)",
+      "type": "color",
+      "description": "darkModeBlack"
+    },
+    "buttonDangerBackground": {
+      "value": "{palette.blauRed}",
+      "type": "color",
+      "description": "blauRed"
+    },
+    "buttonDangerBackgroundPressed": {
+      "value": "{palette.blauRed70}",
+      "type": "color",
+      "description": "blauRed70"
+    },
+    "buttonDangerBackgroundHover": {
+      "value": "{palette.blauRed70}",
+      "type": "color",
+      "description": "blauRed70"
+    },
+    "buttonLinkDangerBackgroundPressed": {
+      "value": "rgba({palette.blauPurple}, 0.3)",
+      "type": "color",
+      "description": "blauPurple"
+    },
+    "buttonLinkDangerBackgroundInverse": {
+      "value": "rgba({palette.white}, 0)",
+      "type": "color",
+      "description": "blauPurple"
+    },
+    "buttonLinkDangerBackgroundInversePressed": {
+      "value": "rgba({palette.blauPurple}, 0.3)",
+      "type": "color",
+      "description": "blauPurple"
+    },
+    "buttonLinkBackgroundPressed": {
+      "value": "rgba({palette.blauPurple}, 0.3)",
+      "type": "color",
+      "description": "blauPurple"
+    },
+    "buttonLinkBackgroundInversePressed": {
+      "value": "rgba({palette.blauPurple}, 0.3)",
+      "type": "color",
+      "description": "blauPurple"
+    },
+    "buttonPrimaryBackground": {
+      "value": "{palette.blauBlueSecondary}",
+      "type": "color",
+      "description": "blauBlueSecondary"
+    },
+    "buttonPrimaryBackgroundInverse": {
+      "value": "{palette.blauBluePrimary}",
+      "type": "color",
+      "description": "blauBluePrimary"
+    },
+    "buttonPrimaryBackgroundPressed": {
+      "value": "{palette.blauBlueSecondary60}",
+      "type": "color",
+      "description": "blauBlueSecondary60"
+    },
+    "buttonPrimaryBackgroundHover": {
+      "value": "{palette.blauBlueSecondary60}",
+      "type": "color",
+      "description": "blauBlueSecondary60"
+    },
+    "buttonPrimaryBackgroundInversePressed": {
+      "value": "{palette.blauBlueSecondary60}",
+      "type": "color",
+      "description": "blauBlueSecondary60"
+    },
+    "buttonSecondaryBorder": {
+      "value": "{palette.white}",
+      "type": "color",
+      "description": "white"
+    },
+    "buttonSecondaryBorderPressed": {
+      "value": "{palette.white}",
+      "type": "color",
+      "description": "white"
+    },
+    "buttonSecondaryBackgroundHover": {
+      "value": "rgba({palette.white}, 0.15)",
+      "type": "color",
+      "description": "white"
+    },
+    "buttonSecondaryBackgroundPressed": {
+      "value": "rgba({palette.white}, 0.15)",
+      "type": "color",
+      "description": "white"
+    },
+    "buttonSecondaryBorderInverse": {
+      "value": "{palette.white}",
+      "type": "color",
+      "description": "white"
+    },
+    "buttonSecondaryBorderInversePressed": {
+      "value": "{palette.white}",
+      "type": "color",
+      "description": "white"
+    },
+    "buttonSecondaryBackgroundInverseHover": {
+      "value": "rgba({palette.white}, 0.15)",
+      "type": "color",
+      "description": "white"
+    },
+    "buttonSecondaryBackgroundInversePressed": {
+      "value": "rgba({palette.white}, 0.15)",
+      "type": "color",
+      "description": "white"
+    },
+    "textButtonPrimary": {
+      "value": "{palette.grey2}",
+      "type": "color",
+      "description": "grey2"
+    },
+    "textButtonPrimaryInverse": {
+      "value": "{palette.grey2}",
+      "type": "color",
+      "description": "grey2"
+    },
+    "textButtonPrimaryInversePressed": {
+      "value": "{palette.grey2}",
+      "type": "color",
+      "description": "grey2"
+    },
+    "textButtonSecondary": {
+      "value": "{palette.grey2}",
+      "type": "color",
+      "description": "grey2"
+    },
+    "textButtonSecondaryPressed": {
+      "value": "{palette.grey2}",
+      "type": "color",
+      "description": "grey2"
+    },
+    "textButtonSecondaryInverse": {
+      "value": "{palette.grey2}",
+      "type": "color",
+      "description": "grey2"
+    },
+    "textButtonSecondaryInversePressed": {
+      "value": "{palette.grey2}",
+      "type": "color",
+      "description": "grey2"
+    },
+    "textLink": {
+      "value": "{palette.blauPurple30}",
+      "type": "color",
+      "description": "blauPurple30"
+    },
+    "textLinkInverse": {
+      "value": "{palette.blauPurple30}",
+      "type": "color",
+      "description": "blauPurple30"
+    },
+    "textLinkDanger": {
+      "value": "{palette.blauRed}",
+      "type": "color",
+      "description": "blauRed"
+    },
+    "textLinkSnackbar": {
+      "value": "{palette.blauPurple30}",
+      "type": "color",
+      "description": "blauPurple30"
+    },
+    "textActivated": {
+      "value": "{palette.blauBlueSecondary}",
+      "type": "color",
+      "description": "blauBlueSecondary"
+    },
+    "textBrand": {
+      "value": "{palette.blauBluePrimary}",
+      "type": "color",
+      "description": "blauBluePrimary"
+    },
+    "control": {
+      "value": "{palette.darkModeGrey6}",
+      "type": "color",
+      "description": "darkModeGrey6"
+    },
+    "controlActivated": {
+      "value": "{palette.blauBlueSecondary}",
+      "type": "color",
+      "description": "blauBlueSecondary"
+    },
+    "controlInverse": {
+      "value": "{palette.darkModeGrey6}",
+      "type": "color",
+      "description": "darkModeGrey6"
+    },
+    "controlActivatedInverse": {
+      "value": "{palette.blauBlueSecondary}",
+      "type": "color",
+      "description": "blauBlueSecondary"
+    },
+    "controlError": {
+      "value": "{palette.blauRed}",
+      "type": "color",
+      "description": "blauRed"
+    },
+    "barTrack": {
+      "value": "{palette.darkModeGrey6}",
+      "type": "color",
+      "description": "darkModeGrey6"
+    },
+    "barTrackInverse": {
+      "value": "{palette.darkModeGrey6}",
+      "type": "color",
+      "description": "darkModeGrey6"
+    },
+    "loadingBar": {
+      "value": "{palette.blauBluePrimary}",
+      "type": "color",
+      "description": "blauBluePrimary"
+    },
+    "loadingBarBackground": {
+      "value": "{palette.darkModeGrey}",
+      "type": "color",
+      "description": "darkModeGrey"
+    },
+    "toggleAndroidInactive": {
+      "value": "{palette.grey5}",
+      "type": "color",
+      "description": "grey5"
+    },
+    "toggleAndroidBackgroundActive": {
+      "value": "{palette.blauBlueSecondary30}",
+      "type": "color",
+      "description": "blauBlueSecondary30"
+    },
+    "iosControlKnob": {
+      "value": "{palette.grey2}",
+      "type": "color",
+      "description": "grey2"
+    },
+    "controlKnobInverse": {
+      "value": "{palette.grey2}",
+      "type": "color",
+      "description": "grey2"
+    },
+    "divider": {
+      "value": "rgba({palette.white}, 0.05)",
+      "type": "color",
+      "description": "white"
+    },
+    "dividerInverse": {
+      "value": "rgba({palette.white}, 0.05)",
+      "type": "color",
+      "description": "white"
+    },
+    "navigationBarDivider": {
+      "value": "{palette.darkModeBlack}",
+      "type": "color",
+      "description": "darkModeBlack"
+    },
+    "badge": {
+      "value": "{palette.blauRed}",
+      "type": "color",
+      "description": "blauRed"
+    },
+    "feedbackErrorBackground": {
+      "value": "{palette.blauRed}",
+      "type": "color",
+      "description": "blauRed"
+    },
+    "feedbackInfoBackground": {
+      "value": "{palette.darkModeGrey}",
+      "type": "color",
+      "description": "darkModeGrey"
+    },
+    "brand": {
+      "value": "{palette.blauBluePrimary}",
+      "type": "color",
+      "description": "blauBluePrimary"
+    },
+    "brandHigh": {
+      "value": "rgba({palette.white}, 0.05)",
+      "type": "color",
+      "description": "white"
+    },
+    "inverse": {
+      "value": "{palette.grey2}",
+      "type": "color",
+      "description": "grey2"
+    },
+    "neutralHigh": {
+      "value": "{palette.grey2}",
+      "type": "color",
+      "description": "grey2"
+    },
+    "neutralMedium": {
+      "value": "{palette.grey5}",
+      "type": "color",
+      "description": "grey5"
+    },
+    "neutralMediumInverse": {
+      "value": "{palette.grey5}",
+      "type": "color",
+      "description": "grey5"
+    },
+    "neutralLow": {
+      "value": "{palette.darkModeGrey6}",
+      "type": "color",
+      "description": "darkModeGrey6"
+    },
+    "neutralLowAlternative": {
+      "value": "{palette.darkModeGrey6}",
+      "type": "color",
+      "description": "darkModeGrey6"
+    },
+    "textPrimary": {
+      "value": "{palette.grey2}",
+      "type": "color",
+      "description": "grey2"
+    },
+    "textPrimaryInverse": {
+      "value": "{palette.grey2}",
+      "type": "color",
+      "description": "grey2"
+    },
+    "textSecondary": {
+      "value": "{palette.grey4}",
+      "type": "color",
+      "description": "grey4"
+    },
+    "textSecondaryInverse": {
+      "value": "{palette.grey4}",
+      "type": "color",
+      "description": "grey4"
+    },
+    "error": {
+      "value": "{palette.blauRed}",
+      "type": "color",
+      "description": "blauRed"
+    },
+    "textError": {
+      "value": "{palette.blauRed}",
+      "type": "color",
+      "description": "blauRed"
+    },
+    "textErrorInverse": {
+      "value": "{palette.blauRed}",
+      "type": "color",
+      "description": "blauRed"
+    },
+    "success": {
+      "value": "{palette.blauGreen}",
+      "type": "color",
+      "description": "blauGreen"
+    },
+    "warning": {
+      "value": "{palette.blauYellow}",
+      "type": "color",
+      "description": "blauYellow"
+    },
+    "promo": {
+      "value": "{palette.blauPurple}",
+      "type": "color",
+      "description": "blauPurple"
+    },
+    "highlight": {
+      "value": "{palette.blauBluePrimary}",
+      "type": "color",
+      "description": "blauBluePrimary"
+    },
+    "successLow": {
+      "value": "{palette.darkModeGrey6}",
+      "type": "color",
+      "description": "darkModeGrey6"
+    },
+    "warningLow": {
+      "value": "{palette.darkModeGrey6}",
+      "type": "color",
+      "description": "darkModeGrey6"
+    },
+    "errorLow": {
+      "value": "{palette.darkModeGrey6}",
+      "type": "color",
+      "description": "darkModeGrey6"
+    },
+    "promoLow": {
+      "value": "{palette.darkModeGrey6}",
+      "type": "color",
+      "description": "darkModeGrey6"
+    },
+    "brandLow": {
+      "value": "{palette.darkModeGrey6}",
+      "type": "color",
+      "description": "darkModeGrey6"
+    },
+    "successHigh": {
+      "value": "{palette.blauGreen30}",
+      "type": "color",
+      "description": "blauGreen30"
+    },
+    "warningHigh": {
+      "value": "{palette.blauYellow40}",
+      "type": "color",
+      "description": "blauYellow40"
+    },
+    "errorHigh": {
+      "value": "{palette.blauRed40}",
+      "type": "color",
+      "description": "blauRed40"
+    },
+    "promoHigh": {
+      "value": "{palette.blauPurple30}",
+      "type": "color",
+      "description": "blauPurple30"
+    },
+    "successHighInverse": {
+      "value": "{palette.blauGreen70}",
+      "type": "color",
+      "description": "blauGreen70"
+    },
+    "warningHighInverse": {
+      "value": "{palette.blauYellow70}",
+      "type": "color",
+      "description": "blauYellow70"
+    },
+    "errorHighInverse": {
+      "value": "{palette.blauRed70}",
+      "type": "color",
+      "description": "blauRed70"
+    },
+    "promoHighInverse": {
+      "value": "{palette.blauPurple}",
+      "type": "color",
+      "description": "blauPurple"
+    },
+    "textNavigationBarPrimary": {
+      "value": "{palette.grey2}",
+      "type": "color",
+      "description": "grey2"
+    },
+    "textNavigationBarSecondary": {
+      "value": "{palette.grey4}",
+      "type": "color",
+      "description": "grey4"
+    },
+    "textNavigationSearchBarHint": {
+      "value": "{palette.grey4}",
+      "type": "color",
+      "description": "grey4"
+    },
+    "textNavigationSearchBarText": {
+      "value": "{palette.grey2}",
+      "type": "color",
+      "description": "grey2"
+    },
+    "textAppBar": {
+      "value": "{palette.grey5}",
+      "type": "color",
+      "description": "grey5"
+    },
+    "textAppBarSelected": {
+      "value": "{palette.grey2}",
+      "type": "color",
+      "description": "grey2"
+    },
+    "customTabsBackground": {
+      "value": "{palette.darkModeBlack}",
+      "type": "color",
+      "description": "darkModeBlack"
+    },
+    "tagTextPromo": {
+      "value": "{palette.blauPurple30}",
+      "type": "color",
+      "description": "blauPurple30"
+    },
+    "tagTextActive": {
+      "value": "{palette.blauBluePrimary}",
+      "type": "color",
+      "description": "blauBluePrimary"
+    },
+    "tagTextInactive": {
+      "value": "{palette.grey5}",
+      "type": "color",
+      "description": "grey5"
+    },
+    "tagTextSuccess": {
+      "value": "{palette.blauGreen30}",
+      "type": "color",
+      "description": "blauGreen30"
+    },
+    "tagTextWarning": {
+      "value": "{palette.blauYellow40}",
+      "type": "color",
+      "description": "blauYellow40"
+    },
+    "tagTextError": {
+      "value": "{palette.blauRed40}",
+      "type": "color",
+      "description": "blauRed40"
+    },
+    "tagBackgroundPromo": {
+      "value": "{palette.darkModeGrey6}",
+      "type": "color",
+      "description": "darkModeGrey6"
+    },
+    "tagBackgroundActive": {
+      "value": "{palette.darkModeGrey6}",
+      "type": "color",
+      "description": "darkModeGrey6"
+    },
+    "tagBackgroundInactive": {
+      "value": "{palette.darkModeGrey6}",
+      "type": "color",
+      "description": "darkModeGrey6"
+    },
+    "tagBackgroundSuccess": {
+      "value": "{palette.darkModeGrey6}",
+      "type": "color",
+      "description": "darkModeGrey6"
+    },
+    "tagBackgroundWarning": {
+      "value": "{palette.darkModeGrey6}",
+      "type": "color",
+      "description": "darkModeGrey6"
+    },
+    "tagBackgroundError": {
+      "value": "{palette.darkModeGrey6}",
+      "type": "color",
+      "description": "darkModeGrey6"
+    },
+    "tagTextPromoInverse": {
+      "value": "{palette.blauPurple30}",
+      "type": "color",
+      "description": "blauPurple30"
+    },
+    "tagTextActiveInverse": {
+      "value": "{palette.blauBluePrimary}",
+      "type": "color",
+      "description": "blauBluePrimary"
+    },
+    "tagTextInactiveInverse": {
+      "value": "{palette.grey5}",
+      "type": "color",
+      "description": "grey5"
+    },
+    "tagTextSuccessInverse": {
+      "value": "{palette.blauGreen30}",
+      "type": "color",
+      "description": "blauGreen30"
+    },
+    "tagTextWarningInverse": {
+      "value": "{palette.blauYellow40}",
+      "type": "color",
+      "description": "blauYellow40"
+    },
+    "tagTextErrorInverse": {
+      "value": "{palette.blauRed40}",
+      "type": "color",
+      "description": "blauRed40"
+    },
+    "tagBackgroundPromoInverse": {
+      "value": "{palette.darkModeGrey6}",
+      "type": "color",
+      "description": "darkModeGrey6"
+    },
+    "tagBackgroundActiveInverse": {
+      "value": "{palette.darkModeGrey6}",
+      "type": "color",
+      "description": "darkModeGrey6"
+    },
+    "tagBackgroundInactiveInverse": {
+      "value": "{palette.darkModeGrey6}",
+      "type": "color",
+      "description": "darkModeGrey6"
+    },
+    "tagBackgroundSuccessInverse": {
+      "value": "{palette.darkModeGrey6}",
+      "type": "color",
+      "description": "darkModeGrey6"
+    },
+    "tagBackgroundWarningInverse": {
+      "value": "{palette.darkModeGrey6}",
+      "type": "color",
+      "description": "darkModeGrey6"
+    },
+    "tagBackgroundErrorInverse": {
+      "value": "{palette.darkModeGrey6}",
+      "type": "color",
+      "description": "darkModeGrey6"
+    },
+    "cardContentOverlay": {
+      "type": "linear-gradient",
+      "value": {
+        "angle": 180,
+        "colors": [
+          {
+            "value": "rgba({palette.grey6}, 0)",
+            "stop": 0
+          },
+          {
+            "value": "rgba({palette.grey6}, 0.4)",
+            "stop": 0.3
+          },
+          {
+            "value": "rgba({palette.grey6}, 0.7)",
+            "stop": 1
+          }
+        ]
+      },
+      "description": "grey6"
+    }
+  },
+  "radius": {
+    "avatar": {
+      "value": "circle",
+      "type": "borderRadius"
+    },
+    "bar": {
+      "value": "999",
+      "type": "borderRadius"
+    },
+    "button": {
+      "value": "4",
+      "type": "borderRadius"
+    },
+    "checkbox": {
+      "value": "2",
+      "type": "borderRadius"
+    },
+    "container": {
+      "value": "8",
+      "type": "borderRadius"
+    },
+    "indicator": {
+      "value": "999",
+      "type": "borderRadius"
+    },
+    "input": {
+      "value": "8",
+      "type": "borderRadius"
+    },
+    "legacyDisplay": {
+      "value": "16",
+      "type": "borderRadius"
+    },
+    "popup": {
+      "value": "8",
+      "type": "borderRadius"
+    },
+    "sheet": {
+      "value": "8",
+      "type": "borderRadius"
+    },
+    "mediaSmall": {
+      "value": "8",
+      "type": "borderRadius"
+    }
+  },
+  "themeVariant": {
+    "successFeedback": {
+      "value": "inverse",
+      "type": "themeVariant"
+    },
+    "brandLoadingScreen": {
+      "value": "default",
+      "type": "themeVariant"
+    }
+  },
+  "text": {
+    "weight": {
+      "cardTitle": {
+        "value": "regular",
+        "type": "typography"
+      },
+      "button": {
+        "value": "medium",
+        "type": "typography"
+      },
+      "tabsLabel": {
+        "value": "medium",
+        "type": "typography"
+      },
+      "link": {
+        "value": "medium",
+        "type": "typography"
+      },
+      "title1": {
+        "value": "medium",
+        "type": "typography"
+      },
+      "title2": {
+        "value": "light",
+        "type": "typography"
+      },
+      "title3": {
+        "value": "light",
+        "type": "typography"
+      },
+      "indicator": {
+        "value": "medium",
+        "type": "typography"
+      },
+      "navigationBar": {
+        "value": "medium",
+        "type": "typography"
+      },
+      "text5": {
+        "value": "light",
+        "type": "typography"
+      },
+      "text6": {
+        "value": "light",
+        "type": "typography"
+      },
+      "text7": {
+        "value": "light",
+        "type": "typography"
+      },
+      "text8": {
+        "value": "light",
+        "type": "typography"
+      },
+      "text9": {
+        "value": "light",
+        "type": "typography"
+      },
+      "text10": {
+        "value": "light",
+        "type": "typography"
+      }
+    },
+    "size": {
+      "tabsLabel": {
+        "value": {
+          "mobile": 16,
+          "desktop": 18
+        },
+        "type": "typography"
+      },
+      "title3": {
+        "value": {
+          "mobile": 20,
+          "desktop": 28
+        },
+        "type": "typography"
+      },
+      "text1": {
+        "value": {
+          "mobile": 12,
+          "desktop": 14
+        },
+        "type": "typography"
+      },
+      "text2": {
+        "value": {
+          "mobile": 14,
+          "desktop": 16
+        },
+        "type": "typography"
+      },
+      "text3": {
+        "value": {
+          "mobile": 16,
+          "desktop": 18
+        },
+        "type": "typography"
+      },
+      "text4": {
+        "value": {
+          "mobile": 18,
+          "desktop": 20
+        },
+        "type": "typography"
+      },
+      "text5": {
+        "value": {
+          "mobile": 20,
+          "desktop": 28
+        },
+        "type": "typography"
+      },
+      "text6": {
+        "value": {
+          "mobile": 24,
+          "desktop": 32
+        },
+        "type": "typography"
+      },
+      "text7": {
+        "value": {
+          "mobile": 28,
+          "desktop": 40
+        },
+        "type": "typography"
+      },
+      "text8": {
+        "value": {
+          "mobile": 32,
+          "desktop": 48
+        },
+        "type": "typography"
+      },
+      "text9": {
+        "value": {
+          "mobile": 40,
+          "desktop": 56
+        },
+        "type": "typography"
+      },
+      "text10": {
+        "value": {
+          "mobile": 48,
+          "desktop": 64
+        },
+        "type": "typography"
+      }
+    },
+    "lineHeight": {
+      "tabsLabel": {
+        "value": {
+          "mobile": 24,
+          "desktop": 24
+        },
+        "type": "typography"
+      },
+      "title3": {
+        "value": {
+          "mobile": 24,
+          "desktop": 32
+        },
+        "type": "typography"
+      },
+      "text1": {
+        "value": {
+          "mobile": 16,
+          "desktop": 20
+        },
+        "type": "typography"
+      },
+      "text2": {
+        "value": {
+          "mobile": 20,
+          "desktop": 24
+        },
+        "type": "typography"
+      },
+      "text3": {
+        "value": {
+          "mobile": 24,
+          "desktop": 24
+        },
+        "type": "typography"
+      },
+      "text4": {
+        "value": {
+          "mobile": 24,
+          "desktop": 28
+        },
+        "type": "typography"
+      },
+      "text5": {
+        "value": {
+          "mobile": 24,
+          "desktop": 32
+        },
+        "type": "typography"
+      },
+      "text6": {
+        "value": {
+          "mobile": 32,
+          "desktop": 40
+        },
+        "type": "typography"
+      },
+      "text7": {
+        "value": {
+          "mobile": 32,
+          "desktop": 48
+        },
+        "type": "typography"
+      },
+      "text8": {
+        "value": {
+          "mobile": 40,
+          "desktop": 56
+        },
+        "type": "typography"
+      },
+      "text9": {
+        "value": {
+          "mobile": 48,
+          "desktop": 64
+        },
+        "type": "typography"
+      },
+      "text10": {
+        "value": {
+          "mobile": 56,
+          "desktop": 72
+        },
+        "type": "typography"
+      }
+    }
+  },
+  "global": {
+    "palette": {
+      "blauBluePrimary": {
+        "value": "#00B6F1",
+        "type": "color"
+      },
+      "blauBluePrimary10": {
+        "value": "#F7FDFF",
+        "type": "color"
+      },
+      "blauBluePrimary20": {
+        "value": "#E5F6FD",
+        "type": "color"
+      },
+      "blauBluePrimary30": {
+        "value": "#B3E9FB",
+        "type": "color"
+      },
+      "blauBlueSecondary": {
+        "value": "#0072BC",
+        "type": "color"
+      },
+      "blauBlueSecondary10": {
+        "value": "#E5F1F9",
+        "type": "color"
+      },
+      "blauBlueSecondary20": {
+        "value": "#B2D4EC",
+        "type": "color"
+      },
+      "blauBlueSecondary30": {
+        "value": "#80B7DF",
+        "type": "color"
+      },
+      "blauBlueSecondary60": {
+        "value": "#005A99",
+        "type": "color"
+      },
+      "blauPurple": {
+        "value": "#7814B3",
+        "type": "color"
+      },
+      "blauPurple10": {
+        "value": "#F1E7F7",
+        "type": "color"
+      },
+      "blauPurple30": {
+        "value": "#BB89D9",
+        "type": "color"
+      },
+      "blauYellow": {
+        "value": "#FFA922",
+        "type": "color"
+      },
+      "blauYellow10": {
+        "value": "#FFF6E9",
+        "type": "color"
+      },
+      "blauYellow40": {
+        "value": "#FFC364",
+        "type": "color"
+      },
+      "blauYellow60": {
+        "value": "#F09500",
+        "type": "color"
+      },
+      "blauYellow70": {
+        "value": "#996614",
+        "type": "color"
+      },
+      "blauGreen": {
+        "value": "#30D300",
+        "type": "color"
+      },
+      "blauGreen10": {
+        "value": "#EAFBE5",
+        "type": "color"
+      },
+      "blauGreen30": {
+        "value": "#97E980",
+        "type": "color"
+      },
+      "blauGreen70": {
+        "value": "#1D7F00",
+        "type": "color"
+      },
+      "blauRed": {
+        "value": "#F64417",
+        "type": "color"
+      },
+      "blauRed10": {
+        "value": "#FEECE8",
+        "type": "color"
+      },
+      "blauRed20": {
+        "value": "#FCC7B9",
+        "type": "color"
+      },
+      "blauRed30": {
+        "value": "#FA9E87",
+        "type": "color"
+      },
+      "blauRed40": {
+        "value": "#F97C5D",
+        "type": "color"
+      },
+      "blauRed70": {
+        "value": "#C93712",
+        "type": "color"
+      },
+      "grey1": {
+        "value": "#F5F9FA",
+        "type": "color"
+      },
+      "grey2": {
+        "value": "#E7E7E7",
+        "type": "color"
+      },
+      "grey3": {
+        "value": "#B8B8B8",
+        "type": "color"
+      },
+      "grey4": {
+        "value": "#A0A0A0",
+        "type": "color"
+      },
+      "grey5": {
+        "value": "#808285",
+        "type": "color"
+      },
+      "grey6": {
+        "value": "#000000",
+        "type": "color"
+      },
+      "white": {
+        "value": "#FFFFFF",
+        "type": "color"
+      },
+      "darkModeBlack": {
+        "value": "#191919",
+        "type": "color"
+      },
+      "darkModeGrey": {
+        "value": "#242424",
+        "type": "color"
+      },
+      "darkModeGrey6": {
+        "value": "#313235",
+        "type": "color"
+      }
+    }
+  }
+}
