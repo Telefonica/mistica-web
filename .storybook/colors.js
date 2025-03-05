@@ -59,10 +59,10 @@ export const getColors = (skin) => {
             };
         case 'EsimFlag':
             return {
-                primary: '#2B3447',
-                textPrimary: '#2B3447',
+                primary: '#005CFF',
+                textPrimary: '#001740',
                 textPrimaryInverse: '#FFFFFF',
-                textSecondary: '#727579',
+                textSecondary: '#666B73',
             };
         default:
             throw Error('Unexpected skin: ' + skin);
