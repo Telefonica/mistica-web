@@ -1,3 +1,10 @@
+# [16.15.0](https://github.com/Telefonica/mistica-web/compare/v16.14.0...v16.15.0) (2025-03-05)
+
+
+### Features
+
+* **Touchable:** add aria-current support ([#1324](https://github.com/Telefonica/mistica-web/issues/1324)) ([4112e46](https://github.com/Telefonica/mistica-web/commit/4112e46a2964295e6e40d8bffcce6da69476d3b3))
+
 # [16.14.0](https://github.com/Telefonica/mistica-web/compare/v16.13.0...v16.14.0) (2025-02-25)
 
 
