@@ -80,7 +80,7 @@ const themesMap: {
     EsimFlag: {
         text: 'Esim Flag',
         themeConfig: EsimFlag,
-        Icon: () => <EsimFlagLogo size={24} />,
+        Icon: () => <O2NewLogo size={24} />,
     },
 };
 

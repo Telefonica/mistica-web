@@ -99,17 +99,7 @@ export {
     NavigationBarActionGroup,
     NavigationBarAction,
 } from './navigation-bar';
-export {
-    Logo,
-    MovistarLogo,
-    VivoLogo,
-    O2Logo,
-    O2NewLogo,
-    TelefonicaLogo,
-    BlauLogo,
-    TuLogo,
-    EsimFlagLogo,
-} from './logo';
+export {Logo, MovistarLogo, VivoLogo, O2Logo, O2NewLogo, TelefonicaLogo, BlauLogo, TuLogo} from './logo';
 export {default as Image} from './image';
 export {default as Chip} from './chip';
 export {default as Video} from './video';
@@ -225,7 +215,7 @@ export {getO2NewSkin} from './skins/o2-new';
 export {getTelefonicaSkin} from './skins/telefonica';
 export {getBlauSkin} from './skins/blau';
 export {getTuSkin} from './skins/tu';
-export {getEsimFlagSkin} from './skins/esimflag';
+export {getEsimflagSkin} from './skins/esimflag';
 export {palette as vivoPalette} from './skins/vivo';
 export {palette as movistarPalette} from './skins/movistar';
 export {palette as o2Palette} from './skins/o2';
