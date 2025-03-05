@@ -33,6 +33,7 @@ interface CommonProps {
     'aria-selected'?: 'true' | 'false' | boolean;
     'aria-labelledby'?: string;
     'aria-live'?: 'polite' | 'off' | 'assertive';
+    'aria-current'?: React.AriaAttributes['aria-current'];
     /** IMPORTANT: try to avoid using role="link" with onPress and first consider other alternatives like to/href + onNavigate */
     role?: string;
     type?: 'button' | 'submit';
@@ -117,6 +118,7 @@ const RawTouchable = React.forwardRef<TouchableElement, TouchableProps>((props, 
         'aria-hidden': props['aria-hidden'],
         'aria-selected': props['aria-selected'],
         'aria-live': props['aria-live'],
+        'aria-current': props['aria-current'],
         tabIndex: props.tabIndex,
         ...getPrefixedDataAttributes(props.dataAttributes, 'Touchable'),
     };
