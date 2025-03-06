@@ -21,7 +21,7 @@ import {
     Portal,
     O2NewLogo,
 } from '../../src';
-import {Movistar, Telefonica, Blau, Vivo_New, Tu, O2_New, Esimflag} from '../themes';
+import {Movistar, Telefonica, Blau, Vivo_New, Tu, O2_New} from '../themes';
 import {useOverrideTheme} from '../frame-component';
 import IconSun from '../icons/icon-sun';
 import IconMoon from '../icons/icon-moon';
