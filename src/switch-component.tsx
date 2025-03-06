@@ -35,6 +35,7 @@ type PropsRender = {
     children?: undefined;
     'aria-labelledby'?: string;
     'aria-label'?: string;
+    'aria-busy'?: boolean;
     dataAttributes?: DataAttributes;
 };
 
@@ -48,6 +49,7 @@ type PropsChildren = {
     render?: undefined;
     'aria-labelledby'?: string;
     'aria-label'?: string;
+    'aria-busy'?: boolean;
     dataAttributes?: DataAttributes;
 };
 
@@ -140,6 +142,7 @@ const Switch = (props: PropsRender | PropsChildren): JSX.Element => {
         <span
             role="switch"
             aria-checked={value ?? checkedState}
+            aria-busy={props['aria-busy']}
             onClick={(e) => {
                 e.stopPropagation();
                 if (!disabled) {
