@@ -77,11 +77,6 @@ const themesMap: {
         themeConfig: Tu,
         Icon: () => <TuLogo size={24} />,
     },
-    Esimflag: {
-        text: 'Esim Flag',
-        themeConfig: Esimflag,
-        Icon: () => <O2NewLogo size={24} />,
-    },
 };
 
 type PreviewToolsControlsProps = {
