@@ -53,7 +53,10 @@ export const touchableBackgroundInverse = style({
 
 export const pointer = sprinkles({cursor: 'pointer'});
 
-export const boxed = style({overflow: 'visible'});
+export const boxed = style({
+    // To allow button/a focus ring to overflow the container
+    overflow: 'visible',
+});
 
 export const rowContent = style([
     sprinkles({
@@ -67,6 +70,7 @@ export const rowContent = style([
     {
         selectors: {
             [`${boxed} &`]: {
+                // needed because we can't use overflow: hidden on the boxed container (see boxed style above)
                 borderRadius: `calc(${vars.borderRadii.container} - 1px)`,
             },
         },
@@ -140,6 +144,7 @@ export const dualActionLeft = style([
     {
         selectors: {
             [`${boxed} &`]: {
+                // needed because we can't use overflow: hidden on the boxed container (see boxed style above)
                 borderRadius: `calc(${vars.borderRadii.container} - 1px)`,
                 borderTopRightRadius: 0,
                 borderBottomRightRadius: 0,
