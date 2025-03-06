@@ -21,7 +21,7 @@ import {
     Portal,
     O2NewLogo,
 } from '../../src';
-import {Movistar, Telefonica, Blau, Vivo_New, Tu, O2_New, EsimFlag} from '../themes';
+import {Movistar, Telefonica, Blau, Vivo_New, Tu, O2_New, Esimflag} from '../themes';
 import {useOverrideTheme} from '../frame-component';
 import IconSun from '../icons/icon-sun';
 import IconMoon from '../icons/icon-moon';
@@ -38,7 +38,7 @@ export * from '../../src/community';
 export {default as Loader} from './loader';
 export {default as Animation} from './animation';
 
-type ValidSkinName = Exclude<KnownSkinName, 'O2' | 'Vivo'>;
+type ValidSkinName = Exclude<KnownSkinName, 'O2' | 'Vivo' | 'Esimflag'>;
 
 const themesMap: {
     [skinName in ValidSkinName]: {
@@ -77,9 +77,9 @@ const themesMap: {
         themeConfig: Tu,
         Icon: () => <TuLogo size={24} />,
     },
-    EsimFlag: {
+    Esimflag: {
         text: 'Esim Flag',
-        themeConfig: EsimFlag,
+        themeConfig: Esimflag,
         Icon: () => <O2NewLogo size={24} />,
     },
 };

@@ -16,7 +16,7 @@ export const O2_New: ThemeConfig = {...themes.O2_New, ...common};
 export const Telefonica: ThemeConfig = {...themes.Telefonica, ...common};
 export const Blau: ThemeConfig = {...themes.Blau, ...common};
 export const Tu: ThemeConfig = {...themes.Tu, ...common};
-export const EsimFlag: ThemeConfig = {...themes.EsimFlag, ...common};
+export const Esimflag: ThemeConfig = {...themes.Esimflag, ...common};
 
 export const Movistar_iOS: ThemeConfig = {...Movistar, platformOverrides: {platform: 'ios'}};
 export const Vivo_New_iOS: ThemeConfig = {...Vivo_New, platformOverrides: {platform: 'ios'}};
@@ -24,4 +24,4 @@ export const O2_New_iOS: ThemeConfig = {...O2_New, platformOverrides: {platform:
 export const Telefonica_iOS: ThemeConfig = {...Telefonica, platformOverrides: {platform: 'ios'}};
 export const Blau_iOS: ThemeConfig = {...Blau, platformOverrides: {platform: 'ios'}};
 export const Tu_iOS: ThemeConfig = {...Tu, platformOverrides: {platform: 'ios'}};
-export const EsimFlag_iOS: ThemeConfig = {...EsimFlag, platformOverrides: {platform: 'ios'}};
+export const Esimflag_iOS: ThemeConfig = {...Esimflag, platformOverrides: {platform: 'ios'}};

@@ -14,7 +14,7 @@ const AVAILABLE_SKINS = [
     'Telefonica',
     'Blau',
     'Tu',
-    'EsimFlag',
+    'Esimflag',
 ];
 
 const renderPrimaryColorDot = (skinName) => (
