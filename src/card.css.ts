@@ -9,10 +9,15 @@ export const actions = style([
     {marginTop: 16},
 ]);
 
-export const boxed = style([
+export const touchable = style([
     sprinkles({display: 'flex', position: 'relative'}),
     {
+        minHeight: '100%',
+        width: '100%',
         isolation: 'isolate', // Needed to preserve border-radius with Video component and Safari
+        padding: 0,
+        border: 'none',
+        background: 'transparent',
     },
 ]);
 
@@ -25,15 +30,12 @@ export const cardContentContainer = sprinkles({
 
 export const touchableContainer = style({});
 
-export const touchable = style({
+export const boxed = style({
     display: 'flex',
     flexDirection: 'column',
     minHeight: '100%',
     width: '100%',
     position: 'relative',
-    padding: 0,
-    border: 'none',
-    background: 'transparent',
 });
 
 const touchableCardOverlayBase = style({

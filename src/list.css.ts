@@ -53,14 +53,29 @@ export const touchableBackgroundInverse = style({
 
 export const pointer = sprinkles({cursor: 'pointer'});
 
-export const rowContent = sprinkles({
-    width: '100%',
-    border: 'none',
-    background: 'transparent',
-    padding: 0,
-    display: 'block',
-    height: '100%',
+export const boxed = style({
+    // To allow button/a focus ring to overflow the container
+    overflow: 'visible',
 });
+
+export const rowContent = style([
+    sprinkles({
+        width: '100%',
+        border: 'none',
+        background: 'transparent',
+        padding: 0,
+        display: 'block',
+        height: '100%',
+    }),
+    {
+        selectors: {
+            [`${boxed} &`]: {
+                // needed because we can't use overflow: hidden on the boxed container (see boxed style above)
+                borderRadius: `calc(${vars.borderRadii.container} - 1px)`,
+            },
+        },
+    },
+]);
 
 export const rowContentPadding = sprinkles({
     paddingX: 16,
@@ -126,6 +141,16 @@ export const dualActionLeft = style([
         flexGrow: 1,
         paddingX: 16,
     }),
+    {
+        selectors: {
+            [`${boxed} &`]: {
+                // needed because we can't use overflow: hidden on the boxed container (see boxed style above)
+                borderRadius: `calc(${vars.borderRadii.container} - 1px)`,
+                borderTopRightRadius: 0,
+                borderBottomRightRadius: 0,
+            },
+        },
+    },
 ]);
 
 export const dualActionDivider = style([

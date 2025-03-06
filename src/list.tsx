@@ -729,6 +729,7 @@ type BoxedRowProps = ExclusifyUnion<
 
 export const BoxedRow = React.forwardRef<HTMLDivElement, BoxedRowProps>(({dataAttributes, ...props}, ref) => (
     <Boxed
+        className={styles.boxed}
         variant={props.isInverse ? 'inverse' : 'default'}
         ref={ref}
         dataAttributes={{'component-name': 'BoxedRow', testid: 'BoxedRow', ...dataAttributes}}
