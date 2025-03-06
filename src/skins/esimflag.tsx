@@ -352,7 +352,7 @@ export const getEsimflagSkin: GetKnownSkin = () => {
             indicator: '8px',
             input: '16px',
             legacyDisplay: '24px',
-            popup: '8px',
+            popup: '16px',
             sheet: '16px',
             mediaSmall: '8px',
         },
