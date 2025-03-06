@@ -263,6 +263,7 @@
     min-width: 56px;
     padding: 4px 12px;
     vertical-align: middle;
+    width: fit-content;
 }
 
 .mistica-tag-promo {
@@ -448,6 +449,7 @@
     aspect-ratio: 16 / 9;
     object-fit: cover;
     width: calc(100% + 32px);
+    max-width: initial; /* Movistar AEM has a default max-width: 100% for any img tag */
 }
 
 .mistica-naked-card .mistica-card__media,
