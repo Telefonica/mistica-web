@@ -56,6 +56,7 @@ interface CommonProps {
     'aria-label'?: string;
     right?: Right;
     danger?: boolean;
+    autoFocus?: boolean;
 }
 
 const renderRight = (right: Right, centerY: boolean) => {
@@ -101,6 +102,7 @@ export const Content = ({
     labelId,
     disabled,
     control,
+    autoFocus = false
 }: ContentProps): JSX.Element => {
     const isInverse = useIsInverseOrMediaVariant();
     const numTextLines = [headline, title, subtitle, description, extra].filter(Boolean).length;
@@ -379,6 +381,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
         dataAttributes,
         right,
         'aria-label': ariaLabelProp,
+        autoFocus
     } = props;
 
     const [headlineText, setHeadlineText] = React.useState<string>('');
@@ -407,6 +410,12 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
     const hasControl = hasControlProps(props);
     const isInteractive = !!props.onPress || !!props.href || !!props.to;
     const hasChevron = hasControl ? false : withChevron ?? isInteractive;
+    const focusableRef = React.useRef<HTMLSelectElement | HTMLDivElement>(null);
+        React.useEffect(() => {
+            if (autoFocus && focusableRef.current) {
+                focusableRef.current.focus();
+            }
+        }, [autoFocus]);
 
     const interactiveProps = {
         href: props.href,
@@ -460,13 +469,14 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
             labelId={contentProps?.labelId}
             disabled={disabled}
             withChevron={hasChevron}
+            autoFocus={autoFocus}
         />
     );
 
     if (isInteractive && !hasControl) {
         return (
             <BaseTouchable
-                ref={ref}
+                ref={focusableRef}
                 className={classNames(styles.rowContent, {
                     [styles.touchableBackground]: hasHoverDefault,
                     [styles.touchableBackgroundInverse]: hasHoverInverse,
