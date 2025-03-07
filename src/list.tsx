@@ -102,14 +102,19 @@ export const Content = ({
     labelId,
     disabled,
     control,
-    autoFocus = false
+    autoFocus,
 }: ContentProps): JSX.Element => {
     const isInverse = useIsInverseOrMediaVariant();
     const numTextLines = [headline, title, subtitle, description, extra].filter(Boolean).length;
     const centerY = numTextLines === 1;
-
+    const focusableRef = React.useRef<HTMLInputElement>(null);
+    React.useEffect(() => {
+        if (autoFocus && focusableRef.current) {
+            focusableRef.current.focus();
+        }
+    }, [autoFocus, focusableRef]);
     return (
-        <div className={styles.content} id={labelId}>
+        <div className={styles.content} id={labelId} ref={focusableRef}>
             {asset && (
                 <div
                     className={classNames(styles.assetContainer, {
@@ -381,7 +386,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
         dataAttributes,
         right,
         'aria-label': ariaLabelProp,
-        autoFocus
+        autoFocus,
     } = props;
 
     const [headlineText, setHeadlineText] = React.useState<string>('');
@@ -410,12 +415,6 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
     const hasControl = hasControlProps(props);
     const isInteractive = !!props.onPress || !!props.href || !!props.to;
     const hasChevron = hasControl ? false : withChevron ?? isInteractive;
-    const focusableRef = React.useRef<HTMLSelectElement | HTMLDivElement>(null);
-        React.useEffect(() => {
-            if (autoFocus && focusableRef.current) {
-                focusableRef.current.focus();
-            }
-        }, [autoFocus]);
 
     const interactiveProps = {
         href: props.href,
@@ -435,6 +434,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
 
     const renderContent = (contentProps?: {control?: React.ReactNode; labelId?: string}) => (
         <Content
+            autoFocus={autoFocus}
             asset={asset}
             headline={headline}
             headlineRef={(node) => {
@@ -469,14 +469,13 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
             labelId={contentProps?.labelId}
             disabled={disabled}
             withChevron={hasChevron}
-            autoFocus={autoFocus}
         />
     );
 
     if (isInteractive && !hasControl) {
         return (
             <BaseTouchable
-                ref={focusableRef}
+                ref={ref}
                 className={classNames(styles.rowContent, {
                     [styles.touchableBackground]: hasHoverDefault,
                     [styles.touchableBackgroundInverse]: hasHoverInverse,
