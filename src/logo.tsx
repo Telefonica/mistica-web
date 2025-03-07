@@ -314,6 +314,6 @@ export const EsimflagLogo = ({
     ...props
 }: LogoProps): JSX.Element => (
     <MaybeTouchableLogo size={size} {...props}>
-        <LogoBase skinName="Esimflag    " type={type} size={size} color={color} />
+        <LogoBase skinName="Esimflag" type={type} size={size} color={color} />
     </MaybeTouchableLogo>
 );
