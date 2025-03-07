@@ -74,7 +74,7 @@ const TuLogoImage = React.lazy(
 const EsimflagLogoImage = React.lazy(
     () =>
         import(
-            /* webpackChunkName: "logo-tu" */
+            /* webpackChunkName: "logo-esimflag" */
             './logo-esimflag'
         )
 );

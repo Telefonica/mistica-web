@@ -122,7 +122,7 @@ export const getEsimflagSkin: GetKnownSkin = () => {
             barTrackInverse: applyAlpha(palette.white, 0.3),
             loadingBar: palette.blue,
             loadingBarBackground: palette.grey2,
-            toggleAndroidInactive: palette.blue20,
+            toggleAndroidInactive: palette.grey3,
             toggleAndroidBackgroundActive: palette.blue20,
             iosControlKnob: palette.white,
             controlKnobInverse: palette.blue,

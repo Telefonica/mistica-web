@@ -18,7 +18,7 @@ const EsimflagLogoImage = ({size, isDarkMode, isInverse, color: colorProp}: Logo
             viewBox="0 0 72 72"
             fill={color}
         >
-            <circle cx="24" cy="24" r="24" fill="#D9D9D9" />
+            <circle cx="36" cy="36" r="30" fill="#D9D9D9" />
         </svg>
     );
 };
