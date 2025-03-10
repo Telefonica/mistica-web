@@ -106,7 +106,7 @@ export const Content = ({
     const isInverse = useIsInverseOrMediaVariant();
     const numTextLines = [headline, title, subtitle, description, extra].filter(Boolean).length;
     const centerY = numTextLines === 1;
-    
+
     return (
         <div className={styles.content} id={labelId}>
             {asset && (
@@ -380,7 +380,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
         dataAttributes,
         right,
         'aria-label': ariaLabelProp,
-        tabIndex
+        tabIndex,
     } = props;
 
     const [headlineText, setHeadlineText] = React.useState<string>('');
