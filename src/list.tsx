@@ -105,10 +105,9 @@ export const Content = ({
 }: ContentProps): JSX.Element => {
     const isInverse = useIsInverseOrMediaVariant();
     const numTextLines = [headline, title, subtitle, description, extra].filter(Boolean).length;
-    const centerY = numTextLines === 1;
-  
+    const centerY = numTextLines === 1;    
     return (
-        <div className={styles.content} id={labelId} >
+        <div className={styles.content} id={labelId}>
             {asset && (
                 <div
                     className={classNames(styles.assetContainer, {
