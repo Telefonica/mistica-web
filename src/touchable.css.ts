@@ -22,6 +22,7 @@ export const base = style([
         textDecoration: 'none',
         fontSize: 'inherit',
         WebkitTapHighlightColor: 'transparent',
+        outlineOffset: 0,
         ':active': {
             textDecoration: 'none',
         },
