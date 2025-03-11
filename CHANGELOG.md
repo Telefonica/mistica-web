@@ -1,3 +1,10 @@
+# [16.16.0](https://github.com/Telefonica/mistica-web/compare/v16.15.0...v16.16.0) (2025-03-11)
+
+
+### Features
+
+* **Row:** add tabIndex prop ([#1326](https://github.com/Telefonica/mistica-web/issues/1326)) ([27988ac](https://github.com/Telefonica/mistica-web/commit/27988ac7ea99474efb67385b6e6871e84118a236))
+
 # [16.15.0](https://github.com/Telefonica/mistica-web/compare/v16.14.0...v16.15.0) (2025-03-05)
 
 
