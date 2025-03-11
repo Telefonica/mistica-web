@@ -10,7 +10,7 @@ import classNames from 'classnames';
 import {vars as skinVars} from './skins/skin-contract.css';
 import {getPrefixedDataAttributes} from './utils/dom';
 import Divider from './divider';
-import {Boxed} from './boxed';
+import {Boxed, InternalBoxed} from './boxed';
 import {useIsInverseOrMediaVariant} from './theme-variant-context';
 import {CSSTransition} from 'react-transition-group';
 import {isRunningAcceptanceTest} from './utils/platform';
@@ -296,13 +296,15 @@ interface BoxedAccordionItemProps extends AccordionItemContentProps {
 
 export const BoxedAccordionItem = React.forwardRef<HTMLDivElement, BoxedAccordionItemProps>(
     ({dataAttributes, isInverse, ...props}, ref) => (
-        <Boxed
+        <InternalBoxed
+            overflow="visible"
+            className={styles.boxed}
             variant={isInverse ? 'inverse' : 'default'}
             ref={ref}
             dataAttributes={{'component-name': 'BoxedAccordionItem', ...dataAttributes}}
         >
             <AccordionItemContent {...props} />
-        </Boxed>
+        </InternalBoxed>
     )
 );
 

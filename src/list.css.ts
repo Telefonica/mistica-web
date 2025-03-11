@@ -67,11 +67,11 @@ export const rowContent = style([
     {
         selectors: {
             [`${boxed} &:active`]: {
-                // needed because we can't use overflow: hidden on the boxed container (see boxed style above)
+                // needed because we can't use overflow: hidden on the boxed container for the focus ring to be visible
                 borderRadius: `calc(${vars.borderRadii.container} - 1px)`,
             },
             [`${boxed} &:hover`]: {
-                // needed because we can't use overflow: hidden on the boxed container (see boxed style above)
+                // needed because we can't use overflow: hidden on the boxed container for the focus ring to be visible
                 borderRadius: `calc(${vars.borderRadii.container} - 1px)`,
             },
         },
@@ -145,13 +145,13 @@ export const dualActionLeft = style([
     {
         selectors: {
             [`${boxed} &:active`]: {
-                // needed because we can't use overflow: hidden on the boxed container (see boxed style above)
+                // needed because we can't use overflow: hidden on the boxed container for the focus ring to be visible
                 borderRadius: `calc(${vars.borderRadii.container} - 1px)`,
                 borderTopRightRadius: 0,
                 borderBottomRightRadius: 0,
             },
             [`${boxed} &:hover`]: {
-                // needed because we can't use overflow: hidden on the boxed container (see boxed style above)
+                // needed because we can't use overflow: hidden on the boxed container for the focus ring to be visible
                 borderRadius: `calc(${vars.borderRadii.container} - 1px)`,
                 borderTopRightRadius: 0,
                 borderBottomRightRadius: 0,
