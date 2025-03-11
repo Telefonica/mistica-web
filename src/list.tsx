@@ -479,6 +479,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
                 dataAttributes={dataAttributes}
                 disabled={disabled}
                 aria-label={ariaLabel}
+                tabIndex={tabIndex}
             >
                 <Box paddingX={16} aria-hidden={!!props.to || !!props.href || undefined}>
                     {renderContent()}
@@ -502,6 +503,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
                     [styles.touchableBackgroundInverse]: hasHoverInverse,
                 })}
                 aria-label={ariaLabel}
+                tabIndex={tabIndex}
             >
                 {renderContent({labelId: titleId})}
             </BaseTouchable>
@@ -577,6 +579,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
                               <Box paddingX={16}>{controlElement}</Box>
                           </Stack>
                       )}
+                      
                   />
               )
             : renderRowWithSingleControl(
