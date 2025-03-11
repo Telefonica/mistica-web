@@ -49,6 +49,9 @@ export const Default: StoryComponent<Args> = ({label: labelFromArgs, icon, inver
                     >
                         {getLabel('Promo')}
                     </Tag>
+                    <Tag Icon={icon ? IconCloseRegular : undefined} type="info" badge={badgeValue}>
+                        {getLabel('Info')}
+                    </Tag>
                     <Tag Icon={icon ? IconStarFilled : undefined} type="active" badge={badgeValue}>
                         {getLabel('Active')}
                     </Tag>
