@@ -579,7 +579,6 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
                               <Box paddingX={16}>{controlElement}</Box>
                           </Stack>
                       )}
-                      
                   />
               )
             : renderRowWithSingleControl(
