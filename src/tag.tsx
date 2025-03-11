@@ -97,7 +97,6 @@ const Tag = ({
     const [defaultTextColor, inverseTextColor, defaultBackgroundColor, backgroundColorInverse] =
         tagTypeToColors[type];
 
-    // Use custom colors if provided, otherwise use theme colors
     const textColor = customTextColor || (isInverse ? inverseTextColor : defaultTextColor);
     const backgroundColor =
         customBackgroundColor || (isInverse ? backgroundColorInverse : defaultBackgroundColor);
