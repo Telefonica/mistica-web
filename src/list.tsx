@@ -18,7 +18,7 @@ import IconChevron from './icons/icon-chevron';
 import Switch from './switch-component';
 import RadioButton, {useRadioContext} from './radio-button';
 import Checkbox from './checkbox';
-import {Boxed} from './boxed';
+import {InternalBoxed} from './boxed';
 import Divider from './divider';
 import {getPrefixedDataAttributes} from './utils/dom';
 import * as styles from './list.css';
@@ -728,14 +728,15 @@ type BoxedRowProps = ExclusifyUnion<
     CommonBoxedRowProps;
 
 export const BoxedRow = React.forwardRef<HTMLDivElement, BoxedRowProps>(({dataAttributes, ...props}, ref) => (
-    <Boxed
+    <InternalBoxed
+        overflow="visible"
         className={styles.boxed}
         variant={props.isInverse ? 'inverse' : 'default'}
         ref={ref}
         dataAttributes={{'component-name': 'BoxedRow', testid: 'BoxedRow', ...dataAttributes}}
     >
         <RowContent {...props} />
-    </Boxed>
+    </InternalBoxed>
 ));
 
 type BoxedRowListProps = {
