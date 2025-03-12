@@ -56,6 +56,7 @@ interface CommonProps {
     'aria-label'?: string;
     right?: Right;
     danger?: boolean;
+    tabIndex?: number;
 }
 
 const renderRight = (right: Right, centerY: boolean) => {
@@ -379,6 +380,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
         dataAttributes,
         right,
         'aria-label': ariaLabelProp,
+        tabIndex,
     } = props;
 
     const [headlineText, setHeadlineText] = React.useState<string>('');
@@ -477,6 +479,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
                 dataAttributes={dataAttributes}
                 disabled={disabled}
                 aria-label={ariaLabel}
+                tabIndex={tabIndex}
             >
                 <Box paddingX={16} aria-hidden={!!props.to || !!props.href || undefined}>
                     {renderContent()}
@@ -500,6 +503,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
                     [styles.touchableBackgroundInverse]: hasHoverInverse,
                 })}
                 aria-label={ariaLabel}
+                tabIndex={tabIndex}
             >
                 {renderContent({labelId: titleId})}
             </BaseTouchable>
@@ -642,6 +646,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
             role={role}
             {...getPrefixedDataAttributes(dataAttributes)}
             ref={ref as React.Ref<HTMLDivElement>}
+            tabIndex={tabIndex}
         >
             <div aria-hidden={hasCustomAriaLabel}>{renderContent()}</div>
             {hasCustomAriaLabel && (
