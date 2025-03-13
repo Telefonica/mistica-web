@@ -11,6 +11,8 @@ export const row = sprinkles({
     width: '100%',
 });
 
+export const boxed = style({});
+
 export const touchableBackground = style({
     transition: 'background-color 0.1s ease-in-out',
     ':active': {
@@ -53,14 +55,28 @@ export const touchableBackgroundInverse = style({
 
 export const pointer = sprinkles({cursor: 'pointer'});
 
-export const rowContent = sprinkles({
-    width: '100%',
-    border: 'none',
-    background: 'transparent',
-    padding: 0,
-    display: 'block',
-    height: '100%',
-});
+export const rowContent = style([
+    sprinkles({
+        width: '100%',
+        border: 'none',
+        background: 'transparent',
+        padding: 0,
+        display: 'block',
+        height: '100%',
+    }),
+    {
+        selectors: {
+            [`${boxed} &:active`]: {
+                // needed because we can't use overflow: hidden on the boxed container for the focus ring to be visible
+                borderRadius: `calc(${vars.borderRadii.container} - 1px)`,
+            },
+            [`${boxed} &:hover`]: {
+                // needed because we can't use overflow: hidden on the boxed container for the focus ring to be visible
+                borderRadius: `calc(${vars.borderRadii.container} - 1px)`,
+            },
+        },
+    },
+]);
 
 export const rowContentPadding = sprinkles({
     paddingX: 16,
@@ -126,6 +142,22 @@ export const dualActionLeft = style([
         flexGrow: 1,
         paddingX: 16,
     }),
+    {
+        selectors: {
+            [`${boxed} &:active`]: {
+                // needed because we can't use overflow: hidden on the boxed container for the focus ring to be visible
+                borderRadius: `calc(${vars.borderRadii.container} - 1px)`,
+                borderTopRightRadius: 0,
+                borderBottomRightRadius: 0,
+            },
+            [`${boxed} &:hover`]: {
+                // needed because we can't use overflow: hidden on the boxed container for the focus ring to be visible
+                borderRadius: `calc(${vars.borderRadii.container} - 1px)`,
+                borderTopRightRadius: 0,
+                borderBottomRightRadius: 0,
+            },
+        },
+    },
 ]);
 
 export const dualActionDivider = style([
