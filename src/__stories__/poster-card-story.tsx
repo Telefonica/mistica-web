@@ -199,7 +199,7 @@ Default.argTypes = {
         control: {type: 'select'},
     },
     headlineType: {
-        options: ['promo', 'active', 'inactive', 'success', 'warning', 'error'],
+        options: ['promo', 'active', 'inactive', 'success', 'warning', 'error', 'info'],
         control: {type: 'select'},
     },
     background: {

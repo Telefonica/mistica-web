@@ -111,7 +111,7 @@ type Args = {
 };
 
 export const Wrap: StoryComponent<Args> = ({space, numItems}) => {
-    const tagTypes = ['active', 'inactive', 'success', 'warning', 'error', 'promo'] as const;
+    const tagTypes = ['active', 'inactive', 'success', 'warning', 'error', 'promo', 'info'] as const;
     return (
         <Inline space={space} wrap>
             {Array.from({length: numItems}, (_, i) => {

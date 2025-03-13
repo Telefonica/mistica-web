@@ -134,3 +134,23 @@ test('Tags with badge and large fontSize', async () => {
     const image = await tag.screenshot();
     expect(image).toMatchImageSnapshot();
 });
+
+test('Tags with custom colors', async () => {
+    await openStoryPage({
+        id: 'components-tag--default',
+        device: 'DESKTOP',
+        args: {
+            badge: 1,
+            colorConfig: 'custom color',
+            textColorCustom: 'yellow',
+            backgroundColorCustom: 'blue',
+        },
+    });
+
+    await setRootFontSize(32);
+
+    const tag = await screen.findByTestId('tags');
+
+    const image = await tag.screenshot();
+    expect(image).toMatchImageSnapshot();
+});
