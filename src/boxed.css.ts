@@ -52,7 +52,6 @@ export const boxed = style({
     minWidth,
     background,
     borderRadius,
-    overflow: 'hidden',
 
     '@media': {
         [mq.mobile]: {
@@ -84,6 +83,8 @@ export const boxed = style({
         },
     },
 });
+
+export const overflowHidden = sprinkles({overflow: 'hidden'});
 
 export const boxBorder = sprinkles({
     border: 'regular',
