@@ -46,7 +46,7 @@ export const Welcome = () => {
                         </Paragraph>
                     </Stack>
                     <nav style={{margin: '0 -8px'}}>
-                        <Inline space={8}>
+                        <Inline space={8} wrap>
                             <ButtonLink small href="https://github.com/Telefonica/mistica">
                                 About Mistica
                             </ButtonLink>
