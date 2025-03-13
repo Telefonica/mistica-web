@@ -10,7 +10,7 @@ import classNames from 'classnames';
 import {vars as skinVars} from './skins/skin-contract.css';
 import {getPrefixedDataAttributes} from './utils/dom';
 import Divider from './divider';
-import {Boxed, InternalBoxed} from './boxed';
+import {InternalBoxed} from './boxed';
 import {useIsInverseOrMediaVariant} from './theme-variant-context';
 import {CSSTransition} from 'react-transition-group';
 import {isRunningAcceptanceTest} from './utils/platform';
