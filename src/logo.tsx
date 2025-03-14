@@ -71,6 +71,14 @@ const TuLogoImage = React.lazy(
         )
 );
 
+const EsimflagLogoImage = React.lazy(
+    () =>
+        import(
+            /* webpackChunkName: "logo-esimflag" */
+            './logo-esimflag'
+        )
+);
+
 type LogoBaseProps = {
     skinName: KnownSkinName;
     size: ByBreakpoint<number>;
@@ -146,6 +154,16 @@ const LogoBase = ({size, skinName, type = 'isotype', color}: LogoBaseProps): JSX
         case 'Tu':
             return (
                 <TuLogoImage
+                    size={size}
+                    type={type}
+                    isDarkMode={isDarkMode}
+                    isInverse={isInverse}
+                    color={color}
+                />
+            );
+        case 'Esimflag':
+            return (
+                <EsimflagLogoImage
                     size={size}
                     type={type}
                     isDarkMode={isDarkMode}
@@ -286,5 +304,16 @@ export const TuLogo = ({
 }: LogoProps): JSX.Element => (
     <MaybeTouchableLogo size={size} {...props}>
         <LogoBase skinName="Tu" type={type} size={size} color={color} />
+    </MaybeTouchableLogo>
+);
+
+export const EsimflagLogo = ({
+    size = DEFAULT_HEIGHT_PX,
+    type = 'isotype',
+    color,
+    ...props
+}: LogoProps): JSX.Element => (
+    <MaybeTouchableLogo size={size} {...props}>
+        <LogoBase skinName="Esimflag" type={type} size={size} color={color} />
     </MaybeTouchableLogo>
 );

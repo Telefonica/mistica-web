@@ -11,6 +11,7 @@ const SKINS: Array<KnownSkinName> = [
     'Telefonica',
     'Blau',
     'Tu',
+    'Esimflag',
 ];
 const LOGO_TYPES = ['imagotype', 'vertical', 'isotype'];
 const INVERSE_VALUES = [false, true];

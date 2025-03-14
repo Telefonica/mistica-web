@@ -38,7 +38,7 @@ export * from '../../src/community';
 export {default as Loader} from './loader';
 export {default as Animation} from './animation';
 
-type ValidSkinName = Exclude<KnownSkinName, 'O2' | 'Vivo'>;
+type ValidSkinName = Exclude<KnownSkinName, 'O2' | 'Vivo' | 'Esimflag'>;
 
 const themesMap: {
     [skinName in ValidSkinName]: {

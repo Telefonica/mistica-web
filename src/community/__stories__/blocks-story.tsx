@@ -183,7 +183,7 @@ BlockHighlightedValue.args = {
 };
 BlockHighlightedValue.argTypes = {
     headlineType: {
-        options: ['promo', 'active', 'inactive', 'success', 'warning', 'error'],
+        options: ['promo', 'active', 'inactive', 'success', 'warning', 'error', 'info'],
         control: {type: 'select'},
     },
 };

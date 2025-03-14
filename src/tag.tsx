@@ -14,20 +14,30 @@ import Badge from './badge';
 
 import type {DataAttributes, IconProps} from './utils/types';
 
-export type TagType = 'promo' | 'active' | 'inactive' | 'success' | 'warning' | 'error';
+export type TagType = 'promo' | 'info' | 'active' | 'inactive' | 'success' | 'warning' | 'error';
 
 export type TagProps = {
     // not using "TagType" and repeating the union to make these props playroom autocomplete friendly
-    type?: 'promo' | 'active' | 'inactive' | 'success' | 'warning' | 'error';
+    type?: 'promo' | 'info' | 'active' | 'inactive' | 'success' | 'warning' | 'error';
     children: string;
     Icon?: (props: IconProps) => JSX.Element;
     dataAttributes?: DataAttributes;
     badge?: boolean | number;
+    backgroundColor?: string;
+    textColor?: string;
 };
 
 const {colors} = vars;
 
-const Tag = ({Icon, children, dataAttributes, type = 'promo', badge}: TagProps): JSX.Element | null => {
+const Tag = ({
+    Icon,
+    children,
+    dataAttributes,
+    type = 'promo',
+    badge,
+    backgroundColor: customBackgroundColor,
+    textColor: customTextColor,
+}: TagProps): JSX.Element | null => {
     const {textPresets} = useTheme();
     const themeVariant = useThemeVariant();
     const isInverse = themeVariant === 'inverse';
@@ -44,6 +54,12 @@ const Tag = ({Icon, children, dataAttributes, type = 'promo', badge}: TagProps):
             colors.tagTextPromoInverse,
             colors.tagBackgroundPromo,
             colors.tagBackgroundPromoInverse,
+        ],
+        info: [
+            colors.tagTextInfo,
+            colors.tagTextInfoInverse,
+            colors.tagBackgroundInfo,
+            colors.tagBackgroundInfoInverse,
         ],
         active: [
             colors.tagTextActive,
@@ -78,7 +94,12 @@ const Tag = ({Icon, children, dataAttributes, type = 'promo', badge}: TagProps):
         ],
     } as const;
 
-    const [textColor, inverseTextColor, backgroundColor, backgroundColorInverse] = tagTypeToColors[type];
+    const [defaultTextColor, inverseTextColor, defaultBackgroundColor, backgroundColorInverse] =
+        tagTypeToColors[type];
+
+    const textColor = customTextColor || (isInverse ? inverseTextColor : defaultTextColor);
+    const backgroundColor =
+        customBackgroundColor || (isInverse ? backgroundColorInverse : defaultBackgroundColor);
 
     return (
         <span
@@ -87,21 +108,17 @@ const Tag = ({Icon, children, dataAttributes, type = 'promo', badge}: TagProps):
             style={{
                 paddingLeft: Icon ? 8 : 12,
                 paddingRight: badgeValue !== 0 ? 8 : 12,
-                background: isInverse ? backgroundColorInverse : backgroundColor,
+                background: backgroundColor,
             }}
         >
             {Icon && (
                 <Box paddingRight={4}>
-                    <Icon
-                        color={isInverse ? inverseTextColor : textColor}
-                        size={pxToRem(16)}
-                        className={styles.icon}
-                    />
+                    <Icon color={textColor} size={pxToRem(16)} className={styles.icon} />
                 </Box>
             )}
             <ThemeVariant isInverse={false}>
                 <Text
-                    color={isInverse ? inverseTextColor : textColor}
+                    color={textColor}
                     size={14}
                     lineHeight={20}
                     weight={textPresets.indicator.weight}

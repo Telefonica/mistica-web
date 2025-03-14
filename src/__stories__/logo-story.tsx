@@ -1,5 +1,15 @@
 import * as React from 'react';
-import {BlauLogo, Logo, MovistarLogo, O2Logo, TelefonicaLogo, VivoLogo, TuLogo, O2NewLogo} from '../logo';
+import {
+    BlauLogo,
+    Logo,
+    MovistarLogo,
+    O2Logo,
+    TelefonicaLogo,
+    VivoLogo,
+    TuLogo,
+    O2NewLogo,
+    EsimflagLogo,
+} from '../logo';
 import {Box, ResponsiveLayout, useTheme} from '../index';
 
 const COLOR_OPTIONS = ['default', 'neutralHigh', 'neutralMedium', '#000000'] as const;
@@ -24,7 +34,7 @@ type Args = {
     inverse: boolean;
     action: 'none' | 'onPress' | 'href' | 'to';
     forceBrandLogo: boolean;
-    brand: 'Movistar' | 'O2' | 'O2-new' | 'Vivo' | 'Telefonica' | 'Blau' | 'Tu';
+    brand: 'Movistar' | 'O2' | 'O2-new' | 'Vivo' | 'Telefonica' | 'Blau' | 'Tu' | 'Esimflag';
     color: (typeof COLOR_OPTIONS)[number];
 };
 
@@ -77,6 +87,7 @@ export const Default: StoryComponent<Args> = ({
         Telefonica: TelefonicaLogo,
         Blau: BlauLogo,
         Tu: TuLogo,
+        Esimflag: EsimflagLogo,
     }[forceBrandLogo ? brand : 'default'];
 
     return (
@@ -102,7 +113,7 @@ Default.args = {
 
 Default.argTypes = {
     brand: {
-        options: ['Movistar', 'O2', 'O2-new', 'Vivo', 'Telefonica', 'Blau', 'Tu'],
+        options: ['Movistar', 'O2', 'O2-new', 'Vivo', 'Telefonica', 'Blau', 'Tu', 'Esimflag'],
         control: {type: 'select'},
         if: {arg: 'forceBrandLogo'},
     },
