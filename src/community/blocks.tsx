@@ -160,7 +160,9 @@ interface HighlightedValueBlockProps {
     headline?: RendersNullableElement<typeof Tag>;
     headings?: ReadonlyArray<Heading>;
     title?: string;
+    Pretitle?: string;
     description?: ReadonlyArray<string> | string;
+    strikedValue?: ReadonlyArray<string> | string;
     'aria-label'?: string;
 }
 
@@ -168,13 +170,27 @@ export const HighlightedValueBlock = ({
     headline,
     headings,
     title,
+    Pretitle,
     description,
+    strikedValue,
     'aria-label': ariaLabel,
 }: HighlightedValueBlockProps): JSX.Element => {
     return (
         <div aria-label={ariaLabel}>
             {headline && <Box paddingBottom={24}>{headline}</Box>}
 
+            {Pretitle && (
+                <Box paddingTop={24}>
+                    <Text2 regular>{Pretitle}</Text2>
+                </Box>
+            )}
+            {strikedValue && (
+                <Box paddingTop={8}>
+                    <Text2 regular color={vars.colors.textSecondary} decoration="line-through">
+                        {strikedValue}
+                    </Text2>
+                </Box>
+            )}
             {headings && (
                 <Stack space={2}>
                     {headings.map((heading, index) => (
