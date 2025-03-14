@@ -2,7 +2,7 @@
 import * as React from 'react';
 import Touchable, {BaseTouchable} from './touchable';
 import classNames from 'classnames';
-import {isWebViewBridgeAvailable, nativeMessage} from '@tef-novum/webview-bridge';
+import {isWebViewBridgeAvailable} from '@tef-novum/webview-bridge';
 import {useElementDimensions, useScreenSize, useTheme} from './hooks';
 import {Text2, Text3} from './text';
 import * as styles from './snackbar.css';
@@ -11,13 +11,11 @@ import {getPrefixedDataAttributes} from './utils/dom';
 import {Portal} from './portal';
 import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
 import * as tokens from './text-tokens';
+import {showNativeSnackbar} from './snackbar-native';
 
+import type {SnackbarType, CloseAction} from './snackbar-native';
 import type {DataAttributes} from './utils/types';
 
-const CLOSE_ACTIONS = ['DISMISS', 'TIMEOUT', 'CONSECUTIVE', 'BUTTON'] as const;
-
-type SnackbarType = 'INFORMATIVE' | 'CRITICAL';
-type CloseAction = (typeof CLOSE_ACTIONS)[number];
 export type SnackbarCloseHandler = (result: {action: CloseAction}) => unknown;
 
 const DEFAULT_DURATION_WITHOUT_BUTTON = 5000;
@@ -210,7 +208,7 @@ const Snackbar = React.forwardRef<ImperativeHandle & HTMLDivElement, Props>(
             /** the isOpenRef check is to avoid a double call to nativeMessage in development with StrictMode */
             if (renderNative && !isOpenRef.current) {
                 isOpenRef.current = true;
-                nativeMessage({
+                showNativeSnackbar({
                     message,
                     duration,
                     buttonText,
@@ -218,13 +216,8 @@ const Snackbar = React.forwardRef<ImperativeHandle & HTMLDivElement, Props>(
                     type,
                     withDismiss,
                 })
-                    .then((unknownResult: unknown) => {
-                        const result = unknownResult as {action?: CloseAction} | undefined;
-                        if (result?.action && CLOSE_ACTIONS.includes(result.action)) {
-                            onCloseRef.current({action: result.action});
-                        } else {
-                            onCloseRef.current({action: 'DISMISS'});
-                        }
+                    .then(({action}) => {
+                        onCloseRef.current({action});
                     })
                     .finally(() => {
                         isOpenRef.current = false;

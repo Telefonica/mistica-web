@@ -1,6 +1,7 @@
 'use client';
 import * as React from 'react';
 import {isWebViewBridgeAvailable} from '@tef-novum/webview-bridge';
+import {showNativeSnackbar} from './snackbar-native';
 
 import type {ImperativeHandle, Props as SnackbarProps, SnackbarCloseHandler} from './snackbar';
 
@@ -22,29 +23,18 @@ export const SnackbarRoot = ({children}: {children: React.ReactNode}): JSX.Eleme
     const [snackbars, setSnackbars] = React.useState<Array<SnackbarEntry>>([]);
     const snackbarRef = React.useRef<ImperativeHandle & HTMLDivElement>(null);
     const isClosingRef = React.useRef(false);
-    const renderNative = isWebViewBridgeAvailable();
 
     React.useEffect(() => {
         // multiple snackbars, close the current one
         if (snackbars.length > 1 && !isClosingRef.current) {
             isClosingRef.current = true;
-            if (renderNative) {
-                // the native side will automatically close the current snackbar when opening a new one
-                setSnackbars((snackbars) => snackbars.slice(1));
-            } else {
-                snackbarRef.current?.close({action: 'CONSECUTIVE'});
-            }
+            snackbarRef.current?.close({action: 'CONSECUTIVE'});
         }
-    }, [snackbars, renderNative]);
+    }, [snackbars]);
 
     const handleClose: SnackbarCloseHandler = ({action}) => {
         isClosingRef.current = false;
-        if (renderNative && action === 'CONSECUTIVE') {
-            // rebuild the array to force a re-render to process the next item in queue
-            setSnackbars((snackbars) => snackbars.slice(0));
-        } else {
-            setSnackbars((snackbars) => snackbars.slice(1));
-        }
+        setSnackbars((snackbars) => snackbars.slice(1));
         snackbars[0].onClose?.({action});
     };
 
@@ -89,8 +79,14 @@ export const useSnackbar = (): {
 
     const openSnackbar = React.useCallback(
         (params: SnackbarProps) => {
-            const uniqueIdentifier = Date.now() + '-' + Math.random();
-            setSnackbars((snackbars) => [...snackbars, {...params, id: uniqueIdentifier}]);
+            if (isWebViewBridgeAvailable()) {
+                showNativeSnackbar(params).then(({action}) => {
+                    params.onClose?.({action});
+                });
+            } else {
+                const uniqueIdentifier = Date.now() + '-' + Math.random();
+                setSnackbars((snackbars) => [...snackbars, {...params, id: uniqueIdentifier}]);
+            }
         },
         [setSnackbars]
     );
