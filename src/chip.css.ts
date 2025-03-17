@@ -70,11 +70,11 @@ export const chipVariants = styleVariants({
         chipActive,
         containerBase,
         sprinkles({
-            color: vars.colors.textPrimaryInverse,
-            background: vars.colors.controlActivated,
+            color: vars.colors.textButtonPrimary,
+            background: vars.colors.buttonPrimaryBackground,
         }),
         {
-            borderColor: vars.colors.controlActivated,
+            borderColor: vars.colors.buttonPrimaryBackground,
             cursor: 'pointer',
         },
     ],
