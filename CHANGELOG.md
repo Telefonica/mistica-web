@@ -1,3 +1,16 @@
+# [16.17.0](https://github.com/Telefonica/mistica-web/compare/v16.16.0...v16.17.0) (2025-03-14)
+
+
+### Bug Fixes
+
+* **Row/Cards:** browser focus ring in boxed components ([#1325](https://github.com/Telefonica/mistica-web/issues/1325)) ([33a4543](https://github.com/Telefonica/mistica-web/commit/33a454360d2613d0117cd0a76c3edb2853990c48))
+
+
+### Features
+
+* **skins:** new eSIMFlag skin ([#1323](https://github.com/Telefonica/mistica-web/issues/1323)) ([a2f2892](https://github.com/Telefonica/mistica-web/commit/a2f2892aeaa00a532a40348a287387256a1c030f))
+* **Tag:** New type "info" and allow custom colors ([#1327](https://github.com/Telefonica/mistica-web/issues/1327)) ([6c71b10](https://github.com/Telefonica/mistica-web/commit/6c71b104697f8f0b9c1aa74914cfb2fe72b40c23))
+
 # [16.16.0](https://github.com/Telefonica/mistica-web/compare/v16.15.0...v16.16.0) (2025-03-11)
 
 

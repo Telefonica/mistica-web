@@ -634,13 +634,13 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
                 aria-label={isTouchable ? undefined : ariaLabelProp}
                 className={styles.touchableContainer}
             >
-                <Boxed className={styles.boxed} width="100%" height="100%">
-                    <BaseTouchable
-                        maybe
-                        {...touchableProps}
-                        className={styles.touchable}
-                        aria-label={isTouchable ? ariaLabel : undefined}
-                    >
+                <BaseTouchable
+                    maybe
+                    {...touchableProps}
+                    className={styles.touchable}
+                    aria-label={isTouchable ? ariaLabel : undefined}
+                >
+                    <Boxed className={styles.boxed} width="100%" height="100%">
                         {isTouchable && <div className={styles.touchableMediaCardOverlay} />}
                         <div className={styles.mediaCard} aria-hidden={isTouchable}>
                             <div style={applyCssVars({[mediaStyles.vars.mediaBorderRadius]: '0px'})}>
@@ -678,8 +678,8 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
                                 </div>
                             )}
                         </div>
-                    </BaseTouchable>
-                </Boxed>
+                    </Boxed>
+                </BaseTouchable>
                 <CardActionsGroup
                     onClose={onClose}
                     closeButtonLabel={closeButtonLabel}
@@ -1022,13 +1022,13 @@ export const DataCard = React.forwardRef<HTMLDivElement, DataCardProps>(
                 className={styles.touchableContainer}
                 aspectRatio={aspectRatio}
             >
-                <Boxed className={styles.boxed} width="100%" minHeight="100%">
-                    <BaseTouchable
-                        maybe
-                        {...touchableProps}
-                        className={styles.touchable}
-                        aria-label={isTouchable ? ariaLabel : undefined}
-                    >
+                <BaseTouchable
+                    maybe
+                    {...touchableProps}
+                    className={styles.touchable}
+                    aria-label={isTouchable ? ariaLabel : undefined}
+                >
+                    <Boxed className={styles.boxed} width="100%" minHeight="100%">
                         {isTouchable && <div className={styles.touchableCardOverlay} />}
                         <div className={styles.dataCard} aria-hidden={isTouchable}>
                             <Inline space={0}>
@@ -1082,8 +1082,8 @@ export const DataCard = React.forwardRef<HTMLDivElement, DataCardProps>(
                                 </div>
                             )}
                         </div>
-                    </BaseTouchable>
-                </Boxed>
+                    </Boxed>
+                </BaseTouchable>
                 <CardActionsGroup
                     onClose={onClose}
                     closeButtonLabel={closeButtonLabel}
@@ -1149,17 +1149,17 @@ export const SnapCard = React.forwardRef<HTMLDivElement, SnapCardProps>(
                 aspectRatio={aspectRatio}
                 aria-label={isTouchable ? undefined : ariaLabelProp}
             >
-                <Boxed
-                    className={styles.boxed}
-                    variant={isInverse ? 'inverse' : 'default'}
-                    width="100%"
-                    minHeight="100%"
+                <BaseTouchable
+                    maybe
+                    {...touchableProps}
+                    className={styles.touchable}
+                    aria-label={isTouchable ? ariaLabel : undefined}
                 >
-                    <BaseTouchable
-                        maybe
-                        {...touchableProps}
-                        className={styles.touchable}
-                        aria-label={isTouchable ? ariaLabel : undefined}
+                    <Boxed
+                        className={styles.boxed}
+                        variant={isInverse ? 'inverse' : 'default'}
+                        width="100%"
+                        minHeight="100%"
                     >
                         {isTouchable && <div className={overlayStyle} />}
                         <section className={styles.snapCard} aria-hidden={isTouchable}>
@@ -1219,8 +1219,8 @@ export const SnapCard = React.forwardRef<HTMLDivElement, SnapCardProps>(
                                 </div>
                             )}
                         </section>
-                    </BaseTouchable>
-                </Boxed>
+                    </Boxed>
+                </BaseTouchable>
             </CardContainer>
         );
     }
@@ -1473,25 +1473,25 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
                 aria-label={isTouchable ? undefined : ariaLabelProp}
                 className={styles.touchableContainer}
             >
-                <InternalBoxed
-                    borderRadius={vars.borderRadii.legacyDisplay}
-                    className={styles.boxed}
-                    width="100%"
-                    minHeight="100%"
-                    background={
-                        hasImage || hasVideo
-                            ? isExternalInverse
-                                ? vars.colors.backgroundContainerBrandOverInverse
-                                : vars.colors.backgroundContainer
-                            : undefined
-                    }
-                    variant={hasImage || hasVideo ? 'media' : isInverse ? 'inverse' : 'default'}
+                <BaseTouchable
+                    maybe
+                    {...touchableProps}
+                    className={styles.touchable}
+                    aria-label={isTouchable ? ariaLabel : undefined}
                 >
-                    <BaseTouchable
-                        maybe
-                        {...touchableProps}
-                        className={styles.touchable}
-                        aria-label={isTouchable ? ariaLabel : undefined}
+                    <InternalBoxed
+                        borderRadius={vars.borderRadii.legacyDisplay}
+                        className={styles.boxed}
+                        width="100%"
+                        minHeight="100%"
+                        background={
+                            hasImage || hasVideo
+                                ? isExternalInverse
+                                    ? vars.colors.backgroundContainerBrandOverInverse
+                                    : vars.colors.backgroundContainer
+                                : undefined
+                        }
+                        variant={hasImage || hasVideo ? 'media' : isInverse ? 'inverse' : 'default'}
                     >
                         {isTouchable && <div className={overlayStyle} />}
 
@@ -1600,8 +1600,8 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
                                 </div>
                             </div>
                         </div>
-                    </BaseTouchable>
-                </InternalBoxed>
+                    </InternalBoxed>
+                </BaseTouchable>
                 <CardActionsGroup
                     onClose={onClose}
                     closeButtonLabel={closeButtonLabel}
@@ -1792,25 +1792,25 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                 className={styles.touchableContainer}
                 aria-label={isTouchable ? undefined : ariaLabelProp}
             >
-                <InternalBoxed
-                    borderRadius={vars.borderRadii.legacyDisplay}
-                    className={styles.boxed}
-                    width="100%"
-                    minHeight="100%"
-                    background={calcBackgroundColor()}
-                    variant={
-                        hasImage || hasVideo
-                            ? 'media'
-                            : hasImage || hasVideo || normalizedVariant === 'inverse'
-                              ? 'inverse'
-                              : 'default'
-                    }
+                <BaseTouchable
+                    maybe
+                    {...touchableProps}
+                    className={styles.touchable}
+                    aria-label={isTouchable ? ariaLabel : undefined}
                 >
-                    <BaseTouchable
-                        maybe
-                        {...touchableProps}
-                        className={styles.touchable}
-                        aria-label={isTouchable ? ariaLabel : undefined}
+                    <InternalBoxed
+                        borderRadius={vars.borderRadii.legacyDisplay}
+                        className={styles.boxed}
+                        width="100%"
+                        minHeight="100%"
+                        background={calcBackgroundColor()}
+                        variant={
+                            hasImage || hasVideo
+                                ? 'media'
+                                : hasImage || hasVideo || normalizedVariant === 'inverse'
+                                  ? 'inverse'
+                                  : 'default'
+                        }
                     >
                         {isTouchable && <div className={overlayStyle} />}
 
@@ -1925,8 +1925,8 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                                 </div>
                             </div>
                         </div>
-                    </BaseTouchable>
-                </InternalBoxed>
+                    </InternalBoxed>
+                </BaseTouchable>
                 <CardActionsGroup
                     onClose={onClose}
                     closeButtonLabel={closeButtonLabel}
