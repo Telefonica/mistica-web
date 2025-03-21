@@ -133,7 +133,7 @@ type HighlightedValueBlockArgs = {
 
     secondaryValue: string;
 
-    Pretitle: string;
+    pretitle: string;
     title: string;
     description: string;
     strikedValue: string;
@@ -145,7 +145,7 @@ export const BlockHighlightedValue: StoryComponent<HighlightedValueBlockArgs> = 
     value,
     text,
     secondaryValue,
-    Pretitle,
+    pretitle,
     title,
     description,
     strikedValue,
@@ -155,7 +155,7 @@ export const BlockHighlightedValue: StoryComponent<HighlightedValueBlockArgs> = 
             <Box paddingY={24} dataAttributes={{testid: 'highlighted-value-block'}}>
                 <HighlightedValueBlock
                     headline={<Tag type={headlineType}>{headline}</Tag>}
-                    Pretitle={Pretitle}
+                    pretitle={pretitle}
                     title={title}
                     description={description}
                     strikedValue={strikedValue}
@@ -173,13 +173,13 @@ BlockHighlightedValue.storyName = 'HighlightedValueBlock';
 BlockHighlightedValue.args = {
     headline: 'Priority',
     headlineType: 'promo',
-    text: 'text',
+    pretitle: 'Pretitle',
+    strikedValue: 'striked Value',
     value: '20',
+    text: 'text',
     secondaryValue: '20',
-    Pretitle: 'Pretitle',
     title: 'title',
     description: 'description',
-    strikedValue: 'striked Value',
 };
 BlockHighlightedValue.argTypes = {
     headlineType: {
