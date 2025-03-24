@@ -1,3 +1,10 @@
+## [16.18.1](https://github.com/Telefonica/mistica-web/compare/v16.18.0...v16.18.1) (2025-03-24)
+
+
+### Bug Fixes
+
+* **Card:** make cards fill the parent height ([#1331](https://github.com/Telefonica/mistica-web/issues/1331)) ([fe44c95](https://github.com/Telefonica/mistica-web/commit/fe44c958f4d0ab078d9d5bded8b276e4a68b5882)), closes [#1325](https://github.com/Telefonica/mistica-web/issues/1325)
+
 # [16.18.0](https://github.com/Telefonica/mistica-web/compare/v16.17.0...v16.18.0) (2025-03-20)
 
 
