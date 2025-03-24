@@ -1,3 +1,10 @@
+# [16.18.0](https://github.com/Telefonica/mistica-web/compare/v16.17.0...v16.18.0) (2025-03-20)
+
+
+### Features
+
+* **Snackbar:** dont lazy load snackbar when using webview bridge ([#1328](https://github.com/Telefonica/mistica-web/issues/1328)) ([83f107b](https://github.com/Telefonica/mistica-web/commit/83f107b4d1dab250af70842fb1f77e22cf14c9df))
+
 # [16.17.0](https://github.com/Telefonica/mistica-web/compare/v16.16.0...v16.17.0) (2025-03-14)
 
 
