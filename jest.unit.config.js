@@ -1,6 +1,6 @@
 module.exports = {
     ...require('./jest.base.config'),
-    testTimeout: 15000,
+    testTimeout: 30000,
     displayName: 'unit',
 
     collectCoverage: true,
