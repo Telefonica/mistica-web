@@ -1028,7 +1028,7 @@ export const DataCard = React.forwardRef<HTMLDivElement, DataCardProps>(
                     className={styles.touchable}
                     aria-label={isTouchable ? ariaLabel : undefined}
                 >
-                    <Boxed className={styles.boxed} width="100%" minHeight="100%">
+                    <Boxed className={styles.boxed} width="100%" height="100%">
                         {isTouchable && <div className={styles.touchableCardOverlay} />}
                         <div className={styles.dataCard} aria-hidden={isTouchable}>
                             <Inline space={0}>
@@ -1159,7 +1159,7 @@ export const SnapCard = React.forwardRef<HTMLDivElement, SnapCardProps>(
                         className={styles.boxed}
                         variant={isInverse ? 'inverse' : 'default'}
                         width="100%"
-                        minHeight="100%"
+                        height="100%"
                     >
                         {isTouchable && <div className={overlayStyle} />}
                         <section className={styles.snapCard} aria-hidden={isTouchable}>
@@ -1483,7 +1483,7 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
                         borderRadius={vars.borderRadii.legacyDisplay}
                         className={styles.boxed}
                         width="100%"
-                        minHeight="100%"
+                        height="100%"
                         background={
                             hasImage || hasVideo
                                 ? isExternalInverse
@@ -1802,7 +1802,7 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                         borderRadius={vars.borderRadii.legacyDisplay}
                         className={styles.boxed}
                         width="100%"
-                        minHeight="100%"
+                        height="100%"
                         background={calcBackgroundColor()}
                         variant={
                             hasImage || hasVideo
