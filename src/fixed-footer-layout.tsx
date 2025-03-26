@@ -78,10 +78,8 @@ const FixedFooterLayout = ({
     
         if (isFooterVisible && isFooterFixed) {
             rootElement.style.scrollPaddingBottom = '80px';
-        } else {
-            rootElement.style.scrollPaddingBottom = '';
-        }
-    
+            return
+        } 
         return () => {
             rootElement.style.scrollPaddingBottom = '';
         };
@@ -92,10 +90,8 @@ const FixedFooterLayout = ({
     
         if (isFooterVisible && isFooterFixed) {
             rootElement.style.scrollPaddingBottom = `${domFooterHeight}px`;
-        } else {
-            rootElement.style.scrollPaddingBottom = '';
+            return
         }
-    
         return () => {
             rootElement.style.scrollPaddingBottom = '';
         };
@@ -107,9 +103,8 @@ const FixedFooterLayout = ({
         if (isFooterVisible && isFooterFixed) {
             const scrollPaddingBottom = `${(domFooterHeight / window.innerHeight) * 100}vh`;
             rootElement.style.scrollPaddingBottom = scrollPaddingBottom;
-        } else {
-            rootElement.style.scrollPaddingBottom = '';
-        }
+            return
+        } 
     
         return () => {
             rootElement.style.scrollPaddingBottom = '';
