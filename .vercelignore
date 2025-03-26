@@ -4,6 +4,7 @@ reports
 doc
 scripts
 examples
+!examples/css
 codemods
 __tests__
 __acceptance_tests__
