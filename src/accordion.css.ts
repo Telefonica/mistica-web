@@ -12,6 +12,23 @@ export const itemContent = sprinkles({
     padding: 0,
 });
 
+export const boxed = style({});
+
+const boxedTouchableBorderRadiusStyles = {
+    [`${boxed} &:active`]: {
+        // needed because we can't use overflow: hidden on the boxed container for the focus ring to be visible
+        borderRadius: `calc(${vars.borderRadii.container} - 1px)`,
+    },
+    [`${boxed} &:hover`]: {
+        // needed because we can't use overflow: hidden on the boxed container for the focus ring to be visible
+        borderRadius: `calc(${vars.borderRadii.container} - 1px)`,
+    },
+    [`${boxed} &[aria-expanded="true"]`]: {
+        borderBottomLeftRadius: 0,
+        borderBottomRightRadius: 0,
+    },
+};
+
 export const touchableBackground = style({
     transition: 'background-color 0.1s ease-in-out',
     ':active': {
@@ -30,6 +47,7 @@ export const touchableBackground = style({
             transition: 'none',
         },
     },
+    selectors: boxedTouchableBorderRadiusStyles,
 });
 
 export const touchableBackgroundInverse = style({
@@ -50,6 +68,7 @@ export const touchableBackgroundInverse = style({
             transition: 'none',
         },
     },
+    selectors: boxedTouchableBorderRadiusStyles,
 });
 
 export const rightContentContainer = style({

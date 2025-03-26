@@ -18,7 +18,7 @@ import IconChevron from './icons/icon-chevron';
 import Switch from './switch-component';
 import RadioButton, {useRadioContext} from './radio-button';
 import Checkbox from './checkbox';
-import {Boxed} from './boxed';
+import {InternalBoxed} from './boxed';
 import Divider from './divider';
 import {getPrefixedDataAttributes} from './utils/dom';
 import * as styles from './list.css';
@@ -56,6 +56,7 @@ interface CommonProps {
     'aria-label'?: string;
     right?: Right;
     danger?: boolean;
+    tabIndex?: number;
 }
 
 const renderRight = (right: Right, centerY: boolean) => {
@@ -379,6 +380,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
         dataAttributes,
         right,
         'aria-label': ariaLabelProp,
+        tabIndex,
     } = props;
 
     const [headlineText, setHeadlineText] = React.useState<string>('');
@@ -477,6 +479,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
                 dataAttributes={dataAttributes}
                 disabled={disabled}
                 aria-label={ariaLabel}
+                tabIndex={tabIndex}
             >
                 <Box paddingX={16} aria-hidden={!!props.to || !!props.href || undefined}>
                     {renderContent()}
@@ -500,6 +503,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
                     [styles.touchableBackgroundInverse]: hasHoverInverse,
                 })}
                 aria-label={ariaLabel}
+                tabIndex={tabIndex}
             >
                 {renderContent({labelId: titleId})}
             </BaseTouchable>
@@ -642,6 +646,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
             role={role}
             {...getPrefixedDataAttributes(dataAttributes)}
             ref={ref as React.Ref<HTMLDivElement>}
+            tabIndex={tabIndex}
         >
             <div aria-hidden={hasCustomAriaLabel}>{renderContent()}</div>
             {hasCustomAriaLabel && (
@@ -728,13 +733,15 @@ type BoxedRowProps = ExclusifyUnion<
     CommonBoxedRowProps;
 
 export const BoxedRow = React.forwardRef<HTMLDivElement, BoxedRowProps>(({dataAttributes, ...props}, ref) => (
-    <Boxed
+    <InternalBoxed
+        overflow="visible"
+        className={styles.boxed}
         variant={props.isInverse ? 'inverse' : 'default'}
         ref={ref}
         dataAttributes={{'component-name': 'BoxedRow', testid: 'BoxedRow', ...dataAttributes}}
     >
         <RowContent {...props} />
-    </Boxed>
+    </InternalBoxed>
 ));
 
 type BoxedRowListProps = {

@@ -1,3 +1,44 @@
+## [16.18.1](https://github.com/Telefonica/mistica-web/compare/v16.18.0...v16.18.1) (2025-03-24)
+
+
+### Bug Fixes
+
+* **Card:** make cards fill the parent height ([#1331](https://github.com/Telefonica/mistica-web/issues/1331)) ([fe44c95](https://github.com/Telefonica/mistica-web/commit/fe44c958f4d0ab078d9d5bded8b276e4a68b5882)), closes [#1325](https://github.com/Telefonica/mistica-web/issues/1325)
+
+# [16.18.0](https://github.com/Telefonica/mistica-web/compare/v16.17.0...v16.18.0) (2025-03-20)
+
+
+### Features
+
+* **Snackbar:** dont lazy load snackbar when using webview bridge ([#1328](https://github.com/Telefonica/mistica-web/issues/1328)) ([83f107b](https://github.com/Telefonica/mistica-web/commit/83f107b4d1dab250af70842fb1f77e22cf14c9df))
+
+# [16.17.0](https://github.com/Telefonica/mistica-web/compare/v16.16.0...v16.17.0) (2025-03-14)
+
+
+### Bug Fixes
+
+* **Row/Cards:** browser focus ring in boxed components ([#1325](https://github.com/Telefonica/mistica-web/issues/1325)) ([33a4543](https://github.com/Telefonica/mistica-web/commit/33a454360d2613d0117cd0a76c3edb2853990c48))
+
+
+### Features
+
+* **skins:** new eSIMFlag skin ([#1323](https://github.com/Telefonica/mistica-web/issues/1323)) ([a2f2892](https://github.com/Telefonica/mistica-web/commit/a2f2892aeaa00a532a40348a287387256a1c030f))
+* **Tag:** New type "info" and allow custom colors ([#1327](https://github.com/Telefonica/mistica-web/issues/1327)) ([6c71b10](https://github.com/Telefonica/mistica-web/commit/6c71b104697f8f0b9c1aa74914cfb2fe72b40c23))
+
+# [16.16.0](https://github.com/Telefonica/mistica-web/compare/v16.15.0...v16.16.0) (2025-03-11)
+
+
+### Features
+
+* **Row:** add tabIndex prop ([#1326](https://github.com/Telefonica/mistica-web/issues/1326)) ([27988ac](https://github.com/Telefonica/mistica-web/commit/27988ac7ea99474efb67385b6e6871e84118a236))
+
+# [16.15.0](https://github.com/Telefonica/mistica-web/compare/v16.14.0...v16.15.0) (2025-03-05)
+
+
+### Features
+
+* **Touchable:** add aria-current support ([#1324](https://github.com/Telefonica/mistica-web/issues/1324)) ([4112e46](https://github.com/Telefonica/mistica-web/commit/4112e46a2964295e6e40d8bffcce6da69476d3b3))
+
 # [16.14.0](https://github.com/Telefonica/mistica-web/compare/v16.13.0...v16.14.0) (2025-02-25)
 
 

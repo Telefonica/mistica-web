@@ -1565,13 +1565,19 @@ const titlesSnippets: Array<Snippet> = [
     },
 ].map((snippet) => ({...snippet, group: 'Titles'}));
 
-const tagSnippets: Array<Snippet> = ['promo', 'active', 'inactive', 'success', 'warning', 'error'].map(
-    (type) => ({
-        name: `Tag (${type})`,
-        group: 'Tags',
-        code: `<Tag type="${type}" Icon={IconStarFilled}>${capitalize(type)}</Tag>`,
-    })
-);
+const tagSnippets: Array<Snippet> = [
+    'promo',
+    'info',
+    'active',
+    'inactive',
+    'success',
+    'warning',
+    'error',
+].map((type) => ({
+    name: `Tag (${type})`,
+    group: 'Tags',
+    code: `<Tag type="${type}" Icon={IconStarFilled}>${capitalize(type)}</Tag>`,
+}));
 
 const sliderSnippets: Array<Snippet> = [
     {

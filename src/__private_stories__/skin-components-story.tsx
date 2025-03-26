@@ -365,6 +365,7 @@ export const Default: StoryComponent<Args> = ({variant}) => {
                             <Tag type="success">Success</Tag>
                             <Tag type="warning">Warning</Tag>
                             <Tag type="error">Error</Tag>
+                            <Tag type="info">Info</Tag>
                         </Inline>
 
                         {/** IconButton */}

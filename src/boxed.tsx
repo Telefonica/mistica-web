@@ -32,6 +32,7 @@ type InternalProps = {
     borderRadius?: typeof vars.borderRadii.container | typeof vars.borderRadii.legacyDisplay;
     desktopOnly?: boolean;
     background?: string;
+    overflow?: 'hidden' | 'visible';
 };
 
 const getBorderStyle = (isInverseOutside: boolean, isInverseInside: boolean) => {
@@ -86,6 +87,7 @@ export const InternalBoxed = React.forwardRef<HTMLDivElement, Props & InternalPr
             background,
             desktopOnly,
             variant,
+            overflow,
         },
         ref
     ) => {
@@ -116,7 +118,10 @@ export const InternalBoxed = React.forwardRef<HTMLDivElement, Props & InternalPr
                     className,
                     styles.boxed,
                     getBorderStyle(isInverseOutside, isInverseInside),
-                    {[styles.desktopOnly]: desktopOnly}
+                    {
+                        [styles.desktopOnly]: desktopOnly,
+                        [styles.overflowHidden]: overflow !== 'visible',
+                    }
                 )}
                 role={role}
                 aria-label={ariaLabel}
