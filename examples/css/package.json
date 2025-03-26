@@ -5,11 +5,11 @@
     "type": "module",
     "scripts": {
         "dev": "vite",
-        "build": "vite build",
+        "build": "vite build --base=\"/mistica-css/\"",
         "preview": "vite preview"
     },
     "devDependencies": {
-        "vite": "^5.3.1"
+        "vite": "^6.2.3"
     },
     "packageManager": "yarn@4.2.2"
 }
