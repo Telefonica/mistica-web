@@ -163,7 +163,7 @@ const FixedFooterLayout = ({
                 {renderBackground()}
                 {children}
             </div>
-            {isFooterVisible && ( <style>{`html {scroll-padding-bottom: ${domFooterHeight}px};`}</style>) }
+            {isFooterVisible && <style>{`html {scroll-padding-bottom: ${domFooterHeight}px};`}</style>}
             <div
                 className={classnames(styles.footer, {
                     [styles.withoutFooter]: !isFooterVisible,
