@@ -72,45 +72,7 @@ const FixedFooterLayout = ({
     useIsomorphicLayoutEffect(() => {
         onChangeFooterHeight?.(domFooterHeight);
     }, [onChangeFooterHeight, domFooterHeight]);
-    
-    React.useEffect(() => {
-        const rootElement = document.documentElement;
-    
-        if (isFooterVisible && isFooterFixed) {
-            rootElement.style.scrollPaddingBottom = '80px';
-            return
-        } 
-        return () => {
-            rootElement.style.scrollPaddingBottom = '';
-        };
-    }, [isFooterVisible, isFooterFixed]);
 
-/*     React.useEffect(() => {
-        const rootElement = document.documentElement;
-    
-        if (isFooterVisible && isFooterFixed) {
-            rootElement.style.scrollPaddingBottom = `${domFooterHeight}px`;
-            return
-        }
-        return () => {
-            rootElement.style.scrollPaddingBottom = '';
-        };
-    }, [isFooterVisible, isFooterFixed, domFooterHeight]);
- */
- /*    React.useEffect(() => {
-        const rootElement = document.documentElement;
-    
-        if (isFooterVisible && isFooterFixed) {
-            const scrollPaddingBottom = `${(domFooterHeight / window.innerHeight) * 100}vh`;
-            rootElement.style.scrollPaddingBottom = scrollPaddingBottom;
-            return
-        } 
-    
-        return () => {
-            rootElement.style.scrollPaddingBottom = '';
-        };
-    }, [isFooterVisible, isFooterFixed, domFooterHeight]);
- */
     React.useEffect(() => {
         /**
          * There is no elevation in desktop devices and we don't display it in acceptance tests or when the
@@ -201,6 +163,7 @@ const FixedFooterLayout = ({
                 {renderBackground()}
                 {children}
             </div>
+            {isFooterVisible && ( <style>{`html {scroll-padding-bottom: ${domFooterHeight}px};`}</style>) }
             <div
                 className={classnames(styles.footer, {
                     [styles.withoutFooter]: !isFooterVisible,
