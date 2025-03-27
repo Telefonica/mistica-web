@@ -1,3 +1,10 @@
+## [16.18.2](https://github.com/Telefonica/mistica-web/compare/v16.18.1...v16.18.2) (2025-03-27)
+
+
+### Bug Fixes
+
+* **FixedFooterLayout:** obscured focus ([#1334](https://github.com/Telefonica/mistica-web/issues/1334)) ([1a89176](https://github.com/Telefonica/mistica-web/commit/1a891768bfc207bd84799aecf31f9608b92e2031)), closes [/#diff-a20f24af3140080300870a68a5accb89feee523f1c59592a9e57d0f2bf4d02baR166](https://github.com///issues/diff-a20f24af3140080300870a68a5accb89feee523f1c59592a9e57d0f2bf4d02baR166)
+
 ## [16.18.1](https://github.com/Telefonica/mistica-web/compare/v16.18.0...v16.18.1) (2025-03-24)
 
 
