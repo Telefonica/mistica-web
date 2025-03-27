@@ -163,11 +163,11 @@ const FixedFooterLayout = ({
                 {renderBackground()}
                 {children}
             </div>
-            /**
-             * This style is added to the html element to avoid the
-             * footer covering the focus of the elements when there is overflow 
-             */
-            {isFooterVisible &&  isFooterFixed && <style>{`html {scroll-padding-bottom: ${domFooterHeight}px};`}</style>}
+            /** * This style is added to the html element to avoid the * footer covering the focus of the
+            elements when there is overflow */
+            {isFooterVisible && isFooterFixed && (
+                <style>{`html {scroll-padding-bottom: ${domFooterHeight}px};`}</style>
+            )}
             <div
                 className={classnames(styles.footer, {
                     [styles.withoutFooter]: !isFooterVisible,
