@@ -162,7 +162,7 @@ interface HighlightedValueBlockProps {
     title?: string;
     pretitle?: string;
     description?: ReadonlyArray<string> | string;
-    strikedValue?: ReadonlyArray<string> | string;
+    strikedValue?: string;
     'aria-label'?: string;
 }
 
