@@ -27,6 +27,7 @@ import {vars} from './skins/skin-contract.css';
 import {applyCssVars} from './utils/css';
 import {IconButton, ToggleIconButton} from './icon-button';
 import ScreenReaderOnly from './screen-reader-only';
+import Spinner from './spinner';
 
 import type {IconButtonProps, ToggleIconButtonProps} from './icon-button';
 import type {TouchableElement, TouchableProps} from './touchable';
@@ -261,6 +262,9 @@ type ControlProps = {
     value?: boolean;
     defaultValue?: boolean;
     onChange?: (checked: boolean) => void;
+    updatingValue?: {
+        showSpinner: boolean;
+    };
 };
 
 type BasicRowContentProps = CommonProps;
@@ -445,14 +449,14 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
             descriptionLinesMax={descriptionLinesMax}
             detail={detail}
             danger={danger}
-            right={right}
+            right={props.switch?.updatingValue?.showSpinner ? <Spinner /> : undefined}
             rightRef={(node) => {
                 if (node) {
                     // jsdom doesn't support innerText so we fallback to textContent https://github.com/jsdom/jsdom/issues/1245
                     setRightText(node.innerText || node.textContent || '');
                 }
             }}
-            control={contentProps?.control}
+            control={props.switch?.updatingValue?.showSpinner ? undefined : contentProps?.control}
             extra={extra}
             extraRef={(node) => {
                 if (node) {
@@ -460,7 +464,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
                 }
             }}
             labelId={contentProps?.labelId}
-            disabled={disabled}
+            disabled={disabled || props.switch?.updatingValue !== undefined}
             withChevron={hasChevron}
         />
     );
@@ -541,6 +545,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
                       aria-label={ariaLabel}
                       aria-labelledby={titleId}
                       onChange={toggle}
+                      aria-busy={props.switch?.updatingValue !== undefined}
                       render={({controlElement}) => (
                           <div className={styles.dualActionRight}>{controlElement}</div>
                       )}
@@ -553,6 +558,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
                       checked={isChecked}
                       aria-label={ariaLabel}
                       aria-labelledby={titleId}
+                      aria-busy={props.switch?.updatingValue !== undefined}
                       onChange={toggle}
                       render={({controlElement, labelId}) => (
                           <Box paddingX={16} role={role}>
