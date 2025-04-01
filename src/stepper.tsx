@@ -88,11 +88,7 @@ const Stepper = ({
                                     <Text1
                                         as="span"
                                         weight={textPresets.indicator.weight}
-                                        color={
-                                            isCurrent
-                                                ? vars.colors.textPrimaryInverse
-                                                : vars.colors.textSecondary
-                                        }
+                                        color={isCurrent ? vars.colors.inverse : vars.colors.textSecondary}
                                         aria-hidden="true"
                                     >
                                         {index + 1}
