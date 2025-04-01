@@ -11,9 +11,11 @@
     --mistica-telefonica-coral80: #912c31;
     --mistica-telefonica-telefonicaBlue30: #80b3ff;
     --mistica-telefonica-telefonicaBlue10: #e5f0ff;
+    --mistica-telefonica-grey4: #848ca4;
     --mistica-telefonica-grey3: #b0b6ca;
     --mistica-telefonica-coral70: #d50000;
     --mistica-telefonica-grey9: #031a34;
+    --mistica-telefonica-grey6: #58617a;
     --mistica-telefonica-turquoise: #59c2c9;
     --mistica-telefonica-ambar: #eac344;
     --mistica-telefonica-orchid: #c466ef;
@@ -24,10 +26,8 @@
     --mistica-telefonica-turquoise70: #3e888d;
     --mistica-telefonica-ambar70: #69581f;
     --mistica-telefonica-orchid70: #8a1a93;
-    --mistica-telefonica-grey4: #8f97af;
     --mistica-telefonica-darkModeBlack: #191919;
     --mistica-telefonica-darkModeGrey: #242424;
-    --mistica-telefonica-grey6: #58617a;
     --mistica-telefonica-darkModeGrey6: #313235;
     --mistica-telefonica-telefonicaBlue20: #b2d1ff;
     --mistica-telefonica-grey8: #2b3447;
@@ -105,6 +105,7 @@
     --mistica-color-textLinkSnackbar: var(--mistica-telefonica-telefonicaBlue30);
     --mistica-color-textActivated: var(--mistica-telefonica-telefonicaBlue);
     --mistica-color-textBrand: var(--mistica-telefonica-telefonicaBlue);
+    --mistica-color-inputBorder: var(--mistica-telefonica-grey4);
     --mistica-color-control: var(--mistica-telefonica-grey3);
     --mistica-color-controlActivated: var(--mistica-telefonica-telefonicaBlue);
     --mistica-color-controlInverse: var(--mistica-telefonica-grey1);
@@ -134,7 +135,7 @@
     --mistica-color-neutralLowAlternative: var(--mistica-telefonica-grey2);
     --mistica-color-textPrimary: var(--mistica-telefonica-grey9);
     --mistica-color-textPrimaryInverse: var(--mistica-telefonica-white);
-    --mistica-color-textSecondary: var(--mistica-telefonica-grey5);
+    --mistica-color-textSecondary: var(--mistica-telefonica-grey6);
     --mistica-color-textSecondaryInverse: var(--mistica-telefonica-telefonicaBlue10);
     --mistica-color-error: var(--mistica-telefonica-coral);
     --mistica-color-textError: var(--mistica-telefonica-coral);
@@ -317,6 +318,7 @@
     --mistica-color-textLinkSnackbar: var(--mistica-telefonica-telefonicaBlue30);
     --mistica-color-textActivated: var(--mistica-telefonica-telefonicaBlue);
     --mistica-color-textBrand: var(--mistica-telefonica-telefonicaBlue);
+    --mistica-color-inputBorder: var(--mistica-telefonica-grey5);
     --mistica-color-control: var(--mistica-telefonica-darkModeGrey6);
     --mistica-color-controlActivated: var(--mistica-telefonica-telefonicaBlue);
     --mistica-color-controlInverse: var(--mistica-telefonica-darkModeGrey6);
@@ -346,8 +348,8 @@
     --mistica-color-neutralLowAlternative: var(--mistica-telefonica-darkModeGrey6);
     --mistica-color-textPrimary: var(--mistica-telefonica-grey2);
     --mistica-color-textPrimaryInverse: var(--mistica-telefonica-grey2);
-    --mistica-color-textSecondary: var(--mistica-telefonica-grey4);
-    --mistica-color-textSecondaryInverse: var(--mistica-telefonica-grey4);
+    --mistica-color-textSecondary: var(--mistica-telefonica-grey3);
+    --mistica-color-textSecondaryInverse: var(--mistica-telefonica-grey3);
     --mistica-color-error: var(--mistica-telefonica-coral);
     --mistica-color-textError: var(--mistica-telefonica-coral);
     --mistica-color-textErrorInverse: var(--mistica-telefonica-coral);
@@ -483,6 +485,7 @@
         --mistica-color-textLinkSnackbar: var(--mistica-telefonica-telefonicaBlue30);
         --mistica-color-textActivated: var(--mistica-telefonica-telefonicaBlue);
         --mistica-color-textBrand: var(--mistica-telefonica-telefonicaBlue);
+        --mistica-color-inputBorder: var(--mistica-telefonica-grey5);
         --mistica-color-control: var(--mistica-telefonica-darkModeGrey6);
         --mistica-color-controlActivated: var(--mistica-telefonica-telefonicaBlue);
         --mistica-color-controlInverse: var(--mistica-telefonica-darkModeGrey6);
@@ -512,8 +515,8 @@
         --mistica-color-neutralLowAlternative: var(--mistica-telefonica-darkModeGrey6);
         --mistica-color-textPrimary: var(--mistica-telefonica-grey2);
         --mistica-color-textPrimaryInverse: var(--mistica-telefonica-grey2);
-        --mistica-color-textSecondary: var(--mistica-telefonica-grey4);
-        --mistica-color-textSecondaryInverse: var(--mistica-telefonica-grey4);
+        --mistica-color-textSecondary: var(--mistica-telefonica-grey3);
+        --mistica-color-textSecondaryInverse: var(--mistica-telefonica-grey3);
         --mistica-color-error: var(--mistica-telefonica-coral);
         --mistica-color-textError: var(--mistica-telefonica-coral);
         --mistica-color-textErrorInverse: var(--mistica-telefonica-coral);
@@ -648,6 +651,7 @@
         --mistica-color-textLinkSnackbar: var(--mistica-telefonica-telefonicaBlue30);
         --mistica-color-textActivated: var(--mistica-telefonica-telefonicaBlue);
         --mistica-color-textBrand: var(--mistica-telefonica-telefonicaBlue);
+        --mistica-color-inputBorder: var(--mistica-telefonica-grey4);
         --mistica-color-control: var(--mistica-telefonica-grey3);
         --mistica-color-controlActivated: var(--mistica-telefonica-telefonicaBlue);
         --mistica-color-controlInverse: var(--mistica-telefonica-grey1);
@@ -677,7 +681,7 @@
         --mistica-color-neutralLowAlternative: var(--mistica-telefonica-grey2);
         --mistica-color-textPrimary: var(--mistica-telefonica-grey9);
         --mistica-color-textPrimaryInverse: var(--mistica-telefonica-white);
-        --mistica-color-textSecondary: var(--mistica-telefonica-grey5);
+        --mistica-color-textSecondary: var(--mistica-telefonica-grey6);
         --mistica-color-textSecondaryInverse: var(--mistica-telefonica-telefonicaBlue10);
         --mistica-color-error: var(--mistica-telefonica-coral);
         --mistica-color-textError: var(--mistica-telefonica-coral);

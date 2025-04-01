@@ -102,13 +102,18 @@ export const fullWidth = sprinkles({
     width: '100%',
 });
 
-export const field = sprinkles({
-    overflow: 'hidden',
-    border: 'regular',
-    display: 'flex',
-    borderRadius: vars.borderRadii.input,
-    position: 'relative',
-});
+export const field = style([
+    sprinkles({
+        overflow: 'hidden',
+        border: 'regular',
+        display: 'flex',
+        borderRadius: vars.borderRadii.input,
+        position: 'relative',
+    }),
+    {
+        borderColor: vars.colors.inputBorder,
+    },
+]);
 
 export const helperContainer = sprinkles({
     paddingLeft: 12,
