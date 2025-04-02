@@ -29,13 +29,12 @@
     --mistica-esimflag-purple10: #fceffc;
     --mistica-esimflag-grass70: #6b951d;
     --mistica-esimflag-peach75: #995b00;
-    --mistica-esimflag-blush20: #fff1f7;
+    --mistica-esimflag-blush: #ffd2e3;
     --mistica-esimflag-teal: #2fddea;
     --mistica-esimflag-purple30: #d1a1e3;
     --mistica-esimflag-chili: #fa4549;
     --mistica-esimflag-purple55: #8b3aa8;
     --mistica-esimflag-grass75: #5c8019;
-    --mistica-esimflag-blush: #ffd2e3;
     --mistica-esimflag-teal10: #d5f8fb;
     --mistica-esimflag-darkModeBlack: #00001c;
     --mistica-esimflag-darkModeGrey: #08132b;
@@ -189,7 +188,7 @@
     --mistica-color-tagTextSuccess: var(--mistica-esimflag-blue85);
     --mistica-color-tagTextWarning: var(--mistica-esimflag-blue85);
     --mistica-color-tagTextError: var(--mistica-esimflag-blue85);
-    --mistica-color-tagBackgroundPromo: var(--mistica-esimflag-blush20);
+    --mistica-color-tagBackgroundPromo: var(--mistica-esimflag-blush);
     --mistica-color-tagBackgroundActive: var(--mistica-esimflag-teal);
     --mistica-color-tagBackgroundInactive: var(--mistica-esimflag-grey2);
     --mistica-color-tagBackgroundInfo: var(--mistica-esimflag-purple30);
@@ -736,7 +735,7 @@
         --mistica-color-tagTextSuccess: var(--mistica-esimflag-blue85);
         --mistica-color-tagTextWarning: var(--mistica-esimflag-blue85);
         --mistica-color-tagTextError: var(--mistica-esimflag-blue85);
-        --mistica-color-tagBackgroundPromo: var(--mistica-esimflag-blush20);
+        --mistica-color-tagBackgroundPromo: var(--mistica-esimflag-blush);
         --mistica-color-tagBackgroundActive: var(--mistica-esimflag-teal);
         --mistica-color-tagBackgroundInactive: var(--mistica-esimflag-grey2);
         --mistica-color-tagBackgroundInfo: var(--mistica-esimflag-purple30);

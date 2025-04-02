@@ -180,7 +180,7 @@ export const getEsimflagSkin: GetKnownSkin = () => {
             tagTextSuccess: palette.blue85,
             tagTextWarning: palette.blue85,
             tagTextError: palette.blue85,
-            tagBackgroundPromo: palette.blush20,
+            tagBackgroundPromo: palette.blush,
             tagBackgroundActive: palette.teal,
             tagBackgroundInactive: palette.grey2,
             tagBackgroundInfo: palette.purple30,
