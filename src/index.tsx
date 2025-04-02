@@ -1065,6 +1065,9 @@ export {default as IconGasStationRegular} from './generated/mistica-icons/icon-g
 export {default as IconGiftFilled} from './generated/mistica-icons/icon-gift-filled';
 export {default as IconGiftLight} from './generated/mistica-icons/icon-gift-light';
 export {default as IconGiftRegular} from './generated/mistica-icons/icon-gift-regular';
+export {default as IconGlassFilled} from './generated/mistica-icons/icon-glass-filled';
+export {default as IconGlassLight} from './generated/mistica-icons/icon-glass-light';
+export {default as IconGlassRegular} from './generated/mistica-icons/icon-glass-regular';
 export {default as IconGroupFilled} from './generated/mistica-icons/icon-group-filled';
 export {default as IconGroupLight} from './generated/mistica-icons/icon-group-light';
 export {default as IconGroupRegular} from './generated/mistica-icons/icon-group-regular';
@@ -1984,6 +1987,9 @@ export {default as IconWalletRegular} from './generated/mistica-icons/icon-walle
 export {default as IconWarningFilled} from './generated/mistica-icons/icon-warning-filled';
 export {default as IconWarningLight} from './generated/mistica-icons/icon-warning-light';
 export {default as IconWarningRegular} from './generated/mistica-icons/icon-warning-regular';
+export {default as IconWashingMachineFilled} from './generated/mistica-icons/icon-washing-machine-filled';
+export {default as IconWashingMachineLight} from './generated/mistica-icons/icon-washing-machine-light';
+export {default as IconWashingMachineRegular} from './generated/mistica-icons/icon-washing-machine-regular';
 export {default as IconWaterDropFilled} from './generated/mistica-icons/icon-water-drop-filled';
 export {default as IconWaterDropLight} from './generated/mistica-icons/icon-water-drop-light';
 export {default as IconWaterDropRegular} from './generated/mistica-icons/icon-water-drop-regular';
@@ -1997,6 +2003,9 @@ export {default as IconWebRegular} from './generated/mistica-icons/icon-web-regu
 export {default as IconWifiFilled} from './generated/mistica-icons/icon-wifi-filled';
 export {default as IconWifiLight} from './generated/mistica-icons/icon-wifi-light';
 export {default as IconWifiRegular} from './generated/mistica-icons/icon-wifi-regular';
+export {default as IconWindFilled} from './generated/mistica-icons/icon-wind-filled';
+export {default as IconWindLight} from './generated/mistica-icons/icon-wind-light';
+export {default as IconWindRegular} from './generated/mistica-icons/icon-wind-regular';
 export {default as IconWinnerCheckFilled} from './generated/mistica-icons/icon-winner-check-filled';
 export {default as IconWinnerCheckLight} from './generated/mistica-icons/icon-winner-check-light';
 export {default as IconWinnerCheckRegular} from './generated/mistica-icons/icon-winner-check-regular';
