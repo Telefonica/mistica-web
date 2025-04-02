@@ -14,6 +14,7 @@ import {flushSync} from 'react-dom';
 import * as tokens from './text-tokens';
 
 import type {DataAttributes} from './utils/types';
+import {skinVars} from '.';
 
 // Protection for when there is more than one OtpField in the page.
 // This should't be a supported use case, but we need it in storybook/playroom, and for some reason
@@ -198,11 +199,10 @@ const PinInput = ({
                          * style than other inputs (less margin, fontSize and height).
                          */
                         style={{
-                            marginTop: `calc(${styles.pinInputLineHeight} - 1px)`,
-                            marginBottom: `calc(${styles.pinInputLineHeight} - 1px)`,
                             lineHeight: styles.pinInputLineHeight,
                             fontSize: styles.pinInputLineHeight,
-                            height: styles.pinInputLineHeight,
+                            height: `calc(${styles.pinInputLineHeight} * 3 - 2px)`,
+                            borderRadius: skinVars.borderRadii.input,
                         }}
                         disabled={disabled}
                         readOnly={readOnly}
