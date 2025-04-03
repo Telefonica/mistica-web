@@ -20,6 +20,8 @@ interface SearchFieldBaseArgs {
     error: boolean;
     inverse: boolean;
     optional: boolean;
+    showOptionalLabel: boolean;
+    withSearchIcon: boolean;
     disabled: boolean;
     readOnly: boolean;
     preventCopy: boolean;
@@ -32,6 +34,8 @@ const defaultBaseArgs: SearchFieldBaseArgs = {
     error: false,
     inverse: false,
     optional: false,
+    showOptionalLabel: true,
+    withSearchIcon: true,
     disabled: false,
     readOnly: false,
     preventCopy: false,

@@ -168,6 +168,7 @@ const IbanField = ({
     label,
     optional,
     validate: customValidate,
+    validateOnBlurInsideForm,
     onChange,
     onChangeValue,
     onBlur,
@@ -199,6 +200,7 @@ const IbanField = ({
         disabled,
         onBlur,
         validate,
+        validateOnBlurInsideForm,
         onChange,
         onChangeValue,
     });

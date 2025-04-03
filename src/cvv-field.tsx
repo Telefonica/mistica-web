@@ -63,6 +63,7 @@ const CvvField = ({
     label,
     optional,
     validate: validateProp,
+    validateOnBlurInsideForm,
     onChange,
     onChangeValue,
     onBlur,
@@ -99,6 +100,7 @@ const CvvField = ({
         disabled,
         onBlur,
         validate,
+        validateOnBlurInsideForm,
         onChange,
         onChangeValue,
     });

@@ -105,6 +105,7 @@ const PhoneNumberField = ({
     label,
     optional,
     validate,
+    validateOnBlurInsideForm,
     onChange,
     onChangeValue,
     onBlur,
@@ -146,6 +147,7 @@ const PhoneNumberField = ({
         disabled,
         onBlur,
         validate,
+        validateOnBlurInsideForm,
         onChange,
         onChangeValue,
     });

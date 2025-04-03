@@ -117,6 +117,7 @@ const DecimalField = ({
     label,
     optional,
     validate,
+    validateOnBlurInsideForm,
     onChange,
     onChangeValue,
     onBlur,
@@ -140,6 +141,7 @@ const DecimalField = ({
         disabled,
         onBlur,
         validate,
+        validateOnBlurInsideForm,
         onChange,
         onChangeValue,
     });

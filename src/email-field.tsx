@@ -23,6 +23,7 @@ const EmailField = ({
     label,
     optional,
     validate: validateProp,
+    validateOnBlurInsideForm,
     onChange,
     onChangeValue,
     onBlur,
@@ -55,6 +56,7 @@ const EmailField = ({
         disabled,
         onBlur,
         validate,
+        validateOnBlurInsideForm,
         onChange,
         onChangeValue,
     });
