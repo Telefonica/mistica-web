@@ -12,9 +12,9 @@ import {createChangeEvent, getPrefixedDataAttributes} from './utils/dom';
 import {HelperText} from './text-field-components';
 import {flushSync} from 'react-dom';
 import * as tokens from './text-tokens';
+import {skinVars} from '.';
 
 import type {DataAttributes} from './utils/types';
-import {skinVars} from '.';
 
 // Protection for when there is more than one OtpField in the page.
 // This should't be a supported use case, but we need it in storybook/playroom, and for some reason
