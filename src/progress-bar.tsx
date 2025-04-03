@@ -47,7 +47,6 @@ export const ProgressBar = ({
             ? {'aria-hidden': ariaHidden}
             : {
                   role: 'progressbar',
-                  'aria-valuenow': progressValue,
                   'aria-valuemin': 0,
                   'aria-valuemax': 100,
                   'aria-label': ariaLabelledBy ? undefined : getFormattedLabel(),
