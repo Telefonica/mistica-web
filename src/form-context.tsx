@@ -113,6 +113,7 @@ export const useFieldProps = ({
     disabled,
     onBlur,
     validate,
+    validateOnBlurInsideForm = true,
     onChange,
     onChangeValue,
 }: {
@@ -127,6 +128,7 @@ export const useFieldProps = ({
     disabled?: boolean;
     onBlur?: React.FocusEventHandler;
     validate?: (value: any, rawValue: string) => string | undefined;
+    validateOnBlurInsideForm?: boolean;
     onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
     onChangeValue?: (value: any, rawValue: string) => void;
 }): {
@@ -138,7 +140,7 @@ export const useFieldProps = ({
     required: boolean;
     error: boolean;
     disabled: boolean;
-    onBlur: React.FocusEventHandler;
+    onBlur: React.FocusEventHandler | undefined;
     inputRef: (field: HTMLInputElement | null) => void;
     onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 } => {
@@ -168,16 +170,18 @@ export const useFieldProps = ({
         required: !optional,
         error: error || !!formErrors[name],
         disabled: disabled || formStatus === 'sending',
-        onBlur: (e: React.FocusEvent) => {
-            let error: string | undefined;
-            if (!rawValues[name] && !optional) {
-                error = texts.formFieldErrorIsMandatory || t(tokens.formFieldErrorIsMandatory);
-            } else if (validate) {
-                error = validate(values[name], rawValues[name]);
-            }
-            setFormError({name, error});
-            onBlur?.(e);
-        },
+        onBlur: validateOnBlurInsideForm
+            ? (e: React.FocusEvent) => {
+                  let error: string | undefined;
+                  if (!rawValues[name] && !optional) {
+                      error = texts.formFieldErrorIsMandatory || t(tokens.formFieldErrorIsMandatory);
+                  } else if (validate) {
+                      error = validate(values[name], rawValues[name]);
+                  }
+                  setFormError({name, error});
+                  onBlur?.(e);
+              }
+            : onBlur,
         inputRef: (input: HTMLInputElement | null) => register(name, {input, validator: validate, label}),
         onChange: (event: React.ChangeEvent<HTMLInputElement>) => {
             const rawValue = event.currentTarget.value;

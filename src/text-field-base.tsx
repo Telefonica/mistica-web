@@ -120,8 +120,10 @@ export interface CommonFormFieldProps<T = HTMLInputElement> {
     label: string;
     name: string;
     optional?: boolean;
+    showOptionalLabel?: boolean;
     maxLength?: number;
     validate?: FieldValidator;
+    validateOnBlurInsideForm?: boolean;
     autoComplete?: AutoComplete;
     onFocus?: React.FocusEventHandler<T>;
     onBlur?: React.FocusEventHandler<T>;
@@ -146,6 +148,7 @@ interface TextFieldBaseProps {
     error?: boolean;
     pattern?: string;
     required?: boolean;
+    showOptionalLabel?: boolean;
     fullWidth?: boolean;
     helperText?: string;
     label?: string;
@@ -213,6 +216,7 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
             fullWidth,
             dataAttributes,
             preventCopy,
+            showOptionalLabel = true,
             ...rest
         },
         ref
@@ -366,7 +370,7 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
                             forId={id}
                             inputState={inputState}
                             shrinkLabel={shrinkLabel}
-                            optional={!rest.required}
+                            showOptional={!rest.required && showOptionalLabel}
                         >
                             {label}
                         </Label>

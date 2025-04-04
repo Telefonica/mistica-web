@@ -14,6 +14,7 @@ interface DecimalFieldBaseArgs {
     error: boolean;
     inverse: boolean;
     optional: boolean;
+    showOptionalLabel: boolean;
     disabled: boolean;
     readOnly: boolean;
     preventCopy: boolean;
@@ -26,6 +27,7 @@ const defaultBaseArgs: DecimalFieldBaseArgs = {
     error: false,
     inverse: false,
     optional: false,
+    showOptionalLabel: true,
     disabled: false,
     readOnly: false,
     preventCopy: false,

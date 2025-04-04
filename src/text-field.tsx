@@ -42,6 +42,7 @@ const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
             label,
             optional,
             validate,
+            validateOnBlurInsideForm,
             onChangeValue,
             onChange,
             value,
@@ -93,6 +94,7 @@ const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
             disabled,
             onBlur,
             validate,
+            validateOnBlurInsideForm,
             onChange,
             onChangeValue,
         });

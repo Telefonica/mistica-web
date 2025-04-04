@@ -15,6 +15,7 @@ type Args = {
     error: boolean;
     native: boolean;
     optional: boolean;
+    showOptionalLabel: boolean;
     inverse: boolean;
 };
 
@@ -25,6 +26,7 @@ const defaultArgs = {
     error: false,
     native: false,
     optional: false,
+    showOptionalLabel: true,
     inverse: false,
 };
 
@@ -35,6 +37,7 @@ export const Controlled: StoryComponent<Args> = ({
     error,
     native,
     optional,
+    showOptionalLabel,
     inverse,
 }) => {
     const fruitOptions = fruitEntries.map(([text, value]) => ({text, value}));
@@ -52,6 +55,7 @@ export const Controlled: StoryComponent<Args> = ({
                         error={error}
                         disabled={disabled}
                         optional={optional}
+                        showOptionalLabel={showOptionalLabel}
                         value={value}
                         onChangeValue={setValue}
                         label={label}
@@ -74,6 +78,7 @@ export const Uncontrolled: StoryComponent<Args> = ({
     error,
     native,
     optional,
+    showOptionalLabel,
     inverse,
 }) => {
     const fruitOptions = fruitEntries.map(([text, value]) => ({text, value}));
@@ -89,6 +94,7 @@ export const Uncontrolled: StoryComponent<Args> = ({
                         error={error}
                         disabled={disabled}
                         optional={optional}
+                        showOptionalLabel={showOptionalLabel}
                         label={label}
                         helperText={helperText}
                         options={fruitOptions}
