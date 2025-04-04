@@ -38,9 +38,10 @@ export type TabsProps = {
     }>;
     children?: void;
     dataAttributes?: DataAttributes;
+    selectedTabRef?: React.RefCallback<HTMLDivElement> | React.Ref<HTMLDivElement>;
 };
 
-const Tabs = ({selectedIndex, onChange, tabs, dataAttributes}: TabsProps): JSX.Element => {
+const Tabs = ({selectedIndex, onChange, tabs, dataAttributes, selectedTabRef}: TabsProps): JSX.Element => {
     const {textPresets} = useTheme();
     const id = React.useId();
     const {ref} = useElementDimensions();
@@ -91,6 +92,8 @@ const Tabs = ({selectedIndex, onChange, tabs, dataAttributes}: TabsProps): JSX.E
                                 const isSelected = index === selectedIndex;
                                 return (
                                     <BaseTouchable
+                                        tabIndex={isSelected ? -1 : 0}
+                                        ref={isSelected ? selectedTabRef : undefined}
                                         dataAttributes={{'component-name': 'Tab', tabindex: index}}
                                         key={index}
                                         className={classnames(
