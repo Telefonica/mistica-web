@@ -6713,16 +6713,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vanilla-extract/dynamic@npm:^2.1.1":
-  version: 2.1.1
-  resolution: "@vanilla-extract/dynamic@npm:2.1.1"
-  dependencies:
-    "@vanilla-extract/private": ^1.0.5
-  checksum: 03fd6bcd477dcb022f0186e17ad7caa4d30b2db7e39df61ae778fb129ee005585a70eb56ebf656b9deba2354ce3b41a7db18823714566538f64d582b27ff57fa
-  languageName: node
-  linkType: hard
-
-"@vanilla-extract/dynamic@npm:^2.1.2":
+"@vanilla-extract/dynamic@npm:^2.1.1, @vanilla-extract/dynamic@npm:^2.1.2":
   version: 2.1.2
   resolution: "@vanilla-extract/dynamic@npm:2.1.2"
   dependencies:
@@ -6782,14 +6773,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vanilla-extract/private@npm:^1.0.5":
-  version: 1.0.5
-  resolution: "@vanilla-extract/private@npm:1.0.5"
-  checksum: 147acf9b1795f0681372db92e483bc27eeddad050b7d517e9ab87c5e9bcbdce69c0be300c4948f42e3bdeb81b8dd16b8243f3404ce74e6bc9acbb31112429ff4
-  languageName: node
-  linkType: hard
-
-"@vanilla-extract/private@npm:^1.0.6":
+"@vanilla-extract/private@npm:^1.0.5, @vanilla-extract/private@npm:^1.0.6":
   version: 1.0.6
   resolution: "@vanilla-extract/private@npm:1.0.6"
   checksum: 2265b02af29d8cd40f6ddeeed197fb2df1a7695f5a9821d5e3597677179be8b83bcd8fe4df4a6178544f89123d745a3c6a13599d4fe4e5873b065a8ad329f690
@@ -8516,9 +8500,9 @@ __metadata:
   linkType: hard
 
 "caniuse-lite@npm:^1.0.30001407, caniuse-lite@npm:^1.0.30001565":
-  version: 1.0.30001632
-  resolution: "caniuse-lite@npm:1.0.30001632"
-  checksum: 95be155501650ac36a8c3bdf60886bc8f7c419e7715cdaf1c04941f8676c0bd75355aeda62563092585fbe6f9d50d2eb6dea6bd063d7f6a58004ec62d8f8fe49
+  version: 1.0.30001707
+  resolution: "caniuse-lite@npm:1.0.30001707"
+  checksum: 38824c9f88d754428844e64ba18197c06f4f8503035e30eace88c6bffdcf5f682dcf3cef895b60cd6f19c71e6714731adc1940b612ea606c6875cd2f801e4836
   languageName: node
   linkType: hard
 
