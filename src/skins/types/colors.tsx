@@ -60,6 +60,7 @@ export type Colors = {
     textLinkSnackbar: string;
     textActivated: string;
     textBrand: string;
+    inputBorder: string;
     control: string;
     controlActivated: string;
     controlInverse: string;
