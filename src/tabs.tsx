@@ -92,7 +92,6 @@ const Tabs = ({selectedIndex, onChange, tabs, dataAttributes, selectedTabRef}: T
                                 const isSelected = index === selectedIndex;
                                 return (
                                     <BaseTouchable
-                                        tabIndex={isSelected ? -1 : 0}
                                         ref={isSelected ? selectedTabRef : undefined}
                                         dataAttributes={{'component-name': 'Tab', tabindex: index}}
                                         key={index}
