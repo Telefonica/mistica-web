@@ -3,7 +3,6 @@ import * as styles from './logo.css';
 import {getEsimflagSkin} from './skins/esimflag';
 import {applyCssVars} from './utils/css';
 import {calcInlineVars} from './logo-common';
-import logoBackground from './icons/logoBackground.png';
 
 import type {LogoImageProps} from './logo-common';
 
