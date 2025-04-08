@@ -23,6 +23,7 @@ interface TextFieldBaseArgs {
     error: boolean;
     inverse: boolean;
     optional: boolean;
+    showOptionalLabel: boolean;
     multiline: boolean;
     maxLength: boolean;
     icon: boolean;
@@ -39,6 +40,7 @@ const defaultBaseArgs: TextFieldBaseArgs = {
     error: false,
     inverse: false,
     optional: false,
+    showOptionalLabel: true,
     multiline: false,
     maxLength: false,
     icon: false,

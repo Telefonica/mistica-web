@@ -100,6 +100,7 @@ const CreditCardExpirationField = ({
     label,
     optional,
     validate: validateProp,
+    validateOnBlurInsideForm,
     onChange,
     onChangeValue,
     onBlur,
@@ -150,6 +151,7 @@ const CreditCardExpirationField = ({
         disabled,
         onBlur,
         validate,
+        validateOnBlurInsideForm,
         onChange,
         onChangeValue,
     });

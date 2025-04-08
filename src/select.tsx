@@ -25,6 +25,7 @@ export type SelectProps = {
     label: string;
     name: string;
     optional?: boolean;
+    showOptionalLabel?: boolean;
     validate?: (value: string | void, rawValue: string | void) => string | void;
     onChangeValue?: (value: string) => void;
     onBlur?: (event: React.FocusEvent<any>) => void;
@@ -51,6 +52,7 @@ const Select = ({
     fullWidth,
     options,
     optional,
+    showOptionalLabel,
     disabled: disabledProp,
     error: errorProp,
     onBlur,
@@ -325,7 +327,7 @@ const Select = ({
                                       ? 'filled'
                                       : 'default'
                             }
-                            optional={optional}
+                            showOptional={optional && showOptionalLabel}
                         >
                             {label}
                         </Label>

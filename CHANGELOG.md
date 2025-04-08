@@ -1,3 +1,20 @@
+# [16.19.0](https://github.com/Telefonica/mistica-web/compare/v16.18.2...v16.19.0) (2025-04-04)
+
+
+### Features
+
+* **Chip:** Update chip navigationActive colors ([#1330](https://github.com/Telefonica/mistica-web/issues/1330)) ([6061b67](https://github.com/Telefonica/mistica-web/commit/6061b676a991db6a0dfd02f84ba29f360a75e627))
+* **Form:** allow disabling onBlur validation, make '(optional)' label optional, allow to hide search icon in SearchField ([#1340](https://github.com/Telefonica/mistica-web/issues/1340)) ([d42f4d3](https://github.com/Telefonica/mistica-web/commit/d42f4d3f2efa20e01a780cb2be733c986187b465))
+* **HighlightedValueBlock:** new pretitle and strickedValue props ([#1329](https://github.com/Telefonica/mistica-web/issues/1329)) ([2283867](https://github.com/Telefonica/mistica-web/commit/2283867874caa50767543bf083858af2d3e3573a))
+* **icons:** New vivo icons ([#1335](https://github.com/Telefonica/mistica-web/issues/1335)) ([ba6d2ca](https://github.com/Telefonica/mistica-web/commit/ba6d2ca8cb4dad4a399539361cd4f91c7040eb4e))
+
+## [16.18.2](https://github.com/Telefonica/mistica-web/compare/v16.18.1...v16.18.2) (2025-03-27)
+
+
+### Bug Fixes
+
+* **FixedFooterLayout:** obscured focus ([#1334](https://github.com/Telefonica/mistica-web/issues/1334)) ([1a89176](https://github.com/Telefonica/mistica-web/commit/1a891768bfc207bd84799aecf31f9608b92e2031)), closes [/#diff-a20f24af3140080300870a68a5accb89feee523f1c59592a9e57d0f2bf4d02baR166](https://github.com///issues/diff-a20f24af3140080300870a68a5accb89feee523f1c59592a9e57d0f2bf4d02baR166)
+
 ## [16.18.1](https://github.com/Telefonica/mistica-web/compare/v16.18.0...v16.18.1) (2025-03-24)
 
 
