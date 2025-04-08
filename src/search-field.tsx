@@ -16,6 +16,7 @@ export interface SearchFieldProps extends CommonFormFieldProps {
     onChangeValue?: (value: string, rawValue: string) => void;
     getSuggestions?: (value: string) => ReadonlyArray<string>;
     inputMode?: React.HTMLAttributes<HTMLInputElement>['inputMode'];
+    withStartIcon?: boolean;
 }
 
 const SearchField = React.forwardRef<any, SearchFieldProps>(
@@ -28,11 +29,13 @@ const SearchField = React.forwardRef<any, SearchFieldProps>(
             label,
             optional,
             validate,
+            validateOnBlurInsideForm,
             onChange,
             onChangeValue,
             onBlur,
             value,
             defaultValue,
+            withStartIcon = true,
             dataAttributes,
             ...rest
         },
@@ -76,6 +79,7 @@ const SearchField = React.forwardRef<any, SearchFieldProps>(
             disabled,
             onBlur,
             validate,
+            validateOnBlurInsideForm,
             onChange,
             onChangeValue: handleChangeValue,
         });
@@ -83,7 +87,7 @@ const SearchField = React.forwardRef<any, SearchFieldProps>(
         return (
             <TextFieldBaseAutosuggest
                 ref={combineRefs(inputRef, ref)}
-                startIcon={<IconSearchRegular size={iconSize.default} />}
+                startIcon={withStartIcon ? <IconSearchRegular size={iconSize.default} /> : undefined}
                 endIcon={
                     controlledValue ? (
                         <FieldEndIcon

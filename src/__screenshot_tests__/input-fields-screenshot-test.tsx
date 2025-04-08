@@ -39,6 +39,19 @@ test('TextField - optional', async () => {
     expect(image).toMatchImageSnapshot();
 });
 
+test('TextField - optional showOptionalLabel=false', async () => {
+    await openStoryPage({
+        id: 'components-input-fields-textfield--uncontrolled',
+        device: 'MOBILE_IOS',
+        args: {defaultValue: '', optional: true, showOptionalLabel: false},
+    });
+
+    const fieldWrapper = await screen.findByTestId('text-field');
+    const image = await fieldWrapper.screenshot();
+
+    expect(image).toMatchImageSnapshot();
+});
+
 test('TextField - multiline and optional', async () => {
     await openStoryPage({
         id: 'components-input-fields-textfield--uncontrolled',

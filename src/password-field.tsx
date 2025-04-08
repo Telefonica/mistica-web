@@ -50,6 +50,7 @@ const PasswordField = ({
     label,
     optional,
     validate,
+    validateOnBlurInsideForm,
     onChange,
     onChangeValue,
     onBlur,
@@ -101,6 +102,7 @@ const PasswordField = ({
         disabled,
         onBlur,
         validate,
+        validateOnBlurInsideForm,
         onChange,
         onChangeValue,
     });

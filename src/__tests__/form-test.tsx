@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {render, screen, waitFor} from '@testing-library/react';
+import {act, render, screen, waitFor} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import {
     ButtonPrimary,
@@ -88,6 +88,44 @@ test('custom validator', async () => {
     await waitFor(() =>
         expect(handleSubmitSpy).toHaveBeenCalledWith({password: 'letmein'}, {password: 'letmein'})
     );
+});
+
+test('validation errors are shown onBlur by default', async () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Form onSubmit={() => {}}>
+                <TextField label="Name" name="name" />
+                <ButtonPrimary submit>Submit</ButtonPrimary>
+            </Form>
+        </ThemeContextProvider>
+    );
+
+    const nameField = screen.getByLabelText('Name');
+    act(() => nameField.focus());
+    act(() => nameField.blur());
+
+    expect(await screen.findByText('Este campo es obligatorio')).toBeInTheDocument();
+});
+
+test('validation errors are only shown onSubmit if validatieOnBlurInsideForm is false', async () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Form onSubmit={() => {}}>
+                <TextField label="Name" name="name" validateOnBlurInsideForm={false} />
+                <ButtonPrimary submit>Submit</ButtonPrimary>
+            </Form>
+        </ThemeContextProvider>
+    );
+
+    const nameField = screen.getByLabelText('Name');
+    act(() => nameField.focus());
+    act(() => nameField.blur());
+
+    expect(screen.queryByText('Este campo es obligatorio')).not.toBeInTheDocument();
+
+    await userEvent.click(screen.getByText('Submit'));
+
+    expect(await screen.findByText('Este campo es obligatorio')).toBeInTheDocument();
 });
 
 test('when there are multiple errors on submit, the fields with error are anounced by screen reader', async () => {

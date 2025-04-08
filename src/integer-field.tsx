@@ -52,6 +52,7 @@ const IntegerField = ({
     label,
     optional,
     validate,
+    validateOnBlurInsideForm,
     onChange,
     onChangeValue,
     onBlur,
@@ -74,6 +75,7 @@ const IntegerField = ({
         disabled,
         onBlur,
         validate,
+        validateOnBlurInsideForm,
         onChange,
         onChangeValue,
     });
