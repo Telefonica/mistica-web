@@ -1,3 +1,10 @@
+# [16.20.0](https://github.com/Telefonica/mistica-web/compare/v16.19.0...v16.20.0) (2025-04-09)
+
+
+### Features
+
+* **tabs:** add selectedTabRef ([#1341](https://github.com/Telefonica/mistica-web/issues/1341)) ([8db0cf3](https://github.com/Telefonica/mistica-web/commit/8db0cf3ea9e68bd32804733f5debb1bb08557a3e))
+
 # [16.19.0](https://github.com/Telefonica/mistica-web/compare/v16.18.2...v16.19.0) (2025-04-04)
 
 
