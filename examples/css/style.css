@@ -75,3 +75,7 @@ select {
     display: flex;
     gap: 16px;
 }
+
+.cards-group + .cards-group {
+    margin-top: 16px;
+}

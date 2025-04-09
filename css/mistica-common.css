@@ -15,7 +15,7 @@
     --vcolor-buttonPrimaryBackgroundPressed: var(--mistica-color-buttonPrimaryBackgroundInversePressed);
     --vcolor-buttonSecondaryBorder: var(--mistica-color-buttonSecondaryBorderInverse);
     --vcolor-textButtonSecondaryPressed: var(--mistica-color-textButtonSecondaryInversePressed);
-    --vcolor-buttonSecondaryBackgroundHover: var(--mistica-color-textButtonPrimaryInversePressed);
+    --vcolor-buttonSecondaryBackgroundHover: var(--mistica-color-buttonSecondaryBackgroundInverseHover);
     --vcolor-buttonSecondaryBackgroundPressed: var(--mistica-color-buttonSecondaryBackgroundInversePressed);
     --vcolor-buttonLinkBackgroundPressed: var(--mistica-color-buttonLinkBackgroundInversePressed);
 
@@ -36,7 +36,8 @@
 [data-mistica-skin] > *,
 [data-mistica-variant='default'] > *,
 .mistica-card > *,
-.mistica-snap-card > * {
+.mistica-snap-card > *,
+.mistica-display-card > * {
     --mistica-boxed-border: 1px solid var(--mistica-color-border);
     --vcolor-textPrimary: var(--mistica-color-textPrimary);
     --vcolor-textSecondary: var(--mistica-color-textSecondary);
@@ -180,8 +181,8 @@
 .mistica-text-title1 {
     color: var(--vcolor-textSecondary);
     text-transform: uppercase;
-    font-size: var(--mistica-font-size-title1);
-    line-height: var(--mistica-line-height-title1);
+    font-size: var(--mistica-font-size-1);
+    line-height: var(--mistica-line-height-1);
     font-weight: var(--mistica-font-weight-title1);
 }
 .mistica-text-title2 {
@@ -298,15 +299,17 @@
 
 /* Buttons */
 [class^='mistica-button'] {
+    --button-font-size: var(--mistica-font-size-3);
+    --button-line-height: var(--mistica-line-height-3);
     display: inline-block;
     border-radius: var(--mistica-border-radius-button);
-    font-size: var(--mistica-font-size-2);
-    line-height: var(--mistica-line-height-2);
+    font-size: var(--button-font-size);
+    line-height: var(--button-line-height);
     font-weight: var(--mistica-font-weight-button);
     border: 1.5px solid transparent;
     box-sizing: border-box;
     min-width: 104px;
-    padding: 12px 16px;
+    padding: 10.5px 14.5px;
     cursor: pointer;
     /* Reset default browser styles */
     outline: none;
@@ -318,6 +321,10 @@
     display: inline-block;
     font-size: inherit;
     --webkit-tap-highlight-color: transparent;
+    transition:
+        background-color 0.1s ease-in-out,
+        color 0.1s ease-in-out,
+        border-color 0.1s ease-in-out;
 }
 
 [class^='mistica-button']:hover,
@@ -383,7 +390,9 @@
 }
 
 [class^='mistica-button'][class$='small'] {
-    padding: 6px 12px;
+    --button-font-size: 0.875rem;
+    --button-line-height: 1.25rem;
+    padding: 4.5px 10.5px;
     min-width: 80px;
 }
 
@@ -391,6 +400,7 @@
 .mistica-card,
 .mistica-snap-card,
 .mistica-display-card {
+    text-decoration: none;
     position: relative;
     border: var(--mistica-boxed-border);
     border-radius: var(--mistica-border-radius-container);
@@ -402,6 +412,97 @@
     align-items: flex-start;
     width: 100%;
     height: auto;
+    transition: background 0.1s ease-in-out;
+    isolation: isolate;
+}
+
+@media (min-width: 1024px) {
+    .mistica-card {
+        padding: 32px 24px;
+    }
+}
+
+.mistica-card:after,
+.mistica-snap-card:after,
+.mistica-display-card:after {
+    position: absolute;
+    content: '';
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.mistica-card > *,
+.mistica-snap-card > *,
+.mistica-display-card > * {
+    z-index: 2;
+}
+
+.mistica-card .mistica-card__media,
+.mistica-display-card .mistica-card__media {
+    z-index: 1;
+}
+
+a.mistica-card:hover:after,
+a.mistica-snap-card:hover:after,
+a.mistica-display-card:hover:after,
+button.mistica-card:hover:after,
+button.mistica-snap-card:hover:after,
+button.mistica-display-card:hover:after {
+    background: var(--mistica-color-backgroundContainerHover);
+}
+
+a.mistica-card:active:after,
+a.mistica-snap-card:active:after,
+a.mistica-display-card:active:after,
+button.mistica-card:active:after,
+button.mistica-snap-card:active:after,
+button.mistica-display-card:active:after {
+    background: var(--mistica-color-backgroundContainerPressed);
+}
+
+.mistica-naked-card,
+.mistica-small-naked-card {
+    text-decoration: none;
+}
+
+.mistica-naked-card > *,
+.mistica-small-naked-card > * {
+    transition:
+        opacity 0.1s ease-in-out,
+        filter 0.1s ease-in-out;
+}
+
+a.mistica-naked-card:hover > *,
+button.mistica-naked-card:hover > *,
+a.mistica-small-naked-card:hover > *,
+button.mistica-small-naked-card:hover > * {
+    opacity: 0.8;
+}
+
+a.mistica-naked-card:active > *,
+button.mistica-naked-card:active > *,
+a.mistica-small-naked-card:active > *,
+button.mistica-small-naked-card:active > * {
+    opacity: 0.6;
+}
+
+a.mistica-naked-card:hover > .mistica-card__media,
+button.mistica-naked-card:hover > .mistica-card__media,
+a.mistica-small-naked-card:hover > .mistica-card__media,
+button.mistica-small-naked-card:hover > .mistica-card__media {
+    opacity: 1;
+    filter: brightness(75%);
+}
+
+a.mistica-naked-card:active > .mistica-card__media,
+button.mistica-naked-card:active > .mistica-card__media,
+a.mistica-small-naked-card:active > .mistica-card__media,
+button.mistica-small-naked-card:active > .mistica-card__media {
+    opacity: 1;
+    filter: brightness(65%);
 }
 
 .mistica-card,
@@ -421,6 +522,12 @@
 
 .mistica-snap-card {
     padding: 16px;
+}
+
+@media (min-width: 1024px) {
+    .mistica-snap-card {
+        padding: 24px;
+    }
 }
 
 .mistica-display-card {
@@ -450,6 +557,14 @@
     object-fit: cover;
     width: calc(100% + 32px);
     max-width: initial; /* Movistar AEM has a default max-width: 100% for any img tag */
+    position: relative;
+}
+
+@media (min-width: 1024px) {
+    .mistica-card .mistica-card__media {
+        margin: -32px -24px 24px -24px;
+        width: calc(100% + 48px);
+    }
 }
 
 .mistica-naked-card .mistica-card__media,
@@ -474,20 +589,24 @@
 .mistica-display-card:has(.mistica-card__media) {
     isolation: isolate;
     padding-top: 40px;
+    border: none;
     --mistica-card-text-shadow: 0 0 16px rgba(0, 0, 0, 0.4);
     --mistica-card-text-color: var(--mistica-color-textPrimaryInverse);
     --mistica-card-description-text-color: var(--mistica-color-textPrimaryInverse);
 }
 
 .mistica-display-card:has(.mistica-card__media):after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
     background: var(--mistica-color-cardContentOverlay);
-    z-index: -1;
+}
+
+a.mistica-display-card:has(.mistica-card__media):hover:after,
+button.mistica-display-card:has(.mistica-card__media):hover:after {
+    background: var(--mistica-color-cardContentOverlay) var(--mistica-color-backgroundContainerHover);
+}
+
+a.mistica-display-card:has(.mistica-card__media):active:after,
+button.mistica-display-card:has(.mistica-card__media):active:after {
+    background: var(--mistica-color-cardContentOverlay) var(--mistica-color-backgroundContainerPressed);
 }
 
 .mistica-card__pretitle {
@@ -572,6 +691,7 @@
     gap: 16px;
     flex-wrap: wrap;
     align-items: flex-end;
+    align-content: flex-end;
 }
 
 .mistica-card .mistica-card__buttons {
