@@ -569,7 +569,7 @@ button.mistica-small-naked-card:active > .mistica-card__media {
 .mistica-small-naked-card .mistica-card__media {
     aspect-ratio: 16 / 9;
     object-fit: cover;
-    width: 100%;
+    width: calc(100% + 16px);
     border-radius: var(--mistica-border-radius-container);
     margin-bottom: 16px;
 }
