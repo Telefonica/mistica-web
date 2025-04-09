@@ -318,7 +318,6 @@
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: inherit;
     --webkit-tap-highlight-color: transparent;
     transition:
         background-color 0.1s ease-in-out,
