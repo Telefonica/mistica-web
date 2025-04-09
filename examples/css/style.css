@@ -54,7 +54,6 @@ select {
     border: 1px solid var(--mistica-color-border);
     border-radius: var(--mistica-border-radius-input);
     padding: 8px 16px;
-    outline: none;
 }
 
 .components > h2 {

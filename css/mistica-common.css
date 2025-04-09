@@ -312,7 +312,6 @@
     padding: 10.5px 14.5px;
     cursor: pointer;
     /* Reset default browser styles */
-    outline: none;
     font-family: inherit;
     appearance: none;
     user-select: none;
