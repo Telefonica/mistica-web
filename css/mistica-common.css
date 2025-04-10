@@ -31,6 +31,11 @@
     --vcolor-tagTextWarning: var(--mistica-color-tagTextWarningInverse);
     --vcolor-tagBackgroundError: var(--mistica-color-tagBackgroundErrorInverse);
     --vcolor-tagTextError: var(--mistica-color-tagTextErrorInverse);
+
+    --vcolor-accordionChevronClosed: var(--mistica-color-inverse);
+    --vcolor-accordionChevronOpen: var(--mistica-color-inverse);
+
+    --vcolor-divider: var(--mistica-color-dividerInverse);
 }
 
 [data-mistica-skin] > *,
@@ -68,6 +73,11 @@
     --vcolor-tagTextWarning: var(--mistica-color-tagTextWarning);
     --vcolor-tagBackgroundError: var(--mistica-color-tagBackgroundError);
     --vcolor-tagTextError: var(--mistica-color-tagTextError);
+
+    --vcolor-accordionChevronClosed: var(--mistica-color-neutralMedium);
+    --vcolor-accordionChevronOpen: var(--mistica-color-neutralHigh);
+
+    --vcolor-divider: var(--mistica-color-divider);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -694,4 +704,91 @@ button.mistica-display-card:has(.mistica-card__media):active:after {
 
 .mistica-card .mistica-card__buttons {
     flex: 1;
+}
+
+/* Accordion */
+
+.mistica-accordion-item {
+    interpolate-size: allow-keywords;
+}
+
+.mistica-accordion-item:after {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 1px;
+    background-color: var(--vcolor-divider);
+}
+
+.mistica-accordion-item:last-child:after {
+    display: none;
+}
+
+.mistica-accordion-item__summary {
+    min-height: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px;
+    margin: 0 -16px;
+    transition: background-color 0.1s ease-in-out;
+}
+
+.mistica-accordion-item__summary-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2px;
+}
+
+.mistica-accordion-item__summary-title {
+    font-size: var(--mistica-font-size-3);
+    line-height: var(--mistica-line-height-3);
+    font-weight: var(--mistica-font-weight-3);
+    color: var(--vcolor-textPrimary);
+}
+
+.mistica-accordion-item__summary-subtitle {
+    font-size: var(--mistica-font-size-2);
+    line-height: var(--mistica-line-height-2);
+    font-weight: var(--mistica-font-weight-2);
+    color: var(--vcolor-textPrimary);
+}
+
+.mistica-accordion-item__chevron {
+    transition: transform 0.4s ease-in-out;
+    transform: rotate(90deg);
+    color: var(--vcolor-accordionChevronClosed);
+}
+
+.mistica-accordion-item[open] > summary > .mistica-accordion-item__chevron {
+    transform: rotate(-90deg);
+    color: var(--vcolor-accordionChevronOpen);
+}
+
+.mistica-accordion-item__summary:hover {
+    background-color: var(--mistica-color-backgroundContainerHover);
+}
+
+.mistica-accordion-item__summary:active {
+    background-color: var(--mistica-color-backgroundContainerPressed);
+}
+
+.mistica-accordion-item::details-content {
+    overflow: hidden;
+    height: 0;
+
+    transition:
+        height 0.4s ease-in-out,
+        content-visibility 0.4s ease-in-out;
+    transition-behavior: allow-discrete;
+}
+
+.mistica-accordion-item__content {
+    padding: 0 16px 16px;
+    margin: 0 -16px;
+}
+
+.mistica-accordion-item[open]::details-content {
+    height: auto;
 }
