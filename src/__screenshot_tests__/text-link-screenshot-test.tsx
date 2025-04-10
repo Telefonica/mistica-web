@@ -69,3 +69,57 @@ test('TextLink - inherits text style', async () => {
 
     expect(image).toMatchImageSnapshot();
 });
+
+test('TextLink - bodyLink', async () => {
+    await openStoryPage({
+        id: 'components-textlink--default',
+        args: {bodyLink: false},
+    });
+
+    const textLink = await screen.findByTestId('text-link');
+
+    const image = await textLink.screenshot();
+
+    expect(image).toMatchImageSnapshot();
+});
+
+test('TextLink - bodyLink - inverse', async () => {
+    await openStoryPage({
+        id: 'components-textlink--default',
+        args: {inverse: true, bodyLink: false},
+    });
+
+    const textLink = await screen.findByTestId('text-link');
+
+    const image = await textLink.screenshot();
+
+    expect(image).toMatchImageSnapshot();
+});
+
+test('TextLink - bodyLink - dark mode', async () => {
+    await openStoryPage({
+        id: 'components-textlink--default',
+        args: {bodyLink: false},
+        isDarkMode: true,
+    });
+
+    const textLink = await screen.findByTestId('text-link');
+
+    const image = await textLink.screenshot();
+
+    expect(image).toMatchImageSnapshot();
+});
+
+test('TextLink - bodyLink - inverse - dark mode', async () => {
+    await openStoryPage({
+        id: 'components-textlink--default',
+        args: {inverse: true, bodyLink: false},
+        isDarkMode: true,
+    });
+
+    const textLink = await screen.findByTestId('text-link');
+
+    const image = await textLink.screenshot();
+
+    expect(image).toMatchImageSnapshot();
+});
