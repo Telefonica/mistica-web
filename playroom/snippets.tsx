@@ -2840,6 +2840,7 @@ const navigationBarSnippets = [
                                 "Movistar Cloud",
                               ].map((title, index) => (
                                 <TextLink
+                                  bodyLink={false}
                                   key={index}
                                   onPress={() => {}}
                                   style={{ color: colors.textPrimary }}
