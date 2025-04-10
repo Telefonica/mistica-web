@@ -795,6 +795,7 @@ const MainNavigationBarDesktopMenuSectionColumn = ({
                         role="listitem"
                     >
                         <TextLink
+                            bodyLink={false}
                             className={styles.desktopMenuColumnItem}
                             dataAttributes={{
                                 [`navigation-bar-menu-item-${columnIndex}-${itemIdx}`]: 'true',

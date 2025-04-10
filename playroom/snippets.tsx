@@ -4314,6 +4314,11 @@ export default [
     {group: 'Badge', name: 'Icon with badge', code: '<Badge value="5"><IconSettingsRegular /></Badge>'},
     {group: 'Text', name: 'Text', code: '<Text>some text</Text>'},
     {
+        group: 'TextLink',
+        name: 'TextLink',
+        code: '<Text3>This is a <TextLink href="https://example.org" newTab>text link</TextLink> in the middle of a text</Text3>',
+    },
+    {
         group: 'Counter',
         name: 'Counter',
         code: `

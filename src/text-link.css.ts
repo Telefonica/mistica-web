@@ -7,18 +7,20 @@ const base = style([
     sprinkles({
         width: 'auto',
         display: 'inline',
-        cursor: 'pointer',
     }),
     {
         userSelect: 'text',
         lineHeight: 'inherit',
         wordBreak: 'break-word',
+        textDecoration: 'underline !important',
+
         '@media': {
             [mq.supportsHover]: {
                 selectors: {
                     '&:hover:not([disabled])': {
                         // important is needed to override styles in touchable.css.ts
                         textDecoration: 'underline !important',
+                        textDecorationThickness: '0.125em !important',
                     },
                 },
             },
@@ -32,6 +34,30 @@ const base = style([
     },
 ]);
 
+const underlined = style({
+    cursor: 'pointer',
+    textDecoration: 'underline !important',
+});
+
+const underlineOnHover = style({
+    cursor: 'pointer',
+    textDecoration: 'none !important',
+    '@media': {
+        [mq.supportsHover]: {
+            selectors: {
+                '&:hover:not([disabled])': {
+                    textDecorationThickness: '0.0625em !important',
+                },
+            },
+        },
+    },
+});
+
+export const linkStyles = {
+    underlined,
+    underlineOnHover,
+};
+
 export const variants = styleVariants({
     default: [
         base,
@@ -44,34 +70,11 @@ export const variants = styleVariants({
         sprinkles({
             color: vars.colors.textLinkInverse,
         }),
-        {
-            textDecoration: 'underline !important',
-            '@media': {
-                [mq.supportsHover]: {
-                    selectors: {
-                        '&:hover:not([disabled])': {
-                            textDecorationThickness: '2px !important',
-                        },
-                    },
-                },
-            },
-        },
     ],
     inverseDark: [
         base,
         sprinkles({
             color: vars.colors.textLink,
         }),
-        {
-            '@media': {
-                [mq.supportsHover]: {
-                    selectors: {
-                        '&:hover:not([disabled])': {
-                            textDecorationThickness: 1,
-                        },
-                    },
-                },
-            },
-        },
     ],
 });
