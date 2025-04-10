@@ -7,24 +7,12 @@ const base = style([
     sprinkles({
         width: 'auto',
         display: 'inline',
+        cursor: 'pointer',
     }),
     {
         userSelect: 'text',
         lineHeight: 'inherit',
         wordBreak: 'break-word',
-        textDecoration: 'underline !important',
-
-        '@media': {
-            [mq.supportsHover]: {
-                selectors: {
-                    '&:hover:not([disabled])': {
-                        // important is needed to override styles in touchable.css.ts
-                        textDecoration: 'underline !important',
-                        textDecorationThickness: '0.125em !important',
-                    },
-                },
-            },
-        },
         selectors: {
             '&[disabled]': {
                 opacity: 0.5,
@@ -34,18 +22,27 @@ const base = style([
     },
 ]);
 
-const underlined = style({
-    cursor: 'pointer',
+const withBodyLink = style({
     textDecoration: 'underline !important',
+    '@media': {
+        [mq.supportsHover]: {
+            selectors: {
+                '&:hover:not([disabled])': {
+                    // important is needed to override styles in touchable.css.ts
+                    textDecorationThickness: '0.125em !important',
+                },
+            },
+        },
+    },
 });
 
-const underlineOnHover = style({
-    cursor: 'pointer',
+const withoutBodyLink = style({
     textDecoration: 'none !important',
     '@media': {
         [mq.supportsHover]: {
             selectors: {
                 '&:hover:not([disabled])': {
+                    textDecoration: 'underline !important',
                     textDecorationThickness: '0.0625em !important',
                 },
             },
@@ -54,8 +51,8 @@ const underlineOnHover = style({
 });
 
 export const linkStyles = {
-    underlined,
-    underlineOnHover,
+    withBodyLink,
+    withoutBodyLink,
 };
 
 export const variants = styleVariants({

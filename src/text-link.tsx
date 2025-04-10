@@ -46,7 +46,7 @@ const TextLink = ({
     const {formStatus} = useForm();
     const {eventFormat} = useTrackingConfig();
 
-    const underlineStyle = bodyLink ? styles.linkStyles.underlined : styles.linkStyles.underlineOnHover;
+    const underlineStyle = bodyLink ? styles.linkStyles.withBodyLink : styles.linkStyles.withoutBodyLink;
 
     const createDefaultTrackingEvent = (): TrackingEvent => {
         if (eventFormat === 'google-analytics-4') {
