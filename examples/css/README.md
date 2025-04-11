@@ -49,6 +49,9 @@ yarn dev
 
 Take a look at the `index.html` and `styles.css` files.
 
+You can see a deployed version of the example page in
+[https://mistica-web.vercel.app/mistica-css](https://mistica-web.vercel.app/mistica-css)
+
 ## Dark mode support
 
 By default, color tokens will change folloging the user's system preferences. If you want to force the dark or
@@ -170,6 +173,5 @@ Others: see the full list in the
 
 ### Components
 
-Some provided classes can be used to build components like Buttons, Cards, Accordion, etc. See the
-[index.html](./index.html) which has some examples. You can see a deployed version of index.html in
-[https://mistica-web.vercel.app/mistica-css](https://mistica-web.vercel.app/mistica-css)
+Some provided classes can be used to build components like Buttons, Cards, Tags, Accordion, etc. See some
+examples in [index.html](./index.html).
