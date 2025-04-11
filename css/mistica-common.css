@@ -725,6 +725,7 @@ button.mistica-display-card:has(.mistica-card__media):active:after {
 }
 
 .mistica-accordion-item__summary {
+    cursor: pointer;
     min-height: 72px;
     display: flex;
     align-items: center;
@@ -756,13 +757,12 @@ button.mistica-display-card:has(.mistica-card__media):active:after {
 }
 
 .mistica-accordion-item__chevron {
-    transition: transform 0.4s ease-in-out;
-    transform: rotate(90deg);
+    transition: transform 0.3s ease-in-out;
     color: var(--vcolor-accordionChevronClosed);
 }
 
 .mistica-accordion-item[open] > summary > .mistica-accordion-item__chevron {
-    transform: rotate(-90deg);
+    transform: rotate(-180deg);
     color: var(--vcolor-accordionChevronOpen);
 }
 
@@ -779,8 +779,8 @@ button.mistica-display-card:has(.mistica-card__media):active:after {
     height: 0;
 
     transition:
-        height 0.4s ease-in-out,
-        content-visibility 0.4s ease-in-out;
+        height 0.3s ease-in-out,
+        content-visibility 0.3s ease-in-out;
     transition-behavior: allow-discrete;
 }
 
