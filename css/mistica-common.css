@@ -1,56 +1,159 @@
-/* Default text color */
+[data-mistica-variant='inverse'] > *,
+.mistica-display-card:has(.mistica-card__media) > * {
+    --mistica-boxed-border: none;
+
+    --vcolor-textPrimary: var(--mistica-color-textPrimaryInverse);
+    --vcolor-textSecondary: var(--mistica-color-textSecondaryInverse);
+    --vcolor-textLink: var(--mistica-color-textLinkInverse);
+    --vcolor-textError: var(--mistica-color-textErrorInverse);
+
+    --vcolor-textButtonPrimary: var(--mistica-color-textButtonPrimaryInverse);
+    --vcolor-textButtonSecondary: var(--mistica-color-textButtonSecondaryInverse);
+    --vcolor-textButtonError: var(--mistica-color-textButtonPrimary);
+    --vcolor-buttonPrimaryBackground: var(--mistica-color-buttonPrimaryBackgroundInverse);
+    --vcolor-buttonPrimaryBackgroundHover: var(--mistica-color-buttonPrimaryBackgroundInversePressed);
+    --vcolor-buttonPrimaryBackgroundPressed: var(--mistica-color-buttonPrimaryBackgroundInversePressed);
+    --vcolor-buttonSecondaryBorder: var(--mistica-color-buttonSecondaryBorderInverse);
+    --vcolor-textButtonSecondaryPressed: var(--mistica-color-textButtonSecondaryInversePressed);
+    --vcolor-buttonSecondaryBackgroundHover: var(--mistica-color-buttonSecondaryBackgroundInverseHover);
+    --vcolor-buttonSecondaryBackgroundPressed: var(--mistica-color-buttonSecondaryBackgroundInversePressed);
+    --vcolor-buttonLinkBackgroundPressed: var(--mistica-color-buttonLinkBackgroundInversePressed);
+
+    --vcolor-tagBackgroundPromo: var(--mistica-color-tagBackgroundPromoInverse);
+    --vcolor-tagTextPromo: var(--mistica-color-tagTextPromoInverse);
+    --vcolor-tagBackgroundActive: var(--mistica-color-tagBackgroundActiveInverse);
+    --vcolor-tagTextActive: var(--mistica-color-tagTextActiveInverse);
+    --vcolor-tagBackgroundInactive: var(--mistica-color-tagBackgroundInactiveInverse);
+    --vcolor-tagTextInactive: var(--mistica-color-tagTextInactiveInverse);
+    --vcolor-tagBackgroundSuccess: var(--mistica-color-tagBackgroundSuccessInverse);
+    --vcolor-tagTextSuccess: var(--mistica-color-tagTextSuccessInverse);
+    --vcolor-tagBackgroundWarning: var(--mistica-color-tagBackgroundWarningInverse);
+    --vcolor-tagTextWarning: var(--mistica-color-tagTextWarningInverse);
+    --vcolor-tagBackgroundError: var(--mistica-color-tagBackgroundErrorInverse);
+    --vcolor-tagTextError: var(--mistica-color-tagTextErrorInverse);
+}
+
+[data-mistica-skin] > *,
+[data-mistica-variant='default'] > *,
+.mistica-card > *,
+.mistica-snap-card > *,
+.mistica-display-card > * {
+    --mistica-boxed-border: 1px solid var(--mistica-color-border);
+    --vcolor-textPrimary: var(--mistica-color-textPrimary);
+    --vcolor-textSecondary: var(--mistica-color-textSecondary);
+    --vcolor-textLink: var(--mistica-color-textLink);
+    --vcolor-textError: var(--mistica-color-textError);
+
+    --vcolor-textButtonPrimary: var(--mistica-color-textButtonPrimary);
+    --vcolor-textButtonSecondary: var(--mistica-color-textButtonSecondary);
+    --vcolor-textButtonError: var(--mistica-color-textButtonPrimary);
+    --vcolor-buttonPrimaryBackground: var(--mistica-color-buttonPrimaryBackground);
+    --vcolor-buttonPrimaryBackgroundHover: var(--mistica-color-buttonPrimaryBackgroundHover);
+    --vcolor-buttonPrimaryBackgroundPressed: var(--mistica-color-buttonPrimaryBackgroundPressed);
+    --vcolor-buttonSecondaryBorder: var(--mistica-color-buttonSecondaryBorder);
+    --vcolor-textButtonSecondaryPressed: var(--mistica-color-textButtonSecondaryPressed);
+    --vcolor-buttonSecondaryBackgroundHover: var(--mistica-color-buttonSecondaryBackgroundHover);
+    --vcolor-buttonSecondaryBackgroundPressed: var(--mistica-color-buttonSecondaryBackgroundPressed);
+    --vcolor-buttonLinkBackgroundPressed: var(--mistica-color-buttonLinkBackgroundPressed);
+
+    --vcolor-tagBackgroundPromo: var(--mistica-color-tagBackgroundPromo);
+    --vcolor-tagTextPromo: var(--mistica-color-tagTextPromo);
+    --vcolor-tagBackgroundActive: var(--mistica-color-tagBackgroundActive);
+    --vcolor-tagTextActive: var(--mistica-color-tagTextActive);
+    --vcolor-tagBackgroundInactive: var(--mistica-color-tagBackgroundInactive);
+    --vcolor-tagTextInactive: var(--mistica-color-tagTextInactive);
+    --vcolor-tagBackgroundSuccess: var(--mistica-color-tagBackgroundSuccess);
+    --vcolor-tagTextSuccess: var(--mistica-color-tagTextSuccess);
+    --vcolor-tagBackgroundWarning: var(--mistica-color-tagBackgroundWarning);
+    --vcolor-tagTextWarning: var(--mistica-color-tagTextWarning);
+    --vcolor-tagBackgroundError: var(--mistica-color-tagBackgroundError);
+    --vcolor-tagTextError: var(--mistica-color-tagTextError);
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-mistica-skin] > *,
+    [data-mistica-variant='default'] > *,
+    .mistica-card > *,
+    .mistica-snap-card > * {
+        --mistica-boxed-border: none;
+    }
+
+    [data-mistica-color-scheme='light'][data-mistica-skin] > *,
+    [data-mistica-color-scheme='light'] [data-mistica-variant='default'] > *,
+    [data-mistica-color-scheme='light'] .mistica-card > *,
+    [data-mistica-color-scheme='light'] .mistica-snap-card > * {
+        --mistica-boxed-border: 1px solid var(--mistica-color-border);
+    }
+}
+
+[data-mistica-color-scheme='dark'][data-mistica-skin] > *,
+[data-mistica-color-scheme='dark'] [data-mistica-variant='default'] > *,
+[data-mistica-color-scheme='dark'] .mistica-card > *,
+[data-mistica-color-scheme='dark'] .mistica-snap-card > * {
+    --mistica-boxed-border: none;
+}
+
 [data-mistica-skin] {
-    color: var(--mistica-color-textPrimary);
     background: var(--mistica-color-background);
 }
 
 /* text utility classes */
 .mistica-text-1 {
+    color: var(--vcolor-textPrimary);
     font-size: var(--mistica-font-size-1);
     line-height: var(--mistica-line-height-1);
     font-weight: var(--mistica-font-weight-1);
 }
 .mistica-text-2 {
+    color: var(--vcolor-textPrimary);
     font-size: var(--mistica-font-size-2);
     line-height: var(--mistica-line-height-2);
     font-weight: var(--mistica-font-weight-2);
 }
 .mistica-text-3 {
+    color: var(--vcolor-textPrimary);
     font-size: var(--mistica-font-size-3);
     line-height: var(--mistica-line-height-3);
     font-weight: var(--mistica-font-weight-3);
 }
 .mistica-text-4 {
+    color: var(--vcolor-textPrimary);
     font-size: var(--mistica-font-size-4);
     line-height: var(--mistica-line-height-4);
     font-weight: var(--mistica-font-weight-4);
 }
 .mistica-text-5 {
+    color: var(--vcolor-textPrimary);
     font-size: var(--mistica-font-size-5);
     line-height: var(--mistica-line-height-5);
     font-weight: var(--mistica-font-weight-5);
 }
 .mistica-text-6 {
+    color: var(--vcolor-textPrimary);
     font-size: var(--mistica-font-size-6);
     line-height: var(--mistica-line-height-6);
     font-weight: var(--mistica-font-weight-6);
 }
 .mistica-text-7 {
+    color: var(--vcolor-textPrimary);
     font-size: var(--mistica-font-size-7);
     line-height: var(--mistica-line-height-7);
     font-weight: var(--mistica-font-weight-7);
 }
 .mistica-text-8 {
+    color: var(--vcolor-textPrimary);
     font-size: var(--mistica-font-size-8);
     line-height: var(--mistica-line-height-8);
     font-weight: var(--mistica-font-weight-8);
 }
 .mistica-text-9 {
+    color: var(--vcolor-textPrimary);
     font-size: var(--mistica-font-size-9);
     line-height: var(--mistica-line-height-9);
     font-weight: var(--mistica-font-weight-9);
 }
 .mistica-text-10 {
+    color: var(--vcolor-textPrimary);
     font-size: var(--mistica-font-size-10);
     line-height: var(--mistica-line-height-10);
     font-weight: var(--mistica-font-weight-10);
@@ -76,19 +179,29 @@
     font-weight: var(--mistica-font-weight-link);
 }
 .mistica-text-title1 {
-    font-size: var(--mistica-font-size-title1);
-    line-height: var(--mistica-line-height-title1);
+    color: var(--vcolor-textSecondary);
+    text-transform: uppercase;
+    font-size: var(--mistica-font-size-1);
+    line-height: var(--mistica-line-height-1);
     font-weight: var(--mistica-font-weight-title1);
 }
 .mistica-text-title2 {
-    font-size: var(--mistica-font-size-title2);
-    line-height: var(--mistica-line-height-title2);
+    color: var(--vcolor-textPrimary);
+    font-size: var(--mistica-font-size-3);
+    line-height: var(--mistica-line-height-3);
     font-weight: var(--mistica-font-weight-title2);
 }
 .mistica-text-title3 {
+    color: var(--vcolor-textPrimary);
     font-size: var(--mistica-font-size-title3);
     line-height: var(--mistica-line-height-title3);
     font-weight: var(--mistica-font-weight-title3);
+}
+.mistica-text-title4 {
+    color: var(--vcolor-textPrimary);
+    font-size: var(--mistica-font-size-6);
+    line-height: var(--mistica-line-height-6);
+    font-weight: var(--mistica-font-weight-6);
 }
 .mistica-text-indicator {
     font-size: var(--mistica-font-size-indicator);
@@ -103,7 +216,7 @@
 
 /* Boxed */
 .mistica-boxed {
-    border: 1px solid var(--mistica-color-border);
+    border: var(--mistica-boxed-border);
     border-radius: var(--mistica-border-radius-container);
     background: var(--mistica-color-backgroundContainer);
 }
@@ -112,8 +225,12 @@
 .mistica-responsive-layout {
     padding-left: env(safe-area-inset-left);
     padding-right: env(safe-area-inset-right);
-    margin: 0 var(--mistica-responsive-layout-margin);
+    padding: 0 var(--mistica-responsive-layout-margin);
     --mistica-responsive-layout-margin: 16px;
+}
+
+.mistica-responsive-layout[data-mistica-variant='inverse'] {
+    background: var(--mistica-color-backgroundBrand);
 }
 
 @media (min-width: 768px) {
@@ -132,4 +249,449 @@
     .mistica-responsive-layout {
         --mistica-responsive-layout-margin: calc((100vw - 1224px) / 2);
     }
+}
+
+/* Tag */
+[class^='mistica-tag'] {
+    font-weight: var(--mistica-font-weight-indicator);
+    border-radius: var(--mistica-border-radius-indicator);
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    min-width: 56px;
+    padding: 4px 12px;
+    vertical-align: middle;
+    width: fit-content;
+}
+
+.mistica-tag-promo {
+    background: var(--vcolor-tagBackgroundPromo);
+    color: var(--vcolor-tagTextPromo);
+}
+
+.mistica-tag-active {
+    background: var(--vcolor-tagBackgroundActive);
+    color: var(--vcolor-tagTextActive);
+}
+
+.mistica-tag-inactive {
+    background: var(--vcolor-tagBackgroundInactive);
+    color: var(--vcolor-tagTextInactive);
+}
+
+.mistica-tag-success {
+    background: var(--vcolor-tagBackgroundSuccess);
+    color: var(--vcolor-tagTextSuccess);
+}
+
+.mistica-tag-warning {
+    background: var(--vcolor-tagBackgroundWarning);
+    color: var(--vcolor-tagTextWarning);
+}
+
+.mistica-tag-error {
+    background: var(--vcolor-tagBackgroundError);
+    color: var(--vcolor-tagTextError);
+}
+
+/* Buttons */
+[class^='mistica-button'] {
+    --button-font-size: var(--mistica-font-size-3);
+    --button-line-height: var(--mistica-line-height-3);
+    display: inline-block;
+    border-radius: var(--mistica-border-radius-button);
+    font-size: var(--button-font-size);
+    line-height: var(--button-line-height);
+    font-weight: var(--mistica-font-weight-button);
+    border: 1.5px solid transparent;
+    box-sizing: border-box;
+    min-width: 104px;
+    padding: 10.5px 14.5px;
+    cursor: pointer;
+    /* Reset default browser styles */
+    font-family: inherit;
+    appearance: none;
+    user-select: none;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    --webkit-tap-highlight-color: transparent;
+    transition:
+        background-color 0.1s ease-in-out,
+        color 0.1s ease-in-out,
+        border-color 0.1s ease-in-out;
+}
+
+[class^='mistica-button']:hover,
+[class^='mistica-button']:active {
+    text-decoration: none;
+}
+
+[class^='mistica-button'][disabled] {
+    cursor: default;
+}
+
+[class^='mistica-button-primary'] {
+    color: var(--vcolor-textButtonPrimary);
+    background: var(--vcolor-buttonPrimaryBackground);
+}
+
+[class^='mistica-button-primary']:hover {
+    background: var(--vcolor-buttonPrimaryBackgroundHover);
+}
+
+[class^='mistica-button-primary']:active {
+    background: var(--vcolor-buttonPrimaryBackgroundPressed);
+}
+
+[class^='mistica-button-secondary'] {
+    color: var(--vcolor-textButtonSecondary);
+    background: transparent;
+    border-color: var(--vcolor-buttonSecondaryBorder);
+}
+
+[class^='mistica-button-secondary']:hover {
+    background: var(--vcolor-buttonSecondaryBackgroundHover);
+}
+
+[class^='mistica-button-secondary']:active {
+    background: var(--vcolor-buttonSecondaryBackgroundPressed);
+}
+
+[class^='mistica-button-danger'] {
+    color: var(--vcolor-textButtonError);
+    background: var(--mistica-color-buttonDangerBackground);
+}
+
+[class^='mistica-button-danger']:hover {
+    background: var(--mistica-color-buttonDangerBackgroundHover);
+}
+
+[class^='mistica-button-danger']:active {
+    background: var(--mistica-color-buttonDangerBackgroundPressed);
+}
+
+[class^='mistica-button-link'] {
+    color: var(--vcolor-textLink);
+    background: transparent;
+}
+
+[class^='mistica-button-link']:hover {
+    background: var(--vcolor-buttonLinkBackgroundPressed);
+}
+
+[class^='mistica-button-link']:active {
+    background: var(--vcolor-buttonLinkBackgroundPressed);
+}
+
+[class^='mistica-button'][class$='small'] {
+    --button-font-size: 0.875rem;
+    --button-line-height: 1.25rem;
+    padding: 4.5px 10.5px;
+    min-width: 80px;
+}
+
+/* Cards */
+.mistica-card,
+.mistica-snap-card,
+.mistica-display-card {
+    text-decoration: none;
+    position: relative;
+    border: var(--mistica-boxed-border);
+    border-radius: var(--mistica-border-radius-container);
+    background: var(--mistica-color-backgroundContainer);
+    padding: 24px 16px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    height: auto;
+    transition: background 0.1s ease-in-out;
+    isolation: isolate;
+}
+
+@media (min-width: 1024px) {
+    .mistica-card {
+        padding: 32px 24px;
+    }
+}
+
+.mistica-card:after,
+.mistica-snap-card:after,
+.mistica-display-card:after {
+    position: absolute;
+    content: '';
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.mistica-card > *,
+.mistica-snap-card > *,
+.mistica-display-card > * {
+    z-index: 2;
+}
+
+.mistica-card .mistica-card__media,
+.mistica-display-card .mistica-card__media {
+    z-index: 1;
+}
+
+a.mistica-card:hover:after,
+a.mistica-snap-card:hover:after,
+a.mistica-display-card:hover:after,
+button.mistica-card:hover:after,
+button.mistica-snap-card:hover:after,
+button.mistica-display-card:hover:after {
+    background: var(--mistica-color-backgroundContainerHover);
+}
+
+a.mistica-card:active:after,
+a.mistica-snap-card:active:after,
+a.mistica-display-card:active:after,
+button.mistica-card:active:after,
+button.mistica-snap-card:active:after,
+button.mistica-display-card:active:after {
+    background: var(--mistica-color-backgroundContainerPressed);
+}
+
+.mistica-naked-card,
+.mistica-small-naked-card {
+    text-decoration: none;
+}
+
+.mistica-naked-card > *,
+.mistica-small-naked-card > * {
+    transition:
+        opacity 0.1s ease-in-out,
+        filter 0.1s ease-in-out;
+}
+
+a.mistica-naked-card:hover > *,
+button.mistica-naked-card:hover > *,
+a.mistica-small-naked-card:hover > *,
+button.mistica-small-naked-card:hover > * {
+    opacity: 0.8;
+}
+
+a.mistica-naked-card:active > *,
+button.mistica-naked-card:active > *,
+a.mistica-small-naked-card:active > *,
+button.mistica-small-naked-card:active > * {
+    opacity: 0.6;
+}
+
+a.mistica-naked-card:hover > .mistica-card__media,
+button.mistica-naked-card:hover > .mistica-card__media,
+a.mistica-small-naked-card:hover > .mistica-card__media,
+button.mistica-small-naked-card:hover > .mistica-card__media {
+    opacity: 1;
+    filter: brightness(75%);
+}
+
+a.mistica-naked-card:active > .mistica-card__media,
+button.mistica-naked-card:active > .mistica-card__media,
+a.mistica-small-naked-card:active > .mistica-card__media,
+button.mistica-small-naked-card:active > .mistica-card__media {
+    opacity: 1;
+    filter: brightness(65%);
+}
+
+.mistica-card,
+.mistica-snap-card,
+.mistica-display-card {
+    --mistica-card-text-color: var(--mistica-color-textPrimary);
+    --mistica-card-description-text-color: var(--mistica-color-textSecondary);
+    color: var(--mistica-card-text-color);
+}
+
+.mistica-naked-card,
+.mistica-small-naked-card {
+    --mistica-card-text-color: var(--vcolor-textPrimary);
+    --mistica-card-description-text-color: var(--vcolor-textSecondary);
+    color: var(--mistica-card-text-color);
+}
+
+.mistica-snap-card {
+    padding: 16px;
+}
+
+@media (min-width: 1024px) {
+    .mistica-snap-card {
+        padding: 24px;
+    }
+}
+
+.mistica-display-card {
+    padding: 24px;
+    border-radius: var(--mistica-border-radius-legacyDisplay);
+    justify-content: flex-end;
+}
+
+.mistica-naked-card,
+.mistica-small-naked-card {
+    padding-right: 16px;
+}
+
+.mistica-aspect-ratio {
+    display: flex;
+    flex: 1;
+}
+
+.mistica-aspect-ratio::before {
+    content: '';
+    padding-bottom: calc(100% / (var(--aspect-ratio)));
+}
+
+.mistica-card .mistica-card__media {
+    margin: -24px -16px 16px -16px;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    width: calc(100% + 32px);
+    max-width: initial; /* Movistar AEM has a default max-width: 100% for any img tag */
+    position: relative;
+}
+
+@media (min-width: 1024px) {
+    .mistica-card .mistica-card__media {
+        margin: -32px -24px 24px -24px;
+        width: calc(100% + 48px);
+    }
+}
+
+.mistica-naked-card .mistica-card__media,
+.mistica-small-naked-card .mistica-card__media {
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    width: calc(100% + 16px);
+    border-radius: var(--mistica-border-radius-container);
+    margin-bottom: 16px;
+}
+
+.mistica-display-card .mistica-card__media {
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+.mistica-display-card:has(.mistica-card__media) {
+    isolation: isolate;
+    padding-top: 40px;
+    border: none;
+    --mistica-card-text-shadow: 0 0 16px rgba(0, 0, 0, 0.4);
+    --mistica-card-text-color: var(--mistica-color-textPrimaryInverse);
+    --mistica-card-description-text-color: var(--mistica-color-textPrimaryInverse);
+}
+
+.mistica-display-card:has(.mistica-card__media):after {
+    background: var(--mistica-color-cardContentOverlay);
+}
+
+a.mistica-display-card:has(.mistica-card__media):hover:after,
+button.mistica-display-card:has(.mistica-card__media):hover:after {
+    background: var(--mistica-color-cardContentOverlay) var(--mistica-color-backgroundContainerHover);
+}
+
+a.mistica-display-card:has(.mistica-card__media):active:after,
+button.mistica-display-card:has(.mistica-card__media):active:after {
+    background: var(--mistica-color-cardContentOverlay) var(--mistica-color-backgroundContainerPressed);
+}
+
+.mistica-card__pretitle {
+    font-size: var(--mistica-font-size-2);
+    line-height: var(--mistica-line-height-2);
+    font-weight: var(--mistica-font-weight-2);
+    text-shadow: var(--mistica-card-text-shadow);
+}
+
+[class^='mistica-tag'] + .mistica-card__pretitle {
+    padding-top: 8px;
+}
+
+.mistica-display-card [class^='mistica-tag'] + .mistica-card__pretitle {
+    padding-top: 16px;
+}
+
+.mistica-card__title {
+    font-size: var(--mistica-font-size-cardTitle);
+    line-height: var(--mistica-line-height-cardTitle);
+    font-weight: var(--mistica-font-weight-cardTitle);
+    text-shadow: var(--mistica-card-text-shadow);
+}
+
+.mistica-snap-card .mistica-card__title,
+.mistica-small-naked-card .mistica-card__title {
+    font-size: var(--mistica-font-size-2);
+    line-height: var(--mistica-line-height-2);
+}
+
+.mistica-display-card .mistica-card__title {
+    font-size: var(--mistica-font-size-6);
+    line-height: var(--mistica-line-height-6);
+    font-weight: var(--mistica-font-weight-6);
+}
+
+[class^='mistica-tag'] + .mistica-card__title {
+    padding-top: 8px;
+}
+
+.mistica-display-card [class^='mistica-tag'] + .mistica-card__title {
+    padding-top: 16px;
+}
+
+.mistica-card__pretitle + .mistica-card__title {
+    padding-top: 4px;
+}
+
+.mistica-card__subtitle {
+    font-size: var(--mistica-font-size-2);
+    line-height: var(--mistica-line-height-2);
+    font-weight: var(--mistica-font-weight-2);
+    text-shadow: var(--mistica-card-text-shadow);
+    padding-top: 4px;
+}
+
+.mistica-card__description {
+    font-size: var(--mistica-font-size-2);
+    line-height: var(--mistica-line-height-2);
+    font-weight: var(--mistica-font-weight-2);
+    text-shadow: var(--mistica-card-text-shadow);
+    color: var(--mistica-card-description-text-color);
+}
+
+.mistica-display-card .mistica-card__description {
+    font-size: var(--mistica-font-size-3);
+    line-height: var(--mistica-line-height-3);
+    font-weight: var(--mistica-font-weight-3);
+}
+
+.mistica-card__description:not(:first-child) {
+    padding-top: 8px;
+}
+
+.mistica-snap-card .mistica-card__description:not(:first-child) {
+    padding-top: 4px;
+}
+
+.mistica-card__buttons {
+    padding-top: 16px;
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    align-content: flex-end;
+}
+
+.mistica-card .mistica-card__buttons {
+    flex: 1;
 }
