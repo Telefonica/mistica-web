@@ -12,7 +12,7 @@ import {vars} from '../../skins/skin-contract.css';
 
 import type {IconProps} from '../../utils/types';
 
-const IconChevronRightRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
+const IconChevronRightFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const isInverse = useIsInverseOrMediaVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();
@@ -21,7 +21,7 @@ const IconChevronRightRegular = ({color, size = 24, ...rest}: IconProps): JSX.El
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
-                    d="m18 12.001-7.2-7.68a1 1 0 0 0-1.42-.05c-.4.38-.43 1.02-.05 1.42l5.91 6.31-5.91 6.31a1 1 0 0 0 .05 1.42 1 1 0 0 0 1.42-.05z"
+                    d="m18.322 11.998-7.13-7.6c-.48-.51-1.28-.53-1.79-.06-.51.48-.53 1.28-.06 1.79l5.51 5.87-5.51 5.87a1.265 1.265 0 1 0 1.85 1.73z"
                 />
             </svg>
         );
@@ -30,16 +30,7 @@ const IconChevronRightRegular = ({color, size = 24, ...rest}: IconProps): JSX.El
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
-                    d="M17.572 12.001c0-.25-.09-.49-.27-.69l-6.56-6.99a1 1 0 0 0-1.42-.05c-.4.38-.43 1.02-.05 1.42l5.91 6.31-5.91 6.31a1 1 0 0 0 .05 1.42 1 1 0 0 0 1.42-.05l6.56-6.99c.18-.19.27-.44.27-.69"
-                />
-            </svg>
-        );
-    } else if (skinName.match(/^o2/i)) {
-        return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                <path
-                    fill={fillColor}
-                    d="M9.2 18.734a.79.79 0 0 0 0 1.049c.265.29.696.29.962 0l6.639-7.238A.78.78 0 0 0 17 12a.78.78 0 0 0-.2-.545l-6.638-7.238a.64.64 0 0 0-.963 0 .79.79 0 0 0 0 1.05L15.376 12z"
+                    d="M17.852 11.998c0-.31-.11-.62-.34-.86l-6.32-6.74c-.48-.51-1.28-.53-1.79-.06-.51.48-.53 1.28-.06 1.79l5.51 5.87-5.51 5.87a1.265 1.265 0 1 0 1.85 1.73l6.32-6.74c.23-.24.34-.55.34-.86"
                 />
             </svg>
         );
@@ -48,11 +39,11 @@ const IconChevronRightRegular = ({color, size = 24, ...rest}: IconProps): JSX.El
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     fill={fillColor}
-                    d="M18.455 12c0 .28-.11.54-.32.73l-7.437 6.996c-.4.38-1.04.36-1.421-.04-.38-.4-.36-1.041.04-1.421l6.656-6.266-6.656-6.265a1 1 0 0 1-.04-1.422c.38-.4 1.02-.42 1.421-.04l7.437 6.996c.2.19.32.46.32.731"
+                    d="M18.81 12c0-.39-.16-.76-.44-1.02l-7.01-6.6c-.56-.53-1.45-.5-1.98.06s-.5 1.45.06 1.98L15.37 12l-5.93 5.58c-.56.53-.59 1.42-.06 1.98s1.42.59 1.98.06l7.01-6.6c.28-.26.44-.63.44-1.02"
                 />
             </svg>
         );
     }
 };
 
-export default IconChevronRightRegular;
+export default IconChevronRightFilled;
