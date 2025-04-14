@@ -297,6 +297,26 @@
     color: var(--vcolor-tagTextError);
 }
 
+/* TextLink */
+
+.mistica-text-link {
+    color: var(--vcolor-textLink);
+    font-weight: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    font-family: inherit;
+    text-decoration: underline;
+}
+
+.mistica-text-link:hover:not([disabled]) {
+    text-decoration-thickness: 0.125em;
+}
+
+.mistica-text-link[disabled] {
+    opacity: 0.5;
+    text-decoration: none;
+}
+
 /* Buttons */
 [class^='mistica-button'] {
     --button-font-size: var(--mistica-font-size-3);
