@@ -34,6 +34,8 @@
 
     --vcolor-accordionChevronClosed: var(--mistica-color-inverse);
     --vcolor-accordionChevronOpen: var(--mistica-color-inverse);
+    --vcolor-accordionHover: var(--mistica-color-backgroundContainerBrandHover);
+    --vcolor-accordionActive: var(--mistica-color-backgroundContainerBrandPressed);
 
     --vcolor-divider: var(--mistica-color-dividerInverse);
 }
@@ -76,6 +78,8 @@
 
     --vcolor-accordionChevronClosed: var(--mistica-color-neutralMedium);
     --vcolor-accordionChevronOpen: var(--mistica-color-neutralHigh);
+    --vcolor-accordionHover: var(--mistica-color-backgroundContainerHover);
+    --vcolor-accordionActive: var(--mistica-color-backgroundContainerPressed);
 
     --vcolor-divider: var(--mistica-color-divider);
 }
@@ -759,6 +763,7 @@ button.mistica-display-card:has(.mistica-card__media):active:after {
 .mistica-accordion-item__chevron {
     transition: transform 0.4s;
     color: var(--vcolor-accordionChevronClosed);
+    flex-shrink: 0;
 }
 
 .mistica-accordion-item[open] > summary > .mistica-accordion-item__chevron {
