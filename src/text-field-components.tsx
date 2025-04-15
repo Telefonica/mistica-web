@@ -114,11 +114,14 @@ export const HelperText = ({
                             <IconWarningRegular color={leftColor} className={styles.warnIcon} />
                         </Text1>
                     )}
-                    <div aria-live={error ? 'assertive' : undefined}>
-                        <Text1 color={leftColor} regular id={leftTextId}>
-                            {leftText}
-                        </Text1>
-                    </div>
+                    <Text1
+                        color={leftColor}
+                        regular
+                        id={leftTextId}
+                        aria-live={error ? 'assertive' : undefined}
+                    >
+                        {leftText}
+                    </Text1>
                 </p>
             )}
             {rightText && (
