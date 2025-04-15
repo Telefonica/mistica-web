@@ -772,11 +772,11 @@ button.mistica-display-card:has(.mistica-card__media):active:after {
 }
 
 .mistica-accordion-item__summary:hover {
-    background-color: var(--mistica-color-backgroundContainerHover);
+    background-color: var(--vcolor-accordionHover);
 }
 
 .mistica-accordion-item__summary:active {
-    background-color: var(--mistica-color-backgroundContainerPressed);
+    background-color: var(--vcolor-accordionActive);
 }
 
 .mistica-accordion-item::details-content {
