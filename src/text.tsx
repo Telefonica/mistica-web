@@ -104,6 +104,7 @@ export interface TextPresetProps {
     'aria-level'?: number;
     'aria-label'?: string;
     'aria-hidden'?: React.HTMLAttributes<HTMLDivElement>['aria-hidden'];
+    'aria-live'?: React.HTMLAttributes<HTMLDivElement>['aria-live'];
     dataAttributes?: DataAttributes;
     forceMobileSizes?: boolean;
     textShadow?: string;
@@ -152,6 +153,7 @@ export const Text = ({
     'aria-level': ariaLevel,
     'aria-label': ariaLabel,
     'aria-hidden': ariaHidden,
+    'aria-live': ariaLive,
     dataAttributes,
 }: TextProps): JSX.Element | null => {
     const {skinName} = useTheme();
@@ -198,6 +200,7 @@ export const Text = ({
             'aria-level': ariaLevel,
             'aria-label': ariaLabel,
             'aria-hidden': ariaHidden,
+            'aria-live': ariaLive,
             ...getPrefixedDataAttributes(dataAttributes, 'Text'),
             style: {
                 ...sizeVars,
