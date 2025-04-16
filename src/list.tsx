@@ -735,20 +735,17 @@ type BoxedRowProps = ExclusifyUnion<
 > &
     CommonBoxedRowProps;
 
-export const BoxedRow = React.forwardRef<HTMLDivElement, BoxedRowProps>(
-    ({dataAttributes, role = 'listitem', ...props}, ref) => (
-        <InternalBoxed
-            overflow="visible"
-            className={styles.boxed}
-            variant={props.isInverse ? 'inverse' : 'default'}
-            ref={ref}
-            role={role}
-            dataAttributes={{'component-name': 'BoxedRow', testid: 'BoxedRow', ...dataAttributes}}
-        >
-            <RowContent {...props} />
-        </InternalBoxed>
-    )
-);
+export const BoxedRow = React.forwardRef<HTMLDivElement, BoxedRowProps>(({dataAttributes, ...props}, ref) => (
+    <InternalBoxed
+        overflow="visible"
+        className={styles.boxed}
+        variant={props.isInverse ? 'inverse' : 'default'}
+        ref={ref}
+        dataAttributes={{'component-name': 'BoxedRow', testid: 'BoxedRow', ...dataAttributes}}
+    >
+        <RowContent {...props} />
+    </InternalBoxed>
+));
 
 type BoxedRowListProps = {
     children: React.ReactNode;
