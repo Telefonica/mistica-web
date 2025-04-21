@@ -297,7 +297,7 @@
     color: var(--vcolor-tagTextError);
 }
 
-* Breadcrumbs */
+/* Breadcrumbs */
 .mistica-breadcrumb-list {
     display: flex;
     flex: 1;
