@@ -251,6 +251,127 @@
     }
 }
 
+/* Chip */
+
+.mistica-chip {
+    font-weight: var(--mistica-font-weight-indicator);
+    font-size: var(--mistica-font-size-2);
+    line-height: var(--mistica-line-height-2);
+    color: var(--mistica-color-textPrimary);
+    border: 1px solid var(--mistica-color-control);
+    border-radius: var(--mistica-border-radius-indicator);
+    background: var(--mistica-color-backgroundContainer);
+    position: relative;
+    overflow: hidden;
+    min-width: 72px;
+    min-height: 40px;
+    padding: 0 20px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+}
+label.mistica-chip {
+    padding: 0;
+    border: none;
+    overflow: visible;
+    background: transparent;
+}
+label.mistica-chip > span {
+    border: 1px solid var(--mistica-color-control);
+    border-radius: var(--mistica-border-radius-indicator);
+    background: var(--mistica-color-backgroundContainer);
+    position: relative;
+    overflow: hidden;
+    min-width: 72px;
+    min-height: 40px;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+}
+
+@media (min-width: 1024px) {
+    .mistica-chip,
+    label.mistica-chip > span {
+        min-width: 56px;
+        min-height: 32px;
+        padding: 0 12px;
+    }
+}
+
+button.mistica-chip,
+a.mistica-chip,
+label.mistica-chip {
+    cursor: pointer;
+    user-select: none;
+}
+
+button.mistica-chip:before,
+a.mistica-chip:before,
+label.mistica-chip > span:before {
+    position: absolute;
+    content: '';
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    transition: background-color 0.1s ease-in-out;
+}
+
+button.mistica-chip:hover:before,
+a.mistica-chip:hover:before,
+label.mistica-chip > input:hover + span:before {
+    background: var(--mistica-color-backgroundContainerHover);
+}
+
+button.mistica-chip:active:before,
+a.mistica-chip:active:before,
+label.mistica-chip > input:active + span:before {
+    background: var(--mistica-color-backgroundContainerPressed);
+}
+
+label.mistica-chip > input {
+    appearance: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    border-radius: var(--mistica-border-radius-indicator);
+    outline-offset: 0;
+}
+
+label.mistica-chip > input:checked + span {
+    color: var(--mistica-color-textActivated);
+    background: var(--mistica-color-brandLow);
+    border-color: var(--mistica-color-controlActivated);
+}
+
+.mistica-chip > button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
+    padding: 0;
+    margin: 0;
+    min-width: 24px;
+    min-height: 24px;
+    margin-left: 4px;
+    margin-right: -4px;
+}
+
+.mistica-chip > button > svg {
+    width: 1rem;
+    height: 1rem;
+}
+
 /* Tag */
 [class^='mistica-tag'] {
     font-weight: var(--mistica-font-weight-indicator);
