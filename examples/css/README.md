@@ -49,6 +49,9 @@ yarn dev
 
 Take a look at the `index.html` and `styles.css` files.
 
+You can see a deployed version of the example page in
+[https://mistica-web.vercel.app/mistica-css](https://mistica-web.vercel.app/mistica-css)
+
 ## Dark mode support
 
 By default, color tokens will change folloging the user's system preferences. If you want to force the dark or
@@ -127,7 +130,8 @@ bigger in desktop (`@media (min-width: 1024px)`) than in mobile.
 
 ## Utility classes
 
-Apart from the css custom properties, we also provide some utility classes that you can use in your html
+Apart from the css custom properties, we also provide some utility classes that you can use in your html to
+build some Mística components.
 
 ### Typography
 
@@ -166,3 +170,8 @@ Title presets:
 
 Others: see the full list in the
 [token definition file](https://github.com/Telefonica/mistica-design/blob/production/tokens/movistar.json#L1384).
+
+### Components
+
+Some provided classes can be used to build components like Buttons, Cards, Tags, Accordion, etc. See some
+examples in [index.html](./index.html).
