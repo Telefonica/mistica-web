@@ -297,6 +297,37 @@
     color: var(--vcolor-tagTextError);
 }
 
+* Breadcrumbs */
+.mistica-breadcrumb-list {
+    display: flex;
+    flex: 1;
+    align-items: flex-end;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+
+}
+
+[class^='mistica-breadcrumb-'] {
+    text-decoration: none;
+    font-size: var(--mistica-font-size-1);
+    line-height: var(--mistica-line-height-1);
+    font-weight: var(--mistica-font-weight-1);
+    color: var(--vcolor-textPrimary);
+}
+
+.mistica-breadcrumb-separator {
+    padding-right: 3px;
+}
+
+.mistica-breadcrumb-text:hover {
+    text-decoration: underline;
+}
+
+.mistica-breadcrumb-text-current {
+    color: var(--vcolor-textSecondary);
+}
+
 /* Buttons */
 [class^='mistica-button'] {
     --button-font-size: var(--mistica-font-size-3);
