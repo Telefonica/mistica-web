@@ -81,6 +81,27 @@ test('Row as a button', async () => {
     expect(spy).toHaveBeenCalled();
 });
 
+test('Row, keeping its listitem role, containing a button reporting link role', async () => {
+    const spy = jest.fn();
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <RowList>
+                <Row title="Title" onPress={spy} touchableRole="link" />
+            </RowList>
+        </ThemeContextProvider>
+    );
+
+    const rowDiv = screen.getByRole('listitem');
+    expect(rowDiv).toBeInTheDocument();
+
+    const button = screen.getByRole('link', {name: 'Title'});
+    expect(button).toBeInTheDocument();
+    expect(rowDiv).toContainElement(button);
+
+    await userEvent.click(button);
+    expect(spy).toHaveBeenCalled();
+});
+
 test('Row with switch', async () => {
     const spyOnChange = jest.fn();
 
@@ -292,6 +313,27 @@ test('Row list with iconButton', async () => {
     await userEvent.click(iconButton);
     expect(iconButtonOnPressSpy).toHaveBeenCalledTimes(1);
     expect(logEventSpy).toHaveBeenCalledWith({name: 'icon-button-tracking-event'});
+});
+
+test('BoxedRow, keeping its listitem role, containing a button reporting link role', async () => {
+    const spy = jest.fn();
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <BoxedRowList>
+                <BoxedRow title="Title" onPress={spy} touchableRole="link" />
+            </BoxedRowList>
+        </ThemeContextProvider>
+    );
+
+    const rowDiv = screen.getByRole('listitem');
+    expect(rowDiv).toBeInTheDocument();
+
+    const button = screen.getByRole('link', {name: 'Title'});
+    expect(button).toBeInTheDocument();
+    expect(rowDiv).toContainElement(button);
+
+    await userEvent.click(button);
+    expect(spy).toHaveBeenCalled();
 });
 
 test('Text content is read by screen readers in the right order in Rows with link', () => {
