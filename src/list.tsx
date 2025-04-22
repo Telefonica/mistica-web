@@ -478,7 +478,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
                     [styles.pointer]: !disabled,
                 })}
                 {...interactiveProps}
-                role={touchableRole ?? role}
+                role={touchableRole}
                 dataAttributes={dataAttributes}
                 disabled={disabled}
                 aria-label={ariaLabel}
@@ -500,7 +500,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
             <BaseTouchable
                 disabled={disabled}
                 {...interactiveProps}
-                role={touchableRole ?? role}
+                role={touchableRole}
                 className={classNames(styles.dualActionLeft, {
                     [styles.touchableBackground]: hasHoverDefault,
                     [styles.touchableBackgroundInverse]: hasHoverInverse,
