@@ -85,7 +85,6 @@
 }
 
 @media (prefers-color-scheme: dark) {
-
     [data-mistica-skin] > *,
     [data-mistica-variant='default'] > *,
     .mistica-card > *,
@@ -511,14 +510,14 @@ button.mistica-display-card:active:after {
 a.mistica-naked-card:hover > *,
 button.mistica-naked-card:hover > *,
 a.mistica-small-naked-card:hover > *,
-button.mistica-small-naked-card:hover>* {
+button.mistica-small-naked-card:hover > * {
     opacity: 0.8;
 }
 
 a.mistica-naked-card:active > *,
 button.mistica-naked-card:active > *,
 a.mistica-small-naked-card:active > *,
-button.mistica-small-naked-card:active>* {
+button.mistica-small-naked-card:active > * {
     opacity: 0.6;
 }
 
@@ -530,10 +529,10 @@ button.mistica-small-naked-card:hover>.mistica-card__media {
     filter: brightness(75%);
 }
 
-a.mistica-naked-card:active>.mistica-card__media,
-button.mistica-naked-card:active>.mistica-card__media,
-a.mistica-small-naked-card:active>.mistica-card__media,
-button.mistica-small-naked-card:active>.mistica-card__media {
+a.mistica-naked-card:active > .mistica-card__media,
+button.mistica-naked-card:active > .mistica-card__media,
+a.mistica-small-naked-card:active > .mistica-card__media,
+button.mistica-small-naked-card:active > .mistica-card__media {
     opacity: 1;
     filter: brightness(65%);
 }
@@ -649,11 +648,11 @@ button.mistica-display-card:has(.mistica-card__media):active:after {
     text-shadow: var(--mistica-card-text-shadow);
 }
 
-[class^='mistica-tag']+.mistica-card__pretitle {
+[class^='mistica-tag'] + .mistica-card__pretitle {
     padding-top: 8px;
 }
 
-.mistica-display-card [class^='mistica-tag']+.mistica-card__pretitle {
+.mistica-display-card [class^='mistica-tag'] + .mistica-card__pretitle {
     padding-top: 16px;
 }
 
@@ -787,7 +786,7 @@ button.mistica-display-card:has(.mistica-card__media):active:after {
     flex-shrink: 0;
 }
 
-.mistica-accordion-item[open]>summary > .mistica-accordion-item__chevron {
+.mistica-accordion-item[open] > summary > .mistica-accordion-item__chevron {
     transform: rotate(-180deg);
     color: var(--vcolor-accordionChevronOpen);
 }
