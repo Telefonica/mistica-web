@@ -521,10 +521,10 @@ button.mistica-small-naked-card:active > * {
     opacity: 0.6;
 }
 
-a.mistica-naked-card:hover>.mistica-card__media,
-button.mistica-naked-card:hover>.mistica-card__media,
-a.mistica-small-naked-card:hover>.mistica-card__media,
-button.mistica-small-naked-card:hover>.mistica-card__media {
+a.mistica-naked-card:hover > .mistica-card__media,
+button.mistica-naked-card:hover > .mistica-card__media,
+a.mistica-small-naked-card:hover > .mistica-card__media,
+button.mistica-small-naked-card:hover > .mistica-card__media {
     opacity: 1;
     filter: brightness(75%);
 }
