@@ -1,5 +1,5 @@
-[data-mistica-variant='inverse'] > *,
-.mistica-display-card:has(.mistica-card__media) > * {
+[data-mistica-variant='inverse']>*,
+.mistica-display-card:has(.mistica-card__media)>* {
     --mistica-boxed-border: none;
 
     --vcolor-textPrimary: var(--mistica-color-textPrimaryInverse);
@@ -33,11 +33,11 @@
     --vcolor-tagTextError: var(--mistica-color-tagTextErrorInverse);
 }
 
-[data-mistica-skin] > *,
-[data-mistica-variant='default'] > *,
-.mistica-card > *,
-.mistica-snap-card > *,
-.mistica-display-card > * {
+[data-mistica-skin]>*,
+[data-mistica-variant='default']>*,
+.mistica-card>*,
+.mistica-snap-card>*,
+.mistica-display-card>* {
     --mistica-boxed-border: 1px solid var(--mistica-color-border);
     --vcolor-textPrimary: var(--mistica-color-textPrimary);
     --vcolor-textSecondary: var(--mistica-color-textSecondary);
@@ -71,25 +71,26 @@
 }
 
 @media (prefers-color-scheme: dark) {
-    [data-mistica-skin] > *,
-    [data-mistica-variant='default'] > *,
-    .mistica-card > *,
-    .mistica-snap-card > * {
+
+    [data-mistica-skin]>*,
+    [data-mistica-variant='default']>*,
+    .mistica-card>*,
+    .mistica-snap-card>* {
         --mistica-boxed-border: none;
     }
 
-    [data-mistica-color-scheme='light'][data-mistica-skin] > *,
-    [data-mistica-color-scheme='light'] [data-mistica-variant='default'] > *,
-    [data-mistica-color-scheme='light'] .mistica-card > *,
-    [data-mistica-color-scheme='light'] .mistica-snap-card > * {
+    [data-mistica-color-scheme='light'][data-mistica-skin]>*,
+    [data-mistica-color-scheme='light'] [data-mistica-variant='default']>*,
+    [data-mistica-color-scheme='light'] .mistica-card>*,
+    [data-mistica-color-scheme='light'] .mistica-snap-card>* {
         --mistica-boxed-border: 1px solid var(--mistica-color-border);
     }
 }
 
-[data-mistica-color-scheme='dark'][data-mistica-skin] > *,
-[data-mistica-color-scheme='dark'] [data-mistica-variant='default'] > *,
-[data-mistica-color-scheme='dark'] .mistica-card > *,
-[data-mistica-color-scheme='dark'] .mistica-snap-card > * {
+[data-mistica-color-scheme='dark'][data-mistica-skin]>*,
+[data-mistica-color-scheme='dark'] [data-mistica-variant='default']>*,
+[data-mistica-color-scheme='dark'] .mistica-card>*,
+[data-mistica-color-scheme='dark'] .mistica-snap-card>* {
     --mistica-boxed-border: none;
 }
 
@@ -104,80 +105,94 @@
     line-height: var(--mistica-line-height-1);
     font-weight: var(--mistica-font-weight-1);
 }
+
 .mistica-text-2 {
     color: var(--vcolor-textPrimary);
     font-size: var(--mistica-font-size-2);
     line-height: var(--mistica-line-height-2);
     font-weight: var(--mistica-font-weight-2);
 }
+
 .mistica-text-3 {
     color: var(--vcolor-textPrimary);
     font-size: var(--mistica-font-size-3);
     line-height: var(--mistica-line-height-3);
     font-weight: var(--mistica-font-weight-3);
 }
+
 .mistica-text-4 {
     color: var(--vcolor-textPrimary);
     font-size: var(--mistica-font-size-4);
     line-height: var(--mistica-line-height-4);
     font-weight: var(--mistica-font-weight-4);
 }
+
 .mistica-text-5 {
     color: var(--vcolor-textPrimary);
     font-size: var(--mistica-font-size-5);
     line-height: var(--mistica-line-height-5);
     font-weight: var(--mistica-font-weight-5);
 }
+
 .mistica-text-6 {
     color: var(--vcolor-textPrimary);
     font-size: var(--mistica-font-size-6);
     line-height: var(--mistica-line-height-6);
     font-weight: var(--mistica-font-weight-6);
 }
+
 .mistica-text-7 {
     color: var(--vcolor-textPrimary);
     font-size: var(--mistica-font-size-7);
     line-height: var(--mistica-line-height-7);
     font-weight: var(--mistica-font-weight-7);
 }
+
 .mistica-text-8 {
     color: var(--vcolor-textPrimary);
     font-size: var(--mistica-font-size-8);
     line-height: var(--mistica-line-height-8);
     font-weight: var(--mistica-font-weight-8);
 }
+
 .mistica-text-9 {
     color: var(--vcolor-textPrimary);
     font-size: var(--mistica-font-size-9);
     line-height: var(--mistica-line-height-9);
     font-weight: var(--mistica-font-weight-9);
 }
+
 .mistica-text-10 {
     color: var(--vcolor-textPrimary);
     font-size: var(--mistica-font-size-10);
     line-height: var(--mistica-line-height-10);
     font-weight: var(--mistica-font-weight-10);
 }
+
 .mistica-text-cardTitle {
     font-size: var(--mistica-font-size-cardTitle);
     line-height: var(--mistica-line-height-cardTitle);
     font-weight: var(--mistica-font-weight-cardTitle);
 }
+
 .mistica-text-button {
     font-size: var(--mistica-font-size-button);
     line-height: var(--mistica-line-height-button);
     font-weight: var(--mistica-font-weight-button);
 }
+
 .mistica-text-tabsLabel {
     font-size: var(--mistica-font-size-tabsLabel);
     line-height: var(--mistica-line-height-tabsLabel);
     font-weight: var(--mistica-font-weight-tabsLabel);
 }
+
 .mistica-text-link {
     font-size: var(--mistica-font-size-link);
     line-height: var(--mistica-line-height-link);
     font-weight: var(--mistica-font-weight-link);
 }
+
 .mistica-text-title1 {
     color: var(--vcolor-textSecondary);
     text-transform: uppercase;
@@ -185,29 +200,34 @@
     line-height: var(--mistica-line-height-1);
     font-weight: var(--mistica-font-weight-title1);
 }
+
 .mistica-text-title2 {
     color: var(--vcolor-textPrimary);
     font-size: var(--mistica-font-size-3);
     line-height: var(--mistica-line-height-3);
     font-weight: var(--mistica-font-weight-title2);
 }
+
 .mistica-text-title3 {
     color: var(--vcolor-textPrimary);
     font-size: var(--mistica-font-size-title3);
     line-height: var(--mistica-line-height-title3);
     font-weight: var(--mistica-font-weight-title3);
 }
+
 .mistica-text-title4 {
     color: var(--vcolor-textPrimary);
     font-size: var(--mistica-font-size-6);
     line-height: var(--mistica-line-height-6);
     font-weight: var(--mistica-font-weight-6);
 }
+
 .mistica-text-indicator {
     font-size: var(--mistica-font-size-indicator);
     line-height: var(--mistica-line-height-indicator);
     font-weight: var(--mistica-font-weight-indicator);
 }
+
 .mistica-text-navigationBar {
     font-size: var(--mistica-font-size-navigationBar);
     line-height: var(--mistica-line-height-navigationBar);
@@ -298,34 +318,53 @@
 }
 
 /* Breadcrumbs */
-.mistica-breadcrumb-list {
+.mistica-breadcrumb ol {
     display: flex;
     flex: 1;
     align-items: flex-end;
     padding: 0;
     margin: 0;
     list-style: none;
-
 }
 
-[class^='mistica-breadcrumb-'] {
+.mistica-breadcrumb a {
     text-decoration: none;
     font-size: var(--mistica-font-size-1);
     line-height: var(--mistica-line-height-1);
     font-weight: var(--mistica-font-weight-1);
     color: var(--vcolor-textPrimary);
+    position: relative;
+    padding-right: 12px;
 }
 
-.mistica-breadcrumb-separator {
-    padding-right: 3px;
+.mistica-breadcrumb a::after {
+    all: unset;
+    content: '/';
+    font-size: var(--mistica-font-size-1);
+    line-height: var(--mistica-line-height-1);
+    font-weight: var(--mistica-font-weight-1);
+    color: var(--vcolor-textPrimary);
+    margin: 0 3px;
+    position: absolute;
 }
 
-.mistica-breadcrumb-text:hover {
+.mistica-breadcrumb a:hover {
     text-decoration: underline;
 }
 
-.mistica-breadcrumb-text-current {
+.mistica-breadcrumb a:hover:after {
+    text-decoration: none;
+}
+
+.mistica-breadcrumb li:last-of-type a {
+    pointer-events: none;
     color: var(--vcolor-textSecondary);
+    padding-right: 0;
+}
+
+.mistica-breadcrumb li:last-of-type a:after {
+    content: '';
+    margin: 0;
 }
 
 /* Buttons */
@@ -463,9 +502,9 @@
     z-index: 1;
 }
 
-.mistica-card > *,
-.mistica-snap-card > *,
-.mistica-display-card > * {
+.mistica-card>*,
+.mistica-snap-card>*,
+.mistica-display-card>* {
     z-index: 2;
 }
 
@@ -497,39 +536,39 @@ button.mistica-display-card:active:after {
     text-decoration: none;
 }
 
-.mistica-naked-card > *,
-.mistica-small-naked-card > * {
+.mistica-naked-card>*,
+.mistica-small-naked-card>* {
     transition:
         opacity 0.1s ease-in-out,
         filter 0.1s ease-in-out;
 }
 
-a.mistica-naked-card:hover > *,
-button.mistica-naked-card:hover > *,
-a.mistica-small-naked-card:hover > *,
-button.mistica-small-naked-card:hover > * {
+a.mistica-naked-card:hover>*,
+button.mistica-naked-card:hover>*,
+a.mistica-small-naked-card:hover>*,
+button.mistica-small-naked-card:hover>* {
     opacity: 0.8;
 }
 
-a.mistica-naked-card:active > *,
-button.mistica-naked-card:active > *,
-a.mistica-small-naked-card:active > *,
-button.mistica-small-naked-card:active > * {
+a.mistica-naked-card:active>*,
+button.mistica-naked-card:active>*,
+a.mistica-small-naked-card:active>*,
+button.mistica-small-naked-card:active>* {
     opacity: 0.6;
 }
 
-a.mistica-naked-card:hover > .mistica-card__media,
-button.mistica-naked-card:hover > .mistica-card__media,
-a.mistica-small-naked-card:hover > .mistica-card__media,
-button.mistica-small-naked-card:hover > .mistica-card__media {
+a.mistica-naked-card:hover>.mistica-card__media,
+button.mistica-naked-card:hover>.mistica-card__media,
+a.mistica-small-naked-card:hover>.mistica-card__media,
+button.mistica-small-naked-card:hover>.mistica-card__media {
     opacity: 1;
     filter: brightness(75%);
 }
 
-a.mistica-naked-card:active > .mistica-card__media,
-button.mistica-naked-card:active > .mistica-card__media,
-a.mistica-small-naked-card:active > .mistica-card__media,
-button.mistica-small-naked-card:active > .mistica-card__media {
+a.mistica-naked-card:active>.mistica-card__media,
+button.mistica-naked-card:active>.mistica-card__media,
+a.mistica-small-naked-card:active>.mistica-card__media,
+button.mistica-small-naked-card:active>.mistica-card__media {
     opacity: 1;
     filter: brightness(65%);
 }
@@ -585,7 +624,8 @@ button.mistica-small-naked-card:active > .mistica-card__media {
     aspect-ratio: 16 / 9;
     object-fit: cover;
     width: calc(100% + 32px);
-    max-width: initial; /* Movistar AEM has a default max-width: 100% for any img tag */
+    max-width: initial;
+    /* Movistar AEM has a default max-width: 100% for any img tag */
     position: relative;
 }
 
@@ -645,11 +685,11 @@ button.mistica-display-card:has(.mistica-card__media):active:after {
     text-shadow: var(--mistica-card-text-shadow);
 }
 
-[class^='mistica-tag'] + .mistica-card__pretitle {
+[class^='mistica-tag']+.mistica-card__pretitle {
     padding-top: 8px;
 }
 
-.mistica-display-card [class^='mistica-tag'] + .mistica-card__pretitle {
+.mistica-display-card [class^='mistica-tag']+.mistica-card__pretitle {
     padding-top: 16px;
 }
 
@@ -672,15 +712,15 @@ button.mistica-display-card:has(.mistica-card__media):active:after {
     font-weight: var(--mistica-font-weight-6);
 }
 
-[class^='mistica-tag'] + .mistica-card__title {
+[class^='mistica-tag']+.mistica-card__title {
     padding-top: 8px;
 }
 
-.mistica-display-card [class^='mistica-tag'] + .mistica-card__title {
+.mistica-display-card [class^='mistica-tag']+.mistica-card__title {
     padding-top: 16px;
 }
 
-.mistica-card__pretitle + .mistica-card__title {
+.mistica-card__pretitle+.mistica-card__title {
     padding-top: 4px;
 }
 
