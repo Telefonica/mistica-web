@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {RowList, Row, BoxedRowList, BoxedRow} from '../list';
 import {RadioGroup} from '../radio-button';
-import {screen, render, waitFor} from '@testing-library/react';
+import {screen, render, waitFor, within} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import {
     ButtonPrimary,
@@ -327,9 +327,8 @@ test('BoxedRow, keeping its listitem role, containing a button reporting link ro
     const rowDiv = screen.getByRole('listitem');
     expect(rowDiv).toBeInTheDocument();
 
-    const button = screen.getByRole('link', {name: 'Title'});
+    const button = within(rowDiv).getByRole('link', {name: 'Title'});
     expect(button).toBeInTheDocument();
-    expect(rowDiv).toContainElement(button);
 
     await userEvent.click(button);
     expect(spy).toHaveBeenCalled();
