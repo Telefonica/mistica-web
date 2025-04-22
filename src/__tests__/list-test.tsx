@@ -94,9 +94,8 @@ test('Row, keeping its listitem role, containing a button reporting link role', 
     const rowDiv = screen.getByRole('listitem');
     expect(rowDiv).toBeInTheDocument();
 
-    const button = screen.getByRole('link', {name: 'Title'});
+    const button = within(rowDiv).getByRole('link', {name: 'Title'});
     expect(button).toBeInTheDocument();
-    expect(rowDiv).toContainElement(button);
 
     await userEvent.click(button);
     expect(spy).toHaveBeenCalled();
