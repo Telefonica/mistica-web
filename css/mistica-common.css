@@ -85,7 +85,6 @@
 }
 
 @media (prefers-color-scheme: dark) {
-
     [data-mistica-skin] > *,
     [data-mistica-variant='default'] > *,
     .mistica-card > *,
@@ -313,6 +312,7 @@
 }
 
 /* TextLink */
+
 .mistica-text-link {
     color: var(--vcolor-textLink);
     font-weight: inherit;
@@ -321,9 +321,11 @@
     font-family: inherit;
     text-decoration: underline;
 }
+
 .mistica-text-link:hover:not([disabled]) {
     text-decoration-thickness: 0.125em;
 }
+
 .mistica-text-link[disabled] {
     opacity: 0.5;
     text-decoration: none;
@@ -561,18 +563,18 @@ button.mistica-small-naked-card:active > * {
     opacity: 0.6;
 }
 
-a.mistica-naked-card:hover>.mistica-card__media,
-button.mistica-naked-card:hover>.mistica-card__media,
-a.mistica-small-naked-card:hover>.mistica-card__media,
-button.mistica-small-naked-card:hover>.mistica-card__media {
+a.mistica-naked-card:hover > .mistica-card__media,
+button.mistica-naked-card:hover > .mistica-card__media,
+a.mistica-small-naked-card:hover > .mistica-card__media,
+button.mistica-small-naked-card:hover > .mistica-card__media {
     opacity: 1;
     filter: brightness(75%);
 }
 
-a.mistica-naked-card:active>.mistica-card__media,
-button.mistica-naked-card:active>.mistica-card__media,
-a.mistica-small-naked-card:active>.mistica-card__media,
-button.mistica-small-naked-card:active>.mistica-card__media {
+a.mistica-naked-card:active > .mistica-card__media,
+button.mistica-naked-card:active > .mistica-card__media,
+a.mistica-small-naked-card:active > .mistica-card__media,
+button.mistica-small-naked-card:active > .mistica-card__media {
     opacity: 1;
     filter: brightness(65%);
 }
